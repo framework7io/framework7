@@ -8,16 +8,6 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://monovm.com/linux-vps/" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/monovm.jpg">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://staffaugmentation.ro" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/staffaugmentation.jpg">
-      </a>
-    </td>
-    <td align="center" valign="middle">
       <a href="https://www.thoriumbuilder.com/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/thorium.png">
       </a>
@@ -27,8 +17,6 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/appvalley.jpg">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="http://mytommy.com" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/tommy.png">
@@ -37,6 +25,23 @@
     <td align="center" valign="middle">
       <a href="https://www.securcom.me/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/securcom.png">
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle">
+      <a href="https://writersperhour.com/write-my-paper" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/writersperhour.jpg">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://monovm.com/linux-vps/" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/monovm.jpg">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://staffaugmentation.ro" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/staffaugmentation.jpg">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -49,13 +54,13 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/rise.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://usave.co.uk/utilities/broadband" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/usave.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://bid4papers.com/write-my-essay.html" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/bid4papers.png">
@@ -76,19 +81,18 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/hicapps.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://blokt.com/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/blokt.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://wappler.io/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
-    <td></td>
     <td></td>
     <td></td>
     <td></td>
@@ -127,6 +131,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ---
 
 ### $50+ Top Supporter
+[Writers Per Hour](https://writersperhour.com/write-my-paper) - Write My Paper For Me<br>
 [Staff Augmentation](https://staffaugmentation.ro) - Recruit Top Staff in Romania<br>
 [Bid4Papers](https://bid4papers.com/write-my-essay.html) - Write My Essay<br>
 [COLOGNE WEBDESIGN](https://www.colognewebdesign.de/)<br>
