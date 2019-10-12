@@ -111,10 +111,12 @@ export namespace PhotoBrowser {
     swipeToClose: (photoBrowser: PhotoBrowser) => void
     /** Event will be fired when user click/tap on Swiper. Receives 'touchend' event as an arguments */
     tap: (photoBrowser: PhotoBrowser, event: Event) => void
-    /** Event will be fired when user click/tap on Swiper after 300ms delay. Receives 'touchend' event as an arguments */
+    /** Event will be fired when user click/tap on Swiper. Receives 'touchend' event as an arguments */
     click: (photoBrowser: PhotoBrowser, event: Event) => void
     /** Event will be fired when user double tap on Swiper's container. Receives 'touchend' event as an arguments */
     doubleTap: (photoBrowser: PhotoBrowser, event: Event) => void
+    /** Event will be fired when user double tap on Swiper's container. Receives 'touchend' event as an arguments */
+    doubleClick: (photoBrowser: PhotoBrowser, event: Event) => void
     /** Event will be fired when currently active slide is changed */
     slideChange: (photoBrowser: PhotoBrowser) => void
     /** Event will be fired in the beginning of transition */

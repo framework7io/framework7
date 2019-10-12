@@ -350,20 +350,26 @@ class PhotoBrowser extends Framework7Class {
     pb.captions = pb.$el.find('.photo-browser-caption');
 
     // Init Swiper
+    let clickTimeout;
+
     const swiperParams = Utils.extend({}, pb.params.swiper, {
       initialSlide: pb.activeIndex,
       on: {
-        tap(e) {
-          pb.emit('local::tap', e);
-        },
         click(e) {
+          clearTimeout(clickTimeout);
+
           if (pb.params.exposition) {
-            pb.expositionToggle();
+            clickTimeout = setTimeout(() => {
+              pb.expositionToggle();
+            }, 350);
           }
+          pb.emit('local::tap', e);
           pb.emit('local::click', e);
         },
-        doubleTap(e) {
+        doubleClick(e) {
+          clearTimeout(clickTimeout);
           pb.emit('local::doubleTap', e);
+          pb.emit('local::doubleClick', e);
         },
         slideChange(...args) {
           const swiper = this;
