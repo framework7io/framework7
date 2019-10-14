@@ -126,6 +126,9 @@ export default {
       </div>
     );
   },
+  componentDidCreate() {
+    Utils.bindMethods(this, ['onHide', 'onShow']);
+  },
   componentDidUpdate() {
     const self = this;
     if (self.props.tabbar && self.$f7) {
@@ -134,11 +137,34 @@ export default {
   },
   componentDidMount() {
     const self = this;
+    const { el } = self.refs;
+    if (!el) return;
     self.$f7ready((f7) => {
-      if (self.props.tabbar) f7.toolbar.setHighlight(self.refs.el);
+      self.eventTargetEl = el;
+      if (self.props.tabbar) f7.toolbar.setHighlight(el);
+      f7.on('toolbarShow', self.onShow);
+      f7.on('toolbarHide', self.onHide);
     });
   },
+  componentWillUnmount() {
+    const self = this;
+    const { el } = self.refs;
+    if (!el || !self.$f7) return;
+    const f7 = self.$f7;
+    f7.off('toolbarShow', self.onShow);
+    f7.off('toolbarHide', self.onHide);
+    self.eventTargetEl = null;
+    delete self.eventTargetEl;
+  },
   methods: {
+    onHide(navbarEl) {
+      if (this.eventTargetEl !== navbarEl) return;
+      this.dispatchEvent('toolbar:hide toolbarHide');
+    },
+    onShow(navbarEl) {
+      if (this.eventTargetEl !== navbarEl) return;
+      this.dispatchEvent('toolbar:show toolbarShow');
+    },
     hide(animate) {
       const self = this;
       if (!self.$f7) return;

@@ -48,6 +48,7 @@ const Toolbar = {
     app.toolbar.setHighlight(tabbarEl);
   },
   hide(el, animate = true) {
+    const app = this;
     const $el = $(el);
     if ($el.hasClass('toolbar-hidden')) return;
     const className = `toolbar-hidden${animate ? ' toolbar-transitioning' : ''}`;
@@ -55,8 +56,11 @@ const Toolbar = {
       $el.removeClass('toolbar-transitioning');
     });
     $el.addClass(className);
+    $el.trigger('toolbar:hide');
+    app.emit('toolbarHide', $el[0]);
   },
   show(el, animate = true) {
+    const app = this;
     const $el = $(el);
     if (!$el.hasClass('toolbar-hidden')) return;
     if (animate) {
@@ -66,6 +70,8 @@ const Toolbar = {
       });
     }
     $el.removeClass('toolbar-hidden');
+    $el.trigger('toolbar:show');
+    app.emit('toolbarShow', $el[0]);
   },
   initHideToolbarOnScroll(pageEl) {
     const app = this;
