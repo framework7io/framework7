@@ -352,7 +352,7 @@ class Component {
           if (mixin[name]) promises.push(mixin[name].call(self));
         });
       }
-      if (self[name]) {
+      if (self[name] && typeof self[name] === 'function') {
         promises.push(self[name].call(self));
       }
       if (self.$options[name]) {
