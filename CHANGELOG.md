@@ -412,7 +412,7 @@
     ```
 * **Icon**
   * `size` prop will also set element `width` and `height` in addition to just `font-size` (like before)
-  * Removed support for Font Awesome and Ionic icons, props `fa` and `ion` and not supported anymore
+  * Removed support for Font Awesome and Ionic icons, props `fa` and `ion` not supported anymore
 * **Link**
   * New `transition` (string) prop to specify custom page transition name for list link
 * **List**
