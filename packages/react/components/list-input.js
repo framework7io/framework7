@@ -179,7 +179,7 @@ function (_React$Component) {
       this.dispatchEvent.apply(this, ['change'].concat(args));
 
       if (this.props.type === 'texteditor') {
-        this.dispatchEvent('texteditor:change textEditorChange', args[1]);
+        this.dispatchEvent('texteditor:change textEditorChange', args[0]);
       }
     }
   }, {

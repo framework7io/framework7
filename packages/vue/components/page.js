@@ -357,16 +357,18 @@ export default {
     onPageBeforeIn: function onPageBeforeIn(page) {
       if (this.eventTargetEl !== page.el) return;
 
-      if (page.from === 'next') {
-        this.setState({
-          routerPositionClass: 'page-next'
-        });
-      }
+      if (!page.swipeBack) {
+        if (page.from === 'next') {
+          this.setState({
+            routerPositionClass: 'page-next'
+          });
+        }
 
-      if (page.from === 'previous') {
-        this.setState({
-          routerPositionClass: 'page-previous'
-        });
+        if (page.from === 'previous') {
+          this.setState({
+            routerPositionClass: 'page-previous'
+          });
+        }
       }
 
       this.dispatchEvent('page:beforein pageBeforeIn', page);

@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.0.4
+ * Framework7 Vue 5.0.5
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 9, 2019
+ * Released on: October 16, 2019
  */
 
 (function (global, factory) {
@@ -3248,15 +3248,15 @@
         placeholder: placeholder,
         clearFormattingOnPaste: clearFormattingOnPaste,
         on: {
-          onChange: this.onChange,
-          onInput: this.onInput,
-          onFocus: this.onFocus,
-          onBlur: this.onBlur,
-          onButtonClick: this.onButtonClick,
-          onKeyboardOpen: this.onKeyboardOpen,
-          onKeyboardClose: this.onKeyboardClose,
-          onPopoverOpen: this.onPopoverOpen,
-          onPopoverClose: this.onPopoverClose
+          change: this.onChange,
+          input: this.onInput,
+          focus: this.onFocus,
+          blur: this.onBlur,
+          buttonClick: this.onButtonClick,
+          keyboardOpen: this.onKeyboardOpen,
+          keyboardClose: this.onKeyboardClose,
+          popoverOpen: this.onPopoverOpen,
+          popoverClose: this.onPopoverClose
         }
       });
       this.$f7ready(function (f7) {
@@ -5019,7 +5019,7 @@
         this.dispatchEvent.apply(this, ['change'].concat(args));
 
         if (this.props.type === 'texteditor') {
-          this.dispatchEvent('texteditor:change textEditorChange', args[1]);
+          this.dispatchEvent('texteditor:change textEditorChange', args[0]);
         }
       },
       dispatchEvent: function dispatchEvent(events) {
@@ -8775,16 +8775,18 @@
       onPageBeforeIn: function onPageBeforeIn(page) {
         if (this.eventTargetEl !== page.el) { return; }
 
-        if (page.from === 'next') {
-          this.setState({
-            routerPositionClass: 'page-next'
-          });
-        }
+        if (!page.swipeBack) {
+          if (page.from === 'next') {
+            this.setState({
+              routerPositionClass: 'page-next'
+            });
+          }
 
-        if (page.from === 'previous') {
-          this.setState({
-            routerPositionClass: 'page-previous'
-          });
+          if (page.from === 'previous') {
+            this.setState({
+              routerPositionClass: 'page-previous'
+            });
+          }
         }
 
         this.dispatchEvent('page:beforein pageBeforeIn', page);
@@ -11476,6 +11478,9 @@
         class: 'toolbar-inner'
       }, [this.$slots['default']]) : this.$slots['default'], this.$slots['after-inner']]);
     },
+    created: function created() {
+      Utils.bindMethods(this, ['onHide', 'onShow']);
+    },
     updated: function updated() {
       var self = this;
 
@@ -11485,11 +11490,34 @@
     },
     mounted: function mounted() {
       var self = this;
+      var el = self.$refs.el;
+      if (!el) { return; }
       self.$f7ready(function (f7) {
-        if (self.props.tabbar) { f7.toolbar.setHighlight(self.$refs.el); }
+        self.eventTargetEl = el;
+        if (self.props.tabbar) { f7.toolbar.setHighlight(el); }
+        f7.on('toolbarShow', self.onShow);
+        f7.on('toolbarHide', self.onHide);
       });
     },
+    beforeDestroy: function beforeDestroy() {
+      var self = this;
+      var el = self.$refs.el;
+      if (!el || !self.$f7) { return; }
+      var f7 = self.$f7;
+      f7.off('toolbarShow', self.onShow);
+      f7.off('toolbarHide', self.onHide);
+      self.eventTargetEl = null;
+      delete self.eventTargetEl;
+    },
     methods: {
+      onHide: function onHide(navbarEl) {
+        if (this.eventTargetEl !== navbarEl) { return; }
+        this.dispatchEvent('toolbar:hide toolbarHide');
+      },
+      onShow: function onShow(navbarEl) {
+        if (this.eventTargetEl !== navbarEl) { return; }
+        this.dispatchEvent('toolbar:show toolbarShow');
+      },
       hide: function hide(animate) {
         var self = this;
         if (!self.$f7) { return; }
@@ -11499,6 +11527,15 @@
         var self = this;
         if (!self.$f7) { return; }
         self.$f7.toolbar.show(this.$refs.el, animate);
+      },
+      dispatchEvent: function dispatchEvent(events) {
+        var arguments$1 = arguments;
+
+        for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+          args[_key - 1] = arguments$1[_key];
+        }
+
+        __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
       },
       setState: function setState(updater, callback) {
         __vueComponentSetState(this, updater, callback);
@@ -12200,7 +12237,7 @@
   };
 
   /**
-   * Framework7 Vue 5.0.4
+   * Framework7 Vue 5.0.5
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -12208,7 +12245,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: October 9, 2019
+   * Released on: October 16, 2019
    */
 
   function f7ready(callback) {

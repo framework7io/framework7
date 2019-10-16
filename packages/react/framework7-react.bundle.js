@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.0.4
+ * Framework7 React 5.0.5
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 9, 2019
+ * Released on: October 16, 2019
  */
 
 (function (global, factory) {
@@ -4897,15 +4897,15 @@
           placeholder: placeholder,
           clearFormattingOnPaste: clearFormattingOnPaste,
           on: {
-            onChange: this.onChange,
-            onInput: this.onInput,
-            onFocus: this.onFocus,
-            onBlur: this.onBlur,
-            onButtonClick: this.onButtonClick,
-            onKeyboardOpen: this.onKeyboardOpen,
-            onKeyboardClose: this.onKeyboardClose,
-            onPopoverOpen: this.onPopoverOpen,
-            onPopoverClose: this.onPopoverClose
+            change: this.onChange,
+            input: this.onInput,
+            focus: this.onFocus,
+            blur: this.onBlur,
+            buttonClick: this.onButtonClick,
+            keyboardOpen: this.onKeyboardOpen,
+            keyboardClose: this.onKeyboardClose,
+            popoverOpen: this.onPopoverOpen,
+            popoverClose: this.onPopoverClose
           }
         });
         this.$f7ready(function (f7) {
@@ -6552,7 +6552,7 @@
         this.dispatchEvent.apply(this, ['change'].concat(args));
 
         if (this.props.type === 'texteditor') {
-          this.dispatchEvent('texteditor:change textEditorChange', args[1]);
+          this.dispatchEvent('texteditor:change textEditorChange', args[0]);
         }
       }
     }, {
@@ -11897,16 +11897,18 @@
       value: function onPageBeforeIn(page) {
         if (this.eventTargetEl !== page.el) { return; }
 
-        if (page.from === 'next') {
-          this.setState({
-            routerPositionClass: 'page-next'
-          });
-        }
+        if (!page.swipeBack) {
+          if (page.from === 'next') {
+            this.setState({
+              routerPositionClass: 'page-next'
+            });
+          }
 
-        if (page.from === 'previous') {
-          this.setState({
-            routerPositionClass: 'page-previous'
-          });
+          if (page.from === 'previous') {
+            this.setState({
+              routerPositionClass: 'page-previous'
+            });
+          }
         }
 
         this.dispatchEvent('page:beforein pageBeforeIn', page);
@@ -15874,10 +15876,26 @@
         };
       }();
 
+      (function () {
+        Utils.bindMethods(_assertThisInitialized$1m(_this), ['onHide', 'onShow']);
+      })();
+
       return _this;
     }
 
     _createClass$1m(F7Toolbar, [{
+      key: "onHide",
+      value: function onHide(navbarEl) {
+        if (this.eventTargetEl !== navbarEl) { return; }
+        this.dispatchEvent('toolbar:hide toolbarHide');
+      }
+    }, {
+      key: "onShow",
+      value: function onShow(navbarEl) {
+        if (this.eventTargetEl !== navbarEl) { return; }
+        this.dispatchEvent('toolbar:show toolbarShow');
+      }
+    }, {
       key: "hide",
       value: function hide(animate) {
         var self = this;
@@ -15941,11 +15959,28 @@
         }, this.slots['default']) : this.slots['default'], this.slots['after-inner']);
       }
     }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {
+        var self = this;
+        var el = self.refs.el;
+        if (!el || !self.$f7) { return; }
+        var f7 = self.$f7;
+        f7.off('toolbarShow', self.onShow);
+        f7.off('toolbarHide', self.onHide);
+        self.eventTargetEl = null;
+        delete self.eventTargetEl;
+      }
+    }, {
       key: "componentDidMount",
       value: function componentDidMount() {
         var self = this;
+        var el = self.refs.el;
+        if (!el) { return; }
         self.$f7ready(function (f7) {
-          if (self.props.tabbar) { f7.toolbar.setHighlight(self.refs.el); }
+          self.eventTargetEl = el;
+          if (self.props.tabbar) { f7.toolbar.setHighlight(el); }
+          f7.on('toolbarShow', self.onShow);
+          f7.on('toolbarHide', self.onHide);
         });
       }
     }, {
@@ -15956,6 +15991,17 @@
         if (self.props.tabbar && self.$f7) {
           self.$f7.toolbar.setHighlight(self.refs.el);
         }
+      }
+    }, {
+      key: "dispatchEvent",
+      value: function dispatchEvent(events) {
+        var arguments$1 = arguments;
+
+        for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+          args[_key - 1] = arguments$1[_key];
+        }
+
+        return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
       }
     }, {
       key: "slots",
@@ -16915,7 +16961,7 @@
   };
 
   /**
-   * Framework7 React 5.0.4
+   * Framework7 React 5.0.5
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -16923,7 +16969,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: October 9, 2019
+   * Released on: October 16, 2019
    */
 
   function f7ready(callback) {

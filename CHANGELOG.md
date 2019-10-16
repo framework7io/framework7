@@ -2,6 +2,35 @@
 
 # Change Log
 
+# [v5.0.5](https://github.com/framework7io/framework7/compare/v5.0.4...v5.0.5) - October 16, 2019
+  * Core
+    * Toolbar
+      * Now it fires `toolbar:show` and `toolbar:hide` events on show/hide
+    * Card
+      * Now it should consider `hideStatusbarOnOpen` when calculating expandable card size
+    * PhotoBrowser
+      * Fixed issue with double preloader
+      * Fixed issue when double tap to zoom also toggled exposition
+    * Router Component
+      * Fixed issue when `updated` hook had wrong context
+    * Sheet Modal
+      * Tweaked Sheet dark theme background color to have more contrast with page
+    * Input
+      * Added more events when resizable textarea's size should be recalculated
+    * Swiper updated to latest v5.1.0
+      * Core
+        * Fixed issues with touch on iOS 13
+        * New `translateTo` method
+      * Pagination
+        * Improved dynamic bullets behavior when `loop: true`
+      * Zoom
+        * Fixed issue with pinch to zoom on Android
+  * Phenome
+    * Page
+      * Fixed issue when pages can stuck on swipe back
+    * TextEditor
+      * Fixed issue with not working component events
+
 # [v5.0.4](https://github.com/framework7io/framework7/compare/v5.0.3...v5.0.4) - October 9, 2019
   * Core
     * Messages

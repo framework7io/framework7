@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.4
+ * Framework7 5.0.5
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 9, 2019
+ * Released on: October 16, 2019
  */
 
 (function (global, factory) {
@@ -10700,6 +10700,7 @@
     hide: function hide(el, animate) {
       if ( animate === void 0 ) animate = true;
 
+      var app = this;
       var $el = $(el);
       if ($el.hasClass('toolbar-hidden')) { return; }
       var className = "toolbar-hidden" + (animate ? ' toolbar-transitioning' : '');
@@ -10707,10 +10708,13 @@
         $el.removeClass('toolbar-transitioning');
       });
       $el.addClass(className);
+      $el.trigger('toolbar:hide');
+      app.emit('toolbarHide', $el[0]);
     },
     show: function show(el, animate) {
       if ( animate === void 0 ) animate = true;
 
+      var app = this;
       var $el = $(el);
       if (!$el.hasClass('toolbar-hidden')) { return; }
       if (animate) {
@@ -10720,6 +10724,8 @@
         });
       }
       $el.removeClass('toolbar-hidden');
+      $el.trigger('toolbar:show');
+      app.emit('toolbarShow', $el[0]);
     },
     initHideToolbarOnScroll: function initHideToolbarOnScroll(pageEl) {
       var app = this;
@@ -17240,11 +17246,23 @@
       var maxWidth = $cardSizeEl[0].offsetWidth || pageWidth;
       var maxHeight = $cardSizeEl[0].offsetHeight || pageHeight;
 
+      var statusbarHeight;
+      if ($navbarEl && !cardParams.hideStatusbarOnOpen && maxHeight === pageHeight) {
+        statusbarHeight = parseInt($navbarEl.css('--f7-safe-area-top'), 10);
+        if (Number.isNaN(statusbarHeight)) { statusbarHeight = 0; }
+      }
+      if (statusbarHeight) {
+        maxHeight -= statusbarHeight;
+      }
+
       var scaleX = maxWidth / cardWidth;
       var scaleY = maxHeight / cardHeight;
 
       var offset = $cardEl.offset();
       var pageOffset = $pageEl.offset();
+      if (statusbarHeight) {
+        pageOffset.top += statusbarHeight / 2;
+      }
       offset.left -= pageOffset.left;
 
       var cardLeftOffset;
@@ -17348,12 +17366,25 @@
         maxWidth = $cardSizeEl[0].offsetWidth || pageWidth;
         maxHeight = $cardSizeEl[0].offsetHeight || pageHeight;
 
+        statusbarHeight = 0;
+        if ($navbarEl && !cardParams.hideStatusbarOnOpen && maxHeight === pageHeight) {
+          statusbarHeight = parseInt($navbarEl.css('--f7-safe-area-top'), 10);
+          if (Number.isNaN(statusbarHeight)) { statusbarHeight = 0; }
+        }
+        if (statusbarHeight) {
+          maxHeight -= statusbarHeight;
+        }
+
+
         scaleX = maxWidth / cardWidth;
         scaleY = maxHeight / cardHeight;
 
         $cardEl.transform('translate3d(0px, 0px, 0) scale(1)');
         offset = $cardEl.offset();
         pageOffset = $pageEl.offset();
+        if (statusbarHeight) {
+          pageOffset.top += statusbarHeight / 2;
+        }
         offset.left -= pageOffset.left;
         offset.top -= pageOffset.top;
 
@@ -18291,6 +18322,18 @@
         $pageEl.find('textarea.resizable').each(function (textareaIndex, textareaEl) {
           app.input.resizeTextarea(textareaEl);
         });
+      },
+      'panelBreakpoint panelCollapsedBreakpoint panelResize panelOpen panelSwipeOpen resize viewMasterDetailBreakpoint': function onPanelOpen(instance) {
+        var app = this;
+        if (instance && instance.$el) {
+          instance.$el.find('textarea.resizable').each(function (textareaIndex, textareaEl) {
+            app.input.resizeTextarea(textareaEl);
+          });
+        } else {
+          $('textarea.resizable').each(function (textareaIndex, textareaEl) {
+            app.input.resizeTextarea(textareaEl);
+          });
+        }
       },
     },
   };
@@ -27133,11 +27176,90 @@
     return (-this.snapGrid[this.snapGrid.length - 1]);
   }
 
+  function translateTo (translate, speed, runCallbacks, translateBounds, internal) {
+    var obj;
+
+    if ( translate === void 0 ) translate = 0;
+    if ( speed === void 0 ) speed = this.params.speed;
+    if ( runCallbacks === void 0 ) runCallbacks = true;
+    if ( translateBounds === void 0 ) translateBounds = true;
+    var swiper = this;
+
+    var params = swiper.params;
+    var wrapperEl = swiper.wrapperEl;
+
+    if (swiper.animating && params.preventInteractionOnTransition) {
+      return false;
+    }
+
+    var minTranslate = swiper.minTranslate();
+    var maxTranslate = swiper.maxTranslate();
+    var newTranslate;
+    if (translateBounds && translate > minTranslate) { newTranslate = minTranslate; }
+    else if (translateBounds && translate < maxTranslate) { newTranslate = maxTranslate; }
+    else { newTranslate = translate; }
+
+    // Update progress
+    swiper.updateProgress(newTranslate);
+
+    if (params.cssMode) {
+      var isH = swiper.isHorizontal();
+      if (speed === 0) {
+        wrapperEl[isH ? 'scrollLeft' : 'scrollTop'] = -newTranslate;
+      } else {
+        // eslint-disable-next-line
+        if (wrapperEl.scrollTo) {
+          wrapperEl.scrollTo(( obj = {}, obj[isH ? 'left' : 'top'] = -newTranslate, obj.behavior = 'smooth', obj ));
+        } else {
+          wrapperEl[isH ? 'scrollLeft' : 'scrollTop'] = -newTranslate;
+        }
+      }
+      return true;
+    }
+
+    if (speed === 0) {
+      swiper.setTransition(0);
+      swiper.setTranslate(newTranslate);
+      if (runCallbacks) {
+        swiper.emit('beforeTransitionStart', speed, internal);
+        swiper.emit('transitionEnd');
+      }
+    } else {
+      swiper.setTransition(speed);
+      swiper.setTranslate(newTranslate);
+      if (runCallbacks) {
+        swiper.emit('beforeTransitionStart', speed, internal);
+        swiper.emit('transitionStart');
+      }
+      if (!swiper.animating) {
+        swiper.animating = true;
+        if (!swiper.onTranslateToWrapperTransitionEnd) {
+          swiper.onTranslateToWrapperTransitionEnd = function transitionEnd(e) {
+            if (!swiper || swiper.destroyed) { return; }
+            if (e.target !== this) { return; }
+            swiper.$wrapperEl[0].removeEventListener('transitionend', swiper.onTranslateToWrapperTransitionEnd);
+            swiper.$wrapperEl[0].removeEventListener('webkitTransitionEnd', swiper.onTranslateToWrapperTransitionEnd);
+            swiper.onTranslateToWrapperTransitionEnd = null;
+            delete swiper.onTranslateToWrapperTransitionEnd;
+            if (runCallbacks) {
+              swiper.emit('transitionEnd');
+            }
+          };
+        }
+        swiper.$wrapperEl[0].addEventListener('transitionend', swiper.onTranslateToWrapperTransitionEnd);
+        swiper.$wrapperEl[0].addEventListener('webkitTransitionEnd', swiper.onTranslateToWrapperTransitionEnd);
+      }
+    }
+
+    return true;
+  }
+
   var translate = {
     getTranslate: getTranslate,
     setTranslate: setTranslate,
     minTranslate: minTranslate,
     maxTranslate: maxTranslate,
+    translateTo: translateTo,
   };
 
   function setTransition (duration, byController) {
@@ -27890,8 +28012,9 @@
       return;
     }
     if (data.isTouchEvent && e.type === 'mousemove') { return; }
-    var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
-    var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+    var targetTouch = e.type === 'touchmove' && e.targetTouches && (e.targetTouches[0] || e.changedTouches[0]);
+    var pageX = e.type === 'touchmove' ? targetTouch.pageX : e.pageX;
+    var pageY = e.type === 'touchmove' ? targetTouch.pageY : e.pageY;
     if (e.preventedByNestedSwiper) {
       touches.startX = pageX;
       touches.startY = pageY;
@@ -28444,6 +28567,9 @@
     swiper.emit('setTranslate', swiper.translate, false);
   }
 
+  var dummyEventAttached = false;
+  function dummyEventListener() {}
+
   function attachEvents() {
     var swiper = this;
     var params = swiper.params;
@@ -28475,6 +28601,10 @@
         el.addEventListener(touchEvents.end, swiper.onTouchEnd, passiveListener);
         if (touchEvents.cancel) {
           el.addEventListener(touchEvents.cancel, swiper.onTouchEnd, passiveListener);
+        }
+        if (!dummyEventAttached) {
+          doc.addEventListener('touchstart', dummyEventListener);
+          dummyEventAttached = true;
         }
       }
       if ((params.simulateTouch && !Device.ios && !Device.android) || (params.simulateTouch && !Support.touch && Device.ios)) {
@@ -30436,6 +30566,7 @@
           });
         } else {
           var $bullet = bullets.eq(current);
+          var bulletIndex = $bullet.index();
           $bullet.addClass(params.bulletActiveClass);
           if (params.dynamicBullets) {
             var $firstDisplayedBullet = bullets.eq(firstIndex);
@@ -30443,16 +30574,36 @@
             for (var i = firstIndex; i <= lastIndex; i += 1) {
               bullets.eq(i).addClass(((params.bulletActiveClass) + "-main"));
             }
-            $firstDisplayedBullet
-              .prev()
-              .addClass(((params.bulletActiveClass) + "-prev"))
-              .prev()
-              .addClass(((params.bulletActiveClass) + "-prev-prev"));
-            $lastDisplayedBullet
-              .next()
-              .addClass(((params.bulletActiveClass) + "-next"))
-              .next()
-              .addClass(((params.bulletActiveClass) + "-next-next"));
+            if (swiper.params.loop) {
+              if (bulletIndex >= bullets.length - params.dynamicMainBullets) {
+                for (var i$1 = params.dynamicMainBullets; i$1 >= 0; i$1 -= 1) {
+                  bullets.eq(bullets.length - i$1).addClass(((params.bulletActiveClass) + "-main"));
+                }
+                bullets.eq(bullets.length - params.dynamicMainBullets - 1).addClass(((params.bulletActiveClass) + "-prev"));
+              } else {
+                $firstDisplayedBullet
+                  .prev()
+                  .addClass(((params.bulletActiveClass) + "-prev"))
+                  .prev()
+                  .addClass(((params.bulletActiveClass) + "-prev-prev"));
+                $lastDisplayedBullet
+                  .next()
+                  .addClass(((params.bulletActiveClass) + "-next"))
+                  .next()
+                  .addClass(((params.bulletActiveClass) + "-next-next"));
+              }
+            } else {
+              $firstDisplayedBullet
+                .prev()
+                .addClass(((params.bulletActiveClass) + "-prev"))
+                .prev()
+                .addClass(((params.bulletActiveClass) + "-prev-prev"));
+              $lastDisplayedBullet
+                .next()
+                .addClass(((params.bulletActiveClass) + "-next"))
+                .next()
+                .addClass(((params.bulletActiveClass) + "-next-next"));
+            }
           }
         }
         if (params.dynamicBullets) {
@@ -31552,7 +31703,7 @@
         swiper.$wrapperEl.on('gestureend', '.swiper-slide', zoom.onGestureEnd, passiveListener);
       } else if (swiper.touchEvents.start === 'touchstart') {
         swiper.$wrapperEl.on(swiper.touchEvents.start, '.swiper-slide', zoom.onGestureStart, passiveListener);
-        swiper.$wrapperEl.on(swiper.touchEvents.move, '.swiper-slide', zoom.onGestureChange, passiveListener);
+        swiper.$wrapperEl.on(swiper.touchEvents.move, '.swiper-slide', zoom.onGestureChange, activeListenerWithCapture);
         swiper.$wrapperEl.on(swiper.touchEvents.end, '.swiper-slide', zoom.onGestureEnd, passiveListener);
         if (swiper.touchEvents.cancel) {
           swiper.$wrapperEl.on(swiper.touchEvents.cancel, '.swiper-slide', zoom.onGestureEnd, passiveListener);
@@ -31579,7 +31730,7 @@
         swiper.$wrapperEl.off('gestureend', '.swiper-slide', zoom.onGestureEnd, passiveListener);
       } else if (swiper.touchEvents.start === 'touchstart') {
         swiper.$wrapperEl.off(swiper.touchEvents.start, '.swiper-slide', zoom.onGestureStart, passiveListener);
-        swiper.$wrapperEl.off(swiper.touchEvents.move, '.swiper-slide', zoom.onGestureChange, passiveListener);
+        swiper.$wrapperEl.off(swiper.touchEvents.move, '.swiper-slide', zoom.onGestureChange, activeListenerWithCapture);
         swiper.$wrapperEl.off(swiper.touchEvents.end, '.swiper-slide', zoom.onGestureEnd, passiveListener);
         if (swiper.touchEvents.cancel) {
           swiper.$wrapperEl.off(swiper.touchEvents.cancel, '.swiper-slide', zoom.onGestureEnd, passiveListener);
@@ -33571,7 +33722,7 @@
     PhotoBrowser.prototype.renderLazyPhoto = function renderLazyPhoto (photo, index) {
       var pb = this;
       if (pb.params.renderLazyPhoto) { return pb.params.renderLazyPhoto.call(pb, photo, index); }
-      var photoHtml = ("\n      <div class=\"photo-browser-slide photo-browser-slide-lazy swiper-slide\" data-swiper-slide-index=\"" + index + "\">\n          <div class=\"preloader swiper-lazy-preloader " + (pb.params.theme === 'dark' ? 'color-white' : '') + "\">" + (Utils[((pb.app.theme) + "PreloaderContent")] || '') + "</div>\n          <span class=\"swiper-zoom-container\">\n              <img data-src=\"" + (photo.url ? photo.url : photo) + "\" class=\"swiper-lazy\">\n          </span>\n      </div>\n    ").trim();
+      var photoHtml = ("\n      <div class=\"photo-browser-slide photo-browser-slide-lazy swiper-slide\" data-swiper-slide-index=\"" + index + "\">\n          <div class=\"swiper-lazy-preloader\"></div>\n          <span class=\"swiper-zoom-container\">\n              <img data-src=\"" + (photo.url ? photo.url : photo) + "\" class=\"swiper-lazy\">\n          </span>\n      </div>\n    ").trim();
       return photoHtml;
     };
 
@@ -33643,20 +33794,26 @@
       pb.captions = pb.$el.find('.photo-browser-caption');
 
       // Init Swiper
+      var clickTimeout;
+
       var swiperParams = Utils.extend({}, pb.params.swiper, {
         initialSlide: pb.activeIndex,
         on: {
-          tap: function tap(e) {
-            pb.emit('local::tap', e);
-          },
           click: function click(e) {
+            clearTimeout(clickTimeout);
+
             if (pb.params.exposition) {
-              pb.expositionToggle();
+              clickTimeout = setTimeout(function () {
+                pb.expositionToggle();
+              }, 350);
             }
+            pb.emit('local::tap', e);
             pb.emit('local::click', e);
           },
-          doubleTap: function doubleTap(e) {
+          doubleClick: function doubleClick(e) {
+            clearTimeout(clickTimeout);
             pb.emit('local::doubleTap', e);
+            pb.emit('local::doubleClick', e);
           },
           slideChange: function slideChange() {
             var args = [], len = arguments.length;
@@ -38880,7 +39037,7 @@
   };
 
   /**
-   * Framework7 5.0.4
+   * Framework7 5.0.5
    * Full featured mobile HTML framework for building iOS & Android apps
    * http://framework7.io/
    *
@@ -38888,7 +39045,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: October 9, 2019
+   * Released on: October 16, 2019
    */
 
   // Install Core Modules & Components

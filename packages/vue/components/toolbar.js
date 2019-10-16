@@ -1,6 +1,7 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentSetState from '../runtime-helpers/vue-component-set-state.js';
+import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
   name: 'f7-toolbar',
@@ -126,6 +127,9 @@ export default {
       class: 'toolbar-inner'
     }, [this.$slots['default']]) : this.$slots['default'], this.$slots['after-inner']]);
   },
+  created: function created() {
+    Utils.bindMethods(this, ['onHide', 'onShow']);
+  },
   updated: function updated() {
     var self = this;
 
@@ -135,11 +139,34 @@ export default {
   },
   mounted: function mounted() {
     var self = this;
+    var el = self.$refs.el;
+    if (!el) return;
     self.$f7ready(function (f7) {
-      if (self.props.tabbar) f7.toolbar.setHighlight(self.$refs.el);
+      self.eventTargetEl = el;
+      if (self.props.tabbar) f7.toolbar.setHighlight(el);
+      f7.on('toolbarShow', self.onShow);
+      f7.on('toolbarHide', self.onHide);
     });
   },
+  beforeDestroy: function beforeDestroy() {
+    var self = this;
+    var el = self.$refs.el;
+    if (!el || !self.$f7) return;
+    var f7 = self.$f7;
+    f7.off('toolbarShow', self.onShow);
+    f7.off('toolbarHide', self.onHide);
+    self.eventTargetEl = null;
+    delete self.eventTargetEl;
+  },
   methods: {
+    onHide: function onHide(navbarEl) {
+      if (this.eventTargetEl !== navbarEl) return;
+      this.dispatchEvent('toolbar:hide toolbarHide');
+    },
+    onShow: function onShow(navbarEl) {
+      if (this.eventTargetEl !== navbarEl) return;
+      this.dispatchEvent('toolbar:show toolbarShow');
+    },
     hide: function hide(animate) {
       var self = this;
       if (!self.$f7) return;
@@ -149,6 +176,13 @@ export default {
       var self = this;
       if (!self.$f7) return;
       self.$f7.toolbar.show(this.$refs.el, animate);
+    },
+    dispatchEvent: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+
+      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     },
     setState: function setState(updater, callback) {
       __vueComponentSetState(this, updater, callback);

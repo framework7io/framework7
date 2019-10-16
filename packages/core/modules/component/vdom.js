@@ -112,7 +112,7 @@ function getHooks(data, app, initial, isRoot, tagName) {
       const vn = vnode || oldVnode;
       if (!vn) return;
       if (vn.data && vn.data.context && vn.data.context.$options.updated) {
-        vn.data.context.$options.updated();
+        vn.data.context.$hook('updated');
       }
     });
   }

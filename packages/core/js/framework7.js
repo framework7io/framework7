@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.4
+ * Framework7 5.0.5
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 9, 2019
+ * Released on: October 16, 2019
  */
 
 (function (global, factory) {
@@ -9971,7 +9971,7 @@
         var vn = vnode || oldVnode;
         if (!vn) { return; }
         if (vn.data && vn.data.context && vn.data.context.$options.updated) {
-          vn.data.context.$options.updated();
+          vn.data.context.$hook('updated');
         }
       });
     }
@@ -11205,7 +11205,7 @@
           if (mixin[name]) { promises.push(mixin[name].call(self)); }
         });
       }
-      if (self[name]) {
+      if (self[name] && typeof self[name] === 'function') {
         promises.push(self[name].call(self));
       }
       if (self.$options[name]) {
@@ -12488,6 +12488,7 @@
     hide: function hide(el, animate) {
       if ( animate === void 0 ) animate = true;
 
+      var app = this;
       var $el = $(el);
       if ($el.hasClass('toolbar-hidden')) { return; }
       var className = "toolbar-hidden" + (animate ? ' toolbar-transitioning' : '');
@@ -12495,10 +12496,13 @@
         $el.removeClass('toolbar-transitioning');
       });
       $el.addClass(className);
+      $el.trigger('toolbar:hide');
+      app.emit('toolbarHide', $el[0]);
     },
     show: function show(el, animate) {
       if ( animate === void 0 ) animate = true;
 
+      var app = this;
       var $el = $(el);
       if (!$el.hasClass('toolbar-hidden')) { return; }
       if (animate) {
@@ -12508,6 +12512,8 @@
         });
       }
       $el.removeClass('toolbar-hidden');
+      $el.trigger('toolbar:show');
+      app.emit('toolbarShow', $el[0]);
     },
     initHideToolbarOnScroll: function initHideToolbarOnScroll(pageEl) {
       var app = this;

@@ -19,6 +19,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 import React from 'react';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
+import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
 
@@ -53,10 +54,26 @@ function (_React$Component) {
       };
     }();
 
+    (function () {
+      Utils.bindMethods(_assertThisInitialized(_this), ['onHide', 'onShow']);
+    })();
+
     return _this;
   }
 
   _createClass(F7Toolbar, [{
+    key: "onHide",
+    value: function onHide(navbarEl) {
+      if (this.eventTargetEl !== navbarEl) return;
+      this.dispatchEvent('toolbar:hide toolbarHide');
+    }
+  }, {
+    key: "onShow",
+    value: function onShow(navbarEl) {
+      if (this.eventTargetEl !== navbarEl) return;
+      this.dispatchEvent('toolbar:show toolbarShow');
+    }
+  }, {
     key: "hide",
     value: function hide(animate) {
       var self = this;
@@ -120,11 +137,28 @@ function (_React$Component) {
       }, this.slots['default']) : this.slots['default'], this.slots['after-inner']);
     }
   }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      var self = this;
+      var el = self.refs.el;
+      if (!el || !self.$f7) return;
+      var f7 = self.$f7;
+      f7.off('toolbarShow', self.onShow);
+      f7.off('toolbarHide', self.onHide);
+      self.eventTargetEl = null;
+      delete self.eventTargetEl;
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       var self = this;
+      var el = self.refs.el;
+      if (!el) return;
       self.$f7ready(function (f7) {
-        if (self.props.tabbar) f7.toolbar.setHighlight(self.refs.el);
+        self.eventTargetEl = el;
+        if (self.props.tabbar) f7.toolbar.setHighlight(el);
+        f7.on('toolbarShow', self.onShow);
+        f7.on('toolbarHide', self.onHide);
       });
     }
   }, {
@@ -135,6 +169,15 @@ function (_React$Component) {
       if (self.props.tabbar && self.$f7) {
         self.$f7.toolbar.setHighlight(self.refs.el);
       }
+    }
+  }, {
+    key: "dispatchEvent",
+    value: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+
+      return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     }
   }, {
     key: "slots",

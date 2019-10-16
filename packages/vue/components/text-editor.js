@@ -72,15 +72,15 @@ export default {
       placeholder: placeholder,
       clearFormattingOnPaste: clearFormattingOnPaste,
       on: {
-        onChange: this.onChange,
-        onInput: this.onInput,
-        onFocus: this.onFocus,
-        onBlur: this.onBlur,
-        onButtonClick: this.onButtonClick,
-        onKeyboardOpen: this.onKeyboardOpen,
-        onKeyboardClose: this.onKeyboardClose,
-        onPopoverOpen: this.onPopoverOpen,
-        onPopoverClose: this.onPopoverClose
+        change: this.onChange,
+        input: this.onInput,
+        focus: this.onFocus,
+        blur: this.onBlur,
+        buttonClick: this.onButtonClick,
+        keyboardOpen: this.onKeyboardOpen,
+        keyboardClose: this.onKeyboardClose,
+        popoverOpen: this.onPopoverOpen,
+        popoverClose: this.onPopoverClose
       }
     });
     this.$f7ready(function (f7) {
