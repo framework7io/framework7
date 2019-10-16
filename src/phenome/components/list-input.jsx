@@ -585,7 +585,7 @@ export default {
     onChange(...args) {
       this.dispatchEvent('change', ...args);
       if (this.props.type === 'texteditor') {
-        this.dispatchEvent('texteditor:change textEditorChange', args[1]);
+        this.dispatchEvent('texteditor:change textEditorChange', args[0]);
       }
     },
   },
