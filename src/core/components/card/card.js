@@ -79,11 +79,23 @@ const CardExpandable = {
     let maxWidth = $cardSizeEl[0].offsetWidth || pageWidth;
     let maxHeight = $cardSizeEl[0].offsetHeight || pageHeight;
 
+    let statusbarHeight;
+    if ($navbarEl && !cardParams.hideStatusbarOnOpen && maxHeight === pageHeight) {
+      statusbarHeight = parseInt($navbarEl.css('--f7-safe-area-top'), 10);
+      if (Number.isNaN(statusbarHeight)) statusbarHeight = 0;
+    }
+    if (statusbarHeight) {
+      maxHeight -= statusbarHeight;
+    }
+
     let scaleX = maxWidth / cardWidth;
     let scaleY = maxHeight / cardHeight;
 
     let offset = $cardEl.offset();
     let pageOffset = $pageEl.offset();
+    if (statusbarHeight) {
+      pageOffset.top += statusbarHeight / 2;
+    }
     offset.left -= pageOffset.left;
 
     let cardLeftOffset;
@@ -185,12 +197,25 @@ const CardExpandable = {
       maxWidth = $cardSizeEl[0].offsetWidth || pageWidth;
       maxHeight = $cardSizeEl[0].offsetHeight || pageHeight;
 
+      statusbarHeight = 0;
+      if ($navbarEl && !cardParams.hideStatusbarOnOpen && maxHeight === pageHeight) {
+        statusbarHeight = parseInt($navbarEl.css('--f7-safe-area-top'), 10);
+        if (Number.isNaN(statusbarHeight)) statusbarHeight = 0;
+      }
+      if (statusbarHeight) {
+        maxHeight -= statusbarHeight;
+      }
+
+
       scaleX = maxWidth / cardWidth;
       scaleY = maxHeight / cardHeight;
 
       $cardEl.transform('translate3d(0px, 0px, 0) scale(1)');
       offset = $cardEl.offset();
       pageOffset = $pageEl.offset();
+      if (statusbarHeight) {
+        pageOffset.top += statusbarHeight / 2;
+      }
       offset.left -= pageOffset.left;
       offset.top -= pageOffset.top;
 
