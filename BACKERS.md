@@ -194,6 +194,7 @@ Dave Billington
 ---
 
 ### $5+ Thank You
+Brett Lee<br>
 [FanBattle.app](https://fanbattle.ru/)<br>
 Miguel Nahara<br>
 Muthaiyan Rm<br>
