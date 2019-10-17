@@ -91,7 +91,7 @@ class VirtualList extends Framework7Class {
 
     // Append <ul>
     const ul = vl.params.ul;
-    vl.$ul = ul ? $(vl.params.ul) : vl.$el.children('ul');
+    vl.$ul = ul ? $(vl.params.ul) : vl.$el.children(ul);
     if (vl.$ul.length === 0 && vl.params.createUl) {
       vl.$el.append('<ul></ul>');
       vl.$ul = vl.$el.children('ul');
