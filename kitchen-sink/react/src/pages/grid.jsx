@@ -130,5 +130,26 @@ export default () => (
         <Col width="100" medium="33">.col-100.medium-33</Col>
       </Row>
     </Block>
+
+    <BlockTitle>Resizable Grid</BlockTitle>
+    <Block className="grid-resizable-demo">
+      <Row className="align-items-stretch" style={{height: '300px'}}>
+        <Col resizable className="demo-col-center-content" style={{minWidth: '80px'}}>Left</Col>
+        <Col resizable className="display-flex flex-direction-column" style={{
+          padding: '0px',
+          border: 'none',
+          minWidth: '80px',
+          backgroundColor: 'transparent'
+        }}>
+          <Row resizable style={{height: '50%', minHeight: '50px'}}>
+            <Col className="demo-col-center-content" style={{height: '100%'}}>Center Top</Col>
+          </Row>
+          <Row resizable style={{height: '50%', minHeight: '50px'}}>
+            <Col className="demo-col-center-content" style={{height: '100%'}}>Center Bottom</Col>
+          </Row>
+        </Col>
+        <Col resizable className="demo-col-center-content" style={{minWidth: '80px'}}>Right</Col>
+      </Row>
+    </Block>
   </Page>
 );

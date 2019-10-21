@@ -127,6 +127,23 @@
         <f7-col width="100" medium="33">.col-100.medium-33</f7-col>
       </f7-row>
     </f7-block>
+
+    <f7-block-title>Resizable Grid</f7-block-title>
+    <f7-block class="grid-resizable-demo">
+      <f7-row class="align-items-stretch" style="height: 300px">
+        <f7-col resizable class="demo-col-center-content" style="min-width: 80px">Left</f7-col>
+        <f7-col resizable class="display-flex flex-direction-column" style="padding: 0px; border: none; min-width: 80px; background-color: transparent">
+          <f7-row resizable style="height: 50%; min-height: 50px">
+            <f7-col class="demo-col-center-content" style="height: 100%">Center Top</f7-col>
+          </f7-row>
+          <f7-row resizable style="height: 50%; min-height: 50px">
+            <f7-col class="demo-col-center-content" style="height: 100%">Center Bottom</f7-col>
+          </f7-row>
+        </f7-col>
+        <f7-col resizable class="demo-col-center-content" style="min-width: 80px">Right</f7-col>
+      </f7-row>
+    </f7-block>
+
   </f7-page>
 </template>
 <script>
