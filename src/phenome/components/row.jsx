@@ -12,6 +12,13 @@ export default {
       type: String,
       default: 'div',
     },
+    resizable: Boolean,
+    resizableFixed: Boolean,
+    resizableAbsolute: Boolean,
+    resizableHandler: {
+      type: Boolean,
+      default: true,
+    },
     ...Mixins.colorProps,
   },
   render() {
@@ -23,6 +30,10 @@ export default {
       style,
       tag,
       noGap,
+      resizable,
+      resizableFixed,
+      resizableAbsolute,
+      resizableHandler,
     } = props;
 
     const RowTag = tag;
@@ -32,6 +43,9 @@ export default {
       'row',
       {
         'no-gap': noGap,
+        resizable,
+        'resizable-fixed': resizableFixed,
+        'resizable-absolute': resizableAbsolute,
       },
       Mixins.colorClasses(props),
     );
@@ -39,21 +53,39 @@ export default {
     return (
       <RowTag id={id} style={style} className={classes} ref="el">
         <slot />
+        {resizable && resizableHandler && (
+          <span className="resize-handler" />
+        )}
       </RowTag>
     );
   },
   componentDidCreate() {
-    Utils.bindMethods(this, ['onClick'])
+    Utils.bindMethods(this, ['onClick', 'onResize']);
   },
   componentDidMount() {
-    this.refs.el.addEventListener('click', this.onClick);
+    const self = this;
+    self.eventTargetEl = self.refs.el;
+    self.eventTargetEl.addEventListener('click', self.onClick);
+    self.$f7ready((f7) => {
+      f7.on('gridResize', self.onResize);
+    });
   },
   componentWillUnmount() {
-    this.refs.el.removeEventListener('click', this.onClick);
+    const self = this;
+    const el = self.refs.el;
+    if (!el || !self.$f7) return;
+    el.removeEventListener('click', self.onClick);
+    self.$f7.off('gridResize', self.onResize);
+    delete self.eventTargetEl;
   },
   methods: {
     onClick(event) {
       this.dispatchEvent('click', event);
+    },
+    onResize(el) {
+      if (el === this.eventTargetEl) {
+        this.dispatchEvent('grid:resize gridResize');
+      }
     },
   },
 };
