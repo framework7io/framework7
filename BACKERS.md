@@ -40,8 +40,8 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://staffaugmentation.ro" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/staffaugmentation.jpg">
+      <a href="https://unicorn.io" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/unicorn.svg">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -132,7 +132,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 
 ### $50+ Top Supporter
 [Writers Per Hour](https://writersperhour.com/write-my-paper) - Write My Paper For Me<br>
-[Staff Augmentation](https://staffaugmentation.ro) - Recruit Top Staff in Romania<br>
+[Unicorn.io](https://unicorn.io) - Choose your Dream Job<br>
 [Bid4Papers](https://bid4papers.com/write-my-essay.html) - Write My Essay<br>
 [COLOGNE WEBDESIGN](https://www.colognewebdesign.de/)<br>
 Fatih Batal<br>
