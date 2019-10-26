@@ -113,6 +113,9 @@ class Component {
       });
     }
 
+    self.$style = $options.isClassComponent ? self.constructor.style : $options.style;
+    self.$styleScoped = $options.isClassComponent ? self.constructor.styleScoped : $options.styleScoped;
+
     return new Promise((resolve, reject) => {
       self.$hook('data', true)
         .then((datas) => {
@@ -123,18 +126,13 @@ class Component {
           Utils.extend(self, data);
           self.$hook('beforeCreate');
           let html = self.$render();
-          const style = $options.isClassComponent ? self.constructor.style : $options.style;
-          const styleScoped = $options.isClassComponent ? self.constructor.styleScoped : $options.styleScoped;
 
           if (self.$options.el) {
             html = html.trim();
             self.$vnode = vdom(html, self, true);
-            if (style) {
+            if (self.$style) {
               self.$styleEl = document.createElement('style');
-              self.$styleEl.innerHTML = style;
-              if (styleScoped) {
-                self.$vnode.data.attrs[`data-f7-${self.$id}`] = '';
-              }
+              self.$styleEl.innerHTML = self.$style;
             }
             self.el = self.$options.el;
             patch(self.el, self.$vnode);
@@ -152,22 +150,16 @@ class Component {
           if (html && typeof html === 'string') {
             html = html.trim();
             self.$vnode = vdom(html, self, true);
-            if (style && styleScoped) {
-              self.$vnode.data.attrs[`data-f7-${self.$id}`] = '';
-            }
             self.el = document.createElement(self.$vnode.sel || 'div');
             patch(self.el, self.$vnode);
             self.$el = $(self.el);
           } else if (html) {
             self.el = html;
             self.$el = $(self.el);
-            if (style && styleScoped) {
-              self.el.setAttribute(`data-f7-${self.$id}`, '');
-            }
           }
-          if (style) {
+          if (self.$style) {
             self.$styleEl = document.createElement('style');
-            self.$styleEl.innerHTML = style;
+            self.$styleEl.innerHTML = self.$style;
           }
 
           self.$attachEvents();
