@@ -116,6 +116,8 @@ class Component {
     self.$style = $options.isClassComponent ? self.constructor.style : $options.style;
     self.$styleScoped = $options.isClassComponent ? self.constructor.styleScoped : $options.styleScoped;
 
+    self.__updateQueue = [];
+
     return new Promise((resolve, reject) => {
       self.$hook('data', true)
         .then((datas) => {
@@ -258,43 +260,52 @@ class Component {
     return html;
   }
 
+  $startUpdateQueue() {
+    const self = this;
+    if (self.__requestAnimationFrameId) return;
+    function update() {
+      let html = self.$render();
+
+      // Make Dom
+      if (html && typeof html === 'string') {
+        html = html.trim();
+        const newVNode = vdom(html, self, false);
+        self.$vnode = patch(self.$vnode, newVNode);
+      }
+    }
+    self.__requestAnimationFrameId = window.requestAnimationFrame(() => {
+      if (self.__updateIsPending) update();
+      self.__updateQueue.forEach(resolver => resolver());
+      self.__updateQueue = [];
+      self.__updateIsPending = false;
+      window.cancelAnimationFrame(self.__requestAnimationFrameId);
+      delete self.__requestAnimationFrameId;
+      delete self.__updateIsPending;
+    });
+  }
+
   $tick(callback) {
     const self = this;
     return new Promise((resolve) => {
-      window.requestAnimationFrame(() => {
-        if (self.__updateIsPending) {
-          window.requestAnimationFrame(() => {
-            resolve();
-            callback();
-          });
-        } else {
-          resolve();
-          callback();
-        }
-      });
+      function resolver() {
+        resolve();
+        if (callback) callback();
+      }
+      self.__updateQueue.push(resolver);
+      self.$startUpdateQueue();
     });
   }
 
   $update(callback) {
     const self = this;
-    window.cancelAnimationFrame(self.__requestAnimationFrameId);
-    delete self.__requestAnimationFrameId;
-    self.__updateIsPending = true;
     return new Promise((resolve) => {
-      self.__requestAnimationFrameId = window.requestAnimationFrame(() => {
-        let html = self.$render();
-
-        // Make Dom
-        if (html && typeof html === 'string') {
-          html = html.trim();
-          const newVNode = vdom(html, self, false);
-          self.$vnode = patch(self.$vnode, newVNode);
-        }
-        self.__updateIsPending = false;
-        delete self.__updateIsPending;
+      function resolver() {
         if (callback) callback();
         resolve();
-      });
+      }
+      self.__updateIsPending = true;
+      self.__updateQueue.push(resolver);
+      self.$startUpdateQueue();
     });
   }
 
