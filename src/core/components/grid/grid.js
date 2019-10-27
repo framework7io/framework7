@@ -25,10 +25,7 @@ function getElMaxSize(dimension, $el) {
 }
 
 const Grid = {
-  create(pageEl) {
-    if (!pageEl || pageEl.f7DestroyGrid) {
-      return;
-    }
+  init() {
     const app = this;
     let isTouched;
     let isMoved;
@@ -183,22 +180,9 @@ const Grid = {
       isMoved = false;
     }
 
-    $(pageEl).on(app.touchEvents.start, '.col > .resize-handler, .row > .resize-handler', handleTouchStart);
+    $(document).on(app.touchEvents.start, '.col > .resize-handler, .row > .resize-handler', handleTouchStart);
     app.on('touchmove', handleTouchMove);
     app.on('touchend', handleTouchEnd);
-
-    function destroyGrid() {
-      $(pageEl).off(app.touchEvents.start, '.col > .resize-handler, .row > .resize-handler', handleTouchStart);
-      app.off('touchmove', handleTouchMove);
-      app.off('touchend', handleTouchEnd);
-    }
-
-    pageEl.f7DestroyGrid = destroyGrid;
-  },
-  destroy(pageEl) {
-    if (!pageEl || !pageEl.f7DestroyGrid) return;
-    pageEl.f7DestroyGrid();
-    delete pageEl.f7DestroyGrid;
   },
 };
 
@@ -208,24 +192,14 @@ export default {
     const app = this;
     Utils.extend(app, {
       grid: {
-        create: Grid.create.bind(app),
-        destroy: Grid.destroy.bind(app),
+        init: Grid.init.bind(app),
       },
     });
   },
   on: {
-    'pageInit tabMounted': function onInit(instance) {
+    init() {
       const app = this;
-      const pageEl = instance.el || $(instance).parents('.page')[0];
-
-      if ($(pageEl).find('.row.resizable .resize-handler, .col.resizable .resize-handler').length) {
-        app.grid.create(pageEl);
-      }
-    },
-    'pageBeforeRemove tabBeforeRemove': function onRemove(instance) {
-      const app = this;
-      const pageEl = instance.el || $(instance).parents('.page')[0];
-      app.grid.destroy(pageEl);
+      app.grid.init();
     },
   },
 };
