@@ -289,6 +289,10 @@ function getData(el, context, app, initial, isRoot, tagName) {
       }
     }
   });
+  if (isRoot && context && context.$id && context.$style && context.$styleScoped) {
+    if (!data.attrs) data.attrs = {};
+    data.attrs[`data-f7-${context.$id}`] = '';
+  }
   const hooks = getHooks(data, app, initial, isRoot, tagName);
   hooks.prepatch = (oldVnode, vnode) => {
     if (!oldVnode || !vnode) return;

@@ -8,7 +8,8 @@ export namespace Grid {
 
   }
   interface AppEvents {
-
+    /** Event will be triggered when column or row resized */
+    gridResize: (el : HTMLElement) => void
   }
 }
 

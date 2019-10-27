@@ -10,6 +10,13 @@ export default {
     tag: {
       type: String,
       default: 'div'
+    },
+    resizable: Boolean,
+    resizableFixed: Boolean,
+    resizableAbsolute: Boolean,
+    resizableHandler: {
+      type: Boolean,
+      default: true
     }
   }, Mixins.colorProps),
   render: function render() {
@@ -20,10 +27,17 @@ export default {
         id = props.id,
         style = props.style,
         tag = props.tag,
-        noGap = props.noGap;
+        noGap = props.noGap,
+        resizable = props.resizable,
+        resizableFixed = props.resizableFixed,
+        resizableAbsolute = props.resizableAbsolute,
+        resizableHandler = props.resizableHandler;
     var RowTag = tag;
     var classes = Utils.classNames(className, 'row', {
-      'no-gap': noGap
+      'no-gap': noGap,
+      resizable: resizable,
+      'resizable-fixed': resizableFixed,
+      'resizable-absolute': resizableAbsolute
     }, Mixins.colorClasses(props));
     return _h(RowTag, {
       style: style,
@@ -32,20 +46,37 @@ export default {
       attrs: {
         id: id
       }
-    }, [this.$slots['default']]);
+    }, [this.$slots['default'], resizable && resizableHandler && _h('span', {
+      class: 'resize-handler'
+    })]);
   },
   created: function created() {
-    Utils.bindMethods(this, ['onClick']);
+    Utils.bindMethods(this, ['onClick', 'onResize']);
   },
   mounted: function mounted() {
-    this.$refs.el.addEventListener('click', this.onClick);
+    var self = this;
+    self.eventTargetEl = self.$refs.el;
+    self.eventTargetEl.addEventListener('click', self.onClick);
+    self.$f7ready(function (f7) {
+      f7.on('gridResize', self.onResize);
+    });
   },
   beforeDestroy: function beforeDestroy() {
-    this.$refs.el.removeEventListener('click', this.onClick);
+    var self = this;
+    var el = self.$refs.el;
+    if (!el || !self.$f7) return;
+    el.removeEventListener('click', self.onClick);
+    self.$f7.off('gridResize', self.onResize);
+    delete self.eventTargetEl;
   },
   methods: {
     onClick: function onClick(event) {
       this.dispatchEvent('click', event);
+    },
+    onResize: function onResize(el) {
+      if (el === this.eventTargetEl) {
+        this.dispatchEvent('grid:resize gridResize');
+      }
     },
     dispatchEvent: function dispatchEvent(events) {
       for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {

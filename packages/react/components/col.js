@@ -39,7 +39,7 @@ function (_React$Component) {
     _this.__reactRefs = {};
 
     (function () {
-      Utils.bindMethods(_assertThisInitialized(_this), ['onClick']);
+      Utils.bindMethods(_assertThisInitialized(_this), ['onClick', 'onResize']);
     })();
 
     return _this;
@@ -49,6 +49,13 @@ function (_React$Component) {
     key: "onClick",
     value: function onClick(event) {
       this.dispatchEvent('click', event);
+    }
+  }, {
+    key: "onResize",
+    value: function onResize(el) {
+      if (el === this.eventTargetEl) {
+        this.dispatchEvent('grid:resize gridResize');
+      }
     }
   }, {
     key: "render",
@@ -67,11 +74,15 @@ function (_React$Component) {
           small = props.small,
           medium = props.medium,
           large = props.large,
-          xlarge = props.xlarge;
+          xlarge = props.xlarge,
+          resizable = props.resizable,
+          resizableFixed = props.resizableFixed,
+          resizableAbsolute = props.resizableAbsolute,
+          resizableHandler = props.resizableHandler;
       var ColTag = tag;
       var classes = Utils.classNames(className, (_Utils$classNames = {
         col: width === 'auto'
-      }, _defineProperty(_Utils$classNames, "col-".concat(width), width !== 'auto'), _defineProperty(_Utils$classNames, "xsmall-".concat(xsmall), xsmall), _defineProperty(_Utils$classNames, "small-".concat(small), small), _defineProperty(_Utils$classNames, "medium-".concat(medium), medium), _defineProperty(_Utils$classNames, "large-".concat(large), large), _defineProperty(_Utils$classNames, "xlarge-".concat(xlarge), xlarge), _Utils$classNames), Mixins.colorClasses(props));
+      }, _defineProperty(_Utils$classNames, "col-".concat(width), width !== 'auto'), _defineProperty(_Utils$classNames, "xsmall-".concat(xsmall), xsmall), _defineProperty(_Utils$classNames, "small-".concat(small), small), _defineProperty(_Utils$classNames, "medium-".concat(medium), medium), _defineProperty(_Utils$classNames, "large-".concat(large), large), _defineProperty(_Utils$classNames, "xlarge-".concat(xlarge), xlarge), _defineProperty(_Utils$classNames, "resizable", resizable), _defineProperty(_Utils$classNames, 'resizable-fixed', resizableFixed), _defineProperty(_Utils$classNames, 'resizable-absolute', resizableAbsolute), _Utils$classNames), Mixins.colorClasses(props));
       return React.createElement(ColTag, {
         id: id,
         style: style,
@@ -79,17 +90,29 @@ function (_React$Component) {
         ref: function ref(__reactNode) {
           _this2.__reactRefs['el'] = __reactNode;
         }
-      }, this.slots['default']);
+      }, this.slots['default'], resizable && resizableHandler && React.createElement('span', {
+        className: 'resize-handler'
+      }));
     }
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      this.refs.el.removeEventListener('click', this.onClick);
+      var self = this;
+      var el = self.refs.el;
+      if (!el || !self.$f7) return;
+      el.removeEventListener('click', self.onClick);
+      self.$f7.off('gridResize', self.onResize);
+      delete self.eventTargetEl;
     }
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.refs.el.addEventListener('click', this.onClick);
+      var self = this;
+      self.eventTargetEl = self.refs.el;
+      self.eventTargetEl.addEventListener('click', self.onClick);
+      self.$f7ready(function (f7) {
+        f7.on('gridResize', self.onResize);
+      });
     }
   }, {
     key: "dispatchEvent",
@@ -142,6 +165,13 @@ __reactComponentSetProps(F7Col, Object.assign({
   },
   xlarge: {
     type: [Number, String]
+  },
+  resizable: Boolean,
+  resizableFixed: Boolean,
+  resizableAbsolute: Boolean,
+  resizableHandler: {
+    type: Boolean,
+    default: true
   }
 }, Mixins.colorProps));
 

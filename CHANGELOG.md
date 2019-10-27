@@ -2,6 +2,26 @@
 
 # Change Log
 
+# [v5.1.0](https://github.com/framework7io/framework7/compare/v5.0.5...v5.1.0) - October 27, 2019
+  * Core
+    * Grid
+      * New resizable grid
+    * Router Component
+      * Fixed issue when triggering update could break scoped styles
+      * Fixed update callbacks queue
+    * Swiper - updated to latest 5.2.0
+      * Core
+        * New `centeredSlidesBounds` parameter that when enabled will keep first and last slides at bounds
+        * Fixed issue when `freeMode` could break position on resize (#2708, #3303)
+        * Fixed transitin duration issue with `freeModeSticky` (#3302)
+        * Fixed issue with wrong row/column if not full groups (#3294)
+        * Fixed issue when `watchOverflow` and `slidesOffsetBefore`/`slidesOffsetAfter` couldn't work together (#3291)
+      * Mousewheel
+        * Faster & smoother mousewheel inertial scrolling (#3304)
+  * Phenome
+    * Row/Col
+      * New `resizable` components properties to enable resizable grid
+
 # [v5.0.5](https://github.com/framework7io/framework7/compare/v5.0.4...v5.0.5) - October 16, 2019
   * Core
     * Toolbar

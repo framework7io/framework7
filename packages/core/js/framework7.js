@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.5
+ * Framework7 5.1.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 16, 2019
+ * Released on: October 27, 2019
  */
 
 (function (global, factory) {
@@ -10156,6 +10156,10 @@
         }
       }
     });
+    if (isRoot && context && context.$id && context.$style && context.$styleScoped) {
+      if (!data.attrs) { data.attrs = {}; }
+      data.attrs[("data-f7-" + (context.$id))] = '';
+    }
     var hooks = getHooks(data, app, initial, isRoot, tagName);
     hooks.prepatch = function (oldVnode, vnode) {
       if (!oldVnode || !vnode) { return; }
@@ -10964,6 +10968,11 @@
       });
     }
 
+    self.$style = $options.isClassComponent ? self.constructor.style : $options.style;
+    self.$styleScoped = $options.isClassComponent ? self.constructor.styleScoped : $options.styleScoped;
+
+    self.__updateQueue = [];
+
     return new Promise(function (resolve, reject) {
       self.$hook('data', true)
         .then(function (datas) {
@@ -10974,18 +10983,13 @@
           Utils.extend(self, data);
           self.$hook('beforeCreate');
           var html = self.$render();
-          var style = $options.isClassComponent ? self.constructor.style : $options.style;
-          var styleScoped = $options.isClassComponent ? self.constructor.styleScoped : $options.styleScoped;
 
           if (self.$options.el) {
             html = html.trim();
             self.$vnode = vdom(html, self, true);
-            if (style) {
+            if (self.$style) {
               self.$styleEl = doc.createElement('style');
-              self.$styleEl.innerHTML = style;
-              if (styleScoped) {
-                self.$vnode.data.attrs[("data-f7-" + (self.$id))] = '';
-              }
+              self.$styleEl.innerHTML = self.$style;
             }
             self.el = self.$options.el;
             patch(self.el, self.$vnode);
@@ -11003,22 +11007,16 @@
           if (html && typeof html === 'string') {
             html = html.trim();
             self.$vnode = vdom(html, self, true);
-            if (style && styleScoped) {
-              self.$vnode.data.attrs[("data-f7-" + (self.$id))] = '';
-            }
             self.el = doc.createElement(self.$vnode.sel || 'div');
             patch(self.el, self.$vnode);
             self.$el = $(self.el);
           } else if (html) {
             self.el = html;
             self.$el = $(self.el);
-            if (style && styleScoped) {
-              self.el.setAttribute(("data-f7-" + (self.$id)), '');
-            }
           }
-          if (style) {
+          if (self.$style) {
             self.$styleEl = doc.createElement('style');
-            self.$styleEl.innerHTML = style;
+            self.$styleEl.innerHTML = self.$style;
           }
 
           self.$attachEvents();
@@ -11119,43 +11117,52 @@
     return html;
   };
 
+  Component.prototype.$startUpdateQueue = function $startUpdateQueue () {
+    var self = this;
+    if (self.__requestAnimationFrameId) { return; }
+    function update() {
+      var html = self.$render();
+
+      // Make Dom
+      if (html && typeof html === 'string') {
+        html = html.trim();
+        var newVNode = vdom(html, self, false);
+        self.$vnode = patch(self.$vnode, newVNode);
+      }
+    }
+    self.__requestAnimationFrameId = win.requestAnimationFrame(function () {
+      if (self.__updateIsPending) { update(); }
+      self.__updateQueue.forEach(function (resolver) { return resolver(); });
+      self.__updateQueue = [];
+      self.__updateIsPending = false;
+      win.cancelAnimationFrame(self.__requestAnimationFrameId);
+      delete self.__requestAnimationFrameId;
+      delete self.__updateIsPending;
+    });
+  };
+
   Component.prototype.$tick = function $tick (callback) {
     var self = this;
     return new Promise(function (resolve) {
-      win.requestAnimationFrame(function () {
-        if (self.__updateIsPending) {
-          win.requestAnimationFrame(function () {
-            resolve();
-            callback();
-          });
-        } else {
-          resolve();
-          callback();
-        }
-      });
+      function resolver() {
+        resolve();
+        if (callback) { callback(); }
+      }
+      self.__updateQueue.push(resolver);
+      self.$startUpdateQueue();
     });
   };
 
   Component.prototype.$update = function $update (callback) {
     var self = this;
-    win.cancelAnimationFrame(self.__requestAnimationFrameId);
-    delete self.__requestAnimationFrameId;
-    self.__updateIsPending = true;
     return new Promise(function (resolve) {
-      self.__requestAnimationFrameId = win.requestAnimationFrame(function () {
-        var html = self.$render();
-
-        // Make Dom
-        if (html && typeof html === 'string') {
-          html = html.trim();
-          var newVNode = vdom(html, self, false);
-          self.$vnode = patch(self.$vnode, newVNode);
-        }
-        self.__updateIsPending = false;
-        delete self.__updateIsPending;
+      function resolver() {
         if (callback) { callback(); }
         resolve();
-      });
+      }
+      self.__updateIsPending = true;
+      self.__updateQueue.push(resolver);
+      self.$startUpdateQueue();
     });
   };
 

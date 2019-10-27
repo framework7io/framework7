@@ -8,6 +8,10 @@ declare namespace F7Row {
     style? : React.CSSProperties
     noGap? : boolean
     tag? : string
+    resizable? : boolean
+    resizableFixed? : boolean
+    resizableAbsolute? : boolean
+    resizableHandler? : boolean
     color? : string
     colorTheme? : string
     textColor? : string
@@ -16,9 +20,11 @@ declare namespace F7Row {
     rippleColor? : string
     themeDark? : boolean
     onClick? : (event?: any) => void
+    onGridResize? : (...args: any[]) => void
   }
 }
 declare class F7Row extends React.Component<F7Row.Props, {}> {
   onClick(event? : any) : unknown
+  onResize(el? : any) : unknown
 }
 export default F7Row;

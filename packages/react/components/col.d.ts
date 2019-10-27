@@ -13,6 +13,10 @@ declare namespace F7Col {
     medium? : number | string
     large? : number | string
     xlarge? : number | string
+    resizable? : boolean
+    resizableFixed? : boolean
+    resizableAbsolute? : boolean
+    resizableHandler? : boolean
     color? : string
     colorTheme? : string
     textColor? : string
@@ -21,9 +25,11 @@ declare namespace F7Col {
     rippleColor? : string
     themeDark? : boolean
     onClick? : (event?: any) => void
+    onGridResize? : (...args: any[]) => void
   }
 }
 declare class F7Col extends React.Component<F7Col.Props, {}> {
   onClick(event? : any) : unknown
+  onResize(el? : any) : unknown
 }
 export default F7Col;

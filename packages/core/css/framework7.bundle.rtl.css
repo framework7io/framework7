@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.5
+ * Framework7 5.1.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 16, 2019
+ * Released on: October 27, 2019
  */
 
 /*====================
@@ -10770,6 +10770,7 @@ input[type="email"],
 input[type="tel"],
 input[type="url"],
 input[type="date"],
+input[type='month'],
 input[type="datetime-local"],
 input[type="time"],
 input[type="number"],
@@ -10808,6 +10809,7 @@ textarea {
 .list input[type="tel"],
 .list input[type="url"],
 .list input[type="date"],
+.list input[type='month'],
 .list input[type="datetime-local"],
 .list input[type="time"],
 .list input[type="number"],
@@ -10827,6 +10829,7 @@ textarea {
 .list input[type="tel"]::-webkit-input-placeholder,
 .list input[type="url"]::-webkit-input-placeholder,
 .list input[type="date"]::-webkit-input-placeholder,
+.list input[type='month']::-webkit-input-placeholder,
 .list input[type="datetime-local"]::-webkit-input-placeholder,
 .list input[type="time"]::-webkit-input-placeholder,
 .list input[type="number"]::-webkit-input-placeholder,
@@ -10840,6 +10843,7 @@ textarea {
 .list input[type="tel"]::-moz-placeholder,
 .list input[type="url"]::-moz-placeholder,
 .list input[type="date"]::-moz-placeholder,
+.list input[type='month']::-moz-placeholder,
 .list input[type="datetime-local"]::-moz-placeholder,
 .list input[type="time"]::-moz-placeholder,
 .list input[type="number"]::-moz-placeholder,
@@ -10853,6 +10857,7 @@ textarea {
 .list input[type="tel"]::placeholder,
 .list input[type="url"]::placeholder,
 .list input[type="date"]::placeholder,
+.list input[type='month']::placeholder,
 .list input[type="datetime-local"]::placeholder,
 .list input[type="time"]::placeholder,
 .list input[type="number"]::placeholder,
@@ -10889,10 +10894,12 @@ textarea {
 }
 .list input[type="time"],
 .list input[type="date"],
+.list input[type='month'],
 .list input[type="datetime-local"] {
   line-height: var(--f7-input-height);
 }
 .list input[type="date"],
+.list input[type='month'],
 .list input[type="datetime-local"] {
   text-align: right;
   flex-direction: row-reverse;
@@ -12763,6 +12770,12 @@ label.item-radio.disabled,
 /* === Grid === */
 :root {
   --f7-grid-gap: 16px;
+  --f7-grid-row-gap: 0px;
+  --f7-grid-resize-handler-bg-color: rgba(0, 0, 0, 0.35);
+}
+:root .theme-dark,
+:root.theme-dark {
+  --f7-grid-resize-handler-bg-color: rgba(255, 255, 255, 0.35);
 }
 .row {
   display: flex;
@@ -12771,13 +12784,24 @@ label.item-radio.disabled,
   align-items: flex-start;
   --f7-cols-per-row: 1;
 }
+.row + .row {
+  margin-top: var(--f7-grid-row-gap);
+}
 .row > [class*="col-"],
 .row > .col {
   box-sizing: border-box;
   width: calc((100% - var(--f7-grid-gap) * (var(--f7-cols-per-row) - 1)) / var(--f7-cols-per-row));
 }
+.row > [class*="col-"].resizable,
+.row > .col.resizable {
+  position: relative;
+}
+.row.resizable {
+  position: relative;
+}
 .row.no-gap {
   --f7-grid-gap: 0px;
+  --f7-grid-row-gap: 0px;
 }
 .row .col-5 {
   --f7-cols-per-row: 20;
@@ -12845,92 +12869,92 @@ label.item-radio.disabled,
 .row .col-100 {
   --f7-cols-per-row: 1;
 }
-.row .col:nth-last-child(1),
-.row .col:nth-last-child(1) ~ .col {
+.row .col:nth-last-of-type(1),
+.row .col:nth-last-of-type(1) ~ .col {
   --f7-cols-per-row: 1;
 }
-.row .col:nth-last-child(2),
-.row .col:nth-last-child(2) ~ .col {
+.row .col:nth-last-of-type(2),
+.row .col:nth-last-of-type(2) ~ .col {
   --f7-cols-per-row: 2;
 }
-.row .col:nth-last-child(3),
-.row .col:nth-last-child(3) ~ .col {
+.row .col:nth-last-of-type(3),
+.row .col:nth-last-of-type(3) ~ .col {
   --f7-cols-per-row: 3;
 }
-.row .col:nth-last-child(4),
-.row .col:nth-last-child(4) ~ .col {
+.row .col:nth-last-of-type(4),
+.row .col:nth-last-of-type(4) ~ .col {
   --f7-cols-per-row: 4;
 }
-.row .col:nth-last-child(5),
-.row .col:nth-last-child(5) ~ .col {
+.row .col:nth-last-of-type(5),
+.row .col:nth-last-of-type(5) ~ .col {
   --f7-cols-per-row: 5;
 }
-.row .col:nth-last-child(6),
-.row .col:nth-last-child(6) ~ .col {
+.row .col:nth-last-of-type(6),
+.row .col:nth-last-of-type(6) ~ .col {
   --f7-cols-per-row: 6;
 }
-.row .col:nth-last-child(7),
-.row .col:nth-last-child(7) ~ .col {
+.row .col:nth-last-of-type(7),
+.row .col:nth-last-of-type(7) ~ .col {
   --f7-cols-per-row: 7;
 }
-.row .col:nth-last-child(8),
-.row .col:nth-last-child(8) ~ .col {
+.row .col:nth-last-of-type(8),
+.row .col:nth-last-of-type(8) ~ .col {
   --f7-cols-per-row: 8;
 }
-.row .col:nth-last-child(9),
-.row .col:nth-last-child(9) ~ .col {
+.row .col:nth-last-of-type(9),
+.row .col:nth-last-of-type(9) ~ .col {
   --f7-cols-per-row: 9;
 }
-.row .col:nth-last-child(10),
-.row .col:nth-last-child(10) ~ .col {
+.row .col:nth-last-of-type(10),
+.row .col:nth-last-of-type(10) ~ .col {
   --f7-cols-per-row: 10;
 }
-.row .col:nth-last-child(11),
-.row .col:nth-last-child(11) ~ .col {
+.row .col:nth-last-of-type(11),
+.row .col:nth-last-of-type(11) ~ .col {
   --f7-cols-per-row: 11;
 }
-.row .col:nth-last-child(12),
-.row .col:nth-last-child(12) ~ .col {
+.row .col:nth-last-of-type(12),
+.row .col:nth-last-of-type(12) ~ .col {
   --f7-cols-per-row: 12;
 }
-.row .col:nth-last-child(13),
-.row .col:nth-last-child(13) ~ .col {
+.row .col:nth-last-of-type(13),
+.row .col:nth-last-of-type(13) ~ .col {
   --f7-cols-per-row: 13;
 }
-.row .col:nth-last-child(14),
-.row .col:nth-last-child(14) ~ .col {
+.row .col:nth-last-of-type(14),
+.row .col:nth-last-of-type(14) ~ .col {
   --f7-cols-per-row: 14;
 }
-.row .col:nth-last-child(15),
-.row .col:nth-last-child(15) ~ .col {
+.row .col:nth-last-of-type(15),
+.row .col:nth-last-of-type(15) ~ .col {
   --f7-cols-per-row: 15;
 }
-.row .col:nth-last-child(16),
-.row .col:nth-last-child(16) ~ .col {
+.row .col:nth-last-of-type(16),
+.row .col:nth-last-of-type(16) ~ .col {
   --f7-cols-per-row: 16;
 }
-.row .col:nth-last-child(17),
-.row .col:nth-last-child(17) ~ .col {
+.row .col:nth-last-of-type(17),
+.row .col:nth-last-of-type(17) ~ .col {
   --f7-cols-per-row: 17;
 }
-.row .col:nth-last-child(18),
-.row .col:nth-last-child(18) ~ .col {
+.row .col:nth-last-of-type(18),
+.row .col:nth-last-of-type(18) ~ .col {
   --f7-cols-per-row: 18;
 }
-.row .col:nth-last-child(19),
-.row .col:nth-last-child(19) ~ .col {
+.row .col:nth-last-of-type(19),
+.row .col:nth-last-of-type(19) ~ .col {
   --f7-cols-per-row: 19;
 }
-.row .col:nth-last-child(20),
-.row .col:nth-last-child(20) ~ .col {
+.row .col:nth-last-of-type(20),
+.row .col:nth-last-of-type(20) ~ .col {
   --f7-cols-per-row: 20;
 }
-.row .col:nth-last-child(21),
-.row .col:nth-last-child(21) ~ .col {
+.row .col:nth-last-of-type(21),
+.row .col:nth-last-of-type(21) ~ .col {
   --f7-cols-per-row: 21;
 }
-.row .col:nth-last-child(22),
-.row .col:nth-last-child(22) ~ .col {
+.row .col:nth-last-of-type(22),
+.row .col:nth-last-of-type(22) ~ .col {
   --f7-cols-per-row: 22;
 }
 @media (min-width: 480px) {
@@ -13000,92 +13024,92 @@ label.item-radio.disabled,
   .row .xsmall-100 {
     --f7-cols-per-row: 1;
   }
-  .row .xsmall-auto:nth-last-child(1),
-  .row .xsmall-auto:nth-last-child(1) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(1),
+  .row .xsmall-auto:nth-last-of-type(1) ~ .xsmall-auto {
     --f7-cols-per-row: 1;
   }
-  .row .xsmall-auto:nth-last-child(2),
-  .row .xsmall-auto:nth-last-child(2) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(2),
+  .row .xsmall-auto:nth-last-of-type(2) ~ .xsmall-auto {
     --f7-cols-per-row: 2;
   }
-  .row .xsmall-auto:nth-last-child(3),
-  .row .xsmall-auto:nth-last-child(3) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(3),
+  .row .xsmall-auto:nth-last-of-type(3) ~ .xsmall-auto {
     --f7-cols-per-row: 3;
   }
-  .row .xsmall-auto:nth-last-child(4),
-  .row .xsmall-auto:nth-last-child(4) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(4),
+  .row .xsmall-auto:nth-last-of-type(4) ~ .xsmall-auto {
     --f7-cols-per-row: 4;
   }
-  .row .xsmall-auto:nth-last-child(5),
-  .row .xsmall-auto:nth-last-child(5) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(5),
+  .row .xsmall-auto:nth-last-of-type(5) ~ .xsmall-auto {
     --f7-cols-per-row: 5;
   }
-  .row .xsmall-auto:nth-last-child(6),
-  .row .xsmall-auto:nth-last-child(6) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(6),
+  .row .xsmall-auto:nth-last-of-type(6) ~ .xsmall-auto {
     --f7-cols-per-row: 6;
   }
-  .row .xsmall-auto:nth-last-child(7),
-  .row .xsmall-auto:nth-last-child(7) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(7),
+  .row .xsmall-auto:nth-last-of-type(7) ~ .xsmall-auto {
     --f7-cols-per-row: 7;
   }
-  .row .xsmall-auto:nth-last-child(8),
-  .row .xsmall-auto:nth-last-child(8) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(8),
+  .row .xsmall-auto:nth-last-of-type(8) ~ .xsmall-auto {
     --f7-cols-per-row: 8;
   }
-  .row .xsmall-auto:nth-last-child(9),
-  .row .xsmall-auto:nth-last-child(9) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(9),
+  .row .xsmall-auto:nth-last-of-type(9) ~ .xsmall-auto {
     --f7-cols-per-row: 9;
   }
-  .row .xsmall-auto:nth-last-child(10),
-  .row .xsmall-auto:nth-last-child(10) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(10),
+  .row .xsmall-auto:nth-last-of-type(10) ~ .xsmall-auto {
     --f7-cols-per-row: 10;
   }
-  .row .xsmall-auto:nth-last-child(11),
-  .row .xsmall-auto:nth-last-child(11) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(11),
+  .row .xsmall-auto:nth-last-of-type(11) ~ .xsmall-auto {
     --f7-cols-per-row: 11;
   }
-  .row .xsmall-auto:nth-last-child(12),
-  .row .xsmall-auto:nth-last-child(12) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(12),
+  .row .xsmall-auto:nth-last-of-type(12) ~ .xsmall-auto {
     --f7-cols-per-row: 12;
   }
-  .row .xsmall-auto:nth-last-child(13),
-  .row .xsmall-auto:nth-last-child(13) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(13),
+  .row .xsmall-auto:nth-last-of-type(13) ~ .xsmall-auto {
     --f7-cols-per-row: 13;
   }
-  .row .xsmall-auto:nth-last-child(14),
-  .row .xsmall-auto:nth-last-child(14) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(14),
+  .row .xsmall-auto:nth-last-of-type(14) ~ .xsmall-auto {
     --f7-cols-per-row: 14;
   }
-  .row .xsmall-auto:nth-last-child(15),
-  .row .xsmall-auto:nth-last-child(15) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(15),
+  .row .xsmall-auto:nth-last-of-type(15) ~ .xsmall-auto {
     --f7-cols-per-row: 15;
   }
-  .row .xsmall-auto:nth-last-child(16),
-  .row .xsmall-auto:nth-last-child(16) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(16),
+  .row .xsmall-auto:nth-last-of-type(16) ~ .xsmall-auto {
     --f7-cols-per-row: 16;
   }
-  .row .xsmall-auto:nth-last-child(17),
-  .row .xsmall-auto:nth-last-child(17) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(17),
+  .row .xsmall-auto:nth-last-of-type(17) ~ .xsmall-auto {
     --f7-cols-per-row: 17;
   }
-  .row .xsmall-auto:nth-last-child(18),
-  .row .xsmall-auto:nth-last-child(18) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(18),
+  .row .xsmall-auto:nth-last-of-type(18) ~ .xsmall-auto {
     --f7-cols-per-row: 18;
   }
-  .row .xsmall-auto:nth-last-child(19),
-  .row .xsmall-auto:nth-last-child(19) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(19),
+  .row .xsmall-auto:nth-last-of-type(19) ~ .xsmall-auto {
     --f7-cols-per-row: 19;
   }
-  .row .xsmall-auto:nth-last-child(20),
-  .row .xsmall-auto:nth-last-child(20) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(20),
+  .row .xsmall-auto:nth-last-of-type(20) ~ .xsmall-auto {
     --f7-cols-per-row: 20;
   }
-  .row .xsmall-auto:nth-last-child(21),
-  .row .xsmall-auto:nth-last-child(21) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(21),
+  .row .xsmall-auto:nth-last-of-type(21) ~ .xsmall-auto {
     --f7-cols-per-row: 21;
   }
-  .row .xsmall-auto:nth-last-child(22),
-  .row .xsmall-auto:nth-last-child(22) ~ .xsmall-auto {
+  .row .xsmall-auto:nth-last-of-type(22),
+  .row .xsmall-auto:nth-last-of-type(22) ~ .xsmall-auto {
     --f7-cols-per-row: 22;
   }
 }
@@ -13156,92 +13180,92 @@ label.item-radio.disabled,
   .row .small-100 {
     --f7-cols-per-row: 1;
   }
-  .row .small-auto:nth-last-child(1),
-  .row .small-auto:nth-last-child(1) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(1),
+  .row .small-auto:nth-last-of-type(1) ~ .small-auto {
     --f7-cols-per-row: 1;
   }
-  .row .small-auto:nth-last-child(2),
-  .row .small-auto:nth-last-child(2) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(2),
+  .row .small-auto:nth-last-of-type(2) ~ .small-auto {
     --f7-cols-per-row: 2;
   }
-  .row .small-auto:nth-last-child(3),
-  .row .small-auto:nth-last-child(3) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(3),
+  .row .small-auto:nth-last-of-type(3) ~ .small-auto {
     --f7-cols-per-row: 3;
   }
-  .row .small-auto:nth-last-child(4),
-  .row .small-auto:nth-last-child(4) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(4),
+  .row .small-auto:nth-last-of-type(4) ~ .small-auto {
     --f7-cols-per-row: 4;
   }
-  .row .small-auto:nth-last-child(5),
-  .row .small-auto:nth-last-child(5) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(5),
+  .row .small-auto:nth-last-of-type(5) ~ .small-auto {
     --f7-cols-per-row: 5;
   }
-  .row .small-auto:nth-last-child(6),
-  .row .small-auto:nth-last-child(6) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(6),
+  .row .small-auto:nth-last-of-type(6) ~ .small-auto {
     --f7-cols-per-row: 6;
   }
-  .row .small-auto:nth-last-child(7),
-  .row .small-auto:nth-last-child(7) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(7),
+  .row .small-auto:nth-last-of-type(7) ~ .small-auto {
     --f7-cols-per-row: 7;
   }
-  .row .small-auto:nth-last-child(8),
-  .row .small-auto:nth-last-child(8) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(8),
+  .row .small-auto:nth-last-of-type(8) ~ .small-auto {
     --f7-cols-per-row: 8;
   }
-  .row .small-auto:nth-last-child(9),
-  .row .small-auto:nth-last-child(9) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(9),
+  .row .small-auto:nth-last-of-type(9) ~ .small-auto {
     --f7-cols-per-row: 9;
   }
-  .row .small-auto:nth-last-child(10),
-  .row .small-auto:nth-last-child(10) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(10),
+  .row .small-auto:nth-last-of-type(10) ~ .small-auto {
     --f7-cols-per-row: 10;
   }
-  .row .small-auto:nth-last-child(11),
-  .row .small-auto:nth-last-child(11) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(11),
+  .row .small-auto:nth-last-of-type(11) ~ .small-auto {
     --f7-cols-per-row: 11;
   }
-  .row .small-auto:nth-last-child(12),
-  .row .small-auto:nth-last-child(12) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(12),
+  .row .small-auto:nth-last-of-type(12) ~ .small-auto {
     --f7-cols-per-row: 12;
   }
-  .row .small-auto:nth-last-child(13),
-  .row .small-auto:nth-last-child(13) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(13),
+  .row .small-auto:nth-last-of-type(13) ~ .small-auto {
     --f7-cols-per-row: 13;
   }
-  .row .small-auto:nth-last-child(14),
-  .row .small-auto:nth-last-child(14) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(14),
+  .row .small-auto:nth-last-of-type(14) ~ .small-auto {
     --f7-cols-per-row: 14;
   }
-  .row .small-auto:nth-last-child(15),
-  .row .small-auto:nth-last-child(15) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(15),
+  .row .small-auto:nth-last-of-type(15) ~ .small-auto {
     --f7-cols-per-row: 15;
   }
-  .row .small-auto:nth-last-child(16),
-  .row .small-auto:nth-last-child(16) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(16),
+  .row .small-auto:nth-last-of-type(16) ~ .small-auto {
     --f7-cols-per-row: 16;
   }
-  .row .small-auto:nth-last-child(17),
-  .row .small-auto:nth-last-child(17) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(17),
+  .row .small-auto:nth-last-of-type(17) ~ .small-auto {
     --f7-cols-per-row: 17;
   }
-  .row .small-auto:nth-last-child(18),
-  .row .small-auto:nth-last-child(18) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(18),
+  .row .small-auto:nth-last-of-type(18) ~ .small-auto {
     --f7-cols-per-row: 18;
   }
-  .row .small-auto:nth-last-child(19),
-  .row .small-auto:nth-last-child(19) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(19),
+  .row .small-auto:nth-last-of-type(19) ~ .small-auto {
     --f7-cols-per-row: 19;
   }
-  .row .small-auto:nth-last-child(20),
-  .row .small-auto:nth-last-child(20) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(20),
+  .row .small-auto:nth-last-of-type(20) ~ .small-auto {
     --f7-cols-per-row: 20;
   }
-  .row .small-auto:nth-last-child(21),
-  .row .small-auto:nth-last-child(21) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(21),
+  .row .small-auto:nth-last-of-type(21) ~ .small-auto {
     --f7-cols-per-row: 21;
   }
-  .row .small-auto:nth-last-child(22),
-  .row .small-auto:nth-last-child(22) ~ .small-auto {
+  .row .small-auto:nth-last-of-type(22),
+  .row .small-auto:nth-last-of-type(22) ~ .small-auto {
     --f7-cols-per-row: 22;
   }
 }
@@ -13312,92 +13336,92 @@ label.item-radio.disabled,
   .row .medium-100 {
     --f7-cols-per-row: 1;
   }
-  .row .medium-auto:nth-last-child(1),
-  .row .medium-auto:nth-last-child(1) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(1),
+  .row .medium-auto:nth-last-of-type(1) ~ .medium-auto {
     --f7-cols-per-row: 1;
   }
-  .row .medium-auto:nth-last-child(2),
-  .row .medium-auto:nth-last-child(2) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(2),
+  .row .medium-auto:nth-last-of-type(2) ~ .medium-auto {
     --f7-cols-per-row: 2;
   }
-  .row .medium-auto:nth-last-child(3),
-  .row .medium-auto:nth-last-child(3) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(3),
+  .row .medium-auto:nth-last-of-type(3) ~ .medium-auto {
     --f7-cols-per-row: 3;
   }
-  .row .medium-auto:nth-last-child(4),
-  .row .medium-auto:nth-last-child(4) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(4),
+  .row .medium-auto:nth-last-of-type(4) ~ .medium-auto {
     --f7-cols-per-row: 4;
   }
-  .row .medium-auto:nth-last-child(5),
-  .row .medium-auto:nth-last-child(5) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(5),
+  .row .medium-auto:nth-last-of-type(5) ~ .medium-auto {
     --f7-cols-per-row: 5;
   }
-  .row .medium-auto:nth-last-child(6),
-  .row .medium-auto:nth-last-child(6) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(6),
+  .row .medium-auto:nth-last-of-type(6) ~ .medium-auto {
     --f7-cols-per-row: 6;
   }
-  .row .medium-auto:nth-last-child(7),
-  .row .medium-auto:nth-last-child(7) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(7),
+  .row .medium-auto:nth-last-of-type(7) ~ .medium-auto {
     --f7-cols-per-row: 7;
   }
-  .row .medium-auto:nth-last-child(8),
-  .row .medium-auto:nth-last-child(8) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(8),
+  .row .medium-auto:nth-last-of-type(8) ~ .medium-auto {
     --f7-cols-per-row: 8;
   }
-  .row .medium-auto:nth-last-child(9),
-  .row .medium-auto:nth-last-child(9) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(9),
+  .row .medium-auto:nth-last-of-type(9) ~ .medium-auto {
     --f7-cols-per-row: 9;
   }
-  .row .medium-auto:nth-last-child(10),
-  .row .medium-auto:nth-last-child(10) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(10),
+  .row .medium-auto:nth-last-of-type(10) ~ .medium-auto {
     --f7-cols-per-row: 10;
   }
-  .row .medium-auto:nth-last-child(11),
-  .row .medium-auto:nth-last-child(11) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(11),
+  .row .medium-auto:nth-last-of-type(11) ~ .medium-auto {
     --f7-cols-per-row: 11;
   }
-  .row .medium-auto:nth-last-child(12),
-  .row .medium-auto:nth-last-child(12) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(12),
+  .row .medium-auto:nth-last-of-type(12) ~ .medium-auto {
     --f7-cols-per-row: 12;
   }
-  .row .medium-auto:nth-last-child(13),
-  .row .medium-auto:nth-last-child(13) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(13),
+  .row .medium-auto:nth-last-of-type(13) ~ .medium-auto {
     --f7-cols-per-row: 13;
   }
-  .row .medium-auto:nth-last-child(14),
-  .row .medium-auto:nth-last-child(14) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(14),
+  .row .medium-auto:nth-last-of-type(14) ~ .medium-auto {
     --f7-cols-per-row: 14;
   }
-  .row .medium-auto:nth-last-child(15),
-  .row .medium-auto:nth-last-child(15) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(15),
+  .row .medium-auto:nth-last-of-type(15) ~ .medium-auto {
     --f7-cols-per-row: 15;
   }
-  .row .medium-auto:nth-last-child(16),
-  .row .medium-auto:nth-last-child(16) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(16),
+  .row .medium-auto:nth-last-of-type(16) ~ .medium-auto {
     --f7-cols-per-row: 16;
   }
-  .row .medium-auto:nth-last-child(17),
-  .row .medium-auto:nth-last-child(17) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(17),
+  .row .medium-auto:nth-last-of-type(17) ~ .medium-auto {
     --f7-cols-per-row: 17;
   }
-  .row .medium-auto:nth-last-child(18),
-  .row .medium-auto:nth-last-child(18) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(18),
+  .row .medium-auto:nth-last-of-type(18) ~ .medium-auto {
     --f7-cols-per-row: 18;
   }
-  .row .medium-auto:nth-last-child(19),
-  .row .medium-auto:nth-last-child(19) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(19),
+  .row .medium-auto:nth-last-of-type(19) ~ .medium-auto {
     --f7-cols-per-row: 19;
   }
-  .row .medium-auto:nth-last-child(20),
-  .row .medium-auto:nth-last-child(20) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(20),
+  .row .medium-auto:nth-last-of-type(20) ~ .medium-auto {
     --f7-cols-per-row: 20;
   }
-  .row .medium-auto:nth-last-child(21),
-  .row .medium-auto:nth-last-child(21) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(21),
+  .row .medium-auto:nth-last-of-type(21) ~ .medium-auto {
     --f7-cols-per-row: 21;
   }
-  .row .medium-auto:nth-last-child(22),
-  .row .medium-auto:nth-last-child(22) ~ .medium-auto {
+  .row .medium-auto:nth-last-of-type(22),
+  .row .medium-auto:nth-last-of-type(22) ~ .medium-auto {
     --f7-cols-per-row: 22;
   }
 }
@@ -13468,92 +13492,92 @@ label.item-radio.disabled,
   .row .large-100 {
     --f7-cols-per-row: 1;
   }
-  .row .large-auto:nth-last-child(1),
-  .row .large-auto:nth-last-child(1) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(1),
+  .row .large-auto:nth-last-of-type(1) ~ .large-auto {
     --f7-cols-per-row: 1;
   }
-  .row .large-auto:nth-last-child(2),
-  .row .large-auto:nth-last-child(2) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(2),
+  .row .large-auto:nth-last-of-type(2) ~ .large-auto {
     --f7-cols-per-row: 2;
   }
-  .row .large-auto:nth-last-child(3),
-  .row .large-auto:nth-last-child(3) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(3),
+  .row .large-auto:nth-last-of-type(3) ~ .large-auto {
     --f7-cols-per-row: 3;
   }
-  .row .large-auto:nth-last-child(4),
-  .row .large-auto:nth-last-child(4) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(4),
+  .row .large-auto:nth-last-of-type(4) ~ .large-auto {
     --f7-cols-per-row: 4;
   }
-  .row .large-auto:nth-last-child(5),
-  .row .large-auto:nth-last-child(5) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(5),
+  .row .large-auto:nth-last-of-type(5) ~ .large-auto {
     --f7-cols-per-row: 5;
   }
-  .row .large-auto:nth-last-child(6),
-  .row .large-auto:nth-last-child(6) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(6),
+  .row .large-auto:nth-last-of-type(6) ~ .large-auto {
     --f7-cols-per-row: 6;
   }
-  .row .large-auto:nth-last-child(7),
-  .row .large-auto:nth-last-child(7) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(7),
+  .row .large-auto:nth-last-of-type(7) ~ .large-auto {
     --f7-cols-per-row: 7;
   }
-  .row .large-auto:nth-last-child(8),
-  .row .large-auto:nth-last-child(8) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(8),
+  .row .large-auto:nth-last-of-type(8) ~ .large-auto {
     --f7-cols-per-row: 8;
   }
-  .row .large-auto:nth-last-child(9),
-  .row .large-auto:nth-last-child(9) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(9),
+  .row .large-auto:nth-last-of-type(9) ~ .large-auto {
     --f7-cols-per-row: 9;
   }
-  .row .large-auto:nth-last-child(10),
-  .row .large-auto:nth-last-child(10) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(10),
+  .row .large-auto:nth-last-of-type(10) ~ .large-auto {
     --f7-cols-per-row: 10;
   }
-  .row .large-auto:nth-last-child(11),
-  .row .large-auto:nth-last-child(11) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(11),
+  .row .large-auto:nth-last-of-type(11) ~ .large-auto {
     --f7-cols-per-row: 11;
   }
-  .row .large-auto:nth-last-child(12),
-  .row .large-auto:nth-last-child(12) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(12),
+  .row .large-auto:nth-last-of-type(12) ~ .large-auto {
     --f7-cols-per-row: 12;
   }
-  .row .large-auto:nth-last-child(13),
-  .row .large-auto:nth-last-child(13) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(13),
+  .row .large-auto:nth-last-of-type(13) ~ .large-auto {
     --f7-cols-per-row: 13;
   }
-  .row .large-auto:nth-last-child(14),
-  .row .large-auto:nth-last-child(14) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(14),
+  .row .large-auto:nth-last-of-type(14) ~ .large-auto {
     --f7-cols-per-row: 14;
   }
-  .row .large-auto:nth-last-child(15),
-  .row .large-auto:nth-last-child(15) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(15),
+  .row .large-auto:nth-last-of-type(15) ~ .large-auto {
     --f7-cols-per-row: 15;
   }
-  .row .large-auto:nth-last-child(16),
-  .row .large-auto:nth-last-child(16) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(16),
+  .row .large-auto:nth-last-of-type(16) ~ .large-auto {
     --f7-cols-per-row: 16;
   }
-  .row .large-auto:nth-last-child(17),
-  .row .large-auto:nth-last-child(17) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(17),
+  .row .large-auto:nth-last-of-type(17) ~ .large-auto {
     --f7-cols-per-row: 17;
   }
-  .row .large-auto:nth-last-child(18),
-  .row .large-auto:nth-last-child(18) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(18),
+  .row .large-auto:nth-last-of-type(18) ~ .large-auto {
     --f7-cols-per-row: 18;
   }
-  .row .large-auto:nth-last-child(19),
-  .row .large-auto:nth-last-child(19) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(19),
+  .row .large-auto:nth-last-of-type(19) ~ .large-auto {
     --f7-cols-per-row: 19;
   }
-  .row .large-auto:nth-last-child(20),
-  .row .large-auto:nth-last-child(20) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(20),
+  .row .large-auto:nth-last-of-type(20) ~ .large-auto {
     --f7-cols-per-row: 20;
   }
-  .row .large-auto:nth-last-child(21),
-  .row .large-auto:nth-last-child(21) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(21),
+  .row .large-auto:nth-last-of-type(21) ~ .large-auto {
     --f7-cols-per-row: 21;
   }
-  .row .large-auto:nth-last-child(22),
-  .row .large-auto:nth-last-child(22) ~ .large-auto {
+  .row .large-auto:nth-last-of-type(22),
+  .row .large-auto:nth-last-of-type(22) ~ .large-auto {
     --f7-cols-per-row: 22;
   }
 }
@@ -13624,94 +13648,171 @@ label.item-radio.disabled,
   .row .xlarge-100 {
     --f7-cols-per-row: 1;
   }
-  .row .xlarge-auto:nth-last-child(1),
-  .row .xlarge-auto:nth-last-child(1) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(1),
+  .row .xlarge-auto:nth-last-of-type(1) ~ .xlarge-auto {
     --f7-cols-per-row: 1;
   }
-  .row .xlarge-auto:nth-last-child(2),
-  .row .xlarge-auto:nth-last-child(2) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(2),
+  .row .xlarge-auto:nth-last-of-type(2) ~ .xlarge-auto {
     --f7-cols-per-row: 2;
   }
-  .row .xlarge-auto:nth-last-child(3),
-  .row .xlarge-auto:nth-last-child(3) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(3),
+  .row .xlarge-auto:nth-last-of-type(3) ~ .xlarge-auto {
     --f7-cols-per-row: 3;
   }
-  .row .xlarge-auto:nth-last-child(4),
-  .row .xlarge-auto:nth-last-child(4) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(4),
+  .row .xlarge-auto:nth-last-of-type(4) ~ .xlarge-auto {
     --f7-cols-per-row: 4;
   }
-  .row .xlarge-auto:nth-last-child(5),
-  .row .xlarge-auto:nth-last-child(5) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(5),
+  .row .xlarge-auto:nth-last-of-type(5) ~ .xlarge-auto {
     --f7-cols-per-row: 5;
   }
-  .row .xlarge-auto:nth-last-child(6),
-  .row .xlarge-auto:nth-last-child(6) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(6),
+  .row .xlarge-auto:nth-last-of-type(6) ~ .xlarge-auto {
     --f7-cols-per-row: 6;
   }
-  .row .xlarge-auto:nth-last-child(7),
-  .row .xlarge-auto:nth-last-child(7) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(7),
+  .row .xlarge-auto:nth-last-of-type(7) ~ .xlarge-auto {
     --f7-cols-per-row: 7;
   }
-  .row .xlarge-auto:nth-last-child(8),
-  .row .xlarge-auto:nth-last-child(8) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(8),
+  .row .xlarge-auto:nth-last-of-type(8) ~ .xlarge-auto {
     --f7-cols-per-row: 8;
   }
-  .row .xlarge-auto:nth-last-child(9),
-  .row .xlarge-auto:nth-last-child(9) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(9),
+  .row .xlarge-auto:nth-last-of-type(9) ~ .xlarge-auto {
     --f7-cols-per-row: 9;
   }
-  .row .xlarge-auto:nth-last-child(10),
-  .row .xlarge-auto:nth-last-child(10) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(10),
+  .row .xlarge-auto:nth-last-of-type(10) ~ .xlarge-auto {
     --f7-cols-per-row: 10;
   }
-  .row .xlarge-auto:nth-last-child(11),
-  .row .xlarge-auto:nth-last-child(11) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(11),
+  .row .xlarge-auto:nth-last-of-type(11) ~ .xlarge-auto {
     --f7-cols-per-row: 11;
   }
-  .row .xlarge-auto:nth-last-child(12),
-  .row .xlarge-auto:nth-last-child(12) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(12),
+  .row .xlarge-auto:nth-last-of-type(12) ~ .xlarge-auto {
     --f7-cols-per-row: 12;
   }
-  .row .xlarge-auto:nth-last-child(13),
-  .row .xlarge-auto:nth-last-child(13) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(13),
+  .row .xlarge-auto:nth-last-of-type(13) ~ .xlarge-auto {
     --f7-cols-per-row: 13;
   }
-  .row .xlarge-auto:nth-last-child(14),
-  .row .xlarge-auto:nth-last-child(14) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(14),
+  .row .xlarge-auto:nth-last-of-type(14) ~ .xlarge-auto {
     --f7-cols-per-row: 14;
   }
-  .row .xlarge-auto:nth-last-child(15),
-  .row .xlarge-auto:nth-last-child(15) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(15),
+  .row .xlarge-auto:nth-last-of-type(15) ~ .xlarge-auto {
     --f7-cols-per-row: 15;
   }
-  .row .xlarge-auto:nth-last-child(16),
-  .row .xlarge-auto:nth-last-child(16) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(16),
+  .row .xlarge-auto:nth-last-of-type(16) ~ .xlarge-auto {
     --f7-cols-per-row: 16;
   }
-  .row .xlarge-auto:nth-last-child(17),
-  .row .xlarge-auto:nth-last-child(17) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(17),
+  .row .xlarge-auto:nth-last-of-type(17) ~ .xlarge-auto {
     --f7-cols-per-row: 17;
   }
-  .row .xlarge-auto:nth-last-child(18),
-  .row .xlarge-auto:nth-last-child(18) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(18),
+  .row .xlarge-auto:nth-last-of-type(18) ~ .xlarge-auto {
     --f7-cols-per-row: 18;
   }
-  .row .xlarge-auto:nth-last-child(19),
-  .row .xlarge-auto:nth-last-child(19) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(19),
+  .row .xlarge-auto:nth-last-of-type(19) ~ .xlarge-auto {
     --f7-cols-per-row: 19;
   }
-  .row .xlarge-auto:nth-last-child(20),
-  .row .xlarge-auto:nth-last-child(20) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(20),
+  .row .xlarge-auto:nth-last-of-type(20) ~ .xlarge-auto {
     --f7-cols-per-row: 20;
   }
-  .row .xlarge-auto:nth-last-child(21),
-  .row .xlarge-auto:nth-last-child(21) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(21),
+  .row .xlarge-auto:nth-last-of-type(21) ~ .xlarge-auto {
     --f7-cols-per-row: 21;
   }
-  .row .xlarge-auto:nth-last-child(22),
-  .row .xlarge-auto:nth-last-child(22) ~ .xlarge-auto {
+  .row .xlarge-auto:nth-last-of-type(22),
+  .row .xlarge-auto:nth-last-of-type(22) ~ .xlarge-auto {
     --f7-cols-per-row: 22;
   }
+}
+.row .resize-handler {
+  position: absolute;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  z-index: 100;
+}
+.row .resize-handler:before {
+  content: '';
+  position: absolute;
+}
+.row .resize-handler:after {
+  content: '';
+  position: absolute;
+  border-radius: 4px;
+  background: var(--f7-grid-resize-handler-bg-color);
+}
+.row > .resize-handler {
+  width: 100%;
+  height: var(--f7-grid-row-gap);
+  left: 0;
+  top: 100%;
+  cursor: row-resize;
+}
+.row > .resize-handler:before {
+  left: 0%;
+  top: 50%;
+  height: 12px;
+  width: 100%;
+  min-height: var(--f7-grid-row-gap);
+  transform: translateY(-50%);
+}
+.row > .resize-handler:after {
+  height: 4px;
+  margin-top: -2px;
+  width: 80%;
+  max-width: 20px;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%);
+}
+[class*="col-"] > .resize-handler,
+.col > .resize-handler {
+  width: var(--f7-grid-gap);
+  left: 100%;
+  top: 0;
+  height: 100%;
+  cursor: col-resize;
+}
+[class*="col-"] > .resize-handler:before,
+.col > .resize-handler:before {
+  left: 50%;
+  top: 0;
+  height: 100%;
+  width: 12px;
+  min-width: var(--f7-grid-gap);
+  transform: translateX(-50%);
+}
+[class*="col-"] > .resize-handler:after,
+.col > .resize-handler:after {
+  width: 4px;
+  margin-left: -2px;
+  height: 80%;
+  max-height: 20px;
+  border-radius: 4px;
+  left: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.row:last-child > .resize-handler,
+.row:last-of-type > .resize-handler,
+.row [class*="col-"]:last-child > .resize-handler,
+.row [class*="col-"]:last-of-type > .resize-handler,
+.row .col:last-child > .resize-handler,
+.row .col:last-of-type > .resize-handler {
+  display: none;
 }
 /* === Calendar/Datepicker === */
 :root {
@@ -18026,6 +18127,9 @@ table.data-table {
   font-family: swiper-icons;
   font-size: var(--swiper-navigation-size);
   text-transform: none !important;
+  letter-spacing: 0;
+  text-transform: none;
+  font-variant: initial;
 }
 .swiper-button-prev,
 .swiper-container-rtl .swiper-button-next {

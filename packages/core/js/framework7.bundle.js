@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.5
+ * Framework7 5.1.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 16, 2019
+ * Released on: October 27, 2019
  */
 
 (function (global, factory) {
@@ -10156,6 +10156,10 @@
         }
       }
     });
+    if (isRoot && context && context.$id && context.$style && context.$styleScoped) {
+      if (!data.attrs) { data.attrs = {}; }
+      data.attrs[("data-f7-" + (context.$id))] = '';
+    }
     var hooks = getHooks(data, app, initial, isRoot, tagName);
     hooks.prepatch = function (oldVnode, vnode) {
       if (!oldVnode || !vnode) { return; }
@@ -10964,6 +10968,11 @@
       });
     }
 
+    self.$style = $options.isClassComponent ? self.constructor.style : $options.style;
+    self.$styleScoped = $options.isClassComponent ? self.constructor.styleScoped : $options.styleScoped;
+
+    self.__updateQueue = [];
+
     return new Promise(function (resolve, reject) {
       self.$hook('data', true)
         .then(function (datas) {
@@ -10974,18 +10983,13 @@
           Utils.extend(self, data);
           self.$hook('beforeCreate');
           var html = self.$render();
-          var style = $options.isClassComponent ? self.constructor.style : $options.style;
-          var styleScoped = $options.isClassComponent ? self.constructor.styleScoped : $options.styleScoped;
 
           if (self.$options.el) {
             html = html.trim();
             self.$vnode = vdom(html, self, true);
-            if (style) {
+            if (self.$style) {
               self.$styleEl = doc.createElement('style');
-              self.$styleEl.innerHTML = style;
-              if (styleScoped) {
-                self.$vnode.data.attrs[("data-f7-" + (self.$id))] = '';
-              }
+              self.$styleEl.innerHTML = self.$style;
             }
             self.el = self.$options.el;
             patch(self.el, self.$vnode);
@@ -11003,22 +11007,16 @@
           if (html && typeof html === 'string') {
             html = html.trim();
             self.$vnode = vdom(html, self, true);
-            if (style && styleScoped) {
-              self.$vnode.data.attrs[("data-f7-" + (self.$id))] = '';
-            }
             self.el = doc.createElement(self.$vnode.sel || 'div');
             patch(self.el, self.$vnode);
             self.$el = $(self.el);
           } else if (html) {
             self.el = html;
             self.$el = $(self.el);
-            if (style && styleScoped) {
-              self.el.setAttribute(("data-f7-" + (self.$id)), '');
-            }
           }
-          if (style) {
+          if (self.$style) {
             self.$styleEl = doc.createElement('style');
-            self.$styleEl.innerHTML = style;
+            self.$styleEl.innerHTML = self.$style;
           }
 
           self.$attachEvents();
@@ -11119,43 +11117,52 @@
     return html;
   };
 
+  Component.prototype.$startUpdateQueue = function $startUpdateQueue () {
+    var self = this;
+    if (self.__requestAnimationFrameId) { return; }
+    function update() {
+      var html = self.$render();
+
+      // Make Dom
+      if (html && typeof html === 'string') {
+        html = html.trim();
+        var newVNode = vdom(html, self, false);
+        self.$vnode = patch(self.$vnode, newVNode);
+      }
+    }
+    self.__requestAnimationFrameId = win.requestAnimationFrame(function () {
+      if (self.__updateIsPending) { update(); }
+      self.__updateQueue.forEach(function (resolver) { return resolver(); });
+      self.__updateQueue = [];
+      self.__updateIsPending = false;
+      win.cancelAnimationFrame(self.__requestAnimationFrameId);
+      delete self.__requestAnimationFrameId;
+      delete self.__updateIsPending;
+    });
+  };
+
   Component.prototype.$tick = function $tick (callback) {
     var self = this;
     return new Promise(function (resolve) {
-      win.requestAnimationFrame(function () {
-        if (self.__updateIsPending) {
-          win.requestAnimationFrame(function () {
-            resolve();
-            callback();
-          });
-        } else {
-          resolve();
-          callback();
-        }
-      });
+      function resolver() {
+        resolve();
+        if (callback) { callback(); }
+      }
+      self.__updateQueue.push(resolver);
+      self.$startUpdateQueue();
     });
   };
 
   Component.prototype.$update = function $update (callback) {
     var self = this;
-    win.cancelAnimationFrame(self.__requestAnimationFrameId);
-    delete self.__requestAnimationFrameId;
-    self.__updateIsPending = true;
     return new Promise(function (resolve) {
-      self.__requestAnimationFrameId = win.requestAnimationFrame(function () {
-        var html = self.$render();
-
-        // Make Dom
-        if (html && typeof html === 'string') {
-          html = html.trim();
-          var newVNode = vdom(html, self, false);
-          self.$vnode = patch(self.$vnode, newVNode);
-        }
-        self.__updateIsPending = false;
-        delete self.__updateIsPending;
+      function resolver() {
         if (callback) { callback(); }
         resolve();
-      });
+      }
+      self.__updateIsPending = true;
+      self.__updateQueue.push(resolver);
+      self.$startUpdateQueue();
     });
   };
 
@@ -22447,8 +22454,207 @@
     },
   };
 
+  function getElMinSize(dimension, $el) {
+    var minSize = $el.css(("min-" + dimension));
+    if (minSize === 'auto' || minSize === 'none') {
+      minSize = 0;
+    } else if (minSize.indexOf('px') >= 0) {
+      minSize = parseFloat(minSize);
+    } else if (minSize.indexOf('%') >= 0) {
+      minSize = $el.parent()[0][dimension === 'height' ? 'offsetHeight' : 'offsetWidth'] * parseFloat(minSize) / 100;
+    }
+    return minSize;
+  }
+  function getElMaxSize(dimension, $el) {
+    var maxSize = $el.css(("max-" + dimension));
+    if (maxSize === 'auto' || maxSize === 'none') {
+      maxSize = null;
+    } else if (maxSize.indexOf('px') >= 0) {
+      maxSize = parseFloat(maxSize);
+    } else if (maxSize.indexOf('%') >= 0) {
+      maxSize = $el.parent()[0][dimension === 'height' ? 'offsetHeight' : 'offsetWidth'] * parseFloat(maxSize) / 100;
+    }
+    return maxSize;
+  }
+
   var Grid = {
+    init: function init() {
+      var app = this;
+      var isTouched;
+      var isMoved;
+      var touchStartX;
+      var touchStartY;
+      var $resizeHandlerEl;
+      var $prevResizableEl;
+      var $nextResizableEl;
+      var prevElSize;
+      var prevElMinSize;
+      var prevElMaxSize;
+      var nextElSize;
+      var nextElMinSize;
+      var nextElMaxSize;
+      var parentSize;
+      var itemsInFlow;
+      var gapSize;
+      var isScrolling;
+
+      function handleTouchStart(e) {
+        if (isTouched || isMoved) { return; }
+        $resizeHandlerEl = $(e.target).closest('.resize-handler');
+        touchStartX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+        touchStartY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+        isTouched = true;
+        $prevResizableEl = undefined;
+        $nextResizableEl = undefined;
+        isScrolling = undefined;
+      }
+
+      function handleTouchMove(e) {
+        if (!isTouched) { return; }
+        var isRow = $resizeHandlerEl.parent('.row').length === 1;
+        var sizeProp = isRow ? 'height' : 'width';
+        var getSizeProp = isRow ? 'offsetHeight' : 'offsetWidth';
+        if (!isMoved) {
+          $prevResizableEl = $resizeHandlerEl.parent(isRow ? '.row' : '.col');
+          if ($prevResizableEl.length && (!$prevResizableEl.hasClass('resizable') || $prevResizableEl.hasClass('resizable-fixed'))) {
+            $prevResizableEl = $prevResizableEl.prevAll('.resizable:not(.resizable-fixed)').eq(0);
+          }
+          $nextResizableEl = $prevResizableEl.next(isRow ? '.row' : '.col');
+          if ($nextResizableEl.length && (!$nextResizableEl.hasClass('resizable') || $nextResizableEl.hasClass('resizable-fixed'))) {
+            $nextResizableEl = $nextResizableEl.nextAll('.resizable:not(.resizable-fixed)').eq(0);
+          }
+
+          if ($prevResizableEl.length) {
+            prevElSize = $prevResizableEl[0][getSizeProp];
+            prevElMinSize = getElMinSize(sizeProp, $prevResizableEl);
+            prevElMaxSize = getElMaxSize(sizeProp, $prevResizableEl);
+            parentSize = $prevResizableEl.parent()[0][getSizeProp];
+            itemsInFlow = $prevResizableEl.parent().children(isRow ? '.row' : '[class*="col-"], .col').length;
+            gapSize = parseFloat($prevResizableEl.css(isRow ? '--f7-grid-row-gap' : '--f7-grid-gap'));
+          }
+          if ($nextResizableEl.length) {
+            nextElSize = $nextResizableEl[0][getSizeProp];
+            nextElMinSize = getElMinSize(sizeProp, $nextResizableEl);
+            nextElMaxSize = getElMaxSize(sizeProp, $nextResizableEl);
+            if (!$prevResizableEl.length) {
+              parentSize = $nextResizableEl.parent()[0][getSizeProp];
+              itemsInFlow = $nextResizableEl.parent().children(isRow ? '.row' : '[class*="col-"], .col').length;
+              gapSize = parseFloat($nextResizableEl.css(isRow ? '--f7-grid-row-gap' : '--f7-grid-gap'));
+            }
+          }
+        }
+
+        isMoved = true;
+        var touchCurrentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+        var touchCurrentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+        if (typeof isScrolling === 'undefined' && !isRow) {
+          isScrolling = !!(isScrolling || Math.abs(touchCurrentY - touchStartY) > Math.abs(touchCurrentX - touchStartX));
+        }
+        if (isScrolling) {
+          isTouched = false;
+          isMoved = false;
+          return;
+        }
+
+        var isAbsolute = $prevResizableEl.hasClass('resizable-absolute') || $nextResizableEl.hasClass('resizable-absolute');
+        var resizeNextEl = !isRow || (isRow && !isAbsolute);
+
+        if ((resizeNextEl && !$nextResizableEl.length) || !$prevResizableEl.length) {
+          isTouched = false;
+          isMoved = false;
+          return;
+        }
+
+        e.preventDefault();
+
+        var diff = isRow
+          ? touchCurrentY - touchStartY
+          : touchCurrentX - touchStartX;
+
+        var prevElNewSize;
+        var nextElNewSize;
+        if ($prevResizableEl.length) {
+          prevElNewSize = prevElSize + diff;
+          if (prevElNewSize < prevElMinSize) {
+            prevElNewSize = prevElMinSize;
+            diff = prevElNewSize - prevElSize;
+          }
+          if (prevElMaxSize && prevElNewSize > prevElMaxSize) {
+            prevElNewSize = prevElMaxSize;
+            diff = prevElNewSize - prevElSize;
+          }
+        }
+        if ($nextResizableEl.length && resizeNextEl) {
+          nextElNewSize = nextElSize - diff;
+          if (nextElNewSize < nextElMinSize) {
+            nextElNewSize = nextElMinSize;
+            diff = nextElSize - nextElNewSize;
+            prevElNewSize = prevElSize + diff;
+          }
+          if (nextElMaxSize && nextElNewSize > nextElMaxSize) {
+            nextElNewSize = nextElMaxSize;
+            diff = nextElSize - nextElNewSize;
+            prevElNewSize = prevElSize + diff;
+          }
+        }
+
+        if (isAbsolute) {
+          $prevResizableEl[0].style[sizeProp] = prevElNewSize + "px";
+          if (resizeNextEl) {
+            $nextResizableEl[0].style[sizeProp] = nextElNewSize + "px";
+          }
+          $prevResizableEl.trigger('grid:resize');
+          $nextResizableEl.trigger('grid:resize');
+          app.emit('gridResize', $prevResizableEl[0]);
+          app.emit('gridResize', $nextResizableEl[0]);
+          return;
+        }
+
+        var gapAddSize = (itemsInFlow - 1) * gapSize / itemsInFlow;
+        var gapAddSizeCSS = isRow
+          ? ((itemsInFlow - 1) + " * var(--f7-grid-row-gap) / " + itemsInFlow)
+          : '(var(--f7-cols-per-row) - 1) * var(--f7-grid-gap) / var(--f7-cols-per-row)';
+        var prevElNewSizeNormalized = prevElNewSize + gapAddSize;
+        var nextElNewSizeNormalized = nextElNewSize + gapAddSize;
+        $prevResizableEl[0].style[sizeProp] = "calc(" + (prevElNewSizeNormalized / parentSize * 100) + "% - " + gapAddSizeCSS + ")";
+        $nextResizableEl[0].style[sizeProp] = "calc(" + (nextElNewSizeNormalized / parentSize * 100) + "% - " + gapAddSizeCSS + ")";
+        $prevResizableEl.trigger('grid:resize');
+        $nextResizableEl.trigger('grid:resize');
+        app.emit('gridResize', $prevResizableEl[0]);
+        app.emit('gridResize', $nextResizableEl[0]);
+      }
+
+      function handleTouchEnd() {
+        if (!isTouched) { return; }
+        if (!isMoved) {
+          isTouched = false;
+        }
+        isTouched = false;
+        isMoved = false;
+      }
+
+      $(document).on(app.touchEvents.start, '.col > .resize-handler, .row > .resize-handler', handleTouchStart);
+      app.on('touchmove', handleTouchMove);
+      app.on('touchend', handleTouchEnd);
+    },
+  };
+
+  var Grid$1 = {
     name: 'grid',
+    create: function create() {
+      var app = this;
+      Utils.extend(app, {
+        grid: {
+          init: Grid.init.bind(app),
+        },
+      });
+    },
+    on: {
+      init: function init() {
+        var app = this;
+        app.grid.init();
+      },
+    },
   };
 
   var Calendar = /*@__PURE__*/(function (Framework7Class) {
@@ -28377,8 +28583,11 @@
         if (params.slidesPerColumnFill === 'row' && params.slidesPerGroup > 1) {
           var groupIndex = Math.floor(i / (params.slidesPerGroup * params.slidesPerColumn));
           var slideIndexInGroup = i - params.slidesPerColumn * params.slidesPerGroup * groupIndex;
-          row = Math.floor(slideIndexInGroup / params.slidesPerGroup);
-          column = (slideIndexInGroup - row * params.slidesPerGroup) + groupIndex * params.slidesPerGroup;
+          var columnsInGroup = groupIndex === 0
+            ? params.slidesPerGroup
+            : Math.min(Math.ceil((slidesLength - groupIndex * slidesPerColumn * params.slidesPerGroup) / slidesPerColumn), params.slidesPerGroup);
+          row = Math.floor(slideIndexInGroup / columnsInGroup);
+          column = (slideIndexInGroup - row * columnsInGroup) + groupIndex * params.slidesPerGroup;
 
           newSlideOrderIndex = column + ((row * slidesNumberEvenToRows) / slidesPerColumn);
           slide
@@ -28550,14 +28759,28 @@
       } else { slides.filter(slidesForMargin).css({ marginBottom: (spaceBetween + "px") }); }
     }
 
-    if (params.centerInsufficientSlides) {
+    if (params.centeredSlides && params.centeredSlidesBounds) {
       var allSlidesSize = 0;
       slidesSizesGrid.forEach(function (slideSizeValue) {
         allSlidesSize += slideSizeValue + (params.spaceBetween ? params.spaceBetween : 0);
       });
       allSlidesSize -= params.spaceBetween;
-      if (allSlidesSize < swiperSize) {
-        var allSlidesOffset = (swiperSize - allSlidesSize) / 2;
+      var maxSnap = allSlidesSize - swiperSize;
+      snapGrid = snapGrid.map(function (snap) {
+        if (snap < 0) { return -offsetBefore; }
+        if (snap > maxSnap) { return maxSnap + offsetAfter; }
+        return snap;
+      });
+    }
+
+    if (params.centerInsufficientSlides) {
+      var allSlidesSize$1 = 0;
+      slidesSizesGrid.forEach(function (slideSizeValue) {
+        allSlidesSize$1 += slideSizeValue + (params.spaceBetween ? params.spaceBetween : 0);
+      });
+      allSlidesSize$1 -= params.spaceBetween;
+      if (allSlidesSize$1 < swiperSize) {
+        var allSlidesOffset = (swiperSize - allSlidesSize$1) / 2;
         snapGrid.forEach(function (snap, snapIndex) {
           snapGrid[snapIndex] = snap - allSlidesOffset;
         });
@@ -29344,24 +29567,36 @@
   }
 
   /* eslint no-unused-vars: "off" */
-  function slideToClosest (speed, runCallbacks, internal) {
+  function slideToClosest (speed, runCallbacks, internal, threshold) {
     if ( speed === void 0 ) speed = this.params.speed;
     if ( runCallbacks === void 0 ) runCallbacks = true;
+    if ( threshold === void 0 ) threshold = 0.5;
 
     var swiper = this;
     var index = swiper.activeIndex;
     var snapIndex = Math.floor(index / swiper.params.slidesPerGroup);
 
-    if (snapIndex < swiper.snapGrid.length - 1) {
-      var translate = swiper.rtlTranslate ? swiper.translate : -swiper.translate;
+    var translate = swiper.rtlTranslate ? swiper.translate : -swiper.translate;
 
+    if (translate >= swiper.snapGrid[snapIndex]) {
+      // The current translate is on or after the current snap index, so the choice
+      // is between the current index and the one after it.
       var currentSnap = swiper.snapGrid[snapIndex];
       var nextSnap = swiper.snapGrid[snapIndex + 1];
-
-      if ((translate - currentSnap) > (nextSnap - currentSnap) / 2) {
-        index = swiper.params.slidesPerGroup;
+      if ((translate - currentSnap) > (nextSnap - currentSnap) * threshold) {
+        index += swiper.params.slidesPerGroup;
+      }
+    } else {
+      // The current translate is before the current snap index, so the choice
+      // is between the current index and the one before it.
+      var prevSnap = swiper.snapGrid[snapIndex - 1];
+      var currentSnap$1 = swiper.snapGrid[snapIndex];
+      if ((translate - prevSnap) <= (currentSnap$1 - prevSnap) * threshold) {
+        index -= swiper.params.slidesPerGroup;
       }
     }
+    index = Math.max(index, 0);
+    index = Math.min(index, swiper.snapGrid.length - 1);
 
     return swiper.slideTo(index, speed, runCallbacks, internal);
   }
@@ -29468,7 +29703,6 @@
 
   function loopFix () {
     var swiper = this;
-    var params = swiper.params;
     var activeIndex = swiper.activeIndex;
     var slides = swiper.slides;
     var loopedSlides = swiper.loopedSlides;
@@ -29492,7 +29726,7 @@
       if (slideChanged && diff !== 0) {
         swiper.setTranslate((rtl ? -swiper.translate : swiper.translate) - diff);
       }
-    } else if ((params.slidesPerView === 'auto' && activeIndex >= loopedSlides * 2) || (activeIndex >= slides.length - loopedSlides)) {
+    } else if (activeIndex >= slides.length - loopedSlides) {
       // Fix For Positive Oversliding
       newIndex = -slides.length + activeIndex + loopedSlides;
       newIndex += loopedSlides;
@@ -30158,6 +30392,24 @@
           } else {
             momentumDuration = Math.abs((newPosition - swiper.translate) / swiper.velocity);
           }
+          if (params.freeModeSticky) {
+            // If freeModeSticky is active and the user ends a swipe with a slow-velocity
+            // event, then durations can be 20+ seconds to slide one (or zero!) slides.
+            // It's easy to see this when simulating touch with mouse events. To fix this,
+            // limit single-slide swipes to the default slide duration. This also has the
+            // nice side effect of matching slide speed if the user stopped moving before
+            // lifting finger or mouse vs. moving slowly before lifting the finger/mouse.
+            // For faster swipes, also apply limits (albeit higher ones).
+            var moveDistance = Math.abs((rtl ? -newPosition : newPosition) - swiper.translate);
+            var currentSlideSize = swiper.slidesSizesGrid[swiper.activeIndex];
+            if (moveDistance < currentSlideSize) {
+              momentumDuration = params.speed;
+            } else if (moveDistance < 2 * currentSlideSize) {
+              momentumDuration = params.speed * 1.5;
+            } else {
+              momentumDuration = params.speed * 2.5;
+            }
+          }
         } else if (params.freeModeSticky) {
           swiper.slideToClosest();
           return;
@@ -30290,23 +30542,13 @@
     swiper.updateSize();
     swiper.updateSlides();
 
-    if (params.freeMode) {
-      var newTranslate = Math.min(Math.max(swiper.translate, swiper.maxTranslate()), swiper.minTranslate());
-      swiper.setTranslate(newTranslate);
-      swiper.updateActiveIndex();
-      swiper.updateSlidesClasses();
-
-      if (params.autoHeight) {
-        swiper.updateAutoHeight();
-      }
+    swiper.updateSlidesClasses();
+    if ((params.slidesPerView === 'auto' || params.slidesPerView > 1) && swiper.isEnd && !swiper.params.centeredSlides) {
+      swiper.slideTo(swiper.slides.length - 1, 0, false, true);
     } else {
-      swiper.updateSlidesClasses();
-      if ((params.slidesPerView === 'auto' || params.slidesPerView > 1) && swiper.isEnd && !swiper.params.centeredSlides) {
-        swiper.slideTo(swiper.slides.length - 1, 0, false, true);
-      } else {
-        swiper.slideTo(swiper.activeIndex, 0, false, true);
-      }
+      swiper.slideTo(swiper.activeIndex, 0, false, true);
     }
+
     if (swiper.autoplay && swiper.autoplay.running && swiper.autoplay.paused) {
       swiper.autoplay.run();
     }
@@ -30664,9 +30906,16 @@
 
   function checkOverflow() {
     var swiper = this;
+    var params = swiper.params;
     var wasLocked = swiper.isLocked;
+    var lastSlidePosition = swiper.slides.length > 0 && (params.slidesOffsetBefore + (params.spaceBetween * (swiper.slides.length - 1)) + ((swiper.slides[0]).offsetWidth) * swiper.slides.length);
 
-    swiper.isLocked = swiper.snapGrid.length === 1;
+    if (params.slidesOffsetBefore && params.slidesOffsetAfter && lastSlidePosition) {
+      swiper.isLocked = lastSlidePosition <= swiper.size;
+    } else {
+      swiper.isLocked = swiper.snapGrid.length === 1;
+    }
+
     swiper.allowSlideNext = !swiper.isLocked;
     swiper.allowSlidePrev = !swiper.isLocked;
 
@@ -30727,6 +30976,7 @@
     slidesPerColumnFill: 'column',
     slidesPerGroup: 1,
     centeredSlides: false,
+    centeredSlidesBounds: false,
     slidesOffsetBefore: 0, // in px
     slidesOffsetAfter: 0, // in px
     normalizeSlideIndex: true,
@@ -31854,6 +32104,8 @@
   }
   var Mousewheel = {
     lastScrollTime: Utils.now(),
+    lastEventBeforeSnap: undefined,
+    recentWheelEvents: [],
     event: function event() {
       if (win.navigator.userAgent.indexOf('firefox') > -1) { return 'DOMMouseScroll'; }
       return isEventSupported() ? 'wheel' : 'mousewheel';
@@ -31983,39 +32235,104 @@
         swiper.mousewheel.lastScrollTime = (new win.Date()).getTime();
       } else {
         // Freemode or scrollContainer:
-        if (swiper.params.loop) {
-          swiper.loopFix();
-        }
-        var position = swiper.getTranslate() + (delta * params.sensitivity);
-        var wasBeginning = swiper.isBeginning;
-        var wasEnd = swiper.isEnd;
 
-        if (position >= swiper.minTranslate()) { position = swiper.minTranslate(); }
-        if (position <= swiper.maxTranslate()) { position = swiper.maxTranslate(); }
+        // If we recently snapped after a momentum scroll, then ignore wheel events
+        // to give time for the declereration to finish. Stop ignoring after 500 msecs
+        // or if it's a new scroll (larger delta or inverse sign as last event before
+        // an end-of-momentum snap).
+        var newEvent = { time: Utils.now(), delta: Math.abs(delta), direction: Math.sign(delta) };
+        var ref = swiper.mousewheel;
+        var lastEventBeforeSnap = ref.lastEventBeforeSnap;
+        var ignoreWheelEvents = lastEventBeforeSnap
+          && newEvent.time < lastEventBeforeSnap.time + 500
+          && newEvent.delta <= lastEventBeforeSnap.delta
+          && newEvent.direction === lastEventBeforeSnap.direction;
+        if (!ignoreWheelEvents) {
+          swiper.mousewheel.lastEventBeforeSnap = undefined;
 
-        swiper.setTransition(0);
-        swiper.setTranslate(position);
-        swiper.updateProgress();
-        swiper.updateActiveIndex();
-        swiper.updateSlidesClasses();
+          if (swiper.params.loop) {
+            swiper.loopFix();
+          }
+          var position = swiper.getTranslate() + (delta * params.sensitivity);
+          var wasBeginning = swiper.isBeginning;
+          var wasEnd = swiper.isEnd;
 
-        if ((!wasBeginning && swiper.isBeginning) || (!wasEnd && swiper.isEnd)) {
+          if (position >= swiper.minTranslate()) { position = swiper.minTranslate(); }
+          if (position <= swiper.maxTranslate()) { position = swiper.maxTranslate(); }
+
+          swiper.setTransition(0);
+          swiper.setTranslate(position);
+          swiper.updateProgress();
+          swiper.updateActiveIndex();
           swiper.updateSlidesClasses();
-        }
 
-        if (swiper.params.freeModeSticky) {
-          clearTimeout(swiper.mousewheel.timeout);
-          swiper.mousewheel.timeout = Utils.nextTick(function () {
-            swiper.slideToClosest();
-          }, 300);
-        }
-        // Emit event
-        swiper.emit('scroll', e);
+          if ((!wasBeginning && swiper.isBeginning) || (!wasEnd && swiper.isEnd)) {
+            swiper.updateSlidesClasses();
+          }
 
-        // Stop autoplay
-        if (swiper.params.autoplay && swiper.params.autoplayDisableOnInteraction) { swiper.autoplay.stop(); }
-        // Return page scroll on edge positions
-        if (position === swiper.minTranslate() || position === swiper.maxTranslate()) { return true; }
+          if (swiper.params.freeModeSticky) {
+            // When wheel scrolling starts with sticky (aka snap) enabled, then detect
+            // the end of a momentum scroll by storing recent (N=15?) wheel events.
+            // 1. do all N events have decreasing or same (absolute value) delta?
+            // 2. did all N events arrive in the last M (M=500?) msecs?
+            // 3. does the earliest event have an (absolute value) delta that's
+            //    at least P (P=1?) larger than the most recent event's delta?
+            // 4. does the latest event have a delta that's smaller than Q (Q=6?) pixels?
+            // If 1-4 are "yes" then we're near the end of a momuntum scroll deceleration.
+            // Snap immediately and ignore remaining wheel events in this scroll.
+            // See comment above for "remaining wheel events in this scroll" determination.
+            // If 1-4 aren't satisfied, then wait to snap until 500ms after the last event.
+            clearTimeout(swiper.mousewheel.timeout);
+            swiper.mousewheel.timeout = undefined;
+            var recentWheelEvents = swiper.mousewheel.recentWheelEvents;
+            if (recentWheelEvents.length >= 15) {
+              recentWheelEvents.shift(); // only store the last N events
+            }
+            var prevEvent = recentWheelEvents.length ? recentWheelEvents[recentWheelEvents.length - 1] : undefined;
+            var firstEvent = recentWheelEvents[0];
+            recentWheelEvents.push(newEvent);
+            if (prevEvent && (newEvent.delta > prevEvent.delta || newEvent.direction !== prevEvent.direction)) {
+              // Increasing or reverse-sign delta means the user started scrolling again. Clear the wheel event log.
+              recentWheelEvents.splice(0);
+            } else if (recentWheelEvents.length >= 15
+                && newEvent.time - firstEvent.time < 500
+                && firstEvent.delta - newEvent.delta >= 1
+                && newEvent.delta <= 6
+            ) {
+              // We're at the end of the deceleration of a momentum scroll, so there's no need
+              // to wait for more events. Snap ASAP on the next tick.
+              // Also, because there's some remaining momentum we'll bias the snap in the
+              // direction of the ongoing scroll because it's better UX for the scroll to snap
+              // in the same direction as the scroll instead of reversing to snap.  Therefore,
+              // if it's already scrolled more than 20% in the current direction, keep going.
+              var snapToThreshold = delta > 0 ? 0.8 : 0.2;
+              swiper.mousewheel.lastEventBeforeSnap = newEvent;
+              recentWheelEvents.splice(0);
+              swiper.mousewheel.timeout = Utils.nextTick(function () {
+                swiper.slideToClosest(swiper.params.speed, true, undefined, snapToThreshold);
+              }, 0); // no delay; move on next tick
+            }
+            if (!swiper.mousewheel.timeout) {
+              // if we get here, then we haven't detected the end of a momentum scroll, so
+              // we'll consider a scroll "complete" when there haven't been any wheel events
+              // for 500ms.
+              swiper.mousewheel.timeout = Utils.nextTick(function () {
+                var snapToThreshold = 0.5;
+                swiper.mousewheel.lastEventBeforeSnap = newEvent;
+                recentWheelEvents.splice(0);
+                swiper.slideToClosest(swiper.params.speed, true, undefined, snapToThreshold);
+              }, 500);
+            }
+          }
+
+          // Emit event
+          if (!ignoreWheelEvents) { swiper.emit('scroll', e); }
+
+          // Stop autoplay
+          if (swiper.params.autoplay && swiper.params.autoplayDisableOnInteraction) { swiper.autoplay.stop(); }
+          // Return page scroll on edge positions
+          if (position === swiper.minTranslate() || position === swiper.maxTranslate()) { return true; }
+        }
       }
 
       if (e.preventDefault) { e.preventDefault(); }
@@ -32083,6 +32400,8 @@
           handleMouseEnter: Mousewheel.handleMouseEnter.bind(swiper),
           handleMouseLeave: Mousewheel.handleMouseLeave.bind(swiper),
           lastScrollTime: Utils.now(),
+          lastEventBeforeSnap: undefined,
+          recentWheelEvents: [],
         },
       });
     },
@@ -40893,7 +41212,7 @@
     Range$1,
     Stepper$1,
     SmartSelect$1,
-    Grid,
+    Grid$1,
     Calendar$1,
     Picker$1,
     InfiniteScroll$1,
