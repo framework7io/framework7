@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Messsages" back-link="Back"></f7-navbar>
+    <f7-navbar title="Messages" back-link="Back"></f7-navbar>
 
     <f7-messagebar
       :placeholder="placeholder"
