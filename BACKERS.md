@@ -3,6 +3,11 @@
 <table>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://codersrank.io" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/codersrank.svg">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://www.sparheld.de/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/sparheld.jpg">
       </a>
@@ -22,13 +27,13 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/tommy.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.securcom.me/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/securcom.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://writersperhour.com/write-my-paper" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/writersperhour.jpg">
@@ -49,13 +54,13 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/colognewebdesign.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://rise.co" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/rise.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://usave.co.uk/utilities/broadband" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/usave.png">
@@ -76,13 +81,13 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/cyberbrain.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://hicapps.cl/web/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/hicapps.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://blokt.com/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/blokt.png">
@@ -93,7 +98,6 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
-    <td></td>
     <td></td>
     <td></td>
   </tr>
@@ -114,6 +118,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ---
 
 ### $250 Gold Sponsor
+[CodersRank](https://codersrank.io) - CodersRank - Ultimate Profile For Coders
 [Sparheld.de](https://www.sparheld.de/) - Sparheld.de - save shopping online
 Steven Roussey<br>
 [Join here!](https://www.patreon.com/bePatron?patAmt=250.0&exp=1&u=4109762&rid=830877)
