@@ -105,7 +105,7 @@ export default class extends React.Component {
   render() {
     return (
       <Page>
-        <Navbar title="Messsages" backLink="Back"></Navbar>
+        <Navbar title="Messages" backLink="Back"></Navbar>
 
         <Messagebar
           placeholder={this.placeholder}
