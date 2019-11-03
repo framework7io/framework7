@@ -1,21 +1,3 @@
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
 import React from 'react';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
@@ -24,165 +6,142 @@ import __reactComponentDispatchEvent from '../runtime-helpers/react-component-di
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
 
-var F7Range =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(F7Range, _React$Component);
-
-  function F7Range(props, context) {
-    var _this;
-
-    _classCallCheck(this, F7Range);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(F7Range).call(this, props, context));
-    _this.__reactRefs = {};
-    return _this;
+class F7Range extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.__reactRefs = {};
   }
 
-  _createClass(F7Range, [{
-    key: "setValue",
-    value: function setValue(newValue) {
-      var self = this;
-      if (self.f7Range && self.f7Range.setValue) self.f7Range.setValue(newValue);
-    }
-  }, {
-    key: "getValue",
-    value: function getValue() {
-      var self = this;
+  setValue(newValue) {
+    const self = this;
+    if (self.f7Range && self.f7Range.setValue) self.f7Range.setValue(newValue);
+  }
 
-      if (self.f7Range && self.f7Range.getValue) {
-        return self.f7Range.getValue();
-      }
+  getValue() {
+    const self = this;
 
-      return undefined;
+    if (self.f7Range && self.f7Range.getValue) {
+      return self.f7Range.getValue();
     }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this2 = this;
 
-      var self = this;
-      var props = self.props;
-      var _self$props = self.props,
-          id = _self$props.id,
-          disabled = _self$props.disabled,
-          className = _self$props.className,
-          style = _self$props.style,
-          input = _self$props.input,
-          inputId = _self$props.inputId,
-          name = _self$props.name,
-          vertical = _self$props.vertical,
-          verticalReversed = _self$props.verticalReversed;
-      var classes = Utils.classNames(className, 'range-slider', {
-        'range-slider-horizontal': !vertical,
-        'range-slider-vertical': vertical,
-        'range-slider-vertical-reversed': vertical && verticalReversed,
-        disabled: disabled
-      }, Mixins.colorClasses(props));
-      return React.createElement('div', {
-        ref: function ref(__reactNode) {
-          _this2.__reactRefs['el'] = __reactNode;
-        },
-        id: id,
-        style: style,
-        className: classes
-      }, input && React.createElement('input', {
-        type: 'range',
-        name: name,
-        id: inputId
-      }), this.slots['default']);
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      var self = this;
-      if (self.f7Range && self.f7Range.destroy) self.f7Range.destroy();
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var self = this;
-      self.$f7ready(function (f7) {
-        if (!self.props.init) return;
-        var props = self.props;
-        var value = props.value,
-            min = props.min,
-            max = props.max,
-            step = props.step,
-            label = props.label,
-            dual = props.dual,
-            draggableBar = props.draggableBar,
-            vertical = props.vertical,
-            verticalReversed = props.verticalReversed,
-            formatLabel = props.formatLabel,
-            scale = props.scale,
-            scaleSteps = props.scaleSteps,
-            scaleSubSteps = props.scaleSubSteps,
-            formatScaleLabel = props.formatScaleLabel,
-            limitKnobPosition = props.limitKnobPosition;
-        self.f7Range = f7.range.create(Utils.noUndefinedProps({
-          el: self.refs.el,
-          value: value,
-          min: min,
-          max: max,
-          step: step,
-          label: label,
-          dual: dual,
-          draggableBar: draggableBar,
-          vertical: vertical,
-          verticalReversed: verticalReversed,
-          formatLabel: formatLabel,
-          scale: scale,
-          scaleSteps: scaleSteps,
-          scaleSubSteps: scaleSubSteps,
-          formatScaleLabel: formatScaleLabel,
-          limitKnobPosition: limitKnobPosition,
-          on: {
-            change: function change(range, val) {
-              self.dispatchEvent('range:change rangeChange', val);
-            },
-            changed: function changed(range, val) {
-              self.dispatchEvent('range:changed rangeChanged', val);
-            }
+    return undefined;
+  }
+
+  render() {
+    const self = this;
+    const props = self.props;
+    const {
+      id,
+      disabled,
+      className,
+      style,
+      input,
+      inputId,
+      name,
+      vertical,
+      verticalReversed
+    } = self.props;
+    const classes = Utils.classNames(className, 'range-slider', {
+      'range-slider-horizontal': !vertical,
+      'range-slider-vertical': vertical,
+      'range-slider-vertical-reversed': vertical && verticalReversed,
+      disabled
+    }, Mixins.colorClasses(props));
+    return React.createElement('div', {
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
+      id: id,
+      style: style,
+      className: classes
+    }, input && React.createElement('input', {
+      type: 'range',
+      name: name,
+      id: inputId
+    }), this.slots['default']);
+  }
+
+  componentWillUnmount() {
+    const self = this;
+    if (self.f7Range && self.f7Range.destroy) self.f7Range.destroy();
+  }
+
+  componentDidMount() {
+    const self = this;
+    self.$f7ready(f7 => {
+      if (!self.props.init) return;
+      const props = self.props;
+      const {
+        value,
+        min,
+        max,
+        step,
+        label,
+        dual,
+        draggableBar,
+        vertical,
+        verticalReversed,
+        formatLabel,
+        scale,
+        scaleSteps,
+        scaleSubSteps,
+        formatScaleLabel,
+        limitKnobPosition
+      } = props;
+      self.f7Range = f7.range.create(Utils.noUndefinedProps({
+        el: self.refs.el,
+        value,
+        min,
+        max,
+        step,
+        label,
+        dual,
+        draggableBar,
+        vertical,
+        verticalReversed,
+        formatLabel,
+        scale,
+        scaleSteps,
+        scaleSubSteps,
+        formatScaleLabel,
+        limitKnobPosition,
+        on: {
+          change(range, val) {
+            self.dispatchEvent('range:change rangeChange', val);
+          },
+
+          changed(range, val) {
+            self.dispatchEvent('range:changed rangeChanged', val);
           }
-        }));
-      });
-    }
-  }, {
-    key: "dispatchEvent",
-    value: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps, prevState) {
-      var _this3 = this;
+        }
+      }));
+    });
+  }
 
-      __reactComponentWatch(this, 'props.value', prevProps, prevState, function (newValue) {
-        var self = _this3;
-        if (!self.f7Range) return;
-        self.f7Range.setValue(newValue);
-      });
-    }
-  }, {
-    key: "slots",
-    get: function get() {
-      return __reactComponentSlots(this.props);
-    }
-  }, {
-    key: "refs",
-    get: function get() {
-      return this.__reactRefs;
-    },
-    set: function set(refs) {}
-  }]);
+  get slots() {
+    return __reactComponentSlots(this.props);
+  }
 
-  return F7Range;
-}(React.Component);
+  dispatchEvent(events, ...args) {
+    return __reactComponentDispatchEvent(this, events, ...args);
+  }
+
+  get refs() {
+    return this.__reactRefs;
+  }
+
+  set refs(refs) {}
+
+  componentDidUpdate(prevProps, prevState) {
+    __reactComponentWatch(this, 'props.value', prevProps, prevState, newValue => {
+      const self = this;
+      if (!self.f7Range) return;
+      self.f7Range.setValue(newValue);
+    });
+  }
+
+}
 
 __reactComponentSetProps(F7Range, Object.assign({
   id: [String, Number],

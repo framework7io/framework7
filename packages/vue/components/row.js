@@ -19,23 +19,26 @@ export default {
       default: true
     }
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = self.props;
-    var className = props.className,
-        id = props.id,
-        style = props.style,
-        tag = props.tag,
-        noGap = props.noGap,
-        resizable = props.resizable,
-        resizableFixed = props.resizableFixed,
-        resizableAbsolute = props.resizableAbsolute,
-        resizableHandler = props.resizableHandler;
-    var RowTag = tag;
-    var classes = Utils.classNames(className, 'row', {
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = self.props;
+    const {
+      className,
+      id,
+      style,
+      tag,
+      noGap,
+      resizable,
+      resizableFixed,
+      resizableAbsolute,
+      resizableHandler
+    } = props;
+    const RowTag = tag;
+    const classes = Utils.classNames(className, 'row', {
       'no-gap': noGap,
-      resizable: resizable,
+      resizable,
       'resizable-fixed': resizableFixed,
       'resizable-absolute': resizableAbsolute
     }, Mixins.colorClasses(props));
@@ -50,45 +53,49 @@ export default {
       class: 'resize-handler'
     })]);
   },
-  created: function created() {
+
+  created() {
     Utils.bindMethods(this, ['onClick', 'onResize']);
   },
-  mounted: function mounted() {
-    var self = this;
+
+  mounted() {
+    const self = this;
     self.eventTargetEl = self.$refs.el;
     self.eventTargetEl.addEventListener('click', self.onClick);
-    self.$f7ready(function (f7) {
+    self.$f7ready(f7 => {
       f7.on('gridResize', self.onResize);
     });
   },
-  beforeDestroy: function beforeDestroy() {
-    var self = this;
-    var el = self.$refs.el;
+
+  beforeDestroy() {
+    const self = this;
+    const el = self.$refs.el;
     if (!el || !self.$f7) return;
     el.removeEventListener('click', self.onClick);
     self.$f7.off('gridResize', self.onResize);
     delete self.eventTargetEl;
   },
+
   methods: {
-    onClick: function onClick(event) {
+    onClick(event) {
       this.dispatchEvent('click', event);
     },
-    onResize: function onResize(el) {
+
+    onResize(el) {
       if (el === this.eventTargetEl) {
         this.dispatchEvent('grid:resize gridResize');
       }
     },
-    dispatchEvent: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     }
+
   },
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

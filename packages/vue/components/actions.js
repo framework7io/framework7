@@ -17,15 +17,18 @@ export default {
     closeByOutsideClick: Boolean,
     closeOnEscape: Boolean
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = self.props;
-    var className = props.className,
-        id = props.id,
-        style = props.style,
-        grid = props.grid;
-    var classes = Utils.classNames(className, 'actions-modal', {
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = self.props;
+    const {
+      className,
+      id,
+      style,
+      grid
+    } = props;
+    const classes = Utils.classNames(className, 'actions-modal', {
       'actions-grid': grid
     }, Mixins.colorClasses(props));
     return _h('div', {
@@ -37,9 +40,10 @@ export default {
       }
     }, [this.$slots['default']]);
   },
+
   watch: {
     'props.opened': function watchOpened(opened) {
-      var self = this;
+      const self = this;
       if (!self.f7Actions) return;
 
       if (opened) {
@@ -49,27 +53,31 @@ export default {
       }
     }
   },
-  created: function created() {
+
+  created() {
     Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed']);
   },
-  mounted: function mounted() {
-    var self = this;
-    var el = self.$refs.el;
+
+  mounted() {
+    const self = this;
+    const el = self.$refs.el;
     if (!el) return;
-    var props = self.props;
-    var grid = props.grid,
-        target = props.target,
-        convertToPopover = props.convertToPopover,
-        forceToPopover = props.forceToPopover,
-        opened = props.opened,
-        closeByBackdropClick = props.closeByBackdropClick,
-        closeByOutsideClick = props.closeByOutsideClick,
-        closeOnEscape = props.closeOnEscape,
-        backdrop = props.backdrop,
-        backdropEl = props.backdropEl;
-    var actionsParams = {
-      el: el,
-      grid: grid,
+    const props = self.props;
+    const {
+      grid,
+      target,
+      convertToPopover,
+      forceToPopover,
+      opened,
+      closeByBackdropClick,
+      closeByOutsideClick,
+      closeOnEscape,
+      backdrop,
+      backdropEl
+    } = props;
+    const actionsParams = {
+      el,
+      grid,
       on: {
         open: self.onOpen,
         opened: self.onOpened,
@@ -79,7 +87,7 @@ export default {
     };
     if (target) actionsParams.targetEl = target;
     {
-      var propsData = self.$options.propsData;
+      const propsData = self.$options.propsData;
       if (typeof propsData.convertToPopover !== 'undefined') actionsParams.convertToPopover = convertToPopover;
       if (typeof propsData.forceToPopover !== 'undefined') actionsParams.forceToPopover = forceToPopover;
       if (typeof propsData.backdrop !== 'undefined') actionsParams.backdrop = backdrop;
@@ -88,7 +96,7 @@ export default {
       if (typeof propsData.closeByOutsideClick !== 'undefined') actionsParams.closeByOutsideClick = closeByOutsideClick;
       if (typeof propsData.closeOnEscape !== 'undefined') actionsParams.closeOnEscape = closeOnEscape;
     }
-    self.$f7ready(function () {
+    self.$f7ready(() => {
       self.f7Actions = self.$f7.actions.create(actionsParams);
 
       if (opened) {
@@ -96,45 +104,51 @@ export default {
       }
     });
   },
-  beforeDestroy: function beforeDestroy() {
-    var self = this;
+
+  beforeDestroy() {
+    const self = this;
     if (self.f7Actions) self.f7Actions.destroy();
     delete self.f7Actions;
   },
+
   methods: {
-    onOpen: function onOpen(instance) {
+    onOpen(instance) {
       this.dispatchEvent('actions:open actionsOpen', instance);
     },
-    onOpened: function onOpened(instance) {
+
+    onOpened(instance) {
       this.dispatchEvent('actions:opened actionsOpened', instance);
     },
-    onClose: function onClose(instance) {
+
+    onClose(instance) {
       this.dispatchEvent('actions:close actionsClose', instance);
     },
-    onClosed: function onClosed(instance) {
+
+    onClosed(instance) {
       this.dispatchEvent('actions:closed actionsClosed', instance);
     },
-    open: function open(animate) {
-      var self = this;
+
+    open(animate) {
+      const self = this;
       if (!self.f7Actions) return undefined;
       return self.f7Actions.open(animate);
     },
-    close: function close(animate) {
-      var self = this;
+
+    close(animate) {
+      const self = this;
       if (!self.f7Actions) return undefined;
       return self.f7Actions.close(animate);
     },
-    dispatchEvent: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     }
+
   },
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

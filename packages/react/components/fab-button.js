@@ -1,21 +1,3 @@
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
 import React from 'react';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
@@ -24,142 +6,118 @@ import __reactComponentDispatchEvent from '../runtime-helpers/react-component-di
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
 
-var F7FabButton =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(F7FabButton, _React$Component);
+class F7FabButton extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.__reactRefs = {};
 
-  function F7FabButton(props, context) {
-    var _this;
-
-    _classCallCheck(this, F7FabButton);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(F7FabButton).call(this, props, context));
-    _this.__reactRefs = {};
-
-    (function () {
-      Utils.bindMethods(_assertThisInitialized(_this), ['onClick']);
+    (() => {
+      Utils.bindMethods(this, ['onClick']);
     })();
-
-    return _this;
   }
 
-  _createClass(F7FabButton, [{
-    key: "onClick",
-    value: function onClick(event) {
-      this.dispatchEvent('click', event);
+  onClick(event) {
+    this.dispatchEvent('click', event);
+  }
+
+  render() {
+    const props = this.props;
+    const {
+      className,
+      id,
+      style,
+      fabClose,
+      label,
+      target
+    } = props;
+    const classes = Utils.classNames(className, {
+      'fab-close': fabClose,
+      'fab-label-button': label
+    }, Mixins.colorClasses(props));
+    let labelEl;
+
+    if (label) {
+      labelEl = React.createElement('span', {
+        className: 'fab-label'
+      }, label);
     }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this2 = this;
 
-      var props = this.props;
-      var className = props.className,
-          id = props.id,
-          style = props.style,
-          fabClose = props.fabClose,
-          label = props.label,
-          target = props.target;
-      var classes = Utils.classNames(className, {
-        'fab-close': fabClose,
-        'fab-label-button': label
-      }, Mixins.colorClasses(props));
-      var labelEl;
+    return React.createElement('a', {
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
+      id: id,
+      style: style,
+      target: target,
+      className: classes
+    }, this.slots['default'], labelEl);
+  }
 
-      if (label) {
-        labelEl = React.createElement('span', {
-          className: 'fab-label'
-        }, label);
-      }
+  componentWillUnmount() {
+    const self = this;
+    self.refs.el.removeEventListener('click', self.onClick);
 
-      return React.createElement('a', {
-        ref: function ref(__reactNode) {
-          _this2.__reactRefs['el'] = __reactNode;
-        },
-        id: id,
-        style: style,
-        target: target,
-        className: classes
-      }, this.slots['default'], labelEl);
+    if (self.f7Tooltip && self.f7Tooltip.destroy) {
+      self.f7Tooltip.destroy();
+      self.f7Tooltip = null;
+      delete self.f7Tooltip;
     }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      var self = this;
-      self.refs.el.removeEventListener('click', self.onClick);
+  }
 
-      if (self.f7Tooltip && self.f7Tooltip.destroy) {
+  componentDidMount() {
+    const self = this;
+    self.refs.el.addEventListener('click', self.onClick);
+    const {
+      tooltip
+    } = self.props;
+    if (!tooltip) return;
+    self.$f7ready(f7 => {
+      self.f7Tooltip = f7.tooltip.create({
+        targetEl: self.refs.el,
+        text: tooltip
+      });
+    });
+  }
+
+  get slots() {
+    return __reactComponentSlots(this.props);
+  }
+
+  dispatchEvent(events, ...args) {
+    return __reactComponentDispatchEvent(this, events, ...args);
+  }
+
+  get refs() {
+    return this.__reactRefs;
+  }
+
+  set refs(refs) {}
+
+  componentDidUpdate(prevProps, prevState) {
+    __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, newText => {
+      const self = this;
+
+      if (!newText && self.f7Tooltip) {
         self.f7Tooltip.destroy();
         self.f7Tooltip = null;
         delete self.f7Tooltip;
+        return;
       }
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var self = this;
-      self.refs.el.addEventListener('click', self.onClick);
-      var tooltip = self.props.tooltip;
-      if (!tooltip) return;
-      self.$f7ready(function (f7) {
-        self.f7Tooltip = f7.tooltip.create({
+
+      if (newText && !self.f7Tooltip && self.$f7) {
+        self.f7Tooltip = self.$f7.tooltip.create({
           targetEl: self.refs.el,
-          text: tooltip
+          text: newText
         });
-      });
-    }
-  }, {
-    key: "dispatchEvent",
-    value: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
+        return;
       }
 
-      return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps, prevState) {
-      var _this3 = this;
+      if (!newText || !self.f7Tooltip) return;
+      self.f7Tooltip.setText(newText);
+    });
+  }
 
-      __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
-        var self = _this3;
-
-        if (!newText && self.f7Tooltip) {
-          self.f7Tooltip.destroy();
-          self.f7Tooltip = null;
-          delete self.f7Tooltip;
-          return;
-        }
-
-        if (newText && !self.f7Tooltip && self.$f7) {
-          self.f7Tooltip = self.$f7.tooltip.create({
-            targetEl: self.refs.el,
-            text: newText
-          });
-          return;
-        }
-
-        if (!newText || !self.f7Tooltip) return;
-        self.f7Tooltip.setText(newText);
-      });
-    }
-  }, {
-    key: "slots",
-    get: function get() {
-      return __reactComponentSlots(this.props);
-    }
-  }, {
-    key: "refs",
-    get: function get() {
-      return this.__reactRefs;
-    },
-    set: function set(refs) {}
-  }]);
-
-  return F7FabButton;
-}(React.Component);
+}
 
 __reactComponentSetProps(F7FabButton, Object.assign({
   id: [String, Number],

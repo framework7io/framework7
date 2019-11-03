@@ -6,14 +6,17 @@ export default {
     id: [String, Number],
     zoom: Boolean
   },
-  render: function render() {
-    var _h = this.$createElement;
-    var props = this.props;
-    var className = props.className,
-        id = props.id,
-        style = props.style,
-        zoom = props.zoom;
-    var classes = Utils.classNames(className, 'swiper-slide');
+
+  render() {
+    const _h = this.$createElement;
+    const props = this.props;
+    const {
+      className,
+      id,
+      style,
+      zoom
+    } = props;
+    const classes = Utils.classNames(className, 'swiper-slide');
     return _h('div', {
       style: style,
       class: classes,
@@ -24,9 +27,11 @@ export default {
       class: 'swiper-zoom-container'
     }, [this.$slots['default']]) : this.$slots['default']]);
   },
+
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

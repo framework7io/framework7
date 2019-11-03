@@ -10,14 +10,17 @@ export default {
     params: Object,
     routes: Array
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = self.props;
-    var id = props.id,
-        style = props.style,
-        className = props.className;
-    var classes = Utils.classNames(className, 'framework7-root', Mixins.colorClasses(props));
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = self.props;
+    const {
+      id,
+      style,
+      className
+    } = props;
+    const classes = Utils.classNames(className, 'framework7-root', Mixins.colorClasses(props));
     return _h('div', {
       ref: 'el',
       style: style,
@@ -27,14 +30,15 @@ export default {
       }
     }, [this.$slots['default'], _h(RoutableModals)]);
   },
-  mounted: function mounted() {
-    var self = this;
-    var _self$props = self.props,
-        _self$props$params = _self$props.params,
-        params = _self$props$params === void 0 ? {} : _self$props$params,
-        routes = _self$props.routes;
-    var el = self.$refs.el;
-    var parentEl = el.parentNode;
+
+  mounted() {
+    const self = this;
+    const {
+      params = {},
+      routes
+    } = self.props;
+    const el = self.$refs.el;
+    const parentEl = el.parentNode;
 
     if (parentEl && parentEl !== document.body && parentEl.parentNode === document.body) {
       parentEl.style.height = '100%';
@@ -42,9 +46,11 @@ export default {
 
     f7.init(el, params, routes);
   },
+
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

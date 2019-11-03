@@ -55,17 +55,16 @@ export default {
       default: true
     }
   }, Mixins.colorProps),
-  data: function data() {
-    var _this = this;
 
-    var props = __vueComponentProps(this);
+  data() {
+    const props = __vueComponentProps(this);
 
-    var state = function () {
-      var self = _this;
-      var $f7 = self.$f7;
+    const state = (() => {
+      const self = this;
+      const $f7 = self.$f7;
 
       if (!$f7) {
-        self.$f7ready(function () {
+        self.$f7ready(() => {
           self.setState({
             _theme: self.$theme
           });
@@ -75,39 +74,42 @@ export default {
       return {
         _theme: $f7 ? self.$theme : null
       };
-    }();
+    })();
 
     return {
-      state: state
+      state
     };
   },
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = self.props;
-    var id = props.id,
-        style = props.style,
-        className = props.className,
-        inner = props.inner,
-        tabbar = props.tabbar,
-        labels = props.labels,
-        scrollable = props.scrollable,
-        hidden = props.hidden,
-        noShadow = props.noShadow,
-        noHairline = props.noHairline,
-        noBorder = props.noBorder,
-        topMd = props.topMd,
-        topIos = props.topIos,
-        topAurora = props.topAurora,
-        top = props.top,
-        bottomMd = props.bottomMd,
-        bottomIos = props.bottomIos,
-        bottomAurora = props.bottomAurora,
-        bottom = props.bottom,
-        position = props.position;
-    var theme = self.state._theme;
-    var classes = Utils.classNames(className, 'toolbar', {
-      tabbar: tabbar,
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = self.props;
+    const {
+      id,
+      style,
+      className,
+      inner,
+      tabbar,
+      labels,
+      scrollable,
+      hidden,
+      noShadow,
+      noHairline,
+      noBorder,
+      topMd,
+      topIos,
+      topAurora,
+      top,
+      bottomMd,
+      bottomIos,
+      bottomAurora,
+      bottom,
+      position
+    } = props;
+    const theme = self.state._theme;
+    const classes = Utils.classNames(className, 'toolbar', {
+      tabbar,
       'toolbar-bottom': theme && theme.md && bottomMd || theme && theme.ios && bottomIos || theme && theme.aurora && bottomAurora || bottom || position === 'bottom',
       'toolbar-top': theme && theme.md && topMd || theme && theme.ios && topIos || theme && theme.aurora && topAurora || top || position === 'top',
       'tabbar-labels': labels,
@@ -127,70 +129,82 @@ export default {
       class: 'toolbar-inner'
     }, [this.$slots['default']]) : this.$slots['default'], this.$slots['after-inner']]);
   },
-  created: function created() {
+
+  created() {
     Utils.bindMethods(this, ['onHide', 'onShow']);
   },
-  updated: function updated() {
-    var self = this;
+
+  updated() {
+    const self = this;
 
     if (self.props.tabbar && self.$f7) {
       self.$f7.toolbar.setHighlight(self.$refs.el);
     }
   },
-  mounted: function mounted() {
-    var self = this;
-    var el = self.$refs.el;
+
+  mounted() {
+    const self = this;
+    const {
+      el
+    } = self.$refs;
     if (!el) return;
-    self.$f7ready(function (f7) {
+    self.$f7ready(f7 => {
       self.eventTargetEl = el;
       if (self.props.tabbar) f7.toolbar.setHighlight(el);
       f7.on('toolbarShow', self.onShow);
       f7.on('toolbarHide', self.onHide);
     });
   },
-  beforeDestroy: function beforeDestroy() {
-    var self = this;
-    var el = self.$refs.el;
+
+  beforeDestroy() {
+    const self = this;
+    const {
+      el
+    } = self.$refs;
     if (!el || !self.$f7) return;
-    var f7 = self.$f7;
+    const f7 = self.$f7;
     f7.off('toolbarShow', self.onShow);
     f7.off('toolbarHide', self.onHide);
     self.eventTargetEl = null;
     delete self.eventTargetEl;
   },
+
   methods: {
-    onHide: function onHide(navbarEl) {
+    onHide(navbarEl) {
       if (this.eventTargetEl !== navbarEl) return;
       this.dispatchEvent('toolbar:hide toolbarHide');
     },
-    onShow: function onShow(navbarEl) {
+
+    onShow(navbarEl) {
       if (this.eventTargetEl !== navbarEl) return;
       this.dispatchEvent('toolbar:show toolbarShow');
     },
-    hide: function hide(animate) {
-      var self = this;
+
+    hide(animate) {
+      const self = this;
       if (!self.$f7) return;
       self.$f7.toolbar.hide(this.$refs.el, animate);
     },
-    show: function show(animate) {
-      var self = this;
+
+    show(animate) {
+      const self = this;
       if (!self.$f7) return;
       self.$f7.toolbar.show(this.$refs.el, animate);
     },
-    dispatchEvent: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     },
-    setState: function setState(updater, callback) {
+
+    setState(updater, callback) {
       __vueComponentSetState(this, updater, callback);
     }
+
   },
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

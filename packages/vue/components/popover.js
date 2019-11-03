@@ -14,14 +14,17 @@ export default {
     closeByOutsideClick: Boolean,
     closeOnEscape: Boolean
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = self.props;
-    var className = props.className,
-        id = props.id,
-        style = props.style;
-    var classes = Utils.classNames(className, 'popover', Mixins.colorClasses(props));
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = self.props;
+    const {
+      className,
+      id,
+      style
+    } = props;
+    const classes = Utils.classNames(className, 'popover', Mixins.colorClasses(props));
     return _h('div', {
       ref: 'el',
       style: style,
@@ -35,9 +38,10 @@ export default {
       class: 'popover-inner'
     }, [this.$slots['default']])]);
   },
+
   watch: {
     'props.opened': function watchOpened(opened) {
-      var self = this;
+      const self = this;
       if (!self.f7Popover) return;
 
       if (opened) {
@@ -47,23 +51,27 @@ export default {
       }
     }
   },
-  created: function created() {
+
+  created() {
     Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed']);
   },
-  mounted: function mounted() {
-    var self = this;
-    var el = self.$refs.el;
+
+  mounted() {
+    const self = this;
+    const el = self.$refs.el;
     if (!el) return;
-    var props = self.props;
-    var target = props.target,
-        opened = props.opened,
-        backdrop = props.backdrop,
-        backdropEl = props.backdropEl,
-        closeByBackdropClick = props.closeByBackdropClick,
-        closeByOutsideClick = props.closeByOutsideClick,
-        closeOnEscape = props.closeOnEscape;
-    var popoverParams = {
-      el: el,
+    const props = self.props;
+    const {
+      target,
+      opened,
+      backdrop,
+      backdropEl,
+      closeByBackdropClick,
+      closeByOutsideClick,
+      closeOnEscape
+    } = props;
+    const popoverParams = {
+      el,
       on: {
         open: self.onOpen,
         opened: self.onOpened,
@@ -73,14 +81,14 @@ export default {
     };
     if (target) popoverParams.targetEl = target;
     {
-      var propsData = self.$options.propsData;
+      const propsData = self.$options.propsData;
       if (typeof propsData.closeByBackdropClick !== 'undefined') popoverParams.closeByBackdropClick = closeByBackdropClick;
       if (typeof propsData.closeByOutsideClick !== 'undefined') popoverParams.closeByOutsideClick = closeByOutsideClick;
       if (typeof propsData.closeOnEscape !== 'undefined') popoverParams.closeOnEscape = closeOnEscape;
       if (typeof propsData.backdrop !== 'undefined') popoverParams.backdrop = backdrop;
       if (typeof propsData.backdropEl !== 'undefined') popoverParams.backdropEl = backdropEl;
     }
-    self.$f7ready(function () {
+    self.$f7ready(() => {
       self.f7Popover = self.$f7.popover.create(popoverParams);
 
       if (opened && target) {
@@ -88,44 +96,50 @@ export default {
       }
     });
   },
-  beforeDestroy: function beforeDestroy() {
-    var self = this;
+
+  beforeDestroy() {
+    const self = this;
     if (self.f7Popover) self.f7Popover.destroy();
   },
+
   methods: {
-    onOpen: function onOpen(instance) {
+    onOpen(instance) {
       this.dispatchEvent('popover:open popoverOpen', instance);
     },
-    onOpened: function onOpened(instance) {
+
+    onOpened(instance) {
       this.dispatchEvent('popover:opened popoverOpened', instance);
     },
-    onClose: function onClose(instance) {
+
+    onClose(instance) {
       this.dispatchEvent('popover:close popoverClose', instance);
     },
-    onClosed: function onClosed(instance) {
+
+    onClosed(instance) {
       this.dispatchEvent('popover:closed popoverClosed', instance);
     },
-    open: function open(animate) {
-      var self = this;
+
+    open(animate) {
+      const self = this;
       if (!self.f7Popover) return undefined;
       return self.f7Popover.open(animate);
     },
-    close: function close(animate) {
-      var self = this;
+
+    close(animate) {
+      const self = this;
       if (!self.f7Popover) return undefined;
       return self.f7Popover.close(animate);
     },
-    dispatchEvent: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     }
+
   },
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

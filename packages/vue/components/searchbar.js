@@ -98,25 +98,28 @@ export default {
       default: true
     }
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var clearEl;
-    var disableEl;
-    var props = self.props;
-    var placeholder = props.placeholder,
-        clearButton = props.clearButton,
-        disableButton = props.disableButton,
-        disableButtonText = props.disableButtonText,
-        form = props.form,
-        noShadow = props.noShadow,
-        noHairline = props.noHairline,
-        expandable = props.expandable,
-        className = props.className,
-        style = props.style,
-        id = props.id,
-        value = props.value,
-        inline = props.inline;
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    let clearEl;
+    let disableEl;
+    const props = self.props;
+    const {
+      placeholder,
+      clearButton,
+      disableButton,
+      disableButtonText,
+      form,
+      noShadow,
+      noHairline,
+      expandable,
+      className,
+      style,
+      id,
+      value,
+      inline
+    } = props;
 
     if (clearButton) {
       clearEl = _h('span', {
@@ -132,19 +135,19 @@ export default {
       }, [disableButtonText]);
     }
 
-    var SearchbarTag = form ? 'form' : 'div';
-    var classes = Utils.classNames(className, 'searchbar', {
+    const SearchbarTag = form ? 'form' : 'div';
+    const classes = Utils.classNames(className, 'searchbar', {
       'searchbar-inline': inline,
       'no-shadow': noShadow,
       'no-hairline': noHairline,
       'searchbar-expandable': expandable
     }, Mixins.colorClasses(props));
-    var inputEl;
+    let inputEl;
     {
       inputEl = _h('input', {
         ref: 'inputEl',
         domProps: {
-          value: value
+          value
         },
         on: {
           input: self.onInput,
@@ -173,38 +176,42 @@ export default {
       class: 'searchbar-icon'
     }), clearEl, this.$slots['input-wrap-end']]), disableEl, this.$slots['inner-end'], this.$slots['default']]), this.$slots['after-inner']]);
   },
-  created: function created() {
+
+  created() {
     Utils.bindMethods(this, ['onSubmit', 'onClearButtonClick', 'onDisableButtonClick', 'onInput', 'onChange', 'onFocus', 'onBlur']);
   },
-  mounted: function mounted() {
-    var self = this;
-    var _self$props = self.props,
-        init = _self$props.init,
-        inputEvents = _self$props.inputEvents,
-        searchContainer = _self$props.searchContainer,
-        searchIn = _self$props.searchIn,
-        searchItem = _self$props.searchItem,
-        searchGroup = _self$props.searchGroup,
-        searchGroupTitle = _self$props.searchGroupTitle,
-        hideOnEnableEl = _self$props.hideOnEnableEl,
-        hideOnSearchEl = _self$props.hideOnSearchEl,
-        foundEl = _self$props.foundEl,
-        notFoundEl = _self$props.notFoundEl,
-        backdrop = _self$props.backdrop,
-        backdropEl = _self$props.backdropEl,
-        disableButton = _self$props.disableButton,
-        ignore = _self$props.ignore,
-        customSearch = _self$props.customSearch,
-        removeDiacritics = _self$props.removeDiacritics,
-        hideDividers = _self$props.hideDividers,
-        hideGroups = _self$props.hideGroups,
-        form = _self$props.form,
-        expandable = _self$props.expandable,
-        inline = _self$props.inline;
-    var _self$$refs = self.$refs,
-        el = _self$$refs.el,
-        clearEl = _self$$refs.clearEl,
-        disableEl = _self$$refs.disableEl;
+
+  mounted() {
+    const self = this;
+    const {
+      init,
+      inputEvents,
+      searchContainer,
+      searchIn,
+      searchItem,
+      searchGroup,
+      searchGroupTitle,
+      hideOnEnableEl,
+      hideOnSearchEl,
+      foundEl,
+      notFoundEl,
+      backdrop,
+      backdropEl,
+      disableButton,
+      ignore,
+      customSearch,
+      removeDiacritics,
+      hideDividers,
+      hideGroups,
+      form,
+      expandable,
+      inline
+    } = self.props;
+    const {
+      el,
+      clearEl,
+      disableEl
+    } = self.$refs;
 
     if (form && el) {
       el.addEventListener('submit', self.onSubmit, false);
@@ -219,45 +226,49 @@ export default {
     }
 
     if (!init) return;
-    self.$f7ready(function () {
-      var params = Utils.noUndefinedProps({
+    self.$f7ready(() => {
+      const params = Utils.noUndefinedProps({
         el: self.$refs.el,
-        inputEvents: inputEvents,
-        searchContainer: searchContainer,
-        searchIn: searchIn,
-        searchItem: searchItem,
-        searchGroup: searchGroup,
-        searchGroupTitle: searchGroupTitle,
-        hideOnEnableEl: hideOnEnableEl,
-        hideOnSearchEl: hideOnSearchEl,
-        foundEl: foundEl,
-        notFoundEl: notFoundEl,
-        backdrop: backdrop,
-        backdropEl: backdropEl,
-        disableButton: disableButton,
-        ignore: ignore,
-        customSearch: customSearch,
-        removeDiacritics: removeDiacritics,
-        hideDividers: hideDividers,
-        hideGroups: hideGroups,
-        expandable: expandable,
-        inline: inline,
+        inputEvents,
+        searchContainer,
+        searchIn,
+        searchItem,
+        searchGroup,
+        searchGroupTitle,
+        hideOnEnableEl,
+        hideOnSearchEl,
+        foundEl,
+        notFoundEl,
+        backdrop,
+        backdropEl,
+        disableButton,
+        ignore,
+        customSearch,
+        removeDiacritics,
+        hideDividers,
+        hideGroups,
+        expandable,
+        inline,
         on: {
-          search: function search(searchbar, query, previousQuery) {
+          search(searchbar, query, previousQuery) {
             self.dispatchEvent('searchbar:search searchbarSearch', searchbar, query, previousQuery);
           },
-          clear: function clear(searchbar, previousQuery) {
+
+          clear(searchbar, previousQuery) {
             self.dispatchEvent('searchbar:clear searchbarClear', searchbar, previousQuery);
           },
-          enable: function enable(searchbar) {
+
+          enable(searchbar) {
             self.dispatchEvent('searchbar:enable searchbarEnable', searchbar);
           },
-          disable: function disable(searchbar) {
+
+          disable(searchbar) {
             self.dispatchEvent('searchbar:disable searchbarDisable', searchbar);
           }
+
         }
       });
-      Object.keys(params).forEach(function (key) {
+      Object.keys(params).forEach(key => {
         if (params[key] === '') {
           delete params[key];
         }
@@ -265,12 +276,14 @@ export default {
       self.f7Searchbar = self.$f7.searchbar.create(params);
     });
   },
-  beforeDestroy: function beforeDestroy() {
-    var self = this;
-    var _self$$refs2 = self.$refs,
-        el = _self$$refs2.el,
-        clearEl = _self$$refs2.clearEl,
-        disableEl = _self$$refs2.disableEl;
+
+  beforeDestroy() {
+    const self = this;
+    const {
+      el,
+      clearEl,
+      disableEl
+    } = self.$refs;
 
     if (self.props.form && el) {
       el.removeEventListener('submit', self.onSubmit, false);
@@ -286,59 +299,70 @@ export default {
 
     if (self.f7Searchbar && self.f7Searchbar.destroy) self.f7Searchbar.destroy();
   },
+
   methods: {
-    search: function search(query) {
+    search(query) {
       if (!this.f7Searchbar) return undefined;
       return this.f7Searchbar.search(query);
     },
-    enable: function enable() {
+
+    enable() {
       if (!this.f7Searchbar) return undefined;
       return this.f7Searchbar.enable();
     },
-    disable: function disable() {
+
+    disable() {
       if (!this.f7Searchbar) return undefined;
       return this.f7Searchbar.disable();
     },
-    toggle: function toggle() {
+
+    toggle() {
       if (!this.f7Searchbar) return undefined;
       return this.toggle.disable();
     },
-    clear: function clear() {
+
+    clear() {
       if (!this.f7Searchbar) return undefined;
       return this.f7Searchbar.clear();
     },
-    onChange: function onChange(event) {
+
+    onChange(event) {
       this.dispatchEvent('change', event);
     },
-    onInput: function onInput(event) {
+
+    onInput(event) {
       this.dispatchEvent('input', event);
     },
-    onFocus: function onFocus(event) {
+
+    onFocus(event) {
       this.dispatchEvent('focus', event);
     },
-    onBlur: function onBlur(event) {
+
+    onBlur(event) {
       this.dispatchEvent('blur', event);
     },
-    onSubmit: function onSubmit(event) {
+
+    onSubmit(event) {
       this.dispatchEvent('submit', event);
     },
-    onClearButtonClick: function onClearButtonClick(event) {
+
+    onClearButtonClick(event) {
       this.dispatchEvent('click:clear clickClear', event);
     },
-    onDisableButtonClick: function onDisableButtonClick(event) {
+
+    onDisableButtonClick(event) {
       this.dispatchEvent('click:disable clickDisable', event);
     },
-    dispatchEvent: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     }
+
   },
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

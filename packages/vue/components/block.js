@@ -22,50 +22,56 @@ export default {
     noHairlinesIos: Boolean,
     noHairlinesAurora: Boolean
   }, Mixins.colorProps),
-  created: function created() {
+
+  created() {
     Utils.bindMethods(this, ['onTabShow', 'onTabHide']);
   },
-  mounted: function mounted() {
-    var self = this;
-    var el = self.$refs.el;
+
+  mounted() {
+    const self = this;
+    const el = self.$refs.el;
     if (!el) return;
     self.eventTargetEl = el;
-    self.$f7ready(function (f7) {
+    self.$f7ready(f7 => {
       f7.on('tabShow', self.onTabShow);
       f7.on('tabHide', self.onTabHide);
     });
   },
-  beforeDestroy: function beforeDestroy() {
-    var el = this.$refs.el;
+
+  beforeDestroy() {
+    const el = this.$refs.el;
     if (!el || !this.$f7) return;
     this.$f7.off('tabShow', this.onTabShow);
     this.$f7.off('tabHide', this.onTabHide);
     delete this.eventTargetEl;
   },
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = self.props;
-    var className = props.className,
-        inset = props.inset,
-        xsmallInset = props.xsmallInset,
-        smallInset = props.smallInset,
-        mediumInset = props.mediumInset,
-        largeInset = props.largeInset,
-        xlargeInset = props.xlargeInset,
-        strong = props.strong,
-        accordionList = props.accordionList,
-        tabs = props.tabs,
-        tab = props.tab,
-        tabActive = props.tabActive,
-        noHairlines = props.noHairlines,
-        noHairlinesIos = props.noHairlinesIos,
-        noHairlinesMd = props.noHairlinesMd,
-        noHairlinesAurora = props.noHairlinesAurora,
-        id = props.id,
-        style = props.style;
-    var classes = Utils.classNames(className, 'block', {
-      inset: inset,
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = self.props;
+    const {
+      className,
+      inset,
+      xsmallInset,
+      smallInset,
+      mediumInset,
+      largeInset,
+      xlargeInset,
+      strong,
+      accordionList,
+      tabs,
+      tab,
+      tabActive,
+      noHairlines,
+      noHairlinesIos,
+      noHairlinesMd,
+      noHairlinesAurora,
+      id,
+      style
+    } = props;
+    const classes = Utils.classNames(className, 'block', {
+      inset,
       'xsmall-inset': xsmallInset,
       'small-inset': smallInset,
       'medium-inset': mediumInset,
@@ -73,8 +79,8 @@ export default {
       'xlarge-inset': xlargeInset,
       'block-strong': strong,
       'accordion-list': accordionList,
-      tabs: tabs,
-      tab: tab,
+      tabs,
+      tab,
       'tab-active': tabActive,
       'no-hairlines': noHairlines,
       'no-hairlines-md': noHairlinesMd,
@@ -90,26 +96,27 @@ export default {
       }
     }, [this.$slots['default']]);
   },
+
   methods: {
-    onTabShow: function onTabShow(el) {
+    onTabShow(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('tabShow tab:show');
     },
-    onTabHide: function onTabHide(el) {
+
+    onTabHide(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('tabHide tab:hide');
     },
-    dispatchEvent: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     }
+
   },
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

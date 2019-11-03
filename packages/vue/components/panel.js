@@ -1,5 +1,3 @@
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
@@ -43,12 +41,15 @@ export default {
       default: 0
     }
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var props = this.props;
-    var id = props.id,
-        style = props.style,
-        resizable = props.resizable;
+
+  render() {
+    const _h = this.$createElement;
+    const props = this.props;
+    const {
+      id,
+      style,
+      resizable
+    } = props;
     return _h('div', {
       ref: 'el',
       style: style,
@@ -60,36 +61,43 @@ export default {
       class: 'panel-resize-handler'
     })]);
   },
-  computed: {
-    classes: function classes() {
-      var _Utils$classNames;
 
-      var self = this;
-      var props = self.props;
-      var left = props.left,
-          reveal = props.reveal,
-          className = props.className,
-          resizable = props.resizable;
-      var side = props.side,
-          effect = props.effect;
+  computed: {
+    classes() {
+      const self = this;
+      const props = self.props;
+      const {
+        left,
+        reveal,
+        className,
+        resizable
+      } = props;
+      let {
+        side,
+        effect
+      } = props;
       side = side || (left ? 'left' : 'right');
       effect = effect || (reveal ? 'reveal' : 'cover');
-      return Utils.classNames(className, 'panel', (_Utils$classNames = {
-        'panel-resizable': resizable
-      }, _defineProperty(_Utils$classNames, "panel-".concat(side), side), _defineProperty(_Utils$classNames, "panel-".concat(effect), effect), _Utils$classNames), Mixins.colorClasses(props));
+      return Utils.classNames(className, 'panel', {
+        'panel-resizable': resizable,
+        [`panel-${side}`]: side,
+        [`panel-${effect}`]: effect
+      }, Mixins.colorClasses(props));
     },
-    props: function props() {
+
+    props() {
       return __vueComponentProps(this);
     }
+
   },
   watch: {
     'props.resizable': function watchResizable(resizable) {
-      var self = this;
+      const self = this;
       if (!self.f7Panel) return;
       if (resizable) self.f7Panel.enableResizable();else self.f7Panel.disableResizable();
     },
     'props.opened': function watchOpened(opened) {
-      var self = this;
+      const self = this;
       if (!self.f7Panel) return;
 
       if (opened) {
@@ -99,42 +107,45 @@ export default {
       }
     }
   },
-  created: function created() {
+
+  created() {
     Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onBackdropClick', 'onSwipe', 'onSwipeOpen', 'onBreakpoint', 'onCollapsedBreakpoint', 'onResize']);
   },
-  mounted: function mounted() {
-    var self = this;
-    var el = self.$refs.el;
-    var _self$props = self.props,
-        opened = _self$props.opened,
-        resizable = _self$props.resizable,
-        backdrop = _self$props.backdrop,
-        backdropEl = _self$props.backdropEl,
-        visibleBreakpoint = _self$props.visibleBreakpoint,
-        collapsedBreakpoint = _self$props.collapsedBreakpoint,
-        swipe = _self$props.swipe,
-        swipeOnlyClose = _self$props.swipeOnlyClose,
-        swipeActiveArea = _self$props.swipeActiveArea,
-        swipeThreshold = _self$props.swipeThreshold;
-    self.$f7ready(function () {
-      var $ = self.$$;
+
+  mounted() {
+    const self = this;
+    const el = self.$refs.el;
+    const {
+      opened,
+      resizable,
+      backdrop,
+      backdropEl,
+      visibleBreakpoint,
+      collapsedBreakpoint,
+      swipe,
+      swipeOnlyClose,
+      swipeActiveArea,
+      swipeThreshold
+    } = self.props;
+    self.$f7ready(() => {
+      const $ = self.$$;
       if (!$) return;
 
       if ($('.panel-backdrop').length === 0) {
         $('<div class="panel-backdrop"></div>').insertBefore(el);
       }
 
-      var params = Utils.noUndefinedProps({
-        el: el,
-        resizable: resizable,
-        backdrop: backdrop,
-        backdropEl: backdropEl,
-        visibleBreakpoint: visibleBreakpoint,
-        collapsedBreakpoint: collapsedBreakpoint,
-        swipe: swipe,
-        swipeOnlyClose: swipeOnlyClose,
-        swipeActiveArea: swipeActiveArea,
-        swipeThreshold: swipeThreshold,
+      const params = Utils.noUndefinedProps({
+        el,
+        resizable,
+        backdrop,
+        backdropEl,
+        visibleBreakpoint,
+        collapsedBreakpoint,
+        swipe,
+        swipeOnlyClose,
+        swipeActiveArea,
+        swipeThreshold,
         on: {
           open: self.onOpen,
           opened: self.onOpened,
@@ -155,65 +166,77 @@ export default {
       }
     });
   },
-  beforeDestroy: function beforeDestroy() {
-    var self = this;
+
+  beforeDestroy() {
+    const self = this;
 
     if (self.f7Panel && self.f7Panel.destroy) {
       self.f7Panel.destroy();
     }
   },
+
   methods: {
-    onOpen: function onOpen(event) {
+    onOpen(event) {
       this.dispatchEvent('panel:open panelOpen', event);
     },
-    onOpened: function onOpened(event) {
+
+    onOpened(event) {
       this.dispatchEvent('panel:opened panelOpened', event);
     },
-    onClose: function onClose(event) {
+
+    onClose(event) {
       this.dispatchEvent('panel:close panelClose', event);
     },
-    onClosed: function onClosed(event) {
+
+    onClosed(event) {
       this.dispatchEvent('panel:closed panelClosed', event);
     },
-    onBackdropClick: function onBackdropClick(event) {
+
+    onBackdropClick(event) {
       this.dispatchEvent('panel:backdrop-click panelBackdropClick', event);
     },
-    onSwipe: function onSwipe(event) {
+
+    onSwipe(event) {
       this.dispatchEvent('panel:swipe panelSwipe', event);
     },
-    onSwipeOpen: function onSwipeOpen(event) {
+
+    onSwipeOpen(event) {
       this.dispatchEvent('panel:swipeopen panelSwipeOpen', event);
     },
-    onBreakpoint: function onBreakpoint(event) {
+
+    onBreakpoint(event) {
       this.dispatchEvent('panel:breakpoint panelBreakpoint', event);
     },
-    onCollapsedBreakpoint: function onCollapsedBreakpoint(event) {
+
+    onCollapsedBreakpoint(event) {
       this.dispatchEvent('panel:collapsedbreakpoint panelCollapsedBreakpoint', event);
     },
-    onResize: function onResize(event) {
+
+    onResize(event) {
       this.dispatchEvent('panel:resize panelResize', event);
     },
-    open: function open(animate) {
-      var self = this;
+
+    open(animate) {
+      const self = this;
       if (!self.f7Panel) return;
       self.f7Panel.open(animate);
     },
-    close: function close(animate) {
-      var self = this;
+
+    close(animate) {
+      const self = this;
       if (!self.f7Panel) return;
       self.f7Panel.close(animate);
     },
-    toggle: function toggle(animate) {
-      var self = this;
+
+    toggle(animate) {
+      const self = this;
       if (!self.f7Panel) return;
       self.f7Panel.toggle(animate);
     },
-    dispatchEvent: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     }
+
   }
 };

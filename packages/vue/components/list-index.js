@@ -36,13 +36,16 @@ export default {
       default: 14
     }
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var props = this.props;
-    var className = props.className,
-        id = props.id,
-        style = props.style;
-    var classes = Utils.classNames(className, 'list-index', Mixins.colorClasses(props));
+
+  render() {
+    const _h = this.$createElement;
+    const props = this.props;
+    const {
+      className,
+      id,
+      style
+    } = props;
+    const classes = Utils.classNames(className, 'list-index', Mixins.colorClasses(props));
     return _h('div', {
       ref: 'el',
       style: style,
@@ -52,43 +55,48 @@ export default {
       }
     }, [this.$slots['default']]);
   },
-  beforeDestroy: function beforeDestroy() {
+
+  beforeDestroy() {
     if (!this.props.init) return;
 
     if (this.f7ListIndex && this.f7ListIndex.destroy) {
       this.f7ListIndex.destroy();
     }
   },
-  mounted: function mounted() {
-    var self = this;
+
+  mounted() {
+    const self = this;
     if (!self.props.init) return;
-    self.$f7ready(function (f7) {
-      var el = self.$refs.el;
-      var _self$props = self.props,
-          listEl = _self$props.listEl,
-          indexes = _self$props.indexes,
-          iosItemHeight = _self$props.iosItemHeight,
-          mdItemHeight = _self$props.mdItemHeight,
-          auroraItemHeight = _self$props.auroraItemHeight,
-          scrollList = _self$props.scrollList,
-          label = _self$props.label;
+    self.$f7ready(f7 => {
+      const el = self.$refs.el;
+      const {
+        listEl,
+        indexes,
+        iosItemHeight,
+        mdItemHeight,
+        auroraItemHeight,
+        scrollList,
+        label
+      } = self.props;
       self.f7ListIndex = f7.listIndex.create({
-        el: el,
-        listEl: listEl,
-        indexes: indexes,
-        iosItemHeight: iosItemHeight,
-        mdItemHeight: mdItemHeight,
-        auroraItemHeight: auroraItemHeight,
-        scrollList: scrollList,
-        label: label,
+        el,
+        listEl,
+        indexes,
+        iosItemHeight,
+        mdItemHeight,
+        auroraItemHeight,
+        scrollList,
+        label,
         on: {
-          select: function select(index, itemContent, itemIndex) {
+          select(index, itemContent, itemIndex) {
             self.dispatchEvent('listindex:select listIndexSelect', itemContent, itemIndex);
           }
+
         }
       });
     });
   },
+
   watch: {
     'props.indexes': function watchIndexes() {
       if (!this.f7ListIndex) return;
@@ -97,25 +105,25 @@ export default {
     }
   },
   methods: {
-    update: function update() {
+    update() {
       if (!this.f7ListIndex) return;
       this.f7ListIndex.update();
     },
-    scrollListToIndex: function scrollListToIndex(indexContent) {
+
+    scrollListToIndex(indexContent) {
       if (!this.f7ListIndex) return;
       this.f7ListIndex.scrollListToIndex(indexContent);
     },
-    dispatchEvent: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     }
+
   },
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

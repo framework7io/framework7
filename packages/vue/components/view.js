@@ -67,33 +67,37 @@ export default {
       default: true
     }
   }, Mixins.colorProps),
-  data: function data() {
-    var props = __vueComponentProps(this);
 
-    var state = function () {
+  data() {
+    const props = __vueComponentProps(this);
+
+    const state = (() => {
       return {
         pages: []
       };
-    }();
+    })();
 
     return {
-      state: state
+      state
     };
   },
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = self.props;
-    var id = props.id,
-        style = props.style,
-        tab = props.tab,
-        main = props.main,
-        tabActive = props.tabActive,
-        className = props.className;
-    var classes = Utils.classNames(className, 'view', {
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = self.props;
+    const {
+      id,
+      style,
+      tab,
+      main,
+      tabActive,
+      className
+    } = props;
+    const classes = Utils.classNames(className, 'view', {
       'view-main': main,
       'tab-active': tabActive,
-      tab: tab
+      tab
     }, Mixins.colorClasses(props));
     return _h('div', {
       ref: 'el',
@@ -102,8 +106,8 @@ export default {
       attrs: {
         id: id
       }
-    }, [this.$slots['default'], self.state.pages.map(function (page) {
-      var PageComponent = page.component;
+    }, [this.$slots['default'], self.state.pages.map(page => {
+      const PageComponent = page.component;
       {
         return _h(PageComponent, {
           key: page.id,
@@ -112,26 +116,30 @@ export default {
       }
     })]);
   },
-  created: function created() {
-    var self = this;
+
+  created() {
+    const self = this;
     Utils.bindMethods(self, ['onSwipeBackMove', 'onSwipeBackBeforeChange', 'onSwipeBackAfterChange', 'onSwipeBackBeforeReset', 'onSwipeBackAfterReset', 'onTabShow', 'onTabHide', 'onViewInit']);
   },
-  mounted: function mounted() {
-    var self = this;
-    var el = self.$refs.el;
-    self.$f7ready(function (f7Instance) {
+
+  mounted() {
+    const self = this;
+    const el = self.$refs.el;
+    self.$f7ready(f7Instance => {
       f7Instance.on('tabShow', self.onTabShow);
       f7Instance.on('tabHide', self.onTabHide);
       self.routerData = {
-        el: el,
+        el,
         component: self,
         pages: self.state.pages,
         instance: null,
-        setPages: function setPages(pages) {
+
+        setPages(pages) {
           self.setState({
-            pages: pages
+            pages
           });
         }
+
       };
       f7.routers.views.push(self.routerData);
       if (!self.props.init) return;
@@ -148,8 +156,9 @@ export default {
       self.f7View.on('swipebackAfterReset', self.onSwipeBackAfterReset);
     });
   },
-  beforeDestroy: function beforeDestroy() {
-    var self = this;
+
+  beforeDestroy() {
+    const self = this;
 
     if (f7.instance) {
       f7.instance.off('tabShow', self.onTabShow);
@@ -169,14 +178,16 @@ export default {
     self.routerData = null;
     delete self.routerData;
   },
-  updated: function updated() {
-    var self = this;
+
+  updated() {
+    const self = this;
     if (!self.routerData) return;
     f7.events.emit('viewRouterDidUpdate', self.routerData);
   },
+
   methods: {
-    onViewInit: function onViewInit(view) {
-      var self = this;
+    onViewInit(view) {
+      const self = this;
       self.dispatchEvent('view:init viewInit', view);
 
       if (!self.props.init) {
@@ -184,50 +195,57 @@ export default {
         self.f7View = self.routerData.instance;
       }
     },
-    onSwipeBackMove: function onSwipeBackMove(data) {
-      var swipeBackData = data;
+
+    onSwipeBackMove(data) {
+      const swipeBackData = data;
       this.dispatchEvent('swipeback:move swipeBackMove', swipeBackData);
     },
-    onSwipeBackBeforeChange: function onSwipeBackBeforeChange(data) {
-      var swipeBackData = data;
+
+    onSwipeBackBeforeChange(data) {
+      const swipeBackData = data;
       this.dispatchEvent('swipeback:beforechange swipeBackBeforeChange', swipeBackData);
     },
-    onSwipeBackAfterChange: function onSwipeBackAfterChange(data) {
-      var swipeBackData = data;
+
+    onSwipeBackAfterChange(data) {
+      const swipeBackData = data;
       this.dispatchEvent('swipeback:afterchange swipeBackAfterChange', swipeBackData);
     },
-    onSwipeBackBeforeReset: function onSwipeBackBeforeReset(data) {
-      var swipeBackData = data;
+
+    onSwipeBackBeforeReset(data) {
+      const swipeBackData = data;
       this.dispatchEvent('swipeback:beforereset swipeBackBeforeReset', swipeBackData);
     },
-    onSwipeBackAfterReset: function onSwipeBackAfterReset(data) {
-      var swipeBackData = data;
+
+    onSwipeBackAfterReset(data) {
+      const swipeBackData = data;
       this.dispatchEvent('swipeback:afterreset swipeBackAfterReset', swipeBackData);
     },
-    onTabShow: function onTabShow(el) {
+
+    onTabShow(el) {
       if (el === this.$refs.el) {
         this.dispatchEvent('tab:show tabShow');
       }
     },
-    onTabHide: function onTabHide(el) {
+
+    onTabHide(el) {
       if (el === this.$refs.el) {
         this.dispatchEvent('tab:hide tabHide');
       }
     },
-    dispatchEvent: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     },
-    setState: function setState(updater, callback) {
+
+    setState(updater, callback) {
       __vueComponentSetState(this, updater, callback);
     }
+
   },
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

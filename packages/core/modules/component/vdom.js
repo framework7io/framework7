@@ -7,7 +7,9 @@ import customComponents from './custom-components';
 const selfClosing = 'area base br col command embed hr img input keygen link menuitem meta param source track wbr'.split(' ');
 const propsAttrs = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple value indeterminate'.split(' ');
 const booleanProps = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple readOnly indeterminate'.split(' ');
-const tempDom = document.createElement('div');
+const tempDomDIV = document.createElement('div');
+let tempDomTBODY;
+let tempDomTROW;
 
 function toCamelCase(name) {
   return name
@@ -78,11 +80,17 @@ function getHooks(data, app, initial, isRoot, tagName) {
   const destroy = [];
   const update = [];
   const postpatch = [];
+  let isFakeElement = false;
+  if (data && data.attrs && data.attrs.component) {
+    // eslint-disable-next-line
+    tagName = data.attrs.component;
+    delete data.attrs.component;
+    isFakeElement = true;
+  }
   const isCustomComponent = tagName && tagName.indexOf('-') > 0 && customComponents[tagName];
-
   if (isCustomComponent) {
     insert.push((vnode) => {
-      if (vnode.sel !== tagName) return;
+      if (vnode.sel !== tagName && !isFakeElement) return;
       createCustomComponent({ app, vnode, tagName, data });
     });
     destroy.push((vnode) => {
@@ -364,7 +372,17 @@ function elementToVNode(el, context, app, initial, isRoot) {
 
 export default function (html = '', context, initial) {
   // Save to temp dom
-  tempDom.innerHTML = html.trim();
+  const htmlTrim = html.trim();
+  let tempDom = tempDomDIV;
+  if (htmlTrim.indexOf('<tr') === 0) {
+    if (!tempDomTBODY) tempDomTBODY = document.createElement('tbody');
+    tempDom = tempDomTBODY;
+  }
+  if (htmlTrim.indexOf('<td') === 0 || htmlTrim.indexOf('<th') === 0) {
+    if (!tempDomTROW) tempDomTROW = document.createElement('tr');
+    tempDom = tempDomTROW;
+  }
+  tempDom.innerHTML = htmlTrim;
 
   // Parse DOM
   let rootEl;

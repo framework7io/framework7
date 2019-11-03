@@ -8,15 +8,18 @@ export default {
     id: [String, Number],
     bold: Boolean
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = self.props;
-    var className = props.className,
-        id = props.id,
-        style = props.style,
-        bold = props.bold;
-    var classes = Utils.classNames(className, 'actions-label', {
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = self.props;
+    const {
+      className,
+      id,
+      style,
+      bold
+    } = props;
+    const classes = Utils.classNames(className, 'actions-label', {
       'actions-button-bold': bold
     }, Mixins.colorClasses(props));
     return _h('div', {
@@ -28,30 +31,33 @@ export default {
       }
     }, [this.$slots['default']]);
   },
-  created: function created() {
+
+  created() {
     Utils.bindMethods(this, ['onClick']);
   },
-  mounted: function mounted() {
+
+  mounted() {
     this.$refs.el.addEventListener('click', this.onClick);
   },
-  beforeDestroy: function beforeDestroy() {
+
+  beforeDestroy() {
     this.$refs.el.removeEventListener('click', this.onClick);
   },
+
   methods: {
-    onClick: function onClick(event) {
+    onClick(event) {
       this.dispatchEvent('click', event);
     },
-    dispatchEvent: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     }
+
   },
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

@@ -14,20 +14,23 @@ export default {
     delete: Boolean,
     href: String
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var props = this.props;
-    var className = props.className,
-        id = props.id,
-        style = props.style,
-        overswipe = props.overswipe,
-        deleteProp = props.delete,
-        close = props.close,
-        href = props.href,
-        confirmTitle = props.confirmTitle,
-        confirmText = props.confirmText,
-        text = props.text;
-    var classes = Utils.classNames(className, {
+
+  render() {
+    const _h = this.$createElement;
+    const props = this.props;
+    const {
+      className,
+      id,
+      style,
+      overswipe,
+      delete: deleteProp,
+      close,
+      href,
+      confirmTitle,
+      confirmText,
+      text
+    } = props;
+    const classes = Utils.classNames(className, {
       'swipeout-overswipe': overswipe,
       'swipeout-delete': deleteProp,
       'swipeout-close': close
@@ -44,30 +47,33 @@ export default {
       }
     }, [this.$slots['default'] || [text]]);
   },
-  created: function created() {
+
+  created() {
     Utils.bindMethods(this, ['onClick']);
   },
-  mounted: function mounted() {
+
+  mounted() {
     this.$refs.el.addEventListener('click', this.onClick);
   },
-  beforeDestroy: function beforeDestroy() {
+
+  beforeDestroy() {
     this.$refs.el.removeEventListener('click', this.onClick);
   },
+
   methods: {
-    onClick: function onClick(event) {
+    onClick(event) {
       this.dispatchEvent('click', event);
     },
-    dispatchEvent: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     }
+
   },
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

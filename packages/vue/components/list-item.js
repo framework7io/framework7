@@ -49,70 +49,74 @@ export default {
     disabled: Boolean,
     virtualListIndex: Number
   }, Mixins.colorProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps),
-  data: function data() {
-    var props = __vueComponentProps(this);
 
-    var state = function () {
+  data() {
+    const props = __vueComponentProps(this);
+
+    const state = (() => {
       return {
         isMedia: props.mediaItem || props.mediaList,
         isSortable: props.sortable,
         isSimple: false
       };
-    }();
+    })();
 
     return {
-      state: state
+      state
     };
   },
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var linkEl;
-    var itemContentEl;
-    var props = self.props;
-    var id = props.id,
-        style = props.style,
-        className = props.className,
-        title = props.title,
-        text = props.text,
-        media = props.media,
-        subtitle = props.subtitle,
-        header = props.header,
-        footer = props.footer,
-        link = props.link,
-        href = props.href,
-        target = props.target,
-        after = props.after,
-        badge = props.badge,
-        badgeColor = props.badgeColor,
-        mediaItem = props.mediaItem,
-        mediaList = props.mediaList,
-        divider = props.divider,
-        groupTitle = props.groupTitle,
-        swipeout = props.swipeout,
-        accordionItem = props.accordionItem,
-        accordionItemOpened = props.accordionItemOpened,
-        smartSelect = props.smartSelect,
-        checkbox = props.checkbox,
-        radio = props.radio,
-        checked = props.checked,
-        defaultChecked = props.defaultChecked,
-        indeterminate = props.indeterminate,
-        name = props.name,
-        value = props.value,
-        readonly = props.readonly,
-        required = props.required,
-        disabled = props.disabled,
-        sortable = props.sortable,
-        noChevron = props.noChevron,
-        chevronCenter = props.chevronCenter,
-        virtualListIndex = props.virtualListIndex;
-    var isMedia = mediaItem || mediaList || self.state.isMedia;
-    var isSortable = sortable || self.state.isSortable;
-    var isSimple = self.state.isSimple;
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    let linkEl;
+    let itemContentEl;
+    const props = self.props;
+    const {
+      id,
+      style,
+      className,
+      title,
+      text,
+      media,
+      subtitle,
+      header,
+      footer,
+      link,
+      href,
+      target,
+      after,
+      badge,
+      badgeColor,
+      mediaItem,
+      mediaList,
+      divider,
+      groupTitle,
+      swipeout,
+      accordionItem,
+      accordionItemOpened,
+      smartSelect,
+      checkbox,
+      radio,
+      checked,
+      defaultChecked,
+      indeterminate,
+      name,
+      value,
+      readonly,
+      required,
+      disabled,
+      sortable,
+      noChevron,
+      chevronCenter,
+      virtualListIndex
+    } = props;
+    const isMedia = mediaItem || mediaList || self.state.isMedia;
+    const isSortable = sortable || self.state.isSortable;
+    const isSimple = self.state.isSimple;
 
     if (!isSimple) {
-      var needsEvents = !(link || href || accordionItem || smartSelect);
+      const needsEvents = !(link || href || accordionItem || smartSelect);
       itemContentEl = _h(F7ListItemContent, {
         on: needsEvents ? {
           click: self.onClick,
@@ -144,11 +148,11 @@ export default {
       }, [this.$slots['content-start'], this.$slots['content'], this.$slots['content-end'], this.$slots['media'], this.$slots['inner-start'], this.$slots['inner'], this.$slots['inner-end'], this.$slots['after-start'], this.$slots['after'], this.$slots['after-end'], this.$slots['header'], this.$slots['footer'], this.$slots['before-title'], this.$slots['title'], this.$slots['after-title'], this.$slots['subtitle'], this.$slots['text'], swipeout || accordionItem ? null : self.$slots.default]);
 
       if (link || href || accordionItem || smartSelect) {
-        var linkAttrs = Object.assign({
+        const linkAttrs = Object.assign({
           href: link === true ? '' : link || href,
-          target: target
+          target
         }, Mixins.linkRouterAttrs(props), {}, Mixins.linkActionsAttrs(props));
-        var linkClasses = Utils.classNames({
+        const linkClasses = Utils.classNames({
           'item-link': true,
           'smart-select': smartSelect
         }, Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
@@ -159,11 +163,11 @@ export default {
       }
     }
 
-    var liClasses = Utils.classNames(className, {
+    const liClasses = Utils.classNames(className, {
       'item-divider': divider,
       'list-group-title': groupTitle,
       'media-item': isMedia,
-      swipeout: swipeout,
+      swipeout,
       'accordion-item': accordionItem,
       'accordion-item-opened': accordionItemOpened,
       disabled: disabled && !(radio || checkbox),
@@ -196,7 +200,7 @@ export default {
       }, [title, this.$slots['default']]);
     }
 
-    var linkItemEl = link || href || smartSelect || accordionItem ? linkEl : itemContentEl;
+    const linkItemEl = link || href || smartSelect || accordionItem ? linkEl : itemContentEl;
     return _h('li', {
       ref: 'el',
       style: style,
@@ -211,9 +215,10 @@ export default {
       class: 'sortable-handler'
     }), (swipeout || accordionItem) && self.$slots.default, this.$slots['root'], this.$slots['root-end']]);
   },
+
   watch: {
     'props.tooltip': function watchTooltip(newText) {
-      var self = this;
+      const self = this;
 
       if (!newText && self.f7Tooltip) {
         self.f7Tooltip.destroy();
@@ -234,9 +239,9 @@ export default {
       self.f7Tooltip.setText(newText);
     },
     'props.swipeoutOpened': function watchSwipeoutOpened(opened) {
-      var self = this;
+      const self = this;
       if (!self.props.swipeout) return;
-      var el = self.$refs.el;
+      const el = self.$refs.el;
 
       if (opened) {
         self.$f7.swipeout.open(el);
@@ -245,26 +250,30 @@ export default {
       }
     }
   },
-  created: function created() {
+
+  created() {
     Utils.bindMethods(this, ['onClick', 'onChange', 'onSwipeoutOpen', 'onSwipeoutOpened', 'onSwipeoutClose', 'onSwipeoutClosed', 'onSwipeoutDelete', 'onSwipeoutDeleted', 'onSwipeoutOverswipeEnter', 'onSwipeoutOverswipeExit', 'onSwipeout', 'onAccBeforeOpen', 'onAccOpen', 'onAccOpened', 'onAccBeforeClose', 'onAccClose', 'onAccClosed']);
   },
-  mounted: function mounted() {
-    var self = this;
-    var _self$$refs = self.$refs,
-        el = _self$$refs.el,
-        linkEl = _self$$refs.linkEl;
+
+  mounted() {
+    const self = this;
+    const {
+      el,
+      linkEl
+    } = self.$refs;
     if (!el) return;
-    var _self$props = self.props,
-        link = _self$props.link,
-        href = _self$props.href,
-        smartSelect = _self$props.smartSelect,
-        swipeout = _self$props.swipeout,
-        swipeoutOpened = _self$props.swipeoutOpened,
-        accordionItem = _self$props.accordionItem,
-        smartSelectParams = _self$props.smartSelectParams,
-        routeProps = _self$props.routeProps,
-        tooltip = _self$props.tooltip;
-    var needsEvents = !(link || href || accordionItem || smartSelect);
+    const {
+      link,
+      href,
+      smartSelect,
+      swipeout,
+      swipeoutOpened,
+      accordionItem,
+      smartSelectParams,
+      routeProps,
+      tooltip
+    } = self.props;
+    const needsEvents = !(link || href || accordionItem || smartSelect);
 
     if (!needsEvents && linkEl) {
       linkEl.addEventListener('click', self.onClick);
@@ -284,7 +293,7 @@ export default {
       });
     }
 
-    self.$f7ready(function (f7) {
+    self.$f7ready(f7 => {
       self.eventTargetEl = el;
 
       if (swipeout) {
@@ -309,7 +318,7 @@ export default {
       }
 
       if (smartSelect) {
-        var ssParams = Utils.extend({
+        const ssParams = Utils.extend({
           el: el.querySelector('a.smart-select')
         }, smartSelectParams || {});
         self.f7SmartSelect = f7.smartSelect.create(ssParams);
@@ -327,49 +336,60 @@ export default {
       }
     });
   },
-  updated: function updated() {
-    var self = this;
-    var $listEl = self.$listEl;
-    var linkEl = self.$refs.linkEl;
-    var routeProps = self.props.routeProps;
+
+  updated() {
+    const self = this;
+    const {
+      $listEl
+    } = self;
+    const {
+      linkEl
+    } = self.$refs;
+    const {
+      routeProps
+    } = self.props;
 
     if (linkEl && routeProps) {
       linkEl.f7RouteProps = routeProps;
     }
 
     if (!$listEl || $listEl && $listEl.length === 0) return;
-    var isMedia = $listEl.hasClass('media-list');
-    var isSimple = $listEl.hasClass('simple-list');
-    var isSortable = $listEl.hasClass('sortable');
+    const isMedia = $listEl.hasClass('media-list');
+    const isSimple = $listEl.hasClass('simple-list');
+    const isSortable = $listEl.hasClass('sortable');
 
     if (isMedia !== self.state.isMedia) {
       self.setState({
-        isMedia: isMedia
+        isMedia
       });
     }
 
     if (isSimple !== self.state.isSimple) {
       self.setState({
-        isSimple: isSimple
+        isSimple
       });
     }
 
     if (isSortable !== self.state.isSortable) {
       self.setState({
-        isSortable: isSortable
+        isSortable
       });
     }
   },
-  beforeDestroy: function beforeDestroy() {
-    var self = this;
-    var linkEl = self.$refs.linkEl;
-    var _self$props2 = self.props,
-        link = _self$props2.link,
-        href = _self$props2.href,
-        smartSelect = _self$props2.smartSelect,
-        swipeout = _self$props2.swipeout,
-        accordionItem = _self$props2.accordionItem;
-    var needsEvents = !(link || href || accordionItem || smartSelect);
+
+  beforeDestroy() {
+    const self = this;
+    const {
+      linkEl
+    } = self.$refs;
+    const {
+      link,
+      href,
+      smartSelect,
+      swipeout,
+      accordionItem
+    } = self.props;
+    const needsEvents = !(link || href || accordionItem || smartSelect);
 
     if (linkEl) {
       if (!needsEvents) {
@@ -380,7 +400,7 @@ export default {
     }
 
     if (self.$f7) {
-      var f7 = self.$f7;
+      const f7 = self.$f7;
 
       if (swipeout) {
         f7.off('swipeoutOpen', self.onSwipeoutOpen);
@@ -417,94 +437,112 @@ export default {
     self.eventTargetEl = null;
     delete self.eventTargetEl;
   },
+
   methods: {
-    onClick: function onClick(event) {
-      var self = this;
+    onClick(event) {
+      const self = this;
 
       if (event.target.tagName.toLowerCase() !== 'input') {
         self.dispatchEvent('click', event);
       }
     },
-    onSwipeoutOverswipeEnter: function onSwipeoutOverswipeEnter(el) {
+
+    onSwipeoutOverswipeEnter(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('swipeout:overswipeenter swipeoutOverswipeEnter');
     },
-    onSwipeoutOverswipeExit: function onSwipeoutOverswipeExit(el) {
+
+    onSwipeoutOverswipeExit(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('swipeout:overswipeexit swipeoutOverswipeExit');
     },
-    onSwipeoutDeleted: function onSwipeoutDeleted(el) {
+
+    onSwipeoutDeleted(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('swipeout:deleted swipeoutDeleted');
     },
-    onSwipeoutDelete: function onSwipeoutDelete(el) {
+
+    onSwipeoutDelete(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('swipeout:delete swipeoutDelete');
     },
-    onSwipeoutClose: function onSwipeoutClose(el) {
+
+    onSwipeoutClose(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('swipeout:close swipeoutClose');
     },
-    onSwipeoutClosed: function onSwipeoutClosed(el) {
+
+    onSwipeoutClosed(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('swipeout:closed swipeoutClosed');
     },
-    onSwipeoutOpen: function onSwipeoutOpen(el) {
+
+    onSwipeoutOpen(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('swipeout:open swipeoutOpen');
     },
-    onSwipeoutOpened: function onSwipeoutOpened(el) {
+
+    onSwipeoutOpened(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('swipeout:opened swipeoutOpened');
     },
-    onSwipeout: function onSwipeout(el, progress) {
+
+    onSwipeout(el, progress) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('swipeout', progress);
     },
-    onAccBeforeClose: function onAccBeforeClose(el, prevent) {
+
+    onAccBeforeClose(el, prevent) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('accordion:beforeclose accordionBeforeClose', prevent);
     },
-    onAccClose: function onAccClose(el) {
+
+    onAccClose(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('accordion:close accordionClose');
     },
-    onAccClosed: function onAccClosed(el) {
+
+    onAccClosed(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('accordion:closed accordionClosed');
     },
-    onAccBeforeOpen: function onAccBeforeOpen(el, prevent) {
+
+    onAccBeforeOpen(el, prevent) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('accordion:beforeopen accordionBeforeOpen', prevent);
     },
-    onAccOpen: function onAccOpen(el) {
+
+    onAccOpen(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('accordion:open accordionOpen');
     },
-    onAccOpened: function onAccOpened(el) {
+
+    onAccOpened(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('accordion:opened accordionOpened');
     },
-    onChange: function onChange(event) {
+
+    onChange(event) {
       this.dispatchEvent('change', event);
     },
-    onInput: function onInput(event) {
+
+    onInput(event) {
       this.dispatchEvent('input', event);
     },
-    dispatchEvent: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     },
-    setState: function setState(updater, callback) {
+
+    setState(updater, callback) {
       __vueComponentSetState(this, updater, callback);
     }
+
   },
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

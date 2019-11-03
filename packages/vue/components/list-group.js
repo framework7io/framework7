@@ -13,20 +13,23 @@ export default {
       default: undefined
     }
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = self.props;
-    var className = props.className,
-        id = props.id,
-        style = props.style,
-        mediaList = props.mediaList,
-        sortable = props.sortable,
-        sortableTapHold = props.sortableTapHold,
-        sortableMoveElements = props.sortableMoveElements;
-    var classes = Utils.classNames(className, 'list-group', {
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = self.props;
+    const {
+      className,
+      id,
+      style,
+      mediaList,
+      sortable,
+      sortableTapHold,
+      sortableMoveElements
+    } = props;
+    const classes = Utils.classNames(className, 'list-group', {
       'media-list': mediaList,
-      sortable: sortable,
+      sortable,
       'sortable-tap-hold': sortableTapHold
     }, Mixins.colorClasses(props));
     return _h('div', {
@@ -38,9 +41,11 @@ export default {
       }
     }, [_h('ul', [this.$slots['default']])]);
   },
+
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

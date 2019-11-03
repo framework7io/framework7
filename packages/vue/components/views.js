@@ -7,16 +7,19 @@ export default {
     id: [String, Number],
     tabs: Boolean
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = self.props;
-    var className = props.className,
-        id = props.id,
-        style = props.style,
-        tabs = props.tabs;
-    var classes = Utils.classNames(className, 'views', {
-      tabs: tabs
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = self.props;
+    const {
+      className,
+      id,
+      style,
+      tabs
+    } = props;
+    const classes = Utils.classNames(className, 'views', {
+      tabs
     }, Mixins.colorClasses(props));
     return _h('div', {
       style: style,
@@ -26,9 +29,11 @@ export default {
       }
     }, [this.$slots['default']]);
   },
+
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

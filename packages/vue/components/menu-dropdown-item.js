@@ -13,21 +13,24 @@ export default {
     target: String,
     divider: Boolean
   }, Mixins.colorProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = self.props;
-    var id = props.id,
-        className = props.className,
-        style = props.style,
-        link = props.link,
-        href = props.href,
-        text = props.text,
-        divider = props.divider,
-        menuClose = props.menuClose;
-    var isLink = link || href || href === '';
-    var Tag = isLink ? 'a' : 'div';
-    var classes = Utils.classNames({
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = self.props;
+    const {
+      id,
+      className,
+      style,
+      link,
+      href,
+      text,
+      divider,
+      menuClose
+    } = props;
+    const isLink = link || href || href === '';
+    const Tag = isLink ? 'a' : 'div';
+    const classes = Utils.classNames({
       'menu-dropdown-link': isLink && !divider,
       'menu-dropdown-item': !isLink && !divider,
       'menu-dropdown-divider': divider
@@ -44,59 +47,70 @@ export default {
       }
     })), [text, this.$slots['default']]);
   },
-  created: function created() {
+
+  created() {
     Utils.bindMethods(this, ['onClick']);
   },
-  mounted: function mounted() {
-    var self = this;
-    var el = self.$refs.el;
+
+  mounted() {
+    const self = this;
+    const el = self.$refs.el;
     if (!el) return;
     el.addEventListener('click', self.onClick);
-    var routeProps = self.props.routeProps;
+    const {
+      routeProps
+    } = self.props;
     if (routeProps) el.f7RouteProps = routeProps;
   },
-  updated: function updated() {
-    var self = this;
-    var el = self.$refs.el;
+
+  updated() {
+    const self = this;
+    const el = self.$refs.el;
     if (!el) return;
-    var routeProps = self.props.routeProps;
+    const {
+      routeProps
+    } = self.props;
     if (routeProps) el.f7RouteProps = routeProps;
   },
-  beforeDestroy: function beforeDestroy() {
-    var self = this;
-    var el = self.$refs.el;
+
+  beforeDestroy() {
+    const self = this;
+    const el = self.$refs.el;
     if (!el) return;
     el.removeEventListener('click', self.onClick);
     delete el.f7RouteProps;
   },
+
   computed: {
-    attrs: function attrs() {
-      var self = this;
-      var props = self.props;
-      var link = props.link,
-          href = props.href,
-          target = props.target;
-      var hrefComputed = href;
+    attrs() {
+      const self = this;
+      const props = self.props;
+      const {
+        link,
+        href,
+        target
+      } = props;
+      let hrefComputed = href;
       if (typeof hrefComputed === 'undefined' && link) hrefComputed = '#';
       return Utils.extend({
         href: hrefComputed,
-        target: target
+        target
       }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
     },
-    props: function props() {
+
+    props() {
       return __vueComponentProps(this);
     }
+
   },
   methods: {
-    onClick: function onClick(event) {
+    onClick(event) {
       this.dispatchEvent('click', event);
     },
-    dispatchEvent: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     }
+
   }
 };

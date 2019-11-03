@@ -1,5 +1,5 @@
 /**
- * Framework7 5.1.0
+ * Framework7 5.1.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 27, 2019
+ * Released on: November 3, 2019
  */
 
 (function (global, factory) {
@@ -9855,7 +9855,9 @@
   var selfClosing = 'area base br col command embed hr img input keygen link menuitem meta param source track wbr'.split(' ');
   var propsAttrs = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple value indeterminate'.split(' ');
   var booleanProps = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple readOnly indeterminate'.split(' ');
-  var tempDom = doc.createElement('div');
+  var tempDomDIV = doc.createElement('div');
+  var tempDomTBODY;
+  var tempDomTROW;
 
   function toCamelCase$1(name) {
     return name
@@ -9937,11 +9939,17 @@
     var destroy = [];
     var update = [];
     var postpatch = [];
+    var isFakeElement = false;
+    if (data && data.attrs && data.attrs.component) {
+      // eslint-disable-next-line
+      tagName = data.attrs.component;
+      delete data.attrs.component;
+      isFakeElement = true;
+    }
     var isCustomComponent = tagName && tagName.indexOf('-') > 0 && customComponents[tagName];
-
     if (isCustomComponent) {
       insert.push(function (vnode) {
-        if (vnode.sel !== tagName) { return; }
+        if (vnode.sel !== tagName && !isFakeElement) { return; }
         createCustomComponent({ app: app, vnode: vnode, tagName: tagName, data: data });
       });
       destroy.push(function (vnode) {
@@ -10233,7 +10241,17 @@
     if ( html === void 0 ) html = '';
 
     // Save to temp dom
-    tempDom.innerHTML = html.trim();
+    var htmlTrim = html.trim();
+    var tempDom = tempDomDIV;
+    if (htmlTrim.indexOf('<tr') === 0) {
+      if (!tempDomTBODY) { tempDomTBODY = doc.createElement('tbody'); }
+      tempDom = tempDomTBODY;
+    }
+    if (htmlTrim.indexOf('<td') === 0 || htmlTrim.indexOf('<th') === 0) {
+      if (!tempDomTROW) { tempDomTROW = doc.createElement('tr'); }
+      tempDom = tempDomTROW;
+    }
+    tempDom.innerHTML = htmlTrim;
 
     // Parse DOM
     var rootEl;
@@ -23176,12 +23194,16 @@
           .replace(/yy/g, String(year).substring(2))
           .replace(/mm/g, month1 < 10 ? ("0" + month1) : month1)
           .replace(/m(\W+)/g, (month1 + "$1"))
+          .replace(/(\W+)m/g, ("$1" + month1))
           .replace(/MM/g, monthNames[month])
           .replace(/M(\W+)/g, ((monthNamesShort[month]) + "$1"))
+          .replace(/(\W+)M/g, ("$1" + (monthNamesShort[month])))
           .replace(/dd/g, day < 10 ? ("0" + day) : day)
           .replace(/d(\W+)/g, (day + "$1"))
+          .replace(/(\W+)d/g, ("$1" + day))
           .replace(/DD/g, dayNames[weekDay])
-          .replace(/D(\W+)/g, ((dayNamesShort[weekDay]) + "$1"));
+          .replace(/D(\W+)/g, ((dayNamesShort[weekDay]) + "$1"))
+          .replace(/(\W+)D/g, ("$1" + (dayNamesShort[weekDay])));
       }
       if (typeof dateFormat === 'function') {
         return dateFormat(date);
@@ -35932,8 +35954,6 @@
             var args = [], len = arguments.length;
             while ( len-- ) args[ len ] = arguments[ len ];
 
-            var swiper = this;
-            pb.onSlideChange(swiper);
             pb.emit.apply(pb, [ 'local::slideChange' ].concat( args ));
           },
           transitionStart: function transitionStart() {
@@ -35952,6 +35972,8 @@
             var args = [], len = arguments.length;
             while ( len-- ) args[ len ] = arguments[ len ];
 
+            var swiper = this;
+            pb.onSlideChange(swiper);
             pb.emit.apply(pb, [ 'local::slideChangeTransitionStart' ].concat( args ));
           },
           slideChangeTransitionEnd: function slideChangeTransitionEnd() {

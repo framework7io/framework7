@@ -1,11 +1,3 @@
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
@@ -15,22 +7,25 @@ export default {
     id: [String, Number],
     sliding: Boolean
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var props = this.props;
-    var className = props.className,
-        id = props.id,
-        style = props.style,
-        sliding = props.sliding;
-    var classes = Utils.classNames(className, 'right', {
-      sliding: sliding
+
+  render() {
+    const _h = this.$createElement;
+    const props = this.props;
+    const {
+      className,
+      id,
+      style,
+      sliding
+    } = props;
+    const classes = Utils.classNames(className, 'right', {
+      sliding
     }, Mixins.colorClasses(props));
-    var children = [];
-    var slots = this.$slots;
+    const children = [];
+    const slots = this.$slots;
 
     if (slots && Object.keys(slots).length) {
-      Object.keys(slots).forEach(function (key) {
-        children.push.apply(children, _toConsumableArray(slots[key]));
+      Object.keys(slots).forEach(key => {
+        children.push(...slots[key]);
       });
     }
 
@@ -42,9 +37,11 @@ export default {
       }
     }, [children]);
   },
+
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

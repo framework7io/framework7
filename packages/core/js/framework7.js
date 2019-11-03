@@ -1,5 +1,5 @@
 /**
- * Framework7 5.1.0
+ * Framework7 5.1.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 27, 2019
+ * Released on: November 3, 2019
  */
 
 (function (global, factory) {
@@ -9855,7 +9855,9 @@
   var selfClosing = 'area base br col command embed hr img input keygen link menuitem meta param source track wbr'.split(' ');
   var propsAttrs = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple value indeterminate'.split(' ');
   var booleanProps = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple readOnly indeterminate'.split(' ');
-  var tempDom = doc.createElement('div');
+  var tempDomDIV = doc.createElement('div');
+  var tempDomTBODY;
+  var tempDomTROW;
 
   function toCamelCase$1(name) {
     return name
@@ -9937,11 +9939,17 @@
     var destroy = [];
     var update = [];
     var postpatch = [];
+    var isFakeElement = false;
+    if (data && data.attrs && data.attrs.component) {
+      // eslint-disable-next-line
+      tagName = data.attrs.component;
+      delete data.attrs.component;
+      isFakeElement = true;
+    }
     var isCustomComponent = tagName && tagName.indexOf('-') > 0 && customComponents[tagName];
-
     if (isCustomComponent) {
       insert.push(function (vnode) {
-        if (vnode.sel !== tagName) { return; }
+        if (vnode.sel !== tagName && !isFakeElement) { return; }
         createCustomComponent({ app: app, vnode: vnode, tagName: tagName, data: data });
       });
       destroy.push(function (vnode) {
@@ -10233,7 +10241,17 @@
     if ( html === void 0 ) html = '';
 
     // Save to temp dom
-    tempDom.innerHTML = html.trim();
+    var htmlTrim = html.trim();
+    var tempDom = tempDomDIV;
+    if (htmlTrim.indexOf('<tr') === 0) {
+      if (!tempDomTBODY) { tempDomTBODY = doc.createElement('tbody'); }
+      tempDom = tempDomTBODY;
+    }
+    if (htmlTrim.indexOf('<td') === 0 || htmlTrim.indexOf('<th') === 0) {
+      if (!tempDomTROW) { tempDomTROW = doc.createElement('tr'); }
+      tempDom = tempDomTROW;
+    }
+    tempDom.innerHTML = htmlTrim;
 
     // Parse DOM
     var rootEl;

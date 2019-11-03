@@ -28,43 +28,47 @@ export default {
     smartSelect: Boolean,
     smartSelectParams: Object
   }, Mixins.colorProps, {}, Mixins.linkIconProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps),
-  data: function data() {
-    var props = __vueComponentProps(this);
 
-    var state = function () {
+  data() {
+    const props = __vueComponentProps(this);
+
+    const state = (() => {
       return {
         isTabbarLabel: props.tabbarLabel
       };
-    }();
+    })();
 
     return {
-      state: state
+      state
     };
   },
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = self.props;
-    var text = props.text,
-        badge = props.badge,
-        badgeColor = props.badgeColor,
-        iconOnly = props.iconOnly,
-        iconBadge = props.iconBadge,
-        icon = props.icon,
-        iconColor = props.iconColor,
-        iconSize = props.iconSize,
-        iconMaterial = props.iconMaterial,
-        iconF7 = props.iconF7,
-        iconMd = props.iconMd,
-        iconIos = props.iconIos,
-        iconAurora = props.iconAurora,
-        id = props.id,
-        style = props.style;
-    var defaultSlots = self.$slots.default;
-    var iconEl;
-    var textEl;
-    var badgeEl;
-    var iconBadgeEl;
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = self.props;
+    const {
+      text,
+      badge,
+      badgeColor,
+      iconOnly,
+      iconBadge,
+      icon,
+      iconColor,
+      iconSize,
+      iconMaterial,
+      iconF7,
+      iconMd,
+      iconIos,
+      iconAurora,
+      id,
+      style
+    } = props;
+    const defaultSlots = self.$slots.default;
+    let iconEl;
+    let textEl;
+    let badgeEl;
+    let iconBadgeEl;
 
     if (text) {
       if (badge) badgeEl = _h(F7Badge, {
@@ -116,9 +120,10 @@ export default {
       }
     })), [iconEl, textEl, defaultSlots]);
   },
+
   watch: {
     'props.tooltip': function watchTooltip(newText) {
-      var self = this;
+      const self = this;
 
       if (!newText && self.f7Tooltip) {
         self.f7Tooltip.destroy();
@@ -139,34 +144,37 @@ export default {
       self.f7Tooltip.setText(newText);
     }
   },
-  created: function created() {
+
+  created() {
     Utils.bindMethods(this, ['onClick']);
   },
-  mounted: function mounted() {
-    var self = this;
-    var el = self.$refs.el;
+
+  mounted() {
+    const self = this;
+    const el = self.$refs.el;
     el.addEventListener('click', self.onClick);
-    var _self$props = self.props,
-        tabbarLabel = _self$props.tabbarLabel,
-        tabLink = _self$props.tabLink,
-        tooltip = _self$props.tooltip,
-        smartSelect = _self$props.smartSelect,
-        smartSelectParams = _self$props.smartSelectParams,
-        routeProps = _self$props.routeProps;
-    var isTabbarLabel = false;
+    const {
+      tabbarLabel,
+      tabLink,
+      tooltip,
+      smartSelect,
+      smartSelectParams,
+      routeProps
+    } = self.props;
+    let isTabbarLabel = false;
 
     if (tabbarLabel || (tabLink || tabLink === '') && self.$$(el).parents('.tabbar-labels').length) {
       isTabbarLabel = true;
     }
 
     self.setState({
-      isTabbarLabel: isTabbarLabel
+      isTabbarLabel
     });
     if (routeProps) el.f7RouteProps = routeProps;
-    self.$f7ready(function (f7) {
+    self.$f7ready(f7 => {
       if (smartSelect) {
-        var ssParams = Utils.extend({
-          el: el
+        const ssParams = Utils.extend({
+          el
         }, smartSelectParams || {});
         self.f7SmartSelect = f7.smartSelect.create(ssParams);
       }
@@ -179,18 +187,22 @@ export default {
       }
     });
   },
-  updated: function updated() {
-    var self = this;
-    var el = self.$refs.el;
-    var routeProps = self.props.routeProps;
+
+  updated() {
+    const self = this;
+    const el = self.$refs.el;
+    const {
+      routeProps
+    } = self.props;
 
     if (routeProps) {
       el.f7RouteProps = routeProps;
     }
   },
-  beforeDestroy: function beforeDestroy() {
-    var self = this;
-    var el = self.$refs.el;
+
+  beforeDestroy() {
+    const self = this;
+    const el = self.$refs.el;
     el.removeEventListener('click', self.onClick);
     delete el.f7RouteProps;
 
@@ -204,30 +216,36 @@ export default {
       delete self.f7Tooltip;
     }
   },
+
   computed: {
-    attrs: function attrs() {
-      var self = this;
-      var props = self.props;
-      var href = props.href,
-          target = props.target,
-          tabLink = props.tabLink;
-      var hrefComputed = href;
+    attrs() {
+      const self = this;
+      const props = self.props;
+      const {
+        href,
+        target,
+        tabLink
+      } = props;
+      let hrefComputed = href;
       if (href === true) hrefComputed = '#';
       if (href === false) hrefComputed = undefined;
       return Utils.extend({
         href: hrefComputed,
-        target: target,
+        target,
         'data-tab': Utils.isStringProp(tabLink) && tabLink || undefined
       }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
     },
-    classes: function classes() {
-      var self = this;
-      var props = self.props;
-      var tabLink = props.tabLink,
-          tabLinkActive = props.tabLinkActive,
-          noLinkClass = props.noLinkClass,
-          smartSelect = props.smartSelect,
-          className = props.className;
+
+    classes() {
+      const self = this;
+      const props = self.props;
+      const {
+        tabLink,
+        tabLinkActive,
+        noLinkClass,
+        smartSelect,
+        className
+      } = props;
       return Utils.classNames(className, {
         link: !(noLinkClass || self.state.isTabbarLabel),
         'icon-only': self.iconOnlyComputed,
@@ -236,23 +254,24 @@ export default {
         'smart-select': smartSelect
       }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
     },
-    props: function props() {
+
+    props() {
       return __vueComponentProps(this);
     }
+
   },
   methods: {
-    onClick: function onClick(event) {
+    onClick(event) {
       this.dispatchEvent('click', event);
     },
-    dispatchEvent: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     },
-    setState: function setState(updater, callback) {
+
+    setState(updater, callback) {
       __vueComponentSetState(this, updater, callback);
     }
+
   }
 };

@@ -1,5 +1,5 @@
 /**
- * Framework7 5.1.0
+ * Framework7 5.1.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 27, 2019
+ * Released on: November 3, 2019
  */
 
 (function (global, factory) {
@@ -21381,12 +21381,16 @@
           .replace(/yy/g, String(year).substring(2))
           .replace(/mm/g, month1 < 10 ? ("0" + month1) : month1)
           .replace(/m(\W+)/g, (month1 + "$1"))
+          .replace(/(\W+)m/g, ("$1" + month1))
           .replace(/MM/g, monthNames[month])
           .replace(/M(\W+)/g, ((monthNamesShort[month]) + "$1"))
+          .replace(/(\W+)M/g, ("$1" + (monthNamesShort[month])))
           .replace(/dd/g, day < 10 ? ("0" + day) : day)
           .replace(/d(\W+)/g, (day + "$1"))
+          .replace(/(\W+)d/g, ("$1" + day))
           .replace(/DD/g, dayNames[weekDay])
-          .replace(/D(\W+)/g, ((dayNamesShort[weekDay]) + "$1"));
+          .replace(/D(\W+)/g, ((dayNamesShort[weekDay]) + "$1"))
+          .replace(/(\W+)D/g, ("$1" + (dayNamesShort[weekDay])));
       }
       if (typeof dateFormat === 'function') {
         return dateFormat(date);
@@ -34131,8 +34135,6 @@
             var args = [], len = arguments.length;
             while ( len-- ) args[ len ] = arguments[ len ];
 
-            var swiper = this;
-            pb.onSlideChange(swiper);
             pb.emit.apply(pb, [ 'local::slideChange' ].concat( args ));
           },
           transitionStart: function transitionStart() {
@@ -34151,6 +34153,8 @@
             var args = [], len = arguments.length;
             while ( len-- ) args[ len ] = arguments[ len ];
 
+            var swiper = this;
+            pb.onSlideChange(swiper);
             pb.emit.apply(pb, [ 'local::slideChangeTransitionStart' ].concat( args ));
           },
           slideChangeTransitionEnd: function slideChangeTransitionEnd() {
@@ -39349,7 +39353,7 @@
   };
 
   /**
-   * Framework7 5.1.0
+   * Framework7 5.1.1
    * Full featured mobile HTML framework for building iOS & Android apps
    * http://framework7.io/
    *
@@ -39357,7 +39361,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: October 27, 2019
+   * Released on: November 3, 2019
    */
 
   // Install Core Modules & Components

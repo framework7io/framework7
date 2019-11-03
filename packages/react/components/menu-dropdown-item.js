@@ -1,21 +1,3 @@
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
 import React from 'react';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
@@ -23,131 +5,112 @@ import __reactComponentDispatchEvent from '../runtime-helpers/react-component-di
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
 
-var F7MenuDropdownItem =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(F7MenuDropdownItem, _React$Component);
+class F7MenuDropdownItem extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.__reactRefs = {};
 
-  function F7MenuDropdownItem(props, context) {
-    var _this;
-
-    _classCallCheck(this, F7MenuDropdownItem);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(F7MenuDropdownItem).call(this, props, context));
-    _this.__reactRefs = {};
-
-    (function () {
-      Utils.bindMethods(_assertThisInitialized(_this), ['onClick']);
+    (() => {
+      Utils.bindMethods(this, ['onClick']);
     })();
-
-    return _this;
   }
 
-  _createClass(F7MenuDropdownItem, [{
-    key: "onClick",
-    value: function onClick(event) {
-      this.dispatchEvent('click', event);
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this2 = this;
+  onClick(event) {
+    this.dispatchEvent('click', event);
+  }
 
-      var self = this;
-      var props = self.props;
-      var id = props.id,
-          className = props.className,
-          style = props.style,
-          link = props.link,
-          href = props.href,
-          text = props.text,
-          divider = props.divider,
-          menuClose = props.menuClose;
-      var isLink = link || href || href === '';
-      var Tag = isLink ? 'a' : 'div';
-      var classes = Utils.classNames({
-        'menu-dropdown-link': isLink && !divider,
-        'menu-dropdown-item': !isLink && !divider,
-        'menu-dropdown-divider': divider
-      }, className, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props), {
-        'menu-close': typeof menuClose === 'undefined'
-      });
-      return React.createElement(Tag, Object.assign({
-        ref: function ref(__reactNode) {
-          _this2.__reactRefs['el'] = __reactNode;
-        },
-        className: classes,
-        id: id,
-        style: style
-      }, self.attrs), text, this.slots['default']);
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      var self = this;
-      var el = self.refs.el;
-      if (!el) return;
-      el.removeEventListener('click', self.onClick);
-      delete el.f7RouteProps;
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate() {
-      var self = this;
-      var el = self.refs.el;
-      if (!el) return;
-      var routeProps = self.props.routeProps;
-      if (routeProps) el.f7RouteProps = routeProps;
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var self = this;
-      var el = self.refs.el;
-      if (!el) return;
-      el.addEventListener('click', self.onClick);
-      var routeProps = self.props.routeProps;
-      if (routeProps) el.f7RouteProps = routeProps;
-    }
-  }, {
-    key: "dispatchEvent",
-    value: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
+  get attrs() {
+    const self = this;
+    const props = self.props;
+    const {
+      link,
+      href,
+      target
+    } = props;
+    let hrefComputed = href;
+    if (typeof hrefComputed === 'undefined' && link) hrefComputed = '#';
+    return Utils.extend({
+      href: hrefComputed,
+      target
+    }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
+  }
 
-      return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
-    }
-  }, {
-    key: "attrs",
-    get: function get() {
-      var self = this;
-      var props = self.props;
-      var link = props.link,
-          href = props.href,
-          target = props.target;
-      var hrefComputed = href;
-      if (typeof hrefComputed === 'undefined' && link) hrefComputed = '#';
-      return Utils.extend({
-        href: hrefComputed,
-        target: target
-      }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
-    }
-  }, {
-    key: "slots",
-    get: function get() {
-      return __reactComponentSlots(this.props);
-    }
-  }, {
-    key: "refs",
-    get: function get() {
-      return this.__reactRefs;
-    },
-    set: function set(refs) {}
-  }]);
+  render() {
+    const self = this;
+    const props = self.props;
+    const {
+      id,
+      className,
+      style,
+      link,
+      href,
+      text,
+      divider,
+      menuClose
+    } = props;
+    const isLink = link || href || href === '';
+    const Tag = isLink ? 'a' : 'div';
+    const classes = Utils.classNames({
+      'menu-dropdown-link': isLink && !divider,
+      'menu-dropdown-item': !isLink && !divider,
+      'menu-dropdown-divider': divider
+    }, className, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props), {
+      'menu-close': typeof menuClose === 'undefined'
+    });
+    return React.createElement(Tag, Object.assign({
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
+      className: classes,
+      id: id,
+      style: style
+    }, self.attrs), text, this.slots['default']);
+  }
 
-  return F7MenuDropdownItem;
-}(React.Component);
+  componentWillUnmount() {
+    const self = this;
+    const el = self.refs.el;
+    if (!el) return;
+    el.removeEventListener('click', self.onClick);
+    delete el.f7RouteProps;
+  }
+
+  componentDidUpdate() {
+    const self = this;
+    const el = self.refs.el;
+    if (!el) return;
+    const {
+      routeProps
+    } = self.props;
+    if (routeProps) el.f7RouteProps = routeProps;
+  }
+
+  componentDidMount() {
+    const self = this;
+    const el = self.refs.el;
+    if (!el) return;
+    el.addEventListener('click', self.onClick);
+    const {
+      routeProps
+    } = self.props;
+    if (routeProps) el.f7RouteProps = routeProps;
+  }
+
+  get slots() {
+    return __reactComponentSlots(this.props);
+  }
+
+  dispatchEvent(events, ...args) {
+    return __reactComponentDispatchEvent(this, events, ...args);
+  }
+
+  get refs() {
+    return this.__reactRefs;
+  }
+
+  set refs(refs) {}
+
+}
 
 __reactComponentSetProps(F7MenuDropdownItem, Object.assign({
   id: [String, Number],

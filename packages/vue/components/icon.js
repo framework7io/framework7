@@ -15,17 +15,16 @@ export default {
     tooltip: String,
     size: [String, Number]
   }, Mixins.colorProps),
-  data: function data() {
-    var _this = this;
 
-    var props = __vueComponentProps(this);
+  data() {
+    const props = __vueComponentProps(this);
 
-    var state = function () {
-      var self = _this;
-      var $f7 = self.$f7;
+    const state = (() => {
+      const self = this;
+      const $f7 = self.$f7;
 
       if (!$f7) {
-        self.$f7ready(function () {
+        self.$f7ready(() => {
           self.setState({
             _theme: self.$theme
           });
@@ -35,22 +34,25 @@ export default {
       return {
         _theme: $f7 ? self.$theme : null
       };
-    }();
+    })();
 
     return {
-      state: state
+      state
     };
   },
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = self.props;
-    var id = props.id,
-        style = props.style;
-    var size = props.size;
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = self.props;
+    const {
+      id,
+      style
+    } = props;
+    let size = props.size;
 
     if (typeof size === 'number' || parseFloat(size) === size * 1) {
-      size = "".concat(size, "px");
+      size = `${size}px`;
     }
 
     return _h('i', {
@@ -66,9 +68,10 @@ export default {
       }
     }, [self.iconTextComputed, this.$slots['default']]);
   },
+
   watch: {
     'props.tooltip': function watchTooltip(newText) {
-      var self = this;
+      const self = this;
 
       if (!newText && self.f7Tooltip) {
         self.f7Tooltip.destroy();
@@ -89,21 +92,25 @@ export default {
       self.f7Tooltip.setText(newText);
     }
   },
-  mounted: function mounted() {
-    var self = this;
-    var el = self.$refs.el;
+
+  mounted() {
+    const self = this;
+    const el = self.$refs.el;
     if (!el) return;
-    var tooltip = self.props.tooltip;
+    const {
+      tooltip
+    } = self.props;
     if (!tooltip) return;
-    self.$f7ready(function (f7) {
+    self.$f7ready(f7 => {
       self.f7Tooltip = f7.tooltip.create({
         targetEl: el,
         text: tooltip
       });
     });
   },
-  beforeDestroy: function beforeDestroy() {
-    var self = this;
+
+  beforeDestroy() {
+    const self = this;
 
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
       self.f7Tooltip.destroy();
@@ -111,17 +118,19 @@ export default {
       delete self.f7Tooltip;
     }
   },
+
   computed: {
-    iconTextComputed: function iconTextComputed() {
-      var self = this;
-      var _self$props = self.props,
-          material = _self$props.material,
-          f7 = _self$props.f7,
-          md = _self$props.md,
-          ios = _self$props.ios,
-          aurora = _self$props.aurora;
-      var theme = self.state._theme;
-      var text = material || f7;
+    iconTextComputed() {
+      const self = this;
+      const {
+        material,
+        f7,
+        md,
+        ios,
+        aurora
+      } = self.props;
+      const theme = self.state._theme;
+      let text = material || f7;
 
       if (md && theme && theme.md && (md.indexOf('material:') >= 0 || md.indexOf('f7:') >= 0)) {
         text = md.split(':')[1];
@@ -133,27 +142,30 @@ export default {
 
       return text;
     },
-    classes: function classes() {
-      var classes = {
+
+    classes() {
+      let classes = {
         icon: true
       };
-      var self = this;
-      var props = self.props;
-      var theme = self.state._theme;
-      var material = props.material,
-          f7 = props.f7,
-          icon = props.icon,
-          md = props.md,
-          ios = props.ios,
-          aurora = props.aurora,
-          className = props.className;
-      var themeIcon;
+      const self = this;
+      const props = self.props;
+      const theme = self.state._theme;
+      const {
+        material,
+        f7,
+        icon,
+        md,
+        ios,
+        aurora,
+        className
+      } = props;
+      let themeIcon;
       if (theme && theme.ios) themeIcon = ios;else if (theme && theme.md) themeIcon = md;else if (theme && theme.aurora) themeIcon = aurora;
 
       if (themeIcon) {
-        var parts = themeIcon.split(':');
-        var prop = parts[0];
-        var value = parts[1];
+        const parts = themeIcon.split(':');
+        const prop = parts[0];
+        const value = parts[1];
 
         if (prop === 'material' || prop === 'f7') {
           classes['material-icons'] = prop === 'material';
@@ -174,13 +186,16 @@ export default {
 
       return Utils.classNames(className, classes, Mixins.colorClasses(props));
     },
-    props: function props() {
+
+    props() {
       return __vueComponentProps(this);
     }
+
   },
   methods: {
-    setState: function setState(updater, callback) {
+    setState(updater, callback) {
       __vueComponentSetState(this, updater, callback);
     }
+
   }
 };

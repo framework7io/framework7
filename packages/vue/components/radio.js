@@ -13,28 +13,31 @@ export default {
     readonly: Boolean,
     defaultChecked: Boolean
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = self.props;
-    var name = props.name,
-        value = props.value,
-        disabled = props.disabled,
-        readonly = props.readonly,
-        checked = props.checked,
-        defaultChecked = props.defaultChecked,
-        id = props.id,
-        style = props.style,
-        className = props.className;
-    var inputEl;
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = self.props;
+    const {
+      name,
+      value,
+      disabled,
+      readonly,
+      checked,
+      defaultChecked,
+      id,
+      style,
+      className
+    } = props;
+    let inputEl;
     {
       inputEl = _h('input', {
         ref: 'inputEl',
         domProps: {
-          value: value,
-          disabled: disabled,
-          readonly: readonly,
-          checked: checked
+          value,
+          disabled,
+          readonly,
+          checked
         },
         on: {
           change: self.onChange
@@ -46,12 +49,12 @@ export default {
       });
     }
 
-    var iconEl = _h('i', {
+    const iconEl = _h('i', {
       class: 'icon-radio'
     });
 
-    var classes = Utils.classNames(className, 'radio', {
-      disabled: disabled
+    const classes = Utils.classNames(className, 'radio', {
+      disabled
     }, Mixins.colorClasses(props));
     return _h('label', {
       style: style,
@@ -61,24 +64,25 @@ export default {
       }
     }, [inputEl, iconEl, this.$slots['default']]);
   },
-  created: function created() {
+
+  created() {
     Utils.bindMethods(this, ['onChange']);
   },
+
   methods: {
-    onChange: function onChange(event) {
+    onChange(event) {
       this.dispatchEvent('change', event);
     },
-    dispatchEvent: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     }
+
   },
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

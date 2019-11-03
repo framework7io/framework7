@@ -6,13 +6,16 @@ export default {
   props: Object.assign({
     id: [String, Number]
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var props = this.props;
-    var className = props.className,
-        id = props.id,
-        style = props.style;
-    var classes = Utils.classNames(className, 'messages-title', Mixins.colorClasses(props));
+
+  render() {
+    const _h = this.$createElement;
+    const props = this.props;
+    const {
+      className,
+      id,
+      style
+    } = props;
+    const classes = Utils.classNames(className, 'messages-title', Mixins.colorClasses(props));
     return _h('div', {
       style: style,
       class: classes,
@@ -21,9 +24,11 @@ export default {
       }
     }, [this.$slots['default']]);
   },
+
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

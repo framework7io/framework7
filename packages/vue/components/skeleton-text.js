@@ -1,5 +1,3 @@
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
@@ -14,51 +12,54 @@ export default {
       default: 'span'
     }
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var props = this.props;
-    var className = props.className,
-        id = props.id,
-        style = props.style,
-        width = props.width,
-        height = props.height,
-        tag = props.tag;
-    var classes = Utils.classNames('skeleton-text', className, Mixins.colorClasses(props));
-    var styleAttribute = style;
+
+  render() {
+    const _h = this.$createElement;
+    const props = this.props;
+    const {
+      className,
+      id,
+      style,
+      width,
+      height,
+      tag
+    } = props;
+    const classes = Utils.classNames('skeleton-text', className, Mixins.colorClasses(props));
+    let styleAttribute = style;
 
     if (width) {
-      var widthValue = typeof width === 'number' ? "".concat(width, "px") : width;
+      const widthValue = typeof width === 'number' ? `${width}px` : width;
 
       if (!styleAttribute) {
         styleAttribute = {
           width: widthValue
         };
-      } else if (_typeof(styleAttribute) === 'object') {
+      } else if (typeof styleAttribute === 'object') {
         styleAttribute = Object.assign({
           width: widthValue
         }, styleAttribute);
       } else if (typeof styleAttribute === 'string') {
-        styleAttribute = "width: ".concat(widthValue, "; ").concat(styleAttribute);
+        styleAttribute = `width: ${widthValue}; ${styleAttribute}`;
       }
     }
 
     if (height) {
-      var heightValue = typeof height === 'number' ? "".concat(height, "px") : height;
+      const heightValue = typeof height === 'number' ? `${height}px` : height;
 
       if (!styleAttribute) {
         styleAttribute = {
           height: heightValue
         };
-      } else if (_typeof(styleAttribute) === 'object') {
+      } else if (typeof styleAttribute === 'object') {
         styleAttribute = Object.assign({
           height: heightValue
         }, styleAttribute);
       } else if (typeof styleAttribute === 'string') {
-        styleAttribute = "height: ".concat(heightValue, "; ").concat(styleAttribute);
+        styleAttribute = `height: ${heightValue}; ${styleAttribute}`;
       }
     }
 
-    var Tag = tag;
+    const Tag = tag;
     return _h(Tag, {
       style: styleAttribute,
       class: classes,
@@ -67,9 +68,11 @@ export default {
       }
     }, [this.$slots['default']]);
   },
+
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

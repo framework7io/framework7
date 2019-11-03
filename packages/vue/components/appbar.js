@@ -14,19 +14,22 @@ export default {
     innerClass: String,
     innerClassName: String
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = self.props;
-    var inner = props.inner,
-        innerClass = props.innerClass,
-        innerClassName = props.innerClassName,
-        className = props.className,
-        id = props.id,
-        style = props.style,
-        noShadow = props.noShadow,
-        noHairline = props.noHairline;
-    var innerEl;
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = self.props;
+    const {
+      inner,
+      innerClass,
+      innerClassName,
+      className,
+      id,
+      style,
+      noShadow,
+      noHairline
+    } = props;
+    let innerEl;
 
     if (inner) {
       innerEl = _h('div', {
@@ -35,7 +38,7 @@ export default {
       }, [this.$slots['default']]);
     }
 
-    var classes = Utils.classNames(className, 'appbar', {
+    const classes = Utils.classNames(className, 'appbar', {
       'no-shadow': noShadow,
       'no-hairline': noHairline
     }, Mixins.colorClasses(props));
@@ -48,9 +51,11 @@ export default {
       }
     }, [this.$slots['before-inner'], innerEl || self.$slots.default, this.$slots['after-inner']]);
   },
+
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

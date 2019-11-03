@@ -10,14 +10,17 @@ export default {
       default: true
     }
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var props = this.props;
-    var id = props.id,
-        className = props.className,
-        style = props.style,
-        padding = props.padding;
-    var classes = Utils.classNames(className, 'card-content', {
+
+  render() {
+    const _h = this.$createElement;
+    const props = this.props;
+    const {
+      id,
+      className,
+      style,
+      padding
+    } = props;
+    const classes = Utils.classNames(className, 'card-content', {
       'card-content-padding': padding
     }, Mixins.colorClasses(props));
     return _h('div', {
@@ -28,9 +31,11 @@ export default {
       }
     }, [this.$slots['default']]);
   },
+
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

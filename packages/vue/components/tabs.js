@@ -13,22 +13,25 @@ export default {
       default: undefined
     }
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = self.props;
-    var animated = props.animated,
-        swipeable = props.swipeable,
-        id = props.id,
-        style = props.style,
-        className = props.className,
-        routable = props.routable;
-    var classes = Utils.classNames(className, Mixins.colorClasses(props));
-    var wrapClasses = Utils.classNames({
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = self.props;
+    const {
+      animated,
+      swipeable,
+      id,
+      style,
+      className,
+      routable
+    } = props;
+    const classes = Utils.classNames(className, Mixins.colorClasses(props));
+    const wrapClasses = Utils.classNames({
       'tabs-animated-wrap': animated,
       'tabs-swipeable-wrap': swipeable
     });
-    var tabsClasses = Utils.classNames({
+    const tabsClasses = Utils.classNames({
       tabs: true,
       'tabs-routable': routable
     });
@@ -54,19 +57,23 @@ export default {
       }
     }, [this.$slots['default']]);
   },
-  mounted: function mounted() {
-    var self = this;
-    var _self$props = self.props,
-        swipeable = _self$props.swipeable,
-        swiperParams = _self$props.swiperParams;
+
+  mounted() {
+    const self = this;
+    const {
+      swipeable,
+      swiperParams
+    } = self.props;
     if (!swipeable || !swiperParams) return;
-    var wrapEl = self.$refs.wrapEl;
+    const wrapEl = self.$refs.wrapEl;
     if (!wrapEl) return;
     wrapEl.f7SwiperParams = swiperParams;
   },
+
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

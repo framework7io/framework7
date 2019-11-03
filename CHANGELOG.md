@@ -2,6 +2,16 @@
 
 # Change Log
 
+# [v5.1.1](https://github.com/framework7io/framework7/compare/v5.1.0...v5.1.1) - November 3, 2019
+  * Core
+    * Calendar
+      * Fixed `d`, `m`, `D`, `M` tokens parsing in custom date format
+    * Photo Browser
+      * Fixed issue when opening PhotoBrowser on not first slide can cause empty text in its Navbar
+    * Router Component
+      * New syntax to use custom components in strict HTML layout using `component` attribute, e.g. `<tr component="my-table-row"></tr>` instead of `<my-table-row></my-table-row>`
+  * Minor fixes
+
 # [v5.1.0](https://github.com/framework7io/framework7/compare/v5.0.5...v5.1.0) - October 27, 2019
   * Core
     * Grid

@@ -16,15 +16,18 @@ export default {
     target: String,
     tooltip: String
   }, Mixins.colorProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = this.props;
-    var className = props.className,
-        id = props.id,
-        style = props.style,
-        title = props.title,
-        text = props.text;
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = this.props;
+    const {
+      className,
+      id,
+      style,
+      title,
+      text
+    } = props;
     return _h('li', {
       style: style,
       class: className,
@@ -37,38 +40,46 @@ export default {
       ref: 'linkEl'
     })), [this.$slots['default'] || [title || text]])]);
   },
+
   computed: {
-    attrs: function attrs() {
-      var self = this;
-      var props = self.props;
-      var link = props.link,
-          href = props.href,
-          target = props.target,
-          tabLink = props.tabLink;
+    attrs() {
+      const self = this;
+      const props = self.props;
+      const {
+        link,
+        href,
+        target,
+        tabLink
+      } = props;
       return Utils.extend({
         href: typeof link === 'boolean' && typeof href === 'boolean' ? '#' : link || href,
-        target: target,
+        target,
         'data-tab': Utils.isStringProp(tabLink) && tabLink
       }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
     },
-    classes: function classes() {
-      var self = this;
-      var props = self.props;
-      var tabLink = props.tabLink,
-          tabLinkActive = props.tabLinkActive;
+
+    classes() {
+      const self = this;
+      const props = self.props;
+      const {
+        tabLink,
+        tabLinkActive
+      } = props;
       return Utils.classNames({
         'list-button': true,
         'tab-link': tabLink || tabLink === '',
         'tab-link-active': tabLinkActive
       }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
     },
-    props: function props() {
+
+    props() {
       return __vueComponentProps(this);
     }
+
   },
   watch: {
     'props.tooltip': function watchTooltip(newText) {
-      var self = this;
+      const self = this;
 
       if (!newText && self.f7Tooltip) {
         self.f7Tooltip.destroy();
@@ -89,22 +100,25 @@ export default {
       self.f7Tooltip.setText(newText);
     }
   },
-  created: function created() {
+
+  created() {
     Utils.bindMethods(this, ['onClick']);
   },
-  mounted: function mounted() {
-    var self = this;
-    var linkEl = self.$refs.linkEl;
-    var _self$props = self.props,
-        routeProps = _self$props.routeProps,
-        tooltip = _self$props.tooltip;
+
+  mounted() {
+    const self = this;
+    const linkEl = self.$refs.linkEl;
+    const {
+      routeProps,
+      tooltip
+    } = self.props;
 
     if (routeProps) {
       linkEl.f7RouteProps = routeProps;
     }
 
     linkEl.addEventListener('click', self.onClick);
-    self.$f7ready(function (f7) {
+    self.$f7ready(f7 => {
       if (tooltip) {
         self.f7Tooltip = f7.tooltip.create({
           targetEl: linkEl,
@@ -113,18 +127,22 @@ export default {
       }
     });
   },
-  updated: function updated() {
-    var self = this;
-    var linkEl = self.$refs.linkEl;
-    var routeProps = self.props.routeProps;
+
+  updated() {
+    const self = this;
+    const linkEl = self.$refs.linkEl;
+    const {
+      routeProps
+    } = self.props;
 
     if (routeProps) {
       linkEl.f7RouteProps = routeProps;
     }
   },
-  beforeDestroy: function beforeDestroy() {
-    var self = this;
-    var linkEl = self.$refs.linkEl;
+
+  beforeDestroy() {
+    const self = this;
+    const linkEl = self.$refs.linkEl;
     linkEl.removeEventListener('click', this.onClick);
     delete linkEl.f7RouteProps;
 
@@ -134,16 +152,15 @@ export default {
       delete self.f7Tooltip;
     }
   },
+
   methods: {
-    onClick: function onClick(event) {
+    onClick(event) {
       this.dispatchEvent('click', event);
     },
-    dispatchEvent: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     }
+
   }
 };

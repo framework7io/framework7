@@ -9,25 +9,28 @@ export default {
     image: String,
     checked: Boolean
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = self.props;
-    var image = props.image,
-        checked = props.checked,
-        id = props.id,
-        className = props.className,
-        style = props.style;
-    var classes = Utils.classNames(className, 'messagebar-sheet-image', 'checkbox', Mixins.colorClasses(props));
-    var styles = Utils.extend({
-      backgroundImage: image && "url(".concat(image, ")")
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = self.props;
+    const {
+      image,
+      checked,
+      id,
+      className,
+      style
+    } = props;
+    const classes = Utils.classNames(className, 'messagebar-sheet-image', 'checkbox', Mixins.colorClasses(props));
+    const styles = Utils.extend({
+      backgroundImage: image && `url(${image})`
     }, style || {});
-    var inputEl;
+    let inputEl;
     {
       inputEl = _h('input', {
         ref: 'inputEl',
         domProps: {
-          checked: checked
+          checked
         },
         on: {
           change: self.onChange
@@ -47,25 +50,26 @@ export default {
       class: 'icon icon-checkbox'
     }), this.$slots['default']]);
   },
-  created: function created() {
+
+  created() {
     Utils.bindMethods(this, ['onChange']);
   },
+
   methods: {
-    onChange: function onChange(event) {
+    onChange(event) {
       if (this.props.checked) this.dispatchEvent('checked', event);else this.dispatchEvent('unchecked', event);
       this.dispatchEvent('change', event);
     },
-    dispatchEvent: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     }
+
   },
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

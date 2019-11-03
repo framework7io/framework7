@@ -69,25 +69,27 @@ export default {
     inputId: String,
     disabled: Boolean
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = self.props;
-    var _self$props = self.props,
-        id = _self$props.id,
-        disabled = _self$props.disabled,
-        className = _self$props.className,
-        style = _self$props.style,
-        input = _self$props.input,
-        inputId = _self$props.inputId,
-        name = _self$props.name,
-        vertical = _self$props.vertical,
-        verticalReversed = _self$props.verticalReversed;
-    var classes = Utils.classNames(className, 'range-slider', {
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = self.props;
+    const {
+      id,
+      disabled,
+      className,
+      style,
+      input,
+      inputId,
+      name,
+      vertical,
+      verticalReversed
+    } = self.props;
+    const classes = Utils.classNames(className, 'range-slider', {
       'range-slider-horizontal': !vertical,
       'range-slider-vertical': vertical,
       'range-slider-vertical-reversed': vertical && verticalReversed,
-      disabled: disabled
+      disabled
     }, Mixins.colorClasses(props));
     return _h('div', {
       ref: 'el',
@@ -104,72 +106,81 @@ export default {
       }
     }), this.$slots['default']]);
   },
+
   watch: {
     'props.value': function watchValue(newValue) {
-      var self = this;
+      const self = this;
       if (!self.f7Range) return;
       self.f7Range.setValue(newValue);
     }
   },
-  mounted: function mounted() {
-    var self = this;
-    self.$f7ready(function (f7) {
+
+  mounted() {
+    const self = this;
+    self.$f7ready(f7 => {
       if (!self.props.init) return;
-      var props = self.props;
-      var value = props.value,
-          min = props.min,
-          max = props.max,
-          step = props.step,
-          label = props.label,
-          dual = props.dual,
-          draggableBar = props.draggableBar,
-          vertical = props.vertical,
-          verticalReversed = props.verticalReversed,
-          formatLabel = props.formatLabel,
-          scale = props.scale,
-          scaleSteps = props.scaleSteps,
-          scaleSubSteps = props.scaleSubSteps,
-          formatScaleLabel = props.formatScaleLabel,
-          limitKnobPosition = props.limitKnobPosition;
+      const props = self.props;
+      const {
+        value,
+        min,
+        max,
+        step,
+        label,
+        dual,
+        draggableBar,
+        vertical,
+        verticalReversed,
+        formatLabel,
+        scale,
+        scaleSteps,
+        scaleSubSteps,
+        formatScaleLabel,
+        limitKnobPosition
+      } = props;
       self.f7Range = f7.range.create(Utils.noUndefinedProps({
         el: self.$refs.el,
-        value: value,
-        min: min,
-        max: max,
-        step: step,
-        label: label,
-        dual: dual,
-        draggableBar: draggableBar,
-        vertical: vertical,
-        verticalReversed: verticalReversed,
-        formatLabel: formatLabel,
-        scale: scale,
-        scaleSteps: scaleSteps,
-        scaleSubSteps: scaleSubSteps,
-        formatScaleLabel: formatScaleLabel,
-        limitKnobPosition: limitKnobPosition,
+        value,
+        min,
+        max,
+        step,
+        label,
+        dual,
+        draggableBar,
+        vertical,
+        verticalReversed,
+        formatLabel,
+        scale,
+        scaleSteps,
+        scaleSubSteps,
+        formatScaleLabel,
+        limitKnobPosition,
         on: {
-          change: function change(range, val) {
+          change(range, val) {
             self.dispatchEvent('range:change rangeChange', val);
           },
-          changed: function changed(range, val) {
+
+          changed(range, val) {
             self.dispatchEvent('range:changed rangeChanged', val);
           }
+
         }
       }));
     });
   },
-  beforeDestroy: function beforeDestroy() {
-    var self = this;
+
+  beforeDestroy() {
+    const self = this;
     if (self.f7Range && self.f7Range.destroy) self.f7Range.destroy();
   },
+
   methods: {
-    setValue: function setValue(newValue) {
-      var self = this;
+    setValue(newValue) {
+      const self = this;
       if (self.f7Range && self.f7Range.setValue) self.f7Range.setValue(newValue);
     },
-    getValue: function getValue() {
-      var self = this;
+
+    getValue() {
+      const self = this;
 
       if (self.f7Range && self.f7Range.getValue) {
         return self.f7Range.getValue();
@@ -177,17 +188,16 @@ export default {
 
       return undefined;
     },
-    dispatchEvent: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     }
+
   },
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

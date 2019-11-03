@@ -32,17 +32,16 @@ export default {
     largeTransparent: Boolean,
     titleLarge: String
   }, Mixins.colorProps),
-  data: function data() {
-    var _this = this;
 
-    var props = __vueComponentProps(this);
+  data() {
+    const props = __vueComponentProps(this);
 
-    var state = function () {
-      var self = _this;
-      var $f7 = self.$f7;
+    const state = (() => {
+      const self = this;
+      const $f7 = self.$f7;
 
       if (!$f7) {
-        self.$f7ready(function () {
+        self.$f7ready(() => {
           self.setState({
             _theme: self.$theme
           });
@@ -52,43 +51,46 @@ export default {
       return {
         _theme: $f7 ? self.$theme : null
       };
-    }();
+    })();
 
     return {
-      state: state
+      state
     };
   },
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = self.props;
-    var backLink = props.backLink,
-        backLinkUrl = props.backLinkUrl,
-        backLinkForce = props.backLinkForce,
-        backLinkShowText = props.backLinkShowText,
-        sliding = props.sliding,
-        title = props.title,
-        subtitle = props.subtitle,
-        innerClass = props.innerClass,
-        innerClassName = props.innerClassName,
-        className = props.className,
-        id = props.id,
-        style = props.style,
-        hidden = props.hidden,
-        noShadow = props.noShadow,
-        noHairline = props.noHairline,
-        large = props.large,
-        largeTransparent = props.largeTransparent,
-        titleLarge = props.titleLarge;
-    var theme = self.state.theme;
-    var leftEl;
-    var titleEl;
-    var rightEl;
-    var titleLargeEl;
-    var addLeftTitleClass = theme && theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
-    var addCenterTitleClass = theme && theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || theme && theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
-    var slots = self.$slots;
-    var classes = Utils.classNames(className, 'navbar', {
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = self.props;
+    const {
+      backLink,
+      backLinkUrl,
+      backLinkForce,
+      backLinkShowText,
+      sliding,
+      title,
+      subtitle,
+      innerClass,
+      innerClassName,
+      className,
+      id,
+      style,
+      hidden,
+      noShadow,
+      noHairline,
+      large,
+      largeTransparent,
+      titleLarge
+    } = props;
+    const theme = self.state.theme;
+    let leftEl;
+    let titleEl;
+    let rightEl;
+    let titleLargeEl;
+    const addLeftTitleClass = theme && theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
+    const addCenterTitleClass = theme && theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || theme && theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
+    const slots = self.$slots;
+    const classes = Utils.classNames(className, 'navbar', {
       'navbar-hidden': hidden,
       'navbar-large': large,
       'navbar-large-transparent': largeTransparent
@@ -121,7 +123,7 @@ export default {
       rightEl = _h(F7NavRight, [slots['nav-right'], slots.right]);
     }
 
-    var largeTitle = titleLarge;
+    let largeTitle = titleLarge;
     if (!largeTitle && large && title) largeTitle = title;
 
     if (largeTitle || slots['title-large']) {
@@ -132,9 +134,9 @@ export default {
       }, [largeTitle || '', this.$slots['title-large']])]);
     }
 
-    var innerEl = _h('div', {
+    const innerEl = _h('div', {
       class: Utils.classNames('navbar-inner', innerClass, innerClassName, {
-        sliding: sliding,
+        sliding,
         'no-shadow': noShadow,
         'no-hairline': noHairline,
         'navbar-inner-left-title': addLeftTitleClass,
@@ -153,14 +155,18 @@ export default {
       class: 'navbar-bg'
     }), this.$slots['before-inner'], innerEl, this.$slots['after-inner']]);
   },
-  created: function created() {
+
+  created() {
     Utils.bindMethods(this, ['onBackClick', 'onHide', 'onShow', 'onExpand', 'onCollapse']);
   },
-  mounted: function mounted() {
-    var self = this;
-    var el = self.$refs.el;
+
+  mounted() {
+    const self = this;
+    const {
+      el
+    } = self.$refs;
     if (!el) return;
-    self.$f7ready(function (f7) {
+    self.$f7ready(f7 => {
       self.eventTargetEl = el;
       f7.on('navbarShow', self.onShow);
       f7.on('navbarHide', self.onHide);
@@ -168,17 +174,21 @@ export default {
       f7.on('navbarExpand', self.onExpand);
     });
   },
-  updated: function updated() {
-    var self = this;
+
+  updated() {
+    const self = this;
     if (!self.$f7) return;
-    var el = self.$refs.el;
+    const el = self.$refs.el;
     self.$f7.navbar.size(el);
   },
-  beforeDestroy: function beforeDestroy() {
-    var self = this;
-    var el = self.$refs.el;
+
+  beforeDestroy() {
+    const self = this;
+    const {
+      el
+    } = self.$refs;
     if (!el || !self.$f7) return;
-    var f7 = self.$f7;
+    const f7 = self.$f7;
     f7.off('navbarShow', self.onShow);
     f7.off('navbarHide', self.onHide);
     f7.off('navbarCollapse', self.onCollapse);
@@ -186,55 +196,63 @@ export default {
     self.eventTargetEl = null;
     delete self.eventTargetEl;
   },
+
   methods: {
-    onHide: function onHide(navbarEl) {
+    onHide(navbarEl) {
       if (this.eventTargetEl !== navbarEl) return;
       this.dispatchEvent('navbar:hide navbarHide');
     },
-    onShow: function onShow(navbarEl) {
+
+    onShow(navbarEl) {
       if (this.eventTargetEl !== navbarEl) return;
       this.dispatchEvent('navbar:show navbarShow');
     },
-    onExpand: function onExpand(navbarEl) {
+
+    onExpand(navbarEl) {
       if (this.eventTargetEl !== navbarEl) return;
       this.dispatchEvent('navbar:expand navbarExpand');
     },
-    onCollapse: function onCollapse(navbarEl) {
+
+    onCollapse(navbarEl) {
       if (this.eventTargetEl !== navbarEl) return;
       this.dispatchEvent('navbar:collapse navbarCollapse');
     },
-    hide: function hide(animate) {
-      var self = this;
+
+    hide(animate) {
+      const self = this;
       if (!self.$f7) return;
       self.$f7.navbar.hide(self.$refs.el, animate);
     },
-    show: function show(animate) {
-      var self = this;
+
+    show(animate) {
+      const self = this;
       if (!self.$f7) return;
       self.$f7.navbar.show(self.$refs.el, animate);
     },
-    size: function size() {
-      var self = this;
+
+    size() {
+      const self = this;
       if (!self.$f7) return;
       self.$f7.navbar.size(self.$refs.el);
     },
-    onBackClick: function onBackClick(event) {
+
+    onBackClick(event) {
       this.dispatchEvent('back-click backClick click:back clickBack', event);
     },
-    dispatchEvent: function dispatchEvent(events) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
 
-      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     },
-    setState: function setState(updater, callback) {
+
+    setState(updater, callback) {
       __vueComponentSetState(this, updater, callback);
     }
+
   },
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

@@ -1,11 +1,3 @@
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
@@ -17,17 +9,20 @@ export default {
     subtitle: String,
     sliding: Boolean
   }, Mixins.colorProps),
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var props = self.props;
-    var title = props.title,
-        subtitle = props.subtitle,
-        id = props.id,
-        style = props.style,
-        sliding = props.sliding,
-        className = props.className;
-    var subtitleEl;
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const props = self.props;
+    const {
+      title,
+      subtitle,
+      id,
+      style,
+      sliding,
+      className
+    } = props;
+    let subtitleEl;
 
     if (subtitle) {
       subtitleEl = _h('span', {
@@ -35,18 +30,16 @@ export default {
       }, [subtitle]);
     }
 
-    var classes = Utils.classNames(className, 'title', {
-      sliding: sliding
+    const classes = Utils.classNames(className, 'title', {
+      sliding
     }, Mixins.colorClasses(props));
-    var children;
-    var slots = self.$slots;
+    let children;
+    const slots = self.$slots;
 
     if (slots && Object.keys(slots).length) {
       children = [];
-      Object.keys(slots).forEach(function (key) {
-        var _children;
-
-        (_children = children).push.apply(_children, _toConsumableArray(slots[key]));
+      Object.keys(slots).forEach(key => {
+        children.push(...slots[key]);
       });
     }
 
@@ -58,9 +51,11 @@ export default {
       }
     }, [children, !children && title, !children && subtitleEl]);
   },
+
   computed: {
-    props: function props() {
+    props() {
       return __vueComponentProps(this);
     }
+
   }
 };

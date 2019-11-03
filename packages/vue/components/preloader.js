@@ -8,17 +8,16 @@ export default {
     id: [String, Number],
     size: [Number, String]
   }, Mixins.colorProps),
-  data: function data() {
-    var _this = this;
 
-    var props = __vueComponentProps(this);
+  data() {
+    const props = __vueComponentProps(this);
 
-    var state = function () {
-      var self = _this;
-      var $f7 = self.$f7;
+    const state = (() => {
+      const self = this;
+      const $f7 = self.$f7;
 
       if (!$f7) {
-        self.$f7ready(function () {
+        self.$f7ready(() => {
           self.setState({
             _theme: self.$theme
           });
@@ -28,31 +27,36 @@ export default {
       return {
         _theme: $f7 ? self.$theme : null
       };
-    }();
+    })();
 
     return {
-      state: state
+      state
     };
   },
-  render: function render() {
-    var _h = this.$createElement;
-    var self = this;
-    var sizeComputed = self.sizeComputed,
-        props = self.props;
-    var id = props.id,
-        style = props.style,
-        className = props.className;
-    var theme = self.state._theme;
-    var preloaderStyle = {};
+
+  render() {
+    const _h = this.$createElement;
+    const self = this;
+    const {
+      sizeComputed,
+      props
+    } = self;
+    const {
+      id,
+      style,
+      className
+    } = props;
+    const theme = self.state._theme;
+    const preloaderStyle = {};
 
     if (sizeComputed) {
-      preloaderStyle.width = "".concat(sizeComputed, "px");
-      preloaderStyle.height = "".concat(sizeComputed, "px");
-      preloaderStyle['--f7-preloader-size'] = "".concat(sizeComputed, "px");
+      preloaderStyle.width = `${sizeComputed}px`;
+      preloaderStyle.height = `${sizeComputed}px`;
+      preloaderStyle['--f7-preloader-size'] = `${sizeComputed}px`;
     }
 
     if (style) Utils.extend(preloaderStyle, style || {});
-    var innerEl;
+    let innerEl;
 
     if (theme && theme.md) {
       innerEl = _h('span', {
@@ -104,7 +108,7 @@ export default {
       })]);
     }
 
-    var classes = Utils.classNames(className, 'preloader', Mixins.colorClasses(props));
+    const classes = Utils.classNames(className, 'preloader', Mixins.colorClasses(props));
     return _h('span', {
       style: preloaderStyle,
       class: classes,
@@ -113,9 +117,10 @@ export default {
       }
     }, [innerEl]);
   },
+
   computed: {
-    sizeComputed: function sizeComputed() {
-      var s = this.props.size;
+    sizeComputed() {
+      let s = this.props.size;
 
       if (s && typeof s === 'string' && s.indexOf('px') >= 0) {
         s = s.replace('px', '');
@@ -123,13 +128,16 @@ export default {
 
       return s;
     },
-    props: function props() {
+
+    props() {
       return __vueComponentProps(this);
     }
+
   },
   methods: {
-    setState: function setState(updater, callback) {
+    setState(updater, callback) {
       __vueComponentSetState(this, updater, callback);
     }
+
   }
 };
