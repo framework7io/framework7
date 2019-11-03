@@ -15,6 +15,8 @@ function transformRestSpread(buildPath) {
   function transformFile(filePath) {
     const fileContent = fs.readFileSync(filePath);
     const { code } = transformSync(fileContent, {
+      babelrc: false,
+      configFile: false,
       plugins: [
         ['@babel/plugin-proposal-object-rest-spread', { loose: true, useBuiltIns: true }],
       ],
