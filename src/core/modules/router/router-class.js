@@ -1,6 +1,6 @@
 import { window, document } from 'ssr-window';
 import $ from 'dom7';
-import PathToRegexp from 'path-to-regexp'; // eslint-disable-line
+import { pathToRegexp, compile } from 'path-to-regexp';
 import Framework7Class from '../../utils/class';
 import Utils from '../../utils/utils';
 import History from '../../utils/history';
@@ -479,7 +479,7 @@ class Router extends Framework7Class {
   // eslint-disable-next-line
   constructRouteUrl(route, { params, query } = {}) {
     const { path } = route;
-    const toUrl = PathToRegexp.compile(path);
+    const toUrl = compile(path);
     let url;
     try {
       url = toUrl(params || {});
@@ -553,7 +553,7 @@ class Router extends Framework7Class {
       let matched;
       pathsToMatch.forEach((pathToMatch) => {
         if (matched) return;
-        matched = PathToRegexp(pathToMatch, keys).exec(path);
+        matched = pathToRegexp(pathToMatch, keys).exec(path);
       });
 
       if (matched) {
