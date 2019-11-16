@@ -626,31 +626,39 @@ export default {
       if ($clickedEl.closest('a').length > 0) {
         return;
       }
-      let pageContent;
+      let $pageContentEl;
+
       // Find active page
-      const navbar = $clickedEl.parents('.navbar');
+      const $navbarEl = $clickedEl.parents('.navbar');
+      const $navbarsEl = $navbarEl.parents('.navbars');
 
       // Static Layout
-      pageContent = navbar.parents('.page-content');
+      $pageContentEl = $navbarEl.parents('.page-content');
 
-      if (pageContent.length === 0) {
+      if ($pageContentEl.length === 0) {
         // Fixed Layout
-        if (navbar.parents('.page').length > 0) {
-          pageContent = navbar.parents('.page').find('.page-content');
+        if ($navbarEl.parents('.page').length > 0) {
+          $pageContentEl = $navbarEl.parents('.page').find('.page-content');
+        }
+        // Through Layout iOS
+        if ($pageContentEl.length === 0 && $navbarsEl.length) {
+          if ($navbarsEl.nextAll('.page-current:not(.stacked)').length > 0) {
+            $pageContentEl = $navbarsEl.nextAll('.page-current:not(.stacked)').find('.page-content');
+          }
         }
         // Through Layout
-        if (pageContent.length === 0) {
-          if (navbar.nextAll('.page-current:not(.stacked)').length > 0) {
-            pageContent = navbar.nextAll('.page-current:not(.stacked)').find('.page-content');
+        if ($pageContentEl.length === 0) {
+          if ($navbarEl.nextAll('.page-current:not(.stacked)').length > 0) {
+            $pageContentEl = $navbarEl.nextAll('.page-current:not(.stacked)').find('.page-content');
           }
         }
       }
-      if (pageContent && pageContent.length > 0) {
+      if ($pageContentEl && $pageContentEl.length > 0) {
         // Check for tab
-        if (pageContent.hasClass('tab')) {
-          pageContent = pageContent.parent('.tabs').children('.page-content.tab-active');
+        if ($pageContentEl.hasClass('tab')) {
+          $pageContentEl = $pageContentEl.parent('.tabs').children('.page-content.tab-active');
         }
-        if (pageContent.length > 0) pageContent.scrollTop(0, 300);
+        if ($pageContentEl.length > 0) $pageContentEl.scrollTop(0, 300);
       }
     },
   },
