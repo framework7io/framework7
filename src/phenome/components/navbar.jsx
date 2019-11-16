@@ -44,6 +44,8 @@ export default {
     }
     return {
       _theme: $f7 ? self.$theme : null,
+      routerPositionClass: '',
+      largeCollapsed: false,
     };
   },
   render() {
@@ -70,7 +72,11 @@ export default {
       titleLarge,
     } = props;
 
-    const theme = self.state.theme;
+    const {
+      _theme: theme,
+      routerPositionClass,
+      largeCollapsed,
+    } = self.state;
 
     let leftEl;
     let titleEl;
@@ -86,10 +92,12 @@ export default {
     const classes = Utils.classNames(
       className,
       'navbar',
+      routerPositionClass,
       {
         'navbar-hidden': hidden,
         'navbar-large': large,
         'navbar-large-transparent': largeTransparent,
+        'navbar-large-collapsed': large && largeCollapsed,
       },
       Mixins.colorClasses(props),
     );
@@ -163,7 +171,7 @@ export default {
     );
   },
   componentDidCreate() {
-    Utils.bindMethods(this, ['onBackClick', 'onHide', 'onShow', 'onExpand', 'onCollapse']);
+    Utils.bindMethods(this, ['onBackClick', 'onHide', 'onShow', 'onExpand', 'onCollapse', 'onNavbarPosition']);
   },
   componentDidMount() {
     const self = this;
@@ -175,6 +183,7 @@ export default {
       f7.on('navbarHide', self.onHide);
       f7.on('navbarCollapse', self.onCollapse);
       f7.on('navbarExpand', self.onExpand);
+      f7.on('navbarPosition', self.onNavbarPosition);
     });
   },
   componentDidUpdate() {
@@ -192,6 +201,7 @@ export default {
     f7.off('navbarHide', self.onHide);
     f7.off('navbarCollapse', self.onCollapse);
     f7.off('navbarExpand', self.onExpand);
+    f7.off('navbarPosition', self.onNavbarPosition);
     self.eventTargetEl = null;
     delete self.eventTargetEl;
   },
@@ -206,11 +216,23 @@ export default {
     },
     onExpand(navbarEl) {
       if (this.eventTargetEl !== navbarEl) return;
+      this.setState({
+        largeCollapsed: false,
+      });
       this.dispatchEvent('navbar:expand navbarExpand');
     },
     onCollapse(navbarEl) {
       if (this.eventTargetEl !== navbarEl) return;
+      this.setState({
+        largeCollapsed: true,
+      });
       this.dispatchEvent('navbar:collapse navbarCollapse');
+    },
+    onNavbarPosition(navbarEl, position) {
+      if (this.eventTargetEl !== navbarEl) return;
+      this.setState({
+        routerPositionClass: `navbar-${position}`,
+      });
     },
     hide(animate) {
       const self = this;
