@@ -2,6 +2,10 @@
 
 # Change Log
 
+# [v5.1.3](https://github.com/framework7io/framework7/compare/v5.1.2...v5.1.3) - November 17, 2019
+  * Core
+    * Fixed issue with setting wrong class on page
+
 # [v5.1.2](https://github.com/framework7io/framework7/compare/v5.1.1...v5.1.2) - November 17, 2019
   * Core
     * Fixed issue when `.once` could be called more than once (#3322)
