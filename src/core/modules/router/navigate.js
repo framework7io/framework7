@@ -498,8 +498,8 @@ function forward(el, forwardOptions = {}) {
     }
   }
   function setPositionClasses() {
-    router.setNavbarPosition($oldPage, 'current', false);
-    router.setNavbarPosition($newPage, 'next', false);
+    router.setPagePosition($oldPage, 'current', false);
+    router.setPagePosition($newPage, 'next', false);
     if (dynamicNavbar) {
       router.setNavbarPosition($oldNavbarEl, 'current', false);
       router.setNavbarPosition($newNavbarEl, 'next', false);
