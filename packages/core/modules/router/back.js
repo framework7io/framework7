@@ -361,15 +361,11 @@ function backward(el, backwardOptions) {
   // Animation
   function afterAnimation() {
     // Set classes
-    const pageClasses = 'page-previous page-current page-next';
-    const navbarClasses = 'navbar-previous navbar-current navbar-next';
-    $newPage.removeClass(pageClasses).addClass('page-current').removeAttr('aria-hidden').trigger('page:position', { position: 'current' });
-    router.emit('pagePosition', $newPage[0], 'current');
-    $oldPage.removeClass(pageClasses).addClass('page-next').attr('aria-hidden', 'true').trigger('page:position', { position: 'next' });
-    router.emit('pagePosition', $oldPage[0], 'next');
+    router.setPagePosition($newPage, 'current', false);
+    router.setPagePosition($oldPage, 'next', true);
     if (dynamicNavbar) {
-      $newNavbarEl.removeClass(navbarClasses).addClass('navbar-current').removeAttr('aria-hidden');
-      $oldNavbarEl.removeClass(navbarClasses).addClass('navbar-next').attr('aria-hidden', 'true');
+      router.setNavbarPosition($newNavbarEl, 'current', false);
+      router.setNavbarPosition($oldNavbarEl, 'next', true);
     }
 
     // After animation event
@@ -406,15 +402,11 @@ function backward(el, backwardOptions) {
   }
 
   function setPositionClasses() {
-    const pageClasses = 'page-previous page-current page-next';
-    const navbarClasses = 'navbar-previous navbar-current navbar-next';
-    $oldPage.removeClass(pageClasses).addClass('page-current').trigger('page:position', { position: 'current' });
-    router.emit('pagePosition', $oldPage[0], 'current');
-    $newPage.removeClass(pageClasses).addClass('page-previous').removeAttr('aria-hidden').trigger('page:position', { position: 'previous' });
-    router.emit('pagePosition', $newPage[0], 'previous');
+    router.setPagePosition($oldPage, 'current');
+    router.setPagePosition($newPage, 'previous', false);
     if (dynamicNavbar) {
-      $oldNavbarEl.removeClass(navbarClasses).addClass('navbar-current');
-      $newNavbarEl.removeClass(navbarClasses).addClass('navbar-previous').removeAttr('aria-hidden');
+      router.setNavbarPosition($oldNavbarEl, 'current');
+      router.setNavbarPosition($newNavbarEl, 'previous', false);
     }
   }
 

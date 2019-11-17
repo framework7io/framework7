@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.1.1
+ * Framework7 Vue 5.1.2
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,14 +7,14 @@
  *
  * Released under the MIT License
  *
- * Released on: November 3, 2019
+ * Released on: November 17, 2019
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('vue')) :
   typeof define === 'function' && define.amd ? define(['vue'], factory) :
   (global = global || self, global.Framework7Vue = factory(global.Vue));
-}(this, function (Vue) { 'use strict';
+}(this, (function (Vue) { 'use strict';
 
   Vue = Vue && Vue.hasOwnProperty('default') ? Vue['default'] : Vue;
 
@@ -8350,7 +8350,9 @@
         }
 
         return {
-          _theme: $f7 ? self.$theme : null
+          _theme: $f7 ? self.$theme : null,
+          routerPositionClass: '',
+          largeCollapsed: false
         };
       })();
 
@@ -8381,7 +8383,10 @@
       var large = props.large;
       var largeTransparent = props.largeTransparent;
       var titleLarge = props.titleLarge;
-      var theme = self.state.theme;
+      var ref = self.state;
+      var theme = ref._theme;
+      var routerPositionClass = ref.routerPositionClass;
+      var largeCollapsed = ref.largeCollapsed;
       var leftEl;
       var titleEl;
       var rightEl;
@@ -8389,10 +8394,11 @@
       var addLeftTitleClass = theme && theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
       var addCenterTitleClass = theme && theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || theme && theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
       var slots = self.$slots;
-      var classes = Utils.classNames(className, 'navbar', {
+      var classes = Utils.classNames(className, 'navbar', routerPositionClass, {
         'navbar-hidden': hidden,
         'navbar-large': large,
-        'navbar-large-transparent': largeTransparent
+        'navbar-large-transparent': largeTransparent,
+        'navbar-large-collapsed': large && largeCollapsed
       }, Mixins.colorClasses(props));
 
       if (backLink || slots['nav-left'] || slots.left) {
@@ -8456,7 +8462,7 @@
     },
 
     created: function created() {
-      Utils.bindMethods(this, ['onBackClick', 'onHide', 'onShow', 'onExpand', 'onCollapse']);
+      Utils.bindMethods(this, ['onBackClick', 'onHide', 'onShow', 'onExpand', 'onCollapse', 'onNavbarPosition']);
     },
 
     mounted: function mounted() {
@@ -8470,6 +8476,7 @@
         f7.on('navbarHide', self.onHide);
         f7.on('navbarCollapse', self.onCollapse);
         f7.on('navbarExpand', self.onExpand);
+        f7.on('navbarPosition', self.onNavbarPosition);
       });
     },
 
@@ -8490,6 +8497,7 @@
       f7.off('navbarHide', self.onHide);
       f7.off('navbarCollapse', self.onCollapse);
       f7.off('navbarExpand', self.onExpand);
+      f7.off('navbarPosition', self.onNavbarPosition);
       self.eventTargetEl = null;
       delete self.eventTargetEl;
     },
@@ -8507,12 +8515,25 @@
 
       onExpand: function onExpand(navbarEl) {
         if (this.eventTargetEl !== navbarEl) { return; }
+        this.setState({
+          largeCollapsed: false
+        });
         this.dispatchEvent('navbar:expand navbarExpand');
       },
 
       onCollapse: function onCollapse(navbarEl) {
         if (this.eventTargetEl !== navbarEl) { return; }
+        this.setState({
+          largeCollapsed: true
+        });
         this.dispatchEvent('navbar:collapse navbarCollapse');
+      },
+
+      onNavbarPosition: function onNavbarPosition(navbarEl, position) {
+        if (this.eventTargetEl !== navbarEl) { return; }
+        this.setState({
+          routerPositionClass: ("navbar-" + position)
+        });
       },
 
       hide: function hide(animate) {
@@ -12991,7 +13012,7 @@
   };
 
   /**
-   * Framework7 Vue 5.1.1
+   * Framework7 Vue 5.1.2
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -12999,7 +13020,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: November 3, 2019
+   * Released on: November 17, 2019
    */
 
   function f7ready(callback) {
@@ -13219,4 +13240,4 @@
 
   return Plugin;
 
-}));
+})));

@@ -1,5 +1,5 @@
 /**
- * Framework7 5.1.1
+ * Framework7 5.1.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 3, 2019
+ * Released on: November 17, 2019
  */
 
 /*====================
@@ -4751,8 +4751,7 @@ li.media-item .item-link.chevron-center .item-inner:before {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  -moz-font-feature-settings: "liga";
-       font-feature-settings: "liga";
+  font-feature-settings: "liga";
   text-align: center;
   display: block;
   width: 100%;
@@ -5616,8 +5615,7 @@ i.icon {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  -moz-font-feature-settings: "liga";
-       font-feature-settings: "liga";
+  font-feature-settings: "liga";
   text-align: center;
   display: block;
   width: 100%;

@@ -39,6 +39,10 @@
     "url": "https://github.com/framework7io/framework7/issues"
   },
   "homepage": "http://framework7.io/",
+  "funding": {
+    "type": "patreon",
+    "url": "https://www.patreon.com/vladimirkharlampidi"
+  },
   "browserslist": [
     "Android >= 7",
     "IOS >= 11",

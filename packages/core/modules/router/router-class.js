@@ -1,6 +1,6 @@
 import { window, document } from 'ssr-window';
 import $ from 'dom7';
-import PathToRegexp from 'path-to-regexp'; // eslint-disable-line
+import { pathToRegexp, compile } from 'path-to-regexp';
 import Framework7Class from '../../utils/class';
 import Utils from '../../utils/utils';
 import History from '../../utils/history';
@@ -479,7 +479,7 @@ class Router extends Framework7Class {
   // eslint-disable-next-line
   constructRouteUrl(route, { params, query } = {}) {
     const { path } = route;
-    const toUrl = PathToRegexp.compile(path);
+    const toUrl = compile(path);
     let url;
     try {
       url = toUrl(params || {});
@@ -553,7 +553,7 @@ class Router extends Framework7Class {
       let matched;
       pathsToMatch.forEach((pathToMatch) => {
         if (matched) return;
-        matched = PathToRegexp(pathToMatch, keys).exec(path);
+        matched = pathToRegexp(pathToMatch, keys).exec(path);
       });
 
       if (matched) {
@@ -693,6 +693,32 @@ class Router extends Framework7Class {
         },
       });
     });
+  }
+
+  setNavbarPosition($el, position, ariaHidden) {
+    const router = this;
+    $el.removeClass('navbar-previous navbar-current navbar-next');
+    $el.addClass(`navbar-${position}`);
+    if (ariaHidden === false) {
+      $el.removeAttr('aria-hidden');
+    } else if (ariaHidden === true) {
+      $el.attr('aria-hidden', 'true');
+    }
+    $el.trigger('navbar:position', { position });
+    router.emit('navbarPosition', $el[0], position);
+  }
+
+  setPagePosition($el, position, ariaHidden) {
+    const router = this;
+    $el.removeClass('page-previous page-current page-next');
+    $el.addClass(`page-${position}`);
+    if (ariaHidden === false) {
+      $el.removeAttr('aria-hidden');
+    } else if (ariaHidden === true) {
+      $el.attr('aria-hidden', 'true');
+    }
+    $el.trigger('page:position', { position });
+    router.emit('pagePosition', $el[0], position);
   }
 
   // Remove theme elements
@@ -1059,14 +1085,14 @@ class Router extends Framework7Class {
       router.$el.children('.page:not(.stacked)').each((index, pageEl) => {
         const $pageEl = $(pageEl);
         let $navbarEl;
-        $pageEl.addClass('page-current');
+        router.setPagePosition($pageEl, 'current');
         if (router.dynamicNavbar) {
           $navbarEl = $pageEl.children('.navbar');
           if ($navbarEl.length > 0) {
             if (!router.$navbarsEl.parents(document).length) {
               router.$el.prepend(router.$navbarsEl);
             }
-            $navbarEl.addClass('navbar-current');
+            router.setNavbarPosition($navbarEl, 'current');
             router.$navbarsEl.append($navbarEl);
             if ($navbarEl.children('.title-large').length) {
               $navbarEl.addClass('navbar-large');

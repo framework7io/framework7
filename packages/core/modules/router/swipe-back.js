@@ -444,8 +444,8 @@ function SwipeBack(r) {
       if ($pageShadowEl) $pageShadowEl[0].style.opacity = '';
       if ($pageOpacityEl) $pageOpacityEl[0].style.opacity = '';
       if (dynamicNavbar) {
-        $currentNavbarEl.removeClass('navbar-current').addClass('navbar-next');
-        $previousNavbarEl.removeClass('navbar-previous').addClass('navbar-current').removeAttr('aria-hidden');
+        router.setNavbarPosition($currentNavbarEl, 'next');
+        router.setNavbarPosition($previousNavbarEl, 'current', false);
       }
       pageChanged = true;
     }

@@ -7,7 +7,8 @@ export namespace DataTable {
     el: HTMLElement
     /** Dom7 instance with Data table HTML element */
     $el: Dom7Instance
-
+    /** Destroy data table */
+    destroy() : void
   }
 
   interface Parameters {

@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.1.1
+ * Framework7 React 5.1.2
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,14 +7,14 @@
  *
  * Released under the MIT License
  *
- * Released on: November 3, 2019
+ * Released on: November 17, 2019
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react')) :
   typeof define === 'function' && define.amd ? define(['react'], factory) :
   (global = global || self, global.Framework7React = factory(global.React));
-}(this, function (React) { 'use strict';
+}(this, (function (React) { 'use strict';
 
   React = React && React.hasOwnProperty('default') ? React['default'] : React;
 
@@ -9378,12 +9378,14 @@
         }
 
         return {
-          _theme: $f7 ? self.$theme : null
+          _theme: $f7 ? self.$theme : null,
+          routerPositionClass: '',
+          largeCollapsed: false
         };
       })();
 
       (function () {
-        Utils.bindMethods(this$1, ['onBackClick', 'onHide', 'onShow', 'onExpand', 'onCollapse']);
+        Utils.bindMethods(this$1, ['onBackClick', 'onHide', 'onShow', 'onExpand', 'onCollapse', 'onNavbarPosition']);
       })();
     }
 
@@ -9405,12 +9407,25 @@
 
     F7Navbar.prototype.onExpand = function onExpand (navbarEl) {
       if (this.eventTargetEl !== navbarEl) { return; }
+      this.setState({
+        largeCollapsed: false
+      });
       this.dispatchEvent('navbar:expand navbarExpand');
     };
 
     F7Navbar.prototype.onCollapse = function onCollapse (navbarEl) {
       if (this.eventTargetEl !== navbarEl) { return; }
+      this.setState({
+        largeCollapsed: true
+      });
       this.dispatchEvent('navbar:collapse navbarCollapse');
+    };
+
+    F7Navbar.prototype.onNavbarPosition = function onNavbarPosition (navbarEl, position) {
+      if (this.eventTargetEl !== navbarEl) { return; }
+      this.setState({
+        routerPositionClass: ("navbar-" + position)
+      });
     };
 
     F7Navbar.prototype.hide = function hide (animate) {
@@ -9458,7 +9473,10 @@
       var large = props.large;
       var largeTransparent = props.largeTransparent;
       var titleLarge = props.titleLarge;
-      var theme = self.state.theme;
+      var ref = self.state;
+      var theme = ref._theme;
+      var routerPositionClass = ref.routerPositionClass;
+      var largeCollapsed = ref.largeCollapsed;
       var leftEl;
       var titleEl;
       var rightEl;
@@ -9466,10 +9484,11 @@
       var addLeftTitleClass = theme && theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
       var addCenterTitleClass = theme && theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || theme && theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
       var slots = self.slots;
-      var classes = Utils.classNames(className, 'navbar', {
+      var classes = Utils.classNames(className, 'navbar', routerPositionClass, {
         'navbar-hidden': hidden,
         'navbar-large': large,
-        'navbar-large-transparent': largeTransparent
+        'navbar-large-transparent': largeTransparent,
+        'navbar-large-collapsed': large && largeCollapsed
       }, Mixins.colorClasses(props));
 
       if (backLink || slots['nav-left'] || slots.left) {
@@ -9535,6 +9554,7 @@
       f7.off('navbarHide', self.onHide);
       f7.off('navbarCollapse', self.onCollapse);
       f7.off('navbarExpand', self.onExpand);
+      f7.off('navbarPosition', self.onNavbarPosition);
       self.eventTargetEl = null;
       delete self.eventTargetEl;
     };
@@ -9557,6 +9577,7 @@
         f7.on('navbarHide', self.onHide);
         f7.on('navbarCollapse', self.onCollapse);
         f7.on('navbarExpand', self.onExpand);
+        f7.on('navbarPosition', self.onNavbarPosition);
       });
     };
 
@@ -14455,7 +14476,7 @@
   };
 
   /**
-   * Framework7 React 5.1.1
+   * Framework7 React 5.1.2
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -14463,7 +14484,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: November 3, 2019
+   * Released on: November 17, 2019
    */
 
   function f7ready(callback) {
@@ -14656,4 +14677,4 @@
 
   return Plugin;
 
-}));
+})));

@@ -1,5 +1,5 @@
 /**
- * Framework7 5.1.1
+ * Framework7 5.1.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 3, 2019
+ * Released on: November 17, 2019
  */
 
 /*====================
@@ -4755,8 +4755,7 @@ li.media-item .item-link.chevron-center .item-inner:before {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  -moz-font-feature-settings: "liga";
-       font-feature-settings: "liga";
+  font-feature-settings: "liga";
   text-align: center;
   display: block;
   width: 100%;
@@ -5620,8 +5619,7 @@ i.icon {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  -moz-font-feature-settings: "liga";
-       font-feature-settings: "liga";
+  font-feature-settings: "liga";
   text-align: center;
   display: block;
   width: 100%;
@@ -6116,9 +6114,6 @@ input.dialog-input[type] {
   border: var(--f7-dialog-input-border-width) solid var(--f7-dialog-input-border-color);
 }
 input.dialog-input[type]::-webkit-input-placeholder {
-  color: var(--f7-dialog-input-placeholder-color);
-}
-input.dialog-input[type]::-moz-placeholder {
   color: var(--f7-dialog-input-placeholder-color);
 }
 input.dialog-input[type]::placeholder {
@@ -8416,8 +8411,7 @@ body > .progressbar-infinite,
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  -moz-font-feature-settings: "liga";
-       font-feature-settings: "liga";
+  font-feature-settings: "liga";
   text-align: center;
   display: block;
   width: 100%;
@@ -8672,8 +8666,7 @@ html.device-android-4 .accordion-item-content {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  -moz-font-feature-settings: "liga";
-       font-feature-settings: "liga";
+  font-feature-settings: "liga";
   text-align: center;
   display: block;
   width: 100%;
@@ -10586,8 +10579,7 @@ html.with-panel-right-reveal .panel-right.panel-in-collapsed ~ .view {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  -moz-font-feature-settings: "liga";
-       font-feature-settings: "liga";
+  font-feature-settings: "liga";
   text-align: center;
   display: block;
   width: 100%;
@@ -10643,7 +10635,7 @@ html.with-panel-right-reveal .panel-right.panel-in-collapsed ~ .view {
 :root {
   --f7-input-bg-color: transparent;
   --f7-label-font-weight: 400;
-  --f7-label-line-height: 1.2;
+  --f7-label-line-height: 1.3;
   --f7-input-padding-left: 0px;
   --f7-input-padding-right: 0px;
   --f7-input-error-text-color: #ff3b30;
@@ -10822,32 +10814,7 @@ textarea {
   padding-left: var(--f7-input-padding-left);
   padding-right: var(--f7-input-padding-right);
 }
-.list input[type="text"]::-webkit-input-placeholder,
-.list input[type="password"]::-webkit-input-placeholder,
-.list input[type="search"]::-webkit-input-placeholder,
-.list input[type="email"]::-webkit-input-placeholder,
-.list input[type="tel"]::-webkit-input-placeholder,
-.list input[type="url"]::-webkit-input-placeholder,
-.list input[type="date"]::-webkit-input-placeholder,
-.list input[type='month']::-webkit-input-placeholder,
-.list input[type="datetime-local"]::-webkit-input-placeholder,
-.list input[type="time"]::-webkit-input-placeholder,
-.list input[type="number"]::-webkit-input-placeholder,
-.list select::-webkit-input-placeholder {
-  color: var(--f7-input-placeholder-color);
-}
-.list input[type="text"]::-moz-placeholder,
-.list input[type="password"]::-moz-placeholder,
-.list input[type="search"]::-moz-placeholder,
-.list input[type="email"]::-moz-placeholder,
-.list input[type="tel"]::-moz-placeholder,
-.list input[type="url"]::-moz-placeholder,
-.list input[type="date"]::-moz-placeholder,
-.list input[type='month']::-moz-placeholder,
-.list input[type="datetime-local"]::-moz-placeholder,
-.list input[type="time"]::-moz-placeholder,
-.list input[type="number"]::-moz-placeholder,
-.list select::-moz-placeholder {
+.list input[type="text"]::-webkit-input-placeholder, .list input[type="password"]::-webkit-input-placeholder, .list input[type="search"]::-webkit-input-placeholder, .list input[type="email"]::-webkit-input-placeholder, .list input[type="tel"]::-webkit-input-placeholder, .list input[type="url"]::-webkit-input-placeholder, .list input[type="date"]::-webkit-input-placeholder, .list input[type='month']::-webkit-input-placeholder, .list input[type="datetime-local"]::-webkit-input-placeholder, .list input[type="time"]::-webkit-input-placeholder, .list input[type="number"]::-webkit-input-placeholder, .list select::-webkit-input-placeholder {
   color: var(--f7-input-placeholder-color);
 }
 .list input[type="text"]::placeholder,
@@ -10878,9 +10845,6 @@ textarea {
   padding-right: var(--f7-input-padding-right);
 }
 .list textarea::-webkit-input-placeholder {
-  color: var(--f7-input-placeholder-color);
-}
-.list textarea::-moz-placeholder {
   color: var(--f7-input-placeholder-color);
 }
 .list textarea::placeholder {
@@ -10927,13 +10891,7 @@ textarea {
   right: var(--f7-input-padding-right);
   transform-origin: right center;
 }
-.list .item-floating-label ~ .item-input-wrap input::-webkit-input-placeholder,
-.list .item-floating-label ~ .item-input-wrap textarea::-webkit-input-placeholder {
-  opacity: 0;
-  transition-duration: 100ms;
-}
-.list .item-floating-label ~ .item-input-wrap input::-moz-placeholder,
-.list .item-floating-label ~ .item-input-wrap textarea::-moz-placeholder {
+.list .item-floating-label ~ .item-input-wrap input::-webkit-input-placeholder, .list .item-floating-label ~ .item-input-wrap textarea::-webkit-input-placeholder {
   opacity: 0;
   transition-duration: 100ms;
 }
@@ -10942,13 +10900,7 @@ textarea {
   opacity: 0;
   transition-duration: 100ms;
 }
-.list .item-floating-label ~ .item-input-wrap input.input-focused::-webkit-input-placeholder,
-.list .item-floating-label ~ .item-input-wrap textarea.input-focused::-webkit-input-placeholder {
-  opacity: 1;
-  transition-duration: 300ms;
-}
-.list .item-floating-label ~ .item-input-wrap input.input-focused::-moz-placeholder,
-.list .item-floating-label ~ .item-input-wrap textarea.input-focused::-moz-placeholder {
+.list .item-floating-label ~ .item-input-wrap input.input-focused::-webkit-input-placeholder, .list .item-floating-label ~ .item-input-wrap textarea.input-focused::-webkit-input-placeholder {
   opacity: 1;
   transition-duration: 300ms;
 }
@@ -11064,8 +11016,7 @@ textarea {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  -moz-font-feature-settings: "liga";
-       font-feature-settings: "liga";
+  font-feature-settings: "liga";
   text-align: center;
   display: block;
   width: 100%;
@@ -11562,8 +11513,7 @@ textarea {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  -moz-font-feature-settings: "liga";
-       font-feature-settings: "liga";
+  font-feature-settings: "liga";
   text-align: center;
   display: block;
   width: 100%;
@@ -11801,8 +11751,7 @@ label.item-radio.disabled,
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  -moz-font-feature-settings: "liga";
-       font-feature-settings: "liga";
+  font-feature-settings: "liga";
   text-align: center;
   display: block;
   width: 100%;
@@ -14715,8 +14664,7 @@ label.item-radio.disabled,
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  -moz-font-feature-settings: "liga";
-       font-feature-settings: "liga";
+  font-feature-settings: "liga";
   text-align: center;
   display: block;
   width: 100%;
@@ -14924,8 +14872,7 @@ label.item-radio.disabled,
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  -moz-font-feature-settings: "liga";
-       font-feature-settings: "liga";
+  font-feature-settings: "liga";
   text-align: center;
   display: block;
   width: 100%;
@@ -15287,8 +15234,7 @@ table.data-table {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  -moz-font-feature-settings: "liga";
-       font-feature-settings: "liga";
+  font-feature-settings: "liga";
   text-align: center;
   display: block;
   width: 100%;
@@ -16308,13 +16254,7 @@ table.data-table {
   padding-left: calc(var(--f7-searchbar-input-padding-horizontal) + var(--f7-searchbar-input-extra-padding-right, 0px));
   padding-right: calc(var(--f7-searchbar-input-padding-horizontal) + var(--f7-searchbar-input-extra-padding-left, 0px));
 }
-.searchbar input[type="text"]::-webkit-input-placeholder,
-.searchbar input[type="search"]::-webkit-input-placeholder {
-  color: var(--f7-searchbar-placeholder-color);
-  opacity: 1;
-}
-.searchbar input[type="text"]::-moz-placeholder,
-.searchbar input[type="search"]::-moz-placeholder {
+.searchbar input[type="text"]::-webkit-input-placeholder, .searchbar input[type="search"]::-webkit-input-placeholder {
   color: var(--f7-searchbar-placeholder-color);
   opacity: 1;
 }
@@ -16423,8 +16363,7 @@ table.data-table {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  -moz-font-feature-settings: "liga";
-       font-feature-settings: "liga";
+  font-feature-settings: "liga";
   text-align: center;
   display: block;
   width: 100%;
@@ -16701,8 +16640,7 @@ table.data-table {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  -moz-font-feature-settings: "liga";
-       font-feature-settings: "liga";
+  font-feature-settings: "liga";
   text-align: center;
   display: block;
   width: 100%;
@@ -18823,8 +18761,7 @@ button.swiper-pagination-bullet {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  -moz-font-feature-settings: "liga";
-       font-feature-settings: "liga";
+  font-feature-settings: "liga";
   display: block;
   width: 100%;
   height: 100%;

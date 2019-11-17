@@ -2,6 +2,24 @@
 
 # Change Log
 
+# [v5.1.2](https://github.com/framework7io/framework7/compare/v5.1.1...v5.1.2) - November 17, 2019
+  * Core
+    * Fixed issue when `.once` could be called more than once (#3322)
+    * Navbar
+      * Fixed issue when `scrollTopOnTitleClick` didn't work in iOS theme
+    * Swiper - updated to latest 5.2.1
+      * Core
+        * New loop events `beforeLoopFix` and `loopFix`
+        * New parameter `updateOnWindowResize` (by default `true`) that will update/recalc swiper on window resize/orientationchange
+      * Mousewheel
+        * Fixed scroll wheel unwanted frozen effect (#3328)
+      * Thumbs
+        * New `multipleActiveThumbs` (by default `true`) option to control whether multiple thumbnail slides may get activated or not.
+  * Phenome
+    * Navbar
+      * Fixed issue when dynamically updating its classes/props could break its layout
+  * Minor fixes
+
 # [v5.1.1](https://github.com/framework7io/framework7/compare/v5.1.0...v5.1.1) - November 3, 2019
   * Core
     * Calendar

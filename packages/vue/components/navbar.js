@@ -49,7 +49,9 @@ export default {
       }
 
       return {
-        _theme: $f7 ? self.$theme : null
+        _theme: $f7 ? self.$theme : null,
+        routerPositionClass: '',
+        largeCollapsed: false
       };
     })();
 
@@ -82,7 +84,11 @@ export default {
       largeTransparent,
       titleLarge
     } = props;
-    const theme = self.state.theme;
+    const {
+      _theme: theme,
+      routerPositionClass,
+      largeCollapsed
+    } = self.state;
     let leftEl;
     let titleEl;
     let rightEl;
@@ -90,10 +96,11 @@ export default {
     const addLeftTitleClass = theme && theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
     const addCenterTitleClass = theme && theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || theme && theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
     const slots = self.$slots;
-    const classes = Utils.classNames(className, 'navbar', {
+    const classes = Utils.classNames(className, 'navbar', routerPositionClass, {
       'navbar-hidden': hidden,
       'navbar-large': large,
-      'navbar-large-transparent': largeTransparent
+      'navbar-large-transparent': largeTransparent,
+      'navbar-large-collapsed': large && largeCollapsed
     }, Mixins.colorClasses(props));
 
     if (backLink || slots['nav-left'] || slots.left) {
@@ -157,7 +164,7 @@ export default {
   },
 
   created() {
-    Utils.bindMethods(this, ['onBackClick', 'onHide', 'onShow', 'onExpand', 'onCollapse']);
+    Utils.bindMethods(this, ['onBackClick', 'onHide', 'onShow', 'onExpand', 'onCollapse', 'onNavbarPosition']);
   },
 
   mounted() {
@@ -172,6 +179,7 @@ export default {
       f7.on('navbarHide', self.onHide);
       f7.on('navbarCollapse', self.onCollapse);
       f7.on('navbarExpand', self.onExpand);
+      f7.on('navbarPosition', self.onNavbarPosition);
     });
   },
 
@@ -193,6 +201,7 @@ export default {
     f7.off('navbarHide', self.onHide);
     f7.off('navbarCollapse', self.onCollapse);
     f7.off('navbarExpand', self.onExpand);
+    f7.off('navbarPosition', self.onNavbarPosition);
     self.eventTargetEl = null;
     delete self.eventTargetEl;
   },
@@ -210,12 +219,25 @@ export default {
 
     onExpand(navbarEl) {
       if (this.eventTargetEl !== navbarEl) return;
+      this.setState({
+        largeCollapsed: false
+      });
       this.dispatchEvent('navbar:expand navbarExpand');
     },
 
     onCollapse(navbarEl) {
       if (this.eventTargetEl !== navbarEl) return;
+      this.setState({
+        largeCollapsed: true
+      });
       this.dispatchEvent('navbar:collapse navbarCollapse');
+    },
+
+    onNavbarPosition(navbarEl, position) {
+      if (this.eventTargetEl !== navbarEl) return;
+      this.setState({
+        routerPositionClass: `navbar-${position}`
+      });
     },
 
     hide(animate) {
