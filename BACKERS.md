@@ -4,98 +4,98 @@
   <tr>
     <td align="center" valign="middle">
       <a href="https://codersrank.io" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/codersrank.svg">
+        <img width="160" src="https://framework7.io/i/sponsors/codersrank.svg">
       </a>
     </td>
     <td align="center" valign="middle">
       <a href="https://www.sparheld.de/" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/sparheld.jpg">
+        <img width="160" src="https://framework7.io/i/sponsors/sparheld.jpg">
       </a>
     </td>
     <td align="center" valign="middle">
       <a href="https://www.thoriumbuilder.com/" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/thorium.png">
+        <img width="160" src="https://framework7.io/i/sponsors/thorium.png">
       </a>
     </td>
     <td align="center" valign="middle">
       <a href="https://app-valley.vip/" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/appvalley.jpg">
+        <img width="160" src="https://framework7.io/i/sponsors/appvalley.jpg">
       </a>
     </td>
     <td align="center" valign="middle">
       <a href="http://mytommy.com" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/tommy.png">
+        <img width="160" src="https://framework7.io/i/sponsors/tommy.png">
       </a>
     </td>
   </tr>
   <tr>
     <td align="center" valign="middle">
       <a href="https://www.securcom.me/" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/securcom.png">
+        <img width="160" src="https://framework7.io/i/sponsors/securcom.png">
       </a>
     </td>
     <td align="center" valign="middle">
       <a href="https://writersperhour.com/write-my-paper" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/writersperhour.jpg">
+        <img width="160" src="https://framework7.io/i/sponsors/writersperhour.jpg">
       </a>
     </td>
     <td align="center" valign="middle">
       <a href="https://monovm.com/linux-vps/" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/monovm.jpg">
+        <img width="160" src="https://framework7.io/i/sponsors/monovm.jpg">
       </a>
     </td>
     <td align="center" valign="middle">
       <a href="https://unicorn.io" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/unicorn.svg">
+        <img width="160" src="https://framework7.io/i/sponsors/unicorn.svg">
       </a>
     </td>
     <td align="center" valign="middle">
       <a href="https://www.colognewebdesign.de/" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/colognewebdesign.png">
+        <img width="160" src="https://framework7.io/i/sponsors/colognewebdesign.png">
       </a>
     </td>
   </tr>
   <tr>
     <td align="center" valign="middle">
       <a href="https://rise.co" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/rise.png">
+        <img width="160" src="https://framework7.io/i/sponsors/rise.png">
       </a>
     </td>
     <td align="center" valign="middle">
       <a href="https://usave.co.uk/utilities/broadband" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/usave.png">
+        <img width="160" src="https://framework7.io/i/sponsors/usave.png">
       </a>
     </td>
     <td align="center" valign="middle">
       <a href="https://bid4papers.com/write-my-essay.html" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/bid4papers.png">
+        <img width="160" src="https://framework7.io/i/sponsors/bid4papers.png">
       </a>
     </td>
     <td align="center" valign="middle">
       <a href="https://kidoverse.app" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/kidoverse.png">
+        <img width="160" src="https://framework7.io/i/sponsors/kidoverse.png">
       </a>
     </td>
     <td align="center" valign="middle">
       <a href="https://www.cyberbrain.nl/" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/cyberbrain.png">
+        <img width="160" src="https://framework7.io/i/sponsors/cyberbrain.png">
       </a>
     </td>
   </tr>
   <tr>
     <td align="center" valign="middle">
       <a href="https://hicapps.cl/web/" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/hicapps.png">
+        <img width="160" src="https://framework7.io/i/sponsors/hicapps.png">
       </a>
     </td>
     <td align="center" valign="middle">
       <a href="https://blokt.com/" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/blokt.png">
+        <img width="160" src="https://framework7.io/i/sponsors/blokt.png">
       </a>
     </td>
     <td align="center" valign="middle">
       <a href="https://wappler.io/" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/wappler.png">
+        <img width="160" src="https://framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
     <td></td>
