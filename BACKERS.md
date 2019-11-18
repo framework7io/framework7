@@ -3,7 +3,7 @@
 <table>
   <tr>
     <td align="center" valign="middle">
-      <a href="https://codersrank.io" target="_blank">
+      <a href="https://codersrank.io/?utm_source=banner&utm_medium=referral&utm_campaign=vladimir" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/codersrank.svg">
       </a>
     </td>
@@ -118,7 +118,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ---
 
 ### $250 Gold Sponsor
-[CodersRank](https://codersrank.io) - CodersRank - Ultimate Profile For Coders
+[CodersRank](https://codersrank.io/?utm_source=banner&utm_medium=referral&utm_campaign=vladimir) - CodersRank - Ultimate Profile For Coders
 [Sparheld.de](https://www.sparheld.de/) - Sparheld.de - save shopping online
 Steven Roussey<br>
 [Join here!](https://www.patreon.com/bePatron?patAmt=250.0&exp=1&u=4109762&rid=830877)

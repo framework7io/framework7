@@ -19,7 +19,7 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
 <table>
   <tr>
     <td align="center" valign="middle">
-      <a href="https://codersrank.io" target="_blank">
+      <a href="https://codersrank.io/?utm_source=banner&utm_medium=referral&utm_campaign=vladimir" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/codersrank.svg">
       </a>
     </td>
