@@ -169,11 +169,9 @@ Dirk Holtwick<br>
 JK<br>
 Azad Zain<br>
 Nicolas Hinze<br>
-Josué Marinho<br>
 Will Mero<br>
 Jorge Pagano<br>
 Jacob Gur<br>
-Yaroslav Ermolaev<br>
 Matthew Proctor<br>
 Andy Fuchs<br>
 Noah A Neibaron<br>
@@ -199,8 +197,9 @@ Dave Billington
 ---
 
 ### $5+ Thank You
+Artūras Šeleсhov-Balčiūnas<br>
+Josué Marinho<br>
 Brett Lee<br>
-[FanBattle.app](https://fanbattle.ru/)<br>
 Miguel Nahara<br>
 Muthaiyan Rm<br>
 xPlants.it SRL<br>
