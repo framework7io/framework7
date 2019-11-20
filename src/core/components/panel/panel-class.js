@@ -124,7 +124,7 @@ class Panel extends Framework7Class {
         });
         app.allowPanelOpen = true;
         if (emitEvents) {
-          panel.emit('local::breakpoint panelBreakpoint');
+          panel.emit('local::breakpoint panelBreakpoint', panel);
           panel.$el.trigger('panel:breakpoint');
         }
       } else {
@@ -140,7 +140,7 @@ class Panel extends Framework7Class {
         [`margin-${side}`]: '',
       });
       if (emitEvents) {
-        panel.emit('local::breakpoint panelBreakpoint');
+        panel.emit('local::breakpoint panelBreakpoint', panel);
         panel.$el.trigger('panel:breakpoint');
       }
     }
@@ -188,7 +188,7 @@ class Panel extends Framework7Class {
         panel.collapsed = true;
         app.allowPanelOpen = true;
         if (emitEvents) {
-          panel.emit('local::collapsedBreakpoint panelCollapsedBreakpoint');
+          panel.emit('local::collapsedBreakpoint panelCollapsedBreakpoint', panel);
           panel.$el.trigger('panel:collapsedbreakpoint');
         }
       }
@@ -196,7 +196,7 @@ class Panel extends Framework7Class {
       $el.removeClass('panel-in-collapsed panel-in');
       panel.collapsed = false;
       if (emitEvents) {
-        panel.emit('local::collapsedBreakpoint panelCollapsedBreakpoint');
+        panel.emit('local::collapsedBreakpoint panelCollapsedBreakpoint', panel);
         panel.$el.trigger('panel:collapsedbreakpoint');
       }
     }
@@ -498,12 +498,12 @@ class Panel extends Framework7Class {
       $viewEl.css({
         [`margin-${panel.side}`]: '',
       });
-      panel.emit('local::breakpoint panelBreakpoint');
+      panel.emit('local::breakpoint panelBreakpoint', panel);
       panel.$el.trigger('panel:breakpoint');
     }
 
     panel.$el.trigger('panel:destroy');
-    panel.emit('local::destroy panelDestroy');
+    panel.emit('local::destroy panelDestroy', panel);
     if (panel.el) {
       panel.el.f7Panel = null;
       delete panel.el.f7Panel;
