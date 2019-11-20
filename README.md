@@ -19,6 +19,11 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
 <table>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://watchcartoononline.best/" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/watchcartoononline.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://codersrank.io/?utm_source=banner&utm_medium=referral&utm_campaign=vladimir" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/codersrank.svg">
       </a>
@@ -38,13 +43,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img width="160" src="https://framework7.io/i/sponsors/appvalley.jpg">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="http://mytommy.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/tommy.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.securcom.me/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/securcom.png">
@@ -65,13 +70,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img width="160" src="https://framework7.io/i/sponsors/unicorn.svg">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.colognewebdesign.de/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/colognewebdesign.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://rise.co" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/rise.png">
@@ -92,13 +97,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img width="160" src="https://framework7.io/i/sponsors/kidoverse.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.cyberbrain.nl/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/cyberbrain.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://hicapps.cl/web/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/hicapps.png">
@@ -114,7 +119,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img width="160" src="https://framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
-    <td></td>
     <td></td>
   </tr>
 </table>
