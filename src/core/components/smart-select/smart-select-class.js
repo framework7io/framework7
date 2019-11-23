@@ -525,6 +525,7 @@ class SmartSelect extends Framework7Class {
       }
     } else {
       const $selectedItemEl = $containerEl.find('input:checked').parents('li');
+      if (!$selectedItemEl.length) return ss;
       const $pageContentEl = $containerEl.find('.page-content');
       $pageContentEl.scrollTop($selectedItemEl.offset().top - $pageContentEl.offset().top - parseInt($pageContentEl.css('padding-top'), 10));
     }
