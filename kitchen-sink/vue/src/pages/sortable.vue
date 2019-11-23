@@ -72,10 +72,49 @@
         <img slot="media" src="https://cdn.framework7.io/placeholder/people-160x160-3.jpg" width="80" />
       </f7-list-item>
     </f7-list>
+
+    <f7-block-title>Opposite Side</f7-block-title>
+    <f7-list sortable sortable-opposite>
+      <f7-list-item
+        title="1 Jenna Smith"
+        after="CEO">
+        <f7-icon icon="icon-f7" slot="media"></f7-icon>
+      </f7-list-item>
+      <f7-list-item
+        title="2 John Doe"
+        after="Director">
+        <f7-icon icon="icon-f7" slot="media"></f7-icon>
+      </f7-list-item>
+      <f7-list-item
+        title="3 John Doe"
+        after="Developer">
+        <f7-icon icon="icon-f7" slot="media"></f7-icon>
+      </f7-list-item>
+      <f7-list-item
+        title="4 Aaron Darling"
+        after="Manager">
+        <f7-icon icon="icon-f7" slot="media"></f7-icon>
+      </f7-list-item>
+      <f7-list-item
+        title="5 Calvin Johnson"
+        after="Accounter">
+        <f7-icon icon="icon-f7" slot="media"></f7-icon>
+      </f7-list-item>
+      <f7-list-item
+        title="6 John Smith"
+        after="SEO">
+        <f7-icon icon="icon-f7" slot="media"></f7-icon>
+      </f7-list-item>
+      <f7-list-item
+        title="7 Chloe"
+        after="Manager">
+        <f7-icon icon="icon-f7" slot="media"></f7-icon>
+      </f7-list-item>
+    </f7-list>
   </f7-page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Icon } from 'framework7-vue';
+  import { f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Icon, f7BlockTitle } from 'framework7-vue';
 
   export default {
     components: {
@@ -87,6 +126,7 @@
       f7NavRight,
       f7Link,
       f7Icon,
+      f7BlockTitle,
     },
   };
 </script>
