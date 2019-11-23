@@ -40,6 +40,11 @@
       </a>
     </td>
     <td align="center" valign="middle">
+      <a href="https://kqapi.us" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/kqapius.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://writersperhour.com/write-my-paper" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/writersperhour.jpg">
       </a>
@@ -49,13 +54,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/monovm.jpg">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://unicorn.io" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/unicorn.svg">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.colognewebdesign.de/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/colognewebdesign.png">
@@ -76,13 +81,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/bid4papers.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://kidoverse.app" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/kidoverse.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.cyberbrain.nl/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/cyberbrain.png">
@@ -103,7 +108,6 @@
         <img width="160" src="https://framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
-    <td></td>
   </tr>
 </table>
 
@@ -145,7 +149,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 [Unicorn.io](https://unicorn.io) - Choose your Dream Job<br>
 [Bid4Papers](https://bid4papers.com/write-my-essay.html) - Write My Essay<br>
 [COLOGNE WEBDESIGN](https://www.colognewebdesign.de/)<br>
-Fatih Batal<br>
+[Kqapius, INC.](https://kqapi.us)<br>
 Vinay Samant<br>
 [Rise](https://rise.co) - Creative Web Development Agency<br>
 [usave](https://usave.co.uk/utilities/broadband) - compare broadband deals on usave.co.uk<br>
