@@ -82,10 +82,10 @@ export interface Framework7Plugin {
   /** Install callback
   It will be executed right after component is installed
   Context of this callback points to Class where it was installed */
-  install: () => void,
+  install?: () => void,
   /** Create callback
   It will be executed in the very beginning of class initilization (when we create new instance of the class) */
-  create(instance: Framework7): () => void,
+  create(instance: Framework7): void,
   /** Object with default class/plugin parameters */
   params?: {
     [plugin_name: string]: {
