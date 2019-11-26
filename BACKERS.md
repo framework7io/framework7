@@ -171,6 +171,7 @@ Bart DJ
 
 ### $10+ Supporter
 Nathan Harold<br>
+Paulo Vieira<br>
 Ruslan Trifonov<br>
 Michael Powers<br>
 shastox<br>
