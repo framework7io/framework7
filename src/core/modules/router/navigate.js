@@ -208,6 +208,8 @@ function forward(el, forwardOptions = {}) {
       $oldNavbarEl = $navbarsInView.filter((index, navbarEl) => navbarEl !== $newNavbarEl[0]);
     }
   } else {
+    let removedPageEls = [];
+    let removedNavbarEls = [];
     if ($pagesInView.length > 1) {
       let i = 0;
       for (i = 0; i < $pagesInView.length - 1; i += 1) {
@@ -232,9 +234,11 @@ function forward(el, forwardOptions = {}) {
           }
         } else {
           // Page remove event
+          removedPageEls.push($pagesInView[i]);
           router.pageCallback('beforeRemove', $pagesInView[i], $navbarsInView && $navbarsInView[i], 'previous', undefined, options);
           router.removePage($pagesInView[i]);
           if (dynamicNavbar && oldNavbarEl) {
+            removedNavbarEls.push(oldNavbarEl);
             router.removeNavbar(oldNavbarEl);
           }
         }
@@ -242,12 +246,14 @@ function forward(el, forwardOptions = {}) {
     }
     $oldPage = $viewEl
       .children('.page:not(.stacked)')
-      .filter((index, page) => page !== $newPage[0]);
+      .filter((index, pageEl) => pageEl !== $newPage[0] && removedPageEls.indexOf(pageEl) < 0);
     if (dynamicNavbar) {
       $oldNavbarEl = $navbarsEl
         .children('.navbar:not(.stacked)')
-        .filter((index, navbarEl) => navbarEl !== $newNavbarEl[0]);
+        .filter((index, navbarEl) => navbarEl !== $newNavbarEl[0] && removedNavbarEls.indexOf(removedNavbarEls) < 0);
     }
+    removedPageEls = [];
+    removedNavbarEls = [];
   }
 
   if (isDetail && !options.reloadAll) {
