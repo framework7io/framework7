@@ -1109,14 +1109,15 @@ class Router extends Framework7Class {
     const router = this;
     router.view.history = router.history;
     if (router.params.pushState) {
-      window.localStorage[`f7router-${router.view.id}-history`] = JSON.stringify(router.history);
+      Utils.storage.local.setItem(`f7router-eem-${router.view.id}-history`, JSON.stringify(router.history));
     }
   }
 
   restoreHistory() {
     const router = this;
-    if (router.params.pushState && window.localStorage[`f7router-${router.view.id}-history`]) {
-      router.history = JSON.parse(window.localStorage[`f7router-${router.view.id}-history`]);
+    const history = Utils.storage.local.getItem(`f7router-eem-${router.view.id}-history`);
+    if (router.params.pushState && history) {
+      router.history = JSON.parse(history);
       router.view.history = router.history;
     }
   }

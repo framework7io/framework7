@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 13, 2019
+ * Released on: November 28, 2019
  */
 
 (function (global, factory) {
@@ -2320,6 +2320,95 @@
     });
   });
 
+  function unwrapExports (x) {
+  	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x.default : x;
+  }
+
+  function createCommonjsModule(fn, module) {
+  	return module = { exports: {} }, fn(module, module.exports), module.exports;
+  }
+
+  var lib = createCommonjsModule(function (module, exports) {
+  Object.defineProperty(exports, "__esModule", { value: true });
+  function storageFactory(getStorage) {
+      var inMemoryStorage = {};
+      function isSupported() {
+          try {
+              var testKey = "__some_random_key_you_are_not_going_to_use__";
+              getStorage().setItem(testKey, testKey);
+              getStorage().removeItem(testKey);
+              return true;
+          }
+          catch (e) {
+              return false;
+          }
+      }
+      function clear() {
+          if (isSupported()) {
+              getStorage().clear();
+          }
+          else {
+              inMemoryStorage = {};
+          }
+      }
+      function getItem(name) {
+          if (isSupported()) {
+              return getStorage().getItem(name);
+          }
+          if (inMemoryStorage.hasOwnProperty(name)) {
+              return inMemoryStorage[name];
+          }
+          return null;
+      }
+      function key(index) {
+          if (isSupported()) {
+              return getStorage().key(index);
+          }
+          else {
+              return Object.keys(inMemoryStorage)[index] || null;
+          }
+      }
+      function removeItem(name) {
+          if (isSupported()) {
+              getStorage().removeItem(name);
+          }
+          else {
+              delete inMemoryStorage[name];
+          }
+      }
+      function setItem(name, value) {
+          if (isSupported()) {
+              getStorage().setItem(name, value);
+          }
+          else {
+              inMemoryStorage[name] = String(value);
+          }
+      }
+      function length() {
+          if (isSupported()) {
+              return getStorage().length;
+          }
+          else {
+              return Object.keys(inMemoryStorage).length;
+          }
+      }
+      return {
+          getItem: getItem,
+          setItem: setItem,
+          removeItem: removeItem,
+          clear: clear,
+          key: key,
+          get length() {
+              return length();
+          },
+      };
+  }
+  exports.storageFactory = storageFactory;
+  });
+
+  unwrapExports(lib);
+  var lib_1 = lib.storageFactory;
+
   /**
    * https://github.com/gre/bezier-easing
    * BezierEasing - use bezier curve for transition easing function
@@ -2428,6 +2517,8 @@
   }
 
   /* eslint no-control-regex: "off" */
+
+  var local = lib_1(function () { return win.localStorage; });
 
   // Remove Diacritics
   var defaultDiacriticsRemovalap = [
@@ -2827,6 +2918,7 @@
       }
       return to;
     },
+    storage: { local: local },
   };
 
   var Device = (function Device() {
@@ -8822,14 +8914,15 @@
       var router = this;
       router.view.history = router.history;
       if (router.params.pushState) {
-        win.localStorage[("f7router-" + (router.view.id) + "-history")] = JSON.stringify(router.history);
+        Utils.storage.local.setItem(("f7router-eem-" + (router.view.id) + "-history"), JSON.stringify(router.history));
       }
     };
 
     Router.prototype.restoreHistory = function restoreHistory () {
       var router = this;
-      if (router.params.pushState && win.localStorage[("f7router-" + (router.view.id) + "-history")]) {
-        router.history = JSON.parse(win.localStorage[("f7router-" + (router.view.id) + "-history")]);
+      var history = Utils.storage.local.getItem(("f7router-eem-" + (router.view.id) + "-history"));
+      if (router.params.pushState && history) {
+        router.history = JSON.parse(history);
         router.view.history = router.history;
       }
     };
@@ -17031,7 +17124,7 @@
 
       // Store form data in local storage also
       try {
-        win.localStorage[("f7form-" + formId)] = JSON.stringify(data);
+        Utils.storage.local.setItem(("f7form-" + formId), JSON.stringify(data));
       } catch (e) {
         throw e;
       }
@@ -17046,8 +17139,9 @@
       }
 
       try {
-        if (win.localStorage[("f7form-" + formId)]) {
-          return JSON.parse(win.localStorage[("f7form-" + formId)]);
+        var formData = Utils.storage.local.getItem(("f7form-" + formId));
+        if (formData) {
+          return JSON.parse(formData);
         }
       } catch (e) {
         throw e;
@@ -17074,9 +17168,8 @@
 
       // Delete form data from local storage also
       try {
-        if (win.localStorage[("f7form-" + formId)]) {
-          win.localStorage[("f7form-" + formId)] = '';
-          win.localStorage.removeItem(("f7form-" + formId));
+        if (Utils.storage.local.getItem(("f7form-" + formId))) {
+          Utils.storage.local.removeItem(("f7form-" + formId));
         }
       } catch (e) {
         throw e;
