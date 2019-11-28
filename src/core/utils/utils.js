@@ -1,6 +1,9 @@
 /* eslint no-control-regex: "off" */
 import { window } from 'ssr-window';
+import { storageFactory } from 'storage-factory';
 import bezier from './bezier';
+
+const local = storageFactory(() => window.localStorage);
 
 // Remove Diacritics
 const defaultDiacriticsRemovalap = [
@@ -387,5 +390,6 @@ const Utils = {
     }
     return to;
   },
+  storage: { local },
 };
 export default Utils;

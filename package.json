@@ -52,6 +52,7 @@
     "dom7": "^2.1.3",
     "path-to-regexp": "^3.0.0",
     "ssr-window": "^1.0.1",
+    "storage-factory": "^0.1.0",
     "template7": "^1.4.1"
   },
   "devDependencies": {

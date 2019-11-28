@@ -17,7 +17,7 @@ const FormData = {
 
     // Store form data in local storage also
     try {
-      window.localStorage[`f7form-${formId}`] = JSON.stringify(data);
+      Utils.storage.local.setItem(`f7form-${formId}`, JSON.stringify(data));
     } catch (e) {
       throw e;
     }
@@ -32,8 +32,9 @@ const FormData = {
     }
 
     try {
-      if (window.localStorage[`f7form-${formId}`]) {
-        return JSON.parse(window.localStorage[`f7form-${formId}`]);
+      const formData = Utils.storage.local.getItem(`f7form-${formId}`);
+      if (formData) {
+        return JSON.parse(formData);
       }
     } catch (e) {
       throw e;
@@ -60,9 +61,8 @@ const FormData = {
 
     // Delete form data from local storage also
     try {
-      if (window.localStorage[`f7form-${formId}`]) {
-        window.localStorage[`f7form-${formId}`] = '';
-        window.localStorage.removeItem(`f7form-${formId}`);
+      if (Utils.storage.local.getItem(`f7form-${formId}`)) {
+        Utils.storage.local.removeItem(`f7form-${formId}`);
       }
     } catch (e) {
       throw e;
