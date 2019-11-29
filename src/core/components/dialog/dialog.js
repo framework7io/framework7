@@ -16,6 +16,7 @@ export default {
       closeByBackdropClick: false,
       destroyPredefinedDialogs: true,
       keyboardActions: true,
+      autoFocus: true,
     },
   },
   static: {
@@ -28,6 +29,15 @@ export default {
     }
     const destroyOnClose = app.params.dialog.destroyPredefinedDialogs;
     const keyboardActions = app.params.dialog.keyboardActions;
+    const autoFocus = app.params.dialog.autoFocus;
+    const autoFocusHandler = (autoFocus ? {
+      on: {
+        opened(dialog) {
+          dialog.$el.find('input').eq(0).focus();
+        },
+      },
+    } : {});
+
     app.dialog = Utils.extend(
       ModalMethods({
         app,
@@ -81,6 +91,7 @@ export default {
               if (index === 1 && callbackOk) callbackOk(inputValue);
             },
             destroyOnClose,
+            ...autoFocusHandler,
           }).open();
         },
         confirm(...args) {
@@ -142,6 +153,7 @@ export default {
               if (index === 1 && callbackOk) callbackOk(username, password);
             },
             destroyOnClose,
+            ...autoFocusHandler,
           }).open();
         },
         password(...args) {
@@ -174,6 +186,7 @@ export default {
               if (index === 1 && callbackOk) callbackOk(password);
             },
             destroyOnClose,
+            ...autoFocusHandler,
           }).open();
         },
         preloader(title, color) {

@@ -103,7 +103,9 @@ async function umdBundle({ components, lite } = {}) {
       }),
       resolve({ mainFields: ['module', 'main', 'jsnext'] }),
       commonjs(),
-      buble(),
+      buble({
+        objectAssign: 'Object.assign',
+      }),
     ],
     onwarn(warning, warn) {
       const ignore = ['EVAL'];
@@ -168,7 +170,9 @@ async function umdCore({ lite } = {}) {
       }),
       resolve({ mainFields: ['module', 'main', 'jsnext'] }),
       commonjs(),
-      buble(),
+      buble({
+        objectAssign: 'Object.assign',
+      }),
     ],
     onwarn(warning, warn) {
       const ignore = ['EVAL'];

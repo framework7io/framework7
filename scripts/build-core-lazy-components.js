@@ -127,7 +127,9 @@ function buildLazyComponentsJs(components, cb) {
         }),
         resolve({ mainFields: ['module', 'main', 'jsnext'] }),
         commonjs(),
-        buble(),
+        buble({
+          objectAssign: 'Object.assign',
+        }),
       ],
       onwarn(warning, warn) {
         const ignore = ['EVAL'];
