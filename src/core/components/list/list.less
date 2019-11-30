@@ -1,5 +1,13 @@
 /* === List View === */
 @import url('./list-vars.less');
+:root {
+  --f7-list-chevron-icon-left: 'chevron_left';
+  --f7-list-chevron-icon-right: 'chevron_right';
+}
+.aurora {
+  --f7-list-chevron-icon-left: 'chevron_left_aurora';
+  --f7-list-chevron-icon-right: 'chevron_right_aurora';
+}
 
 .list {
   position: relative;
@@ -449,11 +457,11 @@ li.media-item .item-link.chevron-center  .item-inner {
     pointer-events: none;
     .ltr({
       right: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-right));
-      content: 'chevron_right';
+      content: var(--f7-list-chevron-icon-right);
     });
     .rtl({
       left: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-left));
-      content: 'chevron_left';
+      content: var(--f7-list-chevron-icon-left);
     });
   }
 }
