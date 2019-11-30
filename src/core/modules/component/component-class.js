@@ -275,12 +275,14 @@ class Component {
     }
     self.__requestAnimationFrameId = window.requestAnimationFrame(() => {
       if (self.__updateIsPending) update();
-      self.__updateQueue.forEach(resolver => resolver());
+      let resolvers = [...self.__updateQueue];
       self.__updateQueue = [];
       self.__updateIsPending = false;
       window.cancelAnimationFrame(self.__requestAnimationFrameId);
       delete self.__requestAnimationFrameId;
       delete self.__updateIsPending;
+      resolvers.forEach(resolver => resolver());
+      resolvers = [];
     });
   }
 
@@ -300,8 +302,8 @@ class Component {
     const self = this;
     return new Promise((resolve) => {
       function resolver() {
-        if (callback) callback();
         resolve();
+        if (callback) callback();
       }
       self.__updateIsPending = true;
       self.__updateQueue.push(resolver);
@@ -309,7 +311,7 @@ class Component {
     });
   }
 
-  $setState(mergeState, callback) {
+  $setState(mergeState = {}, callback) {
     const self = this;
     Utils.merge(self, mergeState);
     return self.$update(callback);
