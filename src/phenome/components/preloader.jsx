@@ -73,6 +73,10 @@ export default {
           <span className="preloader-inner-circle"></span>
         </span>
       );
+    } else if (!theme) {
+      innerEl = (
+        <span className="preloader-inner"></span>
+      );
     }
 
     const classes = Utils.classNames(
