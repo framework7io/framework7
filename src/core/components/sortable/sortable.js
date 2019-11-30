@@ -180,9 +180,13 @@ const Sortable = {
         else indexTo = undefined;
 
         const virtualList = $sortableContainer[0].f7VirtualList;
+
+        if (indexFrom) indexFrom = parseInt(indexFrom, 10);
+        if (indexTo) indexTo = parseInt(indexTo, 10);
         if (virtualList) virtualList.moveItem(indexFrom, indexTo);
       }
       if (typeof indexTo !== 'undefined' && !Number.isNaN(indexTo) && indexTo !== indexFrom) {
+
         $sortingEl.trigger('sortable:sort', { from: indexFrom, to: indexTo });
         app.emit('sortableSort', $sortingEl[0], { from: indexFrom, to: indexTo, el: $sortingEl[0] }, $sortableContainer[0]);
       }
