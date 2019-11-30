@@ -66,6 +66,38 @@
       </f7-list-item>
     </f7-list>
 
+    <f7-block-title>Opposite Side</f7-block-title>
+    <f7-list accordion-list accordion-opposite>
+      <f7-list-item accordion-item title="Lorem Ipsum">
+        <f7-accordion-content>
+          <f7-block>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean elementum id neque nec commodo. Sed vel justo at turpis laoreet pellentesque quis sed lorem. Integer semper arcu nibh, non mollis arcu tempor vel. Sed pharetra tortor vitae est rhoncus, vel congue dui sollicitudin. Donec eu arcu dignissim felis viverra blandit suscipit eget ipsum.
+            </p>
+          </f7-block>
+        </f7-accordion-content>
+      </f7-list-item>
+      <f7-list-item accordion-item title="Nested List">
+        <f7-accordion-content>
+          <f7-list>
+            <f7-list-item title="Item 1"></f7-list-item>
+            <f7-list-item title="Item 2"></f7-list-item>
+            <f7-list-item title="Item 3"></f7-list-item>
+            <f7-list-item title="Item 4"></f7-list-item>
+          </f7-list>
+        </f7-accordion-content>
+      </f7-list-item>
+      <f7-list-item accordion-item title="Integer semper">
+        <f7-accordion-content>
+          <f7-block>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean elementum id neque nec commodo. Sed vel justo at turpis laoreet pellentesque quis sed lorem. Integer semper arcu nibh, non mollis arcu tempor vel. Sed pharetra tortor vitae est rhoncus, vel congue dui sollicitudin. Donec eu arcu dignissim felis viverra blandit suscipit eget ipsum.
+            </p>
+          </f7-block>
+        </f7-accordion-content>
+      </f7-list-item>
+    </f7-list>
+
     <f7-block-title>Custom Collapsible</f7-block-title>
     <f7-block inner accordion-list>
       <f7-accordion-item v-for="n in 3" :key="n">
