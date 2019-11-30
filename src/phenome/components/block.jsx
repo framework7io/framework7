@@ -18,6 +18,7 @@ export default {
     tab: Boolean,
     tabActive: Boolean,
     accordionList: Boolean,
+    accordionOpposite: Boolean,
     noHairlines: Boolean,
     noHairlinesMd: Boolean,
     noHairlinesIos: Boolean,
@@ -57,6 +58,7 @@ export default {
       xlargeInset,
       strong,
       accordionList,
+      accordionOpposite,
 
       tabs,
       tab,
@@ -80,6 +82,7 @@ export default {
         'xlarge-inset': xlargeInset,
         'block-strong': strong,
         'accordion-list': accordionList,
+        'accordion-opposite': accordionOpposite,
         tabs,
         tab,
         'tab-active': tabActive,

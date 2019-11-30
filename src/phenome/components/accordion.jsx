@@ -6,6 +6,7 @@ export default {
     id: [String, Number],
     className: String, // phenome-react-line
     style: Object, // phenome-react-line
+    accordionOpposite: Boolean,
     ...Mixins.colorProps,
   },
   name: 'f7-accordion',
@@ -15,10 +16,12 @@ export default {
       className,
       id,
       style,
+      accordionOpposite,
     } = props;
     const classes = Utils.classNames(
       className,
       'accordion-list',
+      accordionOpposite && 'accordion-opposite',
       Mixins.colorClasses(props),
     );
     return (

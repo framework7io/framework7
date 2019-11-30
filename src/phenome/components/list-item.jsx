@@ -49,6 +49,10 @@ export default {
       type: Boolean,
       default: undefined,
     },
+    sortableOpposite: {
+      type: Boolean,
+      default: undefined,
+    },
     accordionItem: Boolean,
     accordionItemOpened: Boolean,
 
@@ -80,6 +84,7 @@ export default {
     return {
       isMedia: props.mediaItem || props.mediaList,
       isSortable: props.sortable,
+      isSortableOpposite: props.sortableOpposite,
       isSimple: false,
     };
   },
@@ -125,6 +130,7 @@ export default {
       required,
       disabled,
       sortable,
+      sortableOpposite,
       noChevron,
       chevronCenter,
       virtualListIndex,
@@ -132,6 +138,8 @@ export default {
 
     const isMedia = mediaItem || mediaList || self.state.isMedia;
     const isSortable = sortable || self.state.isSortable;
+    const isSortableOpposite = isSortable && (sortableOpposite || self.state.isSortableOpposite);
+
     const isSimple = self.state.isSimple;
 
     if (!isSimple) {
@@ -183,6 +191,7 @@ export default {
           <slot name="subtitle" />
           <slot name="text" />
           {swipeout || accordionItem ? null : self.slots.default}
+          {isSortable && sortable !== false && isSortableOpposite && (<div className="sortable-handler" slot="content-start" />)}
         </F7ListItemContent>
       );
 
@@ -258,7 +267,7 @@ export default {
           )
           : linkItemEl
         }
-        {isSortable && sortable !== false && (<div className="sortable-handler" />)}
+        {isSortable && sortable !== false && !isSortableOpposite && (<div className="sortable-handler" />)}
         {(swipeout || accordionItem) && self.slots.default}
         <slot name="root" />
         <slot name="root-end" />
@@ -337,6 +346,7 @@ export default {
         isMedia: self.$listEl.hasClass('media-list'),
         isSimple: self.$listEl.hasClass('simple-list'),
         isSortable: self.$listEl.hasClass('sortable'),
+        isSortableOpposite: self.$listEl.hasClass('sortable-opposite'),
       });
     }
 
@@ -391,6 +401,7 @@ export default {
     const isMedia = $listEl.hasClass('media-list');
     const isSimple = $listEl.hasClass('simple-list');
     const isSortable = $listEl.hasClass('sortable');
+    const isSortableOpposite = $listEl.hasClass('sortable-opposite');
     if (isMedia !== self.state.isMedia) {
       self.setState({ isMedia });
     }
@@ -399,6 +410,9 @@ export default {
     }
     if (isSortable !== self.state.isSortable) {
       self.setState({ isSortable });
+      if (isSortableOpposite !== self.state.isSortableOpposite) {
+        self.setState({ isSortableOpposite });
+      }
     }
   },
   componentWillUnmount() {
