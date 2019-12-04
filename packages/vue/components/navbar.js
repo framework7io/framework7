@@ -100,7 +100,8 @@ export default {
       'navbar-hidden': hidden,
       'navbar-large': large,
       'navbar-large-transparent': largeTransparent,
-      'navbar-large-collapsed': large && largeCollapsed
+      'navbar-large-collapsed': large && largeCollapsed,
+      'no-shadow': noShadow
     }, Mixins.colorClasses(props));
 
     if (backLink || slots['nav-left'] || slots.left) {
@@ -144,7 +145,6 @@ export default {
     const innerEl = _h('div', {
       class: Utils.classNames('navbar-inner', innerClass, innerClassName, {
         sliding,
-        'no-shadow': noShadow,
         'no-hairline': noHairline,
         'navbar-inner-left-title': addLeftTitleClass,
         'navbar-inner-centered-title': addCenterTitleClass
