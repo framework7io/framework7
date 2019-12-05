@@ -3,11 +3,6 @@
 <table>
   <tr>
     <td align="center" valign="middle">
-      <a href="https://watchcartoononline.best/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/watchcartoononline.png">
-      </a>
-    </td>
-    <td align="center" valign="middle">
       <a href="https://codersrank.io/?utm_source=banner&utm_medium=referral&utm_campaign=vladimir" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/codersrank.svg">
       </a>
@@ -27,16 +22,21 @@
         <img width="160" src="https://framework7.io/i/sponsors/appvalley.jpg">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="http://mytommy.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/tommy.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.securcom.me/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/securcom.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="http://ananyamultitech.com/" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/ananya.png">
       </a>
     </td>
     <td align="center" valign="middle">
