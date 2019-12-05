@@ -105,6 +105,8 @@ export default {
         'navbar-master-detail': this.state.routerNavbarRole === 'detail',
         'navbar-master-detail-root': this.state.routerNavbarRoleDetailRoot === true,
         'navbar-master-stacked': this.state.routerNavbarMasterStack === true,
+        'no-shadow': noShadow,
+        'no-hairline': noHairline,
       },
       Mixins.colorClasses(props),
     );
@@ -153,8 +155,6 @@ export default {
           innerClassName,
           {
             sliding,
-            'no-shadow': noShadow,
-            'no-hairline': noHairline,
             'navbar-inner-left-title': addLeftTitleClass,
             'navbar-inner-centered-title': addCenterTitleClass,
           }
