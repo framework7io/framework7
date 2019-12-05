@@ -187,6 +187,9 @@ function forward(el, forwardOptions = {}) {
       .removeClass('navbar-previous navbar-current navbar-next')
       .addClass(`navbar-${newPagePosition}${isMaster ? ' navbar-master' : ''}${isDetail ? ' navbar-master-detail' : ''}${isDetailRoot ? ' navbar-master-detail-root' : ''}`)
       .removeClass('stacked');
+    if (isMaster || isDetail) {
+      router.emit('navbarRole', $newNavbarEl[0], { role: isMaster ? 'master' : 'detail', detailRoot: !!isDetailRoot });
+    }
   }
 
   // Find Old Page
@@ -221,6 +224,7 @@ function forward(el, forwardOptions = {}) {
           router.emit('pageMasterStack', $pagesInView[i]);
           if (dynamicNavbar) {
             $(app.navbar.getElByPage(masterPageEl)).addClass('navbar-master-stacked');
+            router.emit('navbarMasterStack', app.navbar.getElByPage(masterPageEl));
           }
           continue; // eslint-disable-line
         }
