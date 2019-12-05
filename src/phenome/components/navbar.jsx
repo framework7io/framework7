@@ -98,6 +98,8 @@ export default {
         'navbar-large': large,
         'navbar-large-transparent': largeTransparent,
         'navbar-large-collapsed': large && largeCollapsed,
+        'no-shadow': noShadow,
+        'no-hairline': noHairline,
       },
       Mixins.colorClasses(props),
     );
@@ -145,9 +147,7 @@ export default {
           innerClass,
           innerClassName,
           {
-            sliding,
-            'no-shadow': noShadow,
-            'no-hairline': noHairline,
+            sliding, 
             'navbar-inner-left-title': addLeftTitleClass,
             'navbar-inner-centered-title': addCenterTitleClass,
           }
