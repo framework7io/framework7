@@ -493,22 +493,53 @@ class Calendar extends Framework7Class {
     const weekDay = date.getDay();
     const { monthNames, monthNamesShort, dayNames, dayNamesShort } = calendar;
     const { dateFormat, locale } = calendar.params;
+
+    function twoDigits(number) {
+      return (number < 10) ? `0${number}` : number;
+    }
     if (typeof dateFormat === 'string') {
-      return dateFormat
-        .replace(/yyyy/g, year)
-        .replace(/yy/g, String(year).substring(2))
-        .replace(/mm/g, month1 < 10 ? `0${month1}` : month1)
-        .replace(/m(\W+)/g, `${month1}$1`)
-        .replace(/(\W+)m/g, `$1${month1}`)
-        .replace(/MM/g, monthNames[month])
-        .replace(/M(\W+)/g, `${monthNamesShort[month]}$1`)
-        .replace(/(\W+)M/g, `$1${monthNamesShort[month]}`)
-        .replace(/dd/g, day < 10 ? `0${day}` : day)
-        .replace(/d(\W+)/g, `${day}$1`)
-        .replace(/(\W+)d/g, `$1${day}`)
-        .replace(/DD/g, dayNames[weekDay])
-        .replace(/D(\W+)/g, `${dayNamesShort[weekDay]}$1`)
-        .replace(/(\W+)D/g, `$1${dayNamesShort[weekDay]}`);
+      const tokens = {
+        yyyy: year,
+        yy: String(year).substring(2),
+        mm: twoDigits(month1),
+        m: month1,
+        MM: monthNames[month],
+        M: monthNamesShort[month],
+        dd: twoDigits(day),
+        d: day,
+        DD: dayNames[weekDay],
+        D: dayNamesShort[weekDay],
+      };
+      if (calendar.params.timePicker) {
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const seconds = date.getSeconds();
+        let hours12 = hours;
+        if (hours > 12) hours12 = hours - 12;
+        if (hours === 0) hours12 = 12;
+        const a = hours >= 12 && hours !== 0 ? 'pm' : 'am';
+
+        Object.assign(tokens, {
+          HH: twoDigits(hours),
+          H: hours,
+          hh: twoDigits(hours12),
+          h: hours12,
+          ss: twoDigits(seconds),
+          s: seconds,
+          ':mm': twoDigits(minutes),
+          ':m': minutes,
+          a,
+          A: a.toUpperCase(),
+        });
+      }
+      const regexp = new RegExp(
+        Object.keys(tokens).map(t => `(${t})`).join('|'),
+        'g',
+      );
+      return dateFormat.replace(regexp, (token) => {
+        if (token in tokens) return tokens[token];
+        return token;
+      });
     }
     if (typeof dateFormat === 'function') {
       return dateFormat(date);
