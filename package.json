@@ -27,7 +27,7 @@
     "test": "npm run build:dev && eslint .",
     "release": "bash ./scripts/release.sh",
     "release-update-dependencies": "node ./scripts/release-update-dependencies.js",
-    "postinstall": "node -e \"console.log('\\u001b[35m\\u001b[1mLove Framework7? Support project by donating or pledging on patreon:\\u001b[22m\\u001b[39m\\n > \\u001b[32mhttps://patreon.com/vladimirkharlampidi\\u001b[0m\\n')\""
+    "postinstall": "echo \"\u001b[35m\u001b[1mLove Framework7? Support project by donating or pledging on patreon:\u001b[22m\u001b[39m\n > \u001b[32mhttps://patreon.com/vladimirkharlampidi\u001b[0m\n\""
   },
   "repository": {
     "type": "git",
@@ -63,19 +63,19 @@
     "template7": "^1.4.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.4",
+    "@babel/core": "^7.7.5",
     "@babel/plugin-proposal-object-rest-spread": "^7.7.4",
     "@babel/plugin-transform-react-jsx": "^7.7.4",
-    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-env": "^7.7.5",
     "acorn": "^7.1.0",
     "acorn-jsx": "^5.1.0",
-    "autoprefixer": "^9.7.2",
+    "autoprefixer": "^9.7.3",
     "clean-css": "^4.2.1",
     "cross-env": "^6.0.3",
-    "eslint": "^6.7.0",
+    "eslint": "^6.7.2",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react": "^7.17.0",
     "glob": "^7.1.6",
     "gulp": "^4.0.2",
     "gulp-connect": "^5.7.0",
@@ -87,14 +87,14 @@
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "rollup": "^1.27.4",
+    "rollup": "^1.27.8",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-buble": "^0.19.8",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-vue": "^5.1.4",
-    "terser": "^4.4.0",
+    "terser": "^4.4.2",
     "vue": "^2.6.10",
     "vue-template-compiler": "^2.6.10"
   }
