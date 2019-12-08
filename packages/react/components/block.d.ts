@@ -17,6 +17,7 @@ declare namespace F7Block {
     tab? : boolean
     tabActive? : boolean
     accordionList? : boolean
+    accordionOpposite? : boolean
     noHairlines? : boolean
     noHairlinesMd? : boolean
     noHairlinesIos? : boolean

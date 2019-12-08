@@ -1,5 +1,5 @@
 /**
- * Framework7 5.1.3
+ * Framework7 5.2.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 17, 2019
+ * Released on: December 8, 2019
  */
 
 /*====================
@@ -4267,6 +4267,14 @@ html.device-full-viewport body {
   --f7-list-button-pressed-bg-color: rgba(255, 255, 255, 0.05);
   --f7-list-button-hover-bg-color: rgba(255, 255, 255, 0.03);
 }
+:root {
+  --f7-list-chevron-icon-left: 'chevron_left';
+  --f7-list-chevron-icon-right: 'chevron_right';
+}
+.aurora {
+  --f7-list-chevron-icon-left: 'chevron_left_aurora';
+  --f7-list-chevron-icon-right: 'chevron_right_aurora';
+}
 .list {
   position: relative;
   z-index: 1;
@@ -4767,7 +4775,7 @@ li.media-item .item-link.chevron-center .item-inner:before {
   color: var(--f7-list-chevron-icon-color);
   pointer-events: none;
   right: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-right));
-  content: 'chevron_right';
+  content: var(--f7-list-chevron-icon-right);
 }
 .media-list.chevron-center .item-title-row:before,
 .media-list .chevron-center .item-title-row:before,
@@ -5053,18 +5061,6 @@ li.list-group-title,
 }
 .aurora .list .item-media {
   min-width: 18px;
-}
-.aurora .list .item-link .item-inner:before,
-.aurora .links-list a:before,
-.aurora .media-list .item-link .item-title-row:before,
-.aurora li.media-item .item-link .item-title-row:before,
-.aurora .media-list.chevron-center .item-link .item-inner:before,
-.aurora .media-list .chevron-center .item-link .item-inner:before,
-.aurora .media-list .item-link.chevron-center .item-inner:before,
-.aurora li.media-item.chevron-center .item-link .item-inner:before,
-.aurora li.media-item .chevron-center .item-link .item-inner:before,
-.aurora li.media-item .item-link.chevron-center .item-inner:before {
-  content: 'chevron_right_aurora';
 }
 .aurora .links-list a,
 .aurora .list .item-link,

@@ -106,6 +106,10 @@ export default {
       }, [_h('span', {
         class: 'preloader-inner-circle'
       })]);
+    } else if (!theme) {
+      innerEl = _h('span', {
+        class: 'preloader-inner'
+      });
     }
 
     const classes = Utils.classNames(className, 'preloader', Mixins.colorClasses(props));

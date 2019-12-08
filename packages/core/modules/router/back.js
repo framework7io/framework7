@@ -115,6 +115,9 @@ function backward(el, backwardOptions) {
       .addClass(`navbar-previous${isMaster ? ' navbar-master' : ''}${isDetail ? ' navbar-master-detail' : ''}${isDetailRoot ? ' navbar-master-detail-root' : ''}`)
       .removeClass('stacked')
       .removeAttr('aria-hidden');
+    if (isMaster || isDetailRoot) {
+      router.emit('navbarRole', $newNavbarEl[0], { role: isMaster ? 'master' : 'detail', detailRoot: !!isDetailRoot });
+    }
   }
 
   // Remove previous page in case of "forced"
@@ -239,6 +242,7 @@ function backward(el, backwardOptions) {
       router.emit('pageMasterUnstack', $newPage[0]);
       if (dynamicNavbar) {
         $(app.navbar.getElByPage($newPage)).removeClass('navbar-master-stacked');
+        router.emi('navbarMasterUnstack', app.navbar.getElByPage($newPage));
       }
     }
     // Page init and before init events

@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.1.3
+ * Framework7 React 5.2.0
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 17, 2019
+ * Released on: December 8, 2019
  */
 
 (function (global, factory) {
@@ -780,7 +780,8 @@
       var className = props.className;
       var id = props.id;
       var style = props.style;
-      var classes = Utils.classNames(className, 'accordion-list', Mixins.colorClasses(props));
+      var accordionOpposite = props.accordionOpposite;
+      var classes = Utils.classNames(className, 'accordion-list', accordionOpposite && 'accordion-opposite', Mixins.colorClasses(props));
       return React.createElement('div', {
         id: id,
         style: style,
@@ -800,7 +801,8 @@
   __reactComponentSetProps(F7Accordion, Object.assign({
     id: [String, Number],
     className: String,
-    style: Object
+    style: Object,
+    accordionOpposite: Boolean
   }, Mixins.colorProps));
 
   F7Accordion.displayName = 'f7-accordion';
@@ -1400,6 +1402,7 @@
         parentEl.style.height = '100%';
       }
 
+      if (f7.instance) { return; }
       f7.init(el, params, routes);
     };
 
@@ -1722,6 +1725,7 @@
       var xlargeInset = props.xlargeInset;
       var strong = props.strong;
       var accordionList = props.accordionList;
+      var accordionOpposite = props.accordionOpposite;
       var tabs = props.tabs;
       var tab = props.tab;
       var tabActive = props.tabActive;
@@ -1740,6 +1744,7 @@
         'xlarge-inset': xlargeInset,
         'block-strong': strong,
         'accordion-list': accordionList,
+        'accordion-opposite': accordionOpposite,
         tabs: tabs,
         tab: tab,
         'tab-active': tabActive,
@@ -1814,6 +1819,7 @@
     tab: Boolean,
     tabActive: Boolean,
     accordionList: Boolean,
+    accordionOpposite: Boolean,
     noHairlines: Boolean,
     noHairlinesMd: Boolean,
     noHairlinesIos: Boolean,
@@ -5223,12 +5229,14 @@
       var style = props.style;
       var mediaList = props.mediaList;
       var sortable = props.sortable;
+      var sortableOpposite = props.sortableOpposite;
       var sortableTapHold = props.sortableTapHold;
       var sortableMoveElements = props.sortableMoveElements;
       var classes = Utils.classNames(className, 'list-group', {
         'media-list': mediaList,
         sortable: sortable,
-        'sortable-tap-hold': sortableTapHold
+        'sortable-tap-hold': sortableTapHold,
+        'sortable-opposite': sortableOpposite
       }, Mixins.colorClasses(props));
       return React.createElement('div', {
         id: id,
@@ -5253,6 +5261,7 @@
     style: Object,
     mediaList: Boolean,
     sortable: Boolean,
+    sortableOpposite: Boolean,
     sortableTapHold: Boolean,
     sortableMoveElements: {
       type: Boolean,
@@ -6125,13 +6134,19 @@
       var inputIconEl;
       var headerEl;
       var footerEl;
-      var slots = self.slots.default;
+      var slotsDefault = self.slots.default;
       var flattenSlots = [];
 
-      if (slots && slots.length) {
-        slots.forEach(function (slot) {
+      if (slotsDefault && slotsDefault.length) {
+        slotsDefault.forEach(function (slot) {
           if (Array.isArray(slot)) { flattenSlots.push.apply(flattenSlots, slot); }else { flattenSlots.push(slot); }
         });
+      }
+
+      var passedSlotsContentStart = self.slots['content-start'];
+
+      if (passedSlotsContentStart && passedSlotsContentStart.length) {
+        slotsContentStart.push.apply(slotsContentStart, passedSlotsContentStart);
       }
 
       flattenSlots.forEach(function (child) {
@@ -6412,6 +6427,7 @@
         return {
           isMedia: props.mediaItem || props.mediaList,
           isSortable: props.sortable,
+          isSortableOpposite: props.sortableOpposite,
           isSimple: false
         };
       })();
@@ -6559,11 +6575,13 @@
       var required = props.required;
       var disabled = props.disabled;
       var sortable = props.sortable;
+      var sortableOpposite = props.sortableOpposite;
       var noChevron = props.noChevron;
       var chevronCenter = props.chevronCenter;
       var virtualListIndex = props.virtualListIndex;
       var isMedia = mediaItem || mediaList || self.state.isMedia;
       var isSortable = sortable || self.state.isSortable;
+      var isSortableOpposite = isSortable && (sortableOpposite || self.state.isSortableOpposite);
       var isSimple = self.state.isSimple;
 
       if (!isSimple) {
@@ -6592,7 +6610,10 @@
           disabled: disabled,
           onClick: needsEvents ? self.onClick : null,
           onChange: needsEvents ? self.onChange : null
-        }, this.slots['content-start'], this.slots['content'], this.slots['content-end'], this.slots['media'], this.slots['inner-start'], this.slots['inner'], this.slots['inner-end'], this.slots['after-start'], this.slots['after'], this.slots['after-end'], this.slots['header'], this.slots['footer'], this.slots['before-title'], this.slots['title'], this.slots['after-title'], this.slots['subtitle'], this.slots['text'], swipeout || accordionItem ? null : self.slots.default);
+        }, this.slots['content-start'], this.slots['content'], this.slots['content-end'], this.slots['media'], this.slots['inner-start'], this.slots['inner'], this.slots['inner-end'], this.slots['after-start'], this.slots['after'], this.slots['after-end'], this.slots['header'], this.slots['footer'], this.slots['before-title'], this.slots['title'], this.slots['after-title'], this.slots['subtitle'], this.slots['text'], swipeout || accordionItem ? null : self.slots.default, isSortable && sortable !== false && isSortableOpposite && React.createElement('div', {
+          className: 'sortable-handler',
+          slot: 'content-start'
+        }));
 
         if (link || href || accordionItem || smartSelect) {
           var linkAttrs = Object.assign({
@@ -6660,7 +6681,7 @@
         'data-virtual-list-index': virtualListIndex
       }, this.slots['root-start'], swipeout ? React.createElement('div', {
         className: 'swipeout-content'
-      }, linkItemEl) : linkItemEl, isSortable && sortable !== false && React.createElement('div', {
+      }, linkItemEl) : linkItemEl, isSortable && sortable !== false && !isSortableOpposite && React.createElement('div', {
         className: 'sortable-handler'
       }), (swipeout || accordionItem) && self.slots.default, this.slots['root'], this.slots['root-end']);
     };
@@ -6776,6 +6797,7 @@
       var isMedia = $listEl.hasClass('media-list');
       var isSimple = $listEl.hasClass('simple-list');
       var isSortable = $listEl.hasClass('sortable');
+      var isSortableOpposite = $listEl.hasClass('sortable-opposite');
 
       if (isMedia !== self.state.isMedia) {
         self.setState({
@@ -6793,6 +6815,12 @@
         self.setState({
           isSortable: isSortable
         });
+
+        if (isSortableOpposite !== self.state.isSortableOpposite) {
+          self.setState({
+            isSortableOpposite: isSortableOpposite
+          });
+        }
       }
     };
 
@@ -6828,7 +6856,8 @@
         self.setState({
           isMedia: self.$listEl.hasClass('media-list'),
           isSimple: self.$listEl.hasClass('simple-list'),
-          isSortable: self.$listEl.hasClass('sortable')
+          isSortable: self.$listEl.hasClass('sortable'),
+          isSortableOpposite: self.$listEl.hasClass('sortable-opposite')
         });
       }
 
@@ -6924,6 +6953,10 @@
       type: Boolean,
       default: undefined
     },
+    sortableOpposite: {
+      type: Boolean,
+      default: undefined
+    },
     accordionItem: Boolean,
     accordionItemOpened: Boolean,
     smartSelect: Boolean,
@@ -7007,7 +7040,9 @@
       var sortable = props.sortable;
       var sortableTapHold = props.sortableTapHold;
       var sortableEnabled = props.sortableEnabled;
+      var sortableOpposite = props.sortableOpposite;
       var accordionList = props.accordionList;
+      var accordionOpposite = props.accordionOpposite;
       var contactsList = props.contactsList;
       var virtualList = props.virtualList;
       var tab = props.tab;
@@ -7038,7 +7073,9 @@
         sortable: sortable,
         'sortable-tap-hold': sortableTapHold,
         'sortable-enabled': sortableEnabled,
+        'sortable-opposite': sortableOpposite,
         'accordion-list': accordionList,
+        'accordion-opposite': accordionOpposite,
         'contacts-list': contactsList,
         'virtual-list': virtualList,
         tab: tab,
@@ -7225,7 +7262,9 @@
       type: Boolean,
       default: undefined
     },
+    sortableOpposite: Boolean,
     accordionList: Boolean,
+    accordionOpposite: Boolean,
     contactsList: Boolean,
     simpleList: Boolean,
     linksList: Boolean,
@@ -9380,7 +9419,10 @@
         return {
           _theme: $f7 ? self.$theme : null,
           routerPositionClass: '',
-          largeCollapsed: false
+          largeCollapsed: false,
+          routerNavbarRole: null,
+          routerNavbarRoleDetailRoot: false,
+          routerNavbarMasterStack: false
         };
       })();
 
@@ -9425,6 +9467,28 @@
       if (this.eventTargetEl !== navbarEl) { return; }
       this.setState({
         routerPositionClass: ("navbar-" + position)
+      });
+    };
+
+    F7Navbar.prototype.onNavbarRole = function onNavbarRole (navbarEl, rolesData) {
+      if (this.eventTargetEl !== navbarEl) { return; }
+      this.setState({
+        routerNavbarRole: rolesData.role,
+        routerNavbarRoleDetailRoot: rolesData.detailRoot
+      });
+    };
+
+    F7Navbar.prototype.onNavbarMasterStack = function onNavbarMasterStack (navbarEl) {
+      if (this.eventTargetEl !== navbarEl) { return; }
+      this.setState({
+        routerNavbarMasterStack: true
+      });
+    };
+
+    F7Navbar.prototype.onNavbarMasterUnstack = function onNavbarMasterUnstack (navbarEl) {
+      if (this.eventTargetEl !== navbarEl) { return; }
+      this.setState({
+        routerNavbarMasterStack: false
       });
     };
 
@@ -9488,7 +9552,13 @@
         'navbar-hidden': hidden,
         'navbar-large': large,
         'navbar-large-transparent': largeTransparent,
-        'navbar-large-collapsed': large && largeCollapsed
+        'navbar-large-collapsed': large && largeCollapsed,
+        'navbar-master': this.state.routerNavbarRole === 'master',
+        'navbar-master-detail': this.state.routerNavbarRole === 'detail',
+        'navbar-master-detail-root': this.state.routerNavbarRoleDetailRoot === true,
+        'navbar-master-stacked': this.state.routerNavbarMasterStack === true,
+        'no-shadow': noShadow,
+        'no-hairline': noHairline
       }, Mixins.colorClasses(props));
 
       if (backLink || slots['nav-left'] || slots.left) {
@@ -9526,8 +9596,6 @@
       var innerEl = React.createElement('div', {
         className: Utils.classNames('navbar-inner', innerClass, innerClassName, {
           sliding: sliding,
-          'no-shadow': noShadow,
-          'no-hairline': noHairline,
           'navbar-inner-left-title': addLeftTitleClass,
           'navbar-inner-centered-title': addCenterTitleClass
         })
@@ -9555,6 +9623,9 @@
       f7.off('navbarCollapse', self.onCollapse);
       f7.off('navbarExpand', self.onExpand);
       f7.off('navbarPosition', self.onNavbarPosition);
+      f7.off('navbarRole', self.onNavbarRole);
+      f7.off('navbarMasterStack', self.onNavbarMasterStack);
+      f7.off('navbarMasterUnstack', self.onNavbarMasterUnstack);
       self.eventTargetEl = null;
       delete self.eventTargetEl;
     };
@@ -9578,6 +9649,9 @@
         f7.on('navbarCollapse', self.onCollapse);
         f7.on('navbarExpand', self.onExpand);
         f7.on('navbarPosition', self.onNavbarPosition);
+        f7.on('navbarRole', self.onNavbarRole);
+        f7.on('navbarMasterStack', self.onNavbarMasterStack);
+        f7.on('navbarMasterUnstack', self.onNavbarMasterUnstack);
       });
     };
 
@@ -9739,6 +9813,10 @@
         }, React.createElement('span', {
           className: 'preloader-inner-circle'
         }));
+      } else if (!theme) {
+        innerEl = React.createElement('span', {
+          className: 'preloader-inner'
+        });
       }
 
       var classes = Utils.classNames(className, 'preloader', Mixins.colorClasses(props));
@@ -14476,7 +14554,7 @@
   };
 
   /**
-   * Framework7 React 5.1.3
+   * Framework7 React 5.2.0
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -14484,7 +14562,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: November 17, 2019
+   * Released on: December 8, 2019
    */
 
   function f7ready(callback) {

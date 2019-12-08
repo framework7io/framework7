@@ -16,6 +16,7 @@ class F7ListItem extends React.Component {
       return {
         isMedia: props.mediaItem || props.mediaList,
         isSortable: props.sortable,
+        isSortableOpposite: props.sortableOpposite,
         isSimple: false
       };
     })();
@@ -156,12 +157,14 @@ class F7ListItem extends React.Component {
       required,
       disabled,
       sortable,
+      sortableOpposite,
       noChevron,
       chevronCenter,
       virtualListIndex
     } = props;
     const isMedia = mediaItem || mediaList || self.state.isMedia;
     const isSortable = sortable || self.state.isSortable;
+    const isSortableOpposite = isSortable && (sortableOpposite || self.state.isSortableOpposite);
     const isSimple = self.state.isSimple;
 
     if (!isSimple) {
@@ -190,7 +193,10 @@ class F7ListItem extends React.Component {
         disabled: disabled,
         onClick: needsEvents ? self.onClick : null,
         onChange: needsEvents ? self.onChange : null
-      }, this.slots['content-start'], this.slots['content'], this.slots['content-end'], this.slots['media'], this.slots['inner-start'], this.slots['inner'], this.slots['inner-end'], this.slots['after-start'], this.slots['after'], this.slots['after-end'], this.slots['header'], this.slots['footer'], this.slots['before-title'], this.slots['title'], this.slots['after-title'], this.slots['subtitle'], this.slots['text'], swipeout || accordionItem ? null : self.slots.default);
+      }, this.slots['content-start'], this.slots['content'], this.slots['content-end'], this.slots['media'], this.slots['inner-start'], this.slots['inner'], this.slots['inner-end'], this.slots['after-start'], this.slots['after'], this.slots['after-end'], this.slots['header'], this.slots['footer'], this.slots['before-title'], this.slots['title'], this.slots['after-title'], this.slots['subtitle'], this.slots['text'], swipeout || accordionItem ? null : self.slots.default, isSortable && sortable !== false && isSortableOpposite && React.createElement('div', {
+        className: 'sortable-handler',
+        slot: 'content-start'
+      }));
 
       if (link || href || accordionItem || smartSelect) {
         const linkAttrs = Object.assign({
@@ -258,7 +264,7 @@ class F7ListItem extends React.Component {
       'data-virtual-list-index': virtualListIndex
     }, this.slots['root-start'], swipeout ? React.createElement('div', {
       className: 'swipeout-content'
-    }, linkItemEl) : linkItemEl, isSortable && sortable !== false && React.createElement('div', {
+    }, linkItemEl) : linkItemEl, isSortable && sortable !== false && !isSortableOpposite && React.createElement('div', {
       className: 'sortable-handler'
     }), (swipeout || accordionItem) && self.slots.default, this.slots['root'], this.slots['root-end']);
   }
@@ -378,6 +384,7 @@ class F7ListItem extends React.Component {
     const isMedia = $listEl.hasClass('media-list');
     const isSimple = $listEl.hasClass('simple-list');
     const isSortable = $listEl.hasClass('sortable');
+    const isSortableOpposite = $listEl.hasClass('sortable-opposite');
 
     if (isMedia !== self.state.isMedia) {
       self.setState({
@@ -395,6 +402,12 @@ class F7ListItem extends React.Component {
       self.setState({
         isSortable
       });
+
+      if (isSortableOpposite !== self.state.isSortableOpposite) {
+        self.setState({
+          isSortableOpposite
+        });
+      }
     }
   }
 
@@ -432,7 +445,8 @@ class F7ListItem extends React.Component {
       self.setState({
         isMedia: self.$listEl.hasClass('media-list'),
         isSimple: self.$listEl.hasClass('simple-list'),
-        isSortable: self.$listEl.hasClass('sortable')
+        isSortable: self.$listEl.hasClass('sortable'),
+        isSortableOpposite: self.$listEl.hasClass('sortable-opposite')
       });
     }
 
@@ -519,6 +533,10 @@ __reactComponentSetProps(F7ListItem, Object.assign({
   swipeout: Boolean,
   swipeoutOpened: Boolean,
   sortable: {
+    type: Boolean,
+    default: undefined
+  },
+  sortableOpposite: {
     type: Boolean,
     default: undefined
   },

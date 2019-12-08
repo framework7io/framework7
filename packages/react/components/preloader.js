@@ -106,6 +106,10 @@ class F7Preloader extends React.Component {
       }, React.createElement('span', {
         className: 'preloader-inner-circle'
       }));
+    } else if (!theme) {
+      innerEl = React.createElement('span', {
+        className: 'preloader-inner'
+      });
     }
 
     const classes = Utils.classNames(className, 'preloader', Mixins.colorClasses(props));

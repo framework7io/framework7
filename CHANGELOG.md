@@ -2,6 +2,36 @@
 
 # Change Log
 
+# [v5.2.0](https://github.com/framework7io/framework7/compare/v5.1.3...v5.2.0) - December 8, 2019
+  * Core
+    * Accordion
+      * It is now possible to use accordion chevron on opposite side (on left in LTR) by adding `accordion-opposite` class to accordion list
+    * Calendar
+      * Fixed issue when custom `dateFormat` parsed twice (#3434)
+      * Added custom time tokens support to `dateFormat` when  `timePicker` is enabled: `HH`, `H`, `hh`, `h`, `:mm`, `:m`, `:ss`, `:s`, `A`, `a` (#3439)
+    * Dialog
+      * New `app.dialog.autoFocus` boolean parameter to auto focus predefined dialog inputs on open (valid for predefined Prompt, Login and Password dialogs). Enabled by default
+      * Added hover and pressed state for dialog buttons in Aurora theme
+    * Panel
+      * All panel instance events now have Panel instance as argument (#3404)
+    * Photo Browser
+      * Size navbar after updating count text (`1 of 4`) (#3420)
+    * Router Component
+      * Fixed issue when calling `$setState` recursively didn't work as expected (#3421)
+    * Smart Select
+      * Fixed issue calling scrollToSelectedItem caused error when there were no any items (#3412)
+    * Sortable
+      * It is now possible to make sortable handler appear on opposite side (on left in LTR) adding `sortable-opposite` class to sortable list
+  * Phenome
+    * Added lock to not throw and error and ignore further attempts to init Framework7 (for example when App component unmounted and mounted again)
+    * List
+      * New boolean `sortableOpposite` prop to render sortable handler on opposite side
+      * New boolean `accordionOpposite` prop to render accordion checron icon on opposite side
+    * Navbar
+      * Fixed issue when `no-shadow` and `no-hairline` props didn't have expected effect (#3436)
+      * Fixed issue when it was loosing required position classes in Master Detail layout
+  * Minor fixes
+
 # [v5.1.3](https://github.com/framework7io/framework7/compare/v5.1.2...v5.1.3) - November 17, 2019
   * Core
     * Fixed issue with setting wrong class on page

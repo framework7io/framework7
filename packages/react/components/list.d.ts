@@ -18,7 +18,9 @@ declare namespace F7List {
     sortableTapHold? : boolean
     sortableEnabled? : boolean
     sortableMoveElements? : boolean
+    sortableOpposite? : boolean
     accordionList? : boolean
+    accordionOpposite? : boolean
     contactsList? : boolean
     simpleList? : boolean
     linksList? : boolean

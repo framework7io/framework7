@@ -89,13 +89,19 @@ export default {
     let inputIconEl;
     let headerEl;
     let footerEl;
-    const slots = self.$slots.default;
+    const slotsDefault = self.$slots.default;
     const flattenSlots = [];
 
-    if (slots && slots.length) {
-      slots.forEach(slot => {
+    if (slotsDefault && slotsDefault.length) {
+      slotsDefault.forEach(slot => {
         if (Array.isArray(slot)) flattenSlots.push(...slot);else flattenSlots.push(slot);
       });
+    }
+
+    const passedSlotsContentStart = self.$slots['content-start'];
+
+    if (passedSlotsContentStart && passedSlotsContentStart.length) {
+      slotsContentStart.push(...passedSlotsContentStart);
     }
 
     flattenSlots.forEach(child => {

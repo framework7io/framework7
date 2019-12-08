@@ -180,6 +180,9 @@ const Sortable = {
         else indexTo = undefined;
 
         const virtualList = $sortableContainer[0].f7VirtualList;
+
+        if (indexFrom) indexFrom = parseInt(indexFrom, 10);
+        if (indexTo) indexTo = parseInt(indexTo, 10);
         if (virtualList) virtualList.moveItem(indexFrom, indexTo);
       }
       if (typeof indexTo !== 'undefined' && !Number.isNaN(indexTo) && indexTo !== indexFrom) {

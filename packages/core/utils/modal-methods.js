@@ -14,13 +14,14 @@ export default function (parameters = {}) {
     {
       open(el, animate) {
         const $el = $(el);
+        if (!$el.length) return undefined;
         let instance = $el[0].f7Modal;
         if (!instance) instance = new constructor(app, { el: $el });
         return instance.open(animate);
       },
       close(el = defaultSelector, animate) {
         const $el = $(el);
-        if ($el.length === 0) return undefined;
+        if (!$el.length) return undefined;
         let instance = $el[0].f7Modal;
         if (!instance) instance = new constructor(app, { el: $el });
         return instance.close(animate);

@@ -66,8 +66,9 @@ class PhotoBrowser extends Framework7Class {
 
     let $currentEl = pb.$el.find('.photo-browser-current');
     let $totalEl = pb.$el.find('.photo-browser-total');
+    let navbarEl;
     if (pb.params.type === 'page' && pb.params.navbar && $currentEl.length === 0 && pb.app.theme === 'ios') {
-      const navbarEl = pb.app.navbar.getElByPage(pb.$el);
+      navbarEl = pb.app.navbar.getElByPage(pb.$el);
       if (navbarEl) {
         $currentEl = $(navbarEl).find('.photo-browser-current');
         $totalEl = $(navbarEl).find('.photo-browser-total');
@@ -76,6 +77,10 @@ class PhotoBrowser extends Framework7Class {
     if ($currentEl.length && $totalEl.length) {
       $currentEl.text(current);
       $totalEl.text(total);
+      if (!navbarEl) navbarEl = $currentEl.parents('.navbar')[0];
+      if (navbarEl) {
+        pb.app.navbar.size(navbarEl);
+      }
     }
 
     // Update captions

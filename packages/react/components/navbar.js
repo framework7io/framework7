@@ -28,7 +28,10 @@ class F7Navbar extends React.Component {
       return {
         _theme: $f7 ? self.$theme : null,
         routerPositionClass: '',
-        largeCollapsed: false
+        largeCollapsed: false,
+        routerNavbarRole: null,
+        routerNavbarRoleDetailRoot: false,
+        routerNavbarMasterStack: false
       };
     })();
 
@@ -67,6 +70,28 @@ class F7Navbar extends React.Component {
     if (this.eventTargetEl !== navbarEl) return;
     this.setState({
       routerPositionClass: `navbar-${position}`
+    });
+  }
+
+  onNavbarRole(navbarEl, rolesData) {
+    if (this.eventTargetEl !== navbarEl) return;
+    this.setState({
+      routerNavbarRole: rolesData.role,
+      routerNavbarRoleDetailRoot: rolesData.detailRoot
+    });
+  }
+
+  onNavbarMasterStack(navbarEl) {
+    if (this.eventTargetEl !== navbarEl) return;
+    this.setState({
+      routerNavbarMasterStack: true
+    });
+  }
+
+  onNavbarMasterUnstack(navbarEl) {
+    if (this.eventTargetEl !== navbarEl) return;
+    this.setState({
+      routerNavbarMasterStack: false
     });
   }
 
@@ -131,7 +156,13 @@ class F7Navbar extends React.Component {
       'navbar-hidden': hidden,
       'navbar-large': large,
       'navbar-large-transparent': largeTransparent,
-      'navbar-large-collapsed': large && largeCollapsed
+      'navbar-large-collapsed': large && largeCollapsed,
+      'navbar-master': this.state.routerNavbarRole === 'master',
+      'navbar-master-detail': this.state.routerNavbarRole === 'detail',
+      'navbar-master-detail-root': this.state.routerNavbarRoleDetailRoot === true,
+      'navbar-master-stacked': this.state.routerNavbarMasterStack === true,
+      'no-shadow': noShadow,
+      'no-hairline': noHairline
     }, Mixins.colorClasses(props));
 
     if (backLink || slots['nav-left'] || slots.left) {
@@ -169,8 +200,6 @@ class F7Navbar extends React.Component {
     const innerEl = React.createElement('div', {
       className: Utils.classNames('navbar-inner', innerClass, innerClassName, {
         sliding,
-        'no-shadow': noShadow,
-        'no-hairline': noHairline,
         'navbar-inner-left-title': addLeftTitleClass,
         'navbar-inner-centered-title': addCenterTitleClass
       })
@@ -199,6 +228,9 @@ class F7Navbar extends React.Component {
     f7.off('navbarCollapse', self.onCollapse);
     f7.off('navbarExpand', self.onExpand);
     f7.off('navbarPosition', self.onNavbarPosition);
+    f7.off('navbarRole', self.onNavbarRole);
+    f7.off('navbarMasterStack', self.onNavbarMasterStack);
+    f7.off('navbarMasterUnstack', self.onNavbarMasterUnstack);
     self.eventTargetEl = null;
     delete self.eventTargetEl;
   }
@@ -223,6 +255,9 @@ class F7Navbar extends React.Component {
       f7.on('navbarCollapse', self.onCollapse);
       f7.on('navbarExpand', self.onExpand);
       f7.on('navbarPosition', self.onNavbarPosition);
+      f7.on('navbarRole', self.onNavbarRole);
+      f7.on('navbarMasterStack', self.onNavbarMasterStack);
+      f7.on('navbarMasterUnstack', self.onNavbarMasterUnstack);
     });
   }
 

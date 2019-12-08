@@ -180,6 +180,8 @@ export namespace Dialog {
       keyboardActions?: boolean
       /** When enabled, dialog will be closed on backdrop click. (default true) */
       closeByBackdropClick?: boolean
+      /** When enabled it will auto focus input in predefined dialogs (like .prompt(), .login() and .password()) */
+      autoFocus?: boolean
     } | undefined
   }
   interface AppEvents {

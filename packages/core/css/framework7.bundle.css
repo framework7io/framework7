@@ -1,5 +1,5 @@
 /**
- * Framework7 5.1.3
+ * Framework7 5.2.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 17, 2019
+ * Released on: December 8, 2019
  */
 
 /*====================
@@ -4267,6 +4267,14 @@ html.device-full-viewport body {
   --f7-list-button-pressed-bg-color: rgba(255, 255, 255, 0.05);
   --f7-list-button-hover-bg-color: rgba(255, 255, 255, 0.03);
 }
+:root {
+  --f7-list-chevron-icon-left: 'chevron_left';
+  --f7-list-chevron-icon-right: 'chevron_right';
+}
+.aurora {
+  --f7-list-chevron-icon-left: 'chevron_left_aurora';
+  --f7-list-chevron-icon-right: 'chevron_right_aurora';
+}
 .list {
   position: relative;
   z-index: 1;
@@ -4767,7 +4775,7 @@ li.media-item .item-link.chevron-center .item-inner:before {
   color: var(--f7-list-chevron-icon-color);
   pointer-events: none;
   right: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-right));
-  content: 'chevron_right';
+  content: var(--f7-list-chevron-icon-right);
 }
 .media-list.chevron-center .item-title-row:before,
 .media-list .chevron-center .item-title-row:before,
@@ -5053,18 +5061,6 @@ li.list-group-title,
 }
 .aurora .list .item-media {
   min-width: 18px;
-}
-.aurora .list .item-link .item-inner:before,
-.aurora .links-list a:before,
-.aurora .media-list .item-link .item-title-row:before,
-.aurora li.media-item .item-link .item-title-row:before,
-.aurora .media-list.chevron-center .item-link .item-inner:before,
-.aurora .media-list .chevron-center .item-link .item-inner:before,
-.aurora .media-list .item-link.chevron-center .item-inner:before,
-.aurora li.media-item.chevron-center .item-link .item-inner:before,
-.aurora li.media-item .chevron-center .item-link .item-inner:before,
-.aurora li.media-item .item-link.chevron-center .item-inner:before {
-  content: 'chevron_right_aurora';
 }
 .aurora .links-list a,
 .aurora .list .item-link,
@@ -5987,6 +5983,7 @@ i.icon {
   --f7-dialog-button-text-transform: none;
   /*
   --f7-dialog-button-pressed-bg-color: var(--f7-theme-color-shade);
+  --f7-dialog-button-hover-bg-color: var(--f7-theme-color-tint);
   */
   --f7-dialog-input-border-radius: 4px;
   --f7-dialog-input-font-size: 13px;
@@ -6352,6 +6349,12 @@ html.with-modal-dialog .page-content {
 }
 .aurora .dialog-button + .dialog-button {
   margin-left: 16px;
+}
+.aurora .dialog-button.active-state {
+  background-color: var(--f7-dialog-button-pressed-bg-color, var(--f7-theme-color-shade));
+}
+.aurora.device-desktop .dialog-button:not(.active-state):not(.no-hover):hover {
+  background-color: var(--f7-dialog-button-hover-bg-color, var(--f7-theme-color-tint));
 }
 .aurora .dialog-buttons-vertical .dialog-buttons {
   display: flex;
@@ -8419,9 +8422,6 @@ body > .progressbar-infinite,
   height: 20px;
   width: 18px;
 }
-.sortable .item-inner {
-  transition-duration: 300ms;
-}
 .sortable li.sorting {
   z-index: 50;
   background: var(--f7-sortable-sorting-item-bg-color);
@@ -8430,6 +8430,20 @@ body > .progressbar-infinite,
 }
 .sortable li.sorting .item-inner:after {
   display: none !important;
+}
+.sortable-opposite .sortable-handler {
+  left: var(--f7-safe-area-right);
+  right: auto;
+}
+.sortable-opposite .sortable-handler:after {
+  transform: translateX(-10px);
+}
+.sortable:not(.sortable-opposite) .item-inner,
+.sortable-opposite .item-content,
+.sortable.simple-list li,
+.sortable-opposite.links-list li a {
+  transition-duration: 300ms;
+  transition-property: all;
 }
 .sortable-sorting li {
   transition-duration: 300ms;
@@ -8441,17 +8455,25 @@ body > .progressbar-infinite,
 .sortable-enabled li:not(.no-sorting):not(.disallow-sorting) .sortable-handler:after {
   transform: translateX(0px);
 }
-.sortable-enabled li:not(.no-sorting):not(.disallow-sorting) .item-link .item-inner,
-.sortable-enabled li:not(.no-sorting):not(.disallow-sorting) .item-link .item-title-row {
-  background-image: none !important;
+.sortable-enabled:not(.sortable-opposite) li:not(.no-sorting):not(.disallow-sorting) .item-link .item-inner:before,
+.sortable-enabled:not(.sortable-opposite) li:not(.no-sorting):not(.disallow-sorting) .item-link .item-title-row:before,
+.sortable-enabled:not(.sortable-opposite).links-list li:not(.no-sorting):not(.disallow-sorting) > a:before {
+  display: none;
 }
-.list.sortable-enabled li:not(.no-sorting):not(.disallow-sorting) .item-inner,
-.list.sortable-enabled li:not(.no-sorting):not(.disallow-sorting) .item-link .item-inner,
-.list.sortable-enabled li:not(.no-sorting):not(.disallow-sorting) .item-link.no-chevron .item-inner,
-.list.sortable-enabled.no-chevron li:not(.no-sorting):not(.disallow-sorting) .item-link .item-inner,
-.list.sortable-enabled .no-chevron .item-link .item-inner,
-.no-chevron .list.sortable-enabled li:not(.no-sorting):not(.disallow-sorting) .item-link .item-inner {
+.sortable-enabled:not(.sortable-opposite) li:not(.no-sorting):not(.disallow-sorting) .item-inner,
+.sortable-enabled:not(.sortable-opposite) li:not(.no-sorting):not(.disallow-sorting) .item-link .item-inner,
+.sortable-enabled:not(.sortable-opposite) li:not(.no-sorting):not(.disallow-sorting) .item-link.no-chevron .item-inner,
+.sortable-enabled.no-chevron:not(.sortable-opposite) li:not(.no-sorting):not(.disallow-sorting) .item-link .item-inner,
+.sortable-enabled :not(.sortable-opposite).no-chevron .item-link .item-inner,
+.no-chevron .sortable-enabled:not(.sortable-opposite) li:not(.no-sorting):not(.disallow-sorting) .item-link .item-inner,
+.simple-list.sortable-enabled:not(.sortable-opposite) li:not(.no-sorting):not(.disallow-sorting),
+.links-list.sortable-enabled:not(.sortable-opposite) li:not(.no-sorting):not(.disallow-sorting) a {
   padding-right: calc(var(--f7-sortable-handler-width) + var(--f7-safe-area-right));
+}
+.sortable-opposite.sortable-enabled li:not(.no-sorting):not(.disallow-sorting) .item-content,
+.simple-list.sortable-opposite.sortable-enabled li:not(.no-sorting):not(.disallow-sorting),
+.links-list.sortable-opposite.sortable-enabled li:not(.no-sorting):not(.disallow-sorting) a {
+  padding-left: calc(var(--f7-sortable-handler-width) + var(--f7-safe-area-right));
 }
 .ios .sortable-handler:after {
   content: 'sort_ios';
@@ -8586,22 +8608,38 @@ body > .progressbar-infinite,
   --f7-swipeout-button-bg-color: var(--f7-theme-color);
 }
 /* === Accordion === */
+:root {
+  --f7-accordion-chevron-icon-down: 'chevron_down';
+  --f7-accordion-chevron-icon-up: 'chevron_up';
+}
+.aurora {
+  --f7-accordion-chevron-icon-down: 'chevron_down_aurora';
+  --f7-accordion-chevron-icon-up: 'chevron_up_aurora';
+}
 .accordion-item-toggle {
   cursor: pointer;
-  transition-duration: 300ms;
 }
-.accordion-item-toggle.active-state {
+.list.accordion-list .accordion-item-toggle {
   transition-duration: 300ms;
+  position: relative;
+  overflow: hidden;
 }
-.accordion-item-toggle.active-state > .item-inner:after {
+.list.accordion-list .accordion-item-toggle.active-state {
+  transition-duration: 300ms;
+  background-color: var(--f7-list-link-pressed-bg-color);
+}
+.list.accordion-list .accordion-item-toggle.active-state > .item-inner:after {
   background-color: transparent;
 }
-.accordion-item-toggle .item-inner {
+.list.accordion-list .accordion-item-toggle .item-inner {
   transition-duration: 300ms;
   transition-property: background-color;
 }
-.accordion-item-toggle .item-inner:after {
+.list.accordion-list .accordion-item-toggle .item-inner:after {
   transition-duration: 300ms;
+}
+.list.accordion-list .accordion-item-toggle .ripple-wave {
+  z-index: 0;
 }
 .accordion-item .item-link .item-inner:after {
   transition-duration: 300ms;
@@ -8645,9 +8683,6 @@ body > .progressbar-infinite,
 html.device-android-4 .accordion-item-content {
   transform: none;
 }
-.list .accordion-item-toggle .item-inner {
-  padding-right: calc(var(--f7-list-chevron-icon-area) + var(--f7-safe-area-right));
-}
 .list .accordion-item-toggle .item-inner:before {
   font-family: 'framework7-core-icons';
   font-weight: normal;
@@ -8666,17 +8701,76 @@ html.device-android-4 .accordion-item-content {
   display: block;
   width: 100%;
   height: 100%;
+  font-size: 20px;
   position: absolute;
   top: 50%;
-  width: 14px;
-  height: 8px;
-  margin-top: -4px;
-  font-size: 20px;
-  line-height: 14px;
+  font-size: var(--f7-list-chevron-icon-font-size);
   color: var(--f7-list-chevron-icon-color);
   pointer-events: none;
   right: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-right));
-  content: 'chevron_right';
+}
+.list:not(.accordion-opposite) .accordion-item-toggle .item-inner {
+  padding-right: calc(var(--f7-list-chevron-icon-area) + var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-right));
+}
+.accordion-opposite .accordion-item-toggle.item-link .item-inner,
+.accordion-opposite .accordion-item-toggle .item-inner,
+.accordion-opposite .accordion-item > .item-link > .item-inner,
+.accordion-opposite .accordion-item > .item-link > .item-content > .item-inner {
+  padding-right: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-right));
+}
+.accordion-opposite .accordion-item > .item-link > .item-title-row {
+  padding-right: 0;
+}
+.accordion-opposite .accordion-item-toggle.item-link .item-inner:before,
+.accordion-opposite .accordion-item-toggle .item-inner:before,
+.accordion-opposite .accordion-item > .item-link > .item-inner:before,
+.accordion-opposite .accordion-item > .item-link > .item-content > .item-inner:before,
+.accordion-opposite .accordion-item > .item-link .item-title-row:before {
+  display: none;
+}
+.accordion-opposite .accordion-item-toggle > .item-content,
+.accordion-opposite .accordion-item-toggle.item-content,
+.accordion-opposite .accordion-item > .item-content,
+.accordion-opposite .accordion-item > .item-link > .item-content,
+.accordion-opposite.links-list .accordion-item > a {
+  position: relative;
+  padding-left: calc(var(--f7-list-chevron-icon-area) + var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-left));
+}
+.accordion-opposite .accordion-item-toggle > .item-content:before,
+.accordion-opposite .accordion-item-toggle.item-content:before,
+.accordion-opposite .accordion-item > .item-content:before,
+.accordion-opposite .accordion-item > .item-link > .item-content:before,
+.accordion-opposite.links-list .accordion-item > a:before {
+  font-family: 'framework7-core-icons';
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "liga";
+  text-align: center;
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  font-size: var(--f7-list-chevron-icon-font-size);
+  color: var(--f7-list-chevron-icon-color);
+  pointer-events: none;
+  content: var(--f7-accordion-chevron-icon-down);
+  width: 14px;
+  height: 8px;
+  margin-top: -4px;
+  line-height: 8px;
+  transform: translateX(-50%);
+  left: calc((var(--f7-list-chevron-icon-area) + var(--f7-list-item-padding-horizontal)) / 2 + var(--f7-safe-area-left));
 }
 .list .accordion-item-toggle.active-state {
   background-color: var(--f7-list-link-pressed-bg-color);
@@ -8689,7 +8783,7 @@ html.device-android-4 .accordion-item-content {
 .accordion-item.media-item .accordion-item-toggle .item-title-row:before,
 .accordion-item.media-item > .item-link .item-title-row:before,
 .links-list .accordion-item > a:before {
-  content: 'chevron_down';
+  content: var(--f7-accordion-chevron-icon-down);
   width: 14px;
   height: 8px;
   margin-top: -4px;
@@ -8702,32 +8796,17 @@ html.device-android-4 .accordion-item-content {
 .media-list .accordion-item-opened > .item-link .item-title-row:before,
 .accordion-item-opened.media-item .accordion-item-toggle .item-title-row:before,
 .accordion-item-opened.media-item > .item-link .item-title-row:before,
-.links-list .accordion-item-opened > a:before {
-  content: 'chevron_up';
+.links-list .accordion-item-opened > a:before,
+.accordion-opposite .accordion-item-opened .accordion-item-toggle > .item-content:before,
+.accordion-opposite .accordion-item-opened .accordion-item-toggle.item-content:before,
+.accordion-opposite .accordion-item-opened > .item-content:before,
+.accordion-opposite .accordion-item-opened > .item-link > .item-content:before,
+.accordion-opposite .links-list .accordion-item-opened > a:before {
+  content: var(--f7-accordion-chevron-icon-up);
   width: 14px;
   height: 8px;
   margin-top: -4px;
   line-height: 8px;
-}
-.aurora .list .accordion-item-toggle .item-inner:before,
-.aurora .list:not(.media-list) .accordion-item:not(.media-item) .accordion-item-toggle .item-inner:before,
-.aurora .list:not(.media-list) .accordion-item:not(.media-item) > .item-link .item-inner:before,
-.aurora .media-list .accordion-item .accordion-item-toggle .item-title-row:before,
-.aurora .media-list .accordion-item > .item-link .item-title-row:before,
-.aurora .accordion-item.media-item .accordion-item-toggle .item-title-row:before,
-.aurora .accordion-item.media-item > .item-link .item-title-row:before,
-.aurora .links-list .accordion-item > a:before {
-  content: 'chevron_down_aurora';
-}
-.aurora .list .accordion-item-toggle.accordion-item-opened .item-inner:before,
-.aurora .list:not(.media-list) .accordion-item-opened:not(.media-item) .accordion-item-toggle .item-inner:before,
-.aurora .list:not(.media-list) .accordion-item-opened:not(.media-item) > .item-link .item-inner:before,
-.aurora .media-list .accordion-item-opened .accordion-item-toggle .item-title-row:before,
-.aurora .media-list .accordion-item-opened > .item-link .item-title-row:before,
-.aurora .accordion-item-opened.media-item .accordion-item-toggle .item-title-row:before,
-.aurora .accordion-item-opened.media-item > .item-link .item-title-row:before,
-.aurora .links-list .accordion-item-opened > a:before {
-  content: 'chevron_up_aurora';
 }
 /* === Contacts === */
 :root .theme-dark,

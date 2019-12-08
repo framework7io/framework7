@@ -34,6 +34,14 @@
     + .dialog-button {
       margin-left: 16px;
     }
+    &.active-state {
+      background-color: var(--f7-dialog-button-pressed-bg-color, var(--f7-theme-color-shade));
+    }
+  }
+  &.device-desktop {
+    .dialog-button:not(.active-state):not(.no-hover):hover {
+      background-color: var(--f7-dialog-button-hover-bg-color, var(--f7-theme-color-tint));
+    }
   }
 
   .dialog-buttons-vertical {

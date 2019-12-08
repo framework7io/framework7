@@ -31,6 +31,10 @@ export default {
       type: Boolean,
       default: undefined
     },
+    sortableOpposite: {
+      type: Boolean,
+      default: undefined
+    },
     accordionItem: Boolean,
     accordionItemOpened: Boolean,
     smartSelect: Boolean,
@@ -57,6 +61,7 @@ export default {
       return {
         isMedia: props.mediaItem || props.mediaList,
         isSortable: props.sortable,
+        isSortableOpposite: props.sortableOpposite,
         isSimple: false
       };
     })();
@@ -107,12 +112,14 @@ export default {
       required,
       disabled,
       sortable,
+      sortableOpposite,
       noChevron,
       chevronCenter,
       virtualListIndex
     } = props;
     const isMedia = mediaItem || mediaList || self.state.isMedia;
     const isSortable = sortable || self.state.isSortable;
+    const isSortableOpposite = isSortable && (sortableOpposite || self.state.isSortableOpposite);
     const isSimple = self.state.isSimple;
 
     if (!isSimple) {
@@ -145,7 +152,10 @@ export default {
           required: required,
           disabled: disabled
         }
-      }, [this.$slots['content-start'], this.$slots['content'], this.$slots['content-end'], this.$slots['media'], this.$slots['inner-start'], this.$slots['inner'], this.$slots['inner-end'], this.$slots['after-start'], this.$slots['after'], this.$slots['after-end'], this.$slots['header'], this.$slots['footer'], this.$slots['before-title'], this.$slots['title'], this.$slots['after-title'], this.$slots['subtitle'], this.$slots['text'], swipeout || accordionItem ? null : self.$slots.default]);
+      }, [this.$slots['content-start'], this.$slots['content'], this.$slots['content-end'], this.$slots['media'], this.$slots['inner-start'], this.$slots['inner'], this.$slots['inner-end'], this.$slots['after-start'], this.$slots['after'], this.$slots['after-end'], this.$slots['header'], this.$slots['footer'], this.$slots['before-title'], this.$slots['title'], this.$slots['after-title'], this.$slots['subtitle'], this.$slots['text'], swipeout || accordionItem ? null : self.$slots.default, isSortable && sortable !== false && isSortableOpposite && _h('div', {
+        class: 'sortable-handler',
+        slot: 'content-start'
+      })]);
 
       if (link || href || accordionItem || smartSelect) {
         const linkAttrs = Object.assign({
@@ -211,7 +221,7 @@ export default {
       }
     }, [this.$slots['root-start'], swipeout ? _h('div', {
       class: 'swipeout-content'
-    }, [linkItemEl]) : linkItemEl, isSortable && sortable !== false && _h('div', {
+    }, [linkItemEl]) : linkItemEl, isSortable && sortable !== false && !isSortableOpposite && _h('div', {
       class: 'sortable-handler'
     }), (swipeout || accordionItem) && self.$slots.default, this.$slots['root'], this.$slots['root-end']]);
   },
@@ -289,7 +299,8 @@ export default {
       self.setState({
         isMedia: self.$listEl.hasClass('media-list'),
         isSimple: self.$listEl.hasClass('simple-list'),
-        isSortable: self.$listEl.hasClass('sortable')
+        isSortable: self.$listEl.hasClass('sortable'),
+        isSortableOpposite: self.$listEl.hasClass('sortable-opposite')
       });
     }
 
@@ -357,6 +368,7 @@ export default {
     const isMedia = $listEl.hasClass('media-list');
     const isSimple = $listEl.hasClass('simple-list');
     const isSortable = $listEl.hasClass('sortable');
+    const isSortableOpposite = $listEl.hasClass('sortable-opposite');
 
     if (isMedia !== self.state.isMedia) {
       self.setState({
@@ -374,6 +386,12 @@ export default {
       self.setState({
         isSortable
       });
+
+      if (isSortableOpposite !== self.state.isSortableOpposite) {
+        self.setState({
+          isSortableOpposite
+        });
+      }
     }
   },
 

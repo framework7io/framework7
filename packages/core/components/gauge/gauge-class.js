@@ -207,7 +207,7 @@ class Gauge extends Framework7Class {
         stroke: borderColor,
         'stroke-width': borderWidth,
         'stroke-dasharray': length / 2,
-        'stroke-dashoffset': (length / 2) * (progress - 1),
+        'stroke-dashoffset': (length / 2) * (1 + progress),
         fill: borderBgColor ? 'none' : (bgColor || 'none'),
       };
       Object.keys(backAttrs).forEach((attr) => {

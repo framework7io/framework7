@@ -7,6 +7,7 @@ export default {
     id: [String, Number],
     mediaList: Boolean,
     sortable: Boolean,
+    sortableOpposite: Boolean,
     sortableTapHold: Boolean,
     sortableMoveElements: {
       type: Boolean,
@@ -24,13 +25,15 @@ export default {
       style,
       mediaList,
       sortable,
+      sortableOpposite,
       sortableTapHold,
       sortableMoveElements
     } = props;
     const classes = Utils.classNames(className, 'list-group', {
       'media-list': mediaList,
       sortable,
-      'sortable-tap-hold': sortableTapHold
+      'sortable-tap-hold': sortableTapHold,
+      'sortable-opposite': sortableOpposite
     }, Mixins.colorClasses(props));
     return _h('div', {
       style: style,

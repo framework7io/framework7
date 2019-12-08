@@ -27,6 +27,7 @@ declare namespace F7ListItem {
     swipeout? : boolean
     swipeoutOpened? : boolean
     sortable? : boolean
+    sortableOpposite? : boolean
     accordionItem? : boolean
     accordionItemOpened? : boolean
     smartSelect? : boolean

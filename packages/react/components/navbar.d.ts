@@ -42,6 +42,9 @@ declare class F7Navbar extends React.Component<F7Navbar.Props, {}> {
   onExpand(navbarEl? : any) : unknown
   onCollapse(navbarEl? : any) : unknown
   onNavbarPosition(navbarEl? : any, position? : any) : unknown
+  onNavbarRole(navbarEl? : any, rolesData? : any) : unknown
+  onNavbarMasterStack(navbarEl? : any) : unknown
+  onNavbarMasterUnstack(navbarEl? : any) : unknown
   hide(animate? : any) : unknown
   show(animate? : any) : unknown
   size() : unknown

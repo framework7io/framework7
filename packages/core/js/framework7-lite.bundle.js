@@ -1,5 +1,5 @@
 /**
- * Framework7 5.1.3
+ * Framework7 5.2.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 17, 2019
+ * Released on: December 8, 2019
  */
 
 (function (global, factory) {
@@ -3246,6 +3246,7 @@
       {
         open: function open(el, animate) {
           var $el = $(el);
+          if (!$el.length) { return undefined; }
           var instance = $el[0].f7Modal;
           if (!instance) { instance = new constructor(app, { el: $el }); }
           return instance.open(animate);
@@ -3254,7 +3255,7 @@
           if ( el === void 0 ) el = defaultSelector;
 
           var $el = $(el);
-          if ($el.length === 0) { return undefined; }
+          if (!$el.length) { return undefined; }
           var instance = $el[0].f7Modal;
           if (!instance) { instance = new constructor(app, { el: $el }); }
           return instance.close(animate);
@@ -4674,11 +4675,11 @@
         tapHoldPreventClicks: true,
         // Active State
         activeState: true,
-        activeStateElements: 'a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus, .card-expandable, .menu-item, .link, .item-link',
+        activeStateElements: 'a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus, .card-expandable, .menu-item, .link, .item-link, .accordion-item-toggle',
         mdTouchRipple: true,
         iosTouchRipple: false,
         auroraTouchRipple: false,
-        touchRippleElements: '.ripple, .link, .item-link, .list-button, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell:not(.input-cell), .notification-close-button, .stepper-button, .stepper-button-minus, .stepper-button-plus, .menu-item-content',
+        touchRippleElements: '.ripple, .link, .item-link, .list-button, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell:not(.input-cell), .notification-close-button, .stepper-button, .stepper-button-minus, .stepper-button-plus, .menu-item-content, .list.accordion-list .accordion-item-toggle',
       },
     },
     instance: {
@@ -4694,60 +4695,34 @@
   };
 
   /**
-   * Default configs.
+   * Tokenize input string.
    */
-  var DEFAULT_DELIMITER = "/";
-  /**
-   * Balanced bracket helper function.
-   */
-  function balanced(open, close, str, index) {
-      var count = 0;
-      var i = index;
-      while (i < str.length) {
-          if (str[i] === "\\") {
-              i += 2;
-              continue;
-          }
-          if (str[i] === close) {
-              count--;
-              if (count === 0)
-                  { return i + 1; }
-          }
-          if (str[i] === open) {
-              count++;
-          }
-          i++;
-      }
-      return -1;
-  }
-  /**
-   * Parse a string for the raw tokens.
-   */
-  function parse(str, options) {
-      if (options === void 0) { options = {}; }
-      var _a, _b;
+  function lexer(str) {
       var tokens = [];
-      var defaultDelimiter = (_a = options.delimiter, (_a !== null && _a !== void 0 ? _a : DEFAULT_DELIMITER));
-      var whitelist = (_b = options.whitelist, (_b !== null && _b !== void 0 ? _b : undefined));
       var i = 0;
-      var key = 0;
-      var path = "";
-      var isEscaped = false;
-      // tslint:disable-next-line
       while (i < str.length) {
-          var prefix = "";
-          var name = "";
-          var pattern = "";
-          // Ignore escaped sequences.
-          if (str[i] === "\\") {
-              i++;
-              path += str[i++];
-              isEscaped = true;
+          var char = str[i];
+          if (char === "*" || char === "+" || char === "?") {
+              tokens.push({ type: "MODIFIER", index: i, value: str[i++] });
               continue;
           }
-          if (str[i] === ":") {
-              while (++i < str.length) {
-                  var code = str.charCodeAt(i);
+          if (char === "\\") {
+              tokens.push({ type: "ESCAPED_CHAR", index: i++, value: str[i++] });
+              continue;
+          }
+          if (char === "{") {
+              tokens.push({ type: "OPEN", index: i, value: str[i++] });
+              continue;
+          }
+          if (char === "}") {
+              tokens.push({ type: "CLOSE", index: i, value: str[i++] });
+              continue;
+          }
+          if (char === ":") {
+              var name = "";
+              var j = i + 1;
+              while (j < str.length) {
+                  var code = str.charCodeAt(j);
                   if (
                   // `0-9`
                   (code >= 48 && code <= 57) ||
@@ -4757,71 +4732,140 @@
                       (code >= 97 && code <= 122) ||
                       // `_`
                       code === 95) {
-                      name += str[i];
+                      name += str[j++];
                       continue;
                   }
                   break;
               }
-              // False positive on param name.
               if (!name)
-                  { i--; }
-          }
-          if (str[i] === "(") {
-              var end = balanced("(", ")", str, i);
-              // False positive on matching brackets.
-              if (end > -1) {
-                  pattern = str.slice(i + 1, end - 1);
-                  i = end;
-                  if (pattern[0] === "?") {
-                      throw new TypeError("Path pattern must be a capturing group");
-                  }
-                  if (/\((?=[^?])/.test(pattern)) {
-                      var validPattern = pattern.replace(/\((?=[^?])/, "(?:");
-                      throw new TypeError("Capturing groups are not allowed in pattern, use a non-capturing group: (" + validPattern + ")");
-                  }
-              }
-          }
-          // Add regular characters to the path string.
-          if (name === "" && pattern === "") {
-              path += str[i++];
-              isEscaped = false;
+                  { throw new TypeError("Missing parameter name at " + i); }
+              tokens.push({ type: "NAME", index: i, value: name });
+              i = j;
               continue;
           }
-          // Extract the final character from `path` for the prefix.
-          if (path.length && !isEscaped) {
-              var char = path[path.length - 1];
-              var matches = whitelist ? whitelist.indexOf(char) > -1 : true;
-              if (matches) {
-                  prefix = char;
-                  path = path.slice(0, -1);
+          if (char === "(") {
+              var count = 1;
+              var pattern = "";
+              var j = i + 1;
+              if (str[j] === "?") {
+                  throw new TypeError("Pattern cannot start with \"?\" at " + j);
               }
+              while (j < str.length) {
+                  if (str[j] === "\\") {
+                      pattern += str[j++] + str[j++];
+                      continue;
+                  }
+                  if (str[j] === ")") {
+                      count--;
+                      if (count === 0) {
+                          j++;
+                          break;
+                      }
+                  }
+                  else if (str[j] === "(") {
+                      count++;
+                      if (str[j + 1] !== "?") {
+                          throw new TypeError("Capturing groups are not allowed at " + j);
+                      }
+                  }
+                  pattern += str[j++];
+              }
+              if (count)
+                  { throw new TypeError("Unbalanced pattern at " + i); }
+              if (!pattern)
+                  { throw new TypeError("Missing pattern at " + i); }
+              tokens.push({ type: "PATTERN", index: i, value: pattern });
+              i = j;
+              continue;
           }
-          // Push the current path onto the list of tokens.
-          if (path.length) {
-              tokens.push(path);
+          tokens.push({ type: "CHAR", index: i, value: str[i++] });
+      }
+      tokens.push({ type: "END", index: i, value: "" });
+      return tokens;
+  }
+  /**
+   * Parse a string for the raw tokens.
+   */
+  function parse(str, options) {
+      if (options === void 0) { options = {}; }
+      var tokens = lexer(str);
+      var _a = options.prefixes, prefixes = _a === void 0 ? "./" : _a;
+      var defaultPattern = "[^" + escapeString(options.delimiter || "/#?") + "]+?";
+      var result = [];
+      var key = 0;
+      var i = 0;
+      var path = "";
+      var tryConsume = function (type) {
+          if (i < tokens.length && tokens[i].type === type)
+              { return tokens[i++].value; }
+      };
+      var mustConsume = function (type) {
+          var value = tryConsume(type);
+          if (value !== undefined)
+              { return value; }
+          var _a = tokens[i], nextType = _a.type, index = _a.index;
+          throw new TypeError("Unexpected " + nextType + " at " + index + ", expected " + type);
+      };
+      var consumeText = function () {
+          var result = "";
+          var value;
+          // tslint:disable-next-line
+          while ((value = tryConsume("CHAR") || tryConsume("ESCAPED_CHAR"))) {
+              result += value;
+          }
+          return result;
+      };
+      while (i < tokens.length) {
+          var char = tryConsume("CHAR");
+          var name = tryConsume("NAME");
+          var pattern = tryConsume("PATTERN");
+          if (name || pattern) {
+              var prefix = char || "";
+              if (prefixes.indexOf(prefix) === -1) {
+                  path += prefix;
+                  prefix = "";
+              }
+              if (path) {
+                  result.push(path);
+                  path = "";
+              }
+              result.push({
+                  name: name || key++,
+                  prefix: prefix,
+                  suffix: "",
+                  pattern: pattern || defaultPattern,
+                  modifier: tryConsume("MODIFIER") || ""
+              });
+              continue;
+          }
+          var value = char || tryConsume("ESCAPED_CHAR");
+          if (value) {
+              path += value;
+              continue;
+          }
+          if (path) {
+              result.push(path);
               path = "";
           }
-          var repeat = str[i] === "+" || str[i] === "*";
-          var optional = str[i] === "?" || str[i] === "*";
-          var delimiter = prefix || defaultDelimiter;
-          // Increment `i` past modifier token.
-          if (repeat || optional)
-              { i++; }
-          tokens.push({
-              name: name || key++,
-              prefix: prefix,
-              delimiter: delimiter,
-              optional: optional,
-              repeat: repeat,
-              pattern: pattern ||
-                  "[^" + escapeString(delimiter === defaultDelimiter
-                      ? delimiter
-                      : delimiter + defaultDelimiter) + "]+?"
-          });
+          var open = tryConsume("OPEN");
+          if (open) {
+              var prefix = consumeText();
+              var name_1 = tryConsume("NAME") || "";
+              var pattern_1 = tryConsume("PATTERN") || "";
+              var suffix = consumeText();
+              mustConsume("CLOSE");
+              result.push({
+                  name: name_1 || (pattern_1 ? key++ : ""),
+                  pattern: name_1 && !pattern_1 ? defaultPattern : pattern_1,
+                  prefix: prefix,
+                  suffix: suffix,
+                  modifier: tryConsume("MODIFIER") || ""
+              });
+              continue;
+          }
+          mustConsume("END");
       }
-      if (path.length)
-          { tokens.push(path); }
-      return tokens;
+      return result;
   }
   /**
    * Compile a string to a template function for the path.
@@ -4851,12 +4895,14 @@
                   continue;
               }
               var value = data ? data[token.name] : undefined;
+              var optional = token.modifier === "?" || token.modifier === "*";
+              var repeat = token.modifier === "*" || token.modifier === "+";
               if (Array.isArray(value)) {
-                  if (!token.repeat) {
+                  if (!repeat) {
                       throw new TypeError("Expected \"" + token.name + "\" to not repeat, but got an array");
                   }
                   if (value.length === 0) {
-                      if (token.optional)
+                      if (optional)
                           { continue; }
                       throw new TypeError("Expected \"" + token.name + "\" to not be empty");
                   }
@@ -4865,7 +4911,7 @@
                       if (validate && !matches[i].test(segment)) {
                           throw new TypeError("Expected all \"" + token.name + "\" to match \"" + token.pattern + "\", but got \"" + segment + "\"");
                       }
-                      path += (j === 0 ? token.prefix : token.delimiter) + segment;
+                      path += token.prefix + segment + token.suffix;
                   }
                   continue;
               }
@@ -4874,12 +4920,12 @@
                   if (validate && !matches[i].test(segment)) {
                       throw new TypeError("Expected \"" + token.name + "\" to match \"" + token.pattern + "\", but got \"" + segment + "\"");
                   }
-                  path += token.prefix + segment;
+                  path += token.prefix + segment + token.suffix;
                   continue;
               }
-              if (token.optional)
+              if (optional)
                   { continue; }
-              var typeOfMessage = token.repeat ? "an array" : "a string";
+              var typeOfMessage = repeat ? "an array" : "a string";
               throw new TypeError("Expected \"" + token.name + "\" to be " + typeOfMessage);
           }
           return path;
@@ -4910,9 +4956,8 @@
               keys.push({
                   name: i,
                   prefix: "",
-                  delimiter: "",
-                  optional: false,
-                  repeat: false,
+                  suffix: "",
+                  modifier: "",
                   pattern: ""
               });
           }
@@ -4937,13 +4982,9 @@
    */
   function tokensToRegexp(tokens, keys, options) {
       if (options === void 0) { options = {}; }
-      var strict = options.strict, _a = options.start, start = _a === void 0 ? true : _a, _b = options.end, end = _b === void 0 ? true : _b, _c = options.delimiter, delimiter = _c === void 0 ? DEFAULT_DELIMITER : _c, _d = options.encode, encode = _d === void 0 ? function (x) { return x; } : _d;
-      var endsWith = (typeof options.endsWith === "string"
-          ? options.endsWith.split("")
-          : options.endsWith || [])
-          .map(escapeString)
-          .concat("$")
-          .join("|");
+      var _a = options.strict, strict = _a === void 0 ? false : _a, _b = options.start, start = _b === void 0 ? true : _b, _c = options.end, end = _c === void 0 ? true : _c, _d = options.encode, encode = _d === void 0 ? function (x) { return x; } : _d;
+      var endsWith = "[" + escapeString(options.endsWith || "") + "]|$";
+      var delimiter = "[" + escapeString(options.delimiter || "/#?") + "]";
       var route = start ? "^" : "";
       // Iterate over the tokens and create our regexp string.
       for (var _i = 0, tokens_1 = tokens; _i < tokens_1.length; _i++) {
@@ -4952,40 +4993,45 @@
               route += escapeString(encode(token));
           }
           else {
-              var capture = token.repeat
-                  ? "(?:" + token.pattern + ")(?:" + escapeString(token.delimiter) + "(?:" + token.pattern + "))*"
-                  : token.pattern;
-              if (keys)
-                  { keys.push(token); }
-              if (token.optional) {
-                  if (!token.prefix) {
-                      route += "(" + capture + ")?";
+              var prefix = escapeString(encode(token.prefix));
+              var suffix = escapeString(encode(token.suffix));
+              if (token.pattern) {
+                  if (keys)
+                      { keys.push(token); }
+                  if (prefix || suffix) {
+                      if (token.modifier === "+" || token.modifier === "*") {
+                          var mod = token.modifier === "*" ? "?" : "";
+                          route += "(?:" + prefix + "((?:" + token.pattern + ")(?:" + suffix + prefix + "(?:" + token.pattern + "))*)" + suffix + ")" + mod;
+                      }
+                      else {
+                          route += "(?:" + prefix + "(" + token.pattern + ")" + suffix + ")" + token.modifier;
+                      }
                   }
                   else {
-                      route += "(?:" + escapeString(token.prefix) + "(" + capture + "))?";
+                      route += "(" + token.pattern + ")" + token.modifier;
                   }
               }
               else {
-                  route += escapeString(token.prefix) + "(" + capture + ")";
+                  route += "(?:" + prefix + suffix + ")" + token.modifier;
               }
           }
       }
       if (end) {
           if (!strict)
-              { route += "(?:" + escapeString(delimiter) + ")?"; }
-          route += endsWith === "$" ? "$" : "(?=" + endsWith + ")";
+              { route += delimiter + "?"; }
+          route += !options.endsWith ? "$" : "(?=" + endsWith + ")";
       }
       else {
           var endToken = tokens[tokens.length - 1];
           var isEndDelimited = typeof endToken === "string"
-              ? endToken[endToken.length - 1] === delimiter
+              ? delimiter.indexOf(endToken[endToken.length - 1]) > -1
               : // tslint:disable-next-line
                   endToken === undefined;
           if (!strict) {
-              route += "(?:" + escapeString(delimiter) + "(?=" + endsWith + "))?";
+              route += "(?:" + delimiter + "(?=" + endsWith + "))?";
           }
           if (!isEndDelimited) {
-              route += "(?=" + escapeString(delimiter) + "|" + endsWith + ")";
+              route += "(?=" + delimiter + "|" + endsWith + ")";
           }
       }
       return new RegExp(route, flags(options));
@@ -4998,12 +5044,10 @@
    * contain `[{ name: 'id', delimiter: '/', optional: false, repeat: false }]`.
    */
   function pathToRegexp(path, keys, options) {
-      if (path instanceof RegExp) {
-          return regexpToRegexp(path, keys);
-      }
-      if (Array.isArray(path)) {
-          return arrayToRegexp(path, keys, options);
-      }
+      if (path instanceof RegExp)
+          { return regexpToRegexp(path, keys); }
+      if (Array.isArray(path))
+          { return arrayToRegexp(path, keys, options); }
       return stringToRegexp(path, keys, options);
   }
   //# sourceMappingURL=index.js.map
@@ -6032,6 +6076,9 @@
         .removeClass('navbar-previous navbar-current navbar-next')
         .addClass(("navbar-" + newPagePosition + (isMaster ? ' navbar-master' : '') + (isDetail ? ' navbar-master-detail' : '') + (isDetailRoot ? ' navbar-master-detail-root' : '')))
         .removeClass('stacked');
+      if (isMaster || isDetail) {
+        router.emit('navbarRole', $newNavbarEl[0], { role: isMaster ? 'master' : 'detail', detailRoot: !!isDetailRoot });
+      }
     }
 
     // Find Old Page
@@ -6053,6 +6100,8 @@
         $oldNavbarEl = $navbarsInView.filter(function (index, navbarEl) { return navbarEl !== $newNavbarEl[0]; });
       }
     } else {
+      var removedPageEls = [];
+      var removedNavbarEls = [];
       if ($pagesInView.length > 1) {
         var i$2 = 0;
         for (i$2 = 0; i$2 < $pagesInView.length - 1; i$2 += 1) {
@@ -6064,6 +6113,7 @@
             router.emit('pageMasterStack', $pagesInView[i$2]);
             if (dynamicNavbar) {
               $(app.navbar.getElByPage(masterPageEl)).addClass('navbar-master-stacked');
+              router.emit('navbarMasterStack', app.navbar.getElByPage(masterPageEl));
             }
             continue; // eslint-disable-line
           }
@@ -6077,9 +6127,11 @@
             }
           } else {
             // Page remove event
+            removedPageEls.push($pagesInView[i$2]);
             router.pageCallback('beforeRemove', $pagesInView[i$2], $navbarsInView && $navbarsInView[i$2], 'previous', undefined, options);
             router.removePage($pagesInView[i$2]);
             if (dynamicNavbar && oldNavbarEl) {
+              removedNavbarEls.push(oldNavbarEl);
               router.removeNavbar(oldNavbarEl);
             }
           }
@@ -6087,12 +6139,14 @@
       }
       $oldPage = $viewEl
         .children('.page:not(.stacked)')
-        .filter(function (index, page) { return page !== $newPage[0]; });
+        .filter(function (index, pageEl) { return pageEl !== $newPage[0] && removedPageEls.indexOf(pageEl) < 0; });
       if (dynamicNavbar) {
         $oldNavbarEl = $navbarsEl
           .children('.navbar:not(.stacked)')
-          .filter(function (index, navbarEl) { return navbarEl !== $newNavbarEl[0]; });
+          .filter(function (index, navbarEl) { return navbarEl !== $newNavbarEl[0] && removedNavbarEls.indexOf(removedNavbarEls) < 0; });
       }
+      removedPageEls = [];
+      removedNavbarEls = [];
     }
 
     if (isDetail && !options.reloadAll) {
@@ -7267,6 +7321,9 @@
         .addClass(("navbar-previous" + (isMaster ? ' navbar-master' : '') + (isDetail ? ' navbar-master-detail' : '') + (isDetailRoot ? ' navbar-master-detail-root' : '')))
         .removeClass('stacked')
         .removeAttr('aria-hidden');
+      if (isMaster || isDetailRoot) {
+        router.emit('navbarRole', $newNavbarEl[0], { role: isMaster ? 'master' : 'detail', detailRoot: !!isDetailRoot });
+      }
     }
 
     // Remove previous page in case of "forced"
@@ -7391,6 +7448,7 @@
         router.emit('pageMasterUnstack', $newPage[0]);
         if (dynamicNavbar) {
           $(app.navbar.getElByPage($newPage)).removeClass('navbar-master-stacked');
+          router.emi('navbarMasterUnstack', app.navbar.getElByPage($newPage));
         }
       }
       // Page init and before init events
@@ -11482,6 +11540,7 @@
         closeByBackdropClick: false,
         destroyPredefinedDialogs: true,
         keyboardActions: true,
+        autoFocus: true,
       },
     },
     static: {
@@ -11494,6 +11553,15 @@
       }
       var destroyOnClose = app.params.dialog.destroyPredefinedDialogs;
       var keyboardActions = app.params.dialog.keyboardActions;
+      var autoFocus = app.params.dialog.autoFocus;
+      var autoFocusHandler = (autoFocus ? {
+        on: {
+          opened: function opened(dialog) {
+            dialog.$el.find('input').eq(0).focus();
+          },
+        },
+      } : {});
+
       app.dialog = Utils.extend(
         ModalMethods({
           app: app,
@@ -11539,8 +11607,7 @@
               (assign = args, text = assign[0], callbackOk = assign[1], callbackCancel = assign[2], defaultValue = assign[3], title = assign[4]);
             }
             defaultValue = typeof defaultValue === 'undefined' || defaultValue === null ? '' : defaultValue;
-            return new Dialog(app, {
-              title: typeof title === 'undefined' ? defaultDialogTitle() : title,
+            return new Dialog(app, Object.assign({}, {title: typeof title === 'undefined' ? defaultDialogTitle() : title,
               text: text,
               content: ("<div class=\"dialog-input-field input\"><input type=\"text\" class=\"dialog-input\" value=\"" + defaultValue + "\"></div>"),
               buttons: [
@@ -11559,8 +11626,8 @@
                 if (index === 0 && callbackCancel) { callbackCancel(inputValue); }
                 if (index === 1 && callbackOk) { callbackOk(inputValue); }
               },
-              destroyOnClose: destroyOnClose,
-            }).open();
+              destroyOnClose: destroyOnClose},
+              autoFocusHandler)).open();
           },
           confirm: function confirm() {
             var assign;
@@ -11605,8 +11672,7 @@
             if (typeof args[1] === 'function') {
               (assign = args, text = assign[0], callbackOk = assign[1], callbackCancel = assign[2], title = assign[3]);
             }
-            return new Dialog(app, {
-              title: typeof title === 'undefined' ? defaultDialogTitle() : title,
+            return new Dialog(app, Object.assign({}, {title: typeof title === 'undefined' ? defaultDialogTitle() : title,
               text: text,
               content: ("\n              <div class=\"dialog-input-field dialog-input-double input\">\n                <input type=\"text\" name=\"dialog-username\" placeholder=\"" + (app.params.dialog.usernamePlaceholder) + "\" class=\"dialog-input\">\n              </div>\n              <div class=\"dialog-input-field dialog-input-double input\">\n                <input type=\"password\" name=\"dialog-password\" placeholder=\"" + (app.params.dialog.passwordPlaceholder) + "\" class=\"dialog-input\">\n              </div>"),
               buttons: [
@@ -11626,8 +11692,8 @@
                 if (index === 0 && callbackCancel) { callbackCancel(username, password); }
                 if (index === 1 && callbackOk) { callbackOk(username, password); }
               },
-              destroyOnClose: destroyOnClose,
-            }).open();
+              destroyOnClose: destroyOnClose},
+              autoFocusHandler)).open();
           },
           password: function password() {
             var assign;
@@ -11641,8 +11707,7 @@
             if (typeof args[1] === 'function') {
               (assign = args, text = assign[0], callbackOk = assign[1], callbackCancel = assign[2], title = assign[3]);
             }
-            return new Dialog(app, {
-              title: typeof title === 'undefined' ? defaultDialogTitle() : title,
+            return new Dialog(app, Object.assign({}, {title: typeof title === 'undefined' ? defaultDialogTitle() : title,
               text: text,
               content: ("\n              <div class=\"dialog-input-field input\">\n                <input type=\"password\" name=\"dialog-password\" placeholder=\"" + (app.params.dialog.passwordPlaceholder) + "\" class=\"dialog-input\">\n              </div>"),
               buttons: [
@@ -11661,8 +11726,8 @@
                 if (index === 0 && callbackCancel) { callbackCancel(password); }
                 if (index === 1 && callbackOk) { callbackOk(password); }
               },
-              destroyOnClose: destroyOnClose,
-            }).open();
+              destroyOnClose: destroyOnClose},
+              autoFocusHandler)).open();
           },
           preloader: function preloader(title, color) {
             var preloaderInner = Utils[((app.theme) + "PreloaderContent")] || '';
@@ -13904,6 +13969,9 @@
           else { indexTo = undefined; }
 
           var virtualList = $sortableContainer[0].f7VirtualList;
+
+          if (indexFrom) { indexFrom = parseInt(indexFrom, 10); }
+          if (indexTo) { indexTo = parseInt(indexTo, 10); }
           if (virtualList) { virtualList.moveItem(indexFrom, indexTo); }
         }
         if (typeof indexTo !== 'undefined' && !Number.isNaN(indexTo) && indexTo !== indexFrom) {
@@ -16555,7 +16623,7 @@
           $viewEl.css(( obj = {}, obj[("margin-" + side)] = (($el.width()) + "px"), obj ));
           app.allowPanelOpen = true;
           if (emitEvents) {
-            panel.emit('local::breakpoint panelBreakpoint');
+            panel.emit('local::breakpoint panelBreakpoint', panel);
             panel.$el.trigger('panel:breakpoint');
           }
         } else {
@@ -16567,7 +16635,7 @@
         panel.onClosed();
         $viewEl.css(( obj$2 = {}, obj$2[("margin-" + side)] = '', obj$2 ));
         if (emitEvents) {
-          panel.emit('local::breakpoint panelBreakpoint');
+          panel.emit('local::breakpoint panelBreakpoint', panel);
           panel.$el.trigger('panel:breakpoint');
         }
       }
@@ -16618,7 +16686,7 @@
           panel.collapsed = true;
           app.allowPanelOpen = true;
           if (emitEvents) {
-            panel.emit('local::collapsedBreakpoint panelCollapsedBreakpoint');
+            panel.emit('local::collapsedBreakpoint panelCollapsedBreakpoint', panel);
             panel.$el.trigger('panel:collapsedbreakpoint');
           }
         }
@@ -16626,7 +16694,7 @@
         $el.removeClass('panel-in-collapsed panel-in');
         panel.collapsed = false;
         if (emitEvents) {
-          panel.emit('local::collapsedBreakpoint panelCollapsedBreakpoint');
+          panel.emit('local::collapsedBreakpoint panelCollapsedBreakpoint', panel);
           panel.$el.trigger('panel:collapsedbreakpoint');
         }
       }
@@ -16944,12 +17012,12 @@
         var $viewEl = $(panel.getViewEl());
         panel.$el.removeClass('panel-in-breakpoint panel-in-collapsed panel-in');
         $viewEl.css(( obj = {}, obj[("margin-" + (panel.side))] = '', obj ));
-        panel.emit('local::breakpoint panelBreakpoint');
+        panel.emit('local::breakpoint panelBreakpoint', panel);
         panel.$el.trigger('panel:breakpoint');
       }
 
       panel.$el.trigger('panel:destroy');
-      panel.emit('local::destroy panelDestroy');
+      panel.emit('local::destroy panelDestroy', panel);
       if (panel.el) {
         panel.el.f7Panel = null;
         delete panel.el.f7Panel;
@@ -20146,6 +20214,7 @@
         }
       } else {
         var $selectedItemEl = $containerEl.find('input:checked').parents('li');
+        if (!$selectedItemEl.length) { return ss; }
         var $pageContentEl = $containerEl.find('.page-content');
         $pageContentEl.scrollTop($selectedItemEl.offset().top - $pageContentEl.offset().top - parseInt($pageContentEl.css('padding-top'), 10));
       }
@@ -21323,22 +21392,53 @@
       var ref = calendar.params;
       var dateFormat = ref.dateFormat;
       var locale = ref.locale;
+
+      function twoDigits(number) {
+        return (number < 10) ? ("0" + number) : number;
+      }
       if (typeof dateFormat === 'string') {
-        return dateFormat
-          .replace(/yyyy/g, year)
-          .replace(/yy/g, String(year).substring(2))
-          .replace(/mm/g, month1 < 10 ? ("0" + month1) : month1)
-          .replace(/m(\W+)/g, (month1 + "$1"))
-          .replace(/(\W+)m/g, ("$1" + month1))
-          .replace(/MM/g, monthNames[month])
-          .replace(/M(\W+)/g, ((monthNamesShort[month]) + "$1"))
-          .replace(/(\W+)M/g, ("$1" + (monthNamesShort[month])))
-          .replace(/dd/g, day < 10 ? ("0" + day) : day)
-          .replace(/d(\W+)/g, (day + "$1"))
-          .replace(/(\W+)d/g, ("$1" + day))
-          .replace(/DD/g, dayNames[weekDay])
-          .replace(/D(\W+)/g, ((dayNamesShort[weekDay]) + "$1"))
-          .replace(/(\W+)D/g, ("$1" + (dayNamesShort[weekDay])));
+        var tokens = {
+          yyyy: year,
+          yy: String(year).substring(2),
+          mm: twoDigits(month1),
+          m: month1,
+          MM: monthNames[month],
+          M: monthNamesShort[month],
+          dd: twoDigits(day),
+          d: day,
+          DD: dayNames[weekDay],
+          D: dayNamesShort[weekDay],
+        };
+        if (calendar.params.timePicker) {
+          var hours = date.getHours();
+          var minutes = date.getMinutes();
+          var seconds = date.getSeconds();
+          var hours12 = hours;
+          if (hours > 12) { hours12 = hours - 12; }
+          if (hours === 0) { hours12 = 12; }
+          var a = hours >= 12 && hours !== 0 ? 'pm' : 'am';
+
+          Object.assign(tokens, {
+            HH: twoDigits(hours),
+            H: hours,
+            hh: twoDigits(hours12),
+            h: hours12,
+            ss: twoDigits(seconds),
+            s: seconds,
+            ':mm': twoDigits(minutes),
+            ':m': minutes,
+            a: a,
+            A: a.toUpperCase(),
+          });
+        }
+        var regexp = new RegExp(
+          Object.keys(tokens).map(function (t) { return ("(" + t + ")"); }).join('|'),
+          'g'
+        );
+        return dateFormat.replace(regexp, function (token) {
+          if (token in tokens) { return tokens[token]; }
+          return token;
+        });
       }
       if (typeof dateFormat === 'function') {
         return dateFormat(date);
@@ -33939,8 +34039,9 @@
 
       var $currentEl = pb.$el.find('.photo-browser-current');
       var $totalEl = pb.$el.find('.photo-browser-total');
+      var navbarEl;
       if (pb.params.type === 'page' && pb.params.navbar && $currentEl.length === 0 && pb.app.theme === 'ios') {
-        var navbarEl = pb.app.navbar.getElByPage(pb.$el);
+        navbarEl = pb.app.navbar.getElByPage(pb.$el);
         if (navbarEl) {
           $currentEl = $(navbarEl).find('.photo-browser-current');
           $totalEl = $(navbarEl).find('.photo-browser-total');
@@ -33949,6 +34050,10 @@
       if ($currentEl.length && $totalEl.length) {
         $currentEl.text(current);
         $totalEl.text(total);
+        if (!navbarEl) { navbarEl = $currentEl.parents('.navbar')[0]; }
+        if (navbarEl) {
+          pb.app.navbar.size(navbarEl);
+        }
       }
 
       // Update captions
@@ -36207,7 +36312,7 @@
           stroke: borderColor,
           'stroke-width': borderWidth,
           'stroke-dasharray': length / 2,
-          'stroke-dashoffset': (length / 2) * (progress - 1),
+          'stroke-dashoffset': (length / 2) * (1 + progress),
           fill: borderBgColor ? 'none' : (bgColor || 'none'),
         };
         Object.keys(backAttrs).forEach(function (attr) {
@@ -39391,7 +39496,7 @@
   };
 
   /**
-   * Framework7 5.1.3
+   * Framework7 5.2.0
    * Full featured mobile HTML framework for building iOS & Android apps
    * http://framework7.io/
    *
@@ -39399,7 +39504,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: November 17, 2019
+   * Released on: December 8, 2019
    */
 
   // Install Core Modules & Components
