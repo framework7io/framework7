@@ -1,5 +1,6 @@
 /* eslint indent: ["off"] */
 import $ from 'dom7';
+import { window, document } from 'ssr-window';
 import Utils from '../../utils/utils';
 import Modal from '../modal/modal-class';
 
