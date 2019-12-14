@@ -9,6 +9,7 @@ scripts/build-config-custom.js
 scripts/build-config-*.js
 kitchen-sink/vue/js/app.js
 kitchen-sink/react/js/app.js
+kitchen-sink/svelte/js/app.js
 .github-access-token
 packages/*.zip
 packages/*.tar.gz

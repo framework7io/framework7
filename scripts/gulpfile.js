@@ -6,6 +6,7 @@ const opn = require('opn');
 const buildKsCore = require('./build-ks-core.js');
 const buildKsVue = require('./build-ks-vue.js');
 const buildKsReact = require('./build-ks-react.js');
+const buildKsSvelte = require('./build-ks-svelte.js');
 
 const buildCoreJs = require('./build-core-js.js');
 const buildCoreTypings = require('./build-core-typings.js');
@@ -14,10 +15,11 @@ const buildCoreComponents = require('./build-core-components.js');
 const buildCoreLazyComponents = require('./build-core-lazy-components.js');
 
 const buildPhenome = require('./build-phenome.js');
-const buildVue = require('./build-vue');
+const buildVue = require('./build-vue.js');
 const buildVueTypings = require('./build-vue-typings.js');
-const buildReact = require('./build-react');
+const buildReact = require('./build-react.js');
 const buildReactTypings = require('./build-react-typings.js');
+const buildSvelte = require('./build-svelte.js');
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -25,6 +27,7 @@ const env = process.env.NODE_ENV || 'development';
 gulp.task('ks-core', buildKsCore);
 gulp.task('ks-vue', buildKsVue);
 gulp.task('ks-react', buildKsReact);
+gulp.task('ks-svelte', buildKsSvelte);
 gulp.task('core-js', buildCoreJs);
 gulp.task('core-typings', buildCoreTypings);
 gulp.task('core-styles', buildCoreLess);
@@ -38,6 +41,8 @@ gulp.task('react-typings', buildReactTypings);
 gulp.task('vue', buildVue);
 gulp.task('vue-typings', buildVueTypings);
 
+gulp.task('svelte', buildSvelte);
+
 // eslint-disable-next-line
 gulp.task('build-core', gulp.series([
   'core-components',
@@ -48,6 +53,7 @@ gulp.task('build-core', gulp.series([
 ]));
 gulp.task('build-react', gulp.series(['react', 'react-typings']));
 gulp.task('build-vue', gulp.series(['vue', 'vue-typings']));
+gulp.task('build-svelte', gulp.series(['svelte']));
 
 // Watchers
 const watch = {
@@ -56,7 +62,8 @@ const watch = {
       'core-js',
       'core-components',
       'ks-react',
-      'ks-vue'
+      'ks-vue',
+      'ks-svelte',
     ));
     gulp.watch(['./src/core/**/*.d.ts'], gulp.series(
       'core-typings'
@@ -70,13 +77,17 @@ const watch = {
       'build-react',
       'build-vue',
       'ks-react',
-      'ks-vue'
+      'ks-vue',
+      'ks-svelte',
     ));
     gulp.watch(['./kitchen-sink/react/src/**/*.js', './kitchen-sink/react/src/**/*.jsx'], gulp.series(
       'ks-react'
     ));
     gulp.watch(['./kitchen-sink/vue/src/**/*.js', './kitchen-sink/vue/src/**/*.vue'], gulp.series(
       'ks-vue'
+    ));
+    gulp.watch(['./kitchen-sink/svelte/src/**/*.js', './kitchen-sink/svelte/src/**/*.svelte'], gulp.series(
+      'ks-svelte'
     ));
   },
   core() {
@@ -132,6 +143,28 @@ const watch = {
       'ks-vue',
     ));
   },
+  svelte() {
+    gulp.watch(['./src/core/**/*.js'], gulp.series(
+      'core-js',
+      'core-components',
+      'ks-svelte'
+    ));
+    gulp.watch('./src/core/**/*.less', gulp.series(
+      'core-styles',
+      'core-components',
+    ));
+    gulp.watch(['./src/phenome/**/*.js'], gulp.series(
+      'build-svelte',
+      'ks-svelte'
+    ));
+    gulp.watch(['./src/svelte/**/*.svelte'], gulp.series(
+      'build-svelte',
+      'ks-svelte'
+    ));
+    gulp.watch(['./kitchen-sink/svelte/src/**/*.js', './kitchen-sink/svelte/src/**/*.svelte'], gulp.series(
+      'ks-svelte',
+    ));
+  },
 };
 
 // Server
@@ -162,6 +195,11 @@ gulp.task('server-vue', () => {
   server();
   opn('http://localhost:3000/kitchen-sink/vue/');
 });
+gulp.task('server-svelte', () => {
+  if (env === 'development') watch.svelte();
+  server();
+  opn('http://localhost:3000/kitchen-sink/svelte/');
+});
 
 gulp.task('watch', () => {
   watch.all();
@@ -174,4 +212,7 @@ gulp.task('watch-react', () => {
 });
 gulp.task('watch-vue', () => {
   watch.vue();
+});
+gulp.task('watch-svelte', () => {
+  watch.svelte();
 });
