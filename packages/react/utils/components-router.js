@@ -59,7 +59,7 @@ export default {
       viewRouter.setPages(viewRouter.pages);
     },
     removePage($pageEl) {
-      if (!$pageEl) return;
+      if (!$pageEl || $pageEl.length === 0) return;
       const router = this;
       let f7Page;
       if ('length' in $pageEl) f7Page = $pageEl[0].f7Page;
