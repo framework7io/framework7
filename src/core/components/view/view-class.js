@@ -16,6 +16,10 @@ class View extends Framework7Class {
       routesAdd: [],
     };
 
+    if ($el.length === 0 && typeof el === 'string') {
+      throw new Error(`Framework7: can't create a View instance because the selector "${el}" didn't match any element`);
+    }
+
     // Default View params
     view.params = Utils.extend(defaults, app.params.view, viewParams);
 
