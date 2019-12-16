@@ -19,8 +19,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
 <table>
   <tr>
     <td align="center" valign="middle">
-      <a href="https://watchcartoononline.best/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/watchcartoononline.png">
+      <a href="https://privicy.com/" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/privicy.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://10-0-0-0-1x.com/" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/10.0.0.0.1.png">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -38,13 +43,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img width="160" src="https://framework7.io/i/sponsors/thorium.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://app-valley.vip/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/appvalley.jpg">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="http://mytommy.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/tommy.png">
@@ -65,13 +70,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img width="160" src="https://framework7.io/i/sponsors/kqapius.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://writersperhour.com/write-my-paper" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/writersperhour.jpg">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://monovm.com/linux-vps/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/monovm.jpg">
@@ -92,13 +97,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img width="160" src="https://framework7.io/i/sponsors/rise.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://usave.co.uk/utilities/broadband" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/usave.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://bid4papers.com/write-my-essay.html" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/bid4papers.png">
@@ -119,19 +124,18 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img width="160" src="https://framework7.io/i/sponsors/hicapps.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://blokt.com/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/blokt.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://wappler.io/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
-    <td></td>
     <td></td>
     <td></td>
     <td></td>
