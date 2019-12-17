@@ -16,8 +16,13 @@ class View extends Framework7Class {
       routesAdd: [],
     };
 
-    if ($el.length === 0 && typeof el === 'string') {
-      throw new Error(`Framework7: can't create a View instance because the selector "${el}" didn't match any element`);
+    if ($el.length === 0) {
+      let message = `Framework7: can't create a View instance because `;
+      message += (typeof el === 'string') ? 
+        `the selector "${el}" didn't match any element` :
+        `el must be an HTMLElement or Dom7 object`;
+
+      throw new Error(message);
     }
 
     // Default View params
