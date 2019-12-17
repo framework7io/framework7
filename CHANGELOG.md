@@ -1718,7 +1718,7 @@
   * Router
     * `async` route support for routable tabs
     * `async` route support for routable modals
-  * Virutal List
+  * Virtual List
     * New `ul` and `createUl` parameters. When disabled then VL can be used with any elements not expecting the list only
   * Dialog
     * New `app.destroyPredefinedDialogs` parameter to automatically destroy predefined dialogs like Alert, Confirm, Prompt, etc.

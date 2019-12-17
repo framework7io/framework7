@@ -3,8 +3,13 @@
 <table>
   <tr>
     <td align="center" valign="middle">
-      <a href="https://watchcartoononline.best/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/watchcartoononline.png">
+      <a href="https://privicy.com/" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/privicy.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://10-0-0-0-1x.com/" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/10.0.0.0.1.png">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -22,13 +27,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/thorium.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://app-valley.vip/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/appvalley.jpg">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="http://mytommy.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/tommy.png">
@@ -49,13 +54,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/kqapius.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://writersperhour.com/write-my-paper" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/writersperhour.jpg">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://monovm.com/linux-vps/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/monovm.jpg">
@@ -76,13 +81,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/rise.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://usave.co.uk/utilities/broadband" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/usave.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://bid4papers.com/write-my-essay.html" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/bid4papers.png">
@@ -103,19 +108,18 @@
         <img width="160" src="https://framework7.io/i/sponsors/hicapps.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://blokt.com/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/blokt.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://wappler.io/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
-    <td></td>
     <td></td>
     <td></td>
     <td></td>
@@ -137,10 +141,10 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ---
 
 ### $250 Gold Sponsor
-[Watch cartoon online](https://watchcartoononline.best/)<br>
+[10.0.0.0.1](https://10-0-0-0-1x.com/)<br>
 [CodersRank](https://codersrank.io/?utm_source=banner&utm_medium=referral&utm_campaign=vladimir) - CodersRank - Ultimate Profile For Coders<br>
 [Sparheld.de](https://www.sparheld.de/) - Sparheld.de - save shopping online
-Steven Roussey<br>
+[Privict](https://privicy.com/) - Privacy control for consumers<br>
 [Join here!](https://www.patreon.com/bePatron?patAmt=250.0&exp=1&u=4109762&rid=830877)
 
 ---
