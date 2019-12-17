@@ -17,10 +17,10 @@ class View extends Framework7Class {
     };
 
     if ($el.length === 0) {
-      let message = `Framework7: can't create a View instance because `;
-      message += (typeof el === 'string') ? 
-        `the selector "${el}" didn't match any element` :
-        `el must be an HTMLElement or Dom7 object`;
+      let message = 'Framework7: can\'t create a View instance because ';
+      message += (typeof el === 'string')
+        ? `the selector "${el}" didn't match any element`
+        : 'el must be an HTMLElement or Dom7 object';
 
       throw new Error(message);
     }
