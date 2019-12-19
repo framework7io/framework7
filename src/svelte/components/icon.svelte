@@ -90,7 +90,6 @@
   $: iconStyle = (style || '') + (iconSize ? `;font-size: ${iconSize}; width: ${iconSize}; height: ${iconSize}`.replace(';;', '') : '');
 
 
-  // Tooltip Start
   let tooltipText = tooltip;
   function watchTooltip(newText) {
     const oldText = tooltipText;
