@@ -8,7 +8,7 @@ import About from './pages/about.svelte';
 // import Appbar from './pages/appbar.svelte';
 // import Autocomplete from './pages/autocomplete.svelte';
 // import Badge from './pages/badge.svelte';
-// import Buttons from './pages/buttons.svelte';
+import Buttons from './pages/buttons.svelte';
 // import Calendar from './pages/calendar.svelte';
 // import CalendarPage from './pages/calendar-page.svelte';
 // import Cards from './pages/cards.svelte';
@@ -25,7 +25,7 @@ import ContentBlock from './pages/content-block.svelte';
 // import FabMorph from './pages/fab-morph.svelte';
 // import FormStorage from './pages/form-storage.svelte';
 // import Gauge from './pages/gauge.svelte';
-// import Grid from './pages/grid.svelte';
+import Grid from './pages/grid.svelte';
 // import Icons from './pages/icons.svelte';
 // import InfiniteScroll from './pages/infinite-scroll.svelte';
 // import Inputs from './pages/inputs.svelte';
@@ -207,10 +207,10 @@ export default [
   //   path: '/badge/',
   //   component: Badge,
   // },
-  // {
-  //   path: '/buttons/',
-  //   component: Buttons,
-  // },
+  {
+    path: '/buttons/',
+    component: Buttons,
+  },
   // {
   //   path: '/calendar/',
   //   component: Calendar,
@@ -275,10 +275,10 @@ export default [
   //   path: '/gauge/',
   //   component: Gauge,
   // },
-  // {
-  //   path: '/grid/',
-  //   component: Grid,
-  // },
+  {
+    path: '/grid/',
+    component: Grid,
+  },
   // {
   //   path: '/icons/',
   //   component: Icons,
