@@ -19,8 +19,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
 <table>
   <tr>
     <td align="center" valign="middle">
-      <a href="https://watchcartoononline.best/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/watchcartoononline.png">
+      <a href="https://privicy.com/" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/privicy.png">
       </a>
     </td>
     <td align="center" valign="middle">

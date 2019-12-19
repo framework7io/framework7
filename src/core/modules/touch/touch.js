@@ -157,7 +157,9 @@ function initTouch() {
     }
   }
   function handleMouseMove() {
-    $('.active-state').removeClass('active-state');
+    if (!params.activeStateOnMouseMove) {
+      $('.active-state').removeClass('active-state');
+    }
     if (useRipple) {
       rippleTouchMove();
     }
@@ -408,6 +410,7 @@ function initTouch() {
     app.on('touchstart', handleMouseDown);
     app.on('touchmove', handleMouseMove);
     app.on('touchend', handleMouseUp);
+    document.addEventListener('pointercancel', handleMouseUp, { passive: true });
   }
   document.addEventListener('contextmenu', (e) => {
     if (params.disableContextMenu && (Device.ios || Device.android || Device.cordova)) {
@@ -435,6 +438,7 @@ export default {
       // Active State
       activeState: true,
       activeStateElements: 'a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus, .card-expandable, .menu-item, .link, .item-link, .accordion-item-toggle',
+      activeStateOnMouseMove: false,
       mdTouchRipple: true,
       iosTouchRipple: false,
       auroraTouchRipple: false,

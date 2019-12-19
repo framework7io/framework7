@@ -62,7 +62,7 @@ export default {
       if (!$pageEl) return;
       const router = this;
       let f7Page;
-      if ('length' in $pageEl) f7Page = $pageEl[0].f7Page;
+      if ('length' in $pageEl && $pageEl[0]) f7Page = $pageEl[0].f7Page;
       else f7Page = $pageEl.f7Page;
       if (f7Page && f7Page.route && f7Page.route.route && f7Page.route.route.keepAlive) {
         router.app.$($pageEl).remove();

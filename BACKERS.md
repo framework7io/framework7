@@ -3,8 +3,8 @@
 <table>
   <tr>
     <td align="center" valign="middle">
-      <a href="https://watchcartoononline.best/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/watchcartoononline.png">
+      <a href="https://privicy.com/" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/privicy.png">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -137,10 +137,9 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ---
 
 ### $250 Gold Sponsor
-[Watch cartoon online](https://watchcartoononline.best/)<br>
 [CodersRank](https://codersrank.io/?utm_source=banner&utm_medium=referral&utm_campaign=vladimir) - CodersRank - Ultimate Profile For Coders<br>
 [Sparheld.de](https://www.sparheld.de/) - Sparheld.de - save shopping online
-Steven Roussey<br>
+[Privict](https://privicy.com/) - Privacy control for consumers<br>
 [Join here!](https://www.patreon.com/bePatron?patAmt=250.0&exp=1&u=4109762&rid=830877)
 
 ---
