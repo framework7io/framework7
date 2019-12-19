@@ -114,6 +114,7 @@ class Tooltip extends Framework7Class {
   position(targetEl) {
     const tooltip = this;
     const { $el, app } = tooltip;
+    const tooltipOffset = tooltip.params.offset || 0;
     $el.css({ left: '', top: '' });
     const $targetEl = $(targetEl || tooltip.targetEl);
     const [width, height] = [$el.width(), $el.height()];
@@ -142,13 +143,13 @@ class Tooltip extends Framework7Class {
     // Top Position
     let position = 'top';
 
-    if (height < targetOffsetTop) {
+    if (height + tooltipOffset < targetOffsetTop) {
       // On top
-      top = targetOffsetTop - height;
+      top = targetOffsetTop - height - tooltipOffset;
     } else if (height < app.height - targetOffsetTop - targetHeight) {
       // On bottom
       position = 'bottom';
-      top = targetOffsetTop + targetHeight;
+      top = targetOffsetTop + targetHeight + tooltipOffset;
     } else {
       // On middle
       position = 'middle';
