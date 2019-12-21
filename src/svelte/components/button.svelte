@@ -118,8 +118,8 @@
       f7Tooltip = null;
       return;
     }
-    if (newText && !f7Tooltip && F7.instance) {
-      f7Tooltip = F7.instance.tooltip.create({
+    if (newText && !f7Tooltip && f7.instance) {
+      f7Tooltip = f7.instance.tooltip.create({
         targetEl: el,
         text: newText,
       });
