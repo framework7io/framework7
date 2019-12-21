@@ -3,14 +3,12 @@ const fs = require('./utils/fs-extra');
 const getOutput = require('./get-output');
 const bannerSvelte = require('./banners/svelte');
 
-function esm({ banner, componentImports, componentAliases, componentExports }) {
+function esm({ banner, componentImports, componentExports }) {
   return `
 ${banner}
 
 ${componentImports.join('\n')}
 import Framework7Svelte, { f7, f7ready, theme } from './utils/plugin';
-
-${componentAliases.join('\n')}
 
 export {\n${componentExports.join(',\n')}\n};
 
@@ -24,7 +22,6 @@ function buildSvelte(cb) {
   const output = path.resolve(getOutput(), 'svelte');
   const components = [];
   const componentImports = [];
-  const componentAliases = [];
   const componentExports = [];
 
   // Copy components
@@ -40,11 +37,9 @@ function buildSvelte(cb) {
         .join('');
       components.push({
         name: `${componentName}`,
-        importName: `F7${componentName}`,
       });
-      componentImports.push(`import F7${componentName} from './components/${fileName}';`);
-      componentAliases.push(`const ${componentName} = F7${componentName};`);
-      componentExports.push(`  F7${componentName}`, `  ${componentName}`);
+      componentImports.push(`import ${componentName} from './components/${fileName}';`);
+      componentExports.push(`  ${componentName}`, `  ${componentName}`);
 
       fs.copyFileSync(path.resolve(componentsSrc, fileName), path.resolve(output, 'components', fileName));
     });
@@ -92,7 +87,6 @@ function buildSvelte(cb) {
   const componentsContent = esm({
     banner: bannerSvelte.trim(),
     componentImports,
-    componentAliases,
     componentExports,
   });
   fs.writeFileSync(`${output}/framework7-svelte.esm.js`, componentsContent);
