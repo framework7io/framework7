@@ -78,7 +78,7 @@
     if (typeof closeOnEscape !== 'undefined') params.closeOnEscape = closeOnEscape;
 
     f7.ready(() => {
-      f7Actions = f7.instance.sheet.create(params);
+      f7Actions = f7.instance.actions.create(params);
       if (opened) {
         f7Actions.open(false);
       }

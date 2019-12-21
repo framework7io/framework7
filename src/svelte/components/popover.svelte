@@ -71,7 +71,7 @@
     if (typeof backdropEl !== 'undefined') params.backdropEl = backdropEl;
 
     f7.ready(() => {
-      f7Popover = f7.instance.sheet.create(params);
+      f7Popover = f7.instance.popover.create(params);
       if (opened) {
         f7Popover.open(false);
       }
