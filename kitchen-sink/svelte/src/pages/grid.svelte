@@ -1,16 +1,5 @@
 <Page class="grid-demo">
-  <div slot="fixed" class="navbar">
-    <div class="navbar-bg"></div>
-    <div class="navbar-inner sliding">
-      <div class="left">
-        <a href="#" class="link back">
-          <i class="icon icon-back"></i>
-          <span class="if-not-md">Back</span>
-        </a>
-      </div>
-      <div class="title">Grid / Layout</div>
-    </div>
-  </div>
+  <Navbar title="Grid / Layout" backLink="Back" />
 
   <Block>
     <p>Columns within a row are automatically set to have equal width. Otherwise you can define your column with pourcentage of screen you want.</p>
@@ -157,5 +146,5 @@
 </Page>
 
 <script>
-  import { Page, BlockTitle, Block, Row, Col, } from 'framework7-svelte';
+  import { Page, Navbar, BlockTitle, Block, Row, Col, } from 'framework7-svelte';
 </script>

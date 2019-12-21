@@ -1,36 +1,24 @@
 <Page class="page-home">
-  <div class="navbar navbar-large-transparent" slot="fixed">
-    <div class="navbar-bg"></div>
-    <div class="navbar-inner">
-      <div class="left">
-        <a href="#" class="link icon-only panel-open" data-panel="left">
-          <Icon ios="f7:menu" aurora="f7:menu" md="material:menu" />
-          <!-- <i class="icon f7-icons if-not-md">menu</i> -->
-          <!-- <i class="icon material-icons md-only">menu</i> -->
-        </a>
-      </div>
-      <div class="title sliding">Framework7 Svelte</div>
-      <div class="right">
-        <a class="link icon-only searchbar-enable" data-searchbar=".searchbar-components">
-          <i class="icon f7-icons if-not-md">search</i>
-          <i class="icon material-icons md-only">search</i>
-        </a>
-      </div>
-      <div class="title-large">
-        <div class="title-large-text">Framework7 Svelte</div>
-      </div>
-      <form data-search-container=".components-list" data-search-in="a" class="searchbar searchbar-expandable searchbar-components searchbar-init">
-        <div class="searchbar-inner">
-          <div class="searchbar-input-wrap">
-            <input type="search" placeholder="Search components"/>
-            <i class="searchbar-icon"></i>
-            <span class="input-clear-button"></span>
-          </div>
-          <span class="searchbar-disable-button if-not-aurora">Cancel</span>
+  <Navbar large largeTransparent sliding={false}>
+    <NavLeft>
+      <Link panelOpen="left" iconIos="f7:menu" iconAurora="f7:menu" iconMd="material:menu"></Link>
+    </NavLeft>
+    <NavTitle sliding>Framework7 Svelte</NavTitle>
+    <NavRight>
+      <Link searchbarEnable=".searchbar-components" iconIos="f7:search" iconAurora="f7:search" iconMd="material:search"></Link>
+    </NavRight>
+    <NavTitleLarge>Framework7 Svelte</NavTitleLarge>
+    <form data-search-container=".components-list" data-search-in="a" class="searchbar searchbar-expandable searchbar-components searchbar-init">
+      <div class="searchbar-inner">
+        <div class="searchbar-input-wrap">
+          <input type="search" placeholder="Search components"/>
+          <i class="searchbar-icon"></i>
+          <span class="input-clear-button"></span>
         </div>
-      </form>
-    </div>
-  </div>
+        <span class="searchbar-disable-button if-not-aurora">Cancel</span>
+      </div>
+    </form>
+  </Navbar>
 
   <div class="list searchbar-hide-on-search">
     <ul>
@@ -590,5 +578,5 @@
 </Page>
 
 <script>
-  import { Page, Icon } from 'framework7-svelte';
+  import { Page, Icon, Navbar, NavLeft, NavRight, NavTitle, NavTitleLarge, Link } from 'framework7-svelte';
 </script>

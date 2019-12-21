@@ -1,16 +1,5 @@
 <Page>
-  <div slot="fixed" class="navbar">
-    <div class="navbar-bg"></div>
-    <div class="navbar-inner sliding">
-      <div class="left">
-        <a href="#" class="link back">
-          <i class="icon icon-back"></i>
-          <span class="if-not-md">Back</span>
-        </a>
-      </div>
-      <div class="title">Buttons</div>
-    </div>
-  </div>
+  <Navbar title="Buttons" backLink="Back" />
 
   <BlockTitle>Usual Buttons</BlockTitle>
   <Block strong>
@@ -255,5 +244,5 @@
 </Page>
 
 <script>
-  import { Page, BlockTitle, Block, Row, Col, Segmented, Button, } from 'framework7-svelte';
+  import { Page, Navbar, BlockTitle, Block, Row, Col, Segmented, Button, } from 'framework7-svelte';
 </script>

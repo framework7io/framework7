@@ -1,19 +1,5 @@
 <Page class="page-about">
-  <div slot="fixed" class="navbar navbar-large-transparent">
-    <div class="navbar-bg"></div>
-    <div class="navbar-inner sliding">
-      <div class="left">
-        <a href="#" class="link back">
-          <i class="icon icon-back"></i>
-          <span class="if-not-md">Framework7</span>
-        </a>
-      </div>
-      <div class="title">About</div>
-      <div class="title-large">
-        <div class="title-large-text">About</div>
-      </div>
-    </div>
-  </div>
+  <Navbar large largeTransparent title="About" titleLarge="About" backLink="Framework7"></Navbar>
 
   <BlockTitle medium>Welcome to Framework7</BlockTitle>
   <Block strong>
@@ -25,5 +11,5 @@
 </Page>
 
 <script>
-  import { Page, BlockTitle, Block } from 'framework7-svelte';
+  import { Page, BlockTitle, Block, Navbar } from 'framework7-svelte';
 </script>

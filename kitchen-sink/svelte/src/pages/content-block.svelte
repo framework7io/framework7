@@ -1,16 +1,5 @@
 <Page>
-  <div slot="fixed" class="navbar">
-    <div class="navbar-bg"></div>
-    <div class="navbar-inner sliding">
-      <div class="left">
-        <a href="#" class="link back">
-          <i class="icon icon-back"></i>
-          <span class="if-not-md">Back</span>
-        </a>
-      </div>
-      <div class="title">Content Block</div>
-    </div>
-  </div>
+  <Navbar title="Content Block" backLink="Back" />
 
   <p>This paragraph is outside of content block. Not cool, but useful for any custom elements with custom styling.</p>
 
@@ -79,5 +68,5 @@
 </Page>
 
 <script>
-  import { Page, BlockTitle, BlockHeader, BlockFooter, Block } from 'framework7-svelte';
+  import { Page, Navbar, BlockTitle, BlockHeader, BlockFooter, Block } from 'framework7-svelte';
 </script>
