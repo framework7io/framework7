@@ -50,11 +50,17 @@ function buildSvelte(cb) {
     });
 
   // Copy utils
-  const utilsSrc = path.resolve('./src/phenome/utils');
+  const phenomeUtilsSrc = path.resolve('./src/phenome/utils');
   fs
-    .readdirSync(utilsSrc)
+    .readdirSync(phenomeUtilsSrc)
     .forEach((fileName) => {
-      fs.copyFileSync(path.resolve(utilsSrc, fileName), path.resolve(output, 'utils', fileName));
+      fs.copyFileSync(path.resolve(phenomeUtilsSrc, fileName), path.resolve(output, 'utils', fileName));
+    });
+  const svelteUtilsSrc = path.resolve('./src/svelte/utils');
+  fs
+    .readdirSync(svelteUtilsSrc)
+    .forEach((fileName) => {
+      fs.copyFileSync(path.resolve(svelteUtilsSrc, fileName), path.resolve(output, 'utils', fileName));
     });
 
   // Tweak utils
