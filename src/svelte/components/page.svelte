@@ -258,6 +258,11 @@
   }
 
   onMount(() => {
+    if (el && f7.instance) {
+      const $ = f7.instance.$;
+      const $fixedEls = $(el).children('.page-content').children('[data-f7-page-slot="fixed"]');
+      if ($fixedEls.length) $(el).prepend($fixedEls);
+    }
     f7.ready(() => {
       mountPage();
     });
