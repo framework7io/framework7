@@ -36,7 +36,6 @@ export default {
     if (inner) {
       innerEl = (
         <div
-          ref="inner"
           className={Utils.classNames(
             'appbar-inner',
             innerClass,
@@ -58,7 +57,7 @@ export default {
     );
 
     return (
-      <div ref="el" id={id} style={style} className={classes}>
+      <div id={id} style={style} className={classes}>
         <slot name="before-inner" />
         {innerEl || self.slots.default}
         <slot name="after-inner" />
