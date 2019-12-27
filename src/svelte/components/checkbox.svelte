@@ -30,7 +30,7 @@
   );
 
   function onChange(event) {
-    dispatch('change', event.target.checked);
+    dispatch('change', [event]);
   }
 
   onMount(() => {

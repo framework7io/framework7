@@ -37,16 +37,16 @@
   );
 
   function onOpen(instance) {
-    dispatch('popup:open', instance);
+    dispatch('popup:open', [instance]);
   }
   function onOpened(instance) {
-    dispatch('popup:opened', instance);
+    dispatch('popup:opened', [instance]);
   }
   function onClose(instance) {
-    dispatch('popup:close', instance);
+    dispatch('popup:close', [instance]);
   }
   function onClosed(instance) {
-    dispatch('popup:closed', instance);
+    dispatch('popup:closed', [instance]);
   }
 
   function watchOpened(openedPassed) {

@@ -86,27 +86,27 @@
 
   // Handlers
   function onPtrPullStart(e) {
-    dispatch('ptr:pullstart', e.detail);
+    dispatch('ptr:pullstart', [...e.detail]);
   }
   function onPtrPullMove(e) {
-    dispatch('ptr:pullmove', e.detail);
+    dispatch('ptr:pullmove', [...e.detail]);
   }
   function onPtrPullEnd(e) {
-    dispatch('ptr:pullend', e.detail);
+    dispatch('ptr:pullend', [...e.detail]);
   }
   function onPtrRefresh(e) {
-    dispatch('ptr:refresh', e.detail);
+    dispatch('ptr:refresh', [...e.detail]);
   }
   function onPtrDone(e) {
-    dispatch('ptr:done', e.detail);
+    dispatch('ptr:done', [...e.detail]);
   }
   function onInfinite(e) {
-    dispatch('infinite', e.detail);
+    dispatch('infinite', [...e.detail]);
   }
   // Main Page Events
   function onPageMounted(page) {
     if (el !== page.el) return;
-    dispatch('page:mounted', page);
+    dispatch('page:mounted', [page]);
   }
   function onPageInit(page) {
     if (el !== page.el) return;
@@ -128,11 +128,11 @@
       }
     }
 
-    dispatch('page:init', page);
+    dispatch('page:init', [page]);
   }
   function onPageReinit(page) {
     if (el !== page.el) return;
-    dispatch('page:reinit', page);
+    dispatch('page:reinit', [page]);
   }
   function onPageBeforeIn(page) {
     if (el !== page.el) return;
@@ -144,11 +144,11 @@
         routerPositionClass = 'page-previous';
       }
     }
-    dispatch('page:beforein', page);
+    dispatch('page:beforein', [page]);
   }
   function onPageBeforeOut(page) {
     if (el !== page.el) return;
-    dispatch('page:beforeout', page);
+    dispatch('page:beforeout', [page]);
   }
   function onPageAfterOut(page) {
     if (el !== page.el) return;
@@ -158,19 +158,19 @@
     if (page.to === 'previous') {
       routerPositionClass = 'page-previous';
     }
-    dispatch('page:afterout', page);
+    dispatch('page:afterout', [page]);
   }
   function onPageAfterIn(page) {
     if (el !== page.el) return;
     routerPositionClass = 'page-current';
-    dispatch('page:afterin', page);
+    dispatch('page:afterin', [page]);
   }
   function onPageBeforeRemove(page) {
     if (el !== page.el) return;
     // if (page.$navbarEl && page.$navbarEl[0] && page.$navbarEl.parent()[0] && page.$navbarEl.parent()[0] !== el) {
     //   page.$el.prepend(page.$navbarEl);
     // }
-    dispatch('page:beforeremove', page);
+    dispatch('page:beforeremove', [page]);
   }
   // Helper events
   function onPageStack(pageEl) {

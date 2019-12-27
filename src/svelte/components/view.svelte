@@ -31,19 +31,19 @@
   let f7View;
 
   function onSwipeBackMove(data) {
-    dispatch('swipeback:move', data);
+    dispatch('swipeback:move', [data]);
   }
   function onSwipeBackBeforeChange(data) {
-    dispatch('swipeback:beforechange', data);
+    dispatch('swipeback:beforechange', [data]);
   }
   function onSwipeBackAfterChange(data) {
-    dispatch('swipeback:afterchange', data);
+    dispatch('swipeback:afterchange', [data]);
   }
   function onSwipeBackBeforeReset(data) {
-    dispatch('swipeback:beforereset', data);
+    dispatch('swipeback:beforereset', [data]);
   }
   function onSwipeBackAfterReset(data) {
-    dispatch('swipeback:afterreset', data);
+    dispatch('swipeback:afterreset', [data]);
   }
   function onTabShow(tabEl) {
     if (el !== tabEl) return;
@@ -57,7 +57,7 @@
   function onViewInit(view) {
     f7View = view;
     routerData.instance = view;
-    dispatch('view:init', view);
+    dispatch('view:init', [view]);
   }
 
   onMount(() => {

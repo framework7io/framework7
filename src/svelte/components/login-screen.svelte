@@ -24,16 +24,16 @@
   );
 
   function onOpen(instance) {
-    dispatch('loginscreen:open', instance);
+    dispatch('loginscreen:open', [instance]);
   }
   function onOpened(instance) {
-    dispatch('loginscreen:opened', instance);
+    dispatch('loginscreen:opened', [instance]);
   }
   function onClose(instance) {
-    dispatch('loginscreen:close', instance);
+    dispatch('loginscreen:close', [instance]);
   }
   function onClosed(instance) {
-    dispatch('loginscreen:closed', instance);
+    dispatch('loginscreen:closed', [instance]);
   }
 
   function watchOpened(openedPassed) {

@@ -4,7 +4,6 @@
   import Utils from '../utils/utils';
   import f7 from '../utils/f7';
 
-
   export let id = undefined;
   export let style = undefined;
 

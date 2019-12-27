@@ -328,7 +328,7 @@ export default {
         Mixins.colorClasses(props),
       );
       return (
-        <div id={id} ref="wrapEl" className={wrapClasses} style={style}>
+        <div id={id} className={wrapClasses} style={style}>
           {inputEl}
           {errorMessage && errorMessageForce && (
             <div className="input-error-message">{errorMessage}</div>

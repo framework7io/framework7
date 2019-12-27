@@ -40,7 +40,7 @@
   $: watchChecked(checked);
 
   function onChange(event) {
-    dispatch('change', event.target.checked);
+    dispatch('change', [event]);
   }
 
   onMount(() => {
@@ -50,7 +50,7 @@
         el,
         on: {
           change(toggle) {
-            dispatch('toggle:change', toggle.checked);
+            dispatch('toggle:change', [toggle.checked]);
           },
         },
       });

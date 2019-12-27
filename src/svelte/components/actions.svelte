@@ -36,16 +36,16 @@
   );
 
   function onOpen(instance) {
-    dispatch('actions:open', instance);
+    dispatch('actions:open', [instance]);
   }
   function onOpened(instance) {
-    dispatch('actions:opened', instance);
+    dispatch('actions:opened', [instance]);
   }
   function onClose(instance) {
-    dispatch('actions:close', instance);
+    dispatch('actions:close', [instance]);
   }
   function onClosed(instance) {
-    dispatch('actions:closed', instance);
+    dispatch('actions:closed', [instance]);
   }
 
 

@@ -67,7 +67,7 @@
   }
   function onPtrRefresh(ptrEl, done) {
     if (ptrEl !== pageContentEl) return;
-    dispatch('ptr:refresh', done);
+    dispatch('ptr:refresh', [done]);
   }
   function onPtrDone(ptrEl) {
     if (ptrEl !== pageContentEl) return;

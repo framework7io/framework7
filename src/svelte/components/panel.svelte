@@ -69,35 +69,35 @@
   }
   $: watchOpened(opened);
 
-  function onOpen(event) {
-    dispatch('panel:open', event);
+  function onOpen(...args) {
+    dispatch('panel:open', [...args]);
   }
-  function onOpened(event) {
-    dispatch('panel:opened', event);
+  function onOpened(...args) {
+    dispatch('panel:opened', [...args]);
   }
-  function onClose(event) {
-    dispatch('panel:close', event);
+  function onClose(...args) {
+    dispatch('panel:close', [...args]);
   }
-  function onClosed(event) {
-    dispatch('panel:closed', event);
+  function onClosed(...args) {
+    dispatch('panel:closed', [...args]);
   }
-  function onBackdropClick(event) {
-    dispatch('panel:backdrop-click', event);
+  function onBackdropClick(...args) {
+    dispatch('panel:backdrop-click', [...args]);
   }
-  function onSwipe(event) {
-    dispatch('panel:swipe', event);
+  function onSwipe(...args) {
+    dispatch('panel:swipe', [...args]);
   }
-  function onSwipeOpen(event) {
-    dispatch('panel:swipeopen', event);
+  function onSwipeOpen(...args) {
+    dispatch('panel:swipeopen', [...args]);
   }
-  function onBreakpoint(event) {
-    dispatch('panel:breakpoint', event);
+  function onBreakpoint(...args) {
+    dispatch('panel:breakpoint', [...args]);
   }
-  function onCollapsedBreakpoint(event) {
-    dispatch('panel:collapsedbreakpoint', event);
+  function onCollapsedBreakpoint(...args) {
+    dispatch('panel:collapsedbreakpoint', [...args]);
   }
-  function onResize(event) {
-    dispatch('panel:resize', event);
+  function onResize(...args) {
+    dispatch('panel:resize', [...args]);
   }
 
   export function open(animate) {

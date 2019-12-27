@@ -62,31 +62,31 @@
   );
 
   function onChange(event) {
-    dispatch('change', [event.target]);
+    dispatch('change', [event]);
   }
 
   function onInput(event) {
-    dispatch('input', [event.target]);
+    dispatch('input', [event]);
   }
 
   function onFocus(event) {
-    dispatch('focus', [event.target]);
+    dispatch('focus', [event]);
   }
 
   function onBlur(event) {
-    dispatch('blur', [event.target]);
+    dispatch('blur', [event]);
   }
 
   function onSubmit(event) {
-    dispatch('submit', [event.target]);
+    dispatch('submit', [event]);
   }
 
   function onClearButtonClick(event) {
-    dispatch('click:clear', [event.target]);
+    dispatch('click:clear', [event]);
   }
 
   function onDisableButtonClick(event) {
-    dispatch('click:disable', [event.target]);
+    dispatch('click:disable', [event]);
   }
 
   onMount(() => {

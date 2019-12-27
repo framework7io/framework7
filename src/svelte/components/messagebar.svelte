@@ -6,6 +6,7 @@
   import hasSlots from '../utils/has-slots';
 
   import Link from './link.svelte';
+  import Input from './input.svelte';
 
   const dispatch = createEventDispatcher();
 
@@ -66,19 +67,19 @@
   $: watchAttachmentsVisible(attachmentsVisible);
 
   function onChange(event) {
-    dispatch('change', [event.detail[0]]);
+    dispatch('change', [...event.detail]);
   }
 
   function onInput(event) {
-    dispatch('input', [event.detail[0]]);
+    dispatch('input', [...event.detail]);
   }
 
   function onFocus(event) {
-    dispatch('focus', [event.detail[0]]);
+    dispatch('focus', [...event.detail]);
   }
 
   function onBlur(event) {
-    dispatch('blur', [event.detail[0]]);
+    dispatch('blur', [...event.detail]);
   }
 
   function onClick(event) {
@@ -165,7 +166,7 @@
     <slot name="inner-start" />
     <div class="messagebar-area">
       <slot name="before-area" />
-      <F7Input
+      <Input
         id={textareaId}
         type="textarea"
         wrap={false}

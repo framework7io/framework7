@@ -48,25 +48,25 @@
   );
 
   function onOpen(instance) {
-    dispatch('sheet:open', instance);
+    dispatch('sheet:open', [instance]);
   }
   function onOpened(instance) {
-    dispatch('sheet:opened', instance);
+    dispatch('sheet:opened', [instance]);
   }
   function onClose(instance) {
-    dispatch('sheet:close', instance);
+    dispatch('sheet:close', [instance]);
   }
   function onClosed(instance) {
-    dispatch('sheet:closed', instance);
+    dispatch('sheet:closed', [instance]);
   }
   function onStepProgress(instance, progress) {
-    dispatch('sheet:stepprogress', instance, progress);
+    dispatch('sheet:stepprogress', [instance, progress]);
   }
   function onStepOpen(instance) {
-    dispatch('sheet:stepopen', instance);
+    dispatch('sheet:stepopen', [instance]);
   }
   function onStepClose(instance) {
-    dispatch('sheet:stepclose', instance);
+    dispatch('sheet:stepclose', [instance]);
   }
 
   function watchOpened(openedPassed) {

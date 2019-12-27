@@ -31,16 +31,16 @@
   );
 
   function onOpen(instance) {
-    dispatch('popover:open', instance);
+    dispatch('popover:open', [instance]);
   }
   function onOpened(instance) {
-    dispatch('popover:opened', instance);
+    dispatch('popover:opened', [instance]);
   }
   function onClose(instance) {
-    dispatch('popover:close', instance);
+    dispatch('popover:close', [instance]);
   }
   function onClosed(instance) {
-    dispatch('popover:closed', instance);
+    dispatch('popover:closed', [instance]);
   }
 
 
