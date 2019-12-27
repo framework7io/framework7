@@ -26,7 +26,7 @@
   style={style}
   class={classes}
 >
-  {#if title}title{/if}
+  {#if title}{title}{/if}
   {#if subtitle}
     <span clas="subtitle">{subtitle}</span>
   {/if}

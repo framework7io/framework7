@@ -167,9 +167,9 @@
   }
   function onPageBeforeRemove(page) {
     if (el !== page.el) return;
-    // if (page.$navbarEl && page.$navbarEl[0] && page.$navbarEl.parent()[0] && page.$navbarEl.parent()[0] !== el) {
-    //   page.$el.prepend(page.$navbarEl);
-    // }
+    if (page.$navbarEl && page.$navbarEl[0] && page.$navbarEl.parent()[0] && page.$navbarEl.parent()[0] !== el) {
+      page.$el.prepend(page.$navbarEl);
+    }
     dispatch('page:beforeremove', [page]);
   }
   // Helper events

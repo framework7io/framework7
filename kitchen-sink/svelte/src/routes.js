@@ -4,7 +4,7 @@ import Home from './pages/home.svelte';
 import About from './pages/about.svelte';
 
 // import Accordion from './pages/accordion.svelte';
-// import ActionSheet from './pages/action-sheet.svelte';
+import ActionSheet from './pages/action-sheet.svelte';
 // import Appbar from './pages/appbar.svelte';
 // import Autocomplete from './pages/autocomplete.svelte';
 // import Badge from './pages/badge.svelte';
@@ -191,10 +191,10 @@ export default [
   //   path: '/accordion/',
   //   component: Accordion,
   // },
-  // {
-  //   path: '/action-sheet/',
-  //   component: ActionSheet,
-  // },
+  {
+    path: '/action-sheet/',
+    component: ActionSheet,
+  },
   // {
   //   path: '/appbar/',
   //   component: Appbar,

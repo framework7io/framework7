@@ -26,6 +26,15 @@
   let el;
   let f7Actions;
 
+  export function open(animate) {
+    if (!f7Actions) return undefined;
+    return f7Actions.open(animate);
+  }
+  export function close(animate) {
+    if (!f7Actions) return undefined;
+    return f7Actions.close(animate);
+  }
+
   $: classes = Utils.classNames(
     className,
     'actions-modal',

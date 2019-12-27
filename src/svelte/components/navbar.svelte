@@ -196,7 +196,7 @@
         title={title}
         subtitle={subtitle}
       >
-        <slot name="title"></slot>
+        <slot name="title" />
       </NavTitle>
     {/if}
     {#if hasRightSlots}
