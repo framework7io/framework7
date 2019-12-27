@@ -45,25 +45,25 @@
         class="gauge-back-semi"
         d={`M${size - (borderWidth / 2)},${size / 2} a1,1 0 0,0 -${size - borderWidth},0`}
         stroke={borderBgColor}
-        strokeWidth={borderWidth}
+        stroke-width={borderWidth}
         fill={bgColor || 'none'}
       />
       <path
         class="gauge-front-semi"
         d={`M${size - (borderWidth / 2)},${size / 2} a1,1 0 0,0 -${size - borderWidth},0`}
         stroke={borderColor}
-        strokeWidth={borderWidth}
-        strokeDasharray={length / 2}
-        strokeDashoffset={(length / 2) * (1 + progress)}
+        stroke-width={borderWidth}
+        stroke-dasharray={length / 2}
+        stroke-dashoffset={(length / 2) * (1 + progress)}
         fill={borderBgColor ? 'none' : (bgColor || 'none')}
       />
     {/if}
-    {#if semiCircle}
+    {#if !semiCircle}
       {#if borderBgColor}
         <circle
           class="gauge-back-circle"
           stroke={borderBgColor}
-          strokeWidth={borderWidth}
+          stroke-width={borderWidth}
           fill={bgColor || 'none'}
           cx={size / 2}
           cy={size / 2}
@@ -74,27 +74,26 @@
         class="gauge-front-circle"
         transform={`rotate(-90 ${size / 2} ${size / 2})`}
         stroke={borderColor}
-        strokeWidth={borderWidth}
-        strokeDasharray={length}
-        strokeDashoffset={length * (1 - progress)}
+        stroke-width={borderWidth}
+        stroke-dasharray={length}
+        stroke-dashoffset={length * (1 - progress)}
         fill={borderBgColor ? 'none' : bgColor || 'none'}
         cx={size / 2}
         cy={size / 2}
         r={radius}
       />
     {/if}
-    )}
     {#if valueText}
       <text
         class="gauge-value-text"
         x="50%"
         y={semiCircle ? '100%' : '50%'}
-        fontWeight={valueFontWeight}
-        fontSize={valueFontSize}
+        font-weight={valueFontWeight}
+        font-size={valueFontSize}
         fill={valueTextColor}
         dy={semiCircle ? (labelText ? -labelFontSize - 15 : -5) : 0}
-        textAnchor="middle"
-        dominantBaseline={!semiCircle ? 'middle' : null}
+        text-anchor="middle"
+        dominant-baseline={!semiCircle ? 'middle' : null}
       >{valueText}</text>
     {/if}
     {#if labelText}
@@ -102,12 +101,12 @@
         class="gauge-label-text"
         x="50%"
         y={semiCircle ? '100%' : '50%'}
-        fontWeight={labelFontWeight}
-        fontSize={labelFontSize}
+        font-weight={labelFontWeight}
+        font-size={labelFontSize}
         fill={labelTextColor}
         dy={semiCircle ? -5 : (valueText ? ((valueFontSize / 2) + 10) : 0)}
-        textAnchor="middle"
-        dominantBaseline={!semiCircle ? 'middle' : null}
+        text-anchor="middle"
+        dominant-baseline={!semiCircle ? 'middle' : null}
       >{labelText}</text>
     {/if}
   </svg>

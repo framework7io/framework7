@@ -12,19 +12,19 @@ import Buttons from './pages/buttons.svelte';
 // import Calendar from './pages/calendar.svelte';
 // import CalendarPage from './pages/calendar-page.svelte';
 // import Cards from './pages/cards.svelte';
-// import CardsExpandable from './pages/cards-expandable.svelte';
+import CardsExpandable from './pages/cards-expandable.svelte';
 // import Checkbox from './pages/checkbox.svelte';
 // import Chips from './pages/chips.svelte';
 // import ColorPicker from './pages/color-picker.svelte';
 // import ContactsList from './pages/contacts-list.svelte';
 import ContentBlock from './pages/content-block.svelte';
 // import DataTable from './pages/data-table.svelte';
-// import Dialog from './pages/dialog.svelte';
+import Dialog from './pages/dialog.svelte';
 // import Elevation from './pages/elevation.svelte';
 // import Fab from './pages/fab.svelte';
 // import FabMorph from './pages/fab-morph.svelte';
 // import FormStorage from './pages/form-storage.svelte';
-// import Gauge from './pages/gauge.svelte';
+import Gauge from './pages/gauge.svelte';
 import Grid from './pages/grid.svelte';
 // import Icons from './pages/icons.svelte';
 // import InfiniteScroll from './pages/infinite-scroll.svelte';
@@ -223,10 +223,10 @@ export default [
   //   path: '/cards/',
   //   component: Cards,
   // },
-  // {
-  //   path: '/cards-expandable/',
-  //   component: CardsExpandable,
-  // },
+  {
+    path: '/cards-expandable/',
+    component: CardsExpandable,
+  },
   // {
   //   path: '/checkbox/',
   //   component: Checkbox,
@@ -251,10 +251,10 @@ export default [
   //   path: '/data-table/',
   //   component: DataTable,
   // },
-  // {
-  //   path: '/dialog/',
-  //   component: Dialog,
-  // },
+  {
+    path: '/dialog/',
+    component: Dialog,
+  },
   // {
   //   path: '/elevation/',
   //   component: Elevation,
@@ -271,10 +271,10 @@ export default [
   //   path: '/form-storage/',
   //   component: FormStorage,
   // },
-  // {
-  //   path: '/gauge/',
-  //   component: Gauge,
-  // },
+  {
+    path: '/gauge/',
+    component: Gauge,
+  },
   {
     path: '/grid/',
     component: Grid,

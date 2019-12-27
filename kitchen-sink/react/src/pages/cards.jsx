@@ -116,7 +116,7 @@ export default () => (
     </Card>
     <Card title="New Releases:">
       <CardContent padding={false}>
-        <List medial-list>
+        <List mediaList>
           <ListItem
             title="Yellow Submarine"
             subtitle="Beatles"
