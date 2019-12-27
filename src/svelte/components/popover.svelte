@@ -23,6 +23,14 @@
   let el;
   let f7Popover;
 
+  export function open(anim) {
+    if (!f7Popover) return undefined;
+    return f7Popover.open(anim);
+  }
+  export function close(anim) {
+    if (!f7Popover) return undefined;
+    return f7Popover.close(anim);
+  }
 
   $: classes = Utils.classNames(
     className,

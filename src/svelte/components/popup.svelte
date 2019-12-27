@@ -26,6 +26,15 @@
   let el;
   let f7Popup;
 
+  export function open(anim) {
+    if (!f7Popup) return undefined;
+    return f7Popup.open(anim);
+  }
+  export function close(anim) {
+    if (!f7Popup) return undefined;
+    return f7Popup.close(anim);
+  }
+
   $: classes = Utils.classNames(
     className,
     'popup',

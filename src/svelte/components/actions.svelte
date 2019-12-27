@@ -26,13 +26,13 @@
   let el;
   let f7Actions;
 
-  export function open(animate) {
+  export function open(anim) {
     if (!f7Actions) return undefined;
-    return f7Actions.open(animate);
+    return f7Actions.open(anim);
   }
-  export function close(animate) {
+  export function close(anim) {
     if (!f7Actions) return undefined;
-    return f7Actions.close(animate);
+    return f7Actions.close(anim);
   }
 
   $: classes = Utils.classNames(
@@ -56,7 +56,6 @@
   function onClosed(instance) {
     dispatch('actions:closed', [instance]);
   }
-
 
   function watchOpened(openedPassed) {
     if (!f7Actions) return;

@@ -17,6 +17,15 @@
   let el;
   let f7LoginScreen;
 
+  export function open(anim) {
+    if (!f7LoginScreen) return undefined;
+    return f7LoginScreen.open(anim);
+  }
+  export function close(anim) {
+    if (!f7LoginScreen) return undefined;
+    return f7LoginScreen.close(anim);
+  }
+
   $: classes = Utils.classNames(
     className,
     'login-screen',
