@@ -50,9 +50,9 @@
       back
       icon="icon-back"
       force={backLinkForce || undefined}
-      className={!backLinkText ? 'icon-only' : undefined}
+      class={!backLinkText ? 'icon-only' : undefined}
       text={backLinkText}
-      onClick={onBackClick}
+      on:click={onBackClick}
     />
   {/if}
   <slot />

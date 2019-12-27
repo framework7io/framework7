@@ -1,0 +1,91 @@
+<script>
+  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+
+  import Utils from '../utils/utils';
+  import f7 from '../utils/f7';
+
+  const dispatch = createEventDispatcher();
+
+  export let init = true;
+  export let params = undefined;
+  export let photos = undefined;
+  export let exposition = true;
+  export let expositionHideCaptions = false;
+  export let type = undefined;
+  export let navbar = true;
+  export let toolbar = true;
+  export let theme = undefined;
+  export let captionsTheme = undefined;
+  export let iconsColor = undefined;
+  export let swipeToClose = true;
+  export let pageBackLinkText = undefined;
+  export let popupCloseLinkText = undefined;
+  export let navbarOfText = undefined;
+  export let navbarShowCount = undefined;
+  export let swiper = undefined;
+  export let url = undefined;
+  export let routableModals = true;
+  export let virtualSlides = true;
+  export let view = undefined;
+  export let renderNavbar = undefined;
+  export let renderToolbar = undefined;
+  export let renderCaption = undefined;
+  export let renderObject = undefined;
+  export let renderLazyPhoto = undefined;
+  export let renderPhoto = undefined;
+  export let renderPage = undefined;
+  export let renderPopup = undefined;
+  export let renderStandalone = undefined;
+
+  let f7PhotoBrowser;
+
+  function watchPhotos(newValue) {
+    if (!f7PhotoBrowser) return;
+    f7PhotoBrowser.params.photos = newValue;
+    if (f7PhotoBrowser.opened && f7PhotoBrowser.swiper) {
+      f7PhotoBrowser.swiper.update();
+    }
+  }
+
+  $: watchPhotos(photos);
+
+  onMount(() => {
+    if (!init) return;
+    f7.ready(() => {
+      let pbParams;
+
+      if (typeof params !== 'undefined') pbParams = params;
+      else pbParams = { ...$$props };
+
+      Object.keys(pbParams).forEach((param) => {
+        if (typeof pbParams[param] === 'undefined' || pbParams[param] === '') delete pbParams[param];
+      });
+
+      pbParams = Utils.extend({}, pbParams, {
+        on: {
+          open() {
+            dispatch('photobrowser:open');
+          },
+          close() {
+            dispatch('photobrowser:close');
+          },
+          opened() {
+            dispatch('photobrowser:opened');
+          },
+          closed() {
+            dispatch('photobrowser:closed');
+          },
+          swipeToClose() {
+            dispatch('photobrowser:swipetoclose');
+          },
+        },
+      });
+
+      f7PhotoBrowser = f7.instance.photoBrowser.create(pbParams);
+    });
+  });
+
+  onDestroy(() => {
+    if (f7PhotoBrowser && f7PhotoBrowser.destroy) f7PhotoBrowser.destroy();
+  });
+</script>

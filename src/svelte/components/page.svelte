@@ -1,5 +1,5 @@
 <script>
-  import { onMount, onDestroy, createEventDispatcher } from 'svelte';
+  import { onMount, afterUpdate, onDestroy, createEventDispatcher } from 'svelte';
   import Utils from '../utils/utils';
   import Mixins from '../utils/mixins';
   import f7 from '../utils/f7';
@@ -260,12 +260,19 @@
   onMount(() => {
     if (el && f7.instance) {
       const $ = f7.instance.$;
-      const $fixedEls = $(el).children('.page-content').children('[data-f7-page-slot="fixed"]');
+      const $fixedEls = $(el).children('.page-content').children('[data-f7-slot="fixed"]');
       if ($fixedEls.length) $(el).prepend($fixedEls);
     }
     f7.ready(() => {
       mountPage();
     });
+  });
+  afterUpdate(() => {
+    if (el && f7.instance) {
+      const $ = f7.instance.$;
+      const $fixedEls = $(el).children('.page-content').children('[data-f7-slot="fixed"]');
+      if ($fixedEls.length) $(el).prepend($fixedEls);
+    }
   });
   onDestroy(() => {
     destroyPage();

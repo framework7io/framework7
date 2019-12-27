@@ -41,7 +41,8 @@ export default {
       );
       mediaEl = (
         <div className={mediaClasses}>
-          {media || (<slot name="media" />)}
+          {media}
+          <slot name="media" />
         </div>
       );
     }

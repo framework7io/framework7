@@ -34,7 +34,7 @@
   export let largeTransparent = false;
   export let titleLarge = undefined;
 
-  export let pageSlot = "fixed";
+  export let f7Slot = 'fixed';
 
   let el;
   // eslint-disable-next-line
@@ -174,7 +174,7 @@
   style={style}
   class={classes}
   bind:this={el}
-  data-f7-page-slot={pageSlot}
+  data-f7-slot={f7Slot}
 >
   <div class="navbar-bg"></div>
   <slot name="before-inner"></slot>

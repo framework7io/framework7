@@ -107,8 +107,7 @@ export default {
         el: self.refs.el,
         on: {
           change(toggle) {
-            const checked = toggle.checked;
-            self.dispatchEvent('toggle:change toggleChange', checked);
+            self.dispatchEvent('toggle:change toggleChange', toggle.checked);
           },
         },
       });
