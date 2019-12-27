@@ -39,7 +39,7 @@ function buildSvelte(cb) {
         name: `${componentName}`,
       });
       componentImports.push(`import ${componentName} from './components/${fileName}';`);
-      componentExports.push(`  ${componentName}`, `  ${componentName}`);
+      componentExports.push(`  ${componentName}`);
 
       fs.copyFileSync(path.resolve(componentsSrc, fileName), path.resolve(output, 'components', fileName));
     });
