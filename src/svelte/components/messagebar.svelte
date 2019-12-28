@@ -107,15 +107,15 @@
 
   onMount(() => {
     if (!init || !el) return;
-    if (el && f7.instance) {
-      const $ = f7.instance.$;
-      const $attachmentsEl = $(el).find('.toolbar-inner > .messagebar-attachments');
-      if ($attachmentsEl.length) $(el).find('.messagebar-area').prepend($attachmentsEl);
-
-      const $sheetEl = $(el).find('.toolbar-inner > .messagebar-sheet');
-      if ($sheetEl.length) $(el).append($sheetEl);
-    }
     f7.ready(() => {
+      if (el) {
+        const dom7 = f7.instance.$;
+        const attachmentsEl = dom7(el).find('.toolbar-inner > .messagebar-attachments');
+        if (attachmentsEl.length) dom7(el).find('.messagebar-area').prepend(attachmentsEl);
+
+        const sheetEl = dom7(el).find('.toolbar-inner > .messagebar-sheet');
+        if (sheetEl.length) dom7(el).append(sheetEl);
+      }
       f7Messagebar = f7.instance.messagebar.create(Utils.noUndefinedProps({
         el,
         top,
@@ -135,12 +135,12 @@
   afterUpdate(() => {
     if (!f7Messagebar) return;
     if (el && f7.instance) {
-      const $ = f7.instance.$;
-      const $attachmentsEl = $(el).find('.toolbar-inner > .messagebar-attachments');
-      if ($attachmentsEl.length) $(el).find('.messagebar-area').prepend($attachmentsEl);
+      const dom7 = f7.instance.$;
+      const attachmentsEl = dom7(el).find('.toolbar-inner > .messagebar-attachments');
+      if (attachmentsEl.length) dom7(el).find('.messagebar-area').prepend(attachmentsEl);
 
-      const $sheetEl = $(el).find('.toolbar-inner > .messagebar-sheet');
-      if ($sheetEl.length) $(el).append($sheetEl);
+      const sheetEl = dom7(el).find('.toolbar-inner > .messagebar-sheet');
+      if (sheetEl.length) dom7(el).append(sheetEl);
     }
     if (updateSheetVisible) {
       updateSheetVisible = false;

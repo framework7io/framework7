@@ -1,3 +1,4 @@
+<!-- svelte-ignore a11y-missing-attribute -->
 <Page>
   <Navbar title="Action Sheet" backLink="Back" />
   <Block strong>

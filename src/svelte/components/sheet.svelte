@@ -110,10 +110,10 @@
 
     f7.ready(() => {
       if (el && innerEl) {
-        const $ = f7.instance.$;
-        const $fixedEls = $(innerEl).children('.navbar, .toolbar, .tabbar, .searchbar');
-        if ($fixedEls.length) {
-          $(el).prepend($fixedEls);
+        const dom7 = f7.instance.$;
+        const fixedEls = dom7(innerEl).children('.navbar, .toolbar, .tabbar, .searchbar');
+        if (fixedEls.length) {
+          dom7(el).prepend(fixedEls);
         }
       }
       f7Sheet = f7.instance.sheet.create(params);

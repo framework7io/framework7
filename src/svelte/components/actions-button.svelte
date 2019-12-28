@@ -33,8 +33,8 @@
 
   function onClick() {
     if (close && f7.instance) {
-      const $ = f7.instance.$;
-      f7.instance.actions.close($(el).parents('.actions-modal'));
+      const dom7 = f7.instance.$;
+      f7.instance.actions.close(dom7(el).parents('.actions-modal'));
     }
     dispatch('click');
   }

@@ -258,20 +258,28 @@
   }
 
   onMount(() => {
-    if (el && f7.instance) {
-      const $ = f7.instance.$;
-      const $fixedEls = $(el).children('.page-content').children('[data-f7-slot="fixed"]');
-      if ($fixedEls.length) $(el).prepend($fixedEls);
-    }
     f7.ready(() => {
+      if (el) {
+        const dom7 = f7.instance.$;
+        const fixedEls = dom7(el).children('.page-content').children('[data-f7-slot="fixed"]');
+        if (fixedEls.length) {
+          for (let i = fixedEls.length - 1; i >= 0; i -= 1) {
+            dom7(el).prepend(fixedEls[i]);
+          }
+        }
+      }
       mountPage();
     });
   });
   afterUpdate(() => {
     if (el && f7.instance) {
-      const $ = f7.instance.$;
-      const $fixedEls = $(el).children('.page-content').children('[data-f7-slot="fixed"]');
-      if ($fixedEls.length) $(el).prepend($fixedEls);
+      const dom7 = f7.instance.$;
+      const fixedEls = dom7(el).children('.page-content').children('[data-f7-slot="fixed"]');
+      if (fixedEls.length) {
+        for (let i = fixedEls.length - 1; i >= 0; i -= 1) {
+          dom7(el).prepend(fixedEls[i]);
+        }
+      }
     }
   });
   onDestroy(() => {

@@ -115,9 +115,9 @@
 
   onMount(() => {
     f7.ready(() => {
-      const $ = f7.instance.$;
-      if ($('.panel-backdrop').length === 0) {
-        $('<div class="panel-backdrop"></div>').insertBefore(el);
+      const dom7 = f7.instance.$;
+      if (dom7('.panel-backdrop').length === 0) {
+        dom7('<div class="panel-backdrop"></div>').insertBefore(el);
       }
       const params = Utils.noUndefinedProps({
         el,

@@ -21,15 +21,15 @@ import ContentBlock from './pages/content-block.svelte';
 // import DataTable from './pages/data-table.svelte';
 import Dialog from './pages/dialog.svelte';
 // import Elevation from './pages/elevation.svelte';
-// import Fab from './pages/fab.svelte';
-// import FabMorph from './pages/fab-morph.svelte';
+import Fab from './pages/fab.svelte';
+import FabMorph from './pages/fab-morph.svelte';
 // import FormStorage from './pages/form-storage.svelte';
 import Gauge from './pages/gauge.svelte';
 import Grid from './pages/grid.svelte';
 // import Icons from './pages/icons.svelte';
 // import InfiniteScroll from './pages/infinite-scroll.svelte';
 // import Inputs from './pages/inputs.svelte';
-// import LazyLoad from './pages/lazy-load.svelte';
+import LazyLoad from './pages/lazy-load.svelte';
 // import List from './pages/list.svelte';
 // import ListIndex from './pages/list-index.svelte';
 // import LoginScreen from './pages/login-screen.svelte';
@@ -39,8 +39,8 @@ import Grid from './pages/grid.svelte';
 // import Navbar from './pages/navbar.svelte';
 // import NavbarHideScroll from './pages/navbar-hide-scroll.svelte';
 // import Notifications from './pages/notifications.svelte';
-// import Panel from './pages/panel.svelte';
-// import PhotoBrowser from './pages/photo-browser.svelte';
+import Panel from './pages/panel.svelte';
+import PhotoBrowser from './pages/photo-browser.svelte';
 // import Picker from './pages/picker.svelte';
 // import Popup from './pages/popup.svelte';
 // import Popover from './pages/popover.svelte';
@@ -259,14 +259,14 @@ export default [
   //   path: '/elevation/',
   //   component: Elevation,
   // },
-  // {
-  //   path: '/fab/',
-  //   component: Fab,
-  // },
-  // {
-  //   path: '/fab-morph/',
-  //   component: FabMorph,
-  // },
+  {
+    path: '/fab/',
+    component: Fab,
+  },
+  {
+    path: '/fab-morph/',
+    component: FabMorph,
+  },
   // {
   //   path: '/form-storage/',
   //   component: FormStorage,
@@ -291,10 +291,10 @@ export default [
   //   path: '/inputs/',
   //   component: Inputs,
   // },
-  // {
-  //   path: '/lazy-load/',
-  //   component: LazyLoad,
-  // },
+  {
+    path: '/lazy-load/',
+    component: LazyLoad,
+  },
   // {
   //   path: '/list/',
   //   component: List,
@@ -331,14 +331,14 @@ export default [
   //   path: '/notifications/',
   //   component: Notifications,
   // },
-  // {
-  //   path: '/panel/',
-  //   component: Panel,
-  // },
-  // {
-  //   path: '/photo-browser/',
-  //   component: PhotoBrowser,
-  // },
+  {
+    path: '/panel/',
+    component: Panel,
+  },
+  {
+    path: '/photo-browser/',
+    component: PhotoBrowser,
+  },
   // {
   //   path: '/picker/',
   //   component: Picker,

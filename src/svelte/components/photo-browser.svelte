@@ -39,6 +39,22 @@
 
   let f7PhotoBrowser;
 
+  export function open(index) {
+    return f7PhotoBrowser.open(index);
+  }
+  export function close() {
+    return f7PhotoBrowser.close();
+  }
+  export function expositionToggle() {
+    return f7PhotoBrowser.expositionToggle();
+  }
+  export function expositionEnable() {
+    return f7PhotoBrowser.expositionEnable();
+  }
+  export function expositionDisable() {
+    return f7PhotoBrowser.expositionDisable();
+  }
+
   function watchPhotos(newValue) {
     if (!f7PhotoBrowser) return;
     f7PhotoBrowser.params.photos = newValue;

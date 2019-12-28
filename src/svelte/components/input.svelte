@@ -308,7 +308,7 @@
   });
 
 </script>
-
+<!-- svelte-ignore a11y-autofocus -->
 {#if wrap}
   <div id={id} class={wrapClasses} style={style}>
     {#if type === 'select'}
