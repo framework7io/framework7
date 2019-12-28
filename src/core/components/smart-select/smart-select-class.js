@@ -328,7 +328,7 @@ class SmartSelect extends Framework7Class {
               </div>
             ` : ''}
             <div class="item-inner">
-              <div class="item-title${item.color ? ` color-${item.color}` : ''}">${item.text}</div>
+              <div class="item-title${item.color ? ` text-color-${item.color}` : ''}">${item.text}</div>
             </div>
           </label>
         </li>
