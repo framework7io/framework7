@@ -108,6 +108,25 @@ export default {
       });
     },
   },
+  vnode: {
+    'panel-init': {
+      insert(vnode) {
+        const app = this;
+        const panelEl = vnode.elm;
+        const params = Object.assign(
+          { el: panelEl },
+          $(panelEl).dataset() || {}
+        );
+        app.panel.create(params);
+      },
+      destroy(vnode) {
+        const app = this;
+        const panelEl = vnode.elm;
+        const panel = app.panel.get(panelEl);
+        if (panel && panel.destroy) panel.destroy();
+      },
+    },
+  },
   clicks: {
     '.panel-open': function open(clickedEl, data = {}) {
       const app = this;
