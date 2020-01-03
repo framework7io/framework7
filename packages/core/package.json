@@ -1,6 +1,6 @@
 {
   "name": "framework7",
-  "version": "5.2.0",
+  "version": "5.3.0",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "main": "js/framework7.js",
   "typings": "js/framework7.d.ts",

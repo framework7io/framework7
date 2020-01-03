@@ -1,4 +1,5 @@
 import $ from 'dom7';
+import { window, document } from 'ssr-window';
 import Utils from '../../utils/utils';
 import Support from '../../utils/support';
 import Modal from '../modal/modal-class';
@@ -376,7 +377,7 @@ class Sheet extends Modal {
       }
     }
 
-    function setSwipeStep(byResize) {
+    sheet.setSwipeStep = function setSwipeStep(byResize = true) {
       const $swipeStepEl = $el.find('.sheet-modal-swipe-step').eq(0);
       if (!$swipeStepEl.length) return;
       if ($el.hasClass('sheet-modal-top')) {
@@ -388,10 +389,10 @@ class Sheet extends Modal {
       if (!byResize) {
         $el.addClass('modal-in-swipe-step');
       }
-    }
+    };
 
     function onResize() {
-      setSwipeStep(true);
+      sheet.setSwipeStep(true);
     }
 
     const passive = Support.passiveListener ? { passive: true } : false;
@@ -411,7 +412,7 @@ class Sheet extends Modal {
         $(document).on('keydown', onKeyDown);
       }
       if (sheet.params.swipeToStep) {
-        setSwipeStep();
+        sheet.setSwipeStep(false);
         app.on('resize', onResize);
       }
       if (sheet.params.scrollToEl) {

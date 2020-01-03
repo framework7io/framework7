@@ -2,6 +2,26 @@
 
 # Change Log
 
+# [v5.3.0](https://github.com/framework7io/framework7/compare/v5.2.0...v5.3.0) - January 3, 2019
+  * Core
+    * Card
+      * Increased default `z-index` for expandable card
+    * Dialog
+      * Added support for `backdrop` parameter to be able to disable backdrop
+    * Sheet
+      * New `sheet.setSwipeSet()` method to update swipe step position if content was modified manually
+    * Tooltip
+      * New `offset` parameter to add extra offset to tooltip position
+    * Touch
+      * New `touch.activeStateOnMouseMove` boolean app parameter. If enabled it will not remove "active state" from clicked elements on mouse move
+    * Router Component
+      * Fixed issue with parsing CSS media queries in scoped styles
+      * Now it is possible to use whole app layout as a component
+        * Main app component can be specified in app `component` or `componentUrl` parameter
+        * `app.rootComponent` now refers to main app component instance
+        * If main app component is used, then `$root` in components refers to main app component instance
+    * Minor fixes
+
 # [v5.2.0](https://github.com/framework7io/framework7/compare/v5.1.3...v5.2.0) - December 8, 2019
   * Core
     * Accordion

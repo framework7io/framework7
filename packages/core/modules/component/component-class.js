@@ -64,6 +64,7 @@ class Component {
       enumerable: true,
       configurable: true,
       get() {
+        if (app.rootComponent) return app.rootComponent;
         let root = Utils.merge({}, app.data, app.methods);
         if (window && window.Proxy) {
           root = new window.Proxy(root, {
@@ -315,6 +316,16 @@ class Component {
     const self = this;
     Utils.merge(self, mergeState);
     return self.$update(callback);
+  }
+
+  $f7ready(callback) {
+    if (this.$f7.initialized) {
+      callback(this.$f7);
+      return;
+    }
+    this.$f7.once('init', () => {
+      callback(this.$f7);
+    });
   }
 
   $mount(mountMethod) {

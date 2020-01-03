@@ -149,4 +149,21 @@ export default {
       });
     },
   },
+  vnode: {
+    'view-init': {
+      insert(vnode) {
+        const app = this;
+        const viewEl = vnode.elm;
+        if (viewEl.f7View) return;
+        const viewParams = $(viewEl).dataset();
+        app.views.create(viewEl, viewParams);
+      },
+      destroy(vnode) {
+        const viewEl = vnode.elm;
+        const view = viewEl.f7View;
+        if (!view) return;
+        view.destroy();
+      },
+    },
+  },
 };
