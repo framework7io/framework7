@@ -51,9 +51,11 @@
     Mixins.colorClasses($$props),
   );
 
+  /* eslint-disable no-undef */
   $: hasHeaderSlots = hasSlots(arguments, 'header');
   $: hasContentSlots = hasSlots(arguments, 'content');
   $: hasFooterSlots = hasSlots(arguments, 'footer');
+  /* eslint-enable no-undef */
 
   function open() {
     f7.instance.card.open(el);

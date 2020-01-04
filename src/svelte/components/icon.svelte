@@ -132,4 +132,5 @@
 
 <i id={id} style={iconStyle} class={iconClasses} bind:this={el}>
   {iconText || ''}
+  <slot />
 </i>

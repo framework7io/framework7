@@ -38,12 +38,12 @@
     bind:this={inputEl}
     type="radio"
     name={name}
-    value={value}
+    value={value || ''}
     disabled={disabled}
     readonly={readonly}
     checked={checked}
     on:change={onChange}
   />
-  <i class="icon-checkbox" />
+  <i class="icon-radio" />
   <slot />
 </label>

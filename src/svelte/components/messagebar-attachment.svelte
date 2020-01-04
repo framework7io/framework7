@@ -28,7 +28,7 @@
     dispatch('attachment:delete', [event]);
   }
 </script>
-
+<!-- svelte-ignore a11y-missing-attribute -->
 <div on:click={onClick} id={id} style={style} class={classes}>
   {#if image}
     <img src={image} />

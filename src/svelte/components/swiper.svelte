@@ -1,10 +1,8 @@
 <script>
-  import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
+  import { onMount, afterUpdate, onDestroy } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
   import f7 from '../utils/f7';
-
-  const dispatch = createEventDispatcher();
 
   export let id = undefined;
   export let style = undefined;

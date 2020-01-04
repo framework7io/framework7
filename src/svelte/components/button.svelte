@@ -160,6 +160,7 @@
   });
 
 </script>
+<!-- svelte-ignore a11y-missing-attribute -->
 {#if tagName === 'button'}
   <button
     bind:this={el}

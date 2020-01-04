@@ -81,7 +81,7 @@
     });
   });
   afterUpdate(() => {
-    if ($$props.routeProps && el) {
+    if ($$props.routeProps) {
       el.f7RouteProps = $$props.routeProps;
     }
   });
@@ -93,6 +93,7 @@
   });
 
 </script>
+<!-- svelte-ignore a11y-missing-attribute -->
 {#if isLink}
   <a on:click={onClick} bind:this={el} class={classes} id={id} style={style} {...attrs}>
     {#if text || hasTextSlots}

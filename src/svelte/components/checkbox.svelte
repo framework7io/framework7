@@ -52,7 +52,7 @@
     bind:this={inputEl}
     type="checkbox"
     name={name}
-    value={value}
+    value={value || ''}
     disabled={disabled}
     readonly={readonly}
     checked={checked}

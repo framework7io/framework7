@@ -55,9 +55,11 @@
     Mixins.linkActionsAttrs($$props),
   );
 
+  /* eslint-disable no-undef */
   $: hasChildren = hasSlots(arguments, 'default')
     || hasSlots(arguments, 'children')
     || hasSlots(arguments, 'children-start');
+  /* eslint-enable no-undef */
 
   $: needToggle = typeof toggle === 'undefined' ? hasChildren : toggle;
 
@@ -97,7 +99,7 @@
     f7.instance.off('treeviewLoadChildren', onLoadChildren);
   });
 </script>
-
+<!-- svelte-ignore a11y-missing-attribute -->
 <div bind:this={el} id={id} style={style} class={classes}>
   {#if treeviewRootTag === 'div'}
     <div

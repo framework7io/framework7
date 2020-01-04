@@ -1,4 +1,5 @@
 <script>
+  /* eslint-disable no-undef */
   import { createEventDispatcher } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
@@ -86,7 +87,7 @@
   }
 
 </script>
-
+<!-- svelte-ignore a11y-missing-attribute -->
 <div id={id} style={style} className={classes} on:click={onClick}>
   <slot name="start"/>
   {#if (avatar || hasAvatarSlots)}

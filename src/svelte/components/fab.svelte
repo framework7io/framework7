@@ -28,6 +28,7 @@
 
   $: hrefComputed = href === true ? '#' : href || undefined;
 
+  // eslint-disable-next-line
   $: hasTextSlots = hasSlots(arguments, 'text');
 
   $: classes = Utils.classNames(

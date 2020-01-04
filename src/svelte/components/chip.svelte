@@ -35,7 +35,9 @@
     mediaBgColor && `bg-color-${mediaBgColor}`,
   );
 
+  // eslint-disable-next-line
   $: hasMediaSlots = hasSlots(arguments, 'media');
+  // eslint-disable-next-line
   $: hasTextSlots = hasSlots(arguments, 'text');
 
   function onClick() {
@@ -46,7 +48,8 @@
   }
 
 </script>
-
+<!-- svelte-ignore a11y-missing-attribute -->
+<!-- svelte-ignore a11y-missing-content -->
 <div id={id} style={style} class={classes} on:click={onClick}>
   {#if media || hasMediaSlots}
     <div class={mediaClasses}>

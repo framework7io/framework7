@@ -70,7 +70,7 @@
     disabled={disabled}
     readonly={readonly}
     checked={checked}
-    value={value}
+    value={value || ''}
     on:change={onChange}
   />
   <span class="toggle-icon" />

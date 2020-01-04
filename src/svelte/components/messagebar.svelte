@@ -52,6 +52,7 @@
     Mixins.colorClasses($$props),
   );
 
+  // eslint-disable-next-line
   $: hasSendLinkSlots = hasSlots(arguments, 'send-link');
 
   function watchSheetVisible() {

@@ -152,8 +152,7 @@
       <div class="searchbar-input-wrap">
         <slot name="input-wrap-start" />
         <input
-          ref="inputEl"
-          value={value}
+          value={value || ''}
           placeholder={placeholder}
           type="search"
           on:input={onInput}
@@ -183,8 +182,7 @@
       <div class="searchbar-input-wrap">
         <slot name="input-wrap-start" />
         <input
-          ref="inputEl"
-          value={value}
+          value={value || ''}
           placeholder={placeholder}
           type="search"
           on:input={onInput}

@@ -151,7 +151,7 @@
       step={inputType === 'number' ? step : undefined}
       on:input={onInput}
       on:change={onChange}
-      value={value}
+      value={value || ''}
       readonly={inputReadonly}
     />
   </div>

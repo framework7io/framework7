@@ -167,6 +167,7 @@
     }
   );
 
+  // eslint-disable-next-line
   $: hasInfoSlots = hasSlots(arguments, 'info');
 
   function onTextareaResize(event) {
@@ -459,7 +460,7 @@
         on:blur={onBlur}
         on:input={onInput}
         on:change={onChange}
-        value={type === 'datepicker' || type === 'colorpicker' || type === 'file' ? undefined : value}
+        value={type === 'datepicker' || type === 'colorpicker' || type === 'file' ? '' : value}
       />
     {/if}
     {#if errorMessage && errorMessageForce}
@@ -624,7 +625,7 @@
       on:blur={onBlur}
       on:input={onInput}
       on:change={onChange}
-      value={type === 'datepicker' || type === 'colorpicker' || type === 'file' ? undefined : value}
+      value={type === 'datepicker' || type === 'colorpicker' || type === 'file' ? '' : value}
     />
   {/if}
 {/if}

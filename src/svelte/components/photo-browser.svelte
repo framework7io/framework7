@@ -71,7 +71,38 @@
       let pbParams;
 
       if (typeof params !== 'undefined') pbParams = params;
-      else pbParams = { ...$$props };
+      else {
+        pbParams = {
+          photos,
+          exposition,
+          expositionHideCaptions,
+          type,
+          navbar,
+          toolbar,
+          theme,
+          captionsTheme,
+          iconsColor,
+          swipeToClose,
+          pageBackLinkText,
+          popupCloseLinkText,
+          navbarOfText,
+          navbarShowCount,
+          swiper,
+          url,
+          routableModals,
+          virtualSlides,
+          view,
+          renderNavbar,
+          renderToolbar,
+          renderCaption,
+          renderObject,
+          renderLazyPhoto,
+          renderPhoto,
+          renderPage,
+          renderPopup,
+          renderStandalone,
+        };
+      }
 
       Object.keys(pbParams).forEach((param) => {
         if (typeof pbParams[param] === 'undefined' || pbParams[param] === '') delete pbParams[param];

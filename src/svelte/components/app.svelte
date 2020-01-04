@@ -27,7 +27,7 @@
       parentEl.style.height = '100%';
     }
     if (f7.instance) return;
-    f7.init(el, params, routes)
+    f7.init(el, params, routes);
   });
 
 </script>
