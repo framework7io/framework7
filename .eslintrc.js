@@ -64,6 +64,15 @@ module.exports = {
   },
   overrides: [
     {
+      files: ['**/*.jsx'],
+      rules: {
+        'import/no-unresolved': ['off'],
+        'import/no-extraneous-dependencies': ['off'],
+        'import/extensions': ['off'],
+        'no-dupe-keys': ['off'],
+      }
+    },
+    {
       files: ['**/*.svelte'],
       processor: 'svelte3/svelte3',
       rules: {
@@ -71,8 +80,12 @@ module.exports = {
         'import/first': ['off'],
         'import/no-unresolved': ['off'],
         'import/no-extraneous-dependencies': ['off'],
+        'import/extensions': ['off'],
+        'no-multiple-empty-lines': ['off'],
         'no-undef-init': ['off'],
+        'no-nested-ternary': ['off'],
         'a11y-invalid-attribute': ['off'],
+        'a11y-missing-attribute': ['off'],
       }
     }
   ],
