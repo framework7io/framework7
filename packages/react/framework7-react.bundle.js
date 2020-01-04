@@ -1,13 +1,13 @@
 /**
- * Framework7 React 5.2.0
+ * Framework7 React 5.3.0
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
- * Copyright 2014-2019 Vladimir Kharlampidi
+ * Copyright 2014-2020 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: December 8, 2019
+ * Released on: January 3, 2020
  */
 
 (function (global, factory) {
@@ -14390,7 +14390,7 @@
         if (!$pageEl) { return; }
         var router = this;
         var f7Page;
-        if ('length' in $pageEl) { f7Page = $pageEl[0].f7Page; }
+        if ('length' in $pageEl && $pageEl[0]) { f7Page = $pageEl[0].f7Page; }
         else { f7Page = $pageEl.f7Page; }
         if (f7Page && f7Page.route && f7Page.route.route && f7Page.route.route.keepAlive) {
           router.app.$($pageEl).remove();
@@ -14554,15 +14554,15 @@
   };
 
   /**
-   * Framework7 React 5.2.0
+   * Framework7 React 5.3.0
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
-   * Copyright 2014-2019 Vladimir Kharlampidi
+   * Copyright 2014-2020 Vladimir Kharlampidi
    *
    * Released under the MIT License
    *
-   * Released on: December 8, 2019
+   * Released on: January 3, 2020
    */
 
   function f7ready(callback) {

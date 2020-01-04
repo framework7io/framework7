@@ -1,13 +1,13 @@
 /**
- * Framework7 5.2.0
+ * Framework7 5.3.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
- * Copyright 2014-2019 Vladimir Kharlampidi
+ * Copyright 2014-2020 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: December 8, 2019
+ * Released on: January 3, 2020
  */
 
 (function (global, factory) {
@@ -3350,12 +3350,12 @@
               var id = Utils.id();
               var callbackLoadName = "f7_component_loader_callback_" + id;
 
-              var scriptEl = document.createElement('script');
+              var scriptEl = doc.createElement('script');
               scriptEl.innerHTML = "window." + callbackLoadName + " = function (Framework7, Framework7AutoInstallComponent) {return " + (scriptContent.trim()) + "}";
               $('head').append(scriptEl);
 
-              var componentLoader = window[callbackLoadName];
-              delete window[callbackLoadName];
+              var componentLoader = win[callbackLoadName];
+              delete win[callbackLoadName];
               $(scriptEl).remove();
 
               var module = componentLoader(Framework7, false);
@@ -3385,7 +3385,7 @@
           Framework7.request.get(
             modulePath.replace('.js', app.rtl ? '.rtl.css' : '.css'),
             function (styleContent) {
-              var styleEl = document.createElement('style');
+              var styleEl = doc.createElement('style');
               styleEl.innerHTML = styleContent;
               $('head').append(styleEl);
 
@@ -3435,6 +3435,8 @@
         autoDarkTheme: false,
         iosTranslucentBars: true,
         iosTranslucentModals: true,
+        component: undefined,
+        componentUrl: undefined,
       };
 
       // Extend defaults with modules params
@@ -3508,7 +3510,7 @@
         }
       };
       // Init
-      if (app.params.init) {
+      function init() {
         if (Device.cordova && app.params.initOnDeviceReady) {
           $(doc).on('deviceready', function () {
             app.init();
@@ -3517,6 +3519,22 @@
           app.init();
         }
       }
+      if (app.params.component || app.params.componentUrl) {
+        app.router.componentLoader(
+          app.params.component,
+          app.params.componentUrl,
+          { componentOptions: { el: app.root[0] } },
+          function (el) {
+            app.root = $(el);
+            app.root[0].f7 = app;
+            app.rootComponent = el.f7Component;
+            if (app.params.init) { init(); }
+          }
+        );
+      } else if (app.params.init) {
+        init();
+      }
+
       // Return app instance
       return app;
     }
@@ -4398,7 +4416,9 @@
       }
     }
     function handleMouseMove() {
-      $('.active-state').removeClass('active-state');
+      if (!params.activeStateOnMouseMove) {
+        $('.active-state').removeClass('active-state');
+      }
       if (useRipple) {
         rippleTouchMove();
       }
@@ -4649,6 +4669,7 @@
       app.on('touchstart', handleMouseDown);
       app.on('touchmove', handleMouseMove);
       app.on('touchend', handleMouseUp);
+      doc.addEventListener('pointercancel', handleMouseUp, { passive: true });
     }
     doc.addEventListener('contextmenu', function (e) {
       if (params.disableContextMenu && (Device.ios || Device.android || Device.cordova)) {
@@ -4676,6 +4697,7 @@
         // Active State
         activeState: true,
         activeStateElements: 'a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus, .card-expandable, .menu-item, .link, .item-link, .accordion-item-toggle',
+        activeStateOnMouseMove: false,
         mdTouchRipple: true,
         iosTouchRipple: false,
         auroraTouchRipple: false,
@@ -9321,6 +9343,15 @@
         routesAdd: [],
       };
 
+      if ($el.length === 0) {
+        var message = 'Framework7: can\'t create a View instance because ';
+        message += (typeof el === 'string')
+          ? ("the selector \"" + el + "\" didn't match any element")
+          : 'el must be an HTMLElement or Dom7 object';
+
+        throw new Error(message);
+      }
+
       // Default View params
       view.params = Utils.extend(defaults, app.params.view, viewParams);
 
@@ -9713,6 +9744,9 @@
               },
             }
           );
+          if (options.componentOptions && options.componentOptions.el) {
+            componentOptions.el = options.componentOptions.el;
+          }
           app.component.create(componentOptions, extendContext)
             .then(function (createdComponent) {
               resolve(createdComponent.el);
@@ -10934,6 +10968,7 @@
       enumerable: true,
       configurable: true,
       get: function get() {
+        if (app.rootComponent) { return app.rootComponent; }
         var root = Utils.merge({}, app.data, app.methods);
         if (win && win.Proxy) {
           root = new win.Proxy(root, {
@@ -11191,6 +11226,18 @@
     return self.$update(callback);
   };
 
+  Component.prototype.$f7ready = function $f7ready (callback) {
+      var this$1 = this;
+
+    if (this.$f7.initialized) {
+      callback(this.$f7);
+      return;
+    }
+    this.$f7.once('init', function () {
+      callback(this$1.$f7);
+    });
+  };
+
   Component.prototype.$mount = function $mount (mountMethod) {
     var self = this;
     self.$hook('beforeMount');
@@ -11290,6 +11337,7 @@
           rules = rules
             .split(',')
             .map(function (rule) {
+              if (rule.indexOf('@') >= 0) { return rule; }
               if (rule.indexOf(("[data-f7-" + id + "]")) >= 0) { return rule; }
               return ("[data-f7-" + id + "] " + (rule.trim()));
             })
@@ -11424,7 +11472,7 @@
     registrations: [],
     register: function register(path, scope) {
       var app = this;
-      if (!('serviceWorker' in window.navigator) || !app.serviceWorker.container) {
+      if (!('serviceWorker' in win.navigator) || !app.serviceWorker.container) {
         return new Promise(function (resolve, reject) {
           reject(new Error('Service worker is not supported'));
         });
@@ -11443,7 +11491,7 @@
     },
     unregister: function unregister(registration) {
       var app = this;
-      if (!('serviceWorker' in window.navigator) || !app.serviceWorker.container) {
+      if (!('serviceWorker' in win.navigator) || !app.serviceWorker.container) {
         return new Promise(function (resolve, reject) {
           reject(new Error('Service worker is not supported'));
         });
@@ -11481,7 +11529,7 @@
       var app = this;
       Utils.extend(app, {
         serviceWorker: {
-          container: ('serviceWorker' in window.navigator) ? window.navigator.serviceWorker : undefined,
+          container: ('serviceWorker' in win.navigator) ? win.navigator.serviceWorker : undefined,
           registrations: SW.registrations,
           register: SW.register.bind(app),
           unregister: SW.unregister.bind(app),
@@ -11490,7 +11538,7 @@
     },
     on: {
       init: function init() {
-        if (!('serviceWorker' in window.navigator)) { return; }
+        if (!('serviceWorker' in win.navigator)) { return; }
         var app = this;
         if (!app.serviceWorker.container) { return; }
         var paths = app.params.serviceWorker.path;
@@ -11793,6 +11841,23 @@
           if (!view) { return; }
           view.destroy();
         });
+      },
+    },
+    vnode: {
+      'view-init': {
+        insert: function insert(vnode) {
+          var app = this;
+          var viewEl = vnode.elm;
+          if (viewEl.f7View) { return; }
+          var viewParams = $(viewEl).dataset();
+          app.views.create(viewEl, viewParams);
+        },
+        destroy: function destroy(vnode) {
+          var viewEl = vnode.elm;
+          var view = viewEl.f7View;
+          if (!view) { return; }
+          view.destroy();
+        },
       },
     },
   };
@@ -13159,6 +13224,9 @@
       if (typeof extendedParams.closeByBackdropClick === 'undefined') {
         extendedParams.closeByBackdropClick = app.params.dialog.closeByBackdropClick;
       }
+      if (typeof extendedParams.backdrop === 'undefined') {
+        extendedParams.backdrop = app.params.dialog.backdrop;
+      }
 
       // Extends with open/close Modal methods;
       Modal.call(this, app, extendedParams);
@@ -13171,6 +13239,7 @@
       var buttons = extendedParams.buttons;
       var verticalButtons = extendedParams.verticalButtons;
       var cssClass = extendedParams.cssClass;
+      var backdrop = extendedParams.backdrop;
 
       dialog.params = extendedParams;
 
@@ -13202,10 +13271,13 @@
         return dialog.destroy();
       }
 
-      var $backdropEl = app.root.children('.dialog-backdrop');
-      if ($backdropEl.length === 0) {
-        $backdropEl = $('<div class="dialog-backdrop"></div>');
-        app.root.append($backdropEl);
+      var $backdropEl;
+      if (backdrop) {
+        $backdropEl = app.root.children('.dialog-backdrop');
+        if ($backdropEl.length === 0) {
+          $backdropEl = $('<div class="dialog-backdrop"></div>');
+          app.root.append($backdropEl);
+        }
       }
 
       // Assign events
@@ -13265,7 +13337,7 @@
         $el: $el,
         el: $el[0],
         $backdropEl: $backdropEl,
-        backdropEl: $backdropEl[0],
+        backdropEl: $backdropEl && $backdropEl[0],
         type: 'dialog',
         setProgress: function setProgress(progress, duration) {
           app.progressbar.set($el.find('.progressbar'), progress, duration);
@@ -13353,6 +13425,7 @@
         passwordPlaceholder: 'Password',
         preloaderTitle: 'Loading... ',
         progressTitle: 'Loading... ',
+        backdrop: true,
         closeByBackdropClick: false,
         destroyPredefinedDialogs: true,
         keyboardActions: true,
@@ -13648,7 +13721,7 @@
       function handleClick(e) {
         var target = e.target;
         var $target = $(target);
-        var keyboardOpened = !app.device.desktop && app.device.cordova && ((window.Keyboard && window.Keyboard.isVisible) || (window.cordova.plugins && window.cordova.plugins.Keyboard && window.cordova.plugins.Keyboard.isVisible));
+        var keyboardOpened = !app.device.desktop && app.device.cordova && ((win.Keyboard && win.Keyboard.isVisible) || (win.cordova.plugins && win.cordova.plugins.Keyboard && win.cordova.plugins.Keyboard.isVisible));
         if (keyboardOpened) { return; }
         if ($target.closest(popup.el).length === 0) {
           if (
@@ -13833,7 +13906,7 @@
 
       popup.on('open', function () {
         if (popup.params.closeOnEscape) {
-          $(document).on('keydown', onKeyDown);
+          $(doc).on('keydown', onKeyDown);
         }
         if (popup.push) {
           isPush = popup.push && (
@@ -13859,7 +13932,7 @@
       });
       popup.on('close', function () {
         if (popup.params.closeOnEscape) {
-          $(document).off('keydown', onKeyDown);
+          $(doc).off('keydown', onKeyDown);
         }
         if (popup.params.closeByBackdropClick) {
           app.off('click', handleClick);
@@ -14096,17 +14169,17 @@
       popover.on('popoverOpen', function () {
         popover.resize();
         app.on('resize', handleResize);
-        $(window).on('keyboardDidShow keyboardDidHide', handleResize);
+        $(win).on('keyboardDidShow keyboardDidHide', handleResize);
         popover.on('popoverClose popoverBeforeDestroy', function () {
           app.off('resize', handleResize);
-          $(window).off('keyboardDidShow keyboardDidHide', handleResize);
+          $(win).off('keyboardDidShow keyboardDidHide', handleResize);
         });
       });
 
       function handleClick(e) {
         var target = e.target;
         var $target = $(target);
-        var keyboardOpened = !app.device.desktop && app.device.cordova && ((window.Keyboard && window.Keyboard.isVisible) || (window.cordova.plugins && window.cordova.plugins.Keyboard && window.cordova.plugins.Keyboard.isVisible));
+        var keyboardOpened = !app.device.desktop && app.device.cordova && ((win.Keyboard && win.Keyboard.isVisible) || (win.cordova.plugins && win.cordova.plugins.Keyboard && win.cordova.plugins.Keyboard.isVisible));
         if (keyboardOpened) { return; }
         if ($target.closest(popover.el).length === 0) {
           if (
@@ -14131,10 +14204,10 @@
 
       if (popover.params.closeOnEscape) {
         popover.on('popoverOpen', function () {
-          $(document).on('keydown', onKeyDown);
+          $(doc).on('keydown', onKeyDown);
         });
         popover.on('popoverClose', function () {
-          $(document).off('keydown', onKeyDown);
+          $(doc).off('keydown', onKeyDown);
         });
       }
 
@@ -14509,7 +14582,7 @@
       function handleClick(e) {
         var target = e.target;
         var $target = $(target);
-        var keyboardOpened = !app.device.desktop && app.device.cordova && ((window.Keyboard && window.Keyboard.isVisible) || (window.cordova.plugins && window.cordova.plugins.Keyboard && window.cordova.plugins.Keyboard.isVisible));
+        var keyboardOpened = !app.device.desktop && app.device.cordova && ((win.Keyboard && win.Keyboard.isVisible) || (win.cordova.plugins && win.cordova.plugins.Keyboard && win.cordova.plugins.Keyboard.isVisible));
         if (keyboardOpened) { return; }
         if ($target.closest(actions.el).length === 0) {
           if (
@@ -14534,10 +14607,10 @@
 
       if (actions.params.closeOnEscape) {
         actions.on('open', function () {
-          $(document).on('keydown', onKeyDown);
+          $(doc).on('keydown', onKeyDown);
         });
         actions.on('close', function () {
-          $(document).off('keydown', onKeyDown);
+          $(doc).off('keydown', onKeyDown);
         });
       }
 
@@ -14762,7 +14835,7 @@
       function handleClick(e) {
         var target = e.target;
         var $target = $(target);
-        var keyboardOpened = !app.device.desktop && app.device.cordova && ((window.Keyboard && window.Keyboard.isVisible) || (window.cordova.plugins && window.cordova.plugins.Keyboard && window.cordova.plugins.Keyboard.isVisible));
+        var keyboardOpened = !app.device.desktop && app.device.cordova && ((win.Keyboard && win.Keyboard.isVisible) || (win.cordova.plugins && win.cordova.plugins.Keyboard && win.cordova.plugins.Keyboard.isVisible));
         if (keyboardOpened) { return; }
         if ($target.closest(sheet.el).length === 0) {
           if (
@@ -15034,7 +15107,9 @@
         }
       }
 
-      function setSwipeStep(byResize) {
+      sheet.setSwipeStep = function setSwipeStep(byResize) {
+        if ( byResize === void 0 ) byResize = true;
+
         var $swipeStepEl = $el.find('.sheet-modal-swipe-step').eq(0);
         if (!$swipeStepEl.length) { return; }
         if ($el.hasClass('sheet-modal-top')) {
@@ -15046,10 +15121,10 @@
         if (!byResize) {
           $el.addClass('modal-in-swipe-step');
         }
-      }
+      };
 
       function onResize() {
-        setSwipeStep(true);
+        sheet.setSwipeStep(true);
       }
 
       var passive = Support.passiveListener ? { passive: true } : false;
@@ -15066,10 +15141,10 @@
 
       sheet.on('open', function () {
         if (sheet.params.closeOnEscape) {
-          $(document).on('keydown', onKeyDown);
+          $(doc).on('keydown', onKeyDown);
         }
         if (sheet.params.swipeToStep) {
-          setSwipeStep();
+          sheet.setSwipeStep(false);
           app.on('resize', onResize);
         }
         if (sheet.params.scrollToEl) {
@@ -15103,7 +15178,7 @@
           app.off('resize', onResize);
         }
         if (sheet.params.closeOnEscape) {
-          $(document).off('keydown', onKeyDown);
+          $(doc).off('keydown', onKeyDown);
         }
         if (sheet.params.scrollToEl) {
           scrollToElementOnClose();
@@ -18962,6 +19037,25 @@
         });
       },
     },
+    vnode: {
+      'panel-init': {
+        insert: function insert(vnode) {
+          var app = this;
+          var panelEl = vnode.elm;
+          var params = Object.assign(
+            { el: panelEl },
+            $(panelEl).dataset() || {}
+          );
+          app.panel.create(params);
+        },
+        destroy: function destroy(vnode) {
+          var app = this;
+          var panelEl = vnode.elm;
+          var panel = app.panel.get(panelEl);
+          if (panel && panel.destroy) { panel.destroy(); }
+        },
+      },
+    },
     clicks: {
       '.panel-open': function open(clickedEl, data) {
         if ( data === void 0 ) data = {};
@@ -21959,7 +22053,7 @@
             disabled = ss.multiple && !selected && ssValue.length === parseInt(ss.maxLength, 10);
           }
         }
-        itemHtml = "\n        <li class=\"" + (item.className || '') + (disabled ? ' disabled' : '') + "\">\n          <label class=\"item-" + (item.inputType) + " item-content\">\n            <input type=\"" + (item.inputType) + "\" name=\"" + (item.inputName) + "\" value=\"" + (item.value) + "\" " + (selected ? 'checked' : '') + "/>\n            <i class=\"icon icon-" + (item.inputType) + "\"></i>\n            " + (item.hasMedia ? ("\n              <div class=\"item-media\">\n                " + (item.icon ? ("<i class=\"icon " + (item.icon) + "\"></i>") : '') + "\n                " + (item.image ? ("<img src=\"" + (item.image) + "\">") : '') + "\n              </div>\n            ") : '') + "\n            <div class=\"item-inner\">\n              <div class=\"item-title" + (item.color ? (" color-" + (item.color)) : '') + "\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
+        itemHtml = "\n        <li class=\"" + (item.className || '') + (disabled ? ' disabled' : '') + "\">\n          <label class=\"item-" + (item.inputType) + " item-content\">\n            <input type=\"" + (item.inputType) + "\" name=\"" + (item.inputName) + "\" value=\"" + (item.value) + "\" " + (selected ? 'checked' : '') + "/>\n            <i class=\"icon icon-" + (item.inputType) + "\"></i>\n            " + (item.hasMedia ? ("\n              <div class=\"item-media\">\n                " + (item.icon ? ("<i class=\"icon " + (item.icon) + "\"></i>") : '') + "\n                " + (item.image ? ("<img src=\"" + (item.image) + "\">") : '') + "\n              </div>\n            ") : '') + "\n            <div class=\"item-inner\">\n              <div class=\"item-title" + (item.color ? (" text-color-" + (item.color)) : '') + "\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
       }
       return itemHtml;
     };
@@ -37733,6 +37827,7 @@
       var tooltip = this;
       var $el = tooltip.$el;
       var app = tooltip.app;
+      var tooltipOffset = tooltip.params.offset || 0;
       $el.css({ left: '', top: '' });
       var $targetEl = $(targetEl || tooltip.targetEl);
       var ref = [$el.width(), $el.height()];
@@ -37765,13 +37860,13 @@
       // Top Position
       var position = 'top';
 
-      if (height < targetOffsetTop) {
+      if (height + tooltipOffset < targetOffsetTop) {
         // On top
-        top = targetOffsetTop - height;
+        top = targetOffsetTop - height - tooltipOffset;
       } else if (height < app.height - targetOffsetTop - targetHeight) {
         // On bottom
         position = 'bottom';
-        top = targetOffsetTop + targetHeight;
+        top = targetOffsetTop + targetHeight + tooltipOffset;
       } else {
         // On middle
         position = 'middle';
@@ -37923,6 +38018,7 @@
         text: null,
         cssClass: null,
         render: null,
+        offset: 0,
       },
     },
     on: {
@@ -40580,7 +40676,7 @@
         self.$contentEl.on('focus', self.onFocus);
         self.$contentEl.on('blur', self.onBlur);
         self.$contentEl.on('input', self.onInput, true);
-        $(document).on('selectionchange', self.onSelectionChange);
+        $(doc).on('selectionchange', self.onSelectionChange);
       };
       self.detachEvents = function detachEvents() {
         if (self.params.mode === 'toolbar') {
@@ -40596,7 +40692,7 @@
         self.$contentEl.off('focus', self.onFocus);
         self.$contentEl.off('blur', self.onBlur);
         self.$contentEl.off('input', self.onInput, true);
-        $(document).off('selectionchange', self.onSelectionChange);
+        $(doc).off('selectionchange', self.onSelectionChange);
       };
 
       // Install Modules
@@ -40630,7 +40726,7 @@
 
     TextEditor.prototype.createLink = function createLink () {
       var self = this;
-      var currentSelection = window.getSelection();
+      var currentSelection = win.getSelection();
       var selectedNodes = [];
       var $selectedLinks;
       if (currentSelection && currentSelection.anchorNode && $(currentSelection.anchorNode).parents(self.$el).length) {
@@ -40648,12 +40744,12 @@
       }
       if ($selectedLinks && $selectedLinks.length) {
         $selectedLinks.each(function (linkIndex, linkNode) {
-          var selection = window.getSelection();
-          var range = document.createRange();
+          var selection = win.getSelection();
+          var range = doc.createRange();
           range.selectNodeContents(linkNode);
           selection.removeAllRanges();
           selection.addRange(range);
-          document.execCommand('unlink', false);
+          doc.execCommand('unlink', false);
           selection.removeAllRanges();
         });
         return self;
@@ -40663,7 +40759,7 @@
       var dialog = self.app.dialog.prompt(self.params.linkUrlText, '', function (link) {
         if (link && link.trim().length) {
           self.setSelectionRange(currentRange);
-          document.execCommand('createLink', false, link.trim());
+          doc.execCommand('createLink', false, link.trim());
         }
       });
       dialog.$el.find('input').focus();
@@ -40677,7 +40773,7 @@
       var dialog = self.app.dialog.prompt(self.params.imageUrlText, '', function (imageUrl) {
         if (imageUrl && imageUrl.trim().length) {
           self.setSelectionRange(currentRange);
-          document.execCommand('insertImage', false, imageUrl.trim());
+          doc.execCommand('insertImage', false, imageUrl.trim());
         }
       });
       dialog.$el.find('input').focus();
@@ -40697,7 +40793,7 @@
     TextEditor.prototype.onSelectionChange = function onSelectionChange () {
       var self = this;
       if (self.params.mode === 'toolbar') { return; }
-      var selection = window.getSelection();
+      var selection = win.getSelection();
       var selectionIsInContent = $(selection.anchorNode).parents(self.contentEl).length || selection.anchorNode === self.contentEl;
       if (self.params.mode === 'keyboard-toolbar') {
         if (!selectionIsInContent) {
@@ -40716,7 +40812,7 @@
         if (!selection.isCollapsed && selection.rangeCount) {
           var range = selection.getRangeAt(0);
           var rect = range.getBoundingClientRect();
-          self.openPopover(rect.x + (window.scrollX || 0), rect.y + (window.scrollY || 0), rect.width, rect.height);
+          self.openPopover(rect.x + (win.scrollX || 0), rect.y + (win.scrollY || 0), rect.width, rect.height);
         } else if (selection.isCollapsed) {
           self.closePopover();
         }
@@ -40728,7 +40824,7 @@
       if (self.params.clearFormattingOnPaste && e.clipboardData && e.clipboardData.getData) {
         var text = e.clipboardData.getData('text/plain');
         e.preventDefault();
-        document.execCommand('insertText', false, text);
+        doc.execCommand('insertText', false, text);
       }
     };
 
@@ -40758,15 +40854,15 @@
         self.insertPlaceholder();
       }
       if (self.params.mode === 'popover') {
-        var selection = window.getSelection();
+        var selection = win.getSelection();
         var selectionIsInContent = $(selection.anchorNode).parents(self.contentEl).length || selection.anchorNode === self.contentEl;
-        var inPopover = document.activeElement && self.popover && $(document.activeElement).closest(self.popover.$el).length;
+        var inPopover = doc.activeElement && self.popover && $(doc.activeElement).closest(self.popover.$el).length;
         if (!inPopover && !selectionIsInContent) {
           self.closePopover();
         }
       }
       if (self.params.mode === 'keyboard-toolbar') {
-        var selection$1 = window.getSelection();
+        var selection$1 = win.getSelection();
         var selectionIsInContent$1 = $(selection$1.anchorNode).parents(self.contentEl).length || selection$1.anchorNode === self.contentEl;
         if (!selectionIsInContent$1) {
           self.closeKeyboardToolbar();
@@ -40778,7 +40874,7 @@
 
     TextEditor.prototype.onButtonClick = function onButtonClick (e) {
       var self = this;
-      var selection = window.getSelection();
+      var selection = win.getSelection();
       var selectionIsInContent = $(selection.anchorNode).parents(self.contentEl).length || selection.anchorNode === self.contentEl;
       if (!selectionIsInContent) { return; }
       var $buttonEl = $(e.target).closest('button');
@@ -40807,24 +40903,24 @@
         var tagName = command.split('.')[1];
         var $anchorNode = $(selection.anchorNode);
         if ($anchorNode.parents(tagName.toLowerCase()).length || $anchorNode.is(tagName)) {
-          document.execCommand('formatBlock', false, 'div');
+          doc.execCommand('formatBlock', false, 'div');
         } else {
-          document.execCommand('formatBlock', false, tagName);
+          doc.execCommand('formatBlock', false, tagName);
         }
         return;
       }
-      document.execCommand(command, false);
+      doc.execCommand(command, false);
     };
 
     // eslint-disable-next-line
     TextEditor.prototype.getSelectionRange = function getSelectionRange () {
-      if (window.getSelection) {
-        var sel = window.getSelection();
+      if (win.getSelection) {
+        var sel = win.getSelection();
         if (sel.getRangeAt && sel.rangeCount) {
           return sel.getRangeAt(0);
         }
-      } else if (document.selection && document.selection.createRange) {
-        return document.selection.createRange();
+      } else if (doc.selection && doc.selection.createRange) {
+        return doc.selection.createRange();
       }
       return null;
     };
@@ -40832,11 +40928,11 @@
     // eslint-disable-next-line
     TextEditor.prototype.setSelectionRange = function setSelectionRange (range) {
       if (range) {
-        if (window.getSelection) {
-          var sel = window.getSelection();
+        if (win.getSelection) {
+          var sel = win.getSelection();
           sel.removeAllRanges();
           sel.addRange(range);
-        } else if (document.selection && range.select) {
+        } else if (doc.selection && range.select) {
           range.select();
         }
       }

@@ -38,6 +38,8 @@ class Framework7 extends Framework7Class {
       autoDarkTheme: false,
       iosTranslucentBars: true,
       iosTranslucentModals: true,
+      component: undefined,
+      componentUrl: undefined,
     };
 
     // Extend defaults with modules params
@@ -108,7 +110,7 @@ class Framework7 extends Framework7Class {
       }
     };
     // Init
-    if (app.params.init) {
+    function init() {
       if (Device.cordova && app.params.initOnDeviceReady) {
         $(document).on('deviceready', () => {
           app.init();
@@ -117,6 +119,22 @@ class Framework7 extends Framework7Class {
         app.init();
       }
     }
+    if (app.params.component || app.params.componentUrl) {
+      app.router.componentLoader(
+        app.params.component,
+        app.params.componentUrl,
+        { componentOptions: { el: app.root[0] } },
+        (el) => {
+          app.root = $(el);
+          app.root[0].f7 = app;
+          app.rootComponent = el.f7Component;
+          if (app.params.init) init();
+        }
+      );
+    } else if (app.params.init) {
+      init();
+    }
+
     // Return app instance
     return app;
   }

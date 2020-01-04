@@ -1,13 +1,13 @@
 /**
- * Framework7 5.2.0
+ * Framework7 5.3.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
- * Copyright 2014-2019 Vladimir Kharlampidi
+ * Copyright 2014-2020 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: December 8, 2019
+ * Released on: January 3, 2020
  */
 
 (function (global, factory) {
@@ -3350,12 +3350,12 @@
               var id = Utils.id();
               var callbackLoadName = "f7_component_loader_callback_" + id;
 
-              var scriptEl = document.createElement('script');
+              var scriptEl = doc.createElement('script');
               scriptEl.innerHTML = "window." + callbackLoadName + " = function (Framework7, Framework7AutoInstallComponent) {return " + (scriptContent.trim()) + "}";
               $('head').append(scriptEl);
 
-              var componentLoader = window[callbackLoadName];
-              delete window[callbackLoadName];
+              var componentLoader = win[callbackLoadName];
+              delete win[callbackLoadName];
               $(scriptEl).remove();
 
               var module = componentLoader(Framework7, false);
@@ -3385,7 +3385,7 @@
           Framework7.request.get(
             modulePath.replace('.js', app.rtl ? '.rtl.css' : '.css'),
             function (styleContent) {
-              var styleEl = document.createElement('style');
+              var styleEl = doc.createElement('style');
               styleEl.innerHTML = styleContent;
               $('head').append(styleEl);
 
@@ -3435,6 +3435,8 @@
         autoDarkTheme: false,
         iosTranslucentBars: true,
         iosTranslucentModals: true,
+        component: undefined,
+        componentUrl: undefined,
       };
 
       // Extend defaults with modules params
@@ -3508,7 +3510,7 @@
         }
       };
       // Init
-      if (app.params.init) {
+      function init() {
         if (Device.cordova && app.params.initOnDeviceReady) {
           $(doc).on('deviceready', function () {
             app.init();
@@ -3517,6 +3519,22 @@
           app.init();
         }
       }
+      if (app.params.component || app.params.componentUrl) {
+        app.router.componentLoader(
+          app.params.component,
+          app.params.componentUrl,
+          { componentOptions: { el: app.root[0] } },
+          function (el) {
+            app.root = $(el);
+            app.root[0].f7 = app;
+            app.rootComponent = el.f7Component;
+            if (app.params.init) { init(); }
+          }
+        );
+      } else if (app.params.init) {
+        init();
+      }
+
       // Return app instance
       return app;
     }
@@ -4398,7 +4416,9 @@
       }
     }
     function handleMouseMove() {
-      $('.active-state').removeClass('active-state');
+      if (!params.activeStateOnMouseMove) {
+        $('.active-state').removeClass('active-state');
+      }
       if (useRipple) {
         rippleTouchMove();
       }
@@ -4649,6 +4669,7 @@
       app.on('touchstart', handleMouseDown);
       app.on('touchmove', handleMouseMove);
       app.on('touchend', handleMouseUp);
+      doc.addEventListener('pointercancel', handleMouseUp, { passive: true });
     }
     doc.addEventListener('contextmenu', function (e) {
       if (params.disableContextMenu && (Device.ios || Device.android || Device.cordova)) {
@@ -4676,6 +4697,7 @@
         // Active State
         activeState: true,
         activeStateElements: 'a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus, .card-expandable, .menu-item, .link, .item-link, .accordion-item-toggle',
+        activeStateOnMouseMove: false,
         mdTouchRipple: true,
         iosTouchRipple: false,
         auroraTouchRipple: false,
@@ -9321,6 +9343,15 @@
         routesAdd: [],
       };
 
+      if ($el.length === 0) {
+        var message = 'Framework7: can\'t create a View instance because ';
+        message += (typeof el === 'string')
+          ? ("the selector \"" + el + "\" didn't match any element")
+          : 'el must be an HTMLElement or Dom7 object';
+
+        throw new Error(message);
+      }
+
       // Default View params
       view.params = Utils.extend(defaults, app.params.view, viewParams);
 
@@ -9713,6 +9744,9 @@
               },
             }
           );
+          if (options.componentOptions && options.componentOptions.el) {
+            componentOptions.el = options.componentOptions.el;
+          }
           app.component.create(componentOptions, extendContext)
             .then(function (createdComponent) {
               resolve(createdComponent.el);
@@ -10934,6 +10968,7 @@
       enumerable: true,
       configurable: true,
       get: function get() {
+        if (app.rootComponent) { return app.rootComponent; }
         var root = Utils.merge({}, app.data, app.methods);
         if (win && win.Proxy) {
           root = new win.Proxy(root, {
@@ -11191,6 +11226,18 @@
     return self.$update(callback);
   };
 
+  Component.prototype.$f7ready = function $f7ready (callback) {
+      var this$1 = this;
+
+    if (this.$f7.initialized) {
+      callback(this.$f7);
+      return;
+    }
+    this.$f7.once('init', function () {
+      callback(this$1.$f7);
+    });
+  };
+
   Component.prototype.$mount = function $mount (mountMethod) {
     var self = this;
     self.$hook('beforeMount');
@@ -11290,6 +11337,7 @@
           rules = rules
             .split(',')
             .map(function (rule) {
+              if (rule.indexOf('@') >= 0) { return rule; }
               if (rule.indexOf(("[data-f7-" + id + "]")) >= 0) { return rule; }
               return ("[data-f7-" + id + "] " + (rule.trim()));
             })
@@ -11424,7 +11472,7 @@
     registrations: [],
     register: function register(path, scope) {
       var app = this;
-      if (!('serviceWorker' in window.navigator) || !app.serviceWorker.container) {
+      if (!('serviceWorker' in win.navigator) || !app.serviceWorker.container) {
         return new Promise(function (resolve, reject) {
           reject(new Error('Service worker is not supported'));
         });
@@ -11443,7 +11491,7 @@
     },
     unregister: function unregister(registration) {
       var app = this;
-      if (!('serviceWorker' in window.navigator) || !app.serviceWorker.container) {
+      if (!('serviceWorker' in win.navigator) || !app.serviceWorker.container) {
         return new Promise(function (resolve, reject) {
           reject(new Error('Service worker is not supported'));
         });
@@ -11481,7 +11529,7 @@
       var app = this;
       Utils.extend(app, {
         serviceWorker: {
-          container: ('serviceWorker' in window.navigator) ? window.navigator.serviceWorker : undefined,
+          container: ('serviceWorker' in win.navigator) ? win.navigator.serviceWorker : undefined,
           registrations: SW.registrations,
           register: SW.register.bind(app),
           unregister: SW.unregister.bind(app),
@@ -11490,7 +11538,7 @@
     },
     on: {
       init: function init() {
-        if (!('serviceWorker' in window.navigator)) { return; }
+        if (!('serviceWorker' in win.navigator)) { return; }
         var app = this;
         if (!app.serviceWorker.container) { return; }
         var paths = app.params.serviceWorker.path;
@@ -11793,6 +11841,23 @@
           if (!view) { return; }
           view.destroy();
         });
+      },
+    },
+    vnode: {
+      'view-init': {
+        insert: function insert(vnode) {
+          var app = this;
+          var viewEl = vnode.elm;
+          if (viewEl.f7View) { return; }
+          var viewParams = $(viewEl).dataset();
+          app.views.create(viewEl, viewParams);
+        },
+        destroy: function destroy(vnode) {
+          var viewEl = vnode.elm;
+          var view = viewEl.f7View;
+          if (!view) { return; }
+          view.destroy();
+        },
       },
     },
   };

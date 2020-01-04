@@ -13,6 +13,7 @@ export default {
       passwordPlaceholder: 'Password',
       preloaderTitle: 'Loading... ',
       progressTitle: 'Loading... ',
+      backdrop: true,
       closeByBackdropClick: false,
       destroyPredefinedDialogs: true,
       keyboardActions: true,

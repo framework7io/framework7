@@ -34,6 +34,9 @@ export default {
             },
           }
         );
+        if (options.componentOptions && options.componentOptions.el) {
+          componentOptions.el = options.componentOptions.el;
+        }
         app.component.create(componentOptions, extendContext)
           .then((createdComponent) => {
             resolve(createdComponent.el);

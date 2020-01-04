@@ -42,6 +42,7 @@ function parseComponent(componentString) {
         rules = rules
           .split(',')
           .map((rule) => {
+            if (rule.indexOf('@') >= 0) return rule;
             if (rule.indexOf(`[data-f7-${id}]`) >= 0) return rule;
             return `[data-f7-${id}] ${rule.trim()}`;
           })
