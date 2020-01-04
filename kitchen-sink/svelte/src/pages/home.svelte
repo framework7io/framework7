@@ -8,575 +8,229 @@
       <Link searchbarEnable=".searchbar-components" iconIos="f7:search" iconAurora="f7:search" iconMd="material:search"></Link>
     </NavRight>
     <NavTitleLarge>Framework7 Svelte</NavTitleLarge>
-    <form data-search-container=".components-list" data-search-in="a" class="searchbar searchbar-expandable searchbar-components searchbar-init">
-      <div class="searchbar-inner">
-        <div class="searchbar-input-wrap">
-          <input type="search" placeholder="Search components"/>
-          <i class="searchbar-icon"></i>
-          <span class="input-clear-button"></span>
-        </div>
-        <span class="searchbar-disable-button if-not-aurora">Cancel</span>
-      </div>
-    </form>
+    <Searchbar
+      class="searchbar-components"
+      searchContainer=".components-list"
+      searchIn="a"
+      expandable
+      disableButton={!theme.aurora}
+    />
   </Navbar>
 
-  <div class="list searchbar-hide-on-search">
-    <ul>
-      <li>
-        <a class="item-content item-link" href="/about/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">About Framework7</div>
-          </div>
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div class="block-title block-title-medium searchbar-found">Components</div>
-  <div class="list components-list searchbar-found">
-    <ul>
-      <li>
-        <a class="item-content item-link" href="/accordion/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Accordion</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/action-sheet/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Action Sheet</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/appbar/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Appbar</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/autocomplete/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Autocomplete</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/badge/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Badge</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/buttons/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Buttons</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/calendar/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Calendar / Date Picker</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/cards/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Cards</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/cards-expandable/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Cards Expandable</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/checkbox/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Checkbox</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/chips/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Chips / Tags</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/color-picker/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Color Picker</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/contacts-list/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Contacts List</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/content-block/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Content Block</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/data-table/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Data Table</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/dialog/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Dialog</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/elevation/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Elevation</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/fab/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">FAB</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/fab-morph/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">FAB Morph</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/form-storage/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Form Storage</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/gauge/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Gauge</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/grid/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Grid / Layout Grid</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/icons/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Icons</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/infinite-scroll/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Infinite Scroll</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/inputs/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Inputs</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/lazy-load/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Lazy Load</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/list/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">List View</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/list-index/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">List Index</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/login-screen/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Login Screen</div>
-          </div>
-        </a>
-      </li>
-      <li>
-          <a class="item-content item-link" href="/menu/">
-            <div class="item-media"><i class="icon icon-f7"></i></div>
-            <div class="item-inner">
-              <div class="item-title">Menu</div>
-            </div>
-          </a>
-        </li>
-      <li>
-        <a class="item-content item-link" href="/messages/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Messages</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/navbar/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Navbar</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/notifications/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Notifications</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/panel/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Panel / Side Panels</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/photo-browser/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Photo Browser</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/picker/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Picker</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/popover/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Popover</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/popup/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Popup</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/preloader/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Preloader</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/progressbar/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Progress Bar</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/pull-to-refresh/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Pull To Refresh</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/radio/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Radio</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/range/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Range Slider</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/searchbar/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Searchbar</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/searchbar-expandable/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Searchbar Expandable</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/sheet-modal/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Sheet Modal</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/skeleton/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Skeleton (Ghost) Layouts</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/smart-select/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Smart Select</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/sortable/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Sortable List</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/stepper/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Stepper</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/subnavbar/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Subnavbar</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/swipeout/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Swipeout (Swipe To Delete)</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/swiper/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Swiper Slider</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/tabs/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Tabs</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/text-editor/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Text Editor</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/timeline/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Timeline</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/toast/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Toast</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/toggle/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Toggle</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/toolbar-tabbar/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Toolbar & Tabbar</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/tooltip/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Tooltip</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/treeview/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Treeview</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="item-content item-link" href="/virtual-list/">
-          <div class="item-media"><i class="icon icon-f7"></i></div>
-          <div class="item-inner">
-            <div class="item-title">Virtual List</div>
-          </div>
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div class="list simple-list searchbar-not-found">
-    <ul>
-      <li>Nothing found</li>
-    </ul>
-  </div>
-  <div class="block-title block-title-medium searchbar-hide-on-search">Themes</div>
-  <div class="list links-list searchbar-hide-on-search">
-    <ul>
-      <li>
-        <a href="./index.html?theme=ios" class="external">iOS Theme</a>
-      </li>
-      <li>
-        <a href="./index.html?theme=md" class="external">Material (MD) Theme</a>
-      </li>
-      <li>
-        <a href="./index.html?theme=aurora" class="external">Aurora Desktop Theme</a>
-      </li>
-      <li>
-        <a href="/color-themes/">Color Themes</a>
-      </li>
-    </ul>
-  </div>
-  <div class="block-title block-title-medium searchbar-hide-on-search">Page Loaders & Router</div>
-  <div class="list links-list searchbar-hide-on-search">
-    <ul>
-      <li>
-        <a href="/page-transitions/">Page Transitions</a>
-      </li>
-      <li>
-        <a href="/page-loader-template7/vladimir/123/about-me/1/?start=0&end=30#top">Template7 Page</a>
-      </li>
-      <li>
-        <a href="/page-loader-component/vladimir/123/about-me/1/?start=0&end=30#top">Component Page</a>
-      </li>
-      <li>
-        <a href="/load-something-that-doesnt-exist/">Default Route (404)</a>
-      </li>
-      <li>
-        <a href="/master-detail/">Master-Detail (Split View)</a>
-      </li>
-    </ul>
-  </div>
+  <List class="searchbar-hide-on-search">
+    <ListItem title="About Framework7" link="/about/">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+  </List>
+
+  <BlockTitle medium class="searchbar-found">Components</BlockTitle>
+  <List class="components-list searchbar-found">
+    <ListItem link="/accordion/" title="Accordion">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/action-sheet/" title="Action Sheet">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/appbar/" title="Appbar">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/autocomplete/" title="Autocomplete">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/badge/" title="Badge">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/buttons/" title="Buttons">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/calendar/" title="Calendar / Date Picker">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/cards/" title="Cards">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/cards-expandable/" title="Cards Expandable">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/checkbox/" title="Checkbox">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/chips/" title="Chips/Tags">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/color-picker/" title="Color Picker">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/contacts-list/" title="Contacts List">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/content-block/" title="Content Block">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/data-table/" title="Data Table">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/dialog/" title="Dialog">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/elevation/" title="Elevation">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/fab/" title="FAB">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/fab-morph/" title="FAB Morph">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/form-storage/" title="Form Storage">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/gauge/" title="Gauge">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/grid/" title="Grid / Layout Grid">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/icons/" title="Icons">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/infinite-scroll/" title="Infinite Scroll">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/inputs/" title="Inputs">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/lazy-load/" title="Lazy Load">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/list/" title="List View">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/list-index/" title="List Index">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/login-screen/" title="Login Screen">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/menu/" title="Menu">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/messages/" title="Messages">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/navbar/" title="Navbar">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/notifications/" title="Notifications">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/panel/" title="Panel / Side Panels">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/photo-browser/" title="Photo Browser">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/picker/" title="Picker">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/popover/" title="Popover">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/popup/" title="Popup">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/preloader/" title="Preloader">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/progressbar/" title="Progress Bar">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/pull-to-refresh/" title="Pull To Refresh">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/radio/" title="Radio">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/range/" title="Range Slider">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/searchbar/" title="Searchbar">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/searchbar-expandable/" title="Searchbar Expandable">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/sheet-modal/" title="Sheet Modal">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/skeleton/" title="Skeleton (Ghost) Elements">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/smart-select/" title="Smart Select">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/sortable/" title="Sortable List">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/stepper/" title="Stepper">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/subnavbar/" title="Subnavbar">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/swipeout/" title="Swipeout (Swipe To Delete)">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/swiper/" title="Swiper Slider">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/tabs/" title="Tabs">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/text-editor/" title="Text Editor">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/timeline/" title="Timeline">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/toast/" title="Toast">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/toggle/" title="Toggle">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/toolbar-tabbar/" title="Toolbar & Tabbar">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/tooltip/" title="Tooltip">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/treeview/" title="Treeview">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/virtual-list/" title="Virtual List">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+  </List>
+  <List class="searchbar-not-found">
+    <ListItem title="Nothing found"></ListItem>
+  </List>
+  <BlockTitle medium class="searchbar-hide-on-search">Themes</BlockTitle>
+  <List class="searchbar-hide-on-search">
+    <ListItem title="iOS Theme" external link="./index.html?theme=ios"></ListItem>
+    <ListItem title="Material (MD) Theme" external link="./index.html?theme=md"></ListItem>
+    <ListItem title="Aurora Desktop Theme" external link="./index.html?theme=aurora"></ListItem>
+    <ListItem title="Color Themes" link="/color-themes/"></ListItem>
+  </List>
+  <BlockTitle medium class="searchbar-hide-on-search">Page Loaders & Router</BlockTitle>
+  <List class="searchbar-hide-on-search">
+    <ListItem title="Page Transitions" link="/page-transitions/"></ListItem>
+    <ListItem title="Routable Modals" link="/routable-modals/"></ListItem>
+    <ListItem title="Default Route (404)" link="/load-something-that-doesnt-exist/"></ListItem>
+    <ListItem title="Master-Detail (Split View)" link="/master-detail/"></ListItem>
+  </List>
 </Page>
 
 <script>
-  import { Page, Icon, Navbar, NavLeft, NavRight, NavTitle, NavTitleLarge, Link } from 'framework7-svelte';
+  import { theme, Page, Navbar, NavLeft, NavTitle, NavTitleLarge, NavRight, BlockTitle, List, ListItem, Link, Searchbar, Icon } from 'framework7-svelte';
 </script>

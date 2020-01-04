@@ -3,17 +3,17 @@ import Home from './pages/home.svelte';
 // import PanelRight from './pages/panel-right.svelte';
 import About from './pages/about.svelte';
 
-// import Accordion from './pages/accordion.svelte';
+import Accordion from './pages/accordion.svelte';
 import ActionSheet from './pages/action-sheet.svelte';
 // import Appbar from './pages/appbar.svelte';
 // import Autocomplete from './pages/autocomplete.svelte';
-// import Badge from './pages/badge.svelte';
+import Badge from './pages/badge.svelte';
 import Buttons from './pages/buttons.svelte';
 // import Calendar from './pages/calendar.svelte';
 // import CalendarPage from './pages/calendar-page.svelte';
-// import Cards from './pages/cards.svelte';
+import Cards from './pages/cards.svelte';
 import CardsExpandable from './pages/cards-expandable.svelte';
-// import Checkbox from './pages/checkbox.svelte';
+import Checkbox from './pages/checkbox.svelte';
 // import Chips from './pages/chips.svelte';
 // import ColorPicker from './pages/color-picker.svelte';
 // import ContactsList from './pages/contacts-list.svelte';
@@ -47,7 +47,7 @@ import PhotoBrowser from './pages/photo-browser.svelte';
 // import Preloader from './pages/preloader.svelte';
 // import Progressbar from './pages/progressbar.svelte';
 // import PullToRefresh from './pages/pull-to-refresh.svelte';
-// import Radio from './pages/radio.svelte';
+import Radio from './pages/radio.svelte';
 // import Range from './pages/range.svelte';
 // import Searchbar from './pages/searchbar.svelte';
 // import SearchbarExpandable from './pages/searchbar-expandable.svelte';
@@ -187,10 +187,10 @@ export default [
   // },
 
   // // Components
-  // {
-  //   path: '/accordion/',
-  //   component: Accordion,
-  // },
+  {
+    path: '/accordion/',
+    component: Accordion,
+  },
   {
     path: '/action-sheet/',
     component: ActionSheet,
@@ -203,10 +203,10 @@ export default [
   //   path: '/autocomplete/',
   //   component: Autocomplete,
   // },
-  // {
-  //   path: '/badge/',
-  //   component: Badge,
-  // },
+  {
+    path: '/badge/',
+    component: Badge,
+  },
   {
     path: '/buttons/',
     component: Buttons,
@@ -219,18 +219,18 @@ export default [
   //   path: '/calendar-page/',
   //   component: CalendarPage,
   // },
-  // {
-  //   path: '/cards/',
-  //   component: Cards,
-  // },
+  {
+    path: '/cards/',
+    component: Cards,
+  },
   {
     path: '/cards-expandable/',
     component: CardsExpandable,
   },
-  // {
-  //   path: '/checkbox/',
-  //   component: Checkbox,
-  // },
+  {
+    path: '/checkbox/',
+    component: Checkbox,
+  },
   // {
   //   path: '/chips/',
   //   component: Chips,
@@ -363,10 +363,10 @@ export default [
   //   path: '/pull-to-refresh/',
   //   component: PullToRefresh,
   // },
-  // {
-  //   path: '/radio/',
-  //   component: Radio,
-  // },
+  {
+    path: '/radio/',
+    component: Radio,
+  },
   // {
   //   path: '/range/',
   //   component: Range,

@@ -1,3 +1,4 @@
+<!-- svelte-ignore a11y-invalid-attribute -->
 <Page>
   <Navbar title="Buttons" backLink="Back" />
 

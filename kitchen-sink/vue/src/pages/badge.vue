@@ -3,7 +3,7 @@
     <f7-navbar sliding back-link="Back" title="Badge">
       <f7-nav-right>
         <f7-link icon-only>
-          <f7-icon ios="f7:person_round_fill" aurora="f7:person_round_fill" md="material:person">
+          <f7-icon ios="f7:person_circle_fill" aurora="f7:person_circle_fill" md="material:person">
             <f7-badge color="red">5</f7-badge>
           </f7-icon>
         </f7-link>
