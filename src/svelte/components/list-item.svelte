@@ -123,14 +123,6 @@
 
   $: isLink = link || href || smartSelect || accordionItem;
 
-  let forceMedia = false;
-  let forceTitle = false;
-  let forceHeader = false;
-  let forceFooter = false;
-  let forceSubtitle = false;
-  let forceText = false;
-  let forceAfter = false;
-
   /* eslint-disable no-undef */
   $: hasMedia = media || hasSlots(arguments, 'media');
   $: hasTitle = title || hasSlots(arguments, 'title');
