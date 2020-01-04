@@ -78,7 +78,7 @@ export default {
     );
   },
   componentDidCreate() {
-    Utils.bindMethods(this, ['onClick', 'onDeleteClick'])
+    Utils.bindMethods(this, ['onClick', 'onDeleteClick']);
   },
   componentDidMount() {
     this.refs.el.addEventListener('click', this.onClick);

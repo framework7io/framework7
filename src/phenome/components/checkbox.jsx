@@ -79,7 +79,7 @@ export default {
     },
   },
   componentDidCreate() {
-    Utils.bindMethods(this, ['onChange'])
+    Utils.bindMethods(this, ['onChange']);
   },
   componentDidMount() {
     const self = this;

@@ -56,7 +56,7 @@ export default {
     );
   },
   componentDidCreate() {
-    Utils.bindMethods(this, ['onClick'])
+    Utils.bindMethods(this, ['onClick']);
   },
   componentDidMount() {
     this.refs.el.addEventListener('click', this.onClick);

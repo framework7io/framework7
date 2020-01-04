@@ -74,7 +74,7 @@ export default {
     );
   },
   componentDidCreate() {
-    Utils.bindMethods(this, ['onChange'])
+    Utils.bindMethods(this, ['onChange']);
   },
   methods: {
     onChange(event) {
