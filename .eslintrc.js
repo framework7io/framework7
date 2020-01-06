@@ -83,6 +83,7 @@ module.exports = {
         'import/extensions': ['off'],
         'no-multiple-empty-lines': ['off'],
         'no-undef-init': ['off'],
+        'no-shadow': ['off'],
         'no-nested-ternary': ['off'],
         'a11y-invalid-attribute': ['off'],
         'a11y-missing-attribute': ['off'],
