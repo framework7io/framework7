@@ -49,7 +49,7 @@
   </Actions>
 
   <!-- Grid -->
-  <Actions grid={true} opened={actionGridOpened} on:actions:closed={() => actionGridOpened = false}>
+  <Actions grid={true} opened={actionGridOpened} on:actionsClosed={() => actionGridOpened = false}>
     <ActionsGroup>
       <ActionsButton>
         <img slot="media" src="https://cdn.framework7.io/placeholder/people-96x96-1.jpg" width="48" style="max-width: 100%"/>

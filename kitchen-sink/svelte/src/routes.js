@@ -5,7 +5,7 @@ import About from './pages/about.svelte';
 
 import Accordion from './pages/accordion.svelte';
 import ActionSheet from './pages/action-sheet.svelte';
-// import Appbar from './pages/appbar.svelte';
+import Appbar from './pages/appbar.svelte';
 // import Autocomplete from './pages/autocomplete.svelte';
 import Badge from './pages/badge.svelte';
 import Buttons from './pages/buttons.svelte';
@@ -14,30 +14,30 @@ import Buttons from './pages/buttons.svelte';
 import Cards from './pages/cards.svelte';
 import CardsExpandable from './pages/cards-expandable.svelte';
 import Checkbox from './pages/checkbox.svelte';
-// import Chips from './pages/chips.svelte';
+import Chips from './pages/chips.svelte';
 // import ColorPicker from './pages/color-picker.svelte';
-// import ContactsList from './pages/contacts-list.svelte';
+import ContactsList from './pages/contacts-list.svelte';
 import ContentBlock from './pages/content-block.svelte';
 // import DataTable from './pages/data-table.svelte';
 import Dialog from './pages/dialog.svelte';
-// import Elevation from './pages/elevation.svelte';
+import Elevation from './pages/elevation.svelte';
 import Fab from './pages/fab.svelte';
 import FabMorph from './pages/fab-morph.svelte';
 // import FormStorage from './pages/form-storage.svelte';
 import Gauge from './pages/gauge.svelte';
 import Grid from './pages/grid.svelte';
 // import Icons from './pages/icons.svelte';
-// import InfiniteScroll from './pages/infinite-scroll.svelte';
+import InfiniteScroll from './pages/infinite-scroll.svelte';
 // import Inputs from './pages/inputs.svelte';
 import LazyLoad from './pages/lazy-load.svelte';
-// import List from './pages/list.svelte';
-// import ListIndex from './pages/list-index.svelte';
+import List from './pages/list.svelte';
+import ListIndex from './pages/list-index.svelte';
 // import LoginScreen from './pages/login-screen.svelte';
 // import LoginScreenPage from './pages/login-screen-page.svelte';
 // import Menu from './pages/menu.svelte';
-// import Messages from './pages/messages.svelte';
-// import Navbar from './pages/navbar.svelte';
-// import NavbarHideScroll from './pages/navbar-hide-scroll.svelte';
+import Messages from './pages/messages.svelte';
+import Navbar from './pages/navbar.svelte';
+import NavbarHideScroll from './pages/navbar-hide-scroll.svelte';
 // import Notifications from './pages/notifications.svelte';
 import Panel from './pages/panel.svelte';
 import PhotoBrowser from './pages/photo-browser.svelte';
@@ -46,7 +46,7 @@ import PhotoBrowser from './pages/photo-browser.svelte';
 // import Popover from './pages/popover.svelte';
 // import Preloader from './pages/preloader.svelte';
 // import Progressbar from './pages/progressbar.svelte';
-// import PullToRefresh from './pages/pull-to-refresh.svelte';
+import PullToRefresh from './pages/pull-to-refresh.svelte';
 import Radio from './pages/radio.svelte';
 // import Range from './pages/range.svelte';
 // import Searchbar from './pages/searchbar.svelte';
@@ -195,10 +195,10 @@ export default [
     path: '/action-sheet/',
     component: ActionSheet,
   },
-  // {
-  //   path: '/appbar/',
-  //   component: Appbar,
-  // },
+  {
+    path: '/appbar/',
+    component: Appbar,
+  },
   // {
   //   path: '/autocomplete/',
   //   component: Autocomplete,
@@ -231,18 +231,18 @@ export default [
     path: '/checkbox/',
     component: Checkbox,
   },
-  // {
-  //   path: '/chips/',
-  //   component: Chips,
-  // },
+  {
+    path: '/chips/',
+    component: Chips,
+  },
   // {
   //   path: '/color-picker/',
   //   component: ColorPicker,
   // },
-  // {
-  //   path: '/contacts-list/',
-  //   component: ContactsList,
-  // },
+  {
+    path: '/contacts-list/',
+    component: ContactsList,
+  },
   {
     path: '/content-block/',
     component: ContentBlock,
@@ -255,10 +255,10 @@ export default [
     path: '/dialog/',
     component: Dialog,
   },
-  // {
-  //   path: '/elevation/',
-  //   component: Elevation,
-  // },
+  {
+    path: '/elevation/',
+    component: Elevation,
+  },
   {
     path: '/fab/',
     component: Fab,
@@ -283,10 +283,10 @@ export default [
   //   path: '/icons/',
   //   component: Icons,
   // },
-  // {
-  //   path: '/infinite-scroll/',
-  //   component: InfiniteScroll,
-  // },
+  {
+    path: '/infinite-scroll/',
+    component: InfiniteScroll,
+  },
   // {
   //   path: '/inputs/',
   //   component: Inputs,
@@ -295,14 +295,14 @@ export default [
     path: '/lazy-load/',
     component: LazyLoad,
   },
-  // {
-  //   path: '/list/',
-  //   component: List,
-  // },
-  // {
-  //   path: '/list-index/',
-  //   component: ListIndex,
-  // },
+  {
+    path: '/list/',
+    component: List,
+  },
+  {
+    path: '/list-index/',
+    component: ListIndex,
+  },
   // {
   //   path: '/login-screen/',
   //   component: LoginScreen,
@@ -315,18 +315,18 @@ export default [
   //   path: '/menu/',
   //   component: Menu,
   // },
-  // {
-  //   path: '/messages/',
-  //   component: Messages,
-  // },
-  // {
-  //   path: '/navbar/',
-  //   component: Navbar,
-  // },
-  // {
-  //   path: '/navbar-hide-scroll/',
-  //   component: NavbarHideScroll,
-  // },
+  {
+    path: '/messages/',
+    component: Messages,
+  },
+  {
+    path: '/navbar/',
+    component: Navbar,
+  },
+  {
+    path: '/navbar-hide-scroll/',
+    component: NavbarHideScroll,
+  },
   // {
   //   path: '/notifications/',
   //   component: Notifications,
@@ -359,10 +359,10 @@ export default [
   //   path: '/progressbar/',
   //   component: Progressbar,
   // },
-  // {
-  //   path: '/pull-to-refresh/',
-  //   component: PullToRefresh,
-  // },
+  {
+    path: '/pull-to-refresh/',
+    component: PullToRefresh,
+  },
   {
     path: '/radio/',
     component: Radio,
