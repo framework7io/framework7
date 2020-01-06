@@ -26,6 +26,10 @@
   let el;
   let f7TextEditor;
 
+  export function instance() {
+    return f7TextEditor;
+  }
+
   $: classes = Utils.classNames(
     className,
     'text-editor',
@@ -42,31 +46,31 @@
   $: watchValue(value);
 
   function onChange(editor, editorValue) {
-    dispatch('texteditor:change', [editorValue]);
+    dispatch('textEditorChange', [editorValue]);
   }
   function onInput() {
-    dispatch('texteditor:change');
+    dispatch('textEditorChange');
   }
   function onFocus() {
-    dispatch('texteditor:focus');
+    dispatch('textEditorFocus');
   }
   function onBlur() {
-    dispatch('texteditor:blur');
+    dispatch('textEditorBlur');
   }
   function onButtonClick(editor, button) {
-    dispatch('texteditor:buttonclick', [button]);
+    dispatch('textEditorButtonClick', [button]);
   }
   function onKeyboardOpen() {
-    dispatch('texteditor:keyboardopen');
+    dispatch('textEditorKeyboardOpen');
   }
   function onKeyboardClose() {
-    dispatch('texteditor:keyboardclose');
+    dispatch('textEditorKeyboardClose');
   }
   function onPopoverOpen() {
-    dispatch('texteditor:popoveropen');
+    dispatch('textEditorPopoverOpen');
   }
   function onPopoverClose() {
-    dispatch('texteditor:popoverclose');
+    dispatch('textEditorPopoverClose');
   }
 
   onMount(() => {

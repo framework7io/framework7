@@ -49,6 +49,10 @@
   let el;
   let f7Searchbar;
 
+  export function instance() {
+    return f7Searchbar;
+  }
+
   $: classes = Utils.classNames(
     className,
     'searchbar',
@@ -116,16 +120,16 @@
         inline,
         on: {
           search(searchbar, query, previousQuery) {
-            dispatch('searchbar:search', [searchbar, query, previousQuery]);
+            dispatch('searchbarSearch', [searchbar, query, previousQuery]);
           },
           clear(searchbar, previousQuery) {
-            dispatch('searchbar:clear', [searchbar, previousQuery]);
+            dispatch('searchbarClear', [searchbar, previousQuery]);
           },
           enable(searchbar) {
-            dispatch('searchbar:enable', [searchbar]);
+            dispatch('searchbarEnable', [searchbar]);
           },
           disable(searchbar) {
-            dispatch('searchbar:disable', [searchbar]);
+            dispatch('searchbarDisable', [searchbar]);
           },
         },
       });

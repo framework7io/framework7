@@ -77,23 +77,23 @@
 
   function onBeforeOpen(cardEl, prevent) {
     if (cardEl !== el) return;
-    dispatch('card:beforeopen', [el, prevent]);
+    dispatch('cardBeforeOpen', [el, prevent]);
   }
   function onOpen(cardEl) {
     if (cardEl !== el) return;
-    dispatch('card:open', [el]);
+    dispatch('cardOpen', [el]);
   }
   function onOpened(cardEl, pageEl) {
     if (cardEl !== el) return;
-    dispatch('card:opened', [el, pageEl]);
+    dispatch('cardOpened', [el, pageEl]);
   }
   function onClose(cardEl) {
     if (cardEl !== el) return;
-    dispatch('card:close', [el]);
+    dispatch('cardClose', [el]);
   }
   function onClosed(cardEl, pageEl) {
     if (cardEl !== el) return;
-    dispatch('card:closed', [el, pageEl]);
+    dispatch('cardClosed', [el, pageEl]);
   }
 
   onMount(() => {

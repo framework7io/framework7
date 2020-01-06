@@ -72,15 +72,15 @@
   }
   function onOpen(itemEl) {
     if (itemEl !== el) return;
-    dispatch('treeview:open', [el]);
+    dispatch('treeviewOpen', [el]);
   }
   function onClose(itemEl) {
     if (itemEl !== el) return;
-    dispatch('treeview:close', [el]);
+    dispatch('treeviewClose', [el]);
   }
   function onLoadChildren(itemEl, done) {
     if (itemEl !== el) return;
-    dispatch('treeview:loadchildren', [el, done]);
+    dispatch('treeviewLoadChildren', [el, done]);
   }
 
   onMount(() => {

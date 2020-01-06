@@ -26,6 +26,10 @@
   let el;
   let f7Popup;
 
+  export function instance() {
+    return f7Popup;
+  }
+
   export function open(anim) {
     if (!f7Popup) return undefined;
     return f7Popup.open(anim);
@@ -46,16 +50,16 @@
   );
 
   function onOpen(instance) {
-    dispatch('popup:open', [instance]);
+    dispatch('popupOpen', [instance]);
   }
   function onOpened(instance) {
-    dispatch('popup:opened', [instance]);
+    dispatch('popupOpened', [instance]);
   }
   function onClose(instance) {
-    dispatch('popup:close', [instance]);
+    dispatch('popupClose', [instance]);
   }
   function onClosed(instance) {
-    dispatch('popup:closed', [instance]);
+    dispatch('popupClosed', [instance]);
   }
 
   function watchOpened(openedPassed) {

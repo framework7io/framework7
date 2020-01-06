@@ -64,11 +64,11 @@
 
   function onOpened(itemEl) {
     if (itemEl !== el) return;
-    dispatch('menu:opened', [el]);
+    dispatch('menuOpened', [el]);
   }
   function onClosed(itemEl) {
     if (itemEl !== el) return;
-    dispatch('menu:closed', [el]);
+    dispatch('menuClosed', [el]);
   }
 
   onMount(() => {

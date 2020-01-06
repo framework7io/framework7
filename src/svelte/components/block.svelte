@@ -32,11 +32,11 @@
 
   function onTabShow(tabEl) {
     if (el !== tabEl) return;
-    dispatch('tab:show');
+    dispatch('tabShow');
   }
   function onTabHide(tabEl) {
     if (el !== tabEl) return;
-    dispatch('tab:hide');
+    dispatch('tabHide');
   }
 
   $: classes = Utils.classNames(

@@ -85,28 +85,28 @@
   );
 
   // Handlers
-  function onPtrPullStart(e) {
-    dispatch('ptr:pullstart', [...e.detail]);
+  function onPtrPullStart() {
+    dispatch('ptrPullStart');
   }
-  function onPtrPullMove(e) {
-    dispatch('ptr:pullmove', [...e.detail]);
+  function onPtrPullMove() {
+    dispatch('ptrPullMove');
   }
-  function onPtrPullEnd(e) {
-    dispatch('ptr:pullend', [...e.detail]);
+  function onPtrPullEnd() {
+    dispatch('ptrPullEnd');
   }
   function onPtrRefresh(e) {
-    dispatch('ptr:refresh', [...e.detail]);
+    dispatch('ptrRefresh', [...e.detail]);
   }
-  function onPtrDone(e) {
-    dispatch('ptr:done', [...e.detail]);
+  function onPtrDone() {
+    dispatch('ptrDone');
   }
-  function onInfinite(e) {
-    dispatch('infinite', [...e.detail]);
+  function onInfinite() {
+    dispatch('infinite');
   }
   // Main Page Events
   function onPageMounted(page) {
     if (el !== page.el) return;
-    dispatch('page:mounted', [page]);
+    dispatch('pageMounted', [page]);
   }
   function onPageInit(page) {
     if (el !== page.el) return;
@@ -128,11 +128,11 @@
       }
     }
 
-    dispatch('page:init', [page]);
+    dispatch('pageInit', [page]);
   }
   function onPageReinit(page) {
     if (el !== page.el) return;
-    dispatch('page:reinit', [page]);
+    dispatch('pageReinit', [page]);
   }
   function onPageBeforeIn(page) {
     if (el !== page.el) return;
@@ -144,11 +144,11 @@
         routerPositionClass = 'page-previous';
       }
     }
-    dispatch('page:beforein', [page]);
+    dispatch('pageBeforeIn', [page]);
   }
   function onPageBeforeOut(page) {
     if (el !== page.el) return;
-    dispatch('page:beforeout', [page]);
+    dispatch('pageBeforeOut', [page]);
   }
   function onPageAfterOut(page) {
     if (el !== page.el) return;
@@ -158,19 +158,19 @@
     if (page.to === 'previous') {
       routerPositionClass = 'page-previous';
     }
-    dispatch('page:afterout', [page]);
+    dispatch('pageAfterOut', [page]);
   }
   function onPageAfterIn(page) {
     if (el !== page.el) return;
     routerPositionClass = 'page-current';
-    dispatch('page:afterin', [page]);
+    dispatch('pageAfterIn', [page]);
   }
   function onPageBeforeRemove(page) {
     if (el !== page.el) return;
     if (page.$navbarEl && page.$navbarEl[0] && page.$navbarEl.parent()[0] && page.$navbarEl.parent()[0] !== el) {
       page.$el.prepend(page.$navbarEl);
     }
-    dispatch('page:beforeremove', [page]);
+    dispatch('pageBeforeRemove', [page]);
   }
   // Helper events
   function onPageStack(pageEl) {
@@ -304,11 +304,11 @@
     hideToolbarOnScroll={hideToolbarOnScroll}
     messagesContent={messagesContent}
     loginScreen={loginScreen}
-    on:ptr:pullstart={onPtrPullStart}
-    on:ptr:pullmove={onPtrPullMove}
-    on:ptr:pullend={onPtrPullEnd}
-    on:ptr:refresh={onPtrRefresh}
-    on:ptr:done={onPtrDone}
+    on:ptrPullstart={onPtrPullStart}
+    on:ptrPullmove={onPtrPullMove}
+    on:ptrPullend={onPtrPullEnd}
+    on:ptrRefresh={onPtrRefresh}
+    on:ptrDone={onPtrDone}
     on:infinite={onInfinite}
   >
     <slot name="static"></slot>

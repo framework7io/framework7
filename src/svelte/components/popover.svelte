@@ -23,6 +23,10 @@
   let el;
   let f7Popover;
 
+  export function instance() {
+    return f7Popover;
+  }
+
   export function open(anim) {
     if (!f7Popover) return undefined;
     return f7Popover.open(anim);
@@ -39,16 +43,16 @@
   );
 
   function onOpen(instance) {
-    dispatch('popover:open', [instance]);
+    dispatch('popoverOpen', [instance]);
   }
   function onOpened(instance) {
-    dispatch('popover:opened', [instance]);
+    dispatch('popoverOpened', [instance]);
   }
   function onClose(instance) {
-    dispatch('popover:close', [instance]);
+    dispatch('popoverClose', [instance]);
   }
   function onClosed(instance) {
-    dispatch('popover:closed', [instance]);
+    dispatch('popoverClosed', [instance]);
   }
 
 

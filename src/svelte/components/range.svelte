@@ -36,6 +36,10 @@
   let el;
   let f7Range;
 
+  export function instance() {
+    return f7Range;
+  }
+
   $: classes = Utils.classNames(
     className,
     'range-slider',
@@ -77,10 +81,10 @@
         limitKnobPosition,
         on: {
           change(range, val) {
-            dispatch('range:change', [val]);
+            dispatch('rangeChange', [val]);
           },
           changed(range, val) {
-            dispatch('range:changed', [val]);
+            dispatch('rangeChanged', [val]);
           },
         },
       }));

@@ -30,6 +30,10 @@
   let el;
   let f7Messages;
 
+  export function instance() {
+    return f7Messages;
+  }
+
   $: classes = Utils.classNames(
     className,
     'messages',
@@ -96,6 +100,6 @@
 
 </script>
 
-<div bind:this={el} id={id} style={style} className={classes}>
+<div bind:this={el} id={id} style={style} class={classes}>
   <slot />
 </div>

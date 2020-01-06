@@ -41,6 +41,10 @@
   let updateSheetVisible;
   let updateAttachmentsVisible;
 
+  export function instance() {
+    return f7Messagebar;
+  }
+
   $: classes = Utils.classNames(
     className,
     'toolbar',
@@ -94,16 +98,16 @@
     dispatch('click', [event]);
   }
 
-  function onAttachmentDelete(instance, attachmentEl, attachmentElIndex) {
-    dispatch('messagebar:attachmentdelete', [instance, attachmentEl, attachmentElIndex]);
+  function onAttachmentDelete(inst, attachmentEl, attachmentElIndex) {
+    dispatch('messagebarAttachmentDelete', [inst, attachmentEl, attachmentElIndex]);
   }
 
-  function onAttachmentClick(instance, attachmentEl, attachmentElIndex) {
-    dispatch('messagebar:attachmentclick', [instance, attachmentEl, attachmentElIndex]);
+  function onAttachmentClick(inst, attachmentEl, attachmentElIndex) {
+    dispatch('messagebarAttachmentClick', [inst, attachmentEl, attachmentElIndex]);
   }
 
-  function onResizePage(instance) {
-    dispatch('messagebar:resizepage', [instance]);
+  function onResizePage(inst) {
+    dispatch('messagebarResizePage', [inst]);
   }
 
   onMount(() => {
@@ -176,7 +180,7 @@
         name={name}
         readonly={readonly}
         resizable={resizable}
-        value={value}
+        value={value || ''}
         on:input={onInput}
         on:change={onChange}
         on:focus={onFocus}

@@ -55,23 +55,23 @@
   // Event handlers
   function onPtrPullStart(ptrEl) {
     if (ptrEl !== pageContentEl) return;
-    dispatch('ptr:pullstart');
+    dispatch('ptrPullStart');
   }
   function onPtrPullMove(ptrEl) {
     if (ptrEl !== pageContentEl) return;
-    dispatch('ptr:pullmove');
+    dispatch('ptrPullMove');
   }
   function onPtrPullEnd(ptrEl) {
     if (ptrEl !== pageContentEl) return;
-    dispatch('ptr:pullend');
+    dispatch('ptrPullEnd');
   }
   function onPtrRefresh(ptrEl, done) {
     if (ptrEl !== pageContentEl) return;
-    dispatch('ptr:refresh', [done]);
+    dispatch('ptrRefresh', [done]);
   }
   function onPtrDone(ptrEl) {
     if (ptrEl !== pageContentEl) return;
-    dispatch('ptr:done');
+    dispatch('ptrDone');
   }
   function onInfinite(infEl) {
     if (infEl !== pageContentEl) return;
@@ -79,11 +79,11 @@
   }
   function onTabShow(tabEl) {
     if (pageContentEl !== tabEl) return;
-    dispatch('tab:show');
+    dispatch('tabShow');
   }
   function onTabHide(tabEl) {
     if (pageContentEl !== tabEl) return;
-    dispatch('tab:hide');
+    dispatch('tabHide');
   }
 
   function mountPageContent() {

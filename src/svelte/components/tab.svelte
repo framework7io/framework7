@@ -26,11 +26,11 @@
 
   function onTabShow(tabEl) {
     if (tabEl !== el) return;
-    dispatch('tab:show');
+    dispatch('tabShow');
   }
   function onTabHide(tabEl) {
     if (tabEl !== el) return;
-    dispatch('tab:hide');
+    dispatch('tabHide');
   }
 
   onMount(() => {

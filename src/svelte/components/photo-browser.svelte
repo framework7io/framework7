@@ -39,6 +39,10 @@
 
   let f7PhotoBrowser;
 
+  export function instance() {
+    return f7PhotoBrowser;
+  }
+
   export function open(index) {
     return f7PhotoBrowser.open(index);
   }
@@ -111,19 +115,19 @@
       pbParams = Utils.extend({}, pbParams, {
         on: {
           open() {
-            dispatch('photobrowser:open');
+            dispatch('photoBrowserOpen');
           },
           close() {
-            dispatch('photobrowser:close');
+            dispatch('photoBrowserClose');
           },
           opened() {
-            dispatch('photobrowser:opened');
+            dispatch('photoBrowserOpened');
           },
           closed() {
-            dispatch('photobrowser:closed');
+            dispatch('photoBrowserClosed');
           },
           swipeToClose() {
-            dispatch('photobrowser:swipetoclose');
+            dispatch('photoBrowserSwipeToClose');
           },
         },
       });

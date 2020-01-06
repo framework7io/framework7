@@ -48,7 +48,7 @@
   }
   function onResize(targetEl) {
     if (el !== targetEl) return;
-    dispatch('grid:resize');
+    dispatch('gridResize');
   }
 
   onMount(() => {

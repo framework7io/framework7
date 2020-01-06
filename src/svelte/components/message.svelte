@@ -14,6 +14,7 @@
   export { className as class };
 
   export let text = undefined;
+  export let htmlText = undefined;
   export let name = undefined;
   export let avatar = undefined;
   export let type = 'sent';
@@ -35,7 +36,7 @@
     className,
     'message',
     {
-      'message-sent': type === 'sent',
+      'message-sent': type === 'sent' || !type,
       'message-received': type === 'received',
       'message-typing': typing,
       'message-first': first,
@@ -63,32 +64,32 @@
   }
 
   function onNameClick() {
-    dispatch('click:name');
+    dispatch('clickName');
   }
 
   function onTextClick() {
-    dispatch('click:text');
+    dispatch('clickText');
   }
 
   function onAvatarClick() {
-    dispatch('click:avatar');
+    dispatch('clickAvatar');
   }
 
   function onHeaderClick() {
-    dispatch('click:header');
+    dispatch('clickHeader');
   }
 
   function onFooterClick() {
-    dispatch('click:footer');
+    dispatch('clickFooter');
   }
 
   function onBubbleClick() {
-    dispatch('click:bubble');
+    dispatch('clickBubble');
   }
 
 </script>
 <!-- svelte-ignore a11y-missing-attribute -->
-<div id={id} style={style} className={classes} on:click={onClick}>
+<div id={id} style={style} class={classes} on:click={onClick}>
   <slot name="start"/>
   {#if (avatar || hasAvatarSlots)}
     <div
@@ -103,13 +104,13 @@
     <slot name="content-start"/>
     {#if (hasNameSlots || name)}
       <div class="message-name" on:click={onNameClick}>
-        {name}
+        {name || ''}
         <slot name="name"/>
       </div>
     {/if}
     {#if (hasHeaderSlots || header)}
       <div class="message-header" on:click={onHeaderClick}>
-        {header}
+        {header || ''}
         <slot name="header"/>
       </div>
     {/if}
@@ -125,13 +126,14 @@
       {/if}
       {#if (hasTextHeaderSlots || textHeader)}
         <div class="message-text-header">
-          {textHeader}
+          {textHeader || ''}
           <slot name="text-header"/>
         </div>
       {/if}
-      {#if (hasTextSlots || text || typing)}
+      {#if (hasTextSlots || text || htmlText || typing)}
         <div class="message-text" on:click={onTextClick}>
-          {text}
+          {text || ''}
+          {#if htmlText}{@html htmlText}{/if}
           <slot name="text"/>
           {#if typing}
             <div class="message-typing-indicator">
@@ -144,7 +146,7 @@
       {/if}
       {#if (hasTextFooterSlots || textFooter)}
         <div class="message-text-footer">
-          {textFooter}
+          {textFooter || ''}
           <slot name="text-footer"/>
         </div>
       {/if}
@@ -153,7 +155,7 @@
     </div>
     {#if (hasFooterSlots || footer)}
       <div class="message-footer" on:click={onFooterClick}>
-        {footer}
+        {footer || ''}
         <slot name="footer"/>
       </div>
     {/if}

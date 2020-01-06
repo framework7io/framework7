@@ -30,6 +30,10 @@
   let innerEl;
   let f7Sheet;
 
+  export function instance() {
+    return f7Sheet;
+  }
+
   export function open(anim) {
     if (!f7Sheet) return undefined;
     return f7Sheet.open(anim);
@@ -57,25 +61,25 @@
   );
 
   function onOpen(instance) {
-    dispatch('sheet:open', [instance]);
+    dispatch('sheetOpen', [instance]);
   }
   function onOpened(instance) {
-    dispatch('sheet:opened', [instance]);
+    dispatch('sheetOpened', [instance]);
   }
   function onClose(instance) {
-    dispatch('sheet:close', [instance]);
+    dispatch('sheetClose', [instance]);
   }
   function onClosed(instance) {
-    dispatch('sheet:closed', [instance]);
+    dispatch('sheetClosed', [instance]);
   }
   function onStepProgress(instance, progress) {
-    dispatch('sheet:stepprogress', [instance, progress]);
+    dispatch('sheetStepProgress', [instance, progress]);
   }
   function onStepOpen(instance) {
-    dispatch('sheet:stepopen', [instance]);
+    dispatch('sheetStepOpen', [instance]);
   }
   function onStepClose(instance) {
-    dispatch('sheet:stepclose', [instance]);
+    dispatch('sheetStepClose', [instance]);
   }
 
   function watchOpened(openedPassed) {

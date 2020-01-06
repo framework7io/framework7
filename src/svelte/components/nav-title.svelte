@@ -28,7 +28,7 @@
 >
   {#if title}{title}{/if}
   {#if subtitle}
-    <span clas="subtitle">{subtitle}</span>
+    <span class="subtitle">{subtitle}</span>
   {/if}
   <slot />
 </div>

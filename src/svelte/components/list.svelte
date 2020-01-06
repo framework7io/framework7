@@ -13,6 +13,8 @@
   let className = undefined;
   export { className as class };
 
+  export let ul = true;
+
   export let inset = false;
   export let xsmallInset = false;
   export let smallInset = false;
@@ -112,23 +114,23 @@
   }
   function onSortableEnable(sortableEl) {
     if (sortableEl !== el) return;
-    dispatch('sortable:enable');
+    dispatch('sortableEnable');
   }
   function onSortableDisable(sortableEl) {
     if (sortableEl !== el) return;
-    dispatch('sortable:disable');
+    dispatch('sortableDisable');
   }
   function onSortableSort(sortableEl, sortData, listEl) {
     if (sortableEl !== listEl) return;
-    dispatch('sortable:sort', [sortData]);
+    dispatch('sortableSort', [sortData]);
   }
   function onTabShow(tabEl) {
     if (tabEl !== el) return;
-    dispatch('tab:show');
+    dispatch('tabShow');
   }
   function onTabHide(tabEl) {
     if (tabEl !== el) return;
-    dispatch('tab:hide');
+    dispatch('tabHide');
   }
 
   onMount(() => {
@@ -148,19 +150,19 @@
         on: {
           itemBeforeInsert(itemEl, item) {
             const vl = this;
-            dispatch('virtual:itembeforeinsert', [vl, itemEl, item]);
+            dispatch('virtualItemBeforeInsert', [vl, itemEl, item]);
           },
           beforeClear(fragment) {
             const vl = this;
-            dispatch('virtual:beforeclear', [vl, fragment]);
+            dispatch('virtualBeforeClear', [vl, fragment]);
           },
           itemsBeforeInsert(fragment) {
             const vl = this;
-            dispatch('virtual:itemsbeforeinsert', [vl, fragment]);
+            dispatch('virtualItemsBeforeInsert', [vl, fragment]);
           },
           itemsAfterInsert(fragment) {
             const vl = this;
-            dispatch('virtual:itemsafterinsert', [vl, fragment]);
+            dispatch('virtualItemsAfterInsert', [vl, fragment]);
           },
         },
       },
@@ -190,11 +192,13 @@
     on:submit={onSubmit}
   >
     <slot name="before-list" />
-    {#if hasUlSlots}
+    {#if hasUlSlots && ul}
     <ul>
       <slot name="list" />
       <slot />
     </ul>
+    {:else}
+    <slot />
     {/if}
     <slot name="after-list" />
   </form>
@@ -207,11 +211,13 @@
     data-sortable-move-elements={typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined}
   >
     <slot name="before-list" />
-    {#if hasUlSlots}
+    {#if hasUlSlots && ul}
     <ul>
       <slot name="list" />
       <slot />
     </ul>
+    {:else}
+    <slot />
     {/if}
     <slot name="after-list" />
   </div>

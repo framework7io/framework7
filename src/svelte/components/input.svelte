@@ -131,8 +131,11 @@
   $: needsValue = type !== 'file' && type !== 'datepicker' && type !== 'colorpicker';
 
   $: inputValue = (() => {
-    if (typeof value !== 'undefined') inputValue = value;
-    else inputValue = domValue();
+    if (typeof value !== 'undefined') {
+      inputValue = value;
+    } else {
+      inputValue = domValue();
+    }
   })();
 
   $: classes = Utils.classNames(
@@ -171,19 +174,19 @@
   $: hasInfoSlots = hasSlots(arguments, 'info');
 
   function onTextareaResize(event) {
-    dispatch('textarea:resize', [event]);
+    dispatch('textareaResize', [event]);
   }
 
   function onInputNotEmpty(event) {
-    dispatch('input:notempty', [event]);
+    dispatch('inputNotEmpty', [event]);
   }
 
   function onInputEmpty(event) {
-    dispatch('input:empty', [event]);
+    dispatch('inputEmpty', [event]);
   }
 
   function onInputClear(event) {
-    dispatch('input:clear', [event]);
+    dispatch('inputClear', [event]);
   }
 
   function onInput(...args) {
@@ -209,7 +212,7 @@
   function onChange(...args) {
     dispatch('change', [...args]);
     if (type === 'texteditor') {
-      dispatch('texteditor:change', [args[1]]);
+      dispatch('textEditorChange', [args[1]]);
     }
   }
 
@@ -233,7 +236,7 @@
           value,
           on: {
             change(calendar, calendarValue) {
-              dispatch('calendar:change', [calendarValue]);
+              dispatch('calendarChange', [calendarValue]);
             },
           },
           ...(calendarParams || {}),
@@ -245,7 +248,7 @@
           value,
           on: {
             change(colorPicker, colorPickerValue) {
-              dispatch('colorpicker:change', [colorPickerValue]);
+              dispatch('colorpickerChange', [colorPickerValue]);
             },
           },
           ...(colorPickerParams || {}),
@@ -348,7 +351,7 @@
         on:blur={onBlur}
         on:input={onInput}
         on:change={onChange}
-        value={inputValue}
+        value={inputValue || ''}
       >
         <slot />
       </select>
@@ -388,7 +391,7 @@
         on:blur={onBlur}
         on:input={onInput}
         on:change={onChange}
-        value={inputValue}
+        value={inputValue || ''}
       />
     {:else if type === 'toggle'}
       <Toggle
@@ -410,17 +413,17 @@
         name={name}
         id={inputId}
         input={true}
-        on:range:change={onChange}
+        on:rangeChange={onChange}
       />
     {:else if type === 'texteditor'}
       <TextEditor
-        value={value}
+        value={value || ''}
         resizable={resizable}
         placeholder={placeholder}
-        on:texteditor:focus={onFocus}
-        on:texteditor:blur={onBlur}
-        on:texteditor:input={onInput}
-        on:texteditor:change={onChange}
+        on:textEditorFocus={onFocus}
+        on:textEditorBlur={onBlur}
+        on:textEditorInput={onInput}
+        on:textEditorChange={onChange}
         {...textEditorParams}
       />
     {:else}
@@ -460,7 +463,7 @@
         on:blur={onBlur}
         on:input={onInput}
         on:change={onChange}
-        value={type === 'datepicker' || type === 'colorpicker' || type === 'file' ? '' : value}
+        value={type === 'datepicker' || type === 'colorpicker' || type === 'file' ? '' : inputValue || ''}
       />
     {/if}
     {#if errorMessage && errorMessageForce}
@@ -513,7 +516,7 @@
       on:blur={onBlur}
       on:input={onInput}
       on:change={onChange}
-      value={inputValue}
+      value={inputValue || ''}
     >
       <slot />
     </select>
@@ -553,7 +556,7 @@
       on:blur={onBlur}
       on:input={onInput}
       on:change={onChange}
-      value={inputValue}
+      value={inputValue || ''}
     />
   {:else if type === 'toggle'}
     <Toggle
@@ -575,17 +578,17 @@
       name={name}
       id={inputId}
       input={true}
-      on:range:change={onChange}
+      on:rangeChange={onChange}
     />
   {:else if type === 'texteditor'}
     <TextEditor
-      value={value}
+      value={value || ''}
       resizable={resizable}
       placeholder={placeholder}
-      on:texteditor:focus={onFocus}
-      on:texteditor:blur={onBlur}
-      on:texteditor:input={onInput}
-      on:texteditor:change={onChange}
+      on:textEditorFocus={onFocus}
+      on:textEditorBlur={onBlur}
+      on:textEditorInput={onInput}
+      on:textEditorChange={onChange}
       {...textEditorParams}
     />
   {:else}
@@ -625,7 +628,7 @@
       on:blur={onBlur}
       on:input={onInput}
       on:change={onChange}
-      value={type === 'datepicker' || type === 'colorpicker' || type === 'file' ? '' : value}
+      value={type === 'datepicker' || type === 'colorpicker' || type === 'file' ? '' : inputValue || ''}
     />
   {/if}
 {/if}

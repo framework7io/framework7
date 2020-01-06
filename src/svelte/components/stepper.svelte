@@ -56,6 +56,10 @@
   let el;
   let f7Stepper;
 
+  export function instance() {
+    return f7Stepper;
+  }
+
   $: classes = Utils.classNames(
     className,
     'stepper',
@@ -101,11 +105,11 @@
   }
 
   function onMinusClick(event) {
-    dispatch('stepper:minusclick', [event, f7Stepper]);
+    dispatch('stepperMinusClick', [event, f7Stepper]);
   }
 
   function onPlusClick(event) {
-    dispatch('stepper:plusclick', [event, f7Stepper]);
+    dispatch('stepperPlusClick', [event, f7Stepper]);
   }
 
   onMount(() => {
@@ -126,7 +130,7 @@
         buttonsEndInputMode,
         on: {
           change(stepper, newValue) {
-            dispatch('stepper:change', [newValue]);
+            dispatch('stepperChange', [newValue]);
           },
         },
       }));

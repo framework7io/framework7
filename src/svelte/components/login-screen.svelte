@@ -17,6 +17,10 @@
   let el;
   let f7LoginScreen;
 
+  export function instance() {
+    return f7LoginScreen;
+  }
+
   export function open(anim) {
     if (!f7LoginScreen) return undefined;
     return f7LoginScreen.open(anim);
@@ -33,16 +37,16 @@
   );
 
   function onOpen(instance) {
-    dispatch('loginscreen:open', [instance]);
+    dispatch('loginscreenOpen', [instance]);
   }
   function onOpened(instance) {
-    dispatch('loginscreen:opened', [instance]);
+    dispatch('loginscreenOpened', [instance]);
   }
   function onClose(instance) {
-    dispatch('loginscreen:close', [instance]);
+    dispatch('loginscreenClose', [instance]);
   }
   function onClosed(instance) {
-    dispatch('loginscreen:closed', [instance]);
+    dispatch('loginscreenClosed', [instance]);
   }
 
   function watchOpened(openedPassed) {

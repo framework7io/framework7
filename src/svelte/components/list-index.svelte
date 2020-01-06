@@ -26,6 +26,10 @@
   let el;
   let f7ListIndex;
 
+  export function instance() {
+    return f7ListIndex;
+  }
+
   $: classes = Utils.classNames(
     className,
     'list-index',
@@ -64,7 +68,7 @@
         label,
         on: {
           select(index, itemContent, itemIndex) {
-            dispatch('listindex:select', [itemContent, itemIndex]);
+            dispatch('listIndexSelect', [itemContent, itemIndex]);
           },
         },
       });

@@ -35,8 +35,8 @@
   $: backLinkText = backLink !== true && needBackLinkText ? backLink : undefined;
 
   function onBackClick() {
-    dispatch('click:back');
-    dispatch('back:click');
+    dispatch('clickBack');
+    dispatch('backBlick');
   }
 </script>
 <div

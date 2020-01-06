@@ -61,11 +61,11 @@
 
   function onShow(toolbarEl) {
     if (el !== toolbarEl) return;
-    dispatch('toolbar:show');
+    dispatch('toolbarShow');
   }
   function onHide(toolbarEl) {
     if (el !== toolbarEl) return;
-    dispatch('toolbar:hide');
+    dispatch('toolbarHide');
   }
 
   onMount(() => {

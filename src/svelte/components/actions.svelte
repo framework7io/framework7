@@ -26,6 +26,10 @@
   let el;
   let f7Actions;
 
+  export function instance() {
+    return f7Actions;
+  }
+
   export function open(anim) {
     if (!f7Actions) return undefined;
     return f7Actions.open(anim);
@@ -45,16 +49,16 @@
   );
 
   function onOpen(instance) {
-    dispatch('actions:open', [instance]);
+    dispatch('actionsOpen', [instance]);
   }
   function onOpened(instance) {
-    dispatch('actions:opened', [instance]);
+    dispatch('actionsOpened', [instance]);
   }
   function onClose(instance) {
-    dispatch('actions:close', [instance]);
+    dispatch('actionsClose', [instance]);
   }
   function onClosed(instance) {
-    dispatch('actions:closed', [instance]);
+    dispatch('actionsClosed', [instance]);
   }
 
   function watchOpened(openedPassed) {

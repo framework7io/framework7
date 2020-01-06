@@ -30,34 +30,38 @@
   let routerData;
   let f7View;
 
+  export function instance() {
+    return f7View;
+  }
+
   function onSwipeBackMove(data) {
-    dispatch('swipeback:move', [data]);
+    dispatch('swipeBackMove', [data]);
   }
   function onSwipeBackBeforeChange(data) {
-    dispatch('swipeback:beforechange', [data]);
+    dispatch('swipeBackBeforeChange', [data]);
   }
   function onSwipeBackAfterChange(data) {
-    dispatch('swipeback:afterchange', [data]);
+    dispatch('swipeBackAfterChange', [data]);
   }
   function onSwipeBackBeforeReset(data) {
-    dispatch('swipeback:beforereset', [data]);
+    dispatch('swipeBackBeforeReset', [data]);
   }
   function onSwipeBackAfterReset(data) {
-    dispatch('swipeback:afterreset', [data]);
+    dispatch('swipeBackAfterReset', [data]);
   }
   function onTabShow(tabEl) {
     if (el !== tabEl) return;
-    dispatch('tab:show');
+    dispatch('tabShow');
   }
   function onTabHide(tabEl) {
     if (el !== tabEl) return;
-    dispatch('tab:hide');
+    dispatch('tabHide');
   }
 
   function onViewInit(view) {
     f7View = view;
     routerData.instance = view;
-    dispatch('view:init', [view]);
+    dispatch('viewInit', [view]);
   }
 
   onMount(() => {

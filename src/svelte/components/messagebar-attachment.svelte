@@ -21,11 +21,11 @@
   );
 
   function onClick(event) {
-    dispatch('attachment:click', [event]);
+    dispatch('attachmentClick', [event]);
   }
 
   function onDeleteClick(event) {
-    dispatch('attachment:delete', [event]);
+    dispatch('attachmentDelete', [event]);
   }
 </script>
 <!-- svelte-ignore a11y-missing-attribute -->

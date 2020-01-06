@@ -32,6 +32,11 @@
 
   let el;
   let f7Panel;
+
+  export function instance() {
+    return f7Panel;
+  }
+
   // eslint-disable-next-line
   $: sideComputed = side || (left ? 'left' : right ? 'right' : 'left');
   // eslint-disable-next-line
@@ -70,34 +75,34 @@
   $: watchOpened(opened);
 
   function onOpen(...args) {
-    dispatch('panel:open', [...args]);
+    dispatch('panelOpen', [...args]);
   }
   function onOpened(...args) {
-    dispatch('panel:opened', [...args]);
+    dispatch('panelOpened', [...args]);
   }
   function onClose(...args) {
-    dispatch('panel:close', [...args]);
+    dispatch('panelClose', [...args]);
   }
   function onClosed(...args) {
-    dispatch('panel:closed', [...args]);
+    dispatch('panelClosed', [...args]);
   }
   function onBackdropClick(...args) {
-    dispatch('panel:backdrop-click', [...args]);
+    dispatch('panelBackdropClick', [...args]);
   }
   function onSwipe(...args) {
-    dispatch('panel:swipe', [...args]);
+    dispatch('panelSwipe', [...args]);
   }
   function onSwipeOpen(...args) {
-    dispatch('panel:swipeopen', [...args]);
+    dispatch('panelSwipeOpen', [...args]);
   }
   function onBreakpoint(...args) {
-    dispatch('panel:breakpoint', [...args]);
+    dispatch('panelBreakpoint', [...args]);
   }
   function onCollapsedBreakpoint(...args) {
-    dispatch('panel:collapsedbreakpoint', [...args]);
+    dispatch('panelCollapsedBreakpoint', [...args]);
   }
   function onResize(...args) {
-    dispatch('panel:resize', [...args]);
+    dispatch('panelResize', [...args]);
   }
 
   export function open(animate) {

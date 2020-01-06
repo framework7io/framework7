@@ -98,21 +98,21 @@
 
   function onHide(navbarEl) {
     if (el !== navbarEl) return;
-    dispatch('navbar:hide');
+    dispatch('navbarHide');
   }
   function onShow(navbarEl) {
     if (el !== navbarEl) return;
-    dispatch('navbar:show');
+    dispatch('navbarShow');
   }
   function onExpand(navbarEl) {
     if (el !== navbarEl) return;
     largeCollapsed = false;
-    dispatch('navbar:expand');
+    dispatch('navbarExpand');
   }
   function onCollapse(navbarEl) {
     if (el !== navbarEl) return;
     largeCollapsed = true;
-    dispatch('navbar:collapse');
+    dispatch('navbarCollapse');
   }
   function onNavbarPosition(navbarEl, position) {
     if (el !== navbarEl) return;
@@ -132,7 +132,7 @@
     routerNavbarMasterStack = false;
   }
   function onBackClick() {
-    dispatch('click:back');
+    dispatch('clickBack');
   }
 
   function mountNavbar() {

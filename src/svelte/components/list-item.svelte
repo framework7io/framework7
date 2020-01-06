@@ -172,35 +172,35 @@
   }
   function onSwipeoutOverswipeEnter(eventEl) {
     if (eventEl !== el) return;
-    dispatch('swipeout:overswipeenter');
+    dispatch('swipeoutOverswipeEnter');
   }
   function onSwipeoutOverswipeExit(eventEl) {
     if (eventEl !== el) return;
-    dispatch('swipeout:overswipeexit');
+    dispatch('swipeoutOverswipeExit');
   }
   function onSwipeoutDeleted(eventEl) {
     if (eventEl !== el) return;
-    dispatch('swipeout:deleted');
+    dispatch('swipeoutDeleted');
   }
   function onSwipeoutDelete(eventEl) {
     if (eventEl !== el) return;
-    dispatch('swipeout:delete');
+    dispatch('swipeoutDelete');
   }
   function onSwipeoutClose(eventEl) {
     if (eventEl !== el) return;
-    dispatch('swipeout:close');
+    dispatch('swipeoutClose');
   }
   function onSwipeoutClosed(eventEl) {
     if (eventEl !== el) return;
-    dispatch('swipeout:closed');
+    dispatch('swipeoutClosed');
   }
   function onSwipeoutOpen(eventEl) {
     if (eventEl !== el) return;
-    dispatch('swipeout:open');
+    dispatch('swipeoutOpen');
   }
   function onSwipeoutOpened(eventEl) {
     if (eventEl !== el) return;
-    dispatch('swipeout:opened');
+    dispatch('swipeoutOpened');
   }
   function onSwipeout(eventEl, progress) {
     if (eventEl !== el) return;
@@ -208,27 +208,27 @@
   }
   function onAccBeforeClose(eventEl, prevent) {
     if (eventEl !== el) return;
-    dispatch('accordion:beforeclose', [prevent]);
+    dispatch('accordionBeforeClose', [prevent]);
   }
   function onAccClose(eventEl) {
     if (eventEl !== el) return;
-    dispatch('accordion:close');
+    dispatch('accordionClose');
   }
   function onAccClosed(eventEl) {
     if (eventEl !== el) return;
-    dispatch('accordion:closed');
+    dispatch('accordionClosed');
   }
   function onAccBeforeOpen(eventEl, prevent) {
     if (eventEl !== el) return;
-    dispatch('accordion:beforeopen', [prevent]);
+    dispatch('accordionBeforeOpen', [prevent]);
   }
   function onAccOpen(eventEl) {
     if (eventEl !== el) return;
-    dispatch('accordion:open');
+    dispatch('accordionOpen');
   }
   function onAccOpened(eventEl) {
     if (eventEl !== el) return;
-    dispatch('accordion:opened');
+    dispatch('accordionOpened');
   }
   function onChange(event) {
     dispatch('change', [event]);

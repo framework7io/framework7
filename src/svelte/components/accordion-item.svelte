@@ -27,27 +27,27 @@
 
   function onBeforeOpen(accEl, prevent) {
     if (accEl !== el) return;
-    dispatch('accordion:beforeopen', [prevent]);
+    dispatch('accordionBeforeOpen', [prevent]);
   }
   function onOpen(accEl) {
     if (accEl !== el) return;
-    dispatch('accordion:open');
+    dispatch('accordionOpen');
   }
   function onOpened(accEl) {
     if (accEl !== el) return;
-    dispatch('accordion:opened');
+    dispatch('accordionOpened');
   }
   function onBeforeClose(accEl, prevent) {
     if (accEl !== el) return;
-    dispatch('accordion:beforeclose', [prevent]);
+    dispatch('accordionBeforeClose', [prevent]);
   }
   function onClose(accEl) {
     if (accEl !== el) return;
-    dispatch('accordion:close');
+    dispatch('accordionClose');
   }
   function onClosed(accEl) {
     if (accEl !== el) return;
-    dispatch('accordion:closed');
+    dispatch('accordionClosed');
   }
 
   onMount(() => {

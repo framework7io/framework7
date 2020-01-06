@@ -23,6 +23,10 @@
   let inputEl;
   let f7Toggle;
 
+  export function instance() {
+    return f7Toggle;
+  }
+
   $: classes = Utils.classNames(
     'toggle',
     className,
@@ -50,7 +54,7 @@
         el,
         on: {
           change(toggle) {
-            dispatch('toggle:change', [toggle.checked]);
+            dispatch('toggleChange', [toggle.checked]);
           },
         },
       });
