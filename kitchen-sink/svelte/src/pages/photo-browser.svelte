@@ -21,7 +21,7 @@
         <Button fill on:click={() => popup.open()}>Popup</Button>
       </Col>
       <Col>
-        <PhotoBrowser photos={photos} type="page" backLinkText="Back" bind:this={ page } />
+        <PhotoBrowser photos={photos} type="page" pageBackLinkText="Back" bind:this={ page } />
         <Button fill on:click={() => page.open()}>Page</Button>
       </Col>
     </Row>
@@ -38,7 +38,7 @@
         <Button fill on:click={() => popupDark.open()}>Popup</Button>
       </Col>
       <Col>
-        <PhotoBrowser photos={photos} theme="dark" type="page" backLinkText="Back" bind:this={ pageDark } />
+        <PhotoBrowser photos={photos} theme="dark" type="page" pageBackLinkText="Back" bind:this={ pageDark } />
         <Button fill on:click={() => pageDark.open()}>Page</Button>
       </Col>
     </Row>

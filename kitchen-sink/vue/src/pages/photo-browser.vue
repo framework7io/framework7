@@ -22,7 +22,7 @@
           <f7-button fill @click="$refs.popup.open()">Popup</f7-button>
         </f7-col>
         <f7-col>
-          <f7-photo-browser :photos="photos" type="page" back-link-text="Back" ref="page"></f7-photo-browser>
+          <f7-photo-browser :photos="photos" type="page" page-back-link-text="Back" ref="page"></f7-photo-browser>
           <f7-button fill @click="$refs.page.open()">Page</f7-button>
         </f7-col>
       </f7-row>
@@ -39,7 +39,7 @@
           <f7-button fill @click="$refs.popupDark.open()">Popup</f7-button>
         </f7-col>
         <f7-col>
-          <f7-photo-browser :photos="photos" theme="dark" type="page" back-link-text="Back" ref="pageDark"></f7-photo-browser>
+          <f7-photo-browser :photos="photos" theme="dark" type="page" page-back-link-text="Back" ref="pageDark"></f7-photo-browser>
           <f7-button fill @click="$refs.pageDark.open()">Page</f7-button>
         </f7-col>
       </f7-row>

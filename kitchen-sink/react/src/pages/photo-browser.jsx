@@ -48,7 +48,7 @@ export default class extends React.Component {
               <Button fill onClick={() => this.popup.open()}>Popup</Button>
             </Col>
             <Col>
-              <PhotoBrowser photos={this.state.photos} type="page" backLinkText="Back" ref={(el) => {this.page = el}} />
+              <PhotoBrowser photos={this.state.photos} type="page" pageBackLinkText="Back" ref={(el) => {this.page = el}} />
               <Button fill onClick={() => this.page.open()}>Page</Button>
             </Col>
           </Row>
@@ -65,7 +65,7 @@ export default class extends React.Component {
               <Button fill onClick={() => this.popupDark.open()}>Popup</Button>
             </Col>
             <Col>
-              <PhotoBrowser photos={this.state.photos} theme="dark" type="page" backLinkText="Back" ref={(el) => {this.pageDark = el}} />
+              <PhotoBrowser photos={this.state.photos} theme="dark" type="page" pageBackLinkText="Back" ref={(el) => {this.pageDark = el}} />
               <Button fill onClick={() => this.pageDark.open()}>Page</Button>
             </Col>
           </Row>
