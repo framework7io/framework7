@@ -5,6 +5,8 @@
   import Utils from '../utils/utils';
   import hasSlots from '../utils/has-slots';
 
+  import Icon from './icon.svelte';
+
   const dispatch = createEventDispatcher();
 
   export let id = undefined;
@@ -40,19 +42,33 @@
   // eslint-disable-next-line
   $: hasTextSlots = hasSlots(arguments, 'text');
 
-  function onClick() {
-    dispatch('click');
+  $: hasIcon = $$props.icon || $$props.iconMaterial || $$props.iconF7 || $$props.iconMd || $$props.iconIos || $$props.iconAurora;
+
+  function onClick(e) {
+    dispatch('click', [e]);
   }
-  function onDeleteClick() {
-    dispatch('delete');
+  function onDeleteClick(e) {
+    dispatch('delete', [e]);
   }
 
 </script>
 <!-- svelte-ignore a11y-missing-attribute -->
 <!-- svelte-ignore a11y-missing-content -->
 <div id={id} style={style} class={classes} on:click={onClick}>
-  {#if media || hasMediaSlots}
+  {#if media || hasMediaSlots || hasIcon}
     <div class={mediaClasses}>
+      {#if hasIcon}
+        <Icon
+          material={$$props.iconMaterial}
+          f7={$$props.iconF7}
+          icon={$$props.icon}
+          md={$$props.iconMd}
+          ios={$$props.iconIos}
+          aurora={$$props.iconAurora}
+          color={$$props.iconColor}
+          size={$$props.iconSize}
+        />
+      {/if}
       {media}
       <slot name="media" />
     </div>
