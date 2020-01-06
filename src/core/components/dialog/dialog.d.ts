@@ -60,7 +60,7 @@ export namespace Dialog {
     backdrop?: boolean
     /** When enabled, dialog will be closed on backdrop click. (default true) */
     closeByBackdropClick?: boolean
-    /** Whether the Dialog should be opened/closed with animation or not. Can be overwritten in .open() and .close() methods. (default true) */
+    /** Whether the Dialog should be opened/closed with animation or not. Can be overwritten in .open() and .close() methods. (default false) */
     animate?: boolean
     /** Dialog title. */
     title?: string
