@@ -28,7 +28,7 @@ import Gauge from './pages/gauge.svelte';
 import Grid from './pages/grid.svelte';
 // import Icons from './pages/icons.svelte';
 import InfiniteScroll from './pages/infinite-scroll.svelte';
-// import Inputs from './pages/inputs.svelte';
+import Inputs from './pages/inputs.svelte';
 import LazyLoad from './pages/lazy-load.svelte';
 import List from './pages/list.svelte';
 import ListIndex from './pages/list-index.svelte';
@@ -38,14 +38,14 @@ import ListIndex from './pages/list-index.svelte';
 import Messages from './pages/messages.svelte';
 import Navbar from './pages/navbar.svelte';
 import NavbarHideScroll from './pages/navbar-hide-scroll.svelte';
-// import Notifications from './pages/notifications.svelte';
+import Notifications from './pages/notifications.svelte';
 import Panel from './pages/panel.svelte';
 import PhotoBrowser from './pages/photo-browser.svelte';
 // import Picker from './pages/picker.svelte';
 // import Popup from './pages/popup.svelte';
 // import Popover from './pages/popover.svelte';
-// import Preloader from './pages/preloader.svelte';
-// import Progressbar from './pages/progressbar.svelte';
+import Preloader from './pages/preloader.svelte';
+import Progressbar from './pages/progressbar.svelte';
 import PullToRefresh from './pages/pull-to-refresh.svelte';
 import Radio from './pages/radio.svelte';
 // import Range from './pages/range.svelte';
@@ -53,11 +53,11 @@ import Radio from './pages/radio.svelte';
 // import SearchbarExpandable from './pages/searchbar-expandable.svelte';
 // import SheetModal from './pages/sheet-modal.svelte';
 // import Skeleton from './pages/skeleton.svelte';
-// import SmartSelect from './pages/smart-select.svelte';
-// import Sortable from './pages/sortable.svelte';
+import SmartSelect from './pages/smart-select.svelte';
+import Sortable from './pages/sortable.svelte';
 // import Stepper from './pages/stepper.svelte';
-// import Subnavbar from './pages/subnavbar.svelte';
-// import SubnavbarTitle from './pages/subnavbar-title.svelte';
+import Subnavbar from './pages/subnavbar.svelte';
+import SubnavbarTitle from './pages/subnavbar-title.svelte';
 // import Swiper from './pages/swiper.svelte';
 // import SwiperHorizontal from './pages/swiper-horizontal.svelte';
 // import SwiperVertical from './pages/swiper-vertical.svelte';
@@ -78,26 +78,26 @@ import Radio from './pages/radio.svelte';
 // import SwiperPaginationFraction from './pages/swiper-pagination-fraction.svelte';
 // import SwiperZoom from './pages/swiper-zoom.svelte';
 // import Swipeout from './pages/swipeout.svelte';
-// import Tabs from './pages/tabs.svelte';
-// import TabsStatic from './pages/tabs-static.svelte';
-// import TabsAnimated from './pages/tabs-animated.svelte';
-// import TabsSwipeable from './pages/tabs-swipeable.svelte';
-// import TabsRoutable from './pages/tabs-routable.svelte';
+import Tabs from './pages/tabs.svelte';
+import TabsStatic from './pages/tabs-static.svelte';
+import TabsAnimated from './pages/tabs-animated.svelte';
+import TabsSwipeable from './pages/tabs-swipeable.svelte';
+import TabsRoutable from './pages/tabs-routable.svelte';
 // import TextEditor from './pages/text-editor.svelte';
 // import Toast from './pages/toast.svelte';
 // import Toggle from './pages/toggle.svelte';
-// import ToolbarTabbar from './pages/toolbar-tabbar.svelte';
-// import Tabbar from './pages/tabbar.svelte';
-// import TabbarLabels from './pages/tabbar-labels.svelte';
-// import TabbarScrollable from './pages/tabbar-scrollable.svelte';
-// import ToolbarHideScroll from './pages/toolbar-hide-scroll.svelte';
-// import Tooltip from './pages/tooltip.svelte';
+import ToolbarTabbar from './pages/toolbar-tabbar.svelte';
+import Tabbar from './pages/tabbar.svelte';
+import TabbarLabels from './pages/tabbar-labels.svelte';
+import TabbarScrollable from './pages/tabbar-scrollable.svelte';
+import ToolbarHideScroll from './pages/toolbar-hide-scroll.svelte';
+import Tooltip from './pages/tooltip.svelte';
 // import Timeline from './pages/timeline.svelte';
 // import TimelineVertical from './pages/timeline-vertical.svelte';
 // import TimelineHorizontal from './pages/timeline-horizontal.svelte';
 // import TimelineHorizontalCalendar from './pages/timeline-horizontal-calendar.svelte';
-// import Treeview from './pages/treeview.svelte';
-// import VirtualList from './pages/virtual-list.svelte';
+import Treeview from './pages/treeview.svelte';
+import VirtualList from './pages/virtual-list.svelte';
 // import ColorThemes from './pages/color-themes.svelte';
 
 // import PageTransitions from './pages/page-transitions.svelte';
@@ -287,10 +287,10 @@ export default [
     path: '/infinite-scroll/',
     component: InfiniteScroll,
   },
-  // {
-  //   path: '/inputs/',
-  //   component: Inputs,
-  // },
+  {
+    path: '/inputs/',
+    component: Inputs,
+  },
   {
     path: '/lazy-load/',
     component: LazyLoad,
@@ -327,10 +327,10 @@ export default [
     path: '/navbar-hide-scroll/',
     component: NavbarHideScroll,
   },
-  // {
-  //   path: '/notifications/',
-  //   component: Notifications,
-  // },
+  {
+    path: '/notifications/',
+    component: Notifications,
+  },
   {
     path: '/panel/',
     component: Panel,
@@ -351,14 +351,14 @@ export default [
   //   path: '/popover/',
   //   component: Popover,
   // },
-  // {
-  //   path: '/preloader/',
-  //   component: Preloader,
-  // },
-  // {
-  //   path: '/progressbar/',
-  //   component: Progressbar,
-  // },
+  {
+    path: '/preloader/',
+    component: Preloader,
+  },
+  {
+    path: '/progressbar/',
+    component: Progressbar,
+  },
   {
     path: '/pull-to-refresh/',
     component: PullToRefresh,
@@ -387,26 +387,26 @@ export default [
   //   path: '/skeleton/',
   //   component: Skeleton,
   // },
-  // {
-  //   path: '/smart-select/',
-  //   component: SmartSelect,
-  // },
-  // {
-  //   path: '/sortable/',
-  //   component: Sortable,
-  // },
+  {
+    path: '/smart-select/',
+    component: SmartSelect,
+  },
+  {
+    path: '/sortable/',
+    component: Sortable,
+  },
   // {
   //   path: '/stepper/',
   //   component: Stepper,
   // },
-  // {
-  //   path: '/subnavbar/',
-  //   component: Subnavbar,
-  // },
-  // {
-  //   path: '/subnavbar-title/',
-  //   component: SubnavbarTitle,
-  // },
+  {
+    path: '/subnavbar/',
+    component: Subnavbar,
+  },
+  {
+    path: '/subnavbar-title/',
+    component: SubnavbarTitle,
+  },
   // {
   //   path: '/swiper/',
   //   component: Swiper,
@@ -489,64 +489,64 @@ export default [
   //   path: '/swipeout/',
   //   component: Swipeout,
   // },
-  // {
-  //   path: '/tabs/',
-  //   component: Tabs,
-  // },
-  // {
-  //   path: '/tabs-static/',
-  //   component: TabsStatic,
-  // },
-  // {
-  //   path: '/tabs-animated/',
-  //   component: TabsAnimated,
-  // },
-  // {
-  //   path: '/tabs-swipeable/',
-  //   component: TabsSwipeable,
-  // },
-  // {
-  //   path: '/tabs-routable/',
-  //   component: TabsRoutable,
-  //   tabs: [
-  //     {
-  //       path: '/',
-  //       id: 'tab1',
-  //       content: `
-  //       <div class="block">
-  //         <p>Tab 1 content</p>
-  //         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae facilis laudantium voluptates obcaecati officia cum, sit libero commodi. Ratione illo suscipit temporibus sequi iure ad laboriosam accusamus?</p>
-  //         <p>Saepe explicabo voluptas ducimus provident, doloremque quo totam molestias! Suscipit blanditiis eaque exercitationem praesentium reprehenderit, fuga accusamus possimus sed, sint facilis ratione quod, qui dignissimos voluptas! Aliquam rerum consequuntur deleniti.</p>
-  //         <p>Totam reprehenderit amet commodi ipsum nam provident doloremque possimus odio itaque, est animi culpa modi consequatur reiciendis corporis libero laudantium sed eveniet unde delectus a maiores nihil dolores? Natus, perferendis.</p>
-  //       </div>
-  //       `,
-  //     },
-  //     {
-  //       path: '/tab2/',
-  //       id: 'tab2',
-  //       content: `
-  //       <div class="block">
-  //         <p>Tab 2 content</p>
-  //         <p>Suscipit, facere quasi atque totam. Repudiandae facilis at optio atque, rem nam, natus ratione cum enim voluptatem suscipit veniam! Repellat, est debitis. Modi nam mollitia explicabo, unde aliquid impedit! Adipisci!</p>
-  //         <p>Deserunt adipisci tempora asperiores, quo, nisi ex delectus vitae consectetur iste fugiat iusto dolorem autem. Itaque, ipsa voluptas, a assumenda rem, dolorum porro accusantium, officiis veniam nostrum cum cumque impedit.</p>
-  //         <p>Laborum illum ipsa voluptatibus possimus nesciunt ex consequatur rem, natus ad praesentium rerum libero consectetur temporibus cupiditate atque aspernatur, eaque provident eligendi quaerat ea soluta doloremque. Iure fugit, minima facere.</p>
-  //       </div>
-  //       `,
-  //     },
-  //     {
-  //       path: '/tab3/',
-  //       id: 'tab3',
-  //       content: `
-  //       <div class="block">
-  //         <p>Tab 3 content</p>
-  //         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae facilis laudantium voluptates obcaecati officia cum, sit libero commodi. Ratione illo suscipit temporibus sequi iure ad laboriosam accusamus?</p>
-  //         <p>Deserunt adipisci tempora asperiores, quo, nisi ex delectus vitae consectetur iste fugiat iusto dolorem autem. Itaque, ipsa voluptas, a assumenda rem, dolorum porro accusantium, officiis veniam nostrum cum cumque impedit.</p>
-  //         <p>Laborum illum ipsa voluptatibus possimus nesciunt ex consequatur rem, natus ad praesentium rerum libero consectetur temporibus cupiditate atque aspernatur, eaque provident eligendi quaerat ea soluta doloremque. Iure fugit, minima facere.</p>
-  //       </div>
-  //       `,
-  //     },
-  //   ],
-  // },
+  {
+    path: '/tabs/',
+    component: Tabs,
+  },
+  {
+    path: '/tabs-static/',
+    component: TabsStatic,
+  },
+  {
+    path: '/tabs-animated/',
+    component: TabsAnimated,
+  },
+  {
+    path: '/tabs-swipeable/',
+    component: TabsSwipeable,
+  },
+  {
+    path: '/tabs-routable/',
+    component: TabsRoutable,
+    tabs: [
+      {
+        path: '/',
+        id: 'tab1',
+        content: `
+        <div class="block">
+          <p>Tab 1 content</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae facilis laudantium voluptates obcaecati officia cum, sit libero commodi. Ratione illo suscipit temporibus sequi iure ad laboriosam accusamus?</p>
+          <p>Saepe explicabo voluptas ducimus provident, doloremque quo totam molestias! Suscipit blanditiis eaque exercitationem praesentium reprehenderit, fuga accusamus possimus sed, sint facilis ratione quod, qui dignissimos voluptas! Aliquam rerum consequuntur deleniti.</p>
+          <p>Totam reprehenderit amet commodi ipsum nam provident doloremque possimus odio itaque, est animi culpa modi consequatur reiciendis corporis libero laudantium sed eveniet unde delectus a maiores nihil dolores? Natus, perferendis.</p>
+        </div>
+        `,
+      },
+      {
+        path: '/tab2/',
+        id: 'tab2',
+        content: `
+        <div class="block">
+          <p>Tab 2 content</p>
+          <p>Suscipit, facere quasi atque totam. Repudiandae facilis at optio atque, rem nam, natus ratione cum enim voluptatem suscipit veniam! Repellat, est debitis. Modi nam mollitia explicabo, unde aliquid impedit! Adipisci!</p>
+          <p>Deserunt adipisci tempora asperiores, quo, nisi ex delectus vitae consectetur iste fugiat iusto dolorem autem. Itaque, ipsa voluptas, a assumenda rem, dolorum porro accusantium, officiis veniam nostrum cum cumque impedit.</p>
+          <p>Laborum illum ipsa voluptatibus possimus nesciunt ex consequatur rem, natus ad praesentium rerum libero consectetur temporibus cupiditate atque aspernatur, eaque provident eligendi quaerat ea soluta doloremque. Iure fugit, minima facere.</p>
+        </div>
+        `,
+      },
+      {
+        path: '/tab3/',
+        id: 'tab3',
+        content: `
+        <div class="block">
+          <p>Tab 3 content</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae facilis laudantium voluptates obcaecati officia cum, sit libero commodi. Ratione illo suscipit temporibus sequi iure ad laboriosam accusamus?</p>
+          <p>Deserunt adipisci tempora asperiores, quo, nisi ex delectus vitae consectetur iste fugiat iusto dolorem autem. Itaque, ipsa voluptas, a assumenda rem, dolorum porro accusantium, officiis veniam nostrum cum cumque impedit.</p>
+          <p>Laborum illum ipsa voluptatibus possimus nesciunt ex consequatur rem, natus ad praesentium rerum libero consectetur temporibus cupiditate atque aspernatur, eaque provident eligendi quaerat ea soluta doloremque. Iure fugit, minima facere.</p>
+        </div>
+        `,
+      },
+    ],
+  },
   // {
   //   path: '/text-editor/',
   //   component: TextEditor,
@@ -559,32 +559,32 @@ export default [
   //   path: '/toggle/',
   //   component: Toggle,
   // },
-  // {
-  //   path: '/toolbar-tabbar/',
-  //   component: ToolbarTabbar,
-  //   routes: [
-  //     {
-  //       path: 'tabbar/',
-  //       component: Tabbar,
-  //     },
-  //     {
-  //       path: 'tabbar-labels/',
-  //       component: TabbarLabels,
-  //     },
-  //     {
-  //       path: 'tabbar-scrollable/',
-  //       component: TabbarScrollable,
-  //     },
-  //     {
-  //       path: 'toolbar-hide-scroll/',
-  //       component: ToolbarHideScroll,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: '/tooltip/',
-  //   component: Tooltip,
-  // },
+  {
+    path: '/toolbar-tabbar/',
+    component: ToolbarTabbar,
+    routes: [
+      {
+        path: 'tabbar/',
+        component: Tabbar,
+      },
+      {
+        path: 'tabbar-labels/',
+        component: TabbarLabels,
+      },
+      {
+        path: 'tabbar-scrollable/',
+        component: TabbarScrollable,
+      },
+      {
+        path: 'toolbar-hide-scroll/',
+        component: ToolbarHideScroll,
+      },
+    ],
+  },
+  {
+    path: '/tooltip/',
+    component: Tooltip,
+  },
   // {
   //   path: '/timeline/',
   //   component: Timeline,
@@ -601,14 +601,14 @@ export default [
   //   path: '/timeline-horizontal-calendar/',
   //   component: TimelineHorizontalCalendar,
   // },
-  // {
-  //   path: '/treeview/',
-  //   component: Treeview,
-  // },
-  // {
-  //   path: '/virtual-list/',
-  //   component: VirtualList,
-  // },
+  {
+    path: '/treeview/',
+    component: Treeview,
+  },
+  {
+    path: '/virtual-list/',
+    component: VirtualList,
+  },
 
   // // Color Themes
   // {
