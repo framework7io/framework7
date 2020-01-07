@@ -60,15 +60,18 @@
 
   function onClick(e) {
     dispatch('click', [e]);
+    if (typeof $$props.onClick === 'function') $$props.onClick(e);
   }
 
   function onOpened(itemEl) {
     if (itemEl !== el) return;
     dispatch('menuOpened', [el]);
+    if (typeof $$props.onMenuOpened === 'function') $$props.onMenuOpened(el);
   }
   function onClosed(itemEl) {
     if (itemEl !== el) return;
     dispatch('menuClosed', [el]);
+    if (typeof $$props.onMenuClosed === 'function') $$props.onMenuClosed(el);
   }
 
   onMount(() => {

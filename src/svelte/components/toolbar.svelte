@@ -62,10 +62,12 @@
   function onShow(toolbarEl) {
     if (el !== toolbarEl) return;
     dispatch('toolbarShow');
+    if (typeof $$props.onToolbarShow === 'function') $$props.onToolbarShow();
   }
   function onHide(toolbarEl) {
     if (el !== toolbarEl) return;
     dispatch('toolbarHide');
+    if (typeof $$props.onToolbarHide === 'function') $$props.onToolbarHide();
   }
 
   onMount(() => {

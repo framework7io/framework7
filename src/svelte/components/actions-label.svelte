@@ -25,6 +25,7 @@
 
   function onClick() {
     dispatch('click');
+    if (typeof $$props.onClick === 'function') $$props.onClick();
   }
 </script>
 

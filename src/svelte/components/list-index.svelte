@@ -74,6 +74,7 @@
         on: {
           select(index, itemContent, itemIndex) {
             dispatch('listIndexSelect', [itemContent, itemIndex]);
+            if (typeof $$props.onListIndexSelect === 'function') $$props.onListIndexSelect(itemContent, itemIndex);
           },
         },
       });

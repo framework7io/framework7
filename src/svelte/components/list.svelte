@@ -111,26 +111,32 @@
 
   function onSubmit(event) {
     dispatch('submit', [event]);
+    if (typeof $$props.onSubmit === 'function') $$props.onSubmit(event);
   }
   function onSortableEnable(sortableEl) {
     if (sortableEl !== el) return;
     dispatch('sortableEnable');
+    if (typeof $$props.onSortableEnable === 'function') $$props.onSortableEnable();
   }
   function onSortableDisable(sortableEl) {
     if (sortableEl !== el) return;
     dispatch('sortableDisable');
+    if (typeof $$props.onSortableDisable === 'function') $$props.onSortableDisable();
   }
   function onSortableSort(sortableEl, sortData, listEl) {
     if (sortableEl !== listEl) return;
     dispatch('sortableSort', [sortData]);
+    if (typeof $$props.onSortableSort === 'function') $$props.onSortableSort(sortData);
   }
   function onTabShow(tabEl) {
     if (tabEl !== el) return;
     dispatch('tabShow');
+    if (typeof $$props.onTabShow === 'function') $$props.onTabShow();
   }
   function onTabHide(tabEl) {
     if (tabEl !== el) return;
     dispatch('tabHide');
+    if (typeof $$props.onTabHide === 'function') $$props.onTabHide();
   }
 
   onMount(() => {
@@ -151,18 +157,22 @@
           itemBeforeInsert(itemEl, item) {
             const vl = this;
             dispatch('virtualItemBeforeInsert', [vl, itemEl, item]);
+            if (typeof $$props.onVirtualItemBeforeInsert === 'function') $$props.onVirtualItemBeforeInsert(vl, itemEl, item);
           },
           beforeClear(fragment) {
             const vl = this;
             dispatch('virtualBeforeClear', [vl, fragment]);
+            if (typeof $$props.onVirtualBeforeClear === 'function') $$props.onVirtualBeforeClear(vl, fragment);
           },
           itemsBeforeInsert(fragment) {
             const vl = this;
             dispatch('virtualItemsBeforeInsert', [vl, fragment]);
+            if (typeof $$props.onVirtualItemsBeforeInsert === 'function') $$props.onVirtualItemsBeforeInsert(vl, fragment);
           },
           itemsAfterInsert(fragment) {
             const vl = this;
             dispatch('virtualItemsAfterInsert', [vl, fragment]);
+            if (typeof $$props.onVirtualItemsAfterInsert === 'function') $$props.onVirtualItemsAfterInsert(vl, fragment);
           },
         },
       },

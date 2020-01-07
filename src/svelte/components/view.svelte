@@ -36,32 +36,40 @@
 
   function onSwipeBackMove(data) {
     dispatch('swipeBackMove', [data]);
+    if (typeof $$props.onSwipeBackMove === 'function') $$props.onSwipeBackMove(data);
   }
   function onSwipeBackBeforeChange(data) {
     dispatch('swipeBackBeforeChange', [data]);
+    if (typeof $$props.onSwipeBackBeforeChange === 'function') $$props.onSwipeBackBeforeChange(data);
   }
   function onSwipeBackAfterChange(data) {
     dispatch('swipeBackAfterChange', [data]);
+    if (typeof $$props.onSwipeBackAfterChange === 'function') $$props.onSwipeBackAfterChange(data);
   }
   function onSwipeBackBeforeReset(data) {
     dispatch('swipeBackBeforeReset', [data]);
+    if (typeof $$props.onSwipeBackBeforeReset === 'function') $$props.onSwipeBackBeforeReset(data);
   }
   function onSwipeBackAfterReset(data) {
     dispatch('swipeBackAfterReset', [data]);
+    if (typeof $$props.onSwipeBackAfterReset === 'function') $$props.onSwipeBackAfterReset(data);
   }
   function onTabShow(tabEl) {
     if (el !== tabEl) return;
     dispatch('tabShow');
+    if (typeof $$props.onTabShow === 'function') $$props.onTabShow();
   }
   function onTabHide(tabEl) {
     if (el !== tabEl) return;
     dispatch('tabHide');
+    if (typeof $$props.onTabHide === 'function') $$props.onTabHide();
   }
 
   function onViewInit(view) {
     f7View = view;
     routerData.instance = view;
     dispatch('viewInit', [view]);
+    if (typeof $$props.onViewInit === 'function') $$props.onViewInit(view);
   }
 
   onMount(() => {

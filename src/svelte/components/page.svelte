@@ -87,26 +87,33 @@
   // Handlers
   function onPtrPullStart() {
     dispatch('ptrPullStart');
+    if (typeof $$props.onPtrPullStart === 'function') $$props.onPtrPullStart();
   }
   function onPtrPullMove() {
     dispatch('ptrPullMove');
+    if (typeof $$props.onPtrPullMove === 'function') $$props.onPtrPullMove();
   }
   function onPtrPullEnd() {
     dispatch('ptrPullEnd');
+    if (typeof $$props.onPtrPullEnd === 'function') $$props.onPtrPullEnd();
   }
   function onPtrRefresh(e) {
     dispatch('ptrRefresh', [...e.detail]);
+    if (typeof $$props.onPtrRefresh === 'function') $$props.onPtrRefresh(...e.detail);
   }
   function onPtrDone() {
     dispatch('ptrDone');
+    if (typeof $$props.onPtrDone === 'function') $$props.onPtrDone();
   }
   function onInfinite() {
     dispatch('infinite');
+    if (typeof $$props.onInfinite === 'function') $$props.onInfinite();
   }
   // Main Page Events
   function onPageMounted(page) {
     if (el !== page.el) return;
     dispatch('pageMounted', [page]);
+    if (typeof $$props.onPageMounted === 'function') $$props.onPageMounted(page);
   }
   function onPageInit(page) {
     if (el !== page.el) return;
@@ -129,10 +136,12 @@
     }
 
     dispatch('pageInit', [page]);
+    if (typeof $$props.onPageInit === 'function') $$props.onPageInit(page);
   }
   function onPageReinit(page) {
     if (el !== page.el) return;
     dispatch('pageReinit', [page]);
+    if (typeof $$props.onPageReinit === 'function') $$props.onPageReinit(page);
   }
   function onPageBeforeIn(page) {
     if (el !== page.el) return;
@@ -145,10 +154,12 @@
       }
     }
     dispatch('pageBeforeIn', [page]);
+    if (typeof $$props.onPageBeforeIn === 'function') $$props.onPageBeforeIn(page);
   }
   function onPageBeforeOut(page) {
     if (el !== page.el) return;
     dispatch('pageBeforeOut', [page]);
+    if (typeof $$props.onPageBeforeOut === 'function') $$props.onPageBeforeOut(page);
   }
   function onPageAfterOut(page) {
     if (el !== page.el) return;
@@ -159,11 +170,13 @@
       routerPositionClass = 'page-previous';
     }
     dispatch('pageAfterOut', [page]);
+    if (typeof $$props.onPageAfterOut === 'function') $$props.onPageAfterOut(page);
   }
   function onPageAfterIn(page) {
     if (el !== page.el) return;
     routerPositionClass = 'page-current';
     dispatch('pageAfterIn', [page]);
+    if (typeof $$props.onPageAfterIn === 'function') $$props.onPageAfterIn(page);
   }
   function onPageBeforeRemove(page) {
     if (el !== page.el) return;
@@ -171,6 +184,7 @@
       page.$el.prepend(page.$navbarEl);
     }
     dispatch('pageBeforeRemove', [page]);
+    if (typeof $$props.onPageBeforeRemove === 'function') $$props.onPageBeforeRemove(page);
   }
   // Helper events
   function onPageStack(pageEl) {
@@ -304,12 +318,12 @@
     hideToolbarOnScroll={hideToolbarOnScroll}
     messagesContent={messagesContent}
     loginScreen={loginScreen}
-    on:ptrPullstart={onPtrPullStart}
-    on:ptrPullmove={onPtrPullMove}
-    on:ptrPullend={onPtrPullEnd}
-    on:ptrRefresh={onPtrRefresh}
-    on:ptrDone={onPtrDone}
-    on:infinite={onInfinite}
+    onPtrPullStart={onPtrPullStart}
+    onPtrPullMove={onPtrPullMove}
+    onPtrPullEnd={onPtrPullEnd}
+    onPtrRefresh={onPtrRefresh}
+    onPtrDone={onPtrDone}
+    onInfinite={onInfinite}
   >
     <slot name="static"></slot>
     <slot></slot>

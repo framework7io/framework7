@@ -83,18 +83,22 @@
 
   function onChange(event) {
     dispatch('change', [...event.detail]);
+    if (typeof $$props.onChange === 'function') $$props.onChange(...event.detail);
   }
 
   function onInput(event) {
     dispatch('input', [...event.detail]);
+    if (typeof $$props.onInput === 'function') $$props.onInput(...event.detail);
   }
 
   function onFocus(event) {
     dispatch('focus', [...event.detail]);
+    if (typeof $$props.onFocus === 'function') $$props.onFocus(...event.detail);
   }
 
   function onBlur(event) {
     dispatch('blur', [...event.detail]);
+    if (typeof $$props.onBlur === 'function') $$props.onBlur(...event.detail);
   }
 
   function onClick(event) {
@@ -104,20 +108,26 @@
       ? () => { f7Messagebar.clear(); }
       : () => {};
     dispatch('submit', [inputValue, clear]);
+    if (typeof $$props.onSubmit === 'function') $$props.onSubmit(inputValue, clear);
     dispatch('send', [inputValue, clear]);
+    if (typeof $$props.onSend === 'function') $$props.onSend(inputValue, clear);
     dispatch('click', [event]);
+    if (typeof $$props.onClick === 'function') $$props.onClick(event);
   }
 
   function onAttachmentDelete(inst, attachmentEl, attachmentElIndex) {
     dispatch('messagebarAttachmentDelete', [inst, attachmentEl, attachmentElIndex]);
+    if (typeof $$props.onMessagebarAttachmentDelete === 'function') $$props.onMessagebarAttachmentDelete(inst, attachmentEl, attachmentElIndex);
   }
 
   function onAttachmentClick(inst, attachmentEl, attachmentElIndex) {
     dispatch('messagebarAttachmentClick', [inst, attachmentEl, attachmentElIndex]);
+    if (typeof $$props.onMessagebarAttachmentClick === 'function') $$props.onMessagebarAttachmentClick(inst, attachmentEl, attachmentElIndex);
   }
 
   function onResizePage(inst) {
     dispatch('messagebarResizePage', [inst]);
+    if (typeof $$props.onMessagebarResizePage === 'function') $$props.onMessagebarResizePage(inst);
   }
 
   onMount(() => {
@@ -199,7 +209,7 @@
       <slot name="after-inner" />
     </div>
     {#if ((sendLink && sendLink.length > 0) || hasSendLinkSlots)}
-      <Link on:click={onClick}>
+      <Link onClick={onClick}>
         <slot name="send-link" />
         {sendLink}
       </Link>

@@ -50,15 +50,19 @@
 
   function onOpen(instance) {
     dispatch('actionsOpen', [instance]);
+    if (typeof $$props.onActionsOpen === 'function') $$props.onActionsOpen(instance);
   }
   function onOpened(instance) {
     dispatch('actionsOpened', [instance]);
+    if (typeof $$props.onActionsOpened === 'function') $$props.onActionsOpened(instance);
   }
   function onClose(instance) {
     dispatch('actionsClose', [instance]);
+    if (typeof $$props.onActionsClose === 'function') $$props.onActionsClose(instance);
   }
   function onClosed(instance) {
     dispatch('actionsClosed', [instance]);
+    if (typeof $$props.onActionsClosed === 'function') $$props.onActionsClosed(instance);
   }
 
   let initialWatched = false;

@@ -44,15 +44,19 @@
 
   function onOpen(instance) {
     dispatch('popoverOpen', [instance]);
+    if (typeof $$props.onPopoverOpen === 'function') $$props.onPopoverOpen(instance);
   }
   function onOpened(instance) {
     dispatch('popoverOpened', [instance]);
+    if (typeof $$props.onPopoverOpened === 'function') $$props.onPopoverOpened(instance);
   }
   function onClose(instance) {
     dispatch('popoverClose', [instance]);
+    if (typeof $$props.onPopoverClose === 'function') $$props.onPopoverClose(instance);
   }
   function onClosed(instance) {
     dispatch('popoverClosed', [instance]);
+    if (typeof $$props.onPopoverClosed === 'function') $$props.onPopoverClosed(instance);
   }
 
   let initialWatched = false;

@@ -98,18 +98,22 @@
 
   function onInput(event) {
     dispatch('input', [event, f7Stepper]);
+    if (typeof $$props.onInput === 'function') $$props.onInput(event, f7Stepper);
   }
 
   function onChange(event) {
     dispatch('change', [event, f7Stepper]);
+    if (typeof $$props.onChange === 'function') $$props.onChange(event, f7Stepper);
   }
 
   function onMinusClick(event) {
     dispatch('stepperMinusClick', [event, f7Stepper]);
+    if (typeof $$props.onStepperMinusClick === 'function') $$props.onStepperMinusClick(event, f7Stepper);
   }
 
   function onPlusClick(event) {
     dispatch('stepperPlusClick', [event, f7Stepper]);
+    if (typeof $$props.onStepperPlusClick === 'function') $$props.onStepperPlusClick(event, f7Stepper);
   }
 
   onMount(() => {
@@ -131,6 +135,7 @@
         on: {
           change(stepper, newValue) {
             dispatch('stepperChange', [newValue]);
+            if (typeof $$props.onStepperChange === 'function') $$props.onStepperChange(newValue);
           },
         },
       }));

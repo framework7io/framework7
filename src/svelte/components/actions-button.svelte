@@ -37,6 +37,7 @@
       f7.instance.actions.close(dom7(el).parents('.actions-modal'));
     }
     dispatch('click');
+    if (typeof $$props.onClick === 'function') $$props.onClick();
   }
 
 </script>

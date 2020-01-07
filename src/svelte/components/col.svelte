@@ -45,10 +45,12 @@
 
   function onClick() {
     dispatch('click');
+    if (typeof $$props.onClick === 'function') $$props.onClick();
   }
   function onResize(targetEl) {
     if (el !== targetEl) return;
     dispatch('gridResize');
+    if (typeof $$props.onGridResize === 'function') $$props.onGridResize();
   }
 
   onMount(() => {

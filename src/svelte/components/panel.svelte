@@ -86,33 +86,43 @@
 
   function onOpen(...args) {
     dispatch('panelOpen', [...args]);
+    if (typeof $$props.onPanelOpen === 'function') $$props.onPanelOpen(...args);
   }
   function onOpened(...args) {
     dispatch('panelOpened', [...args]);
+    if (typeof $$props.onPanelOpened === 'function') $$props.onPanelOpened(...args);
   }
   function onClose(...args) {
     dispatch('panelClose', [...args]);
+    if (typeof $$props.onPanelClose === 'function') $$props.onPanelClose(...args);
   }
   function onClosed(...args) {
     dispatch('panelClosed', [...args]);
+    if (typeof $$props.onPanelClosed === 'function') $$props.onPanelClosed(...args);
   }
   function onBackdropClick(...args) {
     dispatch('panelBackdropClick', [...args]);
+    if (typeof $$props.onPanelBackdropClick === 'function') $$props.onPanelBackdropClick(...args);
   }
   function onSwipe(...args) {
     dispatch('panelSwipe', [...args]);
+    if (typeof $$props.onPanelSwipe === 'function') $$props.onPanelSwipe(...args);
   }
   function onSwipeOpen(...args) {
     dispatch('panelSwipeOpen', [...args]);
+    if (typeof $$props.onPanelSwipeOpen === 'function') $$props.onPanelSwipeOpen(...args);
   }
   function onBreakpoint(...args) {
     dispatch('panelBreakpoint', [...args]);
+    if (typeof $$props.onPanelBreakpoint === 'function') $$props.onPanelBreakpoint(...args);
   }
   function onCollapsedBreakpoint(...args) {
     dispatch('panelCollapsedBreakpoint', [...args]);
+    if (typeof $$props.onPanelCollapsedBreakpoint === 'function') $$props.onPanelCollapsedBreakpoint(...args);
   }
   function onResize(...args) {
     dispatch('panelResize', [...args]);
+    if (typeof $$props.onPanelResize === 'function') $$props.onPanelResize(...args);
   }
 
   export function open(animate) {

@@ -83,22 +83,27 @@
   function onBeforeOpen(cardEl, prevent) {
     if (cardEl !== el) return;
     dispatch('cardBeforeOpen', [el, prevent]);
+    if (typeof $$props.onCardBeforeOpen === 'function') $$props.onCardBeforeOpen(el, prevent);
   }
   function onOpen(cardEl) {
     if (cardEl !== el) return;
     dispatch('cardOpen', [el]);
+    if (typeof $$props.onCardOpen === 'function') $$props.onCardOpen(el);
   }
   function onOpened(cardEl, pageEl) {
     if (cardEl !== el) return;
     dispatch('cardOpened', [el, pageEl]);
+    if (typeof $$props.onCardOpened === 'function') $$props.onCardOpened(el, pageEl);
   }
   function onClose(cardEl) {
     if (cardEl !== el) return;
     dispatch('cardClose', [el]);
+    if (typeof $$props.onCardClose === 'function') $$props.onCardClose(el);
   }
   function onClosed(cardEl, pageEl) {
     if (cardEl !== el) return;
     dispatch('cardClosed', [el, pageEl]);
+    if (typeof $$props.onCardClosed === 'function') $$props.onCardClosed(el, pageEl);
   }
 
   onMount(() => {

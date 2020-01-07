@@ -28,26 +28,32 @@
   function onBeforeOpen(accEl, prevent) {
     if (accEl !== el) return;
     dispatch('accordionBeforeOpen', [prevent]);
+    if (typeof $$props.onAccordionBeforeOpen === 'function') $$props.onAccordionBeforeOpen(prevent);
   }
   function onOpen(accEl) {
     if (accEl !== el) return;
     dispatch('accordionOpen');
+    if (typeof $$props.onAccordionOpen === 'function') $$props.onAccordionOpen();
   }
   function onOpened(accEl) {
     if (accEl !== el) return;
     dispatch('accordionOpened');
+    if (typeof $$props.onAccordionOpened === 'function') $$props.onAccordionOpened();
   }
   function onBeforeClose(accEl, prevent) {
     if (accEl !== el) return;
     dispatch('accordionBeforeClose', [prevent]);
+    if (typeof $$props.onAccordionBeforeClose === 'function') $$props.onAccordionBeforeClose(prevent);
   }
   function onClose(accEl) {
     if (accEl !== el) return;
     dispatch('accordionClose');
+    if (typeof $$props.onAccordionClose === 'function') $$props.onAccordionClose();
   }
   function onClosed(accEl) {
     if (accEl !== el) return;
     dispatch('accordionClosed');
+    if (typeof $$props.onAccordionClosed === 'function') $$props.onAccordionClosed();
   }
 
   onMount(() => {

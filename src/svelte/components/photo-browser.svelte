@@ -121,18 +121,23 @@
         on: {
           open() {
             dispatch('photoBrowserOpen');
+            if (typeof $$props.onPhotoBrowserOpen === 'function') $$props.onPhotoBrowserOpen();
           },
           close() {
             dispatch('photoBrowserClose');
+            if (typeof $$props.onPhotoBrowserClose === 'function') $$props.onPhotoBrowserClose();
           },
           opened() {
             dispatch('photoBrowserOpened');
+            if (typeof $$props.onPhotoBrowserOpened === 'function') $$props.onPhotoBrowserOpened();
           },
           closed() {
             dispatch('photoBrowserClosed');
+            if (typeof $$props.onPhotoBrowserClosed === 'function') $$props.onPhotoBrowserClosed();
           },
           swipeToClose() {
             dispatch('photoBrowserSwipeToClose');
+            if (typeof $$props.onPhotoBrowserSwipeToClose === 'function') $$props.onPhotoBrowserSwipeToClose();
           },
         },
       });

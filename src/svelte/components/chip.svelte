@@ -46,9 +46,11 @@
 
   function onClick(e) {
     dispatch('click', [e]);
+    if (typeof $$props.onClick === 'function') $$props.onClick(e);
   }
   function onDeleteClick(e) {
     dispatch('delete', [e]);
+    if (typeof $$props.onDelete === 'function') $$props.onDelete(e);
   }
 
 </script>

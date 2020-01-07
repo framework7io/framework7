@@ -33,10 +33,12 @@
   function onTabShow(tabEl) {
     if (el !== tabEl) return;
     dispatch('tabShow');
+    if (typeof $$props.onTabShow === 'function') $$props.onTabShow();
   }
   function onTabHide(tabEl) {
     if (el !== tabEl) return;
     dispatch('tabHide');
+    if (typeof $$props.onTabHide === 'function') $$props.onTabHide();
   }
 
   $: classes = Utils.classNames(

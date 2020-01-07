@@ -62,24 +62,31 @@
 
   function onOpen(instance) {
     dispatch('sheetOpen', [instance]);
+    if (typeof $$props.onSheetOpen === 'function') $$props.onSheetOpen(instance);
   }
   function onOpened(instance) {
     dispatch('sheetOpened', [instance]);
+    if (typeof $$props.onSheetOpened === 'function') $$props.onSheetOpened(instance);
   }
   function onClose(instance) {
     dispatch('sheetClose', [instance]);
+    if (typeof $$props.onSheetClose === 'function') $$props.onSheetClose(instance);
   }
   function onClosed(instance) {
     dispatch('sheetClosed', [instance]);
+    if (typeof $$props.onSheetClosed === 'function') $$props.onSheetClosed(instance);
   }
   function onStepProgress(instance, progress) {
     dispatch('sheetStepProgress', [instance, progress]);
+    if (typeof $$props.onSheetStepProgress === 'function') $$props.onSheetStepProgress(instance, progress);
   }
   function onStepOpen(instance) {
     dispatch('sheetStepOpen', [instance]);
+    if (typeof $$props.onSheetStepOpen === 'function') $$props.onSheetStepOpen(instance);
   }
   function onStepClose(instance) {
     dispatch('sheetStepClose', [instance]);
+    if (typeof $$props.onSheetStepClose === 'function') $$props.onSheetStepClose(instance);
   }
 
   let initialWatched = false;

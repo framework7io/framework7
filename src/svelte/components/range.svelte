@@ -82,9 +82,11 @@
         on: {
           change(range, val) {
             dispatch('rangeChange', [val]);
+            if (typeof $$props.onRangeChange === 'function') $$props.onRangeChange(val);
           },
           changed(range, val) {
             dispatch('rangeChanged', [val]);
+            if (typeof $$props.onRangeChanged === 'function') $$props.onRangeChanged(val);
           },
         },
       }));

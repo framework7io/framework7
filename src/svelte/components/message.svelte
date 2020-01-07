@@ -61,30 +61,37 @@
 
   function onClick() {
     dispatch('click');
+    if (typeof $$props.onClick === 'function') $$props.onClick();
   }
 
   function onNameClick() {
     dispatch('clickName');
+    if (typeof $$props.onClickName === 'function') $$props.onClickName();
   }
 
   function onTextClick() {
     dispatch('clickText');
+    if (typeof $$props.onClickText === 'function') $$props.onClickText();
   }
 
   function onAvatarClick() {
     dispatch('clickAvatar');
+    if (typeof $$props.onClickAvatar === 'function') $$props.onClickAvatar();
   }
 
   function onHeaderClick() {
     dispatch('clickHeader');
+    if (typeof $$props.onClickHeader === 'function') $$props.onClickHeader();
   }
 
   function onFooterClick() {
     dispatch('clickFooter');
+    if (typeof $$props.onClickFooter === 'function') $$props.onClickFooter();
   }
 
   function onBubbleClick() {
     dispatch('clickBubble');
+    if (typeof $$props.onClickBubble === 'function') $$props.onClickBubble();
   }
 
 </script>

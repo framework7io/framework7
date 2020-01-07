@@ -51,15 +51,19 @@
 
   function onOpen(instance) {
     dispatch('popupOpen', [instance]);
+    if (typeof $$props.onPopupOpen === 'function') $$props.onPopupOpen(instance);
   }
   function onOpened(instance) {
     dispatch('popupOpened', [instance]);
+    if (typeof $$props.onPopupOpened === 'function') $$props.onPopupOpened(instance);
   }
   function onClose(instance) {
     dispatch('popupClose', [instance]);
+    if (typeof $$props.onPopupClose === 'function') $$props.onPopupClose(instance);
   }
   function onClosed(instance) {
     dispatch('popupClosed', [instance]);
+    if (typeof $$props.onPopupClosed === 'function') $$props.onPopupClosed(instance);
   }
 
   let initialWatched = false;

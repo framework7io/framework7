@@ -172,40 +172,48 @@
 
   function onClick(event) {
     if (event.target.tagName.toLowerCase() !== 'input') {
-      dispatch('click', Array.isArray(event.detail) ? event.detail : [event]);
+      dispatch('click', event);
     }
   }
   function onSwipeoutOverswipeEnter(eventEl) {
     if (eventEl !== el) return;
     dispatch('swipeoutOverswipeEnter');
+    if (typeof $$props.onSwipeoutOverswipeEnter === 'function') $$props.onSwipeoutOverswipeEnter();
   }
   function onSwipeoutOverswipeExit(eventEl) {
     if (eventEl !== el) return;
     dispatch('swipeoutOverswipeExit');
+    if (typeof $$props.onSwipeoutOverswipeExit === 'function') $$props.onSwipeoutOverswipeExit();
   }
   function onSwipeoutDeleted(eventEl) {
     if (eventEl !== el) return;
     dispatch('swipeoutDeleted');
+    if (typeof $$props.onSwipeoutDeleted === 'function') $$props.onSwipeoutDeleted();
   }
   function onSwipeoutDelete(eventEl) {
     if (eventEl !== el) return;
     dispatch('swipeoutDelete');
+    if (typeof $$props.onSwipeoutDelete === 'function') $$props.onSwipeoutDelete();
   }
   function onSwipeoutClose(eventEl) {
     if (eventEl !== el) return;
     dispatch('swipeoutClose');
+    if (typeof $$props.onSwipeoutClose === 'function') $$props.onSwipeoutClose();
   }
   function onSwipeoutClosed(eventEl) {
     if (eventEl !== el) return;
     dispatch('swipeoutClosed');
+    if (typeof $$props.onSwipeoutClosed === 'function') $$props.onSwipeoutClosed();
   }
   function onSwipeoutOpen(eventEl) {
     if (eventEl !== el) return;
     dispatch('swipeoutOpen');
+    if (typeof $$props.onSwipeoutOpen === 'function') $$props.onSwipeoutOpen();
   }
   function onSwipeoutOpened(eventEl) {
     if (eventEl !== el) return;
     dispatch('swipeoutOpened');
+    if (typeof $$props.onSwipeoutOpened === 'function') $$props.onSwipeoutOpened();
   }
   function onSwipeout(eventEl, progress) {
     if (eventEl !== el) return;
@@ -214,29 +222,36 @@
   function onAccBeforeClose(eventEl, prevent) {
     if (eventEl !== el) return;
     dispatch('accordionBeforeClose', [prevent]);
+    if (typeof $$props.onAccordionBeforeClose === 'function') $$props.onAccordionBeforeClose(prevent);
   }
   function onAccClose(eventEl) {
     if (eventEl !== el) return;
     dispatch('accordionClose');
+    if (typeof $$props.onAccordionClose === 'function') $$props.onAccordionClose();
   }
   function onAccClosed(eventEl) {
     if (eventEl !== el) return;
     dispatch('accordionClosed');
+    if (typeof $$props.onAccordionClosed === 'function') $$props.onAccordionClosed();
   }
   function onAccBeforeOpen(eventEl, prevent) {
     if (eventEl !== el) return;
     dispatch('accordionBeforeOpen', [prevent]);
+    if (typeof $$props.onAccordionBeforeOpen === 'function') $$props.onAccordionBeforeOpen(prevent);
   }
   function onAccOpen(eventEl) {
     if (eventEl !== el) return;
     dispatch('accordionOpen');
+    if (typeof $$props.onAccordionOpen === 'function') $$props.onAccordionOpen();
   }
   function onAccOpened(eventEl) {
     if (eventEl !== el) return;
     dispatch('accordionOpened');
+    if (typeof $$props.onAccordionOpened === 'function') $$props.onAccordionOpened();
   }
   function onChange(event) {
     dispatch('change', [event]);
+    if (typeof $$props.onChange === 'function') $$props.onChange(event);
   }
   onMount(() => {
     if (linkEl && $$props.routeProps) {

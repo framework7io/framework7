@@ -67,22 +67,27 @@
 
   function onChange(event) {
     dispatch('change', [event]);
+    if (typeof $$props.onChange === 'function') $$props.onChange(event);
   }
 
   function onInput(event) {
     dispatch('input', [event]);
+    if (typeof $$props.onInput === 'function') $$props.onInput(event);
   }
 
   function onFocus(event) {
     dispatch('focus', [event]);
+    if (typeof $$props.onFocus === 'function') $$props.onFocus(event);
   }
 
   function onBlur(event) {
     dispatch('blur', [event]);
+    if (typeof $$props.onBlur === 'function') $$props.onBlur(event);
   }
 
   function onSubmit(event) {
     dispatch('submit', [event]);
+    if (typeof $$props.onSubmit === 'function') $$props.onSubmit(event);
   }
 
   function onClearButtonClick(event) {
@@ -121,15 +126,19 @@
         on: {
           search(searchbar, query, previousQuery) {
             dispatch('searchbarSearch', [searchbar, query, previousQuery]);
+            if (typeof $$props.onSearchbarSearch === 'function') $$props.onSearchbarSearch(searchbar, query, previousQuery);
           },
           clear(searchbar, previousQuery) {
             dispatch('searchbarClear', [searchbar, previousQuery]);
+            if (typeof $$props.onSearchbarClear === 'function') $$props.onSearchbarClear(searchbar, previousQuery);
           },
           enable(searchbar) {
             dispatch('searchbarEnable', [searchbar]);
+            if (typeof $$props.onSearchbarEnable === 'function') $$props.onSearchbarEnable(searchbar);
           },
           disable(searchbar) {
             dispatch('searchbarDisable', [searchbar]);
+            if (typeof $$props.onSearchbarDisable === 'function') $$props.onSearchbarDisable(searchbar);
           },
         },
       });

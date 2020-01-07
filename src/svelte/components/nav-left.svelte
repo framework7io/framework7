@@ -36,7 +36,9 @@
 
   function onBackClick() {
     dispatch('clickBack');
+    if (typeof $$props.onClickBack === 'function') $$props.onClickBack();
     dispatch('backBlick');
+    if (typeof $$props.onBackBlick === 'function') $$props.onBackBlick();
   }
 </script>
 <div
@@ -52,7 +54,7 @@
       force={backLinkForce || undefined}
       class={!backLinkText ? 'icon-only' : undefined}
       text={backLinkText}
-      on:click={onBackClick}
+      onClick={onBackClick}
     />
   {/if}
   <slot />

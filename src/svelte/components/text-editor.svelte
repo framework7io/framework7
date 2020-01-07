@@ -47,30 +47,39 @@
 
   function onChange(editor, editorValue) {
     dispatch('textEditorChange', [editorValue]);
+    if (typeof $$props.onTextEditorChange === 'function') $$props.onTextEditorChange(editorValue);
   }
   function onInput() {
     dispatch('textEditorChange');
+    if (typeof $$props.onTextEditorChange === 'function') $$props.onTextEditorChange();
   }
   function onFocus() {
     dispatch('textEditorFocus');
+    if (typeof $$props.onTextEditorFocus === 'function') $$props.onTextEditorFocus();
   }
   function onBlur() {
     dispatch('textEditorBlur');
+    if (typeof $$props.onTextEditorBlur === 'function') $$props.onTextEditorBlur();
   }
   function onButtonClick(editor, button) {
     dispatch('textEditorButtonClick', [button]);
+    if (typeof $$props.onTextEditorButtonClick === 'function') $$props.onTextEditorButtonClick(button);
   }
   function onKeyboardOpen() {
     dispatch('textEditorKeyboardOpen');
+    if (typeof $$props.onTextEditorKeyboardOpen === 'function') $$props.onTextEditorKeyboardOpen();
   }
   function onKeyboardClose() {
     dispatch('textEditorKeyboardClose');
+    if (typeof $$props.onTextEditorKeyboardClose === 'function') $$props.onTextEditorKeyboardClose();
   }
   function onPopoverOpen() {
     dispatch('textEditorPopoverOpen');
+    if (typeof $$props.onTextEditorPopoverOpen === 'function') $$props.onTextEditorPopoverOpen();
   }
   function onPopoverClose() {
     dispatch('textEditorPopoverClose');
+    if (typeof $$props.onTextEditorPopoverClose === 'function') $$props.onTextEditorPopoverClose();
   }
 
   onMount(() => {

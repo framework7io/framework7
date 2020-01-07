@@ -99,20 +99,24 @@
   function onHide(navbarEl) {
     if (el !== navbarEl) return;
     dispatch('navbarHide');
+    if (typeof $$props.onNavbarHide === 'function') $$props.onNavbarHide();
   }
   function onShow(navbarEl) {
     if (el !== navbarEl) return;
     dispatch('navbarShow');
+    if (typeof $$props.onNavbarShow === 'function') $$props.onNavbarShow();
   }
   function onExpand(navbarEl) {
     if (el !== navbarEl) return;
     largeCollapsed = false;
     dispatch('navbarExpand');
+    if (typeof $$props.onNavbarExpand === 'function') $$props.onNavbarExpand();
   }
   function onCollapse(navbarEl) {
     if (el !== navbarEl) return;
     largeCollapsed = true;
     dispatch('navbarCollapse');
+    if (typeof $$props.onNavbarCollapse === 'function') $$props.onNavbarCollapse();
   }
   function onNavbarPosition(navbarEl, position) {
     if (el !== navbarEl) return;
@@ -133,6 +137,7 @@
   }
   function onBackClick() {
     dispatch('clickBack');
+    if (typeof $$props.onClickBack === 'function') $$props.onClickBack();
   }
 
   function mountNavbar() {
@@ -185,7 +190,7 @@
         backLinkUrl={backLinkUrl}
         backLinkForce={backLinkForce}
         backLinkShowText={backLinkShowText}
-        on:back:click={onBackClick}
+        onBackClick={onBackClick}
       >
         <slot name="nav-left" />
         <slot name="left" />

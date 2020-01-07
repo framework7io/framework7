@@ -182,22 +182,27 @@
 
   function onTextareaResize(event) {
     dispatch('textareaResize', [event]);
+    if (typeof $$props.onTextareaResize === 'function') $$props.onTextareaResize(event);
   }
 
   function onInputNotEmpty(event) {
     dispatch('inputNotEmpty', [event]);
+    if (typeof $$props.onInputNotEmpty === 'function') $$props.onInputNotEmpty(event);
   }
 
   function onInputEmpty(event) {
     dispatch('inputEmpty', [event]);
+    if (typeof $$props.onInputEmpty === 'function') $$props.onInputEmpty(event);
   }
 
   function onInputClear(event) {
     dispatch('inputClear', [event]);
+    if (typeof $$props.onInputClear === 'function') $$props.onInputClear(event);
   }
 
   function onInput(...args) {
     dispatch('input', [...args]);
+    if (typeof $$props.onInput === 'function') $$props.onInput(...args);
     if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && inputEl) {
       validateInput(inputEl);
     }
@@ -205,11 +210,13 @@
 
   function onFocus(...args) {
     dispatch('focus', [...args]);
+    if (typeof $$props.onFocus === 'function') $$props.onFocus(...args);
     inputFocused = true;
   }
 
   function onBlur(...args) {
     dispatch('blur', [...args]);
+    if (typeof $$props.onBlur === 'function') $$props.onBlur(...args);
     if ((validate || validate === '' || validateOnBlur || validateOnBlur === '') && inputEl) {
       validateInput();
     }
@@ -218,6 +225,7 @@
 
   function onChange(...args) {
     dispatch('change', [...args]);
+    if (typeof $$props.onChange === 'function') $$props.onChange(...args);
     if (type === 'texteditor') {
       dispatch('textEditorChange', [args[1]]);
     }
@@ -244,6 +252,7 @@
           on: {
             change(calendar, calendarValue) {
               dispatch('calendarChange', [calendarValue]);
+              if (typeof $$props.onCalendarChange === 'function') $$props.onCalendarChange(calendarValue);
             },
           },
           ...(calendarParams || {}),
@@ -256,6 +265,7 @@
           on: {
             change(colorPicker, colorPickerValue) {
               dispatch('colorpickerChange', [colorPickerValue]);
+              if (typeof $$props.onColorpickerChange === 'function') $$props.onColorpickerChange(colorPickerValue);
             },
           },
           ...(colorPickerParams || {}),

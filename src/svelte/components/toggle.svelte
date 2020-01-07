@@ -50,6 +50,7 @@
 
   function onChange(event) {
     dispatch('change', [event]);
+    if (typeof $$props.onChange === 'function') $$props.onChange(event);
   }
 
   onMount(() => {
@@ -60,6 +61,7 @@
         on: {
           change(toggle) {
             dispatch('toggleChange', [toggle.checked]);
+            if (typeof $$props.onToggleChange === 'function') $$props.onToggleChange(toggle.checked);
           },
         },
       });

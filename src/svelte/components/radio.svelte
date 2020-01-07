@@ -30,6 +30,7 @@
 
   function onChange(event) {
     dispatch('change', [event]);
+    if (typeof $$props.onChange === 'function') $$props.onChange(event);
   }
 </script>
 

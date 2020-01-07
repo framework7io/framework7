@@ -38,15 +38,19 @@
 
   function onOpen(instance) {
     dispatch('loginscreenOpen', [instance]);
+    if (typeof $$props.onLoginscreenOpen === 'function') $$props.onLoginscreenOpen(instance);
   }
   function onOpened(instance) {
     dispatch('loginscreenOpened', [instance]);
+    if (typeof $$props.onLoginscreenOpened === 'function') $$props.onLoginscreenOpened(instance);
   }
   function onClose(instance) {
     dispatch('loginscreenClose', [instance]);
+    if (typeof $$props.onLoginscreenClose === 'function') $$props.onLoginscreenClose(instance);
   }
   function onClosed(instance) {
     dispatch('loginscreenClosed', [instance]);
+    if (typeof $$props.onLoginscreenClosed === 'function') $$props.onLoginscreenClosed(instance);
   }
 
   let initialWatched = false;

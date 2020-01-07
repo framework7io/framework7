@@ -69,18 +69,22 @@
 
   function onClick(e) {
     dispatch('click', [e]);
+    if (typeof $$props.onClick === 'function') $$props.onClick(e);
   }
   function onOpen(itemEl) {
     if (itemEl !== el) return;
     dispatch('treeviewOpen', [el]);
+    if (typeof $$props.onTreeviewOpen === 'function') $$props.onTreeviewOpen(el);
   }
   function onClose(itemEl) {
     if (itemEl !== el) return;
     dispatch('treeviewClose', [el]);
+    if (typeof $$props.onTreeviewClose === 'function') $$props.onTreeviewClose(el);
   }
   function onLoadChildren(itemEl, done) {
     if (itemEl !== el) return;
     dispatch('treeviewLoadChildren', [el, done]);
+    if (typeof $$props.onTreeviewLoadChildren === 'function') $$props.onTreeviewLoadChildren(el, done);
   }
 
   onMount(() => {

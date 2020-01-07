@@ -50,6 +50,7 @@
 
   function onClick(e) {
     dispatch('click', [e]);
+    if (typeof $$props.onClick === 'function') $$props.onClick(e);
   }
 
   onMount(() => {

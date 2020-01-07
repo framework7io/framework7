@@ -56,34 +56,42 @@
   function onPtrPullStart(ptrEl) {
     if (ptrEl !== pageContentEl) return;
     dispatch('ptrPullStart');
+    if (typeof $$props.onPtrPullStart === 'function') $$props.onPtrPullStart();
   }
   function onPtrPullMove(ptrEl) {
     if (ptrEl !== pageContentEl) return;
     dispatch('ptrPullMove');
+    if (typeof $$props.onPtrPullMove === 'function') $$props.onPtrPullMove();
   }
   function onPtrPullEnd(ptrEl) {
     if (ptrEl !== pageContentEl) return;
     dispatch('ptrPullEnd');
+    if (typeof $$props.onPtrPullEnd === 'function') $$props.onPtrPullEnd();
   }
   function onPtrRefresh(ptrEl, done) {
     if (ptrEl !== pageContentEl) return;
     dispatch('ptrRefresh', [done]);
+    if (typeof $$props.onPtrRefresh === 'function') $$props.onPtrRefresh(done);
   }
   function onPtrDone(ptrEl) {
     if (ptrEl !== pageContentEl) return;
     dispatch('ptrDone');
+    if (typeof $$props.onPtrDone === 'function') $$props.onPtrDone();
   }
   function onInfinite(infEl) {
     if (infEl !== pageContentEl) return;
     dispatch('infinite');
+    if (typeof $$props.onInfinite === 'function') $$props.onInfinite();
   }
   function onTabShow(tabEl) {
     if (pageContentEl !== tabEl) return;
     dispatch('tabShow');
+    if (typeof $$props.onTabShow === 'function') $$props.onTabShow();
   }
   function onTabHide(tabEl) {
     if (pageContentEl !== tabEl) return;
     dispatch('tabHide');
+    if (typeof $$props.onTabHide === 'function') $$props.onTabHide();
   }
 
   function mountPageContent() {
