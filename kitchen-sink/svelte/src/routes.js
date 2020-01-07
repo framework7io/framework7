@@ -100,8 +100,8 @@ import Treeview from './pages/treeview.svelte';
 import VirtualList from './pages/virtual-list.svelte';
 // import ColorThemes from './pages/color-themes.svelte';
 
-// import PageTransitions from './pages/page-transitions.svelte';
-// import PageTransitionsEffect from './pages/page-transitions-effect.svelte';
+import PageTransitions from './pages/page-transitions.svelte';
+import PageTransitionsEffect from './pages/page-transitions-effect.svelte';
 
 // import RoutableModals from './pages/routable-modals.svelte';
 // import RoutablePopup from './pages/routable-popup.svelte';
@@ -617,14 +617,14 @@ export default [
   // },
 
   // // Page Transitions
-  // {
-  //   path: '/page-transitions/',
-  //   component: PageTransitions,
-  // },
-  // {
-  //   path: '/page-transitions/:effect/',
-  //   component: PageTransitionsEffect,
-  // },
+  {
+    path: '/page-transitions/',
+    component: PageTransitions,
+  },
+  {
+    path: '/page-transitions/:effect/',
+    component: PageTransitionsEffect,
+  },
 
   // // Routable Modals
   // {
