@@ -1,4 +1,8 @@
 const Utils = {
+  text(text) {
+    if (typeof text === 'undefined' || text === null) return '';
+    return text;
+  },
   noUndefinedProps(obj) {
     const o = {};
     Object.keys(obj).forEach((key) => {
