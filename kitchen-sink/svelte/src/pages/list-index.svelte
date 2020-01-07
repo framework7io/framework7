@@ -5,7 +5,7 @@
     listEl=".list.contacts-list"
     scrollList={true}
     label={true}
-    on:listIndexSelect={onIndexSelect}
+    onListIndexSelect={onIndexSelect}
   ></ListIndex>
   <List contactsList ul={false}>
     <ListGroup>
@@ -174,7 +174,7 @@
   import { Page, Navbar, List, ListGroup, ListItem, ListIndex } from 'framework7-svelte';
 
 
-  function onIndexSelect({detail: [itemContent, itemIndex]}) {
+  function onIndexSelect(itemContent, itemIndex) {
     console.log(itemContent, itemIndex);
   }
 </script>

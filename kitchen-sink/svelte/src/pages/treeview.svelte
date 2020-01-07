@@ -52,28 +52,28 @@
           <Checkbox
             checked={Object.values(checkboxes.images).indexOf(false) < 0}
             indeterminate={Object.values(checkboxes.images).indexOf(false) >= 0 && Object.values(checkboxes.images).indexOf(true) >= 0}
-            on:change={({detail: [e]}) => {
+            onChange={(e) => {
               Object.keys(checkboxes.images).forEach(k => checkboxes.images[k] = e.target.checked);
               checkboxes = checkboxes;
             }}
           />
         </span>
-        <TreeviewItem label="avatar.png" iconF7="photo_fill">
+        <TreeviewItem label="avatar.png" iconF7="photo_fill" toggle={false}>
           <span slot="content-start">
             <Checkbox
               checked={checkboxes.images['avatar.png']}
-              on:change={({detail: [e]}) => {
+              onChange={(e) => {
                 checkboxes.images['avatar.png'] = e.target.checked;
                 checkboxes = checkboxes;
               }}
             />
           </span>
         </TreeviewItem>
-        <TreeviewItem label="background.jpg" iconF7="photo_fill">
+        <TreeviewItem label="background.jpg" iconF7="photo_fill" toggle={false}>
           <span slot="content-start">
             <Checkbox
               checked={checkboxes.images['background.jpg']}
-              on:change={({detail: [e]}) => {
+              onChange={(e) => {
                 checkboxes.images['background.jpg'] = e.target.checked;
                 checkboxes = checkboxes;
               }}
@@ -86,28 +86,28 @@
           <Checkbox
             checked={Object.values(checkboxes.documents).indexOf(false) < 0}
             indeterminate={Object.values(checkboxes.documents).indexOf(false) >= 0 && Object.values(checkboxes.documents).indexOf(true) >= 0}
-            on:change={({detail: [e]}) => {
+            onChange={(e) => {
               Object.keys(checkboxes.documents).forEach(k => checkboxes.documents[k] = e.target.checked);
               checkboxes = checkboxes;
             }}
           />
         </span>
-        <TreeviewItem label="cv.docx" iconF7="doc_text_fill">
+        <TreeviewItem label="cv.docx" iconF7="doc_text_fill" toggle={false}>
           <span slot="content-start">
             <Checkbox
               checked={checkboxes.documents['cv.docx']}
-              on:change={({detail: [e]}) => {
+              onChange={(e) => {
                 checkboxes.documents['cv.docx'] = e.target.checked;
                 checkboxes = checkboxes;
               }}
             />
           </span>
         </TreeviewItem>
-        <TreeviewItem label="info.docx" iconF7="doc_text_fill">
+        <TreeviewItem label="info.docx" iconF7="doc_text_fill" toggle={false}>
           <span slot="content-start">
             <Checkbox
               checked={checkboxes.documents['info.docx']}
-              on:change={({detail: [e]}) => {
+              onChange={(e) => {
                 checkboxes.documents['info.docx'] = e.target.checked;
                 checkboxes = checkboxes;
               }}
@@ -115,17 +115,17 @@
           </span>
         </TreeviewItem>
       </TreeviewItem>
-      <TreeviewItem label=".gitignore" iconF7="logo_github">
+      <TreeviewItem label=".gitignore" iconF7="logo_github" toggle={false}>
         <span slot="content-start">
-          <Checkbox  checked={checkboxes['.gitignore']} on:change={({detail: [e]}) => {
+          <Checkbox  checked={checkboxes['.gitignore']} onChange={(e) => {
             checkboxes['.gitignore'] = e.target.checked;
             checkboxes = checkboxes;
           }}/>
         </span>
       </TreeviewItem>
-      <TreeviewItem label="index.html" iconF7="doc_text_fill">
+      <TreeviewItem label="index.html" iconF7="doc_text_fill" toggle={false}>
         <span slot="content-start">
-          <Checkbox  checked={checkboxes['index.html']} on:change={({detail: [e]}) => {
+          <Checkbox  checked={checkboxes['index.html']} onChange={(e) => {
             checkboxes['index.html'] = e.target.checked;
             checkboxes = checkboxes;
           }}/>
@@ -158,21 +158,21 @@
         selected={selectedItem === 'images'}
         label="images"
         iconF7="folder_fill"
-        on:click={(e) => toggleSelectable(e, 'images')}
+        onClick={(e) => toggleSelectable(e, 'images')}
       >
         <TreeviewItem
           selectable
           selected={selectedItem === 'avatar.png'}
           label="avatar.png"
           iconF7="photo_fill"
-          on:click={(e) => toggleSelectable(e, 'avatar.png')}
+          onClick={(e) => toggleSelectable(e, 'avatar.png')}
         />
         <TreeviewItem
           selectable
           selected={selectedItem === 'background.jpg'}
           label="background.jpg"
           iconF7="photo_fill"
-          on:click={(e) => toggleSelectable(e, 'background.jpg')}
+          onClick={(e) => toggleSelectable(e, 'background.jpg')}
         />
       </TreeviewItem>
       <TreeviewItem
@@ -180,21 +180,21 @@
         selected={selectedItem === 'documents'}
         label="documents"
         iconF7="folder_fill"
-        on:click={(e) => toggleSelectable(e, 'documents')}
+        onClick={(e) => toggleSelectable(e, 'documents')}
       >
         <TreeviewItem
           selectable
           selected={selectedItem === 'cv.docx'}
           label="cv.docx"
           iconF7="doc_text_fill"
-          on:click={(e) => toggleSelectable(e, 'cv.docx')}
+          onClick={(e) => toggleSelectable(e, 'cv.docx')}
         />
         <TreeviewItem
           selectable
           selected={selectedItem === 'info.docx'}
           label="info.docx"
           iconF7="doc_text_fill"
-          on:click={(e) => toggleSelectable(e, 'info.docx')}
+          onClick={(e) => toggleSelectable(e, 'info.docx')}
         />
       </TreeviewItem>
       <TreeviewItem
@@ -202,14 +202,14 @@
         selected={selectedItem === '.gitignore'}
         label=".gitignore"
         iconF7="logo_github"
-        on:click={(e) => toggleSelectable(e, '.gitignore')}
+        onClick={(e) => toggleSelectable(e, '.gitignore')}
       />
       <TreeviewItem
         selectable
         selected={selectedItem === 'index.html'}
         label="index.html"
         iconF7="doc_text_fill"
-        on:click={(e) => toggleSelectable(e, 'index.html')}
+        onClick={(e) => toggleSelectable(e, 'index.html')}
       />
     </Treeview>
   </Block>
@@ -222,7 +222,7 @@
         loadChildren
         iconF7="person_2_fill"
         label="Users"
-        on:treeviewLoadChildren={({detail: [el, done]}) => loadChildren(done)}
+        onTreeviewLoadChildren={(el, done) => loadChildren(done)}
       >
         {#each loadedChildren as item, index (index)}
           <TreeviewItem
@@ -267,7 +267,7 @@
   let selectedItem = null;
   let loadedChildren = [];
 
-  function toggleSelectable({detail: [e]}, item) {
+  function toggleSelectable(e, item) {
     var $ = f7.$;
     if ($(e.target).is('.treeview-toggle')) return;
     selectedItem = item;

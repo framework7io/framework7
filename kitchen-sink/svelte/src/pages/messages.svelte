@@ -8,7 +8,7 @@
     attachmentsVisible={attachmentsVisible}
     sheetVisible={sheetVisible}
     value={messageText}
-    on:input={(e) => messageText = e.detail[0].target.value}
+    onInput={(e) => messageText = e.target.value}
   >
     <a class="link icon-only" slot="inner-start" on:click={() => sheetVisible = !sheetVisible}>
       <Icon
@@ -29,7 +29,7 @@
         <MessagebarAttachment
           key={index}
           image={image}
-          on:AttachmentDelete={() => deleteAttachment(image)}
+          onAttachmentDelete={() => deleteAttachment(image)}
         ></MessagebarAttachment>
       {/each}
     </MessagebarAttachments>
@@ -39,7 +39,7 @@
           key={index}
           image={image}
           checked={attachments.indexOf(image) >= 0}
-          on:change={handleAttachment}
+          onChange={handleAttachment}
         ></MessagebarSheetImage>
       {/each}
     </MessagebarSheet>
@@ -206,7 +206,7 @@
     attachments.splice(index, 1);
     attachments = attachments;
   }
-  function handleAttachment({detail: [e]}) {
+  function handleAttachment(e) {
     const index = f7.$(e.target).parents('label.checkbox').index();
     const image = images[index];
     if (e.target.checked) {

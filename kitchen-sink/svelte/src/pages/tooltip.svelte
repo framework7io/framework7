@@ -1,4 +1,4 @@
-<Page on:pageInit={onPageInit} on:pageBeforeRemove={onPageBeforeRemove}>
+<Page onPageInit={onPageInit} onPageBeforeRemove={onPageBeforeRemove}>
   <Navbar title="Tooltip" backLink="Back">
     <NavRight>
       <Link class="navbar-tooltip">

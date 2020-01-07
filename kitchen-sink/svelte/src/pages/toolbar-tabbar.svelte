@@ -14,7 +14,7 @@
   <Block>
     <p>Toolbar supports both top and bottom positions. Click the following button to change its position.</p>
     <p>
-      <Button fill on:click={toggleToolbarPosition}>Toggle Toolbar Position</Button>
+      <Button fill onClick={toggleToolbarPosition}>Toggle Toolbar Position</Button>
     </p>
   </Block>
 </Page>

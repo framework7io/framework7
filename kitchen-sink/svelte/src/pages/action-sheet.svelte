@@ -4,13 +4,13 @@
   <Block strong>
     <p class="row">
       <!-- One group, open by direct accessing instance .open() method -->
-      <Button class="col" fill on:click={() => actionsOneGroup.open()}>One group</Button>
+      <Button class="col" fill onClick={() => actionsOneGroup.open()}>One group</Button>
       <!--  Two groups, open by "actionsOpen" attribute -->
       <Button class="col" fill actionsOpen="#actions-two-groups">Two groups</Button>
     </p>
     <p>
       <!-- Actions Grid, open by changing actionGridOpened state property -->
-      <Button fill on:click={() => actionGridOpened = true}>Action Grid</Button>
+      <Button fill onClick={() => actionGridOpened = true}>Action Grid</Button>
     </p>
   </Block>
 
@@ -21,7 +21,7 @@
       <Button
         style="display: inline-block"
         class="button-to-popover"
-        on:click={openActionsPopover}
+        onClick={openActionsPopover}
       >Actions</Button>
     </p>
   </Block>
@@ -49,7 +49,7 @@
   </Actions>
 
   <!-- Grid -->
-  <Actions grid={true} opened={actionGridOpened} on:actionsClosed={() => actionGridOpened = false}>
+  <Actions grid={true} opened={actionGridOpened} onActionsClosed={() => actionGridOpened = false}>
     <ActionsGroup>
       <ActionsButton>
         <img slot="media" src="https://cdn.framework7.io/placeholder/people-96x96-1.jpg" width="48" style="max-width: 100%"/>

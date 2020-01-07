@@ -1,11 +1,11 @@
-<Page on:pageBeforeOut={onPageBeforeOut} on:pageBeforeRemove={onPageBeforeRemove}>
+<Page onPageBeforeOut={onPageBeforeOut} onPageBeforeRemove={onPageBeforeRemove}>
   <Navbar title="Notifications" backLink="Back"></Navbar>
   <Block>
     <p>Framework7 comes with simple Notifications component that allows you to show some useful messages to user and request basic actions.</p>
-    <p><Button fill on:click={showNotificationFull}>Full layout notification</Button></p>
-    <p><Button fill on:click={showNotificationWithButton}>With close button</Button></p>
-    <p><Button fill on:click={showNotificationCloseOnClick}>Click to close</Button></p>
-    <p><Button fill on:click={showNotificationCallbackOnClose}>Callback on close</Button></p>
+    <p><Button fill onClick={showNotificationFull}>Full layout notification</Button></p>
+    <p><Button fill onClick={showNotificationWithButton}>With close button</Button></p>
+    <p><Button fill onClick={showNotificationCloseOnClick}>Click to close</Button></p>
+    <p><Button fill onClick={showNotificationCallbackOnClose}>Callback on close</Button></p>
   </Block>
 </Page>
 <script>
@@ -50,7 +50,6 @@
   function showNotificationCloseOnClick() {
     // Create notification
     if (!notificationCloseOnClick) {
-      console.log('wtf?! i am here!');
       notificationCloseOnClick = f7.notification.create({
         icon: '<i class="icon icon-f7"></i>',
         title: 'Framework7',

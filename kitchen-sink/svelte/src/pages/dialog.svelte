@@ -3,40 +3,40 @@
   <Block strong>
     <p>There are 1:1 replacements of native Alert, Prompt and Confirm modals. They support callbacks, have very easy api and can be combined with each other. Check these examples:</p>
     <Row tag="p">
-      <Button fill class="col" on:click={openAlert}>Alert</Button>
-      <Button fill class="col" on:click={openConfirm}>Confirm</Button>
-      <Button fill class="col" on:click={openPrompt}>Prompt</Button>
+      <Button fill class="col" onClick={openAlert}>Alert</Button>
+      <Button fill class="col" onClick={openConfirm}>Confirm</Button>
+      <Button fill class="col" onClick={openPrompt}>Prompt</Button>
     </Row>
     <Row tag="p">
-      <Button fill class="col" on:click={openLogin}>Login</Button>
-      <Button fill class="col" on:click={openPassword}>Password</Button>
+      <Button fill class="col" onClick={openLogin}>Login</Button>
+      <Button fill class="col" onClick={openPassword}>Password</Button>
     </Row>
   </Block>
   <BlockTitle>Vertical Buttons</BlockTitle>
   <Block strong>
     <p>
-      <Button fill on:click={openVerticalButtons}>Vertical Buttons</Button>
+      <Button fill onClick={openVerticalButtons}>Vertical Buttons</Button>
     </p>
   </Block>
   <BlockTitle>Preloader Dialog</BlockTitle>
   <Block strong>
     <Row tag="p">
-      <Button fill class="col" on:click={openPreloader}>Preloader</Button>
-      <Button fill class="col" on:click={openCustomPreloader}>Custom Text</Button>
+      <Button fill class="col" onClick={openPreloader}>Preloader</Button>
+      <Button fill class="col" onClick={openCustomPreloader}>Custom Text</Button>
     </Row>
   </Block>
   <BlockTitle>Progress Dialog</BlockTitle>
   <Block strong>
     <Row tag="p">
-      <Button fill class="col" on:click={openInfiniteProgress}>Infinite</Button>
-      <Button fill class="col" on:click={openDeterminedProgress}>Determined</Button>
+      <Button fill class="col" onClick={openInfiniteProgress}>Infinite</Button>
+      <Button fill class="col" onClick={openDeterminedProgress}>Determined</Button>
     </Row>
   </Block>
   <BlockTitle>Dialogs Stack</BlockTitle>
   <Block strong>
     <p>This feature doesn't allow to open multiple dialogs at the same time, and will automatically open next dialog when you close the current one. Such behavior is similar to browser native dialogs: </p>
     <p>
-      <Button fill on:click={openAlerts}>Open Multiple Alerts</Button>
+      <Button fill onClick={openAlerts}>Open Multiple Alerts</Button>
     </p>
   </Block>
 </Page>

@@ -21,7 +21,7 @@
       name="demo-checkbox"
       checked={movies.length === 2}
       indeterminate={movies.length === 1}
-      on:change={onMoviesChange}
+      onChange={onMoviesChange}
     >
       <ul slot="root">
         <ListItem
@@ -30,7 +30,7 @@
           name="demo-checkbox"
           value="Movie 1"
           checked={movies.indexOf('Movie 1') >= 0}
-          on:change={onMovieChange}
+          onChange={onMovieChange}
         />
         <ListItem
           checkbox
@@ -38,7 +38,7 @@
           name="demo-checkbox"
           value="Movie 2"
           checked={movies.indexOf('Movie 2') >= 0}
-          on:change={onMovieChange}
+          onChange={onMovieChange}
         />
       </ul>
     </ListItem>
@@ -86,7 +86,7 @@
 
   let movies = ['Movie 1'];
 
-  function onMovieChange({ detail: [e] }) {
+  function onMovieChange(e) {
     var value = e.target.value;
     if (e.target.checked) {
       movies.push(value);

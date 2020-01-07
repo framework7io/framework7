@@ -14,15 +14,15 @@
     <Row>
       <Col>
         <PhotoBrowser photos={photos} bind:this={ standalone } />
-        <Button fill on:click={() => standalone.open()}>Standalone</Button>
+        <Button fill onClick={() => standalone.open()}>Standalone</Button>
       </Col>
       <Col>
         <PhotoBrowser photos={photos} type="popup" bind:this={ popup } />
-        <Button fill on:click={() => popup.open()}>Popup</Button>
+        <Button fill onClick={() => popup.open()}>Popup</Button>
       </Col>
       <Col>
         <PhotoBrowser photos={photos} type="page" pageBackLinkText="Back" bind:this={ page } />
-        <Button fill on:click={() => page.open()}>Page</Button>
+        <Button fill onClick={() => page.open()}>Page</Button>
       </Col>
     </Row>
   </Block>
@@ -31,15 +31,15 @@
     <Row>
       <Col>
         <PhotoBrowser photos={photos} theme="dark" bind:this={ standaloneDark } />
-        <Button fill on:click={() => standaloneDark.open()}>Standalone</Button>
+        <Button fill onClick={() => standaloneDark.open()}>Standalone</Button>
       </Col>
       <Col>
         <PhotoBrowser photos={photos} theme="dark" type="popup" bind:this={ popupDark } />
-        <Button fill on:click={() => popupDark.open()}>Popup</Button>
+        <Button fill onClick={() => popupDark.open()}>Popup</Button>
       </Col>
       <Col>
         <PhotoBrowser photos={photos} theme="dark" type="page" pageBackLinkText="Back" bind:this={ pageDark } />
-        <Button fill on:click={() => pageDark.open()}>Page</Button>
+        <Button fill onClick={() => pageDark.open()}>Page</Button>
       </Col>
     </Row>
   </Block>

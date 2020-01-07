@@ -1,5 +1,5 @@
 <!-- svelte-ignore a11y-missing-attribute -->
-<Page ptr ptrMousewheel={true} on:ptrRefresh={loadMore}>
+<Page ptr ptrMousewheel={true} onPtrRefresh={loadMore}>
   <Navbar title="Pull To Refresh" backLink="Back"></Navbar>
   <List mediaList>
     {#each items as item, index (index)}
@@ -38,7 +38,7 @@
   let songs = ['Yellow Submarine', 'Don\'t Stop Me Now', 'Billie Jean', 'Californication'];
   let authors = ['Beatles', 'Queen', 'Michael Jackson', 'Red Hot Chili Peppers'];
 
-  function loadMore({ detail: [done] }) {
+  function loadMore(done) {
     setTimeout(() => {
       const picURL = `https://cdn.framework7.io/placeholder/abstract-88x88-${(Math.floor(Math.random() * 10) + 1)}.jpg`;
       const song = songs[Math.floor(Math.random() * songs.length)];

@@ -2,7 +2,7 @@
   infinite
   infiniteDistance={50}
   infinitePreloader={showPreloader}
-  on:infinite={loadMore}
+  onInfinite={loadMore}
 >
   <Navbar title="Infinite Scroll" backLink="Back"></Navbar>
   <BlockTitle>Scroll bottom</BlockTitle>

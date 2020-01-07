@@ -4,7 +4,7 @@
     <p>Appbar is the main app bar with actions on top of the whole app. It is designed to be used in desktop apps with Aurora theme.</p>
   </Block>
   <Block strong>
-    <Button fill on:click={toggleAppbar}>Toggle Appbar</Button>
+    <Button fill onClick={toggleAppbar}>Toggle Appbar</Button>
   </Block>
 </Page>
 <script context="module">

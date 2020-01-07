@@ -40,14 +40,14 @@
   </Block>
   <BlockTitle>Deletable Chips / Tags</BlockTitle>
   <Block strong>
-    <Chip text="Example Chip" deleteable on:delete={deleteChip} />
-    <Chip text="Chris" media="C" mediaBgColor="orange" textColor="black" deleteable on:delete={deleteChip} />
-    <Chip text="Jane Doe" deleteable on:delete={deleteChip}>
+    <Chip text="Example Chip" deleteable onDelete={deleteChip} />
+    <Chip text="Chris" media="C" mediaBgColor="orange" textColor="black" deleteable onDelete={deleteChip} />
+    <Chip text="Jane Doe" deleteable onDelete={deleteChip}>
       <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg"/>
     </Chip>
-    <Chip text="One More Chip" deleteable on:delete={deleteChip} />
-    <Chip text="Jennifer" mediaBgColor="pink" media="J" deleteable on:delete={deleteChip} />
-    <Chip text="Adam Smith" deleteable on:delete={deleteChip}>
+    <Chip text="One More Chip" deleteable onDelete={deleteChip} />
+    <Chip text="Jennifer" mediaBgColor="pink" media="J" deleteable onDelete={deleteChip} />
+    <Chip text="Adam Smith" deleteable onDelete={deleteChip}>
       <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg"/>
     </Chip>
   </Block>
@@ -68,7 +68,7 @@
 <script>
   import { f7, Navbar, Page, BlockTitle, Chip, Block, Icon } from 'framework7-svelte';
 
-  function deleteChip({detail: [e]}) {
+  function deleteChip(e) {
     const target = e.target;
     f7.dialog.confirm('Do you want to delete this tiny demo Chip?', () => {
       f7.$(target).parents('.chip').remove();
