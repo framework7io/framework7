@@ -19,7 +19,6 @@
   export let type = undefined;
   export let name = undefined;
   export let value = undefined;
-  export let defaultValue = undefined;
   export let placeholder = undefined;
   export let inputId = undefined;
   export let size = undefined;
@@ -110,7 +109,12 @@
     }
   }
 
+  let initialWatched = false;
   function watchValue() {
+    if (!initialWatched) {
+      initialWatched = true;
+      return;
+    }
     if (type === 'range' || type === 'toggle') return;
     if (!f7.instance) return;
     updateInputOnDidUpdate = true;
@@ -131,11 +135,14 @@
   $: needsValue = type !== 'file' && type !== 'datepicker' && type !== 'colorpicker';
 
   $: inputValue = (() => {
+    let v;
     if (typeof value !== 'undefined') {
-      inputValue = value;
+      v = value;
     } else {
-      inputValue = domValue();
+      v = domValue();
     }
+    if (typeof v === 'undefined' || v === null) return '';
+    return v;
   })();
 
   $: classes = Utils.classNames(
@@ -259,10 +266,7 @@
       if (
         !(validateOnBlur || validateOnBlur === '')
         && (validate || validate === '')
-        && (
-          (typeof value !== 'undefined' && value !== null && value !== '')
-          || (typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')
-        )
+        && (typeof value !== 'undefined' && value !== null && value !== '')
       ) {
         setTimeout(() => {
           validateInput();
@@ -351,7 +355,7 @@
         on:blur={onBlur}
         on:input={onInput}
         on:change={onChange}
-        value={inputValue || ''}
+        value={inputValue}
       >
         <slot />
       </select>
@@ -391,7 +395,7 @@
         on:blur={onBlur}
         on:input={onInput}
         on:change={onChange}
-        value={inputValue || ''}
+        value={inputValue}
       />
     {:else if type === 'toggle'}
       <Toggle
@@ -417,7 +421,7 @@
       />
     {:else if type === 'texteditor'}
       <TextEditor
-        value={value || ''}
+        value={typeof value === 'undefined' ? '' : value}
         resizable={resizable}
         placeholder={placeholder}
         on:textEditorFocus={onFocus}
@@ -463,7 +467,7 @@
         on:blur={onBlur}
         on:input={onInput}
         on:change={onChange}
-        value={type === 'datepicker' || type === 'colorpicker' || type === 'file' ? '' : inputValue || ''}
+        value={type === 'datepicker' || type === 'colorpicker' || type === 'file' ? '' : inputValue}
       />
     {/if}
     {#if errorMessage && errorMessageForce}
@@ -516,7 +520,7 @@
       on:blur={onBlur}
       on:input={onInput}
       on:change={onChange}
-      value={inputValue || ''}
+      value={inputValue}
     >
       <slot />
     </select>
@@ -556,7 +560,7 @@
       on:blur={onBlur}
       on:input={onInput}
       on:change={onChange}
-      value={inputValue || ''}
+      value={inputValue}
     />
   {:else if type === 'toggle'}
     <Toggle
@@ -582,7 +586,7 @@
     />
   {:else if type === 'texteditor'}
     <TextEditor
-      value={value || ''}
+      value={typeof value === 'undefined' ? '' : value}
       resizable={resizable}
       placeholder={placeholder}
       on:textEditorFocus={onFocus}
@@ -628,7 +632,7 @@
       on:blur={onBlur}
       on:input={onInput}
       on:change={onChange}
-      value={type === 'datepicker' || type === 'colorpicker' || type === 'file' ? '' : inputValue || ''}
+      value={type === 'datepicker' || type === 'colorpicker' || type === 'file' ? '' : inputValue}
     />
   {/if}
 {/if}

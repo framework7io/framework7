@@ -62,7 +62,12 @@
     dispatch('popupClosed', [instance]);
   }
 
+  let initialWatched = false;
   function watchOpened(openedPassed) {
+    if (!initialWatched) {
+      initialWatched = true;
+      return;
+    }
     if (!f7Popup) return;
     if (openedPassed) f7Popup.open();
     else f7Popup.close();

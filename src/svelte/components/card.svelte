@@ -65,7 +65,12 @@
     f7.instance.card.close(el);
   }
 
+  let initialWatched = false;
   function watchOpened(openedPassed) {
+    if (!initialWatched) {
+      initialWatched = true;
+      return;
+    }
     if (openedPassed) {
       open();
     } else {

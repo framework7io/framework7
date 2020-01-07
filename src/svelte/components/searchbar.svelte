@@ -156,7 +156,7 @@
       <div class="searchbar-input-wrap">
         <slot name="input-wrap-start" />
         <input
-          value={value || ''}
+          value={typeof value === 'undefined' ? '' : value}
           placeholder={placeholder}
           type="search"
           on:input={onInput}
@@ -186,7 +186,7 @@
       <div class="searchbar-input-wrap">
         <slot name="input-wrap-start" />
         <input
-          value={value || ''}
+          value={typeof value === 'undefined' ? '' : value}
           placeholder={placeholder}
           type="search"
           on:input={onInput}

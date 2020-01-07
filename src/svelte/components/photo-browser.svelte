@@ -59,7 +59,12 @@
     return f7PhotoBrowser.expositionDisable();
   }
 
+  let initialWatched = false;
   function watchPhotos(newValue) {
+    if (!initialWatched) {
+      initialWatched = true;
+      return;
+    }
     if (!f7PhotoBrowser) return;
     f7PhotoBrowser.params.photos = newValue;
     if (f7PhotoBrowser.opened && f7PhotoBrowser.swiper) {

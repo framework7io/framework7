@@ -69,13 +69,13 @@
           size={$$props.iconSize}
         />
       {/if}
-      {media || ''}
+      {Utils.text(media)}
       <slot name="media" />
     </div>
   {/if}
   {#if text || hasTextSlots}
     <div class="chip-label">
-      {text || ''}
+      {Utils.text(text)}
       <slot name="text" />
     </div>
   {/if}

@@ -38,7 +38,7 @@
     bind:this={inputEl}
     type="radio"
     name={name}
-    value={value || ''}
+    value={typeof value === 'undefined' ? '' : value}
     disabled={disabled}
     readonly={readonly}
     checked={checked}

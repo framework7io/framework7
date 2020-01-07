@@ -104,13 +104,13 @@
     <slot name="content-start"/>
     {#if (hasNameSlots || name)}
       <div class="message-name" on:click={onNameClick}>
-        {name || ''}
+        {Utils.text(name)}
         <slot name="name"/>
       </div>
     {/if}
     {#if (hasHeaderSlots || header)}
       <div class="message-header" on:click={onHeaderClick}>
-        {header || ''}
+        {Utils.text(header)}
         <slot name="header"/>
       </div>
     {/if}
@@ -126,13 +126,13 @@
       {/if}
       {#if (hasTextHeaderSlots || textHeader)}
         <div class="message-text-header">
-          {textHeader || ''}
+          {Utils.text(textHeader)}
           <slot name="text-header"/>
         </div>
       {/if}
       {#if (hasTextSlots || text || htmlText || typing)}
         <div class="message-text" on:click={onTextClick}>
-          {text || ''}
+          {Utils.text(text)}
           {#if htmlText}{@html htmlText}{/if}
           <slot name="text"/>
           {#if typing}
@@ -146,7 +146,7 @@
       {/if}
       {#if (hasTextFooterSlots || textFooter)}
         <div class="message-text-footer">
-          {textFooter || ''}
+          {Utils.text(textFooter)}
           <slot name="text-footer"/>
         </div>
       {/if}
@@ -155,7 +155,7 @@
     </div>
     {#if (hasFooterSlots || footer)}
       <div class="message-footer" on:click={onFooterClick}>
-        {footer || ''}
+        {Utils.text(footer)}
         <slot name="footer"/>
       </div>
     {/if}

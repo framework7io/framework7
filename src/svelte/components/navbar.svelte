@@ -208,7 +208,7 @@
     {#if largeTitle || hasTitleLargeSlots}
       <div class="title-large">
         <div class="title-large-text">
-          {largeTitle || ''}
+          {Utils.text(largeTitle)}
           <slot name="title-large" />
         </div>
       </div>

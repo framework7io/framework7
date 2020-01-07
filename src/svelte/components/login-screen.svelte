@@ -49,7 +49,12 @@
     dispatch('loginscreenClosed', [instance]);
   }
 
+  let initialWatched = false;
   function watchOpened(openedPassed) {
+    if (!initialWatched) {
+      initialWatched = true;
+      return;
+    }
     if (!f7LoginScreen) return;
     if (openedPassed) f7LoginScreen.open();
     else f7LoginScreen.close();

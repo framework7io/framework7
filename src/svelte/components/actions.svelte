@@ -61,7 +61,12 @@
     dispatch('actionsClosed', [instance]);
   }
 
+  let initialWatched = false;
   function watchOpened(openedPassed) {
+    if (!initialWatched) {
+      initialWatched = true;
+      return;
+    }
     if (!f7Actions) return;
     if (openedPassed) f7Actions.open();
     else f7Actions.close();

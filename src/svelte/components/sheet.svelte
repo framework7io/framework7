@@ -82,7 +82,12 @@
     dispatch('sheetStepClose', [instance]);
   }
 
+  let initialWatched = false;
   function watchOpened(openedPassed) {
+    if (!initialWatched) {
+      initialWatched = true;
+      return;
+    }
     if (!f7Sheet) return;
     if (openedPassed) f7Sheet.open();
     else f7Sheet.close();

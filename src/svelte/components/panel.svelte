@@ -53,7 +53,12 @@
   );
 
   let resizableOld = resizable;
+  let initialWatchedResizable = false;
   function watchResizable(r) {
+    if (!initialWatchedResizable) {
+      initialWatchedResizable = true;
+      return;
+    }
     if (f7Panel && r && !resizableOld) {
       f7Panel.enableResizable();
     } else if (f7Panel && !r && resizableOld) {
@@ -64,7 +69,12 @@
   $: watchResizable(resizable);
 
   let openedOld = opened;
+  let initialWatchedOpened = false;
   function watchOpened(o) {
+    if (!initialWatchedOpened) {
+      initialWatchedOpened = true;
+      return;
+    }
     if (f7Panel && o && !openedOld) {
       f7Panel.open();
     } else if (f7Panel && !o && openedOld) {

@@ -46,7 +46,12 @@
     f7ListIndex.scrollListToIndex(indexContent);
   }
 
+  let initialWatched = false;
   function watchIndexes() {
+    if (!initialWatched) {
+      initialWatched = true;
+      return;
+    }
     if (!f7ListIndex) return;
     f7ListIndex.params.indexes = indexes;
     update();

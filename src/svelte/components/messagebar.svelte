@@ -59,11 +59,21 @@
   // eslint-disable-next-line
   $: hasSendLinkSlots = hasSlots(arguments, 'send-link');
 
+  let initialWatchedSheet = false;
   function watchSheetVisible() {
+    if (!initialWatchedSheet) {
+      initialWatchedSheet = true;
+      return;
+    }
     if (!resizable || !f7Messagebar) return;
     updateSheetVisible = true;
   }
+  let initialWatchedAttachments;
   function watchAttachmentsVisible() {
+    if (!initialWatchedAttachments) {
+      initialWatchedAttachments = true;
+      return;
+    }
     if (!resizable || !f7Messagebar) return;
     updateAttachmentsVisible = true;
   }
@@ -180,7 +190,7 @@
         name={name}
         readonly={readonly}
         resizable={resizable}
-        value={value || ''}
+        value={typeof value === 'undefined' ? '' : value}
         on:input={onInput}
         on:change={onChange}
         on:focus={onFocus}

@@ -67,8 +67,8 @@
 
   $: treeviewRootTag = link || link === '' ? 'a' : 'div';
 
-  function onClick() {
-    dispatch('click');
+  function onClick(e) {
+    dispatch('click', [e]);
   }
   function onOpen(itemEl) {
     if (itemEl !== el) return;

@@ -36,7 +36,12 @@
     Mixins.colorClasses($$props),
   );
 
+  let initialWatched = false;
   function watchChecked(isChecked) {
+    if (!initialWatched) {
+      initialWatched = true;
+      return;
+    }
     if (!f7Toggle) return;
     f7Toggle.checked = isChecked;
   }
@@ -74,7 +79,7 @@
     disabled={disabled}
     readonly={readonly}
     checked={checked}
-    value={value || ''}
+    value={typeof value === 'undefined' ? '' : value}
     on:change={onChange}
   />
   <span class="toggle-icon" />
