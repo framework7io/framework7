@@ -359,13 +359,8 @@
       <div class="swipeout-content">
         {#if isLink}
           <a bind:this={linkEl} class={linkClasses} {...linkAttrs} on:click={onClick}>
-          <!-- Item content start -->
-            <div
-              bind:this={el}
-              id={id}
-              style={style}
-              class={contentClasses}
-            >
+            <!-- Item content start -->
+            <div class={contentClasses}>
               <slot name="content-start" />
               {#if isSortable && sortable !== false && isSortableOpposite}
                 <div class="sortable-handler" />
@@ -481,13 +476,7 @@
         {:else}
           <!-- Item content start -->
           {#if checkbox || radio}
-            <label
-              bind:this={el}
-              id={id}
-              style={style}
-              class={contentClasses}
-              on:click={onClick}
-            >
+            <label class={contentClasses} on:click={onClick}>
               <slot name="content-start" />
               {#if isSortable && sortable !== false && isSortableOpposite}
                 <div class="sortable-handler" />
@@ -611,13 +600,7 @@
               <slot name="content-end" />
             </label>
           {:else}
-            <div
-              bind:this={el}
-              id={id}
-              style={style}
-              class={contentClasses}
-              on:click={onClick}
-            >
+            <div class={contentClasses} on:click={onClick}>
               <slot name="content-start" />
               {#if isSortable && sortable !== false && isSortableOpposite}
                 <div class="sortable-handler" />
@@ -736,12 +719,7 @@
       {#if isLink}
         <a bind:this={linkEl} class={linkClasses} {...linkAttrs} on:click={onClick}>
           <!-- Item content start -->
-          <div
-            bind:this={el}
-            id={id}
-            style={style}
-            class={contentClasses}
-          >
+          <div class={contentClasses}>
             <slot name="content-start" />
             {#if isSortable && sortable !== false && isSortableOpposite}
               <div class="sortable-handler" />
@@ -857,13 +835,7 @@
       {:else}
         <!-- Item content start -->
         {#if checkbox || radio}
-          <label
-            bind:this={el}
-            id={id}
-            style={style}
-            class={contentClasses}
-            on:click={onClick}
-          >
+          <label class={contentClasses} on:click={onClick}>
             <slot name="content-start" />
             {#if isSortable && sortable !== false && isSortableOpposite}
               <div class="sortable-handler" />
@@ -987,13 +959,7 @@
             <slot name="content-end" />
           </label>
         {:else}
-          <div
-            bind:this={el}
-            id={id}
-            style={style}
-            class={contentClasses}
-            on:click={onClick}
-          >
+          <div class={contentClasses} on:click={onClick}>
             <slot name="content-start" />
             {#if isSortable && sortable !== false && isSortableOpposite}
               <div class="sortable-handler" />
