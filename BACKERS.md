@@ -180,6 +180,7 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+Shawn Jackson<br>
 Никита Коробочкин<br>
 Nathan Harold<br>
 Paulo Vieira<br>
@@ -200,7 +201,6 @@ Noah A Neibaron<br>
 José Manuel Alarcón<br>
 Matt Davis<br>
 Arsen Huang<br>
-Jonathan Pugh<br>
 Danny Redfern<br>
 Marc Hildmann<br>
 Kyle Hammond<br>
@@ -219,6 +219,7 @@ Dave Billington
 ---
 
 ### $5+ Thank You
+Yo. Meyers<br>
 Artūras Šeleсhov-Balčiūnas<br>
 Josué Marinho<br>
 Brett Lee<br>
