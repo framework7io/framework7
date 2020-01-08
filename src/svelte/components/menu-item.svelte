@@ -99,9 +99,9 @@
 <!-- svelte-ignore a11y-missing-attribute -->
 {#if isLink}
   <a on:click={onClick} bind:this={el} class={classes} id={id} style={style} {...attrs}>
-    {#if text || hasTextSlots}
+    {#if typeof text !== 'undefined' || hasTextSlots || hasIcon}
       <div class="menu-item-content">
-        {text}
+        {Utils.text(text)}
         {#if hasIcon}
         <Icon
           material={$$props.iconMaterial}
@@ -121,9 +121,9 @@
   </a>
 {:else}
   <div on:click={onClick} bind:this={el} class={classes} id={id} style={style} {...attrs}>
-    {#if text || hasTextSlots}
+    {#if typeof text !== 'undefined' || hasTextSlots || hasIcon}
       <div class="menu-item-content">
-        {text}
+        {Utils.text(text)}
         {#if hasIcon}
         <Icon
           material={$$props.iconMaterial}

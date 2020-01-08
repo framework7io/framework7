@@ -72,12 +72,12 @@
 <!-- svelte-ignore a11y-missing-attribute -->
 {#if isLink}
   <a on:click={onClick} bind:this={el} class={classes} id={id} style={style} {...attrs}>
-    {text}
+    {Utils.text(text)}
     <slot />
   </a>
 {:else}
   <div on:click={onClick} bind:this={el} class={classes} id={id} style={style} {...attrs}>
-    {text}
+    {Utils.text(text)}
     <slot />
   </div>
 {/if}
