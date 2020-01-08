@@ -135,7 +135,7 @@
     }
   });
   onDestroy(() => {
-    delete el.f7RouteProps;
+    if (el) delete el.f7RouteProps;
     if (f7SmartSelect && f7SmartSelect.destroy) {
       f7SmartSelect.destroy();
       f7SmartSelect = null;

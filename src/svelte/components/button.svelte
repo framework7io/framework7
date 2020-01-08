@@ -153,7 +153,7 @@
     }
   });
   onDestroy(() => {
-    delete el.f7RouteProps;
+    if (el) delete el.f7RouteProps;
     if (f7Tooltip && f7Tooltip.destroy) {
       f7Tooltip.destroy();
       f7Tooltip = null;
