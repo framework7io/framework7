@@ -288,8 +288,8 @@
           value,
           on: {
             change(colorPicker, colorPickerValue) {
-              dispatch('colorpickerChange', [colorPickerValue]);
-              if (typeof $$props.onColorpickerChange === 'function') $$props.onColorpickerChange(colorPickerValue);
+              dispatch('colorPickerChange', [colorPickerValue]);
+              if (typeof $$props.onColorPickerChange === 'function') $$props.onColorPickerChange(colorPickerValue);
             },
           },
           ...(colorPickerParams || {}),
