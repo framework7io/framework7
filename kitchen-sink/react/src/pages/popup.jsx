@@ -113,17 +113,17 @@ export default class extends React.Component {
     if (!self.popup) {
       self.popup = self.$f7.popup.create({
         content: `
-          <div className="popup">
-            <div className="page">
-              <div className="navbar">
-                <div className="navbar-inner">
-                  <div className="navbar-bg">
-                  <div className="title">Dynamic Popup</div>
-                  <div className="right"><a href="#" className="link popup-close">Close</a></div>
+          <div class="popup">
+            <div class="page">
+              <div class="navbar">
+                <div class="navbar-inner">
+                  <div class="navbar-bg"></div>
+                  <div class="title">Dynamic Popup</div>
+                  <div class="right"><a href="#" class="link popup-close">Close</a></div>
                 </div>
               </div>
-              <div className="page-content">
-                <div className="block">
+              <div class="page-content">
+                <div class="block">
                   <p>This popup was created dynamically</p>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse faucibus mauris leo, eu bibendum neque congue non. Ut leo mauris, eleifend eu commodo a, egestas ac urna. Maecenas in lacus faucibus, viverra ipsum pulvinar, molestie arcu. Etiam lacinia venenatis dignissim. Suspendisse non nisl semper tellus malesuada suscipit eu et eros. Nulla eu enim quis quam elementum vulputate. Mauris ornare consequat nunc viverra pellentesque. Aenean semper eu massa sit amet aliquam. Integer et neque sed libero mollis elementum at vitae ligula. Vestibulum pharetra sed libero sed porttitor. Suspendisse a faucibus lectus.</p>
                 </div>

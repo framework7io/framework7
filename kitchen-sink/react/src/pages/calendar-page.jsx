@@ -74,7 +74,7 @@ export default class extends React.Component {
               title={item.title}
               after={item.time}
             >
-              <div class="event-color" style={{'background-color': item.color}} slot="root-start"></div>
+              <div className="event-color" style={{'background-color': item.color}} slot="root-start"></div>
             </ListItem>
           ))}
           {this.state.eventItems.length === 0 && (
@@ -98,8 +98,8 @@ export default class extends React.Component {
     const eventItems = [];
     if (currentEvents.length) {
       currentEvents.forEach((event) => {
-        const hours = event.date.getHours();
-        let minutes = event.date.getMinutes();
+        const hours = event.hours;
+        let minutes = event.minutes;
         if (minutes < 10) minutes = `0${minutes}`;
         eventItems.push({
           title: event.title,
@@ -112,7 +112,7 @@ export default class extends React.Component {
       eventItems,
     });
   }
-  onPageInit(e, page) {
+  onPageInit(page) {
     const self = this;
     const app = self.$f7;
     const $ = self.$$;

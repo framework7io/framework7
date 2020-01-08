@@ -8,7 +8,7 @@ export default () => (
     <Block>
       <p>
         Framework7 comes with powerful and most modern touch slider ever -
-        <a href="http://idangero.us/swiper" className="external" target="_blank">Swiper Slider</a>
+        <a href="https://swiperjs.com" className="external" target="_blank">Swiper Slider</a>
         with super flexible configuration and lot, lot of features. Just check the following demos:
       </p>
     </Block>

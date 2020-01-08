@@ -27,7 +27,7 @@ export default class extends React.Component {
 
         <BlockTitle>Date + Time</BlockTitle>
         <List noHairlinesMd>
-          <ListInput type="datepicker" placeholder="Select date and time" readonly calendarParams={{dateFormat: { month: 'numeric', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' }}} />
+          <ListInput type="datepicker" placeholder="Select date and time" readonly calendarParams={{timePicker: true, dateFormat: { month: 'numeric', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' }}} />
         </List>
 
         <BlockTitle>Multiple Values</BlockTitle>
@@ -54,7 +54,7 @@ export default class extends React.Component {
         </List>
 
         <BlockTitle>Inline with custom toolbar</BlockTitle>
-        <Block className="no-padding">
+        <Block strong className="no-padding">
           <div id="demo-calendar-inline-container"></div>
         </Block>
 
