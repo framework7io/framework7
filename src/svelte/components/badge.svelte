@@ -13,7 +13,6 @@
     'badge',
     Mixins.colorClasses($$props),
   );
-
 </script>
 <span id={id} style={style} class={classes}>
   <slot />

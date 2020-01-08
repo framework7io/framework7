@@ -183,8 +183,8 @@
         size={$$props.iconSize}
       />
     {/if}
-    {#if text}
-      <span>{text}</span>
+    {#if typeof text !== 'undefined'}
+      <span>{Utils.text(text)}</span>
     {/if}
     <slot />
   </button>
@@ -209,8 +209,8 @@
         size={$$props.iconSize}
       />
     {/if}
-    {#if text}
-      <span>{text}</span>
+    {#if typeof text !== 'undefined'}
+      <span>{Utils.text(text)}</span>
     {/if}
     <slot />
   </a>

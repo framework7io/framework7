@@ -84,7 +84,7 @@
   on:click={onClick}
 >
   <slot />
-  {#if label}
-    <span class="fab-label">{label}</span>
+  {#if typeof label !== 'undefined'}
+    <span class="fab-label">{Utils.text(label)}</span>
   {/if}
 </a>

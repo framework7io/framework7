@@ -146,21 +146,21 @@
   data-backdrop={typeof backdrop === 'undefined' ? backdrop : backdrop.toString()}
   data-backdrop-el={backdropEl}
 >
-  {#if title || hasHeaderSlots}
+  {#if typeof title !== 'undefined' || hasHeaderSlots}
     <CardHeader>
-      {title}
+      {Utils.text(title)}
       <slot name="header" />
     </CardHeader>
   {/if}
-  {#if content || hasContentSlots}
+  {#if typeof content !== 'undefined' || hasContentSlots}
     <CardContent padding={padding}>
-      {content}
+      {Utils.text(content)}
       <slot name="content" />
     </CardContent>
   {/if}
-  {#if footer || hasFooterSlots}
+  {#if typeof footer !== 'undefined' || hasFooterSlots}
     <CardFooter>
-      {footer}
+      {Utils.text(footer)}
       <slot name="footer" />
     </CardFooter>
   {/if}

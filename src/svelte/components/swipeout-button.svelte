@@ -47,5 +47,6 @@
   class={classes}
   on:click={onClick}
 >
-  <slot>{text}</slot>
+  {Utils.text(text)}
+  <slot></slot>
 </a>

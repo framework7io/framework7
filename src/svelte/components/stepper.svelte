@@ -166,7 +166,7 @@
   </div>
   {/if}
   {#if (!input && !buttonsOnly)}
-    <div class="stepper-value">{value}</div>
+    <div class="stepper-value">{Utils.text(value)}</div>
   {/if}
   <div on:click={onPlusClick} class="stepper-button-plus" />
 </div>

@@ -111,8 +111,8 @@
 >
   <a bind:this={linkEl} on:click={onClick} target={target} href={hrefComputed}>
     <slot />
-    {#if text || hasTextSlots}
-      <div class="fab-text" bind:this={textEl}>{text}<slot name="text" /></div>
+    {#if typeof text !== 'undefined' || hasTextSlots}
+      <div class="fab-text" bind:this={textEl}>{Utils.text(text)}<slot name="text" /></div>
     {/if}
     <slot name="link" />
   </a>

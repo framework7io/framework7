@@ -132,7 +132,7 @@
         <slot name="media" />
         <div class="treeview-item-label">
           <slot name="label-start" />
-          {label}
+          {Utils.text(label)}
           <slot name="label" />
         </div>
         <slot name="content" />
@@ -168,7 +168,7 @@
         <slot name="media" />
         <div class="treeview-item-label">
           <slot name="label-start" />
-          {label}
+          {Utils.text(label)}
           <slot name="label" />
         </div>
         <slot name="content" />

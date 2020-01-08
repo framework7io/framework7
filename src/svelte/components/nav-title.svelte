@@ -26,9 +26,9 @@
   style={style}
   class={classes}
 >
-  {#if title}{title}{/if}
-  {#if subtitle}
-    <span class="subtitle">{subtitle}</span>
+  {#if typeof title !== 'undefined'}{Utils.text(title)}{/if}
+  {#if typeof subtitle !== 'undefined'}
+    <span class="subtitle">{Utils.text(subtitle)}</span>
   {/if}
   <slot />
 </div>

@@ -169,10 +169,10 @@
     >{#if iconBadge}<Badge color={badgeColor}>{iconBadge}</Badge>{/if}</Icon>
   {/if}
   <slot />
-  {#if text}
+  {#if typeof text !== 'undefined' || typeof badge !== 'undefined'}
     <span class:tabbar-label={isTabbarLabel}>
-      {text}
-      {#if badge}<Badge color={badgeColor}>{badge}</Badge>{/if}
+      {Utils.text(text)}
+      {#if typeof badge !== 'undefined'}<Badge color={badgeColor}>{Utils.text(badge)}</Badge>{/if}
     </span>
   {/if}
 </a>
