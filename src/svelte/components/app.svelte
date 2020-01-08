@@ -5,7 +5,7 @@
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
 
-  export let id = '#framework7-root';
+  export let id = 'framework7-root';
   export let params = {};
   export let routes = [];
   export let style = undefined;
