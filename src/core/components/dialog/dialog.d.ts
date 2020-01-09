@@ -132,9 +132,9 @@ export namespace Dialog {
       confirm(text : string, callbackOk?: () => void, callbackCancel?: () => void) : Dialog
 
       /** create Prompt Dialog and open it */
-      prompt(text : string, title : string, callbackOk?: (value : string) => void, callbackCancel?: (value : string) => void) : Dialog
+      prompt(text : string, title : string, callbackOk?: (value : string) => void, callbackCancel?: (value : string) => void, defaultValue?: string) : Dialog
       /** create Prompt Dialog with default title and open it */
-      prompt(text : string, callbackOk?: (value : string) => void, callbackCancel?: (value : string) => void) : Dialog
+      prompt(text : string, callbackOk?: (value : string) => void, callbackCancel?: (value : string) => void, defaultValue?: string) : Dialog
 
       /** create Login Dialog and open it */
       login(text : string, title : string, callbackOk?: (username : string, password : string) => void, callbackCancel?: (username : string, password : string) => void) : Dialog
