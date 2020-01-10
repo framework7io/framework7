@@ -4,7 +4,7 @@
   import Utils from '../utils/utils';
   import f7 from '../utils/f7';
 
-  import Icon from './Icon.svelte';
+  import Icon from './icon.svelte';
 
   const dispatch = createEventDispatcher();
 

@@ -4,7 +4,7 @@
   import Mixins from '../utils/mixins';
   import f7 from '../utils/f7';
 
-  import Preloader from './Preloader.svelte';
+  import Preloader from './preloader.svelte';
 
   const dispatch = createEventDispatcher();
 

@@ -5,8 +5,8 @@
   import f7 from '../utils/f7';
   import hasSlots from '../utils/has-slots';
 
-  import Badge from './Badge.svelte';
-  import Icon from './Icon.svelte';
+  import Badge from './badge.svelte';
+  import Icon from './icon.svelte';
 
   const dispatch = createEventDispatcher();
 
