@@ -4,7 +4,7 @@ import App from './app.svelte';
 
 Framework7.use(Framework7Svelte);
 
-// Init Vue App
+// Init Svelte App
 const app = new App({
 	target: document.getElementById('app'),
 });
