@@ -212,4 +212,12 @@ export default {
       });
     },
   },
+  vnode: {
+    tabbar: {
+      insert(vnode) {
+        const app = this;
+        app.toolbar.init(vnode.elm);
+      },
+    },
+  },
 };
