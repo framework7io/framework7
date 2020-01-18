@@ -183,10 +183,12 @@ class Router extends Framework7Class {
       (direction === 'forward' ? $newPageEl : $oldPageEl).animationEnd(onCustomTransitionDone);
       if (dynamicNavbar) {
         if ($newNavbarEl && $newPageEl) {
+          router.setNavbarPosition($newNavbarEl, '');
           $newNavbarEl.removeClass('navbar-next navbar-previous navbar-current');
           $newPageEl.prepend($newNavbarEl);
         }
         if ($oldNavbarEl && $oldPageEl) {
+          router.setNavbarPosition($oldNavbarEl, '');
           $oldNavbarEl.removeClass('navbar-next navbar-previous navbar-current');
           $oldPageEl.prepend($oldNavbarEl);
         }
@@ -698,7 +700,10 @@ class Router extends Framework7Class {
   setNavbarPosition($el, position, ariaHidden) {
     const router = this;
     $el.removeClass('navbar-previous navbar-current navbar-next');
-    $el.addClass(`navbar-${position}`);
+    if (position) {
+      $el.addClass(`navbar-${position}`);
+    }
+
     if (ariaHidden === false) {
       $el.removeAttr('aria-hidden');
     } else if (ariaHidden === true) {

@@ -39,6 +39,7 @@ export default {
       openIn: 'auto', // or 'popover' or 'sheet'
       sheetPush: false,
       sheetSwipeToClose: undefined,
+      backdrop: undefined, // uses Popover or Sheet defaults
       formatValue: null,
       inputEl: null,
       inputReadOnly: true,

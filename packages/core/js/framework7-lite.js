@@ -1,5 +1,5 @@
 /**
- * Framework7 5.3.0
+ * Framework7 5.3.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 3, 2020
+ * Released on: January 18, 2020
  */
 
 (function (global, factory) {
@@ -3509,30 +3509,14 @@
           html.classList.remove('theme-dark');
         }
       };
+
       // Init
-      function init() {
-        if (Device.cordova && app.params.initOnDeviceReady) {
-          $(doc).on('deviceready', function () {
-            app.init();
-          });
-        } else {
+      if (Device.cordova && app.params.initOnDeviceReady) {
+        $(doc).on('deviceready', function () {
           app.init();
-        }
-      }
-      if (app.params.component || app.params.componentUrl) {
-        app.router.componentLoader(
-          app.params.component,
-          app.params.componentUrl,
-          { componentOptions: { el: app.root[0] } },
-          function (el) {
-            app.root = $(el);
-            app.root[0].f7 = app;
-            app.rootComponent = el.f7Component;
-            if (app.params.init) { init(); }
-          }
-        );
-      } else if (app.params.init) {
-        init();
+        });
+      } else {
+        app.init();
       }
 
       // Return app instance
@@ -3591,7 +3575,24 @@
       if (app.mq.light) { app.mq.light.removeListener(app.colorSchemeListener); }
     };
 
-    Framework7.prototype.init = function init () {
+    Framework7.prototype.initAppComponent = function initAppComponent (callback) {
+      var app = this;
+      app.router.componentLoader(
+        app.params.component,
+        app.params.componentUrl,
+        { componentOptions: { el: app.root[0] } },
+        function (el) {
+          app.root = $(el);
+          app.root[0].f7 = app;
+          app.rootComponent = el.f7Component;
+          if (callback) { callback(); }
+        },
+        function () {}
+      );
+    };
+
+    // eslint-disable-next-line
+    Framework7.prototype._init = function _init () {
       var app = this;
       if (app.initialized) { return app; }
 
@@ -3642,6 +3643,17 @@
       app.emit('init');
 
       return app;
+    };
+
+    Framework7.prototype.init = function init () {
+      var app = this;
+      if (app.params.component || app.params.componentUrl) {
+        app.initAppComponent(function () {
+          app._init(); // eslint-disable-line
+        });
+      } else {
+        app._init(); // eslint-disable-line
+      }
     };
 
     // eslint-disable-next-line
@@ -4609,16 +4621,18 @@
 
 
     var passiveListener = Support.passiveListener ? { passive: true } : false;
+    var passiveListenerCapture = Support.passiveListener ? { passive: true, capture: true } : true;
     var activeListener = Support.passiveListener ? { passive: false } : false;
+    var activeListenerCapture = Support.passiveListener ? { passive: false, capture: true } : true;
 
     doc.addEventListener('click', appClick, true);
 
     if (Support.passiveListener) {
-      doc.addEventListener(app.touchEvents.start, appTouchStartActive, activeListener);
+      doc.addEventListener(app.touchEvents.start, appTouchStartActive, activeListenerCapture);
       doc.addEventListener(app.touchEvents.move, appTouchMoveActive, activeListener);
       doc.addEventListener(app.touchEvents.end, appTouchEndActive, activeListener);
 
-      doc.addEventListener(app.touchEvents.start, appTouchStartPassive, passiveListener);
+      doc.addEventListener(app.touchEvents.start, appTouchStartPassive, passiveListenerCapture);
       doc.addEventListener(app.touchEvents.move, appTouchMovePassive, passiveListener);
       doc.addEventListener(app.touchEvents.end, appTouchEndPassive, passiveListener);
       if (Support.touch && Support.gestures) {
@@ -4634,7 +4648,7 @@
       doc.addEventListener(app.touchEvents.start, function (e) {
         appTouchStartActive(e);
         appTouchStartPassive(e);
-      }, false);
+      }, true);
       doc.addEventListener(app.touchEvents.move, function (e) {
         appTouchMoveActive(e);
         appTouchMovePassive(e);
@@ -8258,10 +8272,12 @@
         (direction === 'forward' ? $newPageEl : $oldPageEl).animationEnd(onCustomTransitionDone);
         if (dynamicNavbar) {
           if ($newNavbarEl && $newPageEl) {
+            router.setNavbarPosition($newNavbarEl, '');
             $newNavbarEl.removeClass('navbar-next navbar-previous navbar-current');
             $newPageEl.prepend($newNavbarEl);
           }
           if ($oldNavbarEl && $oldPageEl) {
+            router.setNavbarPosition($oldNavbarEl, '');
             $oldNavbarEl.removeClass('navbar-next navbar-previous navbar-current');
             $oldPageEl.prepend($oldNavbarEl);
           }
@@ -8786,7 +8802,10 @@
     Router.prototype.setNavbarPosition = function setNavbarPosition ($el, position, ariaHidden) {
       var router = this;
       $el.removeClass('navbar-previous navbar-current navbar-next');
-      $el.addClass(("navbar-" + position));
+      if (position) {
+        $el.addClass(("navbar-" + position));
+      }
+
       if (ariaHidden === false) {
         $el.removeAttr('aria-hidden');
       } else if (ariaHidden === true) {
@@ -10919,6 +10938,14 @@
         });
       },
     },
+    vnode: {
+      tabbar: {
+        insert: function insert(vnode) {
+          var app = this;
+          app.toolbar.init(vnode.elm);
+        },
+      },
+    },
   };
 
   var Subnavbar = {
@@ -11371,7 +11398,7 @@
   };
 
   /**
-   * Framework7 5.3.0
+   * Framework7 5.3.2
    * Full featured mobile HTML framework for building iOS & Android apps
    * http://framework7.io/
    *
@@ -11379,7 +11406,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: January 3, 2020
+   * Released on: January 18, 2020
    */
 
   // Install Core Modules & Components

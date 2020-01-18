@@ -99,7 +99,7 @@ export default {
     const addLeftTitleClass = theme && theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
     const addCenterTitleClass = theme && theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || theme && theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
     const slots = self.$slots;
-    const classes = Utils.classNames(className, 'navbar', routerPositionClass, {
+    const classes = Utils.classNames(className, 'navbar', routerPositionClass && routerPositionClass, {
       'navbar-hidden': hidden,
       'navbar-large': large,
       'navbar-large-transparent': largeTransparent,
@@ -249,7 +249,7 @@ export default {
     onNavbarPosition(navbarEl, position) {
       if (this.eventTargetEl !== navbarEl) return;
       this.setState({
-        routerPositionClass: `navbar-${position}`
+        routerPositionClass: position ? `navbar-${position}` : ''
       });
     },
 
