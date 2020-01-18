@@ -2,7 +2,7 @@
   import { createEventDispatcher } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
-  import { theme } from '../utils/plugin';
+  import { f7, theme } from '../utils/plugin';
 
   import Link from './link.svelte';
 
@@ -20,6 +20,14 @@
   export let backLinkShowText = undefined;
   export let sliding = undefined;
 
+  // eslint-disable-next-line
+  let _theme = f7.instance ? theme : null;
+  if (!f7.instance) {
+    f7.ready(() => {
+      _theme = theme;
+    });
+  }
+
   $: classes = Utils.classNames(
     className,
     'left',
@@ -30,7 +38,7 @@
   );
 
   $: needBackLinkText = backLinkShowText;
-  $: if (typeof needBackLinkText === 'undefined') needBackLinkText = !theme.md;
+  $: if (typeof needBackLinkText === 'undefined') needBackLinkText = _theme && !_theme.md;
 
   $: backLinkText = backLink !== true && needBackLinkText ? backLink : undefined;
 
