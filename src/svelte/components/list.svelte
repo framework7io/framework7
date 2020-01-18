@@ -140,47 +140,50 @@
   }
 
   onMount(() => {
-    f7.instance.on('sortableEnable', onSortableEnable);
-    f7.instance.on('sortableDisable', onSortableDisable);
-    f7.instance.on('sortableSort', onSortableSort);
-    f7.instance.on('tabShow', onTabShow);
-    f7.instance.on('tabHide', onTabHide);
+    f7.ready(() => {
+      f7.instance.on('sortableEnable', onSortableEnable);
+      f7.instance.on('sortableDisable', onSortableDisable);
+      f7.instance.on('sortableSort', onSortableSort);
+      f7.instance.on('tabShow', onTabShow);
+      f7.instance.on('tabHide', onTabHide);
 
-    if (!virtualList) return;
-    const vlParams = virtualListParams || {};
-    if (!vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) return;
+      if (!virtualList) return;
+      const vlParams = virtualListParams || {};
+      if (!vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) return;
 
-    f7VirtualList = f7.instance.virtualList.create(Utils.extend(
-      {
-        el,
-        on: {
-          itemBeforeInsert(itemEl, item) {
-            const vl = this;
-            dispatch('virtualItemBeforeInsert', [vl, itemEl, item]);
-            if (typeof $$props.onVirtualItemBeforeInsert === 'function') $$props.onVirtualItemBeforeInsert(vl, itemEl, item);
-          },
-          beforeClear(fragment) {
-            const vl = this;
-            dispatch('virtualBeforeClear', [vl, fragment]);
-            if (typeof $$props.onVirtualBeforeClear === 'function') $$props.onVirtualBeforeClear(vl, fragment);
-          },
-          itemsBeforeInsert(fragment) {
-            const vl = this;
-            dispatch('virtualItemsBeforeInsert', [vl, fragment]);
-            if (typeof $$props.onVirtualItemsBeforeInsert === 'function') $$props.onVirtualItemsBeforeInsert(vl, fragment);
-          },
-          itemsAfterInsert(fragment) {
-            const vl = this;
-            dispatch('virtualItemsAfterInsert', [vl, fragment]);
-            if (typeof $$props.onVirtualItemsAfterInsert === 'function') $$props.onVirtualItemsAfterInsert(vl, fragment);
+      f7VirtualList = f7.instance.virtualList.create(Utils.extend(
+        {
+          el,
+          on: {
+            itemBeforeInsert(itemEl, item) {
+              const vl = this;
+              dispatch('virtualItemBeforeInsert', [vl, itemEl, item]);
+              if (typeof $$props.onVirtualItemBeforeInsert === 'function') $$props.onVirtualItemBeforeInsert(vl, itemEl, item);
+            },
+            beforeClear(fragment) {
+              const vl = this;
+              dispatch('virtualBeforeClear', [vl, fragment]);
+              if (typeof $$props.onVirtualBeforeClear === 'function') $$props.onVirtualBeforeClear(vl, fragment);
+            },
+            itemsBeforeInsert(fragment) {
+              const vl = this;
+              dispatch('virtualItemsBeforeInsert', [vl, fragment]);
+              if (typeof $$props.onVirtualItemsBeforeInsert === 'function') $$props.onVirtualItemsBeforeInsert(vl, fragment);
+            },
+            itemsAfterInsert(fragment) {
+              const vl = this;
+              dispatch('virtualItemsAfterInsert', [vl, fragment]);
+              if (typeof $$props.onVirtualItemsAfterInsert === 'function') $$props.onVirtualItemsAfterInsert(vl, fragment);
+            },
           },
         },
-      },
-      vlParams,
-    ));
+        vlParams,
+      ));
+    });
   });
 
   onDestroy(() => {
+    if (!f7.instance) return;
     f7.instance.off('sortableEnable', onSortableEnable);
     f7.instance.off('sortableDisable', onSortableDisable);
     f7.instance.off('sortableSort', onSortableSort);

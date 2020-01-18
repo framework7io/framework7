@@ -59,6 +59,7 @@
     });
   });
   onDestroy(() => {
+    if (!f7.instance) return;
     f7.instance.off('gridResize', onResize);
   });
 </script>

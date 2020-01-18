@@ -171,6 +171,7 @@
     f7.instance.navbar.size(el);
   });
   onDestroy(() => {
+    if (!f7.instance) return;
     destroyNavbar();
   });
 </script>

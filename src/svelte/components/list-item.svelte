@@ -312,6 +312,7 @@
     if (linkEl) {
       delete linkEl.f7RouteProps;
     }
+    if (!f7.instance) return;
     if (swipeout) {
       f7.instance.off('swipeoutOpen', onSwipeoutOpen);
       f7.instance.off('swipeoutOpened', onSwipeoutOpened);

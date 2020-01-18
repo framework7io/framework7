@@ -133,6 +133,7 @@
     });
   });
   onDestroy(() => {
+    if (!f7.instance) return;
     destroyPageContent();
   });
 </script>

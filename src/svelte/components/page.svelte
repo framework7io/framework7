@@ -297,6 +297,7 @@
     }
   });
   onDestroy(() => {
+    if (!f7.instance) return;
     destroyPage();
   });
 </script>

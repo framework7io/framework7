@@ -85,6 +85,7 @@
   });
 
   onDestroy(() => {
+    if (!f7.instance) return;
     f7.instance.off('toolbarShow', onShow);
     f7.instance.off('toolbarHide', onHide);
   });
