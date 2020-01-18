@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.3.0
+ * Framework7 React 5.3.2
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 3, 2020
+ * Released on: January 18, 2020
  */
 
 (function (global, factory) {
@@ -9466,7 +9466,7 @@
     F7Navbar.prototype.onNavbarPosition = function onNavbarPosition (navbarEl, position) {
       if (this.eventTargetEl !== navbarEl) { return; }
       this.setState({
-        routerPositionClass: ("navbar-" + position)
+        routerPositionClass: position ? ("navbar-" + position) : ''
       });
     };
 
@@ -9548,7 +9548,7 @@
       var addLeftTitleClass = theme && theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
       var addCenterTitleClass = theme && theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || theme && theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
       var slots = self.slots;
-      var classes = Utils.classNames(className, 'navbar', routerPositionClass, {
+      var classes = Utils.classNames(className, 'navbar', routerPositionClass && routerPositionClass, {
         'navbar-hidden': hidden,
         'navbar-large': large,
         'navbar-large-transparent': largeTransparent,
@@ -14554,7 +14554,7 @@
   };
 
   /**
-   * Framework7 React 5.3.0
+   * Framework7 React 5.3.2
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -14562,7 +14562,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: January 3, 2020
+   * Released on: January 18, 2020
    */
 
   function f7ready(callback) {

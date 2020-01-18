@@ -15,7 +15,7 @@ export default {
           try {
             context = JSON.parse(context);
           } catch (err) {
-            reject();
+            reject(err);
             throw (err);
           }
         }
@@ -42,7 +42,7 @@ export default {
             resolve(createdComponent.el);
           })
           .catch((err) => {
-            reject();
+            reject(err);
             throw new Error(err);
           });
       }

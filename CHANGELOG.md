@@ -2,6 +2,27 @@
 
 # Change Log
 
+# [v5.3.2](https://github.com/framework7io/framework7/compare/v5.3.0...v5.3.2) - January 18, 2019
+  * Core
+    * Component
+      * Now main app component will be created on app init respecting cordova's deviceready event
+    * Toolbar
+      * Fixed Tabbar init when it used in main app component
+    * Picker
+      * Added `backdrop` parameter support
+    * Swiper updated to latest 5.3.0
+      * Core
+        * New `slidesPerGroupSkip` behavior (#3361)
+        * New ratio-based breakpoints (#3389)
+        * Added SCSS interpolation (#3373, #3374)
+      * Mousehweel
+        * Fixed issue when it can fail on load (#3383)
+    * Touch
+      * Fixed issue when it could prevent Leaflet map controls on iOS 12.x
+  * Vue/React
+    * Navbar - fixed issue when it could disappear with custom transitions
+  * Minor fixes
+
 # [v5.3.0](https://github.com/framework7io/framework7/compare/v5.2.0...v5.3.0) - January 3, 2019
   * Core
     * Card

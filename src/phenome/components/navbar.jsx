@@ -95,7 +95,7 @@ export default {
     const classes = Utils.classNames(
       className,
       'navbar',
-      routerPositionClass,
+      routerPositionClass && routerPositionClass,
       {
         'navbar-hidden': hidden,
         'navbar-large': large,
@@ -244,7 +244,7 @@ export default {
     onNavbarPosition(navbarEl, position) {
       if (this.eventTargetEl !== navbarEl) return;
       this.setState({
-        routerPositionClass: `navbar-${position}`,
+        routerPositionClass: position ? `navbar-${position}` : '',
       });
     },
     onNavbarRole(navbarEl, rolesData) {

@@ -454,7 +454,7 @@ class Picker extends Framework7Class {
       targetEl: $inputEl,
       scrollToEl: params.scrollToInput ? $inputEl : undefined,
       content: picker.render(),
-      backdrop: isPopover,
+      backdrop: typeof params.backdrop !== 'undefined' ? params.backdrop : isPopover,
       on: {
         open() {
           const modal = this;
