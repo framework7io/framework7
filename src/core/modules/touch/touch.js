@@ -350,16 +350,18 @@ function initTouch() {
 
 
   const passiveListener = Support.passiveListener ? { passive: true } : false;
+  const passiveListenerCapture = Support.passiveListener ? { passive: true, capture: true } : true;
   const activeListener = Support.passiveListener ? { passive: false } : false;
+  const activeListenerCapture = Support.passiveListener ? { passive: false, capture: true } : true;
 
   document.addEventListener('click', appClick, true);
 
   if (Support.passiveListener) {
-    document.addEventListener(app.touchEvents.start, appTouchStartActive, activeListener);
+    document.addEventListener(app.touchEvents.start, appTouchStartActive, activeListenerCapture);
     document.addEventListener(app.touchEvents.move, appTouchMoveActive, activeListener);
     document.addEventListener(app.touchEvents.end, appTouchEndActive, activeListener);
 
-    document.addEventListener(app.touchEvents.start, appTouchStartPassive, passiveListener);
+    document.addEventListener(app.touchEvents.start, appTouchStartPassive, passiveListenerCapture);
     document.addEventListener(app.touchEvents.move, appTouchMovePassive, passiveListener);
     document.addEventListener(app.touchEvents.end, appTouchEndPassive, passiveListener);
     if (Support.touch && Support.gestures) {
@@ -375,7 +377,7 @@ function initTouch() {
     document.addEventListener(app.touchEvents.start, (e) => {
       appTouchStartActive(e);
       appTouchStartPassive(e);
-    }, false);
+    }, true);
     document.addEventListener(app.touchEvents.move, (e) => {
       appTouchMoveActive(e);
       appTouchMovePassive(e);
