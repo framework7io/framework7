@@ -3,9 +3,9 @@
 const path = require('path');
 const rollup = require('rollup');
 const babel = require('rollup-plugin-babel');
-const replace = require('rollup-plugin-replace');
-const commonjs = require('rollup-plugin-commonjs');
-const resolve = require('rollup-plugin-node-resolve');
+const replace = require('@rollup/plugin-replace');
+const commonjs = require('@rollup/plugin-commonjs');
+const resolve = require('@rollup/plugin-node-resolve');
 const fs = require('./utils/fs-extra');
 
 // let cache;

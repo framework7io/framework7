@@ -6,7 +6,7 @@
 
 const rollup = require('rollup');
 const buble = require('rollup-plugin-buble');
-const replace = require('rollup-plugin-replace');
+const replace = require('@rollup/plugin-replace');
 
 const Terser = require('terser');
 const bannerVue = require('./banners/vue');
