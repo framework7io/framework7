@@ -120,7 +120,7 @@
   }
   function onNavbarPosition(navbarEl, position) {
     if (el !== navbarEl) return;
-    routerPositionClass = `navbar-${position}`;
+    routerPositionClass = position ? `navbar-${position}` : position;
   }
   function onNavbarRole(navbarEl, rolesData) {
     if (el !== navbarEl) return;
