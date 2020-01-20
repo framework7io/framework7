@@ -52,6 +52,26 @@
   export function instance() {
     return f7Searchbar;
   }
+  export function search(query) {
+    if (!f7Searchbar) return undefined;
+    return f7Searchbar.search(query);
+  }
+  export function enable() {
+    if (!f7Searchbar) return undefined;
+    return f7Searchbar.enable();
+  }
+  export function disable() {
+    if (!f7Searchbar) return undefined;
+    return f7Searchbar.disable();
+  }
+  export function toggle() {
+    if (!f7Searchbar) return undefined;
+    return f7Searchbar.toggle();
+  }
+  export function clear() {
+    if (!f7Searchbar) return undefined;
+    return f7Searchbar.clear();
+  }
 
   $: classes = Utils.classNames(
     className,
