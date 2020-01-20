@@ -97,9 +97,9 @@
     dispatch('ptrPullEnd');
     if (typeof $$props.onPtrPullEnd === 'function') $$props.onPtrPullEnd();
   }
-  function onPtrRefresh(e) {
-    dispatch('ptrRefresh', [...e.detail]);
-    if (typeof $$props.onPtrRefresh === 'function') $$props.onPtrRefresh(...e.detail);
+  function onPtrRefresh(done) {
+    dispatch('ptrRefresh', [done]);
+    if (typeof $$props.onPtrRefresh === 'function') $$props.onPtrRefresh(done);
   }
   function onPtrDone() {
     dispatch('ptrDone');
