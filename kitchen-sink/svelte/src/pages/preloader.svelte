@@ -6,7 +6,7 @@
   </Block>
 
   <BlockTitle>Default</BlockTitle>
-  <Block class="row demo-preloaders align-items-stretch text-align-center">
+  <Block strong class="row demo-preloaders align-items-stretch text-align-center">
     <Col>
       <Preloader></Preloader>
     </Col>
@@ -22,7 +22,7 @@
   </Block>
 
   <BlockTitle>Color Preloaders</BlockTitle>
-  <Block class="row text-align-center">
+  <Block strong class="row text-align-center">
     <Col>
       <Preloader color="red"></Preloader>
     </Col>
@@ -38,12 +38,12 @@
   </Block>
 
   <BlockTitle>Multi-color (MD-theme only)</BlockTitle>
-  <Block class="text-align-center">
+  <Block strong class="text-align-center">
     <Preloader color="multi"></Preloader>
   </Block>
 
   <BlockTitle>Preloader Modals</BlockTitle>
-  <Block>
+  <Block strong>
     <p>With <b>app.preloader.show()</b> you can show small overlay with preloader indicator.</p>
     <p>
       <a class="button button-fill" on:click={openIndicator}>Open Small Indicator</a>

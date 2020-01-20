@@ -6,7 +6,7 @@
     </f7-block>
 
     <f7-block-title>Default</f7-block-title>
-    <f7-block class="row demo-preloaders align-items-stretch text-align-center">
+    <f7-block strong class="row demo-preloaders align-items-stretch text-align-center">
       <f7-col>
         <f7-preloader></f7-preloader>
       </f7-col>
@@ -22,7 +22,7 @@
     </f7-block>
 
     <f7-block-title>Color Preloaders</f7-block-title>
-    <f7-block class="row text-align-center">
+    <f7-block strong class="row text-align-center">
       <f7-col>
         <f7-preloader color="red"></f7-preloader>
       </f7-col>
@@ -38,12 +38,12 @@
     </f7-block>
 
     <f7-block-title>Multi-color (MD-theme only)</f7-block-title>
-    <f7-block class="text-align-center">
+    <f7-block strong class="text-align-center">
       <f7-preloader color="multi"></f7-preloader>
     </f7-block>
 
     <f7-block-title>Preloader Modals</f7-block-title>
-    <f7-block>
+    <f7-block strong>
       <p>With <b>app.preloader.show()</b> you can show small overlay with preloader indicator.</p>
       <p>
         <a class="button button-fill" @click="openIndicator">Open Small Indicator</a>
