@@ -13,7 +13,7 @@ export default class extends React.Component {
     return (
       <Page onPageBeforeOut={this.onPageBeforeOut.bind(this)} onPageBeforeRemove={this.onPageBeforeRemove.bind(this)}>
         <Navbar title="Sheet Modal" backLink="Back"></Navbar>
-        <Block>
+        <Block strong>
           <p>Sheet Modals slide up from the bottom of the screen to reveal more content. Such modals allow to create custom overlays with custom content.</p>
           <Row tag="p">
             <Button className="col" fill sheetOpen=".demo-sheet">Open Sheet</Button>

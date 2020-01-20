@@ -55,14 +55,14 @@ export default class extends React.Component {
         </Block>
         <BlockTitle>Deletable Chips / Tags</BlockTitle>
         <Block strong>
-          <Chip text="Example Chip" deleteable onClick={ this.deleteChipBound } />
-          <Chip text="Chris" media="C" mediaBgColor="orange" textColor="black" deleteable onClick={ this.deleteChipBound } />
-          <Chip text="Jane Doe" deleteable onClick={ this.deleteChipBound }>
+          <Chip text="Example Chip" deleteable onDelete={ this.deleteChipBound } />
+          <Chip text="Chris" media="C" mediaBgColor="orange" textColor="black" deleteable onDelete={ this.deleteChipBound } />
+          <Chip text="Jane Doe" deleteable onDelete={ this.deleteChipBound }>
             <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg"/>
           </Chip>
-          <Chip text="One More Chip" deleteable onClick={ this.deleteChipBound } />
-          <Chip text="Jennifer" mediaBgColor="pink" media="J" deleteable onClick={ this.deleteChipBound } />
-          <Chip text="Adam Smith" deleteable onClick={ this.deleteChipBound }>
+          <Chip text="One More Chip" deleteable onDelete={ this.deleteChipBound } />
+          <Chip text="Jennifer" mediaBgColor="pink" media="J" deleteable onDelete={ this.deleteChipBound } />
+          <Chip text="Adam Smith" deleteable onDelete={ this.deleteChipBound }>
             <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg"/>
           </Chip>
         </Block>

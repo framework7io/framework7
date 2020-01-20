@@ -70,7 +70,7 @@ export default () => (
         label="Range"
         input={false}
       >
-        <Range name="range" slot="input" value={50} min={0} max={100} step={1}/>
+        <Range input={true} name="range" slot="input" value={50} min={0} max={100} step={1}/>
       </ListInput>
 
       <ListInput

@@ -6,6 +6,7 @@ module.exports = {
   'plugins': [
     'import',
     'react',
+    'svelte3',
   ],
   'globals': {
     "window": true,
@@ -61,4 +62,32 @@ module.exports = {
     'arrow-parens': ['off'],
     'prefer-object-spread': ['off'],
   },
+  overrides: [
+    {
+      files: ['**/*.jsx'],
+      rules: {
+        'import/no-unresolved': ['off'],
+        'import/no-extraneous-dependencies': ['off'],
+        'import/extensions': ['off'],
+        'no-dupe-keys': ['off'],
+      }
+    },
+    {
+      files: ['**/*.svelte'],
+      processor: 'svelte3/svelte3',
+      rules: {
+        'import/no-mutable-exports': ['off'],
+        'import/first': ['off'],
+        'import/no-unresolved': ['off'],
+        'import/no-extraneous-dependencies': ['off'],
+        'import/extensions': ['off'],
+        'no-multiple-empty-lines': ['off'],
+        'no-undef-init': ['off'],
+        'no-shadow': ['off'],
+        'no-nested-ternary': ['off'],
+        'a11y-invalid-attribute': ['off'],
+        'a11y-missing-attribute': ['off'],
+      }
+    }
+  ],
 };

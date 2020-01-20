@@ -27,7 +27,7 @@ export default class extends React.Component {
     return (
       <Page>
         <Navbar title="Photo Browser" backLink="Back"></Navbar>
-        <Block>
+        <Block strong>
           <p>Photo Browser is a standalone and highly configurable component that allows to open window with photo viewer and navigation elements with the following features:</p>
           <ul>
             <li>Swiper between photos</li>
@@ -36,7 +36,7 @@ export default class extends React.Component {
             <li>Single click on photo to toggle Exposition mode</li>
           </ul>
         </Block>
-        <Block>
+        <Block strong>
           <p>Photo Browser could be opened in a three ways - as a Standalone component (Popup modification), in Popup, and as separate Page:</p>
           <Row>
             <Col>
@@ -48,12 +48,12 @@ export default class extends React.Component {
               <Button fill onClick={() => this.popup.open()}>Popup</Button>
             </Col>
             <Col>
-              <PhotoBrowser photos={this.state.photos} type="page" backLinkText="Back" ref={(el) => {this.page = el}} />
+              <PhotoBrowser photos={this.state.photos} type="page" pageBackLinkText="Back" ref={(el) => {this.page = el}} />
               <Button fill onClick={() => this.page.open()}>Page</Button>
             </Col>
           </Row>
         </Block>
-        <Block>
+        <Block strong>
           <p>Photo Browser suppots 2 default themes - default Light (like in previous examples) and Dark theme. Here is a Dark theme examples:</p>
           <Row>
             <Col>
@@ -65,7 +65,7 @@ export default class extends React.Component {
               <Button fill onClick={() => this.popupDark.open()}>Popup</Button>
             </Col>
             <Col>
-              <PhotoBrowser photos={this.state.photos} theme="dark" type="page" backLinkText="Back" ref={(el) => {this.pageDark = el}} />
+              <PhotoBrowser photos={this.state.photos} theme="dark" type="page" pageBackLinkText="Back" ref={(el) => {this.pageDark = el}} />
               <Button fill onClick={() => this.pageDark.open()}>Page</Button>
             </Col>
           </Row>

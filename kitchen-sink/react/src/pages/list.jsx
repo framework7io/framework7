@@ -125,7 +125,7 @@ export default () => (
       </ListItem>
     </List>
     <BlockTitle>Mixed, inset</BlockTitle>
-    <List>
+    <List inset>
       <ListItem link="#" title="Ivan Petrov" after="CEO">
         <Icon slot="media" icon="icon-f7"></Icon>
       </ListItem>

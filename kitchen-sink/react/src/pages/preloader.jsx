@@ -14,7 +14,7 @@ export default class extends React.Component {
         </Block>
 
         <BlockTitle>Default</BlockTitle>
-        <Block className="row demo-preloaders align-items-stretch text-align-center">
+        <Block strong className="row demo-preloaders align-items-stretch text-align-center">
           <Col>
             <Preloader></Preloader>
           </Col>
@@ -30,7 +30,7 @@ export default class extends React.Component {
         </Block>
 
         <BlockTitle>Color Preloaders</BlockTitle>
-        <Block className="row text-align-center">
+        <Block strong className="row text-align-center">
           <Col>
             <Preloader color="red"></Preloader>
           </Col>
@@ -46,12 +46,12 @@ export default class extends React.Component {
         </Block>
 
         <BlockTitle>Multi-color (MD-theme only)</BlockTitle>
-        <Block className="text-align-center">
+        <Block strong className="text-align-center">
           <Preloader color="multi"></Preloader>
         </Block>
 
         <BlockTitle>Preloader Modals</BlockTitle>
-        <Block>
+        <Block strong>
           <p>With <b>app.preloader.show()</b> you can show small overlay with preloader indicator.</p>
           <p>
             <a className="button button-fill" onClick={this.openIndicator.bind(this)}>Open Small Indicator</a>

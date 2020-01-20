@@ -1,6 +1,9 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
+// eslint-disable-next-line
+import F7Icon from './icon';
+
 export default {
   name: 'f7-chip',
   props: {
@@ -14,6 +17,7 @@ export default {
     mediaTextColor: String,
     outline: Boolean,
     ...Mixins.colorProps,
+    ...Mixins.linkIconProps,
   },
   render() {
     const self = this;
@@ -28,12 +32,36 @@ export default {
       mediaTextColor,
       mediaBgColor,
       outline,
+      icon,
+      iconMaterial,
+      iconF7,
+      iconMd,
+      iconIos,
+      iconAurora,
+      iconColor,
+      iconSize,
     } = props;
 
+    let iconEl;
     let mediaEl;
     let labelEl;
     let deleteEl;
-    if (media || (self.slots && self.slots.media)) {
+
+    if (icon || iconMaterial || iconF7 || iconMd || iconIos || iconAurora) {
+      iconEl = (
+        <F7Icon
+          material={iconMaterial}
+          f7={iconF7}
+          icon={icon}
+          md={iconMd}
+          ios={iconIos}
+          aurora={iconAurora}
+          color={iconColor}
+          size={iconSize}
+        />
+      );
+    }
+    if (media || iconEl || (self.slots && self.slots.media)) {
       const mediaClasses = Utils.classNames(
         'chip-media',
         mediaTextColor && `text-color-${mediaTextColor}`,
@@ -41,7 +69,9 @@ export default {
       );
       mediaEl = (
         <div className={mediaClasses}>
-          {media || (<slot name="media" />)}
+          {iconEl}
+          {media}
+          <slot name="media" />
         </div>
       );
     }
@@ -77,7 +107,7 @@ export default {
     );
   },
   componentDidCreate() {
-    Utils.bindMethods(this, ['onClick', 'onDeleteClick'])
+    Utils.bindMethods(this, ['onClick', 'onDeleteClick']);
   },
   componentDidMount() {
     this.refs.el.addEventListener('click', this.onClick);

@@ -141,7 +141,7 @@ export default class extends React.Component {
 
     // Simple Dropdown
     self.autocompleteDropdownSimple = app.autocomplete.create({
-      inputEl: '#autocomplete-dropdown input',
+      inputEl: '#autocomplete-dropdown',
       openIn: 'dropdown',
       source(query, render) {
         const results = [];
@@ -160,7 +160,7 @@ export default class extends React.Component {
 
     // Dropdown with input expand
     self.autocompleteDropdownExpand = app.autocomplete.create({
-      inputEl: '#autocomplete-dropdown-expand input',
+      inputEl: '#autocomplete-dropdown-expand',
       openIn: 'dropdown',
       expandInput: true, // expand input
       source(query, render) {
@@ -180,7 +180,7 @@ export default class extends React.Component {
 
     // Dropdown with all values
     self.autocompleteDropdownAll = app.autocomplete.create({
-      inputEl: '#autocomplete-dropdown-all input',
+      inputEl: '#autocomplete-dropdown-all',
       openIn: 'dropdown',
       source(query, render) {
         const results = [];
@@ -195,7 +195,7 @@ export default class extends React.Component {
 
     // Dropdown with placeholder
     self.autocompleteDropdownPlaceholder = app.autocomplete.create({
-      inputEl: '#autocomplete-dropdown-placeholder input',
+      inputEl: '#autocomplete-dropdown-placeholder',
       openIn: 'dropdown',
       dropdownPlaceholderText: 'Try to type "Apple"',
       source(query, render) {
@@ -215,7 +215,7 @@ export default class extends React.Component {
 
     // Dropdown with typeahead
     self.autocompleteDropdownTypeahead = app.autocomplete.create({
-      inputEl: '#autocomplete-dropdown-typeahead input',
+      inputEl: '#autocomplete-dropdown-typeahead',
       openIn: 'dropdown',
       dropdownPlaceholderText: 'Try to type "Pineapple"',
       typeahead: true,
@@ -236,7 +236,7 @@ export default class extends React.Component {
 
     // Dropdown with ajax data
     self.autocompleteDropdownAjax = app.autocomplete.create({
-      inputEl: '#autocomplete-dropdown-ajax input',
+      inputEl: '#autocomplete-dropdown-ajax',
       openIn: 'dropdown',
       preloader: true, // enable preloader
       /* If we set valueProperty to "id" then input value on select will be set according to this property */
@@ -279,7 +279,7 @@ export default class extends React.Component {
 
     // Dropdown with ajax data
     self.autocompleteDropdownAjaxTypeahead = app.autocomplete.create({
-      inputEl: '#autocomplete-dropdown-ajax-typeahead input',
+      inputEl: '#autocomplete-dropdown-ajax-typeahead',
       openIn: 'dropdown',
       preloader: true, // enable preloader
       /* If we set valueProperty to "id" then input value on select will be set according to this property */

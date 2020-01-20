@@ -33,6 +33,12 @@ const fsExtra = {
     }
     return fs.writeFileSync(file, content);
   },
+  copyFileSync(src, dest) {
+    if (!fs.existsSync(path.dirname(dest))) {
+      fsExtra.mkdirSync(path.dirname(dest));
+    }
+    return fs.copyFileSync(src, dest);
+  },
 };
 
 module.exports = fsExtra;

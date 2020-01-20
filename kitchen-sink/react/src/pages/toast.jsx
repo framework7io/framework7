@@ -9,7 +9,7 @@ export default class extends React.Component {
     return (
       <Page onPageBeforeRemove={this.onPageBeforeRemove.bind(this)} onPageBeforeOut={this.onPageBeforeOut.bind(this)}>
         <Navbar title="Toast" backLink="Back"></Navbar>
-        <Block>
+        <Block strong>
           <p>Toasts provide brief feedback about an operation through a message on the screen.</p>
           <p>
             <Button fill onClick={this.showToastBottom.bind(this)}>Toast on Bottom</Button>

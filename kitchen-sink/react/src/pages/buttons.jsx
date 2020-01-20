@@ -6,7 +6,7 @@ export default () => (
     <Navbar title="Buttons" backLink="Back" />
 
     <BlockTitle>Usual Buttons</BlockTitle>
-    <Block>
+    <Block strong>
       <Row>
         <Col>
           <Button>Button</Button>
@@ -21,7 +21,7 @@ export default () => (
     </Block>
 
     <BlockTitle>Fill Buttons</BlockTitle>
-    <Block>
+    <Block strong>
       <Row>
         <Col>
           <Button fill>Button</Button>
@@ -36,7 +36,7 @@ export default () => (
     </Block>
 
     <BlockTitle>Outline Buttons</BlockTitle>
-    <Block>
+    <Block strong>
       <Row>
         <Col>
           <Button outline>Button</Button>
@@ -51,7 +51,7 @@ export default () => (
     </Block>
 
     <BlockTitle>Raised Buttons</BlockTitle>
-    <Block>
+    <Block strong>
       <Row tag="p">
         <Col tag="span">
           <Button raised>Button</Button>
@@ -77,13 +77,23 @@ export default () => (
     </Block>
 
     <BlockTitle>Segmented</BlockTitle>
-    <Block>
-      <Segmented raised tag="p">
+    <Block strong>
+      <Segmented tag="p">
+        <Button>Button</Button>
+        <Button>Button</Button>
+        <Button active>Active</Button>
+      </Segmented>
+      <Segmented strong tag="p">
         <Button>Button</Button>
         <Button>Button</Button>
         <Button active>Active</Button>
       </Segmented>
       <Segmented raised tag="p">
+        <Button>Button</Button>
+        <Button>Button</Button>
+        <Button active>Active</Button>
+      </Segmented>
+      <Segmented tag="p">
         <Button outline>Outline</Button>
         <Button outline>Outline</Button>
         <Button outline active>Active</Button>
@@ -93,7 +103,7 @@ export default () => (
         <Button round>Button</Button>
         <Button round active>Active</Button>
       </Segmented>
-      <Segmented raised round tag="p">
+      <Segmented round tag="p">
         <Button round outline>Outline</Button>
         <Button round outline>Outline</Button>
         <Button round outline active>Active</Button>
@@ -101,7 +111,7 @@ export default () => (
     </Block>
 
     <BlockTitle>Large Buttons</BlockTitle>
-    <Block>
+    <Block strong>
       <Row tag="p">
         <Col tag="span">
           <Button large>Button</Button>
@@ -121,7 +131,7 @@ export default () => (
     </Block>
 
     <BlockTitle>Small Buttons</BlockTitle>
-    <Block>
+    <Block strong>
       <Row tag="p">
         <Col tag="span">
           <Button large small>Button</Button>
@@ -147,7 +157,7 @@ export default () => (
     </Block>
 
     <BlockTitle>Color Buttons</BlockTitle>
-    <Block>
+    <Block strong>
       <Row>
         <Col>
           <Button color="red">Red</Button>
@@ -162,7 +172,7 @@ export default () => (
     </Block>
 
     <BlockTitle>Color Fill Buttons</BlockTitle>
-    <Block>
+    <Block strong>
       <Row>
         <Col>
           <Button fill color="red">Red</Button>

@@ -97,7 +97,7 @@ export default {
     },
   },
   componentDidCreate() {
-    Utils.bindMethods(this, ['onChange'])
+    Utils.bindMethods(this, ['onChange']);
   },
   componentDidMount() {
     const self = this;
@@ -107,8 +107,7 @@ export default {
         el: self.refs.el,
         on: {
           change(toggle) {
-            const checked = toggle.checked;
-            self.dispatchEvent('toggle:change toggleChange', checked);
+            self.dispatchEvent('toggle:change toggleChange', toggle.checked);
           },
         },
       });

@@ -33,11 +33,8 @@ export default {
 
     return (
       <div ref="el" id={id} style={style} className={classes}>
-        {image &&
-          <img src={image} />}
-        {deletable &&
-          <span ref="deleteEl" className="messagebar-attachment-delete" />
-        }
+        {image && <img src={image} />}
+        {deletable && <span ref="deleteEl" className="messagebar-attachment-delete" />}
         <slot />
       </div>
     );

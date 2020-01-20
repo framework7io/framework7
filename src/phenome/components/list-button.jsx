@@ -109,7 +109,7 @@ export default {
     },
   },
   componentDidCreate() {
-    Utils.bindMethods(this, ['onClick'])
+    Utils.bindMethods(this, ['onClick']);
   },
   componentDidMount() {
     const self = this;

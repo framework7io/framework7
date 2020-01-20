@@ -4,7 +4,7 @@
     <div class="block">
       <p>
         Framework7 comes with powerful and most modern touch slider ever -
-        <a href="http://idangero.us/swiper" class="external" target="_blank">Swiper Slider</a>
+        <a href="https://swiperjs.com" class="external" target="_blank">Swiper Slider</a>
         with super flexible configuration and lot, lot of features. Just check the following demos:
       </p>
     </div>

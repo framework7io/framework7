@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 

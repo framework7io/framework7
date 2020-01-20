@@ -19,7 +19,7 @@
 
     <f7-block-title>Date + Time</f7-block-title>
     <f7-list no-hairlines-md>
-      <f7-list-input type="datepicker" placeholder="Select date and time" readonly :calendar-params="{dateFormat: { month: 'numeric', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' }}"/>
+      <f7-list-input type="datepicker" placeholder="Select date and time" readonly :calendar-params="{timePicker: true, dateFormat: { month: 'numeric', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' }}"/>
     </f7-list>
 
     <f7-block-title>Multiple Values</f7-block-title>
@@ -46,7 +46,7 @@
     </f7-list>
 
     <f7-block-title>Inline with custom toolbar</f7-block-title>
-    <f7-block class="no-padding">
+    <f7-block strong class="no-padding">
       <div id="demo-calendar-inline-container"></div>
     </f7-block>
 

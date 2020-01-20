@@ -51,7 +51,6 @@ export default {
     const {
       mode,
       value,
-      palceholder,
       buttons,
       customButtons,
       dividers,
@@ -65,7 +64,6 @@ export default {
       el: this.refs.el,
       mode,
       value,
-      palceholder,
       buttons,
       customButtons,
       dividers,

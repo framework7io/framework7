@@ -109,7 +109,7 @@
         if (inline) {
           progressBarEl = app.progressbar.show('#demo-determinate-container', 0);
         } else {
-          progressBarEl = app.progressbar.show(0, app.theme === 'md' ? 'yellow' : 'blue');
+          progressBarEl = app.progressbar.show(0);
         }
         let progress = 0;
         function simulateLoading() {
@@ -135,7 +135,7 @@
         if (multiColor) {
           app.progressbar.show('multi');
         } else {
-          app.progressbar.show(app.theme === 'md' ? 'yellow' : 'blue');
+          app.progressbar.show();
         }
         setTimeout(() => {
           self.infiniteLoading = false;

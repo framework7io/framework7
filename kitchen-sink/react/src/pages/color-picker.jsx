@@ -175,7 +175,7 @@ export default class extends React.Component {
               modules: ['hsb-sliders'],
               sliderValue: true,
               sliderLabel: true,
-              targetEl: 'hsb-picker-target',
+              targetEl: '.hsb-picker-target',
               formatValue(value) {
                 return `hsb(${value.hsb[0]}, ${value.hsb[1] * 1000 / 10}%, ${value.hsb[2] * 1000 / 10}%)`
               },
