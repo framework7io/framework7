@@ -2,7 +2,7 @@
 
 # Change Log
 
-# [v5.3.2](https://github.com/framework7io/framework7/compare/v5.3.0...v5.3.2) - January 18, 2019
+# [v5.3.2](https://github.com/framework7io/framework7/compare/v5.3.0...v5.3.2) - January 18, 2020
   * Core
     * Component
       * Now main app component will be created on app init respecting cordova's deviceready event
@@ -23,7 +23,7 @@
     * Navbar - fixed issue when it could disappear with custom transitions
   * Minor fixes
 
-# [v5.3.0](https://github.com/framework7io/framework7/compare/v5.2.0...v5.3.0) - January 3, 2019
+# [v5.3.0](https://github.com/framework7io/framework7/compare/v5.2.0...v5.3.0) - January 3, 2020
   * Core
     * Card
       * Increased default `z-index` for expandable card
