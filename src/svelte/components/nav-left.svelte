@@ -2,7 +2,8 @@
   import { createEventDispatcher } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
-  import { f7, theme } from '../utils/plugin';
+  import f7 from '../utils/f7';
+  import { theme } from '../utils/plugin';
 
   import Link from './link.svelte';
 

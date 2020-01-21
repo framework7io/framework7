@@ -33,6 +33,18 @@
   export function instance() {
     return f7Messages;
   }
+  export function scroll(duration, scrollTop) {
+    if (!f7Messages) return undefined;
+    return f7Messages.scroll(duration, scrollTop);
+  }
+  export function showTyping(message) {
+    if (!f7Messages) return undefined;
+    return f7Messages.showTyping(message);
+  }
+  export function hideTyping() {
+    if (!f7Messages) return undefined;
+    return f7Messages.hideTyping();
+  }
 
   $: classes = Utils.classNames(
     className,

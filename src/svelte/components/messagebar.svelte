@@ -45,6 +45,31 @@
     return f7Messagebar;
   }
 
+  export function clear(...args) {
+    if (!f7Messagebar) return undefined;
+    return f7Messagebar.clear(...args);
+  }
+  export function getValue(...args) {
+    if (!f7Messagebar) return undefined;
+    return f7Messagebar.getValue(...args);
+  }
+  export function setValue(...args) {
+    if (!f7Messagebar) return undefined;
+    return f7Messagebar.setValue(...args);
+  }
+  export function resize(...args) {
+    if (!f7Messagebar) return undefined;
+    return f7Messagebar.resizePage(...args);
+  }
+  export function focus(...args) {
+    if (!f7Messagebar) return undefined;
+    return f7Messagebar.focus(...args);
+  }
+  export function blur(...args) {
+    if (!f7Messagebar) return undefined;
+    return f7Messagebar.blur(...args);
+  }
+
   $: classes = Utils.classNames(
     className,
     'toolbar',
