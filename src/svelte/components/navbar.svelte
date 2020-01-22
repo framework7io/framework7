@@ -45,6 +45,16 @@
   let routerNavbarRoleDetailRoot = false;
   let routerNavbarMasterStack = false;
 
+  export function hide(animate) {
+    f7.navbar.hide(el, animate);
+  }
+  export function show(animate) {
+    f7.navbar.show(el, animate);
+  }
+  export function size() {
+    f7.navbar.size(el);
+  }
+
   if (!f7.instance) {
     f7.ready(() => {
       _theme = theme;
