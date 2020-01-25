@@ -64,8 +64,7 @@ function buildSvelte(cb) {
     .replace('// IMPORT_LIBRARY\n', '')
     .replace('// IMPORT_COMPONENTS\n', '')
     .replace('// REGISTER_COMPONENTS\n', '')
-    .replace('const Extend = EXTEND;\n', '')
-    .replace('// removeNavbar() {},', 'removeNavbar() {},');
+    .replace('const Extend = EXTEND;\n', '');
   pluginContent = pluginContent
     .split(/\/\/ DEFINE_INSTANCE_PROTOS_START\n|\/\/ DEFINE_INSTANCE_PROTOS_END\n/)
     .filter((part, index) => index !== 1)
@@ -77,11 +76,6 @@ function buildSvelte(cb) {
     .replace(/\n[ ]*\n/g, '\n');
 
   fs.writeFileSync(path.resolve(output, 'utils/plugin.js'), pluginContent);
-
-  let componentsRouterContent = fs.readFileSync(path.resolve(output, 'utils/components-router.js'), 'utf8');
-  componentsRouterContent = componentsRouterContent
-    .replace('// removeNavbar() {},', 'removeNavbar() {},');
-  fs.writeFileSync(path.resolve(output, 'utils/components-router.js'), componentsRouterContent);
 
   // Create plugin
   const componentsContent = esm({

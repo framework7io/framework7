@@ -97,8 +97,6 @@ export default {
         pageEl.parentNode.removeChild(pageEl);
       }
     },
-    // SVELTE_ONLY_METHOD
-    // removeNavbar() {},
     tabComponentLoader(tabEl, component, componentUrl, options, resolve, reject) {
       const router = this;
       if (!tabEl) reject();
