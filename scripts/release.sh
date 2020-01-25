@@ -13,9 +13,9 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   echo "Releasing $VERSION ..."
 
-  if [[ -z $SKIP_TESTS ]]; then
-    npm run lint
-  fi
+  # if [[ -z $SKIP_TESTS ]]; then
+    # npm run lint
+  # fi
 
   # remove old builds
   rm -rf ./packages/core/components
@@ -43,32 +43,32 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   rm -rf ./packages/vue/*.map
 
   # build
-  VERSION=$VERSION npm run build:prod
+  # VERSION=$VERSION npm run build:prod
 
   # update dependencies
-  npm run release-update-dependencies
+  # npm run release-update-dependencies
 
   # update packages
   # using subshells to avoid having to cd back
   (
     (
       cd packages/core
-      npm version "$VERSION"
+      npm version "$VERSION" --allow-same-version
       npm publish --tag beta
     )
     (
       cd packages/vue
-      npm version "$VERSION"
+      npm version "$VERSION" --allow-same-version
       npm publish --tag beta
     )
     (
       cd packages/react
-      npm version "$VERSION"
+      npm version "$VERSION" --allow-same-version
       npm publish --tag beta
     )
     (
       cd packages/svelte
-      npm version "$VERSION"
+      npm version "$VERSION" --allow-same-version
       npm publish --tag beta
     )
   )
