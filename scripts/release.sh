@@ -54,17 +54,22 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     (
       cd packages/core
       npm version "$VERSION"
-      npm publish
+      npm publish --tag beta
     )
     (
       cd packages/vue
       npm version "$VERSION"
-      npm publish
+      npm publish --tag beta
     )
     (
       cd packages/react
       npm version "$VERSION"
-      npm publish
+      npm publish --tag beta
+    )
+    (
+      cd packages/svelte
+      npm version "$VERSION"
+      npm publish --tag beta
     )
   )
 
@@ -95,6 +100,10 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
       cd packages/vue
       tar -zcvf ../framework7-vue.tar.gz ./*
     )
+    (
+      cd packages/svelte
+      tar -zcvf ../framework7-svelte.tar.gz ./*
+    )
   )
 
   # Read TOKEN
@@ -109,6 +118,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   source "scripts/release-asset.sh" github_api_token=$token tag=v$VERSION filename=./packages/framework7.tar.gz
   source "scripts/release-asset.sh" github_api_token=$token tag=v$VERSION filename=./packages/framework7-react.tar.gz
   source "scripts/release-asset.sh" github_api_token=$token tag=v$VERSION filename=./packages/framework7-vue.tar.gz
+  source "scripts/release-asset.sh" github_api_token=$token tag=v$VERSION filename=./packages/framework7-svelte.tar.gz
 
   # Remove generated assets
   rm -rf ./packages/*.tar.gz
