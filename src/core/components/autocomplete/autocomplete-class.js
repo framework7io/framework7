@@ -35,15 +35,6 @@ class Autocomplete extends Framework7Class {
       if ($inputEl.length) $inputEl[0].f7Autocomplete = ac;
     }
 
-    let view;
-    if (ac.params.view) {
-      view = ac.params.view;
-    } else if ($openerEl || $inputEl) {
-      const $el = $openerEl || $inputEl;
-      view = $el.closest('.view').length && $el.closest('.view')[0].f7View;
-    }
-    if (!view) view = app.views.main;
-
     const id = Utils.id();
 
     let url = params.url;
@@ -63,7 +54,6 @@ class Autocomplete extends Framework7Class {
       $inputEl,
       inputEl: $inputEl && $inputEl[0],
       id,
-      view,
       url,
       value: ac.params.value || [],
       inputType,
@@ -324,6 +314,20 @@ class Autocomplete extends Framework7Class {
     ac.init();
 
     return ac;
+  }
+
+  get view() {
+    const ac = this;
+    const { $openerEl, $inputEl, app } = ac;
+    let view;
+    if (ac.params.view) {
+      view = ac.params.view;
+    } else if ($openerEl || $inputEl) {
+      const $el = $openerEl || $inputEl;
+      view = $el.closest('.view').length && $el.closest('.view')[0].f7View;
+    }
+    if (!view) view = app.views.main;
+    return view;
   }
 
   positionDropdown() {
@@ -784,7 +788,7 @@ class Autocomplete extends Framework7Class {
       },
     };
 
-    if (ac.params.routableModals) {
+    if (ac.params.routableModals && ac.view) {
       ac.view.router.navigate({
         url: ac.url,
         route: {
@@ -839,7 +843,7 @@ class Autocomplete extends Framework7Class {
     if (ac.params.openIn === 'dropdown') {
       ac.onClose();
       ac.onClosed();
-    } else if (ac.params.routableModals || ac.openedIn === 'page') {
+    } else if ((ac.params.routableModals && ac.view) || ac.openedIn === 'page') {
       ac.view.router.back({ animate: ac.params.animate });
     } else {
       ac.modal.once('modalClosed', () => {
