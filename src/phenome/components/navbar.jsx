@@ -178,7 +178,7 @@ export default {
     );
   },
   componentDidCreate() {
-    Utils.bindMethods(this, ['onBackClick', 'onHide', 'onShow', 'onExpand', 'onCollapse', 'onNavbarPosition']);
+    Utils.bindMethods(this, ['onBackClick', 'onHide', 'onShow', 'onExpand', 'onCollapse', 'onNavbarPosition', 'onNavbarRole', 'onNavbarMasterStack', 'onNavbarMasterUnstack']);
   },
   componentDidMount() {
     const self = this;
@@ -186,6 +186,7 @@ export default {
     if (!el) return;
     self.$f7ready((f7) => {
       self.eventTargetEl = el;
+
       f7.on('navbarShow', self.onShow);
       f7.on('navbarHide', self.onHide);
       f7.on('navbarCollapse', self.onCollapse);
