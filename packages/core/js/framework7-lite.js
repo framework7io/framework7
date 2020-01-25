@@ -1,5 +1,5 @@
 /**
- * Framework7 5.4.0-beta.2
+ * Framework7 5.4.0-beta.3
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -11398,7 +11398,7 @@
   };
 
   /**
-   * Framework7 5.4.0-beta.2
+   * Framework7 5.4.0-beta.3
    * Full featured mobile HTML framework for building iOS & Android apps
    * https://framework7.io/
    *
