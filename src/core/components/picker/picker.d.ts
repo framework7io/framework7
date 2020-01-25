@@ -127,6 +127,8 @@ export namespace Picker {
     inputEl?: HTMLElement | CSSSelector
     /** Scroll viewport (page-content) to input when picker opened. (default true) */
     scrollToInput?: boolean
+    /** Scroll to a different element than the inputEl when picker opened. */
+    scrollToEl?: string
     /** Sets "readonly" attribute on specified input. (default true) */
     inputReadOnly?: boolean
     /** Additional CSS class name to be set on picker element. */
