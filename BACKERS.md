@@ -222,7 +222,6 @@ Dave Billington
 ### $5+ Thank You
 Yo. Meyers<br>
 Artūras Šeleсhov-Balčiūnas<br>
-Josué Marinho<br>
 Brett Lee<br>
 Miguel Nahara<br>
 Muthaiyan Rm<br>
