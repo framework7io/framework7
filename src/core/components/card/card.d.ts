@@ -19,6 +19,8 @@ export namespace Card {
       hideToolbarOnOpen?: boolean
       /** Will hide "Statusbar" on expandable card open. (default true) */
       hideStatusbarOnOpen?: boolean
+      /** Custom scrollable container CSS selector, (default '.card-content') */
+      scrollableEl?: string
       /** Allows to close expandable card with swipe (default true) */
       swipeToClose?: boolean
       /** Enables expandable card backdrop layer (default true) */

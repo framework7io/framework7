@@ -28,6 +28,7 @@
   export let hideNavbarOnOpen = undefined;
   export let hideToolbarOnOpen = undefined;
   export let hideStatusbarOnOpen = undefined;
+  export let scrollableEl = undefined;
   export let swipeToClose = undefined;
   export let closeByBackdropClick = undefined;
   export let backdrop = undefined;
@@ -141,6 +142,7 @@
   data-hide-navbar-on-open={typeof hideNavbarOnOpen === 'undefined' ? hideNavbarOnOpen : hideNavbarOnOpen.toString()}
   data-hide-toolbar-on-open={typeof hideToolbarOnOpen === 'undefined' ? hideToolbarOnOpen : hideToolbarOnOpen.toString()}
   data-hide-statusbar-on-open={typeof hideStatusbarOnOpen === 'undefined' ? hideStatusbarOnOpen : hideStatusbarOnOpen.toString()}
+  data-scrollable-el={scrollableEl}
   data-swipe-to-close={typeof swipeToClose === 'undefined' ? swipeToClose : swipeToClose.toString()}
   data-close-by-backdrop-click={typeof closeByBackdropClick === 'undefined' ? closeByBackdropClick : closeByBackdropClick.toString()}
   data-backdrop={typeof backdrop === 'undefined' ? backdrop : backdrop.toString()}

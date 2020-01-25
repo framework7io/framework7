@@ -251,10 +251,20 @@ const CardExpandable = {
     let progress;
     let isV;
     let isH;
+    let $cardScrollableEl;
     function onTouchStart(e) {
       if (!$(e.target).closest($cardEl).length) return;
       if (!$cardEl.hasClass('card-opened')) return;
-      cardScrollTop = $cardContentEl.scrollTop();
+      $cardScrollableEl = $cardEl.find(cardParams.scrollableEl);
+
+      if ($cardScrollableEl[0]
+        && $cardScrollableEl[0] !== $cardContentEl[0]
+        && !$cardScrollableEl[0].contains(e.target)
+      ) {
+        cardScrollTop = 0;
+      } else {
+        cardScrollTop = $cardScrollableEl.scrollTop();
+      }
       isTouched = true;
       touchStartX = e.targetTouches[0].pageX;
       touchStartY = e.targetTouches[0].pageY;
@@ -289,9 +299,9 @@ const CardExpandable = {
       isMoved = true;
       progress = isV ? Math.max((touchEndY - touchStartY) / 150, 0) : Math.max((touchEndX - touchStartX) / (cardWidth / 2), 0);
       if ((progress > 0 && isV) || isH) {
-        if (isV && app.device.ios) {
-          $cardContentEl.css('-webkit-overflow-scrolling', 'auto');
-          $cardContentEl.scrollTop(0);
+        if (isV && app.device.ios && $cardScrollableEl[0] === $cardContentEl[0]) {
+          $cardScrollableEl.css('-webkit-overflow-scrolling', 'auto');
+          $cardScrollableEl.scrollTop(0);
         }
         e.preventDefault();
       }
@@ -310,7 +320,7 @@ const CardExpandable = {
       isTouched = false;
       isMoved = false;
       if (app.device.ios) {
-        $cardContentEl.css('-webkit-overflow-scrolling', '');
+        $cardScrollableEl.css('-webkit-overflow-scrolling', '');
       }
       if (progress >= 0.8) {
         app.card.close($cardEl);
@@ -350,6 +360,7 @@ const CardExpandable = {
     if (!$pageEl.length) return;
 
     const cardParams = Object.assign({ animate }, app.params.card, $cardEl.dataset());
+    const $cardScrollableEl = $cardEl.find(cardParams.scrollableEl);
 
     let $navbarEl;
     let $toolbarEl;
@@ -433,6 +444,9 @@ const CardExpandable = {
     $cardContentEl
       .transform('')
       .scrollTop(0, animate ? 300 : 0);
+    if ($cardScrollableEl.length && $cardScrollableEl[0] !== $cardContentEl[0]) {
+      $cardScrollableEl.scrollTop(0, animate ? 300 : 0);
+    }
     if (animate) {
       $cardContentEl.transitionEnd(() => {
         transitionEnd();
@@ -465,6 +479,7 @@ export default {
       hideNavbarOnOpen: true,
       hideStatusbarOnOpen: true,
       hideToolbarOnOpen: true,
+      scrollableEl: '.card-content',
       swipeToClose: true,
       closeByBackdropClick: true,
       backdrop: true,
