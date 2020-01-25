@@ -2,6 +2,9 @@
 
 # Change Log
 
+# [v5.4.0-beta.2](https://github.com/framework7io/framework7/compare/v5.4.0-beta.1...v5.4.0-beta.2) - January 25, 2020
+  * Fix missing packages
+
 # [v5.4.0-beta.1](https://github.com/framework7io/framework7/compare/v5.3.2...v5.4.0-beta.1) - January 25, 2020
   * Card
     * New `scrollabelEl` parameter that allows to define child scrollable element (if used) to correctly handle expandable card close with touch move

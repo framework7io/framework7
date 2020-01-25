@@ -1,0 +1,43 @@
+.aurora {
+  .toolbar {
+    a.icon-only {
+      min-height: var(--f7-toolbar-height);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+  }
+  .tabbar,
+  .tabbar-labels {
+    .toolbar-inner {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .tab-link,
+    .link {
+      transition-duration: 200ms;
+    }
+  }
+  .tabbar-labels {
+    .tab-link,
+    .link {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      i + span {
+        margin: 0;
+      }
+    }
+  }
+
+  // Scrollable
+  .tabbar-scrollable {
+    .toolbar-inner {
+      justify-content: flex-start;
+    }
+    .tab-link,
+    .link {
+      padding: 0 16px;
+    }
+  }
+}

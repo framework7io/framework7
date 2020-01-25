@@ -1,0 +1,30 @@
+.md {
+  .autocomplete-page {
+    .navbar .autocomplete-preloader {
+      .ltr({ margin-right: 8px; });
+      .rtl({ margin-left: 8px; });
+    }
+  }
+  .autocomplete-popup {
+    .navbar .autocomplete-preloader {
+      .ltr({
+        margin-left: 8px;
+        margin-right: 16px;
+      });
+      .rtl({
+        margin-right: 8px;
+        margin-left: 16px;
+      });
+    }
+  }
+  .autocomplete-dropdown {
+    .autocomplete-preloader {
+      .ltr({ right: 16px; });
+      .rtl({ left: 16px; });
+      margin-bottom: 8px;
+      .preloader-inner-gap, .preloader-inner-half-circle {
+        border-width: 3px;
+      }
+    }
+  }
+}

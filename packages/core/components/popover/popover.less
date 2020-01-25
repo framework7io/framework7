@@ -1,0 +1,97 @@
+/* === Popover === */
+@import url('./popover-vars.less');
+.popover-backdrop {}
+.popover {
+  width: var(--f7-popover-width);
+  z-index: 13500;
+  margin: 0;
+  top: 0;
+  opacity: 0;
+  left: 0;
+  position: absolute;
+  display: none;
+  transition-duration: 300ms;
+  background-color: var(--f7-popover-bg-color);
+  border-radius: var(--f7-popover-border-radius);
+  box-shadow: var(--f7-popover-box-shadow);
+  .list {
+    margin: 0;
+    ul {
+      background: none;
+    }
+    &:first-child ul {
+      .hairline-remove(top);
+    }
+    &:last-child ul {
+      .hairline-remove(bottom);
+    }
+    &:first-child {
+      ul {
+        border-radius: var(--f7-popover-border-radius) var(--f7-popover-border-radius) 0 0;
+      }
+      li:first-child, li:first-child a, li:first-child > label {
+        border-radius: var(--f7-popover-border-radius) var(--f7-popover-border-radius) 0 0;
+      }
+    }
+    &:last-child {
+      ul {
+        border-radius: 0 0 var(--f7-popover-border-radius) var(--f7-popover-border-radius);
+      }
+      li:last-child, li:last-child a, li:last-child > label {
+        border-radius: 0 0 var(--f7-popover-border-radius) var(--f7-popover-border-radius);
+      }
+    }
+    &:first-child:last-child {
+      li:first-child:last-child,
+      li:first-child:last-child a,
+      li:first-child:last-child > label, ul {
+        border-radius: var(--f7-popover-border-radius);
+      }
+    }
+    + .list {
+      margin-top: var(--f7-list-margin-vertical);
+    }
+  }
+  &.modal-in {
+    opacity: 1;
+  }
+  &.not-animated {
+    transition-duration: 0ms;
+  }
+}
+.popover-inner {
+  .scrollable();
+}
+.popover-from-actions {
+  .item-link i.icon {
+    width: var(--f7-popover-actions-icon-size);
+    height: var(--f7-popover-actions-icon-size);
+    font-size: var(--f7-popover-actions-icon-size);
+  }
+}
+.popover-from-actions-bold {
+  font-weight: 600;
+}
+.popover-from-actions-label {
+  line-height: 1.3;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: var(--f7-actions-label-padding);
+  color: var(--f7-popover-actions-label-text-color);
+  font-size: var(--f7-actions-label-font-size);
+  justify-content: var(--f7-actions-label-justify-content);
+  .hairline(bottom, var(--f7-list-item-border-color));
+  &:last-child {
+    .hairline-remove(bottom);
+  }
+}
+.if-ios-theme({
+  @import url('./popover-ios.less');
+});
+.if-md-theme({
+  @import url('./popover-md.less');
+});
+.if-aurora-theme({
+  @import url('./popover-aurora.less');
+});

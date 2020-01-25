@@ -1,0 +1,76 @@
+.md {
+  .notification {
+    transform: translate3d(0, -150%, 0);
+    &.modal-in {
+      transition-duration: 0ms;
+      animation: notification-md-in 400ms ease-out;
+      transform: translate3d(0, 0%, 0);
+      &.notification-transitioning {
+        transition-duration: 200ms;
+      }
+    }
+    &.modal-out {
+      animation:none;
+      transition-duration: 200ms;
+      transition-timing-function: ease-in;
+      transform: translate3d(0, -150%, 0);
+    }
+  }
+
+  .notification-icon {
+    margin-right: 8px;
+  }
+  .notification-subtitle {
+    + .notification-text {
+      margin-top: 2px;
+    }
+  }
+  .notification-header + .notification-content {
+    margin-top: 6px;
+  }
+  .notification-title-right-text {
+    margin-left: 4px;
+    &:before {
+      content: '';
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 4px;
+      background: var(--f7-notification-title-right-color);
+    }
+  }
+  .notification-close-button {
+    width: 16px;
+    height: 16px;
+    transition-duration: 300ms;
+    .link-highlight();
+    &:before, &:after {
+      width: 48px;
+      height: 48px;
+      left: 50%;
+      top: 50%;
+      margin-left: -24px;
+      margin-top: -24px;
+    }
+    &:after {
+      color: #737373;
+      content: 'delete_md';
+      line-height: 48px;
+      font-size: 14px;
+    }
+  }
+
+}
+@keyframes notification-md-in {
+  0% {
+    transform: translate3d(0, -150%, 0);
+  }
+  50% {
+    transform: translate3d(0, 10%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0%, 0);
+  }
+}

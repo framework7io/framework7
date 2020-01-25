@@ -1,0 +1,66 @@
+/* === Toast === */
+@import url('./toast-vars.less');
+
+.toast {
+  --f7-touch-ripple-color: var(--f7-touch-ripple-white);
+  transition-property: transform, opacity;
+  position: absolute;
+  max-width: 568px;
+  z-index: 20000;
+  color: var(--f7-toast-text-color);
+  font-size: var(--f7-toast-font-size);
+  box-sizing: border-box;
+  background-color: var(--f7-toast-bg-color);
+  opacity: 0;
+  .ios-translucent-modals(var(--f7-toast-bg-color-rgb));
+  &.modal-in {
+    opacity: 1;
+  }
+  .toast-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: var(--f7-toast-padding-vertical) var(--f7-toast-padding-horizontal);
+  }
+  .toast-text {
+    line-height: 20px;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+  .toast-button {
+    flex-shrink: 0;
+    min-width: var(--f7-toast-button-min-width);
+    margin-top: -8px;
+    margin-bottom: -8px;
+  }
+  &.toast-with-icon {
+    .toast-content {
+      display: block;
+      text-align: center;
+    }
+    .toast-text {
+      text-align: center;
+    }
+    .toast-icon .f7-icons,
+    .toast-icon .material-icons {
+      font-size: var(--f7-toast-icon-size);
+    }
+  }
+  &.toast-center {
+    top: 50%;
+  }
+  &.toast-top {
+    margin-top: var(--f7-safe-area-top);
+  }
+}
+
+.if-ios-theme({
+  @import url('./toast-ios.less');
+});
+.if-md-theme({
+  @import url('./toast-md.less');
+});
+.if-aurora-theme({
+  @import url('./toast-aurora.less');
+});

@@ -1,0 +1,18 @@
+/* === Infinite === */
+.infinite-scroll-preloader {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  &.preloader {
+    display: block;
+  }
+}
+.if-ios-theme({
+  @import url('./infinite-scroll-ios.less');
+});
+.if-md-theme({
+  @import url('./infinite-scroll-md.less');
+});
+.if-aurora-theme({
+  @import url('./infinite-scroll-aurora.less');
+});

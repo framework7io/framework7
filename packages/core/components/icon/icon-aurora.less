@@ -1,0 +1,42 @@
+.aurora {
+  .f7-icons,
+  .material-icons {
+    font-size: 18px;
+  }
+  .icon-back,
+  .icon-prev,
+  .icon-forward,
+  .icon-next {
+    width: 9px;
+    height: 14px;
+    line-height: 14px;
+    &:after {
+      line-height: inherit;
+    }
+  }
+
+  .ltr({
+    .icon-back, .icon-prev {
+      &:after {
+        content: 'chevron_left_aurora';
+      }
+    }
+    .icon-forward, .icon-next {
+      &:after {
+        content: 'chevron_right_aurora';
+      }
+    }
+  });
+  .rtl({
+    .icon-back, .icon-prev {
+      &:after {
+        content: 'chevron_right_aurora';
+      }
+    }
+    .icon-forward, .icon-next {
+      &:after {
+        content: 'chevron_left_aurora';
+      }
+    }
+  });
+}

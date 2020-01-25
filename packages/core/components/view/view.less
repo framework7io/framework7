@@ -1,0 +1,24 @@
+/* === Views === */
+.views,
+.view {
+  position: relative;
+  height: 100%;
+  z-index: 5000;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.framework7-root {
+  > .view,
+  > .views {
+    height: calc(100% - var(--f7-appbar-app-offset, 0px));
+  }
+}
+.if-ios-theme({
+  @import url('./view-ios.less');
+});
+.if-md-theme({
+  @import url('./view-md.less');
+});
+.if-aurora-theme({
+  @import url('./view-aurora.less');
+});

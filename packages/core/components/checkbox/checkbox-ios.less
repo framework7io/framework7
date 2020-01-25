@@ -1,0 +1,23 @@
+.ios {
+  .icon-checkbox,
+  .checkbox i {
+    &:after {
+      content: 'checkbox_ios';
+      font-size: 21px;
+    }
+  }
+
+  label.item-checkbox {
+    &.active-state {
+      transition-duration: 0ms;
+    }
+  }
+  label.item-checkbox input[type="checkbox"]:indeterminate ~ .icon-checkbox,
+  label.item-checkbox input[type="checkbox"]:indeterminate ~ * .icon-checkbox,
+  .checkbox input[type="checkbox"]:indeterminate ~ i {
+    &:after {
+      height: 1px;
+      margin-top: 0px;
+    }
+  }
+}

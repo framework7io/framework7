@@ -1,0 +1,95 @@
+/* === Swipeout === */
+@import url('./swipeout-vars.less');
+
+.swipeout {
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+.swipeout-deleting {
+  transition-duration: 300ms;
+  .swipeout-content {
+    transform: translateX(-100%);
+  }
+}
+.swipeout-transitioning {
+  .swipeout-content, .swipeout-actions-right a, .swipeout-actions-left a, .swipeout-overswipe {
+    transition-duration: 300ms;
+    transition-property: transform, left;
+  }
+}
+.swipeout-content {
+  position: relative;
+  z-index: 10;
+}
+.swipeout-overswipe {
+  transition-duration: 200ms;
+  transition-property: left;
+}
+.swipeout-actions-left,
+.swipeout-actions-right {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  display: flex;
+  direction: ltr;
+  > a, > button, > span, > div {
+    color: var(--f7-swipeout-button-text-color);
+    background: var(--f7-swipeout-button-bg-color);
+    padding: var(--f7-swipeout-button-padding);
+    display: flex;
+    align-items: center;
+    position: relative;
+    left: 0;
+    font-size: var(--f7-swipeout-button-font-size);
+    font-weight: var(--f7-swipeout-button-font-weight);
+    &:after {
+      content: '';
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      width: 600%;
+      height: 100%;
+      background: inherit;
+      z-index: -1;
+      transform: translate3d(0,0,0);
+      pointer-events: none;
+    }
+  }
+  .swipeout-delete {
+    background: var(--f7-swipeout-delete-button-bg-color);
+  }
+}
+.swipeout-actions-right {
+  right: 0%;
+  transform: translateX(100%);
+  > a, > button, > span, > div {
+    &:after {
+      left: 100%;
+      margin-left: -1px;
+    }
+  }
+}
+.swipeout-actions-left {
+  left: 0%;
+  transform: translateX(-100%);
+  > a, > button, > span, > div {
+    &:after {
+      right: 100%;
+      margin-right: -1px;
+    }
+  }
+}
+.swipeout-actions-left, .swipeout-actions-right {
+  [class*="color-"] {
+    --f7-swipeout-button-bg-color: var(--f7-theme-color);
+  }
+}
+.if-ios-theme({
+  @import url('./swipeout-ios.less');
+});
+.if-md-theme({
+  @import url('./swipeout-md.less');
+});
+.if-aurora-theme({
+  @import url('./swipeout-aurora.less');
+});

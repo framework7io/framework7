@@ -1,0 +1,68 @@
+.ios {
+  .data-table {
+    th, td {
+      &.actions-cell {
+        a.link + a.link {
+          .ltr({ margin-left: 16px; });
+          .rtl({ margin-right: 16px; });
+        }
+      }
+    }
+  }
+  .sortable-cell:not(.numeric-cell):after {
+    .ltr({ margin-left: 5px; });
+    .rtl({ margin-right: 5px; });
+  }
+  .sortable-cell.numeric-cell:before {
+    .ltr({ margin-right: 5px; });
+    .rtl({ margin-left: 5px; });
+  }
+  .data-table-links, .data-table-actions {
+    a.link + a.link,
+    .button + .button {
+      .ltr({ margin-left: 16px; });
+      .rtl({ margin-right: 16px; });
+    }
+  }
+  .data-table-actions {
+    a.link.icon-only {
+      width: 44px;
+      height: 44px;
+    }
+  }
+
+  // Footer
+  .data-table-rows-select,
+  .data-table-pagination {
+    a.link {
+      width: 44px;
+      height: 44px;
+    }
+  }
+  .data-table-rows-select {
+    + .data-table-pagination {
+      .ltr({
+        margin-left: 30px;
+      });
+      .rtl({
+        margin-right: 30px;
+      });
+    }
+    .input {
+      .ltr({
+        margin-left: 20px;
+      });
+      .rtl({
+        margin-right: 20px;
+      });
+    }
+  }
+  .data-table-pagination-label {
+    .ltr({
+      margin-right: 16px;
+    });
+    .rtl({
+      margin-left: 16px;
+    });
+  }
+}

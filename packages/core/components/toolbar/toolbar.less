@@ -1,0 +1,298 @@
+/* === Toolbar === */
+@import url('./toolbar-vars.less');
+
+.toolbar {
+  width: 100%;
+  position: relative;
+  margin: 0;
+  transform: translate3d(0,0,0);
+  backface-visibility: hidden;
+  z-index: 600;
+  box-sizing: border-box;
+  left: 0;
+  height: var(--f7-toolbar-height);
+  background-image: var(--f7-toolbar-bg-image, var(--f7-bars-bg-image));
+  background-color: var(--f7-toolbar-bg-color, var(--f7-bars-bg-color));
+  color: var(--f7-toolbar-text-color, var(--f7-bars-text-color));
+  font-size: var(--f7-toolbar-font-size);
+  .ios-translucent-bars(var(--f7-toolbar-bg-color-rgb, var(--f7-bars-bg-color-rgb)));
+  b {
+    font-weight: 600;
+  }
+  a {
+    color: var(--f7-toolbar-link-color, var(--f7-bars-link-color, var(--f7-theme-color)));
+    box-sizing: border-box;
+    flex-shrink: 1;
+    position: relative;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .link {
+    display: flex;
+    line-height: var(--f7-toolbar-link-line-height, var(--f7-toolbar-height));
+    height: var(--f7-toolbar-link-height, var(--f7-toolbar-height));
+  }
+  i.icon {
+    display: block;
+  }
+  &:after,
+  &:before {
+    backface-visibility: hidden;
+  }
+}
+.views, .view, .page {
+  > .toolbar {
+    position: absolute;
+  }
+}
+.toolbar-top,
+.ios .toolbar-top-ios,
+.md .toolbar-top-md,
+.aurora .toolbar-top-aurora {
+  top: 0;
+  .tab-link-highlight {
+    bottom: 0;
+  }
+  &.no-hairline, &.no-border {
+    &:after {
+      display: none !important;
+    }
+  }
+  &.no-shadow, &.toolbar-hidden {
+    &:before {
+      display: none !important;
+    }
+  }
+  &:after, &:before {
+    backface-visibility: hidden;
+  }
+  .hairline(bottom, var(--f7-toolbar-border-color, var(--f7-bars-border-color)));
+  .bar-shadow-bottom(var(--f7-toolbar-top-shadow-image));
+}
+.toolbar-bottom,
+.ios .toolbar-bottom-ios,
+.md .toolbar-bottom-md,
+.aurora .toolbar-bottom-aurora {
+  bottom: 0;
+  height: calc(var(--f7-toolbar-height) + var(--f7-safe-area-bottom));
+  .tab-link-highlight {
+    top: 0;
+  }
+  .toolbar-inner {
+    height: auto;
+    top: 0;
+    bottom: var(--f7-safe-area-bottom);
+  }
+  &.no-hairline, &.no-border {
+    &:before {
+      display: none !important;
+    }
+  }
+  &.no-shadow, &.toolbar-hidden {
+    &:after {
+      display: none !important;
+    }
+  }
+
+  .hairline(top, var(--f7-toolbar-border-color, var(--f7-bars-border-color)));
+  .bar-shadow-top(var(--f7-toolbar-bottom-shadow-image));
+}
+.toolbar-inner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  align-items: center;
+  align-content: center;
+  overflow: hidden;
+  padding: 0 calc(var(--f7-toolbar-inner-padding-right) + var(--f7-safe-area-right)) 0 calc(var(--f7-toolbar-inner-padding-left) + var(--f7-safe-area-left));
+}
+.tabbar,
+.tabbar-labels {
+  .views > & {
+    z-index: 5001;
+  }
+  a {
+    color: var(--f7-tabbar-link-inactive-color);
+  }
+  .tab-link:not(.tab-link-active) {
+    background-color: var(--f7-tabbar-link-inactive-bg-color, transparent);
+  }
+  .link {
+    line-height: 1.4;
+  }
+  .tab-link,
+  .link {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-transform: var(--f7-tabbar-link-text-transform);
+    font-weight: var(--f7-tabbar-link-font-weight);
+    letter-spacing: var(--f7-tabbar-link-letter-spacing);
+    overflow: hidden;
+  }
+  .tab-link-active {
+    color: var(--f7-tabbar-link-active-color, var(--f7-theme-color));
+    background-color: var(--f7-tabbar-link-active-bg-color, transparent);
+  }
+  i.icon {
+    font-size: var(--f7-tabbar-icon-size);
+    height: var(--f7-tabbar-icon-size);
+    line-height: var(--f7-tabbar-icon-size);
+  }
+}
+.tabbar-labels {
+  --f7-toolbar-height: var(--f7-tabbar-labels-height);
+  .tab-link,
+  .link {
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .tabbar-label {
+    display: block;
+    line-height: 1;
+    margin: 0;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: var(--f7-tabbar-label-font-size);
+    text-transform: var(--f7-tabbar-label-text-transform);
+    font-weight: var(--f7-tabbar-label-font-weight);
+    letter-spacing: var(--f7-tabbar-label-letter-spacing);
+  }
+}
+@media (min-width: 768px) and (min-height: 600px) {
+  :root {
+    --f7-tabbar-labels-height: var(--f7-tabbar-labels-tablet-height);
+    --f7-tabbar-label-font-size: var(--f7-tabbar-label-tablet-font-size);
+  }
+}
+.tabbar-scrollable {
+  .toolbar-inner {
+    justify-content: flex-start;
+    .scrollable();
+    &::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+      -webkit-appearance: none;
+      opacity: 0 !important;
+    }
+  }
+  .tab-link,
+  .link {
+    width: auto;
+    flex-shrink: 0;
+  }
+}
+// Transitions
+.toolbar-transitioning,
+.navbar-transitioning + .toolbar,
+.navbar-transitioning ~ * .toolbar {
+  transition-duration: var(--f7-toolbar-hide-show-transition-duration);
+}
+
+// Relation with page
+.toolbar-bottom,
+.ios .toolbar-bottom-ios,
+.md .toolbar-bottom-md,
+.aurora .toolbar-bottom-aurora {
+  ~ * {
+    --f7-page-toolbar-bottom-offset: var(--f7-toolbar-height);
+  }
+  &.tabbar-labels ~ * {
+    --f7-page-toolbar-bottom-offset: var(--f7-tabbar-labels-height);
+  }
+}
+.toolbar-bottom,
+.ios .toolbar-bottom-ios,
+.md .toolbar-bottom-md,
+.aurora .toolbar-bottom-aurora {
+  &.toolbar-hidden {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+.toolbar-top,
+.ios .toolbar-top-ios,
+.md .toolbar-top-md,
+.aurora .toolbar-top-aurora {
+  ~ * {
+    --f7-page-toolbar-top-offset: var(--f7-toolbar-height);
+  }
+  &.tabbar-labels ~ * {
+    --f7-page-toolbar-top-offset: var(--f7-tabbar-labels-height);
+  }
+}
+.toolbar-top,
+.ios .toolbar-top-ios,
+.md .toolbar-top-md,
+.aurora .toolbar-top-aurora {
+  &.toolbar-hidden {
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
+.navbar ~ .toolbar-top,
+.navbars ~ .toolbar-top,
+.ios .navbar ~ .toolbar-top-ios,
+.ios .navbars ~ .toolbar-top-ios,
+.md .navbar ~ .toolbar-top-md,
+.aurora .navbar ~ .toolbar-top-aurora,
+.navbar ~ * .toolbar-top,
+.navbars ~ * .toolbar-top,
+.ios .navbar ~ * .toolbar-top-ios,
+.ios .navbars ~ * .toolbar-top-ios,
+.md .navbar ~ * .toolbar-top-md,
+.aurora .navbar ~ * .toolbar-top-aurora,
+.navbar ~ .page:not(.no-navbar) .toolbar-top,
+.navbars ~ .page:not(.no-navbar) .toolbar-top,
+.ios .navbar ~ .page:not(.no-navbar) .toolbar-top-ios,
+.ios .navbars ~ .page:not(.no-navbar) .toolbar-top-ios,
+.md .navbar ~ .page:not(.no-navbar) .toolbar-top-md,
+.aurora .navbar ~ .page:not(.no-navbar) .toolbar-top-aurora {
+  top: calc(var(--f7-navbar-height) + var(--f7-safe-area-top));
+  &.toolbar-hidden {
+    transform: translate3d(0, calc(-1 * (var(--f7-navbar-height) + var(--f7-toolbar-height) + var(--f7-safe-area-top))), 0);
+    &.tabbar-labels {
+      transform: translate3d(0, calc(-1 * (var(--f7-navbar-height) + var(--f7-tabbar-labels-height) + var(--f7-safe-area-top))), 0);
+    }
+  }
+}
+.navbar-hidden + .toolbar-top:not(.toolbar-hidden),
+.ios .navbar-hidden + .toolbar-top-ios:not(.toolbar-hidden),
+.md .navbar-hidden + .toolbar-top-md:not(.toolbar-hidden),
+.aurora .navbar-hidden + .toolbar-top-aurora:not(.toolbar-hidden),
+.navbar-hidden ~ * .toolbar-top:not(.toolbar-hidden),
+.ios .navbar-hidden ~ * .toolbar-top-ios:not(.toolbar-hidden),
+.md .navbar-hidden ~ * .toolbar-top-md:not(.toolbar-hidden),
+.aurora .navbar-hidden ~ * .toolbar-top-aurora:not(.toolbar-hidden) {
+  transform: translate3d(0, calc(0px - var(--f7-navbar-height)), 0);
+}
+.navbar-large-hidden + .toolbar-top:not(.toolbar-hidden),
+.ios .navbar-large-hidden + .toolbar-top-ios:not(.toolbar-hidden),
+.md .navbar-large-hidden + .toolbar-top-md:not(.toolbar-hidden),
+.navbar-large-hidden ~ * .toolbar-top:not(.toolbar-hidden),
+.ios .navbar-large-hidden ~ * .toolbar-top-ios:not(.toolbar-hidden),
+.md .navbar-large-hidden ~ * .toolbar-top-md:not(.toolbar-hidden),
+.aurora .navbar-large-hidden ~ * .toolbar-top-aurora:not(.toolbar-hidden) {
+  transform: translate3d(0, calc(0px - var(--f7-navbar-height) - var(--f7-navbar-large-title-height)), 0);
+}
+
+.if-ios-theme({
+  @import url('./toolbar-ios.less');
+});
+.if-md-theme({
+  @import url('./toolbar-md.less');
+});
+.if-aurora-theme({
+  @import url('./toolbar-aurora.less');
+});
