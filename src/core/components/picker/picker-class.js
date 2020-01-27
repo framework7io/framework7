@@ -21,6 +21,14 @@ class Picker extends Framework7Class {
       $inputEl = $(picker.params.inputEl);
     }
 
+    let $scrollToEl = $inputEl;
+    if (picker.params.scrollToEl) {
+      const scrollToEl = $(picker.params.scrollToEl);
+      if (scrollToEl.length > 0) {
+        $scrollToEl = scrollToEl;
+      }
+    }
+
     let view;
     if ($inputEl) {
       view = $inputEl.parents('.view').length && $inputEl.parents('.view')[0].f7View;
@@ -36,6 +44,7 @@ class Picker extends Framework7Class {
       cols: [],
       $inputEl,
       inputEl: $inputEl && $inputEl[0],
+      $scrollToEl,
       initialized: false,
       opened: false,
       url: picker.params.url,
@@ -433,7 +442,7 @@ class Picker extends Framework7Class {
 
   open() {
     const picker = this;
-    const { app, opened, inline, $inputEl, params } = picker;
+    const { app, opened, inline, $inputEl, $scrollToEl, params } = picker;
     if (opened) return;
     if (picker.cols.length === 0 && params.cols.length) {
       params.cols.forEach((col) => {
@@ -452,7 +461,7 @@ class Picker extends Framework7Class {
     const modalType = isPopover ? 'popover' : 'sheet';
     const modalParams = {
       targetEl: $inputEl,
-      scrollToEl: params.scrollToEl || params.scrollToInput ? $inputEl : undefined,
+      scrollToEl: $scrollToEl,
       content: picker.render(),
       backdrop: typeof params.backdrop !== 'undefined' ? params.backdrop : isPopover,
       on: {
