@@ -45,6 +45,7 @@ export default {
       inputReadOnly: true,
       closeByOutsideClick: true,
       scrollToInput: true,
+      scrollToEl: undefined,
       toolbar: true,
       toolbarCloseText: 'Done',
       cssClass: null,
