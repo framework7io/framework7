@@ -24,7 +24,6 @@ class PhotoBrowser extends Framework7Class {
       opened: false,
       activeIndex: pb.params.swiper.initialSlide,
       url: pb.params.url,
-      view: pb.params.view || app.views.main,
       swipeToClose: {
         allow: true,
         isTouched: false,
@@ -42,6 +41,11 @@ class PhotoBrowser extends Framework7Class {
 
     // Init
     pb.init();
+  }
+
+  get view() {
+    const { params, app } = this;
+    return params.view || app.views.main;
   }
 
   onSlideChange(swiper) {
@@ -546,7 +550,7 @@ class PhotoBrowser extends Framework7Class {
       },
     };
 
-    if (pb.params.routableModals) {
+    if (pb.params.routableModals && pb.view) {
       pb.view.router.navigate({
         url: pb.url,
         route: {
@@ -585,7 +589,7 @@ class PhotoBrowser extends Framework7Class {
       },
     };
 
-    if (pb.params.routableModals) {
+    if (pb.params.routableModals && pb.view) {
       pb.view.router.navigate({
         url: pb.url,
         route: {
@@ -660,8 +664,8 @@ class PhotoBrowser extends Framework7Class {
   close() {
     const pb = this;
     if (!pb.opened) return pb;
-    if (pb.params.routableModals || pb.openedIn === 'page') {
-      if (pb.view) pb.view.router.back();
+    if ((pb.params.routableModals && pb.view) || pb.openedIn === 'page') {
+      pb.view.router.back();
     } else {
       pb.modal.once('modalClosed', () => {
         Utils.nextTick(() => {

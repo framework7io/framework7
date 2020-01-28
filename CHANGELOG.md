@@ -2,6 +2,21 @@
 
 # Change Log
 
+# [v5.4.0-beta.3](https://github.com/framework7io/framework7/compare/v5.4.0-beta.2...v5.4.0-beta.3) - January 25, 2020
+  * Core
+    * Autocomplete
+      * Now it falls back to not "routable" modal when there is no View passed or it can't be found.
+    * Calendar
+      * Now it falls back to not "routable" modal when there is no View passed or it can't be found.
+    * Color Picker
+      * Now it falls back to not "routable" modal when there is no View passed or it can't be found.
+    * Photo Browser
+      * Now it falls back to not "routable" modal when there is no View passed or it can't be found.
+    * Picker
+      * Now it falls back to not "routable" modal when there is no View passed or it can't be found.
+    * Smart Select
+      * Now it falls back to not "routable" modal when there is no View passed or it can't be found.
+
 # [v5.4.0-beta.2](https://github.com/framework7io/framework7/compare/v5.4.0-beta.1...v5.4.0-beta.2) - January 25, 2020
   * Fix missing packages
 

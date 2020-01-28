@@ -39,15 +39,6 @@ class ColorPicker extends Framework7Class {
       $targetEl = $(self.params.targetEl);
     }
 
-    let view;
-    if ($inputEl) {
-      view = $inputEl.parents('.view').length && $inputEl.parents('.view')[0].f7View;
-    }
-    if (!view && $targetEl) {
-      view = $targetEl.parents('.view').length && $targetEl.parents('.view')[0].f7View;
-    }
-    if (!view) view = app.views.main;
-
     Utils.extend(self, {
       app,
       $containerEl,
@@ -60,7 +51,6 @@ class ColorPicker extends Framework7Class {
       initialized: false,
       opened: false,
       url: self.params.url,
-      view,
       modules: {
         'alpha-slider': moduleAlphaSlider,
         'current-color': moduleCurrentColor,
@@ -134,6 +124,24 @@ class ColorPicker extends Framework7Class {
     self.init();
 
     return self;
+  }
+
+  get view() {
+    const { $inputEl, $targetEl, app, params } = this;
+    let view;
+    if (params.view) {
+      view = params.view;
+    } else {
+      if ($inputEl) {
+        view = $inputEl.parents('.view').length && $inputEl.parents('.view')[0].f7View;
+      }
+      if (!view && $targetEl) {
+        view = $targetEl.parents('.view').length && $targetEl.parents('.view')[0].f7View;
+      }
+    }
+    if (!view) view = app.views.main;
+
+    return view;
   }
 
   attachEvents() {
@@ -746,7 +754,7 @@ class ColorPicker extends Framework7Class {
         modalParams.push = params.sheetPush;
         modalParams.swipeToClose = params.sheetSwipeToClose;
       }
-      if (params.routableModals) {
+      if (params.routableModals && self.view) {
         self.view.router.navigate({
           url: self.url,
           route: {
@@ -770,7 +778,7 @@ class ColorPicker extends Framework7Class {
       self.onClosed();
       return;
     }
-    if (self.params.routableModals) {
+    if ((self.params.routableModals && self.view) || self.params.openIn === 'page') {
       self.view.router.back();
     } else {
       self.modal.close();

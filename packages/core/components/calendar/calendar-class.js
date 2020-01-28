@@ -20,12 +20,6 @@ class Calendar extends Framework7Class {
       $inputEl = $(calendar.params.inputEl);
     }
 
-    let view;
-    if ($inputEl) {
-      view = $inputEl.parents('.view').length && $inputEl.parents('.view')[0].f7View;
-    }
-    if (!view) view = app.views.main;
-
     const isHorizontal = calendar.params.direction === 'horizontal';
 
     let inverter = 1;
@@ -45,7 +39,6 @@ class Calendar extends Framework7Class {
       url: calendar.params.url,
       isHorizontal,
       inverter,
-      view,
       animating: false,
       hasTimePicker: calendar.params.timePicker && !calendar.params.rangePicker && !calendar.params.multiple,
     });
@@ -389,6 +382,18 @@ class Calendar extends Framework7Class {
     calendar.init();
 
     return calendar;
+  }
+
+  get view() {
+    const { $inputEl, app, params } = this;
+    let view;
+    if (params.view) {
+      view = params.view;
+    } else if ($inputEl) {
+      view = $inputEl.parents('.view').length && $inputEl.parents('.view')[0].f7View;
+    }
+    if (!view) view = app.views.main;
+    return view;
   }
 
   getIntlNames() {
@@ -1703,7 +1708,7 @@ class Calendar extends Framework7Class {
       modalParams.push = params.sheetPush;
       modalParams.swipeToClose = params.sheetSwipeToClose;
     }
-    if (params.routableModals) {
+    if (params.routableModals && calendar.view) {
       calendar.view.router.navigate({
         url: calendar.url,
         route: {
@@ -1726,7 +1731,7 @@ class Calendar extends Framework7Class {
       calendar.onClosed();
       return;
     }
-    if (calendar.params.routableModals) {
+    if (calendar.params.routableModals && calendar.view) {
       calendar.view.router.back();
     } else {
       calendar.modal.close();

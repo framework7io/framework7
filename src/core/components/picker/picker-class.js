@@ -21,6 +21,7 @@ class Picker extends Framework7Class {
       $inputEl = $(picker.params.inputEl);
     }
 
+
     let $scrollToEl = picker.params.scrollToInput ? $inputEl : undefined;
     if (picker.params.scrollToEl) {
       const scrollToEl = $(picker.params.scrollToEl);
@@ -28,12 +29,6 @@ class Picker extends Framework7Class {
         $scrollToEl = scrollToEl;
       }
     }
-
-    let view;
-    if ($inputEl) {
-      view = $inputEl.parents('.view').length && $inputEl.parents('.view')[0].f7View;
-    }
-    if (!view) view = app.views.main;
 
     Utils.extend(picker, {
       app,
@@ -48,7 +43,6 @@ class Picker extends Framework7Class {
       initialized: false,
       opened: false,
       url: picker.params.url,
-      view,
     });
 
     function onResize() {
@@ -106,6 +100,18 @@ class Picker extends Framework7Class {
     picker.init();
 
     return picker;
+  }
+
+  get view() {
+    const { app, params, $inputEl } = this;
+    let view;
+    if (params.view) {
+      view = params.view;
+    } else if ($inputEl) {
+      view = $inputEl.parents('.view').length && $inputEl.parents('.view')[0].f7View;
+    }
+    if (!view) view = app.views.main;
+    return view;
   }
 
   initInput() {
@@ -481,7 +487,7 @@ class Picker extends Framework7Class {
       modalParams.push = params.sheetPush;
       modalParams.swipeToClose = params.sheetSwipeToClose;
     }
-    if (params.routableModals) {
+    if (params.routableModals && picker.view) {
       picker.view.router.navigate({
         url: picker.url,
         route: {
@@ -504,7 +510,7 @@ class Picker extends Framework7Class {
       picker.onClosed();
       return;
     }
-    if (picker.params.routableModals) {
+    if (picker.params.routableModals && picker.view) {
       picker.view.router.back();
     } else {
       picker.modal.close();
