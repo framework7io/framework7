@@ -21,7 +21,7 @@ class Picker extends Framework7Class {
       $inputEl = $(picker.params.inputEl);
     }
 
-    let $scrollToEl = $inputEl;
+    let $scrollToEl = picker.params.scrollToInput ? $inputEl : undefined;
     if (picker.params.scrollToEl) {
       const scrollToEl = $(picker.params.scrollToEl);
       if (scrollToEl.length > 0) {
