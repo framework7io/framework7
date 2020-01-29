@@ -1,5 +1,5 @@
 /**
- * Framework7 5.4.0-beta.3
+ * Framework7 5.4.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 25, 2020
+ * Released on: January 29, 2020
  */
 
 (function (global, factory) {
@@ -3511,12 +3511,14 @@
       };
 
       // Init
-      if (Device.cordova && app.params.initOnDeviceReady) {
-        $(doc).on('deviceready', function () {
+      if (app.params.init) {
+        if (Device.cordova && app.params.initOnDeviceReady) {
+          $(doc).on('deviceready', function () {
+            app.init();
+          });
+        } else {
           app.init();
-        });
-      } else {
-        app.init();
+        }
       }
 
       // Return app instance
@@ -25066,6 +25068,15 @@
         $inputEl = $(picker.params.inputEl);
       }
 
+
+      var $scrollToEl = picker.params.scrollToInput ? $inputEl : undefined;
+      if (picker.params.scrollToEl) {
+        var scrollToEl = $(picker.params.scrollToEl);
+        if (scrollToEl.length > 0) {
+          $scrollToEl = scrollToEl;
+        }
+      }
+
       Utils.extend(picker, {
         app: app,
         $containerEl: $containerEl,
@@ -25075,6 +25086,7 @@
         cols: [],
         $inputEl: $inputEl,
         inputEl: $inputEl && $inputEl[0],
+        $scrollToEl: $scrollToEl,
         initialized: false,
         opened: false,
         url: picker.params.url,
@@ -25469,6 +25481,7 @@
       var opened = picker.opened;
       var inline = picker.inline;
       var $inputEl = picker.$inputEl;
+      var $scrollToEl = picker.$scrollToEl;
       var params = picker.params;
       if (opened) { return; }
       if (picker.cols.length === 0 && params.cols.length) {
@@ -25488,7 +25501,7 @@
       var modalType = isPopover ? 'popover' : 'sheet';
       var modalParams = {
         targetEl: $inputEl,
-        scrollToEl: params.scrollToInput ? $inputEl : undefined,
+        scrollToEl: $scrollToEl,
         content: picker.render(),
         backdrop: typeof params.backdrop !== 'undefined' ? params.backdrop : isPopover,
         on: {
@@ -25635,6 +25648,7 @@
         inputReadOnly: true,
         closeByOutsideClick: true,
         scrollToInput: true,
+        scrollToEl: undefined,
         toolbar: true,
         toolbarCloseText: 'Done',
         cssClass: null,

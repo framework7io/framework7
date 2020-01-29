@@ -1,5 +1,5 @@
 /**
- * Framework7 5.4.0-beta.3
+ * Framework7 5.4.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 25, 2020
+ * Released on: January 29, 2020
  */
 
 (function (global, factory) {
@@ -3511,12 +3511,14 @@
       };
 
       // Init
-      if (Device.cordova && app.params.initOnDeviceReady) {
-        $(doc).on('deviceready', function () {
+      if (app.params.init) {
+        if (Device.cordova && app.params.initOnDeviceReady) {
+          $(doc).on('deviceready', function () {
+            app.init();
+          });
+        } else {
           app.init();
-        });
-      } else {
-        app.init();
+        }
       }
 
       // Return app instance
@@ -11398,7 +11400,7 @@
   };
 
   /**
-   * Framework7 5.4.0-beta.3
+   * Framework7 5.4.0
    * Full featured mobile HTML framework for building iOS & Android apps
    * https://framework7.io/
    *
@@ -11406,7 +11408,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: January 25, 2020
+   * Released on: January 29, 2020
    */
 
   // Install Core Modules & Components

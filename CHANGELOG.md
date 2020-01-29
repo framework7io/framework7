@@ -2,6 +2,29 @@
 
 # Change Log
 
+# [v5.4.0](https://github.com/framework7io/framework7/compare/v5.3.2...v5.4.0) - January 29, 2020
+  * Framework7 Svelte 🎉
+  * Core
+    * Autocomplete
+      * Now it falls back to not "routable" modal when there is no View passed or it can't be found.
+    * Calendar
+      * Now it falls back to not "routable" modal when there is no View passed or it can't be found.
+    * Card
+      * New `scrollabelEl` parameter that allows to define child scrollable element (if used) to correctly handle expandable card close with touch move
+    * Color Picker
+      * Now it falls back to not "routable" modal when there is no View passed or it can't be found.
+    * Photo Browser
+      * Now it falls back to not "routable" modal when there is no View passed or it can't be found.
+    * Picker
+      * Now it falls back to not "routable" modal when there is no View passed or it can't be found.
+      * New `scrollToEl` parameter to specify cutom elements to scroll to on open
+    * Smart Select
+      * Now it falls back to not "routable" modal when there is no View passed or it can't be found.
+  * React/Vue
+    * Card
+      * New `scrollabelEl` prop that allows to define child scrollable element (if used) to correctly handle expandable card close with touch move
+  * Lot of minor fixes
+
 # [v5.4.0-beta.3](https://github.com/framework7io/framework7/compare/v5.4.0-beta.2...v5.4.0-beta.3) - January 25, 2020
   * Core
     * Autocomplete

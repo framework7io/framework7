@@ -164,6 +164,7 @@ The following npm scripts are available to create development builds:
 * `build-core:dev` - build development version of Core (vanilla JS) Framework7
 * `build-react:dev` - build development version of Framework7 React package
 * `build-vue:dev` - build development version of Framework7 Vue package
+* `build-svelte:dev` - build development version of Framework7 Svelte package
 
 Compiled results will be available in `build/` folder.
 
@@ -175,6 +176,7 @@ To build production versions the following npm scripts are available:
 * `build-core:prod` - build production version of Core (vanilla JS) Framework7
 * `build-react:prod` - build production version of Framework7 React package
 * `build-vue:prod` - build production version of Framework7 Vue package
+* `build-svelte:prod` - build production version of Framework7 Svelte package
 
 Compiled results will be available in `packages/` folder.
 
@@ -186,6 +188,7 @@ To run Kitchen Sink with development environment (development version will be bu
 * `core:dev` - build development version of Core (vanilla JS) Framework7 package and run core Kitchen Sink
 * `react:dev` - build development version of Framework7 React package and run React Kitchen Sink
 * `vue:dev` - build development version of Framework7 Vue package and run Vue Kitchen Sink
+* `svelte:dev` - build development version of Framework7 Svelte package and run Svelte Kitchen Sink
 
 To Run Kitchen Sink with production builds (already compiled `/packages/` will be used), use the following npm scripts:
 
@@ -193,6 +196,7 @@ To Run Kitchen Sink with production builds (already compiled `/packages/` will b
 * `core:prod` - run core Kitchen Sink with production Framework7 core package
 * `react:prod` - run React Kitchen Sink with production build of Framework7 React
 * `vue:prod` - run Vue Kitchen Sink with production build of Framework7 Vue
+* `svelte:prod` - run Svelte Kitchen Sink with production build of Framework7 Svelte
 
 ## Source Code
 

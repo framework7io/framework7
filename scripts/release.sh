@@ -54,22 +54,22 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     (
       cd packages/core
       npm version "$VERSION"
-      npm publish --tag beta
+      npm publish
     )
     (
       cd packages/vue
       npm version "$VERSION"
-      npm publish --tag beta
+      npm publish
     )
     (
       cd packages/react
       npm version "$VERSION"
-      npm publish --tag beta
+      npm publish
     )
     (
       cd packages/svelte
       npm version "$VERSION"
-      npm publish --tag beta
+      npm publish
     )
   )
 
