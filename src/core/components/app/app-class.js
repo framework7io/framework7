@@ -111,7 +111,7 @@ class Framework7 extends Framework7Class {
     };
 
     // Init
-    if (params.init) {
+    if (app.params.init) {
       if (Device.cordova && app.params.initOnDeviceReady) {
         $(document).on('deviceready', () => {
           app.init();
