@@ -192,6 +192,7 @@ function Request(requestOptions) {
   // Additional headers
   if (options.headers) {
     Object.keys(options.headers).forEach((headerName) => {
+      if (typeof options.headers[headerName] === 'undefined') return;
       xhr.setRequestHeader(headerName, options.headers[headerName]);
     });
   }
