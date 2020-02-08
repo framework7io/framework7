@@ -14,7 +14,8 @@ export default {
     link: [Boolean, String],
     href: [Boolean, String],
     target: String,
-    tooltip: String
+    tooltip: String,
+    tooltipTrigger: String
   }, Mixins.colorProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps),
 
   render() {
@@ -91,7 +92,8 @@ export default {
       if (newText && !self.f7Tooltip && self.$f7) {
         self.f7Tooltip = self.$f7.tooltip.create({
           targetEl: self.$refs.el,
-          text: newText
+          text: newText,
+          trigger: self.props.tooltipTrigger
         });
         return;
       }
@@ -110,7 +112,8 @@ export default {
     const linkEl = self.$refs.linkEl;
     const {
       routeProps,
-      tooltip
+      tooltip,
+      tooltipTrigger
     } = self.props;
 
     if (routeProps) {
@@ -122,7 +125,8 @@ export default {
       if (tooltip) {
         self.f7Tooltip = f7.tooltip.create({
           targetEl: linkEl,
-          text: tooltip
+          text: tooltip,
+          trigger: tooltipTrigger
         });
       }
     });

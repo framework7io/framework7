@@ -15,6 +15,7 @@ declare namespace F7ListItem {
     header? : string | number
     footer? : string | number
     tooltip? : string
+    tooltipTrigger? : string
     link? : boolean | string
     target? : string
     after? : string | number

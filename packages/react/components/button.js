@@ -182,7 +182,8 @@ class F7Button extends React.Component {
       if (newText && !self.f7Tooltip && self.$f7) {
         self.f7Tooltip = self.$f7.tooltip.create({
           targetEl: self.refs.el,
-          text: newText
+          text: newText,
+          trigger: self.props.tooltipTrigger
         });
         return;
       }
@@ -208,6 +209,7 @@ class F7Button extends React.Component {
     el.addEventListener('click', self.onClick);
     const {
       tooltip,
+      tooltipTrigger,
       routeProps
     } = self.props;
 
@@ -219,7 +221,8 @@ class F7Button extends React.Component {
     self.$f7ready(f7 => {
       self.f7Tooltip = f7.tooltip.create({
         targetEl: el,
-        text: tooltip
+        text: tooltip,
+        trigger: tooltipTrigger
       });
     });
   }
@@ -279,7 +282,8 @@ __reactComponentSetProps(F7Button, Object.assign({
   outlineAurora: Boolean,
   active: Boolean,
   disabled: Boolean,
-  tooltip: String
+  tooltip: String,
+  tooltipTrigger: String
 }, Mixins.colorProps, {}, Mixins.linkIconProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps));
 
 F7Button.displayName = 'f7-button';

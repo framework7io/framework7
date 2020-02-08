@@ -113,13 +113,15 @@ class F7Fab extends React.Component {
     }
 
     const {
-      tooltip
+      tooltip,
+      tooltipTrigger
     } = self.props;
     if (!tooltip) return;
     self.$f7ready(f7 => {
       self.f7Tooltip = f7.tooltip.create({
         targetEl: self.refs.el,
-        text: tooltip
+        text: tooltip,
+        trigger: tooltipTrigger
       });
     });
   }
@@ -152,7 +154,8 @@ class F7Fab extends React.Component {
       if (newText && !self.f7Tooltip && self.$f7) {
         self.f7Tooltip = self.$f7.tooltip.create({
           targetEl: self.refs.el,
-          text: newText
+          text: newText,
+          trigger: self.props.tooltipTrigger
         });
         return;
       }
@@ -176,7 +179,8 @@ __reactComponentSetProps(F7Fab, Object.assign({
     type: String,
     default: 'right-bottom'
   },
-  tooltip: String
+  tooltip: String,
+  tooltipTrigger: String
 }, Mixins.colorProps));
 
 F7Fab.displayName = 'f7-fab';

@@ -13,6 +13,7 @@ declare namespace F7Fab {
     text? : string
     position? : string
     tooltip? : string
+    tooltipTrigger? : string
     color? : string
     colorTheme? : string
     textColor? : string

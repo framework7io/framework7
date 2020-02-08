@@ -9,7 +9,8 @@ export default {
     fabClose: Boolean,
     label: String,
     target: String,
-    tooltip: String
+    tooltip: String,
+    tooltipTrigger: String
   }, Mixins.colorProps),
 
   render() {
@@ -54,13 +55,15 @@ export default {
     const self = this;
     self.$refs.el.addEventListener('click', self.onClick);
     const {
-      tooltip
+      tooltip,
+      tooltipTrigger
     } = self.props;
     if (!tooltip) return;
     self.$f7ready(f7 => {
       self.f7Tooltip = f7.tooltip.create({
         targetEl: self.$refs.el,
-        text: tooltip
+        text: tooltip,
+        trigger: tooltipTrigger
       });
     });
   },
@@ -100,7 +103,8 @@ export default {
       if (newText && !self.f7Tooltip && self.$f7) {
         self.f7Tooltip = self.$f7.tooltip.create({
           targetEl: self.$refs.el,
-          text: newText
+          text: newText,
+          trigger: self.props.tooltipTrigger
         });
         return;
       }

@@ -1,5 +1,5 @@
 /**
- * Framework7 Svelte 5.4.0
+ * Framework7 Svelte 5.4.1
  * Build full featured iOS & Android apps using Framework7 & Svelte
  * https://framework7.io/svelte/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 29, 2020
+ * Released on: February 8, 2020
  */
 
 import AccordionContent from './components/accordion-content.svelte';

@@ -9,6 +9,10 @@ export namespace Tooltip {
     text: string
     /** Additional css class will be added to Tooltip element. Can be used for additional tooltip styling */
     cssClass?: string
+    /** Extra offset (in px) to tooltip position */
+    offset?: number
+    /** How trigger tooltip show/hide, can be "hover" or "click" (default "hover") */
+    trigger?: string
     /** Function to render tooltip element, must return full tooltip HTML layout string */
     render?: (tooltip: Tooltip) => string
     /** Object with events handlers.. */

@@ -15,6 +15,7 @@ declare namespace F7ListButton {
     href? : boolean | string
     target? : string
     tooltip? : string
+    tooltipTrigger? : string
     color? : string
     colorTheme? : string
     textColor? : string

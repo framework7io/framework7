@@ -2,6 +2,22 @@
 
 # Change Log
 
+# [v5.4.1](https://github.com/framework7io/framework7/compare/v5.4.0...v5.4.1) - February 8, 2020
+  * Core
+    * Touch
+      * Fully switch to `pointer` events where supported
+    * Tooltip
+      * New `trigger` parameter to define how to open Tooltip - on `hover` (default) or on `click`
+    * Swiper - updated to latest 5.3.1
+      * Fixed issue when slider could stuck after last slide (#3414)
+      * Added `label` to list of form events to keep clicks on it (#3407)
+    * Request
+      * Now it won't set headers with `undefined` value
+  * Vue/React/Svelte
+    * Tooltip
+      * New `tooltipTrigger` prop for `Button`, `FabButton`, `Fab`, `Icon`, `Link`, `ListButton` and `ListItem` components
+  * Minor fixes
+
 # [v5.4.0](https://github.com/framework7io/framework7/compare/v5.3.2...v5.4.0) - January 29, 2020
   * Framework7 Svelte 🎉
   * Core

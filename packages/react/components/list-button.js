@@ -100,7 +100,8 @@ class F7ListButton extends React.Component {
       if (newText && !self.f7Tooltip && self.$f7) {
         self.f7Tooltip = self.$f7.tooltip.create({
           targetEl: self.refs.el,
-          text: newText
+          text: newText,
+          trigger: self.props.tooltipTrigger
         });
         return;
       }
@@ -125,7 +126,8 @@ class F7ListButton extends React.Component {
     const linkEl = self.refs.linkEl;
     const {
       routeProps,
-      tooltip
+      tooltip,
+      tooltipTrigger
     } = self.props;
 
     if (routeProps) {
@@ -137,7 +139,8 @@ class F7ListButton extends React.Component {
       if (tooltip) {
         self.f7Tooltip = f7.tooltip.create({
           targetEl: linkEl,
-          text: tooltip
+          text: tooltip,
+          trigger: tooltipTrigger
         });
       }
     });
@@ -170,7 +173,8 @@ __reactComponentSetProps(F7ListButton, Object.assign({
   link: [Boolean, String],
   href: [Boolean, String],
   target: String,
-  tooltip: String
+  tooltip: String,
+  tooltipTrigger: String
 }, Mixins.colorProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps));
 
 F7ListButton.displayName = 'f7-list-button';

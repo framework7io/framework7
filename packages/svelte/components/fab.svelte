@@ -19,6 +19,7 @@
   export let text = undefined;
   export let position = 'right-bottom';
   export let tooltip = undefined;
+  export let tooltipTrigger = undefined;
   export let f7Slot = 'fixed';
 
   let el;
@@ -56,6 +57,7 @@
       f7Tooltip = f7.instance.tooltip.create({
         targetEl: linkEl,
         text: newText,
+        trigger: tooltipTrigger,
       });
       return;
     }
@@ -80,6 +82,7 @@
         f7Tooltip = f7.instance.tooltip.create({
           targetEl: linkEl,
           text: tooltip,
+          trigger: tooltipTrigger,
         });
       }
     });

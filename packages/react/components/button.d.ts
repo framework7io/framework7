@@ -40,6 +40,7 @@ declare namespace F7Button {
     active? : boolean
     disabled? : boolean
     tooltip? : string
+    tooltipTrigger? : string
     color? : string
     colorTheme? : string
     textColor? : string

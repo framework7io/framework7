@@ -11,6 +11,7 @@ declare namespace F7FabButton {
     label? : string
     target? : string
     tooltip? : string
+    tooltipTrigger? : string
     color? : string
     colorTheme? : string
     textColor? : string

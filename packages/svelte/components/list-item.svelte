@@ -24,6 +24,7 @@
 
   // Tooltip
   export let tooltip = undefined;
+  export let tooltipTrigger = undefined;
 
   // Link Props
   export let link = undefined;
@@ -147,6 +148,7 @@
       f7Tooltip = f7.instance.tooltip.create({
         targetEl: el,
         text: newText,
+        trigger: tooltipTrigger,
       });
       return;
     }
@@ -294,6 +296,7 @@
         f7Tooltip = f7.instance.tooltip.create({
           targetEl: el,
           text: tooltip,
+          trigger: tooltipTrigger,
         });
       }
     });

@@ -20,6 +20,7 @@ declare namespace F7Link {
     href? : string | boolean
     target? : string
     tooltip? : string
+    tooltipTrigger? : string
     smartSelect? : boolean
     smartSelectParams? : Object
     color? : string

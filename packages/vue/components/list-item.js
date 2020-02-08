@@ -16,6 +16,7 @@ export default {
     header: [String, Number],
     footer: [String, Number],
     tooltip: String,
+    tooltipTrigger: String,
     link: [Boolean, String],
     target: String,
     after: [String, Number],
@@ -240,7 +241,8 @@ export default {
       if (newText && !self.f7Tooltip && self.$f7) {
         self.f7Tooltip = self.$f7.tooltip.create({
           targetEl: self.$refs.el,
-          text: newText
+          text: newText,
+          trigger: self.props.tooltipTrigger
         });
         return;
       }
@@ -281,7 +283,8 @@ export default {
       accordionItem,
       smartSelectParams,
       routeProps,
-      tooltip
+      tooltip,
+      tooltipTrigger
     } = self.props;
     const needsEvents = !(link || href || accordionItem || smartSelect);
 
@@ -342,7 +345,8 @@ export default {
       if (tooltip) {
         self.f7Tooltip = f7.tooltip.create({
           targetEl: el,
-          text: tooltip
+          text: tooltip,
+          trigger: tooltipTrigger
         });
       }
     });

@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.4.0
+ * Framework7 React 5.4.1
  * Build full featured iOS & Android apps using Framework7 & React
  * https://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 29, 2020
+ * Released on: February 8, 2020
  */
 
 (function (global, factory) {
@@ -1955,11 +1955,13 @@
       if (!el) { return; }
       var ref = self.props;
       var tooltip = ref.tooltip;
+      var tooltipTrigger = ref.tooltipTrigger;
       if (!tooltip) { return; }
       self.$f7ready(function (f7) {
         self.f7Tooltip = f7.tooltip.create({
           targetEl: el,
-          text: tooltip
+          text: tooltip,
+          trigger: tooltipTrigger
         });
       });
     };
@@ -1990,7 +1992,8 @@
         if (newText && !self.f7Tooltip && self.$f7) {
           self.f7Tooltip = self.$f7.tooltip.create({
             targetEl: self.refs.el,
-            text: newText
+            text: newText,
+            trigger: self.props.tooltipTrigger
           });
           return;
         }
@@ -2016,6 +2019,7 @@
     aurora: String,
     md: String,
     tooltip: String,
+    tooltipTrigger: String,
     size: [String, Number]
   }, Mixins.colorProps));
 
@@ -2202,7 +2206,8 @@
         if (newText && !self.f7Tooltip && self.$f7) {
           self.f7Tooltip = self.$f7.tooltip.create({
             targetEl: self.refs.el,
-            text: newText
+            text: newText,
+            trigger: self.props.tooltipTrigger
           });
           return;
         }
@@ -2227,6 +2232,7 @@
       el.addEventListener('click', self.onClick);
       var ref = self.props;
       var tooltip = ref.tooltip;
+      var tooltipTrigger = ref.tooltipTrigger;
       var routeProps = ref.routeProps;
 
       if (routeProps) {
@@ -2237,7 +2243,8 @@
       self.$f7ready(function (f7) {
         self.f7Tooltip = f7.tooltip.create({
           targetEl: el,
-          text: tooltip
+          text: tooltip,
+          trigger: tooltipTrigger
         });
       });
     };
@@ -2303,7 +2310,8 @@
     outlineAurora: Boolean,
     active: Boolean,
     disabled: Boolean,
-    tooltip: String
+    tooltip: String,
+    tooltipTrigger: String
   }, Mixins.colorProps, {}, Mixins.linkIconProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps));
 
   F7Button.displayName = 'f7-button';
@@ -3188,11 +3196,13 @@
       self.refs.el.addEventListener('click', self.onClick);
       var ref = self.props;
       var tooltip = ref.tooltip;
+      var tooltipTrigger = ref.tooltipTrigger;
       if (!tooltip) { return; }
       self.$f7ready(function (f7) {
         self.f7Tooltip = f7.tooltip.create({
           targetEl: self.refs.el,
-          text: tooltip
+          text: tooltip,
+          trigger: tooltipTrigger
         });
       });
     };
@@ -3230,7 +3240,8 @@
         if (newText && !self.f7Tooltip && self.$f7) {
           self.f7Tooltip = self.$f7.tooltip.create({
             targetEl: self.refs.el,
-            text: newText
+            text: newText,
+            trigger: self.props.tooltipTrigger
           });
           return;
         }
@@ -3252,7 +3263,8 @@
     fabClose: Boolean,
     label: String,
     target: String,
-    tooltip: String
+    tooltip: String,
+    tooltipTrigger: String
   }, Mixins.colorProps));
 
   F7FabButton.displayName = 'f7-fab-button';
@@ -3418,11 +3430,13 @@
 
       var ref = self.props;
       var tooltip = ref.tooltip;
+      var tooltipTrigger = ref.tooltipTrigger;
       if (!tooltip) { return; }
       self.$f7ready(function (f7) {
         self.f7Tooltip = f7.tooltip.create({
           targetEl: self.refs.el,
-          text: tooltip
+          text: tooltip,
+          trigger: tooltipTrigger
         });
       });
     };
@@ -3460,7 +3474,8 @@
         if (newText && !self.f7Tooltip && self.$f7) {
           self.f7Tooltip = self.$f7.tooltip.create({
             targetEl: self.refs.el,
-            text: newText
+            text: newText,
+            trigger: self.props.tooltipTrigger
           });
           return;
         }
@@ -3487,7 +3502,8 @@
       type: String,
       default: 'right-bottom'
     },
-    tooltip: String
+    tooltip: String,
+    tooltipTrigger: String
   }, Mixins.colorProps));
 
   F7Fab.displayName = 'f7-fab';
@@ -4938,7 +4954,8 @@
         if (newText && !self.f7Tooltip && self.$f7) {
           self.f7Tooltip = self.$f7.tooltip.create({
             targetEl: self.refs.el,
-            text: newText
+            text: newText,
+            trigger: self.props.tooltipTrigger
           });
           return;
         }
@@ -4965,6 +4982,7 @@
       var tabbarLabel = ref.tabbarLabel;
       var tabLink = ref.tabLink;
       var tooltip = ref.tooltip;
+      var tooltipTrigger = ref.tooltipTrigger;
       var smartSelect = ref.smartSelect;
       var smartSelectParams = ref.smartSelectParams;
       var routeProps = ref.routeProps;
@@ -4989,7 +5007,8 @@
         if (tooltip) {
           self.f7Tooltip = f7.tooltip.create({
             targetEl: el,
-            text: tooltip
+            text: tooltip,
+            trigger: tooltipTrigger
           });
         }
       });
@@ -5036,6 +5055,7 @@
     },
     target: String,
     tooltip: String,
+    tooltipTrigger: String,
     smartSelect: Boolean,
     smartSelectParams: Object
   }, Mixins.colorProps, {}, Mixins.linkIconProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps));
@@ -5142,7 +5162,8 @@
         if (newText && !self.f7Tooltip && self.$f7) {
           self.f7Tooltip = self.$f7.tooltip.create({
             targetEl: self.refs.el,
-            text: newText
+            text: newText,
+            trigger: self.props.tooltipTrigger
           });
           return;
         }
@@ -5167,6 +5188,7 @@
       var ref = self.props;
       var routeProps = ref.routeProps;
       var tooltip = ref.tooltip;
+      var tooltipTrigger = ref.tooltipTrigger;
 
       if (routeProps) {
         linkEl.f7RouteProps = routeProps;
@@ -5177,7 +5199,8 @@
         if (tooltip) {
           self.f7Tooltip = f7.tooltip.create({
             targetEl: linkEl,
-            text: tooltip
+            text: tooltip,
+            trigger: tooltipTrigger
           });
         }
       });
@@ -5216,7 +5239,8 @@
     link: [Boolean, String],
     href: [Boolean, String],
     target: String,
-    tooltip: String
+    tooltip: String,
+    tooltipTrigger: String
   }, Mixins.colorProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps));
 
   F7ListButton.displayName = 'f7-list-button';
@@ -6772,7 +6796,8 @@
         if (newText && !self.f7Tooltip && self.$f7) {
           self.f7Tooltip = self.$f7.tooltip.create({
             targetEl: self.refs.el,
-            text: newText
+            text: newText,
+            trigger: self.props.tooltipTrigger
           });
           return;
         }
@@ -6851,6 +6876,7 @@
       var smartSelectParams = ref$1.smartSelectParams;
       var routeProps = ref$1.routeProps;
       var tooltip = ref$1.tooltip;
+      var tooltipTrigger = ref$1.tooltipTrigger;
       var needsEvents = !(link || href || accordionItem || smartSelect);
 
       if (!needsEvents && linkEl) {
@@ -6910,7 +6936,8 @@
         if (tooltip) {
           self.f7Tooltip = f7.tooltip.create({
             targetEl: el,
-            text: tooltip
+            text: tooltip,
+            trigger: tooltipTrigger
           });
         }
       });
@@ -6949,6 +6976,7 @@
     header: [String, Number],
     footer: [String, Number],
     tooltip: String,
+    tooltipTrigger: String,
     link: [Boolean, String],
     target: String,
     after: [String, Number],
@@ -14565,7 +14593,7 @@
   };
 
   /**
-   * Framework7 React 5.4.0
+   * Framework7 React 5.4.1
    * Build full featured iOS & Android apps using Framework7 & React
    * https://framework7.io/react/
    *
@@ -14573,7 +14601,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: January 29, 2020
+   * Released on: February 8, 2020
    */
 
   function f7ready(callback) {

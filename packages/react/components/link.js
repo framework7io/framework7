@@ -166,7 +166,8 @@ class F7Link extends React.Component {
       if (newText && !self.f7Tooltip && self.$f7) {
         self.f7Tooltip = self.$f7.tooltip.create({
           targetEl: self.refs.el,
-          text: newText
+          text: newText,
+          trigger: self.props.tooltipTrigger
         });
         return;
       }
@@ -194,6 +195,7 @@ class F7Link extends React.Component {
       tabbarLabel,
       tabLink,
       tooltip,
+      tooltipTrigger,
       smartSelect,
       smartSelectParams,
       routeProps
@@ -219,7 +221,8 @@ class F7Link extends React.Component {
       if (tooltip) {
         self.f7Tooltip = f7.tooltip.create({
           targetEl: el,
-          text: tooltip
+          text: tooltip,
+          trigger: tooltipTrigger
         });
       }
     });
@@ -260,6 +263,7 @@ __reactComponentSetProps(F7Link, Object.assign({
   },
   target: String,
   tooltip: String,
+  tooltipTrigger: String,
   smartSelect: Boolean,
   smartSelectParams: Object
 }, Mixins.colorProps, {}, Mixins.linkIconProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps));

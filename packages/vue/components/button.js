@@ -43,7 +43,8 @@ export default {
     outlineAurora: Boolean,
     active: Boolean,
     disabled: Boolean,
-    tooltip: String
+    tooltip: String,
+    tooltipTrigger: String
   }, Mixins.colorProps, {}, Mixins.linkIconProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps),
 
   render() {
@@ -214,7 +215,8 @@ export default {
       if (newText && !self.f7Tooltip && self.$f7) {
         self.f7Tooltip = self.$f7.tooltip.create({
           targetEl: self.$refs.el,
-          text: newText
+          text: newText,
+          trigger: self.props.tooltipTrigger
         });
         return;
       }
@@ -234,6 +236,7 @@ export default {
     el.addEventListener('click', self.onClick);
     const {
       tooltip,
+      tooltipTrigger,
       routeProps
     } = self.props;
 
@@ -245,7 +248,8 @@ export default {
     self.$f7ready(f7 => {
       self.f7Tooltip = f7.tooltip.create({
         targetEl: el,
-        text: tooltip
+        text: tooltip,
+        trigger: tooltipTrigger
       });
     });
   },

@@ -137,13 +137,15 @@ class F7Icon extends React.Component {
     const el = self.refs.el;
     if (!el) return;
     const {
-      tooltip
+      tooltip,
+      tooltipTrigger
     } = self.props;
     if (!tooltip) return;
     self.$f7ready(f7 => {
       self.f7Tooltip = f7.tooltip.create({
         targetEl: el,
-        text: tooltip
+        text: tooltip,
+        trigger: tooltipTrigger
       });
     });
   }
@@ -172,7 +174,8 @@ class F7Icon extends React.Component {
       if (newText && !self.f7Tooltip && self.$f7) {
         self.f7Tooltip = self.$f7.tooltip.create({
           targetEl: self.refs.el,
-          text: newText
+          text: newText,
+          trigger: self.props.tooltipTrigger
         });
         return;
       }
@@ -195,6 +198,7 @@ __reactComponentSetProps(F7Icon, Object.assign({
   aurora: String,
   md: String,
   tooltip: String,
+  tooltipTrigger: String,
   size: [String, Number]
 }, Mixins.colorProps));
 

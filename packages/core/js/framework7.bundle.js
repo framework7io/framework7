@@ -1,5 +1,5 @@
 /**
- * Framework7 5.4.0
+ * Framework7 5.4.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 29, 2020
+ * Released on: February 8, 2020
  */
 
 (function (global, factory) {
@@ -2774,7 +2774,7 @@
         return !!((win.navigator.maxTouchPoints > 0) || ('ontouchstart' in win) || (win.DocumentTouch && doc instanceof win.DocumentTouch));
       }()),
 
-      pointerEvents: !!win.PointerEvent && ('maxTouchPoints' in win.navigator) && win.navigator.maxTouchPoints > 0,
+      pointerEvents: !!win.PointerEvent,
 
       observer: (function checkObserver() {
         return ('MutationObserver' in win || 'WebkitMutationObserver' in win);
@@ -4033,6 +4033,7 @@
     // Additional headers
     if (options.headers) {
       Object.keys(options.headers).forEach(function (headerName) {
+        if (typeof options.headers[headerName] === 'undefined') { return; }
         xhr.setRequestHeader(headerName, options.headers[headerName]);
       });
     }
@@ -26473,12 +26474,12 @@
 
       var bg = $imageEl.attr('data-background');
       var src = bg || $imageEl.attr('data-src');
-      if (!src) { return; }
+
       function onLoad() {
         $imageEl.removeClass('lazy').addClass('lazy-loaded');
         if (bg) {
           $imageEl.css('background-image', ("url(" + src + ")"));
-        } else {
+        } else if (src) {
           $imageEl.attr('src', src);
         }
         if (callback) { callback(imageEl); }
@@ -26486,6 +26487,12 @@
         app.emit('lazyLoaded', $imageEl[0]);
       }
 
+      if (!src) {
+        $imageEl.trigger('lazy:load');
+        app.emit('lazyLoad', $imageEl[0]);
+        onLoad();
+        return;
+      }
       function onError() {
         $imageEl.removeClass('lazy').addClass('lazy-loaded');
         if (bg) {
@@ -29629,7 +29636,7 @@
 
     var skip = Math.min(swiper.params.slidesPerGroupSkip, slideIndex);
     var snapIndex = skip + Math.floor((slideIndex - skip) / swiper.params.slidesPerGroup);
-    if (snapIndex >= slidesGrid.length) { snapIndex = slidesGrid.length - 1; }
+    if (snapIndex >= snapGrid.length) { snapIndex = snapGrid.length - 1; }
 
     if ((activeIndex || params.initialSlide || 0) === (previousIndex || 0) && runCallbacks) {
       swiper.emit('beforeSlideChangeStart');
@@ -31522,7 +31529,7 @@
           startTranslate: undefined,
           allowThresholdMove: undefined,
           // Form elements to match
-          formElements: 'input, select, option, textarea, button, video',
+          formElements: 'input, select, option, textarea, button, video, label',
           // Last click time
           lastClickTime: Utils.now(),
           clickTimeout: undefined,
@@ -37867,6 +37874,17 @@
 
       var touchesStart = {};
       var isTouched;
+      function handleClick() {
+        if (tooltip.opened) { tooltip.hide(); }
+        else { tooltip.show(this); }
+      }
+      function handleClickOut(e) {
+        if (tooltip.opened && (
+          $(e.target).closest($targetEl).length
+          || $(e.target).closest(tooltip.$el).length
+        )) { return; }
+        tooltip.hide();
+      }
       function handleTouchStart(e) {
         if (isTouched) { return; }
         isTouched = true;
@@ -37906,6 +37924,11 @@
 
       tooltip.attachEvents = function attachEvents() {
         $el.on('transitionend', handleTransitionEnd);
+        if (tooltip.params.trigger === 'click') {
+          $targetEl.on('click', handleClick);
+          $('html').on('click', handleClickOut);
+          return;
+        }
         if (Support.touch) {
           var passive = Support.passiveListener ? { passive: true } : false;
           $targetEl.on(app.touchEvents.start, handleTouchStart, passive);
@@ -37918,6 +37941,11 @@
       };
       tooltip.detachEvents = function detachEvents() {
         $el.off('transitionend', handleTransitionEnd);
+        if (tooltip.params.trigger === 'click') {
+          $targetEl.off('click', handleClick);
+          $('html').off('click', handleClickOut);
+          return;
+        }
         if (Support.touch) {
           var passive = Support.passiveListener ? { passive: true } : false;
           $targetEl.off(app.touchEvents.start, handleTouchStart, passive);
@@ -38137,6 +38165,7 @@
         cssClass: null,
         render: null,
         offset: 0,
+        trigger: 'hover',
       },
     },
     on: {

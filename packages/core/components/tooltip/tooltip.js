@@ -47,6 +47,7 @@ export default {
       cssClass: null,
       render: null,
       offset: 0,
+      trigger: 'hover',
     },
   },
   on: {

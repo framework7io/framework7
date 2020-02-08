@@ -25,6 +25,7 @@ export default {
     },
     target: String,
     tooltip: String,
+    tooltipTrigger: String,
     smartSelect: Boolean,
     smartSelectParams: Object
   }, Mixins.colorProps, {}, Mixins.linkIconProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps),
@@ -135,7 +136,8 @@ export default {
       if (newText && !self.f7Tooltip && self.$f7) {
         self.f7Tooltip = self.$f7.tooltip.create({
           targetEl: self.$refs.el,
-          text: newText
+          text: newText,
+          trigger: self.props.tooltipTrigger
         });
         return;
       }
@@ -157,6 +159,7 @@ export default {
       tabbarLabel,
       tabLink,
       tooltip,
+      tooltipTrigger,
       smartSelect,
       smartSelectParams,
       routeProps
@@ -182,7 +185,8 @@ export default {
       if (tooltip) {
         self.f7Tooltip = f7.tooltip.create({
           targetEl: el,
-          text: tooltip
+          text: tooltip,
+          trigger: tooltipTrigger
         });
       }
     });

@@ -14,6 +14,7 @@ declare namespace F7Icon {
     aurora? : string
     md? : string
     tooltip? : string
+    tooltipTrigger? : string
     size? : string | number
     color? : string
     colorTheme? : string
