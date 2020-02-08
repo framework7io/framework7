@@ -22,6 +22,7 @@ export default {
     aurora: String,
     md: String,
     tooltip: String,
+    tooltipTrigger: String,
     size: [String, Number],
     ...Mixins.colorProps,
   },
@@ -73,6 +74,7 @@ export default {
         self.f7Tooltip = self.$f7.tooltip.create({
           targetEl: self.refs.el,
           text: newText,
+          trigger: self.props.tooltipTrigger,
         });
         return;
       }
@@ -84,13 +86,14 @@ export default {
     const self = this;
     const el = self.refs.el;
     if (!el) return;
-    const { tooltip } = self.props;
+    const { tooltip, tooltipTrigger } = self.props;
     if (!tooltip) return;
 
     self.$f7ready((f7) => {
       self.f7Tooltip = f7.tooltip.create({
         targetEl: el,
         text: tooltip,
+        trigger: tooltipTrigger,
       });
     });
   },

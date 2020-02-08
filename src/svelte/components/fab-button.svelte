@@ -16,6 +16,7 @@
   export let label = undefined;
   export let target = undefined;
   export let tooltip = undefined;
+  export let tooltipTrigger = undefined;
 
   let el;
   let f7Tooltip;
@@ -43,6 +44,7 @@
       f7Tooltip = f7.instance.tooltip.create({
         targetEl: el,
         text: newText,
+        trigger: tooltipTrigger,
       });
       return;
     }
@@ -62,6 +64,7 @@
         f7Tooltip = f7.instance.tooltip.create({
           targetEl: el,
           text: tooltip,
+          trigger: tooltipTrigger,
         });
       }
     });

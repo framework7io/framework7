@@ -36,6 +36,7 @@ export default {
     },
     target: String,
     tooltip: String,
+    tooltipTrigger: String,
 
     // Smart Select
     smartSelect: Boolean,
@@ -142,6 +143,7 @@ export default {
         self.f7Tooltip = self.$f7.tooltip.create({
           targetEl: self.refs.el,
           text: newText,
+          trigger: self.props.tooltipTrigger,
         });
         return;
       }
@@ -156,7 +158,7 @@ export default {
     const self = this;
     const el = self.refs.el;
     el.addEventListener('click', self.onClick);
-    const { tabbarLabel, tabLink, tooltip, smartSelect, smartSelectParams, routeProps } = self.props;
+    const { tabbarLabel, tabLink, tooltip, tooltipTrigger, smartSelect, smartSelectParams, routeProps } = self.props;
     let isTabbarLabel = false;
     if (tabbarLabel
       || (
@@ -182,6 +184,7 @@ export default {
         self.f7Tooltip = f7.tooltip.create({
           targetEl: el,
           text: tooltip,
+          trigger: tooltipTrigger,
         });
       }
     });

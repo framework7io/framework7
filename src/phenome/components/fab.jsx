@@ -24,6 +24,7 @@ export default {
       default: 'right-bottom',
     },
     tooltip: String,
+    tooltipTrigger: String,
     ...Mixins.colorProps,
   },
   render() {
@@ -117,6 +118,7 @@ export default {
         self.f7Tooltip = self.$f7.tooltip.create({
           targetEl: self.refs.el,
           text: newText,
+          trigger: self.props.tooltipTrigger,
         });
         return;
       }
@@ -132,12 +134,13 @@ export default {
     if (self.refs.linkEl) {
       self.refs.linkEl.addEventListener('click', self.onClick);
     }
-    const { tooltip } = self.props;
+    const { tooltip, tooltipTrigger } = self.props;
     if (!tooltip) return;
     self.$f7ready((f7) => {
       self.f7Tooltip = f7.tooltip.create({
         targetEl: self.refs.el,
         text: tooltip,
+        trigger: tooltipTrigger,
       });
     });
   },

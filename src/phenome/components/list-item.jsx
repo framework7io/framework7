@@ -30,6 +30,7 @@ export default {
 
     // Tooltip
     tooltip: String,
+    tooltipTrigger: String,
 
     // Link Props
     link: [Boolean, String],
@@ -287,6 +288,7 @@ export default {
         self.f7Tooltip = self.$f7.tooltip.create({
           targetEl: self.refs.el,
           text: newText,
+          trigger: self.props.tooltipTrigger,
         });
         return;
       }
@@ -330,7 +332,7 @@ export default {
     const { el, linkEl } = self.refs;
     if (!el) return;
     const {
-      link, href, smartSelect, swipeout, swipeoutOpened, accordionItem, smartSelectParams, routeProps, tooltip,
+      link, href, smartSelect, swipeout, swipeoutOpened, accordionItem, smartSelectParams, routeProps, tooltip, tooltipTrigger,
     } = self.props;
     const needsEvents = !(link || href || accordionItem || smartSelect);
     if (!needsEvents && linkEl) {
@@ -385,6 +387,7 @@ export default {
         self.f7Tooltip = f7.tooltip.create({
           targetEl: el,
           text: tooltip,
+          trigger: tooltipTrigger,
         });
       }
     });

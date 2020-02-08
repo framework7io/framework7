@@ -18,6 +18,7 @@
   export let aurora = undefined;
   export let md = undefined;
   export let tooltip = undefined;
+  export let tooltipTrigger = undefined;
   export let size = undefined;
 
   // eslint-disable-next-line
@@ -104,6 +105,7 @@
       f7Tooltip = F7.instance.tooltip.create({
         targetEl: el,
         text: newText,
+        trigger: tooltipTrigger,
       });
       return;
     }
@@ -118,6 +120,7 @@
       f7Tooltip = F7.instance.tooltip.create({
         targetEl: el,
         text: tooltip,
+        trigger: tooltipTrigger,
       });
     });
   });

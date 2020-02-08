@@ -54,6 +54,7 @@ export default {
     active: Boolean,
     disabled: Boolean,
     tooltip: String,
+    tooltipTrigger: String,
     ...Mixins.colorProps,
     ...Mixins.linkIconProps,
     ...Mixins.linkRouterProps,
@@ -225,6 +226,7 @@ export default {
         self.f7Tooltip = self.$f7.tooltip.create({
           targetEl: self.refs.el,
           text: newText,
+          trigger: self.props.tooltipTrigger,
         });
         return;
       }
@@ -239,7 +241,7 @@ export default {
     const self = this;
     const el = self.refs.el;
     el.addEventListener('click', self.onClick);
-    const { tooltip, routeProps } = self.props;
+    const { tooltip, tooltipTrigger, routeProps } = self.props;
     if (routeProps) {
       el.f7RouteProps = routeProps;
     }
@@ -248,6 +250,7 @@ export default {
       self.f7Tooltip = f7.tooltip.create({
         targetEl: el,
         text: tooltip,
+        trigger: tooltipTrigger,
       });
     });
   },
