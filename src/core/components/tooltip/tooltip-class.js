@@ -41,6 +41,17 @@ class Tooltip extends Framework7Class {
 
     const touchesStart = {};
     let isTouched;
+    function handleClick() {
+      if (tooltip.opened) tooltip.hide();
+      else tooltip.show(this);
+    }
+    function handleClickOut(e) {
+      if (tooltip.opened && (
+        $(e.target).closest($targetEl).length
+        || $(e.target).closest(tooltip.$el).length
+      )) return;
+      tooltip.hide();
+    }
     function handleTouchStart(e) {
       if (isTouched) return;
       isTouched = true;
@@ -80,6 +91,11 @@ class Tooltip extends Framework7Class {
 
     tooltip.attachEvents = function attachEvents() {
       $el.on('transitionend', handleTransitionEnd);
+      if (tooltip.params.trigger === 'click') {
+        $targetEl.on('click', handleClick);
+        $('html').on('click', handleClickOut);
+        return;
+      }
       if (Support.touch) {
         const passive = Support.passiveListener ? { passive: true } : false;
         $targetEl.on(app.touchEvents.start, handleTouchStart, passive);
@@ -92,6 +108,11 @@ class Tooltip extends Framework7Class {
     };
     tooltip.detachEvents = function detachEvents() {
       $el.off('transitionend', handleTransitionEnd);
+      if (tooltip.params.trigger === 'click') {
+        $targetEl.off('click', handleClick);
+        $('html').off('click', handleClickOut);
+        return;
+      }
       if (Support.touch) {
         const passive = Support.passiveListener ? { passive: true } : false;
         $targetEl.off(app.touchEvents.start, handleTouchStart, passive);
