@@ -138,12 +138,12 @@ const Lazy = {
 
     const bg = $imageEl.attr('data-background');
     const src = bg || $imageEl.attr('data-src');
-    if (!src) return;
+
     function onLoad() {
       $imageEl.removeClass('lazy').addClass('lazy-loaded');
       if (bg) {
         $imageEl.css('background-image', `url(${src})`);
-      } else {
+      } else if (src) {
         $imageEl.attr('src', src);
       }
       if (callback) callback(imageEl);
@@ -151,6 +151,12 @@ const Lazy = {
       app.emit('lazyLoaded', $imageEl[0]);
     }
 
+    if (!src) {
+      $imageEl.trigger('lazy:load');
+      app.emit('lazyLoad', $imageEl[0]);
+      onLoad();
+      return;
+    }
     function onError() {
       $imageEl.removeClass('lazy').addClass('lazy-loaded');
       if (bg) {
