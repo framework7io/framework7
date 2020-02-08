@@ -6,7 +6,7 @@ const Support = (function Support() {
       return !!((window.navigator.maxTouchPoints > 0) || ('ontouchstart' in window) || (window.DocumentTouch && document instanceof window.DocumentTouch));
     }()),
 
-    pointerEvents: !!window.PointerEvent && ('maxTouchPoints' in window.navigator) && window.navigator.maxTouchPoints > 0,
+    pointerEvents: !!window.PointerEvent,
 
     observer: (function checkObserver() {
       return ('MutationObserver' in window || 'WebkitMutationObserver' in window);
