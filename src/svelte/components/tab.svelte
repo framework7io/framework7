@@ -27,12 +27,12 @@
   function onTabShow(tabEl) {
     if (tabEl !== el) return;
     dispatch('tabShow');
-    if (typeof $$props.onTabShow === 'function') $$props.onTabShow();
+    if (typeof $$props.onTabShow === 'function') $$props.onTabShow(tabEl);
   }
   function onTabHide(tabEl) {
     if (tabEl !== el) return;
     dispatch('tabHide');
-    if (typeof $$props.onTabHide === 'function') $$props.onTabHide();
+    if (typeof $$props.onTabHide === 'function') $$props.onTabHide(tabEl);
   }
 
   onMount(() => {
