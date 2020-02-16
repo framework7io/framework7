@@ -87,6 +87,7 @@ class TextEditor extends Framework7Class {
     self.onInput = self.onInput.bind(self);
     self.onPaste = self.onPaste.bind(self);
     self.onSelectionChange = self.onSelectionChange.bind(self);
+    self.closeKeyboardToolbar = self.closeKeyboardToolbar.bind(self);
 
     // Handle Events
     self.attachEvents = function attachEvents() {
@@ -95,6 +96,7 @@ class TextEditor extends Framework7Class {
       }
       if (self.params.mode === 'keyboard-toolbar') {
         self.$keyboardToolbarEl.on('click', 'button', self.onButtonClick);
+        self.$el.parents('.page').on('page:beforeout', self.closeKeyboardToolbar);
       }
       if (self.params.mode === 'popover' && self.popover) {
         self.popover.$el.on('click', 'button', self.onButtonClick);
@@ -111,6 +113,7 @@ class TextEditor extends Framework7Class {
       }
       if (self.params.mode === 'keyboard-toolbar') {
         self.$keyboardToolbarEl.off('click', 'button', self.onButtonClick);
+        self.$el.parents('.page').off('page:beforeout', self.closeKeyboardToolbar);
       }
       if (self.params.mode === 'popover' && self.popover) {
         self.popover.$el.off('click', 'button', self.onButtonClick);
@@ -491,6 +494,9 @@ class TextEditor extends Framework7Class {
     self.$el.trigger('texteditor:beforedestroy');
     self.emit('local::beforeDestroy textEditorBeforeDestroy', self);
     self.detachEvents();
+    if (self.params.mode === 'keyboard-toolbar' && self.$keyboardToolbarEl) {
+      self.$keyboardToolbarEl.remove();
+    }
     if (self.popover) {
       self.popover.close(false);
       self.popover.destroy();
