@@ -56,8 +56,8 @@ declare namespace F7List {
     onSortableEnable? : (...args: any[]) => void
     onSortableDisable? : (...args: any[]) => void
     onSortableSort? : (sortData?: any) => void
-    onTabShow? : (...args: any[]) => void
-    onTabHide? : (...args: any[]) => void
+    onTabShow? : (el?: any) => void
+    onTabHide? : (el?: any) => void
   }
 }
 declare class F7List extends React.Component<F7List.Props, {}> {

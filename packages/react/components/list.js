@@ -36,12 +36,12 @@ class F7List extends React.Component {
 
   onTabShow(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('tab:show tabShow');
+    this.dispatchEvent('tab:show tabShow', el);
   }
 
   onTabHide(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('tab:hide tabHide');
+    this.dispatchEvent('tab:hide tabHide', el);
   }
 
   get classes() {

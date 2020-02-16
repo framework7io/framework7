@@ -75,8 +75,8 @@ declare namespace F7View {
     onSwipeBackAfterChange? : (swipeBackData?: any) => void
     onSwipeBackBeforeReset? : (swipeBackData?: any) => void
     onSwipeBackAfterReset? : (swipeBackData?: any) => void
-    onTabShow? : (...args: any[]) => void
-    onTabHide? : (...args: any[]) => void
+    onTabShow? : (el?: any) => void
+    onTabHide? : (el?: any) => void
   }
 }
 declare class F7View extends React.Component<F7View.Props, {}> {

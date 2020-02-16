@@ -2,6 +2,15 @@
 
 # Change Log
 
+# [v5.4.2](https://github.com/framework7io/framework7/compare/v5.4.1...v5.4.2) - February 16, 2020
+  * Core
+    * Card
+      * Fixed issue with expandable card overflow on iOS devices
+      * Fixed expandable card transition in RTL
+    * Text Editor
+      * Fixed issue when keyboard toolbar stays opened on navigating to another page
+  * Minor fixes
+
 # [v5.4.1](https://github.com/framework7io/framework7/compare/v5.4.0...v5.4.1) - February 8, 2020
   * Core
     * Touch

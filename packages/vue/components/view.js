@@ -223,13 +223,13 @@ export default {
 
     onTabShow(el) {
       if (el === this.$refs.el) {
-        this.dispatchEvent('tab:show tabShow');
+        this.dispatchEvent('tab:show tabShow', el);
       }
     },
 
     onTabHide(el) {
       if (el === this.$refs.el) {
-        this.dispatchEvent('tab:hide tabHide');
+        this.dispatchEvent('tab:hide tabHide', el);
       }
     },
 

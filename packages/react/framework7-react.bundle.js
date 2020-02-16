@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.4.1
+ * Framework7 React 5.4.2
  * Build full featured iOS & Android apps using Framework7 & React
  * https://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 8, 2020
+ * Released on: February 16, 2020
  */
 
 (function (global, factory) {
@@ -1692,12 +1692,12 @@
 
     F7Block.prototype.onTabShow = function onTabShow (el) {
       if (this.eventTargetEl !== el) { return; }
-      this.dispatchEvent('tabShow tab:show');
+      this.dispatchEvent('tabShow tab:show', el);
     };
 
     F7Block.prototype.onTabHide = function onTabHide (el) {
       if (this.eventTargetEl !== el) { return; }
-      this.dispatchEvent('tabHide tab:hide');
+      this.dispatchEvent('tabHide tab:hide', el);
     };
 
     F7Block.prototype.render = function render () {
@@ -7056,12 +7056,12 @@
 
     F7List.prototype.onTabShow = function onTabShow (el) {
       if (this.eventTargetEl !== el) { return; }
-      this.dispatchEvent('tab:show tabShow');
+      this.dispatchEvent('tab:show tabShow', el);
     };
 
     F7List.prototype.onTabHide = function onTabHide (el) {
       if (this.eventTargetEl !== el) { return; }
-      this.dispatchEvent('tab:hide tabHide');
+      this.dispatchEvent('tab:hide tabHide', el);
     };
 
     prototypeAccessors.classes.get = function () {
@@ -9930,12 +9930,12 @@
 
     F7PageContent.prototype.onTabShow = function onTabShow (el) {
       if (this.eventTargetEl !== el) { return; }
-      this.dispatchEvent('tab:show tabShow');
+      this.dispatchEvent('tab:show tabShow', el);
     };
 
     F7PageContent.prototype.onTabHide = function onTabHide (el) {
       if (this.eventTargetEl !== el) { return; }
-      this.dispatchEvent('tab:hide tabHide');
+      this.dispatchEvent('tab:hide tabHide', el);
     };
 
     prototypeAccessors.classes.get = function () {
@@ -13393,12 +13393,12 @@
 
     F7Tab.prototype.onTabShow = function onTabShow (el) {
       if (this.eventTargetEl !== el) { return; }
-      this.dispatchEvent('tab:show tabShow');
+      this.dispatchEvent('tab:show tabShow', el);
     };
 
     F7Tab.prototype.onTabHide = function onTabHide (el) {
       if (this.eventTargetEl !== el) { return; }
-      this.dispatchEvent('tab:hide tabHide');
+      this.dispatchEvent('tab:hide tabHide', el);
     };
 
     F7Tab.prototype.render = function render () {
@@ -14127,13 +14127,13 @@
 
     F7View.prototype.onTabShow = function onTabShow (el) {
       if (el === this.refs.el) {
-        this.dispatchEvent('tab:show tabShow');
+        this.dispatchEvent('tab:show tabShow', el);
       }
     };
 
     F7View.prototype.onTabHide = function onTabHide (el) {
       if (el === this.refs.el) {
-        this.dispatchEvent('tab:hide tabHide');
+        this.dispatchEvent('tab:hide tabHide', el);
       }
     };
 
@@ -14593,7 +14593,7 @@
   };
 
   /**
-   * Framework7 React 5.4.1
+   * Framework7 React 5.4.2
    * Build full featured iOS & Android apps using Framework7 & React
    * https://framework7.io/react/
    *
@@ -14601,7 +14601,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: February 8, 2020
+   * Released on: February 16, 2020
    */
 
   function f7ready(callback) {

@@ -1,5 +1,5 @@
 /**
- * Framework7 5.4.1
+ * Framework7 5.4.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 8, 2020
+ * Released on: February 16, 2020
  */
 
 (function (global, factory) {
@@ -19302,7 +19302,7 @@
         .transform(("translate3d(" + (app.rtl ? (cardLeftOffset + translateX) : (-cardLeftOffset - translateX)) + "px, 0px, 0) scale(" + (1 / scaleX) + ", " + (1 / scaleY) + ")"));
 
       $cardEl
-        .transform(("translate3d(" + translateX + "px, " + translateY + "px, 0) scale(" + scaleX + ", " + scaleY + ")"));
+        .transform(("translate3d(" + (app.rtl ? -translateX : translateX) + "px, " + translateY + "px, 0) scale(" + scaleX + ", " + scaleY + ")"));
       if (cardParams.animate) {
         $cardEl.transitionEnd(function () {
           transitionEnd();
@@ -19356,7 +19356,7 @@
         translateX = (cardRightOffset - cardLeftOffset) / 2;
         translateY = (cardBottomOffset - cardTopOffset) / 2;
 
-        $cardEl.transform(("translate3d(" + translateX + "px, " + translateY + "px, 0) scale(" + scaleX + ", " + scaleY + ")"));
+        $cardEl.transform(("translate3d(" + (app.rtl ? -translateX : translateX) + "px, " + translateY + "px, 0) scale(" + scaleX + ", " + scaleY + ")"));
         $cardContentEl
           .css({
             width: (maxWidth + "px"),
@@ -19437,7 +19437,7 @@
           isMoved = false;
           app.card.close($cardEl);
         } else {
-          $cardEl.transform(("translate3d(" + translateX + "px, " + translateY + "px, 0) scale(" + (scaleX * (1 - progress * 0.2)) + ", " + (scaleY * (1 - progress * 0.2)) + ")"));
+          $cardEl.transform(("translate3d(" + (app.rtl ? -translateX : translateX) + "px, " + translateY + "px, 0) scale(" + (scaleX * (1 - progress * 0.2)) + ", " + (scaleY * (1 - progress * 0.2)) + ")"));
         }
       }
       function onTouchEnd() {
@@ -19452,7 +19452,7 @@
         } else {
           $cardEl
             .addClass('card-transitioning')
-            .transform(("translate3d(" + translateX + "px, " + translateY + "px, 0) scale(" + scaleX + ", " + scaleY + ")"));
+            .transform(("translate3d(" + (app.rtl ? -translateX : translateX) + "px, " + translateY + "px, 0) scale(" + scaleX + ", " + scaleY + ")"));
         }
       }
 
@@ -40823,6 +40823,7 @@
       self.onInput = self.onInput.bind(self);
       self.onPaste = self.onPaste.bind(self);
       self.onSelectionChange = self.onSelectionChange.bind(self);
+      self.closeKeyboardToolbar = self.closeKeyboardToolbar.bind(self);
 
       // Handle Events
       self.attachEvents = function attachEvents() {
@@ -40831,6 +40832,7 @@
         }
         if (self.params.mode === 'keyboard-toolbar') {
           self.$keyboardToolbarEl.on('click', 'button', self.onButtonClick);
+          self.$el.parents('.page').on('page:beforeout', self.closeKeyboardToolbar);
         }
         if (self.params.mode === 'popover' && self.popover) {
           self.popover.$el.on('click', 'button', self.onButtonClick);
@@ -40847,6 +40849,7 @@
         }
         if (self.params.mode === 'keyboard-toolbar') {
           self.$keyboardToolbarEl.off('click', 'button', self.onButtonClick);
+          self.$el.parents('.page').off('page:beforeout', self.closeKeyboardToolbar);
         }
         if (self.params.mode === 'popover' && self.popover) {
           self.popover.$el.off('click', 'button', self.onButtonClick);
@@ -41227,6 +41230,9 @@
       self.$el.trigger('texteditor:beforedestroy');
       self.emit('local::beforeDestroy textEditorBeforeDestroy', self);
       self.detachEvents();
+      if (self.params.mode === 'keyboard-toolbar' && self.$keyboardToolbarEl) {
+        self.$keyboardToolbarEl.remove();
+      }
       if (self.popover) {
         self.popover.close(false);
         self.popover.destroy();

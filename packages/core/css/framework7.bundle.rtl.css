@@ -1,5 +1,5 @@
 /**
- * Framework7 5.4.1
+ * Framework7 5.4.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 8, 2020
+ * Released on: February 16, 2020
  */
 
 /*====================
@@ -10364,7 +10364,7 @@ html.with-panel-right-reveal .panel-right.panel-in-collapsed ~ .view {
   width: 100%;
 }
 .card-expandable.active-state {
-  transform: scale(0.97);
+  transform: scale(0.97) translate3d(0, 0, 0);
 }
 .card-expandable .card-opened-fade-in,
 .card-expandable .card-opened-fade-out {

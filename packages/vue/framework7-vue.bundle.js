@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.4.1
+ * Framework7 Vue 5.4.2
  * Build full featured iOS & Android apps using Framework7 & Vue
  * https://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 8, 2020
+ * Released on: February 16, 2020
  */
 
 (function (global, factory) {
@@ -1383,12 +1383,12 @@
     methods: {
       onTabShow: function onTabShow(el) {
         if (this.eventTargetEl !== el) { return; }
-        this.dispatchEvent('tabShow tab:show');
+        this.dispatchEvent('tabShow tab:show', el);
       },
 
       onTabHide: function onTabHide(el) {
         if (this.eventTargetEl !== el) { return; }
-        this.dispatchEvent('tabHide tab:hide');
+        this.dispatchEvent('tabHide tab:hide', el);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -6562,12 +6562,12 @@
 
       onTabShow: function onTabShow(el) {
         if (this.eventTargetEl !== el) { return; }
-        this.dispatchEvent('tab:show tabShow');
+        this.dispatchEvent('tab:show tabShow', el);
       },
 
       onTabHide: function onTabHide(el) {
         if (this.eventTargetEl !== el) { return; }
-        this.dispatchEvent('tab:hide tabHide');
+        this.dispatchEvent('tab:hide tabHide', el);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -9041,12 +9041,12 @@
 
       onTabShow: function onTabShow(el) {
         if (this.eventTargetEl !== el) { return; }
-        this.dispatchEvent('tab:show tabShow');
+        this.dispatchEvent('tab:show tabShow', el);
       },
 
       onTabHide: function onTabHide(el) {
         if (this.eventTargetEl !== el) { return; }
-        this.dispatchEvent('tab:hide tabHide');
+        this.dispatchEvent('tab:hide tabHide', el);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -12113,12 +12113,12 @@
 
       onTabShow: function onTabShow(el) {
         if (this.eventTargetEl !== el) { return; }
-        this.dispatchEvent('tab:show tabShow');
+        this.dispatchEvent('tab:show tabShow', el);
       },
 
       onTabHide: function onTabHide(el) {
         if (this.eventTargetEl !== el) { return; }
-        this.dispatchEvent('tab:hide tabHide');
+        this.dispatchEvent('tab:hide tabHide', el);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -12855,13 +12855,13 @@
 
       onTabShow: function onTabShow(el) {
         if (el === this.$refs.el) {
-          this.dispatchEvent('tab:show tabShow');
+          this.dispatchEvent('tab:show tabShow', el);
         }
       },
 
       onTabHide: function onTabHide(el) {
         if (el === this.$refs.el) {
-          this.dispatchEvent('tab:hide tabHide');
+          this.dispatchEvent('tab:hide tabHide', el);
         }
       },
 
@@ -13146,7 +13146,7 @@
   };
 
   /**
-   * Framework7 Vue 5.4.1
+   * Framework7 Vue 5.4.2
    * Build full featured iOS & Android apps using Framework7 & Vue
    * https://framework7.io/vue/
    *
@@ -13154,7 +13154,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: February 8, 2020
+   * Released on: February 16, 2020
    */
 
   function f7ready(callback) {

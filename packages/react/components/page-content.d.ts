@@ -35,8 +35,8 @@ declare namespace F7PageContent {
     onPtrRefresh? : (done?: any) => void
     onPtrDone? : (...args: any[]) => void
     onInfinite? : (...args: any[]) => void
-    onTabShow? : (...args: any[]) => void
-    onTabHide? : (...args: any[]) => void
+    onTabShow? : (el?: any) => void
+    onTabHide? : (el?: any) => void
   }
 }
 declare class F7PageContent extends React.Component<F7PageContent.Props, {}> {

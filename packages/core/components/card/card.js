@@ -179,7 +179,7 @@ const CardExpandable = {
       .transform(`translate3d(${app.rtl ? (cardLeftOffset + translateX) : (-cardLeftOffset - translateX)}px, 0px, 0) scale(${1 / scaleX}, ${1 / scaleY})`);
 
     $cardEl
-      .transform(`translate3d(${translateX}px, ${translateY}px, 0) scale(${scaleX}, ${scaleY})`);
+      .transform(`translate3d(${app.rtl ? -translateX : translateX}px, ${translateY}px, 0) scale(${scaleX}, ${scaleY})`);
     if (cardParams.animate) {
       $cardEl.transitionEnd(() => {
         transitionEnd();
@@ -231,7 +231,7 @@ const CardExpandable = {
       translateX = (cardRightOffset - cardLeftOffset) / 2;
       translateY = (cardBottomOffset - cardTopOffset) / 2;
 
-      $cardEl.transform(`translate3d(${translateX}px, ${translateY}px, 0) scale(${scaleX}, ${scaleY})`);
+      $cardEl.transform(`translate3d(${app.rtl ? -translateX : translateX}px, ${translateY}px, 0) scale(${scaleX}, ${scaleY})`);
       $cardContentEl
         .css({
           width: `${maxWidth}px`,
@@ -312,7 +312,7 @@ const CardExpandable = {
         isMoved = false;
         app.card.close($cardEl);
       } else {
-        $cardEl.transform(`translate3d(${translateX}px, ${translateY}px, 0) scale(${scaleX * (1 - progress * 0.2)}, ${scaleY * (1 - progress * 0.2)})`);
+        $cardEl.transform(`translate3d(${app.rtl ? -translateX : translateX}px, ${translateY}px, 0) scale(${scaleX * (1 - progress * 0.2)}, ${scaleY * (1 - progress * 0.2)})`);
       }
     }
     function onTouchEnd() {
@@ -327,7 +327,7 @@ const CardExpandable = {
       } else {
         $cardEl
           .addClass('card-transitioning')
-          .transform(`translate3d(${translateX}px, ${translateY}px, 0) scale(${scaleX}, ${scaleY})`);
+          .transform(`translate3d(${app.rtl ? -translateX : translateX}px, ${translateY}px, 0) scale(${scaleX}, ${scaleY})`);
       }
     }
 
