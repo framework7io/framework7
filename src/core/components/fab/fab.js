@@ -150,6 +150,7 @@ const Fab = {
     } else {
       $fabEl.addClass('fab-opened');
     }
+    $fabEl.siblings('.fab-backdrop').addClass('backdrop-in');
     $fabEl.trigger('fab:open');
   },
   close(fabEl = '.fab-opened') {
@@ -165,6 +166,7 @@ const Fab = {
     } else {
       $fabEl.removeClass('fab-opened');
     }
+    $fabEl.siblings('.fab-backdrop').removeClass('backdrop-in');
     $fabEl.trigger('fab:close');
   },
   toggle(fabEl) {
@@ -202,6 +204,10 @@ export default {
     '.fab-close': function close($clickedEl, data = {}) {
       const app = this;
       app.fab.close(data.fab);
+    },
+    '.fab-backdrop': function close() {
+      const app = this;
+      app.fab.close();
     },
   },
 };
