@@ -6,18 +6,18 @@
 .router-transition-f7-fade-forward {
   .page-next {
     opacity: 0 !important;
-    animation: f7-fade-in 500ms forwards;
+    animation: f7-fade-in var(--f7-page-fade-transition-duration) forwards;
   }
   .page-current {
-    animation: f7-fade-out 500ms forwards;
+    animation: f7-fade-out var(--f7-page-fade-transition-duration) forwards;
   }
 }
 .router-transition-f7-fade-backward {
   .page-current {
-    animation: f7-fade-out 500ms forwards;
+    animation: f7-fade-out var(--f7-page-fade-transition-duration) forwards;
   }
   .page-previous {
-    animation: f7-fade-in 500ms forwards;
+    animation: f7-fade-in var(--f7-page-fade-transition-duration) forwards;
   }
 }
 @keyframes f7-fade-in {

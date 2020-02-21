@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.4.2
+ * Framework7 Vue 5.4.5
  * Build full featured iOS & Android apps using Framework7 & Vue
  * https://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 16, 2020
+ * Released on: February 21, 2020
  */
 
 (function (global, factory) {
@@ -2603,6 +2603,37 @@
       }
 
     },
+    computed: {
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+
+    }
+  };
+
+  var f7FabBackdrop = {
+    name: 'f7-fab-backdrop',
+    props: {
+      id: [String, Number]
+    },
+
+    render: function render() {
+      var _h = this.$createElement;
+      var self = this;
+      var props = self.props;
+      var className = props.className;
+      var id = props.id;
+      var style = props.style;
+      var classes = Utils.classNames(className, 'fab-backdrop');
+      return _h('div', {
+        style: style,
+        class: classes,
+        attrs: {
+          id: id
+        }
+      });
+    },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
@@ -13146,7 +13177,7 @@
   };
 
   /**
-   * Framework7 Vue 5.4.2
+   * Framework7 Vue 5.4.5
    * Build full featured iOS & Android apps using Framework7 & Vue
    * https://framework7.io/vue/
    *
@@ -13154,7 +13185,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: February 16, 2020
+   * Released on: February 21, 2020
    */
 
   function f7ready(callback) {
@@ -13202,6 +13233,7 @@
       Vue.component('f7-checkbox', f7Checkbox);
       Vue.component('f7-chip', f7Chip);
       Vue.component('f7-col', f7Col);
+      Vue.component('f7-fab-backdrop', f7FabBackdrop);
       Vue.component('f7-fab-button', f7FabButton);
       Vue.component('f7-fab-buttons', f7FabButtons);
       Vue.component('f7-fab', f7Fab);

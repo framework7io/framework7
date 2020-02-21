@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.4.2
+ * Framework7 Vue 5.4.5
  * Build full featured iOS & Android apps using Framework7 & Vue
  * https://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 16, 2020
+ * Released on: February 21, 2020
  */
 import Vue from 'vue';
 import f7AccordionContent from './components/accordion-content';
@@ -33,6 +33,7 @@ import f7Card from './components/card';
 import f7Checkbox from './components/checkbox';
 import f7Chip from './components/chip';
 import f7Col from './components/col';
+import f7FabBackdrop from './components/fab-backdrop';
 import f7FabButton from './components/fab-button';
 import f7FabButtons from './components/fab-buttons';
 import f7Fab from './components/fab';
@@ -149,6 +150,7 @@ const Plugin = {
     Vue.component('f7-checkbox', f7Checkbox);
     Vue.component('f7-chip', f7Chip);
     Vue.component('f7-col', f7Col);
+    Vue.component('f7-fab-backdrop', f7FabBackdrop);
     Vue.component('f7-fab-button', f7FabButton);
     Vue.component('f7-fab-buttons', f7FabButtons);
     Vue.component('f7-fab', f7Fab);

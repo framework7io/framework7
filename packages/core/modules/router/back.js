@@ -242,7 +242,7 @@ function backward(el, backwardOptions) {
       router.emit('pageMasterUnstack', $newPage[0]);
       if (dynamicNavbar) {
         $(app.navbar.getElByPage($newPage)).removeClass('navbar-master-stacked');
-        router.emi('navbarMasterUnstack', app.navbar.getElByPage($newPage));
+        router.emit('navbarMasterUnstack', app.navbar.getElByPage($newPage));
       }
     }
     // Page init and before init events

@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.4.2
+ * Framework7 React 5.4.5
  * Build full featured iOS & Android apps using Framework7 & React
  * https://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 16, 2020
+ * Released on: February 21, 2020
  */
 
 import F7AccordionContent from './components/accordion-content';
@@ -33,6 +33,7 @@ import F7Card from './components/card';
 import F7Checkbox from './components/checkbox';
 import F7Chip from './components/chip';
 import F7Col from './components/col';
+import F7FabBackdrop from './components/fab-backdrop';
 import F7FabButton from './components/fab-button';
 import F7FabButtons from './components/fab-buttons';
 import F7Fab from './components/fab';
@@ -126,6 +127,7 @@ const Card = F7Card;
 const Checkbox = F7Checkbox;
 const Chip = F7Chip;
 const Col = F7Col;
+const FabBackdrop = F7FabBackdrop;
 const FabButton = F7FabButton;
 const FabButtons = F7FabButtons;
 const Fab = F7Fab;
@@ -242,6 +244,8 @@ export {
   Chip,
   F7Col,
   Col,
+  F7FabBackdrop,
+  FabBackdrop,
   F7FabButton,
   FabButton,
   F7FabButtons,

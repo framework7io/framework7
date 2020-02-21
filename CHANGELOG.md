@@ -2,6 +2,20 @@
 
 # Change Log
 
+# [v5.4.5](https://github.com/framework7io/framework7/compare/v5.4.2...v5.4.5) - February 21, 2020
+  * Core
+    * FAB (Floatin Action Button)
+      * Now it supports backdrop, by adding `<div clas="fab-backdrop"></div>` element on same level as FAB element
+    * Page
+      * Added custom CSS properties for custom transitions durations: `--f7-page-parallax-transition-duration`, `--f7-page-cover-transition-duration`, `--f7-page-dive-transition-duration`, `--f7-page-fade-transition-duration`, `--f7-page-flip-transition-duration`, `--f7-page-push-transition-duration`
+    * Preloader
+      * New methods `app.preloader.showIn(el, color)` and `app.preloader.hideIn(el)` to show/hide preloader overlay in specific element
+    * Request
+      * Now it uses "native" XHR timeout
+  * React, Vue, Svelte
+    * Added `<FabBackdrop />` component
+  * Minor fixes
+
 # [v5.4.2](https://github.com/framework7io/framework7/compare/v5.4.1...v5.4.2) - February 16, 2020
   * Core
     * Card

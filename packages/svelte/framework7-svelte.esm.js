@@ -1,5 +1,5 @@
 /**
- * Framework7 Svelte 5.4.2
+ * Framework7 Svelte 5.4.5
  * Build full featured iOS & Android apps using Framework7 & Svelte
  * https://framework7.io/svelte/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 16, 2020
+ * Released on: February 21, 2020
  */
 
 import AccordionContent from './components/accordion-content.svelte';
@@ -33,6 +33,7 @@ import Card from './components/card.svelte';
 import Checkbox from './components/checkbox.svelte';
 import Chip from './components/chip.svelte';
 import Col from './components/col.svelte';
+import FabBackdrop from './components/fab-backdrop.svelte';
 import FabButton from './components/fab-button.svelte';
 import FabButtons from './components/fab-buttons.svelte';
 import Fab from './components/fab.svelte';
@@ -126,6 +127,7 @@ export {
   Checkbox,
   Chip,
   Col,
+  FabBackdrop,
   FabButton,
   FabButtons,
   Fab,

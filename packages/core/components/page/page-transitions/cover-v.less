@@ -6,18 +6,18 @@
 }
 .router-transition-f7-cover-v-forward {
   .page-next {
-    animation: f7-cover-v-next-to-current 450ms forwards;
+    animation: f7-cover-v-next-to-current var(--f7-page-cover-transition-duration) forwards;
   }
   .page-current {
-    animation: f7-cover-v-current-to-prev 450ms forwards;
+    animation: f7-cover-v-current-to-prev var(--f7-page-cover-transition-duration) forwards;
   }
 }
 .router-transition-f7-cover-v-backward {
   .page-current {
-    animation: f7-cover-v-current-to-next 450ms forwards;
+    animation: f7-cover-v-current-to-next var(--f7-page-cover-transition-duration) forwards;
   }
   .page-previous {
-    animation: f7-cover-v-prev-to-current 450ms forwards;
+    animation: f7-cover-v-prev-to-current var(--f7-page-cover-transition-duration) forwards;
   }
 }
 @keyframes f7-cover-v-next-to-current {

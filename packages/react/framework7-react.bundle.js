@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.4.2
+ * Framework7 React 5.4.5
  * Build full featured iOS & Android apps using Framework7 & React
  * https://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 16, 2020
+ * Released on: February 21, 2020
  */
 
 (function (global, factory) {
@@ -3124,6 +3124,40 @@
   }, Mixins.colorProps));
 
   F7Col.displayName = 'f7-col';
+
+  var F7FabBackdrop = /*@__PURE__*/(function (superclass) {
+    function F7FabBackdrop(props, context) {
+      superclass.call(this, props, context);
+    }
+
+    if ( superclass ) F7FabBackdrop.__proto__ = superclass;
+    F7FabBackdrop.prototype = Object.create( superclass && superclass.prototype );
+    F7FabBackdrop.prototype.constructor = F7FabBackdrop;
+
+    F7FabBackdrop.prototype.render = function render () {
+      var self = this;
+      var props = self.props;
+      var className = props.className;
+      var id = props.id;
+      var style = props.style;
+      var classes = Utils.classNames(className, 'fab-backdrop');
+      return React.createElement('div', {
+        id: id,
+        style: style,
+        className: classes
+      });
+    };
+
+    return F7FabBackdrop;
+  }(React.Component));
+
+  __reactComponentSetProps(F7FabBackdrop, {
+    id: [String, Number],
+    className: String,
+    style: Object
+  });
+
+  F7FabBackdrop.displayName = 'f7-fab-backdrop';
 
   var F7FabButton = /*@__PURE__*/(function (superclass) {
     function F7FabButton(props, context) {
@@ -14593,7 +14627,7 @@
   };
 
   /**
-   * Framework7 React 5.4.2
+   * Framework7 React 5.4.5
    * Build full featured iOS & Android apps using Framework7 & React
    * https://framework7.io/react/
    *
@@ -14601,7 +14635,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: February 16, 2020
+   * Released on: February 21, 2020
    */
 
   function f7ready(callback) {
@@ -14649,6 +14683,7 @@
       window.Checkbox = F7Checkbox;
       window.Chip = F7Chip;
       window.Col = F7Col;
+      window.FabBackdrop = F7FabBackdrop;
       window.FabButton = F7FabButton;
       window.FabButtons = F7FabButtons;
       window.Fab = F7Fab;

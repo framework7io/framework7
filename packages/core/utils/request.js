@@ -211,11 +211,9 @@ function Request(requestOptions) {
     Utils.extend(xhr, options.xhrFields);
   }
 
-  let xhrTimeout;
 
   // Handle XHR
   xhr.onload = function onload() {
-    if (xhrTimeout) clearTimeout(xhrTimeout);
     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
       let responseData;
       if (options.dataType === 'json') {
@@ -245,21 +243,17 @@ function Request(requestOptions) {
   };
 
   xhr.onerror = function onerror() {
-    if (xhrTimeout) clearTimeout(xhrTimeout);
     fireCallback('error', xhr, xhr.status, xhr.status);
     fireCallback('complete', xhr, 'error');
   };
 
   // Timeout
   if (options.timeout > 0) {
-    xhr.onabort = function onabort() {
-      if (xhrTimeout) clearTimeout(xhrTimeout);
-    };
-    xhrTimeout = setTimeout(() => {
-      xhr.abort();
+    xhr.timeout = options.timeout;
+    xhr.ontimeout = () => {
       fireCallback('error', xhr, 'timeout', 'timeout');
       fireCallback('complete', xhr, 'timeout');
-    }, options.timeout);
+    };
   }
 
   // Ajax start callback

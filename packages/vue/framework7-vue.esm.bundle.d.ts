@@ -30,6 +30,7 @@ import f7Card from './components/card';
 import f7Checkbox from './components/checkbox';
 import f7Chip from './components/chip';
 import f7Col from './components/col';
+import f7FabBackdrop from './components/fab-backdrop';
 import f7FabButton from './components/fab-button';
 import f7FabButtons from './components/fab-buttons';
 import f7Fab from './components/fab';
@@ -163,6 +164,7 @@ export {
   f7Checkbox,
   f7Chip,
   f7Col,
+  f7FabBackdrop,
   f7FabButton,
   f7FabButtons,
   f7Fab,

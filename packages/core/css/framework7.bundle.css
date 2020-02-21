@@ -1,5 +1,5 @@
 /**
- * Framework7 5.4.2
+ * Framework7 5.4.5
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 16, 2020
+ * Released on: February 21, 2020
  */
 
 /*====================
@@ -739,6 +739,12 @@ html.device-full-viewport body {
   --f7-page-master-border-color: rgba(0, 0, 0, 0.1);
   --f7-page-master-border-width: 1px;
   --f7-page-swipeback-transition-duration: 300ms;
+  --f7-page-parallax-transition-duration: 500ms;
+  --f7-page-cover-transition-duration: 450ms;
+  --f7-page-dive-transition-duration: 500ms;
+  --f7-page-fade-transition-duration: 500ms;
+  --f7-page-flip-transition-duration: 700ms;
+  --f7-page-push-transition-duration: 500ms;
   /*
   --f7-page-content-extra-padding-top: 0px;
   --f7-page-content-extra-padding-bottom: 0px;
@@ -1229,16 +1235,16 @@ html.device-full-viewport body {
   perspective: 1200px;
 }
 .router-transition-f7-cover-v-forward .page-next {
-  animation: f7-cover-v-next-to-current 450ms forwards;
+  animation: f7-cover-v-next-to-current var(--f7-page-cover-transition-duration) forwards;
 }
 .router-transition-f7-cover-v-forward .page-current {
-  animation: f7-cover-v-current-to-prev 450ms forwards;
+  animation: f7-cover-v-current-to-prev var(--f7-page-cover-transition-duration) forwards;
 }
 .router-transition-f7-cover-v-backward .page-current {
-  animation: f7-cover-v-current-to-next 450ms forwards;
+  animation: f7-cover-v-current-to-next var(--f7-page-cover-transition-duration) forwards;
 }
 .router-transition-f7-cover-v-backward .page-previous {
-  animation: f7-cover-v-prev-to-current 450ms forwards;
+  animation: f7-cover-v-prev-to-current var(--f7-page-cover-transition-duration) forwards;
 }
 @keyframes f7-cover-v-next-to-current {
   from {
@@ -1282,16 +1288,16 @@ html.device-full-viewport body {
   perspective: 1200px;
 }
 .router-transition-f7-cover-forward .page-next {
-  animation: f7-cover-next-to-current 450ms forwards;
+  animation: f7-cover-next-to-current var(--f7-page-cover-transition-duration) forwards;
 }
 .router-transition-f7-cover-forward .page-current {
-  animation: f7-cover-current-to-prev 450ms forwards;
+  animation: f7-cover-current-to-prev var(--f7-page-cover-transition-duration) forwards;
 }
 .router-transition-f7-cover-backward .page-current {
-  animation: f7-cover-current-to-next 450ms forwards;
+  animation: f7-cover-current-to-next var(--f7-page-cover-transition-duration) forwards;
 }
 .router-transition-f7-cover-backward .page-previous {
-  animation: f7-cover-prev-to-current 450ms forwards;
+  animation: f7-cover-prev-to-current var(--f7-page-cover-transition-duration) forwards;
 }
 @keyframes f7-cover-next-to-current {
   from {
@@ -1335,16 +1341,16 @@ html.device-full-viewport body {
   perspective: 1200px;
 }
 .router-transition-f7-dive-forward .page-next {
-  animation: f7-dive-next-to-current 500ms forwards;
+  animation: f7-dive-next-to-current var(--f7-page-dive-transition-duration) forwards;
 }
 .router-transition-f7-dive-forward .page-current {
-  animation: f7-dive-current-to-prev 500ms forwards;
+  animation: f7-dive-current-to-prev var(--f7-page-dive-transition-duration) forwards;
 }
 .router-transition-f7-dive-backward .page-current {
-  animation: f7-dive-current-to-next 500ms forwards;
+  animation: f7-dive-current-to-next var(--f7-page-dive-transition-duration) forwards;
 }
 .router-transition-f7-dive-backward .page-previous {
-  animation: f7-dive-prev-to-current 500ms forwards;
+  animation: f7-dive-prev-to-current var(--f7-page-dive-transition-duration) forwards;
 }
 @keyframes f7-dive-next-to-current {
   from {
@@ -1404,16 +1410,16 @@ html.device-full-viewport body {
 }
 .router-transition-f7-fade-forward .page-next {
   opacity: 0 !important;
-  animation: f7-fade-in 500ms forwards;
+  animation: f7-fade-in var(--f7-page-fade-transition-duration) forwards;
 }
 .router-transition-f7-fade-forward .page-current {
-  animation: f7-fade-out 500ms forwards;
+  animation: f7-fade-out var(--f7-page-fade-transition-duration) forwards;
 }
 .router-transition-f7-fade-backward .page-current {
-  animation: f7-fade-out 500ms forwards;
+  animation: f7-fade-out var(--f7-page-fade-transition-duration) forwards;
 }
 .router-transition-f7-fade-backward .page-previous {
-  animation: f7-fade-in 500ms forwards;
+  animation: f7-fade-in var(--f7-page-fade-transition-duration) forwards;
 }
 @keyframes f7-fade-in {
   from {
@@ -1448,16 +1454,16 @@ html.device-full-viewport body {
           backface-visibility: hidden;
 }
 .router-transition-f7-flip-forward .page-next {
-  animation: f7-flip-next-to-current 700ms forwards;
+  animation: f7-flip-next-to-current var(--f7-page-flip-transition-duration) forwards;
 }
 .router-transition-f7-flip-forward .page-current {
-  animation: f7-flip-current-to-prev 700ms forwards;
+  animation: f7-flip-current-to-prev var(--f7-page-flip-transition-duration) forwards;
 }
 .router-transition-f7-flip-backward .page-current {
-  animation: f7-flip-current-to-next 700ms forwards;
+  animation: f7-flip-current-to-next var(--f7-page-flip-transition-duration) forwards;
 }
 .router-transition-f7-flip-backward .page-previous {
-  animation: f7-flip-prev-to-current 700ms forwards;
+  animation: f7-flip-prev-to-current var(--f7-page-flip-transition-duration) forwards;
 }
 @keyframes f7-flip-next-to-current {
   from {
@@ -1500,16 +1506,16 @@ html.device-full-viewport body {
   }
 }
 .router-transition-f7-parallax-forward .page-next {
-  animation: f7-parallax-next-to-current 500ms forwards;
+  animation: f7-parallax-next-to-current var(--f7-page-parallax-transition-duration) forwards;
 }
 .router-transition-f7-parallax-forward .page-current {
-  animation: f7-parallax-current-to-prev 500ms forwards;
+  animation: f7-parallax-current-to-prev var(--f7-page-parallax-transition-duration) forwards;
 }
 .router-transition-f7-parallax-backward .page-current {
-  animation: f7-parallax-current-to-next 500ms forwards;
+  animation: f7-parallax-current-to-next var(--f7-page-parallax-transition-duration) forwards;
 }
 .router-transition-f7-parallax-backward .page-previous {
-  animation: f7-parallax-prev-to-current 500ms forwards;
+  animation: f7-parallax-prev-to-current var(--f7-page-parallax-transition-duration) forwards;
 }
 @keyframes f7-parallax-next-to-current {
   from {
@@ -1544,16 +1550,16 @@ html.device-full-viewport body {
   }
 }
 .router-transition-f7-push-forward .page-next {
-  animation: f7-push-next-to-current 500ms forwards;
+  animation: f7-push-next-to-current var(--f7-page-push-transition-duration) forwards;
 }
 .router-transition-f7-push-forward .page-current {
-  animation: f7-push-current-to-prev 500ms forwards;
+  animation: f7-push-current-to-prev var(--f7-page-push-transition-duration) forwards;
 }
 .router-transition-f7-push-backward .page-current {
-  animation: f7-push-current-to-next 500ms forwards;
+  animation: f7-push-current-to-next var(--f7-page-push-transition-duration) forwards;
 }
 .router-transition-f7-push-backward .page-previous {
-  animation: f7-push-prev-to-current 500ms forwards;
+  animation: f7-push-prev-to-current var(--f7-page-push-transition-duration) forwards;
 }
 @keyframes f7-push-next-to-current {
   from {
@@ -1929,6 +1935,7 @@ html.device-full-viewport body {
   box-sizing: border-box;
   padding: var(--f7-safe-area-top) calc(var(--f7-navbar-inner-padding-right) + var(--f7-safe-area-right)) 0 calc(var(--f7-navbar-inner-padding-left) + var(--f7-safe-area-left));
   transform: translate3d(0, 0, 0);
+  z-index: 10;
 }
 .views > .navbar,
 .view > .navbar,
@@ -5707,7 +5714,8 @@ i.icon {
 .popover-backdrop,
 .popup-backdrop,
 .preloader-backdrop,
-.sheet-backdrop {
+.sheet-backdrop,
+.fab-backdrop {
   position: absolute;
   left: 0;
   top: 0;
@@ -5725,7 +5733,8 @@ i.icon {
 .popover-backdrop.not-animated,
 .popup-backdrop.not-animated,
 .preloader-backdrop.not-animated,
-.sheet-backdrop.not-animated {
+.sheet-backdrop.not-animated,
+.fab-backdrop.not-animated {
   transition-duration: 0ms;
 }
 .custom-modal-backdrop.backdrop-in,
@@ -5734,7 +5743,8 @@ i.icon {
 .popover-backdrop.backdrop-in,
 .popup-backdrop.backdrop-in,
 .preloader-backdrop.backdrop-in,
-.sheet-backdrop.backdrop-in {
+.sheet-backdrop.backdrop-in,
+.fab-backdrop.backdrop-in {
   visibility: visible;
   opacity: 1;
 }
@@ -6025,6 +6035,7 @@ i.icon {
   color: var(--f7-dialog-text-color);
   font-size: var(--f7-dialog-font-size);
   background: var(--f7-dialog-bg-color);
+  will-change: transform, opacity;
 }
 @supports ((-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px))) {
   .ios-translucent-modals .dialog {
@@ -6712,6 +6723,7 @@ html.with-modal-popup-push .framework7-root > .view {
   background-color: var(--f7-popover-bg-color);
   border-radius: var(--f7-popover-border-radius);
   box-shadow: var(--f7-popover-box-shadow);
+  will-change: transform, opacity;
 }
 .popover .list {
   margin: 0;
@@ -7056,6 +7068,7 @@ html.with-modal-popup-push .framework7-root > .view {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   transition-property: transform;
+  will-change: transform;
 }
 .actions-modal.modal-in,
 .actions-modal.modal-out {
@@ -7347,6 +7360,7 @@ html.with-modal-popup-push .framework7-root > .view {
   transform: translate3d(0, 100%, 0);
   background: var(--f7-sheet-bg-color);
   z-index: 12500;
+  will-change: transform, opacity;
 }
 .sheet-modal.modal-in,
 .sheet-modal.modal-out {
@@ -7800,7 +7814,9 @@ html.with-modal-sheet-push .framework7-root > .view {
   --f7-preloader-size: var(--f7-preloader-modal-preloader-size);
   display: block !important;
 }
-html.with-modal-preloader .page-content {
+html.with-modal-preloader .page-content,
+.with-modal-preloader .page-content,
+.with-modal-preloader.page-content {
   overflow: hidden;
   -webkit-overflow-scrolling: auto;
 }
@@ -15771,6 +15787,9 @@ table.data-table {
   --f7-fab-extended-text-letter-spacing: 0;
   --f7-fab-label-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4);
   --f7-fab-label-font-size: 12px;
+}
+.fab-backdrop {
+  z-index: 1400;
 }
 .fab {
   position: absolute;

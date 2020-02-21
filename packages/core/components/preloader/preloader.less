@@ -32,10 +32,10 @@
     display: block !important;
   }
 }
-html.with-modal-preloader {
-  .page-content {
-    .not-scrollable();
-  }
+html.with-modal-preloader .page-content,
+.with-modal-preloader .page-content,
+.with-modal-preloader.page-content {
+  .not-scrollable();
 }
 .preloader[class*="color-"] {
   --f7-preloader-color: var(--f7-theme-color);
