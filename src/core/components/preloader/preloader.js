@@ -23,12 +23,28 @@ const Preloader = {
     `);
     Preloader.visible = true;
   },
+  showIn(el, color = 'white') {
+    const app = this;
+    const preloaderInner = Utils[`${app.theme}PreloaderContent`] || '';
+    $(el || 'html').addClass('with-modal-preloader');
+    $(el || app.root).append(`
+      <div class="preloader-backdrop"></div>
+      <div class="preloader-modal">
+        <div class="preloader color-${color}">${preloaderInner}</div>
+      </div>
+    `);
+  },
   hide() {
     const app = this;
     if (!Preloader.visible) return;
     $('html').removeClass('with-modal-preloader');
     app.root.find('.preloader-backdrop, .preloader-modal').remove();
     Preloader.visible = false;
+  },
+  hideIn(el) {
+    const app = this;
+    $(el || 'html').removeClass('with-modal-preloader');
+    $(el || app.root).find('.preloader-backdrop, .preloader-modal').remove();
   },
 };
 export default {
@@ -40,6 +56,8 @@ export default {
         init: Preloader.init.bind(app),
         show: Preloader.show.bind(app),
         hide: Preloader.hide.bind(app),
+        showIn: Preloader.showIn.bind(app),
+        hideIn: Preloader.hideIn.bind(app),
       },
     });
   },
