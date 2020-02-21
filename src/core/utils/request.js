@@ -253,7 +253,7 @@ function Request(requestOptions) {
     xhr.ontimeout = () => {
       fireCallback('error', xhr, 'timeout', 'timeout');
       fireCallback('complete', xhr, 'timeout');
-    }
+    };
   }
 
   // Ajax start callback
