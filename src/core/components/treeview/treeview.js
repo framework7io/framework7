@@ -6,21 +6,33 @@ const Treeview = {
     const app = this;
     const $itemEl = $(itemEl).eq(0);
     if (!$itemEl.length) return;
-    $itemEl.addClass('treeview-item-opened');
-    $itemEl.trigger('treeview:open');
-    app.emit('treeviewOpen', $itemEl[0]);
-    function done() {
-      $itemEl[0].f7TreeviewChildrenLoaded = true;
-      $itemEl.find('.treeview-toggle').removeClass('treeview-toggle-hidden');
-      $itemEl.find('.treeview-preloader').remove();
+
+    const needLoadChildren = $itemEl.hasClass('treeview-load-children') && !$itemEl[0].f7TreeviewChildrenLoaded;
+
+    if (!needLoadChildren) {
+      $itemEl.addClass('treeview-item-opened');
+      $itemEl.trigger('treeview:open');
+      app.emit('treeviewOpen', $itemEl[0]);
+      return;
     }
 
-    if ($itemEl.hasClass('treeview-load-children') && !$itemEl[0].f7TreeviewChildrenLoaded) {
-      $itemEl.trigger('treeview:loadchildren', done);
-      app.emit('treeviewLoadChildren', $itemEl[0], done);
-      $itemEl.find('.treeview-toggle').addClass('treeview-toggle-hidden');
-      $itemEl.find('.treeview-item-root').prepend(`<div class="preloader treeview-preloader">${Utils[`${app.theme}PreloaderContent`]}</div>`);
+    function done(err) {
+      $itemEl.find('.treeview-toggle').removeClass('treeview-toggle-hidden');
+      $itemEl.find('.treeview-preloader').remove();
+
+      if (!err) {
+        $itemEl[0].f7TreeviewChildrenLoaded = true;
+
+        $itemEl.addClass('treeview-item-opened');
+        $itemEl.trigger('treeview:open');
+        app.emit('treeviewOpen', $itemEl[0]);
+      }
     }
+
+    $itemEl.trigger('treeview:loadchildren', done);
+    app.emit('treeviewLoadChildren', $itemEl[0], done);
+    $itemEl.find('.treeview-toggle').addClass('treeview-toggle-hidden');
+    $itemEl.find('.treeview-item-root').prepend(`<div class="preloader treeview-preloader">${Utils[`${app.theme}PreloaderContent`]}</div>`);
   },
   close(itemEl) {
     const app = this;
