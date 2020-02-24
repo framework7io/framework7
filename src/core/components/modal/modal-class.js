@@ -233,6 +233,9 @@ class Modal extends Framework7Class {
   destroy() {
     const modal = this;
     if (modal.destroyed) return;
+    if (modal.$el && modal.$el.hasClass('modal-out')) {
+      modal.onClosed();
+    }
     modal.emit(`local::beforeDestroy modalBeforeDestroy ${modal.type}BeforeDestroy`, modal);
     if (modal.$el) {
       modal.$el.trigger(`modal:beforedestroy ${modal.type.toLowerCase()}:beforedestroy`);
