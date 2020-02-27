@@ -184,6 +184,12 @@ Bart DJ
 
 ---
 
+### $25+ Awesome Supporter
+
+[Join here!](https://www.patreon.com/join/vladimirkharlampidi/checkout?rid=4656325)
+
+---
+
 ### $10+ Supporter
 User Mail<br>
 Thomason<br>
