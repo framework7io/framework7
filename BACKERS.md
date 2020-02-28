@@ -185,6 +185,7 @@ Bart DJ
 ---
 
 ### $25+ Awesome Supporter
+Danny Redfern<br>
 
 [Join here!](https://www.patreon.com/join/vladimirkharlampidi/checkout?rid=4656325)
 
@@ -214,7 +215,6 @@ Noah A Neibaron<br>
 José Manuel Alarcón<br>
 Matt Davis<br>
 Arsen Huang<br>
-Danny Redfern<br>
 Marc Hildmann<br>
 Kyle Hammond<br>
 VOUSYS<br>
