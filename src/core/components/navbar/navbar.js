@@ -15,8 +15,11 @@ const Navbar = {
       return;
     }
 
+    const $innerEl = $el.children('.navbar-inner');
+    if (!$innerEl.length) return;
+
     const needCenterTitle = (
-      $el.children('.navbar-inner').hasClass('navbar-inner-centered-title')
+      $innerEl.hasClass('navbar-inner-centered-title')
       || app.params.navbar[`${app.theme}CenterTitle`]
     );
     const needLeftTitle = app.theme === 'ios' && !app.params.navbar[`${app.theme}CenterTitle`];
@@ -33,14 +36,13 @@ const Navbar = {
     }
 
     if (app.theme !== 'ios' && app.params.navbar[`${app.theme}CenterTitle`]) {
-      $el.children('.navbar-inner').addClass('navbar-inner-centered-title');
+      $innerEl.addClass('navbar-inner-centered-title');
     }
     if (app.theme === 'ios' && !app.params.navbar.iosCenterTitle) {
-      $el.children('.navbar-inner').addClass('navbar-inner-left-title');
+      $innerEl.addClass('navbar-inner-left-title');
     }
 
     const $viewEl = $el.parents('.view').eq(0);
-    const $innerEl = $el.children('.navbar-inner');
     const left = app.rtl ? $innerEl.children('.right') : $innerEl.children('.left');
     const right = app.rtl ? $innerEl.children('.left') : $innerEl.children('.right');
     const title = $innerEl.children('.title');
@@ -300,6 +302,7 @@ const Navbar = {
     const isLarge = $titleLargeEl.length || $navbarEl.hasClass('.navbar-large');
     let navbarHideHeight = 44;
     const snapPageScrollToLargeTitle = app.params.navbar.snapPageScrollToLargeTitle;
+    const snapPageScrollToTransparentNavbar = app.params.navbar.snapPageScrollToTransparentNavbar;
 
     let previousScrollTop;
     let currentScrollTop;
@@ -358,6 +361,17 @@ const Navbar = {
       }
     }
 
+    function snapTransparentNavbar() {
+      const inSearchbarExpanded = $navbarEl.hasClass('with-searchbar-expandable-enabled');
+      if (inSearchbarExpanded) return;
+      if (!scrollContent || currentScrollTop < 0) return;
+      if (currentScrollTop >= navbarOffsetHeight / 2 && currentScrollTop < navbarOffsetHeight) {
+        $(scrollContent).scrollTop(navbarOffsetHeight, 100);
+      } else if (currentScrollTop < navbarOffsetHeight) {
+        $(scrollContent).scrollTop(0, 200);
+      }
+    }
+
     function handleNavbarTransparent() {
       const isHidden = $navbarEl.hasClass('navbar-hidden') || $navbarEl.parent('.navbars').hasClass('navbar-hidden');
       const inSearchbarExpanded = $navbarEl.hasClass('with-searchbar-expandable-enabled');
@@ -388,6 +402,23 @@ const Navbar = {
         return;
       }
       $navbarEl.find('.navbar-bg, .title').css('opacity', opacity);
+
+      if (snapPageScrollToTransparentNavbar) {
+        if (!Support.touch) {
+          clearTimeout(scrollTimeoutId);
+          scrollTimeoutId = setTimeout(() => {
+            snapTransparentNavbar();
+          }, desktopSnapTimeout);
+        } else if (touchEndTimeoutId) {
+          clearTimeout(touchEndTimeoutId);
+          touchEndTimeoutId = null;
+          touchEndTimeoutId = setTimeout(() => {
+            snapTransparentNavbar();
+            clearTimeout(touchEndTimeoutId);
+            touchEndTimeoutId = null;
+          }, touchSnapTimeout);
+        }
+      }
     }
 
     function handleLargeNavbarCollapse() {
@@ -510,14 +541,18 @@ const Navbar = {
       touchEndTimeoutId = null;
       touchEndTimeoutId = setTimeout(() => {
         if (scrollChanged !== false) {
-          snapLargeNavbar();
+          if (needTransparent && !needCollapse) {
+            snapTransparentNavbar();
+          } else {
+            snapLargeNavbar();
+          }
           clearTimeout(touchEndTimeoutId);
           touchEndTimeoutId = null;
         }
       }, touchSnapTimeout);
     }
     $pageEl.on('scroll', '.page-content', handleScroll, true);
-    if (Support.touch && needCollapse && snapPageScrollToLargeTitle) {
+    if (Support.touch && ((needCollapse && snapPageScrollToLargeTitle) || (needTransparent && snapPageScrollToTransparentNavbar))) {
       app.on('touchstart:passive', handeTouchStart);
       app.on('touchend:passive', handleTouchEnd);
     }
@@ -533,7 +568,7 @@ const Navbar = {
     $pageEl[0].f7DetachNavbarScrollHandlers = function f7DetachNavbarScrollHandlers() {
       delete $pageEl[0].f7DetachNavbarScrollHandlers;
       $pageEl.off('scroll', '.page-content', handleScroll, true);
-      if (Support.touch && needCollapse && snapPageScrollToLargeTitle) {
+      if (Support.touch && ((needCollapse && snapPageScrollToLargeTitle) || (needTransparent && snapPageScrollToTransparentNavbar))) {
         app.off('touchstart:passive', handeTouchStart);
         app.off('touchend:passive', handleTouchEnd);
       }
@@ -569,6 +604,7 @@ export default {
       showOnPageScrollTop: true,
       collapseLargeTitleOnScroll: true,
       snapPageScrollToLargeTitle: true,
+      snapPageScrollToTransparentNavbar: true,
     },
   },
   on: {
