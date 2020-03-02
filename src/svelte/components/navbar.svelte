@@ -32,6 +32,7 @@
   export let innerClassName = undefined;
   export let large = false;
   export let largeTransparent = false;
+  export let transparent = false;
   export let titleLarge = undefined;
 
   export let f7Slot = 'fixed';
@@ -44,6 +45,7 @@
   let routerNavbarRole = null;
   let routerNavbarRoleDetailRoot = false;
   let routerNavbarMasterStack = false;
+  let transparentVisible = false;
 
   export function hide(animate) {
     f7.navbar.hide(el, animate);
@@ -76,15 +78,22 @@
   $: addCenterTitleClass = (_theme && _theme.md && f7.instance && f7.instance.params.navbar.mdCenterTitle)
     || (_theme && _theme.aurora && f7.instance && f7.instance.params.navbar.auroraCenterTitle);
 
+  $: isLarge = large || largeTransparent;
+  $: isLargeTransparent = isLarge && (largeTransparent || transparent);
+  $: isTransparent = !isLarge && transparent;
+  $: isTransparentVisible = isTransparent && transparentVisible;
+
   $: classes = Utils.classNames(
     className,
     'navbar',
     routerPositionClass,
     {
       'navbar-hidden': hidden,
-      'navbar-large': large,
-      'navbar-large-transparent': largeTransparent,
-      'navbar-large-collapsed': large && largeCollapsed,
+      'navbar-large': isLarge,
+      'navbar-large-transparent': isLargeTransparent,
+      'navbar-large-collapsed': isLarge && largeCollapsed,
+      'navbar-transparent': isTransparent,
+      'navbar-transparent-visible': isTransparentVisible,
       'navbar-master': routerNavbarRole === 'master',
       'navbar-master-detail': routerNavbarRole === 'detail',
       'navbar-master-detail-root': routerNavbarRoleDetailRoot === true,
@@ -115,6 +124,18 @@
     if (el !== navbarEl) return;
     dispatch('navbarShow');
     if (typeof $$props.onNavbarShow === 'function') $$props.onNavbarShow();
+  }
+  function onNavbarTransparentShow(navbarEl) {
+    if (el !== navbarEl) return;
+    transparentVisible = true;
+    dispatch('navbarTransparentShow');
+    if (typeof $$props.onNavbarTransparentShow === 'function') $$props.onNavbarTransparentShow();
+  }
+  function onNavbarTransparentHide(navbarEl) {
+    if (el !== navbarEl) return;
+    transparentVisible = false;
+    dispatch('navbarTransparentHide');
+    if (typeof $$props.onNavbarTransparentHide === 'function') $$props.onNavbarTransparentHide();
   }
   function onExpand(navbarEl) {
     if (el !== navbarEl) return;
@@ -159,6 +180,8 @@
     f7.instance.on('navbarRole', onNavbarRole);
     f7.instance.on('navbarMasterStack', onNavbarMasterStack);
     f7.instance.on('navbarMasterUnstack', onNavbarMasterUnstack);
+    f7.instance.on('navbarTransparentShow', onNavbarTransparentShow);
+    f7.instance.on('navbarTransparentHide', onNavbarTransparentHide);
   }
   function destroyNavbar() {
     f7.instance.off('navbarShow', onShow);
@@ -169,6 +192,8 @@
     f7.instance.off('navbarRole', onNavbarRole);
     f7.instance.off('navbarMasterStack', onNavbarMasterStack);
     f7.instance.off('navbarMasterUnstack', onNavbarMasterUnstack);
+    f7.instance.off('navbarTransparentShow', onNavbarTransparentShow);
+    f7.instance.off('navbarTransparentHide', onNavbarTransparentHide);
   }
 
   onMount(() => {
