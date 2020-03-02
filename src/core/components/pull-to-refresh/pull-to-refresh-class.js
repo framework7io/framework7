@@ -72,10 +72,21 @@ class PullToRefresh extends Framework7Class {
 
     if ($pageEl.find('.navbar').length > 0 || $pageEl.parents('.view').children('.navbars').length > 0) hasNavbar = true;
     if ($pageEl.hasClass('no-navbar')) hasNavbar = false;
-    if (!ptr.bottom && $pageEl.hasClass('page-with-navbar-large')) {
+    if (!ptr.bottom) {
       const pageNavbarEl = app.navbar.getElByPage($pageEl[0]);
-      if (pageNavbarEl && $(pageNavbarEl).hasClass('navbar-large-transparent')) {
-        $el.addClass('ptr-with-navbar-large-transparent');
+      if (pageNavbarEl) {
+        const $pageNavbarEl = $(pageNavbarEl);
+        const isLargeTransparent = $pageNavbarEl.hasClass('navbar-large-transparent')
+          || (
+            $pageNavbarEl.hasClass('navbar-large')
+            && $pageNavbarEl.hasClass('navbar-transparent')
+          );
+        const isTransparent = $pageNavbarEl.hasClass('navbar-transparent') && !$pageNavbarEl.hasClass('navbar-large');
+        if (isLargeTransparent) {
+          $el.addClass('ptr-with-navbar-large-transparent');
+        } else if (isTransparent) {
+          $el.addClass('ptr-with-navbar-transparent');
+        }
       }
     }
     if (!hasNavbar && !ptr.bottom) $el.addClass('ptr-no-navbar');
