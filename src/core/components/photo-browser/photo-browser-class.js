@@ -381,6 +381,8 @@ class PhotoBrowser extends Framework7Class {
           pb.emit('local::doubleClick', e);
         },
         slideChange(...args) {
+          const swiper = this;
+          pb.onSlideChange(swiper);
           pb.emit('local::slideChange', ...args);
         },
         transitionStart(...args) {
