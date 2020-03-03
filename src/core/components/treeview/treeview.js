@@ -9,7 +9,13 @@ const Treeview = {
     $itemEl.addClass('treeview-item-opened');
     $itemEl.trigger('treeview:open');
     app.emit('treeviewOpen', $itemEl[0]);
-    function done() {
+    function done(cancel) {
+      if (cancel) {
+        $itemEl.removeClass('treeview-item-opened');
+        $itemEl.find('.treeview-toggle').removeClass('treeview-toggle-hidden');
+        $itemEl.find('.treeview-item-root').children('.preloader').remove();
+        return;
+      }
       $itemEl[0].f7TreeviewChildrenLoaded = true;
       $itemEl.find('.treeview-toggle').removeClass('treeview-toggle-hidden');
       $itemEl.find('.treeview-preloader').remove();
