@@ -260,6 +260,7 @@ export default {
       'onPageAfterOut',
       'onPageAfterIn',
       'onPageBeforeRemove',
+      'onPageBeforeUnmount',
       'onPageStack',
       'onPageUnstack',
       'onPagePosition',
@@ -285,6 +286,7 @@ export default {
       f7.on('pageAfterOut', self.onPageAfterOut);
       f7.on('pageAfterIn', self.onPageAfterIn);
       f7.on('pageBeforeRemove', self.onPageBeforeRemove);
+      f7.on('pageBeforeUnmount', self.onPageBeforeUnmount);
       f7.on('pageStack', self.onPageStack);
       f7.on('pageUnstack', self.onPageUnstack);
       f7.on('pagePosition', self.onPagePosition);
@@ -309,6 +311,7 @@ export default {
     f7.off('pageAfterOut', self.onPageAfterOut);
     f7.off('pageAfterIn', self.onPageAfterIn);
     f7.off('pageBeforeRemove', self.onPageBeforeRemove);
+    f7.off('pageBeforeUnmount', self.onPageBeforeUnmount);
     f7.off('pageStack', self.onPageStack);
     f7.off('pageUnstack', self.onPageUnstack);
     f7.off('pagePosition', self.onPagePosition);
@@ -414,6 +417,10 @@ export default {
     onPageBeforeRemove(page) {
       if (this.eventTargetEl !== page.el) return;
       this.dispatchEvent('page:beforeremove pageBeforeRemove', page);
+    },
+    onPageBeforeUnmount(page) {
+      if (this.eventTargetEl !== page.el) return;
+      this.dispatchEvent('page:beforeunmount pageBeforeUnmount', page);
     },
     // Helper events
     onPageStack(pageEl) {
