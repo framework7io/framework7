@@ -479,16 +479,10 @@ class Router extends Framework7Class {
   }
 
   generateUrl(parameters = {}) {
-    let name;
-    let params;
-    let query;
     if (typeof parameters === 'string') {
-      name = parameters;
-    } else {
-      name = parameters.name;
-      params = parameters.params;
-      query = parameters.query;
+      return parameters;
     }
+    const { name, params, query } = parameters;
     if (!name) {
       throw new Error('Framework7: name parameter is required');
     }
