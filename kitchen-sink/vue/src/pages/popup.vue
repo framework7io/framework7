@@ -52,7 +52,7 @@
     <f7-popup push class="demo-popup-push">
       <f7-view>
         <f7-page>
-          <f7-navbar title="Push Popup" large largeTransparent>
+          <f7-navbar title="Push Popup" large transparent>
             <f7-nav-right>
               <f7-link popup-close>Close</f7-link>
             </f7-nav-right>

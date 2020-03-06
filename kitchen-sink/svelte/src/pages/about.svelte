@@ -1,5 +1,5 @@
 <Page class="page-about">
-  <Navbar large largeTransparent title="About" titleLarge="About" backLink="Framework7"></Navbar>
+  <Navbar large transparent title="About" titleLarge="About" backLink="Framework7"></Navbar>
 
   <BlockTitle medium>Welcome to Framework7</BlockTitle>
   <Block strong>

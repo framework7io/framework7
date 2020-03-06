@@ -8,7 +8,7 @@ export default class extends React.Component {
   render() {
     return (
       <Page className="page-home">
-        <Navbar large largeTransparent sliding={false}>
+        <Navbar large transparent sliding={false}>
           <NavLeft>
             <Link panelOpen="left" iconIos="f7:menu" iconAurora="f7:menu" iconMd="material:menu"></Link>
           </NavLeft>

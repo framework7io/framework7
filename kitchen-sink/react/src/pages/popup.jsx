@@ -64,7 +64,7 @@ export default class extends React.Component {
         <Popup push className="demo-popup-push">
           <View>
             <Page>
-              <Navbar title="Push Popup" large largeTransparent>
+              <Navbar title="Push Popup" large transparent>
                 <NavRight>
                   <Link popupClose>Close</Link>
                 </NavRight>

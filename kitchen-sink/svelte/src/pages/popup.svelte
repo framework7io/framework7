@@ -51,7 +51,7 @@
   <Popup push class="demo-popup-push">
     <View>
       <Page>
-        <Navbar title="Push Popup" large largeTransparent>
+        <Navbar title="Push Popup" large transparent>
           <NavRight>
             <Link popupClose>Close</Link>
           </NavRight>
