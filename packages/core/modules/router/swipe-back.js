@@ -39,12 +39,22 @@ function SwipeBack(r) {
   function animatableNavElements() {
     const els = [];
     const inverter = app.rtl ? -1 : 1;
+    const currentNavIsTransparent = $currentNavbarEl.hasClass('navbar-transparent') && !$currentNavbarEl.hasClass('navbar-large') && !$currentNavbarEl.hasClass('navbar-transparent-visible');
     const currentNavIsLarge = $currentNavbarEl.hasClass('navbar-large');
     const currentNavIsCollapsed = $currentNavbarEl.hasClass('navbar-large-collapsed');
-    const currentNavIsTransparent = $currentNavbarEl.hasClass('navbar-large-transparent');
+    const currentNavIsLargeTransparent = $currentNavbarEl.hasClass('navbar-large-transparent')
+      || (
+        $currentNavbarEl.hasClass('navbar-large')
+        && $currentNavbarEl.hasClass('navbar-transparent')
+      );
+    const previousNavIsTransparent = $previousNavbarEl.hasClass('navbar-transparent') && !$previousNavbarEl.hasClass('navbar-large') && !$previousNavbarEl.hasClass('navbar-transparent-visible');
     const previousNavIsLarge = $previousNavbarEl.hasClass('navbar-large');
     const previousNavIsCollapsed = $previousNavbarEl.hasClass('navbar-large-collapsed');
-    const previousNavIsTransparent = $previousNavbarEl.hasClass('navbar-large-transparent');
+    const previousNavIsLargeTransparent = $previousNavbarEl.hasClass('navbar-large-transparent')
+      || (
+        $previousNavbarEl.hasClass('navbar-large')
+        && $previousNavbarEl.hasClass('navbar-transparent')
+      );
     const fromLarge = currentNavIsLarge && !currentNavIsCollapsed;
     const toLarge = previousNavIsLarge && !previousNavIsCollapsed;
     const $currentNavElements = $currentNavbarEl.find('.left, .title, .right, .subnavbar, .fading, .title-large, .navbar-bg');
@@ -77,6 +87,7 @@ function SwipeBack(r) {
         const isLeft = $navEl.hasClass('left');
         const isTitle = $navEl.hasClass('title');
         const isBg = $navEl.hasClass('navbar-bg');
+        if ((isTitle || isBg) && currentNavIsTransparent) return;
         if (!fromLarge && $navEl.hasClass('.title-large')) return;
         const el = {
           el: navEl,
@@ -119,7 +130,7 @@ function SwipeBack(r) {
           if (els.indexOf(el) < 0) els.push(el);
           if (!fromLarge && !toLarge) {
             if (currentNavIsCollapsed) {
-              if (currentNavIsTransparent) {
+              if (currentNavIsLargeTransparent) {
                 el.className = 'ios-swipeback-navbar-bg-large';
               }
               el.transform = progress => `translateX(${100 * progress * inverter}%) translateY(calc(-1 * var(--f7-navbar-large-title-height)))`;
@@ -169,6 +180,7 @@ function SwipeBack(r) {
         const isLeft = $navEl.hasClass('left');
         const isTitle = $navEl.hasClass('title');
         const isBg = $navEl.hasClass('navbar-bg');
+        if ((isTitle || isBg) && previousNavIsTransparent) return;
         const el = {
           el: navEl,
         };
@@ -194,7 +206,7 @@ function SwipeBack(r) {
           if (els.indexOf(el) < 0) els.push(el);
           if (!fromLarge && !toLarge) {
             if (previousNavIsCollapsed) {
-              if (previousNavIsTransparent) {
+              if (previousNavIsLargeTransparent) {
                 el.className = 'ios-swipeback-navbar-bg-large';
               }
               el.transform = progress => `translateX(${(-100 + 100 * progress) * inverter}%) translateY(calc(-1 * var(--f7-navbar-large-title-height)))`;

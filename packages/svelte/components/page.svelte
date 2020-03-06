@@ -186,6 +186,11 @@
     dispatch('pageBeforeRemove', [page]);
     if (typeof $$props.onPageBeforeRemove === 'function') $$props.onPageBeforeRemove(page);
   }
+  function onPageBeforeUnmount(page) {
+    if (el !== page.el) return;
+    dispatch('pageBeforeUnmount', [page]);
+    if (typeof $$props.onPageBeforeUnmount === 'function') $$props.onPageBeforeUnmount(page);
+  }
   // Helper events
   function onPageStack(pageEl) {
     if (el !== pageEl) return;
@@ -239,6 +244,7 @@
     f7.instance.on('pageAfterOut', onPageAfterOut);
     f7.instance.on('pageAfterIn', onPageAfterIn);
     f7.instance.on('pageBeforeRemove', onPageBeforeRemove);
+    f7.instance.on('pageBeforeUnmount', onPageBeforeUnmount);
     f7.instance.on('pageStack', onPageStack);
     f7.instance.on('pageUnstack', onPageUnstack);
     f7.instance.on('pagePosition', onPagePosition);
@@ -259,6 +265,7 @@
     f7.instance.off('pageAfterOut', onPageAfterOut);
     f7.instance.off('pageAfterIn', onPageAfterIn);
     f7.instance.off('pageBeforeRemove', onPageBeforeRemove);
+    f7.instance.off('pageBeforeUnmount', onPageBeforeUnmount);
     f7.instance.off('pageStack', onPageStack);
     f7.instance.off('pageUnstack', onPageUnstack);
     f7.instance.off('pagePosition', onPagePosition);

@@ -1,5 +1,5 @@
 /**
- * Framework7 5.4.5
+ * Framework7 5.5.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 21, 2020
+ * Released on: March 6, 2020
  */
 
 (function (global, factory) {
@@ -3582,7 +3582,7 @@
       app.router.componentLoader(
         app.params.component,
         app.params.componentUrl,
-        { componentOptions: { el: app.root[0] } },
+        { componentOptions: { el: app.root[0], root: true } },
         function (el) {
           app.root = $(el);
           app.root[0].f7 = app;
@@ -5261,12 +5261,22 @@
     function animatableNavElements() {
       var els = [];
       var inverter = app.rtl ? -1 : 1;
+      var currentNavIsTransparent = $currentNavbarEl.hasClass('navbar-transparent') && !$currentNavbarEl.hasClass('navbar-large') && !$currentNavbarEl.hasClass('navbar-transparent-visible');
       var currentNavIsLarge = $currentNavbarEl.hasClass('navbar-large');
       var currentNavIsCollapsed = $currentNavbarEl.hasClass('navbar-large-collapsed');
-      var currentNavIsTransparent = $currentNavbarEl.hasClass('navbar-large-transparent');
+      var currentNavIsLargeTransparent = $currentNavbarEl.hasClass('navbar-large-transparent')
+        || (
+          $currentNavbarEl.hasClass('navbar-large')
+          && $currentNavbarEl.hasClass('navbar-transparent')
+        );
+      var previousNavIsTransparent = $previousNavbarEl.hasClass('navbar-transparent') && !$previousNavbarEl.hasClass('navbar-large') && !$previousNavbarEl.hasClass('navbar-transparent-visible');
       var previousNavIsLarge = $previousNavbarEl.hasClass('navbar-large');
       var previousNavIsCollapsed = $previousNavbarEl.hasClass('navbar-large-collapsed');
-      var previousNavIsTransparent = $previousNavbarEl.hasClass('navbar-large-transparent');
+      var previousNavIsLargeTransparent = $previousNavbarEl.hasClass('navbar-large-transparent')
+        || (
+          $previousNavbarEl.hasClass('navbar-large')
+          && $previousNavbarEl.hasClass('navbar-transparent')
+        );
       var fromLarge = currentNavIsLarge && !currentNavIsCollapsed;
       var toLarge = previousNavIsLarge && !previousNavIsCollapsed;
       var $currentNavElements = $currentNavbarEl.find('.left, .title, .right, .subnavbar, .fading, .title-large, .navbar-bg');
@@ -5299,6 +5309,7 @@
           var isLeft = $navEl.hasClass('left');
           var isTitle = $navEl.hasClass('title');
           var isBg = $navEl.hasClass('navbar-bg');
+          if ((isTitle || isBg) && currentNavIsTransparent) { return; }
           if (!fromLarge && $navEl.hasClass('.title-large')) { return; }
           var el = {
             el: navEl,
@@ -5341,7 +5352,7 @@
             if (els.indexOf(el) < 0) { els.push(el); }
             if (!fromLarge && !toLarge) {
               if (currentNavIsCollapsed) {
-                if (currentNavIsTransparent) {
+                if (currentNavIsLargeTransparent) {
                   el.className = 'ios-swipeback-navbar-bg-large';
                 }
                 el.transform = function (progress) { return ("translateX(" + (100 * progress * inverter) + "%) translateY(calc(-1 * var(--f7-navbar-large-title-height)))"); };
@@ -5391,6 +5402,7 @@
           var isLeft = $navEl.hasClass('left');
           var isTitle = $navEl.hasClass('title');
           var isBg = $navEl.hasClass('navbar-bg');
+          if ((isTitle || isBg) && previousNavIsTransparent) { return; }
           var el = {
             el: navEl,
           };
@@ -5416,7 +5428,7 @@
             if (els.indexOf(el) < 0) { els.push(el); }
             if (!fromLarge && !toLarge) {
               if (previousNavIsCollapsed) {
-                if (previousNavIsTransparent) {
+                if (previousNavIsLargeTransparent) {
                   el.className = 'ios-swipeback-navbar-bg-large';
                 }
                 el.transform = function (progress) { return ("translateX(" + ((-100 + 100 * progress) * inverter) + "%) translateY(calc(-1 * var(--f7-navbar-large-title-height)))"); };
@@ -6615,16 +6627,11 @@
       params = navigateParams.params;
     }
     if (name) {
-      // find route by name
-      route = router.findRouteByKey('name', name);
-      if (!route) {
-        throw new Error(("Framework7: route with name \"" + name + "\" not found"));
-      }
-      url = router.constructRouteUrl(route, { params: params, query: query });
+      url = router.generateUrl({ name: name, params: params, query: query });
       if (url) {
         return router.navigate(url, navigateOptions);
       }
-      throw new Error(("Framework7: can't construct URL for route with name \"" + name + "\""));
+      return router;
     }
     var app = router.app;
     appRouterCheck(router, 'navigate');
@@ -7777,12 +7784,7 @@
     var params = navigateOptions.params;
     var query = navigateOptions.query;
     if (name) {
-      // find route by name
-      route = router.findRouteByKey('name', name);
-      if (!route) {
-        throw new Error(("Framework7: route with name \"" + name + "\" not found"));
-      }
-      navigateUrl = router.constructRouteUrl(route, { params: params, query: query });
+      navigateUrl = router.generateUrl({ name: name, params: params, query: query });
       if (navigateUrl) {
         return router.back(navigateUrl, Utils.extend({}, navigateOptions, {
           name: null,
@@ -7790,7 +7792,7 @@
           query: null,
         }));
       }
-      throw new Error(("Framework7: can't construct URL for route with name \"" + name + "\""));
+      return router;
     }
 
     var app = router.app;
@@ -8564,6 +8566,30 @@
         url: url,
         path: path,
       };
+    };
+
+    Router.prototype.generateUrl = function generateUrl (parameters) {
+      if ( parameters === void 0 ) parameters = {};
+
+      if (typeof parameters === 'string') {
+        return parameters;
+      }
+      var name = parameters.name;
+      var params = parameters.params;
+      var query = parameters.query;
+      if (!name) {
+        throw new Error('Framework7: name parameter is required');
+      }
+      var router = this;
+      var route = router.findRouteByKey('name', name);
+      if (!route) {
+        throw new Error(("Framework7: route with name \"" + name + "\" not found"));
+      }
+      var url = router.constructRouteUrl(route, { params: params, query: query });
+      if (!url) {
+        throw new Error(("Framework7: can't construct URL for route with name \"" + name + "\""));
+      }
+      return url;
     };
 
     // eslint-disable-next-line
@@ -9763,6 +9789,9 @@
           if (options.componentOptions && options.componentOptions.el) {
             componentOptions.el = options.componentOptions.el;
           }
+          if (options.componentOptions && options.componentOptions.root) {
+            componentOptions.root = options.componentOptions.root;
+          }
           app.component.create(componentOptions, extendContext)
             .then(function (createdComponent) {
               resolve(createdComponent.el);
@@ -9900,8 +9929,8 @@
   /* eslint no-use-before-define: "off" */
 
   var selfClosing = 'area base br col command embed hr img input keygen link menuitem meta param source track wbr'.split(' ');
-  var propsAttrs = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple value indeterminate'.split(' ');
-  var booleanProps = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple readOnly indeterminate'.split(' ');
+  var propsAttrs = 'hidden checked disabled readonly selected autofocus autoplay required multiple value indeterminate'.split(' ');
+  var booleanProps = 'hidden checked disabled readonly selected autofocus autoplay required multiple readOnly indeterminate'.split(' ');
   var tempDomDIV = doc.createElement('div');
   var tempDomTBODY;
   var tempDomTROW;
@@ -10946,6 +10975,7 @@
         $id: options.isClassComponent ? self.constructor.id : (options.id || id),
         $mixins: options.isClassComponent ? self.constructor.mixins : options.mixins,
         $children: children || [],
+        $isRootComponent: !!options.root,
       }
     );
     var $options = self.$options;
@@ -10984,7 +11014,16 @@
       enumerable: true,
       configurable: true,
       get: function get() {
-        if (app.rootComponent) { return app.rootComponent; }
+        if (self.$isRootComponent) {
+          return self;
+        }
+        if (app.rootComponent) {
+          if (!self.$onRootUpdated) {
+            self.$onRootUpdated = function () { return self.$update(); };
+            app.on('rootComponentUpdated', self.$onRootUpdated);
+          }
+          return app.rootComponent;
+        }
         var root = Utils.merge({}, app.data, app.methods);
         if (win && win.Proxy) {
           root = new win.Proxy(root, {
@@ -11227,6 +11266,9 @@
       function resolver() {
         resolve();
         if (callback) { callback(); }
+        if (self.$isRootComponent) {
+          self.$f7.emit('rootComponentUpdated');
+        }
       }
       self.__updateIsPending = true;
       self.__updateQueue.push(resolver);
@@ -11267,6 +11309,11 @@
     self.$hook('beforeDestroy');
 
     if (self.$styleEl) { $(self.$styleEl).remove(); }
+    if (self.$onRootUpdated) {
+      self.$f7.off('rootComponentUpdated', self.$onRootUpdated);
+      delete self.$onRootUpdated;
+    }
+
     self.$detachEvents();
     self.$hook('destroyed');
     // Delete component instance
@@ -11891,8 +11938,11 @@
         return;
       }
 
+      var $innerEl = $el.children('.navbar-inner');
+      if (!$innerEl.length) { return; }
+
       var needCenterTitle = (
-        $el.children('.navbar-inner').hasClass('navbar-inner-centered-title')
+        $innerEl.hasClass('navbar-inner-centered-title')
         || app.params.navbar[((app.theme) + "CenterTitle")]
       );
       var needLeftTitle = app.theme === 'ios' && !app.params.navbar[((app.theme) + "CenterTitle")];
@@ -11909,14 +11959,13 @@
       }
 
       if (app.theme !== 'ios' && app.params.navbar[((app.theme) + "CenterTitle")]) {
-        $el.children('.navbar-inner').addClass('navbar-inner-centered-title');
+        $innerEl.addClass('navbar-inner-centered-title');
       }
       if (app.theme === 'ios' && !app.params.navbar.iosCenterTitle) {
-        $el.children('.navbar-inner').addClass('navbar-inner-left-title');
+        $innerEl.addClass('navbar-inner-left-title');
       }
 
       var $viewEl = $el.parents('.view').eq(0);
-      var $innerEl = $el.children('.navbar-inner');
       var left = app.rtl ? $innerEl.children('.right') : $innerEl.children('.left');
       var right = app.rtl ? $innerEl.children('.left') : $innerEl.children('.right');
       var title = $innerEl.children('.title');
@@ -12174,7 +12223,7 @@
         app.navbar.collapseLargeTitle($navbarEl);
       }
     },
-    initNavbarOnScroll: function initNavbarOnScroll(pageEl, navbarEl, needHide, needCollapse) {
+    initNavbarOnScroll: function initNavbarOnScroll(pageEl, navbarEl, needHide, needCollapse, needTransparent) {
       var app = this;
       var $pageEl = $(pageEl);
       var $navbarEl = $(navbarEl);
@@ -12182,6 +12231,7 @@
       var isLarge = $titleLargeEl.length || $navbarEl.hasClass('.navbar-large');
       var navbarHideHeight = 44;
       var snapPageScrollToLargeTitle = app.params.navbar.snapPageScrollToLargeTitle;
+      var snapPageScrollToTransparentNavbar = app.params.navbar.snapPageScrollToTransparentNavbar;
 
       var previousScrollTop;
       var currentScrollTop;
@@ -12194,6 +12244,9 @@
 
       var navbarCollapsed;
       var navbarTitleLargeHeight;
+
+      var navbarOffsetHeight;
+
       if (needCollapse || (needHide && isLarge)) {
         navbarTitleLargeHeight = $navbarEl.css('--f7-navbar-large-title-height');
 
@@ -12237,10 +12290,74 @@
         }
       }
 
+      function snapTransparentNavbar() {
+        var inSearchbarExpanded = $navbarEl.hasClass('with-searchbar-expandable-enabled');
+        if (inSearchbarExpanded) { return; }
+        if (!scrollContent || currentScrollTop < 0) { return; }
+        if (currentScrollTop >= navbarOffsetHeight / 2 && currentScrollTop < navbarOffsetHeight) {
+          $(scrollContent).scrollTop(navbarOffsetHeight, 100);
+        } else if (currentScrollTop < navbarOffsetHeight) {
+          $(scrollContent).scrollTop(0, 200);
+        }
+      }
+
+      function handleNavbarTransparent() {
+        var isHidden = $navbarEl.hasClass('navbar-hidden') || $navbarEl.parent('.navbars').hasClass('navbar-hidden');
+        var inSearchbarExpanded = $navbarEl.hasClass('with-searchbar-expandable-enabled');
+        if (inSearchbarExpanded || isHidden) { return; }
+        if (!navbarOffsetHeight) {
+          navbarOffsetHeight = navbarEl.offsetHeight;
+        }
+        var opacity = currentScrollTop / navbarOffsetHeight;
+        var notTransparent = $navbarEl.hasClass('navbar-transparent-visible');
+        opacity = Math.max(Math.min(opacity, 1), 0);
+
+        if ((notTransparent && opacity === 1) || (!notTransparent && opacity === 0)) {
+          $navbarEl.find('.navbar-bg, .title').css('opacity', '');
+          return;
+        }
+        if (notTransparent && opacity === 0) {
+          $navbarEl.trigger('navbar:transparenthide');
+          app.emit('navbarTransparentHide', $navbarEl[0]);
+          $navbarEl.removeClass('navbar-transparent-visible');
+          $navbarEl.find('.navbar-bg, .title').css('opacity', '');
+          return;
+        }
+        if (!notTransparent && opacity === 1) {
+          $navbarEl.trigger('navbar:transparentshow');
+          app.emit('navbarTransparentShow', $navbarEl[0]);
+          $navbarEl.addClass('navbar-transparent-visible');
+          $navbarEl.find('.navbar-bg, .title').css('opacity', '');
+          return;
+        }
+        $navbarEl.find('.navbar-bg, .title').css('opacity', opacity);
+
+        if (snapPageScrollToTransparentNavbar) {
+          if (!Support.touch) {
+            clearTimeout(scrollTimeoutId);
+            scrollTimeoutId = setTimeout(function () {
+              snapTransparentNavbar();
+            }, desktopSnapTimeout);
+          } else if (touchEndTimeoutId) {
+            clearTimeout(touchEndTimeoutId);
+            touchEndTimeoutId = null;
+            touchEndTimeoutId = setTimeout(function () {
+              snapTransparentNavbar();
+              clearTimeout(touchEndTimeoutId);
+              touchEndTimeoutId = null;
+            }, touchSnapTimeout);
+          }
+        }
+      }
+
       function handleLargeNavbarCollapse() {
         var isHidden = $navbarEl.hasClass('navbar-hidden') || $navbarEl.parent('.navbars').hasClass('navbar-hidden');
         if (isHidden) { return; }
-        var isLargeTransparent = $navbarEl.hasClass('navbar-large-transparent');
+        var isLargeTransparent = $navbarEl.hasClass('navbar-large-transparent')
+          || (
+            $navbarEl.hasClass('navbar-large')
+            && $navbarEl.hasClass('navbar-transparent')
+          );
         var collapseProgress = Math.min(Math.max((currentScrollTop / navbarTitleLargeHeight), 0), 1);
         var inSearchbarExpanded = $navbarEl.hasClass('with-searchbar-expandable-enabled');
         if (inSearchbarExpanded) { return; }
@@ -12335,9 +12452,10 @@
         }
         currentScrollTop = scrollContent.scrollTop;
         scrollChanged = currentScrollTop;
-
         if (needCollapse) {
           handleLargeNavbarCollapse();
+        } else if (needTransparent) {
+          handleNavbarTransparent();
         }
         if ($pageEl.hasClass('page-previous')) { return; }
         if (needHide) {
@@ -12352,14 +12470,18 @@
         touchEndTimeoutId = null;
         touchEndTimeoutId = setTimeout(function () {
           if (scrollChanged !== false) {
-            snapLargeNavbar();
+            if (needTransparent && !needCollapse) {
+              snapTransparentNavbar();
+            } else {
+              snapLargeNavbar();
+            }
             clearTimeout(touchEndTimeoutId);
             touchEndTimeoutId = null;
           }
         }, touchSnapTimeout);
       }
       $pageEl.on('scroll', '.page-content', handleScroll, true);
-      if (Support.touch && needCollapse && snapPageScrollToLargeTitle) {
+      if (Support.touch && ((needCollapse && snapPageScrollToLargeTitle) || (needTransparent && snapPageScrollToTransparentNavbar))) {
         app.on('touchstart:passive', handeTouchStart);
         app.on('touchend:passive', handleTouchEnd);
       }
@@ -12367,11 +12489,15 @@
         $pageEl.find('.page-content').each(function (pageContentIndex, pageContentEl) {
           if (pageContentEl.scrollTop > 0) { handleScroll.call(pageContentEl); }
         });
+      } else if (needTransparent) {
+        $pageEl.find('.page-content').each(function (pageContentIndex, pageContentEl) {
+          if (pageContentEl.scrollTop > 0) { handleScroll.call(pageContentEl); }
+        });
       }
       $pageEl[0].f7DetachNavbarScrollHandlers = function f7DetachNavbarScrollHandlers() {
         delete $pageEl[0].f7DetachNavbarScrollHandlers;
         $pageEl.off('scroll', '.page-content', handleScroll, true);
-        if (Support.touch && needCollapse && snapPageScrollToLargeTitle) {
+        if (Support.touch && ((needCollapse && snapPageScrollToLargeTitle) || (needTransparent && snapPageScrollToTransparentNavbar))) {
           app.off('touchstart:passive', handeTouchStart);
           app.off('touchend:passive', handleTouchEnd);
         }
@@ -12407,6 +12533,7 @@
         showOnPageScrollTop: true,
         collapseLargeTitleOnScroll: true,
         snapPageScrollToLargeTitle: true,
+        snapPageScrollToTransparentNavbar: true,
       },
     },
     on: {
@@ -12463,6 +12590,12 @@
           page.$el.addClass('page-with-navbar-large');
         }
 
+        // Need transparent on scroll
+        var needTransparentOnScroll;
+        if (!needCollapseOnScrollHandler && $navbarEl.hasClass('navbar-transparent')) {
+          needTransparentOnScroll = true;
+        }
+
         // Need Hide On Scroll
         var needHideOnScrollHandler;
         if (
@@ -12484,8 +12617,8 @@
           }
         }
 
-        if (needCollapseOnScrollHandler || needHideOnScrollHandler) {
-          app.navbar.initNavbarOnScroll(page.el, $navbarEl[0], needHideOnScrollHandler, needCollapseOnScrollHandler);
+        if (needCollapseOnScrollHandler || needHideOnScrollHandler || needTransparentOnScroll) {
+          app.navbar.initNavbarOnScroll(page.el, $navbarEl[0], needHideOnScrollHandler, needCollapseOnScrollHandler, needTransparentOnScroll);
         }
       },
       'panelOpen panelSwipeOpen modalOpen': function onPanelModalOpen(instance) {
@@ -25839,10 +25972,21 @@
 
       if ($pageEl.find('.navbar').length > 0 || $pageEl.parents('.view').children('.navbars').length > 0) { hasNavbar = true; }
       if ($pageEl.hasClass('no-navbar')) { hasNavbar = false; }
-      if (!ptr.bottom && $pageEl.hasClass('page-with-navbar-large')) {
+      if (!ptr.bottom) {
         var pageNavbarEl = app.navbar.getElByPage($pageEl[0]);
-        if (pageNavbarEl && $(pageNavbarEl).hasClass('navbar-large-transparent')) {
-          $el.addClass('ptr-with-navbar-large-transparent');
+        if (pageNavbarEl) {
+          var $pageNavbarEl = $(pageNavbarEl);
+          var isLargeTransparent = $pageNavbarEl.hasClass('navbar-large-transparent')
+            || (
+              $pageNavbarEl.hasClass('navbar-large')
+              && $pageNavbarEl.hasClass('navbar-transparent')
+            );
+          var isTransparent = $pageNavbarEl.hasClass('navbar-transparent') && !$pageNavbarEl.hasClass('navbar-large');
+          if (isLargeTransparent) {
+            $el.addClass('ptr-with-navbar-large-transparent');
+          } else if (isTransparent) {
+            $el.addClass('ptr-with-navbar-transparent');
+          }
         }
       }
       if (!hasNavbar && !ptr.bottom) { $el.addClass('ptr-no-navbar'); }
@@ -29094,10 +29238,13 @@
     }
     // Find slides currently in view
     if (swiper.params.slidesPerView !== 'auto' && swiper.params.slidesPerView > 1) {
-      for (i = 0; i < Math.ceil(swiper.params.slidesPerView); i += 1) {
-        var index = swiper.activeIndex + i;
-        if (index > swiper.slides.length) { break; }
-        activeSlides.push(swiper.slides.eq(index)[0]);
+      if (swiper.params.centeredSlides) { activeSlides.push.apply(activeSlides, swiper.visibleSlides); }
+      else {
+        for (i = 0; i < Math.ceil(swiper.params.slidesPerView); i += 1) {
+          var index = swiper.activeIndex + i;
+          if (index > swiper.slides.length) { break; }
+          activeSlides.push(swiper.slides.eq(index)[0]);
+        }
       }
     } else {
       activeSlides.push(swiper.slides.eq(swiper.activeIndex)[0]);
@@ -29149,7 +29296,7 @@
       var slideProgress = (
         (offsetCenter + (params.centeredSlides ? swiper.minTranslate() : 0)) - slide.swiperSlideOffset
       ) / (slide.swiperSlideSize + params.spaceBetween);
-      if (params.watchSlidesVisibility) {
+      if (params.watchSlidesVisibility || (params.centeredSlides && params.autoHeight)) {
         var slideBefore = -(offsetCenter - slide.swiperSlideOffset);
         var slideAfter = slideBefore + swiper.slidesSizesGrid[i];
         var isVisible = (slideBefore >= 0 && slideBefore < swiper.size - 1)
@@ -29195,7 +29342,7 @@
       isEnd: isEnd,
     });
 
-    if (params.watchSlidesProgress || params.watchSlidesVisibility) { swiper.updateSlidesProgress(translate); }
+    if (params.watchSlidesProgress || params.watchSlidesVisibility || (params.centeredSlides && params.autoHeight)) { swiper.updateSlidesProgress(translate); }
 
     if (isBeginning && !wasBeginning) {
       swiper.emit('reachBeginning toEdge');
@@ -31061,7 +31208,7 @@
     var breakpoint = false;
 
     var points = Object.keys(breakpoints).map(function (point) {
-      if (typeof point === 'string' && point.startsWith('@')) {
+      if (typeof point === 'string' && point.indexOf('@') === 0) {
         var minRatio = parseFloat(point.substr(1));
         var value = win.innerHeight * minRatio;
         return { value: value, point: point };
@@ -33819,9 +33966,9 @@
         gesture.scaleStart = Zoom.getDistanceBetweenTouches(e);
       }
       if (!gesture.$slideEl || !gesture.$slideEl.length) {
-        gesture.$slideEl = $(e.target).closest('.swiper-slide');
+        gesture.$slideEl = $(e.target).closest(("." + (swiper.params.slideClass)));
         if (gesture.$slideEl.length === 0) { gesture.$slideEl = swiper.slides.eq(swiper.activeIndex); }
-        gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas');
+        gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas, picture, .swiper-zoom-target');
         gesture.$imageWrapEl = gesture.$imageEl.parent(("." + (params.containerClass)));
         gesture.maxRatio = gesture.$imageWrapEl.attr('data-swiper-zoom') || params.maxRatio;
         if (gesture.$imageWrapEl.length === 0) {
@@ -34064,8 +34211,8 @@
       var image = zoom.image;
 
       if (!gesture.$slideEl) {
-        gesture.$slideEl = swiper.clickedSlide ? $(swiper.clickedSlide) : swiper.slides.eq(swiper.activeIndex);
-        gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas');
+        gesture.$slideEl = swiper.slides.eq(swiper.activeIndex);
+        gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas, picture, .swiper-zoom-target');
         gesture.$imageWrapEl = gesture.$imageEl.parent(("." + (params.containerClass)));
       }
       if (!gesture.$imageEl || gesture.$imageEl.length === 0) { return; }
@@ -34150,8 +34297,8 @@
       var gesture = zoom.gesture;
 
       if (!gesture.$slideEl) {
-        gesture.$slideEl = swiper.clickedSlide ? $(swiper.clickedSlide) : swiper.slides.eq(swiper.activeIndex);
-        gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas');
+        gesture.$slideEl = swiper.slides.eq(swiper.activeIndex);
+        gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas, picture, .swiper-zoom-target');
         gesture.$imageWrapEl = gesture.$imageEl.parent(("." + (params.containerClass)));
       }
       if (!gesture.$imageEl || gesture.$imageEl.length === 0) { return; }
@@ -34173,17 +34320,19 @@
       var passiveListener = swiper.touchEvents.start === 'touchstart' && Support.passiveListener && swiper.params.passiveListeners ? { passive: true, capture: false } : false;
       var activeListenerWithCapture = Support.passiveListener ? { passive: false, capture: true } : true;
 
+      var slideSelector = "." + (swiper.params.slideClass);
+
       // Scale image
       if (Support.gestures) {
-        swiper.$wrapperEl.on('gesturestart', '.swiper-slide', zoom.onGestureStart, passiveListener);
-        swiper.$wrapperEl.on('gesturechange', '.swiper-slide', zoom.onGestureChange, passiveListener);
-        swiper.$wrapperEl.on('gestureend', '.swiper-slide', zoom.onGestureEnd, passiveListener);
+        swiper.$wrapperEl.on('gesturestart', slideSelector, zoom.onGestureStart, passiveListener);
+        swiper.$wrapperEl.on('gesturechange', slideSelector, zoom.onGestureChange, passiveListener);
+        swiper.$wrapperEl.on('gestureend', slideSelector, zoom.onGestureEnd, passiveListener);
       } else if (swiper.touchEvents.start === 'touchstart') {
-        swiper.$wrapperEl.on(swiper.touchEvents.start, '.swiper-slide', zoom.onGestureStart, passiveListener);
-        swiper.$wrapperEl.on(swiper.touchEvents.move, '.swiper-slide', zoom.onGestureChange, activeListenerWithCapture);
-        swiper.$wrapperEl.on(swiper.touchEvents.end, '.swiper-slide', zoom.onGestureEnd, passiveListener);
+        swiper.$wrapperEl.on(swiper.touchEvents.start, slideSelector, zoom.onGestureStart, passiveListener);
+        swiper.$wrapperEl.on(swiper.touchEvents.move, slideSelector, zoom.onGestureChange, activeListenerWithCapture);
+        swiper.$wrapperEl.on(swiper.touchEvents.end, slideSelector, zoom.onGestureEnd, passiveListener);
         if (swiper.touchEvents.cancel) {
-          swiper.$wrapperEl.on(swiper.touchEvents.cancel, '.swiper-slide', zoom.onGestureEnd, passiveListener);
+          swiper.$wrapperEl.on(swiper.touchEvents.cancel, slideSelector, zoom.onGestureEnd, passiveListener);
         }
       }
 
@@ -34200,17 +34349,19 @@
       var passiveListener = swiper.touchEvents.start === 'touchstart' && Support.passiveListener && swiper.params.passiveListeners ? { passive: true, capture: false } : false;
       var activeListenerWithCapture = Support.passiveListener ? { passive: false, capture: true } : true;
 
+      var slideSelector = "." + (swiper.params.slideClass);
+
       // Scale image
       if (Support.gestures) {
-        swiper.$wrapperEl.off('gesturestart', '.swiper-slide', zoom.onGestureStart, passiveListener);
-        swiper.$wrapperEl.off('gesturechange', '.swiper-slide', zoom.onGestureChange, passiveListener);
-        swiper.$wrapperEl.off('gestureend', '.swiper-slide', zoom.onGestureEnd, passiveListener);
+        swiper.$wrapperEl.off('gesturestart', slideSelector, zoom.onGestureStart, passiveListener);
+        swiper.$wrapperEl.off('gesturechange', slideSelector, zoom.onGestureChange, passiveListener);
+        swiper.$wrapperEl.off('gestureend', slideSelector, zoom.onGestureEnd, passiveListener);
       } else if (swiper.touchEvents.start === 'touchstart') {
-        swiper.$wrapperEl.off(swiper.touchEvents.start, '.swiper-slide', zoom.onGestureStart, passiveListener);
-        swiper.$wrapperEl.off(swiper.touchEvents.move, '.swiper-slide', zoom.onGestureChange, activeListenerWithCapture);
-        swiper.$wrapperEl.off(swiper.touchEvents.end, '.swiper-slide', zoom.onGestureEnd, passiveListener);
+        swiper.$wrapperEl.off(swiper.touchEvents.start, slideSelector, zoom.onGestureStart, passiveListener);
+        swiper.$wrapperEl.off(swiper.touchEvents.move, slideSelector, zoom.onGestureChange, activeListenerWithCapture);
+        swiper.$wrapperEl.off(swiper.touchEvents.end, slideSelector, zoom.onGestureEnd, passiveListener);
         if (swiper.touchEvents.cancel) {
-          swiper.$wrapperEl.off(swiper.touchEvents.cancel, '.swiper-slide', zoom.onGestureEnd, passiveListener);
+          swiper.$wrapperEl.off(swiper.touchEvents.cancel, slideSelector, zoom.onGestureEnd, passiveListener);
         }
       }
 
@@ -34397,6 +34548,9 @@
             }
           }
           swiper.emit('lazyImageReady', $slideEl[0], $imageEl[0]);
+          if (swiper.params.autoHeight) {
+            swiper.updateAutoHeight();
+          }
         });
 
         swiper.emit('lazyImageLoad', $slideEl[0], $imageEl[0]);
@@ -35526,8 +35680,13 @@
         // var rotateZ = 0
         var translateZ = -translate * Math.abs(offsetMultiplier);
 
-        var translateY = isHorizontal ? 0 : params.stretch * (offsetMultiplier);
-        var translateX = isHorizontal ? params.stretch * (offsetMultiplier) : 0;
+        var stretch = params.stretch;
+        // Allow percentage to make a relative stretch for responsive sliders
+        if (typeof stretch === 'string' && stretch.indexOf('%') !== -1) {
+          stretch = ((parseFloat(params.stretch) / 100) * slideSize);
+        }
+        var translateY = isHorizontal ? 0 : stretch * (offsetMultiplier);
+        var translateX = isHorizontal ? stretch * (offsetMultiplier) : 0;
 
         // Fix for ultra small values
         if (Math.abs(translateX) < 0.001) { translateX = 0; }
@@ -36322,6 +36481,8 @@
             var args = [], len = arguments.length;
             while ( len-- ) args[ len ] = arguments[ len ];
 
+            var swiper = this;
+            pb.onSlideChange(swiper);
             pb.emit.apply(pb, [ 'local::slideChange' ].concat( args ));
           },
           transitionStart: function transitionStart() {
@@ -40693,8 +40854,14 @@
       $itemEl.addClass('treeview-item-opened');
       $itemEl.trigger('treeview:open');
       app.emit('treeviewOpen', $itemEl[0]);
-      function done() {
-        $itemEl[0].f7TreeviewChildrenLoaded = true;
+      function done(cancel) {
+        if (cancel) {
+          $itemEl.removeClass('treeview-item-opened');
+          $itemEl.trigger('treeview:close');
+          app.emit('treeviewClose', $itemEl[0]);
+        } else {
+          $itemEl[0].f7TreeviewChildrenLoaded = true;
+        }
         $itemEl.find('.treeview-toggle').removeClass('treeview-toggle-hidden');
         $itemEl.find('.treeview-preloader').remove();
       }
@@ -41068,7 +41235,7 @@
       $buttonEl.trigger('texteditor:buttonclick', button);
       self.emit('local::buttonClick textEditorButtonClick', self, button);
       if (buttonData) {
-        if (buttonData.onClick) { buttonData.onClick(); }
+        if (buttonData.onClick) { buttonData.onClick(self, $buttonEl[0]); }
         return;
       }
       var command = textEditorButtonsMap[button][2];
@@ -41126,11 +41293,11 @@
         var iconClass = self.app.theme === 'md' ? 'material-icons' : 'f7-icons';
         if (self.params.customButtons && self.params.customButtons[button]) {
           var buttonData = self.params.customButtons[button];
-          return ("<button class=\"text-editor-button\" data-button=\"" + button + "\">" + (buttonData.content || '') + "</button>");
+          return ("<button type=\"button\" class=\"text-editor-button\" data-button=\"" + button + "\">" + (buttonData.content || '') + "</button>");
         }
         if (!textEditorButtonsMap[button]) { return ''; }
         var iconContent = textEditorButtonsMap[button][self.app.theme === 'md' ? 1 : 0];
-        return ("<button class=\"text-editor-button\" data-button=\"" + button + "\">" + (iconContent.indexOf('<') >= 0 ? iconContent : ("<i class=\"" + iconClass + "\">" + iconContent + "</i>")) + "</button>").trim();
+        return ("<button type=\"button\" class=\"text-editor-button\" data-button=\"" + button + "\">" + (iconContent.indexOf('<') >= 0 ? iconContent : ("<i class=\"" + iconClass + "\">" + iconContent + "</i>")) + "</button>").trim();
       }
       self.params.buttons.forEach(function (button, buttonIndex) {
         if (Array.isArray(button)) {
@@ -41237,6 +41404,8 @@
       }
 
       self.attachEvents();
+      self.$el.trigger('texteditor:init');
+      self.emit('local::init textEditorInit', self);
       return self;
     };
 

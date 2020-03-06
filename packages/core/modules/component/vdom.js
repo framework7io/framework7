@@ -5,8 +5,8 @@ import h from './snabbdom/h';
 import customComponents from './custom-components';
 
 const selfClosing = 'area base br col command embed hr img input keygen link menuitem meta param source track wbr'.split(' ');
-const propsAttrs = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple value indeterminate'.split(' ');
-const booleanProps = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple readOnly indeterminate'.split(' ');
+const propsAttrs = 'hidden checked disabled readonly selected autofocus autoplay required multiple value indeterminate'.split(' ');
+const booleanProps = 'hidden checked disabled readonly selected autofocus autoplay required multiple readOnly indeterminate'.split(' ');
 const tempDomDIV = document.createElement('div');
 let tempDomTBODY;
 let tempDomTROW;

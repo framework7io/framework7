@@ -52,8 +52,8 @@ class F7Panel extends React.Component {
     this.dispatchEvent('panel:collapsedbreakpoint panelCollapsedBreakpoint', event);
   }
 
-  onResize(event) {
-    this.dispatchEvent('panel:resize panelResize', event);
+  onResize(...args) {
+    this.dispatchEvent('panel:resize panelResize', ...args);
   }
 
   open(animate) {

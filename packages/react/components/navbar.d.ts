@@ -20,6 +20,7 @@ declare namespace F7Navbar {
     innerClassName? : string
     large? : boolean
     largeTransparent? : boolean
+    transparent? : boolean
     titleLarge? : string
     color? : string
     colorTheme? : string
@@ -32,6 +33,8 @@ declare namespace F7Navbar {
     onNavbarShow? : (...args: any[]) => void
     onNavbarExpand? : (...args: any[]) => void
     onNavbarCollapse? : (...args: any[]) => void
+    onNavbarTransparentShow? : (...args: any[]) => void
+    onNavbarTransparentHide? : (...args: any[]) => void
     onBackClick? : (event?: any) => void
     onClickBack? : (event?: any) => void
   }
@@ -41,6 +44,8 @@ declare class F7Navbar extends React.Component<F7Navbar.Props, {}> {
   onShow(navbarEl? : any) : unknown
   onExpand(navbarEl? : any) : unknown
   onCollapse(navbarEl? : any) : unknown
+  onNavbarTransparentShow(navbarEl? : any) : unknown
+  onNavbarTransparentHide(navbarEl? : any) : unknown
   onNavbarPosition(navbarEl? : any, position? : any) : unknown
   onNavbarRole(navbarEl? : any, rolesData? : any) : unknown
   onNavbarMasterStack(navbarEl? : any) : unknown

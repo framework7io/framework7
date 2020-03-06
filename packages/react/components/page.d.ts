@@ -52,6 +52,7 @@ declare namespace F7Page {
     onPageAfterOut? : (page?: any) => void
     onPageAfterIn? : (page?: any) => void
     onPageBeforeRemove? : (page?: any) => void
+    onPageBeforeUnmount? : (page?: any) => void
   }
 }
 declare class F7Page extends React.Component<F7Page.Props, {}> {
@@ -69,6 +70,7 @@ declare class F7Page extends React.Component<F7Page.Props, {}> {
   onPageAfterOut(page? : any) : unknown
   onPageAfterIn(page? : any) : unknown
   onPageBeforeRemove(page? : any) : unknown
+  onPageBeforeUnmount(page? : any) : unknown
   onPageStack(pageEl? : any) : unknown
   onPageUnstack(pageEl? : any) : unknown
   onPagePosition(pageEl? : any, position? : any) : unknown

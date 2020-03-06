@@ -26,7 +26,7 @@ class F7Page extends React.Component {
     })();
 
     (() => {
-      Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded', 'onCardOpened', 'onCardClose']);
+      Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageBeforeUnmount', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded', 'onCardOpened', 'onCardClose']);
     })();
   }
 
@@ -146,6 +146,11 @@ class F7Page extends React.Component {
   onPageBeforeRemove(page) {
     if (this.eventTargetEl !== page.el) return;
     this.dispatchEvent('page:beforeremove pageBeforeRemove', page);
+  }
+
+  onPageBeforeUnmount(page) {
+    if (this.eventTargetEl !== page.el) return;
+    this.dispatchEvent('page:beforeunmount pageBeforeUnmount', page);
   }
 
   onPageStack(pageEl) {
@@ -373,6 +378,7 @@ class F7Page extends React.Component {
     f7.off('pageAfterOut', self.onPageAfterOut);
     f7.off('pageAfterIn', self.onPageAfterIn);
     f7.off('pageBeforeRemove', self.onPageBeforeRemove);
+    f7.off('pageBeforeUnmount', self.onPageBeforeUnmount);
     f7.off('pageStack', self.onPageStack);
     f7.off('pageUnstack', self.onPageUnstack);
     f7.off('pagePosition', self.onPagePosition);
@@ -400,6 +406,7 @@ class F7Page extends React.Component {
       f7.on('pageAfterOut', self.onPageAfterOut);
       f7.on('pageAfterIn', self.onPageAfterIn);
       f7.on('pageBeforeRemove', self.onPageBeforeRemove);
+      f7.on('pageBeforeUnmount', self.onPageBeforeUnmount);
       f7.on('pageStack', self.onPageStack);
       f7.on('pageUnstack', self.onPageUnstack);
       f7.on('pagePosition', self.onPagePosition);

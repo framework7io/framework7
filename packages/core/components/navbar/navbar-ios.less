@@ -213,6 +213,16 @@
       opacity: 1 !important;
     }
   }
+  .router-transition-forward .navbar-next.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible),
+  .router-transition-backward .navbar-previous.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible) {
+    .title  {
+      animation: none;
+    }
+    .sliding.title,
+    .sliding .title {
+      opacity: 0 !important;
+    }
+  }
   .router-transition-backward .navbar-previous.with-searchbar-expandable-enabled-no-transition,
   .router-transition-backward .navbar-previous.with-searchbar-expandable-enabled {
     .left,
@@ -358,7 +368,8 @@
       &.navbar-large-collapsed:not(.router-navbar-transition-to-large) .navbar-bg {
         animation-name: ios-navbar-bg-from-ct-to-lt;
       }
-      &.navbar-large-collapsed.navbar-large-transparent:not(.router-navbar-transition-to-large) .navbar-bg {
+      &.navbar-large-collapsed.navbar-large-transparent:not(.router-navbar-transition-to-large) .navbar-bg,
+      &.navbar-large-collapsed.navbar-large.navbar-transparent:not(.router-navbar-transition-to-large) .navbar-bg {
         animation-name: ios-navbar-transparent-bg-from-c-to-l;
       }
     }
@@ -393,7 +404,8 @@
       &.navbar-large-collapsed .navbar-bg {
         animation-name: ios-navbar-bg-from-ct-to-rt;
       }
-      &.navbar-large-collapsed.navbar-large-transparent .navbar-bg {
+      &.navbar-large-collapsed.navbar-large-transparent .navbar-bg,
+      &.navbar-large-collapsed.navbar-large.navbar-transparent .navbar-bg {
         animation-name: ios-navbar-bg-from-cb-to-rb;
       }
       &.navbar-large-collapsed.router-navbar-transition-to-large .navbar-bg {
@@ -413,10 +425,12 @@
       &.navbar-large-collapsed .navbar-bg {
         animation-name: ios-navbar-bg-from-lt-to-ct;
       }
-      &.navbar-large-collapsed.navbar-large-transparent .navbar-bg {
+      &.navbar-large-collapsed.navbar-large-transparent .navbar-bg,
+      &.navbar-large-collapsed.navbar-large.navbar-transparent .navbar-bg {
         animation-name: ios-navbar-transparent-bg-from-l-to-c;
       }
-      &.navbar-large-collapsed.navbar-large-transparent.router-navbar-transition-from-large .navbar-bg {
+      &.navbar-large-collapsed.navbar-large-transparent.router-navbar-transition-from-large .navbar-bg,
+      &.navbar-large-collapsed.navbar-large.navbar-transparent.router-navbar-transition-from-large .navbar-bg {
         animation-name: ios-navbar-bg-from-lb-to-ct;
       }
     }
@@ -481,7 +495,8 @@
         animation: none !important;
       }
     }
-    &.navbar-large-transparent {
+    &.navbar-large-transparent,
+    &.navbar-large.navbar-transparent {
       .navbar-bg {
         height: 100% !important;
         opacity: var(--f7-navbar-large-collapse-progress) !important;

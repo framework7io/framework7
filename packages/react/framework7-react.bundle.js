@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.4.5
+ * Framework7 React 5.5.0
  * Build full featured iOS & Android apps using Framework7 & React
  * https://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 21, 2020
+ * Released on: March 6, 2020
  */
 
 (function (global, factory) {
@@ -16,7 +16,7 @@
   (global = global || self, global.Framework7React = factory(global.React));
 }(this, (function (React) { 'use strict';
 
-  React = React && React.hasOwnProperty('default') ? React['default'] : React;
+  React = React && Object.prototype.hasOwnProperty.call(React, 'default') ? React['default'] : React;
 
   var Utils = {
     text: function text(text$1) {
@@ -9495,12 +9495,13 @@
           largeCollapsed: false,
           routerNavbarRole: null,
           routerNavbarRoleDetailRoot: false,
-          routerNavbarMasterStack: false
+          routerNavbarMasterStack: false,
+          transparentVisible: false
         };
       })();
 
       (function () {
-        Utils.bindMethods(this$1, ['onBackClick', 'onHide', 'onShow', 'onExpand', 'onCollapse', 'onNavbarPosition', 'onNavbarRole', 'onNavbarMasterStack', 'onNavbarMasterUnstack']);
+        Utils.bindMethods(this$1, ['onBackClick', 'onHide', 'onShow', 'onExpand', 'onCollapse', 'onNavbarPosition', 'onNavbarRole', 'onNavbarMasterStack', 'onNavbarMasterUnstack', 'onTransparentHide', 'onTransparentShow']);
       })();
     }
 
@@ -9534,6 +9535,22 @@
         largeCollapsed: true
       });
       this.dispatchEvent('navbar:collapse navbarCollapse');
+    };
+
+    F7Navbar.prototype.onNavbarTransparentShow = function onNavbarTransparentShow (navbarEl) {
+      if (this.eventTargetEl !== navbarEl) { return; }
+      this.setState({
+        transparentVisible: true
+      });
+      this.dispatchEvent('navbar:transparentshow navbarTransparentShow');
+    };
+
+    F7Navbar.prototype.onNavbarTransparentHide = function onNavbarTransparentHide (navbarEl) {
+      if (this.eventTargetEl !== navbarEl) { return; }
+      this.setState({
+        transparentVisible: false
+      });
+      this.dispatchEvent('navbar:transparenthide navbarTransparentHide');
     };
 
     F7Navbar.prototype.onNavbarPosition = function onNavbarPosition (navbarEl, position) {
@@ -9609,11 +9626,13 @@
       var noHairline = props.noHairline;
       var large = props.large;
       var largeTransparent = props.largeTransparent;
+      var transparent = props.transparent;
       var titleLarge = props.titleLarge;
       var ref = self.state;
       var theme = ref._theme;
       var routerPositionClass = ref.routerPositionClass;
       var largeCollapsed = ref.largeCollapsed;
+      var transparentVisible = ref.transparentVisible;
       var leftEl;
       var titleEl;
       var rightEl;
@@ -9621,11 +9640,17 @@
       var addLeftTitleClass = theme && theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
       var addCenterTitleClass = theme && theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || theme && theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
       var slots = self.slots;
+      var isLarge = large || largeTransparent;
+      var isLargeTransparent = isLarge && (largeTransparent || transparent);
+      var isTransparent = !isLarge && transparent;
+      var isTransparentVisible = isTransparent && transparentVisible;
       var classes = Utils.classNames(className, 'navbar', routerPositionClass && routerPositionClass, {
         'navbar-hidden': hidden,
-        'navbar-large': large,
-        'navbar-large-transparent': largeTransparent,
-        'navbar-large-collapsed': large && largeCollapsed,
+        'navbar-large': isLarge,
+        'navbar-large-transparent': isLargeTransparent,
+        'navbar-large-collapsed': isLarge && largeCollapsed,
+        'navbar-transparent': isTransparent,
+        'navbar-transparent-visible': isTransparentVisible,
         'navbar-master': this.state.routerNavbarRole === 'master',
         'navbar-master-detail': this.state.routerNavbarRole === 'detail',
         'navbar-master-detail-root': this.state.routerNavbarRoleDetailRoot === true,
@@ -9699,6 +9724,8 @@
       f7.off('navbarRole', self.onNavbarRole);
       f7.off('navbarMasterStack', self.onNavbarMasterStack);
       f7.off('navbarMasterUnstack', self.onNavbarMasterUnstack);
+      f7.off('navbarTransparentShow', self.onNavbarTransparentShow);
+      f7.off('navbarTransparentHide', self.onNavbarTransparentHide);
       self.eventTargetEl = null;
       delete self.eventTargetEl;
     };
@@ -9725,6 +9752,8 @@
         f7.on('navbarRole', self.onNavbarRole);
         f7.on('navbarMasterStack', self.onNavbarMasterStack);
         f7.on('navbarMasterUnstack', self.onNavbarMasterUnstack);
+        f7.on('navbarTransparentShow', self.onNavbarTransparentShow);
+        f7.on('navbarTransparentHide', self.onNavbarTransparentHide);
       });
     };
 
@@ -9774,6 +9803,7 @@
     innerClassName: String,
     large: Boolean,
     largeTransparent: Boolean,
+    transparent: Boolean,
     titleLarge: String
   }, Mixins.colorProps));
 
@@ -10166,7 +10196,7 @@
       })();
 
       (function () {
-        Utils.bindMethods(this$1, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded', 'onCardOpened', 'onCardClose']);
+        Utils.bindMethods(this$1, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageBeforeUnmount', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded', 'onCardOpened', 'onCardClose']);
       })();
     }
 
@@ -10315,6 +10345,11 @@
     F7Page.prototype.onPageBeforeRemove = function onPageBeforeRemove (page) {
       if (this.eventTargetEl !== page.el) { return; }
       this.dispatchEvent('page:beforeremove pageBeforeRemove', page);
+    };
+
+    F7Page.prototype.onPageBeforeUnmount = function onPageBeforeUnmount (page) {
+      if (this.eventTargetEl !== page.el) { return; }
+      this.dispatchEvent('page:beforeunmount pageBeforeUnmount', page);
     };
 
     F7Page.prototype.onPageStack = function onPageStack (pageEl) {
@@ -10541,6 +10576,7 @@
       f7.off('pageAfterOut', self.onPageAfterOut);
       f7.off('pageAfterIn', self.onPageAfterIn);
       f7.off('pageBeforeRemove', self.onPageBeforeRemove);
+      f7.off('pageBeforeUnmount', self.onPageBeforeUnmount);
       f7.off('pageStack', self.onPageStack);
       f7.off('pageUnstack', self.onPageUnstack);
       f7.off('pagePosition', self.onPagePosition);
@@ -10568,6 +10604,7 @@
         f7.on('pageAfterOut', self.onPageAfterOut);
         f7.on('pageAfterIn', self.onPageAfterIn);
         f7.on('pageBeforeRemove', self.onPageBeforeRemove);
+        f7.on('pageBeforeUnmount', self.onPageBeforeUnmount);
         f7.on('pageStack', self.onPageStack);
         f7.on('pageUnstack', self.onPageUnstack);
         f7.on('pagePosition', self.onPagePosition);
@@ -10711,8 +10748,12 @@
       this.dispatchEvent('panel:collapsedbreakpoint panelCollapsedBreakpoint', event);
     };
 
-    F7Panel.prototype.onResize = function onResize (event) {
-      this.dispatchEvent('panel:resize panelResize', event);
+    F7Panel.prototype.onResize = function onResize () {
+      var ref;
+
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+      (ref = this).dispatchEvent.apply(ref, [ 'panel:resize panelResize' ].concat( args ));
     };
 
     F7Panel.prototype.open = function open (animate) {
@@ -14627,7 +14668,7 @@
   };
 
   /**
-   * Framework7 React 5.4.5
+   * Framework7 React 5.5.0
    * Build full featured iOS & Android apps using Framework7 & React
    * https://framework7.io/react/
    *
@@ -14635,7 +14676,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: February 21, 2020
+   * Released on: March 6, 2020
    */
 
   function f7ready(callback) {

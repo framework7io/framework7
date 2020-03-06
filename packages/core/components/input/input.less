@@ -423,6 +423,13 @@ textarea {
     background: var(--f7-list-bg-color);
   }
 }
+
+.if-dark-theme({
+  .theme-dark option {
+    background-color: var(--f7-page-bg-color);
+  }
+});
+
 .if-ios-theme({
   @import url('./input-ios.less');
 });

@@ -2,6 +2,45 @@
 
 # Change Log
 
+# [v5.5.0](https://github.com/framework7io/framework7/compare/v5.4.5...v5.5.0) - March 6, 2020
+  * Core
+    * Card
+      * Expandable card backdrop blur now uses opacity instead of blur transition for better performance
+    * Input
+      * Added dark/black backround for native select `<option>`
+    * Navbar
+      * Added support to make usual (not large) Navbar also transparent. Can be enabled by adding `navbar-transparent` class to navbar
+      * New `snapPageScrollToTransparentNavbar` app.navbar parameter - when enabled it will snap page scroll to transparent title (default true)
+    * Router
+      * New `router.generateUrl({ name, query, params })` to generate route URL
+    * Router Component
+      * Fixed issue with `autocomplete` attribute treated as `boolean` attribute
+      * Now calling `$update()` on root app component should automatically update all components that depends on `$root.` data
+    * Text Editor
+      * added `init` and `textEditorInit` events
+      * added `type="button"` attribute for buttons to prevent form from submitting
+      * fixed issue with missing arguments in custom button onClick callback
+    * Treeview
+      * `loadchildren`'s event `done()` callback now supports boolean `cancel` attribute to cancel/reject loading UI if required by calling `done(true)`
+    * Swiper - updated to latest 5.3.6
+      * Core
+        * Fixed wrong auto height calculation with `centeredSlides` enabled
+      * Lazy
+        * Now it will update auto height (if enabled) on lazy image loaded (#3466)
+      * Zoom
+        * Fixed issue when previously active slide could be zoomed with `zoom.in()` API (#3451)
+        * Fixed issue when zoom didn't work on `<picture>` element (#3456)
+        * Added support for custom zoom-target element by adding `swiper-zoom-target` class to such elements
+      * Coverflow Effect
+        * `stretch` parameter now can be set in `%` (#3468)
+  * React, Svelte, Vue components
+    * Page
+      * Added support for `pageBeforeUnmount` event for `Page` component
+    * Navbar
+      * Added support to make usual (not large) Navbar also transparent. Can be enabled by adding `transparent` property to navbar, e.g. `<Navbar transparent>`
+      * Large-transparent navbar now should be enabled by adding two properties `large` and `transparent` instead of one `large-transparent`. Before: `<Navbar large large-transparent>`, now: `<Navbar large transparent>`
+  * Lots of minor fixes
+
 # [v5.4.5](https://github.com/framework7io/framework7/compare/v5.4.2...v5.4.5) - February 21, 2020
   * Core
     * FAB (Floating Action Button)

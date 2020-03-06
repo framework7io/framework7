@@ -41,6 +41,8 @@ export namespace Navbar {
       collapseLargeTitleOnScroll?: boolean
       /** When enabled it will snap page scroll to large title (default true) */
       snapPageScrollToLargeTitle?: boolean
+      /** When enabled it will snap page scroll to transparent title (default true) */
+      snapPageScrollToTransparentNavbar?: boolean
     } | undefined
   }
   interface AppEvents {

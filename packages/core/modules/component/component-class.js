@@ -26,6 +26,7 @@ class Component {
         $id: options.isClassComponent ? self.constructor.id : (options.id || id),
         $mixins: options.isClassComponent ? self.constructor.mixins : options.mixins,
         $children: children || [],
+        $isRootComponent: !!options.root,
       }
     );
     const { $options } = self;
@@ -64,7 +65,16 @@ class Component {
       enumerable: true,
       configurable: true,
       get() {
-        if (app.rootComponent) return app.rootComponent;
+        if (self.$isRootComponent) {
+          return self;
+        }
+        if (app.rootComponent) {
+          if (!self.$onRootUpdated) {
+            self.$onRootUpdated = () => self.$update();
+            app.on('rootComponentUpdated', self.$onRootUpdated);
+          }
+          return app.rootComponent;
+        }
         let root = Utils.merge({}, app.data, app.methods);
         if (window && window.Proxy) {
           root = new window.Proxy(root, {
@@ -305,6 +315,9 @@ class Component {
       function resolver() {
         resolve();
         if (callback) callback();
+        if (self.$isRootComponent) {
+          self.$f7.emit('rootComponentUpdated');
+        }
       }
       self.__updateIsPending = true;
       self.__updateQueue.push(resolver);
@@ -341,6 +354,11 @@ class Component {
     self.$hook('beforeDestroy');
 
     if (self.$styleEl) $(self.$styleEl).remove();
+    if (self.$onRootUpdated) {
+      self.$f7.off('rootComponentUpdated', self.$onRootUpdated);
+      delete self.$onRootUpdated;
+    }
+
     self.$detachEvents();
     self.$hook('destroyed');
     // Delete component instance

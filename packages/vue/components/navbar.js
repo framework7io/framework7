@@ -30,6 +30,7 @@ export default {
     innerClassName: String,
     large: Boolean,
     largeTransparent: Boolean,
+    transparent: Boolean,
     titleLarge: String
   }, Mixins.colorProps),
 
@@ -54,7 +55,8 @@ export default {
         largeCollapsed: false,
         routerNavbarRole: null,
         routerNavbarRoleDetailRoot: false,
-        routerNavbarMasterStack: false
+        routerNavbarMasterStack: false,
+        transparentVisible: false
       };
     })();
 
@@ -85,12 +87,14 @@ export default {
       noHairline,
       large,
       largeTransparent,
+      transparent,
       titleLarge
     } = props;
     const {
       _theme: theme,
       routerPositionClass,
-      largeCollapsed
+      largeCollapsed,
+      transparentVisible
     } = self.state;
     let leftEl;
     let titleEl;
@@ -99,11 +103,17 @@ export default {
     const addLeftTitleClass = theme && theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
     const addCenterTitleClass = theme && theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || theme && theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
     const slots = self.$slots;
+    const isLarge = large || largeTransparent;
+    const isLargeTransparent = isLarge && (largeTransparent || transparent);
+    const isTransparent = !isLarge && transparent;
+    const isTransparentVisible = isTransparent && transparentVisible;
     const classes = Utils.classNames(className, 'navbar', routerPositionClass && routerPositionClass, {
       'navbar-hidden': hidden,
-      'navbar-large': large,
-      'navbar-large-transparent': largeTransparent,
-      'navbar-large-collapsed': large && largeCollapsed,
+      'navbar-large': isLarge,
+      'navbar-large-transparent': isLargeTransparent,
+      'navbar-large-collapsed': isLarge && largeCollapsed,
+      'navbar-transparent': isTransparent,
+      'navbar-transparent-visible': isTransparentVisible,
       'navbar-master': this.state.routerNavbarRole === 'master',
       'navbar-master-detail': this.state.routerNavbarRole === 'detail',
       'navbar-master-detail-root': this.state.routerNavbarRoleDetailRoot === true,
@@ -171,7 +181,7 @@ export default {
   },
 
   created() {
-    Utils.bindMethods(this, ['onBackClick', 'onHide', 'onShow', 'onExpand', 'onCollapse', 'onNavbarPosition', 'onNavbarRole', 'onNavbarMasterStack', 'onNavbarMasterUnstack']);
+    Utils.bindMethods(this, ['onBackClick', 'onHide', 'onShow', 'onExpand', 'onCollapse', 'onNavbarPosition', 'onNavbarRole', 'onNavbarMasterStack', 'onNavbarMasterUnstack', 'onTransparentHide', 'onTransparentShow']);
   },
 
   mounted() {
@@ -190,6 +200,8 @@ export default {
       f7.on('navbarRole', self.onNavbarRole);
       f7.on('navbarMasterStack', self.onNavbarMasterStack);
       f7.on('navbarMasterUnstack', self.onNavbarMasterUnstack);
+      f7.on('navbarTransparentShow', self.onNavbarTransparentShow);
+      f7.on('navbarTransparentHide', self.onNavbarTransparentHide);
     });
   },
 
@@ -215,6 +227,8 @@ export default {
     f7.off('navbarRole', self.onNavbarRole);
     f7.off('navbarMasterStack', self.onNavbarMasterStack);
     f7.off('navbarMasterUnstack', self.onNavbarMasterUnstack);
+    f7.off('navbarTransparentShow', self.onNavbarTransparentShow);
+    f7.off('navbarTransparentHide', self.onNavbarTransparentHide);
     self.eventTargetEl = null;
     delete self.eventTargetEl;
   },
@@ -244,6 +258,22 @@ export default {
         largeCollapsed: true
       });
       this.dispatchEvent('navbar:collapse navbarCollapse');
+    },
+
+    onNavbarTransparentShow(navbarEl) {
+      if (this.eventTargetEl !== navbarEl) return;
+      this.setState({
+        transparentVisible: true
+      });
+      this.dispatchEvent('navbar:transparentshow navbarTransparentShow');
+    },
+
+    onNavbarTransparentHide(navbarEl) {
+      if (this.eventTargetEl !== navbarEl) return;
+      this.setState({
+        transparentVisible: false
+      });
+      this.dispatchEvent('navbar:transparenthide navbarTransparentHide');
     },
 
     onNavbarPosition(navbarEl, position) {

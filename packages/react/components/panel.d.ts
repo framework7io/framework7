@@ -39,7 +39,7 @@ declare namespace F7Panel {
     onPanelSwipeOpen? : (event?: any) => void
     onPanelBreakpoint? : (event?: any) => void
     onPanelCollapsedBreakpoint? : (event?: any) => void
-    onPanelResize? : (event?: any) => void
+    onPanelResize? : (...args: any[]) => void
   }
 }
 declare class F7Panel extends React.Component<F7Panel.Props, {}> {
@@ -52,7 +52,7 @@ declare class F7Panel extends React.Component<F7Panel.Props, {}> {
   onSwipeOpen(event? : any) : unknown
   onBreakpoint(event? : any) : unknown
   onCollapsedBreakpoint(event? : any) : unknown
-  onResize(event? : any) : unknown
+  onResize(...args : any[]) : unknown
   open(animate? : any) : unknown
   close(animate? : any) : unknown
   toggle(animate? : any) : unknown

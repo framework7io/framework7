@@ -1,5 +1,5 @@
 /**
- * Framework7 5.4.5
+ * Framework7 5.5.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 21, 2020
+ * Released on: March 6, 2020
  */
 
 /*====================
@@ -1943,15 +1943,21 @@ html.device-full-viewport body {
 .navbars > .navbar {
   position: absolute;
 }
+.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible):not(.with-searchbar-expandable-enabled) .navbar-bg,
+.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible):not(.with-searchbar-expandable-enabled) .title {
+  opacity: 0;
+}
 .navbar-large .navbar-bg,
 .ios .router-navbar-transition-to-large .navbar-bg,
 .ios .router-navbar-transition-from-large .navbar-bg,
 .navbar-bg.ios-swipeback-navbar-bg-large,
-.navbar-large-transparent .navbar-bg.ios-swipeback-navbar-bg-large {
+.navbar-large-transparent .navbar-bg.ios-swipeback-navbar-bg-large,
+.navbar-large.navbar-transparent .navbar-bg.ios-swipeback-navbar-bg-large {
   height: calc(100% + var(--f7-navbar-large-title-height));
   transform: translate3d(0px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0);
 }
-.navbar-large-transparent .navbar-bg {
+.navbar-large-transparent .navbar-bg,
+.navbar-large.navbar-transparent .navbar-bg {
   opacity: var(--f7-navbar-large-collapse-progress);
   height: 100%;
   transform: none;
@@ -2189,6 +2195,16 @@ html.device-full-viewport body {
   transform: translate3d(0, 0, 0) !important;
   opacity: 1 !important;
 }
+.ios .router-transition-forward .navbar-next.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible) .title,
+.ios .router-transition-backward .navbar-previous.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible) .title {
+  animation: none;
+}
+.ios .router-transition-forward .navbar-next.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible) .sliding.title,
+.ios .router-transition-backward .navbar-previous.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible) .sliding.title,
+.ios .router-transition-forward .navbar-next.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible) .sliding .title,
+.ios .router-transition-backward .navbar-previous.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible) .sliding .title {
+  opacity: 0 !important;
+}
 .ios .router-transition-backward .navbar-previous.with-searchbar-expandable-enabled-no-transition .left,
 .ios .router-transition-backward .navbar-previous.with-searchbar-expandable-enabled .left,
 .ios .router-transition-backward .navbar-previous.with-searchbar-expandable-enabled-no-transition .title,
@@ -2274,7 +2290,8 @@ html.device-full-viewport body {
 .ios .router-transition-forward .navbar-current.navbar-large-collapsed:not(.router-navbar-transition-to-large) .navbar-bg {
   animation-name: ios-navbar-bg-from-ct-to-lt;
 }
-.ios .router-transition-forward .navbar-current.navbar-large-collapsed.navbar-large-transparent:not(.router-navbar-transition-to-large) .navbar-bg {
+.ios .router-transition-forward .navbar-current.navbar-large-collapsed.navbar-large-transparent:not(.router-navbar-transition-to-large) .navbar-bg,
+.ios .router-transition-forward .navbar-current.navbar-large-collapsed.navbar-large.navbar-transparent:not(.router-navbar-transition-to-large) .navbar-bg {
   animation-name: ios-navbar-transparent-bg-from-c-to-l;
 }
 .ios .router-transition-forward .navbar-next .navbar-bg {
@@ -2301,7 +2318,8 @@ html.device-full-viewport body {
 .ios .router-transition-backward .navbar-current.navbar-large-collapsed .navbar-bg {
   animation-name: ios-navbar-bg-from-ct-to-rt;
 }
-.ios .router-transition-backward .navbar-current.navbar-large-collapsed.navbar-large-transparent .navbar-bg {
+.ios .router-transition-backward .navbar-current.navbar-large-collapsed.navbar-large-transparent .navbar-bg,
+.ios .router-transition-backward .navbar-current.navbar-large-collapsed.navbar-large.navbar-transparent .navbar-bg {
   animation-name: ios-navbar-bg-from-cb-to-rb;
 }
 .ios .router-transition-backward .navbar-current.navbar-large-collapsed.router-navbar-transition-to-large .navbar-bg {
@@ -2319,10 +2337,12 @@ html.device-full-viewport body {
 .ios .router-transition-backward .navbar-previous.navbar-large-collapsed .navbar-bg {
   animation-name: ios-navbar-bg-from-lt-to-ct;
 }
-.ios .router-transition-backward .navbar-previous.navbar-large-collapsed.navbar-large-transparent .navbar-bg {
+.ios .router-transition-backward .navbar-previous.navbar-large-collapsed.navbar-large-transparent .navbar-bg,
+.ios .router-transition-backward .navbar-previous.navbar-large-collapsed.navbar-large.navbar-transparent .navbar-bg {
   animation-name: ios-navbar-transparent-bg-from-l-to-c;
 }
-.ios .router-transition-backward .navbar-previous.navbar-large-collapsed.navbar-large-transparent.router-navbar-transition-from-large .navbar-bg {
+.ios .router-transition-backward .navbar-previous.navbar-large-collapsed.navbar-large-transparent.router-navbar-transition-from-large .navbar-bg,
+.ios .router-transition-backward .navbar-previous.navbar-large-collapsed.navbar-large.navbar-transparent.router-navbar-transition-from-large .navbar-bg {
   animation-name: ios-navbar-bg-from-lb-to-ct;
 }
 .view-master-detail .navbars {
@@ -2374,7 +2394,8 @@ html.device-full-viewport body {
   transition-duration: 0ms;
   animation: none !important;
 }
-.view-master-detail.router-transition .navbar-master.navbar-large-transparent .navbar-bg {
+.view-master-detail.router-transition .navbar-master.navbar-large-transparent .navbar-bg,
+.view-master-detail.router-transition .navbar-master.navbar-large.navbar-transparent .navbar-bg {
   height: 100% !important;
   opacity: var(--f7-navbar-large-collapse-progress) !important;
 }

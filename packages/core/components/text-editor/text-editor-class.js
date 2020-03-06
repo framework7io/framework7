@@ -313,7 +313,7 @@ class TextEditor extends Framework7Class {
     $buttonEl.trigger('texteditor:buttonclick', button);
     self.emit('local::buttonClick textEditorButtonClick', self, button);
     if (buttonData) {
-      if (buttonData.onClick) buttonData.onClick();
+      if (buttonData.onClick) buttonData.onClick(self, $buttonEl[0]);
       return;
     }
     const command = textEditorButtonsMap[button][2];
@@ -371,11 +371,11 @@ class TextEditor extends Framework7Class {
       const iconClass = self.app.theme === 'md' ? 'material-icons' : 'f7-icons';
       if (self.params.customButtons && self.params.customButtons[button]) {
         const buttonData = self.params.customButtons[button];
-        return `<button class="text-editor-button" data-button="${button}">${buttonData.content || ''}</button>`;
+        return `<button type="button" class="text-editor-button" data-button="${button}">${buttonData.content || ''}</button>`;
       }
       if (!textEditorButtonsMap[button]) return '';
       const iconContent = textEditorButtonsMap[button][self.app.theme === 'md' ? 1 : 0];
-      return `<button class="text-editor-button" data-button="${button}">${iconContent.indexOf('<') >= 0 ? iconContent : `<i class="${iconClass}">${iconContent}</i>`}</button>`.trim();
+      return `<button type="button" class="text-editor-button" data-button="${button}">${iconContent.indexOf('<') >= 0 ? iconContent : `<i class="${iconClass}">${iconContent}</i>`}</button>`.trim();
     }
     self.params.buttons.forEach((button, buttonIndex) => {
       if (Array.isArray(button)) {
@@ -486,6 +486,8 @@ class TextEditor extends Framework7Class {
     }
 
     self.attachEvents();
+    self.$el.trigger('texteditor:init');
+    self.emit('local::init textEditorInit', self);
     return self;
   }
 

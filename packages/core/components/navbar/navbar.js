@@ -15,8 +15,11 @@ const Navbar = {
       return;
     }
 
+    const $innerEl = $el.children('.navbar-inner');
+    if (!$innerEl.length) return;
+
     const needCenterTitle = (
-      $el.children('.navbar-inner').hasClass('navbar-inner-centered-title')
+      $innerEl.hasClass('navbar-inner-centered-title')
       || app.params.navbar[`${app.theme}CenterTitle`]
     );
     const needLeftTitle = app.theme === 'ios' && !app.params.navbar[`${app.theme}CenterTitle`];
@@ -33,14 +36,13 @@ const Navbar = {
     }
 
     if (app.theme !== 'ios' && app.params.navbar[`${app.theme}CenterTitle`]) {
-      $el.children('.navbar-inner').addClass('navbar-inner-centered-title');
+      $innerEl.addClass('navbar-inner-centered-title');
     }
     if (app.theme === 'ios' && !app.params.navbar.iosCenterTitle) {
-      $el.children('.navbar-inner').addClass('navbar-inner-left-title');
+      $innerEl.addClass('navbar-inner-left-title');
     }
 
     const $viewEl = $el.parents('.view').eq(0);
-    const $innerEl = $el.children('.navbar-inner');
     const left = app.rtl ? $innerEl.children('.right') : $innerEl.children('.left');
     const right = app.rtl ? $innerEl.children('.left') : $innerEl.children('.right');
     const title = $innerEl.children('.title');
@@ -292,7 +294,7 @@ const Navbar = {
       app.navbar.collapseLargeTitle($navbarEl);
     }
   },
-  initNavbarOnScroll(pageEl, navbarEl, needHide, needCollapse) {
+  initNavbarOnScroll(pageEl, navbarEl, needHide, needCollapse, needTransparent) {
     const app = this;
     const $pageEl = $(pageEl);
     const $navbarEl = $(navbarEl);
@@ -300,6 +302,7 @@ const Navbar = {
     const isLarge = $titleLargeEl.length || $navbarEl.hasClass('.navbar-large');
     let navbarHideHeight = 44;
     const snapPageScrollToLargeTitle = app.params.navbar.snapPageScrollToLargeTitle;
+    const snapPageScrollToTransparentNavbar = app.params.navbar.snapPageScrollToTransparentNavbar;
 
     let previousScrollTop;
     let currentScrollTop;
@@ -312,6 +315,9 @@ const Navbar = {
 
     let navbarCollapsed;
     let navbarTitleLargeHeight;
+
+    let navbarOffsetHeight;
+
     if (needCollapse || (needHide && isLarge)) {
       navbarTitleLargeHeight = $navbarEl.css('--f7-navbar-large-title-height');
 
@@ -355,10 +361,74 @@ const Navbar = {
       }
     }
 
+    function snapTransparentNavbar() {
+      const inSearchbarExpanded = $navbarEl.hasClass('with-searchbar-expandable-enabled');
+      if (inSearchbarExpanded) return;
+      if (!scrollContent || currentScrollTop < 0) return;
+      if (currentScrollTop >= navbarOffsetHeight / 2 && currentScrollTop < navbarOffsetHeight) {
+        $(scrollContent).scrollTop(navbarOffsetHeight, 100);
+      } else if (currentScrollTop < navbarOffsetHeight) {
+        $(scrollContent).scrollTop(0, 200);
+      }
+    }
+
+    function handleNavbarTransparent() {
+      const isHidden = $navbarEl.hasClass('navbar-hidden') || $navbarEl.parent('.navbars').hasClass('navbar-hidden');
+      const inSearchbarExpanded = $navbarEl.hasClass('with-searchbar-expandable-enabled');
+      if (inSearchbarExpanded || isHidden) return;
+      if (!navbarOffsetHeight) {
+        navbarOffsetHeight = navbarEl.offsetHeight;
+      }
+      let opacity = currentScrollTop / navbarOffsetHeight;
+      const notTransparent = $navbarEl.hasClass('navbar-transparent-visible');
+      opacity = Math.max(Math.min(opacity, 1), 0);
+
+      if ((notTransparent && opacity === 1) || (!notTransparent && opacity === 0)) {
+        $navbarEl.find('.navbar-bg, .title').css('opacity', '');
+        return;
+      }
+      if (notTransparent && opacity === 0) {
+        $navbarEl.trigger('navbar:transparenthide');
+        app.emit('navbarTransparentHide', $navbarEl[0]);
+        $navbarEl.removeClass('navbar-transparent-visible');
+        $navbarEl.find('.navbar-bg, .title').css('opacity', '');
+        return;
+      }
+      if (!notTransparent && opacity === 1) {
+        $navbarEl.trigger('navbar:transparentshow');
+        app.emit('navbarTransparentShow', $navbarEl[0]);
+        $navbarEl.addClass('navbar-transparent-visible');
+        $navbarEl.find('.navbar-bg, .title').css('opacity', '');
+        return;
+      }
+      $navbarEl.find('.navbar-bg, .title').css('opacity', opacity);
+
+      if (snapPageScrollToTransparentNavbar) {
+        if (!Support.touch) {
+          clearTimeout(scrollTimeoutId);
+          scrollTimeoutId = setTimeout(() => {
+            snapTransparentNavbar();
+          }, desktopSnapTimeout);
+        } else if (touchEndTimeoutId) {
+          clearTimeout(touchEndTimeoutId);
+          touchEndTimeoutId = null;
+          touchEndTimeoutId = setTimeout(() => {
+            snapTransparentNavbar();
+            clearTimeout(touchEndTimeoutId);
+            touchEndTimeoutId = null;
+          }, touchSnapTimeout);
+        }
+      }
+    }
+
     function handleLargeNavbarCollapse() {
       const isHidden = $navbarEl.hasClass('navbar-hidden') || $navbarEl.parent('.navbars').hasClass('navbar-hidden');
       if (isHidden) return;
-      const isLargeTransparent = $navbarEl.hasClass('navbar-large-transparent');
+      const isLargeTransparent = $navbarEl.hasClass('navbar-large-transparent')
+        || (
+          $navbarEl.hasClass('navbar-large')
+          && $navbarEl.hasClass('navbar-transparent')
+        );
       const collapseProgress = Math.min(Math.max((currentScrollTop / navbarTitleLargeHeight), 0), 1);
       const inSearchbarExpanded = $navbarEl.hasClass('with-searchbar-expandable-enabled');
       if (inSearchbarExpanded) return;
@@ -453,9 +523,10 @@ const Navbar = {
       }
       currentScrollTop = scrollContent.scrollTop;
       scrollChanged = currentScrollTop;
-
       if (needCollapse) {
         handleLargeNavbarCollapse();
+      } else if (needTransparent) {
+        handleNavbarTransparent();
       }
       if ($pageEl.hasClass('page-previous')) return;
       if (needHide) {
@@ -470,14 +541,18 @@ const Navbar = {
       touchEndTimeoutId = null;
       touchEndTimeoutId = setTimeout(() => {
         if (scrollChanged !== false) {
-          snapLargeNavbar();
+          if (needTransparent && !needCollapse) {
+            snapTransparentNavbar();
+          } else {
+            snapLargeNavbar();
+          }
           clearTimeout(touchEndTimeoutId);
           touchEndTimeoutId = null;
         }
       }, touchSnapTimeout);
     }
     $pageEl.on('scroll', '.page-content', handleScroll, true);
-    if (Support.touch && needCollapse && snapPageScrollToLargeTitle) {
+    if (Support.touch && ((needCollapse && snapPageScrollToLargeTitle) || (needTransparent && snapPageScrollToTransparentNavbar))) {
       app.on('touchstart:passive', handeTouchStart);
       app.on('touchend:passive', handleTouchEnd);
     }
@@ -485,11 +560,15 @@ const Navbar = {
       $pageEl.find('.page-content').each((pageContentIndex, pageContentEl) => {
         if (pageContentEl.scrollTop > 0) handleScroll.call(pageContentEl);
       });
+    } else if (needTransparent) {
+      $pageEl.find('.page-content').each((pageContentIndex, pageContentEl) => {
+        if (pageContentEl.scrollTop > 0) handleScroll.call(pageContentEl);
+      });
     }
     $pageEl[0].f7DetachNavbarScrollHandlers = function f7DetachNavbarScrollHandlers() {
       delete $pageEl[0].f7DetachNavbarScrollHandlers;
       $pageEl.off('scroll', '.page-content', handleScroll, true);
-      if (Support.touch && needCollapse && snapPageScrollToLargeTitle) {
+      if (Support.touch && ((needCollapse && snapPageScrollToLargeTitle) || (needTransparent && snapPageScrollToTransparentNavbar))) {
         app.off('touchstart:passive', handeTouchStart);
         app.off('touchend:passive', handleTouchEnd);
       }
@@ -525,6 +604,7 @@ export default {
       showOnPageScrollTop: true,
       collapseLargeTitleOnScroll: true,
       snapPageScrollToLargeTitle: true,
+      snapPageScrollToTransparentNavbar: true,
     },
   },
   on: {
@@ -581,6 +661,12 @@ export default {
         page.$el.addClass('page-with-navbar-large');
       }
 
+      // Need transparent on scroll
+      let needTransparentOnScroll;
+      if (!needCollapseOnScrollHandler && $navbarEl.hasClass('navbar-transparent')) {
+        needTransparentOnScroll = true;
+      }
+
       // Need Hide On Scroll
       let needHideOnScrollHandler;
       if (
@@ -602,8 +688,8 @@ export default {
         }
       }
 
-      if (needCollapseOnScrollHandler || needHideOnScrollHandler) {
-        app.navbar.initNavbarOnScroll(page.el, $navbarEl[0], needHideOnScrollHandler, needCollapseOnScrollHandler);
+      if (needCollapseOnScrollHandler || needHideOnScrollHandler || needTransparentOnScroll) {
+        app.navbar.initNavbarOnScroll(page.el, $navbarEl[0], needHideOnScrollHandler, needCollapseOnScrollHandler, needTransparentOnScroll);
       }
     },
     'panelOpen panelSwipeOpen modalOpen': function onPanelModalOpen(instance) {

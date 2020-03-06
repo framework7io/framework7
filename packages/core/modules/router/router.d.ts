@@ -207,7 +207,15 @@ export namespace Router {
     previousRoute: Route
     /** Boolean property indicating is it allowed to change page / navigate or not */
     allowPageChange: boolean
-
+    /** Generate route url based on a given route name */
+    generateUrl(parameters: {
+      /** route name */
+      name: string
+      /** route params */
+      params: any
+      /** route query */
+      query: any
+    }): string
     /** Navigate to (load) new page */
     navigate(url: string, options?: RouteOptions): Router
     /** Navigate to (load) new page by parameters. This method allows to navigate to route by its name */

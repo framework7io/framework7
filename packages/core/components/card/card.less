@@ -269,13 +269,7 @@
 @supports (backdrop-filter: blur(15px)) {
   .card-backdrop {
     background: transparent;
-    opacity: 1;
-  }
-  .card-backdrop-in {
-    animation: card-backdrop-blur-in 400ms forwards;
-  }
-  .card-backdrop-out {
-    animation: card-backdrop-blur-out 400ms forwards;
+    backdrop-filter: blur(15px);
   }
 }
 @keyframes card-backdrop-fade-in {
@@ -294,22 +288,7 @@
     opacity: 0;
   }
 }
-@keyframes card-backdrop-blur-in {
-  from {
-    backdrop-filter: blur(0px);
-  }
-  to {
-    backdrop-filter: blur(15px);
-  }
-}
-@keyframes card-backdrop-blur-out {
-  from {
-    backdrop-filter: blur(15px);
-  }
-  to {
-    backdrop-filter: blur(0px);
-  }
-}
+
 .if-ios-theme({
   @import url('./card-ios.less');
 });

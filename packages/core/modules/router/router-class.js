@@ -478,6 +478,26 @@ class Router extends Framework7Class {
     };
   }
 
+  generateUrl(parameters = {}) {
+    if (typeof parameters === 'string') {
+      return parameters;
+    }
+    const { name, params, query } = parameters;
+    if (!name) {
+      throw new Error('Framework7: name parameter is required');
+    }
+    const router = this;
+    const route = router.findRouteByKey('name', name);
+    if (!route) {
+      throw new Error(`Framework7: route with name "${name}" not found`);
+    }
+    const url = router.constructRouteUrl(route, { params, query });
+    if (!url) {
+      throw new Error(`Framework7: can't construct URL for route with name "${name}"`);
+    }
+    return url;
+  }
+
   // eslint-disable-next-line
   constructRouteUrl(route, { params, query } = {}) {
     const { path } = route;

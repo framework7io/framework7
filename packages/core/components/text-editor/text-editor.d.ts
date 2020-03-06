@@ -74,6 +74,8 @@ export namespace TextEditor {
     popoverOpen: (editor : TextEditor) => void
     /** Event will be triggered on editor popover close. As an argument event handler receives editor instance */
     popoverClose: (editor : TextEditor) => void
+    /** Event will be triggered on editor init */
+    init: (editor : TextEditor) => void
     /** Event will be triggered right before Text Editor instance will be destroyed. As an argument event handler receives Text Editor instance */
     beforeDestroy: (editor : TextEditor) => void
   }
@@ -96,6 +98,8 @@ export namespace TextEditor {
     'texteditor:popoveropen': () => void
     /** Event will be triggered on editor popover close.*/
     'texteditor:popoverclose': () => void
+    /** Event will be triggered on editor init */
+    'texteditor:init': () => void
     /** Event will be triggered right before Text Editor instance will be destroyed.*/
     'texteditor:beforedestroy': () => void
   }
@@ -132,6 +136,8 @@ export namespace TextEditor {
     textEditorPopoverOpen: (editor : TextEditor) => void
     /** Event will be triggered on editor popover close. As an argument event handler receives editor instance */
     textEditorPopoverClose: (editor : TextEditor) => void
+    /** Event will be triggered on editor init */
+    textEditorInit: (editor : TextEditor) => void
     /** Event will be triggered right before Text Editor instance will be destroyed. As an argument event handler receives Text Editor instance */
     textEditorBeforeDestroy: (editor : TextEditor) => void
   }

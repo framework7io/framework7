@@ -1,5 +1,5 @@
 /**
- * Framework7 5.4.5
+ * Framework7 5.5.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 21, 2020
+ * Released on: March 6, 2020
  */
 
 /*====================
@@ -1943,15 +1943,21 @@ html.device-full-viewport body {
 .navbars > .navbar {
   position: absolute;
 }
+.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible):not(.with-searchbar-expandable-enabled) .navbar-bg,
+.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible):not(.with-searchbar-expandable-enabled) .title {
+  opacity: 0;
+}
 .navbar-large .navbar-bg,
 .ios .router-navbar-transition-to-large .navbar-bg,
 .ios .router-navbar-transition-from-large .navbar-bg,
 .navbar-bg.ios-swipeback-navbar-bg-large,
-.navbar-large-transparent .navbar-bg.ios-swipeback-navbar-bg-large {
+.navbar-large-transparent .navbar-bg.ios-swipeback-navbar-bg-large,
+.navbar-large.navbar-transparent .navbar-bg.ios-swipeback-navbar-bg-large {
   height: calc(100% + var(--f7-navbar-large-title-height));
   transform: translate3d(0px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0);
 }
-.navbar-large-transparent .navbar-bg {
+.navbar-large-transparent .navbar-bg,
+.navbar-large.navbar-transparent .navbar-bg {
   opacity: var(--f7-navbar-large-collapse-progress);
   height: 100%;
   transform: none;
@@ -2189,6 +2195,16 @@ html.device-full-viewport body {
   transform: translate3d(0, 0, 0) !important;
   opacity: 1 !important;
 }
+.ios .router-transition-forward .navbar-next.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible) .title,
+.ios .router-transition-backward .navbar-previous.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible) .title {
+  animation: none;
+}
+.ios .router-transition-forward .navbar-next.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible) .sliding.title,
+.ios .router-transition-backward .navbar-previous.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible) .sliding.title,
+.ios .router-transition-forward .navbar-next.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible) .sliding .title,
+.ios .router-transition-backward .navbar-previous.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible) .sliding .title {
+  opacity: 0 !important;
+}
 .ios .router-transition-backward .navbar-previous.with-searchbar-expandable-enabled-no-transition .left,
 .ios .router-transition-backward .navbar-previous.with-searchbar-expandable-enabled .left,
 .ios .router-transition-backward .navbar-previous.with-searchbar-expandable-enabled-no-transition .title,
@@ -2274,7 +2290,8 @@ html.device-full-viewport body {
 .ios .router-transition-forward .navbar-current.navbar-large-collapsed:not(.router-navbar-transition-to-large) .navbar-bg {
   animation-name: ios-navbar-bg-from-ct-to-lt;
 }
-.ios .router-transition-forward .navbar-current.navbar-large-collapsed.navbar-large-transparent:not(.router-navbar-transition-to-large) .navbar-bg {
+.ios .router-transition-forward .navbar-current.navbar-large-collapsed.navbar-large-transparent:not(.router-navbar-transition-to-large) .navbar-bg,
+.ios .router-transition-forward .navbar-current.navbar-large-collapsed.navbar-large.navbar-transparent:not(.router-navbar-transition-to-large) .navbar-bg {
   animation-name: ios-navbar-transparent-bg-from-c-to-l;
 }
 .ios .router-transition-forward .navbar-next .navbar-bg {
@@ -2301,7 +2318,8 @@ html.device-full-viewport body {
 .ios .router-transition-backward .navbar-current.navbar-large-collapsed .navbar-bg {
   animation-name: ios-navbar-bg-from-ct-to-rt;
 }
-.ios .router-transition-backward .navbar-current.navbar-large-collapsed.navbar-large-transparent .navbar-bg {
+.ios .router-transition-backward .navbar-current.navbar-large-collapsed.navbar-large-transparent .navbar-bg,
+.ios .router-transition-backward .navbar-current.navbar-large-collapsed.navbar-large.navbar-transparent .navbar-bg {
   animation-name: ios-navbar-bg-from-cb-to-rb;
 }
 .ios .router-transition-backward .navbar-current.navbar-large-collapsed.router-navbar-transition-to-large .navbar-bg {
@@ -2319,10 +2337,12 @@ html.device-full-viewport body {
 .ios .router-transition-backward .navbar-previous.navbar-large-collapsed .navbar-bg {
   animation-name: ios-navbar-bg-from-lt-to-ct;
 }
-.ios .router-transition-backward .navbar-previous.navbar-large-collapsed.navbar-large-transparent .navbar-bg {
+.ios .router-transition-backward .navbar-previous.navbar-large-collapsed.navbar-large-transparent .navbar-bg,
+.ios .router-transition-backward .navbar-previous.navbar-large-collapsed.navbar-large.navbar-transparent .navbar-bg {
   animation-name: ios-navbar-transparent-bg-from-l-to-c;
 }
-.ios .router-transition-backward .navbar-previous.navbar-large-collapsed.navbar-large-transparent.router-navbar-transition-from-large .navbar-bg {
+.ios .router-transition-backward .navbar-previous.navbar-large-collapsed.navbar-large-transparent.router-navbar-transition-from-large .navbar-bg,
+.ios .router-transition-backward .navbar-previous.navbar-large-collapsed.navbar-large.navbar-transparent.router-navbar-transition-from-large .navbar-bg {
   animation-name: ios-navbar-bg-from-lb-to-ct;
 }
 .view-master-detail .navbars {
@@ -2374,7 +2394,8 @@ html.device-full-viewport body {
   transition-duration: 0ms;
   animation: none !important;
 }
-.view-master-detail.router-transition .navbar-master.navbar-large-transparent .navbar-bg {
+.view-master-detail.router-transition .navbar-master.navbar-large-transparent .navbar-bg,
+.view-master-detail.router-transition .navbar-master.navbar-large.navbar-transparent .navbar-bg {
   height: 100% !important;
   opacity: var(--f7-navbar-large-collapse-progress) !important;
 }
@@ -10498,13 +10519,8 @@ html.with-panel-right-reveal .panel-right.panel-in-collapsed ~ .view {
 @supports ((-webkit-backdrop-filter: blur(15px)) or (backdrop-filter: blur(15px))) {
   .card-backdrop {
     background: transparent;
-    opacity: 1;
-  }
-  .card-backdrop-in {
-    animation: card-backdrop-blur-in 400ms forwards;
-  }
-  .card-backdrop-out {
-    animation: card-backdrop-blur-out 400ms forwards;
+    -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
   }
 }
 @keyframes card-backdrop-fade-in {
@@ -10521,26 +10537,6 @@ html.with-panel-right-reveal .panel-right.panel-in-collapsed ~ .view {
   }
   to {
     opacity: 0;
-  }
-}
-@keyframes card-backdrop-blur-in {
-  from {
-    -webkit-backdrop-filter: blur(0px);
-            backdrop-filter: blur(0px);
-  }
-  to {
-    -webkit-backdrop-filter: blur(15px);
-            backdrop-filter: blur(15px);
-  }
-}
-@keyframes card-backdrop-blur-out {
-  from {
-    -webkit-backdrop-filter: blur(15px);
-            backdrop-filter: blur(15px);
-  }
-  to {
-    -webkit-backdrop-filter: blur(0px);
-            backdrop-filter: blur(0px);
   }
 }
 /* === Chips === */
@@ -11239,6 +11235,9 @@ textarea {
 }
 .list .item-input-outline .item-floating-label {
   background: var(--f7-list-bg-color);
+}
+.theme-dark option {
+  background-color: var(--f7-page-bg-color);
 }
 .ios .item-label + .item-input-wrap,
 .ios .item-floating-label + .item-input-wrap {
@@ -14708,7 +14707,8 @@ label.item-radio.disabled,
   bottom: 0;
   position: fixed;
 }
-.ptr-with-navbar-large-transparent .ptr-preloader {
+.ptr-with-navbar-large-transparent .ptr-preloader,
+.ptr-with-navbar-transparent .ptr-preloader {
   top: calc(-1 * var(--f7-page-navbar-offset, 0px) + var(--f7-safe-area-top));
 }
 .ios .ptr-preloader {
@@ -14778,12 +14778,14 @@ label.item-radio.disabled,
   transform: rotate(180deg) translate3d(0, 0, 0);
 }
 .ios .ptr-no-navbar,
-.ios .ptr-with-navbar-large-transparent {
+.ios .ptr-with-navbar-large-transparent,
+.ios .ptr-with-navbar-transparent {
   margin-top: calc(-1 * var(--f7-ptr-size));
   height: calc(100% + var(--f7-ptr-size));
 }
 .ios .ptr-no-navbar .ptr-preloader,
-.ios .ptr-with-navbar-large-transparent .ptr-preloader {
+.ios .ptr-with-navbar-large-transparent .ptr-preloader,
+.ios .ptr-with-navbar-transparent .ptr-preloader {
   margin-top: 0;
 }
 .ios .ptr-bottom .ptr-preloader {
@@ -14808,21 +14810,31 @@ label.item-radio.disabled,
   transform: rotate(0deg) translate3d(0, 0, 0);
 }
 .ios .ptr-with-navbar-large-transparent .ptr-preloader .preloader,
-.ios .ptr-with-navbar-large-transparent .ptr-preloader .ptr-arrow {
+.ios .ptr-with-navbar-transparent .ptr-preloader .preloader,
+.ios .ptr-with-navbar-large-transparent .ptr-preloader .ptr-arrow,
+.ios .ptr-with-navbar-transparent .ptr-preloader .ptr-arrow {
   opacity: 0;
   transition-duration: 300ms;
   transition-property: transform, opacity;
 }
 .ios .ptr-with-navbar-large-transparent.ptr-pull-down .ptr-preloader .preloader,
+.ios .ptr-with-navbar-transparent.ptr-pull-down .ptr-preloader .preloader,
 .ios .ptr-with-navbar-large-transparent.ptr-pull-up .ptr-preloader .preloader,
+.ios .ptr-with-navbar-transparent.ptr-pull-up .ptr-preloader .preloader,
 .ios .ptr-with-navbar-large-transparent.ptr-refreshing .ptr-preloader .preloader,
+.ios .ptr-with-navbar-transparent.ptr-refreshing .ptr-preloader .preloader,
 .ios .ptr-with-navbar-large-transparent.ptr-pull-down .ptr-preloader .ptr-arrow,
+.ios .ptr-with-navbar-transparent.ptr-pull-down .ptr-preloader .ptr-arrow,
 .ios .ptr-with-navbar-large-transparent.ptr-pull-up .ptr-preloader .ptr-arrow,
-.ios .ptr-with-navbar-large-transparent.ptr-refreshing .ptr-preloader .ptr-arrow {
+.ios .ptr-with-navbar-transparent.ptr-pull-up .ptr-preloader .ptr-arrow,
+.ios .ptr-with-navbar-large-transparent.ptr-refreshing .ptr-preloader .ptr-arrow,
+.ios .ptr-with-navbar-transparent.ptr-refreshing .ptr-preloader .ptr-arrow {
   opacity: 1;
 }
 .ios .ptr-with-navbar-large-transparent.ptr-closing .ptr-preloader .preloader,
-.ios .ptr-with-navbar-large-transparent.ptr-closing .ptr-preloader .ptr-arrow {
+.ios .ptr-with-navbar-transparent.ptr-closing .ptr-preloader .preloader,
+.ios .ptr-with-navbar-large-transparent.ptr-closing .ptr-preloader .ptr-arrow,
+.ios .ptr-with-navbar-transparent.ptr-closing .ptr-preloader .ptr-arrow {
   opacity: 0;
   transition-duration: 300ms;
 }
@@ -14907,15 +14919,20 @@ label.item-radio.disabled,
 .md .ptr-bottom.ptr-refreshing .ptr-preloader {
   transform: translate3d(0, -66px, 0);
 }
-.md .ptr-with-navbar-large-transparent .ptr-preloader {
+.md .ptr-with-navbar-large-transparent .ptr-preloader,
+.md .ptr-with-navbar-transparent .ptr-preloader {
   opacity: 0;
 }
 .md .ptr-with-navbar-large-transparent.ptr-pull-down .ptr-preloader,
+.md .ptr-with-navbar-transparent.ptr-pull-down .ptr-preloader,
 .md .ptr-with-navbar-large-transparent.ptr-pull-up .ptr-preloader,
-.md .ptr-with-navbar-large-transparent.ptr-refreshing .ptr-preloader {
+.md .ptr-with-navbar-transparent.ptr-pull-up .ptr-preloader,
+.md .ptr-with-navbar-large-transparent.ptr-refreshing .ptr-preloader,
+.md .ptr-with-navbar-transparent.ptr-refreshing .ptr-preloader {
   opacity: 1;
 }
-.md .ptr-with-navbar-large-transparent.ptr-closing .ptr-preloader {
+.md .ptr-with-navbar-large-transparent.ptr-closing .ptr-preloader,
+.md .ptr-with-navbar-transparent.ptr-closing .ptr-preloader {
   opacity: 0;
   transition-duration: 300ms;
 }
@@ -14986,12 +15003,14 @@ label.item-radio.disabled,
   transform: rotate(180deg) translate3d(0, 0, 0);
 }
 .aurora .ptr-no-navbar,
-.aurora .ptr-with-navbar-large-transparent {
+.aurora .ptr-with-navbar-large-transparent,
+.aurora .ptr-with-navbar-transparent {
   margin-top: calc(-1 * var(--f7-ptr-size));
   height: calc(100% + var(--f7-ptr-size));
 }
 .aurora .ptr-no-navbar .ptr-preloader,
-.aurora .ptr-with-navbar-large-transparent .ptr-preloader {
+.aurora .ptr-with-navbar-large-transparent .ptr-preloader,
+.aurora .ptr-with-navbar-transparent .ptr-preloader {
   margin-top: 0;
 }
 .aurora .ptr-bottom .ptr-preloader {
@@ -15016,21 +15035,31 @@ label.item-radio.disabled,
   transform: rotate(0deg) translate3d(0, 0, 0);
 }
 .aurora .ptr-with-navbar-large-transparent .ptr-preloader .preloader,
-.aurora .ptr-with-navbar-large-transparent .ptr-preloader .ptr-arrow {
+.aurora .ptr-with-navbar-transparent .ptr-preloader .preloader,
+.aurora .ptr-with-navbar-large-transparent .ptr-preloader .ptr-arrow,
+.aurora .ptr-with-navbar-transparent .ptr-preloader .ptr-arrow {
   opacity: 0;
   transition-duration: 300ms;
   transition-property: transform, opacity;
 }
 .aurora .ptr-with-navbar-large-transparent.ptr-pull-down .ptr-preloader .preloader,
+.aurora .ptr-with-navbar-transparent.ptr-pull-down .ptr-preloader .preloader,
 .aurora .ptr-with-navbar-large-transparent.ptr-pull-up .ptr-preloader .preloader,
+.aurora .ptr-with-navbar-transparent.ptr-pull-up .ptr-preloader .preloader,
 .aurora .ptr-with-navbar-large-transparent.ptr-refreshing .ptr-preloader .preloader,
+.aurora .ptr-with-navbar-transparent.ptr-refreshing .ptr-preloader .preloader,
 .aurora .ptr-with-navbar-large-transparent.ptr-pull-down .ptr-preloader .ptr-arrow,
+.aurora .ptr-with-navbar-transparent.ptr-pull-down .ptr-preloader .ptr-arrow,
 .aurora .ptr-with-navbar-large-transparent.ptr-pull-up .ptr-preloader .ptr-arrow,
-.aurora .ptr-with-navbar-large-transparent.ptr-refreshing .ptr-preloader .ptr-arrow {
+.aurora .ptr-with-navbar-transparent.ptr-pull-up .ptr-preloader .ptr-arrow,
+.aurora .ptr-with-navbar-large-transparent.ptr-refreshing .ptr-preloader .ptr-arrow,
+.aurora .ptr-with-navbar-transparent.ptr-refreshing .ptr-preloader .ptr-arrow {
   opacity: 1;
 }
 .aurora .ptr-with-navbar-large-transparent.ptr-closing .ptr-preloader .preloader,
-.aurora .ptr-with-navbar-large-transparent.ptr-closing .ptr-preloader .ptr-arrow {
+.aurora .ptr-with-navbar-transparent.ptr-closing .ptr-preloader .preloader,
+.aurora .ptr-with-navbar-large-transparent.ptr-closing .ptr-preloader .ptr-arrow,
+.aurora .ptr-with-navbar-transparent.ptr-closing .ptr-preloader .ptr-arrow {
   opacity: 0;
   transition-duration: 300ms;
 }
@@ -18819,6 +18848,9 @@ button.swiper-pagination-bullet {
 }
 .notification-icon i {
   font-size: var(--f7-notification-icon-size);
+}
+.notification-icon img {
+  height: var(--f7-notification-icon-size);
 }
 .notification-header {
   display: flex;
