@@ -118,7 +118,6 @@ function buildLazyComponentsJs(components, cb) {
   rollup
     .rollup({
       input: componentsToProcess.map(component => `./src/core/components/${component}/${component}.js`),
-      experimentalOptimizeChunks: true,
       plugins: [
         replace({
           delimiters: ['', ''],
