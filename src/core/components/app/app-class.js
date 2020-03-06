@@ -175,7 +175,7 @@ class Framework7 extends Framework7Class {
     app.router.componentLoader(
       app.params.component,
       app.params.componentUrl,
-      { componentOptions: { el: app.root[0] } },
+      { componentOptions: { el: app.root[0], root: true } },
       (el) => {
         app.root = $(el);
         app.root[0].f7 = app;
