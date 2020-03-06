@@ -12,11 +12,11 @@ const Treeview = {
     function done(cancel) {
       if (cancel) {
         $itemEl.removeClass('treeview-item-opened');
-        $itemEl.find('.treeview-toggle').removeClass('treeview-toggle-hidden');
-        $itemEl.find('.treeview-item-root').children('.preloader').remove();
-        return;
+        $itemEl.trigger('treeview:close');
+        app.emit('treeviewClose', $itemEl[0]);
+      } else {
+        $itemEl[0].f7TreeviewChildrenLoaded = true;
       }
-      $itemEl[0].f7TreeviewChildrenLoaded = true;
       $itemEl.find('.treeview-toggle').removeClass('treeview-toggle-hidden');
       $itemEl.find('.treeview-preloader').remove();
     }
