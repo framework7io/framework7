@@ -207,7 +207,7 @@ export namespace Router {
     previousRoute: Route
     /** Boolean property indicating is it allowed to change page / navigate or not */
     allowPageChange: boolean
-    /** Generate route url based on given route name */
+    /** Generate route url based on a given route name */
     generateUrl(parameters: {
       /** route name */
       name: string
