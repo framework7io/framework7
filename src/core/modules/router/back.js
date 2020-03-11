@@ -115,6 +115,8 @@ function backward(el, backwardOptions) {
       .addClass(`navbar-previous${isMaster ? ' navbar-master' : ''}${isDetail ? ' navbar-master-detail' : ''}${isDetailRoot ? ' navbar-master-detail-root' : ''}`)
       .removeClass('stacked')
       .removeAttr('aria-hidden');
+    $newNavbarEl.trigger('navbar:position', { position: 'previous' });
+    router.emit('navbarPosition', $newNavbarEl[0], 'previous');
     if (isMaster || isDetailRoot) {
       router.emit('navbarRole', $newNavbarEl[0], { role: isMaster ? 'master' : 'detail', detailRoot: !!isDetailRoot });
     }
