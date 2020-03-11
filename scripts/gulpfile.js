@@ -170,6 +170,7 @@ const watch = {
 // Server
 function server() {
   connect.server({
+    host: '0.0.0.0',
     root: ['./'],
     livereload: false,
     port: '3000',
