@@ -401,6 +401,7 @@ const Navbar = {
         $navbarEl.find('.navbar-bg, .title').css('opacity', '');
         return;
       }
+
       $navbarEl.find('.navbar-bg, .title').css('opacity', opacity);
 
       if (snapPageScrollToTransparentNavbar) {
@@ -421,6 +422,8 @@ const Navbar = {
       }
     }
 
+    let previousCollapseProgress = null;
+    let collapseProgress = null;
     function handleLargeNavbarCollapse() {
       const isHidden = $navbarEl.hasClass('navbar-hidden') || $navbarEl.parent('.navbars').hasClass('navbar-hidden');
       if (isHidden) return;
@@ -429,11 +432,12 @@ const Navbar = {
           $navbarEl.hasClass('navbar-large')
           && $navbarEl.hasClass('navbar-transparent')
         );
-      const collapseProgress = Math.min(Math.max((currentScrollTop / navbarTitleLargeHeight), 0), 1);
+      previousCollapseProgress = collapseProgress;
+      collapseProgress = Math.min(Math.max((currentScrollTop / navbarTitleLargeHeight), 0), 1);
+      const previousCollapseWasInMiddle = previousCollapseProgress > 0 && previousCollapseProgress < 1;
       const inSearchbarExpanded = $navbarEl.hasClass('with-searchbar-expandable-enabled');
       if (inSearchbarExpanded) return;
       navbarCollapsed = $navbarEl.hasClass('navbar-large-collapsed');
-
       if (collapseProgress === 0 && navbarCollapsed) {
         app.navbar.expandLargeTitle($navbarEl[0]);
       } else if (collapseProgress === 1 && !navbarCollapsed) {
@@ -441,8 +445,9 @@ const Navbar = {
       }
       if (
         (collapseProgress === 0 && navbarCollapsed)
+        || (collapseProgress === 0 && previousCollapseWasInMiddle)
         || (collapseProgress === 1 && !navbarCollapsed)
-        // || ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed))
+        || (collapseProgress === 1 && previousCollapseWasInMiddle)
       ) {
         if (app.theme === 'md') {
           $navbarEl.find('.navbar-inner').css('overflow', '');
