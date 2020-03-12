@@ -258,8 +258,11 @@ class Popup extends Modal {
         );
       }
       if (isPush) {
-        pushOffset = parseInt($el.css('--f7-popup-push-offset'), 10);
-        if (Number.isNaN(pushOffset)) pushOffset = 0;
+        let offset = parseInt($el.css('--f7-popup-push-offset'), 10);
+        let overlap = parseInt($el.css('--f7-popup-push-overlap'), 10);
+        if (Number.isNaN(offset)) offset = 0;
+        if (Number.isNaN(overlap)) overlap = 0;
+        pushOffset = offset + overlap;
         if (pushOffset) {
           $el.addClass('popup-push');
           popup.$htmlEl.addClass('with-modal-popup-push');
