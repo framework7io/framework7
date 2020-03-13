@@ -65,7 +65,7 @@ export default {
           }).open();
         },
         prompt(...args) {
-          let [text, title, callbackOk, callbackCancel, defaultValue] = args;
+          let [text, title, callbackOk, callbackCancel, defaultValue, buttonOk, buttonCancel ] = args;
           if (typeof args[1] === 'function') {
             [text, callbackOk, callbackCancel, defaultValue, title] = args;
           }
@@ -76,12 +76,12 @@ export default {
             content: `<div class="dialog-input-field input"><input type="text" class="dialog-input" value="${defaultValue}"></div>`,
             buttons: [
               {
-                text: app.params.dialog.buttonCancel,
+                text: buttonOk || app.params.dialog.buttonCancel,
                 keyCodes: keyboardActions ? [27] : null,
                 color: app.theme === 'aurora' ? 'gray' : null,
               },
               {
-                text: app.params.dialog.buttonOk,
+                text: buttonCancel || app.params.dialog.buttonOk,
                 bold: true,
                 keyCodes: keyboardActions ? [13] : null,
               },
@@ -96,7 +96,7 @@ export default {
           }).open();
         },
         confirm(...args) {
-          let [text, title, callbackOk, callbackCancel] = args;
+          let [text, title, callbackOk, callbackCancel, buttonOk, buttonCancel ] = args;
           if (typeof args[1] === 'function') {
             [text, callbackOk, callbackCancel, title] = args;
           }
@@ -105,13 +105,13 @@ export default {
             text,
             buttons: [
               {
-                text: app.params.dialog.buttonCancel,
+                text: buttonOk || app.params.dialog.buttonCancel,
                 onClick: callbackCancel,
                 keyCodes: keyboardActions ? [27] : null,
                 color: app.theme === 'aurora' ? 'gray' : null,
               },
               {
-                text: app.params.dialog.buttonOk,
+                text: buttonCancel || app.params.dialog.buttonOk,
                 bold: true,
                 onClick: callbackOk,
                 keyCodes: keyboardActions ? [13] : null,
