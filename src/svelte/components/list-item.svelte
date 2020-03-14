@@ -175,6 +175,7 @@
   function onClick(event) {
     if (event.target.tagName.toLowerCase() !== 'input') {
       dispatch('click', event);
+      if (typeof $$props.onClick === 'function') $$props.onClick(event);
     }
   }
   function onSwipeoutOverswipeEnter(eventEl) {
