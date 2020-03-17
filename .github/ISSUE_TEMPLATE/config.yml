@@ -1,0 +1,7 @@
+contact_links:
+- name: 📃 Documentation Issue
+  url: https://github.com/framework7io/framework7-website/issues/new
+  about: Issues with documentation or website
+- name: ⚙️ CLI Issue
+  url: https://github.com/framework7io/framework7-cli/issues/new
+  about: Issues with Framework7 CLI
