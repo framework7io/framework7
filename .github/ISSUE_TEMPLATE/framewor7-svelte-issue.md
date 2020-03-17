@@ -1,5 +1,5 @@
 ---
-name: Framewor7-Vue Issue
+name: Framewor7-Svelte Issue
 about: Create a report to help us improve
 
 ---
@@ -16,9 +16,9 @@ Please, don't ask questions on GitHub! Do you want to ask a question? Are you lo
 -->
 
 * Framework7 version: [e.g. 3.0.0]
-* Vue.js version: [e.g. 2.0.0]
+* Svelte version: [e.g. 3.0.0]
 * Platform and Target: [e.g. iOS 11 Cordova app, or Android 8 Chrome browser]
-* Live Link or JSFiddle: PREFERABLY _(IF YOU WANT YOUR ISSUE TO BE RESOLVED ASAP)_. You can start from forking the following JSFiddle template: [JSFiddle](https://jsfiddle.net/nolimits4web/jcwzqovz/)
+* Live Link or JSFiddle/CodeSandbox: PREFERABLY _(IF YOU WANT YOUR ISSUE TO BE RESOLVED ASAP)_. You can start from forking the following CodeSandbox template: [CodeSandbox](https://codesandbox.io/s/framework7-svelte-yf8m2)
 
 ### Describe the bug
 A clear and concise description of what the bug is.
