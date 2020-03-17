@@ -1,5 +1,5 @@
 ---
-name: Framewor7-Core Issue
+name: Framework7-Core Issue
 about: Create a report to help us improve
 
 ---
