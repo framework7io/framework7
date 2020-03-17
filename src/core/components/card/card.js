@@ -428,6 +428,9 @@ const CardExpandable = {
             height: '',
           });
       }
+      if ($backdropEl && $backdropEl.length) {
+        $backdropEl.removeClass('card-backdrop-in card-backdrop-out');
+      }
       $cardEl.removeClass('card-closing card-no-transition');
       $cardEl.trigger('card:closed');
       $cardEl.find('.card-expandable-size').remove();
