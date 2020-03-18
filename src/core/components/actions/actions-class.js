@@ -126,11 +126,13 @@ class Actions extends Modal {
         });
         popover.open(animate);
         popover.once('popoverOpened', () => {
+          actions.emit('popoverOpened', popover);
           popover.$el.find('.list-button, .item-link').each((groupIndex, buttonEl) => {
             $(buttonEl).on('click', buttonOnClick);
           });
         });
         popover.once('popoverClosed', () => {
+          actions.emit('popoverClosed', popover);
           popover.$el.find('.list-button, .item-link').each((groupIndex, buttonEl) => {
             $(buttonEl).off('click', buttonOnClick);
           });
