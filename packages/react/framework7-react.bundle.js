@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.5.0
+ * Framework7 React 5.5.1
  * Build full featured iOS & Android apps using Framework7 & React
  * https://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 6, 2020
+ * Released on: March 20, 2020
  */
 
 (function (global, factory) {
@@ -4905,7 +4905,11 @@
       var iconAurora = props.iconAurora;
       var id = props.id;
       var style = props.style;
-      var defaultSlots = self.slots.default;
+      var defaultSlots = self.slots.default || [];
+      Object.keys(self.slots).forEach(function (key) {
+        if (typeof self.slots[key] === 'undefined' || key === 'default') { return; }
+        self.slots[key].forEach(function (child) { return defaultSlots.push(child); });
+      });
       var iconEl;
       var textEl;
       var badgeEl;
@@ -11316,7 +11320,7 @@
       this.__reactRefs = {};
 
       (function () {
-        Utils.bindMethods(this$1, ['onOpen', 'onOpened', 'onClose', 'onClosed']);
+        Utils.bindMethods(this$1, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onSwipeStart', 'onSwipeMove', 'onSwipeEnd', 'onSwipeClose']);
       })();
     }
 
@@ -11325,6 +11329,22 @@
     F7Popup.prototype.constructor = F7Popup;
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
+    F7Popup.prototype.onSwipeStart = function onSwipeStart (instance) {
+      this.dispatchEvent('popup:swipestart popupSwipeStart', instance);
+    };
+
+    F7Popup.prototype.onSwipeMove = function onSwipeMove (instance) {
+      this.dispatchEvent('popup:swipemove popupSwipeMove', instance);
+    };
+
+    F7Popup.prototype.onSwipeEnd = function onSwipeEnd (instance) {
+      this.dispatchEvent('popup:swipeend popupSwipeEnd', instance);
+    };
+
+    F7Popup.prototype.onSwipeClose = function onSwipeClose (instance) {
+      this.dispatchEvent('popup:swipeclose popupSwipeClose', instance);
+    };
 
     F7Popup.prototype.onOpen = function onOpen (instance) {
       this.dispatchEvent('popup:open popupOpen', instance);
@@ -11398,6 +11418,10 @@
       var popupParams = {
         el: el,
         on: {
+          swipeStart: self.onSwipeStart,
+          swipeMove: self.onSwipeMove,
+          swipeEnd: self.onSwipeEnd,
+          swipeClose: self.onSwipeClose,
           open: self.onOpen,
           opened: self.onOpened,
           close: self.onClose,
@@ -14668,7 +14692,7 @@
   };
 
   /**
-   * Framework7 React 5.5.0
+   * Framework7 React 5.5.1
    * Build full featured iOS & Android apps using Framework7 & React
    * https://framework7.io/react/
    *
@@ -14676,7 +14700,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: March 6, 2020
+   * Released on: March 20, 2020
    */
 
   function f7ready(callback) {

@@ -1,5 +1,5 @@
 /**
- * Framework7 5.5.0
+ * Framework7 5.5.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 6, 2020
+ * Released on: March 20, 2020
  */
 
 (function (global, factory) {
@@ -6120,6 +6120,8 @@
         .removeClass('navbar-previous navbar-current navbar-next')
         .addClass(("navbar-" + newPagePosition + (isMaster ? ' navbar-master' : '') + (isDetail ? ' navbar-master-detail' : '') + (isDetailRoot ? ' navbar-master-detail-root' : '')))
         .removeClass('stacked');
+      $newNavbarEl.trigger('navbar:position', { position: 'newPagePosition' });
+      router.emit('navbarPosition', $newNavbarEl[0], 'newPagePosition');
       if (isMaster || isDetail) {
         router.emit('navbarRole', $newNavbarEl[0], { role: isMaster ? 'master' : 'detail', detailRoot: !!isDetailRoot });
       }
@@ -7360,6 +7362,8 @@
         .addClass(("navbar-previous" + (isMaster ? ' navbar-master' : '') + (isDetail ? ' navbar-master-detail' : '') + (isDetailRoot ? ' navbar-master-detail-root' : '')))
         .removeClass('stacked')
         .removeAttr('aria-hidden');
+      $newNavbarEl.trigger('navbar:position', { position: 'previous' });
+      router.emit('navbarPosition', $newNavbarEl[0], 'previous');
       if (isMaster || isDetailRoot) {
         router.emit('navbarRole', $newNavbarEl[0], { role: isMaster ? 'master' : 'detail', detailRoot: !!isDetailRoot });
       }
@@ -10475,6 +10479,7 @@
           $navbarEl.find('.navbar-bg, .title').css('opacity', '');
           return;
         }
+
         $navbarEl.find('.navbar-bg, .title').css('opacity', opacity);
 
         if (snapPageScrollToTransparentNavbar) {
@@ -10495,6 +10500,8 @@
         }
       }
 
+      var previousCollapseProgress = null;
+      var collapseProgress = null;
       function handleLargeNavbarCollapse() {
         var isHidden = $navbarEl.hasClass('navbar-hidden') || $navbarEl.parent('.navbars').hasClass('navbar-hidden');
         if (isHidden) { return; }
@@ -10503,11 +10510,12 @@
             $navbarEl.hasClass('navbar-large')
             && $navbarEl.hasClass('navbar-transparent')
           );
-        var collapseProgress = Math.min(Math.max((currentScrollTop / navbarTitleLargeHeight), 0), 1);
+        previousCollapseProgress = collapseProgress;
+        collapseProgress = Math.min(Math.max((currentScrollTop / navbarTitleLargeHeight), 0), 1);
+        var previousCollapseWasInMiddle = previousCollapseProgress > 0 && previousCollapseProgress < 1;
         var inSearchbarExpanded = $navbarEl.hasClass('with-searchbar-expandable-enabled');
         if (inSearchbarExpanded) { return; }
         navbarCollapsed = $navbarEl.hasClass('navbar-large-collapsed');
-
         if (collapseProgress === 0 && navbarCollapsed) {
           app.navbar.expandLargeTitle($navbarEl[0]);
         } else if (collapseProgress === 1 && !navbarCollapsed) {
@@ -10515,8 +10523,9 @@
         }
         if (
           (collapseProgress === 0 && navbarCollapsed)
+          || (collapseProgress === 0 && previousCollapseWasInMiddle)
           || (collapseProgress === 1 && !navbarCollapsed)
-          // || ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed))
+          || (collapseProgress === 1 && previousCollapseWasInMiddle)
         ) {
           if (app.theme === 'md') {
             $navbarEl.find('.navbar-inner').css('overflow', '');
@@ -11507,7 +11516,7 @@
   };
 
   /**
-   * Framework7 5.5.0
+   * Framework7 5.5.1
    * Full featured mobile HTML framework for building iOS & Android apps
    * https://framework7.io/
    *
@@ -11515,7 +11524,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: March 6, 2020
+   * Released on: March 20, 2020
    */
 
   // Install Core Modules & Components

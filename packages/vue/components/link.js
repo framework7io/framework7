@@ -65,7 +65,11 @@ export default {
       id,
       style
     } = props;
-    const defaultSlots = self.$slots.default;
+    const defaultSlots = self.$slots.default || [];
+    Object.keys(self.$slots).forEach(key => {
+      if (typeof self.$slots[key] === 'undefined' || key === 'default') return;
+      self.$slots[key].forEach(child => defaultSlots.push(child));
+    });
     let iconEl;
     let textEl;
     let badgeEl;

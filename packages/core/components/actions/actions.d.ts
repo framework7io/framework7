@@ -54,6 +54,8 @@ export namespace Actions {
     content?:string
     /** Enables Action Sheet backdrop (dark semi transparent layer behind)*/
     backdrop?:boolean
+    /** Custom css class added to Actions Sheet element */
+    cssClass?: string
     /** When enabled, action sheet will be closed on backdrop click*/
     closeByBackdropClick?:boolean
     /** When enabled, action sheet will be closed on when click outside of it*/

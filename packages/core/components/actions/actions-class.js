@@ -105,6 +105,24 @@ class Actions extends Modal {
           targetY,
           targetWidth,
           targetHeight,
+          on: {
+            open() {
+              actions.$el.trigger(`modal:open ${actions.type.toLowerCase()}:open`);
+              actions.emit(`local::open modalOpen ${actions.type}Open`, actions);
+            },
+            opened() {
+              actions.$el.trigger(`modal:opened ${actions.type.toLowerCase()}:opened`);
+              actions.emit(`local::opened modalOpened ${actions.type}Opened`, actions);
+            },
+            close() {
+              actions.$el.trigger(`modal:close ${actions.type.toLowerCase()}:close`);
+              actions.emit(`local::close modalClose ${actions.type}Close`, actions);
+            },
+            closed() {
+              actions.$el.trigger(`modal:closed ${actions.type.toLowerCase()}:closed`);
+              actions.emit(`local::closed modalClosed ${actions.type}Closed`, actions);
+            },
+          },
         });
         popover.open(animate);
         popover.once('popoverOpened', () => {
@@ -215,8 +233,9 @@ class Actions extends Modal {
     const actions = this;
     if (actions.params.render) return actions.params.render.call(actions, actions);
     const { groups } = actions;
+    const cssClass = actions.params.cssClass;
     return `
-      <div class="actions-modal${actions.params.grid ? ' actions-grid' : ''}">
+      <div class="actions-modal${actions.params.grid ? ' actions-grid' : ''} ${cssClass || ''}">
         ${groups.map(group => `<div class="actions-group">
             ${group.map((button) => {
               const buttonClasses = [`actions-${button.label ? 'label' : 'button'}`];
@@ -243,8 +262,9 @@ class Actions extends Modal {
     const actions = this;
     if (actions.params.renderPopover) return actions.params.renderPopover.call(actions, actions);
     const { groups } = actions;
+    const cssClass = actions.params.cssClass;
     return `
-      <div class="popover popover-from-actions">
+      <div class="popover popover-from-actions ${cssClass || ''}">
         <div class="popover-inner">
           ${groups.map(group => `
             <div class="list">

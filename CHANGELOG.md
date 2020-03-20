@@ -2,6 +2,21 @@
 
 # Change Log
 
+# [v5.5.1](https://github.com/framework7io/framework7/compare/v5.5.0...v5.5.1) - March 20, 2020
+  * Core
+    * Action Sheet
+      * Fixed issue when it stops to emit events when converted to popover
+      * Added `cssClass` parameter to add custom css class to generated element
+    * Login Screen
+      * Fixed issue with appearance in dark theme
+    * Popup
+      * New events when swipeToClose enabled: `swipeStart`, `swipeMove`, `swipeEnd`, `swipeClose`
+    * Searchbar
+      * Fixed inline-searchbar styles when used with large navbar
+    * Subnavbar
+      * Fixed issue with disabled pointer-events in hidden navbar
+  * Minor fixes
+
 # [v5.5.0](https://github.com/framework7io/framework7/compare/v5.4.5...v5.5.0) - March 6, 2020
   * Core
     * Card

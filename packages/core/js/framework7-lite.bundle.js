@@ -1,5 +1,5 @@
 /**
- * Framework7 5.5.0
+ * Framework7 5.5.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 6, 2020
+ * Released on: March 20, 2020
  */
 
 (function (global, factory) {
@@ -6121,6 +6121,8 @@
         .removeClass('navbar-previous navbar-current navbar-next')
         .addClass(("navbar-" + newPagePosition + (isMaster ? ' navbar-master' : '') + (isDetail ? ' navbar-master-detail' : '') + (isDetailRoot ? ' navbar-master-detail-root' : '')))
         .removeClass('stacked');
+      $newNavbarEl.trigger('navbar:position', { position: 'newPagePosition' });
+      router.emit('navbarPosition', $newNavbarEl[0], 'newPagePosition');
       if (isMaster || isDetail) {
         router.emit('navbarRole', $newNavbarEl[0], { role: isMaster ? 'master' : 'detail', detailRoot: !!isDetailRoot });
       }
@@ -7361,6 +7363,8 @@
         .addClass(("navbar-previous" + (isMaster ? ' navbar-master' : '') + (isDetail ? ' navbar-master-detail' : '') + (isDetailRoot ? ' navbar-master-detail-root' : '')))
         .removeClass('stacked')
         .removeAttr('aria-hidden');
+      $newNavbarEl.trigger('navbar:position', { position: 'previous' });
+      router.emit('navbarPosition', $newNavbarEl[0], 'previous');
       if (isMaster || isDetailRoot) {
         router.emit('navbarRole', $newNavbarEl[0], { role: isMaster ? 'master' : 'detail', detailRoot: !!isDetailRoot });
       }
@@ -10476,6 +10480,7 @@
           $navbarEl.find('.navbar-bg, .title').css('opacity', '');
           return;
         }
+
         $navbarEl.find('.navbar-bg, .title').css('opacity', opacity);
 
         if (snapPageScrollToTransparentNavbar) {
@@ -10496,6 +10501,8 @@
         }
       }
 
+      var previousCollapseProgress = null;
+      var collapseProgress = null;
       function handleLargeNavbarCollapse() {
         var isHidden = $navbarEl.hasClass('navbar-hidden') || $navbarEl.parent('.navbars').hasClass('navbar-hidden');
         if (isHidden) { return; }
@@ -10504,11 +10511,12 @@
             $navbarEl.hasClass('navbar-large')
             && $navbarEl.hasClass('navbar-transparent')
           );
-        var collapseProgress = Math.min(Math.max((currentScrollTop / navbarTitleLargeHeight), 0), 1);
+        previousCollapseProgress = collapseProgress;
+        collapseProgress = Math.min(Math.max((currentScrollTop / navbarTitleLargeHeight), 0), 1);
+        var previousCollapseWasInMiddle = previousCollapseProgress > 0 && previousCollapseProgress < 1;
         var inSearchbarExpanded = $navbarEl.hasClass('with-searchbar-expandable-enabled');
         if (inSearchbarExpanded) { return; }
         navbarCollapsed = $navbarEl.hasClass('navbar-large-collapsed');
-
         if (collapseProgress === 0 && navbarCollapsed) {
           app.navbar.expandLargeTitle($navbarEl[0]);
         } else if (collapseProgress === 1 && !navbarCollapsed) {
@@ -10516,8 +10524,9 @@
         }
         if (
           (collapseProgress === 0 && navbarCollapsed)
+          || (collapseProgress === 0 && previousCollapseWasInMiddle)
           || (collapseProgress === 1 && !navbarCollapsed)
-          // || ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed))
+          || (collapseProgress === 1 && previousCollapseWasInMiddle)
         ) {
           if (app.theme === 'md') {
             $navbarEl.find('.navbar-inner').css('overflow', '');
@@ -12150,7 +12159,13 @@
             }
           }
           isMoved = true;
+          popup.emit('local::swipeStart popupSwipeStart', popup);
+          popup.$el.trigger('popup:swipestart');
+        } else {
+          popup.emit('local::swipeMove popupSwipeMove', popup);
+          popup.$el.trigger('popup:swipemove');
         }
+
         e.preventDefault();
         if (isPush && pushOffset) {
           var pushProgress = 1 - Math.abs(touchesDiff / popupHeight);
@@ -12164,6 +12179,8 @@
         if (!isMoved) {
           return;
         }
+        popup.emit('local::swipeEnd popupSwipeEnd', popup);
+        popup.$el.trigger('popup:swipeend');
         isMoved = false;
         allowSwipeToClose = false;
         $el.transition('');
@@ -12186,6 +12203,8 @@
               $el.addClass('swipe-close-to-top');
             }
             $el.transform('');
+            popup.emit('local::swipeclose popupSwipeClose', popup);
+            popup.$el.trigger('popup:swipeclose');
             popup.close();
             allowSwipeToClose = true;
           });
@@ -12829,6 +12848,24 @@
             targetY: targetY,
             targetWidth: targetWidth,
             targetHeight: targetHeight,
+            on: {
+              open: function open() {
+                actions.$el.trigger(("modal:open " + (actions.type.toLowerCase()) + ":open"));
+                actions.emit(("local::open modalOpen " + (actions.type) + "Open"), actions);
+              },
+              opened: function opened() {
+                actions.$el.trigger(("modal:opened " + (actions.type.toLowerCase()) + ":opened"));
+                actions.emit(("local::opened modalOpened " + (actions.type) + "Opened"), actions);
+              },
+              close: function close() {
+                actions.$el.trigger(("modal:close " + (actions.type.toLowerCase()) + ":close"));
+                actions.emit(("local::close modalClose " + (actions.type) + "Close"), actions);
+              },
+              closed: function closed() {
+                actions.$el.trigger(("modal:closed " + (actions.type.toLowerCase()) + ":closed"));
+                actions.emit(("local::closed modalClosed " + (actions.type) + "Closed"), actions);
+              },
+            },
           });
           popover.open(animate);
           popover.once('popoverOpened', function () {
@@ -12943,7 +12980,8 @@
       var actions = this;
       if (actions.params.render) { return actions.params.render.call(actions, actions); }
       var groups = actions.groups;
-      return ("\n      <div class=\"actions-modal" + (actions.params.grid ? ' actions-grid' : '') + "\">\n        " + (groups.map(function (group) { return ("<div class=\"actions-group\">\n            " + (group.map(function (button) {
+      var cssClass = actions.params.cssClass;
+      return ("\n      <div class=\"actions-modal" + (actions.params.grid ? ' actions-grid' : '') + " " + (cssClass || '') + "\">\n        " + (groups.map(function (group) { return ("<div class=\"actions-group\">\n            " + (group.map(function (button) {
                 var buttonClasses = [("actions-" + (button.label ? 'label' : 'button'))];
                 var color = button.color;
                 var bg = button.bg;
@@ -12967,7 +13005,8 @@
       var actions = this;
       if (actions.params.renderPopover) { return actions.params.renderPopover.call(actions, actions); }
       var groups = actions.groups;
-      return ("\n      <div class=\"popover popover-from-actions\">\n        <div class=\"popover-inner\">\n          " + (groups.map(function (group) { return ("\n            <div class=\"list\">\n              <ul>\n                " + (group.map(function (button) {
+      var cssClass = actions.params.cssClass;
+      return ("\n      <div class=\"popover popover-from-actions " + (cssClass || '') + "\">\n        <div class=\"popover-inner\">\n          " + (groups.map(function (group) { return ("\n            <div class=\"list\">\n              <ul>\n                " + (group.map(function (button) {
                     var itemClasses = [];
                     var color = button.color;
                     var bg = button.bg;
@@ -13004,6 +13043,7 @@
         forceToPopover: false,
         backdrop: true,
         backdropEl: undefined,
+        cssClass: null,
         closeByBackdropClick: true,
         closeOnEscape: false,
         render: null,
@@ -13226,7 +13266,6 @@
         touchesDiff = startTouch.y - currentTouch.y;
 
         var direction = touchesDiff < 0 ? 'to-bottom' : 'to-top';
-
 
         if (!isMoved) {
           if (sheetPageContentEl && !$el.hasClass('modal-in-swipe-step')) {
@@ -17843,6 +17882,9 @@
               width: '',
               height: '',
             });
+        }
+        if ($backdropEl && $backdropEl.length) {
+          $backdropEl.removeClass('card-backdrop-in card-backdrop-out');
         }
         $cardEl.removeClass('card-closing card-no-transition');
         $cardEl.trigger('card:closed');
@@ -39907,7 +39949,7 @@
   };
 
   /**
-   * Framework7 5.5.0
+   * Framework7 5.5.1
    * Full featured mobile HTML framework for building iOS & Android apps
    * https://framework7.io/
    *
@@ -39915,7 +39957,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: March 6, 2020
+   * Released on: March 20, 2020
    */
 
   // Install Core Modules & Components

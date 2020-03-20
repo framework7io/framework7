@@ -49,6 +49,23 @@
     Mixins.colorClasses($$props),
   );
 
+  function onSwipeStart(instance) {
+    dispatch('popupSwipeStart', [instance]);
+    if (typeof $$props.onPopupSwipeStart === 'function') $$props.onPopupSwipeStart(instance);
+  }
+  function onSwipeMove(instance) {
+    dispatch('popupSwipeMove', [instance]);
+    if (typeof $$props.onPopupSwipeMove === 'function') $$props.onPopupSwipeMove(instance);
+  }
+  function onSwipeEnd(instance) {
+    dispatch('popupSwipeEnd', [instance]);
+    if (typeof $$props.onPopupSwipeEnd === 'function') $$props.onPopupSwipeEnd(instance);
+  }
+  function onSwipeClose(instance) {
+    dispatch('popupSwipeClose', [instance]);
+    if (typeof $$props.onPopupSwipeClose === 'function') $$props.onPopupSwipeClose(instance);
+  }
+
   function onOpen(instance) {
     dispatch('popupOpen', [instance]);
     if (typeof $$props.onPopupOpen === 'function') $$props.onPopupOpen(instance);
@@ -83,6 +100,10 @@
     const popupParams = {
       el,
       on: {
+        swipeStart: onSwipeStart,
+        swipeMove: onSwipeMove,
+        swipeEnd: onSwipeEnd,
+        swipeClose: onSwipeClose,
         open: onOpen,
         opened: onOpened,
         close: onClose,

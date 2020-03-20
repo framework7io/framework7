@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.5.0
+ * Framework7 Vue 5.5.1
  * Build full featured iOS & Android apps using Framework7 & Vue
  * https://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 6, 2020
+ * Released on: March 20, 2020
  */
 
 (function (global, factory) {
@@ -4265,7 +4265,11 @@
       var iconAurora = props.iconAurora;
       var id = props.id;
       var style = props.style;
-      var defaultSlots = self.$slots.default;
+      var defaultSlots = self.$slots.default || [];
+      Object.keys(self.$slots).forEach(function (key) {
+        if (typeof self.$slots[key] === 'undefined' || key === 'default') { return; }
+        self.$slots[key].forEach(function (child) { return defaultSlots.push(child); });
+      });
       var iconEl;
       var textEl;
       var badgeEl;
@@ -10256,7 +10260,7 @@
     },
 
     created: function created() {
-      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed']);
+      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onSwipeStart', 'onSwipeMove', 'onSwipeEnd', 'onSwipeClose']);
     },
 
     mounted: function mounted() {
@@ -10274,6 +10278,10 @@
       var popupParams = {
         el: el,
         on: {
+          swipeStart: self.onSwipeStart,
+          swipeMove: self.onSwipeMove,
+          swipeEnd: self.onSwipeEnd,
+          swipeClose: self.onSwipeClose,
           open: self.onOpen,
           opened: self.onOpened,
           close: self.onClose,
@@ -10305,6 +10313,22 @@
     },
 
     methods: {
+      onSwipeStart: function onSwipeStart(instance) {
+        this.dispatchEvent('popup:swipestart popupSwipeStart', instance);
+      },
+
+      onSwipeMove: function onSwipeMove(instance) {
+        this.dispatchEvent('popup:swipemove popupSwipeMove', instance);
+      },
+
+      onSwipeEnd: function onSwipeEnd(instance) {
+        this.dispatchEvent('popup:swipeend popupSwipeEnd', instance);
+      },
+
+      onSwipeClose: function onSwipeClose(instance) {
+        this.dispatchEvent('popup:swipeclose popupSwipeClose', instance);
+      },
+
       onOpen: function onOpen(instance) {
         this.dispatchEvent('popup:open popupOpen', instance);
       },
@@ -13218,7 +13242,7 @@
   };
 
   /**
-   * Framework7 Vue 5.5.0
+   * Framework7 Vue 5.5.1
    * Build full featured iOS & Android apps using Framework7 & Vue
    * https://framework7.io/vue/
    *
@@ -13226,7 +13250,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: March 6, 2020
+   * Released on: March 20, 2020
    */
 
   function f7ready(callback) {

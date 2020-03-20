@@ -194,7 +194,6 @@ class Sheet extends Modal {
 
       const direction = touchesDiff < 0 ? 'to-bottom' : 'to-top';
 
-
       if (!isMoved) {
         if (sheetPageContentEl && !$el.hasClass('modal-in-swipe-step')) {
           sheetPageContentScrollTop = sheetPageContentEl.scrollTop;

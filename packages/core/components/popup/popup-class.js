@@ -190,7 +190,13 @@ class Popup extends Modal {
           }
         }
         isMoved = true;
+        popup.emit('local::swipeStart popupSwipeStart', popup);
+        popup.$el.trigger('popup:swipestart');
+      } else {
+        popup.emit('local::swipeMove popupSwipeMove', popup);
+        popup.$el.trigger('popup:swipemove');
       }
+
       e.preventDefault();
       if (isPush && pushOffset) {
         const pushProgress = 1 - Math.abs(touchesDiff / popupHeight);
@@ -204,6 +210,8 @@ class Popup extends Modal {
       if (!isMoved) {
         return;
       }
+      popup.emit('local::swipeEnd popupSwipeEnd', popup);
+      popup.$el.trigger('popup:swipeend');
       isMoved = false;
       allowSwipeToClose = false;
       $el.transition('');
@@ -226,6 +234,8 @@ class Popup extends Modal {
             $el.addClass('swipe-close-to-top');
           }
           $el.transform('');
+          popup.emit('local::swipeclose popupSwipeClose', popup);
+          popup.$el.trigger('popup:swipeclose');
           popup.close();
           allowSwipeToClose = true;
         });

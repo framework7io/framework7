@@ -12,8 +12,24 @@ class F7Popup extends React.Component {
     this.__reactRefs = {};
 
     (() => {
-      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed']);
+      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onSwipeStart', 'onSwipeMove', 'onSwipeEnd', 'onSwipeClose']);
     })();
+  }
+
+  onSwipeStart(instance) {
+    this.dispatchEvent('popup:swipestart popupSwipeStart', instance);
+  }
+
+  onSwipeMove(instance) {
+    this.dispatchEvent('popup:swipemove popupSwipeMove', instance);
+  }
+
+  onSwipeEnd(instance) {
+    this.dispatchEvent('popup:swipeend popupSwipeEnd', instance);
+  }
+
+  onSwipeClose(instance) {
+    this.dispatchEvent('popup:swipeclose popupSwipeClose', instance);
   }
 
   onOpen(instance) {
@@ -90,6 +106,10 @@ class F7Popup extends React.Component {
     const popupParams = {
       el,
       on: {
+        swipeStart: self.onSwipeStart,
+        swipeMove: self.onSwipeMove,
+        swipeEnd: self.onSwipeEnd,
+        swipeClose: self.onSwipeClose,
         open: self.onOpen,
         opened: self.onOpened,
         close: self.onClose,

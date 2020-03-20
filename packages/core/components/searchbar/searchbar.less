@@ -215,6 +215,12 @@
   top: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height) + var(--f7-safe-area-top));
   transform: translate3d(0, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)
 }
+.navbars ~ .page-with-navbar-large:not(.no-navbar) .page-content .searchbar,
+.page-with-navbar-large .page-content .searchbar {
+  top: 0;
+  transform: none;
+}
+
 
 .searchbar ~ * {
   --f7-page-searchbar-offset: var(--f7-searchbar-height);

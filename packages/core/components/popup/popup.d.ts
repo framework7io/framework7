@@ -3,6 +3,14 @@ import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from
 
 export namespace Popup {
   interface Events {
+    /** Event will be triggered in the beginning of swipe-to-close interaction (when user just started to drag popup) */
+    swipeStart: (popup: Popup) => void
+    /** Event will be triggered on swipe-to-close move interaction */
+    swipeMove: (popup: Popup) => void
+    /** Event will be triggered on swipe-to-close release */
+    swipeEnd: (popup: Popup) => void
+    /** Event will be triggered when popup closed with swipe */
+    swipeClose: (popup: Popup) => void
     /** Event will be triggered when Popup starts its opening animation. As an argument event handler receives popup instance */
     open: (popup : Popup) => void
     /** Event will be triggered when Popup completes its opening animation. As an argument event handler receives popup instance */
@@ -61,6 +69,14 @@ export namespace Popup {
     destroy() : void
   }
   interface DomEvents {
+    /** Event will be triggered in the beginning of swipe-to-close interaction (when user just started to drag popup) */
+    'popup:swipestart': () => void
+    /** Event will be triggered on swipe-to-close move interaction */
+    'popup:swipemove': () => void
+    /** Event will be triggered on swipe-to-close release */
+    'popup:swipeend': () => void
+    /** Event will be triggered when popup closed with swipe */
+    'popup:swipeclose': () => void
     /** Event will be triggered when Popup starts its opening animation */
     'popup:open' : () => void
     /** Event will be triggered after Popup completes its opening animation */
@@ -89,6 +105,14 @@ export namespace Popup {
     popup?: Parameters | undefined
   }
   interface AppEvents {
+    /** Event will be triggered in the beginning of swipe-to-close interaction (when user just started to drag popup) */
+    popupSwipeStart: (popup: Popup) => void
+    /** Event will be triggered on swipe-to-close move interaction */
+    popupSwipeMove: (popup: Popup) => void
+    /** Event will be triggered on swipe-to-close release */
+    popupSwipeEnd: (popup: Popup) => void
+    /** Event will be triggered when popup closed with swipe */
+    popupSwipeClose: (popup: Popup) => void
     /** Event will be triggered when Popup starts its opening animation. As an argument event handler receives popup instance */
     popupOpen: (popup : Popup) => void
     /** Event will be triggered when Popup completes its opening animation. As an argument event handler receives popup instance */

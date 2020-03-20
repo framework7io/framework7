@@ -1,5 +1,5 @@
 /**
- * Framework7 5.5.0
+ * Framework7 5.5.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 6, 2020
+ * Released on: March 20, 2020
  */
 
 /*====================
@@ -1917,6 +1917,9 @@ html.device-full-viewport body {
 .navbar-hidden .navbar-inner > .title,
 .navbar-hidden .navbar-inner > .right {
   opacity: 0 !important;
+}
+.navbar-hidden .subnavbar {
+  pointer-events: auto;
 }
 .navbar-hidden-statusbar {
   transform: translate3d(0, calc(-1 * var(--f7-navbar-height) - var(--f7-safe-area-top)), 0);
@@ -6567,7 +6570,7 @@ html.with-modal-popup-push .framework7-root > .view {
 :root .theme-dark,
 :root.theme-dark {
   --f7-login-screen-bg-color: #121212;
-  --f7-login-screen-content-bg-color: transparent;
+  --f7-login-screen-content-bg-color: #121212;
 }
 .ios {
   --f7-login-screen-blocks-margin-vertical: 25px;
@@ -6575,6 +6578,7 @@ html.with-modal-popup-push .framework7-root > .view {
 .ios .theme-dark,
 .ios.theme-dark {
   --f7-login-screen-bg-color: #000;
+  --f7-login-screen-content-bg-color: #000;
 }
 .md {
   --f7-login-screen-blocks-margin-vertical: 24px;
@@ -16556,6 +16560,11 @@ table.data-table {
 .page-with-navbar-large .navbar ~ * .searchbar {
   top: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height) + var(--f7-safe-area-top));
   transform: translate3d(0, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0);
+}
+.navbars ~ .page-with-navbar-large:not(.no-navbar) .page-content .searchbar,
+.page-with-navbar-large .page-content .searchbar {
+  top: 0;
+  transform: none;
 }
 .searchbar ~ * {
   --f7-page-searchbar-offset: var(--f7-searchbar-height);

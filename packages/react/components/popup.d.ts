@@ -24,6 +24,10 @@ declare namespace F7Popup {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
+    onPopupSwipeStart? : (instance?: any) => void
+    onPopupSwipeMove? : (instance?: any) => void
+    onPopupSwipeEnd? : (instance?: any) => void
+    onPopupSwipeClose? : (instance?: any) => void
     onPopupOpen? : (instance?: any) => void
     onPopupOpened? : (instance?: any) => void
     onPopupClose? : (instance?: any) => void
@@ -31,6 +35,10 @@ declare namespace F7Popup {
   }
 }
 declare class F7Popup extends React.Component<F7Popup.Props, {}> {
+  onSwipeStart(instance? : any) : unknown
+  onSwipeMove(instance? : any) : unknown
+  onSwipeEnd(instance? : any) : unknown
+  onSwipeClose(instance? : any) : unknown
   onOpen(instance? : any) : unknown
   onOpened(instance? : any) : unknown
   onClose(instance? : any) : unknown
