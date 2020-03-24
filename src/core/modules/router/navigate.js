@@ -187,8 +187,8 @@ function forward(el, forwardOptions = {}) {
       .removeClass('navbar-previous navbar-current navbar-next')
       .addClass(`navbar-${newPagePosition}${isMaster ? ' navbar-master' : ''}${isDetail ? ' navbar-master-detail' : ''}${isDetailRoot ? ' navbar-master-detail-root' : ''}`)
       .removeClass('stacked');
-    $newNavbarEl.trigger('navbar:position', { position: 'newPagePosition' });
-    router.emit('navbarPosition', $newNavbarEl[0], 'newPagePosition');
+    $newNavbarEl.trigger('navbar:position', { position: newPagePosition });
+    router.emit('navbarPosition', $newNavbarEl[0], newPagePosition);
     if (isMaster || isDetail) {
       router.emit('navbarRole', $newNavbarEl[0], { role: isMaster ? 'master' : 'detail', detailRoot: !!isDetailRoot });
     }
