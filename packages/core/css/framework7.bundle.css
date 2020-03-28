@@ -1,5 +1,5 @@
 /**
- * Framework7 5.5.2
+ * Framework7 5.5.3
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -1950,6 +1950,12 @@ html.device-full-viewport body {
 .navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible):not(.with-searchbar-expandable-enabled) .title {
   opacity: 0;
 }
+.navbar-large-transparent .navbar-bg,
+.navbar-large.navbar-transparent .navbar-bg {
+  opacity: var(--f7-navbar-large-collapse-progress);
+  height: 100%;
+  transform: none;
+}
 .navbar-large .navbar-bg,
 .ios .router-navbar-transition-to-large .navbar-bg,
 .ios .router-navbar-transition-from-large .navbar-bg,
@@ -1958,12 +1964,6 @@ html.device-full-viewport body {
 .navbar-large.navbar-transparent .navbar-bg.ios-swipeback-navbar-bg-large {
   height: calc(100% + var(--f7-navbar-large-title-height));
   transform: translate3d(0px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0);
-}
-.navbar-large-transparent .navbar-bg,
-.navbar-large.navbar-transparent .navbar-bg {
-  opacity: var(--f7-navbar-large-collapse-progress);
-  height: 100%;
-  transform: none;
 }
 .ios .navbar:not(.navbar-large) .navbar-bg {
   --f7-navbar-large-collapse-progress: 1;
@@ -3023,6 +3023,7 @@ html.device-full-viewport body {
   top: auto;
   pointer-events: none;
   background: var(--f7-toolbar-bottom-shadow-image);
+  transform: translate3d(0, 0, 0);
 }
 .toolbar-inner {
   position: absolute;
@@ -17624,6 +17625,7 @@ table.data-table {
   top: auto;
   pointer-events: none;
   background: var(--f7-messagebar-shadow-image);
+  transform: translate3d(0, 0, 0);
 }
 @supports ((-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px))) {
   .ios-translucent-bars .messagebar {

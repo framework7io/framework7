@@ -1,5 +1,5 @@
 /**
- * Framework7 Svelte 5.5.2
+ * Framework7 Svelte 5.5.3
  * Build full featured iOS & Android apps using Framework7 & Svelte
  * https://framework7.io/svelte/
  *

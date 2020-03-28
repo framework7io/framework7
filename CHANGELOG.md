@@ -2,7 +2,7 @@
 
 # Change Log
 
-# [v5.5.2](https://github.com/framework7io/framework7/compare/v5.5.1...v5.5.2) - March 28, 2020
+# [v5.5.3](https://github.com/framework7io/framework7/compare/v5.5.1...v5.5.3) - March 28, 2020
   * Core
     * Modals (Popup, Actions, Popover, Login Screen, etc.)
       * Now on modal open/close link click it will close only parent modal or last such modal if there are multiple modals with same selector
