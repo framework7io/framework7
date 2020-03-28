@@ -30,11 +30,11 @@ export default {
   clicks: {
     '.actions-open': function openActions($clickedEl, data = {}) {
       const app = this;
-      app.actions.open(data.actions, data.animate);
+      app.actions.open(data.actions, data.animate, $clickedEl);
     },
     '.actions-close': function closeActions($clickedEl, data = {}) {
       const app = this;
-      app.actions.close(data.actions, data.animate);
+      app.actions.close(data.actions, data.animate, $clickedEl);
     },
   },
 };

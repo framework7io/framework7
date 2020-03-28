@@ -1,5 +1,5 @@
 /**
- * Framework7 5.5.1
+ * Framework7 5.5.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 20, 2020
+ * Released on: March 28, 2020
  */
 
 (function (global, factory) {
@@ -3244,18 +3244,48 @@
         domProp: 'f7Modal',
       }),
       {
-        open: function open(el, animate) {
+        open: function open(el, animate, targetEl) {
           var $el = $(el);
+          if ($el.length > 1 && targetEl) {
+            // check if same modal in other page
+            var $targetPage = $(targetEl).parents('.page');
+            if ($targetPage.length) {
+              $el.each(function (index, modalEl) {
+                var $modalEl = $(modalEl);
+                if ($modalEl.parents($targetPage)[0] === $targetPage[0]) {
+                  $el = $modalEl;
+                }
+              });
+            }
+          }
+          if ($el.length > 1) {
+            $el = $el.eq($el.length - 1);
+          }
           if (!$el.length) { return undefined; }
           var instance = $el[0].f7Modal;
           if (!instance) { instance = new constructor(app, { el: $el }); }
           return instance.open(animate);
         },
-        close: function close(el, animate) {
+        close: function close(el, animate, targetEl) {
           if ( el === void 0 ) el = defaultSelector;
 
           var $el = $(el);
           if (!$el.length) { return undefined; }
+          if ($el.length > 1) {
+            // check if close link (targetEl) in this modal
+            var $parentEl;
+            if (targetEl) {
+              var $targetEl = $(targetEl);
+              if ($targetEl.length) {
+                $parentEl = $targetEl.parents($el);
+              }
+            }
+            if ($parentEl && $parentEl.length > 0) {
+              $el = $parentEl;
+            } else {
+              $el = $el.eq($el.length - 1);
+            }
+          }
           var instance = $el[0].f7Modal;
           if (!instance) { instance = new constructor(app, { el: $el }); }
           return instance.close(animate);
@@ -6120,8 +6150,8 @@
         .removeClass('navbar-previous navbar-current navbar-next')
         .addClass(("navbar-" + newPagePosition + (isMaster ? ' navbar-master' : '') + (isDetail ? ' navbar-master-detail' : '') + (isDetailRoot ? ' navbar-master-detail-root' : '')))
         .removeClass('stacked');
-      $newNavbarEl.trigger('navbar:position', { position: 'newPagePosition' });
-      router.emit('navbarPosition', $newNavbarEl[0], 'newPagePosition');
+      $newNavbarEl.trigger('navbar:position', { position: newPagePosition });
+      router.emit('navbarPosition', $newNavbarEl[0], newPagePosition);
       if (isMaster || isDetail) {
         router.emit('navbarRole', $newNavbarEl[0], { role: isMaster ? 'master' : 'detail', detailRoot: !!isDetailRoot });
       }
@@ -14159,6 +14189,7 @@
         app: app,
         constructor: Popup,
         defaultSelector: '.popup.modal-in',
+        parentSelector: '.popup',
       });
     },
     clicks: {
@@ -14166,13 +14197,13 @@
         if ( data === void 0 ) data = {};
 
         var app = this;
-        app.popup.open(data.popup, data.animate);
+        app.popup.open(data.popup, data.animate, $clickedEl);
       },
       '.popup-close': function closePopup($clickedEl, data) {
         if ( data === void 0 ) data = {};
 
         var app = this;
-        app.popup.close(data.popup, data.animate);
+        app.popup.close(data.popup, data.animate, $clickedEl);
       },
     },
   };
@@ -14243,13 +14274,13 @@
         if ( data === void 0 ) data = {};
 
         var app = this;
-        app.loginScreen.open(data.loginScreen, data.animate);
+        app.loginScreen.open(data.loginScreen, data.animate, $clickedEl);
       },
       '.login-screen-close': function closeLoginScreen($clickedEl, data) {
         if ( data === void 0 ) data = {};
 
         var app = this;
-        app.loginScreen.close(data.loginScreen, data.animate);
+        app.loginScreen.close(data.loginScreen, data.animate, $clickedEl);
       },
     },
   };
@@ -14571,6 +14602,21 @@
         {
           open: function open(popoverEl, targetEl, animate) {
             var $popoverEl = $(popoverEl);
+            if ($popoverEl.length > 1) {
+              // check if same popover in other page
+              var $targetPage = $(targetEl).parents('.page');
+              if ($targetPage.length) {
+                $popoverEl.each(function (index, el) {
+                  var $el = $(el);
+                  if ($el.parents($targetPage)[0] === $targetPage[0]) {
+                    $popoverEl = $el;
+                  }
+                });
+              }
+            }
+            if ($popoverEl.length > 1) {
+              $popoverEl = $popoverEl.eq($popoverEl.length - 1);
+            }
             var popover = $popoverEl[0].f7Modal;
             if (!popover) { popover = new Popover(app, { el: $popoverEl, targetEl: targetEl }); }
             return popover.open(targetEl, animate);
@@ -14589,7 +14635,7 @@
         if ( data === void 0 ) data = {};
 
         var app = this;
-        app.popover.close(data.popover, data.animate);
+        app.popover.close(data.popover, data.animate, $clickedEl);
       },
     },
   };
@@ -14920,13 +14966,13 @@
         if ( data === void 0 ) data = {};
 
         var app = this;
-        app.actions.open(data.actions, data.animate);
+        app.actions.open(data.actions, data.animate, $clickedEl);
       },
       '.actions-close': function closeActions($clickedEl, data) {
         if ( data === void 0 ) data = {};
 
         var app = this;
-        app.actions.close(data.actions, data.animate);
+        app.actions.close(data.actions, data.animate, $clickedEl);
       },
     },
   };
@@ -15482,13 +15528,13 @@
         if ($('.sheet-modal.modal-in').length > 0 && data.sheet && $(data.sheet)[0] !== $('.sheet-modal.modal-in')[0]) {
           app.sheet.close('.sheet-modal.modal-in');
         }
-        app.sheet.open(data.sheet, data.animate);
+        app.sheet.open(data.sheet, data.animate, $clickedEl);
       },
       '.sheet-close': function closeSheet($clickedEl, data) {
         if ( data === void 0 ) data = {};
 
         var app = this;
-        app.sheet.close(data.sheet, data.animate);
+        app.sheet.close(data.sheet, data.animate, $clickedEl);
       },
     },
   };
@@ -20228,12 +20274,12 @@
     },
     validate: function validate(inputEl) {
       var $inputEl = $(inputEl);
-      if (!$inputEl.length) { return; }
+      if (!$inputEl.length) { return true; }
       var $itemInputEl = $inputEl.parents('.item-input');
       var $inputWrapEl = $inputEl.parents('.input');
       var validity = $inputEl[0].validity;
       var validationMessage = $inputEl.dataset().errorMessage || $inputEl[0].validationMessage || '';
-      if (!validity) { return; }
+      if (!validity) { return true; }
       if (!validity.valid) {
         var $errorEl = $inputEl.nextAll('.item-input-error-message, .input-error-message');
         if (validationMessage) {
@@ -20250,17 +20296,20 @@
         $itemInputEl.addClass('item-input-invalid');
         $inputWrapEl.addClass('input-invalid');
         $inputEl.addClass('input-invalid');
-      } else {
-        $itemInputEl.removeClass('item-input-invalid item-input-with-error-message');
-        $inputWrapEl.removeClass('input-invalid input-with-error-message');
-        $inputEl.removeClass('input-invalid');
+        return false;
       }
+      $itemInputEl.removeClass('item-input-invalid item-input-with-error-message');
+      $inputWrapEl.removeClass('input-invalid input-with-error-message');
+      $inputEl.removeClass('input-invalid');
+      return true;
     },
     validateInputs: function validateInputs(el) {
       var app = this;
-      $(el).find('input, textarea, select').each(function (index, inputEl) {
-        app.input.validate(inputEl);
-      });
+      var validates = $(el)
+        .find('input, textarea, select')
+        .toArray()
+        .map(function (inputEl) { return app.input.validate(inputEl); });
+      return validates.indexOf(false) < 0;
     },
     focus: function focus(inputEl) {
       var $inputEl = $(inputEl);

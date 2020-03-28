@@ -37,6 +37,7 @@ declare namespace F7ListInput {
     pattern? : string
     validate? : boolean | string
     validateOnBlur? : boolean
+    onValidate? : Function
     tabindex? : string | number
     resizable? : boolean
     clearButton? : boolean

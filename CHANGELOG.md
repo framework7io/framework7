@@ -2,6 +2,17 @@
 
 # Change Log
 
+# [v5.5.2](https://github.com/framework7io/framework7/compare/v5.5.1...v5.5.2) - March 28, 2020
+  * Core
+    * Modals (Popup, Actions, Popover, Login Screen, etc.)
+      * Now on modal open/close link click it will close only parent modal or last such modal if there are multiple modals with same selector
+    * Input
+      * `app.input.validate` and `app.input.validateInputs` methods now return `true` (when input(s) are valid) or `false` (when input(s) are not valid)
+  * Components (React, Vue, Svelte)
+    * Input/ListInput
+      * New `onValidate` prop callback that receives `true` (when input(s) are valid) or `false` (when input(s) are not valid)
+  * Minor fixes
+
 # [v5.5.1](https://github.com/framework7io/framework7/compare/v5.5.0...v5.5.1) - March 20, 2020
   * Core
     * Action Sheet

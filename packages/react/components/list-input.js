@@ -55,14 +55,20 @@ class F7ListInput extends React.Component {
     if (!f7 || !inputEl) return;
     const validity = inputEl.validity;
     if (!validity) return;
+    const {
+      onValidate
+    } = self.props;
 
     if (!validity.valid) {
+      if (onValidate) onValidate(false);
+
       if (self.state.inputInvalid !== true) {
         self.setState({
           inputInvalid: true
         });
       }
     } else if (self.state.inputInvalid !== false) {
+      if (onValidate) onValidate(true);
       self.setState({
         inputInvalid: false
       });
@@ -555,6 +561,7 @@ __reactComponentSetProps(F7ListInput, Object.assign({
   pattern: String,
   validate: [Boolean, String],
   validateOnBlur: Boolean,
+  onValidate: Function,
   tabindex: [String, Number],
   resizable: Boolean,
   clearButton: Boolean,

@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.5.1
+ * Framework7 React 5.5.2
  * Build full featured iOS & Android apps using Framework7 & React
  * https://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 20, 2020
+ * Released on: March 28, 2020
  */
 
 (function (global, factory) {
@@ -4317,14 +4317,19 @@
       if (!f7 || !inputEl) { return; }
       var validity = inputEl.validity;
       if (!validity) { return; }
+      var ref = self.props;
+      var onValidate = ref.onValidate;
 
       if (!validity.valid) {
+        if (onValidate) { onValidate(false); }
+
         if (self.state.inputInvalid !== true) {
           self.setState({
             inputInvalid: true
           });
         }
       } else if (self.state.inputInvalid !== false) {
+        if (onValidate) { onValidate(true); }
         self.setState({
           inputInvalid: false
         });
@@ -4799,6 +4804,7 @@
     pattern: String,
     validate: [Boolean, String],
     validateOnBlur: Boolean,
+    onValidate: Function,
     tabindex: [String, Number],
     resizable: Boolean,
     clearButton: Boolean,
@@ -5547,14 +5553,19 @@
       if (!f7 || !inputEl) { return; }
       var validity = inputEl.validity;
       if (!validity) { return; }
+      var ref = self.props;
+      var onValidate = ref.onValidate;
 
       if (!validity.valid) {
+        if (onValidate) { onValidate(false); }
+
         if (self.state.inputInvalid !== true) {
           self.setState({
             inputInvalid: true
           });
         }
       } else if (self.state.inputInvalid !== false) {
+        if (onValidate) { onValidate(true); }
         self.setState({
           inputInvalid: false
         });
@@ -6062,6 +6073,7 @@
     pattern: String,
     validate: [Boolean, String],
     validateOnBlur: Boolean,
+    onValidate: Function,
     tabindex: [String, Number],
     resizable: Boolean,
     clearButton: Boolean,
@@ -14692,7 +14704,7 @@
   };
 
   /**
-   * Framework7 React 5.5.1
+   * Framework7 React 5.5.2
    * Build full featured iOS & Android apps using Framework7 & React
    * https://framework7.io/react/
    *
@@ -14700,7 +14712,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: March 20, 2020
+   * Released on: March 28, 2020
    */
 
   function f7ready(callback) {

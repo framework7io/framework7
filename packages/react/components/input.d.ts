@@ -33,6 +33,7 @@ declare namespace F7Input {
     pattern? : string
     validate? : boolean | string
     validateOnBlur? : boolean
+    onValidate? : Function
     tabindex? : string | number
     resizable? : boolean
     clearButton? : boolean
