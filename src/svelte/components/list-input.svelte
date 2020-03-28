@@ -48,6 +48,7 @@
   export let pattern = undefined;
   export let validate = undefined;
   export let validateOnBlur = undefined;
+  export let onValidate = undefined;
   export let tabindex = undefined;
   export let resizable = undefined;
   export let clearButton = undefined;
@@ -110,10 +111,12 @@
     if (!validity) return;
 
     if (!validity.valid) {
+      if (onValidate) onValidate(false);
       if (inputInvalid !== true) {
         inputInvalid = true;
       }
     } else if (inputInvalid !== false) {
+      if (onValidate) onValidate(true);
       inputInvalid = false;
     }
   }
