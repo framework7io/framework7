@@ -210,9 +210,7 @@ Nathan Harold<br>
 Paulo Vieira<br>
 Ruslan Trifonov<br>
 Michael Powers<br>
-shastox<br>
 iOS Haven<br>
-Dirk Holtwick<br>
 JK<br>
 Azad Zain<br>
 Nicolas Hinze<br>
@@ -243,7 +241,6 @@ Dave Billington
 
 ### $5+ Thank You
 Yo. Meyers<br>
-Artūras Šeleсhov-Balčiūnas<br>
 Brett Lee<br>
 Miguel Nahara<br>
 Muthaiyan Rm<br>
