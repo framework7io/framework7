@@ -23,12 +23,17 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://www.thoriumbuilder.com/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/thorium.png">
+      <a href="https://infatica.io" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/infatica.svg">
       </a>
     </td>
   </tr>
   <tr>
+    <td align="center" valign="middle">
+      <a href="https://www.thoriumbuilder.com/" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/thorium.png">
+      </a>
+    </td>
     <td align="center" valign="middle">
       <a href="https://app-valley.vip/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/appvalley.jpg">
@@ -49,13 +54,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/bonusfinder.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.upscalerolex.to/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/upscalerolex.jpg">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="http://ananyamultitech.com/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/ananya.png">
@@ -76,13 +81,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/monovm.jpg">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://unicorn.io" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/unicorn.svg">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.colognewebdesign.de/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/colognewebdesign.png">
@@ -103,13 +108,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/bid4papers.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://kidoverse.app" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/kidoverse.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.cyberbrain.nl/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/cyberbrain.png">
@@ -130,7 +135,6 @@
         <img width="160" src="https://framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
-    <td></td>
   </tr>
 </table>
 
@@ -158,6 +162,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ---
 
 ### $100 Silver Sponsor
+[Infatica](https://infatica.io) - Global Peer-to-Business Proxy Network
 [Thorium Builder](https://www.thoriumbuilder.com/) - Full visual Framework7 app builder<br>
 Colin Adams ([App Valley](https://appvalley.vip/))<br>
 Pavol Cvengros ([securCom Inc](https://www.securcom.me/))<br>
