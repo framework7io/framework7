@@ -154,7 +154,7 @@
       resizable: inputType === 'textarea' && resizable,
       'no-store-data': (noFormStoreData || noStoreData || ignoreStoreData),
       'input-invalid': (errorMessage && errorMessageForce) || inputInvalid,
-      'input-with-value': inputHasValue,
+      'input-with-value': inputHasValue(),
       'input-focused': inputFocused,
     }
   );
@@ -175,7 +175,7 @@
       resizable: inputType === 'textarea' && resizable,
       'no-store-data': (noFormStoreData || noStoreData || ignoreStoreData),
       'input-invalid': (errorMessage && errorMessageForce) || inputInvalid,
-      'input-with-value': inputHasValue,
+      'input-with-value': inputHasValue(),
       'input-focused': inputFocused,
     }
   );
