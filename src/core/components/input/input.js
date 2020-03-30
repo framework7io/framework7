@@ -242,7 +242,11 @@ const Input = {
         .trigger('input:clear', previousValue);
       app.emit('inputClear', previousValue);
     }
+    function preventDefault(e) {
+      e.preventDefault();
+    }
     $(document).on('click', '.input-clear-button', clearInput);
+    $(document).on('mousedown', '.input-clear-button', preventDefault);
     $(document).on('change input', 'input, textarea, select, .item-input [contenteditable]', onChange, true);
     $(document).on('focus', 'input, textarea, select, .item-input [contenteditable]', onFocus, true);
     $(document).on('blur', 'input, textarea, select, .item-input [contenteditable]', onBlur, true);
