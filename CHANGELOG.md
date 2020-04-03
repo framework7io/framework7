@@ -2,6 +2,15 @@
 
 # Change Log
 
+# [v5.5.4](https://github.com/framework7io/framework7/compare/v5.5.3...v5.5.4) - April 2, 2020
+  * Core
+    * Input
+      * Don't unset focus on input on input's clear button click/tap
+  * Svelte
+    * Input
+      * Fixed issue keeping focused state on blur
+  * Minor fixes
+
 # [v5.5.3](https://github.com/framework7io/framework7/compare/v5.5.1...v5.5.3) - March 28, 2020
   * Core
     * Modals (Popup, Actions, Popover, Login Screen, etc.)

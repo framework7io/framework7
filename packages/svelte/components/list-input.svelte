@@ -173,7 +173,7 @@
       resizable: inputType === 'textarea' && resizable,
       'no-store-data': (noFormStoreData || noStoreData || ignoreStoreData),
       'input-invalid': (errorMessage && errorMessageForce) || inputInvalid,
-      'input-with-value': inputHasValue,
+      'input-with-value': inputHasValue(),
       'input-focused': inputFocused,
     }
   );
@@ -188,7 +188,7 @@
       'item-input-outline': outline,
       'item-input-focused': inputFocused,
       'item-input-with-info': !!info || hasInfoSlots,
-      'item-input-with-value': inputHasValue,
+      'item-input-with-value': inputHasValue(),
       'item-input-with-error-message': (hasErrorMessage && errorMessageForce) || inputInvalid,
       'item-input-invalid': (hasErrorMessage && errorMessageForce) || inputInvalid,
     }

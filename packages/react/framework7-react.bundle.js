@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.5.3
+ * Framework7 React 5.5.4
  * Build full featured iOS & Android apps using Framework7 & React
  * https://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 28, 2020
+ * Released on: April 3, 2020
  */
 
 (function (global, factory) {
@@ -9657,13 +9657,11 @@
       var addCenterTitleClass = theme && theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || theme && theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
       var slots = self.slots;
       var isLarge = large || largeTransparent;
-      var isLargeTransparent = isLarge && (largeTransparent || transparent);
-      var isTransparent = !isLarge && transparent;
+      var isTransparent = transparent || isLarge && largeTransparent;
       var isTransparentVisible = isTransparent && transparentVisible;
       var classes = Utils.classNames(className, 'navbar', routerPositionClass && routerPositionClass, {
         'navbar-hidden': hidden,
         'navbar-large': isLarge,
-        'navbar-large-transparent': isLargeTransparent,
         'navbar-large-collapsed': isLarge && largeCollapsed,
         'navbar-transparent': isTransparent,
         'navbar-transparent-visible': isTransparentVisible,
@@ -14704,7 +14702,7 @@
   };
 
   /**
-   * Framework7 React 5.5.3
+   * Framework7 React 5.5.4
    * Build full featured iOS & Android apps using Framework7 & React
    * https://framework7.io/react/
    *
@@ -14712,7 +14710,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: March 28, 2020
+   * Released on: April 3, 2020
    */
 
   function f7ready(callback) {

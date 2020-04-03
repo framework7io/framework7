@@ -79,8 +79,7 @@
     || (_theme && _theme.aurora && f7.instance && f7.instance.params.navbar.auroraCenterTitle);
 
   $: isLarge = large || largeTransparent;
-  $: isLargeTransparent = isLarge && (largeTransparent || transparent);
-  $: isTransparent = !isLarge && transparent;
+  $: isTransparent = transparent || (isLarge && largeTransparent);
   $: isTransparentVisible = isTransparent && transparentVisible;
 
   $: classes = Utils.classNames(
@@ -90,7 +89,6 @@
     {
       'navbar-hidden': hidden,
       'navbar-large': isLarge,
-      'navbar-large-transparent': isLargeTransparent,
       'navbar-large-collapsed': isLarge && largeCollapsed,
       'navbar-transparent': isTransparent,
       'navbar-transparent-visible': isTransparentVisible,

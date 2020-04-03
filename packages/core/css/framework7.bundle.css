@@ -1,5 +1,5 @@
 /**
- * Framework7 5.5.3
+ * Framework7 5.5.4
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 28, 2020
+ * Released on: April 3, 2020
  */
 
 /*====================
@@ -1950,13 +1950,16 @@ html.device-full-viewport body {
 .navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible):not(.with-searchbar-expandable-enabled) .title {
   opacity: 0;
 }
+.navbar-large .navbar-bg {
+  height: calc(100% + var(--f7-navbar-large-title-height));
+  transform: translate3d(0px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0);
+}
 .navbar-large-transparent .navbar-bg,
 .navbar-large.navbar-transparent .navbar-bg {
   opacity: var(--f7-navbar-large-collapse-progress);
   height: 100%;
   transform: none;
 }
-.navbar-large .navbar-bg,
 .ios .router-navbar-transition-to-large .navbar-bg,
 .ios .router-navbar-transition-from-large .navbar-bg,
 .navbar-bg.ios-swipeback-navbar-bg-large,

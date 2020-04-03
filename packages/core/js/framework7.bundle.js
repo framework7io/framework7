@@ -1,5 +1,5 @@
 /**
- * Framework7 5.5.3
+ * Framework7 5.5.4
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 28, 2020
+ * Released on: April 3, 2020
  */
 
 (function (global, factory) {
@@ -20459,7 +20459,11 @@
           .trigger('input:clear', previousValue);
         app.emit('inputClear', previousValue);
       }
+      function preventDefault(e) {
+        e.preventDefault();
+      }
       $(doc).on('click', '.input-clear-button', clearInput);
+      $(doc).on('mousedown', '.input-clear-button', preventDefault);
       $(doc).on('change input', 'input, textarea, select, .item-input [contenteditable]', onChange, true);
       $(doc).on('focus', 'input, textarea, select, .item-input [contenteditable]', onFocus, true);
       $(doc).on('blur', 'input, textarea, select, .item-input [contenteditable]', onBlur, true);
