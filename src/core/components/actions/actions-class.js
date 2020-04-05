@@ -107,18 +107,30 @@ class Actions extends Modal {
           targetHeight,
           on: {
             open() {
+              if (!actions.$el) {
+                actions.$el = popover.$el;
+              }
               actions.$el.trigger(`modal:open ${actions.type.toLowerCase()}:open`);
               actions.emit(`local::open modalOpen ${actions.type}Open`, actions);
             },
             opened() {
+              if (!actions.$el) {
+                actions.$el = popover.$el;
+              }
               actions.$el.trigger(`modal:opened ${actions.type.toLowerCase()}:opened`);
               actions.emit(`local::opened modalOpened ${actions.type}Opened`, actions);
             },
             close() {
+              if (!actions.$el) {
+                actions.$el = popover.$el;
+              }
               actions.$el.trigger(`modal:close ${actions.type.toLowerCase()}:close`);
               actions.emit(`local::close modalClose ${actions.type}Close`, actions);
             },
             closed() {
+              if (!actions.$el) {
+                actions.$el = popover.$el;
+              }
               actions.$el.trigger(`modal:closed ${actions.type.toLowerCase()}:closed`);
               actions.emit(`local::closed modalClosed ${actions.type}Closed`, actions);
             },
