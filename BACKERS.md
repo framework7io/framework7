@@ -3,11 +3,6 @@
 <table>
   <tr>
     <td align="center" valign="middle">
-      <a href="https://www.wfmbuddy.com/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/wfmbuddy.png">
-      </a>
-    </td>
-    <td align="center" valign="middle">
       <a href="https://privicy.com/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/privicy.png">
       </a>
@@ -27,13 +22,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/infatica.svg">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.thoriumbuilder.com/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/thorium.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://app-valley.vip/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/appvalley.jpg">
@@ -54,13 +49,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/cooltechzone.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.bonus.com.de/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/bonusfinder.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.upscalerolex.to/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/upscalerolex.jpg">
@@ -81,13 +76,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/writersperhour.jpg">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://monovm.com/linux-vps/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/monovm.jpg">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://unicorn.io" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/unicorn.svg">
@@ -108,13 +103,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/usave.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://bid4papers.com/write-my-essay.html" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/bid4papers.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://kidoverse.app" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/kidoverse.png">
@@ -135,17 +130,11 @@
         <img width="160" src="https://framework7.io/i/sponsors/blokt.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://wappler.io/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
   </tr>
 </table>
 
@@ -164,7 +153,6 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ---
 
 ### $250 Gold Sponsor
-[WFM Buddy](https://www.wfmbuddy.com/) - WFM Buddy - Delighting your Workforce<br>
 [CodersRank](https://codersrank.io/?utm_source=partner&utm_medium=referral&utm_campaign=vladimir) - CodersRank - Ultimate Profile For Coders<br>
 [Sparheld.de](https://www.sparheld.de/) - Sparheld.de - save shopping online
 [Privict](https://privicy.com/) - Privacy control for consumers<br>
@@ -225,7 +213,6 @@ Shawn Jackson<br>
 Никита Коробочкин<br>
 Nathan Harold<br>
 Paulo Vieira<br>
-Ruslan Trifonov<br>
 Michael Powers<br>
 iOS Haven<br>
 JK<br>
