@@ -3,18 +3,18 @@ import $ from 'dom7';
 export default function (parameters = {}) {
   const {
     defaultSelector,
-    constructor,
+    constructor: Constructor,
     domProp,
     app,
     addMethods,
   } = parameters;
   const methods = {
     create(...args) {
-      if (app) return new constructor(app, ...args);
-      return new constructor(...args);
+      if (app) return new Constructor(app, ...args);
+      return new Constructor(...args);
     },
     get(el = defaultSelector) {
-      if (el instanceof constructor) return el;
+      if (el instanceof Constructor) return el;
       const $el = $(el);
       if ($el.length === 0) return undefined;
       return $el[0][domProp];
