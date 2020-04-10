@@ -5,7 +5,7 @@
 
 
 const rollup = require('rollup');
-const buble = require('rollup-plugin-buble');
+const buble = require('@rollup/plugin-buble');
 const replace = require('@rollup/plugin-replace');
 
 const Terser = require('terser');
