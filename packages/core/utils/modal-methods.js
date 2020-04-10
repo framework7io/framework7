@@ -3,11 +3,11 @@ import Utils from './utils';
 import ConstructorMethods from './constructor-methods';
 
 export default function (parameters = {}) {
-  const { defaultSelector, constructor, app } = parameters;
+  const { defaultSelector, constructor: Constructor, app } = parameters;
   const methods = Utils.extend(
     ConstructorMethods({
       defaultSelector,
-      constructor,
+      constructor: Constructor,
       app,
       domProp: 'f7Modal',
     }),
@@ -31,7 +31,10 @@ export default function (parameters = {}) {
         }
         if (!$el.length) return undefined;
         let instance = $el[0].f7Modal;
-        if (!instance) instance = new constructor(app, { el: $el });
+        if (!instance) {
+          const params = $el.dataset();
+          instance = new Constructor(app, { el: $el, ...params });
+        }
         return instance.open(animate);
       },
       close(el = defaultSelector, animate, targetEl) {
@@ -53,7 +56,10 @@ export default function (parameters = {}) {
           }
         }
         let instance = $el[0].f7Modal;
-        if (!instance) instance = new constructor(app, { el: $el });
+        if (!instance) {
+          const params = $el.dataset();
+          instance = new Constructor(app, { el: $el, ...params });
+        }
         return instance.close(animate);
       },
     }

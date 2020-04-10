@@ -2,6 +2,22 @@
 
 # Change Log
 
+# [v5.5.5](https://github.com/framework7io/framework7/compare/v5.5.4...v5.5.5) - April 10, 2020
+  * Core
+    * Modals (Popup, Actions, Popover, Login Screen, etc.)
+      * Now it is possible to specify all modal parameters via `data-` attributes, e.g.
+        ```html
+          <div class="sheet-modal" data-swipe-to-close="true" data-close-on-escape="true">
+            ...
+          </div>
+        ```
+    * Swiper - updated to latest 5.3.7
+      * Core
+        * Fixed `cssMode` behavior in RTL layout
+      * Zoom
+        * Fixed issue with not working double-tap to toggle with virtual slides
+  * Minor fixes
+
 # [v5.5.4](https://github.com/framework7io/framework7/compare/v5.5.3...v5.5.4) - April 2, 2020
   * Core
     * Input

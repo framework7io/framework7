@@ -62,11 +62,6 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://www.upscalerolex.to/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/upscalerolex.jpg">
-      </a>
-    </td>
-    <td align="center" valign="middle">
       <a href="http://ananyamultitech.com/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/ananya.png">
       </a>
@@ -81,13 +76,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/writersperhour.jpg">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://monovm.com/linux-vps/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/monovm.jpg">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://unicorn.io" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/unicorn.svg">
@@ -108,13 +103,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/usave.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://bid4papers.com/write-my-essay.html" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/bid4papers.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://kidoverse.app" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/kidoverse.png">
@@ -135,17 +130,11 @@
         <img width="160" src="https://framework7.io/i/sponsors/blokt.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://wappler.io/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
   </tr>
 </table>
 
@@ -186,7 +175,6 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ### $50+ Top Supporter
 [vpn for roku](https://cooltechzone.com/roku-vpn)<br>
 [www.bonus.com.de](https://www.bonus.com.de/)<br>
-[Rolex Replica Watches](https://www.upscalerolex.to/)<br>
 [Writers Per Hour](https://writersperhour.com/write-my-paper) - Write My Paper For Me<br>
 [Unicorn.io](https://unicorn.io) - Choose your Dream Job<br>
 [Bid4Papers](https://bid4papers.com/write-my-essay.html) - Write My Essay<br>
@@ -225,6 +213,7 @@ Shawn Jackson<br>
 Никита Коробочкин<br>
 Nathan Harold<br>
 Paulo Vieira<br>
+Ruslan Trifonov<br>
 Michael Powers<br>
 iOS Haven<br>
 JK<br>

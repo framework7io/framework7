@@ -1,5 +1,5 @@
 /**
- * Framework7 5.5.4
+ * Framework7 5.5.5
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 3, 2020
+ * Released on: April 10, 2020
  */
 
 (function (global, factory) {
@@ -3188,7 +3188,7 @@
     if ( parameters === void 0 ) parameters = {};
 
     var defaultSelector = parameters.defaultSelector;
-    var constructor = parameters.constructor;
+    var Constructor = parameters.constructor;
     var domProp = parameters.domProp;
     var app = parameters.app;
     var addMethods = parameters.addMethods;
@@ -3197,13 +3197,13 @@
         var args = [], len = arguments.length;
         while ( len-- ) args[ len ] = arguments[ len ];
 
-        if (app) { return new (Function.prototype.bind.apply( constructor, [ null ].concat( [app], args) )); }
-        return new (Function.prototype.bind.apply( constructor, [ null ].concat( args) ));
+        if (app) { return new (Function.prototype.bind.apply( Constructor, [ null ].concat( [app], args) )); }
+        return new (Function.prototype.bind.apply( Constructor, [ null ].concat( args) ));
       },
       get: function get(el) {
         if ( el === void 0 ) el = defaultSelector;
 
-        if (el instanceof constructor) { return el; }
+        if (el instanceof Constructor) { return el; }
         var $el = $(el);
         if ($el.length === 0) { return undefined; }
         return $el[0][domProp];
@@ -3234,12 +3234,12 @@
     if ( parameters === void 0 ) parameters = {};
 
     var defaultSelector = parameters.defaultSelector;
-    var constructor = parameters.constructor;
+    var Constructor = parameters.constructor;
     var app = parameters.app;
     var methods = Utils.extend(
       ConstructorMethods({
         defaultSelector: defaultSelector,
-        constructor: constructor,
+        constructor: Constructor,
         app: app,
         domProp: 'f7Modal',
       }),
@@ -3263,7 +3263,10 @@
           }
           if (!$el.length) { return undefined; }
           var instance = $el[0].f7Modal;
-          if (!instance) { instance = new constructor(app, { el: $el }); }
+          if (!instance) {
+            var params = $el.dataset();
+            instance = new Constructor(app, Object.assign({}, {el: $el}, params));
+          }
           return instance.open(animate);
         },
         close: function close(el, animate, targetEl) {
@@ -3287,7 +3290,10 @@
             }
           }
           var instance = $el[0].f7Modal;
-          if (!instance) { instance = new constructor(app, { el: $el }); }
+          if (!instance) {
+            var params = $el.dataset();
+            instance = new Constructor(app, Object.assign({}, {el: $el}, params));
+          }
           return instance.close(animate);
         },
       }
