@@ -36,6 +36,9 @@ export default {
     link: [Boolean, String],
     target: String,
 
+    tabLink: [Boolean, String],
+    tabLinkActive: Boolean,
+
     after: [String, Number],
     badge: [String, Number],
     badgeColor: String,
@@ -107,6 +110,8 @@ export default {
       header,
       footer,
       link,
+      tabLink,
+      tabLinkActive,
       href,
       target,
       after,
@@ -201,6 +206,7 @@ export default {
         const linkAttrs = {
           href: link === true ? '' : link || href,
           target,
+          'data-tab': (Utils.isStringProp(tabLink) && tabLink) || undefined,
           ...Mixins.linkRouterAttrs(props),
           ...Mixins.linkActionsAttrs(props),
         };
@@ -208,6 +214,8 @@ export default {
           {
             'item-link': true,
             'smart-select': smartSelect,
+            'tab-link': tabLink || tabLink === '',
+            'tab-link-active': tabLinkActive,
           },
           Mixins.linkRouterClasses(props),
           Mixins.linkActionsClasses(props),
