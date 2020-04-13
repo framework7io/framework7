@@ -44,7 +44,16 @@ export default {
             $popoverEl = $popoverEl.eq($popoverEl.length - 1);
           }
           let popover = $popoverEl[0].f7Modal;
-          if (!popover) popover = new Popover(app, { el: $popoverEl, targetEl });
+          const data = $popoverEl.dataset();
+          if (!popover) {
+            popover = new Popover(app, Object.assign(
+              {
+                el: $popoverEl,
+                targetEl,
+              },
+              data
+            ));
+          }
           return popover.open(targetEl, animate);
         },
       }
