@@ -25,6 +25,7 @@
   export let type = 'text';
   export let name = undefined;
   export let value = undefined;
+  export let inputmode = undefined;
   export let readonly = undefined;
   export let required = undefined;
   export let disabled = undefined;
@@ -429,6 +430,7 @@
                 placeholder={placeholder}
                 id={inputId}
                 size={size}
+                inputmode={inputmode}
                 accept={accept}
                 autocomplete={autocomplete}
                 autocorrect={autocorrect}
@@ -475,6 +477,7 @@
                 style={inputStyle}
                 name={name}
                 type={inputType}
+                inputmode={inputmode}
                 placeholder={placeholder}
                 id={inputId}
                 size={size}
@@ -610,6 +613,7 @@
               placeholder={placeholder}
               id={inputId}
               size={size}
+              inputmode={inputmode}
               accept={accept}
               autocomplete={autocomplete}
               autocorrect={autocorrect}
@@ -656,6 +660,7 @@
               style={inputStyle}
               name={name}
               type={inputType}
+              inputmode={inputmode}
               placeholder={placeholder}
               id={inputId}
               size={size}

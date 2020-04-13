@@ -13,6 +13,7 @@ export default {
     name: String,
     value: [String, Number, Array, Date, Object],
     defaultValue: [String, Number, Array],
+    inputmode: String,
     placeholder: String,
     id: [String, Number],
     className: String, // phenome-react-line
@@ -96,6 +97,7 @@ export default {
       name,
       value,
       defaultValue,
+      inputmode,
       placeholder,
       id,
       inputId,
@@ -179,6 +181,7 @@ export default {
             name={name}
             type={needsType ? inputType : undefined}
             placeholder={placeholder}
+            inputMode={inputmode}
             id={inputId}
             size={size}
             accept={accept}
@@ -223,6 +226,7 @@ export default {
             name={name}
             type={needsType ? inputType : undefined}
             placeholder={placeholder}
+            inputMode={inputmode}
             id={inputId}
             size={size}
             accept={accept}

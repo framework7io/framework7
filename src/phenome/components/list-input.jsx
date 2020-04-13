@@ -37,6 +37,7 @@ export default {
     name: String,
     value: [String, Number, Array, Date, Object],
     defaultValue: [String, Number, Array],
+    inputmode: String,
     readonly: Boolean,
     required: Boolean,
     disabled: Boolean,
@@ -129,6 +130,7 @@ export default {
       readonly,
       required,
       disabled,
+      inputmode,
       placeholder,
       inputId,
       size,
@@ -206,6 +208,7 @@ export default {
             name={name}
             type={needsType ? inputType : undefined}
             placeholder={placeholder}
+            inputMode={inputmode}
             id={inputId}
             size={size}
             accept={accept}
@@ -249,6 +252,7 @@ export default {
             name={name}
             type={needsType ? inputType : undefined}
             placeholder={placeholder}
+            inputMode={inputmode}
             id={inputId}
             size={size}
             accept={accept}
