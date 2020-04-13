@@ -513,7 +513,7 @@
             {/if}
           {/if}
           <slot name="input" />
-          {#if hasErrorMessage && errorMessageForce} && (
+          {#if hasErrorMessage && errorMessageForce}
             <div class="item-input-error-message">
               {Utils.text(errorMessage)}
               <slot name="error-message"/>
@@ -696,7 +696,7 @@
           {/if}
         {/if}
         <slot name="input" />
-        {#if hasErrorMessage && errorMessageForce} && (
+        {#if hasErrorMessage && errorMessageForce}
           <div class="item-input-error-message">
             {Utils.text(errorMessage)}
             <slot name="error-message"/>
