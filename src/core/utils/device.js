@@ -21,6 +21,7 @@ const Device = (function Device() {
     cordova: !!(window.cordova || window.phonegap),
     phonegap: !!(window.cordova || window.phonegap),
     electron: false,
+    nwjs: false,
   };
 
   const screenWidth = window.screen.width;
@@ -35,6 +36,7 @@ const Device = (function Device() {
   const firefox = ua.indexOf('Gecko/') >= 0 && ua.indexOf('Firefox/') >= 0;
   const windows = platform === 'Win32';
   const electron = ua.toLowerCase().indexOf('electron') >= 0;
+  const nwjs = typeof nw !== 'undefined' && typeof process !== 'undefined' && typeof process.versions !== 'undefined' && typeof process.versions.nw !== 'undefined';
   let macos = platform === 'MacIntel';
 
   // iPadOs 13 fix
@@ -94,9 +96,10 @@ const Device = (function Device() {
   device.standalone = device.webView;
 
   // Desktop
-  device.desktop = !(device.ios || device.android) || electron;
+  device.desktop = !(device.ios || device.android) || electron || nwjs;
   if (device.desktop) {
     device.electron = electron;
+    device.nwjs = nwjs;
     device.macos = macos;
     device.windows = windows;
     if (device.macos) {
