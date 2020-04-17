@@ -271,6 +271,8 @@ export default {
       'onPageNavbarLargeExpanded',
       'onCardOpened',
       'onCardClose',
+      'onPageTabShow',
+      'onPageTabHide',
     ]);
   },
   componentDidMount() {
@@ -297,6 +299,8 @@ export default {
       f7.on('pageNavbarLargeExpanded', self.onPageNavbarLargeExpanded);
       f7.on('cardOpened', self.onCardOpened);
       f7.on('cardClose', self.onCardClose);
+      f7.on('pageTabShow', self.onPageTabShow);
+      f7.on('pageTabHide', self.onPageTabHide);
     });
   },
   componentWillUnmount() {
@@ -322,6 +326,8 @@ export default {
     f7.off('pageNavbarLargeExpanded', self.onPageNavbarLargeExpanded);
     f7.off('cardOpened', self.onCardOpened);
     f7.off('cardClose', self.onCardClose);
+    f7.off('pageTabShow', self.onPageTabShow);
+    f7.off('pageTabHide', self.onPageTabHide);
     self.eventTargetEl = null;
     delete self.eventTargetEl;
   },
@@ -479,6 +485,14 @@ export default {
     onCardClose(cardEl, pageEl) {
       if (this.eventTargetEl !== pageEl) return;
       this.setState({ hasCardExpandableOpened: false });
+    },
+    onPageTabShow(pageEl) {
+      if (this.eventTargetEl !== pageEl) return;
+      this.dispatchEvent('page:tabshow pageTabShow');
+    },
+    onPageTabHide(pageEl) {
+      if (this.eventTargetEl !== pageEl) return;
+      this.dispatchEvent('page:tabhide pageTabHide');
     },
   },
 };

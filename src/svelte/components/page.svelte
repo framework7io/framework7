@@ -234,6 +234,17 @@
     hasCardExpandableOpened = false;
   }
 
+  function onPageTabShow(pageEl) {
+    if (el !== pageEl) return;
+    dispatch('pageTabShow');
+    if (typeof $$props.onPageTabShow === 'function') $$props.onPageTabShow();
+  }
+  function onPageTabHide(pageEl) {
+    if (el !== pageEl) return;
+    dispatch('pageTabHide');
+    if (typeof $$props.onPageTabHide === 'function') $$props.onPageTabHide();
+  }
+
   // Mount/destroy
   function mountPage() {
     f7.instance.on('pageMounted', onPageMounted);
@@ -255,6 +266,8 @@
     f7.instance.on('pageNavbarLargeExpanded', onPageNavbarLargeExpanded);
     f7.instance.on('cardOpened', onCardOpened);
     f7.instance.on('cardClose', onCardClose);
+    f7.instance.on('pageTabShow', onPageTabShow);
+    f7.instance.on('pageTabHide', onPageTabHide);
   }
   function destroyPage() {
     f7.instance.off('pageMounted', onPageMounted);
@@ -276,6 +289,8 @@
     f7.instance.off('pageNavbarLargeExpanded', onPageNavbarLargeExpanded);
     f7.instance.off('cardOpened', onCardOpened);
     f7.instance.off('cardClose', onCardClose);
+    f7.instance.off('pageTabShow', onPageTabShow);
+    f7.instance.off('pageTabHide', onPageTabHide);
   }
 
   onMount(() => {
