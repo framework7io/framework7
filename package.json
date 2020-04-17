@@ -14,7 +14,7 @@
     "build-react:prod": "cross-env-shell NODE_ENV=production \"gulp phenome && gulp build-react\"",
     "build-svelte:dev": "cross-env-shell NODE_ENV=development \"gulp build-svelte\"",
     "build-svelte:prod": "cross-env-shell NODE_ENV=production \"gulp build-svelte\"",
-    "dev": "cross-env-shell NODE_ENV=development \"gulp build-core && gulp phenome && gulp build-vue && gulp build-react && gulp ks-core && gulp ks-react && gulp ks-vue && gulp server\"",
+    "dev": "cross-env-shell NODE_ENV=development \"gulp build-core && gulp phenome && gulp build-vue && gulp build-react && gulp build-svelte && gulp ks-core && gulp ks-react && gulp ks-vue && gulp ks-svelte && gulp server\"",
     "prod": "cross-env-shell NODE_ENV=production \"gulp ks-core && gulp ks-react && gulp ks-vue && gulp server\"",
     "ks:dev": "cross-env-shell NODE_ENV=development \"gulp ks-core && gulp ks-react && gulp ks-vue && gulp ks-svelte\"",
     "ks:prod": "cross-env-shell NODE_ENV=production \"gulp ks-core && gulp ks-react && gulp ks-vue && gulp ks-svelte\"",
