@@ -75,7 +75,21 @@ export default {
       </div>
     );
   },
-  componentWillUpdate() {
+  beforeUpdate() {
+    const self = this;
+    if (!self.props.init) return;
+
+    const el = self.refs.el;
+    if (!el) return;
+
+    const children = el.children;
+    if (!children) return;
+
+    for (let i = 0; i < children.length; i += 1) {
+      children[i].classList.add('message-appeared');
+    }
+  },
+  getSnapshotBeforeUpdate() {
     const self = this;
     if (!self.props.init) return;
 
