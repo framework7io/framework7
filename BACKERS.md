@@ -218,7 +218,6 @@ Michael Powers<br>
 iOS Haven<br>
 JK<br>
 Azad Zain<br>
-Nicolas Hinze<br>
 Will Mero<br>
 Jorge Pagano<br>
 Jacob Gur<br>
