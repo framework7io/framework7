@@ -49,6 +49,9 @@
     class={classes}
   >
     <slot />
+    {#if strong || strongIos || strongMd || strongAurora}
+    <span class="segmented-highlight" />
+    {/if}
   </div>
 {:else if tag === 'p'}
   <p
@@ -57,5 +60,8 @@
     class={classes}
   >
     <slot />
+    {#if strong || strongIos || strongMd || strongAurora}
+    <span class="segmented-highlight" />
+    {/if}
   </p>
 {/if}
