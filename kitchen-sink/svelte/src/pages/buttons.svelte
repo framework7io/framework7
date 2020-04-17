@@ -81,9 +81,9 @@
       <Button active>Active</Button>
     </Segmented>
     <Segmented strong tag="p">
-      <Button>Button</Button>
-      <Button>Button</Button>
-      <Button active>Active</Button>
+      <Button active={ activeStrongButton === 0 } onClick={() => activeStrongButton = 0}>Button</Button>
+      <Button active={ activeStrongButton === 1 } onClick={() => activeStrongButton = 1}>Button</Button>
+      <Button active={ activeStrongButton === 2 } onClick={() => activeStrongButton = 2}>Button</Button>
     </Segmented>
     <Segmented raised tag="p">
       <Button>Button</Button>
@@ -246,4 +246,6 @@
 
 <script>
   import { Page, Navbar, BlockTitle, Block, Row, Col, Segmented, Button, } from 'framework7-svelte';
+
+  let activeStrongButton = 0;
 </script>
