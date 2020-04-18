@@ -25,7 +25,7 @@
     * ListItem
       * Added `tabLink` and `tabLinkActive` props to make list item as a tab link
     * Page
-      * * New `pageTabShow`/`page:tabshow` and `pageTabHide`/`page:tabhide` page events. These events fires on page's parent View-Tab show/hide
+      * New `pageTabShow`/`page:tabshow` and `pageTabHide`/`page:tabhide` page events. These events fire on page's parent View-Tab show/hide
   * Minor fixes
 
 # [v5.5.5](https://github.com/framework7io/framework7/compare/v5.5.4...v5.5.5) - April 10, 2020
