@@ -18,9 +18,9 @@
       * **BREAKING CHANGE** - now "strong" segmented requires new `<span class="segmented-highlight">` element
   * React/Vue/Svelte
     * Input
-      * Added support for `inpumode` input attribute
+      * Added support for `inputmode` input attribute
     * ListInput
-      * Added support for `inpumode` input attribute
+      * Added support for `inputmode` input attribute
       * Fixed issue with `errorMessage` in Svelte
     * ListItem
       * Added `tabLink` and `tabLinkActive` props to make list item as a tab link
