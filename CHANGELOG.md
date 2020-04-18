@@ -2,6 +2,32 @@
 
 # Change Log
 
+# [v5.6.0](https://github.com/framework7io/framework7/compare/v5.5.5...v5.6.0) - April 18, 2020
+  * Core
+    * App
+      * Added new app instance boolean property `app.darkTheme`. This property has effect only when `autoDarkTheme` enabled and indicates whether the dark theme active or not
+      * Added new app instance event `darkThemeChange`. It has effect only when `autoDarkTheme` enabled and fires on device preferred color scheme change
+    * Checkbox
+      * Fixed styles in RTL mode
+    * Device
+      * Added `nwjs` property that is true when app running under NW.js environment
+    * Router
+      * New `pageTabShow`/`page:tabshow` and `pageTabHide`/`page:tabhide` page events. These events fires on page's parent View-Tab show/hide
+    * Segmented
+      * Added animation for "strong" segmented active button
+      * **BREAKING CHANGE** - now "strong" segmented requires new `<span class="segmented-highlight">` element
+  * React/Vue/Svelte
+    * Input
+      * Added support for `inpumode` input attribute
+    * ListInput
+      * Added support for `inpumode` input attribute
+      * Fixed issue with `errorMessage` in Svelte
+    * ListItem
+      * Added `tabLink` and `tabLinkActive` props to make list item as a tab link
+    * Page
+      * * New `pageTabShow`/`page:tabshow` and `pageTabHide`/`page:tabhide` page events. These events fires on page's parent View-Tab show/hide
+  * Minor fixes
+
 # [v5.5.5](https://github.com/framework7io/framework7/compare/v5.5.4...v5.5.5) - April 10, 2020
   * Core
     * Modals (Popup, Actions, Popover, Login Screen, etc.)

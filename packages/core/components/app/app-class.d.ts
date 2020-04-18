@@ -116,7 +116,15 @@ export interface Framework7Plugin {
 
 export interface Framework7Events {
   /** Event will be fired on app initialization. Automatically after new Framework7() or after app.init() if you disabled auto init. */
-  'init': () => void
+  init: () => void
+  /** Event will be fired on device preferred color scheme change. It has effect only when `autoDarkTheme` enabled */
+  darkThemeChange: (isDark: boolean) => void
+  /** Event will be fired when app goes online */
+  online: () => void
+  /** Event will be fired when app goes offline */
+  offline: () => void
+  /** Event will be fired on network state change */
+  connection: (isOnline: boolean) => void
 }
 
 interface Framework7 extends Framework7Class<Framework7Events> {
@@ -136,6 +144,8 @@ interface Framework7 extends Framework7Class<Framework7Events> {
   rtl : boolean
   /** Current app theme. Can be md or ios */
   theme : string
+  /** Indicates whether the dark theme active or not. This property has effect only when `autoDarkTheme` enabled */
+  darkTheme : boolean
   /** Object with app root data passed on intialization */
   data : any
   /** Object with app root methods */

@@ -66,7 +66,7 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://cooltechzone.com/roku-vpn" target="_blank">
+      <a href="https://cooltechzone.com/popcorn-time-vpn" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/cooltechzone.png">
       </a>
     </td>

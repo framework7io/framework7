@@ -67,7 +67,9 @@ export default {
       attrs: {
         id: id
       }
-    }, [this.$slots['default']]);
+    }, [this.$slots['default'], (strong || strongIos || strongMd || strongAurora) && _h('span', {
+      class: 'segmented-highlight'
+    })]);
   },
 
   computed: {

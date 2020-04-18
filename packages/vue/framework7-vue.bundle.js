@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.5.5
+ * Framework7 Vue 5.6.0
  * Build full featured iOS & Android apps using Framework7 & Vue
  * https://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 10, 2020
+ * Released on: April 18, 2020
  */
 
 (function (global, factory) {
@@ -3647,6 +3647,7 @@
       name: String,
       value: [String, Number, Array, Date, Object],
       defaultValue: [String, Number, Array],
+      inputmode: String,
       placeholder: String,
       id: [String, Number],
       inputId: [String, Number],
@@ -3719,6 +3720,7 @@
       var name = props.name;
       var value = props.value;
       var defaultValue = props.defaultValue;
+      var inputmode = props.inputmode;
       var placeholder = props.placeholder;
       var id = props.id;
       var inputId = props.inputId;
@@ -3815,6 +3817,7 @@
               name: name,
               type: needsType ? inputType : undefined,
               placeholder: placeholder,
+              inputmode: inputmode,
               id: inputId,
               size: size,
               accept: accept,
@@ -4852,6 +4855,7 @@
       name: String,
       value: [String, Number, Array, Date, Object],
       defaultValue: [String, Number, Array],
+      inputmode: String,
       readonly: Boolean,
       required: Boolean,
       disabled: Boolean,
@@ -4932,6 +4936,7 @@
       var readonly = props.readonly;
       var required = props.required;
       var disabled = props.disabled;
+      var inputmode = props.inputmode;
       var placeholder = props.placeholder;
       var inputId = props.inputId;
       var size = props.size;
@@ -5021,6 +5026,7 @@
               name: name,
               type: needsType ? inputType : undefined,
               placeholder: placeholder,
+              inputmode: inputmode,
               id: inputId,
               size: size,
               accept: accept,
@@ -5798,6 +5804,8 @@
       tooltipTrigger: String,
       link: [Boolean, String],
       target: String,
+      tabLink: [Boolean, String],
+      tabLinkActive: Boolean,
       after: [String, Number],
       badge: [String, Number],
       badgeColor: String,
@@ -5867,6 +5875,8 @@
       var header = props.header;
       var footer = props.footer;
       var link = props.link;
+      var tabLink = props.tabLink;
+      var tabLinkActive = props.tabLinkActive;
       var href = props.href;
       var target = props.target;
       var after = props.after;
@@ -5938,11 +5948,14 @@
         if (link || href || accordionItem || smartSelect) {
           var linkAttrs = Object.assign({
             href: link === true ? '' : link || href,
-            target: target
+            target: target,
+            'data-tab': Utils.isStringProp(tabLink) && tabLink || undefined
           }, Mixins.linkRouterAttrs(props), {}, Mixins.linkActionsAttrs(props));
           var linkClasses = Utils.classNames({
             'item-link': true,
-            'smart-select': smartSelect
+            'smart-select': smartSelect,
+            'tab-link': tabLink || tabLink === '',
+            'tab-link-active': tabLinkActive
           }, Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
           linkEl = _h('a', __vueComponentTransformJSXProps(Object.assign({
             ref: 'linkEl',
@@ -9358,7 +9371,7 @@
     },
 
     created: function created() {
-      Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageBeforeUnmount', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded', 'onCardOpened', 'onCardClose']);
+      Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageBeforeUnmount', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded', 'onCardOpened', 'onCardClose', 'onPageTabShow', 'onPageTabHide']);
     },
 
     mounted: function mounted() {
@@ -9385,6 +9398,8 @@
         f7.on('pageNavbarLargeExpanded', self.onPageNavbarLargeExpanded);
         f7.on('cardOpened', self.onCardOpened);
         f7.on('cardClose', self.onCardClose);
+        f7.on('pageTabShow', self.onPageTabShow);
+        f7.on('pageTabHide', self.onPageTabHide);
       });
     },
 
@@ -9411,6 +9426,8 @@
       f7.off('pageNavbarLargeExpanded', self.onPageNavbarLargeExpanded);
       f7.off('cardOpened', self.onCardOpened);
       f7.off('cardClose', self.onCardClose);
+      f7.off('pageTabShow', self.onPageTabShow);
+      f7.off('pageTabHide', self.onPageTabHide);
       self.eventTargetEl = null;
       delete self.eventTargetEl;
     },
@@ -9631,6 +9648,16 @@
         this.setState({
           hasCardExpandableOpened: false
         });
+      },
+
+      onPageTabShow: function onPageTabShow(pageEl) {
+        if (this.eventTargetEl !== pageEl) { return; }
+        this.dispatchEvent('page:tabshow pageTabShow');
+      },
+
+      onPageTabHide: function onPageTabHide(pageEl) {
+        if (this.eventTargetEl !== pageEl) { return; }
+        this.dispatchEvent('page:tabhide pageTabHide');
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -11048,7 +11075,9 @@
         attrs: {
           id: id
         }
-      }, [this.$slots['default']]);
+      }, [this.$slots['default'], (strong || strongIos || strongMd || strongAurora) && _h('span', {
+        class: 'segmented-highlight'
+      })]);
     },
 
     computed: {
@@ -13252,7 +13281,7 @@
   };
 
   /**
-   * Framework7 Vue 5.5.5
+   * Framework7 Vue 5.6.0
    * Build full featured iOS & Android apps using Framework7 & Vue
    * https://framework7.io/vue/
    *
@@ -13260,7 +13289,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: April 10, 2020
+   * Released on: April 18, 2020
    */
 
   function f7ready(callback) {

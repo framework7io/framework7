@@ -133,6 +133,8 @@ class F7ListItem extends React.Component {
       header,
       footer,
       link,
+      tabLink,
+      tabLinkActive,
       href,
       target,
       after,
@@ -201,11 +203,14 @@ class F7ListItem extends React.Component {
       if (link || href || accordionItem || smartSelect) {
         const linkAttrs = Object.assign({
           href: link === true ? '' : link || href,
-          target
+          target,
+          'data-tab': Utils.isStringProp(tabLink) && tabLink || undefined
         }, Mixins.linkRouterAttrs(props), {}, Mixins.linkActionsAttrs(props));
         const linkClasses = Utils.classNames({
           'item-link': true,
-          'smart-select': smartSelect
+          'smart-select': smartSelect,
+          'tab-link': tabLink || tabLink === '',
+          'tab-link-active': tabLinkActive
         }, Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
         linkEl = React.createElement('a', Object.assign({
           ref: __reactNode => {
@@ -527,6 +532,8 @@ __reactComponentSetProps(F7ListItem, Object.assign({
   tooltipTrigger: String,
   link: [Boolean, String],
   target: String,
+  tabLink: [Boolean, String],
+  tabLinkActive: Boolean,
   after: [String, Number],
   badge: [String, Number],
   badgeColor: String,

@@ -15,6 +15,7 @@ declare namespace F7ListInput {
     name? : string
     value? : string | number | Array<any> | Date | Object
     defaultValue? : string | number | Array<any>
+    inputmode? : string
     readonly? : boolean
     required? : boolean
     disabled? : boolean

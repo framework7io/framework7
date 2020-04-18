@@ -28,6 +28,8 @@
 
   // Link Props
   export let link = undefined;
+  export let tabLink = undefined;
+  export let tabLinkActive = false;
   export let href = undefined;
   export let target = undefined;
 
@@ -110,6 +112,8 @@
     {
       'item-link': true,
       'smart-select': smartSelect,
+      'tab-link': tabLink || tabLink === '',
+      'tab-link-active': tabLinkActive,
     },
     Mixins.linkRouterClasses($$props),
     Mixins.linkActionsClasses($$props),
@@ -118,6 +122,7 @@
   $: linkAttrs = {
     href: link === true ? '' : link || href,
     target,
+    'data-tab': (Utils.isStringProp(tabLink) && tabLink) || undefined,
     ...Mixins.linkRouterAttrs($$props),
     ...Mixins.linkActionsAttrs($$props),
   };

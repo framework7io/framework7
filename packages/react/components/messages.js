@@ -157,7 +157,7 @@ class F7Messages extends React.Component {
     }
   }
 
-  componentWillUpdate() {
+  getSnapshotBeforeUpdate() {
     const self = this;
     if (!self.props.init) return;
     const el = self.refs.el;
