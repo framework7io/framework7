@@ -40,6 +40,7 @@
 @media (min-width: 630px) and (min-height: 630px) {
   .popup:not(.popup-tablet-fullscreen) {
     --f7-safe-area-top: 0px;
+    --f7-safe-area-bottom: 0px;
     width: var(--f7-popup-tablet-width);
     height: var(--f7-popup-tablet-height);
     left: 50%;
@@ -76,6 +77,7 @@ html.with-modal-popup-push-closing {
     top: calc(var(--f7-popup-push-offset) + 10px);
     height: calc(100% - var(--f7-popup-push-offset) - 10px);
     border-radius: var(--f7-popup-push-border-radius) var(--f7-popup-push-border-radius) 0 0;
+    --f7-safe-area-top: 0px;
     .view, .page {
       --f7-safe-area-top: 0px;
     }
