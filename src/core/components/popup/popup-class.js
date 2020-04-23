@@ -257,7 +257,10 @@ class Popup extends Modal {
       });
     }
 
+    let hasPreviousPushPopup;
+
     popup.on('open', () => {
+      hasPreviousPushPopup = false;
       if (popup.params.closeOnEscape) {
         $(document).on('keydown', onKeyDown);
       }
@@ -284,19 +287,20 @@ class Popup extends Modal {
       }
     });
     popup.on('close', () => {
+      hasPreviousPushPopup = popup.$el.prevAll('.popup-push.modal-in').length > 0;
       if (popup.params.closeOnEscape) {
         $(document).off('keydown', onKeyDown);
       }
       if (popup.params.closeByBackdropClick) {
         app.off('click', handleClick);
       }
-      if (isPush && pushOffset) {
+      if (isPush && pushOffset && !hasPreviousPushPopup) {
         popup.$htmlEl.removeClass('with-modal-popup-push');
         popup.$htmlEl.addClass('with-modal-popup-push-closing');
       }
     });
     popup.on('closed', () => {
-      if (isPush && pushOffset) {
+      if (isPush && pushOffset && !hasPreviousPushPopup) {
         popup.$htmlEl.removeClass('with-modal-popup-push-closing');
         popup.$htmlEl[0].style.removeProperty('--f7-popup-push-scale');
       }
