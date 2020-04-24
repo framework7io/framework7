@@ -1,8 +1,8 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Framework7Class from '../../utils/class';
-import SwipePanel from './swipe-panel';
-import ResizablePanel from './resizable-panel';
+import swipePanel from './swipe-panel';
+import resizablePanel from './resizable-panel';
 
 class Panel extends Framework7Class {
   constructor(app, params = {}) {
@@ -208,7 +208,7 @@ class Panel extends Framework7Class {
       panel.resizable = true;
       panel.$el.addClass('panel-resizable');
     } else {
-      ResizablePanel(panel);
+      resizablePanel(panel);
     }
     return panel;
   }
@@ -225,7 +225,7 @@ class Panel extends Framework7Class {
     if (panel.swipeInitialized) {
       panel.swipeable = true;
     } else {
-      SwipePanel(panel);
+      swipePanel(panel);
     }
     return panel;
   }

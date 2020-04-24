@@ -613,7 +613,7 @@ export default {
     },
   },
   on: {
-    'panelBreakpoint panelCollapsedBreakpoint panelResize resize viewMasterDetailBreakpoint': function onPanelResize() {
+    'panelBreakpoint panelCollapsedBreakpoint panelResize viewResize resize viewMasterDetailBreakpoint': function onPanelResize() {
       const app = this;
       $('.navbar').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
