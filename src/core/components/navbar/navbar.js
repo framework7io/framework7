@@ -491,6 +491,7 @@ const Navbar = {
     }
 
     function handleTitleHideShow() {
+      if ($pageEl.hasClass('page-with-card-opened')) return;
       scrollHeight = scrollContent.scrollHeight;
       offsetHeight = scrollContent.offsetHeight;
       reachEnd = currentScrollTop + offsetHeight >= scrollHeight;
