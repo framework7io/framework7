@@ -71,6 +71,7 @@ export default {
     // Inputs
     checkbox: Boolean,
     radio: Boolean,
+    radioIcon: String,
     checked: Boolean,
     defaultChecked: Boolean,
     indeterminate: Boolean,
@@ -127,6 +128,7 @@ export default {
       smartSelect,
       checkbox,
       radio,
+      radioIcon,
       checked,
       defaultChecked,
       indeterminate,
@@ -169,6 +171,7 @@ export default {
           defaultChecked={defaultChecked}
           indeterminate={indeterminate}
           radio={radio}
+          radioIcon={radioIcon}
           name={name}
           value={value}
           readonly={readonly}

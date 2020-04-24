@@ -59,6 +59,7 @@
   // Inputs
   export let checkbox = undefined;
   export let radio = undefined;
+  export let radioIcon = undefined;
   export let checked = undefined;
   export let indeterminate = undefined;
   export let name = undefined;
@@ -104,6 +105,8 @@
     {
       'item-checkbox': checkbox,
       'item-radio': radio,
+      'item-radio-icon-start': radio && radioIcon === 'start',
+      'item-radio-icon-end': radio && radioIcon === 'end',
     },
     Mixins.colorClasses($$props),
   );
