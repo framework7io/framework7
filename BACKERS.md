@@ -207,6 +207,7 @@ Danny Redfern<br>
 ---
 
 ### $10+ Supporter
+Lailton Fernando Mariano<br>
 User Mail<br>
 Thomason<br>
 Shawn Jackson<br>
@@ -244,6 +245,7 @@ Dave Billington
 ---
 
 ### $5+ Thank You
+Elijah Jahbless<br>
 emre çete<br>
 Yo. Meyers<br>
 Brett Lee<br>
