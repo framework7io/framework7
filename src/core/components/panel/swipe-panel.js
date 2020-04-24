@@ -18,6 +18,7 @@ function swipePanel(panel) {
   let isGestureStarted;
   let isMoved;
   let isScrolling;
+  let isInterrupted;
   const touchesStart = {};
   let touchStartTime;
   let touchesDiff;
@@ -61,12 +62,13 @@ function swipePanel(panel) {
     isMoved = false;
     isTouched = true;
     isScrolling = undefined;
+    isInterrupted = false;
 
     touchStartTime = Utils.now();
     direction = undefined;
   }
   function handleTouchMove(e) {
-    if (!isTouched || isGestureStarted) return;
+    if (!isTouched || isGestureStarted || isInterrupted) return;
     touchMoves += 1;
     if (touchMoves < 2) return;
     if (e.f7PreventSwipePanel || app.preventSwipePanelBySwipeBack || app.preventSwipePanel) {
@@ -166,22 +168,36 @@ function swipePanel(panel) {
         translate = panelWidth;
       }
     }
+    const noFollowProgress = Math.abs(translate / panelWidth);
     if (effect === 'reveal') {
-      $viewEl.transform(`translate3d(${translate}px,0,0)`).transition(0);
-      $backdropEl.transform(`translate3d(${translate}px,0,0)`).transition(0);
+      if (!params.swipeNoFollow) {
+        $viewEl.transform(`translate3d(${translate}px,0,0)`).transition(0);
+        $backdropEl.transform(`translate3d(${translate}px,0,0)`).transition(0);
+      }
 
       $el.trigger('panel:swipe', Math.abs(translate / panelWidth));
       panel.emit('local::swipe panelSwipe', panel, Math.abs(translate / panelWidth));
     } else {
       if (side === 'left') translate -= panelWidth;
-      $el.transform(`translate3d(${translate}px,0,0)`).transition(0);
+      if (!params.swipeNoFollow) {
+        $el.transform(`translate3d(${translate}px,0,0)`).transition(0);
 
-      $backdropEl.transition(0);
-      backdropOpacity = 1 - Math.abs(translate / panelWidth);
-      $backdropEl.css({ opacity: backdropOpacity });
+        $backdropEl.transition(0);
+        backdropOpacity = 1 - Math.abs(translate / panelWidth);
+        $backdropEl.css({ opacity: backdropOpacity });
+      }
 
       $el.trigger('panel:swipe', Math.abs(translate / panelWidth));
       panel.emit('local::swipe panelSwipe', panel, Math.abs(translate / panelWidth));
+    }
+
+    if (params.swipeNoFollow) {
+      const stateChanged = (panel.opened && noFollowProgress === 0) || (!panel.opened && noFollowProgress === 1);
+      if (stateChanged) {
+        isInterrupted = true;
+        // eslint-disable-next-line
+        handleTouchEnd(e);
+      }
     }
   }
   function handleTouchEnd(e) {
@@ -195,7 +211,7 @@ function swipePanel(panel) {
     isMoved = false;
     const timeDiff = (new Date()).getTime() - touchStartTime;
     let action;
-    const edge = (translate === 0 || Math.abs(translate) === panelWidth);
+    const edge = (translate === 0 || Math.abs(translate) === panelWidth) && !params.swipeNoFollow;
 
     const threshold = params.swipeThreshold || 0;
 

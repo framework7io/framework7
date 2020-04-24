@@ -26,6 +26,7 @@
   export let visibleBreakpoint = undefined;
   export let collapsedBreakpoint = undefined;
   export let swipe = false;
+  export let swipeNoFollow = false;
   export let swipeOnlyClose = false;
   export let swipeActiveArea = 0;
   export let swipeThreshold = 0;
@@ -152,6 +153,7 @@
         visibleBreakpoint,
         collapsedBreakpoint,
         swipe,
+        swipeNoFollow,
         swipeOnlyClose,
         swipeActiveArea,
         swipeThreshold,
