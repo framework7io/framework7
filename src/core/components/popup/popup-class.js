@@ -171,7 +171,7 @@ class Popup extends Modal {
       if (!isMoved) {
         if (isPush && pushOffset) {
           popupHeight = $el[0].offsetHeight;
-          $pushEl = $el.prevAll('.popup-push.modal-in').eq(0);
+          $pushEl = $el.prevAll('.popup.modal-in').eq(0);
           if ($pushEl.length === 0) {
             $pushEl = app.root.children('.view, .views');
           }
@@ -205,9 +205,15 @@ class Popup extends Modal {
         const pushProgress = 1 - Math.abs(touchesDiff / popupHeight);
         const scale = 1 - (1 - pushViewScale(pushOffset)) * pushProgress;
         if ($pushEl.hasClass('popup')) {
-          $pushEl.transition(0).transform(
-            `translate3d(0, calc(-1 * ${pushProgress} * (var(--f7-popup-push-offset) + 10px)) , 0px) scale(${scale})`
-          );
+          if ($pushEl.hasClass('popup-push')) {
+            $pushEl.transition(0).transform(
+              `translate3d(0, calc(-1 * ${pushProgress} * (var(--f7-popup-push-offset) + 10px)) , 0px) scale(${scale})`
+            );
+          } else {
+            $pushEl.transition(0).transform(
+              `translate3d(0, 0px , 0px) scale(${scale})`
+            );
+          }
         } else {
           $pushEl.transition(0).transform(`translate3d(0,0,0) scale(${scale})`);
         }
@@ -273,6 +279,7 @@ class Popup extends Modal {
       if (popup.params.closeOnEscape) {
         $(document).on('keydown', onKeyDown);
       }
+      $el.prevAll('.popup.modal-in').addClass('popup-behind');
       if (popup.push) {
         isPush = popup.push && (
           (app.width < 630 || app.height < 630)
@@ -284,7 +291,6 @@ class Popup extends Modal {
         if (Number.isNaN(pushOffset)) pushOffset = 0;
         if (pushOffset) {
           $el.addClass('popup-push');
-          $el.prevAll('.popup-push.modal-in').addClass('popup-push-behind');
           popup.$htmlEl.addClass('with-modal-popup-push');
           popup.$htmlEl[0].style.setProperty('--f7-popup-push-scale', pushViewScale(pushOffset));
         }
@@ -304,9 +310,7 @@ class Popup extends Modal {
       if (popup.params.closeByBackdropClick) {
         app.off('click', handleClick);
       }
-      if (isPush && pushOffset) {
-        $el.prevAll('.popup-push.modal-in').eq(0).removeClass('popup-push-behind');
-      }
+      $el.prevAll('.popup.modal-in').eq(0).removeClass('popup-behind');
       if (isPush && pushOffset && !hasPreviousPushPopup) {
         popup.$htmlEl.removeClass('with-modal-popup-push');
         popup.$htmlEl.addClass('with-modal-popup-push-closing');

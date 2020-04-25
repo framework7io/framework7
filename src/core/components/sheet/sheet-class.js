@@ -410,6 +410,7 @@ class Sheet extends Modal {
       if (sheet.params.closeOnEscape) {
         $(document).on('keydown', onKeyDown);
       }
+      $el.prevAll('.popup.modal-in').addClass('popup-behind');
       if (sheet.params.swipeToStep) {
         sheet.setSwipeStep(false);
         app.on('resize', onResize);
@@ -453,6 +454,7 @@ class Sheet extends Modal {
       if (sheet.params.closeByOutsideClick || sheet.params.closeByBackdropClick) {
         app.off('click', handleClick);
       }
+      $el.prevAll('.popup.modal-in').eq(0).removeClass('popup-behind');
       if (sheet.push && pushOffset) {
         sheet.$htmlEl.removeClass('with-modal-sheet-push');
         sheet.$htmlEl.addClass('with-modal-sheet-push-closing');
