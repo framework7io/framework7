@@ -1,5 +1,5 @@
 /**
- * Framework7 5.6.0
+ * Framework7 5.7.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 18, 2020
+ * Released on: April 25, 2020
  */
 
 /*====================
@@ -735,6 +735,20 @@ html.device-full-viewport body {
 .framework7-root > .view,
 .framework7-root > .views {
   height: calc(100% - var(--f7-appbar-app-offset, 0px));
+}
+.view-resize-handler {
+  width: 6px;
+  height: 100%;
+  position: absolute;
+  left: var(--f7-page-master-width);
+  margin-left: -3px;
+  top: 0;
+  cursor: col-resize;
+  z-index: 1000;
+  display: none;
+}
+.view-master-detail .view-resize-handler {
+  display: block;
 }
 /* === Pages === */
 :root {
@@ -6558,9 +6572,11 @@ html.with-modal-dialog .page-content {
   */
 }
 .ios {
+  --f7-popup-tablet-border-radius: 5px;
   --f7-popup-box-shadow: none;
 }
 .md {
+  --f7-popup-tablet-border-radius: 4px;
   --f7-popup-box-shadow: 0px 20px 44px rgba(0, 0, 0, 0.5);
 }
 .aurora {
@@ -6585,6 +6601,10 @@ html.with-modal-dialog .page-content {
   overflow: hidden;
   border-radius: var(--f7-popup-border-radius);
 }
+.theme-dark .popup,
+.popup.theme-dark {
+  background: #000;
+}
 .popup.modal-in,
 .popup.modal-out {
   transition-duration: var(--f7-popup-transition-duration);
@@ -6605,6 +6625,7 @@ html.with-modal-dialog .page-content {
 @media (min-width: 630px) and (min-height: 630px) {
   .popup:not(.popup-tablet-fullscreen) {
     --f7-safe-area-top: 0px;
+    --f7-safe-area-bottom: 0px;
     width: var(--f7-popup-tablet-width);
     height: var(--f7-popup-tablet-height);
     left: 50%;
@@ -6624,6 +6645,9 @@ html.with-modal-dialog .page-content {
   .popup:not(.popup-tablet-fullscreen).swipe-close-to-top.modal-out {
     transform: translate3d(0, -100vh, 0);
   }
+  .popup:not(.popup-tablet-fullscreen).popup-behind {
+    transform: translate3d(0, 0, 0) scale(0.9);
+  }
 }
 html.with-modal-popup .framework7-root > .views .page-content,
 html.with-modal-popup .framework7-root > .view .page-content,
@@ -6636,6 +6660,7 @@ html.with-modal-popup-push-closing .popup-push {
   top: calc(var(--f7-popup-push-offset) + 10px);
   height: calc(100% - var(--f7-popup-push-offset) - 10px);
   border-radius: var(--f7-popup-push-border-radius) var(--f7-popup-push-border-radius) 0 0;
+  --f7-safe-area-top: 0px;
 }
 html.with-modal-popup-push .popup-push .view,
 html.with-modal-popup-push-closing .popup-push .view,
@@ -6653,10 +6678,97 @@ html.with-modal-popup-push .framework7-root > .view,
 html.with-modal-popup-push-closing .framework7-root > .view {
   transition-duration: var(--f7-popup-transition-duration);
 }
+html.with-modal-popup-push.theme-dark .framework7-root > .views:after,
+html.with-modal-popup-push-closing.theme-dark .framework7-root > .views:after,
+html.with-modal-popup-push.theme-dark .framework7-root > .view:after,
+html.with-modal-popup-push-closing.theme-dark .framework7-root > .view:after,
+html.with-modal-popup-push .theme-dark .framework7-root > .views:after,
+html.with-modal-popup-push-closing .theme-dark .framework7-root > .views:after,
+html.with-modal-popup-push .theme-dark .framework7-root > .view:after,
+html.with-modal-popup-push-closing .theme-dark .framework7-root > .view:after,
+html.with-modal-popup-push .theme-dark.framework7-root > .views:after,
+html.with-modal-popup-push-closing .theme-dark.framework7-root > .views:after,
+html.with-modal-popup-push .theme-dark.framework7-root > .view:after,
+html.with-modal-popup-push-closing .theme-dark.framework7-root > .view:after,
+html.with-modal-popup-push .framework7-root > .views.theme-dark:after,
+html.with-modal-popup-push-closing .framework7-root > .views.theme-dark:after,
+html.with-modal-popup-push .framework7-root > .view.theme-dark:after,
+html.with-modal-popup-push-closing .framework7-root > .view.theme-dark:after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 13000;
+  border-radius: var(--f7-popup-push-border-radius) var(--f7-popup-push-border-radius) 0 0;
+  opacity: 1;
+  animation: popup-dark-push-overlay-fade-in var(--f7-popup-transition-duration) forwards;
+}
 html.with-modal-popup-push .framework7-root > .views,
 html.with-modal-popup-push .framework7-root > .view {
   border-radius: var(--f7-popup-push-border-radius) var(--f7-popup-push-border-radius) 0 0;
   transform: translate3d(0, 0, 0px) scale(var(--f7-popup-push-scale, 1));
+}
+html.with-modal-popup-push .popup:after {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 13000;
+  transition-duration: var(--f7-popup-transition-duration);
+  border-radius: var(--f7-popup-push-border-radius) var(--f7-popup-push-border-radius) 0 0;
+  opacity: 0;
+}
+html.with-modal-popup-push.theme-dark .popup:after,
+html.with-modal-popup-push .theme-dark .popup:after,
+html.with-modal-popup-push .theme-dark.popup:after {
+  background: rgba(255, 255, 255, 0.05);
+}
+html.with-modal-popup-push .popup-behind {
+  transform: translate3d(0, 0px, 0px) scale(var(--f7-popup-push-scale, 1));
+}
+html.with-modal-popup-push .popup-behind:not(.popup-push) {
+  border-radius: var(--f7-popup-push-border-radius) var(--f7-popup-push-border-radius) 0 0;
+}
+html.with-modal-popup-push .popup-behind.popup-push {
+  transform: translate3d(0, calc(0px - var(--f7-popup-push-offset) - 10px), 0px) scale(var(--f7-popup-push-scale, 1));
+}
+html.with-modal-popup-push .popup-behind:after {
+  opacity: 1;
+  pointer-events: auto;
+}
+html.with-modal-popup-push-closing.theme-dark .framework7-root > .views:after,
+html.with-modal-popup-push-closing.theme-dark .framework7-root > .view:after,
+html.with-modal-popup-push-closing .theme-dark .framework7-root > .views:after,
+html.with-modal-popup-push-closing .theme-dark .framework7-root > .view:after,
+html.with-modal-popup-push-closing .theme-dark.framework7-root > .views:after,
+html.with-modal-popup-push-closing .theme-dark.framework7-root > .view:after,
+html.with-modal-popup-push-closing .framework7-root > .views.theme-dark:after,
+html.with-modal-popup-push-closing .framework7-root > .view.theme-dark:after {
+  animation: popup-dark-push-overlay-fade-out var(--f7-popup-transition-duration) forwards;
+}
+@keyframes popup-dark-push-overlay-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes popup-dark-push-overlay-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 /* === Login Screen === */
 :root {
@@ -7596,6 +7708,7 @@ html.with-modal-popup-push .framework7-root > .view {
 }
 html.with-modal-sheet-push .sheet-modal-push,
 html.with-modal-sheet-push-closing .sheet-modal-push {
+  --f7-sheet-border-color: transparent;
   border-radius: var(--f7-sheet-push-border-radius) var(--f7-sheet-push-border-radius) 0 0;
   overflow: hidden;
 }
@@ -7619,10 +7732,65 @@ html.with-modal-sheet-push .framework7-root > .view,
 html.with-modal-sheet-push-closing .framework7-root > .view {
   transition-duration: var(--f7-sheet-transition-duration);
 }
+html.with-modal-sheet-push.theme-dark .framework7-root > .views:after,
+html.with-modal-sheet-push-closing.theme-dark .framework7-root > .views:after,
+html.with-modal-sheet-push.theme-dark .framework7-root > .view:after,
+html.with-modal-sheet-push-closing.theme-dark .framework7-root > .view:after,
+html.with-modal-sheet-push .theme-dark .framework7-root > .views:after,
+html.with-modal-sheet-push-closing .theme-dark .framework7-root > .views:after,
+html.with-modal-sheet-push .theme-dark .framework7-root > .view:after,
+html.with-modal-sheet-push-closing .theme-dark .framework7-root > .view:after,
+html.with-modal-sheet-push .theme-dark.framework7-root > .views:after,
+html.with-modal-sheet-push-closing .theme-dark.framework7-root > .views:after,
+html.with-modal-sheet-push .theme-dark.framework7-root > .view:after,
+html.with-modal-sheet-push-closing .theme-dark.framework7-root > .view:after,
+html.with-modal-sheet-push .framework7-root > .views.theme-dark:after,
+html.with-modal-sheet-push-closing .framework7-root > .views.theme-dark:after,
+html.with-modal-sheet-push .framework7-root > .view.theme-dark:after,
+html.with-modal-sheet-push-closing .framework7-root > .view.theme-dark:after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 13000;
+  border-radius: var(--f7-sheet-push-border-radius) var(--f7-sheet-push-border-radius) 0 0;
+  opacity: 1;
+  animation: sheet-dark-push-overlay-fade-in var(--f7-sheet-transition-duration) forwards;
+}
 html.with-modal-sheet-push .framework7-root > .views,
 html.with-modal-sheet-push .framework7-root > .view {
   border-radius: var(--f7-sheet-push-border-radius);
   transform: translate3d(0, 0, 0px) scale(var(--f7-sheet-push-scale, 1));
+}
+html.with-modal-sheet-push-closing.theme-dark .framework7-root > .views:after,
+html.with-modal-sheet-push-closing.theme-dark .framework7-root > .view:after,
+html.with-modal-sheet-push-closing .theme-dark .framework7-root > .views:after,
+html.with-modal-sheet-push-closing .theme-dark .framework7-root > .view:after,
+html.with-modal-sheet-push-closing .theme-dark.framework7-root > .views:after,
+html.with-modal-sheet-push-closing .theme-dark.framework7-root > .view:after,
+html.with-modal-sheet-push-closing .framework7-root > .views.theme-dark:after,
+html.with-modal-sheet-push-closing .framework7-root > .view.theme-dark:after {
+  animation: sheet-dark-push-overlay-fade-out var(--f7-sheet-transition-duration) forwards;
+}
+@keyframes sheet-dark-push-overlay-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes sheet-dark-push-overlay-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 .md .sheet-modal .toolbar a.link:not(.tab-link) {
   flex-shrink: 0;
@@ -11970,14 +12138,17 @@ label.item-radio.disabled,
 .ios .radio input[type="radio"]:checked ~ .icon-radio {
   border-color: var(--f7-radio-active-color, var(--f7-theme-color));
 }
-.ios label.item-radio input[type="radio"] ~ .icon-radio {
+.ios label.item-radio:not(.item-radio-icon-start) input[type="radio"] ~ .icon-radio {
   position: absolute;
   top: 50%;
   margin-top: -11px;
   left: calc(var(--f7-safe-area-left) + 10px);
 }
-.ios label.item-radio .item-inner {
+.ios label.item-radio:not(.item-radio-icon-start) .item-inner {
   padding-left: calc(var(--f7-safe-area-left) + 36px);
+}
+.ios label.item-radio-icon-start > .icon-radio {
+  margin-left: calc(var(--f7-list-item-media-margin) + var(--f7-checkbox-extra-margin));
 }
 .ios label.item-radio.active-state {
   transition-duration: 0ms;
@@ -12015,8 +12186,17 @@ label.item-radio.disabled,
   overflow: hidden;
   z-index: 0;
 }
-.md label.item-radio > .icon-radio {
+.md label.item-radio:not(.item-radio-icon-end) > .icon-radio {
   margin-left: calc(var(--f7-list-item-media-margin) + var(--f7-radio-extra-margin));
+}
+.md label.item-radio-icon-end input[type="radio"] ~ .icon-radio {
+  position: absolute;
+  top: 50%;
+  margin-top: -10px;
+  left: calc(var(--f7-safe-area-left) + 16px);
+}
+.md label.item-radio-icon-end .item-inner {
+  padding-left: calc(var(--f7-safe-area-left) + 52px);
 }
 .aurora .icon-radio {
   transition-duration: 150ms;
@@ -12066,8 +12246,17 @@ label.item-radio.disabled,
   overflow: hidden;
   z-index: 0;
 }
-.aurora label.item-radio > .icon-radio {
+.aurora label.item-radio:not(.item-radio-icon-end) > .icon-radio {
   margin-left: calc(var(--f7-list-item-media-margin) + var(--f7-radio-extra-margin));
+}
+.aurora label.item-radio-icon-end input[type="radio"] ~ .icon-radio {
+  position: absolute;
+  top: 50%;
+  margin-top: -8px;
+  left: calc(var(--f7-safe-area-left) + 16px);
+}
+.aurora label.item-radio-icon-end .item-inner {
+  padding-left: calc(var(--f7-safe-area-left) + 48px);
 }
 /* === Toggle === */
 :root {
@@ -18305,6 +18494,7 @@ table.data-table {
   letter-spacing: 0;
   text-transform: none;
   font-variant: initial;
+  line-height: 1;
 }
 .swiper-button-prev,
 .swiper-container-rtl .swiper-button-next {

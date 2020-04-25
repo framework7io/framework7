@@ -39,6 +39,7 @@ declare namespace F7ListItem {
     chevronCenter? : boolean
     checkbox? : boolean
     radio? : boolean
+    radioIcon? : string
     checked? : boolean
     defaultChecked? : boolean
     indeterminate? : boolean

@@ -1,5 +1,5 @@
 /**
- * Framework7 5.6.0
+ * Framework7 5.7.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 18, 2020
+ * Released on: April 25, 2020
  */
 
 (function (global, factory) {
@@ -9421,6 +9421,144 @@
     },
   };
 
+  function resizableView(view) {
+    var app = view.app;
+    if (view.resizableInitialized) { return; }
+    Utils.extend(view, {
+      resizable: true,
+      resizableWidth: null,
+      resizableInitialized: true,
+    });
+    var $htmlEl = $('html');
+    var $el = view.$el;
+    if (!$el) { return; }
+
+    var $resizeHandlerEl;
+
+    var isTouched;
+    var isMoved;
+    var touchesStart = {};
+    var touchesDiff;
+    var width;
+
+    var minWidth;
+    var maxWidth;
+
+    function transformCSSWidth(v) {
+      if (!v) { return null; }
+      if (v.indexOf('%') >= 0 || v.indexOf('vw') >= 0) {
+        return parseInt(v, 10) / 100 * app.width;
+      }
+      var newV = parseInt(v, 10);
+      if (Number.isNaN(newV)) { return null; }
+      return newV;
+    }
+
+    function isResizable() {
+      return view.resizable && $el.hasClass('view-resizable') && $el.hasClass('view-master-detail');
+    }
+
+    function handleTouchStart(e) {
+      if (!isResizable()) { return; }
+      touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+      touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+      isMoved = false;
+      isTouched = true;
+      var $pageMasterEl = $el.children('.page-master');
+      minWidth = transformCSSWidth($pageMasterEl.css('min-width'));
+      maxWidth = transformCSSWidth($pageMasterEl.css('max-width'));
+    }
+    function handleTouchMove(e) {
+      if (!isTouched) { return; }
+      e.f7PreventSwipePanel = true;
+      var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+
+      if (!isMoved) {
+        width = $resizeHandlerEl[0].offsetLeft + $resizeHandlerEl[0].offsetWidth;
+        $el.addClass('view-resizing');
+        $htmlEl.css('cursor', 'col-resize');
+      }
+
+      isMoved = true;
+
+      e.preventDefault();
+
+      touchesDiff = (pageX - touchesStart.x);
+
+      var newWidth = width + touchesDiff;
+      if (minWidth && !Number.isNaN(minWidth)) {
+        newWidth = Math.max(newWidth, minWidth);
+      }
+      if (maxWidth && !Number.isNaN(maxWidth)) {
+        newWidth = Math.min(newWidth, maxWidth);
+      }
+      newWidth = Math.min(Math.max(newWidth, 0), app.width);
+
+      view.resizableWidth = newWidth;
+      $htmlEl[0].style.setProperty('--f7-page-master-width', (newWidth + "px"));
+
+      $el.trigger('view:resize', newWidth);
+      view.emit('local::resize viewResize', view, newWidth);
+    }
+    function handleTouchEnd() {
+      $('html').css('cursor', '');
+      if (!isTouched || !isMoved) {
+        isTouched = false;
+        isMoved = false;
+        return;
+      }
+      isTouched = false;
+      isMoved = false;
+
+      $htmlEl[0].style.setProperty('--f7-page-master-width', ((view.resizableWidth) + "px"));
+      $el.removeClass('view-resizing');
+    }
+
+    function handleResize() {
+      if (!view.resizableWidth) { return; }
+      minWidth = transformCSSWidth($resizeHandlerEl.css('min-width'));
+      maxWidth = transformCSSWidth($resizeHandlerEl.css('max-width'));
+
+      if (minWidth && !Number.isNaN(minWidth) && view.resizableWidth < minWidth) {
+        view.resizableWidth = Math.max(view.resizableWidth, minWidth);
+      }
+      if (maxWidth && !Number.isNaN(maxWidth) && view.resizableWidth > maxWidth) {
+        view.resizableWidth = Math.min(view.resizableWidth, maxWidth);
+      }
+      view.resizableWidth = Math.min(Math.max(view.resizableWidth, 0), app.width);
+
+      $htmlEl[0].style.setProperty('--f7-page-master-width', ((view.resizableWidth) + "px"));
+    }
+
+    $resizeHandlerEl = view.$el.children('.view-resize-handler');
+    if (!$resizeHandlerEl.length) {
+      view.$el.append('<div class="view-resize-handler"></div>');
+      $resizeHandlerEl = view.$el.children('.view-resize-handler');
+    }
+    view.$resizeHandlerEl = $resizeHandlerEl;
+
+    $el.addClass('view-resizable');
+
+    // Add Events
+    var passive = Support.passiveListener ? { passive: true } : false;
+
+    view.$el.on(app.touchEvents.start, '.view-resize-handler', handleTouchStart, passive);
+    app.on('touchmove:active', handleTouchMove);
+    app.on('touchend:passive', handleTouchEnd);
+    app.on('resize', handleResize);
+    view.on('beforeOpen', handleResize);
+
+    view.once('viewDestroy', function () {
+      $el.removeClass('view-resizable');
+      view.$resizeHandlerEl.remove();
+      view.$el.off(app.touchEvents.start, '.view-resize-handler', handleTouchStart, passive);
+      app.off('touchmove:active', handleTouchMove);
+      app.off('touchend:passive', handleTouchEnd);
+      app.off('resize', handleResize);
+      view.off('beforeOpen', handleResize);
+    });
+  }
+
   var View = /*@__PURE__*/(function (Framework7Class) {
     function View(appInstance, el, viewParams) {
       if ( viewParams === void 0 ) viewParams = {};
@@ -9593,6 +9731,9 @@
       var app = view.app;
       view.checkMasterDetailBreakpoint = view.checkMasterDetailBreakpoint.bind(view);
       view.checkMasterDetailBreakpoint();
+      if (view.params.masterDetailResizable) {
+        resizableView(view);
+      }
       app.on('resize', view.checkMasterDetailBreakpoint);
     };
 
@@ -11858,6 +11999,7 @@
         reloadPages: false,
         reloadDetail: false,
         masterDetailBreakpoint: 0,
+        masterDetailResizable: false,
         removeElements: true,
         removeElementsWithTimeout: false,
         removeElementsTimeout: 0,
@@ -12471,6 +12613,7 @@
       }
 
       function handleTitleHideShow() {
+        if ($pageEl.hasClass('page-with-card-opened')) { return; }
         scrollHeight = scrollContent.scrollHeight;
         offsetHeight = scrollContent.offsetHeight;
         reachEnd = currentScrollTop + offsetHeight >= scrollHeight;
@@ -12593,7 +12736,7 @@
       },
     },
     on: {
-      'panelBreakpoint panelCollapsedBreakpoint panelResize resize viewMasterDetailBreakpoint': function onPanelResize() {
+      'panelBreakpoint panelCollapsedBreakpoint panelResize viewResize resize viewMasterDetailBreakpoint': function onPanelResize() {
         var app = this;
         $('.navbar').each(function (index, navbarEl) {
           app.navbar.size(navbarEl);
@@ -12819,7 +12962,7 @@
       $el.trigger('toolbar:show');
       app.emit('toolbarShow', $el[0]);
     },
-    initHideToolbarOnScroll: function initHideToolbarOnScroll(pageEl) {
+    initToolbarOnScroll: function initToolbarOnScroll(pageEl) {
       var app = this;
       var $pageEl = $(pageEl);
       var $toolbarEl = $pageEl.parents('.view').children('.toolbar');
@@ -12842,11 +12985,12 @@
       var action;
       var toolbarHidden;
       function handleScroll(e) {
+        if ($pageEl.hasClass('page-with-card-opened')) { return; }
+        if ($pageEl.hasClass('page-previous')) { return; }
         var scrollContent = this;
         if (e && e.target && e.target !== scrollContent) {
           return;
         }
-        if ($pageEl.hasClass('page-previous')) { return; }
         currentScrollTop = scrollContent.scrollTop;
         scrollHeight = scrollContent.scrollHeight;
         offsetHeight = scrollContent.offsetHeight;
@@ -12892,7 +13036,7 @@
           hide: Toolbar.hide.bind(app),
           show: Toolbar.show.bind(app),
           setHighlight: Toolbar.setHighlight.bind(app),
-          initHideToolbarOnScroll: Toolbar.initHideToolbarOnScroll.bind(app),
+          initToolbarOnScroll: Toolbar.initToolbarOnScroll.bind(app),
           init: Toolbar.init.bind(app),
         },
       });
@@ -12948,7 +13092,7 @@
           ) {
             return;
           }
-          app.toolbar.initHideToolbarOnScroll(page.el);
+          app.toolbar.initToolbarOnScroll(page.el);
         }
       },
       init: function init() {
@@ -13990,7 +14134,7 @@
       var pageContentOffsetHeight;
       var pageContentScrollHeight;
       var popupHeight;
-      var $pushViewEl;
+      var $pushEl;
 
       function handleTouchStart(e) {
         if (isTouched || !allowSwipeToClose || !popup.params.swipeToClose) { return; }
@@ -14041,7 +14185,10 @@
         if (!isMoved) {
           if (isPush && pushOffset) {
             popupHeight = $el[0].offsetHeight;
-            $pushViewEl = app.root.children('.view, .views');
+            $pushEl = $el.prevAll('.popup.modal-in').eq(0);
+            if ($pushEl.length === 0) {
+              $pushEl = app.root.children('.view, .views');
+            }
           }
           if (pageContentEl) {
             pageContentScrollTop = pageContentEl.scrollTop;
@@ -14071,7 +14218,19 @@
         if (isPush && pushOffset) {
           var pushProgress = 1 - Math.abs(touchesDiff / popupHeight);
           var scale = 1 - (1 - pushViewScale(pushOffset)) * pushProgress;
-          $pushViewEl.transition(0).transform(("translate3d(0,0,0) scale(" + scale + ")"));
+          if ($pushEl.hasClass('popup')) {
+            if ($pushEl.hasClass('popup-push')) {
+              $pushEl.transition(0).transform(
+                ("translate3d(0, calc(-1 * " + pushProgress + " * (var(--f7-popup-push-offset) + 10px)) , 0px) scale(" + scale + ")")
+              );
+            } else {
+              $pushEl.transition(0).transform(
+                ("translate3d(0, 0px , 0px) scale(" + scale + ")")
+              );
+            }
+          } else {
+            $pushEl.transition(0).transform(("translate3d(0,0,0) scale(" + scale + ")"));
+          }
         }
         $el.transition(0).transform(("translate3d(0," + (-touchesDiff) + "px,0)"));
       }
@@ -14086,7 +14245,7 @@
         allowSwipeToClose = false;
         $el.transition('');
         if (isPush && pushOffset) {
-          $pushViewEl.transition('').transform('');
+          $pushEl.transition('').transform('');
         }
         var direction = touchesDiff <= 0 ? 'to-bottom' : 'to-top';
         if ((typeof popup.params.swipeToClose === 'string' && direction !== popup.params.swipeToClose)) {
@@ -14127,10 +14286,14 @@
         });
       }
 
+      var hasPreviousPushPopup;
+
       popup.on('open', function () {
+        hasPreviousPushPopup = false;
         if (popup.params.closeOnEscape) {
           $(doc).on('keydown', onKeyDown);
         }
+        $el.prevAll('.popup.modal-in').addClass('popup-behind');
         if (popup.push) {
           isPush = popup.push && (
             (app.width < 630 || app.height < 630)
@@ -14154,19 +14317,21 @@
         }
       });
       popup.on('close', function () {
+        hasPreviousPushPopup = popup.$el.prevAll('.popup-push.modal-in').length > 0;
         if (popup.params.closeOnEscape) {
           $(doc).off('keydown', onKeyDown);
         }
         if (popup.params.closeByBackdropClick) {
           app.off('click', handleClick);
         }
-        if (isPush && pushOffset) {
+        $el.prevAll('.popup.modal-in').eq(0).removeClass('popup-behind');
+        if (isPush && pushOffset && !hasPreviousPushPopup) {
           popup.$htmlEl.removeClass('with-modal-popup-push');
           popup.$htmlEl.addClass('with-modal-popup-push-closing');
         }
       });
       popup.on('closed', function () {
-        if (isPush && pushOffset) {
+        if (isPush && pushOffset && !hasPreviousPushPopup) {
           popup.$htmlEl.removeClass('with-modal-popup-push-closing');
           popup.$htmlEl[0].style.removeProperty('--f7-popup-push-scale');
         }
@@ -15423,6 +15588,7 @@
         if (sheet.params.closeOnEscape) {
           $(doc).on('keydown', onKeyDown);
         }
+        $el.prevAll('.popup.modal-in').addClass('popup-behind');
         if (sheet.params.swipeToStep) {
           sheet.setSwipeStep(false);
           app.on('resize', onResize);
@@ -15466,6 +15632,7 @@
         if (sheet.params.closeByOutsideClick || sheet.params.closeByBackdropClick) {
           app.off('click', handleClick);
         }
+        $el.prevAll('.popup.modal-in').eq(0).removeClass('popup-behind');
         if (sheet.push && pushOffset) {
           sheet.$htmlEl.removeClass('with-modal-sheet-push');
           sheet.$htmlEl.addClass('with-modal-sheet-push-closing');
@@ -18231,6 +18398,7 @@
     var isGestureStarted;
     var isMoved;
     var isScrolling;
+    var isInterrupted;
     var touchesStart = {};
     var touchStartTime;
     var touchesDiff;
@@ -18274,12 +18442,13 @@
       isMoved = false;
       isTouched = true;
       isScrolling = undefined;
+      isInterrupted = false;
 
       touchStartTime = Utils.now();
       direction = undefined;
     }
     function handleTouchMove(e) {
-      if (!isTouched || isGestureStarted) { return; }
+      if (!isTouched || isGestureStarted || isInterrupted) { return; }
       touchMoves += 1;
       if (touchMoves < 2) { return; }
       if (e.f7PreventSwipePanel || app.preventSwipePanelBySwipeBack || app.preventSwipePanel) {
@@ -18379,22 +18548,36 @@
           translate = panelWidth;
         }
       }
+      var noFollowProgress = Math.abs(translate / panelWidth);
       if (effect === 'reveal') {
-        $viewEl.transform(("translate3d(" + translate + "px,0,0)")).transition(0);
-        $backdropEl.transform(("translate3d(" + translate + "px,0,0)")).transition(0);
+        if (!params.swipeNoFollow) {
+          $viewEl.transform(("translate3d(" + translate + "px,0,0)")).transition(0);
+          $backdropEl.transform(("translate3d(" + translate + "px,0,0)")).transition(0);
+        }
 
         $el.trigger('panel:swipe', Math.abs(translate / panelWidth));
         panel.emit('local::swipe panelSwipe', panel, Math.abs(translate / panelWidth));
       } else {
         if (side === 'left') { translate -= panelWidth; }
-        $el.transform(("translate3d(" + translate + "px,0,0)")).transition(0);
+        if (!params.swipeNoFollow) {
+          $el.transform(("translate3d(" + translate + "px,0,0)")).transition(0);
 
-        $backdropEl.transition(0);
-        backdropOpacity = 1 - Math.abs(translate / panelWidth);
-        $backdropEl.css({ opacity: backdropOpacity });
+          $backdropEl.transition(0);
+          backdropOpacity = 1 - Math.abs(translate / panelWidth);
+          $backdropEl.css({ opacity: backdropOpacity });
+        }
 
         $el.trigger('panel:swipe', Math.abs(translate / panelWidth));
         panel.emit('local::swipe panelSwipe', panel, Math.abs(translate / panelWidth));
+      }
+
+      if (params.swipeNoFollow) {
+        var stateChanged = (panel.opened && noFollowProgress === 0) || (!panel.opened && noFollowProgress === 1);
+        if (stateChanged) {
+          isInterrupted = true;
+          // eslint-disable-next-line
+          handleTouchEnd(e);
+        }
       }
     }
     function handleTouchEnd(e) {
@@ -18408,7 +18591,7 @@
       isMoved = false;
       var timeDiff = (new Date()).getTime() - touchStartTime;
       var action;
-      var edge = (translate === 0 || Math.abs(translate) === panelWidth);
+      var edge = (translate === 0 || Math.abs(translate) === panelWidth) && !params.swipeNoFollow;
 
       var threshold = params.swipeThreshold || 0;
 
@@ -19241,6 +19424,7 @@
         visibleBreakpoint: undefined,
         collapsedBreakpoint: undefined,
         swipe: false, // or true
+        swipeNoFollow: false, // or true
         swipeOnlyClose: false,
         swipeActiveArea: 0,
         swipeThreshold: 0,
@@ -19407,14 +19591,16 @@
       if ( animate === void 0 ) animate = true;
       var app = this;
 
-      if ($('.card-opened').length) { return; }
       var $cardEl = $(cardEl).eq(0);
-
       if (!$cardEl || !$cardEl.length) { return; }
       if ($cardEl.hasClass('card-opened') || $cardEl.hasClass('card-opening') || $cardEl.hasClass('card-closing')) { return; }
 
       var $pageEl = $cardEl.parents('.page').eq(0);
       if (!$pageEl.length) { return; }
+
+      if ($pageEl.find('.card-opened').length) {
+        return;
+      }
 
       var prevented;
 
@@ -22316,6 +22502,7 @@
 
     SmartSelect.prototype.getItemsData = function getItemsData () {
       var ss = this;
+      var theme = ss.app.theme;
       var items = [];
       var previousGroupEl;
       ss.$selectEl.find('option').each(function (index, optionEl) {
@@ -22323,8 +22510,10 @@
         var optionData = $optionEl.dataset();
         var optionImage = optionData.optionImage || ss.params.optionImage;
         var optionIcon = optionData.optionIcon || ss.params.optionIcon;
-        var optionHasMedia = optionImage || optionIcon;
-        // if (material) optionHasMedia = optionImage || optionIcon;
+        var optionIconIos = theme === 'ios' && (optionData.optionIconIos || ss.params.optionIconIos);
+        var optionIconMd = theme === 'md' && (optionData.optionIconMd || ss.params.optionIconMd);
+        var optionIconAurora = theme === 'aurora' && (optionData.optionIconAurora || ss.params.optionIconAurora);
+        var optionHasMedia = optionImage || optionIcon || optionIconIos || optionIconMd || optionIconAurora;
         var optionColor = optionData.optionColor;
 
         var optionClassName = optionData.optionClass || '';
@@ -22349,6 +22538,9 @@
           groupLabel: optionGroupLabel,
           image: optionImage,
           icon: optionIcon,
+          iconIos: optionIconIos,
+          iconMd: optionIconMd,
+          iconAurora: optionIconAurora,
           color: optionColor,
           className: optionClassName,
           disabled: $optionEl[0].disabled,
@@ -22374,6 +22566,27 @@
     SmartSelect.prototype.renderItem = function renderItem (item, index) {
       var ss = this;
       if (ss.params.renderItem) { return ss.params.renderItem.call(ss, item, index); }
+
+      function getIconContent(iconValue) {
+        if ( iconValue === void 0 ) iconValue = '';
+
+        if (iconValue.indexOf(':') >= 0) {
+          return iconValue.split(':')[1];
+        }
+        return '';
+      }
+      function getIconClass(iconValue) {
+        if ( iconValue === void 0 ) iconValue = '';
+
+        if (iconValue.indexOf(':') >= 0) {
+          var className = iconValue.split(':')[0];
+          if (className === 'f7') { className = 'f7-icons'; }
+          if (className === 'material') { className = 'material-icons'; }
+          return className;
+        }
+        return iconValue;
+      }
+
       var itemHtml;
       if (item.isLabel) {
         itemHtml = "<li class=\"item-divider\">" + (item.groupLabel) + "</li>";
@@ -22387,7 +22600,16 @@
             disabled = ss.multiple && !selected && ssValue.length === parseInt(ss.maxLength, 10);
           }
         }
-        itemHtml = "\n        <li class=\"" + (item.className || '') + (disabled ? ' disabled' : '') + "\">\n          <label class=\"item-" + (item.inputType) + " item-content\">\n            <input type=\"" + (item.inputType) + "\" name=\"" + (item.inputName) + "\" value=\"" + (item.value) + "\" " + (selected ? 'checked' : '') + "/>\n            <i class=\"icon icon-" + (item.inputType) + "\"></i>\n            " + (item.hasMedia ? ("\n              <div class=\"item-media\">\n                " + (item.icon ? ("<i class=\"icon " + (item.icon) + "\"></i>") : '') + "\n                " + (item.image ? ("<img src=\"" + (item.image) + "\">") : '') + "\n              </div>\n            ") : '') + "\n            <div class=\"item-inner\">\n              <div class=\"item-title" + (item.color ? (" text-color-" + (item.color)) : '') + "\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
+
+        var icon = item.icon;
+        var iconIos = item.iconIos;
+        var iconMd = item.iconMd;
+        var iconAurora = item.iconAurora;
+        var hasIcon = icon || iconIos || iconMd || iconAurora;
+        var iconContent = getIconContent(icon || iconIos || iconMd || iconAurora || '');
+        var iconClass = getIconClass(icon || iconIos || iconMd || iconAurora || '');
+
+        itemHtml = "\n        <li class=\"" + (item.className || '') + (disabled ? ' disabled' : '') + "\">\n          <label class=\"item-" + (item.inputType) + " item-content\">\n            <input type=\"" + (item.inputType) + "\" name=\"" + (item.inputName) + "\" value=\"" + (item.value) + "\" " + (selected ? 'checked' : '') + "/>\n            <i class=\"icon icon-" + (item.inputType) + "\"></i>\n            " + (item.hasMedia ? ("\n              <div class=\"item-media\">\n                " + (hasIcon ? ("<i class=\"icon " + iconClass + "\">" + iconContent + "</i>") : '') + "\n                " + (item.image ? ("<img src=\"" + (item.image) + "\">") : '') + "\n              </div>\n            ") : '') + "\n            <div class=\"item-inner\">\n              <div class=\"item-title" + (item.color ? (" text-color-" + (item.color)) : '') + "\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
       }
       return itemHtml;
     };
@@ -30999,13 +31221,14 @@
           $wrapperEl.transitionEnd(function () {
             if (!swiper || swiper.destroyed || !data.allowMomentumBounce) { return; }
             swiper.emit('momentumBounce');
-
             swiper.setTransition(params.speed);
-            swiper.setTranslate(afterBouncePosition);
-            $wrapperEl.transitionEnd(function () {
-              if (!swiper || swiper.destroyed) { return; }
-              swiper.transitionEnd();
-            });
+            setTimeout(function () {
+              swiper.setTranslate(afterBouncePosition);
+              $wrapperEl.transitionEnd(function () {
+                if (!swiper || swiper.destroyed) { return; }
+                swiper.transitionEnd();
+              });
+            }, 0);
           });
         } else if (swiper.velocity) {
           swiper.updateProgress(newPosition);
@@ -35150,7 +35373,7 @@
           var $bulletEl = $(bulletEl);
           swiper.a11y.makeElFocusable($bulletEl);
           swiper.a11y.addElRole($bulletEl, 'button');
-          swiper.a11y.addElLabel($bulletEl, params.paginationBulletMessage.replace(/{{index}}/, $bulletEl.index() + 1));
+          swiper.a11y.addElLabel($bulletEl, params.paginationBulletMessage.replace(/\{\{index\}\}/, $bulletEl.index() + 1));
         });
       }
     },
@@ -36017,9 +36240,12 @@
         ? thumbsSwiper.slidesPerViewDynamic()
         : thumbsSwiper.params.slidesPerView;
 
-      if (swiper.realIndex !== thumbsSwiper.realIndex) {
+      var autoScrollOffset = swiper.params.thumbs.autoScrollOffset;
+      var useOffset = autoScrollOffset && !thumbsSwiper.params.loop;
+      if (swiper.realIndex !== thumbsSwiper.realIndex || useOffset) {
         var currentThumbsIndex = thumbsSwiper.activeIndex;
         var newThumbsIndex;
+        var direction;
         if (thumbsSwiper.params.loop) {
           if (thumbsSwiper.slides.eq(currentThumbsIndex).hasClass(thumbsSwiper.params.slideDuplicateClass)) {
             thumbsSwiper.loopFix();
@@ -36028,16 +36254,28 @@
             currentThumbsIndex = thumbsSwiper.activeIndex;
           }
           // Find actual thumbs index to slide to
-          var prevThumbsIndex = thumbsSwiper.slides.eq(currentThumbsIndex).prevAll(("[data-swiper-slide-index=\"" + (swiper.realIndex) + "\"]")).eq(0).index();
-          var nextThumbsIndex = thumbsSwiper.slides.eq(currentThumbsIndex).nextAll(("[data-swiper-slide-index=\"" + (swiper.realIndex) + "\"]")).eq(0).index();
+          var prevThumbsIndex = thumbsSwiper.slides
+            .eq(currentThumbsIndex)
+            .prevAll(("[data-swiper-slide-index=\"" + (swiper.realIndex) + "\"]")).eq(0)
+            .index();
+          var nextThumbsIndex = thumbsSwiper.slides
+            .eq(currentThumbsIndex)
+            .nextAll(("[data-swiper-slide-index=\"" + (swiper.realIndex) + "\"]")).eq(0)
+            .index();
           if (typeof prevThumbsIndex === 'undefined') { newThumbsIndex = nextThumbsIndex; }
           else if (typeof nextThumbsIndex === 'undefined') { newThumbsIndex = prevThumbsIndex; }
           else if (nextThumbsIndex - currentThumbsIndex === currentThumbsIndex - prevThumbsIndex) { newThumbsIndex = currentThumbsIndex; }
           else if (nextThumbsIndex - currentThumbsIndex < currentThumbsIndex - prevThumbsIndex) { newThumbsIndex = nextThumbsIndex; }
           else { newThumbsIndex = prevThumbsIndex; }
+          direction = swiper.activeIndex > swiper.previousIndex ? 'next' : 'prev';
         } else {
           newThumbsIndex = swiper.realIndex;
+          direction = newThumbsIndex > swiper.previousIndex ? 'next' : 'prev';
         }
+        if (useOffset) {
+          newThumbsIndex += direction === 'next' ? autoScrollOffset : -1 * autoScrollOffset;
+        }
+
         if (thumbsSwiper.visibleSlidesIndexes && thumbsSwiper.visibleSlidesIndexes.indexOf(newThumbsIndex) < 0) {
           if (thumbsSwiper.params.centeredSlides) {
             if (newThumbsIndex > currentThumbsIndex) {
@@ -36082,8 +36320,9 @@
     name: 'thumbs',
     params: {
       thumbs: {
-        multipleActiveThumbs: true,
         swiper: null,
+        multipleActiveThumbs: true,
+        autoScrollOffset: 0,
         slideThumbActiveClass: 'swiper-slide-thumb-active',
         thumbsContainerClass: 'swiper-container-thumbs',
       },

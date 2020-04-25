@@ -2,6 +2,47 @@
 
 # Change Log
 
+# [v5.7.0](https://github.com/framework7io/framework7/compare/v5.6.0...v5.7.0) - April 25, 2020
+  * Core
+    * Card
+      * Fixed issue when expandable card didn't work when expandable card was opened in another page
+      * Fixed issue when used with "hide on scroll" Navbar/Toolbar on iOS
+    * Panel
+      * New `swipeNoFollow` parameter - fallback option for potentially better performance on old/slow devices. If you enable it, then swipe panel will not follow your finger during touch move, it will be automatically opened/closed on swipe left/right. (default false)
+    * Popup
+      * Disabled top/bottom safe areas on "tablet" when opened not as full screen popup
+      * Now it correctly handles and stack multiple opened "push" popups
+    * Radio
+      * Now radio icon can be rendered in the beginning or in the end of the list item, by adding `item-radio-icon-start` or `item-radio-icon-end` class to `item-radio` list element
+    * Smart Select
+      * Add support for more data-option-icon properties:
+        * `data-option-icon` - if it just a string then will create an icon with this class. If it is in the format of `f7:icon_name` then it will create a F7-Icons icon. If it is in the format of `md:icon_name` then it will create a Material Icons icon
+        * `data-option-icon-ios` - same as `data-option-icon` but will apply only when iOS theme is active
+        * `data-option-icon-md` - same as `data-option-icon` but will apply only when MD theme is active
+        * `data-option-icon-aurora` - same as `data-option-icon` but will apply only when Aurora theme is active
+    * Swiper - updated to latest 5.3.8
+      * Core
+        * Fix iOS bug with double bounce on free mode momentum bounce
+      * A11y
+        * Fixed focus ring on navigation buttons (#3544)
+        * Fixed RegExp issue in paginationBulletMessage (#3540, #3541)
+      * Thumbs
+        * Added thumbs.autoScrollOffset parameter that allows to set on what thumbs active slide from edge it should automaticall move scroll thumbs
+    * View
+      * New `masterDetailResizable` parameter to enable resizable Master Detail layout
+      * New `viewResize` / `view:resize` event on Master Detail resize
+  * React/Vue/Svelte
+    * ListItem
+      * New `radioIcon` string property to define where to display radio icon - in the beginning or in the end of the list item. Can be `start` or `end`
+    * Navbar
+      * Fixed not working `onBackClick` event in Svelte
+    * Panel
+      * New `swipeNoFollow` boolean property - fallback option for potentially better performance on old/slow devices. If you enable it, then swipe panel will not follow your finger during touch move, it will be automatically opened/closed on swipe left/right. (default false)
+    * View
+      * New `materDetailResizable` boolean property to enable resizable Master Detail layout
+      * New `viewResize` / `view:resize` event on Master Detail resize
+  * Minor fixes
+
 # [v5.6.0](https://github.com/framework7io/framework7/compare/v5.5.5...v5.6.0) - April 18, 2020
   * Core
     * App

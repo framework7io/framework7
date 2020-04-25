@@ -23,6 +23,7 @@ declare namespace F7View {
     allowDuplicateUrls? : boolean
     reloadPages? : boolean
     reloadDetail? : boolean
+    masterDetailResizable? : boolean
     masterDetailBreakpoint? : number
     removeElements? : boolean
     removeElementsWithTimeout? : boolean
@@ -70,6 +71,7 @@ declare namespace F7View {
     rippleColor? : string
     themeDark? : boolean
     onViewInit? : (view?: any) => void
+    onViewResize? : (width?: any) => void
     onSwipeBackMove? : (swipeBackData?: any) => void
     onSwipeBackBeforeChange? : (swipeBackData?: any) => void
     onSwipeBackAfterChange? : (swipeBackData?: any) => void
@@ -81,6 +83,7 @@ declare namespace F7View {
 }
 declare class F7View extends React.Component<F7View.Props, {}> {
   onViewInit(view? : any) : unknown
+  onResize(view? : any, width? : any) : unknown
   onSwipeBackMove(data? : any) : unknown
   onSwipeBackBeforeChange(data? : any) : unknown
   onSwipeBackAfterChange(data? : any) : unknown

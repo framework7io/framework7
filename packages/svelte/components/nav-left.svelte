@@ -46,8 +46,8 @@
   function onBackClick() {
     dispatch('clickBack');
     if (typeof $$props.onClickBack === 'function') $$props.onClickBack();
-    dispatch('backBlick');
-    if (typeof $$props.onBackBlick === 'function') $$props.onBackBlick();
+    dispatch('backClick');
+    if (typeof $$props.onBackClick === 'function') $$props.onBackClick();
   }
 </script>
 <div

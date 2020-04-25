@@ -23,6 +23,7 @@ export default {
     defaultChecked: Boolean,
     indeterminate: Boolean,
     radio: Boolean,
+    radioIcon: String,
     name: String,
     value: [String, Number, Array],
     readonly: Boolean,
@@ -39,6 +40,7 @@ export default {
       className,
       style,
       radio,
+      radioIcon,
       checkbox,
       value,
       name,
@@ -236,7 +238,9 @@ export default {
     const ItemContentTag = checkbox || radio ? 'label' : 'div';
     const classes = Utils.classNames(className, 'item-content', {
       'item-checkbox': checkbox,
-      'item-radio': radio
+      'item-radio': radio,
+      'item-radio-icon-start': radio && radioIcon === 'start',
+      'item-radio-icon-end': radio && radioIcon === 'end'
     }, Mixins.colorClasses(props));
     return _h(ItemContentTag, {
       ref: 'el',

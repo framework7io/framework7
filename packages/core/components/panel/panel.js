@@ -15,6 +15,7 @@ export default {
       visibleBreakpoint: undefined,
       collapsedBreakpoint: undefined,
       swipe: false, // or true
+      swipeNoFollow: false, // or true
       swipeOnlyClose: false,
       swipeActiveArea: 0,
       swipeThreshold: 0,

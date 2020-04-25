@@ -29,12 +29,35 @@
     position: relative;
     overflow: hidden;
     z-index: 0;
+  }
+  label.item-radio:not(.item-radio-icon-end) {
     > .icon-radio {
       .ltr({
         margin-right: calc(var(--f7-list-item-media-margin) + var(--f7-radio-extra-margin))
       });
       .rtl({
         margin-left: calc(var(--f7-list-item-media-margin) + var(--f7-radio-extra-margin))
+      });
+    }
+  }
+  label.item-radio-icon-end input[type="radio"] ~ .icon-radio {
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    .ltr({
+      right: calc(var(--f7-safe-area-right) + 16px);
+    });
+    .rtl({
+      left: calc(var(--f7-safe-area-left) + 16px);
+    })
+  }
+  label.item-radio-icon-end {
+    .item-inner {
+      .ltr({
+        padding-right: calc(var(--f7-safe-area-right) + 52px);
+      });
+      .rtl({
+        padding-left: calc(var(--f7-safe-area-left) + 52px);
       });
     }
   }

@@ -491,6 +491,7 @@ const Navbar = {
     }
 
     function handleTitleHideShow() {
+      if ($pageEl.hasClass('page-with-card-opened')) return;
       scrollHeight = scrollContent.scrollHeight;
       offsetHeight = scrollContent.offsetHeight;
       reachEnd = currentScrollTop + offsetHeight >= scrollHeight;
@@ -613,7 +614,7 @@ export default {
     },
   },
   on: {
-    'panelBreakpoint panelCollapsedBreakpoint panelResize resize viewMasterDetailBreakpoint': function onPanelResize() {
+    'panelBreakpoint panelCollapsedBreakpoint panelResize viewResize resize viewMasterDetailBreakpoint': function onPanelResize() {
       const app = this;
       $('.navbar').each((index, navbarEl) => {
         app.navbar.size(navbarEl);

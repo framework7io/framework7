@@ -134,6 +134,7 @@ class F7Panel extends React.Component {
       visibleBreakpoint,
       collapsedBreakpoint,
       swipe,
+      swipeNoFollow,
       swipeOnlyClose,
       swipeActiveArea,
       swipeThreshold
@@ -154,6 +155,7 @@ class F7Panel extends React.Component {
         visibleBreakpoint,
         collapsedBreakpoint,
         swipe,
+        swipeNoFollow,
         swipeOnlyClose,
         swipeActiveArea,
         swipeThreshold,
@@ -242,6 +244,7 @@ __reactComponentSetProps(F7Panel, Object.assign({
     default: undefined
   },
   swipe: Boolean,
+  swipeNoFollow: Boolean,
   swipeOnlyClose: Boolean,
   swipeActiveArea: {
     type: Number,

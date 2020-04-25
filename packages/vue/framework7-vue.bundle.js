@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.6.0
+ * Framework7 Vue 5.7.0
  * Build full featured iOS & Android apps using Framework7 & Vue
  * https://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 18, 2020
+ * Released on: April 25, 2020
  */
 
 (function (global, factory) {
@@ -5474,6 +5474,7 @@
       defaultChecked: Boolean,
       indeterminate: Boolean,
       radio: Boolean,
+      radioIcon: String,
       name: String,
       value: [String, Number, Array],
       readonly: Boolean,
@@ -5489,6 +5490,7 @@
       var className = props.className;
       var style = props.style;
       var radio = props.radio;
+      var radioIcon = props.radioIcon;
       var checkbox = props.checkbox;
       var value = props.value;
       var name = props.name;
@@ -5685,7 +5687,9 @@
       var ItemContentTag = checkbox || radio ? 'label' : 'div';
       var classes = Utils.classNames(className, 'item-content', {
         'item-checkbox': checkbox,
-        'item-radio': radio
+        'item-radio': radio,
+        'item-radio-icon-start': radio && radioIcon === 'start',
+        'item-radio-icon-end': radio && radioIcon === 'end'
       }, Mixins.colorClasses(props));
       return _h(ItemContentTag, {
         ref: 'el',
@@ -5831,6 +5835,7 @@
       chevronCenter: Boolean,
       checkbox: Boolean,
       radio: Boolean,
+      radioIcon: String,
       checked: Boolean,
       defaultChecked: Boolean,
       indeterminate: Boolean,
@@ -5892,6 +5897,7 @@
       var smartSelect = props.smartSelect;
       var checkbox = props.checkbox;
       var radio = props.radio;
+      var radioIcon = props.radioIcon;
       var checked = props.checked;
       var defaultChecked = props.defaultChecked;
       var indeterminate = props.indeterminate;
@@ -5934,6 +5940,7 @@
             defaultChecked: defaultChecked,
             indeterminate: indeterminate,
             radio: radio,
+            radioIcon: radioIcon,
             name: name,
             value: value,
             readonly: readonly,
@@ -9709,6 +9716,7 @@
         default: undefined
       },
       swipe: Boolean,
+      swipeNoFollow: Boolean,
       swipeOnlyClose: Boolean,
       swipeActiveArea: {
         type: Number,
@@ -9795,6 +9803,7 @@
       var visibleBreakpoint = ref.visibleBreakpoint;
       var collapsedBreakpoint = ref.collapsedBreakpoint;
       var swipe = ref.swipe;
+      var swipeNoFollow = ref.swipeNoFollow;
       var swipeOnlyClose = ref.swipeOnlyClose;
       var swipeActiveArea = ref.swipeActiveArea;
       var swipeThreshold = ref.swipeThreshold;
@@ -9814,6 +9823,7 @@
           visibleBreakpoint: visibleBreakpoint,
           collapsedBreakpoint: collapsedBreakpoint,
           swipe: swipe,
+          swipeNoFollow: swipeNoFollow,
           swipeOnlyClose: swipeOnlyClose,
           swipeActiveArea: swipeActiveArea,
           swipeThreshold: swipeThreshold,
@@ -12793,6 +12803,7 @@
       allowDuplicateUrls: Boolean,
       reloadPages: Boolean,
       reloadDetail: Boolean,
+      masterDetailResizable: Boolean,
       masterDetailBreakpoint: Number,
       removeElements: Boolean,
       removeElementsWithTimeout: Boolean,
@@ -12916,6 +12927,7 @@
           }
         }, Utils.noUndefinedProps(self.$options.propsData || {})));
         self.f7View = self.routerData.instance;
+        self.f7View.on('resize', self.onResize);
         self.f7View.on('swipebackMove', self.onSwipeBackMove);
         self.f7View.on('swipebackBeforeChange', self.onSwipeBackBeforeChange);
         self.f7View.on('swipebackAfterChange', self.onSwipeBackAfterChange);
@@ -12933,6 +12945,7 @@
       }
 
       if (self.f7View) {
+        self.f7View.off('resize', self.onResize);
         self.f7View.off('swipebackMove', self.onSwipeBackMove);
         self.f7View.off('swipebackBeforeChange', self.onSwipeBackBeforeChange);
         self.f7View.off('swipebackAfterChange', self.onSwipeBackAfterChange);
@@ -12961,6 +12974,10 @@
           self.routerData.instance = view;
           self.f7View = self.routerData.instance;
         }
+      },
+
+      onResize: function onResize(view, width) {
+        this.dispatchEvent('view:resize viewResize', width);
       },
 
       onSwipeBackMove: function onSwipeBackMove(data) {
@@ -13281,7 +13298,7 @@
   };
 
   /**
-   * Framework7 Vue 5.6.0
+   * Framework7 Vue 5.7.0
    * Build full featured iOS & Android apps using Framework7 & Vue
    * https://framework7.io/vue/
    *
@@ -13289,7 +13306,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: April 18, 2020
+   * Released on: April 25, 2020
    */
 
   function f7ready(callback) {

@@ -73,7 +73,7 @@ const Toolbar = {
     $el.trigger('toolbar:show');
     app.emit('toolbarShow', $el[0]);
   },
-  initHideToolbarOnScroll(pageEl) {
+  initToolbarOnScroll(pageEl) {
     const app = this;
     const $pageEl = $(pageEl);
     let $toolbarEl = $pageEl.parents('.view').children('.toolbar');
@@ -96,11 +96,12 @@ const Toolbar = {
     let action;
     let toolbarHidden;
     function handleScroll(e) {
+      if ($pageEl.hasClass('page-with-card-opened')) return;
+      if ($pageEl.hasClass('page-previous')) return;
       const scrollContent = this;
       if (e && e.target && e.target !== scrollContent) {
         return;
       }
-      if ($pageEl.hasClass('page-previous')) return;
       currentScrollTop = scrollContent.scrollTop;
       scrollHeight = scrollContent.scrollHeight;
       offsetHeight = scrollContent.offsetHeight;
@@ -146,7 +147,7 @@ export default {
         hide: Toolbar.hide.bind(app),
         show: Toolbar.show.bind(app),
         setHighlight: Toolbar.setHighlight.bind(app),
-        initHideToolbarOnScroll: Toolbar.initHideToolbarOnScroll.bind(app),
+        initToolbarOnScroll: Toolbar.initToolbarOnScroll.bind(app),
         init: Toolbar.init.bind(app),
       },
     });
@@ -202,7 +203,7 @@ export default {
         ) {
           return;
         }
-        app.toolbar.initHideToolbarOnScroll(page.el);
+        app.toolbar.initToolbarOnScroll(page.el);
       }
     },
     init() {

@@ -1,5 +1,5 @@
 /**
- * Framework7 5.6.0
+ * Framework7 5.7.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 18, 2020
+ * Released on: April 25, 2020
  */
 
 /*====================
@@ -735,6 +735,20 @@ html.device-full-viewport body {
 .framework7-root > .view,
 .framework7-root > .views {
   height: calc(100% - var(--f7-appbar-app-offset, 0px));
+}
+.view-resize-handler {
+  width: 6px;
+  height: 100%;
+  position: absolute;
+  left: var(--f7-page-master-width);
+  margin-left: -3px;
+  top: 0;
+  cursor: col-resize;
+  z-index: 1000;
+  display: none;
+}
+.view-master-detail .view-resize-handler {
+  display: block;
 }
 /* === Pages === */
 :root {

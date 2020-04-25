@@ -50,6 +50,7 @@ export default {
       reloadPages: false,
       reloadDetail: false,
       masterDetailBreakpoint: 0,
+      masterDetailResizable: false,
       removeElements: true,
       removeElementsWithTimeout: false,
       removeElementsTimeout: 0,
