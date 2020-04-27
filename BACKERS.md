@@ -84,11 +84,6 @@
   </tr>
   <tr>
     <td align="center" valign="middle">
-      <a href="https://unicorn.io" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/unicorn.svg">
-      </a>
-    </td>
-    <td align="center" valign="middle">
       <a href="https://www.colognewebdesign.de/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/colognewebdesign.png">
       </a>
@@ -108,13 +103,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/bid4papers.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://kidoverse.app" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/kidoverse.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.cyberbrain.nl/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/cyberbrain.png">
@@ -135,6 +130,7 @@
         <img width="160" src="https://framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
+    <td></td>
   </tr>
 </table>
 
@@ -176,7 +172,6 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 [vpn for roku](https://cooltechzone.com/roku-vpn)<br>
 [www.bonus.com.de](https://www.bonus.com.de/)<br>
 [Writers Per Hour](https://writersperhour.com/write-my-paper) - Write My Paper For Me<br>
-[Unicorn.io](https://unicorn.io) - Choose your Dream Job<br>
 [Bid4Papers](https://bid4papers.com/write-my-essay.html) - Write My Essay<br>
 [COLOGNE WEBDESIGN](https://www.colognewebdesign.de/)<br>
 [Kqapius, INC.](https://kqapi.us)<br>
@@ -185,7 +180,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 [usave](https://usave.co.uk/utilities/broadband) - compare broadband deals on usave.co.uk<br>
 [Kidoverse](https://kidoverse.app) - App for kids to learn, play, create and explore<br>
 [CyberBrain IT Services](https://www.cyberbrain.nl/)<br>
-[HICAPPS](https://hicapps.cl/web/) - Health Informatics Custom APPs<br>
+[HICAPPS](https://hicapps.cl/) - Health Informatics Custom APPs<br>
 Michael Russell
 [Blokt](https://blokt.com/) - Cryptocurrency News<br>
 Alexey Victorov<br>
