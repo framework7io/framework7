@@ -121,7 +121,7 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://hicapps.cl/web/" target="_blank">
+      <a href="https://hicapps.cl/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/hicapps.png">
       </a>
     </td>
