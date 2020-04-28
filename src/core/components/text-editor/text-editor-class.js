@@ -238,7 +238,8 @@ class TextEditor extends Framework7Class {
       if (!selection.isCollapsed && selection.rangeCount) {
         const range = selection.getRangeAt(0);
         const rect = range.getBoundingClientRect();
-        self.openPopover(rect.x + (window.scrollX || 0), rect.y + (window.scrollY || 0), rect.width, rect.height);
+        const f7root = document.getElementById('framework7-root');
+        self.openPopover(rect.x + (window.scrollX || 0) - f7root.offsetLeft, rect.y + (window.scrollY || 0) - f7root.offsetTop, rect.width, rect.height);
       } else if (selection.isCollapsed) {
         self.closePopover();
       }
