@@ -202,6 +202,7 @@ Danny Redfern<br>
 ---
 
 ### $10+ Supporter
+Stan Smulders<br>
 Lailton Fernando Mariano<br>
 User Mail<br>
 Thomason<br>
