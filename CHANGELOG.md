@@ -2,6 +2,18 @@
 
 # Change Log
 
+# [v5.7.1](https://github.com/framework7io/framework7/compare/v5.7.0...v5.7.1) - May 1, 2020
+  * Core
+    * CSS
+      * `body` background color changed to `#000` when dark theme enabled
+    * Panel
+      * Now it correctly handles disabling backdrop.
+    * Text Editor
+      * Popover now calculates position relative to app root element (#3618)
+    * View
+      * Fixed `current` view detection when using layout with swipeable tabs
+  * Minor fixes
+
 # [v5.7.0](https://github.com/framework7io/framework7/compare/v5.6.0...v5.7.0) - April 25, 2020
   * Core
     * Card

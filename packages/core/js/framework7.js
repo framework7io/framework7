@@ -1,5 +1,5 @@
 /**
- * Framework7 5.7.0
+ * Framework7 5.7.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 25, 2020
+ * Released on: May 1, 2020
  */
 
 (function (global, factory) {
@@ -7869,7 +7869,11 @@
       if (modalToClose && modalToClose.$el) {
         var prevOpenedModals = modalToClose.$el.prevAll('.modal-in');
         if (prevOpenedModals.length && prevOpenedModals[0].f7Modal) {
-          previousRoute = prevOpenedModals[0].f7Modal.route;
+          var modalEl = prevOpenedModals[0];
+          // check if current router not inside of the modalEl
+          if (!router.$el.parents(modalEl).length) {
+            previousRoute = modalEl.f7Modal.route;
+          }
         }
       }
       if (!previousRoute) {
@@ -11961,6 +11965,9 @@
     if ($viewsEl.length === 0) { $viewsEl = app.root; }
     // Find active view as tab
     var $viewEl = $viewsEl.children('.view');
+    if ($viewEl.length === 0) {
+      $viewEl = $viewsEl.children('.tabs').children('.view');
+    }
     // Propably in tabs or split view
     if ($viewEl.length > 1) {
       if ($viewEl.hasClass('tab')) {

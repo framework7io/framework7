@@ -12,14 +12,14 @@ declare namespace F7Sheet {
     bottom? : boolean
     position? : string
     backdrop? : boolean
-    backdropEl? : string | Object | any
+    backdropEl? : string | Object
     closeByBackdropClick? : boolean
     closeByOutsideClick? : boolean
     closeOnEscape? : boolean
     push? : boolean
     swipeToClose? : boolean
     swipeToStep? : boolean
-    swipeHandler? : string | Object | any
+    swipeHandler? : string | Object
     color? : string
     colorTheme? : string
     textColor? : string

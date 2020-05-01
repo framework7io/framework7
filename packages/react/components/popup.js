@@ -171,14 +171,14 @@ __reactComponentSetProps(F7Popup, Object.assign({
   opened: Boolean,
   animate: Boolean,
   backdrop: Boolean,
-  backdropEl: [String, Object, window.HTMLElement],
+  backdropEl: [String, Object],
   closeByBackdropClick: Boolean,
   closeOnEscape: Boolean,
   swipeToClose: {
     type: [Boolean, String],
     default: false
   },
-  swipeHandler: [String, Object, window.HTMLElement],
+  swipeHandler: [String, Object],
   push: Boolean
 }, Mixins.colorProps));
 

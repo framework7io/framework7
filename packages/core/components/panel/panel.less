@@ -143,7 +143,7 @@ html {
       transition-duration: var(--f7-panel-transition-duration);
       transition-property: transform;
     }
-    .panel-backdrop {
+    .panel-backdrop-in {
       visibility: visible;
       pointer-events: auto;
       opacity: 0;
@@ -159,7 +159,7 @@ html {
   }
   &.with-panel-left-cover,
   &.with-panel-right-cover {
-    .panel-backdrop {
+    .panel-backdrop-in {
       visibility: visible;
       pointer-events: auto;
       opacity: 1;
@@ -168,14 +168,14 @@ html {
   &.with-panel-left-reveal {
     .views,
     .framework7-root > .view,
-    .panel-backdrop {
+    .panel-backdrop-in {
       transform: translate3d(var(--f7-panel-left-width, var(--f7-panel-width)),0,0);
     }
   }
   &.with-panel-right-reveal {
     .views,
     .framework7-root > .view,
-    .panel-backdrop {
+    .panel-backdrop-in {
       transform: translate3d(calc(-1 * var(--f7-panel-right-width, var(--f7-panel-width))),0,0);
     }
   }

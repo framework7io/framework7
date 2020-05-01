@@ -1,5 +1,5 @@
 /**
- * Framework7 5.7.0
+ * Framework7 5.7.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 25, 2020
+ * Released on: May 1, 2020
  */
 
 /*====================
@@ -617,6 +617,10 @@ body {
   font-size: var(--f7-font-size);
   line-height: var(--f7-line-height);
   color: var(--f7-text-color);
+}
+.theme-dark body,
+body.theme-dark {
+  background: #000;
 }
 .theme-dark {
   color: var(--f7-text-color);
@@ -10327,9 +10331,9 @@ html.with-panel-closing .framework7-root > .view {
   transition-duration: var(--f7-panel-transition-duration);
   transition-property: transform;
 }
-html.with-panel-left-reveal .panel-backdrop,
-html.with-panel-right-reveal .panel-backdrop,
-html.with-panel-closing .panel-backdrop {
+html.with-panel-left-reveal .panel-backdrop-in,
+html.with-panel-right-reveal .panel-backdrop-in,
+html.with-panel-closing .panel-backdrop-in {
   visibility: visible;
   pointer-events: auto;
   opacity: 0;
@@ -10339,20 +10343,20 @@ html.with-panel .framework7-root > .view .page-content {
   overflow: hidden;
   -webkit-overflow-scrolling: auto;
 }
-html.with-panel-left-cover .panel-backdrop,
-html.with-panel-right-cover .panel-backdrop {
+html.with-panel-left-cover .panel-backdrop-in,
+html.with-panel-right-cover .panel-backdrop-in {
   visibility: visible;
   pointer-events: auto;
   opacity: 1;
 }
 html.with-panel-left-reveal .views,
 html.with-panel-left-reveal .framework7-root > .view,
-html.with-panel-left-reveal .panel-backdrop {
+html.with-panel-left-reveal .panel-backdrop-in {
   transform: translate3d(var(--f7-panel-left-width, var(--f7-panel-width)), 0, 0);
 }
 html.with-panel-right-reveal .views,
 html.with-panel-right-reveal .framework7-root > .view,
-html.with-panel-right-reveal .panel-backdrop {
+html.with-panel-right-reveal .panel-backdrop-in {
   transform: translate3d(calc(-1 * var(--f7-panel-right-width, var(--f7-panel-width))), 0, 0);
 }
 html.with-panel-left-cover .panel-left {
@@ -16120,28 +16124,39 @@ table.data-table {
 .fab a {
   --f7-touch-ripple-color: var(--f7-touch-ripple-white);
 }
-.fab[class*="fab-left"] {
+.fab-left-top,
+.fab-left-center,
+.fab-left-bottom {
   left: calc(var(--f7-fab-margin) + var(--f7-safe-area-left));
 }
-.fab[class*="fab-right"] {
+.fab-right-top,
+.fab-right-center,
+.fab-right-bottom {
   right: calc(var(--f7-fab-margin) + var(--f7-safe-area-right));
 }
-.fab[class*="-top"] {
+.fab-left-top,
+.fab-center-top,
+.fab-right-top {
   top: var(--f7-fab-margin);
 }
-.fab[class*="-bottom"] {
+.fab-left-bottom,
+.fab-center-bottom,
+.fab-right-bottom {
   bottom: calc(var(--f7-fab-margin) + var(--f7-safe-area-bottom));
 }
-.fab[class*="fab-center"] {
+.fab-center-top,
+.fab-center-center,
+.fab-center-bottom {
   left: 50%;
   transform: translateX(-50%);
 }
-.fab[class*="left-center"],
-.fab[class*="right-center"] {
+.fab-left-center,
+.fab-center-center,
+.fab-right-center {
   top: 50%;
   transform: translateY(-50%);
 }
-.fab[class*="center-center"] {
+.fab-center-center {
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
@@ -16383,82 +16398,186 @@ table.data-table {
   pointer-events: none;
   font-size: var(--f7-fab-label-font-size);
 }
-.fab[class*="fab-right-"] .fab-label {
+.fab-right-top .fab-label,
+.fab-right-center .fab-label,
+.fab-right-bottom .fab-label {
   right: 100%;
   margin-right: 8px;
 }
-.fab[class*="fab-left-"] .fab-label {
+.fab-left-top .fab-label,
+.fab-left-center .fab-label,
+.fab-left-bottom .fab-label {
   left: 100%;
   margin-left: 8px;
 }
-.navbar ~ * .fab[class*="-top"],
-.navbar ~ .fab[class*="-top"],
-.navbars ~ * .fab[class*="-top"],
-.navbars ~ .fab[class*="-top"] {
+.navbar ~ * .fab-left-top,
+.navbar ~ * .fab-center-top,
+.navbar ~ * .fab-right-top,
+.navbar ~ .fab-left-top,
+.navbar ~ .fab-center-top,
+.navbar ~ .fab-right-top,
+.navbars ~ * .fab-left-top,
+.navbars ~ * .fab-center-top,
+.navbars ~ * .fab-right-top,
+.navbars ~ .fab-left-top,
+.navbars ~ .fab-center-top,
+.navbars ~ .fab-right-top {
   margin-top: calc(var(--f7-navbar-height) + var(--f7-safe-area-top));
 }
-.toolbar-top ~ * .fab[class*="-top"],
-.toolbar-top ~ .fab[class*="-top"],
-.ios .toolbar-top-ios ~ * .fab[class*="-top"],
-.ios .toolbar-top-ios ~ .fab[class*="-top"],
-.md .toolbar-top-md ~ * .fab[class*="-top"],
-.md .toolbar-top-md ~ .fab[class*="-top"] {
+.toolbar-top ~ * .fab-left-top,
+.toolbar-top ~ * .fab-center-top,
+.toolbar-top ~ * .fab-right-top,
+.toolbar-top ~ .fab-left-top,
+.toolbar-top ~ .fab-center-top,
+.toolbar-top ~ .fab-right-top,
+.ios .toolbar-top-ios ~ * .fab-left-top,
+.ios .toolbar-top-ios ~ * .fab-center-top,
+.ios .toolbar-top-ios ~ * .fab-right-top,
+.ios .toolbar-top-ios ~ .fab-left-top,
+.ios .toolbar-top-ios ~ .fab-center-top,
+.ios .toolbar-top-ios ~ .fab-right-top,
+.md .toolbar-top-md ~ * .fab-left-top,
+.md .toolbar-top-md ~ * .fab-center-top,
+.md .toolbar-top-md ~ * .fab-right-top,
+.md .toolbar-top-md ~ .fab-left-top,
+.md .toolbar-top-md ~ .fab-center-top,
+.md .toolbar-top-md ~ .fab-right-top {
   margin-top: var(--f7-toolbar-height);
 }
-.toolbar-bottom ~ * .fab[class*="-bottom"],
-.toolbar-bottom ~ .fab[class*="-bottom"],
-.ios .toolbar-bottom-ios ~ * .fab[class*="-bottom"],
-.ios .toolbar-bottom-ios ~ .fab[class*="-bottom"],
-.md .toolbar-bottom-md ~ * .fab[class*="-bottom"],
-.md .toolbar-bottom-md ~ .fab[class*="-bottom"] {
+.toolbar-bottom ~ * .fab-left-bottom,
+.toolbar-bottom ~ * .fab-center-bottom,
+.toolbar-bottom ~ * .fab-right-bottom,
+.toolbar-bottom ~ .fab-left-bottom,
+.toolbar-bottom ~ .fab-center-bottom,
+.toolbar-bottom ~ .fab-right-bottom,
+.ios .toolbar-bottom-ios ~ * .fab-left-bottom,
+.ios .toolbar-bottom-ios ~ * .fab-center-bottom,
+.ios .toolbar-bottom-ios ~ * .fab-right-bottom,
+.ios .toolbar-bottom-ios ~ .fab-left-bottom,
+.ios .toolbar-bottom-ios ~ .fab-center-bottom,
+.ios .toolbar-bottom-ios ~ .fab-right-bottom,
+.md .toolbar-bottom-md ~ * .fab-left-bottom,
+.md .toolbar-bottom-md ~ * .fab-center-bottom,
+.md .toolbar-bottom-md ~ * .fab-right-bottom,
+.md .toolbar-bottom-md ~ .fab-left-bottom,
+.md .toolbar-bottom-md ~ .fab-center-bottom,
+.md .toolbar-bottom-md ~ .fab-right-bottom {
   margin-bottom: var(--f7-toolbar-height);
 }
-.tabbar-labels.toolbar-bottom ~ * .fab[class*="-bottom"],
-.tabbar-labels.toolbar-bottom ~ .fab[class*="-bottom"],
-.ios .tabbar-labels.toolbar-bottom-ios ~ * .fab[class*="-bottom"],
-.ios .tabbar-labels.toolbar-bottom-ios ~ .fab[class*="-bottom"],
-.md .tabbar-labels.toolbar-bottom-md ~ * .fab[class*="-bottom"],
-.md .tabbar-labels.toolbar-bottom-md ~ .fab[class*="-bottom"] {
+.tabbar-labels.toolbar-bottom ~ * .fab-left-bottom,
+.tabbar-labels.toolbar-bottom ~ * .fab-center-bottom,
+.tabbar-labels.toolbar-bottom ~ * .fab-right-bottom,
+.tabbar-labels.toolbar-bottom ~ .fab-left-bottom,
+.tabbar-labels.toolbar-bottom ~ .fab-center-bottom,
+.tabbar-labels.toolbar-bottom ~ .fab-right-bottom,
+.ios .tabbar-labels.toolbar-bottom-ios ~ * .fab-left-bottom,
+.ios .tabbar-labels.toolbar-bottom-ios ~ * .fab-center-bottom,
+.ios .tabbar-labels.toolbar-bottom-ios ~ * .fab-right-bottom,
+.ios .tabbar-labels.toolbar-bottom-ios ~ .fab-left-bottom,
+.ios .tabbar-labels.toolbar-bottom-ios ~ .fab-center-bottom,
+.ios .tabbar-labels.toolbar-bottom-ios ~ .fab-right-bottom,
+.md .tabbar-labels.toolbar-bottom-md ~ * .fab-left-bottom,
+.md .tabbar-labels.toolbar-bottom-md ~ * .fab-center-bottom,
+.md .tabbar-labels.toolbar-bottom-md ~ * .fab-right-bottom,
+.md .tabbar-labels.toolbar-bottom-md ~ .fab-left-bottom,
+.md .tabbar-labels.toolbar-bottom-md ~ .fab-center-bottom,
+.md .tabbar-labels.toolbar-bottom-md ~ .fab-right-bottom {
   margin-bottom: var(--f7-tabbar-labels-height);
 }
-.tabbar-labels.toolbar-top ~ * .fab[class*="-bottom"],
-.tabbar-labels.toolbar-top ~ .fab[class*="-bottom"],
-.ios .tabbar-labels.toolbar-top-ios ~ * .fab[class*="-bottom"],
-.ios .tabbar-labels.toolbar-top-ios ~ .fab[class*="-bottom"],
-.md .tabbar-labels.toolbar-top-md ~ * .fab[class*="-bottom"],
-.md .tabbar-labels.toolbar-top-md ~ .fab[class*="-bottom"] {
+.tabbar-labels.toolbar-top ~ * .fab-left-bottom,
+.tabbar-labels.toolbar-top ~ * .fab-center-bottom,
+.tabbar-labels.toolbar-top ~ * .fab-right-bottom,
+.tabbar-labels.toolbar-top ~ .fab-left-bottom,
+.tabbar-labels.toolbar-top ~ .fab-center-bottom,
+.tabbar-labels.toolbar-top ~ .fab-right-bottom,
+.ios .tabbar-labels.toolbar-top-ios ~ * .fab-left-bottom,
+.ios .tabbar-labels.toolbar-top-ios ~ * .fab-center-bottom,
+.ios .tabbar-labels.toolbar-top-ios ~ * .fab-right-bottom,
+.ios .tabbar-labels.toolbar-top-ios ~ .fab-left-bottom,
+.ios .tabbar-labels.toolbar-top-ios ~ .fab-center-bottom,
+.ios .tabbar-labels.toolbar-top-ios ~ .fab-right-bottom,
+.md .tabbar-labels.toolbar-top-md ~ * .fab-left-bottom,
+.md .tabbar-labels.toolbar-top-md ~ * .fab-center-bottom,
+.md .tabbar-labels.toolbar-top-md ~ * .fab-right-bottom,
+.md .tabbar-labels.toolbar-top-md ~ .fab-left-bottom,
+.md .tabbar-labels.toolbar-top-md ~ .fab-center-bottom,
+.md .tabbar-labels.toolbar-top-md ~ .fab-right-bottom {
   margin-top: var(--f7-tabbar-labels-height);
 }
-.messagebar ~ * .fab[class*="-bottom"],
-.messagebar ~ .fab[class*="-bottom"] {
+.messagebar ~ * .fab-left-bottom,
+.messagebar ~ * .fab-center-bottom,
+.messagebar ~ * .fab-right-bottom,
+.messagebar ~ .fab-left-bottom,
+.messagebar ~ .fab-center-bottom,
+.messagebar ~ .fab-right-bottom {
   margin-bottom: var(--f7-messagebar-height);
 }
-.navbar + .toolbar-top ~ * .fab[class*="-top"],
-.ios .navbar + .toolbar-top-ios ~ * .fab[class*="-top"],
-.md .navbar + .toolbar-top-ios ~ * .fab[class*="-top"],
-.navbar + .toolbar-top ~ .fab[class*="-top"],
-.ios .navbar + .toolbar-top-ios ~ .fab[class*="-top"],
-.md .navbar + .toolbar-top-ios ~ .fab[class*="-top"] {
+.navbar + .toolbar-top ~ * .fab-left-top,
+.ios .navbar + .toolbar-top-ios ~ * .fab-left-top,
+.md .navbar + .toolbar-top-ios ~ * .fab-left-top,
+.navbar + .toolbar-top ~ * .fab-center-top,
+.ios .navbar + .toolbar-top-ios ~ * .fab-center-top,
+.md .navbar + .toolbar-top-ios ~ * .fab-center-top,
+.navbar + .toolbar-top ~ * .fab-right-top,
+.ios .navbar + .toolbar-top-ios ~ * .fab-right-top,
+.md .navbar + .toolbar-top-ios ~ * .fab-right-top,
+.navbar + .toolbar-top ~ .fab-left-top,
+.ios .navbar + .toolbar-top-ios ~ .fab-left-top,
+.md .navbar + .toolbar-top-ios ~ .fab-left-top,
+.navbar + .toolbar-top ~ .fab-center-top,
+.ios .navbar + .toolbar-top-ios ~ .fab-center-top,
+.md .navbar + .toolbar-top-ios ~ .fab-center-top,
+.navbar + .toolbar-top ~ .fab-right-top,
+.ios .navbar + .toolbar-top-ios ~ .fab-right-top,
+.md .navbar + .toolbar-top-ios ~ .fab-right-top {
   margin-top: calc(var(--f7-toolbar-height) + var(--f7-navbar-height) + var(--f7-safe-area-top));
 }
-.navbar + .toolbar-top.tabbar-labels ~ * .fab[class*="-top"],
-.ios .navbar + .toolbar-top-ios.tabbar-labels ~ * .fab[class*="-top"],
-.md .navbar + .toolbar-top-ios.tabbar-labels ~ * .fab[class*="-top"],
-.navbar + .toolbar-top.tabbar-labels ~ .fab[class*="-top"],
-.ios .navbar + .toolbar-top-ios.tabbar-labels ~ .fab[class*="-top"],
-.md .navbar + .toolbar-top-ios.tabbar-labels ~ .fab[class*="-top"] {
+.navbar + .toolbar-top.tabbar-labels ~ * .fab-left-top,
+.ios .navbar + .toolbar-top-ios.tabbar-labels ~ * .fab-left-top,
+.md .navbar + .toolbar-top-ios.tabbar-labels ~ * .fab-left-top,
+.navbar + .toolbar-top.tabbar-labels ~ * .fab-center-top,
+.ios .navbar + .toolbar-top-ios.tabbar-labels ~ * .fab-center-top,
+.md .navbar + .toolbar-top-ios.tabbar-labels ~ * .fab-center-top,
+.navbar + .toolbar-top.tabbar-labels ~ * .fab-right-top,
+.ios .navbar + .toolbar-top-ios.tabbar-labels ~ * .fab-right-top,
+.md .navbar + .toolbar-top-ios.tabbar-labels ~ * .fab-right-top,
+.navbar + .toolbar-top.tabbar-labels ~ .fab-left-top,
+.ios .navbar + .toolbar-top-ios.tabbar-labels ~ .fab-left-top,
+.md .navbar + .toolbar-top-ios.tabbar-labels ~ .fab-left-top,
+.navbar + .toolbar-top.tabbar-labels ~ .fab-center-top,
+.ios .navbar + .toolbar-top-ios.tabbar-labels ~ .fab-center-top,
+.md .navbar + .toolbar-top-ios.tabbar-labels ~ .fab-center-top,
+.navbar + .toolbar-top.tabbar-labels ~ .fab-right-top,
+.ios .navbar + .toolbar-top-ios.tabbar-labels ~ .fab-right-top,
+.md .navbar + .toolbar-top-ios.tabbar-labels ~ .fab-right-top {
   margin-top: calc(var(--f7-tabbar-labels-height) + var(--f7-navbar-height) + var(--f7-safe-area-top));
 }
-.navbars + .toolbar-top ~ * .fab[class*="-top"],
-.ios .navbars + .toolbar-top-ios ~ * .fab[class*="-top"],
-.navbars + .toolbar-top ~ .fab[class*="-top"],
-.ios .navbars + .toolbar-top-ios ~ .fab[class*="-top"] {
+.navbars + .toolbar-top ~ * .fab-left-top,
+.ios .navbars + .toolbar-top-ios ~ * .fab-left-top,
+.navbars + .toolbar-top ~ * .fab-center-top,
+.ios .navbars + .toolbar-top-ios ~ * .fab-center-top,
+.navbars + .toolbar-top ~ * .fab-right-top,
+.ios .navbars + .toolbar-top-ios ~ * .fab-right-top,
+.navbars + .toolbar-top ~ .fab-left-top,
+.ios .navbars + .toolbar-top-ios ~ .fab-left-top,
+.navbars + .toolbar-top ~ .fab-center-top,
+.ios .navbars + .toolbar-top-ios ~ .fab-center-top,
+.navbars + .toolbar-top ~ .fab-right-top,
+.ios .navbars + .toolbar-top-ios ~ .fab-right-top {
   margin-top: calc(var(--f7-toolbar-height) + var(--f7-navbar-height) + var(--f7-safe-area-top));
 }
-.navbars + .toolbar-top.tabbar-labels ~ * .fab[class*="-top"],
-.ios .navbars + .toolbar-top-ios.tabbar-labels ~ * .fab[class*="-top"],
-.navbars + .toolbar-top.tabbar-labels ~ .fab[class*="-top"],
-.ios .navbars + .toolbar-top-ios.tabbar-labels ~ .fab[class*="-top"] {
+.navbars + .toolbar-top.tabbar-labels ~ * .fab-left-top,
+.ios .navbars + .toolbar-top-ios.tabbar-labels ~ * .fab-left-top,
+.navbars + .toolbar-top.tabbar-labels ~ * .fab-center-top,
+.ios .navbars + .toolbar-top-ios.tabbar-labels ~ * .fab-center-top,
+.navbars + .toolbar-top.tabbar-labels ~ * .fab-right-top,
+.ios .navbars + .toolbar-top-ios.tabbar-labels ~ * .fab-right-top,
+.navbars + .toolbar-top.tabbar-labels ~ .fab-left-top,
+.ios .navbars + .toolbar-top-ios.tabbar-labels ~ .fab-left-top,
+.navbars + .toolbar-top.tabbar-labels ~ .fab-center-top,
+.ios .navbars + .toolbar-top-ios.tabbar-labels ~ .fab-center-top,
+.navbars + .toolbar-top.tabbar-labels ~ .fab-right-top,
+.ios .navbars + .toolbar-top-ios.tabbar-labels ~ .fab-right-top {
   margin-top: calc(var(--f7-tabbar-labels-height) + var(--f7-navbar-height) + var(--f7-safe-area-top));
 }
 .ios .fab > a.active-state,

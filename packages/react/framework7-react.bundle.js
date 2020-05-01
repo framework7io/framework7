@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.7.0
+ * Framework7 React 5.7.1
  * Build full featured iOS & Android apps using Framework7 & React
  * https://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 25, 2020
+ * Released on: May 1, 2020
  */
 
 (function (global, factory) {
@@ -1235,7 +1235,7 @@
     forceToPopover: Boolean,
     target: [String, Object],
     backdrop: Boolean,
-    backdropEl: [String, Object, window.HTMLElement],
+    backdropEl: [String, Object],
     closeByBackdropClick: Boolean,
     closeByOutsideClick: Boolean,
     closeOnEscape: Boolean
@@ -11351,7 +11351,7 @@
     opened: Boolean,
     target: [String, Object],
     backdrop: Boolean,
-    backdropEl: [String, Object, window.HTMLElement],
+    backdropEl: [String, Object],
     closeByBackdropClick: Boolean,
     closeByOutsideClick: Boolean,
     closeOnEscape: Boolean
@@ -11538,14 +11538,14 @@
     opened: Boolean,
     animate: Boolean,
     backdrop: Boolean,
-    backdropEl: [String, Object, window.HTMLElement],
+    backdropEl: [String, Object],
     closeByBackdropClick: Boolean,
     closeOnEscape: Boolean,
     swipeToClose: {
       type: [Boolean, String],
       default: false
     },
-    swipeHandler: [String, Object, window.HTMLElement],
+    swipeHandler: [String, Object],
     push: Boolean
   }, Mixins.colorProps));
 
@@ -12525,14 +12525,14 @@
     bottom: Boolean,
     position: String,
     backdrop: Boolean,
-    backdropEl: [String, Object, window.HTMLElement],
+    backdropEl: [String, Object],
     closeByBackdropClick: Boolean,
     closeByOutsideClick: Boolean,
     closeOnEscape: Boolean,
     push: Boolean,
     swipeToClose: Boolean,
     swipeToStep: Boolean,
-    swipeHandler: [String, Object, window.HTMLElement]
+    swipeHandler: [String, Object]
   }, Mixins.colorProps));
 
   F7Sheet.displayName = 'f7-sheet';
@@ -14748,7 +14748,7 @@
   };
 
   /**
-   * Framework7 React 5.7.0
+   * Framework7 React 5.7.1
    * Build full featured iOS & Android apps using Framework7 & React
    * https://framework7.io/react/
    *
@@ -14756,7 +14756,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: April 25, 2020
+   * Released on: May 1, 2020
    */
 
   function f7ready(callback) {

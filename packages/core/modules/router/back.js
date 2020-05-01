@@ -563,7 +563,11 @@ function back(...args) {
     if (modalToClose && modalToClose.$el) {
       const prevOpenedModals = modalToClose.$el.prevAll('.modal-in');
       if (prevOpenedModals.length && prevOpenedModals[0].f7Modal) {
-        previousRoute = prevOpenedModals[0].f7Modal.route;
+        const modalEl = prevOpenedModals[0];
+        // check if current router not inside of the modalEl
+        if (!router.$el.parents(modalEl).length) {
+          previousRoute = modalEl.f7Modal.route;
+        }
       }
     }
     if (!previousRoute) {
