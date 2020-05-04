@@ -186,6 +186,30 @@ html {
     transform: translate3d(0px,0,0);
   }
 }
+
+html.with-modal-popup-push .framework7-root > .panel {
+  &.panel-in,
+  &.panel-out {
+    transition-duration: var(--f7-popup-transition-duration);
+
+    &.panel-reveal.panel-left {
+      transform: translate3d(calc((1 - var(--f7-popup-push-scale, 1)) * 50vw), 0, 0px) scale(var(--f7-popup-push-scale, 1));
+    }
+    &.panel-reveal.panel-right {
+      transform: translate3d(calc((1 - var(--f7-popup-push-scale, 1)) * -50vw), 0, 0px) scale(var(--f7-popup-push-scale, 1));
+    }
+    &.panel-cover.panel-left {
+      transform: translate3d(-100%, 0, 0px);
+    }
+    &.panel-cover.panel-right {
+      transform: translate3d(100%, 0, 0px);
+    }
+  }
+}
+html.with-modal-popup-push-closing .framework7-root > .panel.panel-in {
+  transition-duration: var(--f7-popup-transition-duration);
+}
+
 .panel-resize-handler {
   position: absolute;
   top: 0;
