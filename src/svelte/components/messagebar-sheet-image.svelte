@@ -21,10 +21,6 @@
     Mixins.colorClasses($$props),
   );
 
-  $: styles = Utils.extend({
-    backgroundImage: image && `url(${image})`,
-  }, style || {});
-
   $: styles = `${image ? `background-image: url(${image});` : ''}${style || ''}`;
 
   function onChange(event) {
