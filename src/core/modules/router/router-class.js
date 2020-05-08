@@ -166,6 +166,7 @@ class Router extends Framework7Class {
     const ios = router.app.theme === 'ios';
     if (transition) {
       const routerCustomTransitionClass = `router-transition-custom router-transition-${transition}-${direction}`;
+
       // Animate
       const onCustomTransitionDone = () => {
         router.$el.removeClass(routerCustomTransitionClass);
@@ -179,6 +180,10 @@ class Router extends Framework7Class {
         }
         if (callback) callback();
       };
+
+      if (!router.view.widthIsSet) {
+        router.view.setWidth();
+      }
 
       (direction === 'forward' ? $newPageEl : $oldPageEl).animationEnd(onCustomTransitionDone);
       if (dynamicNavbar) {
@@ -295,6 +300,10 @@ class Router extends Framework7Class {
     (direction === 'forward' ? $newPageEl : $oldPageEl).animationEnd(() => {
       onDone();
     });
+
+    if (!router.view.widthIsSet) {
+      router.view.setWidth();
+    }
 
     // Animate
     if (dynamicNavbar) {

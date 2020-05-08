@@ -1,18 +1,18 @@
 .ios {
   .rtl({
     .page-previous {
-      transform: translate3d(20%, 0, 0);
+      transform: translate3d(calc(0.2 * var(--f7-view-width)), 0, 0);
     }
     .page-next {
-      transform: translate3d(-100%, 0, 0);
+      transform: translate3d(calc(-1 * var(--f7-view-width)), 0, 0);
     }
   });
   .ltr({
     .page-previous {
-      transform: translate3d(-20%, 0, 0);
+      transform: translate3d(calc(-0.2 * var(--f7-view-width)), 0, 0);
     }
     .page-next {
-      transform: translate3d(100%, 0, 0);
+      transform: translate3d(var(--f7-view-width), 0, 0);
     }
   });
   .page-previous {
@@ -71,18 +71,18 @@
 .ltr({
   @keyframes ios-page-next-to-current {
     from {
-      transform: translate3d(100%,0,0);
+      transform: translate3d(var(--f7-view-width),0,0);
     }
     to {
-      transform: translate3d(0%,0,0);
+      transform: translate3d(0,0,0);
     }
   }
   @keyframes ios-page-previous-to-current {
     from {
-      transform: translate3d(-20%,0,0);
+      transform: translate3d(calc(-0.2 * var(--f7-view-width)),0,0);
     }
     to {
-      transform: translate3d(0%,0,0);
+      transform: translate3d(0,0,0);
     }
   }
   @keyframes ios-page-current-to-previous {
@@ -90,7 +90,7 @@
       transform: translate3d(0,0,0);
     }
     to {
-      transform: translate3d(-20%,0,0);
+      transform: translate3d(calc(-0.2 * var(--f7-view-width)),0,0);
     }
   }
   @keyframes ios-page-current-to-next {
@@ -98,25 +98,25 @@
       transform: translate3d(0,0,0);
     }
     to {
-      transform: translate3d(100%,0,0);
+      transform: translate3d(var(--f7-view-width),0,0);
     }
   }
 });
 .rtl({
   @keyframes ios-page-next-to-current {
     from {
-      transform: translate3d(-100%,0,0);
+      transform: translate3d(calc(-1 * var(--f7-view-width)),0,0);
     }
     to {
-      transform: translate3d(0%,0,0);
+      transform: translate3d(0,0,0);
     }
   }
   @keyframes ios-page-previous-to-current {
     from {
-      transform: translate3d(20%,0,0);
+      transform: translate3d(calc(0.2 * var(--f7-view-width)),0,0);
     }
     to {
-      transform: translate3d(0%,0,0);
+      transform: translate3d(0,0,0);
     }
   }
   @keyframes ios-page-current-to-previous {
@@ -124,7 +124,7 @@
       transform: translate3d(0,0,0);
     }
     to {
-      transform: translate3d(20%,0,0);
+      transform: translate3d(calc(0.2 * var(--f7-view-width)),0,0);
     }
   }
   @keyframes ios-page-current-to-next {
@@ -132,7 +132,7 @@
       transform: translate3d(0,0,0);
     }
     to {
-      transform: translate3d(-100%,0,0);
+      transform: translate3d(calc(-1 * var(--f7-view-width)),0,0);
     }
   }
 });

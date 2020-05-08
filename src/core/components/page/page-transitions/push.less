@@ -18,10 +18,10 @@
 @keyframes f7-push-next-to-current {
   from {
     .ltr({
-      transform: translateX(100%);
+      transform: translateX(var(--f7-view-width));
     });
     .rtl({
-      transform: translateX(-100%);
+      transform: translateX(calc(-1 * var(--f7-view-width)));
     });
   }
   to {
@@ -34,10 +34,10 @@
   }
   to {
     .ltr({
-      transform: translateX(100%);
+      transform: translateX(var(--f7-view-width));
     });
     .rtl({
-      transform: translateX(-100%);
+      transform: translateX(calc(-1 * var(--f7-view-width)));
     });
   }
 }
@@ -47,20 +47,20 @@
   }
   to {
     .ltr({
-      transform: translateX(-100%);
+      transform: translateX(calc(-1 * var(--f7-view-width)));
     });
     .rtl({
-      transform: translateX(100%);
+      transform: translateX(var(--f7-view-width));
     });
   }
 }
 @keyframes f7-push-prev-to-current {
   from {
     .ltr({
-      transform: translateX(-100%);
+      transform: translateX(calc(-1 * var(--f7-view-width)));
     });
     .rtl({
-      transform: translateX(100%);
+      transform: translateX(var(--f7-view-width));
     });
   }
   to {

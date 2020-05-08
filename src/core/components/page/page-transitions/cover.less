@@ -23,10 +23,10 @@
 @keyframes f7-cover-next-to-current {
   from {
     .ltr({
-      transform: translateX(100%);
+      transform: translateX(var(--f7-view-width));
     });
     .rtl({
-      transform: translateX(-100%);
+      transform: translateX(calc(-1 * var(--f7-view-width)));
     });
   }
   to {
@@ -39,10 +39,10 @@
   }
   to {
     .ltr({
-      transform: translateX(100%);
+      transform: translateX(var(--f7-view-width));
     });
     .rtl({
-      transform: translateX(-100%);
+      transform: translateX(calc(-1 * var(--f7-view-width)));
     });
   }
 }

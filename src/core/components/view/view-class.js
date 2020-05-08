@@ -108,6 +108,63 @@ class View extends Framework7Class {
     return view;
   }
 
+  checkMasterDetailBreakpoint(force) {
+    const view = this;
+    const app = view.app;
+    const wasMasterDetail = view.$el.hasClass('view-master-detail');
+    const isMasterDetail = app.width >= view.params.masterDetailBreakpoint && view.$el.children('.page-master').length;
+    if ((typeof force === 'undefined' && isMasterDetail) || force === true) {
+      view.$el.addClass('view-master-detail');
+      if (!wasMasterDetail) {
+        view.emit('local::masterDetailBreakpoint viewMasterDetailBreakpoint', view);
+        view.$el.trigger('view:masterDetailBreakpoint');
+      }
+    } else {
+      view.$el.removeClass('view-master-detail');
+      if (wasMasterDetail) {
+        view.emit('local::masterDetailBreakpoint viewMasterDetailBreakpoint', view);
+        view.$el.trigger('view:masterDetailBreakpoint');
+      }
+    }
+  }
+
+  setWidth() {
+    const view = this;
+    if (!view.el) return;
+    const width = view.el.offsetWidth;
+    if (!width) {
+      view.widthIsSet = false;
+      return;
+    }
+    view.widthIsSet = true;
+    view.el.style.setProperty('--f7-view-width', `${width}px`);
+  }
+
+  setWidthForce() {
+    this.setWidth();
+  }
+
+  initWatchPageSize() {
+    const view = this;
+    const app = view.app;
+    view.setWidth = view.setWidth.bind(view);
+    view.setWidthForce = view.setWidthForce.bind(view);
+    view.setWidth();
+    app.on('resize', view.setWidth);
+    app.on('panelBreakpoint panelCollapsedBreakpoint panelResize', view.setWidthForce);
+  }
+
+  initMasterDetail() {
+    const view = this;
+    const app = view.app;
+    view.checkMasterDetailBreakpoint = view.checkMasterDetailBreakpoint.bind(view);
+    view.checkMasterDetailBreakpoint();
+    if (view.params.masterDetailResizable) {
+      resizableView(view);
+    }
+    app.on('resize', view.checkMasterDetailBreakpoint);
+  }
+
   destroy() {
     let view = this;
     const app = view.app;
@@ -116,6 +173,8 @@ class View extends Framework7Class {
     view.emit('local::beforeDestroy viewBeforeDestroy', view);
 
     app.off('resize', view.checkMasterDetailBreakpoint);
+    app.off('resize', view.setWidth);
+    app.off('panelBreakpoint panelCollapsedBreakpoint panelResize', view.setWidthForce);
 
     if (view.main) {
       app.views.main = null;
@@ -145,43 +204,13 @@ class View extends Framework7Class {
     view = null;
   }
 
-  checkMasterDetailBreakpoint(force) {
-    const view = this;
-    const app = view.app;
-    const wasMasterDetail = view.$el.hasClass('view-master-detail');
-    const isMasterDetail = app.width >= view.params.masterDetailBreakpoint && view.$el.children('.page-master').length;
-    if ((typeof force === 'undefined' && isMasterDetail) || force === true) {
-      view.$el.addClass('view-master-detail');
-      if (!wasMasterDetail) {
-        view.emit('local::masterDetailBreakpoint viewMasterDetailBreakpoint', view);
-        view.$el.trigger('view:masterDetailBreakpoint');
-      }
-    } else {
-      view.$el.removeClass('view-master-detail');
-      if (wasMasterDetail) {
-        view.emit('local::masterDetailBreakpoint viewMasterDetailBreakpoint', view);
-        view.$el.trigger('view:masterDetailBreakpoint');
-      }
-    }
-  }
-
-  initMasterDetail() {
-    const view = this;
-    const app = view.app;
-    view.checkMasterDetailBreakpoint = view.checkMasterDetailBreakpoint.bind(view);
-    view.checkMasterDetailBreakpoint();
-    if (view.params.masterDetailResizable) {
-      resizableView(view);
-    }
-    app.on('resize', view.checkMasterDetailBreakpoint);
-  }
-
   init() {
     const view = this;
     if (view.params.router) {
       if (view.params.masterDetailBreakpoint > 0) {
         view.initMasterDetail();
       }
+      view.initWatchPageSize();
       view.router.init();
       view.$el.trigger('view:init');
       view.emit('local::init viewInit', view);

@@ -2,17 +2,17 @@
   .page-next {
     pointer-events: none;
     .ltr({
-      transform: translate3d(100%, 0px, 0);
+      transform: translate3d(var(--f7-view-width), 0px, 0);
     });
     .rtl({
-      transform: translate3d(-100%, 0px, 0);
+      transform: translate3d(calc(-1 * var(--f7-view-width)), 0px, 0);
     });
     &.page-next-on-right {
       .ltr({
-        transform: translate3d(100%, 0, 0);
+        transform: translate3d(var(--f7-view-width), 0, 0);
       });
       .rtl({
-        transform: translate3d(-100%, 0, 0);
+        transform: translate3d(calc(-1 * var(--f7-view-width)), 0, 0);
       });
     }
   }
@@ -55,10 +55,10 @@
 @keyframes aurora-page-next-to-current {
   from {
     .ltr({
-      transform: translate3d(100%, 0, 0);
+      transform: translate3d(var(--f7-view-width), 0, 0);
     });
     .rtl({
-      transform: translate3d(-100%, 0, 0);
+      transform: translate3d(calc(-1 * var(--f7-view-width)), 0, 0);
     });
   }
   to {
@@ -71,10 +71,10 @@
   }
   to {
     .ltr({
-      transform: translate3d(100%, 0, 0);
+      transform: translate3d(var(--f7-view-width), 0, 0);
     });
     .rtl({
-      transform: translate3d(-100%, 0, 0);
+      transform: translate3d(calc(-1 * var(--f7-view-width)), 0, 0);
     });
   }
 }
