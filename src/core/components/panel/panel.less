@@ -78,7 +78,7 @@
   left: 0;
   width: var(--f7-panel-left-width, var(--f7-panel-width));
   &.panel-cover {
-    transform: translate3d(-100%, 0, 0);
+    transform: translate3d(calc(-1 * var(--f7-panel-left-width, var(--f7-panel-width))), 0, 0);
     &:after {
       left: 100%;
       background: linear-gradient(to right, var(--f7-panel-shadow));
@@ -103,7 +103,7 @@
   right: 0;
   width: var(--f7-panel-right-width, var(--f7-panel-width));
   &.panel-cover {
-    transform: translate3d(100%, 0, 0);
+    transform: translate3d(var(--f7-panel-right-width, var(--f7-panel-width)), 0, 0);
     &:after {
       right: 100%;
       background: linear-gradient(to left, var(--f7-panel-shadow));
