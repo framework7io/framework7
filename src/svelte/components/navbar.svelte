@@ -2,6 +2,7 @@
   import { createEventDispatcher, onMount, onDestroy, afterUpdate } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import { theme } from '../utils/plugin';
   import f7 from '../utils/f7';
   import hasSlots from '../utils/has-slots';
@@ -11,9 +12,6 @@
   import NavRight from './nav-right.svelte';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -209,11 +207,10 @@
   });
 </script>
 <div
-  id={id}
-  style={style}
   class={classes}
   bind:this={el}
   data-f7-slot={f7Slot}
+  {...restProps($$restProps)}
 >
   <div class="navbar-bg"></div>
   <slot name="before-inner"></slot>

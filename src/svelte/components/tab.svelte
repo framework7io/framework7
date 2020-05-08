@@ -1,6 +1,7 @@
 <script>
   import { onMount, onDestroy, afterUpdate, createEventDispatcher, tick } from 'svelte';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import Mixins from '../utils/mixins';
   import f7 from '../utils/f7';
 
@@ -8,9 +9,6 @@
 
   let className = undefined;
   export { className as class };
-
-  export let id = undefined;
-  export let style = undefined;
   export let tabActive = false;
 
   let el;
@@ -70,7 +68,7 @@
   }
 </script>
 
-<div id={id} class={classes} style={style} bind:this={el}>
+<div class={classes} bind:this={el} {...restProps($$restProps)}>
   {#if tabContent}
   <svelte:component this={tabContent.component} {...tabContent.props}></svelte:component>
   {/if}

@@ -2,15 +2,13 @@
   import { createEventDispatcher } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import f7 from '../utils/f7';
   import { theme } from '../utils/plugin';
 
   import Link from './link.svelte';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -51,9 +49,8 @@
   }
 </script>
 <div
-  id={id}
-  style={style}
   class={classes}
+  {...restProps($$restProps)}
 >
   {#if backLink}
     <Link

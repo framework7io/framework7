@@ -2,6 +2,7 @@
   import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import f7 from '../utils/f7';
   import hasSlots from '../utils/has-slots';
 
@@ -9,9 +10,6 @@
   import Icon from './icon.svelte';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -47,6 +45,7 @@
       href: hrefComputed,
       target,
       'data-tab': (Utils.isStringProp(tabLink) && tabLink) || undefined,
+      ...restProps($$restProps),
     },
     Mixins.linkRouterAttrs($$props),
     Mixins.linkActionsAttrs($$props),
@@ -153,8 +152,6 @@
 <!-- svelte-ignore a11y-missing-attribute -->
 <a
   bind:this={el}
-  id={id}
-  style={style}
   class={classes}
   on:click={onClick}
   {...attrs}

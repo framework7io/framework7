@@ -1,9 +1,7 @@
 <script>
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
-
-  export let id = undefined;
-  export let style = undefined;
+  import restProps from '../utils/rest-props';
 
   let className = undefined;
   export { className as class };
@@ -24,7 +22,7 @@
 
 </script>
 
-<div class={classes} id={id} style={style} data-f7-slot={f7Slot}>
+<div class={classes} data-f7-slot={f7Slot} {...restProps($$restProps)}>
   {#if inner}
     <div class="subnavbar-inner">
       {#if title}

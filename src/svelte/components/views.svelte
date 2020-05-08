@@ -1,9 +1,8 @@
 <script>
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import Mixins from '../utils/mixins';
 
-  export let id = undefined;
-  export let style = undefined;
   export let tabs = false;
 
   let className = undefined;
@@ -20,6 +19,6 @@
 
 </script>
 
-<div class={classes} style={style} id={id}>
+<div class={classes} {...restProps($$restProps)}>
   <slot />
 </div>

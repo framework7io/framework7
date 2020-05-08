@@ -2,15 +2,13 @@
   import { createEventDispatcher, onMount, onDestroy, afterUpdate, getContext } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import f7 from '../utils/f7';
   import hasSlots from '../utils/has-slots';
 
   import Badge from './badge.svelte';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -357,16 +355,16 @@
 </script>
 <!-- svelte-ignore a11y-missing-attribute -->
 {#if (divider || groupTitle)}
-  <li on:click={ onClick } bind:this={el} id={id} style={style} class={liClasses} data-virtual-list-index={virtualListIndex}>
+  <li on:click={ onClick } bind:this={el} class={liClasses} data-virtual-list-index={virtualListIndex} {...restProps($$restProps)}>
     <span><slot>{Utils.text(title)}</slot></span>
   </li>
 {:else if isSimple}
-  <li on:click={ onClick } bind:this={el} id={id} style={style} class={liClasses} data-virtual-list-index={virtualListIndex}>
+  <li on:click={ onClick } bind:this={el} class={liClasses} data-virtual-list-index={virtualListIndex} {...restProps($$restProps)}>
     {Utils.text(title)}
     <slot />
   </li>
 {:else}
-  <li bind:this={el} id={id} style={style} class={liClasses} data-virtual-list-index={virtualListIndex}>
+  <li bind:this={el} class={liClasses} data-virtual-list-index={virtualListIndex} {...restProps($$restProps)}>
     <slot name="root-start" />
     {#if swipeout}
       <div class="swipeout-content">

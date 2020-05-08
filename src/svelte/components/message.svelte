@@ -3,12 +3,10 @@
   import { createEventDispatcher } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import hasSlots from '../utils/has-slots';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -96,7 +94,7 @@
 
 </script>
 <!-- svelte-ignore a11y-missing-attribute -->
-<div id={id} style={style} class={classes} on:click={onClick}>
+<div class={classes} on:click={onClick} {...restProps($$restProps)}>
   <slot name="start"/>
   {#if (avatar || hasAvatarSlots)}
     <div

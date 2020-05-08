@@ -2,10 +2,10 @@
   import { onMount, onDestroy } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import { theme } from '../utils/plugin';
   import F7 from '../utils/f7';
 
-  export let id = undefined;
   export let style = undefined;
 
   let className = undefined;
@@ -133,7 +133,7 @@
   });
 </script>
 
-<i id={id} style={iconStyle} class={iconClasses} bind:this={el}>
+<i style={iconStyle} class={iconClasses} bind:this={el} {...restProps($$restProps)}>
   {iconText || ''}
   <slot />
 </i>

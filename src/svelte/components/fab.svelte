@@ -2,13 +2,11 @@
   import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import f7 from '../utils/f7';
   import hasSlots from '../utils/has-slots';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -105,12 +103,11 @@
 </script>
 
 <div
-  id={id}
-  style={style}
   class={classes}
   data-morph-to={morphTo}
   bind:this={el}
   data-f7-slot={f7Slot}
+  {...restProps($$restProps)}
 >
   <a bind:this={linkEl} on:click={onClick} target={target} href={hrefComputed}>
     <slot />

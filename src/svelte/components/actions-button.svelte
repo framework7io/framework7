@@ -3,13 +3,11 @@
 
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import f7 from '../utils/f7';
   import hasSlots from '../utils/has-slots';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -43,11 +41,10 @@
 </script>
 
 <div
-  id={id}
-  style={style}
   class={classes}
   on:click={onClick}
   bind:this={el}
+  {...restProps($$restProps)}
 >
   {#if hasMediaSlots}
     <div class="actions-button-media">

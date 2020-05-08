@@ -4,10 +4,10 @@
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
 
-  export let init = true;
   export let id = undefined;
   export let style = undefined;
 
+  export let init = true;
   let className = undefined;
   export { className as class };
 
