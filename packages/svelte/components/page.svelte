@@ -1,6 +1,7 @@
 <script>
   import { onMount, afterUpdate, onDestroy, createEventDispatcher } from 'svelte';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import Mixins from '../utils/mixins';
   import f7 from '../utils/f7';
 
@@ -9,8 +10,6 @@
   const dispatch = createEventDispatcher();
 
   // Props
-  export let id = undefined;
-  export let style = undefined;
   export let name = undefined;
   export let stacked = undefined;
   export let withSubnavbar = undefined;
@@ -323,7 +322,7 @@
     destroyPage();
   });
 </script>
-<div bind:this={el} id={id} style={style} class={classes} data-name={name}>
+<div bind:this={el} class={classes} data-name={name} {...restProps($$restProps)}>
   <slot name="fixed"></slot>
   {#if pageContent}
   <PageContent

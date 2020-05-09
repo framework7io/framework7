@@ -1,8 +1,6 @@
 <script>
   import Utils from '../utils/utils';
-
-  export let id = undefined;
-  export let style = undefined;
+  import restProps from '../utils/rest-props';
 
   let className = undefined;
   export { className as class };
@@ -16,8 +14,7 @@
 </script>
 
 <div
-  id={id}
-  style={style}
   class={classes}
   data-f7-slot={f7Slot}
+  {...restProps($$restProps)}
 ></div>

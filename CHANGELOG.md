@@ -2,6 +2,22 @@
 
 # Change Log
 
+# [v5.7.2](https://github.com/framework7io/framework7/compare/v5.7.1...v5.7.2) - May 9, 2020
+  * Core
+    * Autocomplete
+      * Fixed wrong padding when used as dropdown in searchbar
+    * Buttons
+      * Fixed rendering issue with "strong" segmented happened some times in iOS
+    * Device
+      * Better iPad detection
+    * Panel
+      * Now it auto-hides/restores on push Popup or Sheet modal open
+    * View
+      * Fixed `current` view detection when using layout with swipeable tabs
+  * Svelte
+    * All components now supports `$$restProps` under the hood, it means all extra props passed to components will be set as html attributes on component element
+  * Minor fixes and improvements
+
 # [v5.7.1](https://github.com/framework7io/framework7/compare/v5.7.0...v5.7.1) - May 1, 2020
   * Core
     * CSS

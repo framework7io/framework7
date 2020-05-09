@@ -2,12 +2,10 @@
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import f7 from '../utils/f7';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -118,7 +116,7 @@
   });
 </script>
 
-<div bind:this={el} id={id} style={style} class={classes}>
+<div bind:this={el} class={classes} {...restProps($$restProps)}>
   <slot name="root-start" />
   <div class="text-editor-content" contenteditable><slot /></div>
   <slot name="root-end" />

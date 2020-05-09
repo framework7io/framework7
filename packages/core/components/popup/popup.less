@@ -13,7 +13,7 @@
   display: none;
   box-sizing: border-box;
   transition-property: transform;
-  transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100vh, 0);
   background: #fff;
   z-index: 11000;
   overflow: hidden;
@@ -33,12 +33,12 @@
     transform: translate3d(0, 0, 0);
   }
   &.modal-out {
-    transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100vh, 0);
   }
 }
 .popup.swipe-close-to-top {
   &.modal-out {
-    transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100vh, 0);
   }
 }
 @media (min-width: 630px) and (min-height: 630px) {
@@ -129,7 +129,7 @@ html.with-modal-popup-push {
     > .views,
     > .view {
       border-radius: var(--f7-popup-push-border-radius) var(--f7-popup-push-border-radius) 0 0;
-      transform: translate3d(0, 0, 0px) scale(var(--f7-popup-push-scale, 1));
+      transform: translate3d(0, 0, 0px) scale(var(--f7-popup-push-scale, 1)) !important;
     }
   }
 

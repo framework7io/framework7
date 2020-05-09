@@ -2,6 +2,7 @@
   import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import f7 from '../utils/f7';
   import hasSlots from '../utils/has-slots';
   import Toggle from './toggle.svelte';
@@ -9,9 +10,6 @@
   import TextEditor from './text-editor.svelte';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -331,7 +329,7 @@
 </script>
 <!-- svelte-ignore a11y-autofocus -->
 {#if wrap}
-  <div id={id} class={wrapClasses} style={style}>
+  <div class={wrapClasses} {...restProps($$restProps)}>
     {#if type === 'select'}
       <select
         bind:this={inputEl}
@@ -534,6 +532,7 @@
       on:input={onInput}
       on:change={onChange}
       value={inputValue}
+      {...restProps($$restProps)}
     >
       <slot />
     </select>
@@ -574,6 +573,7 @@
       on:input={onInput}
       on:change={onChange}
       value={inputValue}
+      {...restProps($$restProps)}
     />
   {:else if type === 'toggle'}
     <Toggle
@@ -584,6 +584,7 @@
       disabled={disabled}
       id={inputId}
       on:change={onChange}
+      {...restProps($$restProps)}
     />
   {:else if type === 'range'}
     <Range
@@ -596,6 +597,7 @@
       id={inputId}
       input={true}
       on:rangeChange={onChange}
+      {...restProps($$restProps)}
     />
   {:else if type === 'texteditor'}
     <TextEditor
@@ -607,6 +609,7 @@
       on:textEditorInput={onInput}
       on:textEditorChange={onChange}
       {...textEditorParams}
+      {...restProps($$restProps)}
     />
   {:else}
     <input
@@ -646,6 +649,7 @@
       on:input={onInput}
       on:change={onChange}
       value={type === 'datepicker' || type === 'colorpicker' || type === 'file' ? '' : inputValue}
+      {...restProps($$restProps)}
     />
   {/if}
 {/if}

@@ -1,5 +1,5 @@
 /**
- * Framework7 5.7.1
+ * Framework7 5.7.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 1, 2020
+ * Released on: May 9, 2020
  */
 
 /*====================
@@ -5504,6 +5504,7 @@ input[type="button"].button {
 .md .segmented-strong-md .button,
 .aurora .segmented-strong-aurora .button {
   z-index: 1;
+  transform: translate3d(0, 0, 0);
 }
 .segmented-strong .button,
 .ios .segmented-strong-ios .button,
@@ -6599,7 +6600,7 @@ html.with-modal-dialog .page-content {
   display: none;
   box-sizing: border-box;
   transition-property: transform;
-  transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100vh, 0);
   background: #fff;
   z-index: 11000;
   overflow: hidden;
@@ -6621,10 +6622,10 @@ html.with-modal-dialog .page-content {
   transform: translate3d(0, 0, 0);
 }
 .popup.modal-out {
-  transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100vh, 0);
 }
 .popup.swipe-close-to-top.modal-out {
-  transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, -100vh, 0);
 }
 @media (min-width: 630px) and (min-height: 630px) {
   .popup:not(.popup-tablet-fullscreen) {
@@ -6714,7 +6715,7 @@ html.with-modal-popup-push-closing .framework7-root > .view.theme-dark:after {
 html.with-modal-popup-push .framework7-root > .views,
 html.with-modal-popup-push .framework7-root > .view {
   border-radius: var(--f7-popup-push-border-radius) var(--f7-popup-push-border-radius) 0 0;
-  transform: translate3d(0, 0, 0px) scale(var(--f7-popup-push-scale, 1));
+  transform: translate3d(0, 0, 0px) scale(var(--f7-popup-push-scale, 1)) !important;
 }
 html.with-modal-popup-push .popup:after {
   content: '';
@@ -6816,7 +6817,7 @@ html.with-modal-popup-push-closing .framework7-root > .view.theme-dark:after {
   display: none;
   box-sizing: border-box;
   transition-property: transform;
-  transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100vh, 0);
   background: var(--f7-login-screen-bg-color);
   z-index: 11000;
 }
@@ -7768,7 +7769,7 @@ html.with-modal-sheet-push-closing .framework7-root > .view.theme-dark:after {
 html.with-modal-sheet-push .framework7-root > .views,
 html.with-modal-sheet-push .framework7-root > .view {
   border-radius: var(--f7-sheet-push-border-radius);
-  transform: translate3d(0, 0, 0px) scale(var(--f7-sheet-push-scale, 1));
+  transform: translate3d(0, 0, 0px) scale(var(--f7-sheet-push-scale, 1)) !important;
 }
 html.with-modal-sheet-push-closing.theme-dark .framework7-root > .views:after,
 html.with-modal-sheet-push-closing.theme-dark .framework7-root > .view:after,
@@ -10277,7 +10278,7 @@ html.device-android-4 .accordion-item-content {
   width: var(--f7-panel-left-width, var(--f7-panel-width));
 }
 .panel-left.panel-cover {
-  transform: translate3d(-100%, 0, 0);
+  transform: translate3d(calc(-1 * var(--f7-panel-left-width, var(--f7-panel-width))), 0, 0);
 }
 .panel-left.panel-cover:after {
   left: 100%;
@@ -10300,7 +10301,7 @@ html.with-panel-left-reveal .panel-left.panel-reveal:after {
   width: var(--f7-panel-right-width, var(--f7-panel-width));
 }
 .panel-right.panel-cover {
-  transform: translate3d(100%, 0, 0);
+  transform: translate3d(var(--f7-panel-right-width, var(--f7-panel-width)), 0, 0);
 }
 .panel-right.panel-cover:after {
   right: 100%;
@@ -10410,6 +10411,76 @@ html.with-panel-left-reveal .panel-left.panel-in-collapsed ~ .view {
 html.with-panel-right-reveal .panel-right.panel-in-collapsed ~ .views,
 html.with-panel-right-reveal .panel-right.panel-in-collapsed ~ .view {
   transform: translate3d(calc(var(--f7-panel-right-collapsed-width, var(--f7-panel-collapsed-width)) - var(--f7-panel-right-width, var(--f7-panel-width))), 0, 0);
+}
+html.with-modal-popup-push .framework7-root,
+html.with-modal-popup-push-closing .framework7-root {
+  --f7-panelPushScale: var(--f7-popup-push-scale);
+  --f7-panelPushTransitionDuration: var(--f7-popup-transition-duration);
+  --f7-panelPushBorderRadius: var(--f7-popup-push-border-radius);
+}
+html.with-modal-sheet-push .framework7-root,
+html.with-modal-sheet-push-closing .framework7-root {
+  --f7-panelPushScale: var(--f7-sheet-push-scale);
+  --f7-panelPushTransitionDuration: var(--f7-sheet-transition-duration);
+  --f7-panelPushBorderRadius: var(--f7-sheet-push-border-radius);
+}
+html.with-modal-popup-push .framework7-root > .panel-in,
+html.with-modal-sheet-push .framework7-root > .panel-in,
+html.with-modal-popup-push .framework7-root > .panel-out,
+html.with-modal-sheet-push .framework7-root > .panel-out {
+  transition-duration: var(--f7-panelPushTransitionDuration);
+}
+html.with-modal-popup-push .framework7-root > .panel-in.panel-reveal.panel-left,
+html.with-modal-sheet-push .framework7-root > .panel-in.panel-reveal.panel-left,
+html.with-modal-popup-push .framework7-root > .panel-out.panel-reveal.panel-left,
+html.with-modal-sheet-push .framework7-root > .panel-out.panel-reveal.panel-left {
+  transform: scale(var(--f7-panelPushScale, 1));
+  transform-origin: 50vw center;
+  border-top-left-radius: var(--f7-panelPushBorderRadius);
+}
+html.with-modal-popup-push .framework7-root > .panel-in.panel-reveal.panel-left .view,
+html.with-modal-sheet-push .framework7-root > .panel-in.panel-reveal.panel-left .view,
+html.with-modal-popup-push .framework7-root > .panel-out.panel-reveal.panel-left .view,
+html.with-modal-sheet-push .framework7-root > .panel-out.panel-reveal.panel-left .view {
+  border-top-left-radius: var(--f7-panelPushBorderRadius);
+}
+html.with-modal-popup-push .framework7-root > .panel-in.panel-reveal.panel-right,
+html.with-modal-sheet-push .framework7-root > .panel-in.panel-reveal.panel-right,
+html.with-modal-popup-push .framework7-root > .panel-out.panel-reveal.panel-right,
+html.with-modal-sheet-push .framework7-root > .panel-out.panel-reveal.panel-right {
+  transform: scale(var(--f7-panelPushScale, 1));
+  transform-origin: calc(var(--f7-panel-left-width, var(--f7-panel-width)) - 50vw) center;
+  border-top-right-radius: var(--f7-panelPushBorderRadius);
+}
+html.with-modal-popup-push .framework7-root > .panel-in.panel-reveal.panel-right .view,
+html.with-modal-sheet-push .framework7-root > .panel-in.panel-reveal.panel-right .view,
+html.with-modal-popup-push .framework7-root > .panel-out.panel-reveal.panel-right .view,
+html.with-modal-sheet-push .framework7-root > .panel-out.panel-reveal.panel-right .view {
+  border-top-right-radius: var(--f7-panelPushBorderRadius);
+}
+html.with-modal-popup-push .framework7-root > .panel-in.panel-cover.panel-left,
+html.with-modal-sheet-push .framework7-root > .panel-in.panel-cover.panel-left,
+html.with-modal-popup-push .framework7-root > .panel-out.panel-cover.panel-left,
+html.with-modal-sheet-push .framework7-root > .panel-out.panel-cover.panel-left {
+  transform: translate3d(calc(-1 * var(--f7-panel-left-width, var(--f7-panel-width))), 0, 0px);
+}
+html.with-modal-popup-push .framework7-root > .panel-in.panel-cover.panel-right,
+html.with-modal-sheet-push .framework7-root > .panel-in.panel-cover.panel-right,
+html.with-modal-popup-push .framework7-root > .panel-out.panel-cover.panel-right,
+html.with-modal-sheet-push .framework7-root > .panel-out.panel-cover.panel-right {
+  transform: translate3d(var(--f7-panel-right-width, var(--f7-panel-width)), 0, 0px);
+}
+html.with-modal-popup-push-closing .framework7-root > .panel-in,
+html.with-modal-sheet-push-closing .framework7-root > .panel-in {
+  transition-duration: var(--f7-panelPushTransitionDuration);
+}
+html.with-modal-popup-push-closing .framework7-root > .panel-in.panel-reveal.panel-left,
+html.with-modal-sheet-push-closing .framework7-root > .panel-in.panel-reveal.panel-left {
+  transform-origin: 50vw center;
+}
+html.with-modal-popup-push-closing .framework7-root > .panel-in.panel-reveal.panel-right,
+html.with-modal-sheet-push-closing .framework7-root > .panel-in.panel-reveal.panel-right {
+  transform-origin: calc(var(--f7-panel-right-width, var(--f7-panel-width)) - 50vw) center;
 }
 /* === Card === */
 :root {
@@ -14315,10 +14386,21 @@ label.item-radio.disabled,
 .calendar-popover {
   width: var(--f7-calendar-popover-width);
 }
+.calendar-popover .toolbar-top,
+.calendar-popover .calendar-header {
+  border-radius: var(--f7-popover-border-radius) var(--f7-popover-border-radius) 0 0;
+}
+.calendar-popover .calendar-header + .toolbar-top {
+  border-radius: 0;
+}
+.calendar-popover .toolbar-bottom,
+.calendar-popover .calendar-footer {
+  border-radius: 0 0 var(--f7-popover-border-radius) var(--f7-popover-border-radius);
+}
 .calendar-popover .calendar {
   height: var(--f7-calendar-popover-height);
-  border-radius: var(--f7-popover-border-radius);
   position: relative;
+  z-index: 1;
 }
 .calendar-header {
   width: 100%;
@@ -17203,7 +17285,7 @@ table.data-table {
   transform: rotate(90deg) scale(0.5);
 }
 .md .searchbar {
-  --f7-searchbar-input-extra-padding-left: 17px;
+  --f7-searchbar-input-extra-padding-left: 16px;
 }
 .md .searchbar .input-clear-button {
   width: 48px;
@@ -17242,7 +17324,7 @@ table.data-table {
 .md .page > .searchbar,
 .md .subnavbar .searchbar,
 .md .searchbar-expandable {
-  --f7-searchbar-input-extra-padding-left: calc(17px + 8px);
+  --f7-searchbar-input-extra-padding-left: 24px;
 }
 .md .page > .searchbar .searchbar-icon,
 .md .subnavbar .searchbar .searchbar-icon,
@@ -17319,7 +17401,7 @@ table.data-table {
   bottom: 0;
   opacity: 0;
   width: 100%;
-  transform: translate3d(0, 0%, 0);
+  transform: translate3d(0, 0, 0);
   overflow: hidden;
 }
 .aurora .searchbar-expandable .searchbar-disable-button {
@@ -18886,7 +18968,7 @@ button.swiper-pagination-bullet {
   transition-duration: 300ms;
 }
 .photo-browser-popup.modal-out.swipe-close-to-bottom {
-  transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100vh, 0);
 }
 .photo-browser-popup.modal-out.swipe-close-to-top {
   transform: translate3d(0, -100vh, 0);
@@ -19636,7 +19718,7 @@ button.swiper-pagination-bullet {
   overflow: hidden;
 }
 .searchbar-input-wrap .autocomplete-dropdown .item-content {
-  padding-right: var(--f7-searchbar-input-padding-horizontal);
+  padding-right: calc(var(--f7-searchbar-input-padding-horizontal) + var(--f7-searchbar-input-extra-padding-left));
 }
 .list .item-content-dropdown-expanded .item-title.item-label {
   width: 0;

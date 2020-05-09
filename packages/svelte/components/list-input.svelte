@@ -2,14 +2,12 @@
   import { createEventDispatcher, onMount, afterUpdate, onDestroy, getContext } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import f7 from '../utils/f7';
   import hasSlots from '../utils/has-slots';
   import TextEditor from './text-editor.svelte';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -357,7 +355,7 @@
 <!-- svelte-ignore a11y-autofocus -->
 <!-- svelte-ignore a11y-missing-attribute -->
 {#if wrap}
-  <li id={id} style={style} class={classes}>
+  <li class={classes} {...restProps($$restProps)}>
     <slot name="root-start" />
     <div class={itemContentClasses}>
       <slot name="content-start" />
@@ -542,7 +540,7 @@
     <slot name="root-end" />
   </li>
 {:else}
-  <div class={itemContentClasses}>
+  <div class={itemContentClasses} {...restProps($$restProps)}>
     <slot name="content-start" />
     {#if isSortable && isSortableOpposite}
       <div class="sortable-handler" />

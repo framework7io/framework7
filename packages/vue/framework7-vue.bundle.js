@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.7.1
+ * Framework7 Vue 5.7.2
  * Build full featured iOS & Android apps using Framework7 & Vue
  * https://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 1, 2020
+ * Released on: May 9, 2020
  */
 
 (function (global, factory) {
@@ -13298,7 +13298,7 @@
   };
 
   /**
-   * Framework7 Vue 5.7.1
+   * Framework7 Vue 5.7.2
    * Build full featured iOS & Android apps using Framework7 & Vue
    * https://framework7.io/vue/
    *
@@ -13306,7 +13306,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: May 1, 2020
+   * Released on: May 9, 2020
    */
 
   function f7ready(callback) {

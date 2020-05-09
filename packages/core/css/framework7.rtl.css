@@ -1,5 +1,5 @@
 /**
- * Framework7 5.7.1
+ * Framework7 5.7.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 1, 2020
+ * Released on: May 9, 2020
  */
 
 /*====================
@@ -5504,6 +5504,7 @@ input[type="button"].button {
 .md .segmented-strong-md .button,
 .aurora .segmented-strong-aurora .button {
   z-index: 1;
+  transform: translate3d(0, 0, 0);
 }
 .segmented-strong .button,
 .ios .segmented-strong-ios .button,

@@ -1,8 +1,7 @@
 <script>
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
 
-  export let id = undefined;
-  export let style = undefined;
   let className = undefined;
   export { className as class };
 
@@ -33,7 +32,7 @@
   $: progress = Math.max(Math.min(value, 1), 0);
 
 </script>
-<div id={id} style={style} class={classes}>
+<div class={classes} {...restProps($$restProps)}>
   <svg
     class="gauge-svg"
     width={`${size}px`}

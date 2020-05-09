@@ -2,12 +2,10 @@
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import f7 from '../utils/f7';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -178,7 +176,7 @@
   });
 </script>
 {#if form}
-  <form bind:this={el} id={id} style={style} class={classes} on:submit={onSubmit} data-f7-slot={f7Slot}>
+  <form bind:this={el} class={classes} on:submit={onSubmit} data-f7-slot={f7Slot} {...restProps($$restProps)}>
     <slot name="before-inner" />
     <div class="searchbar-inner">
       <slot name="inner-start" />
@@ -208,7 +206,7 @@
     <slot name="after-inner" />
   </form>
 {:else}
-  <div bind:this={el} id={id} style={style} class={classes} data-f7-slot={f7Slot}>
+  <div bind:this={el} class={classes} data-f7-slot={f7Slot} {...restProps($$restProps)}>
     <slot name="before-inner" />
     <div class="searchbar-inner">
       <slot name="inner-start" />

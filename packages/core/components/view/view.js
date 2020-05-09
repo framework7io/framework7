@@ -18,6 +18,9 @@ function getCurrentView(app) {
     if ($viewEl.hasClass('tab')) {
       // Tabs
       $viewEl = $viewsEl.children('.view.tab-active');
+      if ($viewEl.length === 0) {
+        $viewEl = $viewsEl.children('.tabs').children('.view.tab-active');
+      }
     } else {
       // Split View, leave appView intact
     }

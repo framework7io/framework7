@@ -1,5 +1,5 @@
 /**
- * Framework7 5.7.1
+ * Framework7 5.7.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 1, 2020
+ * Released on: May 9, 2020
  */
 
 (function (global, factory) {
@@ -2845,17 +2845,22 @@
     var macos = platform === 'MacIntel';
 
     // iPadOs 13 fix
+    var iPadScreens = [
+      '1024x1366',
+      '1366x1024',
+      '834x1194',
+      '1194x834',
+      '834x1112',
+      '1112x834',
+      '768x1024',
+      '1024x768' ];
     if (!ipad
       && macos
       && Support.touch
-      && (
-        (screenWidth === 1024 && screenHeight === 1366) // Pro 12.9
-        || (screenWidth === 834 && screenHeight === 1194) // Pro 11
-        || (screenWidth === 834 && screenHeight === 1112) // Pro 10.5
-        || (screenWidth === 768 && screenHeight === 1024) // other
-      )
+      && iPadScreens.indexOf((screenWidth + "x" + screenHeight)) >= 0
     ) {
       ipad = ua.match(/(Version)\/([\d.]+)/);
+      if (!ipad) { ipad = [0, 1, '13_0_0']; }
       macos = false;
     }
 
@@ -8420,12 +8425,12 @@
           if ($oldNavbarEl) {
             $oldNavbarEl.removeClass('router-navbar-transition-to-large router-navbar-transition-from-large');
           }
-          if ($newNavbarEl.hasClass('sliding')) {
+          if ($newNavbarEl.hasClass('sliding') || $newNavbarEl.children('.navbar-inner.sliding').length) {
             $newNavbarEl.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
           } else {
             $newNavbarEl.find('.sliding').transform('');
           }
-          if ($oldNavbarEl.hasClass('sliding')) {
+          if ($oldNavbarEl.hasClass('sliding') || $oldNavbarEl.children('.navbar-inner.sliding').length) {
             $oldNavbarEl.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
           } else {
             $oldNavbarEl.find('.sliding').transform('');
@@ -11706,8 +11711,10 @@
         },
         create: function create(options, context, children) {
           if (typeof options === 'function') {
+            var root = options.root;
+            var el = options.el;
             // eslint-disable-next-line
-            return new options(app, { isClassComponent: true }, context, children);
+            return new options(app, { isClassComponent: true, root: root, el: el }, context, children);
           }
           return new Component(app, options, context, children);
         },
@@ -11973,6 +11980,9 @@
       if ($viewEl.hasClass('tab')) {
         // Tabs
         $viewEl = $viewsEl.children('.view.tab-active');
+        if ($viewEl.length === 0) {
+          $viewEl = $viewsEl.children('.tabs').children('.view.tab-active');
+        }
       }
     }
     if ($popoverView.length > 0 && $popoverView[0].f7View) { return $popoverView[0].f7View; }
@@ -38456,6 +38466,9 @@
       tooltip.useModulesParams(defaults);
 
       tooltip.params = Utils.extend(defaults, params);
+      if (typeof params.offset === 'undefined' && Support.touch && tooltip.params.trigger === 'hover') {
+        tooltip.params.offset = 10;
+      }
 
       var ref = tooltip.params;
       var targetEl = ref.targetEl;

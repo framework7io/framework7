@@ -1,10 +1,8 @@
 <script>
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import f7 from '../utils/f7';
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -36,10 +34,9 @@
 
 <span
   bind:this={el}
-  id={id}
-  style={style}
   class={classes}
   data-progress={progress}
+  {...restProps($$restProps)}
 >
   <span style={transformStyle} />
 </span>

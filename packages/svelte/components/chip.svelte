@@ -3,14 +3,12 @@
 
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import hasSlots from '../utils/has-slots';
 
   import Icon from './icon.svelte';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -56,7 +54,7 @@
 </script>
 <!-- svelte-ignore a11y-missing-attribute -->
 <!-- svelte-ignore a11y-missing-content -->
-<div id={id} style={style} class={classes} on:click={onClick}>
+<div class={classes} on:click={onClick} {...restProps($$restProps)}>
   {#if media || hasMediaSlots || hasIcon}
     <div class={mediaClasses}>
       {#if hasIcon}
