@@ -93,17 +93,12 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://monovm.com/linux-vps/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/monovm.jpg">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" valign="middle">
       <a href="https://www.colognewebdesign.de/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/colognewebdesign.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://rise.co" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/rise.png">
@@ -124,13 +119,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img width="160" src="https://framework7.io/i/sponsors/kidoverse.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.cyberbrain.nl/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/cyberbrain.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://hicapps.cl/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/hicapps.png">
@@ -146,6 +141,7 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img width="160" src="https://framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
+    <td></td>
     <td></td>
   </tr>
 </table>
