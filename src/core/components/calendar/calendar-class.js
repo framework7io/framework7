@@ -96,6 +96,9 @@ class Calendar extends Framework7Class {
         calendar.$inputEl.on('input:clear', onInputClear);
         if (calendar.params.inputReadOnly) {
           calendar.$inputEl.on('focus mousedown', onInputFocus);
+          if (calendar.$inputEl[0]) {
+            calendar.$inputEl[0].f7ValidateReadonly = true;
+          }
         }
       },
       detachInputEvents() {
@@ -103,6 +106,9 @@ class Calendar extends Framework7Class {
         calendar.$inputEl.off('input:clear', onInputClear);
         if (calendar.params.inputReadOnly) {
           calendar.$inputEl.off('focus mousedown', onInputFocus);
+          if (calendar.$inputEl[0]) {
+            delete calendar.$inputEl[0].f7ValidateReadonly;
+          }
         }
       },
       attachHtmlEvents() {
@@ -1613,8 +1619,16 @@ class Calendar extends Framework7Class {
     calendar.opening = false;
     calendar.closing = true;
 
-    if (calendar.$inputEl && app.theme === 'md') {
-      calendar.$inputEl.trigger('blur');
+    if (calendar.$inputEl) {
+      if (app.theme === 'md') {
+        calendar.$inputEl.trigger('blur');
+      } else {
+        const validate = calendar.$inputEl.attr('validate');
+        const required = calendar.$inputEl.attr('required');
+        if (validate && required) {
+          app.input.validate(calendar.$inputEl);
+        }
+      }
     }
     if (calendar.detachCalendarEvents) {
       calendar.detachCalendarEvents();
