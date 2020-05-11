@@ -135,25 +135,27 @@ class VirtualList extends Framework7Class {
     let $tabEl;
     let $panelEl;
     let $popupEl;
+    let isAnimatedTabs;
     vl.attachEvents = function attachEvents() {
       $pageEl = vl.$el.parents('.page').eq(0);
       $tabEl = vl.$el.parents('.tab').eq(0);
+      isAnimatedTabs = $tabEl.parents('.tabs-animated-wrap, .tabs-swipeable-wrap').length > 0;
       $panelEl = vl.$el.parents('.panel').eq(0);
       $popupEl = vl.$el.parents('.popup').eq(0);
 
       vl.$scrollableParentEl.on('scroll', handleScrollBound);
-      if ($pageEl) $pageEl.on('page:reinit', handleResizeBound);
-      if ($tabEl) $tabEl.on('tab:show', handleResizeBound);
-      if ($panelEl) $panelEl.on('panel:open', handleResizeBound);
-      if ($popupEl) $popupEl.on('popup:open', handleResizeBound);
+      if ($pageEl.length) $pageEl.on('page:reinit', handleResizeBound);
+      if ($tabEl.length && !isAnimatedTabs) $tabEl.on('tab:show', handleResizeBound);
+      if ($panelEl.length) $panelEl.on('panel:open', handleResizeBound);
+      if ($popupEl.length) $popupEl.on('popup:open', handleResizeBound);
       app.on('resize', handleResizeBound);
     };
     vl.detachEvents = function attachEvents() {
       vl.$scrollableParentEl.off('scroll', handleScrollBound);
-      if ($pageEl) $pageEl.off('page:reinit', handleResizeBound);
-      if ($tabEl) $tabEl.off('tab:show', handleResizeBound);
-      if ($panelEl) $panelEl.off('panel:open', handleResizeBound);
-      if ($popupEl) $popupEl.off('popup:open', handleResizeBound);
+      if ($pageEl.length) $pageEl.off('page:reinit', handleResizeBound);
+      if ($tabEl.length && !isAnimatedTabs) $tabEl.off('tab:show', handleResizeBound);
+      if ($panelEl.length) $panelEl.off('panel:open', handleResizeBound);
+      if ($popupEl.length) $popupEl.off('popup:open', handleResizeBound);
       app.off('resize', handleResizeBound);
     };
     // Init
