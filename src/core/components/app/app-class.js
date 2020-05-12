@@ -105,8 +105,12 @@ class Framework7 extends Framework7Class {
       const html = document.querySelector('html');
       if (media === DARK) {
         html.classList.add('theme-dark');
+        app.darkTheme = true;
+        app.emit('darkThemeChange', true);
       } else if (media === LIGHT) {
         html.classList.remove('theme-dark');
+        app.darkTheme = false;
+        app.emit('darkThemeChange', false);
       }
     };
 
@@ -158,8 +162,12 @@ class Framework7 extends Framework7Class {
     }
     if (app.mq.dark && app.mq.dark.matches) {
       html.classList.add('theme-dark');
+      app.darkTheme = true;
+      app.emit('darkThemeChange', true);
     } else if (app.mq.light && app.mq.light.matches) {
       html.classList.remove('theme-dark');
+      app.darkTheme = false;
+      app.emit('darkThemeChange', false);
     }
   }
 

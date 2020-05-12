@@ -23,12 +23,17 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://www.thoriumbuilder.com/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/thorium.png">
+      <a href="https://infatica.io" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/infatica.svg">
       </a>
     </td>
   </tr>
   <tr>
+    <td align="center" valign="middle">
+      <a href="https://www.thoriumbuilder.com/" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/thorium.png">
+      </a>
+    </td>
     <td align="center" valign="middle">
       <a href="https://app-valley.vip/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/appvalley.jpg">
@@ -45,17 +50,17 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://www.bonus.com.de/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/bonusfinder.png">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://www.upscalerolex.to/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/upscalerolex.jpg">
+      <a href="https://cooltechzone.com/popcorn-time-vpn" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/cooltechzone.png">
       </a>
     </td>
   </tr>
   <tr>
+    <td align="center" valign="middle">
+      <a href="https://www.bonus.com.de/" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/bonusfinder.png">
+      </a>
+    </td>
     <td align="center" valign="middle">
       <a href="http://ananyamultitech.com/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/ananya.png">
@@ -72,22 +77,12 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://monovm.com/linux-vps/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/monovm.jpg">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://unicorn.io" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/unicorn.svg">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" valign="middle">
       <a href="https://www.colognewebdesign.de/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/colognewebdesign.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://rise.co" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/rise.png">
@@ -108,15 +103,15 @@
         <img width="160" src="https://framework7.io/i/sponsors/kidoverse.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.cyberbrain.nl/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/cyberbrain.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
-      <a href="https://hicapps.cl/web/" target="_blank">
+      <a href="https://hicapps.cl/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/hicapps.png">
       </a>
     </td>
@@ -130,6 +125,7 @@
         <img width="160" src="https://framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
+    <td></td>
     <td></td>
   </tr>
 </table>
@@ -158,6 +154,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ---
 
 ### $100 Silver Sponsor
+[Infatica](https://infatica.io) - Global Peer-to-Business Proxy Network
 [Thorium Builder](https://www.thoriumbuilder.com/) - Full visual Framework7 app builder<br>
 Colin Adams ([App Valley](https://appvalley.vip/))<br>
 Pavol Cvengros ([securCom Inc](https://www.securcom.me/))<br>
@@ -168,10 +165,9 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ---
 
 ### $50+ Top Supporter
+[vpn for roku](https://cooltechzone.com/roku-vpn)<br>
 [www.bonus.com.de](https://www.bonus.com.de/)<br>
-[Rolex Replica Watches](https://www.upscalerolex.to/)<br>
 [Writers Per Hour](https://writersperhour.com/write-my-paper) - Write My Paper For Me<br>
-[Unicorn.io](https://unicorn.io) - Choose your Dream Job<br>
 [Bid4Papers](https://bid4papers.com/write-my-essay.html) - Write My Essay<br>
 [COLOGNE WEBDESIGN](https://www.colognewebdesign.de/)<br>
 [Kqapius, INC.](https://kqapi.us)<br>
@@ -180,7 +176,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 [usave](https://usave.co.uk/utilities/broadband) - compare broadband deals on usave.co.uk<br>
 [Kidoverse](https://kidoverse.app) - App for kids to learn, play, create and explore<br>
 [CyberBrain IT Services](https://www.cyberbrain.nl/)<br>
-[HICAPPS](https://hicapps.cl/web/) - Health Informatics Custom APPs<br>
+[HICAPPS](https://hicapps.cl/) - Health Informatics Custom APPs<br>
 Michael Russell
 [Blokt](https://blokt.com/) - Cryptocurrency News<br>
 Alexey Victorov<br>
@@ -202,20 +198,18 @@ Danny Redfern<br>
 ---
 
 ### $10+ Supporter
+Stan Smulders<br>
+Lailton Fernando Mariano<br>
 User Mail<br>
 Thomason<br>
 Shawn Jackson<br>
 Никита Коробочкин<br>
 Nathan Harold<br>
 Paulo Vieira<br>
-Ruslan Trifonov<br>
 Michael Powers<br>
-shastox<br>
 iOS Haven<br>
-Dirk Holtwick<br>
 JK<br>
 Azad Zain<br>
-Nicolas Hinze<br>
 Will Mero<br>
 Jorge Pagano<br>
 Jacob Gur<br>
@@ -226,7 +220,6 @@ José Manuel Alarcón<br>
 Matt Davis<br>
 Arsen Huang<br>
 Marc Hildmann<br>
-Kyle Hammond<br>
 VOUSYS<br>
 Almaz Kazakov<br>
 plpl<br>
@@ -242,8 +235,9 @@ Dave Billington
 ---
 
 ### $5+ Thank You
+Elijah Jahbless<br>
+emre çete<br>
 Yo. Meyers<br>
-Artūras Šeleсhov-Balčiūnas<br>
 Brett Lee<br>
 Miguel Nahara<br>
 Muthaiyan Rm<br>

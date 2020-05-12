@@ -78,7 +78,7 @@
   left: 0;
   width: var(--f7-panel-left-width, var(--f7-panel-width));
   &.panel-cover {
-    transform: translate3d(-100%, 0, 0);
+    transform: translate3d(calc(-1 * var(--f7-panel-left-width, var(--f7-panel-width))), 0, 0);
     &:after {
       left: 100%;
       background: linear-gradient(to right, var(--f7-panel-shadow));
@@ -103,7 +103,7 @@
   right: 0;
   width: var(--f7-panel-right-width, var(--f7-panel-width));
   &.panel-cover {
-    transform: translate3d(100%, 0, 0);
+    transform: translate3d(var(--f7-panel-right-width, var(--f7-panel-width)), 0, 0);
     &:after {
       right: 100%;
       background: linear-gradient(to left, var(--f7-panel-shadow));
@@ -143,7 +143,7 @@ html {
       transition-duration: var(--f7-panel-transition-duration);
       transition-property: transform;
     }
-    .panel-backdrop {
+    .panel-backdrop-in {
       visibility: visible;
       pointer-events: auto;
       opacity: 0;
@@ -159,7 +159,7 @@ html {
   }
   &.with-panel-left-cover,
   &.with-panel-right-cover {
-    .panel-backdrop {
+    .panel-backdrop-in {
       visibility: visible;
       pointer-events: auto;
       opacity: 1;
@@ -168,14 +168,14 @@ html {
   &.with-panel-left-reveal {
     .views,
     .framework7-root > .view,
-    .panel-backdrop {
+    .panel-backdrop-in {
       transform: translate3d(var(--f7-panel-left-width, var(--f7-panel-width)),0,0);
     }
   }
   &.with-panel-right-reveal {
     .views,
     .framework7-root > .view,
-    .panel-backdrop {
+    .panel-backdrop-in {
       transform: translate3d(calc(-1 * var(--f7-panel-right-width, var(--f7-panel-width))),0,0);
     }
   }
@@ -229,6 +229,58 @@ html {
   html.with-panel-right-reveal & ~ .views,
   html.with-panel-right-reveal & ~ .view {
     transform: translate3d(calc(var(--f7-panel-right-collapsed-width, var(--f7-panel-collapsed-width)) - var(--f7-panel-right-width, var(--f7-panel-width))), 0, 0);
+  }
+}
+html.with-modal-popup-push .framework7-root,
+html.with-modal-popup-push-closing .framework7-root {
+  --f7-panelPushScale: var(--f7-popup-push-scale);
+  --f7-panelPushTransitionDuration: var(--f7-popup-transition-duration);
+  --f7-panelPushBorderRadius: var(--f7-popup-push-border-radius);
+}
+html.with-modal-sheet-push .framework7-root,
+html.with-modal-sheet-push-closing .framework7-root {
+  --f7-panelPushScale: var(--f7-sheet-push-scale);
+  --f7-panelPushTransitionDuration: var(--f7-sheet-transition-duration);
+  --f7-panelPushBorderRadius: var(--f7-sheet-push-border-radius);
+}
+html.with-modal-popup-push .framework7-root,
+html.with-modal-sheet-push .framework7-root {
+  > .panel-in,
+  > .panel-out {
+    transition-duration: var(--f7-panelPushTransitionDuration);
+
+    &.panel-reveal.panel-left {
+      transform: scale(var(--f7-panelPushScale, 1));
+      transform-origin: 50vw center;
+      border-top-left-radius: var(--f7-panelPushBorderRadius);
+      .view {
+        border-top-left-radius: var(--f7-panelPushBorderRadius);
+      }
+    }
+    &.panel-reveal.panel-right {
+      transform: scale(var(--f7-panelPushScale, 1));
+      transform-origin: calc(var(--f7-panel-left-width, var(--f7-panel-width)) - 50vw) center;
+      border-top-right-radius: var(--f7-panelPushBorderRadius);
+      .view {
+        border-top-right-radius: var(--f7-panelPushBorderRadius);
+      }
+    }
+    &.panel-cover.panel-left {
+      transform: translate3d(calc(-1 * var(--f7-panel-left-width, var(--f7-panel-width))), 0, 0px);
+    }
+    &.panel-cover.panel-right {
+      transform: translate3d(var(--f7-panel-right-width, var(--f7-panel-width)), 0, 0px);
+    }
+  }
+}
+html.with-modal-popup-push-closing .framework7-root > .panel-in,
+html.with-modal-sheet-push-closing .framework7-root > .panel-in {
+  transition-duration: var(--f7-panelPushTransitionDuration);
+  &.panel-reveal.panel-left {
+    transform-origin: 50vw center;
+  }
+  &.panel-reveal.panel-right {
+    transform-origin: calc(var(--f7-panel-right-width, var(--f7-panel-width)) - 50vw) center;
   }
 }
 

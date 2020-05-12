@@ -21,7 +21,7 @@ export default {
     forceToPopover: Boolean,
     target: [String, Object],
     backdrop: Boolean,
-    backdropEl: [String, Object, window.HTMLElement],
+    backdropEl: [String, Object],
     closeByBackdropClick: Boolean,
     closeByOutsideClick: Boolean,
     closeOnEscape: Boolean,

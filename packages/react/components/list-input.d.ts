@@ -15,6 +15,7 @@ declare namespace F7ListInput {
     name? : string
     value? : string | number | Array<any> | Date | Object
     defaultValue? : string | number | Array<any>
+    inputmode? : string
     readonly? : boolean
     required? : boolean
     disabled? : boolean
@@ -37,6 +38,7 @@ declare namespace F7ListInput {
     pattern? : string
     validate? : boolean | string
     validateOnBlur? : boolean
+    onValidate? : Function
     tabindex? : string | number
     resizable? : boolean
     clearButton? : boolean

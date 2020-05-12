@@ -37,6 +37,7 @@ export default {
     name: String,
     value: [String, Number, Array, Date, Object],
     defaultValue: [String, Number, Array],
+    inputmode: String,
     readonly: Boolean,
     required: Boolean,
     disabled: Boolean,
@@ -64,6 +65,7 @@ export default {
     pattern: String,
     validate: [Boolean, String],
     validateOnBlur: Boolean,
+    onValidate: Function,
     tabindex: [String, Number],
     resizable: Boolean,
     clearButton: Boolean,
@@ -128,6 +130,7 @@ export default {
       readonly,
       required,
       disabled,
+      inputmode,
       placeholder,
       inputId,
       size,
@@ -205,6 +208,7 @@ export default {
             name={name}
             type={needsType ? inputType : undefined}
             placeholder={placeholder}
+            inputMode={inputmode}
             id={inputId}
             size={size}
             accept={accept}
@@ -248,6 +252,7 @@ export default {
             name={name}
             type={needsType ? inputType : undefined}
             placeholder={placeholder}
+            inputMode={inputmode}
             id={inputId}
             size={size}
             accept={accept}
@@ -540,12 +545,14 @@ export default {
       if (!f7 || !inputEl) return;
       const validity = inputEl.validity;
       if (!validity) return;
-
+      const { onValidate } = self.props;
       if (!validity.valid) {
+        if (onValidate) onValidate(false);
         if (self.state.inputInvalid !== true) {
           self.setState({ inputInvalid: true });
         }
       } else if (self.state.inputInvalid !== false) {
+        if (onValidate) onValidate(true);
         self.setState({ inputInvalid: false });
       }
     },

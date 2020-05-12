@@ -78,6 +78,15 @@ export namespace SmartSelect {
     /** Additional CSS class name to be set on Smart Select container (Page, Popup, Popover or Sheet) */
     cssClass?: string
 
+    /** Select option icon to be set on all options. If it just a string then will create an icon with this class. If it is in the format of `f7:icon_name` then it will create a F7-Icons icon. If it is in the format of `md:icon_name` then it will create a Material Icons icon. */
+    optionIcon?: string
+    /** Same as `optionIcon` but will apply only when iOS theme is active */
+    optionIconIos?: string
+    /** Same as `optionIcon` but will apply only when MD theme is active */
+    optionIconMd?: string
+    /** Same as `optionIcon` but will apply only when Aurora theme is active */
+    optionIconAurora?: string
+
     /** Function to render smart select page, must return full page HTML string */
     renderPage?: (items: any[]) => string,
     /** Function to render smart select popup, must return full popup HTML string */

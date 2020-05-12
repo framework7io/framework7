@@ -18,6 +18,8 @@ declare namespace F7ListItem {
     tooltipTrigger? : string
     link? : boolean | string
     target? : string
+    tabLink? : boolean | string
+    tabLinkActive? : boolean
     after? : string | number
     badge? : string | number
     badgeColor? : string
@@ -37,6 +39,7 @@ declare namespace F7ListItem {
     chevronCenter? : boolean
     checkbox? : boolean
     radio? : boolean
+    radioIcon? : string
     checked? : boolean
     defaultChecked? : boolean
     indeterminate? : boolean

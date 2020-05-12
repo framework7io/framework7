@@ -6,7 +6,7 @@
 // const fs = require('fs');
 const path = require('path');
 const rollup = require('rollup');
-const buble = require('rollup-plugin-buble');
+const buble = require('@rollup/plugin-buble');
 const resolve = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
 const replace = require('@rollup/plugin-replace');

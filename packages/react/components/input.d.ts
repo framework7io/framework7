@@ -7,6 +7,7 @@ declare namespace F7Input {
     name? : string
     value? : string | number | Array<any> | Date | Object
     defaultValue? : string | number | Array<any>
+    inputmode? : string
     placeholder? : string
     id? : string | number
     className? : string
@@ -33,6 +34,7 @@ declare namespace F7Input {
     pattern? : string
     validate? : boolean | string
     validateOnBlur? : boolean
+    onValidate? : Function
     tabindex? : string | number
     resizable? : boolean
     clearButton? : boolean

@@ -1,8 +1,8 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Framework7Class from '../../utils/class';
-import SwipePanel from './swipe-panel';
-import ResizablePanel from './resizable-panel';
+import swipePanel from './swipe-panel';
+import resizablePanel from './resizable-panel';
 
 class Panel extends Framework7Class {
   constructor(app, params = {}) {
@@ -208,7 +208,7 @@ class Panel extends Framework7Class {
       panel.resizable = true;
       panel.$el.addClass('panel-resizable');
     } else {
-      ResizablePanel(panel);
+      resizablePanel(panel);
     }
     return panel;
   }
@@ -225,7 +225,7 @@ class Panel extends Framework7Class {
     if (panel.swipeInitialized) {
       panel.swipeable = true;
     } else {
-      SwipePanel(panel);
+      swipePanel(panel);
     }
     return panel;
   }
@@ -287,6 +287,13 @@ class Panel extends Framework7Class {
     app.panel.allowOpen = true;
     $('html').removeClass('with-panel-closing');
     panel.$el.removeClass('panel-out');
+    if (panel.$backdropEl) {
+      const otherPanel = app.panel.get('.panel-in');
+      const shouldHideBackdrop = !otherPanel || (otherPanel && !otherPanel.$backdropEl);
+      if (shouldHideBackdrop) {
+        panel.$backdropEl.removeClass('panel-backdrop-in');
+      }
+    }
     panel.$el.trigger('panel:closed');
     panel.emit('local::closed panelClosed', panel);
   }
@@ -373,7 +380,10 @@ class Panel extends Framework7Class {
     $el[animate ? 'removeClass' : 'addClass']('not-animated');
     $el.addClass('panel-in');
 
-    $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
+    if ($backdropEl) {
+      $backdropEl.addClass('panel-backdrop-in');
+      $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
+    }
 
     if (panel.effect === 'cover') {
       /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
@@ -422,7 +432,9 @@ class Panel extends Framework7Class {
     if (!opened || $el.hasClass('panel-in-breakpoint') || !$el.hasClass('panel-in')) return panel;
 
     $el[animate ? 'removeClass' : 'addClass']('not-animated');
-    $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
+    if ($backdropEl) {
+      $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
+    }
 
     const transitionEndTarget = effect === 'reveal' ? $el.nextAll('.view, .views').eq(0) : $el;
 

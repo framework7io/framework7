@@ -33,6 +33,10 @@ class F7View extends React.Component {
     }
   }
 
+  onResize(view, width) {
+    this.dispatchEvent('view:resize viewResize', width);
+  }
+
   onSwipeBackMove(data) {
     const swipeBackData = data;
     this.dispatchEvent('swipeback:move swipeBackMove', swipeBackData);
@@ -118,6 +122,7 @@ class F7View extends React.Component {
     }
 
     if (self.f7View) {
+      self.f7View.off('resize', self.onResize);
       self.f7View.off('swipebackMove', self.onSwipeBackMove);
       self.f7View.off('swipebackBeforeChange', self.onSwipeBackBeforeChange);
       self.f7View.off('swipebackAfterChange', self.onSwipeBackAfterChange);
@@ -158,6 +163,7 @@ class F7View extends React.Component {
         }
       }, Utils.noUndefinedProps(self.props)));
       self.f7View = self.routerData.instance;
+      self.f7View.on('resize', self.onResize);
       self.f7View.on('swipebackMove', self.onSwipeBackMove);
       self.f7View.on('swipebackBeforeChange', self.onSwipeBackBeforeChange);
       self.f7View.on('swipebackAfterChange', self.onSwipeBackAfterChange);
@@ -202,6 +208,7 @@ __reactComponentSetProps(F7View, Object.assign({
   allowDuplicateUrls: Boolean,
   reloadPages: Boolean,
   reloadDetail: Boolean,
+  masterDetailResizable: Boolean,
   masterDetailBreakpoint: Number,
   removeElements: Boolean,
   removeElementsWithTimeout: Boolean,

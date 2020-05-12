@@ -2,9 +2,7 @@
   import { setContext } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
-
-  export let id = undefined;
-  export let style = undefined;
+  import restProps from '../utils/rest-props';
 
   let className = undefined;
   export { className as class };
@@ -40,7 +38,7 @@
   );
 </script>
 
-<div id={id} style={style} class={classes} data-sortable-move-elements={typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined}>
+<div class={classes} data-sortable-move-elements={typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined} {...restProps($$restProps)}>
   <ul>
     <slot />
   </ul>

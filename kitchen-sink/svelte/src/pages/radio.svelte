@@ -8,10 +8,16 @@
 
   <BlockTitle>Radio Group</BlockTitle>
   <List>
-    <ListItem radio title="Books" name="demo-radio" value="Books" checked></ListItem>
-    <ListItem radio title="Movies" value="Movies" name="demo-radio"></ListItem>
-    <ListItem radio title="Food" value="Food" name="demo-radio"></ListItem>
-    <ListItem radio title="Drinks" value="Drinks" name="demo-radio"></ListItem>
+    <ListItem radio radioIcon="start" title="Books" name="demo-radio-start" value="Books" checked></ListItem>
+    <ListItem radio radioIcon="start" title="Movies" value="Movies" name="demo-radio-start"></ListItem>
+    <ListItem radio radioIcon="start" title="Food" value="Food" name="demo-radio-start"></ListItem>
+    <ListItem radio radioIcon="start" title="Drinks" value="Drinks" name="demo-radio-start"></ListItem>
+  </List>
+  <List>
+    <ListItem radio radioIcon="end" title="Books" name="demo-radio-end" value="Books" checked></ListItem>
+    <ListItem radio radioIcon="end" title="Movies" value="Movies" name="demo-radio-end"></ListItem>
+    <ListItem radio radioIcon="end" title="Food" value="Food" name="demo-radio-end"></ListItem>
+    <ListItem radio radioIcon="end" title="Drinks" value="Drinks" name="demo-radio-end"></ListItem>
   </List>
 
 
@@ -19,6 +25,7 @@
   <List mediaList>
     <ListItem
       radio
+      radioIcon="start"
       checked
       name="demo-media-radio"
       value="1"
@@ -29,6 +36,7 @@
     ></ListItem>
     <ListItem
       radio
+      radioIcon="start"
       name="demo-media-radio"
       value="2"
       title="John Doe (via Twitter)"
@@ -38,6 +46,7 @@
     ></ListItem>
     <ListItem
       radio
+      radioIcon="start"
       name="demo-media-radio"
       value="3"
       title="Facebook"
@@ -47,6 +56,7 @@
     ></ListItem>
     <ListItem
       radio
+      radioIcon="start"
       name="demo-media-radio"
       value="4"
       title="John Doe (via Twitter)"

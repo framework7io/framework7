@@ -24,6 +24,7 @@ export default {
     allowDuplicateUrls: Boolean,
     reloadPages: Boolean,
     reloadDetail: Boolean,
+    masterDetailResizable: Boolean,
     masterDetailBreakpoint: Number,
     removeElements: Boolean,
     removeElementsWithTimeout: Boolean,
@@ -149,6 +150,7 @@ export default {
         }
       }, Utils.noUndefinedProps(self.$options.propsData || {})));
       self.f7View = self.routerData.instance;
+      self.f7View.on('resize', self.onResize);
       self.f7View.on('swipebackMove', self.onSwipeBackMove);
       self.f7View.on('swipebackBeforeChange', self.onSwipeBackBeforeChange);
       self.f7View.on('swipebackAfterChange', self.onSwipeBackAfterChange);
@@ -166,6 +168,7 @@ export default {
     }
 
     if (self.f7View) {
+      self.f7View.off('resize', self.onResize);
       self.f7View.off('swipebackMove', self.onSwipeBackMove);
       self.f7View.off('swipebackBeforeChange', self.onSwipeBackBeforeChange);
       self.f7View.off('swipebackAfterChange', self.onSwipeBackAfterChange);
@@ -194,6 +197,10 @@ export default {
         self.routerData.instance = view;
         self.f7View = self.routerData.instance;
       }
+    },
+
+    onResize(view, width) {
+      this.dispatchEvent('view:resize viewResize', width);
     },
 
     onSwipeBackMove(data) {

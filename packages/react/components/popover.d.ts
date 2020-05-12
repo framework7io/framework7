@@ -10,7 +10,7 @@ declare namespace F7Popover {
     opened? : boolean
     target? : string | Object
     backdrop? : boolean
-    backdropEl? : string | Object | any
+    backdropEl? : string | Object
     closeByBackdropClick? : boolean
     closeByOutsideClick? : boolean
     closeOnEscape? : boolean

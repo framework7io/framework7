@@ -59,12 +59,12 @@ const Input = {
   },
   validate(inputEl) {
     const $inputEl = $(inputEl);
-    if (!$inputEl.length) return;
+    if (!$inputEl.length) return true;
     const $itemInputEl = $inputEl.parents('.item-input');
     const $inputWrapEl = $inputEl.parents('.input');
     const validity = $inputEl[0].validity;
     const validationMessage = $inputEl.dataset().errorMessage || $inputEl[0].validationMessage || '';
-    if (!validity) return;
+    if (!validity) return true;
     if (!validity.valid) {
       let $errorEl = $inputEl.nextAll('.item-input-error-message, .input-error-message');
       if (validationMessage) {
@@ -81,17 +81,20 @@ const Input = {
       $itemInputEl.addClass('item-input-invalid');
       $inputWrapEl.addClass('input-invalid');
       $inputEl.addClass('input-invalid');
-    } else {
-      $itemInputEl.removeClass('item-input-invalid item-input-with-error-message');
-      $inputWrapEl.removeClass('input-invalid input-with-error-message');
-      $inputEl.removeClass('input-invalid');
+      return false;
     }
+    $itemInputEl.removeClass('item-input-invalid item-input-with-error-message');
+    $inputWrapEl.removeClass('input-invalid input-with-error-message');
+    $inputEl.removeClass('input-invalid');
+    return true;
   },
   validateInputs(el) {
     const app = this;
-    $(el).find('input, textarea, select').each((index, inputEl) => {
-      app.input.validate(inputEl);
-    });
+    const validates = $(el)
+      .find('input, textarea, select')
+      .toArray()
+      .map((inputEl) => app.input.validate(inputEl));
+    return validates.indexOf(false) < 0;
   },
   focus(inputEl) {
     const $inputEl = $(inputEl);
@@ -239,7 +242,11 @@ const Input = {
         .trigger('input:clear', previousValue);
       app.emit('inputClear', previousValue);
     }
+    function preventDefault(e) {
+      e.preventDefault();
+    }
     $(document).on('click', '.input-clear-button', clearInput);
+    $(document).on('mousedown', '.input-clear-button', preventDefault);
     $(document).on('change input', 'input, textarea, select, .item-input [contenteditable]', onChange, true);
     $(document).on('focus', 'input, textarea, select, .item-input [contenteditable]', onFocus, true);
     $(document).on('blur', 'input, textarea, select, .item-input [contenteditable]', onBlur, true);

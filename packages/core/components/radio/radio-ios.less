@@ -21,7 +21,7 @@
   .radio input[type="radio"]:checked ~ .icon-radio {
     border-color: var(--f7-radio-active-color, var(--f7-theme-color));
   }
-  label.item-radio input[type="radio"] ~ .icon-radio {
+  label.item-radio:not(.item-radio-icon-start) input[type="radio"] ~ .icon-radio {
     position: absolute;
     top: 50%;
     margin-top: -11px;
@@ -32,13 +32,23 @@
       left: calc(var(--f7-safe-area-left) + 10px);
     })
   }
-  label.item-radio {
+  label.item-radio:not(.item-radio-icon-start) {
     .item-inner {
       .ltr({
         padding-right: calc(var(--f7-safe-area-right) + 36px);
       });
       .rtl({
         padding-left: calc(var(--f7-safe-area-left) + 36px);
+      });
+    }
+  }
+  label.item-radio-icon-start {
+    > .icon-radio {
+      .ltr({
+        margin-right: calc(var(--f7-list-item-media-margin) + var(--f7-checkbox-extra-margin));
+      });
+      .rtl({
+        margin-left: calc(var(--f7-list-item-media-margin) + var(--f7-checkbox-extra-margin));
       });
     }
   }

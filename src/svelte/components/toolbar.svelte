@@ -2,13 +2,11 @@
   import { createEventDispatcher, onMount, onDestroy, afterUpdate } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import { theme } from '../utils/plugin';
   import f7 from '../utils/f7';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -91,7 +89,7 @@
   });
 </script>
 
-<div id={id} style={style} bind:this={el} class={classes} data-f7-slot={f7Slot}>
+<div bind:this={el} class={classes} data-f7-slot={f7Slot} {...restProps($$restProps)}>
   <slot name="before-inner" />
   {#if inner}
     <div class="toolbar-inner">

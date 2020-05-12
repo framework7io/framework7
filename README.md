@@ -39,12 +39,17 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://www.thoriumbuilder.com/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/thorium.png">
+      <a href="https://infatica.io" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/infatica.svg">
       </a>
     </td>
   </tr>
   <tr>
+    <td align="center" valign="middle">
+      <a href="https://www.thoriumbuilder.com/" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/thorium.png">
+      </a>
+    </td>
     <td align="center" valign="middle">
       <a href="https://app-valley.vip/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/appvalley.jpg">
@@ -61,17 +66,17 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://www.bonus.com.de/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/bonusfinder.png">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://www.upscalerolex.to/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/upscalerolex.jpg">
+      <a href="https://cooltechzone.com/popcorn-time-vpn" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/cooltechzone.png">
       </a>
     </td>
   </tr>
   <tr>
+    <td align="center" valign="middle">
+      <a href="https://www.bonus.com.de/" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/bonusfinder.png">
+      </a>
+    </td>
     <td align="center" valign="middle">
       <a href="http://ananyamultitech.com/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/ananya.png">
@@ -88,22 +93,12 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://monovm.com/linux-vps/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/monovm.jpg">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://unicorn.io" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/unicorn.svg">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" valign="middle">
       <a href="https://www.colognewebdesign.de/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/colognewebdesign.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://rise.co" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/rise.png">
@@ -124,15 +119,15 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img width="160" src="https://framework7.io/i/sponsors/kidoverse.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.cyberbrain.nl/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/cyberbrain.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
-      <a href="https://hicapps.cl/web/" target="_blank">
+      <a href="https://hicapps.cl/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/hicapps.png">
       </a>
     </td>
@@ -146,6 +141,7 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img width="160" src="https://framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
+    <td></td>
     <td></td>
   </tr>
 </table>

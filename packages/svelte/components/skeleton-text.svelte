@@ -1,8 +1,8 @@
 <script>
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
 
-  export let id = undefined;
   export let style = undefined;
 
   let className = undefined;
@@ -33,11 +33,11 @@
 
 </script>
 {#if tag === 'div'}
-<div id={id} style={styleAttribute} class={classes}>
+<div style={styleAttribute} class={classes} {...restProps($$restProps)}>
   <slot />
 </div>
 {:else if tag === 'span'}
-<span id={id} style={styleAttribute} class={classes}>
+<span style={styleAttribute} class={classes} {...restProps($$restProps)}>
   <slot />
 </span>
 {/if}

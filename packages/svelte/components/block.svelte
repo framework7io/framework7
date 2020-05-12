@@ -3,11 +3,10 @@
   import f7 from '../utils/f7';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
 
   const dispatch = createEventDispatcher();
 
-  export let id = undefined;
-  export let style = undefined;
   export let inset = false;
   export let xsmallInset = false;
   export let smallInset = false;
@@ -81,10 +80,9 @@
 </script>
 
 <div
-  id={id}
-  style={style}
   class={classes}
   bind:this={el}
+  {...restProps($$restProps)}
 >
   <slot />
 </div>

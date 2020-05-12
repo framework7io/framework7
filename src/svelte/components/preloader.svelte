@@ -1,14 +1,14 @@
 <script>
   import { theme } from '../utils/plugin';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import Mixins from '../utils/mixins';
   import f7 from '../utils/f7';
 
+  export let style = undefined;
+
   let className = undefined;
   export { className as class };
-
-  export let id = undefined;
-  export let style = undefined;
   export let size = undefined;
 
   // eslint-disable-next-line
@@ -34,7 +34,7 @@
 
 </script>
 
-<span id={id} style={preloaderStyle} class={classes}>
+<span style={preloaderStyle} class={classes} {...restProps($$restProps)}>
   {#if _theme && _theme.md}
   <span class="preloader-inner">
     <span class="preloader-inner-gap" />

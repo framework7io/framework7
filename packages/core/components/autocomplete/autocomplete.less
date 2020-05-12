@@ -79,8 +79,8 @@
     overflow: hidden;
   }
   .item-content {
-    .ltr({ padding-left: var(--f7-searchbar-input-padding-horizontal); });
-    .rtl({ padding-right: var(--f7-searchbar-input-padding-horizontal); });
+    .ltr({ padding-left: calc(var(--f7-searchbar-input-padding-horizontal) + var(--f7-searchbar-input-extra-padding-left)); });
+    .rtl({ padding-right: calc(var(--f7-searchbar-input-padding-horizontal) + var(--f7-searchbar-input-extra-padding-left)); });
   }
 }
 

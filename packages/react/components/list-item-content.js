@@ -32,6 +32,7 @@ class F7ListItemContent extends React.Component {
       className,
       style,
       radio,
+      radioIcon,
       checkbox,
       value,
       name,
@@ -226,7 +227,9 @@ class F7ListItemContent extends React.Component {
     const ItemContentTag = checkbox || radio ? 'label' : 'div';
     const classes = Utils.classNames(className, 'item-content', {
       'item-checkbox': checkbox,
-      'item-radio': radio
+      'item-radio': radio,
+      'item-radio-icon-start': radio && radioIcon === 'start',
+      'item-radio-icon-end': radio && radioIcon === 'end'
     }, Mixins.colorClasses(props));
     return React.createElement(ItemContentTag, {
       ref: __reactNode => {
@@ -313,6 +316,7 @@ __reactComponentSetProps(F7ListItemContent, Object.assign({
   defaultChecked: Boolean,
   indeterminate: Boolean,
   radio: Boolean,
+  radioIcon: String,
   name: String,
   value: [String, Number, Array],
   readonly: Boolean,

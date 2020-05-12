@@ -202,14 +202,14 @@ __reactComponentSetProps(F7Sheet, Object.assign({
   bottom: Boolean,
   position: String,
   backdrop: Boolean,
-  backdropEl: [String, Object, window.HTMLElement],
+  backdropEl: [String, Object],
   closeByBackdropClick: Boolean,
   closeByOutsideClick: Boolean,
   closeOnEscape: Boolean,
   push: Boolean,
   swipeToClose: Boolean,
   swipeToStep: Boolean,
-  swipeHandler: [String, Object, window.HTMLElement]
+  swipeHandler: [String, Object]
 }, Mixins.colorProps));
 
 F7Sheet.displayName = 'f7-sheet';

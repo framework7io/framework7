@@ -20,6 +20,7 @@ declare namespace F7Panel {
     visibleBreakpoint? : number
     collapsedBreakpoint? : number
     swipe? : boolean
+    swipeNoFollow? : boolean
     swipeOnlyClose? : boolean
     swipeActiveArea? : number
     swipeThreshold? : number

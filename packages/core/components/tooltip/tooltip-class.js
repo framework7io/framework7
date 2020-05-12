@@ -15,6 +15,9 @@ class Tooltip extends Framework7Class {
     tooltip.useModulesParams(defaults);
 
     tooltip.params = Utils.extend(defaults, params);
+    if (typeof params.offset === 'undefined' && Support.touch && tooltip.params.trigger === 'hover') {
+      tooltip.params.offset = 10;
+    }
 
     const { targetEl } = tooltip.params;
     if (!targetEl) return tooltip;

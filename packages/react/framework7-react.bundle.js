@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.5.1
+ * Framework7 React 5.7.2
  * Build full featured iOS & Android apps using Framework7 & React
  * https://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 20, 2020
+ * Released on: May 9, 2020
  */
 
 (function (global, factory) {
@@ -1235,7 +1235,7 @@
     forceToPopover: Boolean,
     target: [String, Object],
     backdrop: Boolean,
-    backdropEl: [String, Object, window.HTMLElement],
+    backdropEl: [String, Object],
     closeByBackdropClick: Boolean,
     closeByOutsideClick: Boolean,
     closeOnEscape: Boolean
@@ -4317,14 +4317,19 @@
       if (!f7 || !inputEl) { return; }
       var validity = inputEl.validity;
       if (!validity) { return; }
+      var ref = self.props;
+      var onValidate = ref.onValidate;
 
       if (!validity.valid) {
+        if (onValidate) { onValidate(false); }
+
         if (self.state.inputInvalid !== true) {
           self.setState({
             inputInvalid: true
           });
         }
       } else if (self.state.inputInvalid !== false) {
+        if (onValidate) { onValidate(true); }
         self.setState({
           inputInvalid: false
         });
@@ -4413,6 +4418,7 @@
       var name = props.name;
       var value = props.value;
       var defaultValue = props.defaultValue;
+      var inputmode = props.inputmode;
       var placeholder = props.placeholder;
       var id = props.id;
       var inputId = props.inputId;
@@ -4496,6 +4502,7 @@
             name: name,
             type: needsType ? inputType : undefined,
             placeholder: placeholder,
+            inputMode: inputmode,
             id: inputId,
             size: size,
             accept: accept,
@@ -4772,6 +4779,7 @@
     name: String,
     value: [String, Number, Array, Date, Object],
     defaultValue: [String, Number, Array],
+    inputmode: String,
     placeholder: String,
     id: [String, Number],
     className: String,
@@ -4799,6 +4807,7 @@
     pattern: String,
     validate: [Boolean, String],
     validateOnBlur: Boolean,
+    onValidate: Function,
     tabindex: [String, Number],
     resizable: Boolean,
     clearButton: Boolean,
@@ -5547,14 +5556,19 @@
       if (!f7 || !inputEl) { return; }
       var validity = inputEl.validity;
       if (!validity) { return; }
+      var ref = self.props;
+      var onValidate = ref.onValidate;
 
       if (!validity.valid) {
+        if (onValidate) { onValidate(false); }
+
         if (self.state.inputInvalid !== true) {
           self.setState({
             inputInvalid: true
           });
         }
       } else if (self.state.inputInvalid !== false) {
+        if (onValidate) { onValidate(true); }
         self.setState({
           inputInvalid: false
         });
@@ -5657,6 +5671,7 @@
       var readonly = props.readonly;
       var required = props.required;
       var disabled = props.disabled;
+      var inputmode = props.inputmode;
       var placeholder = props.placeholder;
       var inputId = props.inputId;
       var size = props.size;
@@ -5734,6 +5749,7 @@
             name: name,
             type: needsType ? inputType : undefined,
             placeholder: placeholder,
+            inputMode: inputmode,
             id: inputId,
             size: size,
             accept: accept,
@@ -6039,6 +6055,7 @@
     name: String,
     value: [String, Number, Array, Date, Object],
     defaultValue: [String, Number, Array],
+    inputmode: String,
     readonly: Boolean,
     required: Boolean,
     disabled: Boolean,
@@ -6062,6 +6079,7 @@
     pattern: String,
     validate: [Boolean, String],
     validateOnBlur: Boolean,
+    onValidate: Function,
     tabindex: [String, Number],
     resizable: Boolean,
     clearButton: Boolean,
@@ -6158,6 +6176,7 @@
       var className = props.className;
       var style = props.style;
       var radio = props.radio;
+      var radioIcon = props.radioIcon;
       var checkbox = props.checkbox;
       var value = props.value;
       var name = props.name;
@@ -6351,7 +6370,9 @@
       var ItemContentTag = checkbox || radio ? 'label' : 'div';
       var classes = Utils.classNames(className, 'item-content', {
         'item-checkbox': checkbox,
-        'item-radio': radio
+        'item-radio': radio,
+        'item-radio-icon-start': radio && radioIcon === 'start',
+        'item-radio-icon-end': radio && radioIcon === 'end'
       }, Mixins.colorClasses(props));
       return React.createElement(ItemContentTag, {
         ref: function (__reactNode) {
@@ -6439,6 +6460,7 @@
     defaultChecked: Boolean,
     indeterminate: Boolean,
     radio: Boolean,
+    radioIcon: String,
     name: String,
     value: [String, Number, Array],
     readonly: Boolean,
@@ -6624,6 +6646,8 @@
       var header = props.header;
       var footer = props.footer;
       var link = props.link;
+      var tabLink = props.tabLink;
+      var tabLinkActive = props.tabLinkActive;
       var href = props.href;
       var target = props.target;
       var after = props.after;
@@ -6639,6 +6663,7 @@
       var smartSelect = props.smartSelect;
       var checkbox = props.checkbox;
       var radio = props.radio;
+      var radioIcon = props.radioIcon;
       var checked = props.checked;
       var defaultChecked = props.defaultChecked;
       var indeterminate = props.indeterminate;
@@ -6676,6 +6701,7 @@
           defaultChecked: defaultChecked,
           indeterminate: indeterminate,
           radio: radio,
+          radioIcon: radioIcon,
           name: name,
           value: value,
           readonly: readonly,
@@ -6691,11 +6717,14 @@
         if (link || href || accordionItem || smartSelect) {
           var linkAttrs = Object.assign({
             href: link === true ? '' : link || href,
-            target: target
+            target: target,
+            'data-tab': Utils.isStringProp(tabLink) && tabLink || undefined
           }, Mixins.linkRouterAttrs(props), {}, Mixins.linkActionsAttrs(props));
           var linkClasses = Utils.classNames({
             'item-link': true,
-            'smart-select': smartSelect
+            'smart-select': smartSelect,
+            'tab-link': tabLink || tabLink === '',
+            'tab-link-active': tabLinkActive
           }, Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
           linkEl = React.createElement('a', Object.assign({
             ref: function (__reactNode) {
@@ -7017,6 +7046,8 @@
     tooltipTrigger: String,
     link: [Boolean, String],
     target: String,
+    tabLink: [Boolean, String],
+    tabLinkActive: Boolean,
     after: [String, Number],
     badge: [String, Number],
     badgeColor: String,
@@ -7042,6 +7073,7 @@
     chevronCenter: Boolean,
     checkbox: Boolean,
     radio: Boolean,
+    radioIcon: String,
     checked: Boolean,
     defaultChecked: Boolean,
     indeterminate: Boolean,
@@ -9127,7 +9159,7 @@
       }
     };
 
-    F7Messages.prototype.componentWillUpdate = function componentWillUpdate () {
+    F7Messages.prototype.getSnapshotBeforeUpdate = function getSnapshotBeforeUpdate () {
       var self = this;
       if (!self.props.init) { return; }
       var el = self.refs.el;
@@ -9645,13 +9677,11 @@
       var addCenterTitleClass = theme && theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || theme && theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
       var slots = self.slots;
       var isLarge = large || largeTransparent;
-      var isLargeTransparent = isLarge && (largeTransparent || transparent);
-      var isTransparent = !isLarge && transparent;
+      var isTransparent = transparent || isLarge && largeTransparent;
       var isTransparentVisible = isTransparent && transparentVisible;
       var classes = Utils.classNames(className, 'navbar', routerPositionClass && routerPositionClass, {
         'navbar-hidden': hidden,
         'navbar-large': isLarge,
-        'navbar-large-transparent': isLargeTransparent,
         'navbar-large-collapsed': isLarge && largeCollapsed,
         'navbar-transparent': isTransparent,
         'navbar-transparent-visible': isTransparentVisible,
@@ -10200,7 +10230,7 @@
       })();
 
       (function () {
-        Utils.bindMethods(this$1, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageBeforeUnmount', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded', 'onCardOpened', 'onCardClose']);
+        Utils.bindMethods(this$1, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageBeforeUnmount', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded', 'onCardOpened', 'onCardClose', 'onPageTabShow', 'onPageTabHide']);
       })();
     }
 
@@ -10427,6 +10457,16 @@
       });
     };
 
+    F7Page.prototype.onPageTabShow = function onPageTabShow (pageEl) {
+      if (this.eventTargetEl !== pageEl) { return; }
+      this.dispatchEvent('page:tabshow pageTabShow');
+    };
+
+    F7Page.prototype.onPageTabHide = function onPageTabHide (pageEl) {
+      if (this.eventTargetEl !== pageEl) { return; }
+      this.dispatchEvent('page:tabhide pageTabHide');
+    };
+
     F7Page.prototype.render = function render () {
       var this$1 = this;
 
@@ -10591,6 +10631,8 @@
       f7.off('pageNavbarLargeExpanded', self.onPageNavbarLargeExpanded);
       f7.off('cardOpened', self.onCardOpened);
       f7.off('cardClose', self.onCardClose);
+      f7.off('pageTabShow', self.onPageTabShow);
+      f7.off('pageTabHide', self.onPageTabHide);
       self.eventTargetEl = null;
       delete self.eventTargetEl;
     };
@@ -10619,6 +10661,8 @@
         f7.on('pageNavbarLargeExpanded', self.onPageNavbarLargeExpanded);
         f7.on('cardOpened', self.onCardOpened);
         f7.on('cardClose', self.onCardClose);
+        f7.on('pageTabShow', self.onPageTabShow);
+        f7.on('pageTabHide', self.onPageTabHide);
       });
     };
 
@@ -10834,6 +10878,7 @@
       var visibleBreakpoint = ref.visibleBreakpoint;
       var collapsedBreakpoint = ref.collapsedBreakpoint;
       var swipe = ref.swipe;
+      var swipeNoFollow = ref.swipeNoFollow;
       var swipeOnlyClose = ref.swipeOnlyClose;
       var swipeActiveArea = ref.swipeActiveArea;
       var swipeThreshold = ref.swipeThreshold;
@@ -10853,6 +10898,7 @@
           visibleBreakpoint: visibleBreakpoint,
           collapsedBreakpoint: collapsedBreakpoint,
           swipe: swipe,
+          swipeNoFollow: swipeNoFollow,
           swipeOnlyClose: swipeOnlyClose,
           swipeActiveArea: swipeActiveArea,
           swipeThreshold: swipeThreshold,
@@ -10949,6 +10995,7 @@
       default: undefined
     },
     swipe: Boolean,
+    swipeNoFollow: Boolean,
     swipeOnlyClose: Boolean,
     swipeActiveArea: {
       type: Number,
@@ -11304,7 +11351,7 @@
     opened: Boolean,
     target: [String, Object],
     backdrop: Boolean,
-    backdropEl: [String, Object, window.HTMLElement],
+    backdropEl: [String, Object],
     closeByBackdropClick: Boolean,
     closeByOutsideClick: Boolean,
     closeOnEscape: Boolean
@@ -11491,14 +11538,14 @@
     opened: Boolean,
     animate: Boolean,
     backdrop: Boolean,
-    backdropEl: [String, Object, window.HTMLElement],
+    backdropEl: [String, Object],
     closeByBackdropClick: Boolean,
     closeOnEscape: Boolean,
     swipeToClose: {
       type: [Boolean, String],
       default: false
     },
-    swipeHandler: [String, Object, window.HTMLElement],
+    swipeHandler: [String, Object],
     push: Boolean
   }, Mixins.colorProps));
 
@@ -12230,7 +12277,9 @@
         id: id,
         style: style,
         className: classNames
-      }, this.slots['default']);
+      }, this.slots['default'], (strong || strongIos || strongMd || strongAurora) && React.createElement('span', {
+        className: 'segmented-highlight'
+      }));
     };
 
     prototypeAccessors.slots.get = function () {
@@ -12476,14 +12525,14 @@
     bottom: Boolean,
     position: String,
     backdrop: Boolean,
-    backdropEl: [String, Object, window.HTMLElement],
+    backdropEl: [String, Object],
     closeByBackdropClick: Boolean,
     closeByOutsideClick: Boolean,
     closeOnEscape: Boolean,
     push: Boolean,
     swipeToClose: Boolean,
     swipeToStep: Boolean,
-    swipeHandler: [String, Object, window.HTMLElement]
+    swipeHandler: [String, Object]
   }, Mixins.colorProps));
 
   F7Sheet.displayName = 'f7-sheet';
@@ -14199,6 +14248,10 @@
       }
     };
 
+    F7View.prototype.onResize = function onResize (view, width) {
+      this.dispatchEvent('view:resize viewResize', width);
+    };
+
     F7View.prototype.onSwipeBackMove = function onSwipeBackMove (data) {
       var swipeBackData = data;
       this.dispatchEvent('swipeback:move swipeBackMove', swipeBackData);
@@ -14284,6 +14337,7 @@
       }
 
       if (self.f7View) {
+        self.f7View.off('resize', self.onResize);
         self.f7View.off('swipebackMove', self.onSwipeBackMove);
         self.f7View.off('swipebackBeforeChange', self.onSwipeBackBeforeChange);
         self.f7View.off('swipebackAfterChange', self.onSwipeBackAfterChange);
@@ -14324,6 +14378,7 @@
           }
         }, Utils.noUndefinedProps(self.props)));
         self.f7View = self.routerData.instance;
+        self.f7View.on('resize', self.onResize);
         self.f7View.on('swipebackMove', self.onSwipeBackMove);
         self.f7View.on('swipebackBeforeChange', self.onSwipeBackBeforeChange);
         self.f7View.on('swipebackAfterChange', self.onSwipeBackAfterChange);
@@ -14374,6 +14429,7 @@
     allowDuplicateUrls: Boolean,
     reloadPages: Boolean,
     reloadDetail: Boolean,
+    masterDetailResizable: Boolean,
     masterDetailBreakpoint: Number,
     removeElements: Boolean,
     removeElementsWithTimeout: Boolean,
@@ -14692,7 +14748,7 @@
   };
 
   /**
-   * Framework7 React 5.5.1
+   * Framework7 React 5.7.2
    * Build full featured iOS & Android apps using Framework7 & React
    * https://framework7.io/react/
    *
@@ -14700,7 +14756,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: March 20, 2020
+   * Released on: May 9, 2020
    */
 
   function f7ready(callback) {

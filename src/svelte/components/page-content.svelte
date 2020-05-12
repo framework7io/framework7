@@ -1,15 +1,13 @@
 <script>
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import Mixins from '../utils/mixins';
   import f7 from '../utils/f7';
 
   import Preloader from './preloader.svelte';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
   export let tab = false;
   export let tabActive = false;
   export let ptr = false;
@@ -140,12 +138,11 @@
 
 <div
   class={pageContentClasses}
-  style={style}
-  id={id}
   bind:this={pageContentEl}
   data-ptr-distance={ptrDistance}
   data-ptr-mousewheel={ptrMousewheel || undefined}
   data-infinite-distance={infiniteDistance || undefined}
+  {...restProps($$restProps)}
 >
   {#if ptr && ptrPreloader && !ptrBottom}
     <div class="ptr-preloader">

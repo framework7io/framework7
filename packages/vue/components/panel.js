@@ -31,6 +31,7 @@ export default {
       default: undefined
     },
     swipe: Boolean,
+    swipeNoFollow: Boolean,
     swipeOnlyClose: Boolean,
     swipeActiveArea: {
       type: Number,
@@ -123,6 +124,7 @@ export default {
       visibleBreakpoint,
       collapsedBreakpoint,
       swipe,
+      swipeNoFollow,
       swipeOnlyClose,
       swipeActiveArea,
       swipeThreshold
@@ -143,6 +145,7 @@ export default {
         visibleBreakpoint,
         collapsedBreakpoint,
         swipe,
+        swipeNoFollow,
         swipeOnlyClose,
         swipeActiveArea,
         swipeThreshold,

@@ -7,7 +7,7 @@ const textEditorButtonsMap = {
   // f7-icon, material-icon, command
   bold: ['bold', 'format_bold', 'bold'],
   italic: ['italic', 'format_italic', 'italic'],
-  underline: ['underline', 'format_underline', 'underline'],
+  underline: ['underline', 'format_underlined', 'underline'],
   strikeThrough: ['strikethrough', 'strikethrough_s', 'strikeThrough'],
   orderedList: ['list_number', 'format_list_numbered', 'insertOrderedList'],
   unorderedList: ['list_bullet', 'format_list_bulleted', 'insertUnorderedList'],
@@ -238,7 +238,8 @@ class TextEditor extends Framework7Class {
       if (!selection.isCollapsed && selection.rangeCount) {
         const range = selection.getRangeAt(0);
         const rect = range.getBoundingClientRect();
-        self.openPopover(rect.x + (window.scrollX || 0), rect.y + (window.scrollY || 0), rect.width, rect.height);
+        const rootEl = self.app.root[0] || document.body;
+        self.openPopover(rect.x + (window.scrollX || 0) - rootEl.offsetLeft, rect.y + (window.scrollY || 0) - rootEl.offsetTop, rect.width, rect.height);
       } else if (selection.isCollapsed) {
         self.closePopover();
       }

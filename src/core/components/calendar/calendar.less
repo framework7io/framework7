@@ -48,10 +48,26 @@
 }
 .calendar-popover {
   width: var(--f7-calendar-popover-width);
+  .toolbar-top,
+  .calendar-header {
+    border-radius: var(--f7-popover-border-radius) var(--f7-popover-border-radius) 0 0;
+  }
+  .calendar-header + .toolbar-top {
+    border-radius: 0;
+  }
+  .toolbar-bottom,
+  .calendar-footer {
+    border-radius: 0 0 var(--f7-popover-border-radius) var(--f7-popover-border-radius);
+  }
   .calendar {
     height: var(--f7-calendar-popover-height);
-    border-radius: var(--f7-popover-border-radius);
     position: relative;
+    z-index: 1;
+  }
+  .calendar-month-picker,
+  .calendar-year-picker,
+  .calendar-time-picker {
+    border-radius: var(--f7-popover-border-radius);
   }
 }
 .calendar-header {
@@ -304,7 +320,7 @@
     overflow: hidden;
     pointer-events: none;
   }
-  
+
   .device-desktop.aurora &:hover {
     background-color: var(--f7-calendar-picker-hover-bg-color);
   }

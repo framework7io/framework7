@@ -53,6 +53,8 @@ declare namespace F7Page {
     onPageAfterIn? : (page?: any) => void
     onPageBeforeRemove? : (page?: any) => void
     onPageBeforeUnmount? : (page?: any) => void
+    onPageTabShow? : (...args: any[]) => void
+    onPageTabHide? : (...args: any[]) => void
   }
 }
 declare class F7Page extends React.Component<F7Page.Props, {}> {
@@ -81,5 +83,7 @@ declare class F7Page extends React.Component<F7Page.Props, {}> {
   onPageNavbarLargeExpanded(pageEl? : any) : unknown
   onCardOpened(cardEl? : any, pageEl? : any) : unknown
   onCardClose(cardEl? : any, pageEl? : any) : unknown
+  onPageTabShow(pageEl? : any) : unknown
+  onPageTabHide(pageEl? : any) : unknown
 }
 export default F7Page;

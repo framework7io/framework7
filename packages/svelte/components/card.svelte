@@ -2,6 +2,7 @@
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import f7 from '../utils/f7';
   import hasSlots from '../utils/has-slots';
 
@@ -10,9 +11,6 @@
   import CardFooter from './card-footer.svelte';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -135,8 +133,6 @@
 
 <div
   bind:this={el}
-  id={id}
-  style={style}
   class={classes}
   data-animate={typeof animate === 'undefined' ? animate : animate.toString()}
   data-hide-navbar-on-open={typeof hideNavbarOnOpen === 'undefined' ? hideNavbarOnOpen : hideNavbarOnOpen.toString()}
@@ -147,6 +143,7 @@
   data-close-by-backdrop-click={typeof closeByBackdropClick === 'undefined' ? closeByBackdropClick : closeByBackdropClick.toString()}
   data-backdrop={typeof backdrop === 'undefined' ? backdrop : backdrop.toString()}
   data-backdrop-el={backdropEl}
+  {...restProps($$restProps)}
 >
   {#if typeof title !== 'undefined' || hasHeaderSlots}
     <CardHeader>

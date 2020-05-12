@@ -74,6 +74,9 @@ export default {
         className={classNames}
       >
         <slot />
+        {(strong || strongIos || strongMd || strongAurora) && (
+          <span className="segmented-highlight" />
+        )}
       </SegmentedTag>
     );
   },

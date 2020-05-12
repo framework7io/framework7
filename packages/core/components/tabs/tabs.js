@@ -102,6 +102,12 @@ const Tab = {
     const $oldTabEl = $tabsEl.children('.tab-active');
     $oldTabEl.removeClass('tab-active');
     if (!swiper || (swiper && !swiper.animating) || (swiper && tabRoute)) {
+      if ($oldTabEl.hasClass('view') && $oldTabEl.children('.page').length) {
+        $oldTabEl.children('.page').each((pageIndex, pageEl) => {
+          $(pageEl).trigger('page:tabhide');
+          app.emit('pageTabHide', pageEl);
+        });
+      }
       $oldTabEl.trigger('tab:hide');
       app.emit('tabHide', $oldTabEl[0]);
     }
@@ -109,6 +115,12 @@ const Tab = {
     // Trigger 'show' event on new tab
     $newTabEl.addClass('tab-active');
     if (!swiper || (swiper && !swiper.animating) || (swiper && tabRoute)) {
+      if ($newTabEl.hasClass('view') && $newTabEl.children('.page').length) {
+        $newTabEl.children('.page').each((pageIndex, pageEl) => {
+          $(pageEl).trigger('page:tabshow');
+          app.emit('pageTabShow', pageEl);
+        });
+      }
       $newTabEl.trigger('tab:show');
       app.emit('tabShow', $newTabEl[0]);
     }

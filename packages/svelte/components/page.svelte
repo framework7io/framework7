@@ -1,6 +1,7 @@
 <script>
   import { onMount, afterUpdate, onDestroy, createEventDispatcher } from 'svelte';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import Mixins from '../utils/mixins';
   import f7 from '../utils/f7';
 
@@ -9,8 +10,6 @@
   const dispatch = createEventDispatcher();
 
   // Props
-  export let id = undefined;
-  export let style = undefined;
   export let name = undefined;
   export let stacked = undefined;
   export let withSubnavbar = undefined;
@@ -234,6 +233,17 @@
     hasCardExpandableOpened = false;
   }
 
+  function onPageTabShow(pageEl) {
+    if (el !== pageEl) return;
+    dispatch('pageTabShow');
+    if (typeof $$props.onPageTabShow === 'function') $$props.onPageTabShow();
+  }
+  function onPageTabHide(pageEl) {
+    if (el !== pageEl) return;
+    dispatch('pageTabHide');
+    if (typeof $$props.onPageTabHide === 'function') $$props.onPageTabHide();
+  }
+
   // Mount/destroy
   function mountPage() {
     f7.instance.on('pageMounted', onPageMounted);
@@ -255,6 +265,8 @@
     f7.instance.on('pageNavbarLargeExpanded', onPageNavbarLargeExpanded);
     f7.instance.on('cardOpened', onCardOpened);
     f7.instance.on('cardClose', onCardClose);
+    f7.instance.on('pageTabShow', onPageTabShow);
+    f7.instance.on('pageTabHide', onPageTabHide);
   }
   function destroyPage() {
     f7.instance.off('pageMounted', onPageMounted);
@@ -276,6 +288,8 @@
     f7.instance.off('pageNavbarLargeExpanded', onPageNavbarLargeExpanded);
     f7.instance.off('cardOpened', onCardOpened);
     f7.instance.off('cardClose', onCardClose);
+    f7.instance.off('pageTabShow', onPageTabShow);
+    f7.instance.off('pageTabHide', onPageTabHide);
   }
 
   onMount(() => {
@@ -308,7 +322,7 @@
     destroyPage();
   });
 </script>
-<div bind:this={el} id={id} style={style} class={classes} data-name={name}>
+<div bind:this={el} class={classes} data-name={name} {...restProps($$restProps)}>
   <slot name="fixed"></slot>
   {#if pageContent}
   <PageContent

@@ -56,14 +56,20 @@ class F7Input extends React.Component {
     if (!f7 || !inputEl) return;
     const validity = inputEl.validity;
     if (!validity) return;
+    const {
+      onValidate
+    } = self.props;
 
     if (!validity.valid) {
+      if (onValidate) onValidate(false);
+
       if (self.state.inputInvalid !== true) {
         self.setState({
           inputInvalid: true
         });
       }
     } else if (self.state.inputInvalid !== false) {
+      if (onValidate) onValidate(true);
       self.setState({
         inputInvalid: false
       });
@@ -139,6 +145,7 @@ class F7Input extends React.Component {
       name,
       value,
       defaultValue,
+      inputmode,
       placeholder,
       id,
       inputId,
@@ -223,6 +230,7 @@ class F7Input extends React.Component {
           name: name,
           type: needsType ? inputType : undefined,
           placeholder: placeholder,
+          inputMode: inputmode,
           id: inputId,
           size: size,
           accept: accept,
@@ -496,6 +504,7 @@ __reactComponentSetProps(F7Input, Object.assign({
   name: String,
   value: [String, Number, Array, Date, Object],
   defaultValue: [String, Number, Array],
+  inputmode: String,
   placeholder: String,
   id: [String, Number],
   className: String,
@@ -523,6 +532,7 @@ __reactComponentSetProps(F7Input, Object.assign({
   pattern: String,
   validate: [Boolean, String],
   validateOnBlur: Boolean,
+  onValidate: Function,
   tabindex: [String, Number],
   resizable: Boolean,
   clearButton: Boolean,

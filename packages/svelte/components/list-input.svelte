@@ -2,14 +2,12 @@
   import { createEventDispatcher, onMount, afterUpdate, onDestroy, getContext } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import f7 from '../utils/f7';
   import hasSlots from '../utils/has-slots';
   import TextEditor from './text-editor.svelte';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -25,6 +23,7 @@
   export let type = 'text';
   export let name = undefined;
   export let value = undefined;
+  export let inputmode = undefined;
   export let readonly = undefined;
   export let required = undefined;
   export let disabled = undefined;
@@ -48,6 +47,7 @@
   export let pattern = undefined;
   export let validate = undefined;
   export let validateOnBlur = undefined;
+  export let onValidate = undefined;
   export let tabindex = undefined;
   export let resizable = undefined;
   export let clearButton = undefined;
@@ -110,10 +110,12 @@
     if (!validity) return;
 
     if (!validity.valid) {
+      if (onValidate) onValidate(false);
       if (inputInvalid !== true) {
         inputInvalid = true;
       }
     } else if (inputInvalid !== false) {
+      if (onValidate) onValidate(true);
       inputInvalid = false;
     }
   }
@@ -170,7 +172,7 @@
       resizable: inputType === 'textarea' && resizable,
       'no-store-data': (noFormStoreData || noStoreData || ignoreStoreData),
       'input-invalid': (errorMessage && errorMessageForce) || inputInvalid,
-      'input-with-value': inputHasValue,
+      'input-with-value': inputHasValue(),
       'input-focused': inputFocused,
     }
   );
@@ -185,7 +187,7 @@
       'item-input-outline': outline,
       'item-input-focused': inputFocused,
       'item-input-with-info': !!info || hasInfoSlots,
-      'item-input-with-value': inputHasValue,
+      'item-input-with-value': inputHasValue(),
       'item-input-with-error-message': (hasErrorMessage && errorMessageForce) || inputInvalid,
       'item-input-invalid': (hasErrorMessage && errorMessageForce) || inputInvalid,
     }
@@ -353,7 +355,7 @@
 <!-- svelte-ignore a11y-autofocus -->
 <!-- svelte-ignore a11y-missing-attribute -->
 {#if wrap}
-  <li id={id} style={style} class={classes}>
+  <li class={classes} {...restProps($$restProps)}>
     <slot name="root-start" />
     <div class={itemContentClasses}>
       <slot name="content-start" />
@@ -426,6 +428,7 @@
                 placeholder={placeholder}
                 id={inputId}
                 size={size}
+                inputmode={inputmode}
                 accept={accept}
                 autocomplete={autocomplete}
                 autocorrect={autocorrect}
@@ -472,6 +475,7 @@
                 style={inputStyle}
                 name={name}
                 type={inputType}
+                inputmode={inputmode}
                 placeholder={placeholder}
                 id={inputId}
                 size={size}
@@ -507,7 +511,7 @@
             {/if}
           {/if}
           <slot name="input" />
-          {#if hasErrorMessage && errorMessageForce} && (
+          {#if hasErrorMessage && errorMessageForce}
             <div class="item-input-error-message">
               {Utils.text(errorMessage)}
               <slot name="error-message"/>
@@ -536,7 +540,7 @@
     <slot name="root-end" />
   </li>
 {:else}
-  <div class={itemContentClasses}>
+  <div class={itemContentClasses} {...restProps($$restProps)}>
     <slot name="content-start" />
     {#if isSortable && isSortableOpposite}
       <div class="sortable-handler" />
@@ -607,6 +611,7 @@
               placeholder={placeholder}
               id={inputId}
               size={size}
+              inputmode={inputmode}
               accept={accept}
               autocomplete={autocomplete}
               autocorrect={autocorrect}
@@ -653,6 +658,7 @@
               style={inputStyle}
               name={name}
               type={inputType}
+              inputmode={inputmode}
               placeholder={placeholder}
               id={inputId}
               size={size}
@@ -688,7 +694,7 @@
           {/if}
         {/if}
         <slot name="input" />
-        {#if hasErrorMessage && errorMessageForce} && (
+        {#if hasErrorMessage && errorMessageForce}
           <div class="item-input-error-message">
             {Utils.text(errorMessage)}
             <slot name="error-message"/>

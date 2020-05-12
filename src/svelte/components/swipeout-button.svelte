@@ -3,11 +3,9 @@
 
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -40,12 +38,11 @@
 
 <a
   href={href || '#'}
-  id={id}
-  style={style}
   data-confirm={confirmText || undefined}
   data-confirm-title={confirmTitle || undefined}
   class={classes}
   on:click={onClick}
+  {...restProps($$restProps)}
 >
   {Utils.text(text)}
   <slot></slot>

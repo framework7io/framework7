@@ -50,7 +50,9 @@ class F7Segmented extends React.Component {
       id: id,
       style: style,
       className: classNames
-    }, this.slots['default']);
+    }, this.slots['default'], (strong || strongIos || strongMd || strongAurora) && React.createElement('span', {
+      className: 'segmented-highlight'
+    }));
   }
 
   get slots() {

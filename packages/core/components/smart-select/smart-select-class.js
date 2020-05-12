@@ -280,6 +280,7 @@ class SmartSelect extends Framework7Class {
 
   getItemsData() {
     const ss = this;
+    const theme = ss.app.theme;
     const items = [];
     let previousGroupEl;
     ss.$selectEl.find('option').each((index, optionEl) => {
@@ -287,8 +288,10 @@ class SmartSelect extends Framework7Class {
       const optionData = $optionEl.dataset();
       const optionImage = optionData.optionImage || ss.params.optionImage;
       const optionIcon = optionData.optionIcon || ss.params.optionIcon;
-      const optionHasMedia = optionImage || optionIcon;
-      // if (material) optionHasMedia = optionImage || optionIcon;
+      const optionIconIos = theme === 'ios' && (optionData.optionIconIos || ss.params.optionIconIos);
+      const optionIconMd = theme === 'md' && (optionData.optionIconMd || ss.params.optionIconMd);
+      const optionIconAurora = theme === 'aurora' && (optionData.optionIconAurora || ss.params.optionIconAurora);
+      const optionHasMedia = optionImage || optionIcon || optionIconIos || optionIconMd || optionIconAurora;
       const optionColor = optionData.optionColor;
 
       let optionClassName = optionData.optionClass || '';
@@ -313,6 +316,9 @@ class SmartSelect extends Framework7Class {
         groupLabel: optionGroupLabel,
         image: optionImage,
         icon: optionIcon,
+        iconIos: optionIconIos,
+        iconMd: optionIconMd,
+        iconAurora: optionIconAurora,
         color: optionColor,
         className: optionClassName,
         disabled: $optionEl[0].disabled,
@@ -351,6 +357,23 @@ class SmartSelect extends Framework7Class {
   renderItem(item, index) {
     const ss = this;
     if (ss.params.renderItem) return ss.params.renderItem.call(ss, item, index);
+
+    function getIconContent(iconValue = '') {
+      if (iconValue.indexOf(':') >= 0) {
+        return iconValue.split(':')[1];
+      }
+      return '';
+    }
+    function getIconClass(iconValue = '') {
+      if (iconValue.indexOf(':') >= 0) {
+        let className = iconValue.split(':')[0];
+        if (className === 'f7') className = 'f7-icons';
+        if (className === 'material') className = 'material-icons';
+        return className;
+      }
+      return iconValue;
+    }
+
     let itemHtml;
     if (item.isLabel) {
       itemHtml = `<li class="item-divider">${item.groupLabel}</li>`;
@@ -364,6 +387,12 @@ class SmartSelect extends Framework7Class {
           disabled = ss.multiple && !selected && ssValue.length === parseInt(ss.maxLength, 10);
         }
       }
+
+      const { icon, iconIos, iconMd, iconAurora } = item;
+      const hasIcon = icon || iconIos || iconMd || iconAurora;
+      const iconContent = getIconContent(icon || iconIos || iconMd || iconAurora || '');
+      const iconClass = getIconClass(icon || iconIos || iconMd || iconAurora || '');
+
       itemHtml = `
         <li class="${item.className || ''}${disabled ? ' disabled' : ''}">
           <label class="item-${item.inputType} item-content">
@@ -371,7 +400,7 @@ class SmartSelect extends Framework7Class {
             <i class="icon icon-${item.inputType}"></i>
             ${item.hasMedia ? `
               <div class="item-media">
-                ${item.icon ? `<i class="icon ${item.icon}"></i>` : ''}
+                ${hasIcon ? `<i class="icon ${iconClass}">${iconContent}</i>` : ''}
                 ${item.image ? `<img src="${item.image}">` : ''}
               </div>
             ` : ''}

@@ -9,10 +9,17 @@
 
     <f7-block-title>Radio Group</f7-block-title>
     <f7-list>
-      <f7-list-item radio title="Books" name="demo-radio" checked></f7-list-item>
-      <f7-list-item radio title="Movies" name="demo-radio"></f7-list-item>
-      <f7-list-item radio title="Food" name="demo-radio"></f7-list-item>
-      <f7-list-item radio title="Drinks" name="demo-radio"></f7-list-item>
+      <f7-list-item radio radioIcon="start" title="Books" name="demo-radio-start" checked></f7-list-item>
+      <f7-list-item radio radioIcon="start" title="Movies" name="demo-radio-start"></f7-list-item>
+      <f7-list-item radio radioIcon="start" title="Food" name="demo-radio-start"></f7-list-item>
+      <f7-list-item radio radioIcon="start" title="Drinks" name="demo-radio-start"></f7-list-item>
+    </f7-list>
+
+    <f7-list>
+      <f7-list-item radio radioIcon="end" title="Books" name="demo-radio-end" checked></f7-list-item>
+      <f7-list-item radio radioIcon="end" title="Movies" name="demo-radio-end"></f7-list-item>
+      <f7-list-item radio radioIcon="end" title="Food" name="demo-radio-end"></f7-list-item>
+      <f7-list-item radio radioIcon="end" title="Drinks" name="demo-radio-end"></f7-list-item>
     </f7-list>
 
 
@@ -20,6 +27,7 @@
       <f7-list media-list>
         <f7-list-item
           radio
+          radioIcon="start"
           checked
           name="demo-media-radio"
           value="1"
@@ -30,6 +38,7 @@
         ></f7-list-item>
         <f7-list-item
           radio
+          radioIcon="start"
           name="demo-media-radio"
           value="2"
           title="John Doe (via Twitter)"
@@ -39,6 +48,7 @@
         ></f7-list-item>
         <f7-list-item
           radio
+          radioIcon="start"
           name="demo-media-radio"
           value="3"
           title="Facebook"
@@ -48,6 +58,7 @@
         ></f7-list-item>
         <f7-list-item
           radio
+          radioIcon="start"
           name="demo-media-radio"
           value="4"
           title="John Doe (via Twitter)"

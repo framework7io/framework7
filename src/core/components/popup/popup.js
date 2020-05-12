@@ -23,16 +23,17 @@ export default {
       app,
       constructor: Popup,
       defaultSelector: '.popup.modal-in',
+      parentSelector: '.popup',
     });
   },
   clicks: {
     '.popup-open': function openPopup($clickedEl, data = {}) {
       const app = this;
-      app.popup.open(data.popup, data.animate);
+      app.popup.open(data.popup, data.animate, $clickedEl);
     },
     '.popup-close': function closePopup($clickedEl, data = {}) {
       const app = this;
-      app.popup.close(data.popup, data.animate);
+      app.popup.close(data.popup, data.animate, $clickedEl);
     },
   },
 };

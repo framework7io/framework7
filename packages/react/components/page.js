@@ -26,7 +26,7 @@ class F7Page extends React.Component {
     })();
 
     (() => {
-      Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageBeforeUnmount', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded', 'onCardOpened', 'onCardClose']);
+      Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageBeforeUnmount', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded', 'onCardOpened', 'onCardClose', 'onPageTabShow', 'onPageTabHide']);
     })();
   }
 
@@ -224,6 +224,16 @@ class F7Page extends React.Component {
     });
   }
 
+  onPageTabShow(pageEl) {
+    if (this.eventTargetEl !== pageEl) return;
+    this.dispatchEvent('page:tabshow pageTabShow');
+  }
+
+  onPageTabHide(pageEl) {
+    if (this.eventTargetEl !== pageEl) return;
+    this.dispatchEvent('page:tabhide pageTabHide');
+  }
+
   render() {
     const self = this;
     const props = self.props;
@@ -389,6 +399,8 @@ class F7Page extends React.Component {
     f7.off('pageNavbarLargeExpanded', self.onPageNavbarLargeExpanded);
     f7.off('cardOpened', self.onCardOpened);
     f7.off('cardClose', self.onCardClose);
+    f7.off('pageTabShow', self.onPageTabShow);
+    f7.off('pageTabHide', self.onPageTabHide);
     self.eventTargetEl = null;
     delete self.eventTargetEl;
   }
@@ -417,6 +429,8 @@ class F7Page extends React.Component {
       f7.on('pageNavbarLargeExpanded', self.onPageNavbarLargeExpanded);
       f7.on('cardOpened', self.onCardOpened);
       f7.on('cardClose', self.onCardClose);
+      f7.on('pageTabShow', self.onPageTabShow);
+      f7.on('pageTabHide', self.onPageTabHide);
     });
   }
 

@@ -4,10 +4,10 @@
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
 
-  export let init = true;
   export let id = undefined;
   export let style = undefined;
 
+  export let init = true;
   let className = undefined;
   export { className as class };
 
@@ -34,6 +34,10 @@
     return f7View;
   }
 
+  function onResize(view, width) {
+    dispatch('viewResize', [width]);
+    if (typeof $$props.onViewResize === 'function') $$props.onViewResize(width);
+  }
   function onSwipeBackMove(data) {
     dispatch('swipeBackMove', [data]);
     if (typeof $$props.onSwipeBackMove === 'function') $$props.onSwipeBackMove(data);
@@ -95,6 +99,7 @@
         },
       });
       if (!f7View) f7View = routerData.instance;
+      f7View.on('resize', onResize);
       f7View.on('swipebackMove', onSwipeBackMove);
       f7View.on('swipebackBeforeChange', onSwipeBackBeforeChange);
       f7View.on('swipebackAfterChange', onSwipeBackAfterChange);
@@ -115,6 +120,7 @@
       f7.instance.off('tabHide', onTabHide);
     }
     if (f7View) {
+      f7View.off('resize', onResize);
       f7View.off('swipebackMove', onSwipeBackMove);
       f7View.off('swipebackBeforeChange', onSwipeBackBeforeChange);
       f7View.off('swipebackAfterChange', onSwipeBackAfterChange);

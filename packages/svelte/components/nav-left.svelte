@@ -2,15 +2,13 @@
   import { createEventDispatcher } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import f7 from '../utils/f7';
   import { theme } from '../utils/plugin';
 
   import Link from './link.svelte';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -46,14 +44,13 @@
   function onBackClick() {
     dispatch('clickBack');
     if (typeof $$props.onClickBack === 'function') $$props.onClickBack();
-    dispatch('backBlick');
-    if (typeof $$props.onBackBlick === 'function') $$props.onBackBlick();
+    dispatch('backClick');
+    if (typeof $$props.onBackClick === 'function') $$props.onBackClick();
   }
 </script>
 <div
-  id={id}
-  style={style}
   class={classes}
+  {...restProps($$restProps)}
 >
   {#if backLink}
     <Link

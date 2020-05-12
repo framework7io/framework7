@@ -1,13 +1,11 @@
 <script>
   import { onMount } from 'svelte';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import Mixins from '../utils/mixins';
 
   let className = undefined;
   export { className as class };
-
-  export let id = undefined;
-  export let style = undefined;
   export let animated = false;
   export let swipeable = false;
   export let routable = false;
@@ -36,13 +34,13 @@
 </script>
 
 {#if animated || swipeable}
-  <div id={id} style={style} class={Utils.classNames(wrapClasses, classes)} bind:this={wrapEl}>
+  <div class={Utils.classNames(wrapClasses, classes)} bind:this={wrapEl} {...restProps($$restProps)}>
     <div class={tabsClasses}>
       <slot />
     </div>
   </div>
 {:else}
-  <div id={id} style={style} class={Utils.classNames(tabsClasses, classes)}>
+  <div class={Utils.classNames(tabsClasses, classes)} {...restProps($$restProps)}>
     <slot />
   </div>
 {/if}

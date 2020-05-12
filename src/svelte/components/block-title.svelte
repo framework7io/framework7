@@ -1,9 +1,8 @@
 <script>
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
 
-  export let id = undefined;
-  export let style = undefined;
   export let large = false;
   export let medium = false;
 
@@ -22,9 +21,8 @@
 </script>
 
 <div
-  id={id}
-  style={style}
   class={classes}
+  {...restProps($$restProps)}
 >
   <slot />
 </div>

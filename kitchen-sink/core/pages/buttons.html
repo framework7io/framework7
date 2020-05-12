@@ -1,3 +1,4 @@
+<template>
 <div class="page">
   <div class="navbar">
     <div class="navbar-bg"></div>
@@ -58,9 +59,10 @@
         <button class="button button-active">Active</button>
       </p>
       <p class="segmented segmented-strong">
-        <button class="button">Button</button>
-        <button class="button">Button</button>
-        <button class="button button-active">Active</button>
+        <button class="button {{#js_if 'this.activeStrongButton === 0'}}button-active{{/js_if}}" @click="setStrongButton(0)">Button</button>
+        <button class="button {{#js_if 'this.activeStrongButton === 1'}}button-active{{/js_if}}" @click="setStrongButton(1)">Button</button>
+        <button class="button {{#js_if 'this.activeStrongButton === 2'}}button-active{{/js_if}}" @click="setStrongButton(2)">Button</button>
+        <span class="segmented-highlight"></span>
       </p>
       <p class="segmented segmented-raised">
         <button class="button">Button</button>
@@ -163,3 +165,18 @@
     </div>
   </div>
 </div>
+</template>
+<script>
+  return {
+    data() {
+      return {
+        activeStrongButton: 0
+      }
+    },
+    methods: {
+      setStrongButton(index) {
+        this.$setState({ activeStrongButton: index })
+      }
+    }
+  }
+</script>

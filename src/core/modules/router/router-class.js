@@ -277,12 +277,12 @@ class Router extends Framework7Class {
         if ($oldNavbarEl) {
           $oldNavbarEl.removeClass('router-navbar-transition-to-large router-navbar-transition-from-large');
         }
-        if ($newNavbarEl.hasClass('sliding')) {
+        if ($newNavbarEl.hasClass('sliding') || $newNavbarEl.children('.navbar-inner.sliding').length) {
           $newNavbarEl.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
         } else {
           $newNavbarEl.find('.sliding').transform('');
         }
-        if ($oldNavbarEl.hasClass('sliding')) {
+        if ($oldNavbarEl.hasClass('sliding') || $oldNavbarEl.children('.navbar-inner.sliding').length) {
           $oldNavbarEl.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
         } else {
           $oldNavbarEl.find('.sliding').transform('');

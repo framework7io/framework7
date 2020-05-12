@@ -1,5 +1,5 @@
 /**
- * Framework7 5.5.1
+ * Framework7 5.7.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 20, 2020
+ * Released on: May 9, 2020
  */
 
 /*====================
@@ -618,6 +618,10 @@ body {
   line-height: var(--f7-line-height);
   color: var(--f7-text-color);
 }
+.theme-dark body,
+body.theme-dark {
+  background: #000;
+}
 .theme-dark {
   color: var(--f7-text-color);
 }
@@ -732,6 +736,20 @@ html.device-full-viewport body {
 .framework7-root > .view,
 .framework7-root > .views {
   height: calc(100% - var(--f7-appbar-app-offset, 0px));
+}
+.view-resize-handler {
+  width: 6px;
+  height: 100%;
+  position: absolute;
+  left: var(--f7-page-master-width);
+  margin-left: -3px;
+  top: 0;
+  cursor: col-resize;
+  z-index: 1000;
+  display: none;
+}
+.view-master-detail .view-resize-handler {
+  display: block;
 }
 /* === Pages === */
 :root {
@@ -1950,12 +1968,7 @@ html.device-full-viewport body {
 .navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible):not(.with-searchbar-expandable-enabled) .title {
   opacity: 0;
 }
-.navbar-large .navbar-bg,
-.ios .router-navbar-transition-to-large .navbar-bg,
-.ios .router-navbar-transition-from-large .navbar-bg,
-.navbar-bg.ios-swipeback-navbar-bg-large,
-.navbar-large-transparent .navbar-bg.ios-swipeback-navbar-bg-large,
-.navbar-large.navbar-transparent .navbar-bg.ios-swipeback-navbar-bg-large {
+.navbar-large .navbar-bg {
   height: calc(100% + var(--f7-navbar-large-title-height));
   transform: translate3d(0px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0);
 }
@@ -1964,6 +1977,14 @@ html.device-full-viewport body {
   opacity: var(--f7-navbar-large-collapse-progress);
   height: 100%;
   transform: none;
+}
+.ios .router-navbar-transition-to-large .navbar-bg,
+.ios .router-navbar-transition-from-large .navbar-bg,
+.navbar-bg.ios-swipeback-navbar-bg-large,
+.navbar-large-transparent .navbar-bg.ios-swipeback-navbar-bg-large,
+.navbar-large.navbar-transparent .navbar-bg.ios-swipeback-navbar-bg-large {
+  height: calc(100% + var(--f7-navbar-large-title-height));
+  transform: translate3d(0px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0);
 }
 .ios .navbar:not(.navbar-large) .navbar-bg {
   --f7-navbar-large-collapse-progress: 1;
@@ -3023,6 +3044,7 @@ html.device-full-viewport body {
   top: auto;
   pointer-events: none;
   background: var(--f7-toolbar-bottom-shadow-image);
+  transform: translate3d(0, 0, 0);
 }
 .toolbar-inner {
   position: absolute;
@@ -5466,11 +5488,19 @@ input[type="button"].button {
   --f7-button-font-weight: var(--f7-segmented-strong-button-font-weight);
   --f7-button-text-transform: var(--f7-segmented-strong-button-text-transform);
   --f7-button-pressed-bg-color: var(--f7-segmented-strong-button-pressed-bg-color);
+  position: relative;
   background: var(--f7-segmented-strong-bg-color);
   border-radius: calc(var(--f7-button-border-radius) + 2px);
   box-shadow: none;
   padding: var(--f7-segmented-strong-padding);
   overflow: hidden;
+}
+.segmented-strong .button,
+.ios .segmented-strong-ios .button,
+.md .segmented-strong-md .button,
+.aurora .segmented-strong-aurora .button {
+  z-index: 1;
+  transform: translate3d(0, 0, 0);
 }
 .segmented-strong .button,
 .ios .segmented-strong-ios .button,
@@ -5500,16 +5530,105 @@ input[type="button"].button {
 .ios .segmented-strong-ios .button.tab-link-active,
 .md .segmented-strong-md .button.tab-link-active,
 .aurora .segmented-strong-aurora .button.tab-link-active {
-  --f7-button-hover-bg-color: var(--f7-segmented-strong-button-active-bg-color);
-  --f7-button-bg-color: var(--f7-segmented-strong-button-active-bg-color);
+  --f7-button-hover-bg-color: transparent;
+  --f7-button-bg-color: transparent;
   --f7-button-text-color: var(--f7-segmented-strong-button-active-text-color);
   --f7-button-font-weight: var(--f7-segmented-strong-button-active-font-weight);
-  --f7-button-box-shadow: var(--f7-segmented-strong-button-active-box-shadow);
+}
+.segmented-strong .segmented-highlight,
+.ios .segmented-strong-ios .segmented-highlight,
+.md .segmented-strong-md .segmented-highlight,
+.aurora .segmented-strong-aurora .segmented-highlight {
+  --f7-segmented-highlight-num: 1;
+  --f7-segmented-highlight-active: 0;
+  --f7-segmented-highlight-padding: calc(var(--f7-segmented-strong-padding) * 2);
+  --f7-segmented-highlight-between: var(--f7-segmented-strong-between-buttons);
+  --f7-segmented-highlight-width: calc((100% - var(--f7-segmented-highlight-padding) - var(--f7-segmented-highlight-between) * (var(--f7-segmented-highlight-num) - 1)) / var(--f7-segmented-highlight-num));
+  position: absolute;
+  background-color: var(--f7-segmented-strong-button-active-bg-color);
+  border-radius: var(--f7-button-border-radius);
+  box-shadow: var(--f7-segmented-strong-button-active-box-shadow);
+  left: var(--f7-segmented-strong-padding);
+  top: var(--f7-segmented-strong-padding);
+  height: calc(100% - var(--f7-segmented-strong-padding) * 2);
+  width: var(--f7-segmented-highlight-width);
+  z-index: 0;
+  transform: translateX(calc(var(--f7-segmented-highlight-active) * 100% + var(--f7-segmented-highlight-active) * var(--f7-segmented-highlight-between)));
+  transition: 200ms;
+}
+.button:nth-child(2) ~ .segmented-highlight {
+  --f7-segmented-highlight-num: 2;
+}
+.button:nth-child(3) ~ .segmented-highlight {
+  --f7-segmented-highlight-num: 3;
+}
+.button:nth-child(4) ~ .segmented-highlight {
+  --f7-segmented-highlight-num: 4;
+}
+.button:nth-child(5) ~ .segmented-highlight {
+  --f7-segmented-highlight-num: 5;
+}
+.button:nth-child(6) ~ .segmented-highlight {
+  --f7-segmented-highlight-num: 6;
+}
+.button:nth-child(7) ~ .segmented-highlight {
+  --f7-segmented-highlight-num: 7;
+}
+.button:nth-child(8) ~ .segmented-highlight {
+  --f7-segmented-highlight-num: 8;
+}
+.button:nth-child(9) ~ .segmented-highlight {
+  --f7-segmented-highlight-num: 9;
+}
+.button:nth-child(10) ~ .segmented-highlight {
+  --f7-segmented-highlight-num: 10;
+}
+.button-active:nth-child(2) ~ .segmented-highlight,
+.tab-link-active:nth-child(2) ~ .segmented-highlight {
+  --f7-segmented-highlight-active: 1;
+}
+.button-active:nth-child(3) ~ .segmented-highlight,
+.tab-link-active:nth-child(3) ~ .segmented-highlight {
+  --f7-segmented-highlight-active: 2;
+}
+.button-active:nth-child(4) ~ .segmented-highlight,
+.tab-link-active:nth-child(4) ~ .segmented-highlight {
+  --f7-segmented-highlight-active: 3;
+}
+.button-active:nth-child(5) ~ .segmented-highlight,
+.tab-link-active:nth-child(5) ~ .segmented-highlight {
+  --f7-segmented-highlight-active: 4;
+}
+.button-active:nth-child(6) ~ .segmented-highlight,
+.tab-link-active:nth-child(6) ~ .segmented-highlight {
+  --f7-segmented-highlight-active: 5;
+}
+.button-active:nth-child(7) ~ .segmented-highlight,
+.tab-link-active:nth-child(7) ~ .segmented-highlight {
+  --f7-segmented-highlight-active: 6;
+}
+.button-active:nth-child(8) ~ .segmented-highlight,
+.tab-link-active:nth-child(8) ~ .segmented-highlight {
+  --f7-segmented-highlight-active: 7;
+}
+.button-active:nth-child(9) ~ .segmented-highlight,
+.tab-link-active:nth-child(9) ~ .segmented-highlight {
+  --f7-segmented-highlight-active: 8;
+}
+.button-active:nth-child(10) ~ .segmented-highlight,
+.tab-link-active:nth-child(10) ~ .segmented-highlight {
+  --f7-segmented-highlight-active: 9;
 }
 .segmented-round,
 .ios .segmented-round-ios,
 .md .segmented-round-md,
 .aurora .segmented-round-aurora {
+  border-radius: var(--f7-button-height);
+}
+.segmented-round .segmented-highlight,
+.ios .segmented-round-ios .segmented-highlight,
+.md .segmented-round-md .segmented-highlight,
+.aurora .segmented-round-aurora .segmented-highlight {
   border-radius: var(--f7-button-height);
 }
 .subnavbar .segmented {

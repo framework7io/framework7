@@ -10,11 +10,17 @@ function getCurrentView(app) {
   if ($viewsEl.length === 0) $viewsEl = app.root;
   // Find active view as tab
   let $viewEl = $viewsEl.children('.view');
+  if ($viewEl.length === 0) {
+    $viewEl = $viewsEl.children('.tabs').children('.view');
+  }
   // Propably in tabs or split view
   if ($viewEl.length > 1) {
     if ($viewEl.hasClass('tab')) {
       // Tabs
       $viewEl = $viewsEl.children('.view.tab-active');
+      if ($viewEl.length === 0) {
+        $viewEl = $viewsEl.children('.tabs').children('.view.tab-active');
+      }
     } else {
       // Split View, leave appView intact
     }
@@ -50,6 +56,7 @@ export default {
       reloadPages: false,
       reloadDetail: false,
       masterDetailBreakpoint: 0,
+      masterDetailResizable: false,
       removeElements: true,
       removeElementsWithTimeout: false,
       removeElementsTimeout: 0,

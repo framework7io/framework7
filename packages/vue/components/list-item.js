@@ -19,6 +19,8 @@ export default {
     tooltipTrigger: String,
     link: [Boolean, String],
     target: String,
+    tabLink: [Boolean, String],
+    tabLinkActive: Boolean,
     after: [String, Number],
     badge: [String, Number],
     badgeColor: String,
@@ -44,6 +46,7 @@ export default {
     chevronCenter: Boolean,
     checkbox: Boolean,
     radio: Boolean,
+    radioIcon: String,
     checked: Boolean,
     defaultChecked: Boolean,
     indeterminate: Boolean,
@@ -89,6 +92,8 @@ export default {
       header,
       footer,
       link,
+      tabLink,
+      tabLinkActive,
       href,
       target,
       after,
@@ -104,6 +109,7 @@ export default {
       smartSelect,
       checkbox,
       radio,
+      radioIcon,
       checked,
       defaultChecked,
       indeterminate,
@@ -147,6 +153,7 @@ export default {
           defaultChecked: defaultChecked,
           indeterminate: indeterminate,
           radio: radio,
+          radioIcon: radioIcon,
           name: name,
           value: value,
           readonly: readonly,
@@ -161,11 +168,14 @@ export default {
       if (link || href || accordionItem || smartSelect) {
         const linkAttrs = Object.assign({
           href: link === true ? '' : link || href,
-          target
+          target,
+          'data-tab': Utils.isStringProp(tabLink) && tabLink || undefined
         }, Mixins.linkRouterAttrs(props), {}, Mixins.linkActionsAttrs(props));
         const linkClasses = Utils.classNames({
           'item-link': true,
-          'smart-select': smartSelect
+          'smart-select': smartSelect,
+          'tab-link': tabLink || tabLink === '',
+          'tab-link-active': tabLinkActive
         }, Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
         linkEl = _h('a', __vueComponentTransformJSXProps(Object.assign({
           ref: 'linkEl',

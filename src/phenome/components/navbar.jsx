@@ -97,8 +97,7 @@ export default {
     const slots = self.slots;
 
     const isLarge = large || largeTransparent;
-    const isLargeTransparent = isLarge && (largeTransparent || transparent);
-    const isTransparent = !isLarge && transparent;
+    const isTransparent = transparent || (isLarge && largeTransparent);
     const isTransparentVisible = isTransparent && transparentVisible;
 
     const classes = Utils.classNames(
@@ -108,7 +107,6 @@ export default {
       {
         'navbar-hidden': hidden,
         'navbar-large': isLarge,
-        'navbar-large-transparent': isLargeTransparent,
         'navbar-large-collapsed': isLarge && largeCollapsed,
         'navbar-transparent': isTransparent,
         'navbar-transparent-visible': isTransparentVisible,

@@ -2,7 +2,7 @@
 /* eslint no-console: ["error", { allow: ["log"] }] */
 const path = require('path');
 const rollup = require('rollup');
-const buble = require('rollup-plugin-buble');
+const buble = require('@rollup/plugin-buble');
 const replace = require('@rollup/plugin-replace');
 const commonjs = require('@rollup/plugin-commonjs');
 const resolve = require('@rollup/plugin-node-resolve');

@@ -2,11 +2,9 @@
   import { createEventDispatcher } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -31,7 +29,7 @@
   }
 </script>
 <!-- svelte-ignore a11y-missing-attribute -->
-<div on:click={onClick} id={id} style={style} class={classes}>
+<div on:click={onClick} class={classes} {...restProps($$restProps)}>
   {#if image}
     <img src={image} />
   {/if}

@@ -281,6 +281,11 @@ export namespace Router {
     /** Event will be triggered right before Page will be removed from DOM. This event could be very useful if you need to detach some events / destroy some plugins to free memory. As an argument event receives Page Data */
     pageBeforeRemove(page: Page): void
 
+    /** Event will be triggered on page's parent View-Tab show */
+    pageTabShow(pageEl: HTMLElement): void
+    /** Event will be triggered on page's parent View-Tab hide */
+    pageTabHide(pageEl: HTMLElement): void
+
     /** Event will be triggered right after routable Tab content will be loaded */
     tabInit(newTabEl: HTMLElement, tabRoute: Route): void
     /** Event will be triggered right after routable Tab content will be loaded */
@@ -322,6 +327,10 @@ export namespace Router {
     'page:afterout': () => void
     /** Event will be triggered right before Page will be removed from DOM. This event could be very useful if you need to detach some events / destroy some plugins to free memory */
     'page:beforeremove': () => void
+    /** Event will be triggered on page's parent View-Tab show */
+    'page:tabshow': () => void
+    /** Event will be triggered on page's parent View-Tab hide */
+    'page:tabhide': () => void
   }
 
   interface AppMethods {

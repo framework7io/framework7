@@ -7,14 +7,16 @@ const CardExpandable = {
   open(cardEl = '.card-expandable', animate = true) {
     const app = this;
 
-    if ($('.card-opened').length) return;
     const $cardEl = $(cardEl).eq(0);
-
     if (!$cardEl || !$cardEl.length) return;
     if ($cardEl.hasClass('card-opened') || $cardEl.hasClass('card-opening') || $cardEl.hasClass('card-closing')) return;
 
     const $pageEl = $cardEl.parents('.page').eq(0);
     if (!$pageEl.length) return;
+
+    if ($pageEl.find('.card-opened').length) {
+      return;
+    }
 
     let prevented;
 

@@ -4,11 +4,11 @@
   import RoutableModals from './routable-modals.svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
 
   export let id = 'framework7-root';
   export let params = {};
   export let routes = [];
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -32,7 +32,7 @@
 
 </script>
 
-<div id={id} bind:this={el} class={classes} style={style}>
+<div id={id} bind:this={el} class={classes} {...restProps($$restProps)}>
   <slot></slot>
   <RoutableModals />
 </div>

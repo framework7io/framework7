@@ -120,7 +120,7 @@ class Popup extends Modal {
     let pageContentOffsetHeight;
     let pageContentScrollHeight;
     let popupHeight;
-    let $pushViewEl;
+    let $pushEl;
 
     function handleTouchStart(e) {
       if (isTouched || !allowSwipeToClose || !popup.params.swipeToClose) return;
@@ -171,7 +171,10 @@ class Popup extends Modal {
       if (!isMoved) {
         if (isPush && pushOffset) {
           popupHeight = $el[0].offsetHeight;
-          $pushViewEl = app.root.children('.view, .views');
+          $pushEl = $el.prevAll('.popup.modal-in').eq(0);
+          if ($pushEl.length === 0) {
+            $pushEl = app.root.children('.view, .views');
+          }
         }
         if (pageContentEl) {
           pageContentScrollTop = pageContentEl.scrollTop;
@@ -201,7 +204,19 @@ class Popup extends Modal {
       if (isPush && pushOffset) {
         const pushProgress = 1 - Math.abs(touchesDiff / popupHeight);
         const scale = 1 - (1 - pushViewScale(pushOffset)) * pushProgress;
-        $pushViewEl.transition(0).transform(`translate3d(0,0,0) scale(${scale})`);
+        if ($pushEl.hasClass('popup')) {
+          if ($pushEl.hasClass('popup-push')) {
+            $pushEl.transition(0).transform(
+              `translate3d(0, calc(-1 * ${pushProgress} * (var(--f7-popup-push-offset) + 10px)) , 0px) scale(${scale})`
+            );
+          } else {
+            $pushEl.transition(0).transform(
+              `translate3d(0, 0px , 0px) scale(${scale})`
+            );
+          }
+        } else {
+          $pushEl.transition(0).transform(`translate3d(0,0,0) scale(${scale})`);
+        }
       }
       $el.transition(0).transform(`translate3d(0,${-touchesDiff}px,0)`);
     }
@@ -216,7 +231,7 @@ class Popup extends Modal {
       allowSwipeToClose = false;
       $el.transition('');
       if (isPush && pushOffset) {
-        $pushViewEl.transition('').transform('');
+        $pushEl.transition('').transform('');
       }
       const direction = touchesDiff <= 0 ? 'to-bottom' : 'to-top';
       if ((typeof popup.params.swipeToClose === 'string' && direction !== popup.params.swipeToClose)) {
@@ -257,10 +272,14 @@ class Popup extends Modal {
       });
     }
 
+    let hasPreviousPushPopup;
+
     popup.on('open', () => {
+      hasPreviousPushPopup = false;
       if (popup.params.closeOnEscape) {
         $(document).on('keydown', onKeyDown);
       }
+      $el.prevAll('.popup.modal-in').addClass('popup-behind');
       if (popup.push) {
         isPush = popup.push && (
           (app.width < 630 || app.height < 630)
@@ -284,19 +303,21 @@ class Popup extends Modal {
       }
     });
     popup.on('close', () => {
+      hasPreviousPushPopup = popup.$el.prevAll('.popup-push.modal-in').length > 0;
       if (popup.params.closeOnEscape) {
         $(document).off('keydown', onKeyDown);
       }
       if (popup.params.closeByBackdropClick) {
         app.off('click', handleClick);
       }
-      if (isPush && pushOffset) {
+      $el.prevAll('.popup.modal-in').eq(0).removeClass('popup-behind');
+      if (isPush && pushOffset && !hasPreviousPushPopup) {
         popup.$htmlEl.removeClass('with-modal-popup-push');
         popup.$htmlEl.addClass('with-modal-popup-push-closing');
       }
     });
     popup.on('closed', () => {
-      if (isPush && pushOffset) {
+      if (isPush && pushOffset && !hasPreviousPushPopup) {
         popup.$htmlEl.removeClass('with-modal-popup-push-closing');
         popup.$htmlEl[0].style.removeProperty('--f7-popup-push-scale');
       }

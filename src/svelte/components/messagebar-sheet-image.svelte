@@ -2,10 +2,10 @@
   import { createEventDispatcher } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
 
   const dispatch = createEventDispatcher();
 
-  export let id = undefined;
   export let style = undefined;
 
   let className = undefined;
@@ -21,10 +21,6 @@
     Mixins.colorClasses($$props),
   );
 
-  $: styles = Utils.extend({
-    backgroundImage: image && `url(${image})`,
-  }, style || {});
-
   $: styles = `${image ? `background-image: url(${image});` : ''}${style || ''}`;
 
   function onChange(event) {
@@ -38,7 +34,7 @@
 
 </script>
 
-<label id={id} class={classes} style={styles}>
+<label class={classes} {...restProps($$restProps)}>
   <input type="checkbox" checked={checked} on:change={onChange} />
   <i class="icon icon-checkbox" />
   <slot />

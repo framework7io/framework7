@@ -1,9 +1,7 @@
 <script>
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
-
-  export let id = undefined;
-  export let style = undefined;
+  import restProps from '../utils/rest-props';
 
   let className = undefined;
   export { className as class };
@@ -14,6 +12,6 @@
     Mixins.colorClasses($$props),
   );
 </script>
-<span id={id} style={style} class={classes}>
+<span class={classes} {...restProps($$restProps)}>
   <slot />
 </span>

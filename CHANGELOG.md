@@ -2,6 +2,137 @@
 
 # Change Log
 
+# [v5.7.2](https://github.com/framework7io/framework7/compare/v5.7.1...v5.7.2) - May 9, 2020
+  * Core
+    * Autocomplete
+      * Fixed wrong padding when used as dropdown in searchbar
+    * Buttons
+      * Fixed rendering issue with "strong" segmented happened some times in iOS
+    * Device
+      * Better iPad detection
+    * Panel
+      * Now it auto-hides/restores on push Popup or Sheet modal open
+    * View
+      * Fixed `current` view detection when using layout with swipeable tabs
+  * Svelte
+    * All components now supports `$$restProps` under the hood, it means all extra props passed to components will be set as html attributes on component element
+  * Minor fixes and improvements
+
+# [v5.7.1](https://github.com/framework7io/framework7/compare/v5.7.0...v5.7.1) - May 1, 2020
+  * Core
+    * CSS
+      * `body` background color changed to `#000` when dark theme enabled
+    * Panel
+      * Now it correctly handles disabling backdrop.
+    * Text Editor
+      * Popover now calculates position relative to app root element (#3618)
+    * View
+      * Fixed `current` view detection when using layout with swipeable tabs
+  * Minor fixes
+
+# [v5.7.0](https://github.com/framework7io/framework7/compare/v5.6.0...v5.7.0) - April 25, 2020
+  * Core
+    * Card
+      * Fixed issue when expandable card didn't work when expandable card was opened in another page
+      * Fixed issue when used with "hide on scroll" Navbar/Toolbar on iOS
+    * Panel
+      * New `swipeNoFollow` parameter - fallback option for potentially better performance on old/slow devices. If you enable it, then swipe panel will not follow your finger during touch move, it will be automatically opened/closed on swipe left/right. (default false)
+    * Popup
+      * Disabled top/bottom safe areas on "tablet" when opened not as full screen popup
+      * Now it correctly handles and stack multiple opened "push" popups
+    * Radio
+      * Now radio icon can be rendered in the beginning or in the end of the list item, by adding `item-radio-icon-start` or `item-radio-icon-end` class to `item-radio` list element
+    * Smart Select
+      * Add support for more data-option-icon properties:
+        * `data-option-icon` - if it just a string then will create an icon with this class. If it is in the format of `f7:icon_name` then it will create a F7-Icons icon. If it is in the format of `md:icon_name` then it will create a Material Icons icon
+        * `data-option-icon-ios` - same as `data-option-icon` but will apply only when iOS theme is active
+        * `data-option-icon-md` - same as `data-option-icon` but will apply only when MD theme is active
+        * `data-option-icon-aurora` - same as `data-option-icon` but will apply only when Aurora theme is active
+    * Swiper - updated to latest 5.3.8
+      * Core
+        * Fix iOS bug with double bounce on free mode momentum bounce
+      * A11y
+        * Fixed focus ring on navigation buttons (#3544)
+        * Fixed RegExp issue in paginationBulletMessage (#3540, #3541)
+      * Thumbs
+        * Added thumbs.autoScrollOffset parameter that allows to set on what thumbs active slide from edge it should automaticall move scroll thumbs
+    * View
+      * New `masterDetailResizable` parameter to enable resizable Master Detail layout
+      * New `viewResize` / `view:resize` event on Master Detail resize
+  * React/Vue/Svelte
+    * ListItem
+      * New `radioIcon` string property to define where to display radio icon - in the beginning or in the end of the list item. Can be `start` or `end`
+    * Navbar
+      * Fixed not working `onBackClick` event in Svelte
+    * Panel
+      * New `swipeNoFollow` boolean property - fallback option for potentially better performance on old/slow devices. If you enable it, then swipe panel will not follow your finger during touch move, it will be automatically opened/closed on swipe left/right. (default false)
+    * View
+      * New `materDetailResizable` boolean property to enable resizable Master Detail layout
+      * New `viewResize` / `view:resize` event on Master Detail resize
+  * Minor fixes
+
+# [v5.6.0](https://github.com/framework7io/framework7/compare/v5.5.5...v5.6.0) - April 18, 2020
+  * Core
+    * App
+      * Added new app instance boolean property `app.darkTheme`. This property has effect only when `autoDarkTheme` enabled and indicates whether the dark theme active or not
+      * Added new app instance event `darkThemeChange`. It has effect only when `autoDarkTheme` enabled and fires on device preferred color scheme change
+    * Checkbox
+      * Fixed styles in RTL mode
+    * Device
+      * Added `nwjs` property that is true when app running under NW.js environment
+    * Router
+      * New `pageTabShow`/`page:tabshow` and `pageTabHide`/`page:tabhide` page events. These events fires on page's parent View-Tab show/hide
+    * Segmented
+      * Added animation for "strong" segmented active button
+      * **BREAKING CHANGE** - now "strong" segmented requires new `<span class="segmented-highlight">` element
+  * React/Vue/Svelte
+    * Input
+      * Added support for `inputmode` input attribute
+    * ListInput
+      * Added support for `inputmode` input attribute
+      * Fixed issue with `errorMessage` in Svelte
+    * ListItem
+      * Added `tabLink` and `tabLinkActive` props to make list item as a tab link
+    * Page
+      * New `pageTabShow`/`page:tabshow` and `pageTabHide`/`page:tabhide` page events. These events fire on page's parent View-Tab show/hide
+  * Minor fixes
+
+# [v5.5.5](https://github.com/framework7io/framework7/compare/v5.5.4...v5.5.5) - April 10, 2020
+  * Core
+    * Modals (Popup, Actions, Popover, Login Screen, etc.)
+      * Now it is possible to specify all modal parameters via `data-` attributes, e.g.
+        ```html
+          <div class="sheet-modal" data-swipe-to-close="true" data-close-on-escape="true">
+            ...
+          </div>
+        ```
+    * Swiper - updated to latest 5.3.7
+      * Core
+        * Fixed `cssMode` behavior in RTL layout
+      * Zoom
+        * Fixed issue with not working double-tap to toggle with virtual slides
+  * Minor fixes
+
+# [v5.5.4](https://github.com/framework7io/framework7/compare/v5.5.3...v5.5.4) - April 2, 2020
+  * Core
+    * Input
+      * Don't unset focus on input on input's clear button click/tap
+  * Svelte
+    * Input
+      * Fixed issue keeping focused state on blur
+  * Minor fixes
+
+# [v5.5.3](https://github.com/framework7io/framework7/compare/v5.5.1...v5.5.3) - March 28, 2020
+  * Core
+    * Modals (Popup, Actions, Popover, Login Screen, etc.)
+      * Now on modal open/close link click it will close only parent modal or last such modal if there are multiple modals with same selector
+    * Input
+      * `app.input.validate` and `app.input.validateInputs` methods now return `true` (when input(s) are valid) or `false` (when input(s) are not valid)
+  * Components (React, Vue, Svelte)
+    * Input/ListInput
+      * New `onValidate` prop callback that receives `true` (when input(s) are valid) or `false` (when input(s) are not valid)
+  * Minor fixes
+
 # [v5.5.1](https://github.com/framework7io/framework7/compare/v5.5.0...v5.5.1) - March 20, 2020
   * Core
     * Action Sheet

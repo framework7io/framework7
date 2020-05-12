@@ -2,15 +2,13 @@
   import { createEventDispatcher, onMount, onDestroy, afterUpdate, getContext } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import f7 from '../utils/f7';
   import hasSlots from '../utils/has-slots';
 
   import Badge from './badge.svelte';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -28,6 +26,8 @@
 
   // Link Props
   export let link = undefined;
+  export let tabLink = undefined;
+  export let tabLinkActive = false;
   export let href = undefined;
   export let target = undefined;
 
@@ -57,6 +57,7 @@
   // Inputs
   export let checkbox = undefined;
   export let radio = undefined;
+  export let radioIcon = undefined;
   export let checked = undefined;
   export let indeterminate = undefined;
   export let name = undefined;
@@ -102,6 +103,8 @@
     {
       'item-checkbox': checkbox,
       'item-radio': radio,
+      'item-radio-icon-start': radio && radioIcon === 'start',
+      'item-radio-icon-end': radio && radioIcon === 'end',
     },
     Mixins.colorClasses($$props),
   );
@@ -110,6 +113,8 @@
     {
       'item-link': true,
       'smart-select': smartSelect,
+      'tab-link': tabLink || tabLink === '',
+      'tab-link-active': tabLinkActive,
     },
     Mixins.linkRouterClasses($$props),
     Mixins.linkActionsClasses($$props),
@@ -118,6 +123,7 @@
   $: linkAttrs = {
     href: link === true ? '' : link || href,
     target,
+    'data-tab': (Utils.isStringProp(tabLink) && tabLink) || undefined,
     ...Mixins.linkRouterAttrs($$props),
     ...Mixins.linkActionsAttrs($$props),
   };
@@ -349,16 +355,16 @@
 </script>
 <!-- svelte-ignore a11y-missing-attribute -->
 {#if (divider || groupTitle)}
-  <li on:click={ onClick } bind:this={el} id={id} style={style} class={liClasses} data-virtual-list-index={virtualListIndex}>
+  <li on:click={ onClick } bind:this={el} class={liClasses} data-virtual-list-index={virtualListIndex} {...restProps($$restProps)}>
     <span><slot>{Utils.text(title)}</slot></span>
   </li>
 {:else if isSimple}
-  <li on:click={ onClick } bind:this={el} id={id} style={style} class={liClasses} data-virtual-list-index={virtualListIndex}>
+  <li on:click={ onClick } bind:this={el} class={liClasses} data-virtual-list-index={virtualListIndex} {...restProps($$restProps)}>
     {Utils.text(title)}
     <slot />
   </li>
 {:else}
-  <li bind:this={el} id={id} style={style} class={liClasses} data-virtual-list-index={virtualListIndex}>
+  <li bind:this={el} class={liClasses} data-virtual-list-index={virtualListIndex} {...restProps($$restProps)}>
     <slot name="root-start" />
     {#if swipeout}
       <div class="swipeout-content">

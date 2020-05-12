@@ -27,9 +27,33 @@ export default {
       }),
       {
         open(popoverEl, targetEl, animate) {
-          const $popoverEl = $(popoverEl);
+          let $popoverEl = $(popoverEl);
+          if ($popoverEl.length > 1) {
+            // check if same popover in other page
+            const $targetPage = $(targetEl).parents('.page');
+            if ($targetPage.length) {
+              $popoverEl.each((index, el) => {
+                const $el = $(el);
+                if ($el.parents($targetPage)[0] === $targetPage[0]) {
+                  $popoverEl = $el;
+                }
+              });
+            }
+          }
+          if ($popoverEl.length > 1) {
+            $popoverEl = $popoverEl.eq($popoverEl.length - 1);
+          }
           let popover = $popoverEl[0].f7Modal;
-          if (!popover) popover = new Popover(app, { el: $popoverEl, targetEl });
+          const data = $popoverEl.dataset();
+          if (!popover) {
+            popover = new Popover(app, Object.assign(
+              {
+                el: $popoverEl,
+                targetEl,
+              },
+              data
+            ));
+          }
           return popover.open(targetEl, animate);
         },
       }
@@ -42,7 +66,7 @@ export default {
     },
     '.popover-close': function closePopover($clickedEl, data = {}) {
       const app = this;
-      app.popover.close(data.popover, data.animate);
+      app.popover.close(data.popover, data.animate, $clickedEl);
     },
   },
 };

@@ -2,12 +2,10 @@
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import Mixins from '../utils/mixins';
   import Utils from '../utils/utils';
+  import restProps from '../utils/rest-props';
   import f7 from '../utils/f7';
 
   const dispatch = createEventDispatcher();
-
-  export let id = undefined;
-  export let style = undefined;
 
   let className = undefined;
   export { className as class };
@@ -104,10 +102,9 @@
   });
 </script>
 <div
-  id={id}
-  style={style}
   class={classes}
   bind:this={el}
+  {...restProps($$restProps)}
 >
   <div class="popover-angle" />
   <div class="popover-inner">

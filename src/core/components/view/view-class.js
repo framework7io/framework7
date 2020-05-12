@@ -2,6 +2,7 @@ import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Router from '../../modules/router/router';
 import Framework7Class from '../../utils/class';
+import resizableView from './resizable-view';
 
 class View extends Framework7Class {
   constructor(appInstance, el, viewParams = {}) {
@@ -169,6 +170,9 @@ class View extends Framework7Class {
     const app = view.app;
     view.checkMasterDetailBreakpoint = view.checkMasterDetailBreakpoint.bind(view);
     view.checkMasterDetailBreakpoint();
+    if (view.params.masterDetailResizable) {
+      resizableView(view);
+    }
     app.on('resize', view.checkMasterDetailBreakpoint);
   }
 
