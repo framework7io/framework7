@@ -39,6 +39,8 @@
   $: hasMediaSlots = hasSlots(arguments, 'media');
   // eslint-disable-next-line
   $: hasTextSlots = hasSlots(arguments, 'text');
+  // eslint-disable-next-line
+  $: hasDefaultSlots = hasSlots(arguments, 'default');
 
   $: hasIcon = $$props.icon || $$props.iconMaterial || $$props.iconF7 || $$props.iconMd || $$props.iconIos || $$props.iconAurora;
 
@@ -73,10 +75,11 @@
       <slot name="media" />
     </div>
   {/if}
-  {#if text || hasTextSlots}
+  {#if text || hasTextSlots || hasDefaultSlots}
     <div class="chip-label">
       {Utils.text(text)}
       <slot name="text" />
+      <slot />
     </div>
   {/if}
   {#if deleteable}

@@ -75,11 +75,12 @@ export default {
         </div>
       );
     }
-    if (text || (self.slots && self.slots.text)) {
+    if (text || (self.slots && (self.slots.text || (self.slots.default && self.slots.default.length)))) {
       labelEl = (
         <div className="chip-label">
           {text}
           <slot name="text" />
+          <slot name="default" />
         </div>
       );
     }
