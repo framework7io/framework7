@@ -13,7 +13,7 @@ import * as React from 'react';
 
 const libExtension = `
 declare module 'react' {
-  interface Component extends Partial<Framework7Extensions> {}
+  interface Component extends Framework7Extensions {}
 }
 `.trim();
 

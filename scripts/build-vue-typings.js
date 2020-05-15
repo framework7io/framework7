@@ -13,7 +13,7 @@ import Vue from 'vue';
 
 const libExtension = `
 declare module 'vue/types/vue' {
-  interface Vue extends Partial<Framework7Extensions> {}
+  interface Vue extends Framework7Extensions {}
 }
 `.trim();
 
