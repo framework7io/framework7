@@ -359,7 +359,7 @@ class Range extends Framework7Class {
       parentModals = range.$el.parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog, .toast');
       parentModals.on('modal:open', handleResize);
       parentPanel = range.$el.parents('.panel');
-      parentPanel.on('panel:open', handleResize);
+      parentPanel.on('panel:open panel:resize', handleResize);
       parentPage = range.$el.parents('.page').eq(0);
       parentPage.on('page:reinit', handleResize);
     };
@@ -374,7 +374,7 @@ class Range extends Framework7Class {
         parentModals.off('modal:open', handleResize);
       }
       if (parentPanel) {
-        parentPanel.off('panel:open', handleResize);
+        parentPanel.off('panel:open panel:resize', handleResize);
       }
       if (parentPage) {
         parentPage.off('page:reinit', handleResize);
