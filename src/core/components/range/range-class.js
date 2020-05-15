@@ -161,7 +161,7 @@ class Range extends Framework7Class {
 
     // Scale
     let $scaleEl;
-    if (range.scale && range.scaleSteps > 1) {
+    if (range.scale && range.scaleSteps >= 1) {
       $scaleEl = $(`
         <div class="range-scale">
           ${range.renderScale()}
@@ -551,7 +551,6 @@ class Range extends Framework7Class {
       : (app.rtl ? 'right' : 'left');
 
     let html = '';
-
     Array
       .from({ length: range.scaleSteps + 1 })
       .forEach((scaleEl, index) => {
@@ -577,7 +576,7 @@ class Range extends Framework7Class {
 
   updateScale() {
     const range = this;
-    if (!range.scale || range.scaleSteps < 2) {
+    if (!range.scale || range.scaleSteps < 1) {
       if (range.$scaleEl) range.$scaleEl.remove();
       delete range.$scaleEl;
       return;
