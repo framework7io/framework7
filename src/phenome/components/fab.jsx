@@ -72,9 +72,9 @@ export default {
       );
     }
     let linkEl;
-    if (linkChildren.length || (linkSlots && linkSlots.length)) {
+    if (linkChildren.length || (linkSlots && linkSlots.length) || textEl) {
       linkEl = (
-        <a ref="linkEl" target={target} href={href} key="f7-fab-link">
+        <a ref="linkEl" target={target} href={href}>
           {linkChildren}
           {textEl}
           {linkSlots}
