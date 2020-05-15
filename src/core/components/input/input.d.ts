@@ -24,9 +24,9 @@ export namespace Input {
       /** Recalculate required additional styles and classes on input element based on whether it has value or not */
       checkEmptyState(inputEl : HTMLElement | CSSSelector) : void
       /** Validate input */
-      validate(inputEl : HTMLElement | CSSSelector) : void
+      validate(inputEl : HTMLElement | CSSSelector) : boolean
       /** Validate all inputs in passed container */
-      validateInputs(containerEl : HTMLElement | CSSSelector) : void
+      validateInputs(containerEl : HTMLElement | CSSSelector) : boolean
     }
   }
   interface AppParams {
