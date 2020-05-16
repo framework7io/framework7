@@ -161,7 +161,7 @@ class Range extends Framework7Class {
 
     // Scale
     let $scaleEl;
-    if (range.scale && range.scaleSteps > 1) {
+    if (range.scale && range.scaleSteps >= 1) {
       $scaleEl = $(`
         <div class="range-scale">
           ${range.renderScale()}
@@ -359,7 +359,7 @@ class Range extends Framework7Class {
       parentModals = range.$el.parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog, .toast');
       parentModals.on('modal:open', handleResize);
       parentPanel = range.$el.parents('.panel');
-      parentPanel.on('panel:open', handleResize);
+      parentPanel.on('panel:open panel:resize', handleResize);
       parentPage = range.$el.parents('.page').eq(0);
       parentPage.on('page:reinit', handleResize);
     };
@@ -374,7 +374,7 @@ class Range extends Framework7Class {
         parentModals.off('modal:open', handleResize);
       }
       if (parentPanel) {
-        parentPanel.off('panel:open', handleResize);
+        parentPanel.off('panel:open panel:resize', handleResize);
       }
       if (parentPage) {
         parentPage.off('page:reinit', handleResize);
@@ -551,7 +551,6 @@ class Range extends Framework7Class {
       : (app.rtl ? 'right' : 'left');
 
     let html = '';
-
     Array
       .from({ length: range.scaleSteps + 1 })
       .forEach((scaleEl, index) => {
@@ -577,7 +576,7 @@ class Range extends Framework7Class {
 
   updateScale() {
     const range = this;
-    if (!range.scale || range.scaleSteps < 2) {
+    if (!range.scale || range.scaleSteps < 1) {
       if (range.$scaleEl) range.$scaleEl.remove();
       delete range.$scaleEl;
       return;

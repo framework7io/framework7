@@ -1,5 +1,5 @@
 /**
- * Framework7 5.7.2
+ * Framework7 5.7.5
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 9, 2020
+ * Released on: May 16, 2020
  */
 
 (function (global, factory) {
@@ -672,90 +672,147 @@
   Template7.partials = Template7Class.partials;
 
   /**
-   * SSR Window 1.0.1
+   * SSR Window 2.0.0
    * Better handling for window object in SSR environment
    * https://github.com/nolimits4web/ssr-window
    *
-   * Copyright 2018, Vladimir Kharlampidi
+   * Copyright 2020, Vladimir Kharlampidi
    *
    * Licensed under MIT
    *
-   * Released on: July 18, 2018
+   * Released on: May 12, 2020
    */
-  var doc = (typeof document === 'undefined') ? {
-    body: {},
-    addEventListener: function addEventListener() {},
-    removeEventListener: function removeEventListener() {},
-    activeElement: {
-      blur: function blur() {},
-      nodeName: '',
-    },
-    querySelector: function querySelector() {
-      return null;
-    },
-    querySelectorAll: function querySelectorAll() {
-      return [];
-    },
-    getElementById: function getElementById() {
-      return null;
-    },
-    createEvent: function createEvent() {
-      return {
-        initEvent: function initEvent() {},
-      };
-    },
-    createElement: function createElement() {
-      return {
-        children: [],
-        childNodes: [],
-        style: {},
-        setAttribute: function setAttribute() {},
-        getElementsByTagName: function getElementsByTagName() {
-          return [];
-        },
-      };
-    },
-    location: { hash: '' },
-  } : document; // eslint-disable-line
+  /* eslint-disable no-param-reassign */
+  function isObject(obj) {
+      return (obj !== null &&
+          typeof obj === 'object' &&
+          'constructor' in obj &&
+          obj.constructor === Object);
+  }
+  function extend(target, src) {
+      if (target === void 0) { target = {}; }
+      if (src === void 0) { src = {}; }
+      Object.keys(src).forEach(function (key) {
+          if (typeof target[key] === 'undefined')
+              { target[key] = src[key]; }
+          else if (isObject(src[key]) &&
+              isObject(target[key]) &&
+              Object.keys(src[key]).length > 0) {
+              extend(target[key], src[key]);
+          }
+      });
+  }
 
-  var win = (typeof window === 'undefined') ? {
-    document: doc,
-    navigator: {
-      userAgent: '',
-    },
-    location: {},
-    history: {},
-    CustomEvent: function CustomEvent() {
-      return this;
-    },
-    addEventListener: function addEventListener() {},
-    removeEventListener: function removeEventListener() {},
-    getComputedStyle: function getComputedStyle() {
-      return {
-        getPropertyValue: function getPropertyValue() {
-          return '';
-        },
-      };
-    },
-    Image: function Image() {},
-    Date: function Date() {},
-    screen: {},
-    setTimeout: function setTimeout() {},
-    clearTimeout: function clearTimeout() {},
-  } : window; // eslint-disable-line
+  var doc = typeof document !== 'undefined' ? document : {};
+  var ssrDocument = {
+      body: {},
+      addEventListener: function () { },
+      removeEventListener: function () { },
+      activeElement: {
+          blur: function () { },
+          nodeName: '',
+      },
+      querySelector: function () {
+          return null;
+      },
+      querySelectorAll: function () {
+          return [];
+      },
+      getElementById: function () {
+          return null;
+      },
+      createEvent: function () {
+          return {
+              initEvent: function () { },
+          };
+      },
+      createElement: function () {
+          return {
+              children: [],
+              childNodes: [],
+              style: {},
+              setAttribute: function () { },
+              getElementsByTagName: function () {
+                  return [];
+              },
+          };
+      },
+      createElementNS: function () {
+          return {};
+      },
+      importNode: function () {
+          return null;
+      },
+      location: {
+          hash: '',
+          host: '',
+          hostname: '',
+          href: '',
+          origin: '',
+          pathname: '',
+          protocol: '',
+          search: '',
+      },
+  };
+  extend(doc, ssrDocument);
+
+  var win = typeof window !== 'undefined' ? window : {};
+  var ssrWindow = {
+      document: ssrDocument,
+      navigator: {
+          userAgent: '',
+      },
+      location: {
+          hash: '',
+          host: '',
+          hostname: '',
+          href: '',
+          origin: '',
+          pathname: '',
+          protocol: '',
+          search: '',
+      },
+      history: {
+          replaceState: function () { },
+          pushState: function () { },
+          go: function () { },
+          back: function () { },
+      },
+      CustomEvent: function CustomEvent() {
+          return this;
+      },
+      addEventListener: function () { },
+      removeEventListener: function () { },
+      getComputedStyle: function () {
+          return {
+              getPropertyValue: function () {
+                  return '';
+              },
+          };
+      },
+      Image: function () { },
+      Date: function () { },
+      screen: {},
+      setTimeout: function () { },
+      clearTimeout: function () { },
+      matchMedia: function () {
+          return {};
+      },
+  };
+  extend(win, ssrWindow);
 
   /**
-   * Dom7 2.1.3
+   * Dom7 2.1.5
    * Minimalistic JavaScript library for DOM manipulation, with a jQuery-compatible API
    * http://framework7.io/docs/dom.html
    *
-   * Copyright 2019, Vladimir Kharlampidi
+   * Copyright 2020, Vladimir Kharlampidi
    * The iDangero.us
    * http://www.idangero.us/
    *
    * Licensed under MIT
    *
-   * Released on: February 11, 2019
+   * Released on: May 15, 2020
    */
 
   var Dom7 = function Dom7(arr) {
@@ -2770,11 +2827,9 @@
 
   var Support = (function Support() {
     return {
-      touch: (function checkTouch() {
-        return !!((win.navigator.maxTouchPoints > 0) || ('ontouchstart' in win) || (win.DocumentTouch && doc instanceof win.DocumentTouch));
-      }()),
+      touch: !!(('ontouchstart' in win) || (win.DocumentTouch && doc instanceof win.DocumentTouch)),
 
-      pointerEvents: !!win.PointerEvent,
+      pointerEvents: !!win.PointerEvent && ('maxTouchPoints' in win.navigator) && win.navigator.maxTouchPoints >= 0,
 
       observer: (function checkObserver() {
         return ('MutationObserver' in win || 'WebkitMutationObserver' in win);
@@ -7932,11 +7987,16 @@
 
     var skipMaster;
     if (router.params.masterDetailBreakpoint > 0) {
+      var classes = [];
+      router.$el.children('.page').each(function (index, pageEl) {
+        classes.push(pageEl.className);
+      });
+
       var $previousMaster = router.$el.children('.page-current').prevAll('.page-master').eq(0);
       if ($previousMaster.length) {
         var expectedPreviousPageUrl = router.history[router.history.length - 2];
         var expectedPreviousPageRoute = router.findMatchingRoute(expectedPreviousPageUrl);
-        if (expectedPreviousPageRoute && expectedPreviousPageRoute.route === $previousMaster[0].f7Page.route.route) {
+        if (expectedPreviousPageRoute && $previousMaster[0].f7Page && expectedPreviousPageRoute.route === $previousMaster[0].f7Page.route.route) {
           $previousPage = $previousMaster;
           if (!navigateOptions.preload) {
             skipMaster = app.width >= router.params.masterDetailBreakpoint;
@@ -7944,6 +8004,7 @@
         }
       }
     }
+
     if (!navigateOptions.force && $previousPage.length && !skipMaster) {
       if (router.params.pushState
         && $previousPage[0].f7Page
@@ -11722,7 +11783,7 @@
   };
 
   /**
-   * Framework7 5.7.2
+   * Framework7 5.7.5
    * Full featured mobile HTML framework for building iOS & Android apps
    * https://framework7.io/
    *
@@ -11730,7 +11791,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: May 9, 2020
+   * Released on: May 16, 2020
    */
 
   // Install Core Modules & Components

@@ -621,11 +621,16 @@ function back(...args) {
 
   let skipMaster;
   if (router.params.masterDetailBreakpoint > 0) {
+    const classes = [];
+    router.$el.children('.page').each((index, pageEl) => {
+      classes.push(pageEl.className);
+    });
+
     const $previousMaster = router.$el.children('.page-current').prevAll('.page-master').eq(0);
     if ($previousMaster.length) {
       const expectedPreviousPageUrl = router.history[router.history.length - 2];
       const expectedPreviousPageRoute = router.findMatchingRoute(expectedPreviousPageUrl);
-      if (expectedPreviousPageRoute && expectedPreviousPageRoute.route === $previousMaster[0].f7Page.route.route) {
+      if (expectedPreviousPageRoute && $previousMaster[0].f7Page && expectedPreviousPageRoute.route === $previousMaster[0].f7Page.route.route) {
         $previousPage = $previousMaster;
         if (!navigateOptions.preload) {
           skipMaster = app.width >= router.params.masterDetailBreakpoint;
@@ -633,6 +638,7 @@ function back(...args) {
       }
     }
   }
+
   if (!navigateOptions.force && $previousPage.length && !skipMaster) {
     if (router.params.pushState
       && $previousPage[0].f7Page

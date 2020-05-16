@@ -65,10 +65,9 @@ export default {
 
     let linkEl;
 
-    if (linkChildren.length || linkSlots && linkSlots.length) {
+    if (linkChildren.length || linkSlots && linkSlots.length || textEl) {
       linkEl = _h('a', {
         ref: 'linkEl',
-        key: 'f7-fab-link',
         attrs: {
           target: target,
           href: href

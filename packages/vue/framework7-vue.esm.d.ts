@@ -137,7 +137,7 @@ declare const f7 : Framework7;
 declare const f7ready: (onF7Ready: (f7: Framework7) => void) => void;
 
 declare module 'vue/types/vue' {
-  interface Vue extends Partial<Framework7Extensions> {}
+  interface Vue extends Framework7Extensions {}
 }
 
 export {

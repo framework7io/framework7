@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.7.2
+ * Framework7 React 5.7.5
  * Build full featured iOS & Android apps using Framework7 & React
  * https://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 9, 2020
+ * Released on: May 16, 2020
  */
 
 (function (global, factory) {
@@ -2903,10 +2903,10 @@
         }, iconEl, media, this.slots['media']);
       }
 
-      if (text || self.slots && self.slots.text) {
+      if (text || self.slots && (self.slots.text || self.slots.default && self.slots.default.length)) {
         labelEl = React.createElement('div', {
           className: 'chip-label'
-        }, text, this.slots['text']);
+        }, text, this.slots['text'], this.slots['default']);
       }
 
       if (deleteable) {
@@ -3418,14 +3418,13 @@
 
       var linkEl;
 
-      if (linkChildren.length || linkSlots && linkSlots.length) {
+      if (linkChildren.length || linkSlots && linkSlots.length || textEl) {
         linkEl = React.createElement('a', {
           ref: function (__reactNode) {
             this$1.__reactRefs['linkEl'] = __reactNode;
           },
           target: target,
-          href: href,
-          key: 'f7-fab-link'
+          href: href
         }, linkChildren, textEl, linkSlots);
       }
 
@@ -14748,7 +14747,7 @@
   };
 
   /**
-   * Framework7 React 5.7.2
+   * Framework7 React 5.7.5
    * Build full featured iOS & Android apps using Framework7 & React
    * https://framework7.io/react/
    *
@@ -14756,7 +14755,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: May 9, 2020
+   * Released on: May 16, 2020
    */
 
   function f7ready(callback) {

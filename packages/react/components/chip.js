@@ -71,10 +71,10 @@ class F7Chip extends React.Component {
       }, iconEl, media, this.slots['media']);
     }
 
-    if (text || self.slots && self.slots.text) {
+    if (text || self.slots && (self.slots.text || self.slots.default && self.slots.default.length)) {
       labelEl = React.createElement('div', {
         className: 'chip-label'
-      }, text, this.slots['text']);
+      }, text, this.slots['text'], this.slots['default']);
     }
 
     if (deleteable) {

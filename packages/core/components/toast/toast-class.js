@@ -89,9 +89,12 @@ class Toast extends Modal {
   render() {
     const toast = this;
     if (toast.params.render) return toast.params.render.call(toast, toast);
-    const { position, cssClass, icon, text, closeButton, closeButtonColor, closeButtonText } = toast.params;
+    const { position, horizontalPosition, cssClass, icon, text, closeButton, closeButtonColor, closeButtonText } = toast.params;
+    const horizontalClass = position === 'top' || position === 'bottom'
+      ? `toast-horizontal-${horizontalPosition}`
+      : '';
     return `
-      <div class="toast toast-${position} ${cssClass || ''} ${icon ? 'toast-with-icon' : ''}">
+      <div class="toast toast-${position} ${horizontalClass} ${cssClass || ''} ${icon ? 'toast-with-icon' : ''}">
         <div class="toast-content">
           ${icon ? `<div class="toast-icon">${icon}</div>` : ''}
           <div class="toast-text">${text}</div>

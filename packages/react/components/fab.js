@@ -68,14 +68,13 @@ class F7Fab extends React.Component {
 
     let linkEl;
 
-    if (linkChildren.length || linkSlots && linkSlots.length) {
+    if (linkChildren.length || linkSlots && linkSlots.length || textEl) {
       linkEl = React.createElement('a', {
         ref: __reactNode => {
           this.__reactRefs['linkEl'] = __reactNode;
         },
         target: target,
-        href: href,
-        key: 'f7-fab-link'
+        href: href
       }, linkChildren, textEl, linkSlots);
     }
 

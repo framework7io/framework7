@@ -137,7 +137,7 @@ declare const f7 : Framework7;
 declare const f7ready: (onF7Ready: (f7: Framework7) => void) => void;
 
 declare module 'react' {
-  interface Component extends Partial<Framework7Extensions> {}
+  interface Component extends Framework7Extensions {}
 }
 
 export {

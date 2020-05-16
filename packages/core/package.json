@@ -1,6 +1,6 @@
 {
   "name": "framework7",
-  "version": "5.7.2",
+  "version": "5.7.5",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "main": "js/framework7.js",
   "typings": "js/framework7.d.ts",
@@ -44,9 +44,9 @@
     "url": "https://www.patreon.com/vladimirkharlampidi"
   },
   "dependencies": {
-    "dom7": "^2.1.3",
+    "dom7": "^2.1.5",
     "path-to-regexp": "^6.1.0",
-    "ssr-window": "^1.0.1",
+    "ssr-window": "^2.0.0",
     "template7": "^1.4.2"
   }
 }

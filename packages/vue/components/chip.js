@@ -65,10 +65,10 @@ export default {
       }, [iconEl, media, this.$slots['media']]);
     }
 
-    if (text || self.$slots && self.$slots.text) {
+    if (text || self.$slots && (self.$slots.text || self.$slots.default && self.$slots.default.length)) {
       labelEl = _h('div', {
         class: 'chip-label'
-      }, [text, this.$slots['text']]);
+      }, [text, this.$slots['text'], this.$slots['default']]);
     }
 
     if (deleteable) {

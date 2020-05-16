@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.7.2
+ * Framework7 Vue 5.7.5
  * Build full featured iOS & Android apps using Framework7 & Vue
  * https://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 9, 2020
+ * Released on: May 16, 2020
  */
 
 (function (global, factory) {
@@ -2419,10 +2419,10 @@
         }, [iconEl, media, this.$slots['media']]);
       }
 
-      if (text || self.$slots && self.$slots.text) {
+      if (text || self.$slots && (self.$slots.text || self.$slots.default && self.$slots.default.length)) {
         labelEl = _h('div', {
           class: 'chip-label'
-        }, [text, this.$slots['text']]);
+        }, [text, this.$slots['text'], this.$slots['default']]);
       }
 
       if (deleteable) {
@@ -2856,10 +2856,9 @@
 
       var linkEl;
 
-      if (linkChildren.length || linkSlots && linkSlots.length) {
+      if (linkChildren.length || linkSlots && linkSlots.length || textEl) {
         linkEl = _h('a', {
           ref: 'linkEl',
-          key: 'f7-fab-link',
           attrs: {
             target: target,
             href: href
@@ -13298,7 +13297,7 @@
   };
 
   /**
-   * Framework7 Vue 5.7.2
+   * Framework7 Vue 5.7.5
    * Build full featured iOS & Android apps using Framework7 & Vue
    * https://framework7.io/vue/
    *
@@ -13306,7 +13305,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: May 9, 2020
+   * Released on: May 16, 2020
    */
 
   function f7ready(callback) {

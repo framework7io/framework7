@@ -81,12 +81,18 @@ class Picker extends Framework7Class {
         picker.$inputEl.on('click', onInputClick);
         if (picker.params.inputReadOnly) {
           picker.$inputEl.on('focus mousedown', onInputFocus);
+          if (picker.$inputEl[0]) {
+            picker.$inputEl[0].f7ValidateReadonly = true;
+          }
         }
       },
       detachInputEvents() {
         picker.$inputEl.off('click', onInputClick);
         if (picker.params.inputReadOnly) {
           picker.$inputEl.off('focus mousedown', onInputFocus);
+          if (picker.$inputEl[0]) {
+            delete picker.$inputEl[0].f7ValidateReadonly;
+          }
         }
       },
       attachHtmlEvents() {
@@ -408,8 +414,17 @@ class Picker extends Framework7Class {
     picker.cols.forEach((col) => {
       if (col.destroy) col.destroy();
     });
-    if (picker.$inputEl && app.theme === 'md') {
-      picker.$inputEl.trigger('blur');
+
+    if (picker.$inputEl) {
+      if (app.theme === 'md') {
+        picker.$inputEl.trigger('blur');
+      } else {
+        const validate = picker.$inputEl.attr('validate');
+        const required = picker.$inputEl.attr('required');
+        if (validate && required) {
+          app.input.validate(picker.$inputEl);
+        }
+      }
     }
 
     if (picker.$el) {

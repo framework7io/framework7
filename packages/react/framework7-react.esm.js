@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.7.2
+ * Framework7 React 5.7.5
  * Build full featured iOS & Android apps using Framework7 & React
  * https://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 9, 2020
+ * Released on: May 16, 2020
  */
 
 import F7AccordionContent from './components/accordion-content';

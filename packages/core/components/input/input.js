@@ -62,9 +62,23 @@ const Input = {
     if (!$inputEl.length) return true;
     const $itemInputEl = $inputEl.parents('.item-input');
     const $inputWrapEl = $inputEl.parents('.input');
+    function unsetReadonly() {
+      if ($inputEl[0].f7ValidateReadonly) {
+        $inputEl[0].readOnly = false;
+      }
+    }
+    function setReadonly() {
+      if ($inputEl[0].f7ValidateReadonly) {
+        $inputEl[0].readOnly = true;
+      }
+    }
+    unsetReadonly();
     const validity = $inputEl[0].validity;
     const validationMessage = $inputEl.dataset().errorMessage || $inputEl[0].validationMessage || '';
-    if (!validity) return true;
+    if (!validity) {
+      setReadonly();
+      return true;
+    }
     if (!validity.valid) {
       let $errorEl = $inputEl.nextAll('.item-input-error-message, .input-error-message');
       if (validationMessage) {
@@ -81,11 +95,13 @@ const Input = {
       $itemInputEl.addClass('item-input-invalid');
       $inputWrapEl.addClass('input-invalid');
       $inputEl.addClass('input-invalid');
+      setReadonly();
       return false;
     }
     $itemInputEl.removeClass('item-input-invalid item-input-with-error-message');
     $inputWrapEl.removeClass('input-invalid input-with-error-message');
     $inputEl.removeClass('input-invalid');
+    setReadonly();
     return true;
   },
   validateInputs(el) {

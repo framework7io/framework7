@@ -118,6 +118,9 @@ class SmartSelect extends Framework7Class {
         }
       } else {
         optionEl = ss.$selectEl.find(`option[value="${value}"]`)[0];
+        if (!optionEl) {
+          optionEl = ss.$selectEl.find('option').filter((index, optEl) => optEl.value === value)[0];
+        }
         displayAs = optionEl.dataset ? optionEl.dataset.displayAs : $(optionEl).data('display-as');
         text = displayAs && typeof displayAs !== 'undefined' ? displayAs : optionEl.textContent;
         optionText = [text];

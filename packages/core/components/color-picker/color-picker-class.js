@@ -99,12 +99,18 @@ class ColorPicker extends Framework7Class {
         self.$inputEl.on('click', onInputClick);
         if (self.params.inputReadOnly) {
           self.$inputEl.on('focus mousedown', onInputFocus);
+          if (self.$inputEl[0]) {
+            self.$inputEl[0].f7ValidateReadonly = true;
+          }
         }
       },
       detachInputEvents() {
         self.$inputEl.off('click', onInputClick);
         if (self.params.inputReadOnly) {
           self.$inputEl.off('focus mousedown', onInputFocus);
+          if (self.$inputEl[0]) {
+            delete self.$inputEl[0].f7ValidateReadonly;
+          }
         }
       },
       attachTargetEvents() {
@@ -626,8 +632,16 @@ class ColorPicker extends Framework7Class {
     // Detach events
     self.detachEvents();
 
-    if (self.$inputEl && app.theme === 'md') {
-      self.$inputEl.trigger('blur');
+    if (self.$inputEl) {
+      if (app.theme === 'md') {
+        self.$inputEl.trigger('blur');
+      } else {
+        const validate = self.$inputEl.attr('validate');
+        const required = self.$inputEl.attr('required');
+        if (validate && required) {
+          app.input.validate(self.$inputEl);
+        }
+      }
     }
     params.modules.forEach((m) => {
       if (typeof m === 'string' && modules[m] && modules[m].destroy) {

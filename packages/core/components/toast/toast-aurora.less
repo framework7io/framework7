@@ -31,7 +31,7 @@
     // 568 + 16
     @media (min-width: 584px) {
       left: 50%;
-      margin-left: -568px / 2;
+      margin-left: calc(-1 * var(--f7-toast-max-width) / 2);
       &.toast-center {
         margin-left: 0;
       }
@@ -39,9 +39,17 @@
     @media (min-width: 1024px) {
       margin-left: 0;
       width: auto;
-      &.toast-bottom,
-      &.toast-top {
+      &.toast-horizontal-left {
         left: 10px;
+      }
+      &.toast-horizontal-right {
+        left: auto;
+        right: 10px;
+      }
+      &.toast-horizontal-center {
+        left: 50%;
+        width: var(--f7-toast-max-width);
+        margin-left: calc(-1 * var(--f7-toast-max-width) / 2);
       }
     }
   }

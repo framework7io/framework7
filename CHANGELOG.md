@@ -2,6 +2,31 @@
 
 # Change Log
 
+# [v5.7.5](https://github.com/framework7io/framework7/compare/v5.7.2...v5.7.5) - May 16, 2020
+  * Core
+    * Input
+      * Now `app.input.validate()` and `app.input.validateInputs()` should correctly work with readonly inputs (like in Calendar, Picker, Color Picker, etc.)
+    * Range
+      * Added support for `scaleSteps: 1`
+      * Fixed issue when it didn't update size in parent resizable panel
+    * Swiper updated to latest 5.4.0
+      * Hash Navigation
+        * Added `hashChange` and `hashSet` events (#3557)
+      * Lazy
+        * Added support for `<picture>` lazy loading (#3560)
+      * Mousewheel
+        * Potentially improved vertical scrolling issues on Windows/Linux
+      * `History` and `Hash Navigation` modules are now included in Framework7 version of Swiper
+    * Toast
+      * Added `horizontalPosition` parameter - to set horizontal alignment on wide screen
+    * Touch
+      * Tweaked touch events detection
+  * React/Vue/Svelte
+    * Fab
+      * Fixed issue when it rendered not correctly without icon
+    * Chip
+      * Now it has default slot which goes to text label
+
 # [v5.7.2](https://github.com/framework7io/framework7/compare/v5.7.1...v5.7.2) - May 9, 2020
   * Core
     * Autocomplete
