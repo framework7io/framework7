@@ -19,6 +19,8 @@ import Parallax from './swiper-src/components/parallax/parallax';
 import Zoom from './swiper-src/components/zoom/zoom';
 import Lazy from './swiper-src/components/lazy/lazy';
 import Controller from './swiper-src/components/controller/controller';
+import History from './swiper-src/components/history/history';
+import HashNavigation from './swiper-src/components/hash-navigation/hash-navigation';
 import A11y from './swiper-src/components/a11y/a11y';
 import Autoplay from './swiper-src/components/autoplay/autoplay';
 import EffectFade from './swiper-src/components/effect-fade/effect-fade';
@@ -43,6 +45,8 @@ Swiper.use([
   Zoom,
   Lazy,
   Controller,
+  History,
+  HashNavigation,
   A11y,
   Autoplay,
   EffectFade,
