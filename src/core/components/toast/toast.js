@@ -32,6 +32,7 @@ export default {
       icon: null,
       text: null,
       position: 'bottom',
+      horizontalPosition: 'left',
       closeButton: false,
       closeButtonColor: null,
       closeButtonText: 'Ok',

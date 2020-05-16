@@ -25,6 +25,8 @@ export namespace Toast {
     text?: string
     /** Toast position. Can be bottom, center or top (default bottom) */
     position?: 'top' | 'center' | 'bottom'
+    /** Toast horizontal alignment on wide screen. Has effects only on top and bottom toasts. (default left) */
+    horizontalPosition?: 'left' | 'center' | 'right'
     /** Adds toast close button (default false) */
     closeButton?: boolean
     /** One of the default color themes */
