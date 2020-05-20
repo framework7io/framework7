@@ -73,7 +73,7 @@
     "@babel/preset-env": "^7.9.5",
     "@rollup/plugin-buble": "^0.21.1",
     "@rollup/plugin-commonjs": "^11.0.2",
-    "@rollup/plugin-node-resolve": "^7.1.1",
+    "@rollup/plugin-node-resolve": "^8.0.0",
     "@rollup/plugin-replace": "^2.3.1",
     "acorn": "^7.1.1",
     "acorn-jsx": "^5.2.0",
