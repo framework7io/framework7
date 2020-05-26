@@ -133,7 +133,9 @@ export namespace Router {
     /** route params. If we have matching route with `/page/user/:userId/post/:postId/` path and url of the page is `/page/user/55/post/12/` then it will be the following object `{userId: '55', postId: '12'}` */
     params?: { [ routeParameter : string ] : number | string | undefined }
     /** route name */
-    name : string
+    name?: string
+    /** route path */
+    path?: string
   }
   interface Route {
     /** route URL */
