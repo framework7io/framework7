@@ -75,6 +75,10 @@
   let f7SmartSelect;
   let f7Tooltip;
 
+  export function smartSelectInstance() {
+    return f7SmartSelect;
+  }
+
   $: isMedia = mediaList || mediaItem || getContext('f7ListMedia');
   $: isSortable = sortable || getContext('f7ListSortable');
   $: isSortableOpposite = sortableOpposite || getContext('f7ListSortableOpposite');
