@@ -60,6 +60,10 @@
   let el;
   let f7VirtualList;
 
+  export function virtualListInstance() {
+    return f7VirtualList;
+  }
+
   setContext('f7ListMedia', mediaList);
   setContext('f7ListSortable', sortable);
   setContext('f7ListSortableOpposite', sortableOpposite);
