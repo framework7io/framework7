@@ -60,6 +60,7 @@ module.exports = {
     'react/prop-types': ['off'],
     'linebreak-style': ['off'],
     'arrow-parens': ['off'],
+    'arrow-body-style': ['off'],
     'prefer-object-spread': ['off'],
   },
   overrides: [
