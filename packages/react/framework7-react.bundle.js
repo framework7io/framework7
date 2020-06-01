@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.7.5
+ * Framework7 React 5.7.6
  * Build full featured iOS & Android apps using Framework7 & React
  * https://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 16, 2020
+ * Released on: June 1, 2020
  */
 
 (function (global, factory) {
@@ -5888,6 +5888,18 @@
 
     F7ListInput.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
       var this$1 = this;
+
+      __reactComponentWatch(this, 'props.colorPickerParams', prevProps, prevState, function () {
+        var self = this$1;
+        if (!self.$f7 || !self.f7ColorPicker) { return; }
+        Utils.extend(self.f7ColorPicker.params, self.colorPickerParams || {});
+      });
+
+      __reactComponentWatch(this, 'props.calendarParams', prevProps, prevState, function () {
+        var self = this$1;
+        if (!self.$f7 || !self.f7Calendar) { return; }
+        Utils.extend(self.f7Calendar.params, self.f7Calendar || {});
+      });
 
       __reactComponentWatch(this, 'props.value', prevProps, prevState, function () {
         var self = this$1;
@@ -14747,7 +14759,7 @@
   };
 
   /**
-   * Framework7 React 5.7.5
+   * Framework7 React 5.7.6
    * Build full featured iOS & Android apps using Framework7 & React
    * https://framework7.io/react/
    *
@@ -14755,7 +14767,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: May 16, 2020
+   * Released on: June 1, 2020
    */
 
   function f7ready(callback) {

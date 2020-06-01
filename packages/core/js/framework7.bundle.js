@@ -1,5 +1,5 @@
 /**
- * Framework7 5.7.5
+ * Framework7 5.7.6
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 16, 2020
+ * Released on: June 1, 2020
  */
 
 (function (global, factory) {
@@ -6723,6 +6723,7 @@
     var url;
     var createRoute;
     var name;
+    var path;
     var query;
     var params;
     var route;
@@ -6732,11 +6733,12 @@
       url = navigateParams.url;
       createRoute = navigateParams.route;
       name = navigateParams.name;
+      path = navigateParams.path;
       query = navigateParams.query;
       params = navigateParams.params;
     }
-    if (name) {
-      url = router.generateUrl({ name: name, params: params, query: query });
+    if (name || path) {
+      url = router.generateUrl({ path: path, name: name, params: params, query: query });
       if (url) {
         return router.navigate(url, navigateOptions);
       }
@@ -6876,7 +6878,7 @@
         }
       }
       if (preloadMaster || (masterLoaded && navigateOptions.reloadAll)) {
-        router.navigate(route.route.masterRoute.path, {
+        router.navigate({ path: route.route.masterRoute.path, params: route.params || {} }, {
           animate: false,
           reloadAll: navigateOptions.reloadAll,
           reloadCurrent: navigateOptions.reloadCurrent,
@@ -8696,15 +8698,23 @@
         return parameters;
       }
       var name = parameters.name;
+      var path = parameters.path;
       var params = parameters.params;
       var query = parameters.query;
-      if (!name) {
-        throw new Error('Framework7: name parameter is required');
+      if (!name && !path) {
+        throw new Error('Framework7: "name" or "path" parameter is required');
       }
       var router = this;
-      var route = router.findRouteByKey('name', name);
+      var route = name
+        ? router.findRouteByKey('name', name)
+        : router.findRouteByKey('path', path);
+
       if (!route) {
-        throw new Error(("Framework7: route with name \"" + name + "\" not found"));
+        if (name) {
+          throw new Error(("Framework7: route with name \"" + name + "\" not found"));
+        } else {
+          throw new Error(("Framework7: route with path \"" + path + "\" not found"));
+        }
       }
       var url = router.constructRouteUrl(route, { params: params, query: query });
       if (!url) {
@@ -17320,17 +17330,17 @@
       var $tabEl;
       var $panelEl;
       var $popupEl;
-      var isAnimatedTabs;
       vl.attachEvents = function attachEvents() {
         $pageEl = vl.$el.parents('.page').eq(0);
-        $tabEl = vl.$el.parents('.tab').eq(0);
-        isAnimatedTabs = $tabEl.parents('.tabs-animated-wrap, .tabs-swipeable-wrap').length > 0;
+        $tabEl = vl.$el.parents('.tab').filter(function (tabElIndex, tabEl) {
+          return $(tabEl).parent('.tabs').parent('.tabs-animated-wrap, .tabs-swipeable-wrap').length === 0;
+        }).eq(0);
         $panelEl = vl.$el.parents('.panel').eq(0);
         $popupEl = vl.$el.parents('.popup').eq(0);
 
         vl.$scrollableParentEl.on('scroll', handleScrollBound);
         if ($pageEl.length) { $pageEl.on('page:reinit', handleResizeBound); }
-        if ($tabEl.length && !isAnimatedTabs) { $tabEl.on('tab:show', handleResizeBound); }
+        if ($tabEl.length) { $tabEl.on('tab:show', handleResizeBound); }
         if ($panelEl.length) { $panelEl.on('panel:open', handleResizeBound); }
         if ($popupEl.length) { $popupEl.on('popup:open', handleResizeBound); }
         app.on('resize', handleResizeBound);
@@ -17338,7 +17348,7 @@
       vl.detachEvents = function attachEvents() {
         vl.$scrollableParentEl.off('scroll', handleScrollBound);
         if ($pageEl.length) { $pageEl.off('page:reinit', handleResizeBound); }
-        if ($tabEl.length && !isAnimatedTabs) { $tabEl.off('tab:show', handleResizeBound); }
+        if ($tabEl.length) { $tabEl.off('tab:show', handleResizeBound); }
         if ($panelEl.length) { $panelEl.off('panel:open', handleResizeBound); }
         if ($popupEl.length) { $popupEl.off('popup:open', handleResizeBound); }
         app.off('resize', handleResizeBound);
@@ -18232,11 +18242,13 @@
       var tabLinkEl;
       var animate;
       var tabRoute;
-      if (args.length === 1 && args[0].constructor === Object) {
+      var animatedInit;
+      if (args.length === 1 && args[0] && args[0].constructor === Object) {
         tabEl = args[0].tabEl;
         tabLinkEl = args[0].tabLinkEl;
         animate = args[0].animate;
         tabRoute = args[0].tabRoute;
+        animatedInit = args[0].animatedInit;
       } else {
         (assign = args, tabEl = assign[0], tabLinkEl = assign[1], animate = assign[2], tabRoute = assign[3]);
         if (typeof args[1] === 'boolean') {
@@ -18253,7 +18265,7 @@
         $newTabEl[0].f7TabRoute = tabRoute;
       }
 
-      if ($newTabEl.length === 0 || $newTabEl.hasClass('tab-active')) {
+      if (!animatedInit && ($newTabEl.length === 0 || $newTabEl.hasClass('tab-active'))) {
         return {
           $newTabEl: $newTabEl,
           newTabEl: $newTabEl[0],
@@ -18324,7 +18336,7 @@
       // Remove active class from old tabs
       var $oldTabEl = $tabsEl.children('.tab-active');
       $oldTabEl.removeClass('tab-active');
-      if (!swiper || (swiper && !swiper.animating) || (swiper && tabRoute)) {
+      if (!animatedInit && (!swiper || (swiper && !swiper.animating) || (swiper && tabRoute))) {
         if ($oldTabEl.hasClass('view') && $oldTabEl.children('.page').length) {
           $oldTabEl.children('.page').each(function (pageIndex, pageEl) {
             $(pageEl).trigger('page:tabhide');
@@ -18337,7 +18349,7 @@
 
       // Trigger 'show' event on new tab
       $newTabEl.addClass('tab-active');
-      if (!swiper || (swiper && !swiper.animating) || (swiper && tabRoute)) {
+      if (!animatedInit && (!swiper || (swiper && !swiper.animating) || (swiper && tabRoute))) {
         if ($newTabEl.hasClass('view') && $newTabEl.children('.page').length) {
           $newTabEl.children('.page').each(function (pageIndex, pageEl) {
             $(pageEl).trigger('page:tabshow');
@@ -18447,12 +18459,21 @@
         },
       });
     },
+    on: {
+      'pageInit tabMounted': function onInit(pageOrTabEl) {
+        var $el = $(pageOrTabEl.el || pageOrTabEl);
+        var animatedTabEl = $el.find('.tabs-animated-wrap > .tabs > .tab-active')[0];
+        if (!animatedTabEl) { return; }
+        var app = this;
+        app.tab.show({ tabEl: animatedTabEl, animatedInit: true, animate: false });
+      },
+    },
     clicks: {
       '.tab-link': function tabLinkClick($clickedEl, data) {
         if ( data === void 0 ) data = {};
 
-        var app = this;
         if (($clickedEl.attr('href') && $clickedEl.attr('href').indexOf('#') === 0) || $clickedEl.attr('data-tab')) {
+          var app = this;
           app.tab.show({
             tabEl: data.tab || $clickedEl.attr('href'),
             tabLinkEl: $clickedEl,
@@ -18904,7 +18925,6 @@
       }
       $el.removeClass('panel-resizing');
       Utils.nextFrame(function () {
-        if (visibleByBreakpoint) { return; }
         $el.transition('');
         if (effect === 'reveal') {
           $backdropEl.transition('');
@@ -36860,18 +36880,19 @@
     function updateSwiper() {
       swiper.update();
     }
-    var $tabEl = $swiperEl.parents('.tab');
-    var isAnimatedTabs = $tabEl.parents('.tabs-animated-wrap, .tabs-swipeable-wrap').length > 0;
+    var $tabEl = $swiperEl.parents('.tab').filter(function (tabElIndex, tabEl) {
+      return $(tabEl).parent('.tabs').parent('.tabs-animated-wrap, .tabs-swipeable-wrap').length === 0;
+    }).eq(0);
     $swiperEl.parents('.popup, .login-screen, .sheet-modal, .popover').on('modal:open', updateSwiper);
     $swiperEl.parents('.panel').on('panel:open', updateSwiper);
-    if ($tabEl && $tabEl.length && !isAnimatedTabs) {
+    if ($tabEl && $tabEl.length) {
       $tabEl.on('tab:show', updateSwiper);
     }
 
     swiper.on('beforeDestroy', function () {
       $swiperEl.parents('.popup, .login-screen, .sheet-modal, .popover').off('modal:open', updateSwiper);
       $swiperEl.parents('.panel').off('panel:open', updateSwiper);
-      if ($tabEl && $tabEl.length && !isAnimatedTabs) {
+      if ($tabEl && $tabEl.length) {
         $tabEl.off('tab:show', updateSwiper);
       }
     });

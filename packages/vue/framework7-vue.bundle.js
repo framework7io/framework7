@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.7.5
+ * Framework7 Vue 5.7.6
  * Build full featured iOS & Android apps using Framework7 & Vue
  * https://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 16, 2020
+ * Released on: June 1, 2020
  */
 
 (function (global, factory) {
@@ -5140,6 +5140,16 @@
     },
 
     watch: {
+      'props.colorPickerParams': function watchValue() {
+        var self = this;
+        if (!self.$f7 || !self.f7ColorPicker) { return; }
+        Utils.extend(self.f7ColorPicker.params, self.colorPickerParams || {});
+      },
+      'props.calendarParams': function watchValue() {
+        var self = this;
+        if (!self.$f7 || !self.f7Calendar) { return; }
+        Utils.extend(self.f7Calendar.params, self.f7Calendar || {});
+      },
       'props.value': function watchValue() {
         var self = this;
         if (!self.$f7) { return; }
@@ -13297,7 +13307,7 @@
   };
 
   /**
-   * Framework7 Vue 5.7.5
+   * Framework7 Vue 5.7.6
    * Build full featured iOS & Android apps using Framework7 & Vue
    * https://framework7.io/vue/
    *
@@ -13305,7 +13315,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: May 16, 2020
+   * Released on: June 1, 2020
    */
 
   function f7ready(callback) {

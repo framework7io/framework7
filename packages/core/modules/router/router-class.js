@@ -482,14 +482,21 @@ class Router extends Framework7Class {
     if (typeof parameters === 'string') {
       return parameters;
     }
-    const { name, params, query } = parameters;
-    if (!name) {
-      throw new Error('Framework7: name parameter is required');
+    const { name, path, params, query } = parameters;
+    if (!name && !path) {
+      throw new Error('Framework7: "name" or "path" parameter is required');
     }
     const router = this;
-    const route = router.findRouteByKey('name', name);
+    const route = name
+      ? router.findRouteByKey('name', name)
+      : router.findRouteByKey('path', path);
+
     if (!route) {
-      throw new Error(`Framework7: route with name "${name}" not found`);
+      if (name) {
+        throw new Error(`Framework7: route with name "${name}" not found`);
+      } else {
+        throw new Error(`Framework7: route with path "${path}" not found`);
+      }
     }
     const url = router.constructRouteUrl(route, { params, query });
     if (!url) {

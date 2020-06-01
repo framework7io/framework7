@@ -117,7 +117,6 @@ function resizablePanel(panel) {
     }
     $el.removeClass('panel-resizing');
     Utils.nextFrame(() => {
-      if (visibleByBreakpoint) return;
       $el.transition('');
       if (effect === 'reveal') {
         $backdropEl.transition('');

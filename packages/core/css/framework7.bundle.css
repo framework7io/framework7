@@ -1,5 +1,5 @@
 /**
- * Framework7 5.7.5
+ * Framework7 5.7.6
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 16, 2020
+ * Released on: June 1, 2020
  */
 
 /*====================
@@ -12591,10 +12591,12 @@ label.item-radio.disabled,
 .range-slider.range-slider-horizontal {
   width: 100%;
   height: var(--f7-range-size);
+  touch-action: pan-y;
 }
 .range-slider.range-slider-vertical {
   height: 100%;
   width: var(--f7-range-size);
+  touch-action: pan-x;
 }
 .range-bar {
   position: absolute;

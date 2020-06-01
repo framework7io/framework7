@@ -2,6 +2,22 @@
 
 # Change Log
 
+# [v5.7.6](https://github.com/framework7io/framework7/compare/v5.7.5...v5.7.6) - June 1, 2020
+  * Core
+    * Range slider
+      * Fix for better handling touch events on Windows
+    * Router
+      * Fixed issue with parsing route params for Master Detail master page when navigating directly to detail page
+    * Tabs
+      * Automatically set initial animated tab position based on `tab-active` class
+  * React/Svelte/Vue
+    * ListItem
+      * Added `smartSelectInstance()` method to get Smart Select instance in Svelte
+      * Added `virtualListInstance()` methods to get Virtual List instance in Svelte
+    * ListInput
+      * Auto update Color Picker and Calendar params on `calendarParams` and `colorPickerParams` props changes
+  * Minor fixes
+
 # [v5.7.5](https://github.com/framework7io/framework7/compare/v5.7.2...v5.7.5) - May 16, 2020
   * Core
     * Input

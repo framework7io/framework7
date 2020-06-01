@@ -86,6 +86,14 @@
   let f7Calendar;
   let f7ColorPicker;
 
+  export function calendarInstance() {
+    return f7Calendar;
+  }
+
+  export function colorPickerInstance() {
+    return f7ColorPicker;
+  }
+
   $: isSortable = sortable || getContext('f7ListSortable');
   $: isSortableOpposite = sortableOpposite || getContext('f7ListSortableOpposite');
 
@@ -137,7 +145,19 @@
     }
   }
 
+  function watchColorPickerParams() {
+    if (!f7.instance || !f7ColorPicker) return;
+    Utils.extend(f7ColorPicker.params, colorPickerParams || {});
+  }
+
+  function watchCalendarParams() {
+    if (!f7.instance || !f7Calendar) return;
+    Utils.extend(f7Calendar.params, calendarParams || {});
+  }
+
   $: watchValue(value);
+  $: watchColorPickerParams(colorPickerParams);
+  $: watchCalendarParams(calendarParams);
 
   $: inputType = type === 'datepicker' || type === 'colorpicker'
     ? 'text'

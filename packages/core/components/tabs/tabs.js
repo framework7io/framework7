@@ -9,11 +9,13 @@ const Tab = {
     let tabLinkEl;
     let animate;
     let tabRoute;
-    if (args.length === 1 && args[0].constructor === Object) {
+    let animatedInit;
+    if (args.length === 1 && args[0] && args[0].constructor === Object) {
       tabEl = args[0].tabEl;
       tabLinkEl = args[0].tabLinkEl;
       animate = args[0].animate;
       tabRoute = args[0].tabRoute;
+      animatedInit = args[0].animatedInit;
     } else {
       [tabEl, tabLinkEl, animate, tabRoute] = args;
       if (typeof args[1] === 'boolean') {
@@ -30,7 +32,7 @@ const Tab = {
       $newTabEl[0].f7TabRoute = tabRoute;
     }
 
-    if ($newTabEl.length === 0 || $newTabEl.hasClass('tab-active')) {
+    if (!animatedInit && ($newTabEl.length === 0 || $newTabEl.hasClass('tab-active'))) {
       return {
         $newTabEl,
         newTabEl: $newTabEl[0],
@@ -101,7 +103,7 @@ const Tab = {
     // Remove active class from old tabs
     const $oldTabEl = $tabsEl.children('.tab-active');
     $oldTabEl.removeClass('tab-active');
-    if (!swiper || (swiper && !swiper.animating) || (swiper && tabRoute)) {
+    if (!animatedInit && (!swiper || (swiper && !swiper.animating) || (swiper && tabRoute))) {
       if ($oldTabEl.hasClass('view') && $oldTabEl.children('.page').length) {
         $oldTabEl.children('.page').each((pageIndex, pageEl) => {
           $(pageEl).trigger('page:tabhide');
@@ -114,7 +116,7 @@ const Tab = {
 
     // Trigger 'show' event on new tab
     $newTabEl.addClass('tab-active');
-    if (!swiper || (swiper && !swiper.animating) || (swiper && tabRoute)) {
+    if (!animatedInit && (!swiper || (swiper && !swiper.animating) || (swiper && tabRoute))) {
       if ($newTabEl.hasClass('view') && $newTabEl.children('.page').length) {
         $newTabEl.children('.page').each((pageIndex, pageEl) => {
           $(pageEl).trigger('page:tabshow');
@@ -224,10 +226,19 @@ export default {
       },
     });
   },
+  on: {
+    'pageInit tabMounted': function onInit(pageOrTabEl) {
+      const $el = $(pageOrTabEl.el || pageOrTabEl);
+      const animatedTabEl = $el.find('.tabs-animated-wrap > .tabs > .tab-active')[0];
+      if (!animatedTabEl) return;
+      const app = this;
+      app.tab.show({ tabEl: animatedTabEl, animatedInit: true, animate: false });
+    },
+  },
   clicks: {
     '.tab-link': function tabLinkClick($clickedEl, data = {}) {
-      const app = this;
       if (($clickedEl.attr('href') && $clickedEl.attr('href').indexOf('#') === 0) || $clickedEl.attr('data-tab')) {
+        const app = this;
         app.tab.show({
           tabEl: data.tab || $clickedEl.attr('href'),
           tabLinkEl: $clickedEl,
