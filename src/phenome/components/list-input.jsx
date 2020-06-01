@@ -401,6 +401,16 @@ export default {
     );
   },
   watch: {
+    'props.colorPickerParams': function watchValue() {
+      const self = this;
+      if (!self.$f7 || !self.f7ColorPicker) return;
+      Utils.extend(self.f7ColorPicker.params, self.colorPickerParams || {});
+    },
+    'props.calendarParams': function watchValue() {
+      const self = this;
+      if (!self.$f7 || !self.f7Calendar) return;
+      Utils.extend(self.f7Calendar.params, self.f7Calendar || {});
+    },
     'props.value': function watchValue() {
       const self = this;
       if (!self.$f7) return;
