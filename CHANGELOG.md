@@ -11,9 +11,10 @@
     * Tabs
       * Automatically set initial animated tab position based on `tab-active` class
   * React/Svelte/Vue
+    * List
+      * Added `virtualListInstance()` methods to get Virtual List instance in Svelte
     * ListItem
       * Added `smartSelectInstance()` method to get Smart Select instance in Svelte
-      * Added `virtualListInstance()` methods to get Virtual List instance in Svelte
     * ListInput
       * Auto update Color Picker and Calendar params on `calendarParams` and `colorPickerParams` props changes
   * Minor fixes
