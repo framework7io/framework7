@@ -232,7 +232,7 @@ export default {
       const animatedTabEl = $el.find('.tabs-animated-wrap > .tabs > .tab-active')[0];
       if (!animatedTabEl) return;
       const app = this;
-      app.tab.show({ tabEl: animatedTabEl, animatedInit: true });
+      app.tab.show({ tabEl: animatedTabEl, animatedInit: true, animate: false });
     },
   },
   clicks: {
