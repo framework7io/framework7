@@ -224,6 +224,13 @@ export default {
       );
     },
   },
+  watch: {
+    'props.value': function watchValue(newValue) {
+      const self = this;
+      if (!self.f7Stepper) return;
+      self.f7Stepper.setValue(newValue);
+    },
+  },
   componentDidCreate() {
     Utils.bindMethods(this, [
       'onInput',
