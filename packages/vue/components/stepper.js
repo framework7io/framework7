@@ -217,6 +217,13 @@ export default {
     }
 
   },
+  watch: {
+    'props.value': function watchValue(newValue) {
+      const self = this;
+      if (!self.f7Stepper) return;
+      self.f7Stepper.setValue(newValue);
+    }
+  },
 
   created() {
     Utils.bindMethods(this, ['onInput', 'onMinusClick', 'onPlusClick']);

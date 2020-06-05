@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.7.6
+ * Framework7 Vue 5.7.7
  * Build full featured iOS & Android apps using Framework7 & Vue
  * https://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 1, 2020
+ * Released on: June 5, 2020
  */
 
 (function (global, factory) {
@@ -3929,6 +3929,16 @@
     },
 
     watch: {
+      'props.colorPickerParams': function watchValue() {
+        var self = this;
+        if (!self.$f7 || !self.f7ColorPicker) { return; }
+        Utils.extend(self.f7ColorPicker.params, self.colorPickerParams || {});
+      },
+      'props.calendarParams': function watchValue() {
+        var self = this;
+        if (!self.$f7 || !self.f7Calendar) { return; }
+        Utils.extend(self.f7Calendar.params, self.calendarParams || {});
+      },
       'props.value': function watchValue() {
         var self = this;
         var ref = self.props;
@@ -5148,7 +5158,7 @@
       'props.calendarParams': function watchValue() {
         var self = this;
         if (!self.$f7 || !self.f7Calendar) { return; }
-        Utils.extend(self.f7Calendar.params, self.f7Calendar || {});
+        Utils.extend(self.f7Calendar.params, self.calendarParams || {});
       },
       'props.value': function watchValue() {
         var self = this;
@@ -11667,6 +11677,13 @@
       }
 
     },
+    watch: {
+      'props.value': function watchValue(newValue) {
+        var self = this;
+        if (!self.f7Stepper) { return; }
+        self.f7Stepper.setValue(newValue);
+      }
+    },
 
     created: function created() {
       Utils.bindMethods(this, ['onInput', 'onMinusClick', 'onPlusClick']);
@@ -13307,7 +13324,7 @@
   };
 
   /**
-   * Framework7 Vue 5.7.6
+   * Framework7 Vue 5.7.7
    * Build full featured iOS & Android apps using Framework7 & Vue
    * https://framework7.io/vue/
    *
@@ -13315,7 +13332,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: June 1, 2020
+   * Released on: June 5, 2020
    */
 
   function f7ready(callback) {

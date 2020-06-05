@@ -372,6 +372,18 @@ class F7Input extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    __reactComponentWatch(this, 'props.colorPickerParams', prevProps, prevState, () => {
+      const self = this;
+      if (!self.$f7 || !self.f7ColorPicker) return;
+      Utils.extend(self.f7ColorPicker.params, self.colorPickerParams || {});
+    });
+
+    __reactComponentWatch(this, 'props.calendarParams', prevProps, prevState, () => {
+      const self = this;
+      if (!self.$f7 || !self.f7Calendar) return;
+      Utils.extend(self.f7Calendar.params, self.calendarParams || {});
+    });
+
     __reactComponentWatch(this, 'props.value', prevProps, prevState, () => {
       const self = this;
       const {

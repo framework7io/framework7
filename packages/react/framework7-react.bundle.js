@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.7.6
+ * Framework7 React 5.7.7
  * Build full featured iOS & Android apps using Framework7 & React
  * https://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 1, 2020
+ * Released on: June 5, 2020
  */
 
 (function (global, factory) {
@@ -4643,6 +4643,18 @@
     F7Input.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
       var this$1 = this;
 
+      __reactComponentWatch(this, 'props.colorPickerParams', prevProps, prevState, function () {
+        var self = this$1;
+        if (!self.$f7 || !self.f7ColorPicker) { return; }
+        Utils.extend(self.f7ColorPicker.params, self.colorPickerParams || {});
+      });
+
+      __reactComponentWatch(this, 'props.calendarParams', prevProps, prevState, function () {
+        var self = this$1;
+        if (!self.$f7 || !self.f7Calendar) { return; }
+        Utils.extend(self.f7Calendar.params, self.calendarParams || {});
+      });
+
       __reactComponentWatch(this, 'props.value', prevProps, prevState, function () {
         var self = this$1;
         var ref = self.props;
@@ -5898,7 +5910,7 @@
       __reactComponentWatch(this, 'props.calendarParams', prevProps, prevState, function () {
         var self = this$1;
         if (!self.$f7 || !self.f7Calendar) { return; }
-        Utils.extend(self.f7Calendar.params, self.f7Calendar || {});
+        Utils.extend(self.f7Calendar.params, self.calendarParams || {});
       });
 
       __reactComponentWatch(this, 'props.value', prevProps, prevState, function () {
@@ -12987,6 +12999,16 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
+    F7Stepper.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+      var this$1 = this;
+
+      __reactComponentWatch(this, 'props.value', prevProps, prevState, function (newValue) {
+        var self = this$1;
+        if (!self.f7Stepper) { return; }
+        self.f7Stepper.setValue(newValue);
+      });
+    };
+
     Object.defineProperties( F7Stepper.prototype, prototypeAccessors );
 
     return F7Stepper;
@@ -14759,7 +14781,7 @@
   };
 
   /**
-   * Framework7 React 5.7.6
+   * Framework7 React 5.7.7
    * Build full featured iOS & Android apps using Framework7 & React
    * https://framework7.io/react/
    *
@@ -14767,7 +14789,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: June 1, 2020
+   * Released on: June 5, 2020
    */
 
   function f7ready(callback) {

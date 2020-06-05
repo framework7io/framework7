@@ -386,7 +386,7 @@ class F7ListInput extends React.Component {
     __reactComponentWatch(this, 'props.calendarParams', prevProps, prevState, () => {
       const self = this;
       if (!self.$f7 || !self.f7Calendar) return;
-      Utils.extend(self.f7Calendar.params, self.f7Calendar || {});
+      Utils.extend(self.f7Calendar.params, self.calendarParams || {});
     });
 
     __reactComponentWatch(this, 'props.value', prevProps, prevState, () => {

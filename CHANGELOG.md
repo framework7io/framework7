@@ -2,6 +2,14 @@
 
 # Change Log
 
+# [v5.7.7](https://github.com/framework7io/framework7/compare/v5.7.6...v5.7.7) - June 5, 2020
+  * React/Svelte/Vue
+    * ListInput
+      * Fixed issue with infinite loop when updating `calendarParams`
+    * Stepper
+      * Auto update stepper internal value on `value` prop update
+  * Minor Fixes
+
 # [v5.7.6](https://github.com/framework7io/framework7/compare/v5.7.5...v5.7.6) - June 1, 2020
   * Core
     * Range slider

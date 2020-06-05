@@ -1,6 +1,7 @@
 import React from 'react';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
+import __reactComponentWatch from '../runtime-helpers/react-component-watch.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
 
@@ -266,6 +267,14 @@ class F7Stepper extends React.Component {
   }
 
   set refs(refs) {}
+
+  componentDidUpdate(prevProps, prevState) {
+    __reactComponentWatch(this, 'props.value', prevProps, prevState, newValue => {
+      const self = this;
+      if (!self.f7Stepper) return;
+      self.f7Stepper.setValue(newValue);
+    });
+  }
 
 }
 

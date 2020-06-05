@@ -330,7 +330,7 @@ export default {
     'props.calendarParams': function watchValue() {
       const self = this;
       if (!self.$f7 || !self.f7Calendar) return;
-      Utils.extend(self.f7Calendar.params, self.f7Calendar || {});
+      Utils.extend(self.f7Calendar.params, self.calendarParams || {});
     },
     'props.value': function watchValue() {
       const self = this;
