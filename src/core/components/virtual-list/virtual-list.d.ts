@@ -122,7 +122,7 @@ export namespace VirtualList {
       /** destroy Virtual List instance */
       destroy(el: HTMLElement | CSSSelector): void
       /** get Virtual List instance by HTML element */
-      get(el: HTMLElement | CSSSelector): void
+      get(el: HTMLElement | CSSSelector): VirtualList
     }
   }
   interface AppParams {
