@@ -4,6 +4,14 @@ import Mixins from '../utils/mixins';
 // eslint-disable-next-line
 import F7Icon from './icon';
 
+/* phenome-dts-imports
+import { Tooltip as TooltipNamespace } from 'framework7/components/tooltip/tooltip';
+*/
+
+/* phenome-dts-instance
+f7Tooltip: TooltipNamespace.Tooltip
+*/
+
 export default {
   name: 'f7-chip',
   props: {
@@ -16,6 +24,8 @@ export default {
     mediaBgColor: String,
     mediaTextColor: String,
     outline: Boolean,
+    tooltip: String,
+    tooltipTrigger: String,
     ...Mixins.colorProps,
     ...Mixins.linkIconProps,
   },
@@ -107,19 +117,58 @@ export default {
       </div>
     );
   },
+  watch: {
+    'props.tooltip': function watchTooltip(newText) {
+      const self = this;
+      if (!newText && self.f7Tooltip) {
+        self.f7Tooltip.destroy();
+        self.f7Tooltip = null;
+        delete self.f7Tooltip;
+        return;
+      }
+      if (newText && !self.f7Tooltip && self.$f7) {
+        self.f7Tooltip = self.$f7.tooltip.create({
+          targetEl: self.refs.el,
+          text: newText,
+          trigger: self.props.tooltipTrigger,
+        });
+        return;
+      }
+      if (!newText || !self.f7Tooltip) return;
+      self.f7Tooltip.setText(newText);
+    },
+  },
   componentDidCreate() {
     Utils.bindMethods(this, ['onClick', 'onDeleteClick']);
   },
   componentDidMount() {
-    this.refs.el.addEventListener('click', this.onClick);
-    if (this.refs.deleteEl) {
-      this.refs.deleteEl.addEventListener('click', this.onDeleteClick);
+    const self = this;
+    const el = self.refs.el;
+    el.addEventListener('click', self.onClick);
+    if (self.refs.deleteEl) {
+      self.refs.deleteEl.addEventListener('click', self.onDeleteClick);
     }
+    const { tooltip, tooltipTrigger } = self.props;
+    if (!tooltip) return;
+
+    self.$f7ready((f7) => {
+      self.f7Tooltip = f7.tooltip.create({
+        targetEl: el,
+        text: tooltip,
+        trigger: tooltipTrigger,
+      });
+    });
   },
   componentWillUnmount() {
-    this.refs.el.removeEventListener('click', this.onClick);
-    if (this.refs.deleteEl) {
-      this.refs.deleteEl.removeEventListener('click', this.onDeleteClick);
+    const self = this;
+    self.refs.el.removeEventListener('click', self.onClick);
+    if (self.refs.deleteEl) {
+      self.refs.deleteEl.removeEventListener('click', self.onDeleteClick);
+    }
+    if (self.f7Tooltip && self.f7Tooltip.destroy) {
+      self.f7Tooltip.destroy();
+      self.f7Tooltip = null;
+      delete self.f7Tooltip;
     }
   },
   methods: {
