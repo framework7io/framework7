@@ -1,5 +1,5 @@
 language: node_js
 node_js:
-  - "6"
+  - "11.6.0"
 before_script:
   - npm install --global gulp

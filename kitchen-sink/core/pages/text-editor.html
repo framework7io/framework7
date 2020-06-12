@@ -1,0 +1,130 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Text Editor</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block">
+        <p>Framework7 comes with a touch-friendly Rich Text Editor component. It is based on modern "contenteditable" API so it should work everywhere as is.</p>
+        <p>It comes with the basic set of formatting features. But its functionality can be easily extended and customized to fit any requirements.</p>
+      </div>
+
+      <div class="block-title">Default Setup</div>
+      <div class="text-editor text-editor-init">
+        <div class="text-editor-content" contenteditable></div>
+      </div>
+
+      <div class="block-title">With Placeholder</div>
+      <div class="text-editor text-editor-init" data-placeholder="Enter text...">
+        <div class="text-editor-content" contenteditable></div>
+      </div>
+
+      <div class="block-title">With Default Value</div>
+      <div class="text-editor text-editor-init" data-placeholder="Enter text...">
+        <div class="text-editor-content" contenteditable>
+          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequatur sunt, sapiente quis eligendi consectetur hic asperiores assumenda quidem dolore quasi iusto tenetur commodi qui ullam sint sed alias! Consequatur, dolor!</p>
+          <p>Provident reiciendis exercitationem reprehenderit amet repellat laborum, sequi id quam quis quo quos facere veniam ad libero dolorum animi. Nobis, illum culpa explicabo dolorem vitae ut dolor at reprehenderit magnam?</p>
+          <p>Qui, animi. Dolores dicta, nobis aut expedita enim eum assumenda modi, blanditiis voluptatibus excepturi non pariatur. Facilis fugit facere sequi molestias nemo in, suscipit inventore consequuntur, repellat perferendis, voluptas odit.</p>
+          <p>Tempora voluptates, doloribus architecto eligendi numquam facilis perspiciatis autem quam voluptas maxime ratione harum laudantium cum deleniti. In, alias deserunt voluptatibus eligendi libero nobis est unde et perspiciatis cumque voluptatum.</p>
+          <p>Quam error doloribus qui laboriosam eligendi. Aspernatur quam pariatur perspiciatis reprehenderit atque dicta culpa, aut rem? Assumenda, quibusdam? Reprehenderit necessitatibus facere nemo iure maiores porro voluptates accusamus quibusdam. Nesciunt, assumenda?</p>
+        </div>
+      </div>
+
+      <div class="block-title">Specific Buttons</div>
+      <div class="block-header">It is possible to customize which buttons (commands) to show.</div>
+      <div class="text-editor text-editor-init" data-placeholder="Enter text..." data-buttons='[["bold", "italic", "underline", "strikeThrough"], ["orderedList", "unorderedList"]]'>
+        <div class="text-editor-content" contenteditable></div>
+      </div>
+
+      <div class="block-title">Custom Button</div>
+      <div class="block-header">It is possible to create custom editor buttons. Here is the custom "hr" button that adds horizontal rule:</div>
+      <div class="text-editor text-editor-custom-buttons">
+        <div class="text-editor-content" contenteditable></div>
+      </div>
+
+      <div class="block-title">Resizable</div>
+      <div class="block-header">Editor will be resized based on its content.</div>
+      <div class="text-editor text-editor-init text-editor-resizable" data-placeholder="Enter text..." data-buttons='["bold", "italic", "underline", "strikeThrough"]'>
+        <div class="text-editor-content" contenteditable></div>
+      </div>
+
+      <div class="block-title">Popover Mode</div>
+      <div class="block-header">In this mode, there is no toolbar with buttons, but they appear as popover when you select any text in editor.</div>
+      <div class="text-editor text-editor-init" data-placeholder="Enter text..." data-buttons='["bold", "italic", "underline", "strikeThrough"]' data-mode="popover" style="--f7-text-editor-height: 150px">
+        <div class="text-editor-content" contenteditable></div>
+      </div>
+
+      <div class="block-title">Keyboard Toolbar Mode</div>
+      <div class="block-header">In this mode, toolbar with buttons will appear on top of virtual keyboard when editor is in the focus. It is supported only in iOS, Android cordova apps and in Android Chrome. When not supported it will fallback to "popover" mode.</div>
+      <div class="text-editor text-editor-init" data-placeholder="Enter text..." data-mode="keyboard-toolbar" style="--f7-text-editor-height: 150px">
+        <div class="text-editor-content" contenteditable></div>
+      </div>
+
+      <div class="block-title">As List Input</div>
+      <div class="block-header">Text editor can be used in list with other inputs. In this example it is enabled with "keyboard-toolbar"/"popover" type for "About" field.</div>
+      <div class="list">
+        <ul>
+          <li class="item-content item-input">
+            <div class="item-media">
+              <i class="icon demo-list-icon"></i>
+            </div>
+            <div class="item-inner">
+              <div class="item-title item-label">Name</div>
+              <div class="item-input-wrap">
+                <input type="text" placeholder="Your name">
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-media">
+              <i class="icon demo-list-icon"></i>
+            </div>
+            <div class="item-inner">
+              <div class="item-title item-label">About</div>
+              <div class="item-input-wrap">
+                <div class="text-editor text-editor-init text-editor-resizable" data-placeholder="About" data-buttons='["bold", "italic", "underline", "strikeThrough"]' data-mode="popover">
+                  <div class="text-editor-content" contenteditable></div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function () {
+        var self = this;
+        self.textEditorCustomButtons = self.$app.textEditor.create({
+          el: self.$el.find('.text-editor-custom-buttons'),
+          // define custom "hr" button
+          customButtons: {
+            hr: {
+              content: '&lt;hr&gt;',
+              onClick(editor, buttonEl) {
+                document.execCommand('insertHorizontalRule', false);
+              },
+            },
+          },
+          buttons: [["bold", "italic", "underline", "strikeThrough"], "hr"],
+        });
+      },
+      pageBeforeRemove: function () {
+        var self = this;
+        self.textEditorCustomButtons.destroy();
+      }
+    },
+  }
+</script>

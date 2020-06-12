@@ -1,0 +1,113 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Notifications</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block block-strong">
+        <p>Framework7 comes with simple Notifications component that allows you to show some useful messages to user and request basic actions.</p>
+        <p><a href="#" class="button button-fill" @click="showNotificationFull">Full layout notification</a></p>
+        <p><a href="#" class="button button-fill" @click="showNotificationWithButton">With close button</a></p>
+        <p><a href="#" class="button button-fill" @click="showNotificationCloseOnClick">Click to close</a></p>
+        <p><a href="#" class="button button-fill" @click="showNotificationCallbackOnClose">Callback on close</a></p>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    methods: {
+      showNotificationFull: function () {
+        var self = this;
+        // Create notification
+        if (!self.notificationFull) {
+          self.notificationFull = self.$app.notification.create({
+            icon: '<i class="icon icon-f7"></i>',
+            title: 'Framework7',
+            titleRightText: 'now',
+            subtitle: 'This is a subtitle',
+            text: 'This is a simple notification message',
+            closeTimeout: 3000,
+          });
+        }
+        // Open it
+        self.notificationFull.open();
+      },
+      showNotificationWithButton: function () {
+        var self = this;
+        // Create notification
+        if (!self.notificationWithButton) {
+          self.notificationWithButton = self.$app.notification.create({
+            icon: '<i class="icon icon-f7"></i>',
+            title: 'Framework7',
+            subtitle: 'Notification with close button',
+            text: 'Click (x) button to close me',
+            closeButton: true,
+          });
+        }
+        // Open it
+        self.notificationWithButton.open();
+      },
+      showNotificationCloseOnClick: function () {
+        var self = this;
+        // Create notification
+        if (!self.notificationCloseOnClick) {
+          self.notificationCloseOnClick = self.$app.notification.create({
+            icon: '<i class="icon icon-f7"></i>',
+            title: 'Framework7',
+            titleRightText: 'now',
+            subtitle: 'Notification with close on click',
+            text: 'Click me to close',
+            closeOnClick: true,
+          });
+        }
+        // Open it
+        self.notificationCloseOnClick.open();
+      },
+      showNotificationCallbackOnClose: function () {
+        var self = this;
+        // Create notification
+        if (!self.notificationCallbackOnClose) {
+          self.notificationCallbackOnClose = self.$app.notification.create({
+            icon: '<i class="icon icon-f7"></i>',
+            title: 'Framework7',
+            titleRightText: 'now',
+            subtitle: 'Notification with close on click',
+            text: 'Click me to close',
+            closeOnClick: true,
+            on: {
+              close: function () {
+                self.$app.dialog.alert('Notification closed');
+              },
+            },
+          });
+        }
+        // Open it
+        self.notificationCallbackOnClose.open();
+      },
+    },
+    on: {
+      pageBeforeOut: function () {
+        var self = this;
+        self.$app.notification.close();
+      },
+      pageBeforeRemove: function () {
+        var self = this;
+        // Destroy toasts when page removed
+        if (self.notificationFull) self.notificationFull.destroy();
+        if (self.notificationWithButton) self.notificationWithButton.destroy();
+        if (self.notificationCloseOnClick) self.notificationCloseOnClick.destroy();
+        if (self.notificationCallbackOnClose) self.notificationCallbackOnClose.destroy();
+      },
+    }
+  }
+</script>

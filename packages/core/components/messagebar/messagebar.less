@@ -1,0 +1,180 @@
+/* === Messagebar === */
+@import url('./messagebar-vars.less');
+
+.messagebar {
+  transform: translate3d(0,0,0);
+  background: var(--f7-messagebar-bg-color);
+  height: auto;
+  min-height: var(--f7-messagebar-height);
+  font-size: var(--f7-messagebar-font-size);
+  padding-bottom: var(--f7-safe-area-bottom);
+  bottom: 0;
+  .hairline(top, var(--f7-messagebar-border-color));
+  .bar-shadow-top(var(--f7-messagebar-shadow-image));
+  .ios-translucent-bars(var(--f7-messagebar-bg-color-rgb));
+  &.no-hairline, &.no-border {
+    &:before {
+      display: none !important;
+    }
+  }
+  &.no-shadow, &.toolbar-hidden {
+    &:after {
+      display: none !important;
+    }
+  }
+  .toolbar-inner {
+    top: auto;
+    position: relative;
+    height: auto;
+    bottom: auto;
+    padding-left: calc(var(--f7-messagebar-inner-padding-left, var(--f7-toolbar-inner-padding-left)) + var(--f7-safe-area-left));
+    padding-right: calc(var(--f7-messagebar-inner-padding-right, var(--f7-toolbar-inner-padding-right)) + var(--f7-safe-area-right));
+    .rtl({
+      flex-direction: row-reverse;
+    });
+  }
+  &.messagebar-sheet-visible > .toolbar-inner {
+    bottom: 0;
+  }
+  .messagebar-area {
+    width: 100%;
+    flex-shrink: 1;
+    overflow: hidden;
+    position: relative;
+  }
+  textarea {
+    width: 100%;
+    flex-shrink: 1;
+    background-color: var(--f7-messagebar-textarea-bg-color);
+    border-radius: var(--f7-messagebar-textarea-border-radius);
+    padding: var(--f7-messagebar-textarea-padding);
+    height: var(--f7-messagebar-textarea-height);
+    color: var(--f7-messagebar-textarea-text-color);
+    font-size: var(--f7-messagebar-textarea-font-size);
+    line-height: var(--f7-messagebar-textarea-line-height);
+    border: var(--f7-messagebar-textarea-border);
+  }
+  a.link {
+    align-self: flex-end;
+    flex-shrink: 0;
+    color: var(--f7-messagebar-link-color, var(--f7-theme-color));
+  }
+}
+.messagebar-attachments {
+  width: 100%;
+  .scrollable();
+  font-size: 0;
+  white-space: nowrap;
+  box-sizing: border-box;
+  position: relative;
+}
+.messagebar:not(.messagebar-attachments-visible) .messagebar-attachments {
+  display: none;
+}
+.messagebar-attachment {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: normal;
+  height: var(--f7-messagebar-attachment-height);
+  position: relative;
+  border-radius: var(--f7-messagebar-attachment-border-radius);
+  @media (orientation: landscape) {
+    height: var(--f7-messagebar-attachment-landscape-height);
+  }
+  img {
+    display: block;
+    width: auto;
+    height: 100%;
+    border-radius: var(--f7-messagebar-attachment-border-radius);
+  }
+  + .messagebar-attachment {
+    .ltr({
+      margin-left: 8px;
+    });
+    .rtl({
+      margin-right: 8px;
+    });
+  }
+}
+.messagebar-sheet {
+  .scrollable();
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: flex-start;
+  height: var(--f7-messagebar-sheet-height);
+  background-color: var(--f7-messagebar-sheet-bg-color);
+  padding-left: var(--f7-safe-area-left);
+  padding-right: var(--f7-safe-area-right);
+  @media (orientation: landscape) {
+    height: var(--f7-messagebar-sheet-landscape-height);
+  }
+}
+.messagebar-sheet-image, .messagebar-sheet-item {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  margin-top: 1px;
+  position: relative;
+  overflow: hidden;
+  height: calc((var(--f7-messagebar-sheet-height) - 2px) / 2);
+  width: calc((var(--f7-messagebar-sheet-height) - 2px) / 2);
+  .ltr({
+    margin-left: 1px;
+  });
+  .rtl({
+    margin-right: 1px;
+  });
+  @media (orientation: landscape) {
+    width: calc((var(--f7-messagebar-sheet-landscape-height) - 2px) / 2);
+    height: calc((var(--f7-messagebar-sheet-landscape-height) - 2px) / 2);
+  }
+  .icon-checkbox,
+  .icon-radio {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+  }
+}
+.messagebar-sheet-image {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.messagebar-attachment-delete {
+  display: block;
+  position: absolute;
+  border-radius: 50%;
+  box-sizing: border-box;
+  cursor: pointer;
+  box-shadow: 0px 0px 2px rgba(0,0,0,0.2);
+  &:after, &:before {
+    position: absolute;
+    content: '';
+    left: 50%;
+    top: 50%;
+  }
+  &:after {
+    transform: rotate(45deg);
+  }
+  &:before {
+    transform: rotate(-45deg);
+  }
+}
+.messagebar:not(.messagebar-sheet-visible) .messagebar-sheet {
+  display: none;
+}
+.messagebar ~ * {
+  --f7-page-toolbar-bottom-offset: var(--f7-messagebar-height);
+}
+.if-ios-theme({
+  @import url('./messagebar-ios.less');
+});
+.if-md-theme({
+  @import url('./messagebar-md.less');
+});
+.if-aurora-theme({
+  @import url('./messagebar-aurora.less');
+});

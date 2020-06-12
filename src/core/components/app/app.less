@@ -1,0 +1,114 @@
+@import url('./app-vars.less');
+// Core Icons
+@font-face {
+  @fontBase64: framework7_coreIconsFont();
+  font-family: 'framework7-core-icons';
+  src: url("data:application/font-woff;charset=utf-8;base64, @{fontBase64}") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  @fontBase64: framework7_skeletonFont();
+  font-family: 'framework7-skeleton';
+  src: url("data:application/font-woff;charset=utf-8;base64, @{fontBase64}") format("woff");
+  font-weight: 300, 400, 500, 600, 700;
+  font-style: normal, italic;
+}
+.rtl({
+  html {
+    direction: rtl;
+  }
+});
+html, body, .framework7-root {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background: #fff;
+  overflow: hidden;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--f7-font-family);
+  font-size: var(--f7-font-size);
+  line-height: var(--f7-line-height);
+  color: var(--f7-text-color);
+}
+.theme-dark body,
+body.theme-dark {
+  background: #000;
+}
+.theme-dark {
+  color: var(--f7-text-color);
+}
+.framework7-root {
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.framework7-initializing * {
+  &, &:before, &:after {
+    transition-duration: 0ms !important;
+  }
+}
+.device-ios,
+.device-android {
+  cursor: pointer;
+}
+.device-ios {
+  touch-action: manipulation;
+}
+
+// Fix for iPad in Safari in Lanscape mode
+@media (width:1024px) and (height:691px) and (orientation:landscape) {
+  html, body, .framework7-root {
+    height: 671px;
+  }
+}
+@media (width:1024px) and (height:692px) and (orientation:landscape) {
+  html, body, .framework7-root  {
+    height: 672px;
+  }
+}
+* {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-touch-callout: none;
+}
+a, input, textarea, select {
+  outline: 0;
+}
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--f7-theme-color);
+}
+.link,
+.item-link {
+  cursor: pointer;
+}
+p {
+  margin: 1em 0;
+}
+// Disabled
+.disabled {
+  .disabled() !important;
+}
+// Full viewport
+html.device-full-viewport {
+  &, & body {
+    height: 100vh;
+  }
+}
+
+.if-ios-theme({
+  @import url('./app-ios.less');
+});
+.if-md-theme({
+  @import url('./app-md.less');
+});
+.if-aurora-theme({
+  @import url('./app-aurora.less');
+});

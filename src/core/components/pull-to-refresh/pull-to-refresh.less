@@ -1,0 +1,40 @@
+/* === PTR === */
+@import url('./pull-to-refresh-vars.less');
+
+.ptr-preloader {
+  position: relative;
+  top: var(--f7-ptr-top, 0);
+  height: var(--f7-ptr-size);
+  .preloader {
+    position: absolute;
+    left: 50%;
+    width: var(--f7-ptr-preloader-size);
+    height: var(--f7-ptr-preloader-size);
+    margin-left: calc(-1 * var(--f7-ptr-preloader-size) / 2);
+    margin-top: calc(-1 * var(--f7-ptr-preloader-size) / 2);
+    top: 50%;
+    visibility: hidden;
+  }
+}
+.ptr-bottom {
+  .ptr-preloader {
+    top: auto;
+    bottom: 0;
+    position: fixed;
+  }
+}
+.ptr-with-navbar-large-transparent,
+.ptr-with-navbar-transparent {
+  .ptr-preloader {
+    top: calc(-1 * var(--f7-page-navbar-offset, 0px) + var(--f7-safe-area-top));
+  }
+}
+.if-ios-theme({
+  @import url('./pull-to-refresh-ios.less');
+});
+.if-md-theme({
+  @import url('./pull-to-refresh-md.less');
+});
+.if-aurora-theme({
+  @import url('./pull-to-refresh-aurora.less');
+});

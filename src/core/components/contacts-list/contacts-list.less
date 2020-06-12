@@ -1,0 +1,29 @@
+/* === Contacts === */
+@import url('./contacts-list-vars.less');
+.contacts-list {
+  --f7-list-margin-vertical: 0px;
+  .list-group-title,
+  li.list-group-title {
+    background-color: var(--f7-contacts-list-title-bg-color, var(--f7-list-group-title-bg-color));
+    font-weight: var(--f7-contacts-list-title-font-weight, var(--f7-list-group-title-font-weight));
+    font-size: var(--f7-contacts-list-title-font-size, var(--f7-list-group-title-font-size));
+    color: var(--f7-contacts-list-title-text-color, var(--f7-theme-color));
+    line-height: var(--f7-contacts-list-title-height, var(--f7-list-group-title-height));
+    height: var(--f7-contacts-list-title-height, var(--f7-list-group-title-height));
+  }
+  .list-group:first-child ul {
+    .hairline-remove(top);
+  }
+  .list-group:last-child ul {
+    .hairline-remove(bottom);
+  }
+}
+.if-ios-theme({
+  @import url('./contacts-list-ios.less');
+});
+.if-md-theme({
+  @import url('./contacts-list-md.less');
+});
+.if-aurora-theme({
+  @import url('./contacts-list-aurora.less');
+});

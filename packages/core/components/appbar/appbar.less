@@ -1,0 +1,97 @@
+/* === Appbar === */
+@import url('./appbar-vars.less');
+
+.appbar {
+  position: relative;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 500;
+  backface-visibility: hidden;
+  box-sizing: border-box;
+  margin: 0;
+  transform: translate3d(0,0,0);
+  height: calc(var(--f7-appbar-height) + var(--f7-safe-area-top));
+  background-image: var(--f7-appbar-bg-image, var(--f7-bars-bg-image));
+  background-color: var(--f7-appbar-bg-color, var(--f7-bars-bg-color));
+  color: var(--f7-appbar-text-color, var(--f7-bars-text-color));
+  font-size: var(--f7-appbar-font-size);
+  z-index: 7000;
+  .ios-translucent-bars(var(--f7-appbar-bg-color-rgb, var(--f7-bars-bg-color-rgb)));
+  .panel ~ .appbar {
+    z-index: 5500;
+  }
+  a {
+    color: var(--f7-appbar-link-color, var(--f7-bars-link-color, var(--f7-theme-color)));
+  }
+  a.link {
+    display: flex;
+    justify-content: flex-start;
+    line-height: var(--f7-appbar-link-line-height, var(--f7-appbar-height));
+    height: var(--f7-appbar-link-height, var(--f7-appbar-height));
+  }
+  .left, .center, .right {
+    display: flex;
+    align-items: center;
+  }
+  &.no-hairline, &.no-border {
+    &:after {
+      display: none !important;
+    }
+    .title-large:after {
+      display: none !important;
+    }
+  }
+  &.no-shadow {
+    &:before {
+      display: none !important;
+    }
+  }
+  &:after, &:before {
+    backface-visibility: hidden;
+  }
+  .hairline(bottom, var(--f7-appbar-border-color, var(--f7-bars-border-color)));
+  .bar-shadow-bottom(var(--f7-appbar-shadow-image));
+  &:after {
+    z-index: 1;
+  }
+  & ~ * {
+    --f7-appbar-app-offset: calc(var(--f7-appbar-height) + var(--f7-appbar-extra-offset, 0px) + var(--f7-safe-area-top));
+  }
+  & ~ .views,
+  & ~ .view,
+  & ~ .appbar {
+    --f7-safe-area-top: 0px;
+  }
+  & ~ .panel {
+    .view, .page, .page-content {
+      --f7-safe-area-top: 0px;
+    }
+  }
+}
+.appbar-inner {
+  position: absolute;
+  left: 0;
+  top: var(--f7-safe-area-top);
+  width: 100%;
+  height: var(--f7-appbar-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 0 calc(var(--f7-appbar-inner-padding-right) + var(--f7-safe-area-right)) 0 calc(var(--f7-appbar-inner-padding-left) + var(--f7-safe-area-left));
+
+  &.stacked {
+    display: none;
+  }
+}
+
+.if-ios-theme({
+  @import url('./appbar-ios.less');
+});
+.if-md-theme({
+  @import url('./appbar-md.less');
+});
+.if-aurora-theme({
+  @import url('./appbar-aurora.less');
+});

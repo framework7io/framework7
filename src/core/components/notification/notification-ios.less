@@ -1,0 +1,55 @@
+.ios {
+  .notification {
+    transition-duration: 450ms;
+    transform: translate3d(0%, -200%, 0);
+    &.modal-in {
+      transform: translate3d(0%, 0%, 0);
+      opacity: 1;
+    }
+    &.modal-out {
+      transform: translate3d(0%, -200%, 0);
+    }
+  }
+
+  .notification-icon {
+    margin-right: 8px;
+  }
+  .notification-header + .notification-content {
+    margin-top: 10px;
+  }
+  .notification-title-right-text {
+    margin-right: 6px;
+    margin-left: auto;
+    + .notification-close-button {
+      margin-left: 10px;
+    }
+  }
+  .notification-close-button {
+    font-size: 14px;
+    width: 20px;
+    height: 20px;
+    opacity: 0.3;
+    transition-duration: 300ms;
+    &.active-state {
+      transition-duration: 0ms;
+      opacity: 0.1;
+    }
+    &:after {
+      color: #000;
+      content: 'notification_close_ios';
+      font-size: 0.65em;
+      line-height: 44px;
+      width: 44px;
+      height: 44px;
+      margin-left: -22px;
+      margin-top: -22px;
+    }
+  }
+  .if-dark-theme({
+    .theme-dark, &.theme-dark {
+      .notification-close-button:after {
+        color: #fff;
+      }
+    }
+  });
+}

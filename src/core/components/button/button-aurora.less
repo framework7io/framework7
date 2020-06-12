@@ -1,0 +1,23 @@
+.aurora {
+  // Buttons
+  .button {
+    transition-duration: 100ms;
+    transform: translate3d(0,0,0);
+  }
+  &.device-desktop {
+    .button:not(.active-state):not(.no-hover):hover {
+      background-color: var(--f7-button-hover-bg-color, rgba(var(--f7-theme-color-rgb), .07));
+    }
+  }
+  .button-fill,
+  .button-fill-aurora {
+    --f7-button-pressed-bg-color: var(--f7-button-fill-pressed-bg-color, var(--f7-theme-color-shade));
+  }
+  .button-fill,
+  .button-active,
+  .button.tab-link-active,
+  .button-fill-aurora {
+    --f7-button-hover-bg-color: var(--f7-button-fill-hover-bg-color, var(--f7-theme-color-tint));
+  }
+
+}

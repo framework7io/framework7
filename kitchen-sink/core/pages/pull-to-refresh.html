@@ -1,0 +1,90 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Pull To Refresh</div>
+      </div>
+    </div>
+    <div class="page-content ptr-content" data-ptr-mousewheel="true" @ptr:refresh="loadMore">
+      <div class="ptr-preloader">
+        <div class="preloader"></div>
+        <div class="ptr-arrow"></div>
+      </div>
+      <div class="list media-list">
+        <ul>
+          {{#each items}}
+          <li class="item-content">
+            <div class="item-media"><img src="{{picURL}}" width="44"/></div>
+            <div class="item-inner">
+              <div class="item-title-row">
+                <div class="item-title">{{song}}</div>
+              </div>
+              <div class="item-subtitle">{{author}}</div>
+            </div>
+          </li>
+          {{/each}}
+        </ul>
+        <div class="block-footer">
+          <p>Just pull page down to let the magic happen.<br>Note that pull-to-refresh feature is optimised for touch and native scrolling so it may not work on desktop browser.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    data: function () {
+      return {
+        items: [
+          {
+            picURL: 'https://cdn.framework7.io/placeholder/abstract-88x88-1.jpg',
+            song: 'Yellow Submarine',
+            author: 'Beatles',
+          },
+          {
+            picURL: 'https://cdn.framework7.io/placeholder/abstract-88x88-2.jpg',
+            song: 'Don\'t Stop Me Now',
+            author: 'Queen',
+          },
+          {
+            picURL: 'https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg',
+            song: 'Billie Jean',
+            author: 'Michael Jackson',
+          },
+        ],
+        songs: ['Yellow Submarine', 'Don\'t Stop Me Now', 'Billie Jean', 'Californication'],
+        authors: ['Beatles', 'Queen', 'Michael Jackson', 'Red Hot Chili Peppers']
+      }
+    },
+    methods: {
+      loadMore: function (e, done) {
+        var self = this;
+        var $ = self.$$;
+
+        setTimeout(function () {
+          // Add new item
+          self.items.push({
+            picURL: 'https://cdn.framework7.io/placeholder/abstract-88x88-' + (Math.floor(Math.random() * 10) + 1) + '.jpg',
+            song: self.songs[Math.floor(Math.random() * self.songs.length)],
+            author: self.authors[Math.floor(Math.random() * self.authors.length)],
+          })
+
+          // Update state to rerender
+          self.$setState({
+            items: self.items,
+          });
+
+          // Done
+          done();
+        }, 1000);
+      }
+    }
+  }
+</script>

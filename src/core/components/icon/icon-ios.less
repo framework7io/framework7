@@ -1,0 +1,44 @@
+.ios {
+  .icon-back,
+  .icon-prev,
+  .icon-forward,
+  .icon-next {
+    width: 12px;
+    height: 20px;
+    line-height: 20px;
+    &:after {
+      line-height: inherit;
+    }
+  }
+  .icon-prev,
+  .icon-next {
+    &:after {
+      font-size: 16px;
+    }
+  }
+
+  .ltr({
+    .icon-back, .icon-prev {
+      &:after {
+        content: 'chevron_left_ios';
+      }
+    }
+    .icon-forward, .icon-next {
+      &:after {
+        content: 'chevron_right_ios';
+      }
+    }
+  });
+  .rtl({
+    .icon-back, .icon-prev {
+      &:after {
+        content: 'chevron_right_ios';
+      }
+    }
+    .icon-forward, .icon-next {
+      &:after {
+        content: 'chevron_left_ios';
+      }
+    }
+  });
+}

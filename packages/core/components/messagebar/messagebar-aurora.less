@@ -1,0 +1,48 @@
+.aurora {
+  .messagebar {
+    a.link + .messagebar-area {
+      margin-left: 5px;
+    }
+    .messagebar-area + a.link {
+      margin-left: 5px;
+    }
+  }
+  .messagebar-area {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  .messagebar-sheet-image,
+  .messagebar-sheet-item {
+    .icon-checkbox {
+      background: rgba(255,255,255,0.25);
+    }
+  }
+  .messagebar-attachments {
+    padding: 5px;
+    border-radius: var(--f7-messagebar-textarea-border-radius) var(--f7-messagebar-textarea-border-radius) 0 0;
+    border: 1px solid var(--f7-messagebar-attachments-border-color);
+    border-bottom: none;
+  }
+  .messagebar-attachments-visible {
+    .messagebar-attachments + textarea {
+      border-radius: 0 0 var(--f7-messagebar-textarea-border-radius) var(--f7-messagebar-textarea-border-radius);
+    }
+  }
+  .messagebar-attachment {
+    font-size: 14px;
+  }
+  .messagebar-attachment-delete {
+    right: 5px;
+    top: 5px;
+    width: 14px;
+    height: 14px;
+    background: #808080;
+    &:after, &:before {
+      width: 8px;
+      height: 1px;
+      background: #fff;
+      margin-left: -4px;
+      margin-top: -1px;
+    }
+  }
+}

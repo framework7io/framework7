@@ -1,0 +1,62 @@
+/**
+ * Framework7 5.7.7
+ * Full featured mobile HTML framework for building iOS & Android apps
+ * https://framework7.io/
+ *
+ * Copyright 2014-2020 Vladimir Kharlampidi
+ *
+ * Released under the MIT License
+ *
+ * Released on: June 5, 2020
+ */
+
+@import (reference) './less/mixins.less';
+@import (reference) './less/vars.less';
+
+@includeIosTheme: true;
+@includeMdTheme: true;
+@includeAuroraTheme: true;
+
+@includeDarkTheme: true;
+@includeLightTheme: true;
+
+@themeColor: #007aff;
+
+@colors: {
+  red: #ff3b30;
+  green: #4cd964;
+  blue: #2196f3;
+  pink: #ff2d55;
+  yellow: #ffcc00;
+  orange: #ff9500;
+  purple: #9c27b0;
+  deeppurple: #673ab7;
+  lightblue: #5ac8fa;
+  teal: #009688;
+  lime: #cddc39;
+  deeporange: #ff6b22;
+  gray: #8e8e93;
+  white: #ffffff;
+  black: #000000;
+};
+
+@rtl: false;
+
+// Core
+@import url('./components/app/app.less');
+@import url('./components/statusbar/statusbar.less');
+@import url('./components/view/view.less');
+@import url('./components/page/page.less');
+@import url('./components/link/link.less');
+@import url('./components/navbar/navbar.less');
+@import url('./components/toolbar/toolbar.less');
+@import url('./components/subnavbar/subnavbar.less');
+@import url('./components/block/block.less');
+@import url('./components/list/list.less');
+@import url('./components/badge/badge.less');
+@import url('./components/button/button.less');
+@import url('./components/touch-ripple/touch-ripple.less');
+@import url('./components/icon/icon.less');
+@import url('./components/modal/modal.less');
+
+//IMPORT_COMPONENTS

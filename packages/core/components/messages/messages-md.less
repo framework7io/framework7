@@ -1,0 +1,103 @@
+.md {
+  .messages-title,
+  .message-header,
+  .message-footer,
+  .message-name {
+    b {
+      font-weight: 500;
+    }
+  }
+  .message-header, .message-name {
+    margin-bottom: 2px;
+  }
+  .message-footer {
+    margin-top: 2px;
+  }
+  .message-text-header {
+    margin-bottom: 4px;
+  }
+  .message-text-footer {
+    margin-top: 4px;
+  }
+  .message-received, .message-sent {
+    &.message-tail .message-bubble {
+      &:before {
+        position: absolute;
+        content: '';
+        bottom: 0;
+        width: 0;
+        height: 0;
+      }
+    }
+  }
+  .message-received {
+    margin-left: calc(8px + var(--f7-safe-area-left));
+    .message-avatar + .message-content {
+      margin-left: var(--f7-message-bubble-padding-horizontal);
+    }
+    &.message-tail .message-bubble {
+      &:before {
+        border-left: 8px solid transparent;
+        border-right: 0 solid transparent;
+        border-bottom: 8px solid var(--f7-message-received-bg-color);
+        right: 100%;
+      }
+    }
+  }
+  .message-sent {
+    margin-right: calc(8px + var(--f7-safe-area-right));
+    .message-avatar + .message-content {
+      margin-right: var(--f7-message-bubble-padding-horizontal);
+    }
+    &.message-tail .message-bubble {
+      &:before {
+        border-left: 0 solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 8px solid var(--f7-message-sent-bg-color, var(--f7-theme-color));
+        left: 100%;
+      }
+    }
+  }
+
+  // Rules
+  .message + .message:not(.message-first) {
+    margin-top: 8px;
+  }
+
+  // Typing
+  .message-typing-indicator {
+    > div {
+      width: 6px;
+      height: 6px;
+      + div {
+        .ltr({
+          margin-left: 6px;
+        });
+        .rtl({
+          margin-right: 6px;
+        });
+      }
+    }
+    > div:nth-child(1) {
+      animation: md-message-typing-indicator 900ms infinite;
+    }
+    > div:nth-child(2) {
+      animation: md-message-typing-indicator 900ms 150ms infinite;
+    }
+    > div:nth-child(3) {
+      animation: md-message-typing-indicator 900ms 300ms infinite;
+    }
+  }
+}
+
+@keyframes md-message-typing-indicator {
+  0% {
+    transform: translateY(0%);
+  }
+  25% {
+    transform: translateY(-5px);
+  }
+  50% {
+    transform: translateY(0%);
+  }
+}

@@ -1,0 +1,51 @@
+.ios {
+  .subnavbar {
+    height: calc(var(--f7-subnavbar-height) + 1px);
+    margin-top: -1px;
+    padding-top: 1px;
+    .title {
+      align-self: flex-start;
+      flex-shrink: 10;
+    }
+    .ltr({
+      .left, .right {
+        a + a {
+          margin-left: 16px;
+        }
+      }
+      .left {
+        margin-right: 10px;
+      }
+      .right {
+        margin-left: 10px;
+      }
+      .right:first-child {
+        right: 8px;
+      }
+    });
+    .rtl({
+      .left, .right {
+        a + a {
+          margin-right: 16px;
+        }
+      }
+      .left {
+        margin-left: 10px;
+      }
+      .right {
+        margin-right: 10px;
+      }
+      .right:first-child {
+        left: 8px;
+      }
+    });
+
+    a.link {
+      justify-content: flex-start;
+    }
+    a.icon-only {
+      justify-content: center;
+      margin: 0;
+    }
+  }
+}

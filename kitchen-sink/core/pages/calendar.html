@@ -1,0 +1,213 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Calendar</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block">
+        <p>Calendar is a touch optimized component that provides an easy way to handle dates.</p>
+        <p>Calendar could be used as inline component or as overlay. Overlay Calendar will be automatically converted to Popover on tablets (iPad).</p>
+      </div>
+      <div class="block-title">Default setup</div>
+      <div class="list no-hairlines-md">
+        <ul>
+          <li>
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="text" placeholder="Your birth date" readonly="readonly" id="demo-calendar-default"/>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="block-title">Custom date format</div>
+      <div class="list no-hairlines-md">
+        <ul>
+          <li>
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="text" placeholder="Select date" readonly="readonly" id="demo-calendar-date-format"/>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="block-title">Date + Time</div>
+      <div class="list no-hairlines-md">
+        <ul>
+          <li>
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="text" placeholder="Select date and time" readonly="readonly" id="demo-calendar-date-time"/>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="block-title">Multiple Values</div>
+      <div class="list no-hairlines-md">
+        <ul>
+          <li>
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="text" placeholder="Select multiple dates" readonly="readonly" id="demo-calendar-multiple"/>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="block-title">Range Picker</div>
+      <div class="list no-hairlines-md">
+        <ul>
+          <li>
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="text" placeholder="Select date range" readonly="readonly" id="demo-calendar-range"/>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="block-title">Open in Modal</div>
+      <div class="list no-hairlines-md">
+        <ul>
+          <li>
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="text" placeholder="Select date" readonly="readonly" id="demo-calendar-modal"/>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="block-title">Calendar Page</div>
+      <div class="list">
+        <ul>
+          <li>
+            <a href="/calendar-page/" class="item-content item-link">
+              <div class="item-inner">
+                <div class="item-title">Open Calendar Page</div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="block-title">Inline with custom toolbar</div>
+      <div class="block block-strong no-padding">
+        <div id="demo-calendar-inline-container"></div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function(e, page) {
+        var self = this;
+        var today = new Date();
+        var app = self.$app;
+        var $ = self.$;
+        // Default
+        self.calendarDefault = app.calendar.create({
+          inputEl: '#demo-calendar-default',
+        });
+        
+        // With custom date format
+        self.calendarDateFormat = app.calendar.create({
+          inputEl: '#demo-calendar-date-format',
+          dateFormat: { weekday: 'long', month: 'long', day: '2-digit', year: 'numeric' },
+        });
+
+        // Date + Time
+        self.calendarDateTime = app.calendar.create({
+          inputEl: '#demo-calendar-date-time',
+          timePicker: true,
+          dateFormat: { month: 'numeric', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' },
+        });
+
+        // With multiple values
+        self.calendarMultiple = app.calendar.create({
+          inputEl: '#demo-calendar-multiple',
+          dateFormat: { month: 'short', day: 'numeric' },
+          multiple: true
+        });
+        // Range Picker
+        self.calendarRange = app.calendar.create({
+          inputEl: '#demo-calendar-range',
+          rangePicker: true
+        });
+        // Custom modal
+        self.calendarModal = app.calendar.create({
+          inputEl: '#demo-calendar-modal',
+          openIn: 'customModal',
+          header: true,
+          footer: true,
+        });
+        // Inline with custom toolbar
+        var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        self.calendarInline = app.calendar.create({
+          containerEl: '#demo-calendar-inline-container',
+          value: [new Date()],
+          renderToolbar: function() {
+            return '<div class="toolbar calendar-custom-toolbar no-shadow">' +
+              '<div class="toolbar-inner">' +
+              '<div class="left">' +
+              '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
+              '</div>' +
+              '<div class="center"></div>' +
+              '<div class="right">' +
+              '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
+              '</div>' +
+              '</div>' +
+              '</div>';
+          },
+          on: {
+            init: function(c) {
+              $('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
+              $('.calendar-custom-toolbar .left .link').on('click', function() {
+                self.calendarInline.prevMonth();
+              });
+              $('.calendar-custom-toolbar .right .link').on('click', function() {
+                self.calendarInline.nextMonth();
+              });
+            },
+            monthYearChangeStart: function(c) {
+              $('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
+            }
+          }
+        });
+      },
+      pageBeforeRemove() {
+        var self = this;
+        self.calendarDefault.destroy();
+        self.calendarDateFormat.destroy();
+        self.calendarDateTime.destroy();
+        self.calendarMultiple.destroy();
+        self.calendarRange.destroy();
+        self.calendarModal.destroy();
+        self.calendarInline.destroy();
+      },
+    },
+  }
+</script>

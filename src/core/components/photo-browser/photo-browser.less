@@ -1,0 +1,283 @@
+/* === Photo Browser === */
+@import url('./photo-browser-vars.less');
+
+.photo-browser {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 400;
+}
+.photo-browser-standalone {
+
+  &.modal-in {
+    transition-duration: 0ms;
+    animation: photo-browser-in 400ms;
+  }
+  &.modal-out {
+    transition-duration: 0ms;
+    animation: photo-browser-out 400ms !important;
+    &.swipe-close-to-bottom,
+    &.swipe-close-to-top {
+      animation: none !important;
+    }
+  }
+  &.photo-browser-transitioning {
+    transition: 400ms;
+    transition-property: transform;
+    animation: none !important;
+  }
+}
+.photo-browser-popup {
+  &.modal-out {
+    &.swipe-close-to-bottom,
+    &.swipe-close-to-top {
+      transition-duration: 300ms;
+    }
+    &.swipe-close-to-bottom {
+      transform: translate3d(0, 100vh, 0);
+    }
+    &.swipe-close-to-top {
+      transform: translate3d(0, -100vh, 0);
+    }
+  }
+}
+
+.photo-browser-page {
+  background: none;
+  .toolbar {
+    transform: none;
+  }
+}
+.photo-browser-popup {
+  background: none;
+}
+
+
+.photo-browser-of {
+  margin: 0 5px;
+}
+.photo-browser-captions {
+  pointer-events:none;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  bottom: var(--f7-safe-area-bottom);
+  z-index: 10;
+  opacity: 1;
+  transition: 400ms;
+  &.photo-browser-captions-exposed {
+    opacity: 0;
+  }
+}
+.toolbar ~ .photo-browser-captions {
+  bottom: calc(var(--f7-toolbar-height) + var(--f7-safe-area-bottom));
+  transform: translate3d(0, 0px, 0);
+  &.photo-browser-captions-exposed {
+    transform: translate3d(0, 0px, 0);
+  }
+}
+
+.photo-browser-caption {
+  box-sizing: border-box;
+  transition: 300ms;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  padding: 4px 5px;
+  width: 100%;
+  text-align: center;
+  font-size: var(--f7-photobrowser-caption-font-size);
+  &:empty {
+    display: none;
+  }
+  &.photo-browser-caption-active {
+    opacity: 1;
+  }
+  .photo-browser-captions-light & {
+    color: var(--f7-photobrowser-caption-light-text-color);
+    background: var(--f7-photobrowser-caption-light-bg-color)
+  }
+  .photo-browser-captions-dark & {
+    color: var(--f7-photobrowser-caption-dark-text-color);
+    background: var(--f7-photobrowser-caption-dark-bg-color)
+  }
+}
+
+.photo-browser-swiper-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--f7-photobrowser-bg-color);
+  transition: 400ms;
+  transition-property: background-color;
+}
+
+.photo-browser-prev,
+.photo-browser-next {
+  &.swiper-button-disabled {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+}
+.photo-browser-slide {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  span.swiper-zoom-container {
+    display: none;
+  }
+  img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    display: none;
+  }
+  &.swiper-slide-active,
+  &.swiper-slide-next,
+  &.swiper-slide-prev {
+    span.swiper-zoom-container {
+      display: flex;
+    }
+    img {
+      display: inline;
+    }
+    &.photo-browser-slide-lazy {
+      .preloader {
+        display: block;
+      }
+    }
+  }
+  iframe {
+    width: 100%;
+    height: 100%;
+  }
+  .preloader {
+    display: none;
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    margin-left: -21px;
+    margin-top: -21px;
+    left: 50%;
+    top: 50%;
+  }
+}
+.photo-browser-page .navbar-bg,
+.navbar-photo-browser .navbar-bg,
+.photo-browser-page .toolbar {
+  background-color: var(--f7-photobrowser-bars-bg-color, rgba(var(--f7-bars-bg-color-rgb), 0.95));
+  background-image: var(--f7-photobrowser-bars-bg-image);
+}
+.photo-browser-page {
+  .navbar,
+  .toolbar {
+    transition: 400ms;
+    color: var(--f7-photobrowser-bars-text-color, var(--f7-bars-text-color));
+    a {
+      color: var(--f7-photobrowser-bars-link-color, var(--f7-bars-link-color, var(--f7-theme-color)));
+    }
+  }
+}
+.photo-browser-exposed {
+  .navbar,
+  .toolbar {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .toolbar ~ .photo-browser-captions {
+    transform: translate3d(0,  var(--f7-toolbar-height), 0);
+  }
+  .photo-browser-swiper-container {
+    background: var(--f7-photobrowser-exposed-bg-color);
+  }
+  .photo-browser-caption {
+    color: var(--f7-photobrowser-caption-dark-text-color);
+    background: var(--f7-photobrowser-caption-dark-bg-color)
+  }
+}
+.view.with-photo-browser-page-exposed {
+  .navbar {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.photo-browser-page-dark .navbar-bg,
+.navbar-photo-browser-dark .navbar-bg,
+.photo-browser-page-dark .toolbar {
+  background: var(--f7-photobrowser-dark-bars-bg-color);
+  .hairline-remove-top-bottom();
+}
+
+.navbar-photo-browser-dark,
+.photo-browser-dark .navbar,
+.photo-browser-dark .toolbar,
+.photo-browser-dark-page .navbar,
+.photo-browser-dark-page .toolbar {
+  --f7-touch-ripple-color: var(--f7-touch-ripple-white);
+  --f7-link-highlight-color: var(--f7-link-highlight-white);
+  color: var(--f7-photobrowser-dark-bars-text-color);
+  a {
+    color: var(--f7-photobrowser-dark-bars-link-color);
+  }
+}
+
+.photo-browser-dark,
+.photo-browser-page-dark {
+  .photo-browser-swiper-container {
+    background: var(--f7-photobrowser-dark-bg-color);
+  }
+}
+
+@keyframes photo-browser-in {
+  0% {
+    transform: translate3d(0,0,0) scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    transform: translate3d(0,0,0) scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0,0,0) scale(1);
+    opacity: 1;
+  }
+}
+@keyframes photo-browser-out {
+  0% {
+    transform: translate3d(0,0,0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate3d(0,0,0) scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0,0,0) scale(0.5);
+    opacity: 0;
+  }
+}
+
+.if-ios-theme({
+  @import url('./photo-browser-ios.less');
+});
+.if-md-theme({
+  @import url('./photo-browser-md.less');
+});
+.if-aurora-theme({
+  @import url('./photo-browser-aurora.less');
+});

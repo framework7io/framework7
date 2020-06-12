@@ -1,0 +1,50 @@
+/* === Tabs === */
+.tabs {
+  .tab {
+    display: none;
+  }
+  .tab-active {
+    display: block;
+  }
+}
+.tabs-animated-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  height: 100%;
+  > .tabs {
+    display: flex;
+    height: 100%;
+    transition-duration: 300ms;
+    > .tab {
+      width: 100%;
+      display: block;
+      flex-shrink: 0;
+    }
+  }
+  &.not-animated > .tabs {
+    transition-duration: 0ms;
+  }
+}
+.tabs-swipeable-wrap {
+  height: 100%;
+  > .tabs {
+    height: 100%;
+  }
+  > .tabs > .tab {
+    display: block;
+  }
+}
+.page > .tabs {
+  height: 100%;
+}
+
+.if-ios-theme({
+  @import url('./tabs-ios.less');
+});
+.if-md-theme({
+  @import url('./tabs-md.less');
+});
+.if-aurora-theme({
+  @import url('./tabs-aurora.less');
+});

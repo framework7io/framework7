@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>delete_round_ios</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="delete_round_ios" transform="translate(-4.000000, -4.000000)" fill-rule="nonzero">
+            <circle id="Oval" fill="#000000" cx="14" cy="14" r="14"></circle>
+            <path d="M14,11.8786797 L18.9393398,6.93933983 L21.0606602,9.06066017 L16.1213203,14 L21.0606602,18.9393398 L18.9393398,21.0606602 L14,16.1213203 L9.06066017,21.0606602 L6.93933983,18.9393398 L11.8786797,14 L6.93933983,9.06066017 L9.06066017,6.93933983 L14,11.8786797 Z" id="Combined-Shape" fill="#FFFFFF"></path>
+        </g>
+    </g>
+</svg>

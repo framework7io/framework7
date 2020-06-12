@@ -1,0 +1,191 @@
+<template>
+  <div class="page">
+    <div class="navbar no-shadow">
+      <div class="navbar-inner sliding">
+        <div class="navbar-bg"></div>
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title navbar-calendar-title"></div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div id="calendar" class="block block-strong no-padding no-margin no-hairline-top"></div>
+      <div id="calendar-events" class="list no-margin no-hairlines no-safe-area-left">
+        <ul>
+          {{#each eventItems}}
+            <li class="item-content">
+              <div class="event-color" style="background-color: {{color}}"></div>
+              <div class="item-inner">
+                <div class="item-title">{{title}}</div>
+                <div class="item-after">{{time}}</div>
+              </div>
+            </li>
+          {{else}}
+            <li class="item-content">
+              <div class="item-inner">
+                <div class="item-title text-color-gray">No events for this day</div>
+              </div>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+<style>
+  #calendar, #calendar-events {
+    height: 50%;
+    box-sizing: border-box;
+  }
+  #calendar .calendar {
+    height: 100%;
+  }
+  #calendar-events ul {
+    height: 100%;
+    overflow: auto;
+  }
+  #calendar-events .event-color {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 8px;
+    height: 100%;
+  }
+  @media (orientation: landscape) {
+    #calendar {
+      float: left;
+    }
+    #calendar, #calendar-events {
+      height: 100%;
+    }
+    #calendar, #calendar-events {
+      width: 50%;
+    }
+    #calendar-events {
+      margin-left: 50% !important;
+      border-left: 1px solid #eee;
+    }
+    .theme-dark #calendar-events {
+      border-left-color: #282828;
+    }
+  }
+</style>
+<script>
+  return {
+    data: function () {
+      var date = new Date();
+      var year = date.getFullYear();
+      var month = date.getMonth();
+      var day = date.getDate();
+      return {
+        eventItems: [],
+        today: new Date(year, month, day),
+        events: [
+          {
+            date: new Date(year, month, day),
+            hours: 12,
+            minutes: 30,
+            title: 'Meeting with Vladimir',
+            color: '#2196f3',
+          },
+          {
+            date: new Date(year, month, day),
+            hours: 18,
+            minutes: 0,
+            title: 'Shopping',
+            color: '#4caf50',
+          },
+          {
+            date: new Date(year, month, day),
+            hours: 21,
+            minutes: 0,
+            title: 'Gym',
+            color: '#e91e63',
+          },
+          {
+            date: new Date(year, month, day + 2),
+            hours: 16,
+            minutes: 0,
+            title: 'Pay loan',
+            color: '#2196f3',
+          },
+          {
+            date: new Date(year, month, day + 2),
+            hours: 21,
+            minutes: 0,
+            title: 'Gym',
+            color: '#ff9800',
+          },
+        ],
+      }
+    },
+    methods: {
+      renderEvents: function (calendar) {
+        var self = this;
+        var currentDate = calendar.value[0];
+        var currentEvents = self.events
+          .filter(function (event) {
+            return (
+              event.date.getTime() >= currentDate.getTime() &&
+              event.date.getTime() < currentDate.getTime() + 24 * 60 * 60 * 1000
+            );
+          });
+
+        const eventItems = [];
+        if (currentEvents.length) {
+          currentEvents.forEach(function (event) {
+            const hours = event.hours;
+            let minutes = event.minutes;
+            if (minutes < 10) minutes = `0${minutes}`;
+            eventItems.push({
+              title: event.title,
+              time: `${hours}:${minutes}`,
+              color: event.color,
+            });
+          });
+        }
+        self.$setState({
+          eventItems: eventItems,
+        });
+      },
+    },
+    on: {
+      pageInit: function (e, page) {
+        var self = this;
+        var app = self.$app;
+        var $ = self.$;
+        var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August' , 'September' , 'October', 'November', 'December'];
+        self.calendar = app.calendar.create({
+          containerEl: '#calendar',
+          toolbar: false,
+          value: [self.today],
+          events: self.events,
+          on: {
+            init: function (calendar) {
+              $('.navbar-calendar-title').text(monthNames[calendar.currentMonth] +', ' + calendar.currentYear);
+              app.navbar.size(app.navbar.getElByPage(page.el));
+              calendar.$el.addClass('no-safe-area-right');
+              self.renderEvents(calendar);
+            },
+            monthYearChangeStart: function (calendar) {
+              $('.navbar-calendar-title').text(monthNames[calendar.currentMonth] +', ' + calendar.currentYear);
+              app.navbar.size(app.navbar.getElByPage(page.el));
+            },
+            change: function (calendar) {
+              self.renderEvents(calendar);
+            },
+          }
+        });
+      },
+      pageBeforeRemove() {
+        var self = this;
+        self.calendar.destroy();
+      },
+    },
+  }
+</script>
+

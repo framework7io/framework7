@@ -1,0 +1,62 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Toolbar & Tabbar</div>
+      </div>
+    </div>
+    <div class="toolbar toolbar-{{toolbarPosition}}">
+      <div class="toolbar-inner">
+        <a class="link">Left Link</a>
+        <a class="link">Right Link</a>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="list links-list">
+        <ul>
+          <li>
+            <a href="./tabbar/">Tabbar</a>
+          </li>
+          <li>
+            <a href="./tabbar-labels/">Tabbar With Labels</a>
+          </li>
+          <li>
+            <a href="./tabbar-scrollable/">Tabbar Scrollable</a>
+          </li>
+          <li>
+            <a href="./toolbar-hide-scroll/">Hide Toolbar On Scroll</a>
+          </li>
+        </ul>
+      </div>
+      <div class="block-title">Toolbar Position</div>
+      <div class="block">
+        <p>Toolbar supports both top and bottom positions. Click the following button to change its position.</p>
+        <p><a class="button button-fill" @click="toggleToolbarPosition">Toggle Toolbar Position</a></p>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    data() {
+      return {
+        toolbarPosition: 'bottom',
+      };
+    },
+    methods: {
+      toggleToolbarPosition: function () {
+        this.$setState({
+          toolbarPosition: this.toolbarPosition === 'top' ? 'bottom' : 'top',
+        });
+      },
+    }
+  }
+</script>
+

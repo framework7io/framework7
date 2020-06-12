@@ -1,0 +1,130 @@
+:root {
+  --f7-input-bg-color: transparent;
+  --f7-label-font-weight: 400;
+  --f7-label-line-height: 1.3;
+  --f7-input-padding-left: 0px;
+  --f7-input-padding-right: 0px;
+  --f7-input-error-text-color: #ff3b30;
+  --f7-input-error-font-size: 12px;
+  --f7-input-error-line-height: 1.4;
+  --f7-input-error-font-weight: 400;
+  --f7-input-info-font-size: 12px;
+  --f7-input-info-line-height: 1.4;
+  --f7-input-outline-height: 40px;
+
+  --f7-input-outline-border-radius: 4px;
+  --f7-input-outline-padding-horizontal: 12px;
+  --f7-textarea-height: 100px;
+  /*
+  --f7-input-outline-focused-border-color: var(--f7-theme-color);
+  --f7-input-outline-invalid-border-color: var(--f7-input-error-text-color);
+  */
+  .light-vars({
+    --f7-input-outline-border-color: #999;
+  });
+  .dark-vars({
+    --f7-input-outline-border-color: #444;
+  });
+}
+.ios-vars({
+  --f7-input-height: 44px;
+  --f7-input-font-size: 17px;
+  --f7-input-placeholder-color: #a9a9a9;
+  --f7-textarea-padding-vertical: 11px;
+
+  /*
+  --f7-input-focused-border-color: var(--f7-list-item-border-color);
+  --f7-input-invalid-border-color: var(--f7-list-item-border-color);
+  --f7-input-invalid-text-color: var(--f7-input-error-text-color);
+  */
+  --f7-label-font-size: 12px;
+  --f7-label-text-color: inherit;
+  /*
+  --f7-label-focused-text-color: var(--f7-label-text-color);
+  --f7-label-invalid-text-color: var(--f7-label-text-color);
+  */
+  --f7-floating-label-scale: calc(17 / 12);
+  --f7-inline-label-font-size: 17px;
+  --f7-inline-label-line-height: 1.4;
+  --f7-inline-label-padding-top: 3px;
+  --f7-input-clear-button-size: 14px;
+  .light-vars({
+    --f7-input-text-color: #000000;
+    --f7-input-info-text-color: rgba(0,0,0,0.45);
+    --f7-input-clear-button-color: rgba(0,0,0,0.45);
+  });
+  .dark-vars({
+    --f7-input-text-color: #fff;
+    --f7-input-info-text-color: rgba(255,255,255,0.55);
+    --f7-input-clear-button-color: rgba(255,255,255,0.5);
+  });
+});
+.md-vars({
+  --f7-input-height: 36px;
+  --f7-input-font-size: 16px;
+  --f7-textarea-padding-vertical: 7px;
+  /*
+  --f7-input-focused-border-color: var(--f7-theme-color);
+  --f7-input-invalid-border-color: var(--f7-input-error-text-color);
+  --f7-input-invalid-text-color: var(--f7-input-text-color);
+  */
+  --f7-label-font-size: 12px;
+  /*
+  --f7-label-focused-text-color: var(--f7-theme-color);
+  --f7-label-invalid-text-color: var(--f7-input-error-text-color );
+  */
+  --f7-floating-label-scale: calc(16 / 12);
+  --f7-inline-label-font-size: 16px;
+  --f7-inline-label-line-height: 1.5;
+  --f7-inline-label-padding-top: 7px;
+  --f7-input-clear-button-size: 18px;
+  --f7-input-clear-button-color: #aaa;
+  .light-vars({
+    --f7-input-text-color: #212121;
+    --f7-input-placeholder-color: rgba(0,0,0,0.35);
+    --f7-label-text-color: rgba(0,0,0,.65);
+    --f7-input-info-text-color: rgba(0,0,0,.45);
+
+  });
+  .dark-vars({
+    --f7-input-text-color: rgba(255,255,255,0.87);
+    --f7-input-placeholder-color: rgba(255,255,255,.35);
+    --f7-label-text-color: rgba(255,255,255,.54);
+    --f7-input-info-text-color: rgba(255,255,255,.45);
+  });
+});
+.aurora-vars({
+  --f7-input-height: 24px;
+  --f7-input-font-size: 13px;
+  --f7-textarea-padding-vertical: 2px;
+  /*
+  --f7-input-focused-border-color: var(--f7-list-item-border-color);
+  --f7-input-invalid-border-color: var(--f7-list-item-border-color);
+  --f7-input-invalid-text-color: var(--f7-input-error-text-color);
+  */
+  --f7-label-font-size: 11px;
+  --f7-label-text-color: inherit;
+  /*
+  --f7-label-focused-text-color: var(--f7-label-text-color);
+  --f7-label-invalid-text-color: var(--f7-label-text-color);
+  */
+  --f7-floating-label-scale: calc(13 / 11);
+  --f7-inline-label-font-size: 14px;
+  --f7-inline-label-line-height: 1.4;
+  --f7-inline-label-padding-top: 1px;
+  --f7-input-clear-button-size: 14px;
+  --f7-input-outline-height: 32px;
+  --f7-input-outline-padding-horizontal: 8px;
+  .light-vars({
+    --f7-input-text-color: #000000;
+    --f7-input-placeholder-color: rgba(0,0,0,0.32);
+    --f7-input-clear-button-color: #666;
+    --f7-input-info-text-color: rgba(0,0,0,0.5);
+  });
+  .dark-vars({
+    --f7-input-text-color: #fff;
+    --f7-input-clear-button-color: #aaa;
+    --f7-input-placeholder-color: rgba(255,255,255,.35);
+    --f7-input-info-text-color: rgba(255,255,255,0.45);
+  });
+});

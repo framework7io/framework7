@@ -1,0 +1,54 @@
+/* === Toggle === */
+@import url('./toggle-vars.less');
+
+.toggle, .toggle-icon {
+  width: var(--f7-toggle-width);
+  height: var(--f7-toggle-height);
+  border-radius: var(--f7-toggle-height);
+}
+.toggle {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  box-sizing: border-box;
+  align-self: center;
+  user-select: none;
+  input[type="checkbox"] {
+    display: none;
+  }
+  input[disabled] ~ .toggle-icon {
+    pointer-events: none;
+  }
+}
+.toggle-icon {
+  z-index: 0;
+  margin: 0;
+  padding: 0;
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: 300ms;
+  box-sizing: border-box;
+  display: block;
+  cursor: pointer;
+  &:before, &:after {
+    content: '';
+  }
+  &:after {
+    background: var(--f7-toggle-handle-color);
+    position: absolute;
+    z-index: 2;
+    transform: translateX(0px);
+    transition-duration: 300ms;
+  }
+}
+.if-ios-theme({
+  @import url('./toggle-ios.less');
+});
+.if-md-theme({
+  @import url('./toggle-md.less');
+});
+.if-aurora-theme({
+  @import url('./toggle-aurora.less');
+});
