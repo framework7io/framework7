@@ -2,6 +2,19 @@
 
 # Change Log
 
+# [v5.7.8](https://github.com/framework7io/framework7/compare/v5.7.7...v5.7.8) - June 13, 2020
+  * Core
+    * Card
+      * Expandable card now has `user-select: none` when it is closed
+    * Router Component
+      * Fixed issue with parsing scoped styles that have `"{"` content
+  * React/Svelte/Vue
+    * Badge
+      * Added support for Tooltip with `tooltip` and `tooltipTrigger` props
+    * Chip
+      * Added support for Tooltip with `tooltip` and `tooltipTrigger` props
+  * Minor fixes
+
 # [v5.7.7](https://github.com/framework7io/framework7/compare/v5.7.6...v5.7.7) - June 5, 2020
   * React/Svelte/Vue
     * ListInput

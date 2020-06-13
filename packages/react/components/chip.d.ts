@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Tooltip as TooltipNamespace } from 'framework7/components/tooltip/tooltip';
 
 declare namespace F7Chip {
   interface Props {
@@ -12,6 +13,8 @@ declare namespace F7Chip {
     mediaBgColor? : string
     mediaTextColor? : string
     outline? : boolean
+    tooltip? : string
+    tooltipTrigger? : string
     color? : string
     colorTheme? : string
     textColor? : string
@@ -34,5 +37,6 @@ declare namespace F7Chip {
 declare class F7Chip extends React.Component<F7Chip.Props, {}> {
   onClick(event? : any) : unknown
   onDeleteClick(event? : any) : unknown
+  f7Tooltip: TooltipNamespace.Tooltip
 }
 export default F7Chip;

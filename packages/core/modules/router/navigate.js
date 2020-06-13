@@ -620,7 +620,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
     return router;
   }
 
-  if (url || templateUrl || componentUrl) {
+  if (url || templateUrl || componentUrl || component) {
     router.allowPageChange = false;
   }
 

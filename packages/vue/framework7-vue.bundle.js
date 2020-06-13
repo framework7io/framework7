@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.7.7
+ * Framework7 Vue 5.7.8
  * Build full featured iOS & Android apps using Framework7 & Vue
  * https://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 5, 2020
+ * Released on: June 13, 2020
  */
 
 (function (global, factory) {
@@ -1160,7 +1160,9 @@
   var f7Badge = {
     name: 'f7-badge',
     props: Object.assign({
-      id: [String, Number]
+      id: [String, Number],
+      tooltip: String,
+      tooltipTrigger: String
     }, Mixins.colorProps),
 
     render: function render() {
@@ -1171,12 +1173,65 @@
       var style = props.style;
       var classes = Utils.classNames(className, 'badge', Mixins.colorClasses(props));
       return _h('span', {
+        ref: 'el',
         style: style,
         class: classes,
         attrs: {
           id: id
         }
       }, [this.$slots['default']]);
+    },
+
+    watch: {
+      'props.tooltip': function watchTooltip(newText) {
+        var self = this;
+
+        if (!newText && self.f7Tooltip) {
+          self.f7Tooltip.destroy();
+          self.f7Tooltip = null;
+          delete self.f7Tooltip;
+          return;
+        }
+
+        if (newText && !self.f7Tooltip && self.$f7) {
+          self.f7Tooltip = self.$f7.tooltip.create({
+            targetEl: self.$refs.el,
+            text: newText,
+            trigger: self.props.tooltipTrigger
+          });
+          return;
+        }
+
+        if (!newText || !self.f7Tooltip) { return; }
+        self.f7Tooltip.setText(newText);
+      }
+    },
+
+    mounted: function mounted() {
+      var self = this;
+      var el = self.$refs.el;
+      if (!el) { return; }
+      var ref = self.props;
+      var tooltip = ref.tooltip;
+      var tooltipTrigger = ref.tooltipTrigger;
+      if (!tooltip) { return; }
+      self.$f7ready(function (f7) {
+        self.f7Tooltip = f7.tooltip.create({
+          targetEl: el,
+          text: tooltip,
+          trigger: tooltipTrigger
+        });
+      });
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      var self = this;
+
+      if (self.f7Tooltip && self.f7Tooltip.destroy) {
+        self.f7Tooltip.destroy();
+        self.f7Tooltip = null;
+        delete self.f7Tooltip;
+      }
     },
 
     computed: {
@@ -2368,7 +2423,9 @@
       deleteable: Boolean,
       mediaBgColor: String,
       mediaTextColor: String,
-      outline: Boolean
+      outline: Boolean,
+      tooltip: String,
+      tooltipTrigger: String
     }, Mixins.colorProps, {}, Mixins.linkIconProps),
 
     render: function render() {
@@ -2445,23 +2502,69 @@
       }, [mediaEl, labelEl, deleteEl]);
     },
 
+    watch: {
+      'props.tooltip': function watchTooltip(newText) {
+        var self = this;
+
+        if (!newText && self.f7Tooltip) {
+          self.f7Tooltip.destroy();
+          self.f7Tooltip = null;
+          delete self.f7Tooltip;
+          return;
+        }
+
+        if (newText && !self.f7Tooltip && self.$f7) {
+          self.f7Tooltip = self.$f7.tooltip.create({
+            targetEl: self.$refs.el,
+            text: newText,
+            trigger: self.props.tooltipTrigger
+          });
+          return;
+        }
+
+        if (!newText || !self.f7Tooltip) { return; }
+        self.f7Tooltip.setText(newText);
+      }
+    },
+
     created: function created() {
       Utils.bindMethods(this, ['onClick', 'onDeleteClick']);
     },
 
     mounted: function mounted() {
-      this.$refs.el.addEventListener('click', this.onClick);
+      var self = this;
+      var el = self.$refs.el;
+      el.addEventListener('click', self.onClick);
 
-      if (this.$refs.deleteEl) {
-        this.$refs.deleteEl.addEventListener('click', this.onDeleteClick);
+      if (self.$refs.deleteEl) {
+        self.$refs.deleteEl.addEventListener('click', self.onDeleteClick);
       }
+
+      var ref = self.props;
+      var tooltip = ref.tooltip;
+      var tooltipTrigger = ref.tooltipTrigger;
+      if (!tooltip) { return; }
+      self.$f7ready(function (f7) {
+        self.f7Tooltip = f7.tooltip.create({
+          targetEl: el,
+          text: tooltip,
+          trigger: tooltipTrigger
+        });
+      });
     },
 
     beforeDestroy: function beforeDestroy() {
-      this.$refs.el.removeEventListener('click', this.onClick);
+      var self = this;
+      self.$refs.el.removeEventListener('click', self.onClick);
 
-      if (this.$refs.deleteEl) {
-        this.$refs.deleteEl.removeEventListener('click', this.onDeleteClick);
+      if (self.$refs.deleteEl) {
+        self.$refs.deleteEl.removeEventListener('click', self.onDeleteClick);
+      }
+
+      if (self.f7Tooltip && self.f7Tooltip.destroy) {
+        self.f7Tooltip.destroy();
+        self.f7Tooltip = null;
+        delete self.f7Tooltip;
       }
     },
 
@@ -13324,7 +13427,7 @@
   };
 
   /**
-   * Framework7 Vue 5.7.7
+   * Framework7 Vue 5.7.8
    * Build full featured iOS & Android apps using Framework7 & Vue
    * https://framework7.io/vue/
    *
@@ -13332,7 +13435,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: June 5, 2020
+   * Released on: June 13, 2020
    */
 
   function f7ready(callback) {

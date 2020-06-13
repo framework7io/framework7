@@ -1,5 +1,5 @@
 /**
- * Framework7 5.7.7
+ * Framework7 5.7.8
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 5, 2020
+ * Released on: June 13, 2020
  */
 
 /*====================
@@ -10764,6 +10764,11 @@ html.with-modal-sheet-push-closing .framework7-root > .panel-in.panel-reveal.pan
   margin-bottom: var(--f7-card-expandable-margin-vertical);
   box-shadow: var(--f7-card-expandable-box-shadow);
   font-size: var(--f7-card-expandable-font-size);
+}
+.card-expandable:not(.card-opened) {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 .card-expandable.card-no-transition {
   transition-duration: 0ms;

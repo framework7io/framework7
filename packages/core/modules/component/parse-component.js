@@ -37,7 +37,8 @@ function parseComponent(componentString) {
     style = componentString.split('<style scoped>')[1].split('</style>')[0];
     style = style
       .replace(/{{this}}/g, `[data-f7-${id}]`)
-      .replace(/[\n]?([^{^}]*){/ig, (string, rules) => {
+      .replace(/[\n]?([^{^}]*){/gi, (string, rules) => {
+        if (rules.indexOf('"') >= 0 || rules.indexOf("'") >= 0) return string;
         // eslint-disable-next-line
         rules = rules
           .split(',')

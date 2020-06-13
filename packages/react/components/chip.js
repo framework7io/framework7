@@ -2,6 +2,7 @@ import React from 'react';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import F7Icon from './icon';
+import __reactComponentWatch from '../runtime-helpers/react-component-watch.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
@@ -100,19 +101,41 @@ class F7Chip extends React.Component {
   }
 
   componentWillUnmount() {
-    this.refs.el.removeEventListener('click', this.onClick);
+    const self = this;
+    self.refs.el.removeEventListener('click', self.onClick);
 
-    if (this.refs.deleteEl) {
-      this.refs.deleteEl.removeEventListener('click', this.onDeleteClick);
+    if (self.refs.deleteEl) {
+      self.refs.deleteEl.removeEventListener('click', self.onDeleteClick);
+    }
+
+    if (self.f7Tooltip && self.f7Tooltip.destroy) {
+      self.f7Tooltip.destroy();
+      self.f7Tooltip = null;
+      delete self.f7Tooltip;
     }
   }
 
   componentDidMount() {
-    this.refs.el.addEventListener('click', this.onClick);
+    const self = this;
+    const el = self.refs.el;
+    el.addEventListener('click', self.onClick);
 
-    if (this.refs.deleteEl) {
-      this.refs.deleteEl.addEventListener('click', this.onDeleteClick);
+    if (self.refs.deleteEl) {
+      self.refs.deleteEl.addEventListener('click', self.onDeleteClick);
     }
+
+    const {
+      tooltip,
+      tooltipTrigger
+    } = self.props;
+    if (!tooltip) return;
+    self.$f7ready(f7 => {
+      self.f7Tooltip = f7.tooltip.create({
+        targetEl: el,
+        text: tooltip,
+        trigger: tooltipTrigger
+      });
+    });
   }
 
   get slots() {
@@ -129,6 +152,31 @@ class F7Chip extends React.Component {
 
   set refs(refs) {}
 
+  componentDidUpdate(prevProps, prevState) {
+    __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, newText => {
+      const self = this;
+
+      if (!newText && self.f7Tooltip) {
+        self.f7Tooltip.destroy();
+        self.f7Tooltip = null;
+        delete self.f7Tooltip;
+        return;
+      }
+
+      if (newText && !self.f7Tooltip && self.$f7) {
+        self.f7Tooltip = self.$f7.tooltip.create({
+          targetEl: self.refs.el,
+          text: newText,
+          trigger: self.props.tooltipTrigger
+        });
+        return;
+      }
+
+      if (!newText || !self.f7Tooltip) return;
+      self.f7Tooltip.setText(newText);
+    });
+  }
+
 }
 
 __reactComponentSetProps(F7Chip, Object.assign({
@@ -140,7 +188,9 @@ __reactComponentSetProps(F7Chip, Object.assign({
   deleteable: Boolean,
   mediaBgColor: String,
   mediaTextColor: String,
-  outline: Boolean
+  outline: Boolean,
+  tooltip: String,
+  tooltipTrigger: String
 }, Mixins.colorProps, {}, Mixins.linkIconProps));
 
 F7Chip.displayName = 'f7-chip';
