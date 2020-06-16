@@ -173,7 +173,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ---
 
 ### $50+ Top Supporter
-
+Daniel Fratus<br>
 [Paraphrasing tool- rewrite, paraphrase your article](https://paraphrasetools.com)<br>
 [Divi-Discount.com - Divi Discount](https://divi-discount.com/elegant-themes/)<br>
 [vpn for roku](https://cooltechzone.com/roku-vpn)<br>
@@ -247,6 +247,7 @@ Dave Billington
 ---
 
 ### $5+ Thank You
+Ivan Ivanco<br>
 T Konink<br>
 Elijah Jahbless<br>
 emre çete<br>
