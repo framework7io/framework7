@@ -469,7 +469,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
     return router;
   }
 
-  if (url || templateUrl || componentUrl) {
+  if (url || templateUrl || componentUrl || component) {
     router.allowPageChange = false;
   }
 
