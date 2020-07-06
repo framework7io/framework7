@@ -155,7 +155,6 @@ function getEventHandler(handlerString, context, { stop, prevent, once } = {}) {
   let fired = false;
   let methodName;
   let method;
-  let customArgs = [];
   let needMethodBind = true;
 
   if (handlerString.indexOf('(') < 0) {
@@ -190,11 +189,11 @@ function getEventHandler(handlerString, context, { stop, prevent, once } = {}) {
 
   function handler(...args) {
     const e = args[0];
+    let customArgs = [];
     if (once && fired) return;
     if (stop) e.stopPropagation();
     if (prevent) e.preventDefault();
     fired = true;
-
     if (handlerString.indexOf('(') < 0) {
       customArgs = args;
     } else {
