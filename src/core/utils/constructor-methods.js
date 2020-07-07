@@ -1,13 +1,7 @@
-import $ from 'dom7';
+import $ from './dom';
 
-export default function (parameters = {}) {
-  const {
-    defaultSelector,
-    constructor: Constructor,
-    domProp,
-    app,
-    addMethods,
-  } = parameters;
+export default function ConstructorMethods(parameters = {}) {
+  const { defaultSelector, constructor: Constructor, domProp, app, addMethods } = parameters;
   const methods = {
     create(...args) {
       if (app) return new Constructor(app, ...args);

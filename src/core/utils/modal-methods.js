@@ -1,10 +1,10 @@
-import $ from 'dom7';
-import Utils from './utils';
+import $ from './dom';
+import { extend } from './utils';
 import ConstructorMethods from './constructor-methods';
 
-export default function (parameters = {}) {
+export default function ModalMethods(parameters = {}) {
   const { defaultSelector, constructor: Constructor, app } = parameters;
-  const methods = Utils.extend(
+  const methods = extend(
     ConstructorMethods({
       defaultSelector,
       constructor: Constructor,
@@ -62,7 +62,7 @@ export default function (parameters = {}) {
         }
         return instance.close(animate);
       },
-    }
+    },
   );
   return methods;
 }

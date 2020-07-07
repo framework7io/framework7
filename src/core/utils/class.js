@@ -1,4 +1,4 @@
-import Utils from './utils';
+import { extend, now } from './utils';
 import EventsClass from './events-class';
 
 class Framework7Class extends EventsClass {
@@ -20,11 +20,11 @@ class Framework7Class extends EventsClass {
       const originalParams = {};
       Object.keys(module.params).forEach((paramKey) => {
         if (typeof instanceParams[paramKey] === 'undefined') return;
-        originalParams[paramKey] = Utils.extend({}, instanceParams[paramKey]);
+        originalParams[paramKey] = extend({}, instanceParams[paramKey]);
       });
-      Utils.extend(instanceParams, module.params);
+      extend(instanceParams, module.params);
       Object.keys(originalParams).forEach((paramKey) => {
-        Utils.extend(instanceParams[paramKey], originalParams[paramKey]);
+        extend(instanceParams[paramKey], originalParams[paramKey]);
       });
     }
   }
@@ -36,7 +36,7 @@ class Framework7Class extends EventsClass {
       const module = instance.modules[moduleName];
       // Extend params
       if (module.params) {
-        Utils.extend(instanceParams, module.params);
+        extend(instanceParams, module.params);
       }
     });
   }
@@ -100,7 +100,7 @@ class Framework7Class extends EventsClass {
   static installModule(module, ...params) {
     const Class = this;
     if (!Class.prototype.modules) Class.prototype.modules = {};
-    const name = module.name || (`${Object.keys(Class.prototype.modules).length}_${Utils.now()}`);
+    const name = module.name || `${Object.keys(Class.prototype.modules).length}_${now()}`;
     Class.prototype.modules[name] = module;
     // Prototype
     if (module.proto) {
@@ -124,7 +124,7 @@ class Framework7Class extends EventsClass {
   static use(module, ...params) {
     const Class = this;
     if (Array.isArray(module)) {
-      module.forEach(m => Class.installModule(m));
+      module.forEach((m) => Class.installModule(m));
       return Class;
     }
     return Class.installModule(module, ...params);

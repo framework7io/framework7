@@ -38,7 +38,10 @@ class EventsClass {
         self.eventsListeners[event] = [];
       } else if (self.eventsListeners[event]) {
         self.eventsListeners[event].forEach((eventHandler, index) => {
-          if (eventHandler === handler || (eventHandler.f7proxy && eventHandler.f7proxy === handler)) {
+          if (
+            eventHandler === handler ||
+            (eventHandler.f7proxy && eventHandler.f7proxy === handler)
+          ) {
             self.eventsListeners[event].splice(index, 1);
           }
         });
@@ -66,8 +69,8 @@ class EventsClass {
       eventsParents = args[0].local ? [] : args[0].parents || self.eventsParents;
     }
     const eventsArray = Array.isArray(events) ? events : events.split(' ');
-    const localEvents = eventsArray.map(eventName => eventName.replace('local::', ''));
-    const parentEvents = eventsArray.filter(eventName => eventName.indexOf('local::') < 0);
+    const localEvents = eventsArray.map((eventName) => eventName.replace('local::', ''));
+    const parentEvents = eventsArray.filter((eventName) => eventName.indexOf('local::') < 0);
 
     localEvents.forEach((event) => {
       if (self.eventsListeners && self.eventsListeners[event]) {

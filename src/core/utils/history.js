@@ -1,6 +1,6 @@
-import { window, document } from 'ssr-window';
-import $ from 'dom7';
-import Utils from './utils';
+import { getWindow, getDocument } from 'ssr-window';
+import $ from './dom';
+import { extend } from './utils';
 
 const History = {
   queue: [],
@@ -78,13 +78,15 @@ const History = {
     });
   },
   initViewState(viewId, viewState) {
-    const newState = Utils.extend({}, (History.state || {}), {
+    const window = getWindow();
+    const newState = extend({}, History.state || {}, {
       [viewId]: viewState,
     });
     History.state = newState;
     window.history.replaceState(newState, '');
   },
   push(viewId, viewState, url) {
+    const window = getWindow();
     if (!History.allowChange) {
       History.queue.push(() => {
         History.push(viewId, viewState, url);
@@ -92,13 +94,14 @@ const History = {
       return;
     }
     History.previousState = History.state;
-    const newState = Utils.extend({}, (History.previousState || {}), {
+    const newState = extend({}, History.previousState || {}, {
       [viewId]: viewState,
     });
     History.state = newState;
     window.history.pushState(newState, '', url);
   },
   replace(viewId, viewState, url) {
+    const window = getWindow();
     if (!History.allowChange) {
       History.queue.push(() => {
         History.replace(viewId, viewState, url);
@@ -106,25 +109,30 @@ const History = {
       return;
     }
     History.previousState = History.state;
-    const newState = Utils.extend({}, (History.previousState || {}), {
+    const newState = extend({}, History.previousState || {}, {
       [viewId]: viewState,
     });
     History.state = newState;
     window.history.replaceState(newState, '', url);
   },
   go(index) {
+    const window = getWindow();
     History.allowChange = false;
     window.history.go(index);
   },
   back() {
+    const window = getWindow();
     History.allowChange = false;
     window.history.back();
   },
   allowChange: true,
   previousState: {},
-  state: window.history.state,
+  state: {},
   blockPopstate: true,
   init(app) {
+    const window = getWindow();
+    const document = getDocument();
+    History.state = window.history.state;
     $(window).on('load', () => {
       setTimeout(() => {
         History.blockPopstate = false;

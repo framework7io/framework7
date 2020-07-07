@@ -1,15 +1,20 @@
 /* eslint-disable no-nested-ternary */
-import { window, document } from 'ssr-window';
-import $ from 'dom7';
-import Support from '../../utils/support';
-import Device from '../../utils/device';
+import { getWindow, getDocument } from 'ssr-window';
+import $ from '../../utils/dom';
+import { getSupport } from '../../utils/get-support';
+import { getDevice } from '../../utils/get-device';
+import { extend } from '../../utils/utils';
 
 function initTouch() {
   const app = this;
+  const device = getDevice();
+  const support = getSupport();
+  const window = getWindow();
+  const document = getDocument();
   const params = app.params.touch;
   const useRipple = params[`${app.theme}TouchRipple`];
 
-  if (Device.ios && Device.webView) {
+  if (device.ios && device.webView) {
     // Strange hack required for iOS 8 webview to work on inputs
     window.addEventListener('touchstart', () => {});
   }
@@ -48,8 +53,9 @@ function initTouch() {
       for (let i = 0; i < activable.length; i += 1) {
         if (!preventPropagation) {
           newActivable.push(activable[i]);
-          if (activable.eq(i).hasClass('prevent-active-state-propagation')
-            || activable.eq(i).hasClass('no-active-state-propagation')
+          if (
+            activable.eq(i).hasClass('prevent-active-state-propagation') ||
+            activable.eq(i).hasClass('no-active-state-propagation')
           ) {
             preventPropagation = true;
           }
@@ -305,7 +311,7 @@ function initTouch() {
         () => {
           tapHoldFired = false;
         },
-        (Device.ios || Device.androidChrome ? 100 : 400)
+        device.ios || device.androidChrome ? 100 : 400,
       );
     }
     preventClick = false;
@@ -341,22 +347,15 @@ function initTouch() {
   function appTouchEndPassive(e) {
     emitAppTouchEvent('touchend:passive', e);
   }
-  function appGestureActive(e) {
-    emitAppTouchEvent(`${e.type} ${e.type}:active`, e);
-  }
-  function appGesturePassive(e) {
-    emitAppTouchEvent(`${e.type}:passive`, e);
-  }
 
-
-  const passiveListener = Support.passiveListener ? { passive: true } : false;
-  const passiveListenerCapture = Support.passiveListener ? { passive: true, capture: true } : true;
-  const activeListener = Support.passiveListener ? { passive: false } : false;
-  const activeListenerCapture = Support.passiveListener ? { passive: false, capture: true } : true;
+  const passiveListener = support.passiveListener ? { passive: true } : false;
+  const passiveListenerCapture = support.passiveListener ? { passive: true, capture: true } : true;
+  const activeListener = support.passiveListener ? { passive: false } : false;
+  const activeListenerCapture = support.passiveListener ? { passive: false, capture: true } : true;
 
   document.addEventListener('click', appClick, true);
 
-  if (Support.passiveListener) {
+  if (support.passiveListener) {
     document.addEventListener(app.touchEvents.start, appTouchStartActive, activeListenerCapture);
     document.addEventListener(app.touchEvents.move, appTouchMoveActive, activeListener);
     document.addEventListener(app.touchEvents.end, appTouchEndActive, activeListener);
@@ -364,45 +363,34 @@ function initTouch() {
     document.addEventListener(app.touchEvents.start, appTouchStartPassive, passiveListenerCapture);
     document.addEventListener(app.touchEvents.move, appTouchMovePassive, passiveListener);
     document.addEventListener(app.touchEvents.end, appTouchEndPassive, passiveListener);
-    if (Support.touch && Support.gestures) {
-      document.addEventListener('gesturestart', appGestureActive, activeListener);
-      document.addEventListener('gesturechange', appGestureActive, activeListener);
-      document.addEventListener('gestureend', appGestureActive, activeListener);
-
-      document.addEventListener('gesturestart', appGesturePassive, passiveListener);
-      document.addEventListener('gesturechange', appGesturePassive, passiveListener);
-      document.addEventListener('gestureend', appGesturePassive, passiveListener);
-    }
   } else {
-    document.addEventListener(app.touchEvents.start, (e) => {
-      appTouchStartActive(e);
-      appTouchStartPassive(e);
-    }, true);
-    document.addEventListener(app.touchEvents.move, (e) => {
-      appTouchMoveActive(e);
-      appTouchMovePassive(e);
-    }, false);
-    document.addEventListener(app.touchEvents.end, (e) => {
-      appTouchEndActive(e);
-      appTouchEndPassive(e);
-    }, false);
-    if (Support.touch && Support.gestures) {
-      document.addEventListener('gesturestart', (e) => {
-        appGestureActive(e);
-        appGesturePassive(e);
-      }, false);
-      document.addEventListener('gesturechange', (e) => {
-        appGestureActive(e);
-        appGesturePassive(e);
-      }, false);
-      document.addEventListener('gestureend', (e) => {
-        appGestureActive(e);
-        appGesturePassive(e);
-      }, false);
-    }
+    document.addEventListener(
+      app.touchEvents.start,
+      (e) => {
+        appTouchStartActive(e);
+        appTouchStartPassive(e);
+      },
+      true,
+    );
+    document.addEventListener(
+      app.touchEvents.move,
+      (e) => {
+        appTouchMoveActive(e);
+        appTouchMovePassive(e);
+      },
+      false,
+    );
+    document.addEventListener(
+      app.touchEvents.end,
+      (e) => {
+        appTouchEndActive(e);
+        appTouchEndPassive(e);
+      },
+      false,
+    );
   }
 
-  if (Support.touch) {
+  if (support.touch) {
     app.on('click', handleClick);
     app.on('touchstart', handleTouchStart);
     app.on('touchmove', handleTouchMove);
@@ -415,7 +403,7 @@ function initTouch() {
     document.addEventListener('pointercancel', handleMouseUp, { passive: true });
   }
   document.addEventListener('contextmenu', (e) => {
-    if (params.disableContextMenu && (Device.ios || Device.android || Device.cordova)) {
+    if (params.disableContextMenu && (device.ios || device.android || device.cordova)) {
       e.preventDefault();
     }
     if (useRipple) {
@@ -439,20 +427,26 @@ export default {
       tapHoldPreventClicks: true,
       // Active State
       activeState: true,
-      activeStateElements: 'a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus, .card-expandable, .menu-item, .link, .item-link, .accordion-item-toggle',
+      activeStateElements:
+        'a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus, .card-expandable, .menu-item, .link, .item-link, .accordion-item-toggle',
       activeStateOnMouseMove: false,
       mdTouchRipple: true,
       iosTouchRipple: false,
       auroraTouchRipple: false,
-      touchRippleElements: '.ripple, .link, .item-link, .list-button, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell:not(.input-cell), .notification-close-button, .stepper-button, .stepper-button-minus, .stepper-button-plus, .menu-item-content, .list.accordion-list .accordion-item-toggle',
+      touchRippleElements:
+        '.ripple, .link, .item-link, .list-button, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell:not(.input-cell), .notification-close-button, .stepper-button, .stepper-button-minus, .stepper-button-plus, .menu-item-content, .list.accordion-list .accordion-item-toggle',
     },
   },
-  instance: {
-    touchEvents: {
-      start: Support.touch ? 'touchstart' : (Support.pointerEvents ? 'pointerdown' : 'mousedown'),
-      move: Support.touch ? 'touchmove' : (Support.pointerEvents ? 'pointermove' : 'mousemove'),
-      end: Support.touch ? 'touchend' : (Support.pointerEvents ? 'pointerup' : 'mouseup'),
-    },
+  create() {
+    const app = this;
+    const support = getSupport();
+    extend(app, {
+      touchEvents: {
+        start: support.touch ? 'touchstart' : support.pointerEvents ? 'pointerdown' : 'mousedown',
+        move: support.touch ? 'touchmove' : support.pointerEvents ? 'pointermove' : 'mousemove',
+        end: support.touch ? 'touchend' : support.pointerEvents ? 'pointerup' : 'mouseup',
+      },
+    });
   },
   on: {
     init: initTouch,

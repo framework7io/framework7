@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend } from '../../utils/utils';
 import Panel from './panel-class';
 
 export default {
@@ -25,14 +25,10 @@ export default {
   static: {
     Panel,
   },
-  instance: {
-    panel: {
-      allowOpen: true,
-    },
-  },
   create() {
     const app = this;
-    Utils.extend(app.panel, {
+    extend(app.panel, {
+      allowOpen: true,
       create(params) {
         return new Panel(app, params);
       },
@@ -84,20 +80,14 @@ export default {
     init() {
       const app = this;
       $('.panel-init').each((index, panelEl) => {
-        const params = Object.assign(
-          { el: panelEl },
-          $(panelEl).dataset() || {}
-        );
+        const params = Object.assign({ el: panelEl }, $(panelEl).dataset() || {});
         app.panel.create(params);
       });
     },
     pageInit(page) {
       const app = this;
       page.$el.find('.panel-init').each((index, panelEl) => {
-        const params = Object.assign(
-          { el: panelEl },
-          $(panelEl).dataset() || {}
-        );
+        const params = Object.assign({ el: panelEl }, $(panelEl).dataset() || {});
         app.panel.create(params);
       });
     },
@@ -114,10 +104,7 @@ export default {
       insert(vnode) {
         const app = this;
         const panelEl = vnode.elm;
-        const params = Object.assign(
-          { el: panelEl },
-          $(panelEl).dataset() || {}
-        );
+        const params = Object.assign({ el: panelEl }, $(panelEl).dataset() || {});
         app.panel.create(params);
       },
       destroy(vnode) {
