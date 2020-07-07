@@ -1,9 +1,13 @@
-import { window } from 'ssr-window';
-import Support from './support';
+import { getWindow } from 'ssr-window';
+import { getSupport } from './get-support';
 
-const Device = (function Device() {
+let device;
+
+function calcDevice({ userAgent } = {}) {
+  const support = getSupport();
+  const window = getWindow();
   const platform = window.navigator.platform;
-  const ua = window.navigator.userAgent;
+  const ua = userAgent || window.navigator.userAgent;
 
   const device = {
     ios: false,
@@ -36,7 +40,11 @@ const Device = (function Device() {
   const firefox = ua.indexOf('Gecko/') >= 0 && ua.indexOf('Firefox/') >= 0;
   const windows = platform === 'Win32';
   const electron = ua.toLowerCase().indexOf('electron') >= 0;
-  const nwjs = typeof nw !== 'undefined' && typeof process !== 'undefined' && typeof process.versions !== 'undefined' && typeof process.versions.nw !== 'undefined';
+  const nwjs =
+    typeof nw !== 'undefined' &&
+    typeof process !== 'undefined' &&
+    typeof process.versions !== 'undefined' &&
+    typeof process.versions.nw !== 'undefined';
   let macos = platform === 'MacIntel';
 
   // iPadOs 13 fix
@@ -50,10 +58,11 @@ const Device = (function Device() {
     '768x1024',
     '1024x768',
   ];
-  if (!ipad
-    && macos
-    && Support.touch
-    && iPadScreens.indexOf(`${screenWidth}x${screenHeight}`) >= 0
+  if (
+    !ipad &&
+    macos &&
+    support.touch &&
+    iPadScreens.indexOf(`${screenWidth}x${screenHeight}`) >= 0
   ) {
     ipad = ua.match(/(Version)\/([\d.]+)/);
     if (!ipad) ipad = [0, 1, '13_0_0'];
@@ -96,8 +105,12 @@ const Device = (function Device() {
   }
 
   // Webview
-  device.webView = !!((iphone || ipad || ipod) && (ua.match(/.*AppleWebKit(?!.*Safari)/i) || window.navigator.standalone))
-    || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+  device.webView =
+    !!(
+      (iphone || ipad || ipod) &&
+      (ua.match(/.*AppleWebKit(?!.*Safari)/i) || window.navigator.standalone)
+    ) ||
+    (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
   device.webview = device.webView;
   device.standalone = device.webView;
 
@@ -135,6 +148,13 @@ const Device = (function Device() {
 
   // Export object
   return device;
-}());
+}
 
-export default Device;
+function getDevice(overrides = {}) {
+  if (!device) {
+    device = calcDevice(overrides);
+  }
+  return device;
+}
+
+export { getDevice };

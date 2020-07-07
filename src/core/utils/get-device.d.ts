@@ -1,50 +1,52 @@
 export interface Device {
   /** true for iOS device */
-  ios: boolean
+  ios: boolean;
   /** true for Android device */
-  android: boolean
+  android: boolean;
   /** true for Android Chrome */
-  androidChrome: boolean
+  androidChrome: boolean;
   /** true for desktop browser */
-  desktop: boolean
+  desktop: boolean;
   /** true for iPhone */
-  iphone: boolean
+  iphone: boolean;
   /** true for iPod */
-  ipod: boolean
+  ipod: boolean;
   /** true for iPad */
-  ipad: boolean
+  ipad: boolean;
   /** true for MS Edge browser */
-  edge: boolean
+  edge: boolean;
   /** true for Internet Explorer browser*/
-  ie: boolean
+  ie: boolean;
   /** true for FireFox browser*/
-  firefox: boolean
+  firefox: boolean;
   /** true for desktop macOs */
-  macos: boolean
+  macos: boolean;
   /** true for desktop windows */
-  windows: boolean
+  windows: boolean;
   /** true when app running in cordova environment */
-  cordova: boolean
+  cordova: boolean;
   /** true when app is running under Electron environment */
-  electron: boolean
+  electron: boolean;
   /** true when app is running under NW.js environment */
-  nwjs: boolean
+  nwjs: boolean;
   /** true when app running in cordova environment */
-  phonegap: boolean
+  phonegap: boolean;
   /** true if app runs in web view - webapp installed to home screen */
-  webView: boolean
+  webView: boolean;
   /** true if app runs in web view - webapp installed to home screen */
-  standalone: boolean
+  standalone: boolean;
   /** Contains OS can be ios, android or windows (for Windows Phone) */
-  os: string
+  os: string;
   /** Contains OS version, e.g. 11.2.0 */
-  osVersion: string
+  osVersion: string;
   /** Device pixel ratio */
-  pixelRatio: number
+  pixelRatio: number;
   /** Returns 'dark' or 'light if (prefers-color-theme) media supported, otherwise returns undefined */
-  prefersColorScheme() : string
+  prefersColorScheme(): string;
 }
 
-declare const Device : Device;
+export interface DeviceParams {
+  userAgent: string;
+}
 
-export default Device;
+export const getDevice: (overrides: DeviceParams) => Device;
