@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend, nextFrame } from '../../utils/utils';
 
 const Toolbar = {
   setHighlight(tabbarEl) {
@@ -8,7 +8,11 @@ const Toolbar = {
 
     const $tabbarEl = $(tabbarEl);
 
-    if ($tabbarEl.length === 0 || !($tabbarEl.hasClass('tabbar') || $tabbarEl.hasClass('tabbar-labels'))) return;
+    if (
+      $tabbarEl.length === 0 ||
+      !($tabbarEl.hasClass('tabbar') || $tabbarEl.hasClass('tabbar-labels'))
+    )
+      return;
 
     let $highlightEl = $tabbarEl.find('.tab-link-highlight');
     const tabLinksCount = $tabbarEl.find('.tab-link').length;
@@ -37,10 +41,8 @@ const Toolbar = {
       highlightTranslate = `${(app.rtl ? -activeIndex : activeIndex) * 100}%`;
     }
 
-    Utils.nextFrame(() => {
-      $highlightEl
-        .css('width', highlightWidth)
-        .transform(`translate3d(${highlightTranslate},0,0)`);
+    nextFrame(() => {
+      $highlightEl.css('width', highlightWidth).transform(`translate3d(${highlightTranslate},0,0)`);
     });
   },
   init(tabbarEl) {
@@ -142,7 +144,7 @@ export default {
   name: 'toolbar',
   create() {
     const app = this;
-    Utils.extend(app, {
+    extend(app, {
       toolbar: {
         hide: Toolbar.hide.bind(app),
         show: Toolbar.show.bind(app),
@@ -189,17 +191,17 @@ export default {
         app.toolbar.init(tabbarEl);
       });
       if (
-        app.params.toolbar.hideOnPageScroll
-        || page.$el.find('.hide-toolbar-on-scroll').length
-        || page.$el.hasClass('hide-toolbar-on-scroll')
-        || page.$el.find('.hide-bars-on-scroll').length
-        || page.$el.hasClass('hide-bars-on-scroll')
+        app.params.toolbar.hideOnPageScroll ||
+        page.$el.find('.hide-toolbar-on-scroll').length ||
+        page.$el.hasClass('hide-toolbar-on-scroll') ||
+        page.$el.find('.hide-bars-on-scroll').length ||
+        page.$el.hasClass('hide-bars-on-scroll')
       ) {
         if (
-          page.$el.find('.keep-toolbar-on-scroll').length
-          || page.$el.hasClass('keep-toolbar-on-scroll')
-          || page.$el.find('.keep-bars-on-scroll').length
-          || page.$el.hasClass('keep-bars-on-scroll')
+          page.$el.find('.keep-toolbar-on-scroll').length ||
+          page.$el.hasClass('keep-toolbar-on-scroll') ||
+          page.$el.find('.keep-bars-on-scroll').length ||
+          page.$el.hasClass('keep-bars-on-scroll')
         ) {
           return;
         }

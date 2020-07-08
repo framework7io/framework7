@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend } from '../../utils/utils';
 import View from './view-class';
 
 function getCurrentView(app) {
@@ -108,8 +108,8 @@ export default {
   },
   create() {
     const app = this;
-    Utils.extend(app, {
-      views: Utils.extend([], {
+    extend(app, {
+      views: extend([], {
         create(el, params) {
           return new View(app, el, params);
         },

@@ -1,16 +1,13 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { getDocument } from 'ssr-window';
+import { extend, deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 import swipePanel from './swipe-panel';
 import resizablePanel from './resizable-panel';
 
 class Panel extends Framework7Class {
   constructor(app, params = {}) {
-    const extendedParams = Utils.extend(
-      { on: {} },
-      app.params.panel,
-      params
-    );
+    const extendedParams = extend({ on: {} }, app.params.panel, params);
     super(extendedParams, [app]);
 
     const panel = this;
@@ -21,7 +18,9 @@ class Panel extends Framework7Class {
     if (panel.params.el) {
       $el = $(panel.params.el).eq(0);
     } else if (panel.params.content) {
-      $el = $(panel.params.content).filter((elIndex, node) => node.nodeType === 1).eq(0);
+      $el = $(panel.params.content)
+        .filter((elIndex, node) => node.nodeType === 1)
+        .eq(0);
     }
 
     if ($el.length === 0) return panel;
@@ -45,7 +44,7 @@ class Panel extends Framework7Class {
       }
     }
 
-    Utils.extend(panel, {
+    extend(panel, {
       app,
       side,
       effect,
@@ -113,7 +112,12 @@ class Panel extends Framework7Class {
     const $viewEl = $(panel.getViewEl());
     const wasVisible = $el.hasClass('panel-in-breakpoint');
 
-    if (app.width >= breakpoint && typeof breakpoint !== 'undefined' && breakpoint !== null && !visibleBreakpointDisabled) {
+    if (
+      app.width >= breakpoint &&
+      typeof breakpoint !== 'undefined' &&
+      breakpoint !== null &&
+      !visibleBreakpointDisabled
+    ) {
       if (!wasVisible) {
         $('html').removeClass(`with-panel-${side}-reveal with-panel-${side}-cover with-panel`);
         $el.addClass('panel-in-breakpoint').removeClass('panel-in panel-in-collapsed');
@@ -181,7 +185,12 @@ class Panel extends Framework7Class {
     const breakpoint = params.collapsedBreakpoint;
     const wasVisible = $el.hasClass('panel-in-collapsed');
 
-    if (app.width >= breakpoint && typeof breakpoint !== 'undefined' && breakpoint !== null && !collapsedBreakpointDisabled) {
+    if (
+      app.width >= breakpoint &&
+      typeof breakpoint !== 'undefined' &&
+      breakpoint !== null &&
+      !collapsedBreakpointDisabled
+    ) {
       if (!wasVisible) {
         $('html').removeClass(`with-panel-${side}-reveal with-panel-${side}-cover with-panel`);
         $el.addClass('panel-in-collapsed').removeClass('panel-in');
@@ -312,6 +321,7 @@ class Panel extends Framework7Class {
 
   insertToRoot() {
     const panel = this;
+    const document = getDocument();
     const { $el, app, $backdropEl } = panel;
     const $panelParentEl = $el.parent();
     const wasInDom = $el.parents(document).length > 0;
@@ -328,18 +338,11 @@ class Panel extends Framework7Class {
         app.root.prepend($el);
       }
 
-      if ($backdropEl
-        && $backdropEl.length
-        && (
-          (
-            !$backdropEl.parent().is(app.root)
-            && $backdropEl.nextAll('.panel').length === 0
-          )
-          || (
-            $backdropEl.parent().is(app.root)
-            && $backdropEl.nextAll('.panel').length === 0
-          )
-        )
+      if (
+        $backdropEl &&
+        $backdropEl.length &&
+        ((!$backdropEl.parent().is(app.root) && $backdropEl.nextAll('.panel').length === 0) ||
+          ($backdropEl.parent().is(app.root) && $backdropEl.nextAll('.panel').length === 0))
       ) {
         $backdropEl.insertBefore($el);
       }
@@ -409,9 +412,7 @@ class Panel extends Framework7Class {
         $backdropEl.removeClass('not-animated');
       }
       panelTransitionEnd();
-      $el
-        .removeClass('panel-out not-animated')
-        .addClass('panel-in');
+      $el.removeClass('panel-out not-animated').addClass('panel-in');
       panel.onOpen();
     } else {
       if ($backdropEl) {
@@ -447,20 +448,14 @@ class Panel extends Framework7Class {
       $('html').removeClass('with-panel-closing');
     }
     if (animate) {
-      transitionEndTarget
-        .transitionEnd(() => {
-          transitionEnd();
-        });
-      $el
-        .removeClass('panel-in')
-        .addClass('panel-out');
+      transitionEndTarget.transitionEnd(() => {
+        transitionEnd();
+      });
+      $el.removeClass('panel-in').addClass('panel-out');
       // Emit close
       panel.onClose();
     } else {
-      $el
-        .addClass('not-animated')
-        .removeClass('panel-in')
-        .addClass('panel-out');
+      $el.addClass('not-animated').removeClass('panel-in').addClass('panel-out');
       // Emit close
       panel.onClose();
       panel.onClosed();
@@ -520,7 +515,7 @@ class Panel extends Framework7Class {
       panel.el.f7Panel = null;
       delete panel.el.f7Panel;
     }
-    Utils.deleteProps(panel);
+    deleteProps(panel);
 
     panel = null;
   }

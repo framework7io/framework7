@@ -1,20 +1,41 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import {
+  extend,
+  iosPreloaderContent,
+  mdPreloaderContent,
+  auroraPreloaderContent,
+} from '../../utils/utils';
 
 const Preloader = {
   init(el) {
     const app = this;
+    const preloaders = {
+      iosPreloaderContent,
+      mdPreloaderContent,
+      auroraPreloaderContent,
+    };
     const $el = $(el);
-    if ($el.length === 0 || $el.children('.preloader-inner').length > 0 || $el.children('.preloader-inner-line').length > 0) return;
-    $el.append(Utils[`${app.theme}PreloaderContent`]);
+    if (
+      $el.length === 0 ||
+      $el.children('.preloader-inner').length > 0 ||
+      $el.children('.preloader-inner-line').length > 0
+    )
+      return;
+    $el.append(preloaders[`${app.theme}PreloaderContent`]);
   },
   // Modal
   visible: false,
   show(color = 'white') {
     const app = this;
     if (Preloader.visible) return;
-    const preloaderInner = Utils[`${app.theme}PreloaderContent`] || '';
+    const preloaders = {
+      iosPreloaderContent,
+      mdPreloaderContent,
+      auroraPreloaderContent,
+    };
+    const preloaderInner = preloaders[`${app.theme}PreloaderContent`] || '';
     $('html').addClass('with-modal-preloader');
+    // prettier-ignore
     app.root.append(`
       <div class="preloader-backdrop"></div>
       <div class="preloader-modal">
@@ -25,8 +46,14 @@ const Preloader = {
   },
   showIn(el, color = 'white') {
     const app = this;
-    const preloaderInner = Utils[`${app.theme}PreloaderContent`] || '';
+    const preloaders = {
+      iosPreloaderContent,
+      mdPreloaderContent,
+      auroraPreloaderContent,
+    };
+    const preloaderInner = preloaders[`${app.theme}PreloaderContent`] || '';
     $(el || 'html').addClass('with-modal-preloader');
+    // prettier-ignore
     $(el || app.root).append(`
       <div class="preloader-backdrop"></div>
       <div class="preloader-modal">
@@ -44,14 +71,16 @@ const Preloader = {
   hideIn(el) {
     const app = this;
     $(el || 'html').removeClass('with-modal-preloader');
-    $(el || app.root).find('.preloader-backdrop, .preloader-modal').remove();
+    $(el || app.root)
+      .find('.preloader-backdrop, .preloader-modal')
+      .remove();
   },
 };
 export default {
   name: 'preloader',
   create() {
     const app = this;
-    Utils.extend(app, {
+    extend(app, {
       preloader: {
         init: Preloader.init.bind(app),
         show: Preloader.show.bind(app),
@@ -70,9 +99,11 @@ export default {
     },
     tabMounted(tabEl) {
       const app = this;
-      $(tabEl).find('.preloader').each((index, preloaderEl) => {
-        app.preloader.init(preloaderEl);
-      });
+      $(tabEl)
+        .find('.preloader')
+        .each((index, preloaderEl) => {
+          app.preloader.init(preloaderEl);
+        });
     },
     pageInit(page) {
       const app = this;

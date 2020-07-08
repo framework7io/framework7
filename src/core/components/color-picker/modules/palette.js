@@ -3,6 +3,7 @@ import $ from 'dom7';
 
 export default {
   render(self) {
+    // prettier-ignore
     return `
       <div class="color-picker-module color-picker-module-palette">
         <div class="color-picker-palette">
@@ -31,7 +32,11 @@ export default {
       });
     }
 
-    self.$el.on('click', '.color-picker-module-palette .color-picker-palette-value', handlePaletteClick);
+    self.$el.on(
+      'click',
+      '.color-picker-module-palette .color-picker-palette-value',
+      handlePaletteClick,
+    );
 
     self.destroyPaletteEvents = function destroyPaletteEvents() {
       self.$el.off('click', '.color-picker-module-hex input', handlePaletteClick);

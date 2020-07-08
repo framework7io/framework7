@@ -7,9 +7,8 @@ export default {
     `;
   },
   update(self) {
-    self.$el.find('.color-picker-module-current-color .color-picker-current-color').css(
-      'background-color',
-      self.value.hex,
-    );
+    self.$el
+      .find('.color-picker-module-current-color .color-picker-current-color')
+      .css('background-color', self.value.hex);
   },
 };

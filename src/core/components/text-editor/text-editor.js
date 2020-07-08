@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend } from '../../utils/utils';
 import TextEditor from './text-editor-class';
 import ConstructorMethods from '../../utils/constructor-methods';
 
@@ -29,7 +29,7 @@ export default {
   },
   create() {
     const app = this;
-    app.textEditor = Utils.extend(
+    app.textEditor = extend(
       ConstructorMethods({
         defaultSelector: '.text-editor',
         constructor: TextEditor,
@@ -44,21 +44,25 @@ export default {
   on: {
     tabMounted(tabEl) {
       const app = this;
-      $(tabEl).find('.text-editor-init').each((index, editorEl) => {
-        const dataset = $(editorEl).dataset();
-        app.textEditor.create(Utils.extend({ el: editorEl }, dataset || {}));
-      });
+      $(tabEl)
+        .find('.text-editor-init')
+        .each((index, editorEl) => {
+          const dataset = $(editorEl).dataset();
+          app.textEditor.create(extend({ el: editorEl }, dataset || {}));
+        });
     },
     tabBeforeRemove(tabEl) {
-      $(tabEl).find('.text-editor-init').each((index, editorEl) => {
-        if (editorEl.f7TextEditor) editorEl.f7TextEditor.destroy();
-      });
+      $(tabEl)
+        .find('.text-editor-init')
+        .each((index, editorEl) => {
+          if (editorEl.f7TextEditor) editorEl.f7TextEditor.destroy();
+        });
     },
     pageInit(page) {
       const app = this;
       page.$el.find('.text-editor-init').each((index, editorEl) => {
         const dataset = $(editorEl).dataset();
-        app.textEditor.create(Utils.extend({ el: editorEl }, dataset || {}));
+        app.textEditor.create(extend({ el: editorEl }, dataset || {}));
       });
     },
     pageBeforeRemove(page) {
@@ -73,7 +77,7 @@ export default {
         const app = this;
         const editorEl = vnode.elm;
         const dataset = $(editorEl).dataset();
-        app.textEditor.create(Utils.extend({ el: editorEl }, dataset || {}));
+        app.textEditor.create(extend({ el: editorEl }, dataset || {}));
       },
       destroy(vnode) {
         const editorEl = vnode.elm;

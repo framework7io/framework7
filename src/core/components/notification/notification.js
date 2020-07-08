@@ -1,4 +1,4 @@
-import Utils from '../../utils/utils';
+import { extend } from '../../utils/utils';
 import Notification from './notification-class';
 import ModalMethods from '../../utils/modal-methods';
 
@@ -9,13 +9,13 @@ export default {
   },
   create() {
     const app = this;
-    app.notification = Utils.extend(
+    app.notification = extend(
       {},
       ModalMethods({
         app,
         constructor: Notification,
         defaultSelector: '.notification.modal-in',
-      })
+      }),
     );
   },
   params: {

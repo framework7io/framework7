@@ -1,11 +1,12 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
-import Support from '../../utils/support';
+import { extend } from '../../utils/utils';
+import getSupport from '../../utils/get-support';
 
 function resizableView(view) {
   const app = view.app;
+  const support = getSupport();
   if (view.resizableInitialized) return;
-  Utils.extend(view, {
+  extend(view, {
     resizable: true,
     resizableWidth: null,
     resizableInitialized: true,
@@ -28,7 +29,7 @@ function resizableView(view) {
   function transformCSSWidth(v) {
     if (!v) return null;
     if (v.indexOf('%') >= 0 || v.indexOf('vw') >= 0) {
-      return parseInt(v, 10) / 100 * app.width;
+      return (parseInt(v, 10) / 100) * app.width;
     }
     const newV = parseInt(v, 10);
     if (Number.isNaN(newV)) return null;
@@ -64,7 +65,7 @@ function resizableView(view) {
 
     e.preventDefault();
 
-    touchesDiff = (pageX - touchesStart.x);
+    touchesDiff = pageX - touchesStart.x;
 
     let newWidth = width + touchesDiff;
     if (minWidth && !Number.isNaN(minWidth)) {
@@ -121,7 +122,7 @@ function resizableView(view) {
   $el.addClass('view-resizable');
 
   // Add Events
-  const passive = Support.passiveListener ? { passive: true } : false;
+  const passive = support.passiveListener ? { passive: true } : false;
 
   view.$el.on(app.touchEvents.start, '.view-resize-handler', handleTouchStart, passive);
   app.on('touchmove:active', handleTouchMove);

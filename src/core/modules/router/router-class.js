@@ -1,4 +1,4 @@
-import { window, document } from 'ssr-window';
+import { getWindow, getDocument } from 'ssr-window';
 import $ from 'dom7';
 import { pathToRegexp, compile } from 'path-to-regexp';
 import Framework7Class from '../../utils/class';
@@ -103,7 +103,13 @@ class Router extends Framework7Class {
       const needsOpacityTransition = isSliding ? !isSubnavbar : true;
       const $iconEl = $el.find('.back .icon');
       let isIconLabel;
-      if (isSliding && animateIcon && $el.hasClass('left') && $iconEl.length > 0 && $iconEl.next('span').length) {
+      if (
+        isSliding &&
+        animateIcon &&
+        $el.hasClass('left') &&
+        $iconEl.length > 0 &&
+        $iconEl.next('span').length
+      ) {
         $el = $iconEl.next('span'); // eslint-disable-line
         isIconLabel = true;
       }
@@ -120,22 +126,34 @@ class Router extends Framework7Class {
     if (dynamicNavbar) {
       newNavEls = [];
       oldNavEls = [];
-      $newNavbarEl.children('.navbar-inner').children('.left, .right, .title, .subnavbar').each((index, navEl) => {
-        const $navEl = $(navEl);
-        if ($navEl.hasClass('left') && fromLarge && direction === 'forward') return;
-        if ($navEl.hasClass('title') && toLarge) return;
-        newNavEls.push(animatableNavEl($navEl, $newNavbarEl.children('.navbar-inner')));
-      });
-      if (!($oldNavbarEl.hasClass('navbar-master') && router.params.masterDetailBreakpoint > 0 && router.app.width >= router.params.masterDetailBreakpoint)) {
-        $oldNavbarEl.children('.navbar-inner').children('.left, .right, .title, .subnavbar').each((index, navEl) => {
+      $newNavbarEl
+        .children('.navbar-inner')
+        .children('.left, .right, .title, .subnavbar')
+        .each((index, navEl) => {
           const $navEl = $(navEl);
-          if ($navEl.hasClass('left') && toLarge && !fromLarge && direction === 'forward') return;
-          if ($navEl.hasClass('left') && toLarge && direction === 'backward') return;
-          if ($navEl.hasClass('title') && fromLarge) {
-            return;
-          }
-          oldNavEls.push(animatableNavEl($navEl, $oldNavbarEl.children('.navbar-inner')));
+          if ($navEl.hasClass('left') && fromLarge && direction === 'forward') return;
+          if ($navEl.hasClass('title') && toLarge) return;
+          newNavEls.push(animatableNavEl($navEl, $newNavbarEl.children('.navbar-inner')));
         });
+      if (
+        !(
+          $oldNavbarEl.hasClass('navbar-master') &&
+          router.params.masterDetailBreakpoint > 0 &&
+          router.app.width >= router.params.masterDetailBreakpoint
+        )
+      ) {
+        $oldNavbarEl
+          .children('.navbar-inner')
+          .children('.left, .right, .title, .subnavbar')
+          .each((index, navEl) => {
+            const $navEl = $(navEl);
+            if ($navEl.hasClass('left') && toLarge && !fromLarge && direction === 'forward') return;
+            if ($navEl.hasClass('left') && toLarge && direction === 'backward') return;
+            if ($navEl.hasClass('title') && fromLarge) {
+              return;
+            }
+            oldNavEls.push(animatableNavEl($navEl, $oldNavbarEl.children('.navbar-inner')));
+          });
       }
       [oldNavEls, newNavEls].forEach((navEls) => {
         navEls.forEach((navEl) => {
@@ -146,7 +164,7 @@ class Router extends Framework7Class {
           otherEls.forEach((otherNavEl) => {
             if (otherNavEl.isIconLabel) {
               const iconTextEl = otherNavEl.$el[0];
-              n.leftOffset += iconTextEl ? (iconTextEl.offsetLeft || 0) : 0;
+              n.leftOffset += iconTextEl ? iconTextEl.offsetLeft || 0 : 0;
             }
           });
         });
@@ -159,7 +177,14 @@ class Router extends Framework7Class {
   animate($oldPageEl, $newPageEl, $oldNavbarEl, $newNavbarEl, direction, transition, callback) {
     const router = this;
     if (router.params.animateCustom) {
-      router.params.animateCustom.apply(router, [$oldPageEl, $newPageEl, $oldNavbarEl, $newNavbarEl, direction, callback]);
+      router.params.animateCustom.apply(router, [
+        $oldPageEl,
+        $newPageEl,
+        $oldNavbarEl,
+        $newNavbarEl,
+        direction,
+        callback,
+      ]);
       return;
     }
     const dynamicNavbar = router.dynamicNavbar;
@@ -198,7 +223,6 @@ class Router extends Framework7Class {
       return;
     }
 
-
     // Router Animation class
     const routerTransitionClass = `router-transition-${direction} router-transition`;
 
@@ -212,18 +236,26 @@ class Router extends Framework7Class {
     let newIsLarge;
 
     if (ios && dynamicNavbar) {
-      const betweenMasterAndDetail = router.params.masterDetailBreakpoint > 0 && router.app.width >= router.params.masterDetailBreakpoint
-        && (
-          ($oldNavbarEl.hasClass('navbar-master') && $newNavbarEl.hasClass('navbar-master-detail'))
-          || ($oldNavbarEl.hasClass('navbar-master-detail') && $newNavbarEl.hasClass('navbar-master'))
-        );
+      const betweenMasterAndDetail =
+        router.params.masterDetailBreakpoint > 0 &&
+        router.app.width >= router.params.masterDetailBreakpoint &&
+        (($oldNavbarEl.hasClass('navbar-master') &&
+          $newNavbarEl.hasClass('navbar-master-detail')) ||
+          ($oldNavbarEl.hasClass('navbar-master-detail') &&
+            $newNavbarEl.hasClass('navbar-master')));
       if (!betweenMasterAndDetail) {
         oldIsLarge = $oldNavbarEl && $oldNavbarEl.hasClass('navbar-large');
         newIsLarge = $newNavbarEl && $newNavbarEl.hasClass('navbar-large');
         fromLarge = oldIsLarge && !$oldNavbarEl.hasClass('navbar-large-collapsed');
         toLarge = newIsLarge && !$newNavbarEl.hasClass('navbar-large-collapsed');
       }
-      const navEls = router.animatableNavElements($newNavbarEl, $oldNavbarEl, toLarge, fromLarge, direction);
+      const navEls = router.animatableNavElements(
+        $newNavbarEl,
+        $oldNavbarEl,
+        toLarge,
+        fromLarge,
+        direction,
+      );
       newNavEls = navEls.newNavEls;
       oldNavEls = navEls.oldNavEls;
     }
@@ -245,7 +277,13 @@ class Router extends Framework7Class {
         const offset = direction === 'forward' ? navEl.rightOffset : navEl.leftOffset;
         if (navEl.isSliding) {
           if (navEl.isSubnavbar && newIsLarge) {
-            $el[0].style.setProperty('transform', `translate3d(${offset * (1 - progress)}px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)`, 'important');
+            $el[0].style.setProperty(
+              'transform',
+              `translate3d(${
+                offset * (1 - progress)
+              }px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)`,
+              'important',
+            );
           } else {
             $el.transform(`translate3d(${offset * (1 - progress)}px,0,0)`);
           }
@@ -256,9 +294,13 @@ class Router extends Framework7Class {
         const offset = direction === 'forward' ? navEl.leftOffset : navEl.rightOffset;
         if (navEl.isSliding) {
           if (navEl.isSubnavbar && oldIsLarge) {
-            $el.transform(`translate3d(${offset * (progress)}px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)`);
+            $el.transform(
+              `translate3d(${
+                offset * progress
+              }px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)`,
+            );
           } else {
-            $el.transform(`translate3d(${offset * (progress)}px,0,0)`);
+            $el.transform(`translate3d(${offset * progress}px,0,0)`);
           }
         }
       });
@@ -268,21 +310,31 @@ class Router extends Framework7Class {
     function onDone() {
       if (router.dynamicNavbar) {
         if ($newNavbarEl) {
-          $newNavbarEl.removeClass('router-navbar-transition-to-large router-navbar-transition-from-large');
+          $newNavbarEl.removeClass(
+            'router-navbar-transition-to-large router-navbar-transition-from-large',
+          );
           $newNavbarEl.addClass('navbar-no-title-large-transition');
           Utils.nextFrame(() => {
             $newNavbarEl.removeClass('navbar-no-title-large-transition');
           });
         }
         if ($oldNavbarEl) {
-          $oldNavbarEl.removeClass('router-navbar-transition-to-large router-navbar-transition-from-large');
+          $oldNavbarEl.removeClass(
+            'router-navbar-transition-to-large router-navbar-transition-from-large',
+          );
         }
-        if ($newNavbarEl.hasClass('sliding') || $newNavbarEl.children('.navbar-inner.sliding').length) {
+        if (
+          $newNavbarEl.hasClass('sliding') ||
+          $newNavbarEl.children('.navbar-inner.sliding').length
+        ) {
           $newNavbarEl.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
         } else {
           $newNavbarEl.find('.sliding').transform('');
         }
-        if ($oldNavbarEl.hasClass('sliding') || $oldNavbarEl.children('.navbar-inner.sliding').length) {
+        if (
+          $oldNavbarEl.hasClass('sliding') ||
+          $oldNavbarEl.children('.navbar-inner.sliding').length
+        ) {
           $oldNavbarEl.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
         } else {
           $oldNavbarEl.find('.sliding').transform('');
@@ -343,12 +395,14 @@ class Router extends Framework7Class {
     const $el = $(el);
     if ($el.length === 0) return;
     $el.find('.tab').each((tabIndex, tabEl) => {
-      $(tabEl).children().each((index, tabChild) => {
-        if (tabChild.f7Component) {
-          $(tabChild).trigger('tab:beforeremove');
-          tabChild.f7Component.$destroy();
-        }
-      });
+      $(tabEl)
+        .children()
+        .each((index, tabChild) => {
+          if (tabChild.f7Component) {
+            $(tabChild).trigger('tab:beforeremove');
+            tabChild.f7Component.$destroy();
+          }
+        });
     });
     if ($el[0].f7Component && $el[0].f7Component.$destroy) {
       $el[0].f7Component.$destroy();
@@ -386,7 +440,8 @@ class Router extends Framework7Class {
     const app = router.app;
 
     // Modals Selector
-    const modalsSelector = '.popup, .dialog, .popover, .actions-modal, .sheet-modal, .login-screen, .page';
+    const modalsSelector =
+      '.popup, .dialog, .popover, .actions-modal, .sheet-modal, .login-screen, .page';
 
     const $container = $(container);
     let selector = stringSelector;
@@ -423,7 +478,7 @@ class Router extends Framework7Class {
       if ('tabs' in route && route.tabs) {
         const mergedPathsRoutes = route.tabs.map((tabRoute) => {
           const tRoute = Utils.extend({}, route, {
-            path: (`${route.path}/${tabRoute.path}`).replace('///', '/').replace('//', '/'),
+            path: `${route.path}/${tabRoute.path}`.replace('///', '/').replace('//', '/'),
             parentPath: route.path,
             tab: tabRoute,
           });
@@ -446,7 +501,7 @@ class Router extends Framework7Class {
       if ('routes' in route) {
         const mergedPathsRoutes = route.routes.map((childRoute) => {
           const cRoute = Utils.extend({}, childRoute);
-          cRoute.path = (`${route.path}/${cRoute.path}`).replace('///', '/').replace('//', '/');
+          cRoute.path = `${route.path}/${cRoute.path}`.replace('///', '/').replace('//', '/');
           return cRoute;
         });
         if (hasTabRoutes) {
@@ -487,9 +542,7 @@ class Router extends Framework7Class {
       throw new Error('Framework7: "name" or "path" parameter is required');
     }
     const router = this;
-    const route = name
-      ? router.findRouteByKey('name', name)
-      : router.findRouteByKey('path', path);
+    const route = name ? router.findRouteByKey('name', name) : router.findRouteByKey('path', path);
 
     if (!route) {
       if (name) {
@@ -513,7 +566,9 @@ class Router extends Framework7Class {
     try {
       url = toUrl(params || {});
     } catch (error) {
-      throw new Error(`Framework7: error constructing route URL from passed params:\nRoute: ${path}\n${error.toString()}`);
+      throw new Error(
+        `Framework7: error constructing route URL from passed params:\nRoute: ${path}\n${error.toString()}`,
+      );
     }
 
     if (query) {
@@ -532,11 +587,7 @@ class Router extends Framework7Class {
     const flattenedRoutes = router.flattenRoutes(router.routes);
     let foundTabRoute;
     flattenedRoutes.forEach((route) => {
-      if (
-        route.parentPath === parentPath
-        && route.tab
-        && route.tab.id === tabId
-      ) {
+      if (route.parentPath === parentPath && route.tab && route.tab.id === tabId) {
         foundTabRoute = route;
       }
     });
@@ -598,7 +649,10 @@ class Router extends Framework7Class {
 
         let parentPath;
         if (route.parentPath) {
-          parentPath = path.split('/').slice(0, route.parentPath.split('/').length - 1).join('/');
+          parentPath = path
+            .split('/')
+            .slice(0, route.parentPath.split('/').length - 1)
+            .join('/');
         }
 
         matchingRoute = {
@@ -619,12 +673,13 @@ class Router extends Framework7Class {
   // eslint-disable-next-line
   replaceRequestUrlParams(url = '', options = {}) {
     let compiledUrl = url;
-    if (typeof compiledUrl === 'string'
-      && compiledUrl.indexOf('{{') >= 0
-      && options
-      && options.route
-      && options.route.params
-      && Object.keys(options.route.params).length
+    if (
+      typeof compiledUrl === 'string' &&
+      compiledUrl.indexOf('{{') >= 0 &&
+      options &&
+      options.route &&
+      options.route.params &&
+      Object.keys(options.route.params).length
     ) {
       Object.keys(options.route.params).forEach((paramName) => {
         const regExp = new RegExp(`{{${paramName}}}`, 'g');
@@ -651,21 +706,23 @@ class Router extends Framework7Class {
     let url = requestUrl;
 
     let hasQuery = url.indexOf('?') >= 0;
-    if (params.passRouteQueryToRequest
-      && options
-      && options.route
-      && options.route.query
-      && Object.keys(options.route.query).length
+    if (
+      params.passRouteQueryToRequest &&
+      options &&
+      options.route &&
+      options.route.query &&
+      Object.keys(options.route.query).length
     ) {
       url += `${hasQuery ? '&' : '?'}${Utils.serializeObject(options.route.query)}`;
       hasQuery = true;
     }
 
-    if (params.passRouteParamsToRequest
-      && options
-      && options.route
-      && options.route.params
-      && Object.keys(options.route.params).length
+    if (
+      params.passRouteParamsToRequest &&
+      options &&
+      options.route &&
+      options.route.params &&
+      Object.keys(options.route.params).length
     ) {
       url += `${hasQuery ? '&' : '?'}${Utils.serializeObject(options.route.params)}`;
       hasQuery = true;
@@ -679,7 +736,12 @@ class Router extends Framework7Class {
       url = url.split('?')[0];
     }
     return new Promise((resolve, reject) => {
-      if (params.xhrCache && !ignoreCache && url.indexOf('nocache') < 0 && params.xhrCacheIgnore.indexOf(url) < 0) {
+      if (
+        params.xhrCache &&
+        !ignoreCache &&
+        url.indexOf('nocache') < 0 &&
+        params.xhrCacheIgnore.indexOf(url) < 0
+      ) {
         for (let i = 0; i < router.cache.xhr.length; i += 1) {
           const cachedUrl = router.cache.xhr[i];
           if (cachedUrl.url === url) {
@@ -700,7 +762,10 @@ class Router extends Framework7Class {
         },
         complete(xhr, status) {
           router.emit('routerAjaxComplete', xhr);
-          if ((status !== 'error' && status !== 'timeout' && (xhr.status >= 200 && xhr.status < 300)) || xhr.status === 0) {
+          if (
+            (status !== 'error' && status !== 'timeout' && xhr.status >= 200 && xhr.status < 300) ||
+            xhr.status === 0
+          ) {
             if (params.xhrCache && xhr.responseText !== '') {
               router.removeFromXhrCache(url);
               router.cache.xhr.push({
@@ -775,8 +840,10 @@ class Router extends Framework7Class {
     const currentPage = $pageEl[0].f7Page || {};
     let direction;
     let pageFrom;
-    if ((from === 'next' && to === 'current') || (from === 'current' && to === 'previous')) direction = 'forward';
-    if ((from === 'current' && to === 'next') || (from === 'previous' && to === 'current')) direction = 'backward';
+    if ((from === 'next' && to === 'current') || (from === 'current' && to === 'previous'))
+      direction = 'forward';
+    if ((from === 'current' && to === 'next') || (from === 'previous' && to === 'current'))
+      direction = 'backward';
     if (currentPage && !currentPage.fromPage) {
       const $pageFromEl = $(pageFromEl);
       if ($pageFromEl.length) {
@@ -818,13 +885,18 @@ class Router extends Framework7Class {
     if (!$pageEl.length) return;
     const $navbarEl = $(navbarEl);
     const { route } = options;
-    const restoreScrollTopOnBack = router.params.restoreScrollTopOnBack
-      && !(
-        router.params.masterDetailBreakpoint > 0
-        && $pageEl.hasClass('page-master')
-        && router.app.width >= router.params.masterDetailBreakpoint
+    const restoreScrollTopOnBack =
+      router.params.restoreScrollTopOnBack &&
+      !(
+        router.params.masterDetailBreakpoint > 0 &&
+        $pageEl.hasClass('page-master') &&
+        router.app.width >= router.params.masterDetailBreakpoint
       );
-    const keepAlive = $pageEl[0].f7Page && $pageEl[0].f7Page.route && $pageEl[0].f7Page.route.route && $pageEl[0].f7Page.route.route.keepAlive;
+    const keepAlive =
+      $pageEl[0].f7Page &&
+      $pageEl[0].f7Page.route &&
+      $pageEl[0].f7Page.route.route &&
+      $pageEl[0].f7Page.route.route.keepAlive;
 
     if (callback === 'beforeRemove' && keepAlive) {
       callback = 'beforeUnmount'; // eslint-disable-line
@@ -877,7 +949,10 @@ class Router extends Framework7Class {
       }
       if ($pageEl[0].f7RouteEventsOnce) {
         Object.keys($pageEl[0].f7RouteEventsOnce).forEach((eventName) => {
-          $pageEl.off(Utils.eventNameToColonCase(eventName), $pageEl[0].f7RouteEventsOnce[eventName]);
+          $pageEl.off(
+            Utils.eventNameToColonCase(eventName),
+            $pageEl[0].f7RouteEventsOnce[eventName],
+          );
         });
       }
       $pageEl[0].f7RouteEventsAttached = null;
@@ -892,14 +967,20 @@ class Router extends Framework7Class {
       attachEvents();
     }
     if (callback === 'init') {
-      if (restoreScrollTopOnBack && (from === 'previous' || !from) && to === 'current' && router.scrollHistory[page.route.url] && !$pageEl.hasClass('no-restore-scroll')) {
+      if (
+        restoreScrollTopOnBack &&
+        (from === 'previous' || !from) &&
+        to === 'current' &&
+        router.scrollHistory[page.route.url] &&
+        !$pageEl.hasClass('no-restore-scroll')
+      ) {
         let $pageContent = $pageEl.find('.page-content');
         if ($pageContent.length > 0) {
           // eslint-disable-next-line
           $pageContent = $pageContent.filter((pageContentIndex, pageContentEl) => {
             return (
-              $(pageContentEl).parents('.tab:not(.tab-active)').length === 0
-              && !$(pageContentEl).is('.tab:not(.tab-active)')
+              $(pageContentEl).parents('.tab:not(.tab-active)').length === 0 &&
+              !$(pageContentEl).is('.tab:not(.tab-active)')
             );
           });
         }
@@ -913,15 +994,20 @@ class Router extends Framework7Class {
       }
       $pageEl[0].f7PageInitialized = true;
     }
-    if (restoreScrollTopOnBack && callback === 'beforeOut' && from === 'current' && to === 'previous') {
+    if (
+      restoreScrollTopOnBack &&
+      callback === 'beforeOut' &&
+      from === 'current' &&
+      to === 'previous'
+    ) {
       // Save scroll position
       let $pageContent = $pageEl.find('.page-content');
       if ($pageContent.length > 0) {
         // eslint-disable-next-line
         $pageContent = $pageContent.filter((pageContentIndex, pageContentEl) => {
           return (
-            $(pageContentEl).parents('.tab:not(.tab-active)').length === 0
-            && !$(pageContentEl).is('.tab:not(.tab-active)')
+            $(pageContentEl).parents('.tab:not(.tab-active)').length === 0 &&
+            !$(pageContentEl).is('.tab:not(.tab-active)')
           );
         });
       }
@@ -998,7 +1084,7 @@ class Router extends Framework7Class {
         {
           url: newUrl,
         },
-        pushStateRoot + router.params.pushStateSeparator + newUrl
+        pushStateRoot + router.params.pushStateSeparator + newUrl,
       );
     }
 
@@ -1014,9 +1100,9 @@ class Router extends Framework7Class {
 
     // Init Swipeback
     if (
-      (view && router.params.iosSwipeBack && app.theme === 'ios')
-      || (view && router.params.mdSwipeBack && app.theme === 'md')
-      || (view && router.params.auroraSwipeBack && app.theme === 'aurora')
+      (view && router.params.iosSwipeBack && app.theme === 'ios') ||
+      (view && router.params.mdSwipeBack && app.theme === 'md') ||
+      (view && router.params.auroraSwipeBack && app.theme === 'aurora')
     ) {
       SwipeBack(router);
     }
@@ -1024,11 +1110,24 @@ class Router extends Framework7Class {
     let initUrl = router.params.url;
     let documentUrl = document.location.href.split(document.location.origin)[1];
     let historyRestored;
-    const { pushState, pushStateOnLoad, pushStateSeparator, pushStateAnimateOnLoad } = router.params;
+    const {
+      pushState,
+      pushStateOnLoad,
+      pushStateSeparator,
+      pushStateAnimateOnLoad,
+    } = router.params;
     let { pushStateRoot } = router.params;
-    if (window.cordova && pushState && !pushStateSeparator && !pushStateRoot && document.location.pathname.indexOf('index.html')) {
+    if (
+      window.cordova &&
+      pushState &&
+      !pushStateSeparator &&
+      !pushStateRoot &&
+      document.location.pathname.indexOf('index.html')
+    ) {
       // eslint-disable-next-line
-      console.warn('Framework7: wrong or not complete pushState configuration, trying to guess pushStateRoot');
+      console.warn(
+        'Framework7: wrong or not complete pushState configuration, trying to guess pushStateRoot',
+      );
       pushStateRoot = document.location.pathname.split('index.html')[0];
     }
     if (!pushState || !pushStateOnLoad) {
@@ -1056,7 +1155,11 @@ class Router extends Framework7Class {
         router.history = router.history.slice(0, router.history.indexOf(initUrl) + 1);
       } else if (router.params.url === initUrl) {
         router.history = [initUrl];
-      } else if (History.state && History.state[view.id] && History.state[view.id].url === router.history[router.history.length - 1]) {
+      } else if (
+        History.state &&
+        History.state[view.id] &&
+        History.state[view.id].url === router.history[router.history.length - 1]
+      ) {
         initUrl = router.history[router.history.length - 1];
       } else {
         router.history = [documentUrl.split(pushStateSeparator)[0] || '/', initUrl];
@@ -1103,7 +1206,11 @@ class Router extends Framework7Class {
       });
     }
 
-    if (router.$el.children('.page:not(.stacked)').length === 0 && initUrl && router.params.loadInitialPage) {
+    if (
+      router.$el.children('.page:not(.stacked)').length === 0 &&
+      initUrl &&
+      router.params.loadInitialPage
+    ) {
       // No pages presented in DOM, reload new page
       router.navigate(initUrl, {
         initial: true,
@@ -1137,7 +1244,12 @@ class Router extends Framework7Class {
             }
           }
         }
-        if (router.currentRoute && router.currentRoute.route && router.currentRoute.route.master && router.params.masterDetailBreakpoint > 0) {
+        if (
+          router.currentRoute &&
+          router.currentRoute.route &&
+          router.currentRoute.route.master &&
+          router.params.masterDetailBreakpoint > 0
+        ) {
           $pageEl.addClass('page-master');
           $pageEl.trigger('page:role', { role: 'master' });
           if ($navbarEl && $navbarEl.length) {
@@ -1173,7 +1285,8 @@ class Router extends Framework7Class {
           animate: pushStateAnimateOnLoad,
           once: {
             pageAfterIn() {
-              const preloadPreviousPage = router.params.preloadPreviousPage || router.params[`${app.theme}SwipeBack`];
+              const preloadPreviousPage =
+                router.params.preloadPreviousPage || router.params[`${app.theme}SwipeBack`];
               if (preloadPreviousPage && router.history.length > 2) {
                 router.back({ preload: true });
               }
@@ -1226,6 +1339,5 @@ Router.prototype.loadBack = loadBack;
 Router.prototype.back = back;
 // Clear history
 Router.prototype.clearPreviousHistory = clearPreviousHistory;
-
 
 export default Router;

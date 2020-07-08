@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend } from '../../utils/utils';
 import PullToRefresh from './pull-to-refresh-class';
 import ConstructorMethods from '../../utils/constructor-methods';
 
@@ -7,7 +7,7 @@ export default {
   name: 'pullToRefresh',
   create() {
     const app = this;
-    app.ptr = Utils.extend(
+    app.ptr = extend(
       ConstructorMethods({
         defaultSelector: '.ptr-content',
         constructor: PullToRefresh,
@@ -25,7 +25,7 @@ export default {
           if (ptr) return ptr.refresh();
           return undefined;
         },
-      }
+      },
     );
   },
   static: {

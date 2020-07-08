@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend } from '../../utils/utils';
 import Sheet from './sheet-class';
 import ModalMethods from '../../utils/modal-methods';
 
@@ -23,7 +23,7 @@ export default {
   },
   create() {
     const app = this;
-    app.sheet = Utils.extend(
+    app.sheet = extend(
       {},
       ModalMethods({
         app,
@@ -52,7 +52,11 @@ export default {
   clicks: {
     '.sheet-open': function openSheet($clickedEl, data = {}) {
       const app = this;
-      if ($('.sheet-modal.modal-in').length > 0 && data.sheet && $(data.sheet)[0] !== $('.sheet-modal.modal-in')[0]) {
+      if (
+        $('.sheet-modal.modal-in').length > 0 &&
+        data.sheet &&
+        $(data.sheet)[0] !== $('.sheet-modal.modal-in')[0]
+      ) {
         app.sheet.close('.sheet-modal.modal-in');
       }
       app.sheet.open(data.sheet, data.animate, $clickedEl);

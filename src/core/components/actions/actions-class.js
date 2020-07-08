@@ -1,21 +1,19 @@
 /* eslint indent: ["off"] */
 import $ from 'dom7';
-import { window, document } from 'ssr-window';
-import Utils from '../../utils/utils';
+import { getWindow, getDocument } from 'ssr-window';
+import { extend, nextTick } from '../../utils/utils';
 import Modal from '../modal/modal-class';
 
 class Actions extends Modal {
   constructor(app, params) {
-    const extendedParams = Utils.extend(
-      { on: {} },
-      app.params.actions,
-      params
-    );
+    const extendedParams = extend({ on: {} }, app.params.actions, params);
 
     // Extends with open/close Modal methods;
     super(app, extendedParams);
 
     const actions = this;
+    const window = getWindow();
+    const document = getDocument();
 
     actions.params = extendedParams;
 
@@ -32,7 +30,9 @@ class Actions extends Modal {
     if (actions.params.el) {
       $el = $(actions.params.el).eq(0);
     } else if (actions.params.content) {
-      $el = $(actions.params.content).filter((elIndex, node) => node.nodeType === 1).eq(0);
+      $el = $(actions.params.content)
+        .filter((elIndex, node) => node.nodeType === 1)
+        .eq(0);
     } else if (actions.params.buttons) {
       if (actions.params.convertToPopover) {
         actions.popoverHtml = actions.renderPopover();
@@ -85,13 +85,16 @@ class Actions extends Modal {
     actions.open = function open(animate) {
       let convertToPopover = false;
       const { targetEl, targetX, targetY, targetWidth, targetHeight } = actions.params;
-      if (actions.params.convertToPopover && (targetEl || (targetX !== undefined && targetY !== undefined))) {
+      if (
+        actions.params.convertToPopover &&
+        (targetEl || (targetX !== undefined && targetY !== undefined))
+      ) {
         // Popover
         if (
-          actions.params.forceToPopover
-          || (app.device.ios && app.device.ipad)
-          || app.width >= 768
-          || (app.device.desktop && app.theme === 'aurora')
+          actions.params.forceToPopover ||
+          (app.device.ios && app.device.ipad) ||
+          app.width >= 768 ||
+          (app.device.desktop && app.theme === 'aurora')
         ) {
           convertToPopover = true;
         }
@@ -146,7 +149,7 @@ class Actions extends Modal {
           popover.$el.find('.list-button, .item-link').each((groupIndex, buttonEl) => {
             $(buttonEl).off('click', buttonOnClick);
           });
-          Utils.nextTick(() => {
+          nextTick(() => {
             popover.destroy();
             popover = undefined;
           });
@@ -179,7 +182,7 @@ class Actions extends Modal {
       return actions;
     };
 
-    Utils.extend(actions, {
+    extend(actions, {
       app,
       $el,
       el: $el ? $el[0] : undefined,
@@ -191,14 +194,20 @@ class Actions extends Modal {
     function handleClick(e) {
       const target = e.target;
       const $target = $(target);
-      const keyboardOpened = !app.device.desktop && app.device.cordova && ((window.Keyboard && window.Keyboard.isVisible) || (window.cordova.plugins && window.cordova.plugins.Keyboard && window.cordova.plugins.Keyboard.isVisible));
+      const keyboardOpened =
+        !app.device.desktop &&
+        app.device.cordova &&
+        ((window.Keyboard && window.Keyboard.isVisible) ||
+          (window.cordova.plugins &&
+            window.cordova.plugins.Keyboard &&
+            window.cordova.plugins.Keyboard.isVisible));
       if (keyboardOpened) return;
       if ($target.closest(actions.el).length === 0) {
         if (
-          actions.params.closeByBackdropClick
-          && actions.params.backdrop
-          && actions.backdropEl
-          && actions.backdropEl === target
+          actions.params.closeByBackdropClick &&
+          actions.params.backdrop &&
+          actions.backdropEl &&
+          actions.backdropEl === target
         ) {
           actions.close();
         } else if (actions.params.closeByOutsideClick) {
@@ -246,6 +255,7 @@ class Actions extends Modal {
     if (actions.params.render) return actions.params.render.call(actions, actions);
     const { groups } = actions;
     const cssClass = actions.params.cssClass;
+    // prettier-ignore
     return `
       <div class="actions-modal${actions.params.grid ? ' actions-grid' : ''} ${cssClass || ''}">
         ${groups.map(group => `<div class="actions-group">
@@ -275,6 +285,7 @@ class Actions extends Modal {
     if (actions.params.renderPopover) return actions.params.renderPopover.call(actions, actions);
     const { groups } = actions;
     const cssClass = actions.params.cssClass;
+    // prettier-ignore
     return `
       <div class="popover popover-from-actions ${cssClass || ''}">
         <div class="popover-inner">

@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend, deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 
 class Messages extends Framework7Class {
@@ -28,7 +28,7 @@ class Messages extends Framework7Class {
     // Extend defaults with modules params
     m.useModulesParams(defaults);
 
-    m.params = Utils.extend(defaults, params);
+    m.params = extend(defaults, params);
 
     const $el = $(params.el).eq(0);
     if ($el.length === 0) return m;
@@ -39,13 +39,12 @@ class Messages extends Framework7Class {
 
     const $pageContentEl = $el.closest('.page-content').eq(0);
 
-    Utils.extend(m, {
+    extend(m, {
       messages: m.params.messages,
       $el,
       el: $el[0],
       $pageContentEl,
       pageContentEl: $pageContentEl[0],
-
     });
     // Install Modules
     m.useModules();
@@ -75,10 +74,16 @@ class Messages extends Framework7Class {
       data.text = $messageEl.html();
     }
     if (data.text && data.textHeader) {
-      data.text = data.text.replace(`<div class="message-text-header">${data.textHeader}</div>`, '');
+      data.text = data.text.replace(
+        `<div class="message-text-header">${data.textHeader}</div>`,
+        '',
+      );
     }
     if (data.text && data.textFooter) {
-      data.text = data.text.replace(`<div class="message-text-footer">${data.textFooter}</div>`, '');
+      data.text = data.text.replace(
+        `<div class="message-text-footer">${data.textFooter}</div>`,
+        '',
+      );
     }
     let avatar = $messageEl.find('.message-avatar').css('background-image');
     if (avatar === 'none' || avatar === '') avatar = undefined;
@@ -103,31 +108,62 @@ class Messages extends Framework7Class {
 
   renderMessage(messageToRender) {
     const m = this;
-    const message = Utils.extend({
-      type: 'sent',
-      attrs: {},
-    }, messageToRender);
+    const message = extend(
+      {
+        type: 'sent',
+        attrs: {},
+      },
+      messageToRender,
+    );
     if (m.params.renderMessage) {
       return m.params.renderMessage.call(m, message);
     }
     if (message.isTitle) {
       return `<div class="messages-title">${message.text}</div>`;
     }
-    const attrs = Object.keys(message.attrs).map(attr => `${attr}="${message.attrs[attr]}"`).join(' ');
+    const attrs = Object.keys(message.attrs)
+      .map((attr) => `${attr}="${message.attrs[attr]}"`)
+      .join(' ');
     return `
-      <div class="message message-${message.type} ${message.isTyping ? 'message-typing' : ''} ${message.cssClass || ''}" ${attrs}>
-        ${message.avatar ? `
+      <div class="message message-${message.type} ${message.isTyping ? 'message-typing' : ''} ${
+      message.cssClass || ''
+    }" ${attrs}>
+        ${
+          message.avatar
+            ? `
         <div class="message-avatar" style="background-image:url(${message.avatar})"></div>
-        ` : ''}
+        `
+            : ''
+        }
         <div class="message-content">
           ${message.name ? `<div class="message-name">${message.name}</div>` : ''}
           ${message.header ? `<div class="message-header">${message.header}</div>` : ''}
           <div class="message-bubble">
-            ${message.textHeader ? `<div class="message-text-header">${message.textHeader}</div>` : ''}
+            ${
+              message.textHeader
+                ? `<div class="message-text-header">${message.textHeader}</div>`
+                : ''
+            }
             ${message.image ? `<div class="message-image">${message.image}</div>` : ''}
-            ${message.imageSrc && !message.image ? `<div class="message-image"><img src="${message.imageSrc}"></div>` : ''}
-            ${message.text || message.isTyping ? `<div class="message-text">${message.text || ''}${message.isTyping ? '<div class="message-typing-indicator"><div></div><div></div><div></div></div>' : ''}</div>` : ''}
-            ${message.textFooter ? `<div class="message-text-footer">${message.textFooter}</div>` : ''}
+            ${
+              message.imageSrc && !message.image
+                ? `<div class="message-image"><img src="${message.imageSrc}"></div>`
+                : ''
+            }
+            ${
+              message.text || message.isTyping
+                ? `<div class="message-text">${message.text || ''}${
+                    message.isTyping
+                      ? '<div class="message-typing-indicator"><div></div><div></div><div></div></div>'
+                      : ''
+                  }</div>`
+                : ''
+            }
+            ${
+              message.textFooter
+                ? `<div class="message-text-footer">${message.textFooter}</div>`
+                : ''
+            }
           </div>
           ${message.footer ? `<div class="message-footer">${message.footer}</div>` : ''}
         </div>
@@ -135,9 +171,12 @@ class Messages extends Framework7Class {
     `;
   }
 
-  renderMessages(messagesToRender = this.messages, method = this.params.newMessagesFirst ? 'prepend' : 'append') {
+  renderMessages(
+    messagesToRender = this.messages,
+    method = this.params.newMessagesFirst ? 'prepend' : 'append',
+  ) {
     const m = this;
-    const html = messagesToRender.map(message => m.renderMessage(message)).join('');
+    const html = messagesToRender.map((message) => m.renderMessage(message)).join('');
     m.$el[method](html);
   }
 
@@ -230,7 +269,9 @@ class Messages extends Framework7Class {
           classes.push(customClass);
         });
       }
-      $messageEl.removeClass('message-first message-last message-tail message-same-name message-same-header message-same-footer message-same-avatar');
+      $messageEl.removeClass(
+        'message-first message-last message-tail message-same-name message-same-header message-same-footer message-same-avatar',
+      );
       classes.forEach((className) => {
         $messageEl.addClass(className);
       });
@@ -330,7 +371,7 @@ class Messages extends Framework7Class {
 
     // Add message to DOM and data
     let messagesHTML = '';
-    const typingMessage = m.messages.filter(el => el.isTyping)[0];
+    const typingMessage = m.messages.filter((el) => el.isTyping)[0];
     messagesToAdd.forEach((messageToAdd) => {
       if (typingMessage) {
         if (method === 'append') {
@@ -366,16 +407,24 @@ class Messages extends Framework7Class {
     if (m.params.autoLayout) m.layout();
 
     if (method === 'prepend' && !typingMessage) {
-      m.pageContentEl.scrollTop = scrollBefore + (m.pageContentEl.scrollHeight - scrollHeightBefore);
+      m.pageContentEl.scrollTop =
+        scrollBefore + (m.pageContentEl.scrollHeight - scrollHeightBefore);
     }
 
-    if (m.params.scrollMessages && ((method === 'append' && !m.params.newMessagesFirst) || (method === 'prepend' && m.params.newMessagesFirst && !typingMessage))) {
+    if (
+      m.params.scrollMessages &&
+      ((method === 'append' && !m.params.newMessagesFirst) ||
+        (method === 'prepend' && m.params.newMessagesFirst && !typingMessage))
+    ) {
       if (m.params.scrollMessagesOnEdge) {
         let onEdge = false;
         if (m.params.newMessagesFirst && scrollBefore === 0) {
           onEdge = true;
         }
-        if (!m.params.newMessagesFirst && (scrollBefore - (scrollHeightBefore - heightBefore) >= -10)) {
+        if (
+          !m.params.newMessagesFirst &&
+          scrollBefore - (scrollHeightBefore - heightBefore) >= -10
+        ) {
           onEdge = true;
         }
         if (onEdge) m.scroll(animate ? undefined : 0);
@@ -389,14 +438,19 @@ class Messages extends Framework7Class {
 
   showTyping(message = {}) {
     const m = this;
-    const typingMessage = m.messages.filter(el => el.isTyping)[0];
+    const typingMessage = m.messages.filter((el) => el.isTyping)[0];
     if (typingMessage) {
       m.removeMessage(m.messages.indexOf(typingMessage));
     }
-    m.addMessage(Utils.extend({
-      type: 'received',
-      isTyping: true,
-    }, message));
+    m.addMessage(
+      extend(
+        {
+          type: 'received',
+          isTyping: true,
+        },
+        message,
+      ),
+    );
     return m;
   }
 
@@ -428,7 +482,9 @@ class Messages extends Framework7Class {
     let newScrollTop;
     if (typeof scrollTop !== 'undefined') newScrollTop = scrollTop;
     else {
-      newScrollTop = m.params.newMessagesFirst ? 0 : m.pageContentEl.scrollHeight - m.pageContentEl.offsetHeight;
+      newScrollTop = m.params.newMessagesFirst
+        ? 0
+        : m.pageContentEl.scrollHeight - m.pageContentEl.offsetHeight;
       if (newScrollTop === currentScroll) return m;
     }
     m.$pageContentEl.scrollTop(newScrollTop, duration);
@@ -455,7 +511,7 @@ class Messages extends Framework7Class {
       m.$el[0].f7Messages = null;
       delete m.$el[0].f7Messages;
     }
-    Utils.deleteProps(m);
+    deleteProps(m);
   }
 }
 

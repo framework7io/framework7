@@ -1,13 +1,15 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
-import Support from '../../utils/support';
-import Device from '../../utils/device';
+import getSupport from '../../utils/get-support';
+import getDevice from '../../utils/get-device';
 
 class PullToRefresh extends Framework7Class {
   constructor(app, el) {
     super({}, [app]);
     const ptr = this;
+    const device = getDevice();
+    const support = getSupport();
     const $el = $(el);
     const $preloaderEl = $el.find('.ptr-preloader');
 
@@ -70,18 +72,21 @@ class PullToRefresh extends Framework7Class {
     let maxScrollTop;
     const $pageEl = $el.parents('.page');
 
-    if ($pageEl.find('.navbar').length > 0 || $pageEl.parents('.view').children('.navbars').length > 0) hasNavbar = true;
+    if (
+      $pageEl.find('.navbar').length > 0 ||
+      $pageEl.parents('.view').children('.navbars').length > 0
+    )
+      hasNavbar = true;
     if ($pageEl.hasClass('no-navbar')) hasNavbar = false;
     if (!ptr.bottom) {
       const pageNavbarEl = app.navbar.getElByPage($pageEl[0]);
       if (pageNavbarEl) {
         const $pageNavbarEl = $(pageNavbarEl);
-        const isLargeTransparent = $pageNavbarEl.hasClass('navbar-large-transparent')
-          || (
-            $pageNavbarEl.hasClass('navbar-large')
-            && $pageNavbarEl.hasClass('navbar-transparent')
-          );
-        const isTransparent = $pageNavbarEl.hasClass('navbar-transparent') && !$pageNavbarEl.hasClass('navbar-large');
+        const isLargeTransparent =
+          $pageNavbarEl.hasClass('navbar-large-transparent') ||
+          ($pageNavbarEl.hasClass('navbar-large') && $pageNavbarEl.hasClass('navbar-transparent'));
+        const isTransparent =
+          $pageNavbarEl.hasClass('navbar-transparent') && !$pageNavbarEl.hasClass('navbar-large');
         if (isLargeTransparent) {
           $el.addClass('ptr-with-navbar-large-transparent');
         } else if (isTransparent) {
@@ -104,7 +109,7 @@ class PullToRefresh extends Framework7Class {
 
     function handleTouchStart(e) {
       if (isTouched) {
-        if (Device.os === 'android') {
+        if (device.os === 'android') {
           if ('targetTouches' in e && e.targetTouches.length > 1) return;
         } else return;
       }
@@ -112,7 +117,10 @@ class PullToRefresh extends Framework7Class {
       if ($el.hasClass('ptr-refreshing')) {
         return;
       }
-      if ($(e.target).closest('.sortable-handler, .ptr-ignore, .card-expandable.card-opened').length) return;
+      if (
+        $(e.target).closest('.sortable-handler, .ptr-ignore, .card-expandable.card-opened').length
+      )
+        return;
 
       isMoved = false;
       pullStarted = false;
@@ -146,9 +154,10 @@ class PullToRefresh extends Framework7Class {
       }
       if (!pageX || !pageY) return;
 
-
       if (typeof isScrolling === 'undefined') {
-        isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
+        isScrolling = !!(
+          isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x)
+        );
       }
       if (!isScrolling) {
         isTouched = false;
@@ -174,12 +183,12 @@ class PullToRefresh extends Framework7Class {
           $ptrWatchScrollable.each((ptrScrollableIndex, ptrScrollableEl) => {
             if (ptrScrollableEl === el) return;
             if (
-              (ptrScrollableEl.scrollHeight > ptrScrollableEl.offsetHeight)
-              && $(ptrScrollableEl).css('overflow') === 'auto'
-              && (
-                (!ptr.bottom && ptrScrollableEl.scrollTop > 0)
-                || (ptr.bottom && ptrScrollableEl.scrollTop < ptrScrollableEl.scrollHeight - ptrScrollableEl.offsetHeight)
-              )
+              ptrScrollableEl.scrollHeight > ptrScrollableEl.offsetHeight &&
+              $(ptrScrollableEl).css('overflow') === 'auto' &&
+              ((!ptr.bottom && ptrScrollableEl.scrollTop > 0) ||
+                (ptr.bottom &&
+                  ptrScrollableEl.scrollTop <
+                    ptrScrollableEl.scrollHeight - ptrScrollableEl.offsetHeight))
             ) {
               targetIsScrollable = true;
             }
@@ -191,10 +200,11 @@ class PullToRefresh extends Framework7Class {
         }
         if (dynamicTriggerDistance) {
           triggerDistance = $el.attr('data-ptr-distance');
-          if (triggerDistance.indexOf('%') >= 0) triggerDistance = (scrollHeight * parseInt(triggerDistance, 10)) / 100;
+          if (triggerDistance.indexOf('%') >= 0)
+            triggerDistance = (scrollHeight * parseInt(triggerDistance, 10)) / 100;
         }
         startTranslate = $el.hasClass('ptr-refreshing') ? triggerDistance : 0;
-        if (scrollHeight === offsetHeight || Device.os !== 'ios' || isMaterial) {
+        if (scrollHeight === offsetHeight || device.os !== 'ios' || isMaterial) {
           useTranslate = true;
         } else {
           useTranslate = false;
@@ -204,7 +214,11 @@ class PullToRefresh extends Framework7Class {
       isMoved = true;
       touchesDiff = pageY - touchesStart.y;
 
-      if (typeof wasScrolled === 'undefined' && (ptr.bottom ? scrollTop !== maxScrollTop : scrollTop !== 0)) wasScrolled = true;
+      if (
+        typeof wasScrolled === 'undefined' &&
+        (ptr.bottom ? scrollTop !== maxScrollTop : scrollTop !== 0)
+      )
+        wasScrolled = true;
 
       const ptrStarted = ptr.bottom
         ? (touchesDiff < 0 && scrollTop >= maxScrollTop) || scrollTop > maxScrollTop
@@ -212,7 +226,7 @@ class PullToRefresh extends Framework7Class {
 
       if (ptrStarted) {
         // iOS 8 fix
-        if (Device.os === 'ios' && parseInt(Device.osVersion.split('.')[0], 10) > 7) {
+        if (device.os === 'ios' && parseInt(device.osVersion.split('.')[0], 10) > 7) {
           if (!ptr.bottom && scrollTop === 0 && !wasScrolled) useTranslate = true;
           if (ptr.bottom && scrollTop === maxScrollTop && !wasScrolled) useTranslate = true;
         }
@@ -227,10 +241,14 @@ class PullToRefresh extends Framework7Class {
           if (e.cancelable) {
             e.preventDefault();
           }
-          translate = (ptr.bottom ? -1 * (Math.abs(touchesDiff) ** 0.85) : touchesDiff ** 0.85) + startTranslate;
+          translate =
+            (ptr.bottom ? -1 * Math.abs(touchesDiff) ** 0.85 : touchesDiff ** 0.85) +
+            startTranslate;
           if (isMaterial) {
-            $preloaderEl.transform(`translate3d(0,${translate}px,0)`)
-              .find('.ptr-arrow').transform(`rotate(${(180 * (Math.abs(touchesDiff) / 66)) + 100}deg)`);
+            $preloaderEl
+              .transform(`translate3d(0,${translate}px,0)`)
+              .find('.ptr-arrow')
+              .transform(`rotate(${180 * (Math.abs(touchesDiff) / 66) + 100}deg)`);
           } else {
             // eslint-disable-next-line
             if (ptr.bottom) {
@@ -241,7 +259,11 @@ class PullToRefresh extends Framework7Class {
           }
         }
 
-        if (((useTranslate || forceUseTranslate) && (Math.abs(touchesDiff) ** 0.85) > triggerDistance) || (!useTranslate && Math.abs(touchesDiff) >= triggerDistance * 2)) {
+        if (
+          ((useTranslate || forceUseTranslate) &&
+            Math.abs(touchesDiff) ** 0.85 > triggerDistance) ||
+          (!useTranslate && Math.abs(touchesDiff) >= triggerDistance * 2)
+        ) {
           refresh = true;
           $el.addClass('ptr-pull-up').removeClass('ptr-pull-down');
         } else {
@@ -291,8 +313,7 @@ class PullToRefresh extends Framework7Class {
         translate = 0;
       }
       if (isMaterial) {
-        $preloaderEl.transform('')
-          .find('.ptr-arrow').transform('');
+        $preloaderEl.transform('').find('.ptr-arrow').transform('');
       } else {
         // eslint-disable-next-line
         if (ptr.bottom) {
@@ -335,8 +356,7 @@ class PullToRefresh extends Framework7Class {
         translate = 0;
       }
       if (isMaterial) {
-        $preloaderEl.transform('')
-          .find('.ptr-arrow').transform('');
+        $preloaderEl.transform('').find('.ptr-arrow').transform('');
       } else {
         // eslint-disable-next-line
         if (ptr.bottom) {
@@ -365,7 +385,10 @@ class PullToRefresh extends Framework7Class {
       if ($el.hasClass('ptr-refreshing')) {
         return;
       }
-      if ($(e.target).closest('.sortable-handler, .ptr-ignore, .card-expandable.card-opened').length) return;
+      if (
+        $(e.target).closest('.sortable-handler, .ptr-ignore, .card-expandable.card-opened').length
+      )
+        return;
 
       clearTimeout(mousewheelTimeout);
 
@@ -388,12 +411,12 @@ class PullToRefresh extends Framework7Class {
           $ptrWatchScrollable.each((ptrScrollableIndex, ptrScrollableEl) => {
             if (ptrScrollableEl === el) return;
             if (
-              (ptrScrollableEl.scrollHeight > ptrScrollableEl.offsetHeight)
-              && $(ptrScrollableEl).css('overflow') === 'auto'
-              && (
-                (!ptr.bottom && ptrScrollableEl.scrollTop > 0)
-                || (ptr.bottom && ptrScrollableEl.scrollTop < ptrScrollableEl.scrollHeight - ptrScrollableEl.offsetHeight)
-              )
+              ptrScrollableEl.scrollHeight > ptrScrollableEl.offsetHeight &&
+              $(ptrScrollableEl).css('overflow') === 'auto' &&
+              ((!ptr.bottom && ptrScrollableEl.scrollTop > 0) ||
+                (ptr.bottom &&
+                  ptrScrollableEl.scrollTop <
+                    ptrScrollableEl.scrollHeight - ptrScrollableEl.offsetHeight))
             ) {
               targetIsScrollable = true;
             }
@@ -405,14 +428,19 @@ class PullToRefresh extends Framework7Class {
         }
         if (dynamicTriggerDistance) {
           triggerDistance = $el.attr('data-ptr-distance');
-          if (triggerDistance.indexOf('%') >= 0) triggerDistance = (scrollHeight * parseInt(triggerDistance, 10)) / 100;
+          if (triggerDistance.indexOf('%') >= 0)
+            triggerDistance = (scrollHeight * parseInt(triggerDistance, 10)) / 100;
         }
       }
       isMoved = true;
       mousewheelTranslate -= deltaY;
       touchesDiff = mousewheelTranslate; // pageY - touchesStart.y;
 
-      if (typeof wasScrolled === 'undefined' && (ptr.bottom ? scrollTop !== maxScrollTop : scrollTop !== 0)) wasScrolled = true;
+      if (
+        typeof wasScrolled === 'undefined' &&
+        (ptr.bottom ? scrollTop !== maxScrollTop : scrollTop !== 0)
+      )
+        wasScrolled = true;
 
       const ptrStarted = ptr.bottom
         ? (touchesDiff < 0 && scrollTop >= maxScrollTop) || scrollTop > maxScrollTop
@@ -425,13 +453,15 @@ class PullToRefresh extends Framework7Class {
 
         translate = touchesDiff;
         if (Math.abs(translate) > triggerDistance) {
-          translate = triggerDistance + ((Math.abs(translate) - triggerDistance) ** 0.7);
+          translate = triggerDistance + (Math.abs(translate) - triggerDistance) ** 0.7;
           if (ptr.bottom) translate = -translate;
         }
 
         if (isMaterial) {
-          $preloaderEl.transform(`translate3d(0,${translate}px,0)`)
-            .find('.ptr-arrow').transform(`rotate(${(180 * (Math.abs(touchesDiff) / 66)) + 100}deg)`);
+          $preloaderEl
+            .transform(`translate3d(0,${translate}px,0)`)
+            .find('.ptr-arrow')
+            .transform(`rotate(${180 * (Math.abs(touchesDiff) / 66) + 100}deg)`);
         } else {
           // eslint-disable-next-line
           if (ptr.bottom) {
@@ -480,7 +510,7 @@ class PullToRefresh extends Framework7Class {
 
     // Events
     ptr.attachEvents = function attachEvents() {
-      const passive = Support.passiveListener ? { passive: true } : false;
+      const passive = support.passiveListener ? { passive: true } : false;
       $el.on(app.touchEvents.start, handleTouchStart, passive);
       app.on('touchmove:active', handleTouchMove);
       app.on('touchend:passive', handleTouchEnd);
@@ -489,7 +519,7 @@ class PullToRefresh extends Framework7Class {
       }
     };
     ptr.detachEvents = function detachEvents() {
-      const passive = Support.passiveListener ? { passive: true } : false;
+      const passive = support.passiveListener ? { passive: true } : false;
       $el.off(app.touchEvents.start, handleTouchStart, passive);
       app.off('touchmove:active', handleTouchMove);
       app.off('touchend:passive', handleTouchEnd);
@@ -518,7 +548,7 @@ class PullToRefresh extends Framework7Class {
     ptr.$el.trigger('ptr:beforedestroy');
     delete ptr.el.f7PullToRefresh;
     ptr.detachEvents();
-    Utils.deleteProps(ptr);
+    deleteProps(ptr);
     ptr = null;
   }
 }

@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend } from '../../utils/utils';
 import Router from '../../modules/router/router';
 import Framework7Class from '../../utils/class';
 import resizableView from './resizable-view';
@@ -18,16 +18,17 @@ class View extends Framework7Class {
     };
 
     if ($el.length === 0) {
-      let message = 'Framework7: can\'t create a View instance because ';
-      message += (typeof el === 'string')
-        ? `the selector "${el}" didn't match any element`
-        : 'el must be an HTMLElement or Dom7 object';
+      let message = "Framework7: can't create a View instance because ";
+      message +=
+        typeof el === 'string'
+          ? `the selector "${el}" didn't match any element`
+          : 'el must be an HTMLElement or Dom7 object';
 
       throw new Error(message);
     }
 
     // Default View params
-    view.params = Utils.extend(defaults, app.params.view, viewParams);
+    view.params = extend(defaults, app.params.view, viewParams);
 
     // Routes
     if (view.params.routes.length > 0) {
@@ -41,7 +42,11 @@ class View extends Framework7Class {
     if (typeof el === 'string') selector = el;
     else {
       // Supposed to be HTMLElement or Dom7
-      selector = ($el.attr('id') ? `#${$el.attr('id')}` : '') + ($el.attr('class') ? `.${$el.attr('class').replace(/ /g, '.').replace('.active', '')}` : '');
+      selector =
+        ($el.attr('id') ? `#${$el.attr('id')}` : '') +
+        ($el.attr('class')
+          ? `.${$el.attr('class').replace(/ /g, '.').replace('.active', '')}`
+          : '');
     }
 
     // DynamicNavbar
@@ -54,7 +59,7 @@ class View extends Framework7Class {
     }
 
     // View Props
-    Utils.extend(false, view, {
+    extend(false, view, {
       app,
       $el,
       el: $el[0],
@@ -149,7 +154,8 @@ class View extends Framework7Class {
     const view = this;
     const app = view.app;
     const wasMasterDetail = view.$el.hasClass('view-master-detail');
-    const isMasterDetail = app.width >= view.params.masterDetailBreakpoint && view.$el.children('.page-master').length;
+    const isMasterDetail =
+      app.width >= view.params.masterDetailBreakpoint && view.$el.children('.page-master').length;
     if ((typeof force === 'undefined' && isMasterDetail) || force === true) {
       view.$el.addClass('view-master-detail');
       if (!wasMasterDetail) {
@@ -191,6 +197,5 @@ class View extends Framework7Class {
 
 // Use Router
 View.use(Router);
-
 
 export default View;

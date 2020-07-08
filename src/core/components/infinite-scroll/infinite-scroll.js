@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend } from '../../utils/utils';
 
 const InfiniteScroll = {
   handleScroll(el, e) {
@@ -58,7 +58,7 @@ export default {
   name: 'infiniteScroll',
   create() {
     const app = this;
-    Utils.extend(app, {
+    extend(app, {
       infiniteScroll: {
         handle: InfiniteScroll.handleScroll.bind(app),
         create: InfiniteScroll.create.bind(app),

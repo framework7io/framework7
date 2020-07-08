@@ -1,21 +1,24 @@
 import $ from 'dom7';
-import { document } from 'ssr-window';
-import Utils from '../../utils/utils';
+import { getDocument } from 'ssr-window';
+import { extend } from '../../utils/utils';
 import Modal from '../modal/modal-class';
 
 class Dialog extends Modal {
   constructor(app, params) {
-    const extendedParams = Utils.extend({
-      title: app.params.dialog.title,
-      text: undefined,
-      content: '',
-      buttons: [],
-      verticalButtons: false,
-      onClick: undefined,
-      cssClass: undefined,
-      destroyOnClose: false,
-      on: {},
-    }, params);
+    const extendedParams = extend(
+      {
+        title: app.params.dialog.title,
+        text: undefined,
+        content: '',
+        buttons: [],
+        verticalButtons: false,
+        onClick: undefined,
+        cssClass: undefined,
+        destroyOnClose: false,
+        on: {},
+      },
+      params,
+    );
     if (typeof extendedParams.closeByBackdropClick === 'undefined') {
       extendedParams.closeByBackdropClick = app.params.dialog.closeByBackdropClick;
     }
@@ -27,6 +30,7 @@ class Dialog extends Modal {
     super(app, extendedParams);
 
     const dialog = this;
+    const document = getDocument();
 
     const { title, text, content, buttons, verticalButtons, cssClass, backdrop } = extendedParams;
 
@@ -43,6 +47,7 @@ class Dialog extends Modal {
 
       let buttonsHTML = '';
       if (buttons.length > 0) {
+        // prettier-ignore
         buttonsHTML = `
           <div class="dialog-buttons">
             ${buttons.map(button => `
@@ -52,6 +57,7 @@ class Dialog extends Modal {
         `;
       }
 
+      // prettier-ignore
       const dialogHtml = `
         <div class="${dialogClasses.join(' ')}">
           <div class="dialog-inner">
@@ -112,12 +118,7 @@ class Dialog extends Modal {
           if (button.keyCodes) addKeyboardHander = true;
           $(buttonEl).on('click', buttonOnClick);
         });
-        if (
-          addKeyboardHander
-          && !app.device.ios
-          && !app.device.android
-          && !app.device.cordova
-        ) {
+        if (addKeyboardHander && !app.device.ios && !app.device.android && !app.device.cordova) {
           $(document).on('keydown', onKeyDown);
         }
       });
@@ -125,18 +126,13 @@ class Dialog extends Modal {
         $el.find('.dialog-button').each((index, buttonEl) => {
           $(buttonEl).off('click', buttonOnClick);
         });
-        if (
-          addKeyboardHander
-          && !app.device.ios
-          && !app.device.android
-          && !app.device.cordova
-        ) {
+        if (addKeyboardHander && !app.device.ios && !app.device.android && !app.device.cordova) {
           $(document).off('keydown', onKeyDown);
         }
         addKeyboardHander = false;
       });
     }
-    Utils.extend(dialog, {
+    extend(dialog, {
       app,
       $el,
       el: $el[0],
@@ -178,9 +174,9 @@ class Dialog extends Modal {
       const $target = $(target);
       if ($target.closest(dialog.el).length === 0) {
         if (
-          dialog.params.closeByBackdropClick
-          && dialog.backdropEl
-          && dialog.backdropEl === target
+          dialog.params.closeByBackdropClick &&
+          dialog.backdropEl &&
+          dialog.backdropEl === target
         ) {
           dialog.close();
         }

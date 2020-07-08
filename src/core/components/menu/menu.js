@@ -10,7 +10,7 @@ const Menu = {
     if ($menuEl.length) {
       const zIndex = $menuEl.css('z-index');
       const originalZIndex = $menuEl[0].style.zIndex;
-      $menuEl.css('z-index', parseInt(zIndex || 0, 0) + 1);
+      $menuEl.css('z-index', parseInt(zIndex || 0, 10) + 1);
       $menuEl[0].f7MenuZIndex = originalZIndex;
     }
     $el.eq(0).addClass('menu-item-dropdown-opened').trigger('menu:opened');

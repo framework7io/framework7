@@ -1,6 +1,6 @@
 import $ from 'dom7';
-import { window, document } from 'ssr-window';
-import Utils from '../../utils/utils';
+import { getWindow, getDocument } from 'ssr-window';
+import { extend, deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 
 const textEditorButtonsMap = {
@@ -31,13 +31,14 @@ class TextEditor extends Framework7Class {
   constructor(app, params) {
     super(params, [app]);
     const self = this;
+    const document = getDocument();
 
-    const defaults = Utils.extend({}, app.params.textEditor);
+    const defaults = extend({}, app.params.textEditor);
 
     // Extend defaults with modules params
     self.useModulesParams(defaults);
 
-    self.params = Utils.extend(defaults, params);
+    self.params = extend(defaults, params);
 
     const el = self.params.el;
     if (!el) return self;
@@ -53,7 +54,7 @@ class TextEditor extends Framework7Class {
       $contentEl = $el.children('.text-editor-content');
     }
 
-    Utils.extend(self, {
+    extend(self, {
       app,
       $el,
       el: $el[0],
@@ -152,10 +153,16 @@ class TextEditor extends Framework7Class {
 
   createLink() {
     const self = this;
+    const window = getWindow();
+    const document = getDocument();
     const currentSelection = window.getSelection();
     const selectedNodes = [];
     let $selectedLinks;
-    if (currentSelection && currentSelection.anchorNode && $(currentSelection.anchorNode).parents(self.$el).length) {
+    if (
+      currentSelection &&
+      currentSelection.anchorNode &&
+      $(currentSelection.anchorNode).parents(self.$el).length
+    ) {
       let anchorNode = currentSelection.anchorNode;
       while (anchorNode) {
         selectedNodes.push(anchorNode);
@@ -194,6 +201,7 @@ class TextEditor extends Framework7Class {
 
   insertImage() {
     const self = this;
+    const document = getDocument();
     const currentRange = self.getSelectionRange();
     if (!currentRange) return self;
     const dialog = self.app.dialog.prompt(self.params.imageUrlText, '', (imageUrl) => {
@@ -218,9 +226,13 @@ class TextEditor extends Framework7Class {
 
   onSelectionChange() {
     const self = this;
+    const window = getWindow();
+    const document = getDocument();
     if (self.params.mode === 'toolbar') return;
     const selection = window.getSelection();
-    const selectionIsInContent = $(selection.anchorNode).parents(self.contentEl).length || selection.anchorNode === self.contentEl;
+    const selectionIsInContent =
+      $(selection.anchorNode).parents(self.contentEl).length ||
+      selection.anchorNode === self.contentEl;
     if (self.params.mode === 'keyboard-toolbar') {
       if (!selectionIsInContent) {
         self.closeKeyboardToolbar();
@@ -230,7 +242,9 @@ class TextEditor extends Framework7Class {
       return;
     }
     if (self.params.mode === 'popover') {
-      const selectionIsInPopover = $(selection.anchorNode).parents(self.popover.el).length || selection.anchorNode === self.popover.el;
+      const selectionIsInPopover =
+        $(selection.anchorNode).parents(self.popover.el).length ||
+        selection.anchorNode === self.popover.el;
       if (!selectionIsInContent && !selectionIsInPopover) {
         self.closePopover();
         return;
@@ -239,7 +253,12 @@ class TextEditor extends Framework7Class {
         const range = selection.getRangeAt(0);
         const rect = range.getBoundingClientRect();
         const rootEl = self.app.root[0] || document.body;
-        self.openPopover(rect.x + (window.scrollX || 0) - rootEl.offsetLeft, rect.y + (window.scrollY || 0) - rootEl.offsetTop, rect.width, rect.height);
+        self.openPopover(
+          rect.x + (window.scrollX || 0) - rootEl.offsetLeft,
+          rect.y + (window.scrollY || 0) - rootEl.offsetTop,
+          rect.width,
+          rect.height,
+        );
       } else if (selection.isCollapsed) {
         self.closePopover();
       }
@@ -248,6 +267,7 @@ class TextEditor extends Framework7Class {
 
   onPaste(e) {
     const self = this;
+    const document = getDocument();
     if (self.params.clearFormattingOnPaste && e.clipboardData && e.clipboardData.getData) {
       const text = e.clipboardData.getData('text/plain');
       e.preventDefault();
@@ -277,20 +297,29 @@ class TextEditor extends Framework7Class {
 
   onBlur() {
     const self = this;
+    const window = getWindow();
+    const document = getDocument();
     if (self.params.placeholder && self.$contentEl.html() === '') {
       self.insertPlaceholder();
     }
     if (self.params.mode === 'popover') {
       const selection = window.getSelection();
-      const selectionIsInContent = $(selection.anchorNode).parents(self.contentEl).length || selection.anchorNode === self.contentEl;
-      const inPopover = document.activeElement && self.popover && $(document.activeElement).closest(self.popover.$el).length;
+      const selectionIsInContent =
+        $(selection.anchorNode).parents(self.contentEl).length ||
+        selection.anchorNode === self.contentEl;
+      const inPopover =
+        document.activeElement &&
+        self.popover &&
+        $(document.activeElement).closest(self.popover.$el).length;
       if (!inPopover && !selectionIsInContent) {
         self.closePopover();
       }
     }
     if (self.params.mode === 'keyboard-toolbar') {
       const selection = window.getSelection();
-      const selectionIsInContent = $(selection.anchorNode).parents(self.contentEl).length || selection.anchorNode === self.contentEl;
+      const selectionIsInContent =
+        $(selection.anchorNode).parents(self.contentEl).length ||
+        selection.anchorNode === self.contentEl;
       if (!selectionIsInContent) {
         self.closeKeyboardToolbar();
       }
@@ -301,8 +330,12 @@ class TextEditor extends Framework7Class {
 
   onButtonClick(e) {
     const self = this;
+    const window = getWindow();
+    const document = getDocument();
     const selection = window.getSelection();
-    const selectionIsInContent = $(selection.anchorNode).parents(self.contentEl).length || selection.anchorNode === self.contentEl;
+    const selectionIsInContent =
+      $(selection.anchorNode).parents(self.contentEl).length ||
+      selection.anchorNode === self.contentEl;
     if (!selectionIsInContent) return;
     const $buttonEl = $(e.target).closest('button');
     if ($buttonEl.parents('form').length) {
@@ -341,6 +374,8 @@ class TextEditor extends Framework7Class {
 
   // eslint-disable-next-line
   getSelectionRange() {
+    const window = getWindow();
+    const document = getDocument();
     if (window.getSelection) {
       const sel = window.getSelection();
       if (sel.getRangeAt && sel.rangeCount) {
@@ -354,6 +389,8 @@ class TextEditor extends Framework7Class {
 
   // eslint-disable-next-line
   setSelectionRange(range) {
+    const window = getWindow();
+    const document = getDocument();
     if (range) {
       if (window.getSelection) {
         const sel = window.getSelection();
@@ -372,11 +409,15 @@ class TextEditor extends Framework7Class {
       const iconClass = self.app.theme === 'md' ? 'material-icons' : 'f7-icons';
       if (self.params.customButtons && self.params.customButtons[button]) {
         const buttonData = self.params.customButtons[button];
-        return `<button type="button" class="text-editor-button" data-button="${button}">${buttonData.content || ''}</button>`;
+        return `<button type="button" class="text-editor-button" data-button="${button}">${
+          buttonData.content || ''
+        }</button>`;
       }
       if (!textEditorButtonsMap[button]) return '';
       const iconContent = textEditorButtonsMap[button][self.app.theme === 'md' ? 1 : 0];
-      return `<button type="button" class="text-editor-button" data-button="${button}">${iconContent.indexOf('<') >= 0 ? iconContent : `<i class="${iconClass}">${iconContent}</i>`}</button>`.trim();
+      return `<button type="button" class="text-editor-button" data-button="${button}">${
+        iconContent.indexOf('<') >= 0 ? iconContent : `<i class="${iconClass}">${iconContent}</i>`
+      }</button>`.trim();
     }
     self.params.buttons.forEach((button, buttonIndex) => {
       if (Array.isArray(button)) {
@@ -400,8 +441,13 @@ class TextEditor extends Framework7Class {
 
   createKeyboardToolbar() {
     const self = this;
-    const isDark = self.$el.closest('.theme-dark').length > 0 || self.app.device.prefersColorScheme() === 'dark';
-    self.$keyboardToolbarEl = $(`<div class="toolbar toolbar-bottom text-editor-keyboard-toolbar ${isDark ? 'theme-dark' : ''}"><div class="toolbar-inner">${self.renderButtons()}</div></div>`);
+    const isDark =
+      self.$el.closest('.theme-dark').length > 0 || self.app.device.prefersColorScheme() === 'dark';
+    self.$keyboardToolbarEl = $(
+      `<div class="toolbar toolbar-bottom text-editor-keyboard-toolbar ${
+        isDark ? 'theme-dark' : ''
+      }"><div class="toolbar-inner">${self.renderButtons()}</div></div>`,
+    );
   }
 
   createPopover() {
@@ -505,7 +551,7 @@ class TextEditor extends Framework7Class {
       self.popover.destroy();
     }
     delete self.$el[0].f7TextEditor;
-    Utils.deleteProps(self);
+    deleteProps(self);
     self = null;
   }
 }

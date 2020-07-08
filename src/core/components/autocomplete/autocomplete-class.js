@@ -1,6 +1,14 @@
 /* eslint "no-useless-escape": "off" */
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import {
+  extend,
+  id,
+  nextTick,
+  deleteProps,
+  iosPreloaderContent,
+  mdPreloaderContent,
+  auroraPreloaderContent,
+} from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 
 class Autocomplete extends Framework7Class {
@@ -10,9 +18,12 @@ class Autocomplete extends Framework7Class {
     const ac = this;
     ac.app = app;
 
-    const defaults = Utils.extend({
-      on: {},
-    }, app.params.autocomplete);
+    const defaults = extend(
+      {
+        on: {},
+      },
+      app.params.autocomplete,
+    );
 
     if (typeof defaults.searchbarDisableButton === 'undefined') {
       defaults.searchbarDisableButton = app.theme !== 'aurora';
@@ -21,7 +32,7 @@ class Autocomplete extends Framework7Class {
     // Extend defaults with modules params
     ac.useModulesParams(defaults);
 
-    ac.params = Utils.extend(defaults, params);
+    ac.params = extend(defaults, params);
 
     let $openerEl;
     if (ac.params.openerEl) {
@@ -35,7 +46,7 @@ class Autocomplete extends Framework7Class {
       if ($inputEl.length) $inputEl[0].f7Autocomplete = ac;
     }
 
-    const id = Utils.id();
+    const uniqueId = id();
 
     let url = params.url;
     if (!url && $openerEl && $openerEl.length) {
@@ -48,16 +59,16 @@ class Autocomplete extends Framework7Class {
 
     const inputType = ac.params.multiple ? 'checkbox' : 'radio';
 
-    Utils.extend(ac, {
+    extend(ac, {
       $openerEl,
       openerEl: $openerEl && $openerEl[0],
       $inputEl,
       inputEl: $inputEl && $inputEl[0],
-      id,
+      id: uniqueId,
       url,
       value: ac.params.value || [],
       inputType,
-      inputName: `${inputType}-${id}`,
+      inputName: `${inputType}-${uniqueId}`,
       $modalEl: undefined,
       $dropdownEl: undefined,
     });
@@ -80,16 +91,21 @@ class Autocomplete extends Framework7Class {
         let firstValue;
         let firstItem;
         for (let i = 0; i < limit; i += 1) {
-          const itemValue = typeof items[i] === 'object' ? items[i][ac.params.valueProperty] : items[i];
-          const itemText = typeof items[i] === 'object' ? items[i][ac.params.textProperty] : items[i];
+          const itemValue =
+            typeof items[i] === 'object' ? items[i][ac.params.valueProperty] : items[i];
+          const itemText =
+            typeof items[i] === 'object' ? items[i][ac.params.textProperty] : items[i];
           if (i === 0) {
             firstValue = itemValue;
             firstItem = ac.items[i];
           }
-          itemsHTML += ac.renderItem({
-            value: itemValue,
-            text: ac.params.highlightMatches ? itemText.replace(regExp, '<b>$1</b>') : itemText,
-          }, i);
+          itemsHTML += ac.renderItem(
+            {
+              value: itemValue,
+              text: ac.params.highlightMatches ? itemText.replace(regExp, '<b>$1</b>') : itemText,
+            },
+            i,
+          );
         }
         if (itemsHTML === '' && query === '' && ac.params.dropdownPlaceholderText) {
           itemsHTML += ac.renderItem({
@@ -118,7 +134,8 @@ class Autocomplete extends Framework7Class {
           $inputEl.val(firstValue);
           $inputEl[0].setSelectionRange(query.length, firstValue.length);
 
-          const previousValue = typeof ac.value[0] === 'object' ? ac.value[0][ac.params.valueProperty] : ac.value[0];
+          const previousValue =
+            typeof ac.value[0] === 'object' ? ac.value[0][ac.params.valueProperty] : ac.value[0];
           if (!previousValue || firstValue.toLowerCase() !== previousValue.toLowerCase()) {
             ac.value = [firstItem];
             ac.emit('local::change autocompleteChange', [firstItem]);
@@ -138,7 +155,8 @@ class Autocomplete extends Framework7Class {
       if (isValues) {
         if (ac.inputType === 'checkbox' && !input.checked) {
           for (let i = 0; i < ac.value.length; i += 1) {
-            aValue = typeof ac.value[i] === 'string' ? ac.value[i] : ac.value[i][ac.params.valueProperty];
+            aValue =
+              typeof ac.value[i] === 'string' ? ac.value[i] : ac.value[i][ac.params.valueProperty];
             if (aValue === value || aValue * 1 === value * 1) {
               ac.value.splice(i, 1);
             }
@@ -151,7 +169,8 @@ class Autocomplete extends Framework7Class {
 
       // Find Related Item
       for (let i = 0; i < ac.items.length; i += 1) {
-        itemValue = typeof ac.items[i] === 'object' ? ac.items[i][ac.params.valueProperty] : ac.items[i];
+        itemValue =
+          typeof ac.items[i] === 'object' ? ac.items[i][ac.params.valueProperty] : ac.items[i];
         if (itemValue === value || itemValue * 1 === value * 1) item = ac.items[i];
       }
       if (ac.inputType === 'radio') {
@@ -160,7 +179,8 @@ class Autocomplete extends Framework7Class {
         ac.value.push(item);
       } else {
         for (let i = 0; i < ac.value.length; i += 1) {
-          aValue = typeof ac.value[i] === 'object' ? ac.value[i][ac.params.valueProperty] : ac.value[i];
+          aValue =
+            typeof ac.value[i] === 'object' ? ac.value[i][ac.params.valueProperty] : ac.value[i];
           if (aValue === value || aValue * 1 === value * 1) {
             ac.value.splice(i, 1);
           }
@@ -171,13 +191,17 @@ class Autocomplete extends Framework7Class {
       ac.updateValues();
 
       // On Select Callback
-      if (((ac.inputType === 'radio' && input.checked) || ac.inputType === 'checkbox')) {
+      if ((ac.inputType === 'radio' && input.checked) || ac.inputType === 'checkbox') {
         ac.emit('local::change autocompleteChange', ac.value);
       }
     }
     function onHtmlClick(e) {
       const $targetEl = $(e.target);
-      if ($targetEl.is(ac.$inputEl[0]) || (ac.$dropdownEl && $targetEl.closest(ac.$dropdownEl[0]).length)) return;
+      if (
+        $targetEl.is(ac.$inputEl[0]) ||
+        (ac.$dropdownEl && $targetEl.closest(ac.$dropdownEl[0]).length)
+      )
+        return;
       ac.close();
     }
     function onOpenerClick() {
@@ -226,10 +250,14 @@ class Autocomplete extends Framework7Class {
       if ($selectedItem.length) {
         $newItem = $selectedItem[e.keyCode === 40 ? 'next' : 'prev']('li');
         if (!$newItem.length) {
-          $newItem = ac.$dropdownEl.find('li').eq(e.keyCode === 40 ? 0 : ac.$dropdownEl.find('li').length - 1);
+          $newItem = ac.$dropdownEl
+            .find('li')
+            .eq(e.keyCode === 40 ? 0 : ac.$dropdownEl.find('li').length - 1);
         }
       } else {
-        $newItem = ac.$dropdownEl.find('li').eq(e.keyCode === 40 ? 0 : ac.$dropdownEl.find('li').length - 1);
+        $newItem = ac.$dropdownEl
+          .find('li')
+          .eq(e.keyCode === 40 ? 0 : ac.$dropdownEl.find('li').length - 1);
       }
       if ($newItem.hasClass('autocomplete-dropdown-placeholder')) return;
       $selectedItem.removeClass('autocomplete-dropdown-selected');
@@ -239,14 +267,17 @@ class Autocomplete extends Framework7Class {
       const $clickedEl = $(this);
       let clickedItem;
       for (let i = 0; i < ac.items.length; i += 1) {
-        const itemValue = typeof ac.items[i] === 'object' ? ac.items[i][ac.params.valueProperty] : ac.items[i];
+        const itemValue =
+          typeof ac.items[i] === 'object' ? ac.items[i][ac.params.valueProperty] : ac.items[i];
         const value = $clickedEl.attr('data-value');
         if (itemValue === value || itemValue * 1 === value * 1) {
           clickedItem = ac.items[i];
         }
       }
       if (ac.params.updateInputValueOnSelect) {
-        ac.$inputEl.val(typeof clickedItem === 'object' ? clickedItem[ac.params.valueProperty] : clickedItem);
+        ac.$inputEl.val(
+          typeof clickedItem === 'object' ? clickedItem[ac.params.valueProperty] : clickedItem,
+        );
         ac.$inputEl.trigger('input change');
       }
       ac.value = [clickedItem];
@@ -297,7 +328,7 @@ class Autocomplete extends Framework7Class {
       ac.$el.on('change', 'input[type="radio"], input[type="checkbox"]', onPageInputChange);
       if (ac.params.closeOnSelect && !ac.params.multiple) {
         ac.$el.once('click', '.list label', () => {
-          Utils.nextTick(() => {
+          nextTick(() => {
             ac.close();
           });
         });
@@ -351,15 +382,23 @@ class Autocomplete extends Framework7Class {
     const listOffset = $listEl.offset();
     const paddingBottom = parseInt($pageContentEl.css('padding-bottom'), 10);
     const listOffsetLeft = $listEl.length > 0 ? listOffset.left - $pageContentEl.offset().left : 0;
-    const inputOffsetLeft = inputOffset.left - ($listEl.length > 0 ? listOffset.left : 0) - (app.rtl ? 0 : 0);
-    const inputOffsetTop = inputOffset.top - ($pageContentEl.offset().top - $pageContentEl[0].scrollTop);
+    const inputOffsetLeft =
+      inputOffset.left - ($listEl.length > 0 ? listOffset.left : 0) - (app.rtl ? 0 : 0);
+    const inputOffsetTop =
+      inputOffset.top - ($pageContentEl.offset().top - $pageContentEl[0].scrollTop);
 
-    const maxHeight = $pageContentEl[0].scrollHeight - paddingBottom - (inputOffsetTop + $pageContentEl[0].scrollTop) - $inputEl[0].offsetHeight;
+    const maxHeight =
+      $pageContentEl[0].scrollHeight -
+      paddingBottom -
+      (inputOffsetTop + $pageContentEl[0].scrollTop) -
+      $inputEl[0].offsetHeight;
 
     const paddingProp = app.rtl ? 'padding-right' : 'padding-left';
     let paddingValue;
     if ($listEl.length && !ac.params.expandInput) {
-      paddingValue = (app.rtl ? $listEl[0].offsetWidth - inputOffsetLeft - inputOffsetWidth : inputOffsetLeft) - (app.theme === 'md' ? 16 : 15);
+      paddingValue =
+        (app.rtl ? $listEl[0].offsetWidth - inputOffsetLeft - inputOffsetWidth : inputOffsetLeft) -
+        (app.theme === 'md' ? 16 : 15);
     }
 
     $dropdownEl.css({
@@ -390,19 +429,24 @@ class Autocomplete extends Framework7Class {
       ac.items = items;
       for (let i = 0; i < limit; i += 1) {
         let selected = false;
-        const itemValue = typeof items[i] === 'object' ? items[i][ac.params.valueProperty] : items[i];
+        const itemValue =
+          typeof items[i] === 'object' ? items[i][ac.params.valueProperty] : items[i];
         for (let j = 0; j < ac.value.length; j += 1) {
-          const aValue = typeof ac.value[j] === 'object' ? ac.value[j][ac.params.valueProperty] : ac.value[j];
+          const aValue =
+            typeof ac.value[j] === 'object' ? ac.value[j][ac.params.valueProperty] : ac.value[j];
           if (aValue === itemValue || aValue * 1 === itemValue * 1) selected = true;
         }
-        itemsHTML += ac.renderItem({
-          value: itemValue,
-          text: typeof items[i] === 'object' ? items[i][ac.params.textProperty] : items[i],
-          inputType: ac.inputType,
-          id: ac.id,
-          inputName: ac.inputName,
-          selected,
-        }, i);
+        itemsHTML += ac.renderItem(
+          {
+            value: itemValue,
+            text: typeof items[i] === 'object' ? items[i][ac.params.textProperty] : items[i],
+            inputType: ac.inputType,
+            id: ac.id,
+            inputName: ac.inputName,
+            selected,
+          },
+          i,
+        );
       }
       $el.find('.autocomplete-found ul').html(itemsHTML);
       if (items.length === 0) {
@@ -424,14 +468,18 @@ class Autocomplete extends Framework7Class {
     const ac = this;
     let valuesHTML = '';
     for (let i = 0; i < ac.value.length; i += 1) {
-      valuesHTML += ac.renderItem({
-        value: typeof ac.value[i] === 'object' ? ac.value[i][ac.params.valueProperty] : ac.value[i],
-        text: typeof ac.value[i] === 'object' ? ac.value[i][ac.params.textProperty] : ac.value[i],
-        inputType: ac.inputType,
-        id: ac.id,
-        inputName: `${ac.inputName}-checked}`,
-        selected: true,
-      }, i);
+      valuesHTML += ac.renderItem(
+        {
+          value:
+            typeof ac.value[i] === 'object' ? ac.value[i][ac.params.valueProperty] : ac.value[i],
+          text: typeof ac.value[i] === 'object' ? ac.value[i][ac.params.textProperty] : ac.value[i],
+          inputType: ac.inputType,
+          id: ac.id,
+          inputName: `${ac.inputName}-checked}`,
+          selected: true,
+        },
+        i,
+      );
     }
     ac.$el.find('.autocomplete-values ul').html(valuesHTML);
   }
@@ -456,14 +504,21 @@ class Autocomplete extends Framework7Class {
 
   renderPreloader() {
     const ac = this;
+    const preloaders = {
+      iosPreloaderContent,
+      mdPreloaderContent,
+      auroraPreloaderContent,
+    };
+    // prettier-ignore
     return `
-      <div class="autocomplete-preloader preloader ${ac.params.preloaderColor ? `color-${ac.params.preloaderColor}` : ''}">${Utils[`${ac.app.theme}PreloaderContent`] || ''}</div>
+      <div class="autocomplete-preloader preloader ${ac.params.preloaderColor ? `color-${ac.params.preloaderColor}` : ''}">${preloaders[`${ac.app.theme}PreloaderContent`] || ''}</div>
     `.trim();
   }
 
   renderSearchbar() {
     const ac = this;
     if (ac.params.renderSearchbar) return ac.params.renderSearchbar.call(ac);
+    // prettier-ignore
     const searchbarHTML = `
       <form class="searchbar">
         <div class="searchbar-inner">
@@ -485,8 +540,12 @@ class Autocomplete extends Framework7Class {
     const ac = this;
     if (ac.params.renderItem) return ac.params.renderItem.call(ac, item, index);
     let itemHtml;
-    const itemValue = item.value && typeof item.value === 'string' ? item.value.replace(/"/g, '&quot;') : item.value;
+    const itemValue =
+      item.value && typeof item.value === 'string'
+        ? item.value.replace(/"/g, '&quot;')
+        : item.value;
     if (ac.params.openIn !== 'dropdown') {
+      // prettier-ignore
       itemHtml = `
         <li>
           <label class="item-${item.inputType} item-content">
@@ -500,6 +559,7 @@ class Autocomplete extends Framework7Class {
       `;
     } else if (!item.placeholder) {
       // Dropdown
+      // prettier-ignore
       itemHtml = `
         <li>
           <label class="item-radio item-content" data-value="${itemValue}">
@@ -511,6 +571,7 @@ class Autocomplete extends Framework7Class {
       `;
     } else {
       // Dropwdown placeholder
+      // prettier-ignore
       itemHtml = `
         <li class="autocomplete-dropdown-placeholder">
           <label class="item-content">
@@ -532,6 +593,7 @@ class Autocomplete extends Framework7Class {
       pageTitle = ac.$openerEl.find('.item-title').text().trim();
     }
     const inPopup = ac.params.openIn === 'popup';
+    // prettier-ignore
     const navbarLeft = inPopup
       ? `
         ${ac.params.preloader ? `
@@ -548,6 +610,7 @@ class Autocomplete extends Framework7Class {
           </a>
         </div>
       `;
+    // prettier-ignore
     const navbarRight = inPopup
       ? `
         <div class="right">
@@ -563,6 +626,7 @@ class Autocomplete extends Framework7Class {
         </div>
         ` : ''}
       `;
+    // prettier-ignore
     const navbarHtml = `
       <div class="navbar ${ac.params.navbarColorTheme ? `color-${ac.params.navbarColorTheme}` : ''}">
         <div class="navbar-bg"></div>
@@ -580,6 +644,7 @@ class Autocomplete extends Framework7Class {
   renderDropdown() {
     const ac = this;
     if (ac.params.renderDropdown) return ac.params.renderDropdown.call(ac, ac.items);
+    // prettier-ignore
     const dropdownHtml = `
       <div class="autocomplete-dropdown">
         <div class="autocomplete-dropdown-inner">
@@ -597,6 +662,7 @@ class Autocomplete extends Framework7Class {
     const ac = this;
     if (ac.params.renderPage) return ac.params.renderPage.call(ac, ac.items);
 
+    // prettier-ignore
     const pageHtml = `
       <div class="page page-with-subnavbar autocomplete-page" data-name="autocomplete-page">
         ${ac.renderNavbar(inPopup)}
@@ -622,6 +688,7 @@ class Autocomplete extends Framework7Class {
   renderPopup() {
     const ac = this;
     if (ac.params.renderPopup) return ac.params.renderPopup.call(ac, ac.items);
+    // prettier-ignore
     const popupHtml = `
       <div class="popup autocomplete-popup">
         <div class="view">
@@ -711,7 +778,9 @@ class Autocomplete extends Framework7Class {
     if (ac.params.openIn === 'dropdown') {
       ac.detachDropdownEvents();
       ac.$dropdownEl.removeClass('autocomplete-dropdown-in').remove();
-      ac.$inputEl.parents('.item-content-dropdown-expanded').removeClass('item-content-dropdown-expanded');
+      ac.$inputEl
+        .parents('.item-content-dropdown-expanded')
+        .removeClass('item-content-dropdown-expanded');
     } else {
       ac.detachPageEvents();
     }
@@ -809,7 +878,11 @@ class Autocomplete extends Framework7Class {
       ac.$dropdownEl = $(ac.renderDropdown());
     }
     const $listEl = ac.$inputEl.parents('.list');
-    if ($listEl.length && ac.$inputEl.parents('.item-content').length > 0 && ac.params.expandInput) {
+    if (
+      $listEl.length &&
+      ac.$inputEl.parents('.item-content').length > 0 &&
+      ac.params.expandInput
+    ) {
       ac.$inputEl.parents('.item-content').addClass('item-content-dropdown-expanded');
     }
 
@@ -830,10 +903,15 @@ class Autocomplete extends Framework7Class {
     const ac = this;
     if (ac.opened) return ac;
     const openIn = ac.params.openIn;
-    ac[`open${openIn.split('').map((el, index) => {
-      if (index === 0) return el.toUpperCase();
-      return el;
-    }).join('')}`]();
+    ac[
+      `open${openIn
+        .split('')
+        .map((el, index) => {
+          if (index === 0) return el.toUpperCase();
+          return el;
+        })
+        .join('')}`
+    ]();
     return ac;
   }
 
@@ -847,7 +925,7 @@ class Autocomplete extends Framework7Class {
       ac.view.router.back({ animate: ac.params.animate });
     } else {
       ac.modal.once('modalClosed', () => {
-        Utils.nextTick(() => {
+        nextTick(() => {
           if (ac.destroyed) return;
           ac.modal.destroy();
           delete ac.modal;
@@ -873,7 +951,7 @@ class Autocomplete extends Framework7Class {
     if (ac.$openerEl && ac.$openerEl[0]) {
       delete ac.$openerEl[0].f7Autocomplete;
     }
-    Utils.deleteProps(ac);
+    deleteProps(ac);
     ac.destroyed = true;
   }
 }

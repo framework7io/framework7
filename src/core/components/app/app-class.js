@@ -1,8 +1,8 @@
 import $ from 'dom7';
 import Template7 from 'template7';
-import { window, document } from 'ssr-window';
-import Utils from '../../utils/utils';
-import Device from '../../utils/device';
+import { getWindow, getDocument } from 'ssr-window';
+import { extend, nextFrame } from '../../utils/utils';
+import { getDevice } from '../../utils/get-device';
 import Framework7Class from '../../utils/class';
 import EventsClass from '../../utils/events-class';
 import ConstructorMethods from '../../utils/constructor-methods';
@@ -13,13 +13,17 @@ class Framework7 extends Framework7Class {
   constructor(params) {
     super(params);
     if (Framework7.instance) {
-      throw new Error('Framework7 is already initialized and can\'t be initialized more than once');
+      throw new Error("Framework7 is already initialized and can't be initialized more than once");
     }
 
-    const passedParams = Utils.extend({}, params);
+    const passedParams = extend({}, params);
 
     // App Instance
     const app = this;
+
+    const window = getWindow();
+    const document = getDocument();
+    const device = getDevice();
 
     Framework7.instance = app;
 
@@ -46,11 +50,11 @@ class Framework7 extends Framework7Class {
     app.useModulesParams(defaults);
 
     // Extend defaults with passed params
-    app.params = Utils.extend(defaults, params);
+    app.params = extend(defaults, params);
 
     const $rootEl = $(app.params.root);
 
-    Utils.extend(app, {
+    extend(app, {
       // App Id
       id: app.params.id,
       // App Name
@@ -68,12 +72,12 @@ class Framework7 extends Framework7Class {
       // Theme
       theme: (function getTheme() {
         if (app.params.theme === 'auto') {
-          if (Device.ios) return 'ios';
-          if (Device.desktop && Device.electron) return 'aurora';
+          if (device.ios) return 'ios';
+          if (device.desktop && device.electron) return 'aurora';
           return 'md';
         }
         return app.params.theme;
-      }()),
+      })(),
       // Initially passed parameters
       passedParams,
       online: window.navigator.onLine,
@@ -116,7 +120,7 @@ class Framework7 extends Framework7Class {
 
     // Init
     if (app.params.init) {
-      if (Device.cordova && app.params.initOnDeviceReady) {
+      if (device.cordova && app.params.initOnDeviceReady) {
         $(document).on('deviceready', () => {
           app.init();
         });
@@ -135,9 +139,9 @@ class Framework7 extends Framework7Class {
     // Data
     app.data = {};
     if (app.params.data && typeof app.params.data === 'function') {
-      Utils.extend(app.data, app.params.data.bind(app)());
+      extend(app.data, app.params.data.bind(app)());
     } else if (app.params.data) {
-      Utils.extend(app.data, app.params.data);
+      extend(app.data, app.params.data);
     }
     // Methods
     app.methods = {};
@@ -153,6 +157,8 @@ class Framework7 extends Framework7Class {
   }
 
   enableAutoDarkTheme() {
+    const window = getWindow();
+    const document = getDocument();
     if (!window.matchMedia) return;
     const app = this;
     const html = document.querySelector('html');
@@ -172,6 +178,7 @@ class Framework7 extends Framework7Class {
   }
 
   disableAutoDarkTheme() {
+    const window = getWindow();
     if (!window.matchMedia) return;
     const app = this;
     if (app.mq.dark) app.mq.dark.removeListener(app.colorSchemeListener);
@@ -190,7 +197,7 @@ class Framework7 extends Framework7Class {
         app.rootComponent = el.f7Component;
         if (callback) callback();
       },
-      () => {}
+      () => {},
     );
   }
 
@@ -212,6 +219,7 @@ class Framework7 extends Framework7Class {
     }
 
     // Watch for online/offline state
+    const window = getWindow();
     window.addEventListener('offline', () => {
       app.online = false;
       app.emit('offline');
@@ -230,15 +238,16 @@ class Framework7 extends Framework7Class {
     $('html').removeClass('ios md aurora').addClass(app.theme);
 
     // iOS Translucent
-    if (app.params.iosTranslucentBars && app.theme === 'ios' && Device.ios) {
+    const device = getDevice();
+    if (app.params.iosTranslucentBars && app.theme === 'ios' && device.ios) {
       $('html').addClass('ios-translucent-bars');
     }
-    if (app.params.iosTranslucentModals && app.theme === 'ios' && Device.ios) {
+    if (app.params.iosTranslucentModals && app.theme === 'ios' && device.ios) {
       $('html').addClass('ios-translucent-modals');
     }
 
     // Init class
-    Utils.nextFrame(() => {
+    nextFrame(() => {
       app.root.removeClass('framework7-initializing');
     });
     // Emit, init other modules
@@ -310,7 +319,7 @@ Framework7.ConstructorMethods = ConstructorMethods;
 
 Framework7.loadModule = loadModule;
 Framework7.loadModules = function loadModules(modules) {
-  return Promise.all(modules.map(module => Framework7.loadModule(module)));
+  return Promise.all(modules.map((module) => Framework7.loadModule(module)));
 };
 
 export default Framework7;

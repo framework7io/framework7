@@ -1,6 +1,6 @@
 /* eslint no-nested-ternary: off */
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend, deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 
 class Gauge extends Framework7Class {
@@ -10,12 +10,12 @@ class Gauge extends Framework7Class {
 
     const gauge = this;
 
-    const defaults = Utils.extend({}, app.params.gauge);
+    const defaults = extend({}, app.params.gauge);
 
     // Extend defaults with modules params
     gauge.useModulesParams(defaults);
 
-    gauge.params = Utils.extend(defaults, params);
+    gauge.params = extend(defaults, params);
 
     const { el } = gauge.params;
     if (!el) return gauge;
@@ -25,7 +25,7 @@ class Gauge extends Framework7Class {
 
     if ($el[0].f7Gauge) return $el[0].f7Gauge;
 
-    Utils.extend(gauge, {
+    extend(gauge, {
       app,
       $el,
       el: $el && $el[0],
@@ -44,7 +44,7 @@ class Gauge extends Framework7Class {
   calcRadius() {
     const gauge = this;
     const { size, borderWidth } = gauge.params;
-    return (size / 2) - (borderWidth / 2);
+    return size / 2 - borderWidth / 2;
   }
 
   calcBorderLength() {
@@ -80,6 +80,7 @@ class Gauge extends Framework7Class {
     const length = gauge.calcBorderLength();
     const progress = Math.max(Math.min(value, 1), 0);
 
+    // prettier-ignore
     return `
       <svg class="gauge-svg" width="${size}px" height="${semiCircle ? size / 2 : size}px" viewBox="0 0 ${size} ${semiCircle ? size / 2 : size}">
         ${semiCircle ? `
@@ -197,18 +198,18 @@ class Gauge extends Framework7Class {
     });
     if (semiCircle) {
       const backAttrs = {
-        d: `M${size - (borderWidth / 2)},${size / 2} a1,1 0 0,0 -${size - borderWidth},0`,
+        d: `M${size - borderWidth / 2},${size / 2} a1,1 0 0,0 -${size - borderWidth},0`,
         stroke: borderBgColor,
         'stroke-width': borderWidth,
         fill: bgColor || 'none',
       };
       const frontAttrs = {
-        d: `M${size - (borderWidth / 2)},${size / 2} a1,1 0 0,0 -${size - borderWidth},0`,
+        d: `M${size - borderWidth / 2},${size / 2} a1,1 0 0,0 -${size - borderWidth},0`,
         stroke: borderColor,
         'stroke-width': borderWidth,
         'stroke-dasharray': length / 2,
         'stroke-dashoffset': (length / 2) * (1 + progress),
-        fill: borderBgColor ? 'none' : (bgColor || 'none'),
+        fill: borderBgColor ? 'none' : bgColor || 'none',
       };
       Object.keys(backAttrs).forEach((attr) => {
         $gaugeSvgEl.find('.gauge-back-semi').attr(attr, backAttrs[attr]);
@@ -274,7 +275,7 @@ class Gauge extends Framework7Class {
         'font-weight': labelFontWeight,
         'font-size': labelFontSize,
         fill: labelTextColor,
-        dy: semiCircle ? -5 : (valueText ? ((valueFontSize / 2) + 10) : 0),
+        dy: semiCircle ? -5 : valueText ? valueFontSize / 2 + 10 : 0,
         'text-anchor': 'middle',
         'dominant-baseline': !semiCircle && 'middle',
       };
@@ -292,7 +293,7 @@ class Gauge extends Framework7Class {
     const gauge = this;
     const $gaugeSvgEl = $(gauge.render()).eq(0);
     $gaugeSvgEl.f7Gauge = gauge;
-    Utils.extend(gauge, {
+    extend(gauge, {
       $gaugeSvgEl,
       gaugeSvgEl: $gaugeSvgEl && $gaugeSvgEl[0],
     });
@@ -307,7 +308,7 @@ class Gauge extends Framework7Class {
     gauge.emit('local::beforeDestroy gaugeBeforeDestroy', gauge);
     gauge.$gaugeSvgEl.remove();
     delete gauge.$el[0].f7Gauge;
-    Utils.deleteProps(gauge);
+    deleteProps(gauge);
     gauge.destroyed = true;
   }
 }

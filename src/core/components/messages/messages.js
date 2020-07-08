@@ -14,21 +14,27 @@ export default {
       constructor: Messages,
       app,
       domProp: 'f7Messages',
-      addMethods: 'renderMessages layout scroll clear removeMessage removeMessages addMessage addMessages'.split(' '),
+      addMethods: 'renderMessages layout scroll clear removeMessage removeMessages addMessage addMessages'.split(
+        ' ',
+      ),
     });
   },
   on: {
     tabBeforeRemove(tabEl) {
       const app = this;
-      $(tabEl).find('.messages-init').each((index, messagesEl) => {
-        app.messages.destroy(messagesEl);
-      });
+      $(tabEl)
+        .find('.messages-init')
+        .each((index, messagesEl) => {
+          app.messages.destroy(messagesEl);
+        });
     },
     tabMounted(tabEl) {
       const app = this;
-      $(tabEl).find('.messages-init').each((index, messagesEl) => {
-        app.messages.create({ el: messagesEl });
-      });
+      $(tabEl)
+        .find('.messages-init')
+        .each((index, messagesEl) => {
+          app.messages.create({ el: messagesEl });
+        });
     },
     pageBeforeRemove(page) {
       const app = this;

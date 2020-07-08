@@ -1,12 +1,18 @@
 /* eslint no-use-before-define: "off" */
 /* eslint import/no-named-as-default: "off" */
-import { window, document } from 'ssr-window';
+import { getWindow, getDocument } from 'ssr-window';
 import h from './snabbdom/h';
 import customComponents from './custom-components';
 
-const selfClosing = 'area base br col command embed hr img input keygen link menuitem meta param source track wbr'.split(' ');
-const propsAttrs = 'hidden checked disabled readonly selected autofocus autoplay required multiple value indeterminate'.split(' ');
-const booleanProps = 'hidden checked disabled readonly selected autofocus autoplay required multiple readOnly indeterminate'.split(' ');
+const selfClosing = 'area base br col command embed hr img input keygen link menuitem meta param source track wbr'.split(
+  ' ',
+);
+const propsAttrs = 'hidden checked disabled readonly selected autofocus autoplay required multiple value indeterminate'.split(
+  ' ',
+);
+const booleanProps = 'hidden checked disabled readonly selected autofocus autoplay required multiple readOnly indeterminate'.split(
+  ' ',
+);
 const tempDomDIV = document.createElement('div');
 let tempDomTBODY;
 let tempDomTROW;
@@ -32,21 +38,23 @@ function contextFromAttrs(...args) {
 }
 
 function createCustomComponent({ app, vnode, tagName, data }) {
-  app.component.create(
-    Object.assign({ el: vnode.elm }, customComponents[tagName]),
-    {
-      $props: contextFromAttrs(data.attrs || {}, data.props || {}),
-    },
-    vnode.children,
-  ).then((c) => {
-    if (vnode.data && vnode.data.on && c && c.$el) {
-      Object.keys(vnode.data.on).forEach((eventName) => {
-        c.$el.on(eventName, vnode.data.on[eventName]);
-      });
-    }
-    // eslint-disable-next-line
-    vnode.elm.__component__ = c;
-  });
+  app.component
+    .create(
+      Object.assign({ el: vnode.elm }, customComponents[tagName]),
+      {
+        $props: contextFromAttrs(data.attrs || {}, data.props || {}),
+      },
+      vnode.children,
+    )
+    .then((c) => {
+      if (vnode.data && vnode.data.on && c && c.$el) {
+        Object.keys(vnode.data.on).forEach((eventName) => {
+          c.$el.on(eventName, vnode.data.on[eventName]);
+        });
+      }
+      // eslint-disable-next-line
+      vnode.elm.__component__ = c;
+    });
 }
 function updateCustomComponent(vnode) {
   // eslint-disable-next-line
@@ -124,28 +132,33 @@ function getHooks(data, app, initial, isRoot, tagName) {
       }
     });
   }
-  if (insert.length === 0 && destroy.length === 0 && update.length === 0 && postpatch.length === 0) {
+  if (
+    insert.length === 0 &&
+    destroy.length === 0 &&
+    update.length === 0 &&
+    postpatch.length === 0
+  ) {
     return hooks;
   }
 
   if (insert.length) {
     hooks.insert = (vnode) => {
-      insert.forEach(f => f(vnode));
+      insert.forEach((f) => f(vnode));
     };
   }
   if (destroy.length) {
     hooks.destroy = (vnode) => {
-      destroy.forEach(f => f(vnode));
+      destroy.forEach((f) => f(vnode));
     };
   }
   if (update.length) {
     hooks.update = (oldVnode, vnode) => {
-      update.forEach(f => f(oldVnode, vnode));
+      update.forEach((f) => f(oldVnode, vnode));
     };
   }
   if (postpatch.length) {
     hooks.postpatch = (oldVnode, vnode) => {
-      postpatch.forEach(f => f(oldVnode, vnode));
+      postpatch.forEach((f) => f(oldVnode, vnode));
     };
   }
 
@@ -174,7 +187,12 @@ function getEventHandler(handlerString, context, { stop, prevent, once } = {}) {
       if (!method) method = context;
       if (method[path]) method = method[path];
       else {
-        throw new Error(`Framework7: Component doesn't have method "${methodName.split('.').slice(0, pathIndex + 1).join('.')}"`);
+        throw new Error(
+          `Framework7: Component doesn't have method "${methodName
+            .split('.')
+            .slice(0, pathIndex + 1)
+            .join('.')}"`,
+        );
       }
     });
   } else {
@@ -200,9 +218,9 @@ function getEventHandler(handlerString, context, { stop, prevent, once } = {}) {
       const handlerArguments = handlerString
         .split('(')[1]
         .split(')')[0]
-        .replace(/'[^']*'|"[^"]*"/g, a => a.replace(/,/g, '<_comma_>'))
+        .replace(/'[^']*'|"[^"]*"/g, (a) => a.replace(/,/g, '<_comma_>'))
         .split(',')
-        .map(a => a.replace(/<_comma_>/g, ','));
+        .map((a) => a.replace(/<_comma_>/g, ','));
       handlerArguments.forEach((argument) => {
         let arg = argument.trim();
         // eslint-disable-next-line
@@ -212,7 +230,7 @@ function getEventHandler(handlerString, context, { stop, prevent, once } = {}) {
         else if (arg === 'null') arg = null;
         else if (arg === 'undefined') arg = undefined;
         else if (arg[0] === '"') arg = arg.replace(/"/g, '');
-        else if (arg[0] === '\'') arg = arg.replace(/'/g, '');
+        else if (arg[0] === "'") arg = arg.replace(/'/g, '');
         else if (arg.indexOf('.') > 0) {
           let deepArg;
           arg.split('.').forEach((path) => {
@@ -337,14 +355,13 @@ function getChildren(el, context, app, initial) {
 
 function getSlots(slotEl, context, app, initial) {
   const slotName = slotEl.getAttribute('name') || 'default';
-  const slots = (context.$children || [])
-    .filter((childEl) => {
-      let childSlotName = 'default';
-      if (childEl.data) {
-        childSlotName = (childEl.data.attrs && childEl.data.attrs.slot) || 'default';
-      }
-      return childSlotName === slotName;
-    });
+  const slots = (context.$children || []).filter((childEl) => {
+    let childSlotName = 'default';
+    if (childEl.data) {
+      childSlotName = (childEl.data.attrs && childEl.data.attrs.slot) || 'default';
+    }
+    return childSlotName === slotName;
+  });
   if (slots.length === 0) {
     return getChildren(slotEl, context, app, initial);
   }
@@ -358,14 +375,14 @@ function elementToVNode(el, context, app, initial, isRoot) {
   }
   if (el.nodeType !== 1) return null;
   // element (statement adds inline SVG compatibility)
-  const tagName = (el instanceof window.SVGElement) ? el.nodeName : el.nodeName.toLowerCase();
+  const tagName = el instanceof window.SVGElement ? el.nodeName : el.nodeName.toLowerCase();
   if (tagName === 'slot') {
     return getSlots(el, context, app, initial);
   }
   return h(
     tagName,
     getData(el, context, app, initial, isRoot, tagName),
-    selfClosing.indexOf(tagName) >= 0 ? [] : getChildren(el, context, app, initial)
+    selfClosing.indexOf(tagName) >= 0 ? [] : getChildren(el, context, app, initial),
   );
 }
 

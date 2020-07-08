@@ -1,6 +1,7 @@
 export default {
   render(self) {
     const { hexLabel, hexLabelText, hexValueEditable } = self.params;
+    // prettier-ignore
     return `
       <div class="color-picker-module color-picker-module-hex">
         <div class="color-picker-hex-wrap">
@@ -45,9 +46,7 @@ export default {
     };
   },
   update(self) {
-    const {
-      value,
-    } = self;
+    const { value } = self;
 
     const { hexValueEditable } = self.params;
 

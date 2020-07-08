@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend, deleteProps, id, nextTick } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 
 class SmartSelect extends Framework7Class {
@@ -7,9 +7,12 @@ class SmartSelect extends Framework7Class {
     super(params, [app]);
     const ss = this;
 
-    const defaults = Utils.extend({
-      on: {},
-    }, app.params.smartSelect);
+    const defaults = extend(
+      {
+        on: {},
+      },
+      app.params.smartSelect,
+    );
 
     if (typeof defaults.searchbarDisableButton === 'undefined') {
       defaults.searchbarDisableButton = app.theme !== 'aurora';
@@ -18,7 +21,7 @@ class SmartSelect extends Framework7Class {
     // Extend defaults with modules params
     ss.useModulesParams(defaults);
 
-    ss.params = Utils.extend({}, defaults, params);
+    ss.params = extend({}, defaults, params);
 
     ss.app = app;
 
@@ -52,9 +55,9 @@ class SmartSelect extends Framework7Class {
 
     const multiple = $selectEl[0].multiple;
     const inputType = multiple ? 'checkbox' : 'radio';
-    const id = Utils.id();
+    const selectId = id();
 
-    Utils.extend(ss, {
+    extend(ss, {
       $el,
       el: $el[0],
       $selectEl,
@@ -64,8 +67,8 @@ class SmartSelect extends Framework7Class {
       url,
       multiple,
       inputType,
-      id,
-      inputName: `${inputType}-${id}`,
+      id: selectId,
+      inputName: `${inputType}-${selectId}`,
       selectName: $selectEl.attr('name'),
       maxLength: $selectEl.attr('maxlength') || params.maxLength,
     });
@@ -108,7 +111,9 @@ class SmartSelect extends Framework7Class {
             optionEl.selected = inputEl.checked;
           }
           if (optionEl.selected) {
-            displayAs = optionEl.dataset ? optionEl.dataset.displayAs : $(optionEl).data('display-value-as');
+            displayAs = optionEl.dataset
+              ? optionEl.dataset.displayAs
+              : $(optionEl).data('display-value-as');
             text = displayAs && typeof displayAs !== 'undefined' ? displayAs : optionEl.textContent;
             optionText.push(text.trim());
           }
@@ -137,10 +142,18 @@ class SmartSelect extends Framework7Class {
     }
 
     ss.attachInputsEvents = function attachInputsEvents() {
-      ss.$containerEl.on('change', 'input[type="checkbox"], input[type="radio"]', handleInputChange);
+      ss.$containerEl.on(
+        'change',
+        'input[type="checkbox"], input[type="radio"]',
+        handleInputChange,
+      );
     };
     ss.detachInputsEvents = function detachInputsEvents() {
-      ss.$containerEl.off('change', 'input[type="checkbox"], input[type="radio"]', handleInputChange);
+      ss.$containerEl.off(
+        'change',
+        'input[type="checkbox"], input[type="radio"]',
+        handleInputChange,
+      );
     };
 
     // Install Modules
@@ -169,7 +182,9 @@ class SmartSelect extends Framework7Class {
           optionEl.selected = false;
         }
         if (optionEl.selected) {
-          displayAs = optionEl.dataset ? optionEl.dataset.displayAs : $(optionEl).data('display-value-as');
+          displayAs = optionEl.dataset
+            ? optionEl.dataset.displayAs
+            : $(optionEl).data('display-value-as');
           text = displayAs && typeof displayAs !== 'undefined' ? displayAs : optionEl.textContent;
           optionText.push(text.trim());
         }
@@ -202,7 +217,11 @@ class SmartSelect extends Framework7Class {
     ss.$selectEl[0].value = null;
 
     if (ss.$containerEl) {
-      ss.$containerEl.find(`input[name="${ss.inputName}"][type="checkbox"], input[name="${ss.inputName}"][type="radio"]`).prop('checked', false);
+      ss.$containerEl
+        .find(
+          `input[name="${ss.inputName}"][type="checkbox"], input[name="${ss.inputName}"][type="radio"]`,
+        )
+        .prop('checked', false);
     }
     ss.$selectEl.trigger('change');
   }
@@ -267,7 +286,9 @@ class SmartSelect extends Framework7Class {
       ss.$selectEl.find('option').each((optionIndex, optionEl) => {
         const $optionEl = $(optionEl);
         if (optionEl.selected) {
-          const displayAs = optionEl.dataset ? optionEl.dataset.displayAs : $optionEl.data('display-value-as');
+          const displayAs = optionEl.dataset
+            ? optionEl.dataset.displayAs
+            : $optionEl.data('display-value-as');
           if (displayAs && typeof displayAs !== 'undefined') {
             valueArray.push(displayAs);
           } else {
@@ -291,10 +312,13 @@ class SmartSelect extends Framework7Class {
       const optionData = $optionEl.dataset();
       const optionImage = optionData.optionImage || ss.params.optionImage;
       const optionIcon = optionData.optionIcon || ss.params.optionIcon;
-      const optionIconIos = theme === 'ios' && (optionData.optionIconIos || ss.params.optionIconIos);
+      const optionIconIos =
+        theme === 'ios' && (optionData.optionIconIos || ss.params.optionIconIos);
       const optionIconMd = theme === 'md' && (optionData.optionIconMd || ss.params.optionIconMd);
-      const optionIconAurora = theme === 'aurora' && (optionData.optionIconAurora || ss.params.optionIconAurora);
-      const optionHasMedia = optionImage || optionIcon || optionIconIos || optionIconMd || optionIconAurora;
+      const optionIconAurora =
+        theme === 'aurora' && (optionData.optionIconAurora || ss.params.optionIconAurora);
+      const optionHasMedia =
+        optionImage || optionIcon || optionIconIos || optionIconMd || optionIconAurora;
       const optionColor = optionData.optionColor;
 
       let optionClassName = optionData.optionClass || '';
@@ -340,6 +364,7 @@ class SmartSelect extends Framework7Class {
   renderSearchbar() {
     const ss = this;
     if (ss.params.renderSearchbar) return ss.params.renderSearchbar.call(ss);
+    // prettier-ignore
     const searchbarHTML = `
       <form class="searchbar">
         <div class="searchbar-inner">
@@ -396,6 +421,7 @@ class SmartSelect extends Framework7Class {
       const iconContent = getIconContent(icon || iconIos || iconMd || iconAurora || '');
       const iconClass = getIconClass(icon || iconIos || iconMd || iconAurora || '');
 
+      // prettier-ignore
       itemHtml = `
         <li class="${item.className || ''}${disabled ? ' disabled' : ''}">
           <label class="item-${item.inputType} item-content">
@@ -435,6 +461,7 @@ class SmartSelect extends Framework7Class {
       pageTitle = $itemTitleEl.length ? $itemTitleEl.text().trim() : '';
     }
     const cssClass = ss.params.cssClass;
+    // prettier-ignore
     const pageHtml = `
       <div class="page smart-select-page ${cssClass}" data-name="smart-select-page" data-select-name="${ss.selectName}">
         <div class="navbar ${ss.params.navbarColorTheme ? `color-${ss.params.navbarColorTheme}` : ''}">
@@ -470,6 +497,7 @@ class SmartSelect extends Framework7Class {
       pageTitle = $itemTitleEl.length ? $itemTitleEl.text().trim() : '';
     }
     const cssClass = ss.params.cssClass || '';
+    // prettier-ignore
     const popupHtml = `
       <div class="popup smart-select-popup ${cssClass} ${ss.params.popupTabletFullscreen ? 'popup-tablet-fullscreen' : ''}" data-select-name="${ss.selectName}">
         <div class="view">
@@ -501,6 +529,7 @@ class SmartSelect extends Framework7Class {
     const ss = this;
     if (ss.params.renderSheet) return ss.params.renderSheet.call(ss, ss.items);
     const cssClass = ss.params.cssClass;
+    // prettier-ignore
     const sheetHtml = `
       <div class="sheet-modal smart-select-sheet ${cssClass}" data-select-name="${ss.selectName}">
         <div class="toolbar toolbar-top ${ss.params.toolbarColorTheme ? `color-${ss.params.toolbarColorTheme}` : ''}">
@@ -527,6 +556,7 @@ class SmartSelect extends Framework7Class {
     const ss = this;
     if (ss.params.renderPopover) return ss.params.renderPopover.call(ss, ss.items);
     const cssClass = ss.params.cssClass;
+    // prettier-ignore
     const popoverHtml = `
       <div class="popover smart-select-popover ${cssClass}" data-select-name="${ss.selectName}">
         <div class="popover-inner">
@@ -557,7 +587,11 @@ class SmartSelect extends Framework7Class {
       const $selectedItemEl = $containerEl.find('input:checked').parents('li');
       if (!$selectedItemEl.length) return ss;
       const $pageContentEl = $containerEl.find('.page-content');
-      $pageContentEl.scrollTop($selectedItemEl.offset().top - $pageContentEl.offset().top - parseInt($pageContentEl.css('padding-top'), 10));
+      $pageContentEl.scrollTop(
+        $selectedItemEl.offset().top -
+          $pageContentEl.offset().top -
+          parseInt($pageContentEl.css('padding-top'), 10),
+      );
     }
     return ss;
   }
@@ -578,7 +612,8 @@ class SmartSelect extends Framework7Class {
         renderItem: ss.renderItem.bind(ss),
         height: ss.params.virtualListHeight,
         searchByItem(query, item) {
-          if (item.text && item.text.toLowerCase().indexOf(query.trim().toLowerCase()) >= 0) return true;
+          if (item.text && item.text.toLowerCase().indexOf(query.trim().toLowerCase()) >= 0)
+            return true;
           return false;
         },
       });
@@ -598,7 +633,9 @@ class SmartSelect extends Framework7Class {
         let $notFoundEl = null;
 
         if (typeof ss.params.appendSearchbarNotFound === 'string') {
-          $notFoundEl = $(`<div class="block searchbar-not-found">${ss.params.appendSearchbarNotFound}</div>`);
+          $notFoundEl = $(
+            `<div class="block searchbar-not-found">${ss.params.appendSearchbarNotFound}</div>`,
+          );
         } else if (typeof ss.params.appendSearchbarNotFound === 'boolean') {
           $notFoundEl = $('<div class="block searchbar-not-found">Nothing found</div>');
         } else {
@@ -610,12 +647,15 @@ class SmartSelect extends Framework7Class {
         }
       }
 
-      const searchbarParams = Utils.extend({
-        el: $searchbarEl,
-        backdropEl: $containerEl.find('.searchbar-backdrop'),
-        searchContainer: `.smart-select-list-${ss.id}`,
-        searchIn: '.item-title',
-      }, typeof ss.params.searchbar === 'object' ? ss.params.searchbar : {});
+      const searchbarParams = extend(
+        {
+          el: $searchbarEl,
+          backdropEl: $containerEl.find('.searchbar-backdrop'),
+          searchContainer: `.smart-select-list-${ss.id}`,
+          searchIn: '.item-title',
+        },
+        typeof ss.params.searchbar === 'object' ? ss.params.searchbar : {},
+      );
 
       ss.searchbar = app.searchbar.create(searchbarParams);
     }
@@ -627,9 +667,12 @@ class SmartSelect extends Framework7Class {
 
     // Close on select
     if (ss.params.closeOnSelect) {
-      ss.$containerEl.find(`input[type="radio"][name="${ss.inputName}"]:checked`).parents('label').once('click', () => {
-        ss.close();
-      });
+      ss.$containerEl
+        .find(`input[type="radio"][name="${ss.inputName}"]:checked`)
+        .parents('label')
+        .once('click', () => {
+          ss.close();
+        });
     }
 
     // Attach input events
@@ -844,10 +887,15 @@ class SmartSelect extends Framework7Class {
     ss.emit('local::beforeOpen smartSelectBeforeOpen', ss, prevent);
     if (prevented) return ss;
     const openIn = type || ss.params.openIn;
-    ss[`open${openIn.split('').map((el, index) => {
-      if (index === 0) return el.toUpperCase();
-      return el;
-    }).join('')}`]();
+    ss[
+      `open${openIn
+        .split('')
+        .map((el, index) => {
+          if (index === 0) return el.toUpperCase();
+          return el;
+        })
+        .join('')}`
+    ]();
     return ss;
   }
 
@@ -858,7 +906,7 @@ class SmartSelect extends Framework7Class {
       ss.view.router.back();
     } else {
       ss.modal.once('modalClosed', () => {
-        Utils.nextTick(() => {
+        nextTick(() => {
           if (ss.destroyed) return;
           ss.modal.destroy();
           delete ss.modal;
@@ -881,7 +929,7 @@ class SmartSelect extends Framework7Class {
     ss.$el.trigger('smartselect:beforedestroy');
     ss.detachEvents();
     delete ss.$el[0].f7SmartSelect;
-    Utils.deleteProps(ss);
+    deleteProps(ss);
     ss.destroyed = true;
   }
 }

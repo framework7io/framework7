@@ -1,5 +1,10 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import {
+  extend,
+  iosPreloaderContent,
+  mdPreloaderContent,
+  auroraPreloaderContent,
+} from '../../utils/utils';
 
 const Treeview = {
   open(itemEl) {
@@ -22,10 +27,17 @@ const Treeview = {
     }
 
     if ($itemEl.hasClass('treeview-load-children') && !$itemEl[0].f7TreeviewChildrenLoaded) {
+      const preloaders = { iosPreloaderContent, mdPreloaderContent, auroraPreloaderContent };
       $itemEl.trigger('treeview:loadchildren', done);
       app.emit('treeviewLoadChildren', $itemEl[0], done);
       $itemEl.find('.treeview-toggle').addClass('treeview-toggle-hidden');
-      $itemEl.find('.treeview-item-root').prepend(`<div class="preloader treeview-preloader">${Utils[`${app.theme}PreloaderContent`]}</div>`);
+      $itemEl
+        .find('.treeview-item-root')
+        .prepend(
+          `<div class="preloader treeview-preloader">${
+            preloaders[`${app.theme}PreloaderContent`]
+          }</div>`,
+        );
     }
   },
   close(itemEl) {
@@ -49,7 +61,7 @@ export default {
   name: 'treeview',
   create() {
     const app = this;
-    Utils.extend(app, {
+    extend(app, {
       treeview: {
         open: Treeview.open.bind(app),
         close: Treeview.close.bind(app),

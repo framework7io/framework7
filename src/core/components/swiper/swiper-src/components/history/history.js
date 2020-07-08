@@ -1,4 +1,4 @@
-import { window } from 'ssr-window';
+import { getWindow } from 'ssr-window';
 import Utils from '../../utils/utils';
 
 const History = {
@@ -31,7 +31,10 @@ const History = {
     swiper.history.scrollToSlide(swiper.params.speed, swiper.history.paths.value, false);
   },
   getPathValues() {
-    const pathArray = window.location.pathname.slice(1).split('/').filter((part) => part !== '');
+    const pathArray = window.location.pathname
+      .slice(1)
+      .split('/')
+      .filter((part) => part !== '');
     const total = pathArray.length;
     const key = pathArray[total - 2];
     const value = pathArray[total - 1];
@@ -56,7 +59,8 @@ const History = {
     }
   },
   slugify(text) {
-    return text.toString()
+    return text
+      .toString()
       .replace(/\s+/g, '-')
       .replace(/[^\w-]+/g, '')
       .replace(/--+/g, '-')

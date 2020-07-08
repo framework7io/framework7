@@ -1,12 +1,12 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend, now, nextFrame } from '../../utils/utils';
 
 function swipePanel(panel) {
   const app = panel.app;
   if (panel.swipeInitialized) {
     return;
   }
-  Utils.extend(panel, {
+  extend(panel, {
     swipeable: true,
     swipeInitialized: true,
   });
@@ -35,15 +35,22 @@ function swipePanel(panel) {
     if (!app.panel.allowOpen || (!params.swipe && !params.swipeOnlyClose) || isTouched) return;
     if ($('.modal-in:not(.toast):not(.notification), .photo-browser-in').length > 0) return;
     otherPanel = app.panel.get(side === 'left' ? 'right' : 'left') || {};
-    const otherPanelOpened = otherPanel.opened && otherPanel.$el && !otherPanel.$el.hasClass('panel-in-breakpoint');
+    const otherPanelOpened =
+      otherPanel.opened && otherPanel.$el && !otherPanel.$el.hasClass('panel-in-breakpoint');
     if (!panel.opened && otherPanelOpened) {
       return;
     }
     if (!params.swipeOnlyClose) {
       if (otherPanelOpened) return;
     }
-    if (e.target && e.target.nodeName.toLowerCase() === 'input' && e.target.type === 'range') return;
-    if ($(e.target).closest('.range-slider, .tabs-swipeable-wrap, .calendar-months, .no-swipe-panel, .card-opened').length > 0) return;
+    if (e.target && e.target.nodeName.toLowerCase() === 'input' && e.target.type === 'range')
+      return;
+    if (
+      $(e.target).closest(
+        '.range-slider, .tabs-swipeable-wrap, .calendar-months, .no-swipe-panel, .card-opened',
+      ).length > 0
+    )
+      return;
     touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
     touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
     if (params.swipeOnlyClose && !panel.opened) {
@@ -64,7 +71,7 @@ function swipePanel(panel) {
     isScrolling = undefined;
     isInterrupted = false;
 
-    touchStartTime = Utils.now();
+    touchStartTime = now();
     direction = undefined;
   }
   function handleTouchMove(e) {
@@ -78,7 +85,9 @@ function swipePanel(panel) {
     const pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
     const pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
     if (typeof isScrolling === 'undefined') {
-      isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
+      isScrolling = !!(
+        isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x)
+      );
     }
     if (isScrolling) {
       isTouched = false;
@@ -107,16 +116,8 @@ function swipePanel(panel) {
       }
 
       if (
-        (side === 'left'
-          && (
-            direction === 'to-left' && !$el.hasClass('panel-in')
-          )
-        )
-        || (side === 'right'
-          && (
-            direction === 'to-right' && !$el.hasClass('panel-in')
-          )
-        )
+        (side === 'left' && direction === 'to-left' && !$el.hasClass('panel-in')) ||
+        (side === 'right' && direction === 'to-right' && !$el.hasClass('panel-in'))
       ) {
         isTouched = false;
         return;
@@ -145,7 +146,7 @@ function swipePanel(panel) {
 
     e.preventDefault();
 
-    touchesDiff = (pageX - touchesStart.x) + threshold;
+    touchesDiff = pageX - touchesStart.x + threshold;
 
     if (side === 'right') {
       if (effect === 'cover') {
@@ -192,7 +193,8 @@ function swipePanel(panel) {
     }
 
     if (params.swipeNoFollow) {
-      const stateChanged = (panel.opened && noFollowProgress === 0) || (!panel.opened && noFollowProgress === 1);
+      const stateChanged =
+        (panel.opened && noFollowProgress === 0) || (!panel.opened && noFollowProgress === 1);
       if (stateChanged) {
         isInterrupted = true;
         // eslint-disable-next-line
@@ -209,7 +211,7 @@ function swipePanel(panel) {
     const isGesture = e.type === 'gesturestart' || isGestureStarted;
     isTouched = false;
     isMoved = false;
-    const timeDiff = (new Date()).getTime() - touchStartTime;
+    const timeDiff = new Date().getTime() - touchStartTime;
     let action;
     const edge = (translate === 0 || Math.abs(translate) === panelWidth) && !params.swipeNoFollow;
 
@@ -233,8 +235,8 @@ function swipePanel(panel) {
       } else if (translate === 0) {
         action = 'reset';
       } else if (
-        (timeDiff < 300 && Math.abs(translate) > 0)
-        || (timeDiff >= 300 && (Math.abs(translate) >= panelWidth / 2))
+        (timeDiff < 300 && Math.abs(translate) > 0) ||
+        (timeDiff >= 300 && Math.abs(translate) >= panelWidth / 2)
       ) {
         action = 'swap';
       } else {
@@ -253,8 +255,8 @@ function swipePanel(panel) {
     } else if (translate === -panelWidth) {
       action = 'reset';
     } else if (
-      (timeDiff < 300 && Math.abs(translate) >= 0)
-      || (timeDiff >= 300 && (Math.abs(translate) <= panelWidth / 2))
+      (timeDiff < 300 && Math.abs(translate) >= 0) ||
+      (timeDiff >= 300 && Math.abs(translate) <= panelWidth / 2)
     ) {
       if (side === 'left' && translate === panelWidth) action = 'reset';
       else action = 'swap';
@@ -287,7 +289,7 @@ function swipePanel(panel) {
       }
     }
     if (effect === 'reveal') {
-      Utils.nextFrame(() => {
+      nextFrame(() => {
         $viewEl.transition('');
         $viewEl.transform('');
       });

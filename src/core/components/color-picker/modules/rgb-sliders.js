@@ -2,7 +2,15 @@ import $ from 'dom7';
 
 export default {
   render(self) {
-    const { sliderLabel, sliderValue, sliderValueEditable, redLabelText, greenLabelText, blueLabelText } = self.params;
+    const {
+      sliderLabel,
+      sliderValue,
+      sliderValueEditable,
+      redLabelText,
+      greenLabelText,
+      blueLabelText,
+    } = self.params;
+    // prettier-ignore
     return `
       <div class="color-picker-module color-picker-module-rgb-sliders">
         <div class="color-picker-slider-wrap">
@@ -111,13 +119,7 @@ export default {
     };
   },
   update(self) {
-    const {
-      app,
-      value,
-      redRangeSlider,
-      greenRangeSlider,
-      blueRangeSlider,
-    } = self;
+    const { app, value, redRangeSlider, greenRangeSlider, blueRangeSlider } = self;
 
     const { sliderValue, sliderValueEditable } = self.params;
 
@@ -131,15 +133,39 @@ export default {
     greenRangeSlider.layout();
     blueRangeSlider.layout();
 
-    redRangeSlider.$el[0].style.setProperty('--f7-range-knob-color', `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`);
-    greenRangeSlider.$el[0].style.setProperty('--f7-range-knob-color', `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`);
-    blueRangeSlider.$el[0].style.setProperty('--f7-range-knob-color', `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`);
+    redRangeSlider.$el[0].style.setProperty(
+      '--f7-range-knob-color',
+      `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`,
+    );
+    greenRangeSlider.$el[0].style.setProperty(
+      '--f7-range-knob-color',
+      `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`,
+    );
+    blueRangeSlider.$el[0].style.setProperty(
+      '--f7-range-knob-color',
+      `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`,
+    );
 
     const direction = app.rtl ? 'to left' : 'to right';
 
-    redRangeSlider.$el.find('.range-bar').css('background-image', `linear-gradient(${direction}, rgb(0, ${rgb[1]}, ${rgb[2]}), rgb(255, ${rgb[1]}, ${rgb[2]}))`);
-    greenRangeSlider.$el.find('.range-bar').css('background-image', `linear-gradient(${direction}, rgb(${rgb[0]}, 0, ${rgb[2]}), rgb(${rgb[0]}, 255, ${rgb[2]}))`);
-    blueRangeSlider.$el.find('.range-bar').css('background-image', `linear-gradient(${direction}, rgb(${rgb[0]}, ${rgb[1]}, 0), rgb(${rgb[0]}, ${rgb[1]}, 255))`);
+    redRangeSlider.$el
+      .find('.range-bar')
+      .css(
+        'background-image',
+        `linear-gradient(${direction}, rgb(0, ${rgb[1]}, ${rgb[2]}), rgb(255, ${rgb[1]}, ${rgb[2]}))`,
+      );
+    greenRangeSlider.$el
+      .find('.range-bar')
+      .css(
+        'background-image',
+        `linear-gradient(${direction}, rgb(${rgb[0]}, 0, ${rgb[2]}), rgb(${rgb[0]}, 255, ${rgb[2]}))`,
+      );
+    blueRangeSlider.$el
+      .find('.range-bar')
+      .css(
+        'background-image',
+        `linear-gradient(${direction}, rgb(${rgb[0]}, ${rgb[1]}, 0), rgb(${rgb[0]}, ${rgb[1]}, 255))`,
+      );
 
     if (sliderValue && sliderValueEditable) {
       self.$el.find('input.color-picker-value-red').val(rgb[0]);

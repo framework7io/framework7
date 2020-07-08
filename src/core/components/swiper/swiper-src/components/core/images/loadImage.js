@@ -1,4 +1,4 @@
-import { window } from 'ssr-window';
+import { getWindow } from 'ssr-window';
 import $ from '../../../utils/dom';
 
 export default function (imageEl, src, srcset, sizes, checkForComplete, callback) {

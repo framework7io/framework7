@@ -1,14 +1,17 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend } from '../../utils/utils';
 import Modal from './modal-class';
 
 class CustomModal extends Modal {
   constructor(app, params) {
-    const extendedParams = Utils.extend({
-      backdrop: true,
-      closeByBackdropClick: true,
-      on: {},
-    }, params);
+    const extendedParams = extend(
+      {
+        backdrop: true,
+        closeByBackdropClick: true,
+        on: {},
+      },
+      params,
+    );
 
     // Extends with open/close Modal methods;
     super(app, extendedParams);
@@ -59,7 +62,7 @@ class CustomModal extends Modal {
       }
     });
 
-    Utils.extend(customModal, {
+    extend(customModal, {
       app,
       $el,
       el: $el[0],

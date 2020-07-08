@@ -19,15 +19,19 @@ export default {
   on: {
     tabBeforeRemove(tabEl) {
       const app = this;
-      $(tabEl).find('.data-table-init').each((index, tableEl) => {
-        app.dataTable.destroy(tableEl);
-      });
+      $(tabEl)
+        .find('.data-table-init')
+        .each((index, tableEl) => {
+          app.dataTable.destroy(tableEl);
+        });
     },
     tabMounted(tabEl) {
       const app = this;
-      $(tabEl).find('.data-table-init').each((index, tableEl) => {
-        app.dataTable.create({ el: tableEl });
-      });
+      $(tabEl)
+        .find('.data-table-init')
+        .each((index, tableEl) => {
+          app.dataTable.create({ el: tableEl });
+        });
     },
     pageBeforeRemove(page) {
       const app = this;

@@ -1,11 +1,12 @@
 import $ from 'dom7';
-import { window, document } from 'ssr-window';
-import Utils from '../../utils/utils';
+import { getWindow, getDocument } from 'ssr-window';
+import { extend, serializeObject } from '../../utils/utils';
 
 // Form Data
 const FormData = {
   store(form, data) {
     const app = this;
+    const window = getWindow();
     let formId = form;
 
     const $formEl = $(form);
@@ -20,6 +21,7 @@ const FormData = {
   },
   get(form) {
     const app = this;
+    const window = getWindow();
     let formId = form;
 
     const $formEl = $(form);
@@ -37,6 +39,7 @@ const FormData = {
   },
   remove(form) {
     const app = this;
+    const window = getWindow();
     let formId = form;
 
     const $formEl = $(form);
@@ -207,6 +210,8 @@ function formFromData(formEl, formData) {
 
 function initAjaxForm() {
   const app = this;
+  const window = getWindow();
+  const document = getDocument();
 
   function onSubmitChange(e, fromData) {
     const $formEl = $(this);
@@ -229,7 +234,7 @@ function initAjaxForm() {
         data = new window.FormData($formEl[0]);
       }
     } else {
-      data = Utils.serializeObject(app.form.convertToData($formEl[0]));
+      data = serializeObject(app.form.convertToData($formEl[0]));
     }
 
     app.request({
@@ -255,14 +260,18 @@ function initAjaxForm() {
       },
     });
   }
-  $(document).on('submit change', 'form.form-ajax-submit, form.form-ajax-submit-onchange', onSubmitChange);
+  $(document).on(
+    'submit change',
+    'form.form-ajax-submit, form.form-ajax-submit-onchange',
+    onSubmitChange,
+  );
 }
 
 export default {
   name: 'form',
   create() {
     const app = this;
-    Utils.extend(app, {
+    extend(app, {
       form: {
         data: {},
         storeFormData: FormData.store.bind(app),
@@ -284,15 +293,19 @@ export default {
     },
     tabBeforeRemove(tabEl) {
       const app = this;
-      $(tabEl).find('.form-store-data').each((index, formEl) => {
-        app.form.storage.destroy(formEl);
-      });
+      $(tabEl)
+        .find('.form-store-data')
+        .each((index, formEl) => {
+          app.form.storage.destroy(formEl);
+        });
     },
     tabMounted(tabEl) {
       const app = this;
-      $(tabEl).find('.form-store-data').each((index, formEl) => {
-        app.form.storage.init(formEl);
-      });
+      $(tabEl)
+        .find('.form-store-data')
+        .each((index, formEl) => {
+          app.form.storage.init(formEl);
+        });
     },
     pageBeforeRemove(page) {
       const app = this;

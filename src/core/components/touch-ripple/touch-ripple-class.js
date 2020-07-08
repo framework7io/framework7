@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { nextTick, nextFrame } from '../../utils/utils';
 
 export default class TouchRipple {
   constructor($el, x, y) {
@@ -12,15 +12,21 @@ export default class TouchRipple {
     };
     const width = box.width;
     const height = box.height;
-    const diameter = Math.max((((height ** 2) + (width ** 2)) ** 0.5), 48);
+    const diameter = Math.max((height ** 2 + width ** 2) ** 0.5, 48);
 
-    ripple.$rippleWaveEl = $(`<div class="ripple-wave" style="width: ${diameter}px; height: ${diameter}px; margin-top:-${diameter / 2}px; margin-left:-${diameter / 2}px; left:${center.x}px; top:${center.y}px;"></div>`);
+    ripple.$rippleWaveEl = $(
+      `<div class="ripple-wave" style="width: ${diameter}px; height: ${diameter}px; margin-top:-${
+        diameter / 2
+      }px; margin-left:-${diameter / 2}px; left:${center.x}px; top:${center.y}px;"></div>`,
+    );
 
     $el.prepend(ripple.$rippleWaveEl);
 
-    ripple.rippleTransform = `translate3d(${-center.x + (width / 2)}px, ${-center.y + (height / 2)}px, 0) scale(1)`;
+    ripple.rippleTransform = `translate3d(${-center.x + width / 2}px, ${
+      -center.y + height / 2
+    }px, 0) scale(1)`;
 
-    Utils.nextFrame(() => {
+    nextFrame(() => {
       if (!ripple || !ripple.$rippleWaveEl) return;
       ripple.$rippleWaveEl.transform(ripple.rippleTransform);
     });
@@ -45,7 +51,7 @@ export default class TouchRipple {
     if (ripple.removing) return;
     const $rippleWaveEl = this.$rippleWaveEl;
     const rippleTransform = this.rippleTransform;
-    let removeTimeout = Utils.nextTick(() => {
+    let removeTimeout = nextTick(() => {
       ripple.destroy();
     }, 400);
     ripple.removing = true;
@@ -54,12 +60,12 @@ export default class TouchRipple {
       .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'))
       .transitionEnd(() => {
         clearTimeout(removeTimeout);
-        Utils.nextFrame(() => {
+        nextFrame(() => {
           $rippleWaveEl
             .addClass('ripple-wave-out')
             .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'));
 
-          removeTimeout = Utils.nextTick(() => {
+          removeTimeout = nextTick(() => {
             ripple.destroy();
           }, 700);
 

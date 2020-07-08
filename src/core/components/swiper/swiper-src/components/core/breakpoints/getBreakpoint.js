@@ -1,4 +1,4 @@
-import { window } from 'ssr-window';
+import { getWindow } from 'ssr-window';
 
 export default function (breakpoints) {
   // Get breakpoint for window width

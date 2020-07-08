@@ -25,14 +25,12 @@ export default {
     };
   },
   update(self) {
-    self.$el.find('.color-picker-module-initial-current-colors .color-picker-initial-color').css(
-      'background-color',
-      self.initialValue.hex,
-    );
-    self.$el.find('.color-picker-module-initial-current-colors .color-picker-current-color').css(
-      'background-color',
-      self.value.hex,
-    );
+    self.$el
+      .find('.color-picker-module-initial-current-colors .color-picker-initial-color')
+      .css('background-color', self.initialValue.hex);
+    self.$el
+      .find('.color-picker-module-initial-current-colors .color-picker-current-color')
+      .css('background-color', self.value.hex);
   },
   destroy(self) {
     if (self.destroyInitialCurrentEvents) {

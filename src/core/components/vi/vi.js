@@ -1,4 +1,4 @@
-import { document } from 'ssr-window';
+import { getDocument } from 'ssr-window';
 import $ from 'dom7';
 import Device from '../../utils/device';
 import ViAd from './vi-class';
@@ -62,7 +62,8 @@ export default {
   on: {
     init() {
       const app = this;
-      if (app.params.vi.enabled || (app.passedParams.vi && app.passedParams.vi.enabled !== false)) app.vi.loadSdk();
+      if (app.params.vi.enabled || (app.passedParams.vi && app.passedParams.vi.enabled !== false))
+        app.vi.loadSdk();
     },
   },
 };

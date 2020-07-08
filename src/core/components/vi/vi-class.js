@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import { window } from 'ssr-window';
+import { getWindow } from 'ssr-window';
 import Utils from '../../utils/utils';
 import Device from '../../utils/device';
 import Framework7Class from '../../utils/class';
@@ -14,22 +14,19 @@ class ViAd extends Framework7Class {
 
     let orientation;
     if (typeof window.orientation !== 'undefined') {
-      orientation = window.orientation === -90 || window.orientation === 90 ? 'horizontal' : 'vertical';
+      orientation =
+        window.orientation === -90 || window.orientation === 90 ? 'horizontal' : 'vertical';
     }
-    const defaults = Utils.extend(
-      {},
-      app.params.vi,
-      {
-        appId: app.id,
-        appVer: app.version,
-        language: app.language,
-        width: app.width,
-        height: app.height,
-        os: Device.os,
-        osVersion: Device.osVersion,
-        orientation,
-      }
-    );
+    const defaults = Utils.extend({}, app.params.vi, {
+      appId: app.id,
+      appVer: app.version,
+      language: app.language,
+      width: app.width,
+      height: app.height,
+      os: Device.os,
+      osVersion: Device.osVersion,
+      orientation,
+    });
 
     // Extend defaults with modules params
     vi.useModulesParams(defaults);
@@ -37,7 +34,7 @@ class ViAd extends Framework7Class {
     vi.params = Utils.extend(defaults, params);
 
     const adParams = {};
-    const skipParams = ('on autoplay fallbackOverlay fallbackOverlayText enabled').split(' ');
+    const skipParams = 'on autoplay fallbackOverlay fallbackOverlayText enabled'.split(' ');
     Object.keys(vi.params).forEach((paramName) => {
       if (skipParams.indexOf(paramName) >= 0) return;
       const paramValue = vi.params[paramName];
@@ -46,7 +43,9 @@ class ViAd extends Framework7Class {
     });
 
     if (!vi.params.appId) {
-      throw new Error('Framework7: "app.id" is required to display an ad. Make sure you have specified it on app initialization.');
+      throw new Error(
+        'Framework7: "app.id" is required to display an ad. Make sure you have specified it on app initialization.',
+      );
     }
     if (!vi.params.placementId) {
       throw new Error('Framework7: "placementId" is required to display an ad.');
@@ -55,11 +54,10 @@ class ViAd extends Framework7Class {
     function onResize() {
       const $viFrame = $('iframe#viAd');
       if ($viFrame.length === 0) return;
-      $viFrame
-        .css({
-          width: `${app.width}px`,
-          height: `${app.height}px`,
-        });
+      $viFrame.css({
+        width: `${app.width}px`,
+        height: `${app.height}px`,
+      });
     }
 
     function removeOverlay() {
@@ -69,12 +67,18 @@ class ViAd extends Framework7Class {
     }
     function createOverlay(videoEl) {
       if (!videoEl) return;
-      vi.$overlayEl = $(`
+      vi.$overlayEl = $(
+        `
         <div class="vi-overlay">
-          ${vi.params.fallbackOverlayText ? `<div class="vi-overlay-text">${vi.params.fallbackOverlayText}</div>` : ''}
+          ${
+            vi.params.fallbackOverlayText
+              ? `<div class="vi-overlay-text">${vi.params.fallbackOverlayText}</div>`
+              : ''
+          }
           <div class="vi-overlay-play-button"></div>
         </div>
-      `.trim());
+      `.trim(),
+      );
 
       let touchStartTime;
       vi.$overlayEl.on('touchstart', () => {
@@ -130,7 +134,12 @@ class ViAd extends Framework7Class {
       },
       onAutoPlayFailed(reason, videoEl) {
         vi.emit('local::autoplayFailed', reason, videoEl);
-        if (reason && reason.name && reason.name.indexOf('NotAllowedError') !== -1 && vi.params.fallbackOverlay) {
+        if (
+          reason &&
+          reason.name &&
+          reason.name.indexOf('NotAllowedError') !== -1 &&
+          vi.params.fallbackOverlay
+        ) {
           createOverlay(videoEl);
         }
       },

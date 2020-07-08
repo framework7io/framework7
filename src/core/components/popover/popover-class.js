@@ -1,27 +1,27 @@
 import $ from 'dom7';
-import { window, document } from 'ssr-window';
-import Utils from '../../utils/utils';
+import { getWindow, getDocument } from 'ssr-window';
+import { extend } from '../../utils/utils';
 import Modal from '../modal/modal-class';
 
 class Popover extends Modal {
   constructor(app, params) {
-    const extendedParams = Utils.extend(
-      { on: {} },
-      app.params.popover,
-      params
-    );
+    const extendedParams = extend({ on: {} }, app.params.popover, params);
 
     // Extends with open/close Modal methods;
     super(app, extendedParams);
 
     const popover = this;
+    const window = getWindow();
+    const document = getDocument();
 
     popover.params = extendedParams;
 
     // Find Element
     let $el;
     if (!popover.params.el) {
-      $el = $(popover.params.content).filter((elIndex, node) => node.nodeType === 1).eq(0);
+      $el = $(popover.params.content)
+        .filter((elIndex, node) => node.nodeType === 1)
+        .eq(0);
     } else {
       $el = $(popover.params.el).eq(0);
     }
@@ -61,7 +61,7 @@ class Popover extends Modal {
     // Open
     const originalOpen = popover.open;
 
-    Utils.extend(popover, {
+    extend(popover, {
       app,
       $el,
       el: $el[0],
@@ -99,14 +99,20 @@ class Popover extends Modal {
     function handleClick(e) {
       const target = e.target;
       const $target = $(target);
-      const keyboardOpened = !app.device.desktop && app.device.cordova && ((window.Keyboard && window.Keyboard.isVisible) || (window.cordova.plugins && window.cordova.plugins.Keyboard && window.cordova.plugins.Keyboard.isVisible));
+      const keyboardOpened =
+        !app.device.desktop &&
+        app.device.cordova &&
+        ((window.Keyboard && window.Keyboard.isVisible) ||
+          (window.cordova.plugins &&
+            window.cordova.plugins.Keyboard &&
+            window.cordova.plugins.Keyboard.isVisible));
       if (keyboardOpened) return;
       if ($target.closest(popover.el).length === 0) {
         if (
-          popover.params.closeByBackdropClick
-          && popover.params.backdrop
-          && popover.backdropEl
-          && popover.backdropEl === target
+          popover.params.closeByBackdropClick &&
+          popover.params.backdrop &&
+          popover.backdropEl &&
+          popover.backdropEl === target
         ) {
           popover.close();
         } else if (popover.params.closeByOutsideClick) {
@@ -160,7 +166,11 @@ class Popover extends Modal {
       $angleEl.removeClass('on-left on-right on-top on-bottom').css({ left: '', top: '' });
       angleSize = $angleEl.width() / 2;
     } else {
-      $el.removeClass('popover-on-left popover-on-right popover-on-top popover-on-bottom popover-on-middle').css({ left: '', top: '' });
+      $el
+        .removeClass(
+          'popover-on-left popover-on-right popover-on-top popover-on-bottom popover-on-middle',
+        )
+        .css({ left: '', top: '' });
     }
 
     let targetWidth;
@@ -203,7 +213,7 @@ class Popover extends Modal {
       } else {
         // On middle
         position = 'middle';
-        top = ((targetHeight / 2) + targetOffsetTop) - (height / 2);
+        top = targetHeight / 2 + targetOffsetTop - height / 2;
       }
       top = Math.max(8, Math.min(top, app.height - height - 8));
 
@@ -211,30 +221,27 @@ class Popover extends Modal {
       let hPosition;
       if (targetOffsetLeft < app.width / 2) {
         hPosition = 'right';
-        left = position === 'middle'
-          ? targetOffsetLeft + targetWidth
-          : targetOffsetLeft;
+        left = position === 'middle' ? targetOffsetLeft + targetWidth : targetOffsetLeft;
       } else {
         hPosition = 'left';
-        left = position === 'middle'
-          ? targetOffsetLeft - width
-          : (targetOffsetLeft + targetWidth) - width;
+        left =
+          position === 'middle' ? targetOffsetLeft - width : targetOffsetLeft + targetWidth - width;
       }
       left = Math.max(8, Math.min(left, app.width - width - 8));
       $el.addClass(`popover-on-${position} popover-on-${hPosition}`);
     } else {
       // ios and aurora
-      if ((height + angleSize) < targetOffsetTop - safeAreaTop) {
+      if (height + angleSize < targetOffsetTop - safeAreaTop) {
         // On top
         top = targetOffsetTop - height - angleSize;
-      } else if ((height + angleSize) < app.height - targetOffsetTop - targetHeight) {
+      } else if (height + angleSize < app.height - targetOffsetTop - targetHeight) {
         // On bottom
         position = 'bottom';
         top = targetOffsetTop + targetHeight + angleSize;
       } else {
         // On middle
         position = 'middle';
-        top = ((targetHeight / 2) + targetOffsetTop) - (height / 2);
+        top = targetHeight / 2 + targetOffsetTop - height / 2;
         diff = top;
         top = Math.max(5, Math.min(top, app.height - height - 5));
         diff -= top;
@@ -242,7 +249,7 @@ class Popover extends Modal {
 
       // Horizontal Position
       if (position === 'top' || position === 'bottom') {
-        left = ((targetWidth / 2) + targetOffsetLeft) - (width / 2);
+        left = targetWidth / 2 + targetOffsetLeft - width / 2;
         diff = left;
         left = Math.max(5, Math.min(left, app.width - width - 5));
         if (position === 'top') {
@@ -252,19 +259,19 @@ class Popover extends Modal {
           $angleEl.addClass('on-top');
         }
         diff -= left;
-        angleLeft = ((width / 2) - angleSize) + diff;
-        angleLeft = Math.max(Math.min(angleLeft, width - (angleSize * 2) - 13), 13);
+        angleLeft = width / 2 - angleSize + diff;
+        angleLeft = Math.max(Math.min(angleLeft, width - angleSize * 2 - 13), 13);
         $angleEl.css({ left: `${angleLeft}px` });
       } else if (position === 'middle') {
         left = targetOffsetLeft - width - angleSize;
         $angleEl.addClass('on-right');
-        if (left < 5 || (left + width > app.width)) {
+        if (left < 5 || left + width > app.width) {
           if (left < 5) left = targetOffsetLeft + targetWidth + angleSize;
           if (left + width > app.width) left = app.width - width - 5;
           $angleEl.removeClass('on-right').addClass('on-left');
         }
-        angleTop = ((height / 2) - angleSize) + diff;
-        angleTop = Math.max(Math.min(angleTop, height - (angleSize * 2) - 13), 13);
+        angleTop = height / 2 - angleSize + diff;
+        angleTop = Math.max(Math.min(angleTop, height - angleSize * 2 - 13), 13);
         $angleEl.css({ top: `${angleTop}px` });
       }
     }

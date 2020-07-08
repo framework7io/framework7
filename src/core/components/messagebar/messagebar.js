@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend } from '../../utils/utils';
 import Messagebar from './messagebar-class';
 import ConstructorMethods from '../../utils/constructor-methods';
 
@@ -15,21 +15,27 @@ export default {
       constructor: Messagebar,
       app,
       domProp: 'f7Messagebar',
-      addMethods: 'clear getValue setValue setPlaceholder resizePage focus blur attachmentsCreate attachmentsShow attachmentsHide attachmentsToggle renderAttachments sheetCreate sheetShow sheetHide sheetToggle'.split(' '),
+      addMethods: 'clear getValue setValue setPlaceholder resizePage focus blur attachmentsCreate attachmentsShow attachmentsHide attachmentsToggle renderAttachments sheetCreate sheetShow sheetHide sheetToggle'.split(
+        ' ',
+      ),
     });
   },
   on: {
     tabBeforeRemove(tabEl) {
       const app = this;
-      $(tabEl).find('.messagebar-init').each((index, messagebarEl) => {
-        app.messagebar.destroy(messagebarEl);
-      });
+      $(tabEl)
+        .find('.messagebar-init')
+        .each((index, messagebarEl) => {
+          app.messagebar.destroy(messagebarEl);
+        });
     },
     tabMounted(tabEl) {
       const app = this;
-      $(tabEl).find('.messagebar-init').each((index, messagebarEl) => {
-        app.messagebar.create(Utils.extend({ el: messagebarEl }, $(messagebarEl).dataset()));
-      });
+      $(tabEl)
+        .find('.messagebar-init')
+        .each((index, messagebarEl) => {
+          app.messagebar.create(extend({ el: messagebarEl }, $(messagebarEl).dataset()));
+        });
     },
     pageBeforeRemove(page) {
       const app = this;
@@ -40,7 +46,7 @@ export default {
     pageInit(page) {
       const app = this;
       page.$el.find('.messagebar-init').each((index, messagebarEl) => {
-        app.messagebar.create(Utils.extend({ el: messagebarEl }, $(messagebarEl).dataset()));
+        app.messagebar.create(extend({ el: messagebarEl }, $(messagebarEl).dataset()));
       });
     },
   },
@@ -49,7 +55,7 @@ export default {
       insert(vnode) {
         const app = this;
         const messagebarEl = vnode.elm;
-        app.messagebar.create(Utils.extend({ el: messagebarEl }, $(messagebarEl).dataset()));
+        app.messagebar.create(extend({ el: messagebarEl }, $(messagebarEl).dataset()));
       },
       destroy(vnode) {
         const app = this;

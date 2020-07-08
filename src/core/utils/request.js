@@ -1,4 +1,4 @@
-import { window, document } from 'ssr-window';
+import { getWindow, getDocument } from 'ssr-window';
 import Utils from './utils';
 
 const globals = {};
@@ -6,25 +6,30 @@ let jsonpRequests = 0;
 
 function Request(requestOptions) {
   const globalsNoCallbacks = Utils.extend({}, globals);
-  ('beforeCreate beforeOpen beforeSend error complete success statusCode').split(' ').forEach((callbackName) => {
-    delete globalsNoCallbacks[callbackName];
-  });
-  const defaults = Utils.extend({
-    url: window.location.toString(),
-    method: 'GET',
-    data: false,
-    async: true,
-    cache: true,
-    user: '',
-    password: '',
-    headers: {},
-    xhrFields: {},
-    statusCode: {},
-    processData: true,
-    dataType: 'text',
-    contentType: 'application/x-www-form-urlencoded',
-    timeout: 0,
-  }, globalsNoCallbacks);
+  'beforeCreate beforeOpen beforeSend error complete success statusCode'
+    .split(' ')
+    .forEach((callbackName) => {
+      delete globalsNoCallbacks[callbackName];
+    });
+  const defaults = Utils.extend(
+    {
+      url: window.location.toString(),
+      method: 'GET',
+      data: false,
+      async: true,
+      cache: true,
+      user: '',
+      password: '',
+      headers: {},
+      xhrFields: {},
+      statusCode: {},
+      processData: true,
+      dataType: 'text',
+      contentType: 'application/x-www-form-urlencoded',
+      timeout: 0,
+    },
+    globalsNoCallbacks,
+  );
 
   const options = Utils.extend({}, defaults, requestOptions);
   let proceedRequest;
@@ -51,7 +56,7 @@ function Request(requestOptions) {
     }
     if (typeof globalCallbackValue !== 'boolean') globalCallbackValue = true;
     if (typeof optionCallbackValue !== 'boolean') optionCallbackValue = true;
-    return (globalCallbackValue && optionCallbackValue);
+    return globalCallbackValue && optionCallbackValue;
   }
 
   // Before create callback
@@ -68,7 +73,10 @@ function Request(requestOptions) {
   const method = options.method.toUpperCase();
 
   // Data to modify GET URL
-  if ((method === 'GET' || method === 'HEAD' || method === 'OPTIONS' || method === 'DELETE') && options.data) {
+  if (
+    (method === 'GET' || method === 'HEAD' || method === 'OPTIONS' || method === 'DELETE') &&
+    options.data
+  ) {
     let stringData;
     if (typeof options.data === 'string') {
       // Should be key=value string
@@ -86,12 +94,15 @@ function Request(requestOptions) {
 
   // JSONP
   if (options.dataType === 'json' && options.url.indexOf('callback=') >= 0) {
-    const callbackName = `f7jsonp_${Date.now() + ((jsonpRequests += 1))}`;
+    const callbackName = `f7jsonp_${Date.now() + (jsonpRequests += 1)}`;
     let abortTimeout;
     const callbackSplit = options.url.split('callback=');
     let requestUrl = `${callbackSplit[0]}callback=${callbackName}`;
     if (callbackSplit[1].indexOf('&') >= 0) {
-      const addVars = callbackSplit[1].split('&').filter(el => el.indexOf('=') > 0).join('&');
+      const addVars = callbackSplit[1]
+        .split('&')
+        .filter((el) => el.indexOf('=') > 0)
+        .join('&');
       if (addVars.length > 0) requestUrl += `&${addVars}`;
     }
 
@@ -171,7 +182,11 @@ function Request(requestOptions) {
           data = data.split('&');
           const newData = [];
           for (let i = 0; i < data.length; i += 1) {
-            newData.push(`Content-Disposition: form-data; name="${data[i].split('=')[0]}"\r\n\r\n${data[i].split('=')[1]}\r\n`);
+            newData.push(
+              `Content-Disposition: form-data; name="${data[i].split('=')[0]}"\r\n\r\n${
+                data[i].split('=')[1]
+              }\r\n`,
+            );
           }
           postData = `--${boundary}\r\n${newData.join(`--${boundary}\r\n`)}--${boundary}--\r\n`;
         } else if (options.contentType === 'application/json') {
@@ -200,7 +215,8 @@ function Request(requestOptions) {
   // Check for crossDomain
   if (typeof options.crossDomain === 'undefined') {
     // eslint-disable-next-line
-    options.crossDomain = /^([\w-]+:)?\/\/([^\/]+)/.test(options.url) && RegExp.$2 !== window.location.host;
+    options.crossDomain =
+      /^([\w-]+:)?\/\/([^\/]+)/.test(options.url) && RegExp.$2 !== window.location.host;
   }
 
   if (!options.crossDomain) {
@@ -210,7 +226,6 @@ function Request(requestOptions) {
   if (options.xhrFields) {
     Utils.extend(xhr, options.xhrFields);
   }
-
 
   // Handle XHR
   xhr.onload = function onload() {
@@ -229,7 +244,8 @@ function Request(requestOptions) {
           fireCallback('error', xhr, 'parseerror', 'parseerror');
         }
       } else {
-        responseData = xhr.responseType === 'text' || xhr.responseType === '' ? xhr.responseText : xhr.response;
+        responseData =
+          xhr.responseType === 'text' || xhr.responseType === '' ? xhr.responseText : xhr.response;
         fireCallback('success', responseData, xhr.status, xhr);
       }
     } else {
@@ -313,7 +329,7 @@ function RequestShortcutPromise(method, ...args) {
         // eslint-disable-next-line
         reject({ xhr, status, message });
       },
-      dataType
+      dataType,
     );
   });
 }
@@ -327,15 +343,17 @@ Object.assign(Request, {
 
 Request.promise = function requestPromise(requestOptions) {
   return new Promise((resolve, reject) => {
-    Request(Object.assign(requestOptions, {
-      success(data, status, xhr) {
-        resolve({ data, status, xhr });
-      },
-      error(xhr, status, message) {
-        // eslint-disable-next-line
-        reject({ xhr, status, message });
-      },
-    }));
+    Request(
+      Object.assign(requestOptions, {
+        success(data, status, xhr) {
+          resolve({ data, status, xhr });
+        },
+        error(xhr, status, message) {
+          // eslint-disable-next-line
+          reject({ xhr, status, message });
+        },
+      }),
+    );
   });
 };
 Object.assign(Request.promise, {

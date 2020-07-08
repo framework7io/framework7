@@ -19,12 +19,16 @@ export default {
   on: {
     tabMounted(tabEl) {
       const app = this;
-      $(tabEl).find('.toggle-init').each((index, toggleEl) => app.toggle.create({ el: toggleEl }));
+      $(tabEl)
+        .find('.toggle-init')
+        .each((index, toggleEl) => app.toggle.create({ el: toggleEl }));
     },
     tabBeforeRemove(tabEl) {
-      $(tabEl).find('.toggle-init').each((index, toggleEl) => {
-        if (toggleEl.f7Toggle) toggleEl.f7Toggle.destroy();
-      });
+      $(tabEl)
+        .find('.toggle-init')
+        .each((index, toggleEl) => {
+          if (toggleEl.f7Toggle) toggleEl.f7Toggle.destroy();
+        });
     },
     pageInit(page) {
       const app = this;

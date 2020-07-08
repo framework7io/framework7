@@ -1,6 +1,6 @@
 /* eslint indent: ["off"] */
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend, now, nextTick, deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 
 class PhotoBrowser extends Framework7Class {
@@ -10,16 +10,19 @@ class PhotoBrowser extends Framework7Class {
     const pb = this;
     pb.app = app;
 
-    const defaults = Utils.extend({
-      on: {},
-    }, app.params.photoBrowser);
+    const defaults = extend(
+      {
+        on: {},
+      },
+      app.params.photoBrowser,
+    );
 
     // Extend defaults with modules params
     pb.useModulesParams(defaults);
 
-    pb.params = Utils.extend(defaults, params);
+    pb.params = extend(defaults, params);
 
-    Utils.extend(pb, {
+    extend(pb, {
       exposed: false,
       opened: false,
       activeIndex: pb.params.swiper.initialSlide,
@@ -71,7 +74,12 @@ class PhotoBrowser extends Framework7Class {
     let $currentEl = pb.$el.find('.photo-browser-current');
     let $totalEl = pb.$el.find('.photo-browser-total');
     let navbarEl;
-    if (pb.params.type === 'page' && pb.params.navbar && $currentEl.length === 0 && pb.app.theme === 'ios') {
+    if (
+      pb.params.type === 'page' &&
+      pb.params.navbar &&
+      $currentEl.length === 0 &&
+      pb.app.theme === 'ios'
+    ) {
       navbarEl = pb.app.navbar.getElByPage(pb.$el);
       if (navbarEl) {
         $currentEl = $(navbarEl).find('.photo-browser-current');
@@ -89,9 +97,15 @@ class PhotoBrowser extends Framework7Class {
 
     // Update captions
     if (pb.captions.length > 0) {
-      const captionIndex = swiper.params.loop ? $activeSlideEl.attr('data-swiper-slide-index') : pb.activeIndex;
-      pb.$captionsContainerEl.find('.photo-browser-caption-active').removeClass('photo-browser-caption-active');
-      pb.$captionsContainerEl.find(`[data-caption-index="${captionIndex}"]`).addClass('photo-browser-caption-active');
+      const captionIndex = swiper.params.loop
+        ? $activeSlideEl.attr('data-swiper-slide-index')
+        : pb.activeIndex;
+      pb.$captionsContainerEl
+        .find('.photo-browser-caption-active')
+        .removeClass('photo-browser-caption-active');
+      pb.$captionsContainerEl
+        .find(`[data-caption-index="${captionIndex}"]`)
+        .addClass('photo-browser-caption-active');
     }
 
     // Stop Video
@@ -121,7 +135,7 @@ class PhotoBrowser extends Framework7Class {
       } else {
         swipeToClose.activeSlide = pb.swiper.slides.eq(pb.swiper.activeIndex);
       }
-      swipeToClose.timeStart = Utils.now();
+      swipeToClose.timeStart = now();
     }
     e.preventDefault();
     swipeToClose.current = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
@@ -140,9 +154,9 @@ class PhotoBrowser extends Framework7Class {
     swipeToClose.started = false;
     swipeToClose.allow = false;
     const diff = Math.abs(swipeToClose.diff);
-    const timeDiff = (new Date()).getTime() - swipeToClose.timeStart;
+    const timeDiff = new Date().getTime() - swipeToClose.timeStart;
     if ((timeDiff < 300 && diff > 20) || (timeDiff >= 300 && diff > 100)) {
-      Utils.nextTick(() => {
+      nextTick(() => {
         if (pb.$el) {
           if (swipeToClose.diff < 0) pb.$el.addClass('swipe-close-to-bottom');
           else pb.$el.addClass('swipe-close-to-top');
@@ -162,7 +176,7 @@ class PhotoBrowser extends Framework7Class {
     } else {
       swipeToClose.allow = true;
     }
-    Utils.nextTick(() => {
+    nextTick(() => {
       pb.$el.transform('').transition('');
     });
   }
@@ -175,11 +189,18 @@ class PhotoBrowser extends Framework7Class {
     let iconsColor = pb.params.iconsColor;
     if (!pb.params.iconsColor && pb.params.theme === 'dark') iconsColor = 'white';
 
-    const pageBackLinkText = (pb.app.theme === 'ios' || pb.app.theme === 'aurora') && pb.params.pageBackLinkText ? pb.params.pageBackLinkText : '';
+    const pageBackLinkText =
+      (pb.app.theme === 'ios' || pb.app.theme === 'aurora') && pb.params.pageBackLinkText
+        ? pb.params.pageBackLinkText
+        : '';
 
-    const renderNavbarCount = typeof pb.params.navbarShowCount === 'undefined' ? pb.params.photos.length > 1 : pb.params.navbarShowCount;
+    const renderNavbarCount =
+      typeof pb.params.navbarShowCount === 'undefined'
+        ? pb.params.photos.length > 1
+        : pb.params.navbarShowCount;
 
     const isPopup = pb.params.type !== 'page';
+    // prettier-ignore
     const navbarHtml = `
       <div class="navbar navbar-photo-browser ${pb.params.theme === 'dark' ? 'navbar-photo-browser-dark' : ''}">
         <div class="navbar-bg"></div>
@@ -249,7 +270,9 @@ class PhotoBrowser extends Framework7Class {
     const pb = this;
     if (pb.params.renderObject) return pb.params.renderObject.call(pb, photo, index);
     const objHtml = `
-      <div class="photo-browser-slide photo-browser-object-slide swiper-slide" data-swiper-slide-index="${index}">${photo.html ? photo.html : photo}</div>
+      <div class="photo-browser-slide photo-browser-object-slide swiper-slide" data-swiper-slide-index="${index}">${
+      photo.html ? photo.html : photo
+    }</div>
     `;
     return objHtml;
   }
@@ -284,6 +307,7 @@ class PhotoBrowser extends Framework7Class {
   render() {
     const pb = this;
     if (pb.params.render) return pb.params.render.call(pb, pb.params);
+    // prettier-ignore
     const html = `
       <div class="photo-browser photo-browser-${pb.params.theme}">
         <div class="view">
@@ -361,7 +385,7 @@ class PhotoBrowser extends Framework7Class {
     // Init Swiper
     let clickTimeout;
 
-    const swiperParams = Utils.extend({}, pb.params.swiper, {
+    const swiperParams = extend({}, pb.params.swiper, {
       initialSlide: pb.activeIndex,
       on: {
         click(e) {
@@ -410,7 +434,7 @@ class PhotoBrowser extends Framework7Class {
       },
     });
     if (pb.params.swipeToClose && pb.params.type !== 'page') {
-      Utils.extend(swiperParams.on, {
+      extend(swiperParams.on, {
         touchStart(e) {
           pb.onTouchStart(e);
           pb.emit('local::touchStart', e);
@@ -426,14 +450,22 @@ class PhotoBrowser extends Framework7Class {
       });
     }
     if (pb.params.virtualSlides) {
-      Utils.extend(swiperParams, {
+      extend(swiperParams, {
         virtual: {
           slides: pb.params.photos,
           renderSlide(photo, index) {
-            if (photo.html || ((typeof photo === 'string' || photo instanceof String) && photo.indexOf('<') >= 0 && photo.indexOf('>') >= 0)) {
+            if (
+              photo.html ||
+              ((typeof photo === 'string' || photo instanceof String) &&
+                photo.indexOf('<') >= 0 &&
+                photo.indexOf('>') >= 0)
+            ) {
               return pb.renderObject(photo, index);
             }
-            if (pb.params.swiper.lazy === true || (pb.params.swiper.lazy && pb.params.swiper.lazy.enabled)) {
+            if (
+              pb.params.swiper.lazy === true ||
+              (pb.params.swiper.lazy && pb.params.swiper.lazy.enabled)
+            ) {
               return pb.renderLazyPhoto(photo, index);
             }
             return pb.renderPhoto(photo, index);
@@ -508,14 +540,18 @@ class PhotoBrowser extends Framework7Class {
         path: pb.url,
         on: {
           pageBeforeIn(e, page) {
-            pb.view.$el.addClass(`with-photo-browser-page with-photo-browser-page-${pb.params.theme}`);
+            pb.view.$el.addClass(
+              `with-photo-browser-page with-photo-browser-page-${pb.params.theme}`,
+            );
             pb.onOpen('page', page.el);
           },
           pageAfterIn(e, page) {
             pb.onOpened('page', page.el);
           },
           pageBeforeOut(e, page) {
-            pb.view.$el.removeClass(`with-photo-browser-page with-photo-browser-page-exposed with-photo-browser-page-${pb.params.theme}`);
+            pb.view.$el.removeClass(
+              `with-photo-browser-page with-photo-browser-page-exposed with-photo-browser-page-${pb.params.theme}`,
+            );
             pb.onClose('page', page.el);
           },
           pageAfterOut(e, page) {
@@ -612,7 +648,8 @@ class PhotoBrowser extends Framework7Class {
       pb.view.$el.addClass('with-photo-browser-page-exposed');
     }
     if (pb.$el) pb.$el.addClass('photo-browser-exposed');
-    if (pb.params.expositionHideCaptions) pb.$captionsContainerEl.addClass('photo-browser-captions-exposed');
+    if (pb.params.expositionHideCaptions)
+      pb.$captionsContainerEl.addClass('photo-browser-captions-exposed');
     pb.exposed = true;
     return pb;
   }
@@ -623,7 +660,8 @@ class PhotoBrowser extends Framework7Class {
       pb.view.$el.removeClass('with-photo-browser-page-exposed');
     }
     if (pb.$el) pb.$el.removeClass('photo-browser-exposed');
-    if (pb.params.expositionHideCaptions) pb.$captionsContainerEl.removeClass('photo-browser-captions-exposed');
+    if (pb.params.expositionHideCaptions)
+      pb.$captionsContainerEl.removeClass('photo-browser-captions-exposed');
     pb.exposed = false;
     return pb;
   }
@@ -634,7 +672,8 @@ class PhotoBrowser extends Framework7Class {
       pb.view.$el.toggleClass('with-photo-browser-page-exposed');
     }
     if (pb.$el) pb.$el.toggleClass('photo-browser-exposed');
-    if (pb.params.expositionHideCaptions) pb.$captionsContainerEl.toggleClass('photo-browser-captions-exposed');
+    if (pb.params.expositionHideCaptions)
+      pb.$captionsContainerEl.toggleClass('photo-browser-captions-exposed');
     pb.exposed = !pb.exposed;
     return pb;
   }
@@ -670,7 +709,7 @@ class PhotoBrowser extends Framework7Class {
       pb.view.router.back();
     } else {
       pb.modal.once('modalClosed', () => {
-        Utils.nextTick(() => {
+        nextTick(() => {
           if (pb.destroyed) return;
           pb.modal.destroy();
           delete pb.modal;
@@ -691,7 +730,7 @@ class PhotoBrowser extends Framework7Class {
       pb.$el[0].f7PhotoBrowser = null;
       delete pb.$el[0].f7PhotoBrowser;
     }
-    Utils.deleteProps(pb);
+    deleteProps(pb);
     pb.destroyed = true;
     pb = null;
   }

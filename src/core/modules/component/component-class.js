@@ -1,5 +1,5 @@
 /* eslint no-underscore-dangle: "off" */
-import { window, document } from 'ssr-window';
+import { getWindow, getDocument } from 'ssr-window';
 import $ from 'dom7';
 import Template7 from 'template7';
 import Utils from '../../utils/utils';
@@ -12,25 +12,19 @@ class Component {
   constructor(app, options = {}, extendContext = {}, children) {
     const id = Utils.id();
     const self = this;
-    Utils.merge(
-      self,
-      { $props: {} },
-      extendContext,
-      {
-        $,
-        $$: $,
-        $dom7: $,
-        $app: app,
-        $f7: app,
-        $options: Utils.extend({ id }, options),
-        $id: options.isClassComponent ? self.constructor.id : (options.id || id),
-        $mixins: options.isClassComponent ? self.constructor.mixins : options.mixins,
-        $children: children || [],
-        $isRootComponent: !!options.root,
-      }
-    );
+    Utils.merge(self, { $props: {} }, extendContext, {
+      $,
+      $$: $,
+      $dom7: $,
+      $app: app,
+      $f7: app,
+      $options: Utils.extend({ id }, options),
+      $id: options.isClassComponent ? self.constructor.id : options.id || id,
+      $mixins: options.isClassComponent ? self.constructor.mixins : options.mixins,
+      $children: children || [],
+      $isRootComponent: !!options.root,
+    });
     const { $options } = self;
-
 
     if (self.$mixins && self.$mixins.length) {
       for (let i = self.$mixins.length - 1; i >= 0; i -= 1) {
@@ -59,7 +53,6 @@ class Component {
       },
     });
 
-
     // Root data and methods
     Object.defineProperty(self, '$root', {
       enumerable: true,
@@ -86,7 +79,7 @@ class Component {
               delete app.methods[name];
             },
             has(target, name) {
-              return (name in app.data || name in app.methods);
+              return name in app.data || name in app.methods;
             },
           });
         }
@@ -125,12 +118,15 @@ class Component {
     }
 
     self.$style = $options.isClassComponent ? self.constructor.style : $options.style;
-    self.$styleScoped = $options.isClassComponent ? self.constructor.styleScoped : $options.styleScoped;
+    self.$styleScoped = $options.isClassComponent
+      ? self.constructor.styleScoped
+      : $options.styleScoped;
 
     self.__updateQueue = [];
 
     return new Promise((resolve, reject) => {
-      self.$hook('data', true)
+      self
+        .$hook('data', true)
         .then((datas) => {
           const data = {};
           datas.forEach((dt) => {
@@ -292,7 +288,7 @@ class Component {
       window.cancelAnimationFrame(self.__requestAnimationFrameId);
       delete self.__requestAnimationFrameId;
       delete self.__updateIsPending;
-      resolvers.forEach(resolver => resolver());
+      resolvers.forEach((resolver) => resolver());
       resolvers = [];
     });
   }

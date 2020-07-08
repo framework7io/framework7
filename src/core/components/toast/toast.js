@@ -1,4 +1,4 @@
-import Utils from '../../utils/utils';
+import { extend } from '../../utils/utils';
 import Toast from './toast-class';
 import ModalMethods from '../../utils/modal-methods';
 
@@ -9,7 +9,7 @@ export default {
   },
   create() {
     const app = this;
-    app.toast = Utils.extend(
+    app.toast = extend(
       {},
       ModalMethods({
         app,
@@ -19,12 +19,12 @@ export default {
       {
         // Shortcuts
         show(params) {
-          Utils.extend(params, {
+          extend(params, {
             destroyOnClose: true,
           });
           return new Toast(app, params).open();
         },
-      }
+      },
     );
   },
   params: {

@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import { document } from 'ssr-window';
+import { getDocument } from 'ssr-window';
 import Utils from '../../utils/utils';
 import Device from '../../utils/device';
 import History from '../../utils/history';
@@ -14,14 +14,21 @@ function backward(el, backwardOptions) {
   const app = router.app;
   const view = router.view;
 
-  const options = Utils.extend({
-    animate: router.params.animate,
-    pushState: true,
-    replaceState: false,
-  }, backwardOptions);
+  const options = Utils.extend(
+    {
+      animate: router.params.animate,
+      pushState: true,
+      replaceState: false,
+    },
+    backwardOptions,
+  );
 
   const masterDetailEnabled = router.params.masterDetailBreakpoint > 0;
-  const isMaster = masterDetailEnabled && options.route && options.route.route && options.route.route.master === true;
+  const isMaster =
+    masterDetailEnabled &&
+    options.route &&
+    options.route.route &&
+    options.route.route.master === true;
   let masterPageEl;
   let masterPageRemoved;
 
@@ -60,7 +67,12 @@ function backward(el, backwardOptions) {
   router.removeThemeElements($newPage);
 
   // Save Keep Alive Cache
-  if (options.route && options.route.route && options.route.route.keepAlive && !options.route.route.keepAliveData) {
+  if (
+    options.route &&
+    options.route.route &&
+    options.route.route.keepAlive &&
+    !options.route.route.keepAliveData
+  ) {
     options.route.route.keepAliveData = {
       pageEl: $el[0],
     };
@@ -76,29 +88,42 @@ function backward(el, backwardOptions) {
 
     // Find Detail' master page
     for (let i = 0; i < $pagesInView.length; i += 1) {
-      if (!masterPageEl
-        && $pagesInView[i].classList.contains('page-master')
-      ) {
+      if (!masterPageEl && $pagesInView[i].classList.contains('page-master')) {
         masterPageEl = $pagesInView[i];
         continue; // eslint-disable-line
       }
     }
 
-    isDetail = !isMaster
-      && masterPageEl
-      && (router.history.indexOf(options.route.url) > router.history.indexOf(masterPageEl.f7Page.route.url));
+    isDetail =
+      !isMaster &&
+      masterPageEl &&
+      router.history.indexOf(options.route.url) >
+        router.history.indexOf(masterPageEl.f7Page.route.url);
 
-    if (!isDetail && !isMaster && masterPageEl && masterPageEl.f7Page && options.route.route.masterRoute) {
+    if (
+      !isDetail &&
+      !isMaster &&
+      masterPageEl &&
+      masterPageEl.f7Page &&
+      options.route.route.masterRoute
+    ) {
       isDetail = options.route.route.masterRoute.path === masterPageEl.f7Page.route.route.path;
     }
   }
   if (isDetail && masterPageEl && masterPageEl.f7Page) {
-    isDetailRoot = router.history.indexOf(options.route.url) - router.history.indexOf(masterPageEl.f7Page.route.url) === 1;
+    isDetailRoot =
+      router.history.indexOf(options.route.url) -
+        router.history.indexOf(masterPageEl.f7Page.route.url) ===
+      1;
   }
 
   // New Page
   $newPage
-    .addClass(`page-previous${isMaster ? ' page-master' : ''}${isDetail ? ' page-master-detail' : ''}${isDetailRoot ? ' page-master-detail-root' : ''}`)
+    .addClass(
+      `page-previous${isMaster ? ' page-master' : ''}${isDetail ? ' page-master-detail' : ''}${
+        isDetailRoot ? ' page-master-detail-root' : ''
+      }`,
+    )
     .removeClass('stacked')
     .removeAttr('aria-hidden')
     .trigger('page:unstack')
@@ -107,25 +132,38 @@ function backward(el, backwardOptions) {
   router.emit('pagePosition', $newPage[0], 'previous');
   if (isMaster || isDetail) {
     $newPage.trigger('page:role', { role: isMaster ? 'master' : 'detail', root: !!isDetailRoot });
-    router.emit('pageRole', $newPage[0], { role: isMaster ? 'master' : 'detail', detailRoot: !!isDetailRoot });
+    router.emit('pageRole', $newPage[0], {
+      role: isMaster ? 'master' : 'detail',
+      detailRoot: !!isDetailRoot,
+    });
   }
 
   if (dynamicNavbar && $newNavbarEl.length > 0) {
     $newNavbarEl
-      .addClass(`navbar-previous${isMaster ? ' navbar-master' : ''}${isDetail ? ' navbar-master-detail' : ''}${isDetailRoot ? ' navbar-master-detail-root' : ''}`)
+      .addClass(
+        `navbar-previous${isMaster ? ' navbar-master' : ''}${
+          isDetail ? ' navbar-master-detail' : ''
+        }${isDetailRoot ? ' navbar-master-detail-root' : ''}`,
+      )
       .removeClass('stacked')
       .removeAttr('aria-hidden');
     $newNavbarEl.trigger('navbar:position', { position: 'previous' });
     router.emit('navbarPosition', $newNavbarEl[0], 'previous');
     if (isMaster || isDetailRoot) {
-      router.emit('navbarRole', $newNavbarEl[0], { role: isMaster ? 'master' : 'detail', detailRoot: !!isDetailRoot });
+      router.emit('navbarRole', $newNavbarEl[0], {
+        role: isMaster ? 'master' : 'detail',
+        detailRoot: !!isDetailRoot,
+      });
     }
   }
 
   // Remove previous page in case of "forced"
   let backIndex;
   if (options.force) {
-    if ($oldPage.prev('.page-previous:not(.stacked)').length > 0 || $oldPage.prev('.page-previous').length === 0) {
+    if (
+      $oldPage.prev('.page-previous:not(.stacked)').length > 0 ||
+      $oldPage.prev('.page-previous').length === 0
+    ) {
       if (router.history.indexOf(options.route.url) >= 0) {
         backIndex = router.history.length - router.history.indexOf(options.route.url) - 1;
         router.history = router.history.slice(0, router.history.indexOf(options.route.url) + 2);
@@ -153,7 +191,14 @@ function backward(el, backwardOptions) {
                 $navbarToRemove.addClass('stacked');
               }
             } else {
-              router.pageCallback('beforeRemove', $pageToRemove, $navbarToRemove, 'previous', undefined, options);
+              router.pageCallback(
+                'beforeRemove',
+                $pageToRemove,
+                $navbarToRemove,
+                'previous',
+                undefined,
+                options,
+              );
               if ($pageToRemove[0] === masterPageEl) {
                 masterPageRemoved = true;
               }
@@ -177,7 +222,14 @@ function backward(el, backwardOptions) {
           router.emit('pageStack', $pageToRemove[0]);
           $navbarToRemove.addClass('stacked');
         } else if ($pageToRemove.length > 0) {
-          router.pageCallback('beforeRemove', $pageToRemove, $navbarToRemove, 'previous', undefined, options);
+          router.pageCallback(
+            'beforeRemove',
+            $pageToRemove,
+            $navbarToRemove,
+            'previous',
+            undefined,
+            options,
+          );
           if ($pageToRemove[0] === masterPageEl) {
             masterPageRemoved = true;
           }
@@ -219,10 +271,31 @@ function backward(el, backwardOptions) {
       }
     }
     if (!newPageInDom) {
-      router.pageCallback('mounted', $newPage, $newNavbarEl, 'previous', 'current', options, $oldPage);
-    } else if (options.route && options.route.route && options.route.route.keepAlive && !$newPage[0].f7PageMounted) {
+      router.pageCallback(
+        'mounted',
+        $newPage,
+        $newNavbarEl,
+        'previous',
+        'current',
+        options,
+        $oldPage,
+      );
+    } else if (
+      options.route &&
+      options.route.route &&
+      options.route.route.keepAlive &&
+      !$newPage[0].f7PageMounted
+    ) {
       $newPage[0].f7PageMounted = true;
-      router.pageCallback('mounted', $newPage, $newNavbarEl, 'previous', 'current', options, $oldPage);
+      router.pageCallback(
+        'mounted',
+        $newPage,
+        $newNavbarEl,
+        'previous',
+        'current',
+        options,
+        $oldPage,
+      );
     }
   }
 
@@ -231,16 +304,17 @@ function backward(el, backwardOptions) {
     insertPage();
     // Tab route
     if (options.route.route.tab) {
-      router.tabLoad(options.route.route.tab, Utils.extend({}, options, {
-        history: false,
-        pushState: false,
-        preload: true,
-      }));
+      router.tabLoad(
+        options.route.route.tab,
+        Utils.extend({}, options, {
+          history: false,
+          pushState: false,
+          preload: true,
+        }),
+      );
     }
     if (isMaster) {
-      $newPage
-        .removeClass('page-master-stacked')
-        .trigger('page:masterunstack');
+      $newPage.removeClass('page-master-stacked').trigger('page:masterunstack');
       router.emit('pageMasterUnstack', $newPage[0]);
       if (dynamicNavbar) {
         $(app.navbar.getElByPage($newPage)).removeClass('navbar-master-stacked');
@@ -266,7 +340,13 @@ function backward(el, backwardOptions) {
             $navbarToRemove.addClass('stacked');
           }
         } else {
-          router.pageCallback('beforeRemove', $pageToRemove, $navbarToRemove, 'previous', undefined);
+          router.pageCallback(
+            'beforeRemove',
+            $pageToRemove,
+            $navbarToRemove,
+            'previous',
+            undefined,
+          );
           router.removePage($pageToRemove);
           if (dynamicNavbar && $navbarToRemove.length) {
             router.removeNavbar($navbarToRemove);
@@ -288,7 +368,7 @@ function backward(el, backwardOptions) {
           {
             url: options.route.url,
           },
-          pushStateRoot + router.params.pushStateSeparator + options.route.url
+          pushStateRoot + router.params.pushStateSeparator + options.route.url,
         );
       } else if (backIndex) {
         History.go(-backIndex);
@@ -330,7 +410,7 @@ function backward(el, backwardOptions) {
           {
             url: options.route.url,
           },
-          pushStateRoot + router.params.pushStateSeparator + options.route.url
+          pushStateRoot + router.params.pushStateSeparator + options.route.url,
         );
       } else if (backIndex) {
         History.go(-backIndex);
@@ -345,10 +425,13 @@ function backward(el, backwardOptions) {
 
   // Load Tab
   if (options.route.route.tab) {
-    router.tabLoad(options.route.route.tab, Utils.extend({}, options, {
-      history: false,
-      pushState: false,
-    }));
+    router.tabLoad(
+      options.route.route.tab,
+      Utils.extend({}, options, {
+        history: false,
+        pushState: false,
+      }),
+    );
   }
 
   // Check master detail
@@ -398,7 +481,8 @@ function backward(el, backwardOptions) {
     router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
 
     // Preload previous page
-    const preloadPreviousPage = router.params.preloadPreviousPage || router.params[`${app.theme}SwipeBack`];
+    const preloadPreviousPage =
+      router.params.preloadPreviousPage || router.params[`${app.theme}SwipeBack`];
     if (preloadPreviousPage && router.history[router.history.length - 2] && !isMaster) {
       router.back(router.history[router.history.length - 2], { preload: true });
     }
@@ -426,7 +510,12 @@ function backward(el, backwardOptions) {
     if (!transition && router.previousRoute && router.previousRoute.route) {
       transition = router.previousRoute.route.transition;
     }
-    if (!transition && router.previousRoute && router.previousRoute.route && router.previousRoute.route.options) {
+    if (
+      !transition &&
+      router.previousRoute &&
+      router.previousRoute.route &&
+      router.previousRoute.route.options
+    ) {
       transition = router.previousRoute.route.options.transition;
     }
     setPositionClasses();
@@ -448,10 +537,10 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   const { url, content, el, pageName, template, templateUrl, component, componentUrl } = params;
 
   if (
-    options.route.url
-    && router.url === options.route.url
-    && !(options.reloadCurrent || options.reloadPrevious)
-    && !router.params.allowDuplicateUrls
+    options.route.url &&
+    router.url === options.route.url &&
+    !(options.reloadCurrent || options.reloadPrevious) &&
+    !router.params.allowDuplicateUrls
   ) {
     return false;
   }
@@ -504,7 +593,8 @@ function loadBack(backParams, backOptions, ignorePageChange) {
       router.xhr.abort();
       router.xhr = false;
     }
-    router.xhrRequest(url, options)
+    router
+      .xhrRequest(url, options)
       .then((pageContent) => {
         router.backward(router.getPageEl(pageContent), options);
       })
@@ -531,11 +621,14 @@ function back(...args) {
   if (name) {
     navigateUrl = router.generateUrl({ name, params, query });
     if (navigateUrl) {
-      return router.back(navigateUrl, Utils.extend({}, navigateOptions, {
-        name: null,
-        params: null,
-        query: null,
-      }));
+      return router.back(
+        navigateUrl,
+        Utils.extend({}, navigateOptions, {
+          name: null,
+          params: null,
+          query: null,
+        }),
+      );
     }
     return router;
   }
@@ -546,17 +639,18 @@ function back(...args) {
   let currentRouteIsModal = router.currentRoute.modal;
   let modalType;
   if (!currentRouteIsModal) {
-    ('popup popover sheet loginScreen actions customModal panel').split(' ').forEach((modalLoadProp) => {
-      if (router.currentRoute.route[modalLoadProp]) {
-        currentRouteIsModal = true;
-        modalType = modalLoadProp;
-      }
-    });
+    'popup popover sheet loginScreen actions customModal panel'
+      .split(' ')
+      .forEach((modalLoadProp) => {
+        if (router.currentRoute.route[modalLoadProp]) {
+          currentRouteIsModal = true;
+          modalType = modalLoadProp;
+        }
+      });
   }
   if (currentRouteIsModal) {
-    const modalToClose = router.currentRoute.modal
-                         || router.currentRoute.route.modalInstance
-                         || app[modalType].get();
+    const modalToClose =
+      router.currentRoute.modal || router.currentRoute.route.modalInstance || app[modalType].get();
     const previousUrl = router.history[router.history.length - 2];
     let previousRoute;
     // check if previous route is modal too
@@ -617,7 +711,10 @@ function back(...args) {
     }
     return router;
   }
-  let $previousPage = router.$el.children('.page-current').prevAll('.page-previous:not(.page-master)').eq(0);
+  let $previousPage = router.$el
+    .children('.page-current')
+    .prevAll('.page-previous:not(.page-master)')
+    .eq(0);
 
   let skipMaster;
   if (router.params.masterDetailBreakpoint > 0) {
@@ -630,7 +727,11 @@ function back(...args) {
     if ($previousMaster.length) {
       const expectedPreviousPageUrl = router.history[router.history.length - 2];
       const expectedPreviousPageRoute = router.findMatchingRoute(expectedPreviousPageUrl);
-      if (expectedPreviousPageRoute && $previousMaster[0].f7Page && expectedPreviousPageRoute.route === $previousMaster[0].f7Page.route.route) {
+      if (
+        expectedPreviousPageRoute &&
+        $previousMaster[0].f7Page &&
+        expectedPreviousPageRoute.route === $previousMaster[0].f7Page.route.route
+      ) {
         $previousPage = $previousMaster;
         if (!navigateOptions.preload) {
           skipMaster = app.width >= router.params.masterDetailBreakpoint;
@@ -640,13 +741,14 @@ function back(...args) {
   }
 
   if (!navigateOptions.force && $previousPage.length && !skipMaster) {
-    if (router.params.pushState
-      && $previousPage[0].f7Page
-      && router.history[router.history.length - 2] !== $previousPage[0].f7Page.route.url
+    if (
+      router.params.pushState &&
+      $previousPage[0].f7Page &&
+      router.history[router.history.length - 2] !== $previousPage[0].f7Page.route.url
     ) {
       router.back(
         router.history[router.history.length - 2],
-        Utils.extend(navigateOptions, { force: true })
+        Utils.extend(navigateOptions, { force: true }),
       );
       return router;
     }
@@ -657,11 +759,14 @@ function back(...args) {
       previousPageRoute,
       router.currentRoute,
       () => {
-        router.loadBack({ el: $previousPage }, Utils.extend(navigateOptions, {
-          route: previousPageRoute,
-        }));
+        router.loadBack(
+          { el: $previousPage },
+          Utils.extend(navigateOptions, {
+            route: previousPageRoute,
+          }),
+        );
       },
-      () => {}
+      () => {},
     );
 
     return router;
@@ -678,10 +783,13 @@ function back(...args) {
     navigateUrl = router.history[router.history.length - 2];
   }
   if (skipMaster && !navigateOptions.force && router.history[router.history.length - 3]) {
-    return router.back(router.history[router.history.length - 3], Utils.extend({}, navigateOptions || {}, {
-      force: true,
-      animate: false,
-    }));
+    return router.back(
+      router.history[router.history.length - 3],
+      Utils.extend({}, navigateOptions || {}, {
+        force: true,
+        animate: false,
+      }),
+    );
   }
   if (skipMaster && !navigateOptions.force) {
     return router;
@@ -741,12 +849,14 @@ function back(...args) {
       router.loadBack({ el: route.route.keepAliveData.pageEl }, options);
       routerLoaded = true;
     }
-    ('url content component pageName el componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
-      if (route.route[pageLoadProp] && !routerLoaded) {
-        routerLoaded = true;
-        router.loadBack({ [pageLoadProp]: route.route[pageLoadProp] }, options);
-      }
-    });
+    'url content component pageName el componentUrl template templateUrl'
+      .split(' ')
+      .forEach((pageLoadProp) => {
+        if (route.route[pageLoadProp] && !routerLoaded) {
+          routerLoaded = true;
+          router.loadBack({ [pageLoadProp]: route.route[pageLoadProp] }, options);
+        }
+      });
     if (routerLoaded) return;
     // Async
     function asyncResolve(resolveParams, resolveOptions) {
@@ -783,7 +893,9 @@ function back(...args) {
       () => {
         if (route.route.modules) {
           app
-            .loadModules(Array.isArray(route.route.modules) ? route.route.modules : [route.route.modules])
+            .loadModules(
+              Array.isArray(route.route.modules) ? route.route.modules : [route.route.modules],
+            )
             .then(() => {
               resolve();
             })

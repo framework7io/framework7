@@ -1,4 +1,4 @@
-import { window } from 'ssr-window';
+import { getWindow } from 'ssr-window';
 import Utils from '../../utils/utils';
 
 export default {

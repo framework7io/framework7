@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import Utils from '../../../utils/utils';
+import { colorHsbToHsl } from '../../../utils/utils';
 
 export default {
   render() {
@@ -28,7 +28,7 @@ export default {
     const { $el } = self;
 
     function setHSFromSpecterCoords(x, y) {
-      let h = (x - specterRect.left) / specterRect.width * 360;
+      let h = ((x - specterRect.left) / specterRect.width) * 360;
       let s = (y - specterRect.top) / specterRect.height;
       h = Math.max(0, Math.min(360, h));
       s = 1 - Math.max(0, Math.min(1, s));
@@ -52,7 +52,9 @@ export default {
         setHSFromSpecterCoords(touchStartX, touchStartY);
       }
       if (specterHandleIsTouched || specterIsTouched) {
-        $el.find('.color-picker-hs-spectrum-handle').addClass('color-picker-hs-spectrum-handle-pressed');
+        $el
+          .find('.color-picker-hs-spectrum-handle')
+          .addClass('color-picker-hs-spectrum-handle-pressed');
       }
     }
     function handleTouchMove(e) {
@@ -74,7 +76,9 @@ export default {
     function handleTouchEnd() {
       isMoved = false;
       if (specterIsTouched || specterHandleIsTouched) {
-        $el.find('.color-picker-hs-spectrum-handle').removeClass('color-picker-hs-spectrum-handle-pressed');
+        $el
+          .find('.color-picker-hs-spectrum-handle')
+          .removeClass('color-picker-hs-spectrum-handle-pressed');
       }
       specterIsTouched = false;
       specterHandleIsTouched = false;
@@ -84,7 +88,10 @@ export default {
       self.modules['hs-spectrum'].update(self);
     }
 
-    const passiveListener = app.touchEvents.start === 'touchstart' && app.support.passiveListener ? { passive: true, capture: false } : false;
+    const passiveListener =
+      app.touchEvents.start === 'touchstart' && app.support.passiveListener
+        ? { passive: true, capture: false }
+        : false;
 
     self.$el.on(app.touchEvents.start, handleTouchStart, passiveListener);
     app.on('touchmove:active', handleTouchMove);
@@ -99,20 +106,24 @@ export default {
     };
   },
   update(self) {
-    const {
-      value,
-    } = self;
+    const { value } = self;
 
     const { hsb } = value;
 
     const specterWidth = self.$el.find('.color-picker-hs-spectrum')[0].offsetWidth;
     const specterHeight = self.$el.find('.color-picker-hs-spectrum')[0].offsetHeight;
 
-    const hslBright = Utils.colorHsbToHsl(hsb[0], hsb[1], 1);
+    const hslBright = colorHsbToHsl(hsb[0], hsb[1], 1);
 
-    self.$el.find('.color-picker-hs-spectrum-handle')
-      .css('background-color', `hsl(${hslBright[0]}, ${hslBright[1] * 100}%, ${hslBright[2] * 100}%)`)
-      .transform(`translate(${specterWidth * (hsb[0] / 360)}px, ${specterHeight * (1 - hsb[1])}px)`);
+    self.$el
+      .find('.color-picker-hs-spectrum-handle')
+      .css(
+        'background-color',
+        `hsl(${hslBright[0]}, ${hslBright[1] * 100}%, ${hslBright[2] * 100}%)`,
+      )
+      .transform(
+        `translate(${specterWidth * (hsb[0] / 360)}px, ${specterHeight * (1 - hsb[1])}px)`,
+      );
   },
   destroy(self) {
     if (self.destroySpectrumEvents) self.destroySpectrumEvents();

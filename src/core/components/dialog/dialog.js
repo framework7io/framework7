@@ -1,4 +1,9 @@
-import Utils from '../../utils/utils';
+import {
+  extend,
+  iosPreloaderContent,
+  mdPreloaderContent,
+  auroraPreloaderContent,
+} from '../../utils/utils';
 import Dialog from './dialog-class';
 import ModalMethods from '../../utils/modal-methods';
 
@@ -31,15 +36,17 @@ export default {
     const destroyOnClose = app.params.dialog.destroyPredefinedDialogs;
     const keyboardActions = app.params.dialog.keyboardActions;
     const autoFocus = app.params.dialog.autoFocus;
-    const autoFocusHandler = (autoFocus ? {
-      on: {
-        opened(dialog) {
-          dialog.$el.find('input').eq(0).focus();
-        },
-      },
-    } : {});
+    const autoFocusHandler = autoFocus
+      ? {
+          on: {
+            opened(dialog) {
+              dialog.$el.find('input').eq(0).focus();
+            },
+          },
+        }
+      : {};
 
-    app.dialog = Utils.extend(
+    app.dialog = extend(
       ModalMethods({
         app,
         constructor: Dialog,
@@ -55,12 +62,14 @@ export default {
           return new Dialog(app, {
             title: typeof title === 'undefined' ? defaultDialogTitle() : title,
             text,
-            buttons: [{
-              text: app.params.dialog.buttonOk,
-              bold: true,
-              onClick: callbackOk,
-              keyCodes: keyboardActions ? [13, 27] : null,
-            }],
+            buttons: [
+              {
+                text: app.params.dialog.buttonOk,
+                bold: true,
+                onClick: callbackOk,
+                keyCodes: keyboardActions ? [13, 27] : null,
+              },
+            ],
             destroyOnClose,
           }).open();
         },
@@ -69,7 +78,8 @@ export default {
           if (typeof args[1] === 'function') {
             [text, callbackOk, callbackCancel, defaultValue, title] = args;
           }
-          defaultValue = typeof defaultValue === 'undefined' || defaultValue === null ? '' : defaultValue;
+          defaultValue =
+            typeof defaultValue === 'undefined' || defaultValue === null ? '' : defaultValue;
           return new Dialog(app, {
             title: typeof title === 'undefined' ? defaultDialogTitle() : title,
             text,
@@ -128,6 +138,7 @@ export default {
           return new Dialog(app, {
             title: typeof title === 'undefined' ? defaultDialogTitle() : title,
             text,
+            // prettier-ignore
             content: `
               <div class="dialog-input-field dialog-input-double input">
                 <input type="text" name="dialog-username" placeholder="${app.params.dialog.usernamePlaceholder}" class="dialog-input">
@@ -165,6 +176,7 @@ export default {
           return new Dialog(app, {
             title: typeof title === 'undefined' ? defaultDialogTitle() : title,
             text,
+            // prettier-ignore
             content: `
               <div class="dialog-input-field input">
                 <input type="password" name="dialog-password" placeholder="${app.params.dialog.passwordPlaceholder}" class="dialog-input">
@@ -191,10 +203,20 @@ export default {
           }).open();
         },
         preloader(title, color) {
-          const preloaderInner = Utils[`${app.theme}PreloaderContent`] || '';
+          const preloaders = {
+            iosPreloaderContent,
+            mdPreloaderContent,
+            auroraPreloaderContent,
+          };
+          const preloaderInner = preloaders[`${app.theme}PreloaderContent`] || '';
           return new Dialog(app, {
-            title: typeof title === 'undefined' || title === null ? app.params.dialog.preloaderTitle : title,
-            content: `<div class="preloader${color ? ` color-${color}` : ''}">${preloaderInner}</div>`,
+            title:
+              typeof title === 'undefined' || title === null
+                ? app.params.dialog.preloaderTitle
+                : title,
+            content: `<div class="preloader${
+              color ? ` color-${color}` : ''
+            }">${preloaderInner}</div>`,
             cssClass: 'dialog-preloader',
             destroyOnClose,
           }).open();
@@ -217,7 +239,9 @@ export default {
             title: typeof title === 'undefined' ? app.params.dialog.progressTitle : title,
             cssClass: 'dialog-progress',
             content: `
-              <div class="progressbar${infinite ? '-infinite' : ''}${color ? ` color-${color}` : ''}">
+              <div class="progressbar${infinite ? '-infinite' : ''}${
+              color ? ` color-${color}` : ''
+            }">
                 ${!infinite ? '<span></span>' : ''}
               </div>
             `,
@@ -226,7 +250,7 @@ export default {
           if (!infinite) dialog.setProgress(progress);
           return dialog.open();
         },
-      }
+      },
     );
   },
 };

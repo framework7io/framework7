@@ -1,13 +1,15 @@
-import { document } from 'ssr-window';
+import { getDocument } from 'ssr-window';
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend, deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
-import Device from '../../utils/device';
+import getDevice from '../../utils/get-device';
 
 class VirtualList extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
     const vl = this;
+    const device = getDevice();
+    const document = getDocument();
 
     let defaultHeight;
     if (app.theme === 'md') {
@@ -49,7 +51,7 @@ class VirtualList extends Framework7Class {
     // Extend defaults with modules params
     vl.useModulesParams(defaults);
 
-    vl.params = Utils.extend(defaults, params);
+    vl.params = extend(defaults, params);
     if (vl.params.height === undefined || !vl.params.height) {
       vl.params.height = defaultHeight;
     }
@@ -65,7 +67,8 @@ class VirtualList extends Framework7Class {
       vl.filteredItems = [];
     }
     if (vl.params.itemTemplate) {
-      if (typeof vl.params.itemTemplate === 'string') vl.renderItem = app.t7.compile(vl.params.itemTemplate);
+      if (typeof vl.params.itemTemplate === 'string')
+        vl.renderItem = app.t7.compile(vl.params.itemTemplate);
       else if (typeof vl.params.itemTemplate === 'function') vl.renderItem = vl.params.itemTemplate;
     } else if (vl.params.renderItem) {
       vl.renderItem = vl.params.renderItem;
@@ -73,7 +76,9 @@ class VirtualList extends Framework7Class {
     vl.$pageContentEl = vl.$el.parents('.page-content');
     vl.pageContentEl = vl.$pageContentEl[0];
 
-    vl.$scrollableParentEl = vl.params.scrollableParentEl ? $(vl.params.scrollableParentEl).eq(0) : vl.$pageContentEl;
+    vl.$scrollableParentEl = vl.params.scrollableParentEl
+      ? $(vl.params.scrollableParentEl).eq(0)
+      : vl.$pageContentEl;
     if (!vl.$scrollableParentEl.length && vl.$pageContentEl.length) {
       vl.$scrollableParentEl = vl.$pageContentEl;
     }
@@ -84,7 +89,7 @@ class VirtualList extends Framework7Class {
       vl.updatableScroll = vl.params.updatableScroll;
     } else {
       vl.updatableScroll = true;
-      if (Device.ios && Device.osVersion.split('.')[0] < 8) {
+      if (device.ios && device.osVersion.split('.')[0] < 8) {
         vl.updatableScroll = false;
       }
     }
@@ -102,7 +107,7 @@ class VirtualList extends Framework7Class {
     if (!vl.ul && !vl.params.createUl) $itemsWrapEl = vl.$el;
     else $itemsWrapEl = vl.$ul;
 
-    Utils.extend(vl, {
+    extend(vl, {
       $itemsWrapEl,
       itemsWrapEl: $itemsWrapEl[0],
       // DOM cached items
@@ -137,9 +142,15 @@ class VirtualList extends Framework7Class {
     let $popupEl;
     vl.attachEvents = function attachEvents() {
       $pageEl = vl.$el.parents('.page').eq(0);
-      $tabEl = vl.$el.parents('.tab').filter((tabElIndex, tabEl) => {
-        return $(tabEl).parent('.tabs').parent('.tabs-animated-wrap, .tabs-swipeable-wrap').length === 0;
-      }).eq(0);
+      $tabEl = vl.$el
+        .parents('.tab')
+        .filter((tabElIndex, tabEl) => {
+          return (
+            $(tabEl).parent('.tabs').parent('.tabs-animated-wrap, .tabs-swipeable-wrap').length ===
+            0
+          );
+        })
+        .eq(0);
       $panelEl = vl.$el.parents('.panel').eq(0);
       $popupEl = vl.$el.parents('.popup').eq(0);
 
@@ -181,7 +192,7 @@ class VirtualList extends Framework7Class {
       vl.rowsPerScreen = Math.ceil(vl.pageHeight / vl.params.height);
       vl.rowsBefore = vl.params.rowsBefore || vl.rowsPerScreen * 2;
       vl.rowsAfter = vl.params.rowsAfter || vl.rowsPerScreen;
-      vl.rowsToRender = (vl.rowsPerScreen + vl.rowsBefore + vl.rowsAfter);
+      vl.rowsToRender = vl.rowsPerScreen + vl.rowsBefore + vl.rowsAfter;
       vl.maxBufferHeight = (vl.rowsBefore / 2) * vl.params.height;
     }
 
@@ -194,10 +205,18 @@ class VirtualList extends Framework7Class {
     const vl = this;
     if (force) vl.lastRepaintY = null;
 
-    let scrollTop = -(vl.$el[0].getBoundingClientRect().top - vl.$scrollableParentEl[0].getBoundingClientRect().top);
+    let scrollTop = -(
+      vl.$el[0].getBoundingClientRect().top - vl.$scrollableParentEl[0].getBoundingClientRect().top
+    );
 
     if (typeof forceScrollTop !== 'undefined') scrollTop = forceScrollTop;
-    if (vl.lastRepaintY === null || Math.abs(scrollTop - vl.lastRepaintY) > vl.maxBufferHeight || (!vl.updatableScroll && (vl.$scrollableParentEl[0].scrollTop + vl.pageHeight >= vl.$scrollableParentEl[0].scrollHeight))) {
+    if (
+      vl.lastRepaintY === null ||
+      Math.abs(scrollTop - vl.lastRepaintY) > vl.maxBufferHeight ||
+      (!vl.updatableScroll &&
+        vl.$scrollableParentEl[0].scrollTop + vl.pageHeight >=
+          vl.$scrollableParentEl[0].scrollHeight)
+    ) {
       vl.lastRepaintY = scrollTop;
     } else {
       return;
@@ -216,12 +235,21 @@ class VirtualList extends Framework7Class {
       for (let j = 0; j < vl.heights.length; j += 1) {
         itemHeight = vl.heights[j];
         if (typeof fromIndex === 'undefined') {
-          if (itemTop + itemHeight >= scrollTop - (vl.pageHeight * 2 * vl.params.dynamicHeightBufferSize)) fromIndex = j;
+          if (
+            itemTop + itemHeight >=
+            scrollTop - vl.pageHeight * 2 * vl.params.dynamicHeightBufferSize
+          )
+            fromIndex = j;
           else heightBeforeFirstItem += itemHeight;
         }
 
         if (typeof toIndex === 'undefined') {
-          if (itemTop + itemHeight >= scrollTop + (vl.pageHeight * 2 * vl.params.dynamicHeightBufferSize) || j === vl.heights.length - 1) toIndex = j + 1;
+          if (
+            itemTop + itemHeight >=
+              scrollTop + vl.pageHeight * 2 * vl.params.dynamicHeightBufferSize ||
+            j === vl.heights.length - 1
+          )
+            toIndex = j + 1;
           heightBeforeLastItem += itemHeight;
         }
         itemTop += itemHeight;
@@ -232,7 +260,7 @@ class VirtualList extends Framework7Class {
       if (fromIndex < 0) {
         fromIndex = 0;
       }
-      toIndex = Math.min(fromIndex + (vl.rowsToRender * vl.params.cols), items.length);
+      toIndex = Math.min(fromIndex + vl.rowsToRender * vl.params.cols, items.length);
     }
 
     let topPosition;
@@ -272,7 +300,7 @@ class VirtualList extends Framework7Class {
         if (vl.dynamicHeight) {
           topPosition = heightBeforeFirstItem;
         } else {
-          topPosition = ((i * vl.params.height) / vl.params.cols);
+          topPosition = (i * vl.params.height) / vl.params.cols;
         }
       }
       if (!vl.params.renderExternal) {
@@ -366,7 +394,7 @@ class VirtualList extends Framework7Class {
       itemTop = index * vl.params.height;
     }
     const listTop = vl.$el[0].offsetTop;
-    vl.render(true, (listTop + itemTop) - parseInt(vl.$scrollableParentEl.css('padding-top'), 10));
+    vl.render(true, listTop + itemTop - parseInt(vl.$scrollableParentEl.css('padding-top'), 10));
     return true;
   }
 
@@ -453,7 +481,7 @@ class VirtualList extends Framework7Class {
       vl.items.push(item);
       toIndex = vl.items.length - 1;
     } else {
-    // Add item to new index
+      // Add item to new index
       vl.items.splice(toIndex, 0, item);
     }
     // Update cache
@@ -464,9 +492,11 @@ class VirtualList extends Framework7Class {
         const leftIndex = fromIndex < toIndex ? fromIndex : toIndex;
         const rightIndex = fromIndex < toIndex ? toIndex : fromIndex;
         const indexShift = fromIndex < toIndex ? -1 : 1;
-        if (cachedIndex < leftIndex || cachedIndex > rightIndex) newCache[cachedIndex] = vl.domCache[cachedIndex];
+        if (cachedIndex < leftIndex || cachedIndex > rightIndex)
+          newCache[cachedIndex] = vl.domCache[cachedIndex];
         if (cachedIndex === leftIndex) newCache[rightIndex] = vl.domCache[cachedIndex];
-        if (cachedIndex > leftIndex && cachedIndex <= rightIndex) newCache[cachedIndex + indexShift] = vl.domCache[cachedIndex];
+        if (cachedIndex > leftIndex && cachedIndex <= rightIndex)
+          newCache[cachedIndex + indexShift] = vl.domCache[cachedIndex];
       });
       vl.domCache = newCache;
     }
@@ -580,7 +610,7 @@ class VirtualList extends Framework7Class {
     vl.detachEvents();
     vl.$el[0].f7VirtualList = null;
     delete vl.$el[0].f7VirtualList;
-    Utils.deleteProps(vl);
+    deleteProps(vl);
     vl = null;
   }
 }

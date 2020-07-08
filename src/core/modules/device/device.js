@@ -1,38 +1,48 @@
-import { document } from 'ssr-window';
-import Device from '../../utils/device';
+import { getDocument } from 'ssr-window';
+import { getDevice } from '../../utils/get-device';
+
+const deviceGetter = {};
+Object.defineProperty(deviceGetter, 'device', {
+  get() {
+    return getDevice();
+  },
+});
 
 export default {
   name: 'device',
-  proto: {
-    device: Device,
-  },
-  static: {
-    device: Device,
-  },
+  proto: deviceGetter,
+  static: deviceGetter,
   on: {
     init() {
+      const document = getDocument();
+      const device = getDevice();
       const classNames = [];
       const html = document.querySelector('html');
-      const metaStatusbar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+      const metaStatusbar = document.querySelector(
+        'meta[name="apple-mobile-web-app-status-bar-style"]',
+      );
       if (!html) return;
-      if (Device.standalone && Device.ios && metaStatusbar && metaStatusbar.content === 'black-translucent') {
+      if (
+        device.standalone &&
+        device.ios &&
+        metaStatusbar &&
+        metaStatusbar.content === 'black-translucent'
+      ) {
         classNames.push('device-full-viewport');
       }
 
       // Pixel Ratio
-      classNames.push(`device-pixel-ratio-${Math.floor(Device.pixelRatio)}`);
+      classNames.push(`device-pixel-ratio-${Math.floor(device.pixelRatio)}`);
       // OS classes
-      if (Device.os && !Device.desktop) {
-        classNames.push(
-          `device-${Device.os}`,
-        );
-      } else if (Device.desktop) {
+      if (device.os && !device.desktop) {
+        classNames.push(`device-${device.os}`);
+      } else if (device.desktop) {
         classNames.push('device-desktop');
-        if (Device.os) {
-          classNames.push(`device-${Device.os}`);
+        if (device.os) {
+          classNames.push(`device-${device.os}`);
         }
       }
-      if (Device.cordova || Device.phonegap) {
+      if (device.cordova || device.phonegap) {
         classNames.push('device-cordova');
       }
 

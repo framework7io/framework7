@@ -1,4 +1,4 @@
-import Utils from '../../utils/utils';
+import { extend } from '../../utils/utils';
 import Autocomplete from './autocomplete-class';
 import ConstructorMethods from '../../utils/constructor-methods';
 
@@ -64,7 +64,6 @@ export default {
       renderItem: undefined,
       renderSearchbar: undefined,
       renderNavbar: undefined,
-
     },
   },
   static: {
@@ -72,7 +71,7 @@ export default {
   },
   create() {
     const app = this;
-    app.autocomplete = Utils.extend(
+    app.autocomplete = extend(
       ConstructorMethods({
         defaultSelector: undefined,
         constructor: Autocomplete,
@@ -90,7 +89,7 @@ export default {
           if (ac && ac.close) return ac.close();
           return undefined;
         },
-      }
+      },
     );
   },
 };

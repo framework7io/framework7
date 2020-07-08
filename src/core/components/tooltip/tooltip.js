@@ -53,16 +53,20 @@ export default {
   on: {
     tabMounted(tabEl) {
       const app = this;
-      $(tabEl).find('.tooltip-init').each((index, el) => {
-        const text = $(el).attr('data-tooltip');
-        if (!text) return;
-        app.tooltip.create({ targetEl: el, text });
-      });
+      $(tabEl)
+        .find('.tooltip-init')
+        .each((index, el) => {
+          const text = $(el).attr('data-tooltip');
+          if (!text) return;
+          app.tooltip.create({ targetEl: el, text });
+        });
     },
     tabBeforeRemove(tabEl) {
-      $(tabEl).find('.tooltip-init').each((index, el) => {
-        if (el.f7Tooltip) el.f7Tooltip.destroy();
-      });
+      $(tabEl)
+        .find('.tooltip-init')
+        .each((index, el) => {
+          if (el.f7Tooltip) el.f7Tooltip.destroy();
+        });
     },
     pageInit(page) {
       const app = this;
@@ -71,7 +75,13 @@ export default {
         if (!text) return;
         app.tooltip.create({ targetEl: el, text });
       });
-      if (app.theme === 'ios' && page.view && page.view.router.dynamicNavbar && page.$navbarEl && page.$navbarEl.length > 0) {
+      if (
+        app.theme === 'ios' &&
+        page.view &&
+        page.view.router.dynamicNavbar &&
+        page.$navbarEl &&
+        page.$navbarEl.length > 0
+      ) {
         page.$navbarEl.find('.tooltip-init').each((index, el) => {
           const text = $(el).attr('data-tooltip');
           if (!text) return;
@@ -84,7 +94,13 @@ export default {
       page.$el.find('.tooltip-init').each((index, el) => {
         if (el.f7Tooltip) el.f7Tooltip.destroy();
       });
-      if (app.theme === 'ios' && page.view && page.view.router.dynamicNavbar && page.$navbarEl && page.$navbarEl.length > 0) {
+      if (
+        app.theme === 'ios' &&
+        page.view &&
+        page.view.router.dynamicNavbar &&
+        page.$navbarEl &&
+        page.$navbarEl.length > 0
+      ) {
         page.$navbarEl.find('.tooltip-init').each((index, el) => {
           if (el.f7Tooltip) el.f7Tooltip.destroy();
         });

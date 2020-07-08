@@ -2,7 +2,15 @@ import $ from 'dom7';
 
 export default {
   render(self) {
-    const { barLabel, barValue, barValueEditable, redLabelText, greenLabelText, blueLabelText } = self.params;
+    const {
+      barLabel,
+      barValue,
+      barValueEditable,
+      redLabelText,
+      greenLabelText,
+      blueLabelText,
+    } = self.params;
+    // prettier-ignore
     return `
       <div class="color-picker-module color-picker-module-rgb-bars">
         <div class="color-picker-bar-wrap">
@@ -114,12 +122,7 @@ export default {
     };
   },
   update(self) {
-    const {
-      value,
-      redBar,
-      greenBar,
-      blueBar,
-    } = self;
+    const { value, redBar, greenBar, blueBar } = self;
 
     const { barValue, barValueEditable } = self.params;
 
@@ -133,9 +136,24 @@ export default {
     greenBar.layout();
     blueBar.layout();
 
-    redBar.$el.find('.range-bar').css('background-image', `linear-gradient(to top, rgb(0, ${rgb[1]}, ${rgb[2]}), rgb(255, ${rgb[1]}, ${rgb[2]}))`);
-    greenBar.$el.find('.range-bar').css('background-image', `linear-gradient(to top, rgb(${rgb[0]}, 0, ${rgb[2]}), rgb(${rgb[0]}, 255, ${rgb[2]}))`);
-    blueBar.$el.find('.range-bar').css('background-image', `linear-gradient(to top, rgb(${rgb[0]}, ${rgb[1]}, 0), rgb(${rgb[0]}, ${rgb[1]}, 255))`);
+    redBar.$el
+      .find('.range-bar')
+      .css(
+        'background-image',
+        `linear-gradient(to top, rgb(0, ${rgb[1]}, ${rgb[2]}), rgb(255, ${rgb[1]}, ${rgb[2]}))`,
+      );
+    greenBar.$el
+      .find('.range-bar')
+      .css(
+        'background-image',
+        `linear-gradient(to top, rgb(${rgb[0]}, 0, ${rgb[2]}), rgb(${rgb[0]}, 255, ${rgb[2]}))`,
+      );
+    blueBar.$el
+      .find('.range-bar')
+      .css(
+        'background-image',
+        `linear-gradient(to top, rgb(${rgb[0]}, ${rgb[1]}, 0), rgb(${rgb[0]}, ${rgb[1]}, 255))`,
+      );
 
     if (barValue && barValueEditable) {
       self.$el.find('input.color-picker-value-bar-red').val(rgb[0]);

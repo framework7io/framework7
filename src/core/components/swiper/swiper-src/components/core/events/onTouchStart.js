@@ -1,4 +1,4 @@
-import { window, document } from 'ssr-window';
+import { getWindow, getDocument } from 'ssr-window';
 import $ from '../../../utils/dom';
 import Utils from '../../../utils/utils';
 
@@ -21,7 +21,12 @@ export default function (event) {
   if (!data.isTouchEvent && 'which' in e && e.which === 3) return;
   if (!data.isTouchEvent && 'button' in e && e.button > 0) return;
   if (data.isTouched && data.isMoved) return;
-  if (params.noSwiping && $targetEl.closest(params.noSwipingSelector ? params.noSwipingSelector : `.${params.noSwipingClass}`)[0]) {
+  if (
+    params.noSwiping &&
+    $targetEl.closest(
+      params.noSwipingSelector ? params.noSwipingSelector : `.${params.noSwipingClass}`,
+    )[0]
+  ) {
     swiper.allowClick = true;
     return;
   }
@@ -39,9 +44,8 @@ export default function (event) {
   const edgeSwipeDetection = params.edgeSwipeDetection || params.iOSEdgeSwipeDetection;
   const edgeSwipeThreshold = params.edgeSwipeThreshold || params.iOSEdgeSwipeThreshold;
   if (
-    edgeSwipeDetection
-    && ((startX <= edgeSwipeThreshold)
-    || (startX >= window.screen.width - edgeSwipeThreshold))
+    edgeSwipeDetection &&
+    (startX <= edgeSwipeThreshold || startX >= window.screen.width - edgeSwipeThreshold)
   ) {
     return;
   }
@@ -65,14 +69,15 @@ export default function (event) {
     let preventDefault = true;
     if ($targetEl.is(data.formElements)) preventDefault = false;
     if (
-      document.activeElement
-      && $(document.activeElement).is(data.formElements)
-      && document.activeElement !== $targetEl[0]
+      document.activeElement &&
+      $(document.activeElement).is(data.formElements) &&
+      document.activeElement !== $targetEl[0]
     ) {
       document.activeElement.blur();
     }
 
-    const shouldPreventDefault = preventDefault && swiper.allowTouchMove && params.touchStartPreventDefault;
+    const shouldPreventDefault =
+      preventDefault && swiper.allowTouchMove && params.touchStartPreventDefault;
     if (params.touchStartForcePreventDefault || shouldPreventDefault) {
       e.preventDefault();
     }

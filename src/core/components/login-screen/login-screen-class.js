@@ -1,12 +1,15 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend } from '../../utils/utils';
 import Modal from '../modal/modal-class';
 
 class LoginScreen extends Modal {
   constructor(app, params) {
-    const extendedParams = Utils.extend({
-      on: {},
-    }, params);
+    const extendedParams = extend(
+      {
+        on: {},
+      },
+      params,
+    );
 
     // Extends with open/close Modal methods;
     super(app, extendedParams);
@@ -18,7 +21,9 @@ class LoginScreen extends Modal {
     // Find Element
     let $el;
     if (!loginScreen.params.el) {
-      $el = $(loginScreen.params.content).filter((elIndex, node) => node.nodeType === 1).eq(0);
+      $el = $(loginScreen.params.content)
+        .filter((elIndex, node) => node.nodeType === 1)
+        .eq(0);
     } else {
       $el = $(loginScreen.params.el).eq(0);
     }
@@ -31,7 +36,7 @@ class LoginScreen extends Modal {
       return loginScreen.destroy();
     }
 
-    Utils.extend(loginScreen, {
+    extend(loginScreen, {
       app,
       $el,
       el: $el[0],

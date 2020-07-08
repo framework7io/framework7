@@ -1,5 +1,15 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import {
+  extend,
+  colorRgbToHex,
+  colorRgbToHsl,
+  colorHslToHsb,
+  colorHslToRgb,
+  colorHsbToHsl,
+  colorHexToRgb,
+  nextTick,
+  deleteProps,
+} from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 
 import moduleAlphaSlider from './modules/alpha-slider';
@@ -21,7 +31,7 @@ class ColorPicker extends Framework7Class {
     super(params, [app]);
     const self = this;
 
-    self.params = Utils.extend({}, app.params.colorPicker, params);
+    self.params = extend({}, app.params.colorPicker, params);
 
     let $containerEl;
     if (self.params.containerEl) {
@@ -39,7 +49,7 @@ class ColorPicker extends Framework7Class {
       $targetEl = $(self.params.targetEl);
     }
 
-    Utils.extend(self, {
+    extend(self, {
       app,
       $containerEl,
       containerEl: $containerEl && $containerEl[0],
@@ -54,17 +64,17 @@ class ColorPicker extends Framework7Class {
       modules: {
         'alpha-slider': moduleAlphaSlider,
         'current-color': moduleCurrentColor,
-        'hex': moduleHex, // eslint-disable-line
+        hex: moduleHex, // eslint-disable-line
         'hsb-sliders': moduleHsbSliders,
         'hue-slider': moduleHueSlider,
         'brightness-slider': moduleBrightnessSlider,
-        'palette': modulePalette, // eslint-disable-line
+        palette: modulePalette, // eslint-disable-line
         'initial-current-colors': moduleInitialCurrentColors,
         'rgb-bars': moduleRgbBars,
         'rgb-sliders': moduleRgbSliders,
         'sb-spectrum': moduleSbSpectrum,
         'hs-spectrum': moduleHsSpectrum,
-        'wheel': moduleWheel, // eslint-disable-line
+        wheel: moduleWheel, // eslint-disable-line
       },
     });
 
@@ -85,7 +95,10 @@ class ColorPicker extends Framework7Class {
       if ($clickTargetEl.closest('[class*="backdrop"]').length) return;
       if ($clickTargetEl.closest('.color-picker-popup, .color-picker-popover').length) return;
       if ($inputEl && $inputEl.length > 0) {
-        if ($clickTargetEl[0] !== $inputEl[0] && $clickTargetEl.closest('.sheet-modal').length === 0) {
+        if (
+          $clickTargetEl[0] !== $inputEl[0] &&
+          $clickTargetEl.closest('.sheet-modal').length === 0
+        ) {
           self.close();
         }
       } else if ($(e.target).closest('.sheet-modal').length === 0) {
@@ -94,7 +107,7 @@ class ColorPicker extends Framework7Class {
     }
 
     // Events
-    Utils.extend(self, {
+    extend(self, {
       attachInputEvents() {
         self.$inputEl.on('click', onInputClick);
         if (self.params.inputReadOnly) {
@@ -223,16 +236,7 @@ class ColorPicker extends Framework7Class {
     const self = this;
     if (typeof value === 'undefined') return;
 
-    let {
-      hex,
-      rgb,
-      hsl,
-      hsb,
-      alpha = 1,
-      hue,
-      rgba,
-      hsla,
-    } = (self.value || {});
+    let { hex, rgb, hsl, hsb, alpha = 1, hue, rgba, hsla } = self.value || {};
 
     const needChangeEvent = self.value || (!self.value && !self.params.value);
     let valueChanged;
@@ -255,11 +259,11 @@ class ColorPicker extends Framework7Class {
     if (!valueChanged) return;
 
     if (value.rgb || value.rgba) {
-      const [r, g, b, a = alpha] = (value.rgb || value.rgba);
+      const [r, g, b, a = alpha] = value.rgb || value.rgba;
       rgb = [r, g, b];
-      hex = Utils.colorRgbToHex(...rgb);
-      hsl = Utils.colorRgbToHsl(...rgb);
-      hsb = Utils.colorHslToHsb(...hsl);
+      hex = colorRgbToHex(...rgb);
+      hsl = colorRgbToHsl(...rgb);
+      hsb = colorHslToHsb(...hsl);
       hsl = self.normalizeHsValues(hsl);
       hsb = self.normalizeHsValues(hsb);
       hue = hsb[0];
@@ -269,11 +273,11 @@ class ColorPicker extends Framework7Class {
     }
 
     if (value.hsl || value.hsla) {
-      const [h, s, l, a = alpha] = (value.hsl || value.hsla);
+      const [h, s, l, a = alpha] = value.hsl || value.hsla;
       hsl = [h, s, l];
-      rgb = Utils.colorHslToRgb(...hsl);
-      hex = Utils.colorRgbToHex(...rgb);
-      hsb = Utils.colorHslToHsb(...hsl);
+      rgb = colorHslToRgb(...hsl);
+      hex = colorRgbToHex(...rgb);
+      hsb = colorHslToHsb(...hsl);
       hsl = self.normalizeHsValues(hsl);
       hsb = self.normalizeHsValues(hsb);
       hue = hsb[0];
@@ -285,9 +289,9 @@ class ColorPicker extends Framework7Class {
     if (value.hsb) {
       const [h, s, b, a = alpha] = value.hsb;
       hsb = [h, s, b];
-      hsl = Utils.colorHsbToHsl(...hsb);
-      rgb = Utils.colorHslToRgb(...hsl);
-      hex = Utils.colorRgbToHex(...rgb);
+      hsl = colorHsbToHsl(...hsb);
+      rgb = colorHslToRgb(...hsl);
+      hex = colorRgbToHex(...rgb);
       hsl = self.normalizeHsValues(hsl);
       hsb = self.normalizeHsValues(hsb);
       hue = hsb[0];
@@ -297,10 +301,10 @@ class ColorPicker extends Framework7Class {
     }
 
     if (value.hex) {
-      rgb = Utils.colorHexToRgb(value.hex);
-      hex = Utils.colorRgbToHex(...rgb);
-      hsl = Utils.colorRgbToHsl(...rgb);
-      hsb = Utils.colorHslToHsb(...hsl);
+      rgb = colorHexToRgb(value.hex);
+      hex = colorRgbToHex(...rgb);
+      hsl = colorRgbToHsl(...rgb);
+      hsb = colorHslToHsb(...hsl);
       hsl = self.normalizeHsValues(hsl);
       hsb = self.normalizeHsValues(hsb);
       hue = hsb[0];
@@ -321,9 +325,9 @@ class ColorPicker extends Framework7Class {
     if (typeof value.hue !== 'undefined') {
       const [h, s, l] = hsl; // eslint-disable-line
       hsl = [value.hue, s, l];
-      hsb = Utils.colorHslToHsb(...hsl);
-      rgb = Utils.colorHslToRgb(...hsl);
-      hex = Utils.colorRgbToHex(...rgb);
+      hsb = colorHslToHsb(...hsl);
+      rgb = colorHslToRgb(...hsl);
+      hex = colorRgbToHex(...rgb);
       hsl = self.normalizeHsValues(hsl);
       hsb = self.normalizeHsValues(hsb);
       hue = hsb[0];
@@ -340,7 +344,7 @@ class ColorPicker extends Framework7Class {
       rgba,
       hsla,
     };
-    if (!self.initialValue) self.initialValue = Utils.extend({}, self.value);
+    if (!self.initialValue) self.initialValue = extend({}, self.value);
     self.updateValue(needChangeEvent);
     if (self.opened && updateModules) {
       self.updateModules();
@@ -413,6 +417,7 @@ class ColorPicker extends Framework7Class {
       return self.params.renderNavbar.call(self, self);
     }
     const { openIn, navbarTitleText, navbarBackLinkText, navbarCloseText } = self.params;
+    // prettier-ignore
     return `
     <div class="navbar">
       <div class="navbar-bg"></div>
@@ -424,13 +429,12 @@ class ColorPicker extends Framework7Class {
             <span class="if-not-md">${navbarBackLinkText}</span>
           </a>
         </div>
-        ` : ''}
+        `: ''}
         <div class="title">${navbarTitleText}</div>
         ${openIn !== 'page' ? `
         <div class="right">
           <a class="link popup-close" data-popup=".color-picker-popup">${navbarCloseText}</a>
-        </div>
-        ` : ''}
+        </div>` : ''}
       </div>
     </div>
   `.trim();
@@ -457,7 +461,9 @@ class ColorPicker extends Framework7Class {
     const self = this;
     const { cssClass, groupedModules } = self.params;
     const inlineHtml = `
-    <div class="color-picker color-picker-inline ${groupedModules ? 'color-picker-grouped-modules' : ''} ${cssClass || ''}">
+    <div class="color-picker color-picker-inline ${
+      groupedModules ? 'color-picker-grouped-modules' : ''
+    } ${cssClass || ''}">
       ${self.renderPicker()}
     </div>
   `.trim();
@@ -469,7 +475,9 @@ class ColorPicker extends Framework7Class {
     const self = this;
     const { cssClass, toolbarSheet, groupedModules } = self.params;
     const sheetHtml = `
-    <div class="sheet-modal color-picker color-picker-sheet-modal ${groupedModules ? 'color-picker-grouped-modules' : ''} ${cssClass || ''}">
+    <div class="sheet-modal color-picker color-picker-sheet-modal ${
+      groupedModules ? 'color-picker-grouped-modules' : ''
+    } ${cssClass || ''}">
       ${toolbarSheet ? self.renderToolbar() : ''}
       <div class="sheet-modal-inner">
         <div class="page-content">
@@ -581,7 +589,7 @@ class ColorPicker extends Framework7Class {
         self.setValue({ hex: '#ff0000' }, false);
       }
     } else if (value) {
-      self.initialValue = Utils.extend({}, value);
+      self.initialValue = extend({}, value);
       self.setValue(value, false);
     }
 
@@ -666,7 +674,7 @@ class ColorPicker extends Framework7Class {
     self.closing = false;
 
     if (!self.inline) {
-      Utils.nextTick(() => {
+      nextTick(() => {
         if (self.modal && self.modal.el && self.modal.destroy) {
           if (!self.params.routableModals) {
             self.modal.destroy();
@@ -736,8 +744,8 @@ class ColorPicker extends Framework7Class {
         if (modalType === 'popup') backdrop = true;
       }
       const modalParams = {
-        targetEl: ($targetEl || $inputEl),
-        scrollToEl: params.scrollToInput ? ($targetEl || $inputEl) : undefined,
+        targetEl: $targetEl || $inputEl,
+        scrollToEl: params.scrollToInput ? $targetEl || $inputEl : undefined,
         content: colorPickerContent,
         backdrop,
         closeByBackdropClick: params.closeByBackdropClick,
@@ -745,12 +753,19 @@ class ColorPicker extends Framework7Class {
           open() {
             const modal = this;
             self.modal = modal;
-            self.$el = modalType === 'popover' || modalType === 'popup' ? modal.$el.find('.color-picker') : modal.$el;
+            self.$el =
+              modalType === 'popover' || modalType === 'popup'
+                ? modal.$el.find('.color-picker')
+                : modal.$el;
             self.$el[0].f7ColorPicker = self;
             self.onOpen();
           },
-          opened() { self.onOpened(); },
-          close() { self.onClose(); },
+          opened() {
+            self.onOpened();
+          },
+          close() {
+            self.onClose();
+          },
           closed() {
             self.onClosed();
             if (self.$el && self.$el[0]) {
@@ -849,7 +864,7 @@ class ColorPicker extends Framework7Class {
     }
 
     if ($el && $el.length) delete self.$el[0].f7ColorPicker;
-    Utils.deleteProps(self);
+    deleteProps(self);
     self.destroyed = true;
   }
 }

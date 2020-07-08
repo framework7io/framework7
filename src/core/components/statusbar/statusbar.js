@@ -1,16 +1,20 @@
 import $ from 'dom7';
-import { window } from 'ssr-window';
-import Utils from '../../utils/utils';
-import Device from '../../utils/device';
+import { getWindow } from 'ssr-window';
+import { extend } from '../../utils/utils';
+import { getDevice } from '../../utils/get-device';
 
 const Statusbar = {
   hide() {
-    if (Device.cordova && window.StatusBar) {
+    const window = getWindow();
+    const device = getDevice();
+    if (device.cordova && window.StatusBar) {
       window.StatusBar.hide();
     }
   },
   show() {
-    if (Device.cordova && window.StatusBar) {
+    const window = getWindow();
+    const device = getDevice();
+    if (device.cordova && window.StatusBar) {
       window.StatusBar.show();
     }
   },
@@ -19,17 +23,28 @@ const Statusbar = {
     let pageContent;
     if ($('.popup.modal-in').length > 0) {
       // Check for opened popup
-      pageContent = $('.popup.modal-in').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
+      pageContent = $('.popup.modal-in')
+        .find('.page:not(.page-previous):not(.page-next):not(.cached)')
+        .find('.page-content');
     } else if ($('.panel.panel-in').length > 0) {
       // Check for opened panel
-      pageContent = $('.panel.panel-in').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
+      pageContent = $('.panel.panel-in')
+        .find('.page:not(.page-previous):not(.page-next):not(.cached)')
+        .find('.page-content');
     } else if ($('.views > .view.tab-active').length > 0) {
       // View in tab bar app layout
-      pageContent = $('.views > .view.tab-active').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
+      pageContent = $('.views > .view.tab-active')
+        .find('.page:not(.page-previous):not(.page-next):not(.cached)')
+        .find('.page-content');
     } else if ($('.views').length > 0) {
-      pageContent = $('.views').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
+      pageContent = $('.views')
+        .find('.page:not(.page-previous):not(.page-next):not(.cached)')
+        .find('.page-content');
     } else {
-      pageContent = app.root.children('.view').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
+      pageContent = app.root
+        .children('.view')
+        .find('.page:not(.page-previous):not(.page-next):not(.cached)')
+        .find('.page-content');
     }
 
     if (pageContent && pageContent.length > 0) {
@@ -41,7 +56,9 @@ const Statusbar = {
     }
   },
   setTextColor(color) {
-    if (Device.cordova && window.StatusBar) {
+    const window = getWindow();
+    const device = getDevice();
+    if (device.cordova && window.StatusBar) {
       if (color === 'white') {
         window.StatusBar.styleLightContent();
       } else {
@@ -50,31 +67,39 @@ const Statusbar = {
     }
   },
   setBackgroundColor(color) {
-    if (Device.cordova && window.StatusBar) {
+    const window = getWindow();
+    const device = getDevice();
+    if (device.cordova && window.StatusBar) {
       window.StatusBar.backgroundColorByHexString(color);
     }
   },
   isVisible() {
-    if (Device.cordova && window.StatusBar) {
+    const window = getWindow();
+    const device = getDevice();
+    if (device.cordova && window.StatusBar) {
       return window.StatusBar.isVisible;
     }
     return false;
   },
   overlaysWebView(overlays = true) {
-    if (Device.cordova && window.StatusBar) {
+    const window = getWindow();
+    const device = getDevice();
+    if (device.cordova && window.StatusBar) {
       window.StatusBar.overlaysWebView(overlays);
     }
   },
   init() {
     const app = this;
+    const window = getWindow();
+    const device = getDevice();
     const params = app.params.statusbar;
     if (!params.enabled) return;
 
-    if (Device.cordova && window.StatusBar) {
+    if (device.cordova && window.StatusBar) {
       if (params.scrollTopOnClick) {
         $(window).on('statusTap', Statusbar.onClick.bind(app));
       }
-      if (Device.ios) {
+      if (device.ios) {
         if (params.iosOverlaysWebView) {
           window.StatusBar.overlaysWebView(true);
         } else {
@@ -86,7 +111,7 @@ const Statusbar = {
           window.StatusBar.styleDefault();
         }
       }
-      if (Device.android) {
+      if (device.android) {
         if (params.androidOverlaysWebView) {
           window.StatusBar.overlaysWebView(true);
         } else {
@@ -99,10 +124,10 @@ const Statusbar = {
         }
       }
     }
-    if (params.iosBackgroundColor && Device.ios) {
+    if (params.iosBackgroundColor && device.ios) {
       Statusbar.setBackgroundColor(params.iosBackgroundColor);
     }
-    if (params.androidBackgroundColor && Device.android) {
+    if (params.androidBackgroundColor && device.android) {
       Statusbar.setBackgroundColor(params.androidBackgroundColor);
     }
   },
@@ -127,7 +152,7 @@ export default {
   },
   create() {
     const app = this;
-    Utils.extend(app, {
+    extend(app, {
       statusbar: {
         hide: Statusbar.hide,
         show: Statusbar.show,

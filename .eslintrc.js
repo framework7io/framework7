@@ -52,7 +52,6 @@ module.exports = {
     'react/prop-types': ['off'],
     'no-restricted-globals': ['error', 'window', 'document'],
     'import/prefer-default-export': 'off',
-    'no-shadow': 'off',
   },
   overrides: [
     {

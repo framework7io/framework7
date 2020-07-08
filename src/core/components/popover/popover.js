@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend } from '../../utils/utils';
 import Popover from './popover-class';
 import ModalMethods from '../../utils/modal-methods';
 
@@ -19,7 +19,7 @@ export default {
   },
   create() {
     const app = this;
-    app.popover = Utils.extend(
+    app.popover = extend(
       ModalMethods({
         app,
         constructor: Popover,
@@ -46,17 +46,20 @@ export default {
           let popover = $popoverEl[0].f7Modal;
           const data = $popoverEl.dataset();
           if (!popover) {
-            popover = new Popover(app, Object.assign(
-              {
-                el: $popoverEl,
-                targetEl,
-              },
-              data
-            ));
+            popover = new Popover(
+              app,
+              Object.assign(
+                {
+                  el: $popoverEl,
+                  targetEl,
+                },
+                data,
+              ),
+            );
           }
           return popover.open(targetEl, animate);
         },
-      }
+      },
     );
   },
   clicks: {

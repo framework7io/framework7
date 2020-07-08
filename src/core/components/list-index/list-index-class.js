@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend, deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 
 class ListIndex extends Framework7Class {
@@ -31,7 +31,7 @@ class ListIndex extends Framework7Class {
     // Extend defaults with modules params
     index.useModulesParams(defaults);
 
-    index.params = Utils.extend(defaults, params);
+    index.params = extend(defaults, params);
 
     let $el;
     let $listEl;
@@ -73,7 +73,7 @@ class ListIndex extends Framework7Class {
 
     $el[0].f7ListIndex = index;
 
-    Utils.extend(index, {
+    extend(index, {
       app,
       $el,
       el: $el && $el[0],
@@ -132,7 +132,8 @@ class ListIndex extends Framework7Class {
       const $children = $ul.children();
       if (!$children.length) return;
       topPoint = $children[0].getBoundingClientRect().top;
-      bottomPoint = $children[$children.length - 1].getBoundingClientRect().top + $children[0].offsetHeight;
+      bottomPoint =
+        $children[$children.length - 1].getBoundingClientRect().top + $children[0].offsetHeight;
 
       touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
       touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
@@ -156,9 +157,8 @@ class ListIndex extends Framework7Class {
       const itemIndex = Math.round((index.indexes.length - 1) * percentage);
       const itemContent = index.indexes[itemIndex];
 
-
       const ulHeight = bottomPoint - topPoint;
-      const bubbleBottom = ((index.height - ulHeight) / 2) + ((1 - percentage) * ulHeight);
+      const bubbleBottom = (index.height - ulHeight) / 2 + (1 - percentage) * ulHeight;
 
       if (itemIndex !== previousIndex) {
         if (index.params.label) {
@@ -239,7 +239,9 @@ class ListIndex extends Framework7Class {
     const scrollTop = $pageContentEl[0].scrollTop;
     const scrollToElTop = $scrollToEl.offset().top;
     if ($pageContentEl.parents('.page-with-navbar-large').length) {
-      const navbarInnerEl = app.navbar.getElByPage($pageContentEl.parents('.page-with-navbar-large').eq(0));
+      const navbarInnerEl = app.navbar.getElByPage(
+        $pageContentEl.parents('.page-with-navbar-large').eq(0),
+      );
       const $titleLargeEl = $(navbarInnerEl).find('.title-large');
       if ($titleLargeEl.length) {
         paddingTop -= $titleLargeEl[0].offsetHeight || 0;
@@ -247,9 +249,9 @@ class ListIndex extends Framework7Class {
     }
 
     if (parentTop <= paddingTop) {
-      $pageContentEl.scrollTop((parentTop + scrollTop) - paddingTop);
+      $pageContentEl.scrollTop(parentTop + scrollTop - paddingTop);
     } else {
-      $pageContentEl.scrollTop((scrollToElTop + scrollTop) - paddingTop);
+      $pageContentEl.scrollTop(scrollToElTop + scrollTop - paddingTop);
     }
     return index;
   }
@@ -269,18 +271,20 @@ class ListIndex extends Framework7Class {
     const { $ul, indexes, skipRate } = index;
     let wasSkipped;
 
-    const html = indexes.map((itemContent, itemIndex) => {
-      if (itemIndex % skipRate !== 0 && skipRate > 0) {
-        wasSkipped = true;
-        return '';
-      }
-      let itemHtml = index.renderItem(itemContent, itemIndex);
-      if (wasSkipped) {
-        itemHtml = index.renderSkipPlaceholder() + itemHtml;
-      }
-      wasSkipped = false;
-      return itemHtml;
-    }).join('');
+    const html = indexes
+      .map((itemContent, itemIndex) => {
+        if (itemIndex % skipRate !== 0 && skipRate > 0) {
+          wasSkipped = true;
+          return '';
+        }
+        let itemHtml = index.renderItem(itemContent, itemIndex);
+        if (wasSkipped) {
+          itemHtml = index.renderSkipPlaceholder() + itemHtml;
+        }
+        wasSkipped = false;
+        return itemHtml;
+      })
+      .join('');
 
     $ul.html(html);
 
@@ -296,7 +300,7 @@ class ListIndex extends Framework7Class {
     const items = indexes.length;
     let skipRate = 0;
     if (items > maxItems) {
-      skipRate = Math.ceil(((items * 2) - 1) / maxItems);
+      skipRate = Math.ceil((items * 2 - 1) / maxItems);
     }
 
     index.height = height;
@@ -348,7 +352,7 @@ class ListIndex extends Framework7Class {
       index.$el[0].f7ListIndex = null;
       delete index.$el[0].f7ListIndex;
     }
-    Utils.deleteProps(index);
+    deleteProps(index);
     index = null;
   }
 }

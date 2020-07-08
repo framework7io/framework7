@@ -1,6 +1,7 @@
 export default {
   render(self) {
     const { sliderLabel, sliderValue, sliderValueEditable, alphaLabelText } = self.params;
+    // prettier-ignore
     return `
       <div class="color-picker-module color-picker-module-alpha-slider">
         <div class="color-picker-slider-wrap">
@@ -53,9 +54,7 @@ export default {
     };
   },
   update(self) {
-    const {
-      value,
-    } = self;
+    const { value } = self;
     const { sliderValue, sliderValueEditable } = self.params;
 
     const { alpha } = value;

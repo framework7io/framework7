@@ -1,6 +1,7 @@
 export default {
   render(self) {
     const { sliderLabel, sliderValue, sliderValueEditable, hueLabelText } = self.params;
+    // prettier-ignore
     return `
       <div class="color-picker-module color-picker-module-hue-slider">
         <div class="color-picker-slider-wrap">
@@ -36,19 +37,14 @@ export default {
     });
   },
   update(self) {
-    const {
-      value,
-    } = self;
+    const { value } = self;
     const { sliderValue, sliderValueEditable } = self.params;
 
     const { hue } = value;
 
     self.hueRangeSlider.value = hue;
     self.hueRangeSlider.layout();
-    self.hueRangeSlider.$el[0].style.setProperty(
-      '--f7-range-knob-color',
-      `hsl(${hue}, 100%, 50%)`
-    );
+    self.hueRangeSlider.$el[0].style.setProperty('--f7-range-knob-color', `hsl(${hue}, 100%, 50%)`);
     if (sliderValue && sliderValueEditable) {
       self.$el.find('input.color-picker-value-hue').val(`${hue}`);
     } else if (sliderValue) {

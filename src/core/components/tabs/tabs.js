@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend } from '../../utils/utils';
 
 const Tab = {
   show(...args) {
@@ -93,10 +93,9 @@ const Tab = {
           .slideTo($newTabEl.index(), animate ? undefined : 0);
       } else if (swiper && swiper.animating) {
         animated = true;
-        swiper
-          .once('slideChangeTransitionEnd', () => {
-            tabsChanged();
-          });
+        swiper.once('slideChangeTransitionEnd', () => {
+          tabsChanged();
+        });
       }
     }
 
@@ -185,7 +184,12 @@ const Tab = {
         $oldTabLinkEl = $tabLinkEl.siblings('.tab-link-active');
       }
 
-      if ($oldTabLinkEl && $oldTabLinkEl.length > 1 && $oldTabEl && $oldTabEl.parents('.page').length) {
+      if (
+        $oldTabLinkEl &&
+        $oldTabLinkEl.length > 1 &&
+        $oldTabEl &&
+        $oldTabEl.parents('.page').length
+      ) {
         // eslint-disable-next-line
         $oldTabLinkEl = $oldTabLinkEl.filter((index, tabLinkElement) => {
           return $(tabLinkElement).parents('.page')[0] === $oldTabEl.parents('.page')[0];
@@ -220,7 +224,7 @@ export default {
   name: 'tabs',
   create() {
     const app = this;
-    Utils.extend(app, {
+    extend(app, {
       tab: {
         show: Tab.show.bind(app),
       },
@@ -237,7 +241,10 @@ export default {
   },
   clicks: {
     '.tab-link': function tabLinkClick($clickedEl, data = {}) {
-      if (($clickedEl.attr('href') && $clickedEl.attr('href').indexOf('#') === 0) || $clickedEl.attr('data-tab')) {
+      if (
+        ($clickedEl.attr('href') && $clickedEl.attr('href').indexOf('#') === 0) ||
+        $clickedEl.attr('data-tab')
+      ) {
         const app = this;
         app.tab.show({
           tabEl: data.tab || $clickedEl.attr('href'),

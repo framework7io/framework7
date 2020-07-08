@@ -1,18 +1,23 @@
 import $ from 'dom7';
-import { window } from 'ssr-window';
-import Utils from '../../utils/utils';
+import { getWindow } from 'ssr-window';
+import { extend, nextTick } from '../../utils/utils';
 import Modal from '../modal/modal-class';
 
 class Toast extends Modal {
   constructor(app, params) {
-    const extendedParams = Utils.extend({
-      on: {},
-    }, app.params.toast, params);
+    const extendedParams = extend(
+      {
+        on: {},
+      },
+      app.params.toast,
+      params,
+    );
 
     // Extends with open/close Modal methods;
     super(app, extendedParams);
 
     const toast = this;
+    const window = getWindow();
 
     toast.app = app;
 
@@ -38,7 +43,7 @@ class Toast extends Modal {
       return toast.destroy();
     }
 
-    Utils.extend(toast, {
+    extend(toast, {
       $el,
       el: $el[0],
       type: 'toast',
@@ -66,7 +71,7 @@ class Toast extends Modal {
         }
       });
       if (closeTimeout) {
-        timeoutId = Utils.nextTick(() => {
+        timeoutId = nextTick(() => {
           toast.close();
         }, closeTimeout);
       }
@@ -89,10 +94,19 @@ class Toast extends Modal {
   render() {
     const toast = this;
     if (toast.params.render) return toast.params.render.call(toast, toast);
-    const { position, horizontalPosition, cssClass, icon, text, closeButton, closeButtonColor, closeButtonText } = toast.params;
-    const horizontalClass = position === 'top' || position === 'bottom'
-      ? `toast-horizontal-${horizontalPosition}`
-      : '';
+    const {
+      position,
+      horizontalPosition,
+      cssClass,
+      icon,
+      text,
+      closeButton,
+      closeButtonColor,
+      closeButtonText,
+    } = toast.params;
+    const horizontalClass =
+      position === 'top' || position === 'bottom' ? `toast-horizontal-${horizontalPosition}` : '';
+    // prettier-ignore
     return `
       <div class="toast toast-${position} ${horizontalClass} ${cssClass || ''} ${icon ? 'toast-with-icon' : ''}">
         <div class="toast-content">

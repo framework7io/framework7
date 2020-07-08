@@ -1,8 +1,9 @@
-import Utils from '../../../utils/utils';
+import { colorHsbToHsl } from '../../../utils/utils';
 
 export default {
   render(self) {
     const { sliderLabel, sliderValue, sliderValueEditable, brightnessLabelText } = self.params;
+    // prettier-ignore
     return `
       <div class="color-picker-module color-picker-module-brightness-slider">
         <div class="color-picker-slider-wrap">
@@ -39,10 +40,7 @@ export default {
     });
   },
   update(self) {
-    const {
-      value,
-      app,
-    } = self;
+    const { value, app } = self;
     const { sliderValue, sliderValueEditable } = self.params;
 
     const { hsb } = value;
@@ -50,22 +48,28 @@ export default {
     self.brightnessRangeSlider.value = hsb[2];
     self.brightnessRangeSlider.layout();
 
-    const hslCurrent = Utils.colorHsbToHsl(hsb[0], hsb[1], hsb[2]);
-    const hslLeft = Utils.colorHsbToHsl(hsb[0], hsb[1], 0);
-    const hslRight = Utils.colorHsbToHsl(hsb[0], hsb[1], 1);
+    const hslCurrent = colorHsbToHsl(hsb[0], hsb[1], hsb[2]);
+    const hslLeft = colorHsbToHsl(hsb[0], hsb[1], 0);
+    const hslRight = colorHsbToHsl(hsb[0], hsb[1], 1);
 
     self.brightnessRangeSlider.$el[0].style.setProperty(
       '--f7-range-knob-color',
-      `hsl(${hslCurrent[0]}, ${hslCurrent[1] * 100}%, ${hslCurrent[2] * 100}%)`
+      `hsl(${hslCurrent[0]}, ${hslCurrent[1] * 100}%, ${hslCurrent[2] * 100}%)`,
     );
-    self.brightnessRangeSlider.$el.find('.range-bar').css(
-      'background-image',
-      `linear-gradient(${app.rtl ? 'to left' : 'to right'}, hsl(${hslLeft[0]}, ${hslLeft[1] * 100}%, ${hslLeft[2] * 100}%), hsl(${hslRight[0]}, ${hslRight[1] * 100}%, ${hslRight[2] * 100}%))`
-    );
+    self.brightnessRangeSlider.$el
+      .find('.range-bar')
+      .css(
+        'background-image',
+        `linear-gradient(${app.rtl ? 'to left' : 'to right'}, hsl(${hslLeft[0]}, ${
+          hslLeft[1] * 100
+        }%, ${hslLeft[2] * 100}%), hsl(${hslRight[0]}, ${hslRight[1] * 100}%, ${
+          hslRight[2] * 100
+        }%))`,
+      );
     if (sliderValue && sliderValueEditable) {
-      self.$el.find('input.color-picker-value-brightness').val(`${hsb[2] * 1000 / 10}`);
+      self.$el.find('input.color-picker-value-brightness').val(`${(hsb[2] * 1000) / 10}`);
     } else if (sliderValue) {
-      self.$el.find('span.color-picker-value-brightness').text(`${hsb[2] * 1000 / 10}`);
+      self.$el.find('span.color-picker-value-brightness').text(`${(hsb[2] * 1000) / 10}`);
     }
   },
   destroy(self) {

@@ -1,6 +1,6 @@
 import $ from 'dom7';
-import { window } from 'ssr-window';
-import Utils from '../../utils/utils';
+import { getWindow } from 'ssr-window';
+import { extend, nextTick, deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 import pickerColumn from './picker-column';
 
@@ -8,7 +8,8 @@ class Picker extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
     const picker = this;
-    picker.params = Utils.extend({}, app.params.picker, params);
+    const window = getWindow();
+    picker.params = extend({}, app.params.picker, params);
 
     let $containerEl;
     if (picker.params.containerEl) {
@@ -21,7 +22,6 @@ class Picker extends Framework7Class {
       $inputEl = $(picker.params.inputEl);
     }
 
-
     let $scrollToEl = picker.params.scrollToInput ? $inputEl : undefined;
     if (picker.params.scrollToEl) {
       const scrollToEl = $(picker.params.scrollToEl);
@@ -30,12 +30,16 @@ class Picker extends Framework7Class {
       }
     }
 
-    Utils.extend(picker, {
+    extend(picker, {
       app,
       $containerEl,
       containerEl: $containerEl && $containerEl[0],
       inline: $containerEl && $containerEl.length > 0,
-      needsOriginFix: app.device.ios || ((window.navigator.userAgent.toLowerCase().indexOf('safari') >= 0 && window.navigator.userAgent.toLowerCase().indexOf('chrome') < 0) && !app.device.android),
+      needsOriginFix:
+        app.device.ios ||
+        (window.navigator.userAgent.toLowerCase().indexOf('safari') >= 0 &&
+          window.navigator.userAgent.toLowerCase().indexOf('chrome') < 0 &&
+          !app.device.android),
       cols: [],
       $inputEl,
       inputEl: $inputEl && $inputEl[0],
@@ -70,7 +74,7 @@ class Picker extends Framework7Class {
     }
 
     // Events
-    Utils.extend(picker, {
+    extend(picker, {
       attachResizeEvent() {
         app.on('resize', onResize);
       },
@@ -194,10 +198,14 @@ class Picker extends Framework7Class {
     const newDisplayValue = [];
     let column;
     if (picker.cols.length === 0) {
-      const noDividerColumns = picker.params.cols.filter(c => !c.divider);
+      const noDividerColumns = picker.params.cols.filter((c) => !c.divider);
       for (let i = 0; i < noDividerColumns.length; i += 1) {
         column = noDividerColumns[i];
-        if (column.displayValues !== undefined && column.values !== undefined && column.values.indexOf(newValue[i]) !== -1) {
+        if (
+          column.displayValues !== undefined &&
+          column.values !== undefined &&
+          column.values.indexOf(newValue[i]) !== -1
+        ) {
           newDisplayValue.push(column.displayValues[column.values.indexOf(newValue[i])]);
         } else {
           newDisplayValue.push(newValue[i]);
@@ -254,20 +262,25 @@ class Picker extends Framework7Class {
   }
   // eslint-disable-next-line
   renderColumn(col, onlyItems) {
-    const colClasses = `picker-column ${col.textAlign ? `picker-column-${col.textAlign}` : ''} ${col.cssClass || ''}`;
+    const colClasses = `picker-column ${col.textAlign ? `picker-column-${col.textAlign}` : ''} ${
+      col.cssClass || ''
+    }`;
     let columnHtml;
     let columnItemsHtml;
 
     if (col.divider) {
+      // prettier-ignore
       columnHtml = `
         <div class="${colClasses} picker-column-divider">${col.content}</div>
       `;
     } else {
+      // prettier-ignore
       columnItemsHtml = col.values.map((value, index) => `
         <div class="picker-item" data-picker-value="${value}">
           <span>${col.displayValues ? col.displayValues[index] : value}</span>
         </div>
       `).join('');
+      // prettier-ignore
       columnHtml = `
         <div class="${colClasses}">
           <div class="picker-items">${columnItemsHtml}</div>
@@ -281,6 +294,7 @@ class Picker extends Framework7Class {
   renderInline() {
     const picker = this;
     const { rotateEffect, cssClass, toolbar } = picker.params;
+    // prettier-ignore
     const inlineHtml = `
       <div class="picker picker-inline ${rotateEffect ? 'picker-3d' : ''} ${cssClass || ''}">
         ${toolbar ? picker.renderToolbar() : ''}
@@ -297,6 +311,7 @@ class Picker extends Framework7Class {
   renderSheet() {
     const picker = this;
     const { rotateEffect, cssClass, toolbar } = picker.params;
+    // prettier-ignore
     const sheetHtml = `
       <div class="sheet-modal picker picker-sheet ${rotateEffect ? 'picker-3d' : ''} ${cssClass || ''}">
         ${toolbar ? picker.renderToolbar() : ''}
@@ -313,6 +328,7 @@ class Picker extends Framework7Class {
   renderPopover() {
     const picker = this;
     const { rotateEffect, cssClass, toolbar } = picker.params;
+    // prettier-ignore
     const popoverHtml = `
       <div class="popover picker-popover">
         <div class="popover-inner">
@@ -353,10 +369,7 @@ class Picker extends Framework7Class {
     // Init cols
     $el.find('.picker-column').each((index, colEl) => {
       let updateItems = true;
-      if (
-        (!initialized && params.value)
-        || (initialized && value)
-      ) {
+      if ((!initialized && params.value) || (initialized && value)) {
         updateItems = false;
       }
       picker.initColumn(colEl, updateItems);
@@ -442,7 +455,7 @@ class Picker extends Framework7Class {
     picker.closing = false;
 
     if (!picker.inline) {
-      Utils.nextTick(() => {
+      nextTick(() => {
         if (picker.modal && picker.modal.el && picker.modal.destroy) {
           if (!picker.params.routableModals) {
             picker.modal.destroy();
@@ -493,9 +506,15 @@ class Picker extends Framework7Class {
           picker.$el[0].f7Picker = picker;
           picker.onOpen();
         },
-        opened() { picker.onOpened(); },
-        close() { picker.onClose(); },
-        closed() { picker.onClosed(); },
+        opened() {
+          picker.onOpened();
+        },
+        close() {
+          picker.onClose();
+        },
+        closed() {
+          picker.onClosed();
+        },
       },
     };
     if (modalType === 'sheet') {
@@ -575,7 +594,7 @@ class Picker extends Framework7Class {
     }
 
     if ($el && $el.length) delete picker.$el[0].f7Picker;
-    Utils.deleteProps(picker);
+    deleteProps(picker);
     picker.destroyed = true;
   }
 }

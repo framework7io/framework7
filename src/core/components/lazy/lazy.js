@@ -1,7 +1,7 @@
 import $ from 'dom7';
-import { window } from 'ssr-window';
-import Utils from '../../utils/utils';
-import Support from '../../utils/support';
+import { getWindow } from 'ssr-window';
+import { extend } from '../../utils/utils';
+import { getSupport } from '../../utils/get-support';
 
 const Lazy = {
   destroy(pageEl) {
@@ -13,6 +13,8 @@ const Lazy = {
   },
   create(pageEl) {
     const app = this;
+    const window = getWindow();
+    const support = getSupport();
     const $pageEl = $(pageEl).closest('.page').eq(0);
 
     // Lazy images
@@ -24,7 +26,8 @@ const Lazy = {
 
     if (placeholderSrc !== false) {
       $lazyLoadImages.each((index, lazyEl) => {
-        if ($(lazyEl).attr('data-src') && !$(lazyEl).attr('src')) $(lazyEl).attr('src', placeholderSrc);
+        if ($(lazyEl).attr('data-src') && !$(lazyEl).attr('src'))
+          $(lazyEl).attr('src', placeholderSrc);
       });
     }
 
@@ -58,7 +61,7 @@ const Lazy = {
         }
       });
     }
-    if (app.params.lazy.observer && Support.intersectionObserver) {
+    if (app.params.lazy.observer && support.intersectionObserver) {
       let observer = $pageEl[0].f7LazyObserver;
       if (!observer) {
         observer = new window.IntersectionObserver(observerCallback, {
@@ -126,14 +129,15 @@ const Lazy = {
     const threshold = app.params.lazy.threshold || 0;
 
     return (
-      rect.top >= (0 - threshold)
-      && rect.left >= (0 - threshold)
-      && rect.top <= (app.height + threshold)
-      && rect.left <= (app.width + threshold)
+      rect.top >= 0 - threshold &&
+      rect.left >= 0 - threshold &&
+      rect.top <= app.height + threshold &&
+      rect.left <= app.width + threshold
     );
   },
   loadImage(imageEl, callback) {
     const app = this;
+    const window = getWindow();
     const $imageEl = $(imageEl);
 
     const bg = $imageEl.attr('data-background');
@@ -197,13 +201,13 @@ const Lazy = {
       }
     });
   },
-
 };
 export default {
   name: 'lazy',
   params: {
     lazy: {
-      placeholder: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEXCwsK592mkAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg==',
+      placeholder:
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEXCwsK592mkAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg==',
       threshold: 0,
       sequential: true,
       observer: true,
@@ -211,7 +215,7 @@ export default {
   },
   create() {
     const app = this;
-    Utils.extend(app, {
+    extend(app, {
       lazy: {
         create: Lazy.create.bind(app),
         destroy: Lazy.destroy.bind(app),
@@ -230,7 +234,8 @@ export default {
     },
     pageAfterIn(page) {
       const app = this;
-      if (app.params.lazy.observer && Support.intersectionObserver) return;
+      const support = getSupport();
+      if (app.params.lazy.observer && support.intersectionObserver) return;
       if (page.$el.find('.lazy').length > 0 || page.$el.hasClass('lazy')) {
         app.lazy.create(page.$el);
       }
@@ -250,7 +255,8 @@ export default {
     },
     tabBeforeRemove(tabEl) {
       const app = this;
-      if (app.params.lazy.observer && Support.intersectionObserver) return;
+      const support = getSupport();
+      if (app.params.lazy.observer && support.intersectionObserver) return;
       const $tabEl = $(tabEl);
       if ($tabEl.find('.lazy').length > 0 || $tabEl.hasClass('lazy')) {
         app.lazy.destroy($tabEl);

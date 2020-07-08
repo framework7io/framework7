@@ -1,22 +1,26 @@
-import { window } from 'ssr-window';
-import Utils from '../../utils/utils';
+import { getWindow } from 'ssr-window';
+import { extend } from '../../utils/utils';
 
 const SW = {
   registrations: [],
   register(path, scope) {
     const app = this;
+    const window = getWindow();
+
     if (!('serviceWorker' in window.navigator) || !app.serviceWorker.container) {
       return new Promise((resolve, reject) => {
         reject(new Error('Service worker is not supported'));
       });
     }
     return new Promise((resolve, reject) => {
-      app.serviceWorker.container.register(path, (scope ? { scope } : {}))
+      app.serviceWorker.container
+        .register(path, scope ? { scope } : {})
         .then((reg) => {
           SW.registrations.push(reg);
           app.emit('serviceWorkerRegisterSuccess', reg);
           resolve(reg);
-        }).catch((error) => {
+        })
+        .catch((error) => {
           app.emit('serviceWorkerRegisterError', error);
           reject(error);
         });
@@ -24,6 +28,7 @@ const SW = {
   },
   unregister(registration) {
     const app = this;
+    const window = getWindow();
     if (!('serviceWorker' in window.navigator) || !app.serviceWorker.container) {
       return new Promise((resolve, reject) => {
         reject(new Error('Service worker is not supported'));
@@ -33,20 +38,26 @@ const SW = {
     if (!registration) registrations = SW.registrations;
     else if (Array.isArray(registration)) registrations = registration;
     else registrations = [registration];
-    return Promise.all(registrations.map(reg => new Promise((resolve, reject) => {
-      reg.unregister()
-        .then(() => {
-          if (SW.registrations.indexOf(reg) >= 0) {
-            SW.registrations.splice(SW.registrations.indexOf(reg), 1);
-          }
-          app.emit('serviceWorkerUnregisterSuccess', reg);
-          resolve();
-        })
-        .catch((error) => {
-          app.emit('serviceWorkerUnregisterError', reg, error);
-          reject(error);
-        });
-    })));
+    return Promise.all(
+      registrations.map(
+        (reg) =>
+          new Promise((resolve, reject) => {
+            reg
+              .unregister()
+              .then(() => {
+                if (SW.registrations.indexOf(reg) >= 0) {
+                  SW.registrations.splice(SW.registrations.indexOf(reg), 1);
+                }
+                app.emit('serviceWorkerUnregisterSuccess', reg);
+                resolve();
+              })
+              .catch((error) => {
+                app.emit('serviceWorkerUnregisterError', reg, error);
+                reject(error);
+              });
+          }),
+      ),
+    );
   },
 };
 
@@ -60,9 +71,10 @@ export default {
   },
   create() {
     const app = this;
-    Utils.extend(app, {
+    const window = getWindow();
+    extend(app, {
       serviceWorker: {
-        container: ('serviceWorker' in window.navigator) ? window.navigator.serviceWorker : undefined,
+        container: 'serviceWorker' in window.navigator ? window.navigator.serviceWorker : undefined,
         registrations: SW.registrations,
         register: SW.register.bind(app),
         unregister: SW.unregister.bind(app),
@@ -71,6 +83,7 @@ export default {
   },
   on: {
     init() {
+      const window = getWindow();
       if (!('serviceWorker' in window.navigator)) return;
       const app = this;
       if (!app.serviceWorker.container) return;

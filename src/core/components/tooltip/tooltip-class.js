@@ -1,6 +1,6 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
-import Support from '../../utils/support';
+import { extend, deleteProps } from '../../utils/utils';
+import getSupport from '../../utils/get-support';
 import Framework7Class from '../../utils/class';
 
 class Tooltip extends Framework7Class {
@@ -8,14 +8,19 @@ class Tooltip extends Framework7Class {
     super(params, [app]);
 
     const tooltip = this;
+    const support = getSupport();
 
-    const defaults = Utils.extend({}, app.params.tooltip);
+    const defaults = extend({}, app.params.tooltip);
 
     // Extend defaults with modules params
     tooltip.useModulesParams(defaults);
 
-    tooltip.params = Utils.extend(defaults, params);
-    if (typeof params.offset === 'undefined' && Support.touch && tooltip.params.trigger === 'hover') {
+    tooltip.params = extend(defaults, params);
+    if (
+      typeof params.offset === 'undefined' &&
+      support.touch &&
+      tooltip.params.trigger === 'hover'
+    ) {
       tooltip.params.offset = 10;
     }
 
@@ -29,7 +34,7 @@ class Tooltip extends Framework7Class {
 
     const $el = $(tooltip.render()).eq(0);
 
-    Utils.extend(tooltip, {
+    extend(tooltip, {
       app,
       $targetEl,
       targetEl: $targetEl && $targetEl[0],
@@ -49,10 +54,11 @@ class Tooltip extends Framework7Class {
       else tooltip.show(this);
     }
     function handleClickOut(e) {
-      if (tooltip.opened && (
-        $(e.target).closest($targetEl).length
-        || $(e.target).closest(tooltip.$el).length
-      )) return;
+      if (
+        tooltip.opened &&
+        ($(e.target).closest($targetEl).length || $(e.target).closest(tooltip.$el).length)
+      )
+        return;
       tooltip.hide();
     }
     function handleTouchStart(e) {
@@ -66,10 +72,7 @@ class Tooltip extends Framework7Class {
       if (!isTouched) return;
       const x = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
       const y = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
-      const distance = (
-        ((x - touchesStart.x) ** 2)
-        + ((y - touchesStart.y) ** 2)
-      ) ** 0.5;
+      const distance = ((x - touchesStart.x) ** 2 + (y - touchesStart.y) ** 2) ** 0.5;
       if (distance > 50) {
         isTouched = false;
         tooltip.hide();
@@ -99,14 +102,14 @@ class Tooltip extends Framework7Class {
         $('html').on('click', handleClickOut);
         return;
       }
-      if (Support.touch) {
-        const passive = Support.passiveListener ? { passive: true } : false;
+      if (support.touch) {
+        const passive = support.passiveListener ? { passive: true } : false;
         $targetEl.on(app.touchEvents.start, handleTouchStart, passive);
         app.on('touchmove', handleTouchMove);
         app.on('touchend:passive', handleTouchEnd);
       } else {
-        $targetEl.on((Support.pointerEvents ? 'pointerenter' : 'mouseenter'), handleMouseEnter);
-        $targetEl.on((Support.pointerEvents ? 'pointerleave' : 'mouseleave'), handleMouseLeave);
+        $targetEl.on(support.pointerEvents ? 'pointerenter' : 'mouseenter', handleMouseEnter);
+        $targetEl.on(support.pointerEvents ? 'pointerleave' : 'mouseleave', handleMouseLeave);
       }
     };
     tooltip.detachEvents = function detachEvents() {
@@ -116,14 +119,14 @@ class Tooltip extends Framework7Class {
         $('html').off('click', handleClickOut);
         return;
       }
-      if (Support.touch) {
-        const passive = Support.passiveListener ? { passive: true } : false;
+      if (support.touch) {
+        const passive = support.passiveListener ? { passive: true } : false;
         $targetEl.off(app.touchEvents.start, handleTouchStart, passive);
         app.off('touchmove', handleTouchMove);
         app.off('touchend:passive', handleTouchEnd);
       } else {
-        $targetEl.off((Support.pointerEvents ? 'pointerenter' : 'mouseenter'), handleMouseEnter);
-        $targetEl.off((Support.pointerEvents ? 'pointerleave' : 'mouseleave'), handleMouseLeave);
+        $targetEl.off(support.pointerEvents ? 'pointerenter' : 'mouseenter', handleMouseEnter);
+        $targetEl.off(support.pointerEvents ? 'pointerleave' : 'mouseleave', handleMouseLeave);
       }
     };
 
@@ -177,7 +180,7 @@ class Tooltip extends Framework7Class {
     } else {
       // On middle
       position = 'middle';
-      top = ((targetHeight / 2) + targetOffsetTop) - (height / 2);
+      top = targetHeight / 2 + targetOffsetTop - height / 2;
       if (top <= 0) {
         top = 8;
       } else if (top + height >= app.height) {
@@ -187,13 +190,13 @@ class Tooltip extends Framework7Class {
 
     // Horizontal Position
     if (position === 'top' || position === 'bottom') {
-      left = ((targetWidth / 2) + targetOffsetLeft) - (width / 2);
+      left = targetWidth / 2 + targetOffsetLeft - width / 2;
       if (left < 8) left = 8;
       if (left + width > app.width) left = app.width - width - 8;
       if (left < 0) left = 0;
     } else if (position === 'middle') {
       left = targetOffsetLeft - width;
-      if (left < 8 || (left + width > app.width)) {
+      if (left < 8 || left + width > app.width) {
         if (left < 8) left = targetOffsetLeft + targetWidth;
         if (left + width > app.width) left = app.width - width - 8;
       }
@@ -273,7 +276,7 @@ class Tooltip extends Framework7Class {
     tooltip.$el.remove();
     delete tooltip.$targetEl[0].f7Tooltip;
     tooltip.detachEvents();
-    Utils.deleteProps(tooltip);
+    deleteProps(tooltip);
     tooltip.destroyed = true;
   }
 }
