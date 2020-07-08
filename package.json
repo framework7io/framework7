@@ -58,11 +58,6 @@
     "Firefox >= 52",
     "Samsung >= 6"
   ],
-  "husky": {
-    "hooks": {
-      "pre-push": "npm run lint"
-    }
-  },
   "dependencies": {
     "dom7": "^3.0.0-alpha.5",
     "path-to-regexp": "^6.1.0",
