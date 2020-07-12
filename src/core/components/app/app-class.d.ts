@@ -1,9 +1,9 @@
 import { Dom7, Dom7Array } from 'dom7';
 import Template7 from 'template7';
 import { Router } from '../../modules/router/router';
-import { Device } from '../../utils/get-device';
-import { Request } from '../../utils/request';
+import { DeviceParams, Device } from '../../utils/get-device';
 import { Support } from '../../utils/get-support';
+import { Request } from '../../utils/request';
 import { UtilsObject } from '../../utils/utils';
 import { ComponentClass, ComponentOptions } from '../../modules/component/component';
 
@@ -175,9 +175,9 @@ declare class Framework7 implements Framework7 {
 
   static use(plugin: Framework7Plugin): void;
   static use(plugins: Framework7Plugin[]): void;
-  static device: Device;
+  static getDevice: (overrides: DeviceParams) => Device;
+  static getSupport: () => Support;
   static request: Request;
-  static support: Support;
   static utils: UtilsObject;
   static Events: Events;
   static Component: ComponentClass;

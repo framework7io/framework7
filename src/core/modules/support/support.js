@@ -10,5 +10,7 @@ Object.defineProperty(supportGetter, 'support', {
 export default {
   name: 'support',
   proto: supportGetter,
-  static: supportGetter,
+  static: {
+    getSupport,
+  },
 };

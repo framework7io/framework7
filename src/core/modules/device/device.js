@@ -11,7 +11,9 @@ Object.defineProperty(deviceGetter, 'device', {
 export default {
   name: 'device',
   proto: deviceGetter,
-  static: deviceGetter,
+  static: {
+    getDevice,
+  },
   on: {
     init() {
       const document = getDocument();
