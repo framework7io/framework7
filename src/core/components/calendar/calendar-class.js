@@ -2,6 +2,7 @@ import { extend, nextTick, deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 import $ from '../../utils/dom7';
 import { getDevice } from '../../utils/get-device';
+import { getSupport } from '../../utils/get-support';
 
 class Calendar extends Framework7Class {
   constructor(app, params = {}) {
@@ -364,7 +365,7 @@ class Calendar extends Framework7Class {
       }
 
       const passiveListener =
-        app.touchEvents.start === 'touchstart' && app.support.passiveListener
+        app.touchEvents.start === 'touchstart' && getSupport().passiveListener
           ? { passive: true, capture: false }
           : false;
       // Selectors clicks

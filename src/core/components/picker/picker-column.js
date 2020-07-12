@@ -1,5 +1,6 @@
 import $ from '../../utils/dom7';
 import { requestAnimationFrame, getTranslate } from '../../utils/utils';
+import { getSupport } from '../../utils/get-support';
 
 export default function pickerColumn(colEl, updateItems) {
   const picker = this;
@@ -333,7 +334,7 @@ export default function pickerColumn(colEl, updateItems) {
     col.setValue(value);
   }
 
-  const activeListener = app.support.passiveListener ? { passive: false, capture: false } : false;
+  const activeListener = getSupport().passiveListener ? { passive: false, capture: false } : false;
   col.attachEvents = function attachColEvents() {
     col.$el.on(app.touchEvents.start, handleTouchStart, activeListener);
     app.on('touchmove:active', handleTouchMove);

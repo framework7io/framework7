@@ -1,6 +1,7 @@
 import { getDocument } from 'ssr-window';
 import $ from '../../utils/dom7';
 import { extend, nextFrame } from '../../utils/utils';
+import { getSupport } from '../../utils/get-support';
 
 const Swipeout = {
   init() {
@@ -345,7 +346,7 @@ const Swipeout = {
       });
     }
 
-    const passiveListener = app.support.passiveListener ? { passive: true } : false;
+    const passiveListener = getSupport().passiveListener ? { passive: true } : false;
 
     app.on('touchstart', (e) => {
       if (Swipeout.el) {

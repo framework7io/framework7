@@ -1,4 +1,5 @@
 import $ from '../../../utils/dom7';
+import { getSupport } from '../../../utils/get-support';
 
 export default {
   render() {
@@ -88,7 +89,7 @@ export default {
     }
 
     const passiveListener =
-      app.touchEvents.start === 'touchstart' && app.support.passiveListener
+      app.touchEvents.start === 'touchstart' && getSupport().passiveListener
         ? { passive: true, capture: false }
         : false;
 

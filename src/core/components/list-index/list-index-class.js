@@ -1,6 +1,7 @@
 import $ from '../../utils/dom7';
 import { extend, deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
+import { getSupport } from '../../utils/get-support';
 
 class ListIndex extends Framework7Class {
   constructor(app, params = {}) {
@@ -184,7 +185,7 @@ class ListIndex extends Framework7Class {
         $labelEl = undefined;
       }
     }
-    const passiveListener = app.support.passiveListener ? { passive: true } : false;
+    const passiveListener = getSupport().passiveListener ? { passive: true } : false;
     index.attachEvents = function attachEvents() {
       $el.parents('.tab').on('tab:show', handleResize);
       $el.parents('.page').on('page:reinit', handleResize);
