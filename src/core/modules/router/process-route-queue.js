@@ -30,7 +30,7 @@ function processQueue(router, routerQueue, routeQueue, to, from, resolve, reject
       },
       () => {
         reject();
-      }
+      },
     );
   }
   next();

@@ -5,11 +5,6 @@ import propsModule from './snabbdom/modules/props';
 import styleModule from './snabbdom/modules/style';
 import eventListenersModule from './eventslisteners';
 
-const patch = init([
-  attributesModule,
-  propsModule,
-  styleModule,
-  eventListenersModule,
-]);
+const patch = init([attributesModule, propsModule, styleModule, eventListenersModule]);
 
 export default patch;

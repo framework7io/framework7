@@ -1,4 +1,4 @@
-import Utils from '../../utils/utils';
+import { extend } from '../../utils/utils';
 
 export default function (direction, route, options) {
   const router = this;
@@ -9,7 +9,7 @@ export default function (direction, route, options) {
   }
   function redirectResolve(redirectUrl, redirectOptions = {}) {
     router.allowPageChange = true;
-    router[direction](redirectUrl, Utils.extend({}, options, redirectOptions));
+    router[direction](redirectUrl, extend({}, options, redirectOptions));
   }
   function redirectReject() {
     router.allowPageChange = true;

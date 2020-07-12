@@ -13,9 +13,9 @@ const propsAttrs = 'hidden checked disabled readonly selected autofocus autoplay
 const booleanProps = 'hidden checked disabled readonly selected autofocus autoplay required multiple readOnly indeterminate'.split(
   ' ',
 );
-const tempDomDIV = document.createElement('div');
-let tempDomTBODY;
-let tempDomTROW;
+let tempDIV;
+let tempTBODY;
+let tempTROW;
 
 function toCamelCase(name) {
   return name
@@ -369,6 +369,7 @@ function getSlots(slotEl, context, app, initial) {
 }
 
 function elementToVNode(el, context, app, initial, isRoot) {
+  const window = getWindow();
   if (el.nodeType === 3) {
     // text
     return el.textContent;
@@ -387,30 +388,34 @@ function elementToVNode(el, context, app, initial, isRoot) {
 }
 
 export default function (html = '', context, initial) {
+  const document = getDocument();
   // Save to temp dom
   const htmlTrim = html.trim();
-  let tempDom = tempDomDIV;
+  let tempDOM = tempDIV;
+  if (!tempDOM) {
+    tempDOM = document.createElement('div');
+  }
   if (htmlTrim.indexOf('<tr') === 0) {
-    if (!tempDomTBODY) tempDomTBODY = document.createElement('tbody');
-    tempDom = tempDomTBODY;
+    if (!tempTBODY) tempTBODY = document.createElement('tbody');
+    tempDOM = tempTBODY;
   }
   if (htmlTrim.indexOf('<td') === 0 || htmlTrim.indexOf('<th') === 0) {
-    if (!tempDomTROW) tempDomTROW = document.createElement('tr');
-    tempDom = tempDomTROW;
+    if (!tempTROW) tempTROW = document.createElement('tr');
+    tempDOM = tempTROW;
   }
-  tempDom.innerHTML = htmlTrim;
+  tempDOM.innerHTML = htmlTrim;
 
   // Parse DOM
   let rootEl;
-  for (let i = 0; i < tempDom.childNodes.length; i += 1) {
-    if (!rootEl && tempDom.childNodes[i].nodeType === 1) {
-      rootEl = tempDom.childNodes[i];
+  for (let i = 0; i < tempDOM.childNodes.length; i += 1) {
+    if (!rootEl && tempDOM.childNodes[i].nodeType === 1) {
+      rootEl = tempDOM.childNodes[i];
     }
   }
   const result = elementToVNode(rootEl, context, context.$app, initial, true);
 
   // Clean
-  tempDom.innerHTML = '';
+  tempDOM.innerHTML = '';
 
   return result;
 }

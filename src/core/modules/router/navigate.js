@@ -1,6 +1,6 @@
 import $ from 'dom7';
 import { getDocument } from 'ssr-window';
-import Utils from '../../utils/utils';
+import { extend, parseUrlQuery } from '../../utils/utils';
 import History from '../../utils/history';
 import redirect from './redirect';
 import processRouteQueue from './process-route-queue';
@@ -18,10 +18,11 @@ function refreshPage() {
 
 function forward(el, forwardOptions = {}) {
   const router = this;
+  const document = getDocument();
   const $el = $(el);
   const app = router.app;
   const view = router.view;
-  const options = Utils.extend(
+  const options = extend(
     false,
     {
       animate: router.params.animate,
@@ -73,7 +74,7 @@ function forward(el, forwardOptions = {}) {
       previousRoute = {
         url: previousUrl,
         path: previousUrl.split('?')[0],
-        query: Utils.parseUrlQuery(previousUrl),
+        query: parseUrlQuery(previousUrl),
         route: {
           path: previousUrl.split('?')[0],
           url: previousUrl,
@@ -514,7 +515,7 @@ function forward(el, forwardOptions = {}) {
   if (options.route.route.tab) {
     router.tabLoad(
       options.route.route.tab,
-      Utils.extend({}, options, {
+      extend({}, options, {
         history: false,
         pushState: false,
       }),
@@ -725,12 +726,12 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
 
   if (!options.route && url) {
     options.route = router.parseRouteUrl(url);
-    Utils.extend(options.route, { route: { url, path: url } });
+    extend(options.route, { route: { url, path: url } });
   }
 
   // Component Callbacks
   function resolve(pageEl, newOptions) {
-    return router.forward(pageEl, Utils.extend(options, newOptions));
+    return router.forward(pageEl, extend(options, newOptions));
   }
   function reject() {
     router.allowPageChange = true;
@@ -824,8 +825,8 @@ function navigate(navigateParams, navigateOptions = {}) {
       .replace('//', '/');
   }
   if (createRoute) {
-    route = Utils.extend(router.parseRouteUrl(navigateUrl), {
-      route: Utils.extend({}, createRoute),
+    route = extend(router.parseRouteUrl(navigateUrl), {
+      route: extend({}, createRoute),
     });
   } else {
     route = router.findMatchingRoute(navigateUrl);
@@ -853,9 +854,9 @@ function navigate(navigateParams, navigateOptions = {}) {
 
   const options = {};
   if (route.route.options) {
-    Utils.extend(options, route.route.options, navigateOptions);
+    extend(options, route.route.options, navigateOptions);
   } else {
-    Utils.extend(options, navigateOptions);
+    extend(options, navigateOptions);
   }
   options.route = route;
 
@@ -893,7 +894,7 @@ function navigate(navigateParams, navigateOptions = {}) {
       let resolvedAsModal = false;
       if (resolveOptions && resolveOptions.context) {
         if (!route.context) route.context = resolveOptions.context;
-        else route.context = Utils.extend({}, route.context, resolveOptions.context);
+        else route.context = extend({}, route.context, resolveOptions.context);
         options.route.context = route.context;
       }
       'popup popover sheet loginScreen actions customModal panel'
@@ -901,13 +902,13 @@ function navigate(navigateParams, navigateOptions = {}) {
         .forEach((modalLoadProp) => {
           if (resolveParams[modalLoadProp]) {
             resolvedAsModal = true;
-            const modalRoute = Utils.extend({}, route, { route: resolveParams });
+            const modalRoute = extend({}, route, { route: resolveParams });
             router.allowPageChange = true;
-            router.modalLoad(modalLoadProp, modalRoute, Utils.extend(options, resolveOptions));
+            router.modalLoad(modalLoadProp, modalRoute, extend(options, resolveOptions));
           }
         });
       if (resolvedAsModal) return;
-      router.load(resolveParams, Utils.extend(options, resolveOptions), true);
+      router.load(resolveParams, extend(options, resolveOptions), true);
     }
     function asyncReject() {
       router.allowPageChange = true;
@@ -959,7 +960,7 @@ function navigate(navigateParams, navigateOptions = {}) {
             pageAfterIn() {
               router.navigate(
                 navigateParams,
-                Utils.extend({}, navigateOptions, {
+                extend({}, navigateOptions, {
                   animate: false,
                   reloadAll: false,
                   reloadCurrent: false,

@@ -1,12 +1,14 @@
 import { getWindow, getDocument } from 'ssr-window';
 import Template7 from 'template7';
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { id } from '../../utils/utils';
 
 function parseComponent(componentString) {
-  const id = Utils.id();
-  const callbackCreateName = `f7_component_create_callback_${id}`;
-  const callbackRenderName = `f7_component_render_callback_${id}`;
+  const window = getWindow();
+  const document = getDocument();
+  const componentId = id();
+  const callbackCreateName = `f7_component_create_callback_${componentId}`;
+  const callbackRenderName = `f7_component_render_callback_${componentId}`;
 
   // Template
   let template;
@@ -36,7 +38,7 @@ function parseComponent(componentString) {
     styleScoped = true;
     style = componentString.split('<style scoped>')[1].split('</style>')[0];
     style = style
-      .replace(/{{this}}/g, `[data-f7-${id}]`)
+      .replace(/{{this}}/g, `[data-f7-${componentId}]`)
       .replace(/[\n]?([^{^}]*){/gi, (string, rules) => {
         if (rules.indexOf('"') >= 0 || rules.indexOf("'") >= 0) return string;
         // eslint-disable-next-line
@@ -44,8 +46,8 @@ function parseComponent(componentString) {
           .split(',')
           .map((rule) => {
             if (rule.indexOf('@') >= 0) return rule;
-            if (rule.indexOf(`[data-f7-${id}]`) >= 0) return rule;
-            return `[data-f7-${id}] ${rule.trim()}`;
+            if (rule.indexOf(`[data-f7-${componentId}]`) >= 0) return rule;
+            return `[data-f7-${componentId}] ${rule.trim()}`;
           })
           .join(', ');
 
@@ -130,7 +132,7 @@ function parseComponent(componentString) {
   }
 
   // Component ID
-  component.id = id;
+  component.id = componentId;
   return component;
 }
 

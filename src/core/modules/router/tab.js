@@ -1,18 +1,21 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import { extend } from '../../utils/utils';
 import History from '../../utils/history';
 import asyncComponent from './async-component';
 
 function tabLoad(tabRoute, loadOptions = {}) {
   const router = this;
-  const options = Utils.extend({
-    animate: router.params.animate,
-    pushState: true,
-    history: true,
-    parentPageEl: null,
-    preload: false,
-    on: {},
-  }, loadOptions);
+  const options = extend(
+    {
+      animate: router.params.animate,
+      pushState: true,
+      history: true,
+      parentPageEl: null,
+      preload: false,
+      on: {},
+    },
+    loadOptions,
+  );
 
   let currentRoute;
   let previousRoute;
@@ -37,7 +40,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
         {
           url: options.route.url,
         },
-        (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url
+        (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url,
       );
     }
 
@@ -155,7 +158,14 @@ function tabLoad(tabRoute, loadOptions = {}) {
     } else if (component || componentUrl) {
       // Load from component (F7/Vue/React/...)
       try {
-        router.tabComponentLoader($newTabEl[0], component, componentUrl, loadTabOptions, resolve, reject);
+        router.tabComponentLoader(
+          $newTabEl[0],
+          component,
+          componentUrl,
+          loadTabOptions,
+          resolve,
+          reject,
+        );
       } catch (err) {
         router.allowPageChange = true;
         throw err;
@@ -166,7 +176,8 @@ function tabLoad(tabRoute, loadOptions = {}) {
         router.xhr.abort();
         router.xhr = false;
       }
-      router.xhrRequest(url, loadTabOptions)
+      router
+        .xhrRequest(url, loadTabOptions)
         .then((tabContent) => {
           resolve(tabContent);
         })
@@ -177,7 +188,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
   }
 
   let hasContentLoadProp;
-  ('url content component el componentUrl template templateUrl').split(' ').forEach((tabLoadProp) => {
+  'url content component el componentUrl template templateUrl'.split(' ').forEach((tabLoadProp) => {
     if (tabRoute[tabLoadProp]) {
       hasContentLoadProp = true;
       loadTab({ [tabLoadProp]: tabRoute[tabLoadProp] }, options);
@@ -186,7 +197,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
 
   // Async
   function asyncResolve(resolveParams, resolveOptions) {
-    loadTab(resolveParams, Utils.extend(options, resolveOptions));
+    loadTab(resolveParams, extend(options, resolveOptions));
   }
   function asyncReject() {
     router.allowPageChange = true;

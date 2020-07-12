@@ -1,12 +1,12 @@
 /* eslint no-param-reassign: "off" */
-import Request from '../../utils/request';
+import request from '../../utils/request';
 
 export default {
   name: 'request',
   proto: {
-    request: Request,
+    request,
   },
   static: {
-    request: Request,
+    request,
   },
 };

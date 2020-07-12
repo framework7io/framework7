@@ -2,7 +2,7 @@
 import { getWindow, getDocument } from 'ssr-window';
 import $ from 'dom7';
 import Template7 from 'template7';
-import Utils from '../../utils/utils';
+import { id, merge, extend, eventNameToColonCase, deleteProps } from '../../utils/utils';
 import vdom from './vdom';
 import patch from './patch';
 
@@ -10,16 +10,18 @@ import componentMixins from './component-mixins';
 
 class Component {
   constructor(app, options = {}, extendContext = {}, children) {
-    const id = Utils.id();
+    const window = getWindow();
+    const document = getDocument();
+    const componentId = id();
     const self = this;
-    Utils.merge(self, { $props: {} }, extendContext, {
+    merge(self, { $props: {} }, extendContext, {
       $,
       $$: $,
       $dom7: $,
       $app: app,
       $f7: app,
-      $options: Utils.extend({ id }, options),
-      $id: options.isClassComponent ? self.constructor.id : options.id || id,
+      $options: extend({ id: componentId }, options),
+      $id: options.isClassComponent ? self.constructor.id : options.id || componentId,
       $mixins: options.isClassComponent ? self.constructor.mixins : options.mixins,
       $children: children || [],
       $isRootComponent: !!options.root,
@@ -68,7 +70,7 @@ class Component {
           }
           return app.rootComponent;
         }
-        let root = Utils.merge({}, app.data, app.methods);
+        let root = merge({}, app.data, app.methods);
         if (window && window.Proxy) {
           root = new window.Proxy(root, {
             set(target, name, val) {
@@ -132,7 +134,7 @@ class Component {
           datas.forEach((dt) => {
             Object.assign(data, dt || {});
           });
-          Utils.extend(self, data);
+          extend(self, data);
           self.$hook('beforeCreate');
           let html = self.$render();
 
@@ -197,7 +199,7 @@ class Component {
             const handler = mixin.on[eventName].bind(self);
             if (!self.$detachEventsHandlers[eventName]) self.$detachEventsHandlers[eventName] = [];
             self.$detachEventsHandlers[eventName].push(handler);
-            $el.on(Utils.eventNameToColonCase(eventName), handler);
+            $el.on(eventNameToColonCase(eventName), handler);
           });
         }
         if (mixin.once) {
@@ -205,19 +207,19 @@ class Component {
             const handler = mixin.once[eventName].bind(self);
             if (!self.$detachEventsHandlers[eventName]) self.$detachEventsHandlers[eventName] = [];
             self.$detachEventsHandlers[eventName].push(handler);
-            $el.once(Utils.eventNameToColonCase(eventName), handler);
+            $el.once(eventNameToColonCase(eventName), handler);
           });
         }
       });
     }
     if ($options.on) {
       Object.keys($options.on).forEach((eventName) => {
-        $el.on(Utils.eventNameToColonCase(eventName), $options.on[eventName]);
+        $el.on(eventNameToColonCase(eventName), $options.on[eventName]);
       });
     }
     if ($options.once) {
       Object.keys($options.once).forEach((eventName) => {
-        $el.once(Utils.eventNameToColonCase(eventName), $options.once[eventName]);
+        $el.once(eventNameToColonCase(eventName), $options.once[eventName]);
       });
     }
   }
@@ -227,19 +229,19 @@ class Component {
     const { $options, $el } = self;
     if ($options.on) {
       Object.keys($options.on).forEach((eventName) => {
-        $el.off(Utils.eventNameToColonCase(eventName), $options.on[eventName]);
+        $el.off(eventNameToColonCase(eventName), $options.on[eventName]);
       });
     }
     if ($options.once) {
       Object.keys($options.once).forEach((eventName) => {
-        $el.off(Utils.eventNameToColonCase(eventName), $options.once[eventName]);
+        $el.off(eventNameToColonCase(eventName), $options.once[eventName]);
       });
     }
     if (!self.$detachEventsHandlers) return;
     Object.keys(self.$detachEventsHandlers).forEach((eventName) => {
       const handlers = self.$detachEventsHandlers[eventName];
       handlers.forEach((handler) => {
-        $el.off(Utils.eventNameToColonCase(eventName), handler);
+        $el.off(eventNameToColonCase(eventName), handler);
       });
       self.$detachEventsHandlers[eventName] = [];
       delete self.$detachEventsHandlers[eventName];
@@ -269,6 +271,7 @@ class Component {
 
   $startUpdateQueue() {
     const self = this;
+    const window = getWindow();
     if (self.__requestAnimationFrameId) return;
     function update() {
       let html = self.$render();
@@ -323,7 +326,7 @@ class Component {
 
   $setState(mergeState = {}, callback) {
     const self = this;
-    Utils.merge(self, mergeState);
+    merge(self, mergeState);
     return self.$update(callback);
   }
 
@@ -347,6 +350,7 @@ class Component {
 
   $destroy() {
     const self = this;
+    const window = getWindow();
     self.$hook('beforeDestroy');
 
     if (self.$styleEl) $(self.$styleEl).remove();
@@ -370,7 +374,7 @@ class Component {
     window.cancelAnimationFrame(self.__requestAnimationFrameId);
 
     // Delete all props
-    Utils.deleteProps(self);
+    deleteProps(self);
   }
 
   $hook(name, async) {

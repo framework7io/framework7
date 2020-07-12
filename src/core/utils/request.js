@@ -1,17 +1,19 @@
 import { getWindow, getDocument } from 'ssr-window';
-import Utils from './utils';
+import { extend, serializeObject } from './utils';
 
 const globals = {};
 let jsonpRequests = 0;
 
-function Request(requestOptions) {
-  const globalsNoCallbacks = Utils.extend({}, globals);
+function request(requestOptions) {
+  const window = getWindow();
+  const document = getDocument();
+  const globalsNoCallbacks = extend({}, globals);
   'beforeCreate beforeOpen beforeSend error complete success statusCode'
     .split(' ')
     .forEach((callbackName) => {
       delete globalsNoCallbacks[callbackName];
     });
-  const defaults = Utils.extend(
+  const defaults = extend(
     {
       url: window.location.toString(),
       method: 'GET',
@@ -31,7 +33,7 @@ function Request(requestOptions) {
     globalsNoCallbacks,
   );
 
-  const options = Utils.extend({}, defaults, requestOptions);
+  const options = extend({}, defaults, requestOptions);
   let proceedRequest;
 
   // Function to run XHR callbacks and events
@@ -84,7 +86,7 @@ function Request(requestOptions) {
       else stringData = options.data;
     } else {
       // Should be key=value object
-      stringData = Utils.serializeObject(options.data);
+      stringData = serializeObject(options.data);
     }
     if (stringData.length) {
       options.url += paramsPrefix + stringData;
@@ -177,7 +179,7 @@ function Request(requestOptions) {
           xhr.setRequestHeader('Content-Type', options.contentType);
         }
         postData = '';
-        let data = Utils.serializeObject(options.data);
+        let data = serializeObject(options.data);
         if (options.contentType === 'multipart/form-data') {
           data = data.split('&');
           const newData = [];
@@ -214,8 +216,8 @@ function Request(requestOptions) {
 
   // Check for crossDomain
   if (typeof options.crossDomain === 'undefined') {
-    // eslint-disable-next-line
     options.crossDomain =
+      // eslint-disable-next-line
       /^([\w-]+:)?\/\/([^\/]+)/.test(options.url) && RegExp.$2 !== window.location.host;
   }
 
@@ -224,7 +226,7 @@ function Request(requestOptions) {
   }
 
   if (options.xhrFields) {
-    Utils.extend(xhr, options.xhrFields);
+    extend(xhr, options.xhrFields);
   }
 
   // Handle XHR
@@ -282,7 +284,7 @@ function Request(requestOptions) {
   // Return XHR object
   return xhr;
 }
-function RequestShortcut(method, ...args) {
+function requestShortcut(method, ...args) {
   let [url, data, success, error, dataType] = [];
   if (typeof args[1] === 'function') {
     [url, success, error, dataType] = args;
@@ -306,19 +308,19 @@ function RequestShortcut(method, ...args) {
     dataType,
   };
   if (method === 'postJSON') {
-    Utils.extend(requestOptions, {
+    extend(requestOptions, {
       contentType: 'application/json',
       processData: false,
       crossDomain: true,
       data: typeof data === 'string' ? data : JSON.stringify(data),
     });
   }
-  return Request(requestOptions);
+  return request(requestOptions);
 }
-function RequestShortcutPromise(method, ...args) {
+function requestShortcutPromise(method, ...args) {
   const [url, data, dataType] = args;
   return new Promise((resolve, reject) => {
-    RequestShortcut(
+    requestShortcut(
       method,
       url,
       data,
@@ -333,17 +335,17 @@ function RequestShortcutPromise(method, ...args) {
     );
   });
 }
-Object.assign(Request, {
-  get: (...args) => RequestShortcut('get', ...args),
-  post: (...args) => RequestShortcut('post', ...args),
-  json: (...args) => RequestShortcut('json', ...args),
-  getJSON: (...args) => RequestShortcut('json', ...args),
-  postJSON: (...args) => RequestShortcut('postJSON', ...args),
+Object.assign(request, {
+  get: (...args) => requestShortcut('get', ...args),
+  post: (...args) => requestShortcut('post', ...args),
+  json: (...args) => requestShortcut('json', ...args),
+  getJSON: (...args) => requestShortcut('json', ...args),
+  postJSON: (...args) => requestShortcut('postJSON', ...args),
 });
 
-Request.promise = function requestPromise(requestOptions) {
+request.promise = function requestPromise(requestOptions) {
   return new Promise((resolve, reject) => {
-    Request(
+    request(
       Object.assign(requestOptions, {
         success(data, status, xhr) {
           resolve({ data, status, xhr });
@@ -356,19 +358,19 @@ Request.promise = function requestPromise(requestOptions) {
     );
   });
 };
-Object.assign(Request.promise, {
-  get: (...args) => RequestShortcutPromise('get', ...args),
-  post: (...args) => RequestShortcutPromise('post', ...args),
-  json: (...args) => RequestShortcutPromise('json', ...args),
-  getJSON: (...args) => RequestShortcutPromise('json', ...args),
-  postJSON: (...args) => RequestShortcutPromise('postJSON', ...args),
+Object.assign(request.promise, {
+  get: (...args) => requestShortcutPromise('get', ...args),
+  post: (...args) => requestShortcutPromise('post', ...args),
+  json: (...args) => requestShortcutPromise('json', ...args),
+  getJSON: (...args) => requestShortcutPromise('json', ...args),
+  postJSON: (...args) => requestShortcutPromise('postJSON', ...args),
 });
 
-Request.setup = function setup(options) {
+request.setup = function setup(options) {
   if (options.type && !options.method) {
-    Utils.extend(options, { method: options.type });
+    extend(options, { method: options.type });
   }
-  Utils.extend(globals, options);
+  extend(globals, options);
 };
 
-export default Request;
+export default request;

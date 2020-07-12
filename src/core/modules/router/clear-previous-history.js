@@ -6,12 +6,11 @@ function clearPreviousPages(router) {
   const app = router.app;
   const dynamicNavbar = router.dynamicNavbar;
 
-  const $pagesToRemove = router.$el
-    .children('.page')
-    .filter((index, pageInView) => {
-      if (router.currentRoute && (router.currentRoute.modal || router.currentRoute.panel)) return true;
-      return pageInView !== router.currentPageEl;
-    });
+  const $pagesToRemove = router.$el.children('.page').filter((index, pageInView) => {
+    if (router.currentRoute && (router.currentRoute.modal || router.currentRoute.panel))
+      return true;
+    return pageInView !== router.currentPageEl;
+  });
 
   $pagesToRemove.each((index, pageEl) => {
     const $oldPageEl = $(pageEl);

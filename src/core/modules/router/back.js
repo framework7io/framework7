@@ -1,7 +1,7 @@
 import $ from 'dom7';
 import { getDocument } from 'ssr-window';
-import Utils from '../../utils/utils';
-import Device from '../../utils/device';
+import { extend, parseUrlQuery } from '../../utils/utils';
+import { getDevice } from '../../utils/get-device';
 import History from '../../utils/history';
 import redirect from './redirect';
 import processRouteQueue from './process-route-queue';
@@ -10,11 +10,13 @@ import asyncComponent from './async-component';
 
 function backward(el, backwardOptions) {
   const router = this;
+  const device = getDevice();
+  const document = getDocument();
   const $el = $(el);
   const app = router.app;
   const view = router.view;
 
-  const options = Utils.extend(
+  const options = extend(
     {
       animate: router.params.animate,
       pushState: true,
@@ -306,7 +308,7 @@ function backward(el, backwardOptions) {
     if (options.route.route.tab) {
       router.tabLoad(
         options.route.route.tab,
-        Utils.extend({}, options, {
+        extend({}, options, {
           history: false,
           pushState: false,
           preload: true,
@@ -359,7 +361,7 @@ function backward(el, backwardOptions) {
   }
 
   // History State
-  if (!(Device.ie || Device.edge || (Device.firefox && !Device.ios))) {
+  if (!(device.ie || device.edge || (device.firefox && !device.ios))) {
     if (router.params.pushState && options.pushState) {
       if (options.replaceState) {
         const pushStateRoot = router.params.pushStateRoot || '';
@@ -401,7 +403,7 @@ function backward(el, backwardOptions) {
   router.currentRoute = options.route;
 
   // History State
-  if (Device.ie || Device.edge || (Device.firefox && !Device.ios)) {
+  if (device.ie || device.edge || (device.firefox && !device.ios)) {
     if (router.params.pushState && options.pushState) {
       if (options.replaceState) {
         const pushStateRoot = router.params.pushStateRoot || '';
@@ -427,7 +429,7 @@ function backward(el, backwardOptions) {
   if (options.route.route.tab) {
     router.tabLoad(
       options.route.route.tab,
-      Utils.extend({}, options, {
+      extend({}, options, {
         history: false,
         pushState: false,
       }),
@@ -551,7 +553,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
 
   // Component Callbacks
   function resolve(pageEl, newOptions) {
-    return router.backward(pageEl, Utils.extend(options, newOptions));
+    return router.backward(pageEl, extend(options, newOptions));
   }
   function reject() {
     router.allowPageChange = true;
@@ -606,6 +608,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
 }
 function back(...args) {
   const router = this;
+  const device = getDevice();
   if (router.swipeBackActive) return router;
   let navigateUrl;
   let navigateOptions;
@@ -623,7 +626,7 @@ function back(...args) {
     if (navigateUrl) {
       return router.back(
         navigateUrl,
-        Utils.extend({}, navigateOptions, {
+        extend({}, navigateOptions, {
           name: null,
           params: null,
           query: null,
@@ -672,7 +675,7 @@ function back(...args) {
       previousRoute = {
         url: previousUrl,
         path: previousUrl.split('?')[0],
-        query: Utils.parseUrlQuery(previousUrl),
+        query: parseUrlQuery(previousUrl),
         route: {
           path: previousUrl.split('?')[0],
           url: previousUrl,
@@ -686,7 +689,7 @@ function back(...args) {
     }
     const forceOtherUrl = navigateOptions.force && previousRoute && navigateUrl;
     if (previousRoute && modalToClose) {
-      const isBrokenPushState = Device.ie || Device.edge || (Device.firefox && !Device.ios);
+      const isBrokenPushState = device.ie || device.edge || (device.firefox && !device.ios);
       const needHistoryBack = router.params.pushState && navigateOptions.pushState !== false;
       if (needHistoryBack && !isBrokenPushState) {
         History.back();
@@ -748,7 +751,7 @@ function back(...args) {
     ) {
       router.back(
         router.history[router.history.length - 2],
-        Utils.extend(navigateOptions, { force: true }),
+        extend(navigateOptions, { force: true }),
       );
       return router;
     }
@@ -761,7 +764,7 @@ function back(...args) {
       () => {
         router.loadBack(
           { el: $previousPage },
-          Utils.extend(navigateOptions, {
+          extend(navigateOptions, {
             route: previousPageRoute,
           }),
         );
@@ -785,7 +788,7 @@ function back(...args) {
   if (skipMaster && !navigateOptions.force && router.history[router.history.length - 3]) {
     return router.back(
       router.history[router.history.length - 3],
-      Utils.extend({}, navigateOptions || {}, {
+      extend({}, navigateOptions || {}, {
         force: true,
         animate: false,
       }),
@@ -802,7 +805,7 @@ function back(...args) {
       route = {
         url: navigateUrl,
         path: navigateUrl.split('?')[0],
-        query: Utils.parseUrlQuery(navigateUrl),
+        query: parseUrlQuery(navigateUrl),
         route: {
           path: navigateUrl.split('?')[0],
           url: navigateUrl,
@@ -820,9 +823,9 @@ function back(...args) {
 
   const options = {};
   if (route.route.options) {
-    Utils.extend(options, route.route.options, navigateOptions);
+    extend(options, route.route.options, navigateOptions);
   } else {
-    Utils.extend(options, navigateOptions);
+    extend(options, navigateOptions);
   }
   options.route = route;
 
@@ -863,10 +866,10 @@ function back(...args) {
       router.allowPageChange = false;
       if (resolveOptions && resolveOptions.context) {
         if (!route.context) route.context = resolveOptions.context;
-        else route.context = Utils.extend({}, route.context, resolveOptions.context);
+        else route.context = extend({}, route.context, resolveOptions.context);
         options.route.context = route.context;
       }
-      router.loadBack(resolveParams, Utils.extend(options, resolveOptions), true);
+      router.loadBack(resolveParams, extend(options, resolveOptions), true);
     }
     function asyncReject() {
       router.allowPageChange = true;

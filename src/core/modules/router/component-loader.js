@@ -1,4 +1,4 @@
-import Utils from '../../utils/utils';
+import { merge } from '../../utils/utils';
 
 export default {
   name: 'routerComponentLoader',
@@ -16,31 +16,28 @@ export default {
             context = JSON.parse(context);
           } catch (err) {
             reject(err);
-            throw (err);
+            throw err;
           }
         }
-        const extendContext = Utils.merge(
-          {},
-          context,
-          {
-            $route: options.route,
-            $f7route: options.route,
-            $router: router,
-            $f7router: router,
-            $theme: {
-              ios: app.theme === 'ios',
-              md: app.theme === 'md',
-              aurora: app.theme === 'aurora',
-            },
-          }
-        );
+        const extendContext = merge({}, context, {
+          $route: options.route,
+          $f7route: options.route,
+          $router: router,
+          $f7router: router,
+          $theme: {
+            ios: app.theme === 'ios',
+            md: app.theme === 'md',
+            aurora: app.theme === 'aurora',
+          },
+        });
         if (options.componentOptions && options.componentOptions.el) {
           componentOptions.el = options.componentOptions.el;
         }
         if (options.componentOptions && options.componentOptions.root) {
           componentOptions.root = options.componentOptions.root;
         }
-        app.component.create(componentOptions, extendContext)
+        app.component
+          .create(componentOptions, extendContext)
           .then((createdComponent) => {
             resolve(createdComponent.el);
           })
@@ -77,7 +74,7 @@ export default {
           })
           .catch((err) => {
             reject();
-            throw (err);
+            throw err;
           });
       } else {
         compile(component);
@@ -86,23 +83,41 @@ export default {
 
     modalComponentLoader(rootEl, component, componentUrl, options, resolve, reject) {
       const router = this;
-      router.componentLoader(component, componentUrl, options, (el) => {
-        resolve(el);
-      }, reject);
+      router.componentLoader(
+        component,
+        componentUrl,
+        options,
+        (el) => {
+          resolve(el);
+        },
+        reject,
+      );
     },
 
     tabComponentLoader(tabEl, component, componentUrl, options, resolve, reject) {
       const router = this;
-      router.componentLoader(component, componentUrl, options, (el) => {
-        resolve(el);
-      }, reject);
+      router.componentLoader(
+        component,
+        componentUrl,
+        options,
+        (el) => {
+          resolve(el);
+        },
+        reject,
+      );
     },
 
     pageComponentLoader(routerEl, component, componentUrl, options, resolve, reject) {
       const router = this;
-      router.componentLoader(component, componentUrl, options, (el, newOptions = {}) => {
-        resolve(el, newOptions);
-      }, reject);
+      router.componentLoader(
+        component,
+        componentUrl,
+        options,
+        (el, newOptions = {}) => {
+          resolve(el, newOptions);
+        },
+        reject,
+      );
     },
   },
 };

@@ -2,7 +2,14 @@ import { getWindow, getDocument } from 'ssr-window';
 import $ from 'dom7';
 import { pathToRegexp, compile } from 'path-to-regexp';
 import Framework7Class from '../../utils/class';
-import Utils from '../../utils/utils';
+import {
+  extend,
+  nextFrame,
+  parseUrlQuery,
+  serializeObject,
+  now,
+  eventNameToColonCase,
+} from '../../utils/utils';
 import History from '../../utils/history';
 import SwipeBack from './swipe-back';
 
@@ -17,13 +24,14 @@ class Router extends Framework7Class {
   constructor(app, view) {
     super({}, [typeof view === 'undefined' ? app : view]);
     const router = this;
+    const document = getDocument();
 
     // Is App Router
     router.isAppRouter = typeof view === 'undefined';
 
     if (router.isAppRouter) {
       // App Router
-      Utils.extend(false, router, {
+      extend(false, router, {
         app,
         params: app.params.view,
         routes: app.routes || [],
@@ -31,7 +39,7 @@ class Router extends Framework7Class {
       });
     } else {
       // View Router
-      Utils.extend(false, router, {
+      extend(false, router, {
         app,
         view,
         viewId: view.id,
@@ -66,7 +74,7 @@ class Router extends Framework7Class {
       enumerable: true,
       configurable: true,
       set(newRoute = {}) {
-        previousRoute = Utils.extend({}, currentRoute);
+        previousRoute = extend({}, currentRoute);
         currentRoute = newRoute;
         if (!currentRoute) return;
         router.url = currentRoute.url;
@@ -314,7 +322,7 @@ class Router extends Framework7Class {
             'router-navbar-transition-to-large router-navbar-transition-from-large',
           );
           $newNavbarEl.addClass('navbar-no-title-large-transition');
-          Utils.nextFrame(() => {
+          nextFrame(() => {
             $newNavbarEl.removeClass('navbar-no-title-large-transition');
           });
         }
@@ -352,7 +360,7 @@ class Router extends Framework7Class {
     if (dynamicNavbar) {
       // Prepare Navbars
       animateNavbars(0);
-      Utils.nextFrame(() => {
+      nextFrame(() => {
         // Add class, start animation
         animateNavbars(1);
         router.$el.addClass(routerTransitionClass);
@@ -477,7 +485,7 @@ class Router extends Framework7Class {
       let hasTabRoutes = false;
       if ('tabs' in route && route.tabs) {
         const mergedPathsRoutes = route.tabs.map((tabRoute) => {
-          const tRoute = Utils.extend({}, route, {
+          const tRoute = extend({}, route, {
             path: `${route.path}/${tabRoute.path}`.replace('///', '/').replace('//', '/'),
             parentPath: route.path,
             tab: tabRoute,
@@ -491,7 +499,7 @@ class Router extends Framework7Class {
       }
       if ('detailRoutes' in route) {
         const mergedPathsRoutes = route.detailRoutes.map((detailRoute) => {
-          const dRoute = Utils.extend({}, detailRoute);
+          const dRoute = extend({}, detailRoute);
           dRoute.masterRoute = route;
           dRoute.masterRoutePath = route.path;
           return dRoute;
@@ -500,7 +508,7 @@ class Router extends Framework7Class {
       }
       if ('routes' in route) {
         const mergedPathsRoutes = route.routes.map((childRoute) => {
-          const cRoute = Utils.extend({}, childRoute);
+          const cRoute = extend({}, childRoute);
           cRoute.path = `${route.path}/${cRoute.path}`.replace('///', '/').replace('//', '/');
           return cRoute;
         });
@@ -520,7 +528,7 @@ class Router extends Framework7Class {
   // eslint-disable-next-line
   parseRouteUrl(url) {
     if (!url) return {};
-    const query = Utils.parseUrlQuery(url);
+    const query = parseUrlQuery(url);
     const hash = url.split('#')[1];
     const params = {};
     const path = url.split('#')[0].split('?')[0];
@@ -573,7 +581,7 @@ class Router extends Framework7Class {
 
     if (query) {
       if (typeof query === 'string') url += `?${query}`;
-      else url += `?${Utils.serializeObject(query)}`;
+      else url += `?${serializeObject(query)}`;
     }
 
     return url;
@@ -713,7 +721,7 @@ class Router extends Framework7Class {
       options.route.query &&
       Object.keys(options.route.query).length
     ) {
-      url += `${hasQuery ? '&' : '?'}${Utils.serializeObject(options.route.query)}`;
+      url += `${hasQuery ? '&' : '?'}${serializeObject(options.route.query)}`;
       hasQuery = true;
     }
 
@@ -724,7 +732,7 @@ class Router extends Framework7Class {
       options.route.params &&
       Object.keys(options.route.params).length
     ) {
-      url += `${hasQuery ? '&' : '?'}${Utils.serializeObject(options.route.params)}`;
+      url += `${hasQuery ? '&' : '?'}${serializeObject(options.route.params)}`;
       hasQuery = true;
     }
 
@@ -746,7 +754,7 @@ class Router extends Framework7Class {
           const cachedUrl = router.cache.xhr[i];
           if (cachedUrl.url === url) {
             // Check expiration
-            if (Utils.now() - cachedUrl.time < params.xhrCacheDuration) {
+            if (now() - cachedUrl.time < params.xhrCacheDuration) {
               // Load from cache
               resolve(cachedUrl.content);
               return;
@@ -770,7 +778,7 @@ class Router extends Framework7Class {
               router.removeFromXhrCache(url);
               router.cache.xhr.push({
                 url,
-                time: Utils.now(),
+                time: now(),
                 content: xhr.responseText,
               });
             }
@@ -907,7 +915,7 @@ class Router extends Framework7Class {
 
     let page = {};
     if (callback === 'beforeRemove' && $pageEl[0].f7Page) {
-      page = Utils.extend($pageEl[0].f7Page, { from, to, position: from });
+      page = extend($pageEl[0].f7Page, { from, to, position: from });
     } else {
       page = router.getPageData($pageEl[0], $navbarEl[0], from, to, route, pageFromEl);
     }
@@ -915,10 +923,10 @@ class Router extends Framework7Class {
 
     const { on = {}, once = {} } = options.route ? options.route.route : {};
     if (options.on) {
-      Utils.extend(on, options.on);
+      extend(on, options.on);
     }
     if (options.once) {
-      Utils.extend(once, options.once);
+      extend(once, options.once);
     }
 
     function attachEvents() {
@@ -928,14 +936,14 @@ class Router extends Framework7Class {
         $pageEl[0].f7RouteEventsOn = on;
         Object.keys(on).forEach((eventName) => {
           on[eventName] = on[eventName].bind(router);
-          $pageEl.on(Utils.eventNameToColonCase(eventName), on[eventName]);
+          $pageEl.on(eventNameToColonCase(eventName), on[eventName]);
         });
       }
       if (once && Object.keys(once).length > 0) {
         $pageEl[0].f7RouteEventsOnce = once;
         Object.keys(once).forEach((eventName) => {
           once[eventName] = once[eventName].bind(router);
-          $pageEl.once(Utils.eventNameToColonCase(eventName), once[eventName]);
+          $pageEl.once(eventNameToColonCase(eventName), once[eventName]);
         });
       }
     }
@@ -944,15 +952,12 @@ class Router extends Framework7Class {
       if (!$pageEl[0].f7RouteEventsAttached) return;
       if ($pageEl[0].f7RouteEventsOn) {
         Object.keys($pageEl[0].f7RouteEventsOn).forEach((eventName) => {
-          $pageEl.off(Utils.eventNameToColonCase(eventName), $pageEl[0].f7RouteEventsOn[eventName]);
+          $pageEl.off(eventNameToColonCase(eventName), $pageEl[0].f7RouteEventsOn[eventName]);
         });
       }
       if ($pageEl[0].f7RouteEventsOnce) {
         Object.keys($pageEl[0].f7RouteEventsOnce).forEach((eventName) => {
-          $pageEl.off(
-            Utils.eventNameToColonCase(eventName),
-            $pageEl[0].f7RouteEventsOnce[eventName],
-          );
+          $pageEl.off(eventNameToColonCase(eventName), $pageEl[0].f7RouteEventsOnce[eventName]);
         });
       }
       $pageEl[0].f7RouteEventsAttached = null;
@@ -1034,6 +1039,7 @@ class Router extends Framework7Class {
 
   saveHistory() {
     const router = this;
+    const window = getWindow();
     router.view.history = router.history;
     if (router.params.pushState) {
       window.localStorage[`f7router-${router.view.id}-history`] = JSON.stringify(router.history);
@@ -1042,6 +1048,7 @@ class Router extends Framework7Class {
 
   restoreHistory() {
     const router = this;
+    const window = getWindow();
     if (router.params.pushState && window.localStorage[`f7router-${router.view.id}-history`]) {
       router.history = JSON.parse(window.localStorage[`f7router-${router.view.id}-history`]);
       router.view.history = router.history;
@@ -1068,7 +1075,7 @@ class Router extends Framework7Class {
     // Update current route params
     const { query, hash, params, url, path } = router.parseRouteUrl(newUrl);
     if (router.currentRoute) {
-      Utils.extend(router.currentRoute, {
+      extend(router.currentRoute, {
         query,
         hash,
         params,
@@ -1097,6 +1104,8 @@ class Router extends Framework7Class {
   init() {
     const router = this;
     const { app, view } = router;
+    const window = getWindow();
+    const document = getDocument();
 
     // Init Swipeback
     if (
@@ -1176,7 +1185,7 @@ class Router extends Framework7Class {
       // Will load page
       currentRoute = router.findMatchingRoute(router.history[0]);
       if (!currentRoute) {
-        currentRoute = Utils.extend(router.parseRouteUrl(router.history[0]), {
+        currentRoute = extend(router.parseRouteUrl(router.history[0]), {
           route: {
             url: router.history[0],
             path: router.history[0].split('?')[0],
@@ -1187,7 +1196,7 @@ class Router extends Framework7Class {
       // Don't load page
       currentRoute = router.findMatchingRoute(initUrl);
       if (!currentRoute) {
-        currentRoute = Utils.extend(router.parseRouteUrl(initUrl), {
+        currentRoute = extend(router.parseRouteUrl(initUrl), {
           route: {
             url: initUrl,
             path: initUrl.split('?')[0],
@@ -1261,7 +1270,7 @@ class Router extends Framework7Class {
           route: router.currentRoute,
         };
         if (router.currentRoute && router.currentRoute.route && router.currentRoute.route.options) {
-          Utils.extend(initOptions, router.currentRoute.route.options);
+          extend(initOptions, router.currentRoute.route.options);
         }
         router.currentPageEl = $pageEl[0];
         if (router.dynamicNavbar && $navbarEl.length) {
@@ -1273,7 +1282,7 @@ class Router extends Framework7Class {
         }
         if (initOptions.route.route.tab) {
           hasTabRoute = true;
-          router.tabLoad(initOptions.route.route.tab, Utils.extend({}, initOptions));
+          router.tabLoad(initOptions.route.route.tab, extend({}, initOptions));
         }
         router.pageCallback('init', $pageEl, $navbarEl, 'current', undefined, initOptions);
       });

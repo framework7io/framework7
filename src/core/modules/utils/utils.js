@@ -1,11 +1,11 @@
-import Utils from '../../utils/utils';
+import * as utils from '../../utils/utils';
 
 export default {
   name: 'utils',
   proto: {
-    utils: Utils,
+    utils,
   },
   static: {
-    utils: Utils,
+    utils,
   },
 };

@@ -9,5 +9,4 @@ src/core/framework7.js
 src/core/modules/demo-module.js
 src/core/components/swiper/swiper-src
 src/core/modules/component/snabbdom
-src/core/components/calendar/idate
 woff2
