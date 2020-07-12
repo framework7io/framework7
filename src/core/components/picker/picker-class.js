@@ -2,12 +2,15 @@ import { getWindow } from 'ssr-window';
 import $ from '../../utils/dom7';
 import { extend, nextTick, deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
+import { getDevice } from '../../utils/get-device';
+
 import pickerColumn from './picker-column';
 
 class Picker extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
     const picker = this;
+    const device = getDevice();
     const window = getWindow();
     picker.params = extend({}, app.params.picker, params);
 
@@ -36,10 +39,10 @@ class Picker extends Framework7Class {
       containerEl: $containerEl && $containerEl[0],
       inline: $containerEl && $containerEl.length > 0,
       needsOriginFix:
-        app.device.ios ||
+        device.ios ||
         (window.navigator.userAgent.toLowerCase().indexOf('safari') >= 0 &&
           window.navigator.userAgent.toLowerCase().indexOf('chrome') < 0 &&
-          !app.device.android),
+          !device.android),
       cols: [],
       $inputEl,
       inputEl: $inputEl && $inputEl[0],
@@ -144,18 +147,19 @@ class Picker extends Framework7Class {
   isPopover() {
     const picker = this;
     const { app, modal, params } = picker;
+    const device = getDevice();
     if (params.openIn === 'sheet') return false;
     if (modal && modal.type !== 'popover') return false;
 
     if (!picker.inline && picker.inputEl) {
       if (params.openIn === 'popover') return true;
-      if (app.device.ios) {
-        return !!app.device.ipad;
+      if (device.ios) {
+        return !!device.ipad;
       }
       if (app.width >= 768) {
         return true;
       }
-      if (app.device.desktop && app.theme === 'aurora') {
+      if (device.desktop && app.theme === 'aurora') {
         return true;
       }
     }

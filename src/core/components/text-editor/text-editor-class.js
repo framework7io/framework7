@@ -2,6 +2,7 @@ import { getWindow, getDocument } from 'ssr-window';
 import $ from '../../utils/dom7';
 import { extend, deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
+import { getDevice } from '../../utils/get-device';
 
 const textEditorButtonsMap = {
   // f7-icon, material-icon, command
@@ -32,6 +33,7 @@ class TextEditor extends Framework7Class {
     super(params, [app]);
     const self = this;
     const document = getDocument();
+    const device = getDevice();
 
     const defaults = extend({}, app.params.textEditor);
 
@@ -66,7 +68,7 @@ class TextEditor extends Framework7Class {
     }
 
     if (self.params.mode === 'keyboard-toolbar') {
-      if (!app.device.cordova && !app.device.android) {
+      if (!device.cordova && !device.android) {
         self.params.mode = 'popover';
       }
     }
@@ -442,7 +444,7 @@ class TextEditor extends Framework7Class {
   createKeyboardToolbar() {
     const self = this;
     const isDark =
-      self.$el.closest('.theme-dark').length > 0 || self.app.device.prefersColorScheme() === 'dark';
+      self.$el.closest('.theme-dark').length > 0 || self.device.prefersColorScheme() === 'dark';
     self.$keyboardToolbarEl = $(
       `<div class="toolbar toolbar-bottom text-editor-keyboard-toolbar ${
         isDark ? 'theme-dark' : ''

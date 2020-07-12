@@ -2,6 +2,7 @@ import { getWindow, getDocument } from 'ssr-window';
 import $ from '../../utils/dom7';
 import { extend, now, getTranslate } from '../../utils/utils';
 import getSupport from '../../utils/get-support';
+import { getDevice } from '../../utils/get-device';
 import Modal from '../modal/modal-class';
 
 class Sheet extends Modal {
@@ -15,6 +16,7 @@ class Sheet extends Modal {
     const window = getWindow();
     const document = getDocument();
     const support = getSupport();
+    const device = getDevice();
 
     sheet.params = extendedParams;
     if (typeof sheet.params.backdrop === 'undefined') {
@@ -107,8 +109,8 @@ class Sheet extends Modal {
       const target = e.target;
       const $target = $(target);
       const keyboardOpened =
-        !app.device.desktop &&
-        app.device.cordova &&
+        !device.desktop &&
+        device.cordova &&
         ((window.Keyboard && window.Keyboard.isVisible) ||
           (window.cordova.plugins &&
             window.cordova.plugins.Keyboard &&

@@ -1,5 +1,6 @@
 /* eslint indent: ["off"] */
 import { getWindow, getDocument } from 'ssr-window';
+import { getDevice } from '../../utils/get-device';
 import { extend, nextTick } from '../../utils/utils';
 import Modal from '../modal/modal-class';
 import $ from '../../utils/dom7';
@@ -12,6 +13,8 @@ class Actions extends Modal {
     super(app, extendedParams);
 
     const actions = this;
+
+    const device = getDevice();
     const window = getWindow();
     const document = getDocument();
 
@@ -92,9 +95,9 @@ class Actions extends Modal {
         // Popover
         if (
           actions.params.forceToPopover ||
-          (app.device.ios && app.device.ipad) ||
+          (device.ios && device.ipad) ||
           app.width >= 768 ||
-          (app.device.desktop && app.theme === 'aurora')
+          (device.desktop && app.theme === 'aurora')
         ) {
           convertToPopover = true;
         }
@@ -195,8 +198,8 @@ class Actions extends Modal {
       const target = e.target;
       const $target = $(target);
       const keyboardOpened =
-        !app.device.desktop &&
-        app.device.cordova &&
+        !device.desktop &&
+        device.cordova &&
         ((window.Keyboard && window.Keyboard.isVisible) ||
           (window.cordova.plugins &&
             window.cordova.plugins.Keyboard &&

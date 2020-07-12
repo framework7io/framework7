@@ -2,6 +2,7 @@ import Template7 from 'template7';
 import { getWindow, getDocument } from 'ssr-window';
 import { extend, nextFrame } from '../../utils/utils';
 import { getDevice } from '../../utils/get-device';
+import { getSupport } from '../../utils/get-support';
 import Framework7Class from '../../utils/class';
 import EventsClass from '../../utils/events-class';
 import ConstructorMethods from '../../utils/constructor-methods';
@@ -15,15 +16,19 @@ class Framework7 extends Framework7Class {
     if (Framework7.instance) {
       throw new Error("Framework7 is already initialized and can't be initialized more than once");
     }
+    const device = getDevice();
+    const support = getSupport();
 
     const passedParams = extend({}, params);
 
     // App Instance
     const app = this;
 
+    app.device = device;
+    app.support = support;
+
     const window = getWindow();
     const document = getDocument();
-    const device = getDevice();
 
     Framework7.instance = app;
 
@@ -238,7 +243,7 @@ class Framework7 extends Framework7Class {
     $('html').removeClass('ios md aurora').addClass(app.theme);
 
     // iOS Translucent
-    const device = getDevice();
+    const device = app.device;
     if (app.params.iosTranslucentBars && app.theme === 'ios' && device.ios) {
       $('html').addClass('ios-translucent-bars');
     }

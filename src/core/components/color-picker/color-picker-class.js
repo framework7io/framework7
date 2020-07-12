@@ -11,6 +11,7 @@ import {
 } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 import $ from '../../utils/dom7';
+import { getDevice } from '../../utils/get-device';
 
 import moduleAlphaSlider from './modules/alpha-slider';
 import moduleCurrentColor from './modules/current-color';
@@ -201,13 +202,14 @@ class ColorPicker extends Framework7Class {
     const self = this;
     const { app, modal, params } = self;
     const { openIn, openInPhone } = params;
+    const device = getDevice();
     if (modal && modal.type) return modal.type;
     if (openIn !== 'auto') return openIn;
     if (self.inline) return null;
-    if (app.device.ios) {
-      return app.device.ipad ? 'popover' : openInPhone;
+    if (device.ios) {
+      return device.ipad ? 'popover' : openInPhone;
     }
-    if (app.width >= 768 || (app.device.desktop && app.theme === 'aurora')) {
+    if (app.width >= 768 || (device.desktop && app.theme === 'aurora')) {
       return 'popover';
     }
 

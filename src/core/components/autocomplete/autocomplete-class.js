@@ -9,6 +9,7 @@ import {
   mdPreloaderContent,
   auroraPreloaderContent,
 } from '../../utils/utils';
+import { getDevice } from '../../utils/get-device';
 import Framework7Class from '../../utils/class';
 
 class Autocomplete extends Framework7Class {
@@ -17,6 +18,8 @@ class Autocomplete extends Framework7Class {
 
     const ac = this;
     ac.app = app;
+
+    const device = getDevice();
 
     const defaults = extend(
       {
@@ -292,7 +295,7 @@ class Autocomplete extends Framework7Class {
       if (ac.params.openIn === 'dropdown' && ac.$inputEl) {
         ac.$inputEl.on('focus', onInputFocus);
         ac.$inputEl.on(ac.params.inputEvents, onInputChange);
-        if (app.device.android) {
+        if (device.android) {
           $('html').on('click', onHtmlClick);
         } else {
           ac.$inputEl.on('blur', onInputBlur);
@@ -307,7 +310,7 @@ class Autocomplete extends Framework7Class {
       if (ac.params.openIn === 'dropdown' && ac.$inputEl) {
         ac.$inputEl.off('focus', onInputFocus);
         ac.$inputEl.off(ac.params.inputEvents, onInputChange);
-        if (app.device.android) {
+        if (device.android) {
           $('html').off('click', onHtmlClick);
         } else {
           ac.$inputEl.off('blur', onInputBlur);

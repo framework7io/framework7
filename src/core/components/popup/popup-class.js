@@ -2,6 +2,7 @@ import { getWindow, getDocument } from 'ssr-window';
 import $ from '../../utils/dom7';
 import { extend, now, nextTick } from '../../utils/utils';
 import { getSupport } from '../../utils/get-support';
+import { getDevice } from '../../utils/get-device';
 import Modal from '../modal/modal-class';
 
 class Popup extends Modal {
@@ -15,6 +16,7 @@ class Popup extends Modal {
     const window = getWindow();
     const document = getDocument();
     const support = getSupport();
+    const device = getDevice();
 
     popup.params = extendedParams;
 
@@ -66,8 +68,8 @@ class Popup extends Modal {
       const target = e.target;
       const $target = $(target);
       const keyboardOpened =
-        !app.device.desktop &&
-        app.device.cordova &&
+        !device.desktop &&
+        device.cordova &&
         ((window.Keyboard && window.Keyboard.isVisible) ||
           (window.cordova.plugins &&
             window.cordova.plugins.Keyboard &&

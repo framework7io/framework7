@@ -1,6 +1,7 @@
 import { getDocument } from 'ssr-window';
 import $ from '../../utils/dom7';
 import { extend } from '../../utils/utils';
+import { getDevice } from '../../utils/get-device';
 import Modal from '../modal/modal-class';
 
 class Dialog extends Modal {
@@ -30,6 +31,8 @@ class Dialog extends Modal {
     super(app, extendedParams);
 
     const dialog = this;
+
+    const device = getDevice();
     const document = getDocument();
 
     const { title, text, content, buttons, verticalButtons, cssClass, backdrop } = extendedParams;
@@ -118,7 +121,7 @@ class Dialog extends Modal {
           if (button.keyCodes) addKeyboardHander = true;
           $(buttonEl).on('click', buttonOnClick);
         });
-        if (addKeyboardHander && !app.device.ios && !app.device.android && !app.device.cordova) {
+        if (addKeyboardHander && !device.ios && !device.android && !device.cordova) {
           $(document).on('keydown', onKeyDown);
         }
       });
@@ -126,7 +129,7 @@ class Dialog extends Modal {
         $el.find('.dialog-button').each((index, buttonEl) => {
           $(buttonEl).off('click', buttonOnClick);
         });
-        if (addKeyboardHander && !app.device.ios && !app.device.android && !app.device.cordova) {
+        if (addKeyboardHander && !device.ios && !device.android && !device.cordova) {
           $(document).off('keydown', onKeyDown);
         }
         addKeyboardHander = false;

@@ -1,16 +1,8 @@
 import { getDocument } from 'ssr-window';
 import { getDevice } from '../../utils/get-device';
 
-const deviceGetter = {};
-Object.defineProperty(deviceGetter, 'device', {
-  get() {
-    return getDevice();
-  },
-});
-
 export default {
   name: 'device',
-  proto: deviceGetter,
   static: {
     getDevice,
   },

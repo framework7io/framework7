@@ -1,4 +1,5 @@
 import { getWindow, getDocument } from 'ssr-window';
+import { getDevice } from '../../utils/get-device';
 
 export default {
   name: 'resize',
@@ -43,10 +44,10 @@ export default {
       });
     },
     orientationchange() {
-      const app = this;
       const document = getDocument();
+      const device = getDevice();
       // Fix iPad weird body scroll
-      if (app.device.ipad) {
+      if (device.ipad) {
         document.body.scrollLeft = 0;
         setTimeout(() => {
           document.body.scrollLeft = 0;

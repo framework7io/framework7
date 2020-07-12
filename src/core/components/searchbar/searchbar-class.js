@@ -2,6 +2,7 @@ import { getDocument } from 'ssr-window';
 import $ from '../../utils/dom7';
 import { extend, nextTick, removeDiacritics, deleteProps } from '../../utils/utils';
 import FrameworkClass from '../../utils/class';
+import { getDevice } from '../../utils/get-device';
 
 class Searchbar extends FrameworkClass {
   constructor(app, params = {}) {
@@ -318,6 +319,7 @@ class Searchbar extends FrameworkClass {
     if (sb.enabled) return sb;
     const app = sb.app;
     const document = getDocument();
+    const device = getDevice();
 
     sb.enabled = true;
     function enable() {
@@ -382,7 +384,7 @@ class Searchbar extends FrameworkClass {
         needsFocus = true;
       }
     }
-    const isIos = app.device.ios && app.theme === 'ios';
+    const isIos = device.ios && app.theme === 'ios';
     if (isIos) {
       if (sb.expandable) {
         if (needsFocus) sb.$inputEl.focus();

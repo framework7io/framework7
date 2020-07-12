@@ -1,6 +1,7 @@
 import { extend, nextTick, deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 import $ from '../../utils/dom7';
+import { getDevice } from '../../utils/get-device';
 
 class Calendar extends Framework7Class {
   constructor(app, params = {}) {
@@ -509,18 +510,19 @@ class Calendar extends Framework7Class {
   isPopover() {
     const calendar = this;
     const { app, modal, params } = calendar;
+    const device = getDevice();
     if (params.openIn === 'sheet') return false;
     if (modal && modal.type !== 'popover') return false;
 
     if (!calendar.inline && calendar.inputEl) {
       if (params.openIn === 'popover') return true;
-      if (app.device.ios) {
-        return !!app.device.ipad;
+      if (device.ios) {
+        return !!device.ipad;
       }
       if (app.width >= 768) {
         return true;
       }
-      if (app.device.desktop && app.theme === 'aurora') {
+      if (device.desktop && app.theme === 'aurora') {
         return true;
       }
     }

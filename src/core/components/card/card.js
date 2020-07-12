@@ -2,11 +2,13 @@
 import { getDocument } from 'ssr-window';
 import { extend } from '../../utils/utils';
 import { getSupport } from '../../utils/get-support';
+import { getDevice } from '../../utils/get-device';
 import $ from '../../utils/dom7';
 
 const CardExpandable = {
   open(cardEl = '.card-expandable', animate = true) {
     const app = this;
+    const device = getDevice();
     const document = getDocument();
     const support = getSupport();
 
@@ -171,7 +173,7 @@ const CardExpandable = {
     app.emit('cardOpen', $cardEl[0]);
     function transitionEnd() {
       $pageEl.addClass('page-with-card-opened');
-      if (app.device.ios && $pageContentEl.length) {
+      if (device.ios && $pageContentEl.length) {
         $pageContentEl.css('height', `${$pageContentEl[0].offsetHeight + 1}px`);
         setTimeout(() => {
           $pageContentEl.css('height', '');
@@ -329,7 +331,7 @@ const CardExpandable = {
         ? Math.max((touchEndY - touchStartY) / 150, 0)
         : Math.max((touchEndX - touchStartX) / (cardWidth / 2), 0);
       if ((progress > 0 && isV) || isH) {
-        if (isV && app.device.ios && $cardScrollableEl[0] === $cardContentEl[0]) {
+        if (isV && device.ios && $cardScrollableEl[0] === $cardContentEl[0]) {
           $cardScrollableEl.css('-webkit-overflow-scrolling', 'auto');
           $cardScrollableEl.scrollTop(0);
         }
@@ -353,7 +355,7 @@ const CardExpandable = {
       if (!isTouched || !isMoved) return;
       isTouched = false;
       isMoved = false;
-      if (app.device.ios) {
+      if (device.ios) {
         $cardScrollableEl.css('-webkit-overflow-scrolling', '');
       }
       if (progress >= 0.8) {
@@ -387,6 +389,7 @@ const CardExpandable = {
   },
   close(cardEl = '.card-expandable.card-opened', animate = true) {
     const app = this;
+    const device = getDevice();
     const $cardEl = $(cardEl).eq(0);
     if (!$cardEl || !$cardEl.length) return;
     if (
@@ -440,7 +443,7 @@ const CardExpandable = {
 
     $pageEl.removeClass('page-with-card-opened');
 
-    if (app.device.ios && $pageContentEl.length) {
+    if (device.ios && $pageContentEl.length) {
       $pageContentEl.css('height', `${$pageContentEl[0].offsetHeight + 1}px`);
       setTimeout(() => {
         $pageContentEl.css('height', '');
