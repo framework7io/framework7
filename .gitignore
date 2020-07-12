@@ -4,7 +4,6 @@ build
 custom
 npm-debug.log
 .idea
-.vscode
 scripts/build-config-custom.js
 scripts/build-config-*.js
 kitchen-sink/vue/js/app.js
