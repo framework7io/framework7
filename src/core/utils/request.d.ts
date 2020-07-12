@@ -101,6 +101,6 @@ export interface Request {
   setup: (parameters: RequestParameters) => void;
 }
 
-declare const Request: Request;
+declare const request: Request;
 
-export default Request;
+export default request;

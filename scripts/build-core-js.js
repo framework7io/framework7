@@ -42,11 +42,11 @@ function esLite({ components } = {}) {
     )
     .replace(
       '//ES_IMPORT_HELPERS',
-      "import Request from './utils/request';\nimport Utils from './utils/utils';\nimport Support from './utils/support';\nimport Device from './utils/device';",
+      "import request from './utils/request';\nimport * as utils from './utils/utils';\nimport { getSupport } from './utils/get-support';\nimport { getDevice } from './utils/get-device';",
     )
     .replace(
       '//NAMED_ES_EXPORT',
-      'export { Template7, $ as Dom7, Request, Utils, Device, Support };',
+      'export { Template7, $ as Dom7, request, utils, getDevice, getSupport };',
     )
     .split('\n')
     .filter((line) => line.indexOf('//NO_LITE') < 0)
@@ -60,11 +60,11 @@ function esLite({ components } = {}) {
     .replace('//INSTALL_COMPONENTS\n', '')
     .replace(
       '//ES_IMPORT_HELPERS',
-      "import Request from './utils/request';\nimport Utils from './utils/utils';\nimport Support from './utils/support';\nimport Device from './utils/device';",
+      "import request from './utils/request';\nimport * as utils from './utils/utils';\nimport { getSupport } from './utils/get-support';\nimport { getDevice } from './utils/get-device';",
     )
     .replace(
       '//NAMED_ES_EXPORT',
-      'export { Template7, $ as Dom7, Request, Utils, Device, Support };',
+      'export { Template7, $ as Dom7, request, utils, getDevice, getSupport };',
     )
     .split('\n')
     .filter((line) => line.indexOf('//NO_LITE') < 0)
@@ -100,11 +100,11 @@ function es({ components } = {}) {
     )
     .replace(
       '//ES_IMPORT_HELPERS',
-      "import Request from './utils/request';\nimport Utils from './utils/utils';\nimport Support from './utils/support';\nimport Device from './utils/device';",
+      "import request from './utils/request';\nimport * as utils from './utils/utils';\nimport { getSupport } from './utils/get-support';\nimport { getDevice } from './utils/get-device';",
     )
     .replace(
       '//NAMED_ES_EXPORT',
-      'export { Template7, $ as Dom7, Request, Utils, Device, Support, Component };',
+      'export { Template7, $ as Dom7, request, utils, getDevice, getSupport, Component };',
     );
 
   // Core
@@ -115,11 +115,11 @@ function es({ components } = {}) {
     .replace('//INSTALL_COMPONENTS\n', '')
     .replace(
       '//ES_IMPORT_HELPERS',
-      "import Request from './utils/request';\nimport Utils from './utils/utils';\nimport Support from './utils/support';\nimport Device from './utils/device';",
+      "import request from './utils/request';\nimport * as utils from './utils/utils';\nimport { getSupport } from './utils/get-support';\nimport { getDevice } from './utils/get-device';",
     )
     .replace(
       '//NAMED_ES_EXPORT',
-      'export { Template7, $ as Dom7, Request, Utils, Device, Support, Component };',
+      'export { Template7, $ as Dom7, request, utils, getDevice, getSupport, Component };',
     );
 
   // Save
@@ -153,7 +153,7 @@ async function umdBundle({ components, lite } = {}) {
             .join(',\n  '),
           '//ES_IMPORT_HELPERS': '',
           '//NAMED_ES_EXPORT': '',
-          'export { Template7, $ as Dom7, Request, Utils, Device, Support };': '',
+          'export { Template7, $ as Dom7, request, utils, getDevice, getSupport };': '',
         }),
         resolve({ mainFields: ['module', 'main', 'jsnext'] }),
         commonjs(),
@@ -224,7 +224,7 @@ async function umdCore({ lite } = {}) {
           '//INSTALL_COMPONENTS': '',
           '//ES_IMPORT_HELPERS': '',
           '//NAMED_ES_EXPORT': '',
-          'export { Template7, $ as Dom7, Request, Utils, Device, Support };': '',
+          'export { Template7, $ as Dom7, request, utils, getDevice, getSupport };': '',
         }),
         resolve({ mainFields: ['module', 'main', 'jsnext'] }),
         commonjs(),
