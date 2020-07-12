@@ -2,6 +2,18 @@
 
 # Change Log
 
+# [v5.7.9](https://github.com/framework7io/framework7/compare/v5.7.8...v5.7.9) - July 12, 2020
+  * Core
+    * Router Component
+      * Fixed issue with multiple event handler arguments
+    * Searchbar
+      * Not it won't scroll page on expandable open when navbar large collapsed
+    * Treeview
+      * Changed style to use/set item `min-height` instead of `height`
+    * View
+      * Now it will be also auto initialized on dynamically created panel open
+    * Minor fixes
+
 # [v5.7.8](https://github.com/framework7io/framework7/compare/v5.7.7...v5.7.8) - June 13, 2020
   * Core
     * Card

@@ -1,5 +1,5 @@
 /**
- * Framework7 5.7.8
+ * Framework7 5.7.9
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 13, 2020
+ * Released on: July 12, 2020
  */
 
 (function (global, factory) {
@@ -7832,7 +7832,7 @@
       return router;
     }
 
-    if (url || templateUrl || componentUrl) {
+    if (url || templateUrl || componentUrl || component) {
       router.allowPageChange = false;
     }
 
@@ -10367,7 +10367,6 @@
     var fired = false;
     var methodName;
     var method;
-    var customArgs = [];
     var needMethodBind = true;
 
     if (handlerString.indexOf('(') < 0) {
@@ -10405,11 +10404,11 @@
       while ( len-- ) args[ len ] = arguments[ len ];
 
       var e = args[0];
+      var customArgs = [];
       if (once && fired) { return; }
       if (stop) { e.stopPropagation(); }
       if (prevent) { e.preventDefault(); }
       fired = true;
-
       if (handlerString.indexOf('(') < 0) {
         customArgs = args;
       } else {
@@ -12171,17 +12170,17 @@
           app.views.create(viewEl, viewParams);
         });
       },
-      modalOpen: function modalOpen(modal) {
+      'modalOpen panelOpen': function onOpen(instance) {
         var app = this;
-        modal.$el.find('.view-init').each(function (index, viewEl) {
+        instance.$el.find('.view-init').each(function (index, viewEl) {
           if (viewEl.f7View) { return; }
           var viewParams = $(viewEl).dataset();
           app.views.create(viewEl, viewParams);
         });
       },
-      modalBeforeDestroy: function modalBeforeDestroy(modal) {
-        if (!modal || !modal.$el) { return; }
-        modal.$el.find('.view-init').each(function (index, viewEl) {
+      'modalBeforeDestroy panelBeforeDestroy': function onClose(instance) {
+        if (!instance || !instance.$el) { return; }
+        instance.$el.find('.view-init').each(function (index, viewEl) {
           var view = viewEl.f7View;
           if (!view) { return; }
           view.destroy();
