@@ -1,4 +1,4 @@
-export default function (router, asyncComponent, resolve, reject) {
+export default function asyncComponent(router, component, resolve, reject) {
   function resolvePromise(componentPromise) {
     componentPromise
       .then((c) => {
@@ -10,11 +10,11 @@ export default function (router, asyncComponent, resolve, reject) {
         throw new Error(err);
       });
   }
-  if (asyncComponent instanceof Promise) {
-    resolvePromise(asyncComponent);
+  if (component instanceof Promise) {
+    resolvePromise(component);
     return;
   }
-  const asyncComponentResult = asyncComponent.call(router);
+  const asyncComponentResult = component.call(router);
   if (asyncComponentResult instanceof Promise) {
     resolvePromise(asyncComponentResult);
   } else {

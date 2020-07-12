@@ -290,9 +290,9 @@ export function requestAnimationFrame(callback) {
   const window = getWindow();
   return window.requestAnimationFrame(callback);
 }
-export function cancelAnimationFrame(id) {
+export function cancelAnimationFrame(frameId) {
   const window = getWindow();
-  return window.cancelAnimationFrame(id);
+  return window.cancelAnimationFrame(frameId);
 }
 export function nextTick(callback, delay = 0) {
   return setTimeout(callback, delay);

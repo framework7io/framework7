@@ -1,4 +1,4 @@
-import $ from 'dom7';
+import $ from '../../utils/dom7';
 import { extend } from '../../utils/utils';
 import Range from './range-class';
 import ConstructorMethods from '../../utils/constructor-methods';

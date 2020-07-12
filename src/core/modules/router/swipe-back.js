@@ -1,4 +1,4 @@
-import $ from 'dom7';
+import $ from '../../utils/dom7';
 import History from '../../utils/history';
 import { getSupport } from '../../utils/get-support';
 import { getDevice } from '../../utils/get-device';

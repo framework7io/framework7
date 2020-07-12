@@ -1,4 +1,4 @@
-import $ from 'dom7';
+import $ from '../../utils/dom7';
 import Tooltip from './tooltip-class';
 import ConstructorMethods from '../../utils/constructor-methods';
 

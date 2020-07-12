@@ -1,6 +1,6 @@
-import $ from 'dom7';
 import { getWindow, getDocument } from 'ssr-window';
 import { id } from '../../utils/utils';
+import $ from '../../utils/dom7';
 
 const fetchedModules = [];
 function loadModule(moduleToLoad) {

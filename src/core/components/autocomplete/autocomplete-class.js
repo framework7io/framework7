@@ -1,5 +1,5 @@
 /* eslint "no-useless-escape": "off" */
-import $ from 'dom7';
+import $ from '../../utils/dom7';
 import {
   extend,
   id,

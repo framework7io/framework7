@@ -1,4 +1,4 @@
-import $ from 'dom7';
+import $ from '../../utils/dom7';
 import { nextTick, nextFrame } from '../../utils/utils';
 
 export default class TouchRipple {

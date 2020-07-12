@@ -1,6 +1,6 @@
-import $ from 'dom7';
 import { extend, nextTick, deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
+import $ from '../../utils/dom7';
 
 class Calendar extends Framework7Class {
   constructor(app, params = {}) {

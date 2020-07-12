@@ -1,5 +1,5 @@
 import { getWindow, getDocument } from 'ssr-window';
-import $ from './dom';
+import $ from './dom7';
 import { extend } from './utils';
 
 const History = {

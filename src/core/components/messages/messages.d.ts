@@ -1,131 +1,155 @@
-import { Dom7Instance } from 'dom7';
+import { Dom7Array } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
 export namespace Messages {
   interface Messages extends Framework7EventsClass<Events> {
     /** Object with passed initialization parameters */
-    params : Parameters
+    params: Parameters;
     /** Messages container HTML element (<div class="messages">) */
-    el : HTMLElement
+    el: HTMLElement;
     /** Dom7 element with messages HTML element */
-    $el : Dom7Instance
+    $el: Dom7Array;
     /** Array with messages */
-    messages : Message[]
+    messages: Message[];
 
     /** Show typing message indicator */
-    showTyping(message : Message) : void
+    showTyping(message: Message): void;
     /** Hide typing message indicator */
-    hideTyping() : void
+    hideTyping(): void;
     /** Add new message to the end or to the beginning depending on method parameter */
-    addMessage(message : Message, method : 'append' | 'prepend', animate?: boolean) : Messages
+    addMessage(message: Message, method: 'append' | 'prepend', animate?: boolean): Messages;
     /** Add multiple messages per once. */
-    addMessages(messages : Message[], method : 'append' | 'prepend', animate?: boolean) : Messages
+    addMessages(messages: Message[], method: 'append' | 'prepend', animate?: boolean): Messages;
     /** Remove message */
-    removeMessage(message : Message) : Messages
+    removeMessage(message: Message): Messages;
     /** Remove multiple messages */
-    removeMessages(messages : Message[]) : Messages
+    removeMessages(messages: Message[]): Messages;
     /** Scroll messages to top/bottom depending on newMessagesFirst parameter */
-    scroll(durationMS : number, position : number) : Messages
+    scroll(durationMS: number, position: number): Messages;
     /** Render messages HTML depending on messages array */
-    renderMessages() : Messages
+    renderMessages(): Messages;
     /** Force messages auto layout */
-    layout() : Messages
+    layout(): Messages;
     /** Clear/remove all the messages */
-    clear() : Messages
+    clear(): Messages;
     /** Destroy messages instance */
-    destroy() : void
+    destroy(): void;
   }
 
   interface Message {
     /** Message text. */
-    text: string
+    text: string;
     /** Single message header. */
-    header: string
+    header: string;
     /** Single message footer. */
-    footer: string
+    footer: string;
     /** Sender name. */
-    name: string
+    name: string;
     /** Sender avatar URL string. */
-    avatar: string
+    avatar: string;
     /** Message type - sent or received. (default sent) */
-    type?: string
+    type?: string;
     /** Message text header. */
-    textHeader: string
+    textHeader: string;
     /** Message text footer. */
-    textFooter: string
+    textFooter: string;
     /** Message image HTML string, e.g. <img src="path/to/image">. Can be used instead of imageSrc parameter. */
-    image: string
+    image: string;
     /** Message image URL string. Can be used instead of image parameter. */
-    imageSrc: string
+    imageSrc: string;
     /** Defines whether it should be rendered as a message or as a messages title. */
-    isTitle: boolean
+    isTitle: boolean;
   }
 
   interface Parameters {
     /** Enable Auto Layout to add all required additional classes automatically based on passed conditions. (default true) */
-    autoLayout?: boolean
+    autoLayout?: boolean;
     /** Enable if you want to use new messages on top, instead of having them on bottom. (default false) */
-    newMessagesFirst?: boolean
+    newMessagesFirst?: boolean;
     /** Enable/disable messages autoscrolling when adding new message. (default true) */
-    scrollMessages?: boolean
+    scrollMessages?: boolean;
     /** If enabled then messages autoscrolling will happen only when user is on top/bottom of the messages view. (default true) */
-    scrollMessagesOnEdge?: boolean
+    scrollMessagesOnEdge?: boolean;
     /** Array with initial messages. Each message in array should be presented as an object with single message parameters. */
-    messages?: Message[]
+    messages?: Message[];
     /** Object with events handlers.. */
     on?: {
-      [event in keyof Events]? : Events[event]
-    }
+      [event in keyof Events]?: Events[event];
+    };
 
     /** Function to render single message. Must return full message HTML string. */
-    renderMessage?: (message : Message) => string
+    renderMessage?: (message: Message) => string;
 
     /** Function that must return boolean true or false based on required condition depending on previous and next messages. In case of match then message-first class will be added to message. */
-    firstMessageRule?: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
+    firstMessageRule?: (
+      message: Message,
+      previousMessage: Message,
+      nextMessage: Message,
+    ) => boolean;
     /** Function that must return boolean true or false based on required condition depending on previous and next messages. In case of match then message-last class will be added to message. */
-    lastMessageRule?: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
+    lastMessageRule?: (message: Message, previousMessage: Message, nextMessage: Message) => boolean;
     /** Function that must return boolean true or false based on required condition depending on previous and next messages. In case of match then message-tail class will be added to message. */
-    tailMessageRule?: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
+    tailMessageRule?: (message: Message, previousMessage: Message, nextMessage: Message) => boolean;
     /** Function that must return boolean true or false based on required condition depending on previous and next messages. In case of match then message-same-name class will be added to message. */
-    sameNameMessageRule?: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
+    sameNameMessageRule?: (
+      message: Message,
+      previousMessage: Message,
+      nextMessage: Message,
+    ) => boolean;
     /** Function that must return boolean true or false based on required condition depending on previous and next messages. In case of match then message-same-header class will be added to message. */
-    sameHeaderMessageRule?: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
+    sameHeaderMessageRule?: (
+      message: Message,
+      previousMessage: Message,
+      nextMessage: Message,
+    ) => boolean;
     /** Function that must return boolean true or false based on required condition depending on previous and next messages. In case of match then message-same-footer class will be added to message. */
-    sameFooterMessageRule?: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
+    sameFooterMessageRule?: (
+      message: Message,
+      previousMessage: Message,
+      nextMessage: Message,
+    ) => boolean;
     /** Function that must return boolean true or false based on required condition depending on previous and next messages. In case of match then message-same-avatar class will be added to message. */
-    sameAvatarMessageRule?: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
+    sameAvatarMessageRule?: (
+      message: Message,
+      previousMessage: Message,
+      nextMessage: Message,
+    ) => boolean;
     /** Function that must return additional message classes as string, based on required condition depending on previous and next messages.. */
-    customClassMessageRule?: (message : Message, previousMessage : Message, nextMessage : Message) => string
+    customClassMessageRule?: (
+      message: Message,
+      previousMessage: Message,
+      nextMessage: Message,
+    ) => string;
   }
 
   interface Events {
     /** Event will be triggered right before Messages instance will be destroyed */
-    beforeDestroy(messages : Messages) : void
+    beforeDestroy(messages: Messages): void;
   }
 
   interface DomEvents {
     /** Event will be triggered right before Messages instance will be destroyed */
-    'messages:beforedestroy': void
+    'messages:beforedestroy': void;
   }
 
   interface AppMethods {
     messages: {
       /** create Messages instance */
-      create(parameters : Parameters) : Messages
+      create(parameters: Parameters): Messages;
 
       /** destroy Messages instance */
-      destroy(el : HTMLElement | CSSSelector | Messages) : void
+      destroy(el: HTMLElement | CSSSelector | Messages): void;
 
       /** get Messages instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : Messages
-    }
+      get(el: HTMLElement | CSSSelector): Messages;
+    };
   }
   interface AppParams {
-    messages?: Parameters | undefined
+    messages?: Parameters | undefined;
   }
   interface AppEvents {
     /** Event will be triggered right before Messages instance will be destroyed */
-    messagesBeforeDestroy(messages : Messages) : void
+    messagesBeforeDestroy(messages: Messages): void;
   }
 }
 

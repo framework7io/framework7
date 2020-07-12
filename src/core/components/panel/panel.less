@@ -11,7 +11,7 @@
   z-index: 5999;
   visibility: hidden;
   pointer-events: none;
-  transform: translate3d(0,0,0);
+  transform: translate3d(0, 0, 0);
   background-color: var(--f7-panel-backdrop-bg-color);
   transition-property: transform, opacity;
   transition-duration: var(--f7-panel-transition-duration);
@@ -29,7 +29,7 @@
   position: absolute;
   top: var(--f7-appbar-app-offset, 0px);
   height: calc(100% - var(--f7-appbar-app-offset, 0px));
-  transform: translate3d(0,0,0);
+  transform: translate3d(0, 0, 0);
   width: var(--f7-panel-width);
   background-color: var(--f7-panel-bg-color);
   overflow: visible;
@@ -52,12 +52,14 @@
     transition-duration: var(--f7-panel-transition-duration);
   }
   &.not-animated {
-    &, &:after {
+    &,
+    &:after {
       transition-duration: 0ms !important;
     }
   }
   &.panel-reveal.not-animated {
-    & ~ .views, & ~ .view {
+    & ~ .views,
+    & ~ .view {
       transition-duration: 0ms !important;
     }
   }
@@ -125,7 +127,7 @@
   }
 }
 .panel-in-breakpoint {
-  transform: translate3d(0,0,0) !important;
+  transform: translate3d(0, 0, 0) !important;
   transition-duration: 0ms;
   &:after {
     display: none;
@@ -169,21 +171,21 @@ html {
     .views,
     .framework7-root > .view,
     .panel-backdrop-in {
-      transform: translate3d(var(--f7-panel-left-width, var(--f7-panel-width)),0,0);
+      transform: translate3d(var(--f7-panel-left-width, var(--f7-panel-width)), 0, 0);
     }
   }
   &.with-panel-right-reveal {
     .views,
     .framework7-root > .view,
     .panel-backdrop-in {
-      transform: translate3d(calc(-1 * var(--f7-panel-right-width, var(--f7-panel-width))),0,0);
+      transform: translate3d(calc(-1 * var(--f7-panel-right-width, var(--f7-panel-width))), 0, 0);
     }
   }
   &.with-panel-left-cover .panel-left {
-    transform: translate3d(0px,0,0);
+    transform: translate3d(0px, 0, 0);
   }
   &.with-panel-right-cover .panel-right {
-    transform: translate3d(0px,0,0);
+    transform: translate3d(0px, 0, 0);
   }
 }
 .panel-resize-handler {
@@ -218,7 +220,14 @@ html {
   }
   html.with-panel-left-reveal & ~ .views,
   html.with-panel-left-reveal & ~ .view {
-    transform: translate3d(calc(var(--f7-panel-left-width, var(--f7-panel-width)) - var(--f7-panel-left-collapsed-width, var(--f7-panel-collapsed-width))), 0, 0);
+    transform: translate3d(
+      calc(
+        var(--f7-panel-left-width, var(--f7-panel-width)) -
+          var(--f7-panel-left-collapsed-width, var(--f7-panel-collapsed-width))
+      ),
+      0,
+      0
+    );
   }
 }
 .panel-right.panel-in-collapsed {
@@ -228,7 +237,14 @@ html {
   }
   html.with-panel-right-reveal & ~ .views,
   html.with-panel-right-reveal & ~ .view {
-    transform: translate3d(calc(var(--f7-panel-right-collapsed-width, var(--f7-panel-collapsed-width)) - var(--f7-panel-right-width, var(--f7-panel-width))), 0, 0);
+    transform: translate3d(
+      calc(
+        var(--f7-panel-right-collapsed-width, var(--f7-panel-collapsed-width)) -
+          var(--f7-panel-right-width, var(--f7-panel-width))
+      ),
+      0,
+      0
+    );
   }
 }
 html.with-modal-popup-push .framework7-root,

@@ -16,9 +16,9 @@
       transition-duration: 200ms;
     }
   }
-  label.item-radio input[type="radio"]:checked ~ .icon-radio,
-  label.item-radio input[type="radio"]:checked ~ * .icon-radio,
-  .radio input[type="radio"]:checked ~ .icon-radio {
+  label.item-radio input[type='radio']:checked ~ .icon-radio,
+  label.item-radio input[type='radio']:checked ~ * .icon-radio,
+  .radio input[type='radio']:checked ~ .icon-radio {
     border-color: var(--f7-radio-active-color, var(--f7-theme-color));
     &:after {
       background-color: var(--f7-radio-active-color, var(--f7-theme-color));
@@ -40,7 +40,7 @@
       });
     }
   }
-  label.item-radio-icon-end input[type="radio"] ~ .icon-radio {
+  label.item-radio-icon-end input[type='radio'] ~ .icon-radio {
     position: absolute;
     top: 50%;
     margin-top: -10px;
@@ -49,7 +49,7 @@
     });
     .rtl({
       left: calc(var(--f7-safe-area-left) + 16px);
-    })
+    });
   }
   label.item-radio-icon-end {
     .item-inner {
@@ -62,5 +62,3 @@
     }
   }
 }
-
-

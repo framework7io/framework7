@@ -1,8 +1,8 @@
 /* eslint no-param-reassign: "off" */
-import $ from 'dom7';
 import { getDocument } from 'ssr-window';
 import { extend } from '../../utils/utils';
 import { getSupport } from '../../utils/get-support';
+import $ from '../../utils/dom7';
 
 const CardExpandable = {
   open(cardEl = '.card-expandable', animate = true) {

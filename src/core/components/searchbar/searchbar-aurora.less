@@ -1,6 +1,7 @@
 .aurora {
   .searchbar {
-    input[type="search"], input[type="text"] {
+    input[type='search'],
+    input[type='text'] {
       z-index: 30;
     }
     .input-clear-button {
@@ -35,7 +36,7 @@
   .searchbar-disable-button {
     font-size: 14px;
     flex-shrink: 0;
-    transform: translate3d(0,0,0);
+    transform: translate3d(0, 0, 0);
     transition-duration: 300ms;
     color: var(--f7-searchbar-link-color, var(--f7-bars-link-color, var(--f7-theme-color)));
     display: none;
@@ -45,7 +46,7 @@
     }
   }
   .searchbar-enabled {
-    .searchbar-disable-button  {
+    .searchbar-disable-button {
       pointer-events: auto;
       opacity: 1;
       .ltr({ margin-left: 8px; });
@@ -65,7 +66,7 @@
     bottom: 0;
     opacity: 0;
     width: 100%;
-    transform: translate3d(0,0,0);
+    transform: translate3d(0, 0, 0);
     overflow: hidden;
     .searchbar-disable-button {
       .ltr({ margin-left: 8px; });
@@ -74,7 +75,7 @@
       display: block;
     }
     .searchbar-inner {
-      height: var(--f7-searchbar-expandable-size)
+      height: var(--f7-searchbar-expandable-size);
     }
   }
 
@@ -83,4 +84,3 @@
     pointer-events: auto;
   }
 }
-

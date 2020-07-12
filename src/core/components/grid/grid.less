@@ -1,7 +1,8 @@
 /* === Grid === */
 @import url('./grid-vars.less');
 
-@cols: 5, 10, 15, 20, 25, 30, 100/3, 35, 40, 45, 50, 55, 60, 65, 100*(2/3), 70, 75, 80, 85, 90, 95, 100;
+@cols: 5, 10, 15, 20, 25, 30, 100/3, 35, 40, 45, 50, 55, 60, 65, 100 * (2/3), 70, 75, 80, 85, 90, 95,
+  100;
 
 .row {
   display: flex;
@@ -12,10 +13,12 @@
   + .row {
     margin-top: var(--f7-grid-row-gap);
   }
-  > [class*="col-"],
+  > [class*='col-'],
   > .col {
     box-sizing: border-box;
-    width: calc((100% - var(--f7-grid-gap) * (var(--f7-cols-per-row) - 1)) / var(--f7-cols-per-row));
+    width: calc(
+      (100% - var(--f7-grid-gap) * (var(--f7-cols-per-row) - 1)) / var(--f7-cols-per-row)
+    );
     &.resizable {
       position: relative;
     }
@@ -133,7 +136,7 @@
     background: var(--f7-grid-resize-handler-bg-color);
   }
 }
-.row  > .resize-handler {
+.row > .resize-handler {
   width: 100%;
   height: var(--f7-grid-row-gap);
   left: 0;
@@ -157,7 +160,7 @@
     transform: translateX(-50%);
   }
 }
-[class*="col-"] > .resize-handler,
+[class*='col-'] > .resize-handler,
 .col > .resize-handler {
   width: var(--f7-grid-gap);
   left: 100%;
@@ -185,8 +188,8 @@
 }
 .row:last-child,
 .row:last-of-type,
-.row [class*="col-"]:last-child,
-.row [class*="col-"]:last-of-type,
+.row [class*='col-']:last-child,
+.row [class*='col-']:last-of-type,
 .row .col:last-child,
 .row .col:last-of-type {
   > .resize-handler {

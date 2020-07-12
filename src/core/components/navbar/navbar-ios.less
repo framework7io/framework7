@@ -1,13 +1,14 @@
 .ios {
   --f7-navbarLeftTextOffset: calc(4px + 12px + var(--f7-navbar-inner-padding-left));
-  --f7-navbarTitleLargeOffset: var(--f7-navbar-large-title-padding-left);;
+  --f7-navbarTitleLargeOffset: var(--f7-navbar-large-title-padding-left);
   .navbar {
     a.icon-only {
       width: 44px;
       margin: 0;
       justify-content: center;
     }
-    .left, .right {
+    .left,
+    .right {
       a + a {
         .ltr({
           margin-left: 16px;
@@ -88,7 +89,7 @@
     .title-large {
       opacity: 0;
       transition-duration: 0ms;
-      .title-large-text  {
+      .title-large-text {
         transform: scale(0.5);
         transition-duration: 0ms;
       }
@@ -147,7 +148,6 @@
       });
     }
   }
-
 
   // Animations
   .router-transition {
@@ -209,13 +209,15 @@
     .sliding .subnavbar {
       transition-duration: var(--f7-page-transition-duration);
       animation: none;
-      transform: translate3d(0,0,0) !important;
+      transform: translate3d(0, 0, 0) !important;
       opacity: 1 !important;
     }
   }
-  .router-transition-forward .navbar-next.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible),
-  .router-transition-backward .navbar-previous.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible) {
-    .title  {
+  .router-transition-forward
+    .navbar-next.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible),
+  .router-transition-backward
+    .navbar-previous.navbar-transparent:not(.navbar-large):not(.navbar-transparent-visible) {
+    .title {
       animation: none;
     }
     .sliding.title,
@@ -239,7 +241,9 @@
       .title-large {
         overflow: visible;
         .title-large-text {
-          animation: ios-navbar-large-title-text-slide-up var(--f7-page-transition-duration) forwards, ios-navbar-large-title-text-fade-out var(--f7-page-transition-duration) forwards;
+          animation: ios-navbar-large-title-text-slide-up var(--f7-page-transition-duration)
+              forwards,
+            ios-navbar-large-title-text-fade-out var(--f7-page-transition-duration) forwards;
         }
       }
     }
@@ -261,14 +265,16 @@
       .title-large {
         overflow: visible;
         .title-large-text {
-          animation: ios-navbar-large-title-text-slide-left var(--f7-page-transition-duration) forwards;
+          animation: ios-navbar-large-title-text-slide-left var(--f7-page-transition-duration)
+            forwards;
         }
       }
     }
     .navbar-next.router-navbar-transition-to-large:not(.router-navbar-transition-from-large) {
       .title-large {
         .title-large-text {
-          animation: ios-navbar-large-title-text-slide-left var(--f7-page-transition-duration) forwards;
+          animation: ios-navbar-large-title-text-slide-left var(--f7-page-transition-duration)
+            forwards;
         }
       }
     }
@@ -284,7 +290,8 @@
 
   .router-transition-backward {
     .navbar-current.router-navbar-transition-to-large .left .back span {
-      animation: ios-navbar-back-text-current-to-previous var(--f7-page-transition-duration) forwards;
+      animation: ios-navbar-back-text-current-to-previous var(--f7-page-transition-duration)
+        forwards;
       transition: none;
       .ltr({
         transform-origin: left center;
@@ -297,14 +304,16 @@
       .title-large {
         overflow: visible;
         .title-large-text {
-          animation: ios-navbar-large-title-text-slide-right var(--f7-page-transition-duration) forwards;
+          animation: ios-navbar-large-title-text-slide-right var(--f7-page-transition-duration)
+            forwards;
         }
       }
     }
     .navbar-current.router-navbar-transition-from-large:not(.router-navbar-transition-to-large) {
       .title-large {
         .title-large-text {
-          animation: ios-navbar-large-title-text-slide-right var(--f7-page-transition-duration) forwards;
+          animation: ios-navbar-large-title-text-slide-right var(--f7-page-transition-duration)
+            forwards;
         }
       }
     }
@@ -319,7 +328,9 @@
         overflow: visible;
         opacity: 1;
         .title-large-text {
-          animation: ios-navbar-large-title-text-slide-down var(--f7-page-transition-duration) forwards, ios-navbar-large-title-text-fade-in var(--f7-page-transition-duration) forwards;
+          animation: ios-navbar-large-title-text-slide-down var(--f7-page-transition-duration)
+              forwards,
+            ios-navbar-large-title-text-fade-in var(--f7-page-transition-duration) forwards;
         }
       }
     }
@@ -334,7 +345,8 @@
     }
   }
   --f7-navbar-large-transparent-bg-center: translateX(0);
-  --f7-navbar-large-bg-center-top: translateX(0) translateY(calc(-1 * var(--f7-navbar-large-title-height)));
+  --f7-navbar-large-bg-center-top: translateX(0)
+    translateY(calc(-1 * var(--f7-navbar-large-title-height)));
   --f7-navbar-large-bg-center-bottom: translateX(0) translateY(0);
   .ltr({
     --f7-navbar-large-transparent-bg-left: translateX(-100%);
@@ -368,8 +380,10 @@
       &.navbar-large-collapsed:not(.router-navbar-transition-to-large) .navbar-bg {
         animation-name: ios-navbar-bg-from-ct-to-lt;
       }
-      &.navbar-large-collapsed.navbar-large-transparent:not(.router-navbar-transition-to-large) .navbar-bg,
-      &.navbar-large-collapsed.navbar-large.navbar-transparent:not(.router-navbar-transition-to-large) .navbar-bg {
+      &.navbar-large-collapsed.navbar-large-transparent:not(.router-navbar-transition-to-large)
+        .navbar-bg,
+      &.navbar-large-collapsed.navbar-large.navbar-transparent:not(.router-navbar-transition-to-large)
+        .navbar-bg {
         animation-name: ios-navbar-transparent-bg-from-c-to-l;
       }
     }
@@ -386,8 +400,6 @@
       &:not(.router-navbar-transition-from-large).router-navbar-transition-to-large .navbar-bg {
         animation-name: ios-navbar-bg-from-rt-to-cb;
       }
-
-
     }
   }
   .router-transition-backward {
@@ -429,8 +441,10 @@
       &.navbar-large-collapsed.navbar-large.navbar-transparent .navbar-bg {
         animation-name: ios-navbar-transparent-bg-from-l-to-c;
       }
-      &.navbar-large-collapsed.navbar-large-transparent.router-navbar-transition-from-large .navbar-bg,
-      &.navbar-large-collapsed.navbar-large.navbar-transparent.router-navbar-transition-from-large .navbar-bg {
+      &.navbar-large-collapsed.navbar-large-transparent.router-navbar-transition-from-large
+        .navbar-bg,
+      &.navbar-large-collapsed.navbar-large.navbar-transparent.router-navbar-transition-from-large
+        .navbar-bg {
         animation-name: ios-navbar-bg-from-lb-to-ct;
       }
     }
@@ -548,7 +562,6 @@
     .rtl({
       transform: translateX(calc(-1 * (var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset)))) translateY(calc(-1 * var(--f7-navbar-large-title-height) + var(--f7-navbar-large-title-padding-vertical) / 2)) scale(0.5);
     });
-
   }
   100% {
     transform: translateX(0px) translateY(0%) scale(1);
@@ -619,7 +632,6 @@
     .rtl({
       transform: translateX(calc(-1 * (var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset)))) translateY(calc(1 * var(--f7-navbar-large-title-height) - var(--f7-navbar-large-title-padding-vertical) / 2)) scale(2);
     });
-
   }
 }
 @keyframes ios-navbar-back-text-next-to-current {
@@ -642,70 +654,138 @@
 }
 
 @keyframes ios-navbar-bg-from-cb-to-lb {
-  from { transform: var(--f7-navbar-large-bg-center-bottom) }
-  to { transform: var(--f7-navbar-large-bg-left-bottom) }
+  from {
+    transform: var(--f7-navbar-large-bg-center-bottom);
+  }
+  to {
+    transform: var(--f7-navbar-large-bg-left-bottom);
+  }
 }
 @keyframes ios-navbar-bg-from-cb-to-lt {
-  from { transform: var(--f7-navbar-large-bg-center-bottom) }
-  to { transform: var(--f7-navbar-large-bg-left-top) }
+  from {
+    transform: var(--f7-navbar-large-bg-center-bottom);
+  }
+  to {
+    transform: var(--f7-navbar-large-bg-left-top);
+  }
 }
 @keyframes ios-navbar-bg-from-ct-to-lb {
-  from { transform: var(--f7-navbar-large-bg-center-top) }
-  to { transform: var(--f7-navbar-large-bg-left-bottom) }
+  from {
+    transform: var(--f7-navbar-large-bg-center-top);
+  }
+  to {
+    transform: var(--f7-navbar-large-bg-left-bottom);
+  }
 }
 @keyframes ios-navbar-bg-from-ct-to-lt {
-  from { transform: var(--f7-navbar-large-bg-center-top) }
-  to { transform: var(--f7-navbar-large-bg-left-top) }
+  from {
+    transform: var(--f7-navbar-large-bg-center-top);
+  }
+  to {
+    transform: var(--f7-navbar-large-bg-left-top);
+  }
 }
 @keyframes ios-navbar-bg-from-rb-to-cb {
-  from { transform: var(--f7-navbar-large-bg-right-bottom) }
-  to { transform: var(--f7-navbar-large-bg-center-bottom) }
+  from {
+    transform: var(--f7-navbar-large-bg-right-bottom);
+  }
+  to {
+    transform: var(--f7-navbar-large-bg-center-bottom);
+  }
 }
 @keyframes ios-navbar-bg-from-rb-to-ct {
-  from { transform: var(--f7-navbar-large-bg-right-bottom) }
-  to { transform: var(--f7-navbar-large-bg-center-top) }
+  from {
+    transform: var(--f7-navbar-large-bg-right-bottom);
+  }
+  to {
+    transform: var(--f7-navbar-large-bg-center-top);
+  }
 }
 @keyframes ios-navbar-bg-from-rt-to-cb {
-  from { transform: var(--f7-navbar-large-bg-right-top) }
-  to { transform: var(--f7-navbar-large-bg-center-bottom) }
+  from {
+    transform: var(--f7-navbar-large-bg-right-top);
+  }
+  to {
+    transform: var(--f7-navbar-large-bg-center-bottom);
+  }
 }
 @keyframes ios-navbar-bg-from-cb-to-rb {
-  from { transform: var(--f7-navbar-large-bg-center-bottom) }
-  to { transform: var(--f7-navbar-large-bg-right-bottom) }
+  from {
+    transform: var(--f7-navbar-large-bg-center-bottom);
+  }
+  to {
+    transform: var(--f7-navbar-large-bg-right-bottom);
+  }
 }
 @keyframes ios-navbar-bg-from-ct-to-rb {
-  from { transform: var(--f7-navbar-large-bg-center-top) }
-  to { transform: var(--f7-navbar-large-bg-right-bottom) }
+  from {
+    transform: var(--f7-navbar-large-bg-center-top);
+  }
+  to {
+    transform: var(--f7-navbar-large-bg-right-bottom);
+  }
 }
 @keyframes ios-navbar-bg-from-cb-to-rt {
-  from { transform: var(--f7-navbar-large-bg-center-bottom) }
-  to { transform: var(--f7-navbar-large-bg-right-top) }
+  from {
+    transform: var(--f7-navbar-large-bg-center-bottom);
+  }
+  to {
+    transform: var(--f7-navbar-large-bg-right-top);
+  }
 }
 @keyframes ios-navbar-bg-from-ct-to-rt {
-  from { transform: var(--f7-navbar-large-bg-center-top) }
-  to { transform: var(--f7-navbar-large-bg-right-top) }
+  from {
+    transform: var(--f7-navbar-large-bg-center-top);
+  }
+  to {
+    transform: var(--f7-navbar-large-bg-right-top);
+  }
 }
 @keyframes ios-navbar-bg-from-lb-to-cb {
-  from { transform: var(--f7-navbar-large-bg-left-bottom) }
-  to { transform: var(--f7-navbar-large-bg-center-bottom) }
+  from {
+    transform: var(--f7-navbar-large-bg-left-bottom);
+  }
+  to {
+    transform: var(--f7-navbar-large-bg-center-bottom);
+  }
 }
 @keyframes ios-navbar-bg-from-lt-to-cb {
-  from { transform: var(--f7-navbar-large-bg-left-top) }
-  to { transform: var(--f7-navbar-large-bg-center-bottom) }
+  from {
+    transform: var(--f7-navbar-large-bg-left-top);
+  }
+  to {
+    transform: var(--f7-navbar-large-bg-center-bottom);
+  }
 }
 @keyframes ios-navbar-bg-from-lb-to-ct {
-  from { transform: var(--f7-navbar-large-bg-left-bottom) }
-  to { transform: var(--f7-navbar-large-bg-center-top) }
+  from {
+    transform: var(--f7-navbar-large-bg-left-bottom);
+  }
+  to {
+    transform: var(--f7-navbar-large-bg-center-top);
+  }
 }
 @keyframes ios-navbar-bg-from-lt-to-ct {
-  from { transform: var(--f7-navbar-large-bg-left-top) }
-  to { transform: var(--f7-navbar-large-bg-center-top) }
+  from {
+    transform: var(--f7-navbar-large-bg-left-top);
+  }
+  to {
+    transform: var(--f7-navbar-large-bg-center-top);
+  }
 }
 @keyframes ios-navbar-transparent-bg-from-l-to-c {
-  from { transform: var(--f7-navbar-large-transparent-bg-left) }
-  to { transform: var(--f7-navbar-large-transparent-bg-center) }
+  from {
+    transform: var(--f7-navbar-large-transparent-bg-left);
+  }
+  to {
+    transform: var(--f7-navbar-large-transparent-bg-center);
+  }
 }
 @keyframes ios-navbar-transparent-bg-from-c-to-l {
-  from { transform: var(--f7-navbar-large-transparent-bg-center) }
-  to { transform: var(--f7-navbar-large-transparent-bg-left) }
+  from {
+    transform: var(--f7-navbar-large-transparent-bg-center);
+  }
+  to {
+    transform: var(--f7-navbar-large-transparent-bg-left);
+  }
 }

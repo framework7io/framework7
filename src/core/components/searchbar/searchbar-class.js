@@ -1,5 +1,5 @@
 import { getDocument } from 'ssr-window';
-import $ from 'dom7';
+import $ from '../../utils/dom7';
 import { extend, nextTick, removeDiacritics, deleteProps } from '../../utils/utils';
 import FrameworkClass from '../../utils/class';
 

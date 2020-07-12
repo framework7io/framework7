@@ -1,4 +1,3 @@
-import $ from 'dom7';
 import {
   extend,
   colorRgbToHex,
@@ -11,6 +10,7 @@ import {
   deleteProps,
 } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
+import $ from '../../utils/dom7';
 
 import moduleAlphaSlider from './modules/alpha-slider';
 import moduleCurrentColor from './modules/current-color';

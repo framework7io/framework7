@@ -40,16 +40,31 @@
   min-width: 0;
   position: relative;
   flex-shrink: 10;
-  .card, &.card, .list, &.list, .block, &.block {
+  .card,
+  &.card,
+  .list,
+  &.list,
+  .block,
+  &.block {
     margin: 0;
     width: 100%;
   }
-  .card, .list, .block {
-    + .card, + .list, + .block {
+  .card,
+  .list,
+  .block {
+    + .card,
+    + .list,
+    + .block {
       margin: var(--f7-timeline-inner-block-margin-vertical) 0 0;
     }
   }
-  p, ul, ol, h1, h2, h3, h4 {
+  p,
+  ul,
+  ol,
+  h1,
+  h2,
+  h3,
+  h4 {
     &:first-child {
       margin-top: 0;
     }
@@ -83,7 +98,6 @@
       .hairline-remove-top-bottom();
     }
   }
-
 }
 .timeline-item-divider {
   width: 1px;
@@ -94,7 +108,8 @@
   border-radius: 50%;
   flex-shrink: 0;
   margin: 3px var(--f7-timeline-divider-margin-horizontal) 0;
-  &:after, &:before {
+  &:after,
+  &:before {
     content: ' ';
     width: 1px;
     height: 100vh;
@@ -120,7 +135,8 @@
   font-size: var(--f7-timeline-item-time-font-size);
   margin-top: var(--f7-timeline-inner-block-margin-vertical);
   color: var(--f7-timeline-item-time-text-color);
-  &:first-child, &:last-child {
+  &:first-child,
+  &:last-child {
     margin-top: 0;
   }
   .timeline-item-title + & {
@@ -253,7 +269,8 @@ each(@breakpoints, {
     .hairline-remove(right);
   }
 
-  @cols: 5, 10, 15, 20, 25, 30, 100/3, 35, 40, 45, 50, 55, 60, 65, 100*(2/3), 70, 75, 80, 85, 90, 95, 100;
+  @cols: 5, 10, 15, 20, 25, 30, 100/3, 35, 40, 45, 50, 55, 60, 65, 100 * (2/3), 70, 75, 80, 85, 90,
+    95, 100;
   each(@cols, {
     @className: framework7_floor(@value);
     &.col-@{className} .timeline-item {
@@ -261,7 +278,7 @@ each(@breakpoints, {
     }
   });
 
-  @media (min-width:768px) {
+  @media (min-width: 768px) {
     each(@cols, {
       @className: framework7_floor(@value);
       &.tablet-@{className} .timeline-item {
@@ -283,7 +300,8 @@ each(@breakpoints, {
     .hairline(top, var(--f7-timeline-horizontal-item-border-color));
   }
 }
-.timeline-year, .timeline-month {
+.timeline-year,
+.timeline-month {
   display: flex;
   flex-shrink: 0;
   position: relative;
@@ -302,7 +320,8 @@ each(@breakpoints, {
   font-size: var(--f7-timeline-month-font-size);
   font-weight: var(--f7-timeline-month-font-weight);
 }
-.timeline-year-title, .timeline-month-title {
+.timeline-year-title,
+.timeline-month-title {
   position: absolute;
   left: 0;
   top: 0;
@@ -338,7 +357,11 @@ each(@breakpoints, {
 .timeline-horizontal .timeline-item:first-child,
 .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
 .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
-.timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item {
+.timeline-year:first-child
+  .timeline-year-title
+  + .timeline-month
+  .timeline-month-title
+  + .timeline-item {
   overflow: visible;
   .timeline-item-date {
     width: auto;

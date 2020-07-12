@@ -62,6 +62,7 @@
     "dom7": "^3.0.0-alpha.5",
     "path-to-regexp": "^6.1.0",
     "ssr-window": "^3.0.0-alpha.4",
+    "swiper": "^6.0.2",
     "template7": "^1.4.2"
   },
   "devDependencies": {

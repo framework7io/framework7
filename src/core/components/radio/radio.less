@@ -21,15 +21,18 @@
 .aurora .icon-radio {
   border: var(--f7-radio-border-width) solid var(--f7-radio-inactive-color);
 }
-label.item-radio, .radio {
+label.item-radio,
+.radio {
   cursor: pointer;
-  input[type="checkbox"], input[type="radio"] {
+  input[type='checkbox'],
+  input[type='radio'] {
     display: none;
   }
 }
 label.item-radio {
   transition-duration: 300ms;
-  .item-content, &.item-content {
+  .item-content,
+  &.item-content {
     .item-media {
       align-self: center;
     }
@@ -38,7 +41,8 @@ label.item-radio {
     .hairline-color(bottom, transparent);
     background-color: var(--f7-list-link-pressed-bg-color);
   }
-  &.disabled, .disabled & {
+  &.disabled,
+  .disabled & {
     .disabled();
   }
 }

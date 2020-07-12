@@ -30,8 +30,14 @@
   position: relative;
   cursor: pointer;
   &.active-state {
-    background-color: var(--f7-stepper-button-pressed-bg-color, rgba(var(--f7-theme-color-rgb), 0.15));
-    color: var(--f7-stepper-button-pressed-text-color, var(--f7-stepper-button-text-color, var(--f7-theme-color)));
+    background-color: var(
+      --f7-stepper-button-pressed-bg-color,
+      rgba(var(--f7-theme-color-rgb), 0.15)
+    );
+    color: var(
+      --f7-stepper-button-pressed-text-color,
+      var(--f7-stepper-button-text-color, var(--f7-theme-color))
+    );
   }
   &:first-child {
     border-radius: var(--f7-stepper-border-radius) 0 0 var(--f7-stepper-border-radius);
@@ -52,7 +58,8 @@
 .stepper-button-plus,
 .stepper-button-minus {
   user-select: none;
-  &:after, &:before {
+  &:after,
+  &:before {
     content: '';
     position: absolute;
     left: 50%;
@@ -82,8 +89,8 @@
 .stepper-value {
   flex-shrink: 1;
   text-align: center;
-  border-top:  var(--f7-stepper-border-width) solid var(--f7-theme-color);
-  border-bottom: var(--f7-stepper-border-width) solid  var(--f7-theme-color);
+  border-top: var(--f7-stepper-border-width) solid var(--f7-theme-color);
+  border-bottom: var(--f7-stepper-border-width) solid var(--f7-theme-color);
 }
 .stepper .stepper-input-wrap input,
 .stepper-value {
@@ -120,7 +127,7 @@
 .aurora .stepper-raised-aurora {
   .stepper-button + .stepper-button,
   .stepper-button-minus + .stepper-button-plus {
-    border-left: 1px solid rgba(0,0,0,0.1);
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
   }
 }
 .stepper-fill,
@@ -140,8 +147,8 @@
 .aurora .stepper-raised-aurora:not(.stepper-fill-aurora):not(.stepper-fill) {
   .stepper-input-wrap,
   .stepper-value {
-    border-left: 1px solid rgba(0,0,0,0.1);
-    border-right: 1px solid rgba(0,0,0,0.1);
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
   }
 }
 .stepper-large,

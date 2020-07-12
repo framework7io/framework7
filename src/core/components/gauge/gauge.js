@@ -1,4 +1,4 @@
-import $ from 'dom7';
+import $ from '../../utils/dom7';
 import Gauge from './gauge-class';
 import ConstructorMethods from '../../utils/constructor-methods';
 import { extend } from '../../utils/utils';

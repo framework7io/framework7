@@ -38,28 +38,28 @@
     });
   }
 }
-label.item-checkbox input[type="checkbox"]:not(:checked) ~ .icon-checkbox,
-label.item-checkbox input[type="checkbox"]:not(:checked) ~ * .icon-checkbox,
-.checkbox input[type="checkbox"]:not(:checked) ~ i {
+label.item-checkbox input[type='checkbox']:not(:checked) ~ .icon-checkbox,
+label.item-checkbox input[type='checkbox']:not(:checked) ~ * .icon-checkbox,
+.checkbox input[type='checkbox']:not(:checked) ~ i {
   &:after {
     font-size: 0;
   }
 }
-label.item-checkbox input[type="checkbox"]:checked ~ .icon-checkbox,
-label.item-checkbox input[type="checkbox"]:checked ~ * .icon-checkbox,
-.checkbox input[type="checkbox"]:checked ~ i,
-label.item-checkbox input[type="checkbox"]:indeterminate ~ .icon-checkbox,
-label.item-checkbox input[type="checkbox"]:indeterminate ~ * .icon-checkbox,
-.checkbox input[type="checkbox"]:indeterminate ~ i {
+label.item-checkbox input[type='checkbox']:checked ~ .icon-checkbox,
+label.item-checkbox input[type='checkbox']:checked ~ * .icon-checkbox,
+.checkbox input[type='checkbox']:checked ~ i,
+label.item-checkbox input[type='checkbox']:indeterminate ~ .icon-checkbox,
+label.item-checkbox input[type='checkbox']:indeterminate ~ * .icon-checkbox,
+.checkbox input[type='checkbox']:indeterminate ~ i {
   border-color: var(--f7-checkbox-active-color, var(--f7-theme-color));
   background-color: var(--f7-checkbox-active-color, var(--f7-theme-color));
   &:after {
     opacity: 1;
   }
 }
-label.item-checkbox input[type="checkbox"]:indeterminate ~ .icon-checkbox,
-label.item-checkbox input[type="checkbox"]:indeterminate ~ * .icon-checkbox,
-.checkbox input[type="checkbox"]:indeterminate ~ i {
+label.item-checkbox input[type='checkbox']:indeterminate ~ .icon-checkbox,
+label.item-checkbox input[type='checkbox']:indeterminate ~ * .icon-checkbox,
+.checkbox input[type='checkbox']:indeterminate ~ i {
   &:after {
     font-size: 0;
     content: '';
@@ -83,14 +83,16 @@ label.item-checkbox input[type="checkbox"]:indeterminate ~ * .icon-checkbox,
 label.item-checkbox,
 .checkbox {
   cursor: pointer;
-  input[type="checkbox"], input[type="radio"] {
+  input[type='checkbox'],
+  input[type='radio'] {
     display: none;
   }
 }
 
 label.item-checkbox {
   transition-duration: 300ms;
-  .item-content, &.item-content {
+  .item-content,
+  &.item-content {
     .item-media {
       align-self: center;
     }
@@ -107,7 +109,8 @@ label.item-checkbox {
     .hairline-color(bottom, transparent);
     background-color: var(--f7-list-link-pressed-bg-color);
   }
-  &.disabled, .disabled & {
+  &.disabled,
+  .disabled & {
     .disabled();
   }
 }

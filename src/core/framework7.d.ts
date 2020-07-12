@@ -7,7 +7,7 @@ import Dom7 from 'dom7';
 
 // Modules
 // IMPORT_MODULES
-import {ComponentClass as Component} from '{{basePath}}/modules/component/component';
+import { ComponentClass as Component } from '{{basePath}}/modules/component/component';
 
 // Components
 // IMPORT_COMPONENTS

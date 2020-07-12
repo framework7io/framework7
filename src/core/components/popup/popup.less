@@ -22,7 +22,8 @@
   &.theme-dark {
     background: #000;
   }
-  &.modal-in, &.modal-out {
+  &.modal-in,
+  &.modal-out {
     transition-duration: var(--f7-popup-transition-duration);
   }
   &.not-animated {
@@ -64,13 +65,15 @@
       transform: translate3d(0, -100vh, 0);
     }
     &.popup-behind {
-      transform: translate3d(0,0,0) scale(0.9);
+      transform: translate3d(0, 0, 0) scale(0.9);
     }
   }
 }
 html.with-modal-popup {
   .framework7-root {
-    > .views, > .view, > .panel {
+    > .views,
+    > .view,
+    > .panel {
       .page-content {
         .not-scrollable();
       }
@@ -85,7 +88,8 @@ html.with-modal-popup-push-closing {
     height: calc(100% - var(--f7-popup-push-offset) - 10px);
     border-radius: var(--f7-popup-push-border-radius) var(--f7-popup-push-border-radius) 0 0;
     --f7-safe-area-top: 0px;
-    .view, .page {
+    .view,
+    .page {
       --f7-safe-area-top: 0px;
     }
   }
@@ -141,7 +145,7 @@ html.with-modal-popup-push {
     top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     z-index: 13000;
     transition-duration: var(--f7-popup-transition-duration);
     border-radius: var(--f7-popup-push-border-radius) var(--f7-popup-push-border-radius) 0 0;
@@ -161,7 +165,8 @@ html.with-modal-popup-push {
       border-radius: var(--f7-popup-push-border-radius) var(--f7-popup-push-border-radius) 0 0;
     }
     &.popup-push {
-      transform: translate3d(0, calc(0px - var(--f7-popup-push-offset) - 10px), 0px) scale(var(--f7-popup-push-scale, 1));
+      transform: translate3d(0, calc(0px - var(--f7-popup-push-offset) - 10px), 0px)
+        scale(var(--f7-popup-push-scale, 1));
     }
     &:after {
       opacity: 1;
@@ -203,7 +208,6 @@ html.with-modal-popup-push {
     }
   }
 });
-
 
 .if-ios-theme({
   @import url('./popup-ios.less');

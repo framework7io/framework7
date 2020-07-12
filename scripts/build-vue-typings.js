@@ -28,7 +28,7 @@ export default Framework7Vue;
 function buildTypings(cb) {
   const output = `${getOutput()}/vue`;
 
-  const files = fs.readdirSync(`${output}/components`).filter(file => file.indexOf('.d.ts') < 0);
+  const files = fs.readdirSync(`${output}/components`).filter((file) => file.indexOf('.d.ts') < 0);
 
   const components = [];
   const componentImports = [];
@@ -38,17 +38,21 @@ function buildTypings(cb) {
     const componentName = fileName
       .replace('.js', '')
       .split('-')
-      .map(word => word[0].toUpperCase() + word.substr(1))
+      .map((word) => word[0].toUpperCase() + word.substr(1))
       .join('');
     components.push({
       name: `${componentName}`,
       importName: `F7${componentName}`,
     });
-    componentImports.push(`import f7${componentName} from './components/${fileName.replace('.js', '')}';`);
+    componentImports.push(
+      `import f7${componentName} from './components/${fileName.replace('.js', '')}';`,
+    );
     componentExports.push(`  f7${componentName}`);
   });
 
-  let vueTypings = fs.readFileSync(path.resolve(__dirname, '../src/phenome/framework7-phenome.d.ts'));
+  let vueTypings = fs.readFileSync(
+    path.resolve(__dirname, '../src/phenome/framework7-phenome.d.ts'),
+  );
   vueTypings = vueTypings
     .replace('// IMPORT_LIB', importLib)
     .replace('// IMPORT_COMPONENTS', componentImports.join('\n'))

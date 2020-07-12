@@ -3,7 +3,7 @@
   .stepper-button-minus,
   .stepper-button-plus {
     transition-duration: 100ms;
-    transform: translate3d(0,0,0);
+    transform: translate3d(0, 0, 0);
     overflow: hidden;
   }
   &.device-desktop {
@@ -11,13 +11,22 @@
     .stepper-button-minus,
     .stepper-button-plus {
       &:not(.active-state):not(.no-hover):hover {
-        background-color: var(--f7-stepper-button-hover-bg-color, rgba(var(--f7-theme-color-rgb), .07));
+        background-color: var(
+          --f7-stepper-button-hover-bg-color,
+          rgba(var(--f7-theme-color-rgb), 0.07)
+        );
       }
     }
   }
   .stepper-fill,
   .stepper-fill-aurora {
-    --f7-stepper-button-hover-bg-color: var(--f7-stepper-button-fill-hover-bg-color, var(--f7-theme-color-tint));
-    --f7-stepper-button-pressed-bg-color: var(--f7-stepper-fill-button-pressed-bg-color, var(--f7-theme-color-shade));
+    --f7-stepper-button-hover-bg-color: var(
+      --f7-stepper-button-fill-hover-bg-color,
+      var(--f7-theme-color-tint)
+    );
+    --f7-stepper-button-pressed-bg-color: var(
+      --f7-stepper-fill-button-pressed-bg-color,
+      var(--f7-theme-color-shade)
+    );
   }
 }

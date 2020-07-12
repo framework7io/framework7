@@ -1,4 +1,4 @@
-import $ from 'dom7';
+import $ from '../../utils/dom7';
 import { extend } from '../../utils/utils';
 import Popover from './popover-class';
 import ModalMethods from '../../utils/modal-methods';

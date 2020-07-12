@@ -1,17 +1,17 @@
 /* === Input === */
 @import url('./input-vars.less');
 
-input[type="text"],
-input[type="password"],
-input[type="search"],
-input[type="email"],
-input[type="tel"],
-input[type="url"],
-input[type="date"],
+input[type='text'],
+input[type='password'],
+input[type='search'],
+input[type='email'],
+input[type='tel'],
+input[type='url'],
+input[type='date'],
 input[type='month'],
-input[type="datetime-local"],
-input[type="time"],
-input[type="number"],
+input[type='datetime-local'],
+input[type='time'],
+input[type='number'],
 select,
 textarea {
   box-sizing: border-box;
@@ -39,17 +39,17 @@ textarea {
   visibility: hidden;
 }
 .list {
-  input[type="text"],
-  input[type="password"],
-  input[type="search"],
-  input[type="email"],
-  input[type="tel"],
-  input[type="url"],
-  input[type="date"],
+  input[type='text'],
+  input[type='password'],
+  input[type='search'],
+  input[type='email'],
+  input[type='tel'],
+  input[type='url'],
+  input[type='date'],
   input[type='month'],
-  input[type="datetime-local"],
-  input[type="time"],
-  input[type="number"],
+  input[type='datetime-local'],
+  input[type='time'],
+  input[type='number'],
   select {
     width: 100%;
     height: var(--f7-input-height);
@@ -81,19 +81,19 @@ textarea {
       height: var(--f7-input-height);
     }
   }
-  input[type="datetime-local"] {
+  input[type='datetime-local'] {
     max-width: 50vw;
   }
-  input[type="time"],
-  input[type="date"],
+  input[type='time'],
+  input[type='date'],
   input[type='month'],
-  input[type="datetime-local"] {
+  input[type='datetime-local'] {
     line-height: var(--f7-input-height);
   }
   .rtl({
-    input[type="date"],
+    input[type='date'],
     input[type='month'],
-    input[type="datetime-local"] {
+    input[type='datetime-local'] {
       text-align: right;
       flex-direction: row-reverse;
       width: auto;
@@ -113,7 +113,8 @@ textarea {
   }
   .item-floating-label {
     --label-height: calc(var(--f7-label-font-size) * var(--f7-label-line-height));
-    transform: scale(var(--f7-floating-label-scale)) translateY(calc((var(--f7-input-height) / 2 + 50%) / var(--f7-floating-label-scale)));
+    transform: scale(var(--f7-floating-label-scale))
+      translateY(calc((var(--f7-input-height) / 2 + 50%) / var(--f7-floating-label-scale)));
     color: var(--f7-input-placeholder-color);
     width: auto;
     max-width: calc(100% / var(--f7-floating-label-scale));
@@ -125,12 +126,12 @@ textarea {
       right: var(--f7-input-padding-right);
     });
     ~ .item-input-wrap input,
-    ~ .item-input-wrap textarea, {
+    ~ .item-input-wrap textarea {
       &::placeholder {
         opacity: 0;
         transition-duration: 100ms;
       }
-      &.input-focused::placeholder{
+      &.input-focused::placeholder {
         opacity: 1;
         transition-duration: 300ms;
       }
@@ -212,7 +213,9 @@ textarea {
 }
 .input {
   position: relative;
-  input, select, textarea {
+  input,
+  select,
+  textarea {
     width: 100%;
   }
 }

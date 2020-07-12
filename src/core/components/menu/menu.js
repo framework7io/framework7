@@ -1,4 +1,4 @@
-import $ from 'dom7';
+import $ from '../../utils/dom7';
 
 const Menu = {
   open(el = '.menu-item-dropdown') {

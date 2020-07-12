@@ -1,145 +1,145 @@
-import { Dom7Instance } from 'dom7';
+import { Dom7Array } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
 export namespace TextEditor {
   interface Parameters {
     /** Editor element. HTMLElement or string with CSS selector of editor element */
-    el: HTMLElement | CSSSelector
+    el: HTMLElement | CSSSelector;
     /** Text editor mode: Can be "toolbar", "popover" or "keyboard-toolbar" (default "toolbar") */
-    mode?: string
+    mode?: string;
     /** Default value. Should be HTML string. If not passed then it will treat inner HTML content as default value (default undefined) */
-    value?: string
+    value?: string;
     /** Placeholder (default null) */
-    palceholder?: string
+    palceholder?: string;
     /** Set of editor toolbar buttons */
-    buttons?: string[] | Array<string>[]
+    buttons?: string[] | Array<string>[];
     /** Define custom buttons */
-    customButtons?: object
+    customButtons?: object;
     /** Adds visual divider between buttons group (default true) */
-    dividers?: boolean
+    dividers?: boolean;
     /** Prompt text that appears on image url request (default "Insert image URL") */
-    imageUrlText?: string
+    imageUrlText?: string;
     /** Prompt text that appears on link url request (default "Insert link URL") */
-    linkUrlText?: string
+    linkUrlText?: string;
     /** When enabled it will clear any formatting on paste from clipboard (default true) */
-    clearFormattingOnPaste?: boolean
+    clearFormattingOnPaste?: boolean;
     /** Object with events handlers.. */
     on?: {
-      [event in keyof Events]? : Events[event]
-    }
+      [event in keyof Events]?: Events[event];
+    };
   }
   interface TextEditor extends Framework7EventsClass<Events> {
     /** Link to global app instance */
-    app : Framework7
+    app: Framework7;
     /** Editor HTML element */
-    el : HTMLElement
+    el: HTMLElement;
     /** Dom7 instance with editor HTML element */
-    $el : Dom7Instance
+    $el: Dom7Array;
     /** Editor contenteditable content element */
-    contentEl: HTMLElement
+    contentEl: HTMLElement;
     /** Dom7 instance with editor contenteditable content element */
-    $contentEl: Dom7Instance
+    $contentEl: Dom7Array;
     /** Current editor value (html string) */
-    value: string
+    value: string;
 
     /** Editor parameters */
-    params : Parameters
+    params: Parameters;
     /** Returns editor value */
-    getValue(): number
+    getValue(): number;
     /** Set new editor value */
-    setValue(value: string): TextEditor
+    setValue(value: string): TextEditor;
     /** Returns current selection Range */
-    getSelectionRange(): Range
+    getSelectionRange(): Range;
     /** Set selection based on passed Range */
-    setSelectionRange(range: Range): void
+    setSelectionRange(range: Range): void;
     /** Destroy text editor */
-    destroy() : void
+    destroy(): void;
   }
   interface Events {
     /** Event will be triggered when editor value has been changed. As an argument event handler receives editor instance and value */
-    change: (editor : TextEditor, value: string) => void
+    change: (editor: TextEditor, value: string) => void;
     /** Event will be triggered on editor's content "input" event. As an argument event handler receives editor instance */
-    input: (editor : TextEditor) => void
+    input: (editor: TextEditor) => void;
     /** Event will be triggered on editor's content focus. As an argument event handler receives editor instance */
-    focus: (editor : TextEditor) => void
+    focus: (editor: TextEditor) => void;
     /** Event will be triggered on editor's content blur. As an argument event handler receives editor instance */
-    blur: (editor : TextEditor) => void
+    blur: (editor: TextEditor) => void;
     /** Event will be triggered on editor button click. As an argument event handler receives editor instance and name of the clicked button, e.g. "bold" */
-    buttonClick: (editor : TextEditor, button: string) => void
+    buttonClick: (editor: TextEditor, button: string) => void;
     /** Event will be triggered when editor keyboard toolbar appears. As an argument event handler receives editor instance */
-    keyboardOpen: (editor : TextEditor) => void
+    keyboardOpen: (editor: TextEditor) => void;
     /** Event will be triggered when editor keyboard toolbar disappears. As an argument event handler receives editor instance */
-    keyboardClose: (editor : TextEditor) => void
+    keyboardClose: (editor: TextEditor) => void;
     /** Event will be triggered on editor popover open. As an argument event handler receives editor instance */
-    popoverOpen: (editor : TextEditor) => void
+    popoverOpen: (editor: TextEditor) => void;
     /** Event will be triggered on editor popover close. As an argument event handler receives editor instance */
-    popoverClose: (editor : TextEditor) => void
+    popoverClose: (editor: TextEditor) => void;
     /** Event will be triggered on editor init */
-    init: (editor : TextEditor) => void
+    init: (editor: TextEditor) => void;
     /** Event will be triggered right before Text Editor instance will be destroyed. As an argument event handler receives Text Editor instance */
-    beforeDestroy: (editor : TextEditor) => void
+    beforeDestroy: (editor: TextEditor) => void;
   }
   interface DomEvents {
     /** Event will be triggered when editor value has been changed. */
-    'texteditor:change': () => void
+    'texteditor:change': () => void;
     /** Event will be triggered on editor's content "input" event. */
-    'texteditor:input': () => void
+    'texteditor:input': () => void;
     /** Event will be triggered on editor's content focus.*/
-    'texteditor:focus': () => void
+    'texteditor:focus': () => void;
     /** Event will be triggered on editor's content blur.*/
-    'texteditor:blur': () => void
+    'texteditor:blur': () => void;
     /** Event will be triggered on editor button click. */
-    'texteditor:buttonclick': () => void
+    'texteditor:buttonclick': () => void;
     /** Event will be triggered when editor keyboard toolbar appears.*/
-    'texteditor:keyboardopen': () => void
+    'texteditor:keyboardopen': () => void;
     /** Event will be triggered when editor keyboard toolbar disappears.*/
-    'texteditor:keyboardclose': () => void
+    'texteditor:keyboardclose': () => void;
     /** Event will be triggered on editor popover open.*/
-    'texteditor:popoveropen': () => void
+    'texteditor:popoveropen': () => void;
     /** Event will be triggered on editor popover close.*/
-    'texteditor:popoverclose': () => void
+    'texteditor:popoverclose': () => void;
     /** Event will be triggered on editor init */
-    'texteditor:init': () => void
+    'texteditor:init': () => void;
     /** Event will be triggered right before Text Editor instance will be destroyed.*/
-    'texteditor:beforedestroy': () => void
+    'texteditor:beforedestroy': () => void;
   }
 
   interface AppMethods {
     textEditor: {
       /** create Text Editor instance */
-      create(parameters: Parameters): TextEditor
+      create(parameters: Parameters): TextEditor;
       /** get Text Editor instance by HTML element */
-      get(el: HTMLElement | CSSSelector | TextEditor): TextEditor
+      get(el: HTMLElement | CSSSelector | TextEditor): TextEditor;
       /** destroy Text Editor instance */
-      destroy(el : HTMLElement | CSSSelector | TextEditor) : void
-    }
+      destroy(el: HTMLElement | CSSSelector | TextEditor): void;
+    };
   }
   interface AppParams {
-    textEditor?: Parameters | undefined
+    textEditor?: Parameters | undefined;
   }
   interface AppEvents {
     /** Event will be triggered when editor value has been changed. As an argument event handler receives editor instance and value */
-    textEditorChange: (editor : TextEditor, value: string) => void
+    textEditorChange: (editor: TextEditor, value: string) => void;
     /** Event will be triggered on editor's content "input" event. As an argument event handler receives editor instance */
-    textEditorInput: (editor : TextEditor) => void
+    textEditorInput: (editor: TextEditor) => void;
     /** Event will be triggered on editor's content focus. As an argument event handler receives editor instance */
-    textEditorFocus: (editor : TextEditor) => void
+    textEditorFocus: (editor: TextEditor) => void;
     /** Event will be triggered on editor's content blur. As an argument event handler receives editor instance */
-    textEditorBlur: (editor : TextEditor) => void
+    textEditorBlur: (editor: TextEditor) => void;
     /** Event will be triggered on editor button click. As an argument event handler receives editor instance and name of the clicked button, e.g. "bold" */
-    textEditorButtonClick: (editor : TextEditor, button: string) => void
+    textEditorButtonClick: (editor: TextEditor, button: string) => void;
     /** Event will be triggered when editor keyboard toolbar appears. As an argument event handler receives editor instance */
-    textEditorKeyboardOpen: (editor : TextEditor) => void
+    textEditorKeyboardOpen: (editor: TextEditor) => void;
     /** Event will be triggered when editor keyboard toolbar disappears. As an argument event handler receives editor instance */
-    textEditorKeyboardClose: (editor : TextEditor) => void
+    textEditorKeyboardClose: (editor: TextEditor) => void;
     /** Event will be triggered on editor popover open. As an argument event handler receives editor instance */
-    textEditorPopoverOpen: (editor : TextEditor) => void
+    textEditorPopoverOpen: (editor: TextEditor) => void;
     /** Event will be triggered on editor popover close. As an argument event handler receives editor instance */
-    textEditorPopoverClose: (editor : TextEditor) => void
+    textEditorPopoverClose: (editor: TextEditor) => void;
     /** Event will be triggered on editor init */
-    textEditorInit: (editor : TextEditor) => void
+    textEditorInit: (editor: TextEditor) => void;
     /** Event will be triggered right before Text Editor instance will be destroyed. As an argument event handler receives Text Editor instance */
-    textEditorBeforeDestroy: (editor : TextEditor) => void
+    textEditorBeforeDestroy: (editor: TextEditor) => void;
   }
 }
 

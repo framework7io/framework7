@@ -1,7 +1,8 @@
 /* === Progressbar === */
 @import url('./progressbar-vars.less');
 
-.progressbar, .progressbar-infinite {
+.progressbar,
+.progressbar-infinite {
   width: 100%;
   overflow: hidden;
   position: relative;
@@ -27,7 +28,8 @@
 }
 .progressbar-infinite {
   z-index: 15000;
-  &:before, &:after {
+  &:before,
+  &:after {
     content: '';
     position: absolute;
     left: 0;
@@ -50,8 +52,15 @@
   animation: progressbar-out 150ms forwards;
 }
 
-body, .view, .views, .page, .panel, .popup, .framework7-root {
-  > .progressbar, > .progressbar-infinite {
+body,
+.view,
+.views,
+.page,
+.panel,
+.popup,
+.framework7-root {
+  > .progressbar,
+  > .progressbar-infinite {
     position: absolute;
     left: 0;
     top: 0;

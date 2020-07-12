@@ -1,6 +1,6 @@
 import { getWindow, getDocument } from 'ssr-window';
-import $ from 'dom7';
 import { pathToRegexp, compile } from 'path-to-regexp';
+import $ from '../../utils/dom7';
 import Framework7Class from '../../utils/class';
 import {
   extend,

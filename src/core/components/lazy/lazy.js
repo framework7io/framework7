@@ -1,5 +1,5 @@
-import $ from 'dom7';
 import { getWindow } from 'ssr-window';
+import $ from '../../utils/dom7';
 import { extend } from '../../utils/utils';
 import { getSupport } from '../../utils/get-support';
 

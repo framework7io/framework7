@@ -9,17 +9,19 @@ const getOutput = require('./get-output');
 const fs = require('./utils/fs-extra');
 
 function transformRestSpread(buildPath) {
-  const reactFiles = fs.readdirSync(`${buildPath}/react/components`).filter(f => f[0] !== '.' && f.indexOf('.d.ts') < 0);
-  const vueFiles = fs.readdirSync(`${buildPath}/vue/components`).filter(f => f[0] !== '.' && f.indexOf('.d.ts') < 0);
+  const reactFiles = fs
+    .readdirSync(`${buildPath}/react/components`)
+    .filter((f) => f[0] !== '.' && f.indexOf('.d.ts') < 0);
+  const vueFiles = fs
+    .readdirSync(`${buildPath}/vue/components`)
+    .filter((f) => f[0] !== '.' && f.indexOf('.d.ts') < 0);
 
   function transformFile(filePath) {
     const fileContent = fs.readFileSync(filePath);
     const { code } = transformSync(fileContent, {
       babelrc: false,
       configFile: false,
-      plugins: [
-        ['@babel/plugin-proposal-object-rest-spread', { loose: true, useBuiltIns: true }],
-      ],
+      plugins: [['@babel/plugin-proposal-object-rest-spread', { loose: true, useBuiltIns: true }]],
     });
     fs.writeFileSync(filePath, code);
   }
@@ -65,13 +67,15 @@ function build(cb) {
         forceUpdate: 'auto',
       },
     },
-  }).then(() => {
-    transformRestSpread(buildPath);
-    if (cb) cb();
-  }).catch((err) => {
-    console.log(err);
-    if (cb) cb();
-  });
+  })
+    .then(() => {
+      transformRestSpread(buildPath);
+      if (cb) cb();
+    })
+    .catch((err) => {
+      console.log(err);
+      if (cb) cb();
+    });
 }
 
 module.exports = build;

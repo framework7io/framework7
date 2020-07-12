@@ -14,7 +14,7 @@
 .rules-loop(@display, display);
 
 // Flex Shrink
-@shrinks: 0,1,2,3,4,5,6,7,8,9,10;
+@shrinks: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;
 .rules-loop(@shrinks, flex-shrink);
 
 // Flex Direction
@@ -22,7 +22,8 @@
 .rules-loop(@directions, flex-direction);
 
 // Justify Content
-@justify: flex-start, center, flex-end, space-between, space-around, space-evenly, stretch, start, end, left, right;
+@justify: flex-start, center, flex-end, space-between, space-around, space-evenly, stretch, start,
+  end, left, right;
 .rules-loop(@justify, justify-content);
 
 // Align Content
@@ -201,13 +202,13 @@
   margin-right: calc(var(--f7-typography-margin) / 2) !important;
 }
 // Colors
-[class*="text-color-"] {
+[class*='text-color-'] {
   color: var(--f7-theme-color-text-color) !important;
 }
-[class*="bg-color-"] {
+[class*='bg-color-'] {
   background-color: var(--f7-theme-color-bg-color) !important;
 }
-[class*="border-color-"] {
+[class*='border-color-'] {
   border-color: var(--f7-theme-color-border-color) !important;
 }
 

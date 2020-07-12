@@ -2,3 +2,7 @@ build
 node_modules
 packages
 src/core/modules/component/snabbdom
+
+src/phenome
+src/svelte
+kitchen-sink

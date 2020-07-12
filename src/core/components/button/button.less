@@ -12,7 +12,7 @@ button {
   background: none;
   margin: 0;
   white-space: nowrap;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   position: relative;
   overflow: hidden;
   font-family: inherit;
@@ -22,7 +22,8 @@ button {
   vertical-align: middle;
   justify-content: center;
   align-items: center;
-  border: var(--f7-button-border-width, 0px) solid var(--f7-button-border-color, var(--f7-theme-color));
+  border: var(--f7-button-border-width, 0px) solid
+    var(--f7-button-border-color, var(--f7-theme-color));
   font-size: var(--f7-button-font-size);
   color: var(--f7-button-text-color, var(--f7-theme-color));
   height: var(--f7-button-height);
@@ -39,7 +40,8 @@ button {
     background-color: var(--f7-button-pressed-bg-color, rgba(var(--f7-theme-color-rgb), 0.15));
     color: var(--f7-button-pressed-text-color, var(--f7-button-text-color, var(--f7-theme-color)));
   }
-  input[type="submit"]&, input[type="button"]&{
+  input[type='submit']&,
+  input[type='button']& {
     width: 100%;
   }
 
@@ -132,7 +134,8 @@ button {
   border-radius: var(--f7-button-border-radius);
   box-shadow: var(--f7-button-box-shadow);
   box-sizing: border-box;
-  .button, button {
+  .button,
+  button {
     width: 100%;
     flex-shrink: 1;
     min-width: 0;
@@ -187,7 +190,6 @@ button {
   }
 }
 
-
 .segmented-raised,
 .ios .segmented-raised-ios,
 .md .segmented-raised-md,
@@ -234,7 +236,7 @@ button {
 
   .button {
     z-index: 1;
-    transform: translate3d(0,0,0);
+    transform: translate3d(0, 0, 0);
   }
   .button,
   .button:first-child,
@@ -262,7 +264,12 @@ button {
     --f7-segmented-highlight-active: 0;
     --f7-segmented-highlight-padding: calc(var(--f7-segmented-strong-padding) * 2);
     --f7-segmented-highlight-between: var(--f7-segmented-strong-between-buttons);
-    --f7-segmented-highlight-width: calc((100% - var(--f7-segmented-highlight-padding) - var(--f7-segmented-highlight-between) * (var(--f7-segmented-highlight-num) - 1)) / var(--f7-segmented-highlight-num));
+    --f7-segmented-highlight-width: calc(
+      (
+          100% - var(--f7-segmented-highlight-padding) - var(--f7-segmented-highlight-between) *
+            (var(--f7-segmented-highlight-num) - 1)
+        ) / var(--f7-segmented-highlight-num)
+    );
 
     position: absolute;
     background-color: var(--f7-segmented-strong-button-active-bg-color);
@@ -273,7 +280,12 @@ button {
     height: calc(100% - var(--f7-segmented-strong-padding) * 2);
     width: var(--f7-segmented-highlight-width);
     z-index: 0;
-    transform: translateX(calc(var(--f7-segmented-highlight-active) * 100% + var(--f7-segmented-highlight-active) * var(--f7-segmented-highlight-between)));
+    transform: translateX(
+      calc(
+        var(--f7-segmented-highlight-active) * 100% + var(--f7-segmented-highlight-active) *
+          var(--f7-segmented-highlight-between)
+      )
+    );
     transition: 200ms;
   }
 }

@@ -26,14 +26,13 @@ function buildSvelte(cb) {
 
   // Copy components
   const componentsSrc = path.resolve('./src/svelte/components');
-  fs
-    .readdirSync(componentsSrc)
-    .filter(f => f.indexOf('.svelte') >= 0)
+  fs.readdirSync(componentsSrc)
+    .filter((f) => f.indexOf('.svelte') >= 0)
     .forEach((fileName) => {
       const componentName = fileName
         .replace('.svelte', '')
         .split('-')
-        .map(word => word[0].toUpperCase() + word.substr(1))
+        .map((word) => word[0].toUpperCase() + word.substr(1))
         .join('');
       components.push({
         name: `${componentName}`,
@@ -41,22 +40,27 @@ function buildSvelte(cb) {
       componentImports.push(`import ${componentName} from './components/${fileName}';`);
       componentExports.push(`  ${componentName}`);
 
-      fs.copyFileSync(path.resolve(componentsSrc, fileName), path.resolve(output, 'components', fileName));
+      fs.copyFileSync(
+        path.resolve(componentsSrc, fileName),
+        path.resolve(output, 'components', fileName),
+      );
     });
 
   // Copy utils
   const phenomeUtilsSrc = path.resolve('./src/phenome/utils');
-  fs
-    .readdirSync(phenomeUtilsSrc)
-    .forEach((fileName) => {
-      fs.copyFileSync(path.resolve(phenomeUtilsSrc, fileName), path.resolve(output, 'utils', fileName));
-    });
+  fs.readdirSync(phenomeUtilsSrc).forEach((fileName) => {
+    fs.copyFileSync(
+      path.resolve(phenomeUtilsSrc, fileName),
+      path.resolve(output, 'utils', fileName),
+    );
+  });
   const svelteUtilsSrc = path.resolve('./src/svelte/utils');
-  fs
-    .readdirSync(svelteUtilsSrc)
-    .forEach((fileName) => {
-      fs.copyFileSync(path.resolve(svelteUtilsSrc, fileName), path.resolve(output, 'utils', fileName));
-    });
+  fs.readdirSync(svelteUtilsSrc).forEach((fileName) => {
+    fs.copyFileSync(
+      path.resolve(svelteUtilsSrc, fileName),
+      path.resolve(output, 'utils', fileName),
+    );
+  });
 
   // Tweak utils
   let pluginContent = fs.readFileSync(path.resolve(output, 'utils/plugin.js'), 'utf8');
@@ -72,8 +76,7 @@ function buildSvelte(cb) {
     .split(/\/\/ DEFINE_PROTOS_START|\/\/ DEFINE_PROTOS_END/)
     .filter((part, index) => index !== 1)
     .join('');
-  pluginContent = pluginContent
-    .replace(/\n[ ]*\n/g, '\n');
+  pluginContent = pluginContent.replace(/\n[ ]*\n/g, '\n');
 
   fs.writeFileSync(path.resolve(output, 'utils/plugin.js'), pluginContent);
 

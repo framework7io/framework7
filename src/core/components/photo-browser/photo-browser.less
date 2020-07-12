@@ -10,7 +10,6 @@
   z-index: 400;
 }
 .photo-browser-standalone {
-
   &.modal-in {
     transition-duration: 0ms;
     animation: photo-browser-in 400ms;
@@ -54,12 +53,11 @@
   background: none;
 }
 
-
 .photo-browser-of {
   margin: 0 5px;
 }
 .photo-browser-captions {
-  pointer-events:none;
+  pointer-events: none;
   position: absolute;
   left: 0;
   width: 100%;
@@ -98,11 +96,11 @@
   }
   .photo-browser-captions-light & {
     color: var(--f7-photobrowser-caption-light-text-color);
-    background: var(--f7-photobrowser-caption-light-bg-color)
+    background: var(--f7-photobrowser-caption-light-bg-color);
   }
   .photo-browser-captions-dark & {
     color: var(--f7-photobrowser-caption-dark-text-color);
-    background: var(--f7-photobrowser-caption-dark-bg-color)
+    background: var(--f7-photobrowser-caption-dark-bg-color);
   }
 }
 
@@ -187,7 +185,10 @@
     transition: 400ms;
     color: var(--f7-photobrowser-bars-text-color, var(--f7-bars-text-color));
     a {
-      color: var(--f7-photobrowser-bars-link-color, var(--f7-bars-link-color, var(--f7-theme-color)));
+      color: var(
+        --f7-photobrowser-bars-link-color,
+        var(--f7-bars-link-color, var(--f7-theme-color))
+      );
     }
   }
 }
@@ -199,14 +200,14 @@
     pointer-events: none;
   }
   .toolbar ~ .photo-browser-captions {
-    transform: translate3d(0,  var(--f7-toolbar-height), 0);
+    transform: translate3d(0, var(--f7-toolbar-height), 0);
   }
   .photo-browser-swiper-container {
     background: var(--f7-photobrowser-exposed-bg-color);
   }
   .photo-browser-caption {
     color: var(--f7-photobrowser-caption-dark-text-color);
-    background: var(--f7-photobrowser-caption-dark-bg-color)
+    background: var(--f7-photobrowser-caption-dark-bg-color);
   }
 }
 .view.with-photo-browser-page-exposed {
@@ -245,29 +246,29 @@
 
 @keyframes photo-browser-in {
   0% {
-    transform: translate3d(0,0,0) scale(0.5);
+    transform: translate3d(0, 0, 0) scale(0.5);
     opacity: 0;
   }
   50% {
-    transform: translate3d(0,0,0) scale(1.05);
+    transform: translate3d(0, 0, 0) scale(1.05);
     opacity: 1;
   }
   100% {
-    transform: translate3d(0,0,0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
     opacity: 1;
   }
 }
 @keyframes photo-browser-out {
   0% {
-    transform: translate3d(0,0,0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
     opacity: 1;
   }
   50% {
-    transform: translate3d(0,0,0) scale(1.05);
+    transform: translate3d(0, 0, 0) scale(1.05);
     opacity: 1;
   }
   100% {
-    transform: translate3d(0,0,0) scale(0.5);
+    transform: translate3d(0, 0, 0) scale(0.5);
     opacity: 0;
   }
 }

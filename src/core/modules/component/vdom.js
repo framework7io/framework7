@@ -387,7 +387,7 @@ function elementToVNode(el, context, app, initial, isRoot) {
   );
 }
 
-export default function (html = '', context, initial) {
+export default function vdom(html = '', context, initial) {
   const document = getDocument();
   // Save to temp dom
   const htmlTrim = html.trim();

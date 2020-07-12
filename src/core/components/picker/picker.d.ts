@@ -1,215 +1,215 @@
-import { Dom7Instance } from 'dom7';
+import { Dom7Array } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 import { View } from '../view/view';
 
 export namespace Picker {
   interface Picker extends Framework7EventsClass<Events> {
     /** Link to global app instance */
-    app : Framework7
+    app: Framework7;
     /** Picker wrapping container HTML element (when inline picker is in use) */
-    containerEl : HTMLElement
+    containerEl: HTMLElement;
     /** Dom7 instance with picker wrapping container HTML element (when inline picker is in use) */
-    $containerEl : Dom7Instance
+    $containerEl: Dom7Array;
     /** Picker HTML element */
-    el : HTMLElement
+    el: HTMLElement;
     /** Dom7 instance with picker HTML element */
-    $el : Dom7Instance
+    $el: Dom7Array;
     /** Picker input HTML element (passed in inputEl parameter) */
-    inputEl : HTMLElement
+    inputEl: HTMLElement;
     /** Dom7 instance with picker input HTML element (passed in inputEl parameter) */
-    $inputEl : Dom7Instance
+    $inputEl: Dom7Array;
     /** Array where each item represents current selected value for each column */
-    value : unknown
+    value: unknown;
     /** Array with specified Picker columns. Each column also has its own methods and properties (look below) */
-    cols : Column[]
+    cols: Column[];
     /** true if Picker is currently opened */
-    opened : boolean
+    opened: boolean;
     /** true when inline picker is in use */
-    inline : boolean
+    inline: boolean;
     /** Picker URL (that was passed in url parameter) */
-    url: string
+    url: string;
     /** Picker View (that was passed in view parameter) or found parent view */
-    view : View.View
+    view: View.View;
     /** Object with initialization parameters */
-    params : Parameters
+    params: Parameters;
 
     /** Set new picker value. values is array where each item represents value for each column. duration - transition duration in ms */
-    setValue(values : unknown[], duration? : number) : void
+    setValue(values: unknown[], duration?: number): void;
     /** Returns current picker value */
-    getValue() : unknown
+    getValue(): unknown;
     /** Adds value to the values array. Useful in case if multiple selection is enabled (with multiple: true parameter) */
-    addValue() : void
+    addValue(): void;
     /** Open Picker */
-    open() : void
+    open(): void;
     /** Close Picker */
-    close() : void
+    close(): void;
     /** Destroy Picker instance and remove all events */
-    destroy() : void
+    destroy(): void;
   }
 
   interface Column {
     /** Column HTML element */
-    el : HTMLElement
+    el: HTMLElement;
     /** Dom7 instance with column HTML container */
-    $el : Dom7Instance
+    $el: Dom7Array;
     /** Dom7 instance with column items HTML elements */
-    items : HTMLElement[]
+    items: HTMLElement[];
     /** Currently selected column value */
-    value: unknown
+    value: unknown;
     /** Currently selected column display value */
-    displayValue: string
+    displayValue: string;
     /** Index number of currently selected/active item */
-    activeIndex: number
+    activeIndex: number;
 
     /** Set new value for current column. value is a new value, duration - transition duration in ms */
-    setValue(value : unknown, duration?: number) : void
+    setValue(value: unknown, duration?: number): void;
     /** Replace column values and displayValues with new ones */
-    replaceValues(values : unknown[], displayValues : unknown[]) : void
+    replaceValues(values: unknown[], displayValues: unknown[]): void;
   }
 
   interface ColumnParameters {
     /** Array with string columns values. */
-    values?: string[]
+    values?: string[];
     /** Array with string columns values that will be displayed in Picker. If not specified, it will display values from values parameter. */
-    displayValues?: string[]
+    displayValues?: string[];
     /** Additional CSS class name to be set on column HTML container. */
-    cssClass?: string
+    cssClass?: string;
     /** Text alignment of column values, could be "left", "center" or "right". */
-    textAlign?: string
+    textAlign?: string;
     /** Column width in px. Useful if you need to fix column widths in picker with dependent columns. By default, calculated automatically. */
-    width?: number
+    width?: number;
     /** Defines column that should be used as a visual divider, that doesn't have any values. (default false) */
-    divider?: boolean
+    divider?: boolean;
     /** Should be specified for divider-column (divider:true) with content of the column. */
-    content?: string
+    content?: string;
     /** Callback function that will be executed when picker value changed. */
-    onChange?: (picker : Picker, value : string, displayValue : string) => void
+    onChange?: (picker: Picker, value: string, displayValue: string) => void;
   }
 
   interface Parameters {
     /** Enables 3D rotate effect. (default false) */
-    rotateEffect?: boolean
+    rotateEffect?: boolean;
     /** Larger values produces more momentum when you release picker after fast touch and move. (default 7) */
-    momentumRatio?: number
+    momentumRatio?: number;
     /** Updates picker and input values during momentum. (default false) */
-    updateValuesOnMomentum?: boolean
+    updateValuesOnMomentum?: boolean;
     /** Updates picker and input values during touch move. (default true) */
-    updateValuesOnTouchmove?: boolean
+    updateValuesOnTouchmove?: boolean;
     /** Updates picker and input values during mousewheel scrolling. (default true) */
-    updateValuesOnMousewheel?: boolean
+    updateValuesOnMousewheel?: boolean;
     /** Allow to scroll through picker with mousewheel (default true) */
-    mousewheel?: boolean
+    mousewheel?: boolean;
     /** Disables snapping on values. (default false) */
-    freeMode?: boolean
+    freeMode?: boolean;
     /** Array with initial values. Each array item represents value of related column. */
-    value?: unknown[]
+    value?: unknown[];
     /** Function to format input value, should return new/formatted string value. values and displayValues are arrays where each item represents value/display value of related column. */
-    formatValue?: (values : unknown[], displayValues : unknown[]) => string
+    formatValue?: (values: unknown[], displayValues: unknown[]) => string;
     /** Array with columns. Each array item represents object with column parameters. */
-    cols?: ColumnParameters[]
+    cols?: ColumnParameters[];
 
     /** Object with events handlers.. */
     on?: {
-      [event in keyof Events]? : Events[event]
-    }
+      [event in keyof Events]?: Events[event];
+    };
 
     /** String with CSS selector or HTMLElement where to place generated Picker HTML. Use only for inline picker. */
-    containerEl?: HTMLElement | CSSSelector
+    containerEl?: HTMLElement | CSSSelector;
     /** Can be auto, popover (to open picker in popover), sheet (to open in sheet modal). In case of auto will open in sheet modal on small screens and in popover on large screens.. (default auto) */
-    openIn?: string
+    openIn?: string;
     /** Enables Picker sheet to push view/s behind on open (default false) */
-    sheetPush?: boolean
+    sheetPush?: boolean;
     /** Enables ability to close Picker sheet with swipe (default false) */
-    sheetSwipeToClose?: boolean | undefined
+    sheetSwipeToClose?: boolean | undefined;
     /** Enables backdrop (dark semi transparent layer behind). (default undefined - based on Popover or Sheet defaults) */
-    backdrop?: boolean
+    backdrop?: boolean;
     /** String with CSS selector or HTMLElement with related input element. */
-    inputEl?: HTMLElement | CSSSelector
+    inputEl?: HTMLElement | CSSSelector;
     /** Scroll viewport (page-content) to input when picker opened. (default true) */
-    scrollToInput?: boolean
+    scrollToInput?: boolean;
     /** Scroll to a different element than the inputEl when picker opened. */
-    scrollToEl?: HTMLElement | CSSSelector
+    scrollToEl?: HTMLElement | CSSSelector;
     /** Sets "readonly" attribute on specified input. (default true) */
-    inputReadOnly?: boolean
+    inputReadOnly?: boolean;
     /** Additional CSS class name to be set on picker element. */
-    cssClass?: string
+    cssClass?: string;
     /** If enabled, picker will be closed by clicking outside of picker or related input element. (default true) */
-    closeByOutsideClick?: boolean
+    closeByOutsideClick?: boolean;
     /** Enables picker toolbar. (default true) */
-    toolbar?: boolean
+    toolbar?: boolean;
     /** Text for Done/Close toolbar button. (default Done) */
-    toolbarCloseText?: string
+    toolbarCloseText?: string;
     /** Will add opened picker to router history which gives ability to close picker by going back in router history and set current route to the picker modal. (default true) */
-    routableModals?: boolean
+    routableModals?: boolean;
     /** Picker modal URL that will be set as a current route. (default select/) */
-    url?: string
+    url?: string;
     /** View where to set routing when routableModals enabled. Defaults to parent view of inputEl or main view if not found parent view. */
-    view?: object
+    view?: object;
 
     /** Function to render toolbar. Must return toolbar HTML string. */
-    renderToolbar?: () => string
+    renderToolbar?: () => string;
     /** Function to render whole picker. Must return picker full HTML string. */
-    render?: () => string
+    render?: () => string;
   }
 
   interface Events {
     /** Event will be triggered when picker value changes */
-    change: (picker : Picker, value : unknown, displayValue : unknown) => void
+    change: (picker: Picker, value: unknown, displayValue: unknown) => void;
     /** Event will be triggered when picker initialized */
-    init: (picker : Picker) => void
+    init: (picker: Picker) => void;
     /** Event will be triggered when Picker starts its opening animation. As an argument event handler receives picker instance */
-    open: (picker : Picker) => void
+    open: (picker: Picker) => void;
     /** Event will be triggered when Picker completes its opening animation. As an argument event handler receives picker instance */
-    opened: (picker : Picker) => void
+    opened: (picker: Picker) => void;
     /** Event will be triggered when Picker starts its closing animation. As an argument event handler receives picker instance */
-    close: (picker : Picker) => void
+    close: (picker: Picker) => void;
     /** Event will be triggered after Picker completes its closing animation. As an argument event handler receives picker instance */
-    closed: (picker : Picker) => void
+    closed: (picker: Picker) => void;
     /** Event will be triggered right before Picker instance will be destroyed */
-    beforeDestroy: (picker : Picker) => void
+    beforeDestroy: (picker: Picker) => void;
   }
 
   interface DomEvents {
     /** Event will be triggered when Picker starts its opening animation */
-    'picker:open' : () => void
+    'picker:open': () => void;
     /** Event will be triggered after Picker completes its opening animation */
-    'picker:opened' : () => void
+    'picker:opened': () => void;
     /** Event will be triggered when Picker starts its closing animation */
-    'picker:close' : () => void
+    'picker:close': () => void;
     /** Event will be triggered after Picker completes its closing animation */
-    'picker:closed' : () => void
+    'picker:closed': () => void;
   }
 
   interface AppMethods {
     picker: {
       /** create Picker instance */
-      create(parameters : Parameters) : Picker
+      create(parameters: Parameters): Picker;
       /** destroy Picker instance */
-      destroy(el : HTMLElement | CSSSelector | Picker) : void
+      destroy(el: HTMLElement | CSSSelector | Picker): void;
       /** get Picker instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : Picker
+      get(el: HTMLElement | CSSSelector): Picker;
       /** closes Picker */
-      close(el : HTMLElement | CSSSelector) : Picker
-    }
+      close(el: HTMLElement | CSSSelector): Picker;
+    };
   }
   interface AppParams {
-    picker?: Parameters | undefined
+    picker?: Parameters | undefined;
   }
   interface AppEvents {
     /** Event will be triggered when picker value changes */
-    pickerChange: (picker : Picker, value : unknown, displayValue : unknown) => void
+    pickerChange: (picker: Picker, value: unknown, displayValue: unknown) => void;
     /** Event will be triggered when picker initialized */
-    pickerInit: (picker : Picker) => void
+    pickerInit: (picker: Picker) => void;
     /** Event will be triggered when Picker starts its opening animation. As an argument event handler receives picker instance */
-    pickerOpen: (picker : Picker) => void
+    pickerOpen: (picker: Picker) => void;
     /** Event will be triggered when Picker completes its opening animation. As an argument event handler receives picker instance */
-    pickerOpened: (picker : Picker) => void
+    pickerOpened: (picker: Picker) => void;
     /** Event will be triggered when Picker starts its closing animation. As an argument event handler receives picker instance */
-    pickerClose: (picker : Picker) => void
+    pickerClose: (picker: Picker) => void;
     /** Event will be triggered after Picker completes its closing animation. As an argument event handler receives picker instance */
-    pickerClosed: (picker : Picker) => void
+    pickerClosed: (picker: Picker) => void;
     /** Event will be triggered right before Picker instance will be destroyed */
-    pickerBeforeDestroy: (picker : Picker) => void
+    pickerBeforeDestroy: (picker: Picker) => void;
   }
 }
 

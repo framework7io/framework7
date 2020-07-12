@@ -146,7 +146,8 @@
     font-weight: var(--f7-list-item-footer-font-weight);
     line-height: var(--f7-list-item-footer-line-height);
   }
-  .item-link, .list-button {
+  .item-link,
+  .list-button {
     transition-duration: 300ms;
     transition-property: background-color;
     display: block;
@@ -206,7 +207,7 @@
     font-weight: var(--f7-list-item-text-font-weight);
     color: var(--f7-list-item-text-text-color);
     line-height: var(--f7-list-item-text-line-height);
-    max-height: calc( var(--f7-list-item-text-line-height) * var(--f7-list-item-text-max-lines) )
+    max-height: calc(var(--f7-list-item-text-line-height) * var(--f7-list-item-text-max-lines));
   }
   .item-title-row {
     position: relative;
@@ -250,7 +251,8 @@
         .hairline-remove(bottom);
       }
     }
-    &:last-child, &:last-child li:last-child {
+    &:last-child,
+    &:last-child li:last-child {
       > .item-inner,
       > .item-content > .item-inner,
       > .swipeout-content > .item-content > .item-inner,
@@ -258,7 +260,8 @@
         .hairline-remove(bottom);
       }
     }
-    li:last-child, &:last-child li {
+    li:last-child,
+    &:last-child li {
       .item-inner {
         .hairline(bottom, var(--f7-list-item-border-color));
       }
@@ -279,7 +282,7 @@
     background-color: var(--f7-list-button-pressed-bg-color);
   }
 }
-.list-button[class*="color-"] {
+.list-button[class*='color-'] {
   --f7-list-button-text-color: var(--f7-theme-color);
 }
 .simple-list {
@@ -297,7 +300,6 @@
     height: var(--f7-list-item-min-height);
     padding-left: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-left));
     padding-right: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-right));
-
   }
   li:after {
     left: var(--f7-list-item-padding-horizontal);
@@ -381,7 +383,10 @@ li.media-item {
   --f7-list-item-padding-vertical: var(--f7-list-media-item-padding-vertical);
   --f7-list-item-padding-horizontal: var(--f7-list-media-item-padding-horizontal);
   .item-title {
-    font-weight: var(--f7-list-media-item-title-font-weight, var(--f7-list-item-title-font-weight, inherit));
+    font-weight: var(
+      --f7-list-media-item-title-font-weight,
+      var(--f7-list-item-title-font-weight, inherit)
+    );
   }
   .item-inner {
     display: block;
@@ -443,7 +448,7 @@ li.media-item .item-link .item-title-row,
 .media-list .item-link.chevron-center .item-inner,
 li.media-item.chevron-center .item-link .item-inner,
 li.media-item .chevron-center .item-link .item-inner,
-li.media-item .item-link.chevron-center  .item-inner {
+li.media-item .item-link.chevron-center .item-inner {
   &:before {
     .core-icons-font();
     position: absolute;
@@ -494,7 +499,8 @@ li.media-item .item-link .item-title-row {
 }
 .list-group {
   ul {
-    &:after, &:before {
+    &:after,
+    &:before {
       z-index: 25 !important;
     }
   }
@@ -606,7 +612,8 @@ each(@breakpoints, {
 });
 
 .list {
-  &.no-chevron, .no-chevron {
+  &.no-chevron,
+  .no-chevron {
     --f7-list-chevron-icon-color: transparent;
     --f7-list-chevron-icon-area: 0px;
   }

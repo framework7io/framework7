@@ -1,5 +1,5 @@
-import $ from 'dom7';
 import { getWindow } from 'ssr-window';
+import $ from '../../utils/dom7';
 import { extend, nextTick, deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 import pickerColumn from './picker-column';

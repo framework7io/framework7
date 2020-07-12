@@ -1,4 +1,3 @@
-import $ from 'dom7';
 import Template7 from 'template7';
 import { getWindow, getDocument } from 'ssr-window';
 import { extend, nextFrame } from '../../utils/utils';
@@ -7,6 +6,7 @@ import Framework7Class from '../../utils/class';
 import EventsClass from '../../utils/events-class';
 import ConstructorMethods from '../../utils/constructor-methods';
 import ModalMethods from '../../utils/modal-methods';
+import $ from '../../utils/dom7';
 import loadModule from './load-module';
 
 class Framework7 extends Framework7Class {

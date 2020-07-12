@@ -1,5 +1,5 @@
 /* eslint indent: ["off"] */
-import $ from 'dom7';
+import $ from '../../../utils/dom7';
 
 export default {
   render(self) {

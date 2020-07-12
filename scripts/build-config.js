@@ -1,9 +1,9 @@
 /**
-* F7 Build Configuration
-* Don't modify this file!
-* If you want to build custom version of F7, just put build-config-custom.js with the required configuration in this folder. Or build it using command line:
-* $ npm run build-core:prod -- --config path/to/config.js --output path/to/output/folder
-*/
+ * F7 Build Configuration
+ * Don't modify this file!
+ * If you want to build custom version of F7, just put build-config-custom.js with the required configuration in this folder. Or build it using command line:
+ * $ npm run build-core:prod -- --config path/to/config.js --output path/to/output/folder
+ */
 
 const config = {
   rtl: false,
@@ -120,17 +120,10 @@ const config = {
 
     // Typography
     'typography',
-
-    // VI Video Ads
-    'vi',
   ],
   darkTheme: true,
   lightTheme: true,
-  themes: [
-    'ios',
-    'md',
-    'aurora',
-  ],
+  themes: ['ios', 'md', 'aurora'],
   themeColor: '#007aff',
   colors: {
     red: '#ff3b30',

@@ -7,7 +7,7 @@
   align-self: center;
   cursor: pointer;
   user-select: none;
-  input[type="range"] {
+  input[type='range'] {
     display: none;
   }
   &.range-slider-horizontal {
@@ -220,7 +220,10 @@
   }
 }
 .range-scale-substep {
-  --f7-range-scale-step-bg-color: var(--f7-range-scale-substep-bg-color, var(--f7-range-bar-bg-color));
+  --f7-range-scale-step-bg-color: var(
+    --f7-range-scale-substep-bg-color,
+    var(--f7-range-bar-bg-color)
+  );
   --f7-range-scale-step-width: var(--f7-range-scale-substep-width);
   --f7-range-scale-step-height: var(--f7-range-scale-substep-height);
 }

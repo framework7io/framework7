@@ -1,113 +1,113 @@
-import { Dom7Instance } from 'dom7';
+import { Dom7Array } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
 export namespace Notification {
   interface Notification extends Framework7EventsClass<Events> {
     /** Link to global app instance */
-    app : Framework7
+    app: Framework7;
     /** Notification HTML element */
-    el : HTMLElement
+    el: HTMLElement;
     /** Dom7 instance with notification HTML element */
-    $el : Dom7Instance
+    $el: Dom7Array;
     /** Notification parameters */
-    params : Parameters
+    params: Parameters;
 
     /** Open notification */
-    open() : Notification
+    open(): Notification;
     /** Close notification */
-    close() : Notification
+    close(): Notification;
   }
 
   interface Parameters {
     /** Notification element. Can be useful if you already have Notification element in your HTML and want to create new instance using this element. */
-    el?: HTMLElement
+    el?: HTMLElement;
     /** Notification icon HTML layout, e.g. <i class="f7-icons">home</i> or image <img src="path/to/icon.png">. */
-    icon?: string
+    icon?: string;
     /** Notification title. */
-    title?: string
+    title?: string;
     /** Additional text on the right side of title. */
-    titleRightText?: string
+    titleRightText?: string;
     /** Notification subtitle. */
-    subtitle?: string
+    subtitle?: string;
     /** Notification inner text. */
-    text?: string
+    text?: string;
     /** Adds notification close button. (default false) */
-    closeButton?: boolean
+    closeButton?: boolean;
     /** Timeout delay (in ms) to close notification automatically. */
-    closeTimeout?: number
+    closeTimeout?: number;
     /** If enabled, notification will be closed on notification click. (default false) */
-    closeOnClick?: boolean
+    closeOnClick?: boolean;
     /** If enabled, notification can be closed by swipe gesture. (default true) */
-    swipeToClose?: boolean
+    swipeToClose?: boolean;
     /** Additional css class to add. */
-    cssClass?: string
+    cssClass?: string;
     /** Custom function to render Notification. Must return notification html. */
-    render?: () => string
+    render?: () => string;
     /** Object with events handlers.. */
     on?: {
-      [event in keyof Events]? : Events[event]
-    }
+      [event in keyof Events]?: Events[event];
+    };
   }
 
   interface Events {
     /** Event will be triggered when user clicks on Notification element. As an argument event handler receives notification instance */
-    click: (notification : Notification) => void
+    click: (notification: Notification) => void;
     /** Event will be triggered when Notification starts its opening animation. As an argument event handler receives notification instance */
-    open: (notification : Notification) => void
+    open: (notification: Notification) => void;
     /** Event will be triggered after Notification completes its opening animation. As an argument event handler receives notification instance */
-    opened: (notification : Notification) => void
+    opened: (notification: Notification) => void;
     /** Event will be triggered when Notification starts its closing animation. As an argument event handler receives notification instance */
-    close: (notification : Notification) => void
+    close: (notification: Notification) => void;
     /** Event will be triggered after Notification completes its closing animation. As an argument event handler receives notification instance */
-    closed: (notification : Notification) => void
+    closed: (notification: Notification) => void;
     /** Event will be triggered right before Notification instance will be destroyed. As an argument event handler receives notification instance */
-    beforeDestroy: (notification : Notification) => void
+    beforeDestroy: (notification: Notification) => void;
   }
 
   interface DomEvents {
     /** Event will be triggered when Notification starts its opening animation */
-    'notification:open' : () => void
+    'notification:open': () => void;
     /** Event will be triggered after Notification completes its opening animation */
-    'notification:opened' : () => void
+    'notification:opened': () => void;
     /** Event will be triggered when Notification starts its closing animation */
-    'notification:close' : () => void
+    'notification:close': () => void;
     /** Event will be triggered after Notification completes its closing animation */
-    'notification:closed' : () => void
+    'notification:closed': () => void;
   }
   interface AppMethods {
     notification: {
       /** create Notification instance */
-      create(parameters : Parameters) : Notification
+      create(parameters: Parameters): Notification;
 
       /** destroy Notification instance */
-      destroy(el : HTMLElement | CSSSelector | Notification) : void
+      destroy(el: HTMLElement | CSSSelector | Notification): void;
 
       /** get Notification instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : Notification
+      get(el: HTMLElement | CSSSelector): Notification;
 
       /** open Notification */
-      open(el : HTMLElement | CSSSelector) : Notification
+      open(el: HTMLElement | CSSSelector): Notification;
 
       /** closes Notification */
-      close(el : HTMLElement | CSSSelector) : Notification
-    }
+      close(el: HTMLElement | CSSSelector): Notification;
+    };
   }
   interface AppParams {
-    notification?: Parameters | undefined
+    notification?: Parameters | undefined;
   }
   interface AppEvents {
     /** Event will be triggered when user clicks on Notification element. As an argument event handler receives notification instance */
-    notificationClick: (notification : Notification) => void
+    notificationClick: (notification: Notification) => void;
     /** Event will be triggered when Notification starts its opening animation. As an argument event handler receives notification instance */
-    notificationOpen: (notification : Notification) => void
+    notificationOpen: (notification: Notification) => void;
     /** Event will be triggered after Notification completes its opening animation. As an argument event handler receives notification instance */
-    notificationOpened: (notification : Notification) => void
+    notificationOpened: (notification: Notification) => void;
     /** Event will be triggered when Notification starts its closing animation. As an argument event handler receives notification instance */
-    notificationClose: (notification : Notification) => void
+    notificationClose: (notification: Notification) => void;
     /** Event will be triggered after Notification completes its closing animation. As an argument event handler receives notification instance */
-    notificationClosed: (notification : Notification) => void
+    notificationClosed: (notification: Notification) => void;
     /** Event will be triggered right before Notification instance will be destroyed. As an argument event handler receives notification instance */
-    notificationBeforeDestroy: (notification : Notification) => void
+    notificationBeforeDestroy: (notification: Notification) => void;
   }
 }
 

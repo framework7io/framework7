@@ -1,4 +1,4 @@
-import $ from 'dom7';
+import $ from '../../utils/dom7';
 import { requestAnimationFrame, getTranslate } from '../../utils/utils';
 
 export default function pickerColumn(colEl, updateItems) {

@@ -8,12 +8,19 @@ const getOutput = require('./get-output.js');
 const fs = require('./utils/fs-extra');
 
 function capitalize(name) {
-  return name.split('-').map((word) => { // eslint-disable-line
-    return word.split('').map((char, index) => {
-      if (index === 0) return char.toUpperCase();
-      return char;
-    }).join('');
-  }).join('');
+  return name
+    .split('-')
+    .map((word) => {
+      // eslint-disable-line
+      return word
+        .split('')
+        .map((char, index) => {
+          if (index === 0) return char.toUpperCase();
+          return char;
+        })
+        .join('');
+    })
+    .join('');
 }
 
 function generateTypings(basePath, modules, components) {
@@ -47,7 +54,8 @@ function generateTypings(basePath, modules, components) {
     ].join('\n  ');
   });
 
-  return fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.d.ts'))
+  return fs
+    .readFileSync(path.resolve(__dirname, '../src/core/framework7.d.ts'))
     .replace(/{{basePath}}/g, basePath)
     .replace(/\/\/ IMPORT_BASE/, f7Base)
     .replace(/\/\/ IMPORT_HELPERS/, importHelpers.join('\n'))

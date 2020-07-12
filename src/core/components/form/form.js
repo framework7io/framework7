@@ -1,5 +1,5 @@
-import $ from 'dom7';
 import { getWindow, getDocument } from 'ssr-window';
+import $ from '../../utils/dom7';
 import { extend, serializeObject } from '../../utils/utils';
 
 // Form Data

@@ -1,8 +1,8 @@
 /* eslint indent: ["off"] */
-import $ from 'dom7';
 import { getWindow, getDocument } from 'ssr-window';
 import { extend, nextTick } from '../../utils/utils';
 import Modal from '../modal/modal-class';
+import $ from '../../utils/dom7';
 
 class Actions extends Modal {
   constructor(app, params) {

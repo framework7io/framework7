@@ -1,5 +1,5 @@
-import $ from 'dom7';
 import { getWindow } from 'ssr-window';
+import $ from '../../utils/dom7';
 import { extend, nextTick } from '../../utils/utils';
 import Modal from '../modal/modal-class';
 

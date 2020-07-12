@@ -1,4 +1,4 @@
-import $ from 'dom7';
+import $ from '../../utils/dom7';
 import { extend, deleteProps, id, nextTick } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 

@@ -1,188 +1,187 @@
-import { Dom7Instance } from 'dom7';
+import { Dom7Array } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
-import { Searchbar } from '../searchbar/searchbar';
+import { Searchbar } from '../searchbar/searchbar';
 import { View } from '../view/view';
 
 export namespace Autocomplete {
   interface Autocomplete extends Framework7EventsClass<Events> {
     /** Link to global app instance */
-    app : Framework7
+    app: Framework7;
     /** Object with passed initialization parameters */
-    params : Parameters
+    params: Parameters;
     /** Array with selected items */
-    value : unknown[]
+    value: unknown[];
     /** true if Autocomplete is currently opened */
-    opened : boolean
+    opened: boolean;
     /** HTML element of Autcomplete opener element (if passed on init) */
-    openerEl : HTMLElement | undefined
+    openerEl: HTMLElement | undefined;
     /** Dom7 instance of of Autcomplete opener element (if passed on init) */
-    $openerEl : Dom7Instance | undefined
+    $openerEl: Dom7Array | undefined;
     /** HTML element of Autcomplete input (if passed on init) */
-    inputEl : HTMLElement | undefined
+    inputEl: HTMLElement | undefined;
     /** Dom7 instance of of Autcomplete input (if passed on init) */
-    $inputEl : Dom7Instance | undefined
+    $inputEl: Dom7Array | undefined;
     /** Dom7 instance of Autcomplete dropdown */
-    $dropdownEl : Dom7Instance | undefined
+    $dropdownEl: Dom7Array | undefined;
     /** Autcomplete URL (that was passed in url parameter) */
-    url : string
+    url: string;
     /** Autcomplete View (that was passed in view parameter) or found parent view */
-    view : View.View
+    view: View.View;
     /** HTML element of Autcomplete container: dropdown element, or popup element, or page element. Available when Autocomplete opened */
-    el : HTMLElement | undefined
+    el: HTMLElement | undefined;
     /** Dom7 instance of Autcomplete container: dropdown element, or popup element, or page element. Available when Autocomplete opened */
-    $el : Dom7Instance | undefined
+    $el: Dom7Array | undefined;
     /** Autcomplete page Searchbar instance */
-    searchbar : Searchbar.Searchbar
+    searchbar: Searchbar.Searchbar;
 
     /** Open Autocomplete (Dropdown, Page or Popup) */
-    open() : void
+    open(): void;
     /** Close Autcomplete */
-    close() : void
+    close(): void;
     /** Show autocomplete preloader */
-    preloaderShow() : void
+    preloaderShow(): void;
     /** Hide autocomplete preloader */
-    preloaderHide() : void
+    preloaderHide(): void;
     /** Destroy Autocomplete instance and remove all events */
-    destroy() : void
+    destroy(): void;
   }
 
   interface Parameters {
     /** Defines how to open Autocomplete, can be page or popup (for Standalone) or dropdown. (default page) */
-    openIn?: string
+    openIn?: string;
     /** Function which accepts search query and render function where you need to pass array with matched items. */
-    source: (query: string, render: (items: any[]) => void) => void
+    source: (query: string, render: (items: any[]) => void) => void;
     /** Limit number of maximum displayed items in autocomplete per query. */
-    limit?: number
+    limit?: number;
     /** Set to true to include Preloader to autocomplete layout. (default false) */
-    preloader?: boolean
+    preloader?: boolean;
     /** Preloader color, one of the default colors. */
-    preloaderColor?: string
+    preloaderColor?: string;
     /** Array with default selected values. */
-    value?: unknown[]
+    value?: unknown[];
     /** Name of matched item object's key that represents item value. (default id) */
-    valueProperty?: string
+    valueProperty?: string;
     /** Name of matched item object's key that represents item display value which is used as title of displayed options. (default text) */
-    textProperty?: string
+    textProperty?: string;
     /** If enabled, then it will request passed to source function on autocomplete open. (default false) */
-    requestSourceOnOpen?: boolean
+    requestSourceOnOpen?: boolean;
     /** String with CSS selector or HTMLElement of link which will open standalone autocomplete page or popup on click. */
-    openerEl?: HTMLElement | CSSSelector
+    openerEl?: HTMLElement | CSSSelector;
     /** Default text for "Close" button when opened as Popup. (default Close) */
-    popupCloseLinkText?: string
+    popupCloseLinkText?: string;
     /** Default text for "Back" link when opened as Page. (default Back) */
-    pageBackLinkText?: string
+    pageBackLinkText?: string;
     /** Autocomplete page title. If nothing is specified and passed openerEl is an item of List View, then text value of item-title element will be used. */
-    pageTitle?: string
+    pageTitle?: string;
     /** Searchbar placeholder text. (default Search...) */
-    searchbarPlaceholder?: string
+    searchbarPlaceholder?: string;
     /** Searchbar "Cancel" button text. (default Cancel) */
-    searchbarDisableText?: string
+    searchbarDisableText?: string;
     /** Enables searchbar disable button. By default, disabled for Aurora theme */
-    searchbarDisableButton?: boolean
+    searchbarDisableButton?: boolean;
     /** Enables Autocomplete popup to push view/s behind on open (default false)*/
-    popupPush?: boolean
+    popupPush?: boolean;
     /** Enables ability to close Autocomplete popup with swipe (default undefined) */
-    popupSwipeToClose?: boolean | undefined
+    popupSwipeToClose?: boolean | undefined;
     /** Text which is displayed when no matches found. (default Nothing found) */
-    notFoundText?: string
+    notFoundText?: string;
     /** Set to true to allow multiple selections. (default false) */
-    multiple?: boolean
+    multiple?: boolean;
     /** Set to true and autocomplete will be closed when user picks value. Not available if multiple is enabled. (default false) */
-    closeOnSelect?: boolean
+    closeOnSelect?: boolean;
     /** Set to true to auto focus search field on autocomplete open. (default false) */
-    autoFocus?: boolean
+    autoFocus?: boolean;
     /** Set to false to open standalone autocomplete without animation. (default true) */
-    animate?: boolean
+    animate?: boolean;
     /** Navbar color theme. One of the default color themes. */
-    navbarColorTheme?: string
+    navbarColorTheme?: string;
     /** Form (checkboxes or radios) color theme. One of the default color themes. */
-    formColorTheme?: string
+    formColorTheme?: string;
     /** Will add opened autocomplete modal (when openIn: 'popup') to router history which gives ability to close autocomplete by going back in router history and set current route to the autocomplete modal. (default true) */
-    routableModals?: boolean
+    routableModals?: boolean;
     /** Standalone autocomplete URL that will be set as a current route. (default select/) */
-    url?: string
+    url?: string;
     /** Link to initialized View instance if you want use standalone Autcomplete. By default, if not specified, it will be opened in Main View.. */
-    view?: View.View
+    view?: View.View;
     /** String with CSS selector or HTMLElement of related text input. */
-    inputEl?: HTMLElement | CSSSelector
+    inputEl?: HTMLElement | CSSSelector;
     /** Allows to configure input events used to handle Autcomplete actions and source request. Can be changed for example to change keyup compositionend if you use keyboard with composition of Chinese characters. (default input) */
-    inputEvents?: string
+    inputEvents?: string;
     /** Highlight matches in autcomplete results. (default true) */
-    highlightMatches?: boolean
+    highlightMatches?: boolean;
     /** Enables type ahead, will prefill input value with first item in match. (default false) */
-    typeahead?: boolean
+    typeahead?: boolean;
     /** Specify dropdown placeholder text. */
-    dropdownPlaceholderText?: string
+    dropdownPlaceholderText?: string;
     /** If true then value of related input will be update as well. (default true) */
-    updateInputValueOnSelect?: boolean
+    updateInputValueOnSelect?: boolean;
     /** If true then input which is used as item-input in List View will be expanded to full screen wide during dropdown visible.. (default false) */
-    expandInput?: boolean
+    expandInput?: boolean;
     /** By default dropdown will be added to parent page-content element. You can specify here different element where to add dropdown element. */
-    dropdownContainerEl?: HTMLElement | CSSSelector
+    dropdownContainerEl?: HTMLElement | CSSSelector;
     /** Function to render autocomplete dropdown, must return dropdown HTML string. */
-    renderDropdown?: (items : any[]) => string
+    renderDropdown?: (items: any[]) => string;
     /** Function to render autocomplete page, must return page HTML string. */
-    renderPage?: (items : any[]) => string
+    renderPage?: (items: any[]) => string;
     /** Function to render autocomplete popup, must return popup HTML string. */
-    renderPopup?: (items : any[]) => string
+    renderPopup?: (items: any[]) => string;
     /** Function to render single autocomplete, must return item HTML string. */
-    renderItem?: (item : any, index: number) => string
+    renderItem?: (item: any, index: number) => string;
     /** Function to render searchbar, must return searchbar HTML string. */
-    renderSearchbar?: () => string
+    renderSearchbar?: () => string;
     /** Function to render navbar, must return navbar HTML string. */
-    renderNavbar?: () => string
+    renderNavbar?: () => string;
 
     on?: {
-      [event in keyof Events]? : Events[event]
-    }
+      [event in keyof Events]?: Events[event];
+    };
   }
 
   interface Events {
     /** Event will be triggered when Autocomplete value changed. Returned value is an array with selected items */
-    change : (values : any[]) => void
+    change: (values: any[]) => void;
     /** Event will be triggered when Autocomplete starts its opening animation. As an argument event handler receives autocomplete instance */
-    open : (autocomplete : Autocomplete) => void
+    open: (autocomplete: Autocomplete) => void;
     /** Event will be triggered after Autocomplete completes its opening animation. As an argument event handler receives autocomplete instance */
-    opened : (autocomplete : Autocomplete) => void
+    opened: (autocomplete: Autocomplete) => void;
     /** Event will be triggered when Autocomplete starts its closing animation. As an argument event handler receives autocomplete instance */
-    close : (autocomplete : Autocomplete) => void
+    close: (autocomplete: Autocomplete) => void;
     /** Event will be triggered after Autocomplete completes its closing animation. As an argument event handler receives autocomplete instance */
-    closed : (autocomplete : Autocomplete) => void
+    closed: (autocomplete: Autocomplete) => void;
     /** Event will be triggered right before Autocomplete instance will be destroyed. As an argument event handler receives autocomplete instance */
-    beforeDestroy : (autocomplete : Autocomplete) => void
+    beforeDestroy: (autocomplete: Autocomplete) => void;
   }
 
   interface AppMethods {
     autocomplete: {
       /** create Autocomplete instance */
-      create(parameters : Parameters) : Autocomplete
+      create(parameters: Parameters): Autocomplete;
       /** destroy Autocomplete instance */
-      destroy(el : HTMLElement | CSSSelector) : void
+      destroy(el: HTMLElement | CSSSelector): void;
       /** get Autocomplete instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : Autocomplete
+      get(el: HTMLElement | CSSSelector): Autocomplete;
       /** open Autocomplete */
-      open(el : HTMLElement | CSSSelector) : Autocomplete
+      open(el: HTMLElement | CSSSelector): Autocomplete;
       /** closes Autocomplete */
-      close(el : HTMLElement | CSSSelector) : Autocomplete
-    }
-
+      close(el: HTMLElement | CSSSelector): Autocomplete;
+    };
   }
   interface AppParams {
-    autocomplete?: Parameters | undefined
+    autocomplete?: Parameters | undefined;
   }
   interface AppEvents {
     /** Event will be triggered when Autocomplete value changed. Returned value is an array with selected items */
-    autocompleteChange : (autocomplete : Autocomplete, value : unknown) => void
+    autocompleteChange: (autocomplete: Autocomplete, value: unknown) => void;
     /** Event will be triggered when Autocomplete starts its opening animation. As an argument event handler receives autocomplete instance */
-    autocompleteOpen : (autocomplete : Autocomplete) => void
+    autocompleteOpen: (autocomplete: Autocomplete) => void;
     /** Event will be triggered after Autocomplete completes its opening animation. As an argument event handler receives autocomplete instance */
-    autocompleteOpened : (autocomplete : Autocomplete) => void
+    autocompleteOpened: (autocomplete: Autocomplete) => void;
     /** Event will be triggered when Autocomplete starts its closing animation. As an argument event handler receives autocomplete instance */
-    autocompleteClose : (autocomplete : Autocomplete) => void
+    autocompleteClose: (autocomplete: Autocomplete) => void;
     /** Event will be triggered after Autocomplete completes its closing animation. As an argument event handler receives autocomplete instance */
-    autocompleteClosed : (autocomplete : Autocomplete) => void
+    autocompleteClosed: (autocomplete: Autocomplete) => void;
     /** Event will be triggered right before Autocomplete instance will be destroyed. As an argument event handler receives autocomplete instance */
-    autocompleteBeforeDestroy : (autocomplete : Autocomplete) => void
+    autocompleteBeforeDestroy: (autocomplete: Autocomplete) => void;
   }
 }
 declare const AutcompleteComponent: Framework7Plugin;

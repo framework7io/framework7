@@ -11,7 +11,8 @@
   position: relative;
   z-index: 1;
 }
-.messages-title, .message {
+.messages-title,
+.message {
   margin-top: var(--f7-message-margin);
   &:last-child {
     margin-bottom: var(--f7-message-margin);
@@ -32,7 +33,7 @@
   align-items: flex-end;
   position: relative;
   z-index: 1;
-  transform: translate3d(0,0,0);
+  transform: translate3d(0, 0, 0);
 }
 .message-avatar {
   border-radius: var(--f7-message-avatar-border-radius);
@@ -48,7 +49,9 @@
   display: flex;
   flex-direction: column;
 }
-.message-header, .message-footer, .message-name {
+.message-header,
+.message-footer,
+.message-name {
   line-height: 1;
 }
 .message-header {
@@ -85,7 +88,8 @@
     width: auto;
   }
 }
-.message-text-header, .message-text-footer {
+.message-text-header,
+.message-text-footer {
   line-height: 1;
 }
 .message-text-header {
@@ -124,7 +128,8 @@
     });
   }
   &.message-tail .message-bubble {
-    border-radius: var(--f7-message-bubble-border-radius) var(--f7-message-bubble-border-radius) 0 var(--f7-message-bubble-border-radius);
+    border-radius: var(--f7-message-bubble-border-radius) var(--f7-message-bubble-border-radius) 0
+      var(--f7-message-bubble-border-radius);
   }
 }
 // Rules
@@ -149,7 +154,8 @@
     });
   }
   &.message-tail .message-bubble {
-    border-radius: var(--f7-message-bubble-border-radius) var(--f7-message-bubble-border-radius) var(--f7-message-bubble-border-radius) 0;
+    border-radius: var(--f7-message-bubble-border-radius) var(--f7-message-bubble-border-radius)
+      var(--f7-message-bubble-border-radius) 0;
   }
 }
 .message:not(.message-last) {
@@ -198,18 +204,18 @@
 }
 @keyframes message-appear-from-bottom {
   from {
-    transform: translate3d(0,100%,0);
+    transform: translate3d(0, 100%, 0);
   }
   to {
-    transform: translate3d(0,0,0);
+    transform: translate3d(0, 0, 0);
   }
 }
 @keyframes message-appear-from-top {
   from {
-    transform: translate3d(0,-100%,0);
+    transform: translate3d(0, -100%, 0);
   }
   to {
-    transform: translate3d(0,0,0);
+    transform: translate3d(0, 0, 0);
   }
 }
 .if-ios-theme({

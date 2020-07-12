@@ -7,7 +7,8 @@
       font-weight: 500;
     }
   }
-  .message-header, .message-name {
+  .message-header,
+  .message-name {
     margin-bottom: 2px;
   }
   .message-footer {
@@ -19,7 +20,8 @@
   .message-text-footer {
     margin-top: 2px;
   }
-  .message-received, .message-sent {
+  .message-received,
+  .message-sent {
     &.message-tail .message-bubble {
       &:before {
         position: absolute;
@@ -31,7 +33,8 @@
     }
   }
   .message-image {
-    margin: var(--f7-message-bubble-padding-vertical) calc(-1 * var(--f7-message-bubble-padding-horizontal) + 4px);
+    margin: var(--f7-message-bubble-padding-vertical)
+      calc(-1 * var(--f7-message-bubble-padding-horizontal) + 4px);
     &:first-child {
       margin-top: calc(-1 * var(--f7-message-bubble-padding-vertical) + 4px);
       img {
@@ -52,7 +55,9 @@
     .message-avatar + .message-content {
       margin-left: 5px;
     }
-    .message-header, .message-footer, .message-name {
+    .message-header,
+    .message-footer,
+    .message-name {
       margin-left: var(--f7-message-bubble-padding-horizontal);
     }
     &.message-tail .message-bubble {
@@ -71,7 +76,9 @@
     .message-avatar + .message-content {
       margin-right: 5px;
     }
-    .message-header, .message-footer, .message-name {
+    .message-header,
+    .message-footer,
+    .message-name {
       margin-right: var(--f7-message-bubble-padding-horizontal);
     }
     &.message-tail .message-bubble {

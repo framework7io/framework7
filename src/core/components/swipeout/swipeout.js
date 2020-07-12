@@ -1,5 +1,5 @@
-import $ from 'dom7';
 import { getDocument } from 'ssr-window';
+import $ from '../../utils/dom7';
 import { extend, nextFrame } from '../../utils/utils';
 
 const Swipeout = {

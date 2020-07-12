@@ -1,228 +1,226 @@
-import { Dom7Instance } from 'dom7';
+import { Dom7Array } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 import { View } from '../view/view';
 
 export namespace ColorPicker {
   interface ColorPickerValue {
-    hex?: string
-    alpha?: number
-    hue?: number
-    rgb?: number[]
-    hsl?: number[]
-    hsb?: number[]
-    rgba?: number[]
-    hsla?: number[]
+    hex?: string;
+    alpha?: number;
+    hue?: number;
+    rgb?: number[];
+    hsl?: number[];
+    hsb?: number[];
+    rgba?: number[];
+    hsla?: number[];
   }
 
   interface ColorPicker extends Framework7EventsClass<Events> {
     /** Link to global app instance */
-    app : Framework7
+    app: Framework7;
     /** Color Picker wrapping container HTML element (when inline Color Picker is in use) */
-    containerEl : HTMLElement
+    containerEl: HTMLElement;
     /** Dom7 instance with Color Picker wrapping container HTML element (when inline Color Picker is in use) */
-    $containerEl : Dom7Instance
+    $containerEl: Dom7Array;
     /** Color Picker HTML element */
-    el : HTMLElement
+    el: HTMLElement;
     /** Dom7 instance with Color Picker HTML element */
-    $el : Dom7Instance
+    $el: Dom7Array;
     /** Color Picker input HTML element (passed in inputEl parameter) */
-    inputEl : HTMLElement
+    inputEl: HTMLElement;
     /** Dom7 instance with Color Picker input HTML element (passed in inputEl parameter) */
-    $inputEl : Dom7Instance
+    $inputEl: Dom7Array;
     /** Color Picker target HTML element (passed in targetEl parameter) */
-    targetEl : HTMLElement
+    targetEl: HTMLElement;
     /** Dom7 instance with Color Picker target HTML element (passed in targetEl parameter) */
-    $targetEl : Dom7Instance
+    $targetEl: Dom7Array;
     /** Object with value */
-    value : ColorPickerValue
+    value: ColorPickerValue;
     /** true if Color Picker is currently opened */
-    opened : boolean
+    opened: boolean;
     /** true when inline Color Picker is in use */
-    inline : boolean
+    inline: boolean;
     /** Color Picker URL (that was passed in url parameter) */
-    url: string
+    url: string;
     /** Color Picker View (that was passed in view parameter) or found parent view */
-    view : View.View
+    view: View.View;
     /** Object with initialization parameters */
-    params : Parameters
-
+    params: Parameters;
 
     /** Set new color. Value is the Color Picker Value object */
-    setValue(value : ColorPickerValue) : void
+    setValue(value: ColorPickerValue): void;
     /** Returns current Color Picker value */
-    getValue() : ColorPickerValue
+    getValue(): ColorPickerValue;
     /** Open Color Picker */
-    open() : void
+    open(): void;
     /** Close Color Picker */
-    close() : void
+    close(): void;
     /** Destroy Color Picker instance and remove all events */
-    destroy() : void
+    destroy(): void;
   }
-
 
   interface Parameters {
     /** Object with Color Picker value */
-    value?: ColorPickerValue
+    value?: ColorPickerValue;
     /** Function to format input value, should return new/formatted string value. */
-    formatValue?: (value : ColorPickerValue) => string
+    formatValue?: (value: ColorPickerValue) => string;
     /** Array with Color Picker modules */
-    modules?: string[]
+    modules?: string[];
     /** Array with pallette values. Each value is a HEX value string. Or array with palette "rows" where each row is an array with HEX palette value */
-    palette?: any[]
+    palette?: any[];
     /** Center modules vertically if there is an extra space in color picker container */
-    centerModules?: boolean
+    centerModules?: boolean;
     /** Add additional highlighting to sliders and HEX modules (default false) */
-    groupedModules?: boolean
+    groupedModules?: boolean;
     /** Enables sliders' labels (default false) */
-    sliderLabel?: boolean
+    sliderLabel?: boolean;
     /** Enables sliders' values (default false) */
-    sliderValue?: boolean
+    sliderValue?: boolean;
     /** Makes sliders' values editable (by using input) (default false) */
-    sliderValueEdiable?: boolean
+    sliderValueEdiable?: boolean;
     /** Enables bars' labels (default false) */
-    barLabel?: boolean
+    barLabel?: boolean;
     /** Enables bars' values (default false) */
-    barValue?: boolean
+    barValue?: boolean;
     /** Makes bars' values editable (by using input) (default false) */
-    barValueEdiable?: boolean
+    barValueEdiable?: boolean;
     /** Enables text label for HEX module */
-    hexLabel?: boolean
+    hexLabel?: boolean;
     /** Makes HEX value editable (by using input) (default false) */
-    hexValueEditable?: boolean
+    hexValueEditable?: boolean;
     /** Label text for Red slider/bar (default R) */
-    redLabelText?: string
+    redLabelText?: string;
     /** Label text for Green slider/bar (default G) */
-    greenLabelText?: string
+    greenLabelText?: string;
     /** Label text for Blue slider/bar (default B) */
-    blueLabelText?: string
+    blueLabelText?: string;
     /** Label text for Hue slider (default H) */
-    hueLabelText?: string
+    hueLabelText?: string;
     /** Label text for Saturation slider (default S) */
-    saturationLabelText?: string
+    saturationLabelText?: string;
     /** Label text for Brightness slider (default B) */
-    brightnessLabelText?: string
+    brightnessLabelText?: string;
     /** Label text for HEX module (default HEX) */
-    hexLabelText?: string
+    hexLabelText?: string;
     /** Label text for Alpha slider (default A) */
-    alphaLabelText?: string
+    alphaLabelText?: string;
     /** String with CSS selector or HTMLElement where to place generated Color Picker HTML. Use only for inline Color Picker. */
-    containerEl?: HTMLElement | CSSSelector
+    containerEl?: HTMLElement | CSSSelector;
     /** Can be "auto", "popover" (to open Color Picker in popover), "sheet" (to open in sheet modal) or "popup" (to open in popup) or "page" (to open in page). In case of auto will open in modal specified in openInPhone parameter on small screens and in popover on large screens. (default popover) */
-    openIn?: string
+    openIn?: string;
     /** Enables Color Picker popup to push view/s behind on open (default false) */
-    popupPush?: boolean
+    popupPush?: boolean;
     /** Enables ability to close Color Picker popup with swipe (default undefined) */
-    popupSwipeToClose?: boolean | undefined
+    popupSwipeToClose?: boolean | undefined;
     /** Enables Color Picker sheet to push view/s behind on open (default false) */
-    sheetPush?: boolean
+    sheetPush?: boolean;
     /** Enables ability to close Color Picker sheet with swipe (default undefined) */
-    sheetSwipeToClose?: boolean | undefined
+    sheetSwipeToClose?: boolean | undefined;
     /** Defines in what type of modal Color Picker will be opened on phone (small screen size) when openIn is set to auto (default popup) */
-    openInPhone?: string
+    openInPhone?: string;
     /** String with CSS selector or HTMLElement with related input element. */
-    inputEl?: HTMLElement | CSSSelector
+    inputEl?: HTMLElement | CSSSelector;
     /** String with CSS selector or HTMLElement with related target element. Popover will be opened around this element */
-    targetEl?: HTMLElement | CSSSelector
+    targetEl?: HTMLElement | CSSSelector;
     /** When enabled it will set background color on targetEl (if passed) */
-    targetElSetBackgroundColor: boolean
+    targetElSetBackgroundColor: boolean;
     /** Scroll viewport (page-content) to input when Color Picker opened. (default true) */
-    scrollToInput?: boolean
+    scrollToInput?: boolean;
     /** Sets "readonly" attribute on specified input. (default true) */
-    inputReadOnly?: boolean
+    inputReadOnly?: boolean;
     /** Additional CSS class name to be set on Color Picker element. */
-    cssClass?: string
+    cssClass?: string;
     /** If enabled, picker will be closed by clicking outside of picker or related input element. (default true) */
-    closeByOutsideClick?: boolean
+    closeByOutsideClick?: boolean;
     /** Enables Color Picker toolbar when opened in Sheet modal. (default true) */
-    toolbarSheet?: boolean
+    toolbarSheet?: boolean;
     /** Enables Color Picker toolbar when opened in Popover. (default false) */
-    toolbarPopover?: boolean
+    toolbarPopover?: boolean;
     /** Text for Done/Close toolbar button. (default Done) */
-    toolbarCloseText?: string
+    toolbarCloseText?: string;
     /** Enables Color Picker navbar when opened in Popup. (default true) */
-    navbarPopup?: boolean
+    navbarPopup?: boolean;
     /** Text for Done/Close navbar button. (default Done) */
-    navbarCloseText: string,
+    navbarCloseText: string;
     /** Navbar title text. (default Color) */
-    navbarTitleText: string,
+    navbarTitleText: string;
     /** Navbar's back link text (when opened in page). (default Back) */
-    navbarBackLinkText: string,
+    navbarBackLinkText: string;
     /** Will add opened Color Picker to router history which gives ability to close Color Picker by going back in router history and set current route to the Color Picker modal. (default true) */
-    routableModals?: boolean
+    routableModals?: boolean;
     /** Color Picker modal URL that will be set as a current route. (default color/) */
-    url?: string
+    url?: string;
     /** View where to set routing when routableModals enabled. Defaults to parent view of inputEl or main view if not found parent view. */
-    view?: View.View
+    view?: View.View;
 
     /** Function to render toolbar. Must return toolbar HTML string. */
-    renderToolbar?: () => string
+    renderToolbar?: () => string;
     /** Function to render navbar. Must return navbar HTML string. */
-    renderNavbar?: () => string
+    renderNavbar?: () => string;
     /** Function to render whole Color Picker. Must return Color Picker full HTML string. */
-    render?: () => string
+    render?: () => string;
 
     on?: {
-      [event in keyof Events]? : Events[event]
-    }
+      [event in keyof Events]?: Events[event];
+    };
   }
 
   interface Events {
     /** Event will be triggered when Color Picker initialized */
-    init: (colorPicker : ColorPicker) => void
+    init: (colorPicker: ColorPicker) => void;
     /** Event will be triggered when Color Picker starts its opening animation. As an argument event handler receives Color Picker instance */
-    open: (colorPicker : ColorPicker) => void
+    open: (colorPicker: ColorPicker) => void;
     /** Event will be triggered after Color Picker completes its opening animation. As an argument event handler receives Color Picker instance */
-    opened: (colorPicker : ColorPicker) => void
+    opened: (colorPicker: ColorPicker) => void;
     /** Event will be triggered when Color Picker starts its closing animation. As an argument event handler receives Color Picker instance */
-    close: (colorPicker : ColorPicker) => void
+    close: (colorPicker: ColorPicker) => void;
     /** Event will be triggered after Color Picker completes its closing animation. As an argument event handler receives Color Picker instance */
-    closed: (colorPicker : ColorPicker) => void
+    closed: (colorPicker: ColorPicker) => void;
     /** Event will be triggered right before Color Picker instance will be destroyed. As an argument event handler receives Color Picker instance */
-    beforeDestroy: (colorPicker : ColorPicker) => void
+    beforeDestroy: (colorPicker: ColorPicker) => void;
   }
 
   interface DomEvents {
     /** Event will be triggered when Color Picker starts its opening animation */
-    'colorpicker:open' : () => void
+    'colorpicker:open': () => void;
     /** Event will be triggered after Color Picker completes its opening animation */
-    'colorpicker:opened' : () => void
+    'colorpicker:opened': () => void;
     /** Event will be triggered when Color Picker starts its closing animation */
-    'colorpicker:close' : () => void
+    'colorpicker:close': () => void;
     /** Event will be triggered after Color Picker completes its closing animation */
-    'colorpicker:closed' : () => void
+    'colorpicker:closed': () => void;
   }
 
   interface AppMethods {
     colorPicker: {
       /** create ColorPicker instance */
-      create(parameters : Parameters) : ColorPicker
+      create(parameters: Parameters): ColorPicker;
 
       /** destroy ColorPicker instance */
-      destroy(el : HTMLElement | CSSSelector | ColorPicker) : void
+      destroy(el: HTMLElement | CSSSelector | ColorPicker): void;
 
       /** get ColorPicker instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : ColorPicker
+      get(el: HTMLElement | CSSSelector): ColorPicker;
 
       /** closes ColorPicker */
-      close(el : HTMLElement | CSSSelector) : ColorPicker
-    }
+      close(el: HTMLElement | CSSSelector): ColorPicker;
+    };
   }
   interface AppParams {
-    colorPicker?: Parameters | undefined
+    colorPicker?: Parameters | undefined;
   }
   interface AppEvents {
     /** Event will be triggered when Color Picker initialized */
-    colorPickerInit: (colorPicker : ColorPicker) => void
+    colorPickerInit: (colorPicker: ColorPicker) => void;
     /** Event will be triggered when Color Picker starts its opening animation. As an argument event handler receives Color Picker instance */
-    colorPickerOpen: (colorPicker : ColorPicker) => void
+    colorPickerOpen: (colorPicker: ColorPicker) => void;
     /** Event will be triggered after Color Picker completes its opening animation. As an argument event handler receives Color Picker instance */
-    colorPickerOpened: (colorPicker : ColorPicker) => void
+    colorPickerOpened: (colorPicker: ColorPicker) => void;
     /** Event will be triggered when Color Picker starts its closing animation. As an argument event handler receives Color Picker instance */
-    colorPickerClose: (colorPicker : ColorPicker) => void
+    colorPickerClose: (colorPicker: ColorPicker) => void;
     /** Event will be triggered after Color Picker completes its closing animation. As an argument event handler receives Color Picker instance */
-    colorPickerClosed: (colorPicker : ColorPicker) => void
+    colorPickerClosed: (colorPicker: ColorPicker) => void;
     /** Event will be triggered right before Color Picker instance will be destroyed. As an argument event handler receives Color Picker instance */
-    colorPickerBeforeDestroy: (colorPicker : ColorPicker) => void
+    colorPickerBeforeDestroy: (colorPicker: ColorPicker) => void;
   }
 }
 

@@ -1,4 +1,4 @@
-import $ from './dom';
+import $ from './dom7';
 import { extend } from './utils';
 import ConstructorMethods from './constructor-methods';
 

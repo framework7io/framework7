@@ -32,21 +32,35 @@
   height: 100%;
   position: relative;
   z-index: 1;
-  padding-top: calc(var(--f7-page-navbar-offset, 0px) + var(--f7-page-toolbar-top-offset, 0px) + var(--f7-page-subnavbar-offset, 0px) + var(--f7-page-searchbar-offset, 0px) + var(--f7-page-content-extra-padding-top, 0px));
-  padding-bottom: calc(var(--f7-page-toolbar-bottom-offset, 0px) + var(--f7-safe-area-bottom) + var(--f7-page-content-extra-padding-bottom, 0px));
+  padding-top: calc(
+    var(--f7-page-navbar-offset, 0px) + var(--f7-page-toolbar-top-offset, 0px) +
+      var(--f7-page-subnavbar-offset, 0px) + var(--f7-page-searchbar-offset, 0px) +
+      var(--f7-page-content-extra-padding-top, 0px)
+  );
+  padding-bottom: calc(
+    var(--f7-page-toolbar-bottom-offset, 0px) + var(--f7-safe-area-bottom) +
+      var(--f7-page-content-extra-padding-bottom, 0px)
+  );
 }
 .page-transitioning {
-  &, .page-shadow-effect, .page-opacity-effect {
+  &,
+  .page-shadow-effect,
+  .page-opacity-effect {
     transition-duration: var(--f7-page-transition-duration);
   }
 }
 .page-transitioning-swipeback {
-  &, .page-shadow-effect, .page-opacity-effect {
+  &,
+  .page-shadow-effect,
+  .page-opacity-effect {
     transition-duration: var(--f7-page-swipeback-transition-duration);
   }
 }
-.router-transition-forward, .router-transition-backward {
-  .page-next, .page-current, .page-previous:not(.stacked) {
+.router-transition-forward,
+.router-transition-backward {
+  .page-next,
+  .page-current,
+  .page-previous:not(.stacked) {
     pointer-events: none;
   }
 }
@@ -71,7 +85,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  background: rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.1);
   width: 100%;
   bottom: 0;
   content: '';

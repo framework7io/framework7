@@ -103,12 +103,14 @@
 }
 .color-picker-sb-spectrum {
   background-color: #000;
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000 100%), linear-gradient(to left, rgba(255, 255, 255, 0) 0%, #fff 100%);
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000 100%),
+    linear-gradient(to left, rgba(255, 255, 255, 0) 0%, #fff 100%);
   position: relative;
 }
 .color-picker-hs-spectrum {
   position: relative;
-  background-image: linear-gradient(to right,
+  background-image: linear-gradient(
+    to right,
     hsl(0, 100%, 50%),
     hsl(60, 100%, 50%),
     hsl(120, 100%, 50%),
@@ -124,7 +126,7 @@
     top: 0;
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
   }
 }
 .color-picker-sb-spectrum-handle,
@@ -143,7 +145,7 @@
     height: var(--f7-color-picker-sb-spectrum-handle-size);
     border: 1px solid #fff;
     border-radius: 50%;
-    box-shadow: 0px 0px 2px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
     box-sizing: border-box;
     left: 50%;
     top: 50%;
@@ -180,7 +182,7 @@
     position: absolute;
     box-sizing: border-box;
     border: 2px solid #fff;
-    box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
     background: red;
     border-radius: 50%;
     left: 0;
@@ -283,7 +285,7 @@
   --f7-range-bar-size: var(--f7-color-picker-slider-size);
   --f7-range-bar-border-radius: var(--f7-color-picker-slider-size);
   --f7-range-knob-size: var(--f7-color-picker-slider-knob-size);
-  --f7-range-knob-box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  --f7-range-knob-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   .range-knob {
     transition-duration: 200ms;
     transition-property: transform;
@@ -325,7 +327,7 @@
   --f7-range-bar-size: var(--f7-color-picker-bar-size);
   --f7-range-bar-border-radius: 2px;
   --f7-range-knob-size: 6px;
-  --f7-range-knob-box-shadow: 0 0px 3px rgba(0,0,0,0.3);
+  --f7-range-knob-box-shadow: 0 0px 3px rgba(0, 0, 0, 0.3);
   --f7-range-knob-color: #fff;
   .range-knob {
     transition-duration: 0ms;
@@ -516,7 +518,6 @@
       .rtl({
         margin-right: 5px;
       });
-
     }
     .range-slider:last-child {
       .ltr({

@@ -1,6 +1,6 @@
-import $ from 'dom7';
 import ConstructorMethods from '../../utils/constructor-methods';
 import Calendar from './calendar-class';
+import $ from '../../utils/dom7';
 
 export default {
   name: 'calendar',

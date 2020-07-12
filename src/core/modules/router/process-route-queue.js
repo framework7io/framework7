@@ -36,7 +36,7 @@ function processQueue(router, routerQueue, routeQueue, to, from, resolve, reject
   next();
 }
 
-export default function (to, from, resolve, reject) {
+export default function processRouteQueue(to, from, resolve, reject) {
   const router = this;
   function enterNextRoute() {
     if (to && to.route && (router.params.routesBeforeEnter || to.route.beforeEnter)) {

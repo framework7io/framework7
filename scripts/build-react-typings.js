@@ -28,7 +28,7 @@ export default Framework7React;
 function buildTypings(cb) {
   const output = `${getOutput()}/react`;
 
-  const files = fs.readdirSync(`${output}/components`).filter(file => file.indexOf('.d.ts') < 0);
+  const files = fs.readdirSync(`${output}/components`).filter((file) => file.indexOf('.d.ts') < 0);
 
   const components = [];
   const componentImports = [];
@@ -38,17 +38,21 @@ function buildTypings(cb) {
     const componentName = fileName
       .replace('.js', '')
       .split('-')
-      .map(word => word[0].toUpperCase() + word.substr(1))
+      .map((word) => word[0].toUpperCase() + word.substr(1))
       .join('');
     components.push({
       name: `${componentName}`,
       importName: `F7${componentName}`,
     });
-    componentImports.push(`import F7${componentName} from './components/${fileName.replace('.js', '')}';`);
+    componentImports.push(
+      `import F7${componentName} from './components/${fileName.replace('.js', '')}';`,
+    );
     componentExports.push(`  F7${componentName}`, `  F7${componentName} as ${componentName}`);
   });
 
-  let reactTypings = fs.readFileSync(path.resolve(__dirname, '../src/phenome/framework7-phenome.d.ts'));
+  let reactTypings = fs.readFileSync(
+    path.resolve(__dirname, '../src/phenome/framework7-phenome.d.ts'),
+  );
   reactTypings = reactTypings
     .replace('// IMPORT_LIB', importLib)
     .replace('// IMPORT_COMPONENTS', componentImports.join('\n'))

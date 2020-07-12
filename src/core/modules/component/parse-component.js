@@ -1,6 +1,6 @@
 import { getWindow, getDocument } from 'ssr-window';
 import Template7 from 'template7';
-import $ from 'dom7';
+import $ from '../../utils/dom7';
 import { id } from '../../utils/utils';
 
 function parseComponent(componentString) {

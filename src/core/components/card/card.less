@@ -1,7 +1,8 @@
 /* === Card === */
 @import url('./card-vars.less');
 
-.cards-list, .card .list {
+.cards-list,
+.card .list {
   > ul {
     .hairline-remove-top-bottom();
   }
@@ -19,7 +20,8 @@
   margin-left: calc(var(--f7-card-margin-horizontal) + var(--f7-safe-area-left));
   margin-right: calc(var(--f7-card-margin-horizontal) + var(--f7-safe-area-right));
   box-shadow: var(--f7-card-box-shadow);
-  .list, .block {
+  .list,
+  .block {
     margin: 0;
   }
   .row:not(.no-gap) .col > & {
@@ -36,7 +38,8 @@
 .aurora .card-outline-aurora {
   box-shadow: none;
   border: 1px solid var(--f7-card-outline-border-color);
-  &.no-border, &.no-hairlines {
+  &.no-border,
+  &.no-hairlines {
     border: none;
   }
 }
@@ -46,8 +49,10 @@
 .card-content-padding {
   position: relative;
   padding: var(--f7-card-content-padding-vertical) var(--f7-card-content-padding-horizontal);
-  > .list, > .block {
-    margin: calc(-1 * var(--f7-card-content-padding-vertical)) calc(-1 * var(--f7-card-content-padding-horizontal));
+  > .list,
+  > .block {
+    margin: calc(-1 * var(--f7-card-content-padding-vertical))
+      calc(-1 * var(--f7-card-content-padding-horizontal));
   }
   > p:first-child {
     margin-top: 0;
@@ -73,16 +78,17 @@
     overflow: hidden;
   }
 }
-.card-header, .card-footer {
+.card-header,
+.card-footer {
   position: relative;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  &[valign="top"] {
+  &[valign='top'] {
     align-items: flex-start;
   }
-  &[valign="bottom"] {
+  &[valign='bottom'] {
     align-items: flex-end;
   }
   a.link {
@@ -141,7 +147,7 @@
     }
   }
   &.active-state {
-    transform: scale(0.97) translate3d(0,0,0);
+    transform: scale(0.97) translate3d(0, 0, 0);
   }
   .card-opened-fade-in,
   .card-opened-fade-out {
@@ -191,10 +197,13 @@
       transition-duration: 500ms;
     }
   }
-  &.card-opening, &.card-opened, &.card-closing {
+  &.card-opening,
+  &.card-opened,
+  &.card-closing {
     z-index: 300;
   }
-  &.card-opening, &.card-opened {
+  &.card-opening,
+  &.card-opened {
     border-radius: 0;
     .card-opened-fade-in {
       opacity: 1;
@@ -234,7 +243,8 @@
 @media (min-width: 768px) and (min-height: 670px) {
   .card-expandable:not(.card-tablet-fullscreen) {
     max-width: var(--f7-card-expandable-tablet-width);
-    &.card-opened, &.card-opening {
+    &.card-opened,
+    &.card-opening {
       border-radius: var(--f7-card-expandable-tablet-border-radius);
     }
     &:not(.card-expandable-animate-width) .card-content {
@@ -259,7 +269,7 @@
   height: 100%;
   z-index: 299;
   pointer-events: none;
-  background: rgba(0,0,0,0.2);
+  background: rgba(0, 0, 0, 0.2);
   opacity: 0;
 }
 .card-backdrop-in {

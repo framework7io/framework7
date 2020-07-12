@@ -13,7 +13,11 @@
   padding-right: calc(var(--f7-block-padding-horizontal) + var(--f7-safe-area-right));
   font-size: var(--f7-block-font-size);
   .no-hairlines();
-  > h1, > h2, > h3, > h4, > p {
+  > h1,
+  > h2,
+  > h3,
+  > h4,
+  > p {
     &:first-child {
       margin-top: 0;
     }
@@ -45,7 +49,11 @@
   margin-bottom: var(--f7-block-title-margin-bottom);
   margin-left: calc(var(--f7-block-padding-horizontal) + var(--f7-safe-area-left));
   margin-right: calc(var(--f7-block-padding-horizontal) + var(--f7-safe-area-right));
-  + .list, + .block, + .card, + .timeline, + .block-header {
+  + .list,
+  + .block,
+  + .card,
+  + .timeline,
+  + .block-header {
     margin-top: 0px;
   }
 }
@@ -63,7 +71,8 @@
   font-weight: var(--f7-block-title-large-font-weight);
   line-height: var(--f7-block-title-large-line-height);
 }
-.block, .list {
+.block,
+.list {
   > .block-title:first-child {
     margin-top: 0;
     margin-left: 0;
@@ -76,7 +85,10 @@
   font-size: var(--f7-block-header-font-size);
   margin-bottom: var(--f7-block-header-margin);
   margin-top: var(--f7-block-margin-vertical);
-  + .list, + .block, + .card, + .timeline {
+  + .list,
+  + .block,
+  + .card,
+  + .timeline {
     margin-top: var(--f7-block-header-margin);
   }
 }
@@ -86,12 +98,18 @@
   margin-top: var(--f7-block-footer-margin);
   margin-bottom: var(--f7-block-margin-vertical);
 }
-.block-footer, .block-header {
+.block-footer,
+.block-header {
   padding-top: 0;
   padding-bottom: 0;
   padding-left: calc(var(--f7-block-padding-horizontal) + var(--f7-safe-area-left));
   padding-right: calc(var(--f7-block-padding-horizontal) + var(--f7-safe-area-right));
-  ul, p, h1, h2, h3, h4 {
+  ul,
+  p,
+  h1,
+  h2,
+  h3,
+  h4 {
     &:first-child {
       margin-top: 0;
     }
@@ -104,7 +122,10 @@
     }
   }
 }
-.list, .block, .card, .timeline {
+.list,
+.block,
+.card,
+.timeline {
   .block-header {
     margin-top: 0;
   }
@@ -120,7 +141,8 @@
   margin-bottom: var(--f7-block-margin-vertical);
 }
 .block {
-  .block-header, .block-footer {
+  .block-header,
+  .block-footer {
     padding: 0;
   }
 }

@@ -15,7 +15,9 @@ const fs = require('./utils/fs-extra');
 // Copy LESS
 function copyLess(config, components, cb) {
   const output = `${getOutput()}/core`;
-  const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
+  const colors = `{\n${Object.keys(config.colors)
+    .map((colorName) => `  ${colorName}: ${config.colors[colorName]};`)
+    .join('\n')}\n}`;
   const includeIosTheme = config.themes.indexOf('ios') >= 0;
   const includeMdTheme = config.themes.indexOf('md') >= 0;
   const includeAuroraTheme = config.themes.indexOf('aurora') >= 0;
@@ -39,8 +41,12 @@ function copyLess(config, components, cb) {
   fs.writeFileSync(`${output}/framework7.less`, lessContent);
 
   // Bundle LESS
-  const lessBundleContent = lessContent
-    .replace('//IMPORT_COMPONENTS', components.map(component => `@import url('./components/${component}/${component}.less');`).join('\n'));
+  const lessBundleContent = lessContent.replace(
+    '//IMPORT_COMPONENTS',
+    components
+      .map((component) => `@import url('./components/${component}/${component}.less');`)
+      .join('\n'),
+  );
   fs.writeFileSync(`${output}/framework7.bundle.less`, lessBundleContent);
 
   if (cb) cb();
@@ -48,7 +54,9 @@ function copyLess(config, components, cb) {
 // Build CSS Bundle
 async function buildBundle(config, components, themes, rtl, cb) {
   const env = process.env.NODE_ENV || 'development';
-  const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
+  const colors = `{\n${Object.keys(config.colors)
+    .map((colorName) => `  ${colorName}: ${config.colors[colorName]};`)
+    .join('\n')}\n}`;
   const includeIosTheme = themes.indexOf('ios') >= 0;
   const includeMdTheme = themes.indexOf('md') >= 0;
   const includeAuroraTheme = themes.indexOf('aurora') >= 0;
@@ -59,7 +67,12 @@ async function buildBundle(config, components, themes, rtl, cb) {
 
   let lessContent = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.less'));
   lessContent = lessContent
-    .replace('//IMPORT_COMPONENTS', components.map(component => `@import url('./components/${component}/${component}.less');`).join('\n'))
+    .replace(
+      '//IMPORT_COMPONENTS',
+      components
+        .map((component) => `@import url('./components/${component}/${component}.less');`)
+        .join('\n'),
+    )
     .replace('$includeIosTheme', includeIosTheme)
     .replace('$includeMdTheme', includeMdTheme)
     .replace('$includeAuroraTheme', includeAuroraTheme)
@@ -72,7 +85,7 @@ async function buildBundle(config, components, themes, rtl, cb) {
   let cssContent;
   try {
     cssContent = await autoprefixer(
-      await less(lessContent, path.resolve(__dirname, '../src/core'))
+      await less(lessContent, path.resolve(__dirname, '../src/core')),
     );
   } catch (err) {
     console.log(err);
@@ -105,7 +118,9 @@ async function buildCore(themes, rtl, cb) {
   const includeDarkTheme = config.darkTheme;
   const includeLightTheme = config.lightTheme;
   const output = `${getOutput()}/core`;
-  const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
+  const colors = `{\n${Object.keys(config.colors)
+    .map((colorName) => `  ${colorName}: ${config.colors[colorName]};`)
+    .join('\n')}\n}`;
 
   let lessContent = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.less'));
   lessContent = lessContent
@@ -122,7 +137,7 @@ async function buildCore(themes, rtl, cb) {
   let cssContent;
   try {
     cssContent = await autoprefixer(
-      await less(lessContent, path.resolve(__dirname, '../src/core'))
+      await less(lessContent, path.resolve(__dirname, '../src/core')),
     );
   } catch (e) {
     console.log(e);
@@ -140,7 +155,10 @@ async function buildCore(themes, rtl, cb) {
   const minifiedContent = await cleanCSS(cssContent);
 
   // Write file
-  fs.writeFileSync(`${output}/css/framework7${rtl ? '.rtl' : ''}.min.css`, `${banner}\n${minifiedContent}`);
+  fs.writeFileSync(
+    `${output}/css/framework7${rtl ? '.rtl' : ''}.min.css`,
+    `${banner}\n${minifiedContent}`,
+  );
 
   if (cb) cb();
 }

@@ -1,6 +1,6 @@
 .md {
   .preloader {
-    @easing: cubic-bezier(.8,.0,.4,.8);
+    @easing: cubic-bezier(0.8, 0, 0.4, 0.8);
     @speed: 1320ms; // animation time for each loop
     @loops: 5; // number of points where the arc meets
     animation: md-preloader-outer @speed * @loops / 2 linear infinite;
@@ -34,7 +34,8 @@
       box-sizing: border-box;
       border-top: @border-width solid var(--f7-preloader-color);
     }
-    .preloader-inner-left, .preloader-inner-right {
+    .preloader-inner-left,
+    .preloader-inner-right {
       position: absolute;
       top: 0;
       height: 100%;
@@ -85,7 +86,8 @@
     }
   }
   @keyframes md-preloader-left-rotate {
-    0%, 100% {
+    0%,
+    100% {
       transform: rotate(130deg);
     }
     50% {
@@ -93,7 +95,8 @@
     }
   }
   @keyframes md-preloader-right-rotate {
-    0%, 100% {
+    0%,
+    100% {
       transform: rotate(-130deg);
     }
     50% {
@@ -129,41 +132,41 @@
   @keyframes md-preloader-left-rotate-multicolor {
     0%,
     100% {
-      border-left-color: #4285F4;
+      border-left-color: #4285f4;
       transform: rotate(130deg);
     }
     75% {
-      border-left-color: #1B9A59;
-      border-top-color: #1B9A59;
+      border-left-color: #1b9a59;
+      border-top-color: #1b9a59;
     }
     50% {
-      border-left-color: #F7C223;
-      border-top-color: #F7C223;
+      border-left-color: #f7c223;
+      border-top-color: #f7c223;
       transform: rotate(-5deg);
     }
     25% {
-      border-left-color: #DE3E35;
-      border-top-color: #DE3E35;
+      border-left-color: #de3e35;
+      border-top-color: #de3e35;
     }
   }
   @keyframes md-preloader-right-rotate-multicolor {
     0%,
     100% {
-      border-right-color: #4285F4;
+      border-right-color: #4285f4;
       transform: rotate(-130deg);
     }
     75% {
-      border-right-color: #1B9A59;
-      border-top-color: #1B9A59;
+      border-right-color: #1b9a59;
+      border-top-color: #1b9a59;
     }
     50% {
-      border-right-color: #F7C223;
-      border-top-color: #F7C223;
+      border-right-color: #f7c223;
+      border-top-color: #f7c223;
       transform: rotate(5deg);
     }
     25% {
-      border-top-color: #DE3E35;
-      border-right-color: #DE3E35;
+      border-top-color: #de3e35;
+      border-right-color: #de3e35;
     }
   }
 }

@@ -3,22 +3,20 @@ import Framework7, { Framework7Plugin } from '../../components/app/app-class';
 export namespace Resize {
   interface AppMethods {
     /** App width in px */
-    width : number
+    width: number;
     /** App height in px */
-    height : number
+    height: number;
     /** App left offset in px */
-    left : number
+    left: number;
     /** App top offset in px */
-    top : number
+    top: number;
   }
-  interface AppParams {
-
-  }
+  interface AppParams {}
   interface AppEvents {
     /** Event will be fired on app resize (window resize). */
-    'resize': () => void
+    resize: () => void;
     /** Event will be fired on app orientation change (window orientantion change). */
-    'orientationchange': () => void
+    orientationchange: () => void;
   }
 }
 

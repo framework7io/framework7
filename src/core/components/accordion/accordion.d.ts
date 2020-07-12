@@ -5,36 +5,34 @@ export namespace Accordion {
   interface AppMethods {
     accordion: {
       /** open specified accordion item */
-      open(el : HTMLElement | CSSSelector) : void
+      open(el: HTMLElement | CSSSelector): void;
 
       /** close specified accordion item */
-      close(el : HTMLElement | CSSSelector) : void
+      close(el: HTMLElement | CSSSelector): void;
 
       /** toggle specified accordion item */
-      toggle(el : HTMLElement | CSSSelector) : void
-    }
+      toggle(el: HTMLElement | CSSSelector): void;
+    };
   }
-  interface AppParams {
-
-  }
+  interface AppParams {}
   interface AppEvents {
     /** Event will be triggered before accordion content starts its opening animation */
-    accordionBeforeOpen : (el : HTMLElement | CSSSelector, prevent: () => void) => void
+    accordionBeforeOpen: (el: HTMLElement | CSSSelector, prevent: () => void) => void;
 
     /** Event will be triggered when accordion content starts its opening animation */
-    accordionOpen : (el : HTMLElement | CSSSelector) => void
+    accordionOpen: (el: HTMLElement | CSSSelector) => void;
 
     /** Event will be triggered after accordion content completes its opening animation */
-    accordionOpened : (el : HTMLElement | CSSSelector) => void
+    accordionOpened: (el: HTMLElement | CSSSelector) => void;
 
     /** Event will be triggered before accordion content starts its closing animation */
-    accordionBeforeClose : (el : HTMLElement | CSSSelector, prevent: () => void) => void
+    accordionBeforeClose: (el: HTMLElement | CSSSelector, prevent: () => void) => void;
 
     /** Event will be triggered when accordion content starts its closing animation */
-    accordionClose : (el : HTMLElement | CSSSelector) => void
+    accordionClose: (el: HTMLElement | CSSSelector) => void;
 
     /** Event will be triggered after accordion content completes its closing animation */
-    accordionClosed : (el : HTMLElement | CSSSelector) => void
+    accordionClosed: (el: HTMLElement | CSSSelector) => void;
   }
 }
 

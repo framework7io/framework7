@@ -39,12 +39,17 @@
   .item-link .item-inner:after {
     transition-duration: 300ms;
   }
-  .list, .block {
+  .list,
+  .block {
     margin-top: 0;
     margin-bottom: 0;
   }
   .block {
-    > h1, > h2, > h3, > h4, > p {
+    > h1,
+    > h2,
+    > h3,
+    > h4,
+    > p {
       &:first-child {
         margin-top: 10px;
       }
@@ -67,7 +72,7 @@
   });
   .rtl({
     padding-right: 0;
-  })
+  });
 }
 .accordion-item-content {
   position: relative;
@@ -110,7 +115,7 @@
   .accordion-item-toggle.item-link .item-inner,
   .accordion-item-toggle .item-inner,
   .accordion-item > .item-link > .item-inner,
-  .accordion-item > .item-link > .item-content > .item-inner  {
+  .accordion-item > .item-link > .item-content > .item-inner {
     .ltr({
       padding-right: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-right));
     });
@@ -134,7 +139,7 @@
   .accordion-item-toggle.item-content,
   .accordion-item > .item-content,
   .accordion-item > .item-link > .item-content,
-  &.links-list .accordion-item > a  {
+  &.links-list .accordion-item > a {
     position: relative;
     .ltr({
       padding-left: calc(var(--f7-list-chevron-icon-area) + var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-left));

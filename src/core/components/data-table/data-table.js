@@ -1,4 +1,4 @@
-import $ from 'dom7';
+import $ from '../../utils/dom7';
 import DataTable from './data-table-class';
 import ConstructorMethods from '../../utils/constructor-methods';
 

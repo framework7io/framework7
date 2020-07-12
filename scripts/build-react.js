@@ -3,7 +3,6 @@
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: ["error", { "props": false }] */
 
-
 const rollup = require('rollup');
 const buble = require('@rollup/plugin-buble');
 const replace = require('@rollup/plugin-replace');
@@ -40,16 +39,18 @@ function buildReact(cb) {
 
   /* Replace plugin vars: utils/plugin.js */
   const newPluginContent = pluginContent
-    .replace('// IMPORT_LIBRARY', 'import React from \'react\';')
+    .replace('// IMPORT_LIBRARY', "import React from 'react';")
     .replace('// IMPORT_COMPONENTS\n', '')
     .replace('// REGISTER_COMPONENTS\n', '')
     .replace(/EXTEND/g, 'params.React ? params.React.Component : React.Component')
-    .replace(/COMPILER/g, '\'react\'');
+    .replace(/COMPILER/g, "'react'");
 
   fs.writeFileSync(`${buildPath}/react/utils/plugin.js`, newPluginContent);
 
   /* Build main components esm module: framework7-react.esm.js */
-  const files = fs.readdirSync(`${buildPath}/react/components`).filter(file => file.indexOf('.d.ts') < 0);
+  const files = fs
+    .readdirSync(`${buildPath}/react/components`)
+    .filter((file) => file.indexOf('.d.ts') < 0);
   const components = [];
   const componentImports = [];
   const componentAliases = [];
@@ -59,13 +60,15 @@ function buildReact(cb) {
     const componentName = fileName
       .replace('.js', '')
       .split('-')
-      .map(word => word[0].toUpperCase() + word.substr(1))
+      .map((word) => word[0].toUpperCase() + word.substr(1))
       .join('');
     components.push({
       name: `${componentName}`,
       importName: `F7${componentName}`,
     });
-    componentImports.push(`import F7${componentName} from './components/${fileName.replace('.js', '')}';`);
+    componentImports.push(
+      `import F7${componentName} from './components/${fileName.replace('.js', '')}';`,
+    );
     componentAliases.push(`const ${componentName} = F7${componentName};`);
     componentExports.push(`  F7${componentName}`, `  ${componentName}`);
   });
@@ -81,71 +84,80 @@ function buildReact(cb) {
 
   /* Build esm module bundle for rollup UMD: components + plugin -> framework7-react.esm.bundle.js */
   const registerComponents = components
-    .map(c => `window.${c.name} = ${c.importName};`)
+    .map((c) => `window.${c.name} = ${c.importName};`)
     .join('\n    ');
 
   const esmBundlePluginContent = pluginContent
-    .replace(/ from '\.\//g, ' from \'./utils/')
-    .replace('// IMPORT_LIBRARY', 'import React from \'react\';')
+    .replace(/ from '\.\//g, " from './utils/")
+    .replace('// IMPORT_LIBRARY', "import React from 'react';")
     .replace('// IMPORT_COMPONENTS', `${componentImports.join('\n')}\n`)
     .replace('// REGISTER_COMPONENTS', registerComponents)
     .replace(/EXTEND/g, 'params.React ? params.React.Component : React.Component')
-    .replace(/COMPILER/g, '\'react\'');
+    .replace(/COMPILER/g, "'react'");
 
-  fs.writeFileSync(`${buildPath}/react/framework7-react.esm.bundle.js`, bannerReact + esmBundlePluginContent);
+  fs.writeFileSync(
+    `${buildPath}/react/framework7-react.esm.bundle.js`,
+    bannerReact + esmBundlePluginContent,
+  );
 
   /* Build UMD from esm bundle: framework7-react.esm.bundle.js -> framework7-react.js */
-  rollup.rollup({
-    input: `${buildPath}/react/framework7-react.esm.bundle.js`,
-    external: ['react'],
-    plugins: [
-      replace({
-        'export { f7ready, f7Instance as f7, f7Theme as theme };': '',
-        delimiters: ['', ''],
-        'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
+  rollup
+    .rollup({
+      input: `${buildPath}/react/framework7-react.esm.bundle.js`,
+      external: ['react'],
+      plugins: [
+        replace({
+          'export { f7ready, f7Instance as f7, f7Theme as theme };': '',
+          delimiters: ['', ''],
+          'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
+        }),
+        resolve({ mainFields: ['module', 'main', 'jsnext'] }),
+        commonjs(),
+        buble({
+          objectAssign: 'Object.assign',
+        }),
+      ],
+    })
+    .then((bundle) =>
+      bundle.write({
+        globals: {
+          react: 'React',
+        },
+        strict: true,
+        file: `${buildPath}/react/framework7-react.bundle.js`,
+        format: 'umd',
+        name: 'Framework7React',
+        sourcemap: env === 'development',
+        sourcemapFile: `${buildPath}/react/framework7-react.bundle.js.map`,
+        banner: bannerReact,
       }),
-      resolve({ mainFields: ['module', 'main', 'jsnext'] }),
-      commonjs(),
-      buble({
-        objectAssign: 'Object.assign',
-      }),
-    ],
-  }).then(bundle => bundle.write({
-    globals: {
-      react: 'React',
-    },
-    strict: true,
-    file: `${buildPath}/react/framework7-react.bundle.js`,
-    format: 'umd',
-    name: 'Framework7React',
-    sourcemap: env === 'development',
-    sourcemapFile: `${buildPath}/react/framework7-react.bundle.js.map`,
-    banner: bannerReact,
-  })).then((bundle) => {
-    // Remove esm.bundle
-    fs.unlinkSync(`${buildPath}/react/framework7-react.esm.bundle.js`);
+    )
+    .then((bundle) => {
+      // Remove esm.bundle
+      fs.unlinkSync(`${buildPath}/react/framework7-react.esm.bundle.js`);
 
-    if (env === 'development') {
+      if (env === 'development') {
+        if (cb) cb();
+        return;
+      }
+      const result = bundle.output[0];
+      const minified = Terser.minify(result.code, {
+        sourceMap: {
+          filename: 'framework7-react.bundle.min.js',
+          url: 'framework7-react.bundle.min.js.map',
+        },
+        output: {
+          preamble: bannerReact,
+        },
+      });
+      fs.writeFileSync(`${buildPath}/react/framework7-react.bundle.min.js`, minified.code);
+      fs.writeFileSync(`${buildPath}/react/framework7-react.bundle.min.js.map`, minified.map);
       if (cb) cb();
-      return;
-    }
-    const result = bundle.output[0];
-    const minified = Terser.minify(result.code, {
-      sourceMap: {
-        filename: 'framework7-react.bundle.min.js',
-        url: 'framework7-react.bundle.min.js.map',
-      },
-      output: {
-        preamble: bannerReact,
-      },
+    })
+    .catch((err) => {
+      if (cb) cb();
+      console.log(err);
     });
-    fs.writeFileSync(`${buildPath}/react/framework7-react.bundle.min.js`, minified.code);
-    fs.writeFileSync(`${buildPath}/react/framework7-react.bundle.min.js.map`, minified.map);
-    if (cb) cb();
-  }).catch((err) => {
-    if (cb) cb();
-    console.log(err);
-  });
 }
 
 module.exports = buildReact;

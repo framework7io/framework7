@@ -3,7 +3,8 @@
 
 .skeleton-text {
   font-family: 'framework7-skeleton' !important;
-  &, & * {
+  &,
+  & * {
     color: var(--f7-skeleton-color) !important;
     font-weight: normal !important;
     font-style: normal !important;
@@ -21,7 +22,13 @@
   animation: skeleton-effect-fade 1s infinite;
 }
 .skeleton-effect-blink {
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 25%, black 75%, transparent 100%);
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 25%,
+    black 75%,
+    transparent 100%
+  );
   mask-image: linear-gradient(to right, transparent 0%, black 25%, black 75%, transparent 100%);
   -webkit-mask-size: 200% 100%;
   mask-size: 200% 100%;
@@ -80,5 +87,3 @@
 .if-aurora-theme({
   @import url('./skeleton-aurora.less');
 });
-
-

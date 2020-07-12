@@ -1,90 +1,90 @@
-import { Dom7Instance } from 'dom7';
+import { Dom7Array } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
 export namespace LoginScreen {
   interface LoginScreen extends Framework7EventsClass<Events> {
     /** Link to global app instance */
-    app : Framework7
+    app: Framework7;
     /** Login Screen HTML element */
-    el : HTMLElement
+    el: HTMLElement;
     /** Dom7 instance with login screen HTML element */
-    $el : Dom7Instance
+    $el: Dom7Array;
     /** Login Screen parameters */
-    params : Parameters
+    params: Parameters;
     /** Boolean prop indicating whether login screen is opened or not */
-    opened : boolean
+    opened: boolean;
 
     /** Open login screen. Where */
-    open(animate? : boolean) : LoginScreen
+    open(animate?: boolean): LoginScreen;
     /** Close login screen. Where */
-    close(animate? : boolean) : LoginScreen
+    close(animate?: boolean): LoginScreen;
     /** Destroy login screen */
-    destroy() : void
+    destroy(): void;
   }
 
   interface Parameters {
     /**  */
-    el?: HTMLElement
+    el?: HTMLElement;
     /**  */
-    content?: string
+    content?: string;
     /** true */
-    animate?: boolean
+    animate?: boolean;
     /** Object with events handlers.. */
     on?: {
-      [event in keyof Events]? : Events[event]
-    }
+      [event in keyof Events]?: Events[event];
+    };
   }
 
   interface Events {
     /** Event will be triggered when LoginScreen starts its opening animation. As an argument event handler receives loginScreen instance */
-    open: (loginScreen : LoginScreen) => void
+    open: (loginScreen: LoginScreen) => void;
     /** Event will be triggered after LoginScreen completes its opening animation. As an argument event handler receives loginScreen instance */
-    opened: (loginScreen : LoginScreen) => void
+    opened: (loginScreen: LoginScreen) => void;
     /** Event will be triggered when LoginScreen starts its closing animation. As an argument event handler receives loginScreen instance */
-    close: (loginScreen : LoginScreen) => void
+    close: (loginScreen: LoginScreen) => void;
     /** Event will be triggered after LoginScreen completes its closing animation. As an argument event handler receives loginScreen instance */
-    closed: (loginScreen : LoginScreen) => void
+    closed: (loginScreen: LoginScreen) => void;
     /** Event will be triggered right before LoginScreen instance will be destroyed. As an argument event handler receives loginScreen instance */
-    beforeDestroy: (loginScreen : LoginScreen) => void
+    beforeDestroy: (loginScreen: LoginScreen) => void;
   }
   interface DomEvents {
     /** Event will be triggered when LoginScreen starts its opening animation */
-    'loginscreen:open' : () => void
+    'loginscreen:open': () => void;
     /** Event will be triggered after LoginScreen completes its opening animation */
-    'loginscreen:opened' : () => void
+    'loginscreen:opened': () => void;
     /** Event will be triggered when LoginScreen starts its closing animation */
-    'loginscreen:close' : () => void
+    'loginscreen:close': () => void;
     /** Event will be triggered after LoginScreen completes its closing animation */
-    'loginscreen:closed' : () => void
+    'loginscreen:closed': () => void;
   }
   interface AppMethods {
     loginScreen: {
       /** create LoginScreen instance */
-      create(parameters : Parameters) : LoginScreen
+      create(parameters: Parameters): LoginScreen;
       /** destroy LoginScreen instance */
-      destroy(el : HTMLElement | CSSSelector | LoginScreen) : void
+      destroy(el: HTMLElement | CSSSelector | LoginScreen): void;
       /** get LoginScreen instance by HTML element */
-      get(el? : HTMLElement | CSSSelector) : LoginScreen
+      get(el?: HTMLElement | CSSSelector): LoginScreen;
       /** open LoginScreen */
-      open(el? : HTMLElement | CSSSelector, animate?: boolean) : LoginScreen
+      open(el?: HTMLElement | CSSSelector, animate?: boolean): LoginScreen;
       /** closes LoginScreen */
-      close(el? : HTMLElement | CSSSelector, animate?: boolean) : LoginScreen
-    }
+      close(el?: HTMLElement | CSSSelector, animate?: boolean): LoginScreen;
+    };
   }
   interface AppParams {
-    loginScreen?: Parameters | undefined
+    loginScreen?: Parameters | undefined;
   }
   interface AppEvents {
     /** Event will be triggered when LoginScreen starts its opening animation. As an argument event handler receives loginScreen instance */
-    loginScreenOpen: (loginScreen : LoginScreen) => void
+    loginScreenOpen: (loginScreen: LoginScreen) => void;
     /** Event will be triggered after LoginScreen completes its opening animation. As an argument event handler receives loginScreen instance */
-    loginScreenOpened: (loginScreen : LoginScreen) => void
+    loginScreenOpened: (loginScreen: LoginScreen) => void;
     /** Event will be triggered when LoginScreen starts its closing animation. As an argument event handler receives loginScreen instance */
-    loginScreenClose: (loginScreen : LoginScreen) => void
+    loginScreenClose: (loginScreen: LoginScreen) => void;
     /** Event will be triggered after LoginScreen completes its closing animation. As an argument event handler receives loginScreen instance */
-    loginScreenClosed: (loginScreen : LoginScreen) => void
+    loginScreenClosed: (loginScreen: LoginScreen) => void;
     /** Event will be triggered right before LoginScreen instance will be destroyed. As an argument event handler receives loginScreen instance */
-    loginScreenBeforeDestroy: (loginScreen : LoginScreen) => void
+    loginScreenBeforeDestroy: (loginScreen: LoginScreen) => void;
   }
 }
 

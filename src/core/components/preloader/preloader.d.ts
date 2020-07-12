@@ -4,17 +4,13 @@ export namespace Preloader {
   interface AppMethods {
     preloader: {
       /** Show Preloader overlay */
-      show(color?: string | 'white') : void
+      show(color?: string | 'white'): void;
       /** Hide Preloader overlay */
-      hide() : void
-    }
+      hide(): void;
+    };
   }
-  interface AppParams {
-
-  }
-  interface AppEvents {
-
-  }
+  interface AppParams {}
+  interface AppEvents {}
 }
 
 declare const PreloaderComponent: Framework7Plugin;

@@ -16,7 +16,8 @@
   background: var(--f7-sheet-bg-color);
   z-index: 12500;
   will-change: transform, opacity;
-  &.modal-in, &.modal-out {
+  &.modal-in,
+  &.modal-out {
     transition-duration: var(--f7-sheet-transition-duration);
   }
   &.not-animated {
@@ -42,7 +43,8 @@
     --f7-safe-area-bottom: 0px;
     position: relative;
     width: 100%;
-    &:after, &:before {
+    &:after,
+    &:before {
       display: none;
     }
     + .sheet-modal-inner {
@@ -94,7 +96,8 @@ html.with-modal-sheet-push-closing {
     --f7-sheet-border-color: transparent;
     border-radius: var(--f7-sheet-push-border-radius) var(--f7-sheet-push-border-radius) 0 0;
     overflow: hidden;
-    .view, .page {
+    .view,
+    .page {
       --f7-safe-area-top: 0px;
     }
     &.sheet-modal-top {

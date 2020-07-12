@@ -1,50 +1,48 @@
-import { Dom7Instance } from 'dom7';
+import { Dom7Array } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
 export namespace DataTable {
-  interface DataTable extends Framework7EventsClass<Events>{
+  interface DataTable extends Framework7EventsClass<Events> {
     /** Data table HTML element */
-    el: HTMLElement
+    el: HTMLElement;
     /** Dom7 instance with Data table HTML element */
-    $el: Dom7Instance
+    $el: Dom7Array;
     /** Destroy data table */
-    destroy() : void
+    destroy(): void;
   }
 
   interface Parameters {
     /** Data Table element. Can be useful if you already have Data Table element in your HTML and want to create new instance using this element */
-    el: HTMLElement
+    el: HTMLElement;
 
     on?: {
-      [event in keyof Events]? : Events[event]
-    }
+      [event in keyof Events]?: Events[event];
+    };
   }
 
   interface Events {
     /** Event will be triggered data table sort changed. As an argument event handler receives data table instance and new sort order (asc or desc) */
-    sort : (dataTable : DataTable, sort : string) => void
+    sort: (dataTable: DataTable, sort: string) => void;
     /** Event will be triggered right before Data Table instance will be destroyed. As an argument event handler receives Data table instance */
-    beforeDestroy : (dataTable : DataTable) => void
+    beforeDestroy: (dataTable: DataTable) => void;
   }
 
   interface AppMethods {
     dataTable: {
       /** create DataTable instance */
-      create(parameters : Parameters ) : DataTable;
+      create(parameters: Parameters): DataTable;
       /** destroy DataTable instance */
-      destroy(el : HTMLElement | CSSSelector | DataTable) : void;
+      destroy(el: HTMLElement | CSSSelector | DataTable): void;
       /** get DataTable instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : DataTable;
-    }
+      get(el: HTMLElement | CSSSelector): DataTable;
+    };
   }
-  interface AppParams {
-
-  }
+  interface AppParams {}
   interface AppEvents {
     /** Event will be triggered data table sort changed. As an argument event handler receives data table instance and new sort order (asc or desc) */
-    dataTableSort : (dataTable : DataTable, sort : string) => void
+    dataTableSort: (dataTable: DataTable, sort: string) => void;
     /** Event will be triggered right before Data Table instance will be destroyed. As an argument event handler receives Data table instance */
-    dataTableBeforeDestroy : (dataTable : DataTable) => void
+    dataTableBeforeDestroy: (dataTable: DataTable) => void;
   }
 }
 

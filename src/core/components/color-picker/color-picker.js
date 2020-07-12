@@ -1,4 +1,4 @@
-import $ from 'dom7';
+import $ from '../../utils/dom7';
 import ConstructorMethods from '../../utils/constructor-methods';
 import ColorPicker from './color-picker-class';
 

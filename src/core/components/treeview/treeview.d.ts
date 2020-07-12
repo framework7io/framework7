@@ -4,27 +4,25 @@ export namespace Treeview {
   interface AppMethods {
     treeview: {
       /** open specified treeview item */
-      open(el : HTMLElement | CSSSelector) : void
+      open(el: HTMLElement | CSSSelector): void;
 
       /** close specified treeview item */
-      close(el : HTMLElement | CSSSelector) : void
+      close(el: HTMLElement | CSSSelector): void;
 
       /** toggle specified treeview item */
-      toggle(el : HTMLElement | CSSSelector) : void
-    }
+      toggle(el: HTMLElement | CSSSelector): void;
+    };
   }
-  interface AppParams {
-
-  }
+  interface AppParams {}
   interface AppEvents {
     /** Event will be triggered on treeview item open */
-    treeviewOpen : (el : HTMLElement | CSSSelector) => void
+    treeviewOpen: (el: HTMLElement | CSSSelector) => void;
 
     /** Event will be triggered on treeview item close */
-    treeviewClose : (el : HTMLElement | CSSSelector) => void
+    treeviewClose: (el: HTMLElement | CSSSelector) => void;
 
     /** Event will be triggered when treeview item with "treeview-load-children" class opened. It will also show preloader instead of toggle element */
-    treeviewLoadChildren : (el : HTMLElement | CSSSelector, done: () => void) => void
+    treeviewLoadChildren: (el: HTMLElement | CSSSelector, done: () => void) => void;
   }
 }
 

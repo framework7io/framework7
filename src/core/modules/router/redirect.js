@@ -1,8 +1,8 @@
 import { extend } from '../../utils/utils';
 
-export default function (direction, route, options) {
+export default function redirect(direction, route, options) {
   const router = this;
-  const redirect = route.route.redirect;
+  const r = route.route.redirect;
   if (options.initial && router.params.pushState) {
     options.replaceState = true; // eslint-disable-line
     options.history = true; // eslint-disable-line
@@ -14,14 +14,14 @@ export default function (direction, route, options) {
   function redirectReject() {
     router.allowPageChange = true;
   }
-  if (typeof redirect === 'function') {
+  if (typeof r === 'function') {
     router.allowPageChange = false;
-    const redirectUrl = redirect.call(router, route, redirectResolve, redirectReject);
+    const redirectUrl = r.call(router, route, redirectResolve, redirectReject);
     if (redirectUrl && typeof redirectUrl === 'string') {
       router.allowPageChange = true;
       return router[direction](redirectUrl, options);
     }
     return router;
   }
-  return router[direction](redirect, options);
+  return router[direction](r, options);
 }

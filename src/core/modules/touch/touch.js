@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import { getWindow, getDocument } from 'ssr-window';
-import $ from '../../utils/dom';
+import $ from '../../utils/dom7';
 import { getSupport } from '../../utils/get-support';
 import { getDevice } from '../../utils/get-device';
 import { extend } from '../../utils/utils';

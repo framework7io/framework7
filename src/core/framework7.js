@@ -1,5 +1,5 @@
 import Template7 from 'template7';
-import $ from 'dom7';
+import $ from './utils/dom7';
 
 // F7 Class
 import Framework7 from './components/app/app-class';
@@ -30,7 +30,7 @@ import Toolbar from './components/toolbar/toolbar';
 import Subnavbar from './components/subnavbar/subnavbar';
 import TouchRipple from './components/touch-ripple/touch-ripple';
 import Modal from './components/modal/modal';
-import Router from './modules/router/router-class';//NO_LITE
+import Router from './modules/router/router-class'; //NO_LITE
 
 //IMPORT_COMPONENTS
 
@@ -45,7 +45,8 @@ if (process.env.FORMAT !== 'es') {
 }
 
 // Install Core Modules & Components
-Router.use([ //NO_LITE
+Router.use([
+  //NO_LITE
   RouterTemplateLoaderModule, //NO_LITE
   RouterComponentLoaderModule, //NO_LITE
 ]); //NO_LITE

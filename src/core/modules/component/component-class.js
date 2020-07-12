@@ -1,7 +1,7 @@
 /* eslint no-underscore-dangle: "off" */
 import { getWindow, getDocument } from 'ssr-window';
-import $ from 'dom7';
 import Template7 from 'template7';
+import $ from '../../utils/dom7';
 import { id, merge, extend, eventNameToColonCase, deleteProps } from '../../utils/utils';
 import vdom from './vdom';
 import patch from './patch';

@@ -1,4 +1,4 @@
-import $ from './dom';
+import $ from './dom7';
 
 export default function ConstructorMethods(parameters = {}) {
   const { defaultSelector, constructor: Constructor, domProp, app, addMethods } = parameters;

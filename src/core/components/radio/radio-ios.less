@@ -11,17 +11,17 @@
       opacity: 0;
     }
   }
-  label.item-radio input[type="radio"]:checked ~ .icon-radio,
-  label.item-radio input[type="radio"]:checked ~ * .icon-radio,
-  .radio input[type="radio"]:checked ~ .icon-radio {
+  label.item-radio input[type='radio']:checked ~ .icon-radio,
+  label.item-radio input[type='radio']:checked ~ * .icon-radio,
+  .radio input[type='radio']:checked ~ .icon-radio {
     &:after {
       opacity: 1;
     }
   }
-  .radio input[type="radio"]:checked ~ .icon-radio {
+  .radio input[type='radio']:checked ~ .icon-radio {
     border-color: var(--f7-radio-active-color, var(--f7-theme-color));
   }
-  label.item-radio:not(.item-radio-icon-start) input[type="radio"] ~ .icon-radio {
+  label.item-radio:not(.item-radio-icon-start) input[type='radio'] ~ .icon-radio {
     position: absolute;
     top: 50%;
     margin-top: -11px;
@@ -30,7 +30,7 @@
     });
     .rtl({
       left: calc(var(--f7-safe-area-left) + 10px);
-    })
+    });
   }
   label.item-radio:not(.item-radio-icon-start) {
     .item-inner {

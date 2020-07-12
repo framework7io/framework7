@@ -2,7 +2,7 @@
 @import url('./messagebar-vars.less');
 
 .messagebar {
-  transform: translate3d(0,0,0);
+  transform: translate3d(0, 0, 0);
   background: var(--f7-messagebar-bg-color);
   height: auto;
   min-height: var(--f7-messagebar-height);
@@ -12,12 +12,14 @@
   .hairline(top, var(--f7-messagebar-border-color));
   .bar-shadow-top(var(--f7-messagebar-shadow-image));
   .ios-translucent-bars(var(--f7-messagebar-bg-color-rgb));
-  &.no-hairline, &.no-border {
+  &.no-hairline,
+  &.no-border {
     &:before {
       display: none !important;
     }
   }
-  &.no-shadow, &.toolbar-hidden {
+  &.no-shadow,
+  &.toolbar-hidden {
     &:after {
       display: none !important;
     }
@@ -27,8 +29,14 @@
     position: relative;
     height: auto;
     bottom: auto;
-    padding-left: calc(var(--f7-messagebar-inner-padding-left, var(--f7-toolbar-inner-padding-left)) + var(--f7-safe-area-left));
-    padding-right: calc(var(--f7-messagebar-inner-padding-right, var(--f7-toolbar-inner-padding-right)) + var(--f7-safe-area-right));
+    padding-left: calc(
+      var(--f7-messagebar-inner-padding-left, var(--f7-toolbar-inner-padding-left)) +
+        var(--f7-safe-area-left)
+    );
+    padding-right: calc(
+      var(--f7-messagebar-inner-padding-right, var(--f7-toolbar-inner-padding-right)) +
+        var(--f7-safe-area-right)
+    );
     .rtl({
       flex-direction: row-reverse;
     });
@@ -113,7 +121,8 @@
     height: var(--f7-messagebar-sheet-landscape-height);
   }
 }
-.messagebar-sheet-image, .messagebar-sheet-item {
+.messagebar-sheet-image,
+.messagebar-sheet-item {
   box-sizing: border-box;
   flex-shrink: 0;
   margin-top: 1px;
@@ -149,8 +158,9 @@
   border-radius: 50%;
   box-sizing: border-box;
   cursor: pointer;
-  box-shadow: 0px 0px 2px rgba(0,0,0,0.2);
-  &:after, &:before {
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
+  &:after,
+  &:before {
     position: absolute;
     content: '';
     left: 50%;

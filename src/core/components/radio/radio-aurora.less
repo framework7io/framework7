@@ -23,7 +23,7 @@
       top: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.1);
+      background: rgba(0, 0, 0, 0.1);
       opacity: 0;
       transition-duration: 150ms;
     }
@@ -31,9 +31,9 @@
   .radio.active-state i:before {
     opacity: 1;
   }
-  label.item-radio input[type="radio"]:checked ~ .icon-radio,
-  label.item-radio input[type="radio"]:checked ~ * .icon-radio,
-  .radio input[type="radio"]:checked ~ .icon-radio {
+  label.item-radio input[type='radio']:checked ~ .icon-radio,
+  label.item-radio input[type='radio']:checked ~ * .icon-radio,
+  .radio input[type='radio']:checked ~ .icon-radio {
     border-color: var(--f7-radio-active-color, var(--f7-theme-color));
     background-color: var(--f7-radio-active-color, var(--f7-theme-color));
     &:after {
@@ -55,7 +55,7 @@
       });
     }
   }
-  label.item-radio-icon-end input[type="radio"] ~ .icon-radio {
+  label.item-radio-icon-end input[type='radio'] ~ .icon-radio {
     position: absolute;
     top: 50%;
     margin-top: -8px;
@@ -64,7 +64,7 @@
     });
     .rtl({
       left: calc(var(--f7-safe-area-left) + 16px);
-    })
+    });
   }
   label.item-radio-icon-end {
     .item-inner {
@@ -77,5 +77,3 @@
     }
   }
 }
-
-

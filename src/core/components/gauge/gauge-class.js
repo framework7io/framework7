@@ -1,5 +1,5 @@
 /* eslint no-nested-ternary: off */
-import $ from 'dom7';
+import $ from '../../utils/dom7';
 import { extend, deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 

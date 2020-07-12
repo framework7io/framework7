@@ -1,6 +1,7 @@
 /* === Popover === */
 @import url('./popover-vars.less');
-.popover-backdrop {}
+.popover-backdrop {
+}
 .popover {
   width: var(--f7-popover-width);
   z-index: 13500;
@@ -30,7 +31,9 @@
       ul {
         border-radius: var(--f7-popover-border-radius) var(--f7-popover-border-radius) 0 0;
       }
-      li:first-child, li:first-child a, li:first-child > label {
+      li:first-child,
+      li:first-child a,
+      li:first-child > label {
         border-radius: var(--f7-popover-border-radius) var(--f7-popover-border-radius) 0 0;
       }
     }
@@ -38,14 +41,17 @@
       ul {
         border-radius: 0 0 var(--f7-popover-border-radius) var(--f7-popover-border-radius);
       }
-      li:last-child, li:last-child a, li:last-child > label {
+      li:last-child,
+      li:last-child a,
+      li:last-child > label {
         border-radius: 0 0 var(--f7-popover-border-radius) var(--f7-popover-border-radius);
       }
     }
     &:first-child:last-child {
       li:first-child:last-child,
       li:first-child:last-child a,
-      li:first-child:last-child > label, ul {
+      li:first-child:last-child > label,
+      ul {
         border-radius: var(--f7-popover-border-radius);
       }
     }
