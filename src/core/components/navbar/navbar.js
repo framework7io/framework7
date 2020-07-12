@@ -1,5 +1,5 @@
 import $ from '../../utils/dom7';
-import { extend } from '../../utils/utils';
+import { bindMethods } from '../../utils/utils';
 import { getSupport } from '../../utils/get-support';
 
 const Navbar = {
@@ -632,18 +632,8 @@ export default {
   name: 'navbar',
   create() {
     const app = this;
-    extend(app, {
-      navbar: {
-        size: Navbar.size.bind(app),
-        hide: Navbar.hide.bind(app),
-        show: Navbar.show.bind(app),
-        getElByPage: Navbar.getElByPage.bind(app),
-        getPageByEl: Navbar.getPageByEl.bind(app),
-        collapseLargeTitle: Navbar.collapseLargeTitle.bind(app),
-        expandLargeTitle: Navbar.expandLargeTitle.bind(app),
-        toggleLargeTitle: Navbar.toggleLargeTitle.bind(app),
-        initNavbarOnScroll: Navbar.initNavbarOnScroll.bind(app),
-      },
+    bindMethods(app, {
+      navbar: Navbar,
     });
   },
   params: {

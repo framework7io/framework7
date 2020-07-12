@@ -1,5 +1,5 @@
 import $ from '../../utils/dom7';
-import { extend, nextFrame } from '../../utils/utils';
+import { nextFrame, bindMethods } from '../../utils/utils';
 
 const Toolbar = {
   setHighlight(tabbarEl) {
@@ -144,14 +144,8 @@ export default {
   name: 'toolbar',
   create() {
     const app = this;
-    extend(app, {
-      toolbar: {
-        hide: Toolbar.hide.bind(app),
-        show: Toolbar.show.bind(app),
-        setHighlight: Toolbar.setHighlight.bind(app),
-        initToolbarOnScroll: Toolbar.initToolbarOnScroll.bind(app),
-        init: Toolbar.init.bind(app),
-      },
+    bindMethods(app, {
+      toolbar: Toolbar,
     });
   },
   params: {

@@ -1,6 +1,6 @@
 import $ from '../../utils/dom7';
 import {
-  extend,
+  bindMethods,
   iosPreloaderContent,
   mdPreloaderContent,
   auroraPreloaderContent,
@@ -80,14 +80,8 @@ export default {
   name: 'preloader',
   create() {
     const app = this;
-    extend(app, {
-      preloader: {
-        init: Preloader.init.bind(app),
-        show: Preloader.show.bind(app),
-        hide: Preloader.hide.bind(app),
-        showIn: Preloader.showIn.bind(app),
-        hideIn: Preloader.hideIn.bind(app),
-      },
+    bindMethods(app, {
+      preloader: Preloader,
     });
   },
   on: {

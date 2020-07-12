@@ -1,6 +1,6 @@
 import $ from '../../utils/dom7';
 import {
-  extend,
+  bindMethods,
   iosPreloaderContent,
   mdPreloaderContent,
   auroraPreloaderContent,
@@ -61,12 +61,8 @@ export default {
   name: 'treeview',
   create() {
     const app = this;
-    extend(app, {
-      treeview: {
-        open: Treeview.open.bind(app),
-        close: Treeview.close.bind(app),
-        toggle: Treeview.toggle.bind(app),
-      },
+    bindMethods(app, {
+      treeview: Treeview,
     });
   },
   clicks: {

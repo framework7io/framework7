@@ -1,5 +1,5 @@
 import $ from '../../utils/dom7';
-import { nextFrame, extend } from '../../utils/utils';
+import { nextFrame, bindMethods } from '../../utils/utils';
 
 const Accordion = {
   toggleClicked($clickedEl) {
@@ -107,12 +107,8 @@ export default {
   name: 'accordion',
   create() {
     const app = this;
-    extend(app, {
-      accordion: {
-        open: Accordion.open.bind(app),
-        close: Accordion.close.bind(app),
-        toggle: Accordion.toggle.bind(app),
-      },
+    bindMethods(app, {
+      accordion: Accordion,
     });
   },
   clicks: {

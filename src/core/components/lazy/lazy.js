@@ -1,6 +1,6 @@
 import { getWindow } from 'ssr-window';
 import $ from '../../utils/dom7';
-import { extend } from '../../utils/utils';
+import { bindMethods } from '../../utils/utils';
 import { getSupport } from '../../utils/get-support';
 
 const Lazy = {
@@ -215,14 +215,8 @@ export default {
   },
   create() {
     const app = this;
-    extend(app, {
-      lazy: {
-        create: Lazy.create.bind(app),
-        destroy: Lazy.destroy.bind(app),
-        loadImage: Lazy.loadImage.bind(app),
-        load: Lazy.load.bind(app),
-        isInViewport: Lazy.isInViewport.bind(app),
-      },
+    bindMethods(app, {
+      lazu: Lazy,
     });
   },
   on: {

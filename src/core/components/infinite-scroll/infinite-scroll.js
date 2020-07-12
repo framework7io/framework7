@@ -1,8 +1,8 @@
 import $ from '../../utils/dom7';
-import { extend } from '../../utils/utils';
+import { bindMethods } from '../../utils/utils';
 
 const InfiniteScroll = {
-  handleScroll(el, e) {
+  handle(el, e) {
     const app = this;
     const $el = $(el);
     const scrollTop = $el[0].scrollTop;
@@ -58,12 +58,8 @@ export default {
   name: 'infiniteScroll',
   create() {
     const app = this;
-    extend(app, {
-      infiniteScroll: {
-        handle: InfiniteScroll.handleScroll.bind(app),
-        create: InfiniteScroll.create.bind(app),
-        destroy: InfiniteScroll.destroy.bind(app),
-      },
+    bindMethods(app, {
+      infiniteScroll: InfiniteScroll,
     });
   },
   on: {

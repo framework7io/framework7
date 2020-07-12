@@ -1,6 +1,6 @@
 import { getWindow, getDocument } from 'ssr-window';
 import $ from '../../utils/dom7';
-import { extend } from '../../utils/utils';
+import { bindMethods } from '../../utils/utils';
 import { getDevice } from '../../utils/get-device';
 
 const Input = {
@@ -329,17 +329,8 @@ export default {
     if (typeof app.params.input.scrollIntoViewOnFocus === 'undefined') {
       app.params.input.scrollIntoViewOnFocus = getDevice().android;
     }
-    extend(app, {
-      input: {
-        scrollIntoView: Input.scrollIntoView.bind(app),
-        focus: Input.focus.bind(app),
-        blur: Input.blur.bind(app),
-        validate: Input.validate.bind(app),
-        validateInputs: Input.validateInputs.bind(app),
-        checkEmptyState: Input.checkEmptyState.bind(app),
-        resizeTextarea: Input.resizeTextarea.bind(app),
-        init: Input.init.bind(app),
-      },
+    bindMethods(app, {
+      input: Input,
     });
   },
   on: {

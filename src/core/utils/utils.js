@@ -586,3 +586,16 @@ export function colorThemeCSSProperties(...args) {
     '--f7-theme-color-tint': tint,
   };
 }
+
+export function bindMethods(instance, obj) {
+  Object.keys(obj).forEach((key) => {
+    if (isObject(obj[key])) {
+      Object.keys(obj[key]).forEach((subKey) => {
+        if (typeof obj[key][subKey] === 'function') {
+          obj[key][subKey] = obj[key][subKey].bind(instance);
+        }
+      });
+    }
+    instance[key] = obj[key];
+  });
+}

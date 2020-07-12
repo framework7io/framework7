@@ -43,6 +43,9 @@ export const colorHsbToHsl: (h: number, s: number, b: number) => number[];
 /**  */
 export const colorHslToHsb: (h: number, s: number, l: number) => number[];
 
+/**  */
+export const bindMethods: (target: any, obj: any) => any;
+
 export interface UtilsObject {
   /** Parse url query GET parameters */
   parseUrlQuery: (url: string) => object;
@@ -88,4 +91,6 @@ export interface UtilsObject {
   colorHsbToHsl: (h: number, s: number, b: number) => number[];
   /**  */
   colorHslToHsb: (h: number, s: number, l: number) => number[];
+  /**  */
+  bindMethods: (target: any, obj: any) => any;
 }

@@ -1,6 +1,6 @@
 import { getWindow } from 'ssr-window';
 import $ from '../../utils/dom7';
-import { extend } from '../../utils/utils';
+import { bindMethods } from '../../utils/utils';
 import { getDevice } from '../../utils/get-device';
 
 const Statusbar = {
@@ -152,16 +152,8 @@ export default {
   },
   create() {
     const app = this;
-    extend(app, {
-      statusbar: {
-        hide: Statusbar.hide,
-        show: Statusbar.show,
-        overlaysWebView: Statusbar.overlaysWebView,
-        setTextColor: Statusbar.setTextColor,
-        setBackgroundColor: Statusbar.setBackgroundColor,
-        isVisible: Statusbar.isVisible,
-        init: Statusbar.init.bind(app),
-      },
+    bindMethods(app, {
+      statusbar: Statusbar,
     });
   },
   on: {

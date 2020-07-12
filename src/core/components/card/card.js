@@ -1,6 +1,6 @@
 /* eslint no-param-reassign: "off" */
 import { getDocument } from 'ssr-window';
-import { extend } from '../../utils/utils';
+import { bindMethods } from '../../utils/utils';
 import { getSupport } from '../../utils/get-support';
 import { getDevice } from '../../utils/get-device';
 import $ from '../../utils/dom7';
@@ -532,12 +532,8 @@ export default {
   },
   create() {
     const app = this;
-    extend(app, {
-      card: {
-        open: CardExpandable.open.bind(app),
-        close: CardExpandable.close.bind(app),
-        toggle: CardExpandable.toggle.bind(app),
-      },
+    bindMethods(app, {
+      card: CardExpandable,
     });
   },
   on: {

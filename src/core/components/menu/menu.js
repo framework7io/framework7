@@ -1,4 +1,5 @@
 import $ from '../../utils/dom7';
+import { bindMethods } from '../../utils/utils';
 
 const Menu = {
   open(el = '.menu-item-dropdown') {
@@ -36,10 +37,9 @@ export default {
   name: 'menu',
   create() {
     const app = this;
-    app.menu = {
-      open: Menu.open.bind(app),
-      close: Menu.close.bind(app),
-    };
+    bindMethods(app, {
+      menu: Menu,
+    });
   },
   on: {
     click(e) {

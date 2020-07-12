@@ -1,6 +1,6 @@
 import { getDocument } from 'ssr-window';
 import $ from '../../utils/dom7';
-import { extend } from '../../utils/utils';
+import { bindMethods } from '../../utils/utils';
 import { getSupport } from '../../utils/get-support';
 
 const Sortable = {
@@ -273,13 +273,8 @@ export default {
   },
   create() {
     const app = this;
-    extend(app, {
-      sortable: {
-        init: Sortable.init.bind(app),
-        enable: Sortable.enable.bind(app),
-        disable: Sortable.disable.bind(app),
-        toggle: Sortable.toggle.bind(app),
-      },
+    bindMethods(app, {
+      sortable: Sortable,
     });
   },
   on: {

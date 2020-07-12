@@ -1,6 +1,6 @@
 import { getDocument } from 'ssr-window';
 import $ from '../../utils/dom7';
-import { extend, nextFrame } from '../../utils/utils';
+import { nextFrame, bindMethods } from '../../utils/utils';
 import { getSupport } from '../../utils/get-support';
 
 const Swipeout = {
@@ -520,14 +520,10 @@ export default {
   },
   create() {
     const app = this;
-    extend(app, {
-      swipeout: {
-        init: Swipeout.init.bind(app),
-        open: Swipeout.open.bind(app),
-        close: Swipeout.close.bind(app),
-        delete: Swipeout.delete.bind(app),
-      },
+    bindMethods(app, {
+      swipeout: Swipeout,
     });
+
     Object.defineProperty(app.swipeout, 'el', {
       enumerable: true,
       configurable: true,

@@ -1,5 +1,5 @@
 import $ from '../../utils/dom7';
-import { extend, getTranslate, nextFrame } from '../../utils/utils';
+import { bindMethods, getTranslate, nextFrame } from '../../utils/utils';
 
 const Fab = {
   morphOpen(fabEl, targetEl) {
@@ -170,14 +170,10 @@ export default {
   name: 'fab',
   create() {
     const app = this;
-    extend(app, {
+    bindMethods(app, {
       fab: {
         openedEl: null,
-        morphOpen: Fab.morphOpen.bind(app),
-        morphClose: Fab.morphClose.bind(app),
-        open: Fab.open.bind(app),
-        close: Fab.close.bind(app),
-        toggle: Fab.toggle.bind(app),
+        ...Fab,
       },
     });
   },

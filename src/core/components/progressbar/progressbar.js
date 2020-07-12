@@ -1,5 +1,5 @@
 import $ from '../../utils/dom7';
-import { extend } from '../../utils/utils';
+import { bindMethods } from '../../utils/utils';
 
 const Progressbar = {
   set(...args) {
@@ -130,12 +130,8 @@ export default {
   name: 'progressbar',
   create() {
     const app = this;
-    extend(app, {
-      progressbar: {
-        set: Progressbar.set.bind(app),
-        show: Progressbar.show.bind(app),
-        hide: Progressbar.hide.bind(app),
-      },
+    bindMethods(app, {
+      progressbar: Progressbar,
     });
   },
   on: {
