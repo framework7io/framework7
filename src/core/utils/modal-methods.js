@@ -18,7 +18,7 @@ export default function ModalMethods(parameters = {}) {
           // check if same modal in other page
           const $targetPage = $(targetEl).parents('.page');
           if ($targetPage.length) {
-            $el.each((index, modalEl) => {
+            $el.each((modalEl) => {
               const $modalEl = $(modalEl);
               if ($modalEl.parents($targetPage)[0] === $targetPage[0]) {
                 $el = $modalEl;

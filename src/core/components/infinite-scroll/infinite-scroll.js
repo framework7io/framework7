@@ -41,14 +41,14 @@ const InfiniteScroll = {
     function scrollHandler(e) {
       app.infiniteScroll.handle(this, e);
     }
-    $el.each((index, element) => {
+    $el.each((element) => {
       element.f7InfiniteScrollHandler = scrollHandler;
       element.addEventListener('scroll', element.f7InfiniteScrollHandler);
     });
   },
   destroy(el) {
     const $el = $(el);
-    $el.each((index, element) => {
+    $el.each((element) => {
       element.removeEventListener('scroll', element.f7InfiniteScrollHandler);
       delete element.f7InfiniteScrollHandler;
     });
@@ -68,7 +68,7 @@ export default {
       const $tabEl = $(tabEl);
       const $isEls = $tabEl.find('.infinite-scroll-content');
       if ($tabEl.is('.infinite-scroll-content')) $isEls.add($tabEl);
-      $isEls.each((index, el) => {
+      $isEls.each((el) => {
         app.infiniteScroll.create(el);
       });
     },
@@ -77,19 +77,19 @@ export default {
       const app = this;
       const $isEls = $tabEl.find('.infinite-scroll-content');
       if ($tabEl.is('.infinite-scroll-content')) $isEls.add($tabEl);
-      $isEls.each((index, el) => {
+      $isEls.each((el) => {
         app.infiniteScroll.destroy(el);
       });
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.infinite-scroll-content').each((index, el) => {
+      page.$el.find('.infinite-scroll-content').each((el) => {
         app.infiniteScroll.create(el);
       });
     },
     pageBeforeRemove(page) {
       const app = this;
-      page.$el.find('.infinite-scroll-content').each((index, el) => {
+      page.$el.find('.infinite-scroll-content').each((el) => {
         app.infiniteScroll.destroy(el);
       });
     },

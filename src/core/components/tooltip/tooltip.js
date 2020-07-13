@@ -55,7 +55,7 @@ export default {
       const app = this;
       $(tabEl)
         .find('.tooltip-init')
-        .each((index, el) => {
+        .each((el) => {
           const text = $(el).attr('data-tooltip');
           if (!text) return;
           app.tooltip.create({ targetEl: el, text });
@@ -64,13 +64,13 @@ export default {
     tabBeforeRemove(tabEl) {
       $(tabEl)
         .find('.tooltip-init')
-        .each((index, el) => {
+        .each((el) => {
           if (el.f7Tooltip) el.f7Tooltip.destroy();
         });
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.tooltip-init').each((index, el) => {
+      page.$el.find('.tooltip-init').each((el) => {
         const text = $(el).attr('data-tooltip');
         if (!text) return;
         app.tooltip.create({ targetEl: el, text });
@@ -82,7 +82,7 @@ export default {
         page.$navbarEl &&
         page.$navbarEl.length > 0
       ) {
-        page.$navbarEl.find('.tooltip-init').each((index, el) => {
+        page.$navbarEl.find('.tooltip-init').each((el) => {
           const text = $(el).attr('data-tooltip');
           if (!text) return;
           app.tooltip.create({ targetEl: el, text });
@@ -91,7 +91,7 @@ export default {
     },
     pageBeforeRemove(page) {
       const app = this;
-      page.$el.find('.tooltip-init').each((index, el) => {
+      page.$el.find('.tooltip-init').each((el) => {
         if (el.f7Tooltip) el.f7Tooltip.destroy();
       });
       if (
@@ -101,7 +101,7 @@ export default {
         page.$navbarEl &&
         page.$navbarEl.length > 0
       ) {
-        page.$navbarEl.find('.tooltip-init').each((index, el) => {
+        page.$navbarEl.find('.tooltip-init').each((el) => {
           if (el.f7Tooltip) el.f7Tooltip.destroy();
         });
       }

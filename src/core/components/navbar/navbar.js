@@ -9,7 +9,7 @@ const Navbar = {
     let $el = $(el);
 
     if ($el.hasClass('navbars')) {
-      $el = $el.children('.navbar').each((index, navbarEl) => {
+      $el = $el.children('.navbar').each((navbarEl) => {
         app.navbar.size(navbarEl);
       });
       return;
@@ -185,7 +185,7 @@ const Navbar = {
     });
     $el.addClass(className);
     if (isDynamic) {
-      $el.children('.navbar').each((index, subEl) => {
+      $el.children('.navbar').each((subEl) => {
         $(subEl).trigger('navbar:hide');
         app.emit('navbarHide', subEl);
       });
@@ -209,7 +209,7 @@ const Navbar = {
     }
     $el.removeClass('navbar-hidden navbar-large-hidden navbar-hidden-statusbar');
     if (isDynamic) {
-      $el.children('.navbar').each((index, subEl) => {
+      $el.children('.navbar').each((subEl) => {
         $(subEl).trigger('navbar:show');
         app.emit('navbarShow', subEl);
       });
@@ -246,7 +246,7 @@ const Navbar = {
     $navbarEl
       .parents('.view')
       .find('.page')
-      .each((index, el) => {
+      .each((el) => {
         if (el && el.f7Page && el.f7Page.navbarEl && $navbarEl[0] === el.f7Page.navbarEl) {
           pageEl = el;
         }
@@ -606,11 +606,11 @@ const Navbar = {
       app.on('touchend:passive', handleTouchEnd);
     }
     if (needCollapse) {
-      $pageEl.find('.page-content').each((pageContentIndex, pageContentEl) => {
+      $pageEl.find('.page-content').each((pageContentEl) => {
         if (pageContentEl.scrollTop > 0) handleScroll.call(pageContentEl);
       });
     } else if (needTransparent) {
-      $pageEl.find('.page-content').each((pageContentIndex, pageContentEl) => {
+      $pageEl.find('.page-content').each((pageContentEl) => {
         if (pageContentEl.scrollTop > 0) handleScroll.call(pageContentEl);
       });
     }
@@ -653,7 +653,7 @@ export default {
   on: {
     'panelBreakpoint panelCollapsedBreakpoint panelResize viewResize resize viewMasterDetailBreakpoint': function onPanelResize() {
       const app = this;
-      $('.navbar').each((index, navbarEl) => {
+      $('.navbar').each((navbarEl) => {
         app.navbar.size(navbarEl);
       });
     },
@@ -743,7 +743,7 @@ export default {
     },
     'panelOpen panelSwipeOpen modalOpen': function onPanelModalOpen(instance) {
       const app = this;
-      instance.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
+      instance.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((navbarEl) => {
         app.navbar.size(navbarEl);
       });
     },
@@ -751,7 +751,7 @@ export default {
       const app = this;
       $(tabEl)
         .find('.navbar:not(.navbar-previous):not(.stacked)')
-        .each((index, navbarEl) => {
+        .each((navbarEl) => {
           app.navbar.size(navbarEl);
         });
     },

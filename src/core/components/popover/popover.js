@@ -32,7 +32,7 @@ export default {
             // check if same popover in other page
             const $targetPage = $(targetEl).parents('.page');
             if ($targetPage.length) {
-              $popoverEl.each((index, el) => {
+              $popoverEl.each((el) => {
                 const $el = $(el);
                 if ($el.parents($targetPage)[0] === $targetPage[0]) {
                   $popoverEl = $el;

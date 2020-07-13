@@ -776,7 +776,7 @@ class Calendar extends Framework7Class {
     calendar.$months = $wrapperEl.find('.calendar-month');
     calendar.monthsTranslate = 0;
     calendar.setMonthsTranslate();
-    calendar.$months.each((index, monthEl) => {
+    calendar.$months.each((monthEl) => {
       calendar.emit('local::monthAdd calendarMonthAdd', monthEl);
     });
   }
@@ -1714,7 +1714,7 @@ class Calendar extends Framework7Class {
 
     calendar.initialized = true;
 
-    calendar.$months.each((index, monthEl) => {
+    calendar.$months.each((monthEl) => {
       calendar.emit('local::monthAdd calendarMonthAdd', monthEl);
     });
 

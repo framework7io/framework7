@@ -46,7 +46,7 @@ export default {
       const app = this;
       $(tabEl)
         .find('.text-editor-init')
-        .each((index, editorEl) => {
+        .each((editorEl) => {
           const dataset = $(editorEl).dataset();
           app.textEditor.create(extend({ el: editorEl }, dataset || {}));
         });
@@ -54,19 +54,19 @@ export default {
     tabBeforeRemove(tabEl) {
       $(tabEl)
         .find('.text-editor-init')
-        .each((index, editorEl) => {
+        .each((editorEl) => {
           if (editorEl.f7TextEditor) editorEl.f7TextEditor.destroy();
         });
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.text-editor-init').each((index, editorEl) => {
+      page.$el.find('.text-editor-init').each((editorEl) => {
         const dataset = $(editorEl).dataset();
         app.textEditor.create(extend({ el: editorEl }, dataset || {}));
       });
     },
     pageBeforeRemove(page) {
-      page.$el.find('.text-editor-init').each((index, editorEl) => {
+      page.$el.find('.text-editor-init').each((editorEl) => {
         if (editorEl.f7TextEditor) editorEl.f7TextEditor.destroy();
       });
     },

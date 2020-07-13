@@ -34,7 +34,7 @@ class Actions extends Modal {
       $el = $(actions.params.el).eq(0);
     } else if (actions.params.content) {
       $el = $(actions.params.content)
-        .filter((elIndex, node) => node.nodeType === 1)
+        .filter((node) => node.nodeType === 1)
         .eq(0);
     } else if (actions.params.buttons) {
       if (actions.params.convertToPopover) {
@@ -144,12 +144,12 @@ class Actions extends Modal {
         });
         popover.open(animate);
         popover.once('popoverOpened', () => {
-          popover.$el.find('.list-button, .item-link').each((groupIndex, buttonEl) => {
+          popover.$el.find('.list-button, .item-link').each((buttonEl) => {
             $(buttonEl).on('click', buttonOnClick);
           });
         });
         popover.once('popoverClosed', () => {
-          popover.$el.find('.list-button, .item-link').each((groupIndex, buttonEl) => {
+          popover.$el.find('.list-button, .item-link').each((buttonEl) => {
             $(buttonEl).off('click', buttonOnClick);
           });
           nextTick(() => {
@@ -161,11 +161,11 @@ class Actions extends Modal {
         actions.$el = actions.actionsHtml ? $(actions.actionsHtml) : actions.$el;
         actions.$el[0].f7Modal = actions;
         if (actions.groups) {
-          actions.$el.find('.actions-button').each((groupIndex, buttonEl) => {
+          actions.$el.find('.actions-button').each((buttonEl) => {
             $(buttonEl).on('click', buttonOnClick);
           });
           actions.once('actionsClosed', () => {
-            actions.$el.find('.actions-button').each((groupIndex, buttonEl) => {
+            actions.$el.find('.actions-button').each((buttonEl) => {
               $(buttonEl).off('click', buttonOnClick);
             });
           });

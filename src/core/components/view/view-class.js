@@ -5,10 +5,9 @@ import Framework7Class from '../../utils/class';
 import resizableView from './resizable-view';
 
 class View extends Framework7Class {
-  constructor(appInstance, el, viewParams = {}) {
-    super(viewParams, [appInstance]);
+  constructor(app, el, viewParams = {}) {
+    super(viewParams, [app]);
 
-    const app = appInstance;
     const $el = $(el);
     const view = this;
 

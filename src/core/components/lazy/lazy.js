@@ -25,7 +25,7 @@ const Lazy = {
     const placeholderSrc = app.params.lazy.placeholder;
 
     if (placeholderSrc !== false) {
-      $lazyLoadImages.each((index, lazyEl) => {
+      $lazyLoadImages.each((lazyEl) => {
         if ($(lazyEl).attr('data-src') && !$(lazyEl).attr('src'))
           $(lazyEl).attr('src', placeholderSrc);
       });
@@ -68,7 +68,7 @@ const Lazy = {
           root: $pageEl[0],
         });
       }
-      $lazyLoadImages.each((index, el) => {
+      $lazyLoadImages.each((el) => {
         if (el.f7LazyObserverAdded) return;
         el.f7LazyObserverAdded = true;
         observer.observe(el);
@@ -190,7 +190,7 @@ const Lazy = {
     if ($pageEl.length === 0) {
       return;
     }
-    $pageEl.find('.lazy').each((index, lazyEl) => {
+    $pageEl.find('.lazy').each((lazyEl) => {
       const $lazyEl = $(lazyEl);
       if ($lazyEl.parents('.tab:not(.tab-active)').length > 0) {
         return;

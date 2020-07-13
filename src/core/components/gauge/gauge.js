@@ -50,25 +50,25 @@ export default {
       const app = this;
       $(tabEl)
         .find('.gauge-init')
-        .each((index, el) => {
+        .each((el) => {
           app.gauge.create(extend({ el }, $(el).dataset() || {}));
         });
     },
     tabBeforeRemove(tabEl) {
       $(tabEl)
         .find('.gauge-init')
-        .each((index, el) => {
+        .each((el) => {
           if (el.f7Gauge) el.f7Gauge.destroy();
         });
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.gauge-init').each((index, el) => {
+      page.$el.find('.gauge-init').each((el) => {
         app.gauge.create(extend({ el }, $(el).dataset() || {}));
       });
     },
     pageBeforeRemove(page) {
-      page.$el.find('.gauge-init').each((index, el) => {
+      page.$el.find('.gauge-init').each((el) => {
         if (el.f7Gauge) el.f7Gauge.destroy();
       });
     },

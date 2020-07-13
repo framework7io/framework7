@@ -220,7 +220,7 @@ function tabRemove($oldTabEl, $newTabEl, tabRoute) {
     $oldTabEl[0].f7RouterTabLoaded = false;
     delete $oldTabEl[0].f7RouterTabLoaded;
   }
-  $oldTabEl.children().each((index, tabChild) => {
+  $oldTabEl.children().each((tabChild) => {
     if (tabChild.f7Component) {
       hasTabComponentChild = true;
       $(tabChild).trigger('tab:beforeremove', tabRoute);

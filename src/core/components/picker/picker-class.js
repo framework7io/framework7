@@ -371,7 +371,7 @@ class Picker extends Framework7Class {
     picker.attachResizeEvent();
 
     // Init cols
-    $el.find('.picker-column').each((index, colEl) => {
+    $el.find('.picker-column').each((colEl) => {
       let updateItems = true;
       if ((!initialized && params.value) || (initialized && value)) {
         updateItems = false;

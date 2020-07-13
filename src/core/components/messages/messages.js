@@ -24,7 +24,7 @@ export default {
       const app = this;
       $(tabEl)
         .find('.messages-init')
-        .each((index, messagesEl) => {
+        .each((messagesEl) => {
           app.messages.destroy(messagesEl);
         });
     },
@@ -32,19 +32,19 @@ export default {
       const app = this;
       $(tabEl)
         .find('.messages-init')
-        .each((index, messagesEl) => {
+        .each((messagesEl) => {
           app.messages.create({ el: messagesEl });
         });
     },
     pageBeforeRemove(page) {
       const app = this;
-      page.$el.find('.messages-init').each((index, messagesEl) => {
+      page.$el.find('.messages-init').each((messagesEl) => {
         app.messages.destroy(messagesEl);
       });
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.messages-init').each((index, messagesEl) => {
+      page.$el.find('.messages-init').each((messagesEl) => {
         app.messages.create({ el: messagesEl });
       });
     },

@@ -46,7 +46,7 @@ export default {
       const app = this;
       const openedMenus = $('.menu-item-dropdown-opened');
       if (!openedMenus.length) return;
-      openedMenus.each((index, el) => {
+      openedMenus.each((el) => {
         if (!$(e.target).closest('.menu-item-dropdown-opened').length) {
           app.menu.close(el);
         }

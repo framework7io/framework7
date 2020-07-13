@@ -99,7 +99,7 @@ function formToData(formEl) {
   // Skip input types
   const skipTypes = ['submit', 'image', 'button', 'file'];
   const skipNames = [];
-  $formEl.find('input, select, textarea').each((inputIndex, inputEl) => {
+  $formEl.find('input, select, textarea').each((inputEl) => {
     const $inputEl = $(inputEl);
     if ($inputEl.hasClass('ignore-store-data') || $inputEl.hasClass('no-store-data')) {
       return;
@@ -112,7 +112,7 @@ function formToData(formEl) {
     if (tag === 'select' && $inputEl.prop('multiple')) {
       skipNames.push(name);
       data[name] = [];
-      $formEl.find(`select[name="${name}"] option`).each((index, el) => {
+      $formEl.find(`select[name="${name}"] option`).each((el) => {
         if (el.selected) data[name].push(el.value);
       });
     } else {
@@ -120,13 +120,13 @@ function formToData(formEl) {
         case 'checkbox':
           skipNames.push(name);
           data[name] = [];
-          $formEl.find(`input[name="${name}"]`).each((index, el) => {
+          $formEl.find(`input[name="${name}"]`).each((el) => {
             if (el.checked) data[name].push(el.value);
           });
           break;
         case 'radio':
           skipNames.push(name);
-          $formEl.find(`input[name="${name}"]`).each((index, el) => {
+          $formEl.find(`input[name="${name}"]`).each((el) => {
             if (el.checked) data[name] = el.value;
           });
           break;
@@ -159,7 +159,7 @@ function formFromData(formEl, formData) {
   const skipTypes = ['submit', 'image', 'button', 'file'];
   const skipNames = [];
 
-  $formEl.find('input, select, textarea').each((inputIndex, inputEl) => {
+  $formEl.find('input, select, textarea').each((inputEl) => {
     const $inputEl = $(inputEl);
     if ($inputEl.hasClass('ignore-store-data') || $inputEl.hasClass('no-store-data')) {
       return;
@@ -172,7 +172,7 @@ function formFromData(formEl, formData) {
     if (skipNames.indexOf(name) >= 0 || !name) return;
     if (tag === 'select' && $inputEl.prop('multiple')) {
       skipNames.push(name);
-      $formEl.find(`select[name="${name}"] option`).each((index, el) => {
+      $formEl.find(`select[name="${name}"] option`).each((el) => {
         const selectEl = el;
         if (data[name].indexOf(el.value) >= 0) selectEl.selected = true;
         else selectEl.selected = false;
@@ -181,7 +181,7 @@ function formFromData(formEl, formData) {
       switch (type) {
         case 'checkbox':
           skipNames.push(name);
-          $formEl.find(`input[name="${name}"]`).each((index, el) => {
+          $formEl.find(`input[name="${name}"]`).each((el) => {
             const checkboxEl = el;
             if (data[name].indexOf(el.value) >= 0) checkboxEl.checked = true;
             else checkboxEl.checked = false;
@@ -189,7 +189,7 @@ function formFromData(formEl, formData) {
           break;
         case 'radio':
           skipNames.push(name);
-          $formEl.find(`input[name="${name}"]`).each((index, el) => {
+          $formEl.find(`input[name="${name}"]`).each((el) => {
             const radioEl = el;
             if (data[name] === el.value) radioEl.checked = true;
             else radioEl.checked = false;
@@ -295,7 +295,7 @@ export default {
       const app = this;
       $(tabEl)
         .find('.form-store-data')
-        .each((index, formEl) => {
+        .each((formEl) => {
           app.form.storage.destroy(formEl);
         });
     },
@@ -303,19 +303,19 @@ export default {
       const app = this;
       $(tabEl)
         .find('.form-store-data')
-        .each((index, formEl) => {
+        .each((formEl) => {
           app.form.storage.init(formEl);
         });
     },
     pageBeforeRemove(page) {
       const app = this;
-      page.$el.find('.form-store-data').each((index, formEl) => {
+      page.$el.find('.form-store-data').each((formEl) => {
         app.form.storage.destroy(formEl);
       });
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.form-store-data').each((index, formEl) => {
+      page.$el.find('.form-store-data').each((formEl) => {
         app.form.storage.init(formEl);
       });
     },

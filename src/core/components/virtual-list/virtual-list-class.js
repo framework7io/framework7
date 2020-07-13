@@ -2,7 +2,7 @@ import { getDocument } from 'ssr-window';
 import $ from '../../utils/dom7';
 import { extend, deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
-import getDevice from '../../utils/get-device';
+import { getDevice } from '../../utils/get-device';
 
 class VirtualList extends Framework7Class {
   constructor(app, params = {}) {
@@ -144,7 +144,7 @@ class VirtualList extends Framework7Class {
       $pageEl = vl.$el.parents('.page').eq(0);
       $tabEl = vl.$el
         .parents('.tab')
-        .filter((tabElIndex, tabEl) => {
+        .filter((tabEl) => {
           return (
             $(tabEl).parent('.tabs').parent('.tabs-animated-wrap, .tabs-swipeable-wrap').length ===
             0

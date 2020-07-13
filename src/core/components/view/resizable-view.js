@@ -1,6 +1,6 @@
 import $ from '../../utils/dom7';
 import { extend } from '../../utils/utils';
-import getSupport from '../../utils/get-support';
+import { getSupport } from '../../utils/get-support';
 
 function resizableView(view) {
   const app = view.app;

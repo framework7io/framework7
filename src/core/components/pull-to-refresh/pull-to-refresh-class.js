@@ -1,8 +1,8 @@
 import $ from '../../utils/dom7';
 import { deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
-import getSupport from '../../utils/get-support';
-import getDevice from '../../utils/get-device';
+import { getSupport } from '../../utils/get-support';
+import { getDevice } from '../../utils/get-device';
 
 class PullToRefresh extends Framework7Class {
   constructor(app, el) {
@@ -180,7 +180,7 @@ class PullToRefresh extends Framework7Class {
         }
         const $ptrWatchScrollable = $(e.target).closest('.ptr-watch-scroll');
         if ($ptrWatchScrollable.length) {
-          $ptrWatchScrollable.each((ptrScrollableIndex, ptrScrollableEl) => {
+          $ptrWatchScrollable.each((ptrScrollableEl) => {
             if (ptrScrollableEl === el) return;
             if (
               ptrScrollableEl.scrollHeight > ptrScrollableEl.offsetHeight &&
@@ -408,7 +408,7 @@ class PullToRefresh extends Framework7Class {
         }
         const $ptrWatchScrollable = $(e.target).closest('.ptr-watch-scroll');
         if ($ptrWatchScrollable.length) {
-          $ptrWatchScrollable.each((ptrScrollableIndex, ptrScrollableEl) => {
+          $ptrWatchScrollable.each((ptrScrollableEl) => {
             if (ptrScrollableEl === el) return;
             if (
               ptrScrollableEl.scrollHeight > ptrScrollableEl.offsetHeight &&

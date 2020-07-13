@@ -55,7 +55,7 @@ function initSwiper(swiperEl) {
   }
   const $tabEl = $swiperEl
     .parents('.tab')
-    .filter((tabElIndex, tabEl) => {
+    .filter((tabEl) => {
       return (
         $(tabEl).parent('.tabs').parent('.tabs-animated-wrap, .tabs-swipeable-wrap').length === 0
       );
@@ -113,25 +113,25 @@ export default {
   on: {
     pageBeforeRemove(page) {
       const app = this;
-      page.$el.find('.swiper-init, .tabs-swipeable-wrap').each((index, swiperEl) => {
+      page.$el.find('.swiper-init, .tabs-swipeable-wrap').each((swiperEl) => {
         app.swiper.destroy(swiperEl);
       });
     },
     pageMounted(page) {
       const app = this;
-      page.$el.find('.tabs-swipeable-wrap').each((index, swiperEl) => {
+      page.$el.find('.tabs-swipeable-wrap').each((swiperEl) => {
         initSwiper.call(app, swiperEl);
       });
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.swiper-init, .tabs-swipeable-wrap').each((index, swiperEl) => {
+      page.$el.find('.swiper-init, .tabs-swipeable-wrap').each((swiperEl) => {
         initSwiper.call(app, swiperEl);
       });
     },
     pageReinit(page) {
       const app = this;
-      page.$el.find('.swiper-init, .tabs-swipeable-wrap').each((index, swiperEl) => {
+      page.$el.find('.swiper-init, .tabs-swipeable-wrap').each((swiperEl) => {
         const swiper = app.swiper.get(swiperEl);
         if (swiper && swiper.update) swiper.update();
       });
@@ -140,7 +140,7 @@ export default {
       const app = this;
       $(tabEl)
         .find('.swiper-init, .tabs-swipeable-wrap')
-        .each((index, swiperEl) => {
+        .each((swiperEl) => {
           initSwiper.call(app, swiperEl);
         });
     },
@@ -148,7 +148,7 @@ export default {
       const app = this;
       $(tabEl)
         .find('.swiper-init, .tabs-swipeable-wrap')
-        .each((index, swiperEl) => {
+        .each((swiperEl) => {
           const swiper = app.swiper.get(swiperEl);
           if (swiper && swiper.update) swiper.update();
         });
@@ -157,7 +157,7 @@ export default {
       const app = this;
       $(tabEl)
         .find('.swiper-init, .tabs-swipeable-wrap')
-        .each((index, swiperEl) => {
+        .each((swiperEl) => {
           app.swiper.destroy(swiperEl);
         });
     },

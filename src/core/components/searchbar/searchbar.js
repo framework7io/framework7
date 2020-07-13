@@ -23,7 +23,7 @@ export default {
       const app = this;
       $(tabEl)
         .find('.searchbar-init')
-        .each((index, searchbarEl) => {
+        .each((searchbarEl) => {
           const $searchbarEl = $(searchbarEl);
           app.searchbar.create(extend($searchbarEl.dataset(), { el: searchbarEl }));
         });
@@ -31,7 +31,7 @@ export default {
     tabBeforeRemove(tabEl) {
       $(tabEl)
         .find('.searchbar-init')
-        .each((index, searchbarEl) => {
+        .each((searchbarEl) => {
           if (searchbarEl.f7Searchbar && searchbarEl.f7Searchbar.destroy) {
             searchbarEl.f7Searchbar.destroy();
           }
@@ -39,7 +39,7 @@ export default {
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.searchbar-init').each((index, searchbarEl) => {
+      page.$el.find('.searchbar-init').each((searchbarEl) => {
         const $searchbarEl = $(searchbarEl);
         app.searchbar.create(extend($searchbarEl.dataset(), { el: searchbarEl }));
       });
@@ -50,7 +50,7 @@ export default {
         page.$navbarEl &&
         page.$navbarEl.length > 0
       ) {
-        page.$navbarEl.find('.searchbar-init').each((index, searchbarEl) => {
+        page.$navbarEl.find('.searchbar-init').each((searchbarEl) => {
           const $searchbarEl = $(searchbarEl);
           app.searchbar.create(extend($searchbarEl.dataset(), { el: searchbarEl }));
         });
@@ -58,7 +58,7 @@ export default {
     },
     pageBeforeRemove(page) {
       const app = this;
-      page.$el.find('.searchbar-init').each((index, searchbarEl) => {
+      page.$el.find('.searchbar-init').each((searchbarEl) => {
         if (searchbarEl.f7Searchbar && searchbarEl.f7Searchbar.destroy) {
           searchbarEl.f7Searchbar.destroy();
         }
@@ -70,7 +70,7 @@ export default {
         page.$navbarEl &&
         page.$navbarEl.length > 0
       ) {
-        page.$navbarEl.find('.searchbar-init').each((index, searchbarEl) => {
+        page.$navbarEl.find('.searchbar-init').each((searchbarEl) => {
           if (searchbarEl.f7Searchbar && searchbarEl.f7Searchbar.destroy) {
             searchbarEl.f7Searchbar.destroy();
           }

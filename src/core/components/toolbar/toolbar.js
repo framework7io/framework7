@@ -181,7 +181,7 @@ export default {
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.tabbar, .tabbar-labels').each((index, tabbarEl) => {
+      page.$el.find('.tabbar, .tabbar-labels').each((tabbarEl) => {
         app.toolbar.init(tabbarEl);
       });
       if (
@@ -204,7 +204,7 @@ export default {
     },
     init() {
       const app = this;
-      app.root.find('.tabbar, .tabbar-labels').each((index, tabbarEl) => {
+      app.root.find('.tabbar, .tabbar-labels').each((tabbarEl) => {
         app.toolbar.init(tabbarEl);
       });
     },

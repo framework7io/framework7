@@ -139,14 +139,14 @@ export default {
       const app = this;
       $(tabEl)
         .find('.progressbar')
-        .each((index, progressbarEl) => {
+        .each((progressbarEl) => {
           const $progressbarEl = $(progressbarEl);
           app.progressbar.set($progressbarEl, $progressbarEl.attr('data-progress'));
         });
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.progressbar').each((index, progressbarEl) => {
+      page.$el.find('.progressbar').each((progressbarEl) => {
         const $progressbarEl = $(progressbarEl);
         app.progressbar.set($progressbarEl, $progressbarEl.attr('data-progress'));
       });

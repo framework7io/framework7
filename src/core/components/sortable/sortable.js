@@ -117,7 +117,7 @@ const Sortable = {
         }
       }
 
-      $sortingItems.each((index, el) => {
+      $sortingItems.each((el) => {
         const $currentEl = $(el);
         if ($currentEl[0] === $sortingEl[0]) return;
         const currentElOffset = $currentEl[0].offsetTop;

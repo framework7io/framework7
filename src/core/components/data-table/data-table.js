@@ -21,7 +21,7 @@ export default {
       const app = this;
       $(tabEl)
         .find('.data-table-init')
-        .each((index, tableEl) => {
+        .each((tableEl) => {
           app.dataTable.destroy(tableEl);
         });
     },
@@ -29,19 +29,19 @@ export default {
       const app = this;
       $(tabEl)
         .find('.data-table-init')
-        .each((index, tableEl) => {
+        .each((tableEl) => {
           app.dataTable.create({ el: tableEl });
         });
     },
     pageBeforeRemove(page) {
       const app = this;
-      page.$el.find('.data-table-init').each((index, tableEl) => {
+      page.$el.find('.data-table-init').each((tableEl) => {
         app.dataTable.destroy(tableEl);
       });
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.data-table-init').each((index, tableEl) => {
+      page.$el.find('.data-table-init').each((tableEl) => {
         app.dataTable.create({ el: tableEl });
       });
     },

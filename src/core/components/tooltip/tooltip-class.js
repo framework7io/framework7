@@ -1,6 +1,6 @@
 import $ from '../../utils/dom7';
 import { extend, deleteProps } from '../../utils/utils';
-import getSupport from '../../utils/get-support';
+import { getSupport } from '../../utils/get-support';
 import Framework7Class from '../../utils/class';
 
 class Tooltip extends Framework7Class {

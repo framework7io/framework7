@@ -25,7 +25,7 @@ export default {
       const app = this;
       $(tabEl)
         .find('.messagebar-init')
-        .each((index, messagebarEl) => {
+        .each((messagebarEl) => {
           app.messagebar.destroy(messagebarEl);
         });
     },
@@ -33,19 +33,19 @@ export default {
       const app = this;
       $(tabEl)
         .find('.messagebar-init')
-        .each((index, messagebarEl) => {
+        .each((messagebarEl) => {
           app.messagebar.create(extend({ el: messagebarEl }, $(messagebarEl).dataset()));
         });
     },
     pageBeforeRemove(page) {
       const app = this;
-      page.$el.find('.messagebar-init').each((index, messagebarEl) => {
+      page.$el.find('.messagebar-init').each((messagebarEl) => {
         app.messagebar.destroy(messagebarEl);
       });
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.messagebar-init').each((index, messagebarEl) => {
+      page.$el.find('.messagebar-init').each((messagebarEl) => {
         app.messagebar.create(extend({ el: messagebarEl }, $(messagebarEl).dataset()));
       });
     },

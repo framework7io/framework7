@@ -22,7 +22,7 @@ export default {
       const app = this;
       $(tabEl)
         .find('.list-index-init')
-        .each((index, listIndexEl) => {
+        .each((listIndexEl) => {
           const params = extend($(listIndexEl).dataset(), { el: listIndexEl });
           app.listIndex.create(params);
         });
@@ -30,19 +30,19 @@ export default {
     tabBeforeRemove(tabEl) {
       $(tabEl)
         .find('.list-index-init')
-        .each((index, listIndexEl) => {
+        .each((listIndexEl) => {
           if (listIndexEl.f7ListIndex) listIndexEl.f7ListIndex.destroy();
         });
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.list-index-init').each((index, listIndexEl) => {
+      page.$el.find('.list-index-init').each((listIndexEl) => {
         const params = extend($(listIndexEl).dataset(), { el: listIndexEl });
         app.listIndex.create(params);
       });
     },
     pageBeforeRemove(page) {
-      page.$el.find('.list-index-init').each((index, listIndexEl) => {
+      page.$el.find('.list-index-init').each((listIndexEl) => {
         if (listIndexEl.f7ListIndex) listIndexEl.f7ListIndex.destroy();
       });
     },

@@ -175,7 +175,7 @@ class Notification extends Modal {
       if (notification.params.swipeToClose) {
         attachTouchEvents();
       }
-      $('.notification.modal-in').each((index, openedEl) => {
+      $('.notification.modal-in').each((openedEl) => {
         const notificationInstance = app.notification.get(openedEl);
         if (openedEl !== notification.el && notificationInstance) {
           notificationInstance.close();

@@ -133,7 +133,7 @@ export default {
   on: {
     init() {
       const app = this;
-      $('.view-init').each((index, viewEl) => {
+      $('.view-init').each((viewEl) => {
         if (viewEl.f7View) return;
         const viewParams = $(viewEl).dataset();
         app.views.create(viewEl, viewParams);
@@ -141,7 +141,7 @@ export default {
     },
     'modalOpen panelOpen': function onOpen(instance) {
       const app = this;
-      instance.$el.find('.view-init').each((index, viewEl) => {
+      instance.$el.find('.view-init').each((viewEl) => {
         if (viewEl.f7View) return;
         const viewParams = $(viewEl).dataset();
         app.views.create(viewEl, viewParams);
@@ -149,7 +149,7 @@ export default {
     },
     'modalBeforeDestroy panelBeforeDestroy': function onClose(instance) {
       if (!instance || !instance.$el) return;
-      instance.$el.find('.view-init').each((index, viewEl) => {
+      instance.$el.find('.view-init').each((viewEl) => {
         const view = viewEl.f7View;
         if (!view) return;
         view.destroy();

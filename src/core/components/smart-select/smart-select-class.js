@@ -124,7 +124,7 @@ class SmartSelect extends Framework7Class {
       } else {
         optionEl = ss.$selectEl.find(`option[value="${value}"]`)[0];
         if (!optionEl) {
-          optionEl = ss.$selectEl.find('option').filter((index, optEl) => optEl.value === value)[0];
+          optionEl = ss.$selectEl.find('option').filter((optEl) => optEl.value === value)[0];
         }
         displayAs = optionEl.dataset ? optionEl.dataset.displayAs : $(optionEl).data('display-as');
         text = displayAs && typeof displayAs !== 'undefined' ? displayAs : optionEl.textContent;
@@ -210,7 +210,7 @@ class SmartSelect extends Framework7Class {
     if (ss.params.setValueText) {
       ss.$valueEl.text(ss.formatValueText([]));
     }
-    ss.$selectEl.find('option').each((optionIndex, optionEl) => {
+    ss.$selectEl.find('option').each((optionEl) => {
       optionEl.selected = false;
       optionEl.checked = false;
     });
@@ -250,7 +250,7 @@ class SmartSelect extends Framework7Class {
     const ss = this;
     const $containerEl = ss.$containerEl;
     if (ss.selectEl.selectedOptions.length >= ss.maxLength) {
-      $containerEl.find('input[type="checkbox"]').each((index, inputEl) => {
+      $containerEl.find('input[type="checkbox"]').each((inputEl) => {
         if (!inputEl.checked) {
           $(inputEl).parents('li').addClass('disabled');
         } else {
@@ -283,7 +283,7 @@ class SmartSelect extends Framework7Class {
         valueArray = [value];
       }
     } else {
-      ss.$selectEl.find('option').each((optionIndex, optionEl) => {
+      ss.$selectEl.find('option').each((optionEl) => {
         const $optionEl = $(optionEl);
         if (optionEl.selected) {
           const displayAs = optionEl.dataset
@@ -307,7 +307,7 @@ class SmartSelect extends Framework7Class {
     const theme = ss.app.theme;
     const items = [];
     let previousGroupEl;
-    ss.$selectEl.find('option').each((index, optionEl) => {
+    ss.$selectEl.find('option').each((optionEl) => {
       const $optionEl = $(optionEl);
       const optionData = $optionEl.dataset();
       const optionImage = optionData.optionImage || ss.params.optionImage;

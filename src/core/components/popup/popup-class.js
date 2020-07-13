@@ -24,7 +24,7 @@ class Popup extends Modal {
     let $el;
     if (!popup.params.el) {
       $el = $(popup.params.content)
-        .filter((elIndex, node) => node.nodeType === 1)
+        .filter((node) => node.nodeType === 1)
         .eq(0);
     } else {
       $el = $(popup.params.el).eq(0);
@@ -84,7 +84,7 @@ class Popup extends Modal {
           popup.backdropEl === target
         ) {
           let needToClose = true;
-          popup.$el.nextAll('.popup.modal-in').each((index, popupEl) => {
+          popup.$el.nextAll('.popup.modal-in').each((popupEl) => {
             const popupInstance = popupEl.f7Modal;
             if (!popupInstance) return;
             if (

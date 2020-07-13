@@ -341,34 +341,30 @@ export default {
     tabMounted(tabEl) {
       const app = this;
       const $tabEl = $(tabEl);
-      $tabEl.find('.item-input, .input').each((itemInputIndex, itemInputEl) => {
+      $tabEl.find('.item-input, .input').each((itemInputEl) => {
         const $itemInputEl = $(itemInputEl);
-        $itemInputEl
-          .find('input, select, textarea, [contenteditable]')
-          .each((inputIndex, inputEl) => {
-            const $inputEl = $(inputEl);
-            if (Input.ignoreTypes.indexOf($inputEl.attr('type')) >= 0) return;
-            app.input.checkEmptyState($inputEl);
-          });
+        $itemInputEl.find('input, select, textarea, [contenteditable]').each((inputEl) => {
+          const $inputEl = $(inputEl);
+          if (Input.ignoreTypes.indexOf($inputEl.attr('type')) >= 0) return;
+          app.input.checkEmptyState($inputEl);
+        });
       });
-      $tabEl.find('textarea.resizable').each((textareaIndex, textareaEl) => {
+      $tabEl.find('textarea.resizable').each((textareaEl) => {
         app.input.resizeTextarea(textareaEl);
       });
     },
     pageInit(page) {
       const app = this;
       const $pageEl = page.$el;
-      $pageEl.find('.item-input, .input').each((itemInputIndex, itemInputEl) => {
+      $pageEl.find('.item-input, .input').each((itemInputEl) => {
         const $itemInputEl = $(itemInputEl);
-        $itemInputEl
-          .find('input, select, textarea, [contenteditable]')
-          .each((inputIndex, inputEl) => {
-            const $inputEl = $(inputEl);
-            if (Input.ignoreTypes.indexOf($inputEl.attr('type')) >= 0) return;
-            app.input.checkEmptyState($inputEl);
-          });
+        $itemInputEl.find('input, select, textarea, [contenteditable]').each((inputEl) => {
+          const $inputEl = $(inputEl);
+          if (Input.ignoreTypes.indexOf($inputEl.attr('type')) >= 0) return;
+          app.input.checkEmptyState($inputEl);
+        });
       });
-      $pageEl.find('textarea.resizable').each((textareaIndex, textareaEl) => {
+      $pageEl.find('textarea.resizable').each((textareaEl) => {
         app.input.resizeTextarea(textareaEl);
       });
     },
@@ -377,11 +373,11 @@ export default {
     ) {
       const app = this;
       if (instance && instance.$el) {
-        instance.$el.find('textarea.resizable').each((textareaIndex, textareaEl) => {
+        instance.$el.find('textarea.resizable').each((textareaEl) => {
           app.input.resizeTextarea(textareaEl);
         });
       } else {
-        $('textarea.resizable').each((textareaIndex, textareaEl) => {
+        $('textarea.resizable').each((textareaEl) => {
           app.input.resizeTextarea(textareaEl);
         });
       }

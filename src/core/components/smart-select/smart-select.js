@@ -78,14 +78,14 @@ export default {
       const app = this;
       $(tabEl)
         .find('.smart-select-init')
-        .each((index, smartSelectEl) => {
+        .each((smartSelectEl) => {
           app.smartSelect.create(extend({ el: smartSelectEl }, $(smartSelectEl).dataset()));
         });
     },
     tabBeforeRemove(tabEl) {
       $(tabEl)
         .find('.smart-select-init')
-        .each((index, smartSelectEl) => {
+        .each((smartSelectEl) => {
           if (smartSelectEl.f7SmartSelect && smartSelectEl.f7SmartSelect.destroy) {
             smartSelectEl.f7SmartSelect.destroy();
           }
@@ -93,12 +93,12 @@ export default {
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.smart-select-init').each((index, smartSelectEl) => {
+      page.$el.find('.smart-select-init').each((smartSelectEl) => {
         app.smartSelect.create(extend({ el: smartSelectEl }, $(smartSelectEl).dataset()));
       });
     },
     pageBeforeRemove(page) {
-      page.$el.find('.smart-select-init').each((index, smartSelectEl) => {
+      page.$el.find('.smart-select-init').each((smartSelectEl) => {
         if (smartSelectEl.f7SmartSelect && smartSelectEl.f7SmartSelect.destroy) {
           smartSelectEl.f7SmartSelect.destroy();
         }

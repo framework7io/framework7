@@ -95,13 +95,13 @@ function SwipeBack(r) {
           .eq(0);
       }
       if (activeNavBackIconText.length) {
-        $previousNavElements.each((index, el) => {
+        $previousNavElements.each((el) => {
           if (!$(el).hasClass('title')) return;
           el.f7NavbarLeftOffset += activeNavBackIconText.prev('.icon')[0].offsetWidth;
         });
       }
     }
-    $currentNavElements.each((index, navEl) => {
+    $currentNavElements.each((navEl) => {
       const $navEl = $(navEl);
       const isSubnavbar = $navEl.hasClass('subnavbar');
       const isLeft = $navEl.hasClass('left');
@@ -117,7 +117,7 @@ function SwipeBack(r) {
         if ($navEl.hasClass('title-large')) {
           if (els.indexOf(el) < 0) els.push(el);
           el.overflow = 'visible';
-          $navEl.find('.title-large-text').each((subIndex, subNavEl) => {
+          $navEl.find('.title-large-text').each((subNavEl) => {
             els.push({
               el: subNavEl,
               transform: (progress) => `translateX(${progress * 100 * inverter}%)`,
@@ -136,7 +136,7 @@ function SwipeBack(r) {
         if (isLeft) {
           if (els.indexOf(el) < 0) els.push(el);
           el.opacity = (progress) => 1 - progress ** 0.33;
-          $navEl.find('.back span').each((subIndex, subNavEl) => {
+          $navEl.find('.back span').each((subNavEl) => {
             els.push({
               el: subNavEl,
               'transform-origin': transformOrigin,
@@ -206,7 +206,7 @@ function SwipeBack(r) {
         };
       }
     });
-    $previousNavElements.each((index, navEl) => {
+    $previousNavElements.each((navEl) => {
       const $navEl = $(navEl);
       const isSubnavbar = $navEl.hasClass('subnavbar');
       const isLeft = $navEl.hasClass('left');
@@ -223,7 +223,7 @@ function SwipeBack(r) {
         if ($navEl.hasClass('title-large')) {
           el.opacity = 1;
           el.overflow = 'visible';
-          $navEl.find('.title-large-text').each((subIndex, subNavEl) => {
+          $navEl.find('.title-large-text').each((subNavEl) => {
             els.push({
               el: subNavEl,
               'transform-origin': transformOriginTitleLarge,

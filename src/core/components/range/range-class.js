@@ -1,7 +1,7 @@
 import $ from '../../utils/dom7';
 import { extend, nextTick, deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
-import getSupport from '../../utils/get-support';
+import { getSupport } from '../../utils/get-support';
 
 class Range extends Framework7Class {
   constructor(app, params) {

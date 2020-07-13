@@ -131,14 +131,14 @@ function forward(el, forwardOptions = {}) {
   // Pages In View
   const $pagesInView = $viewEl
     .children('.page:not(.stacked)')
-    .filter((index, pageInView) => pageInView !== $newPage[0]);
+    .filter((pageInView) => pageInView !== $newPage[0]);
 
   // Navbars In View
   let $navbarsInView;
   if (dynamicNavbar) {
     $navbarsInView = $navbarsEl
       .children('.navbar:not(.stacked)')
-      .filter((index, navbarInView) => navbarInView !== $newNavbarEl[0]);
+      .filter((navbarInView) => navbarInView !== $newNavbarEl[0]);
   }
 
   // Exit when reload previous and only 1 page in view so nothing ro reload
@@ -242,9 +242,9 @@ function forward(el, forwardOptions = {}) {
       $oldNavbarEl = $(app.navbar.getElByPage($oldPage));
     }
   } else if (options.reloadAll) {
-    $oldPage = $pagesInView.filter((index, pageEl) => pageEl !== $newPage[0]);
+    $oldPage = $pagesInView.filter((pageEl) => pageEl !== $newPage[0]);
     if (dynamicNavbar) {
-      $oldNavbarEl = $navbarsInView.filter((index, navbarEl) => navbarEl !== $newNavbarEl[0]);
+      $oldNavbarEl = $navbarsInView.filter((navbarEl) => navbarEl !== $newNavbarEl[0]);
     }
   } else {
     let removedPageEls = [];
@@ -291,12 +291,12 @@ function forward(el, forwardOptions = {}) {
     }
     $oldPage = $viewEl
       .children('.page:not(.stacked)')
-      .filter((index, pageEl) => pageEl !== $newPage[0] && removedPageEls.indexOf(pageEl) < 0);
+      .filter((pageEl) => pageEl !== $newPage[0] && removedPageEls.indexOf(pageEl) < 0);
     if (dynamicNavbar) {
       $oldNavbarEl = $navbarsEl
         .children('.navbar:not(.stacked)')
         .filter(
-          (index, navbarEl) =>
+          (navbarEl) =>
             navbarEl !== $newNavbarEl[0] && removedNavbarEls.indexOf(removedNavbarEls) < 0,
         );
     }
@@ -306,11 +306,11 @@ function forward(el, forwardOptions = {}) {
 
   if (isDetail && !options.reloadAll) {
     if ($oldPage.length > 1 || reloadDetail) {
-      $oldPage = $oldPage.filter((pageIndex, pageEl) => !pageEl.classList.contains('page-master'));
+      $oldPage = $oldPage.filter((pageEl) => !pageEl.classList.contains('page-master'));
     }
     if ($oldNavbarEl && ($oldNavbarEl.length > 1 || reloadDetail)) {
       $oldNavbarEl = $oldNavbarEl.filter(
-        (navbarIndex, navbarEl) => !navbarEl.classList.contains('navbar-master'),
+        (navbarEl) => !navbarEl.classList.contains('navbar-master'),
       );
     }
   }
@@ -463,7 +463,7 @@ function forward(el, forwardOptions = {}) {
       }
     }
   } else if (options.reloadAll) {
-    $oldPage.each((index, pageEl) => {
+    $oldPage.each((pageEl, index) => {
       const $oldPageEl = $(pageEl);
       const $oldNavbarElEl = $(app.navbar.getElByPage($oldPageEl));
       if (router.params.stackPages && router.initialPages.indexOf($oldPageEl[0]) >= 0) {

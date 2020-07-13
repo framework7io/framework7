@@ -178,7 +178,7 @@ class TextEditor extends Framework7Class {
       $selectedLinks = $(selectedNodes).closest('a').add($(selectedNodes).children('a'));
     }
     if ($selectedLinks && $selectedLinks.length) {
-      $selectedLinks.each((linkIndex, linkNode) => {
+      $selectedLinks.each((linkNode) => {
         const selection = window.getSelection();
         const range = document.createRange();
         range.selectNodeContents(linkNode);

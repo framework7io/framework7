@@ -87,7 +87,7 @@ export default {
   on: {
     photoBrowserOpen(pb) {
       const app = this;
-      pb.$el.find('.preloader').each((index, preloaderEl) => {
+      pb.$el.find('.preloader').each((preloaderEl) => {
         app.preloader.init(preloaderEl);
       });
     },
@@ -95,13 +95,13 @@ export default {
       const app = this;
       $(tabEl)
         .find('.preloader')
-        .each((index, preloaderEl) => {
+        .each((preloaderEl) => {
           app.preloader.init(preloaderEl);
         });
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.preloader').each((index, preloaderEl) => {
+      page.$el.find('.preloader').each((preloaderEl) => {
         app.preloader.init(preloaderEl);
       });
     },

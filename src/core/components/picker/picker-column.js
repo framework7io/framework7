@@ -56,7 +56,7 @@ export default function pickerColumn(colEl, updateItems) {
     }
     if (picker.params.rotateEffect) {
       if (!col.width) {
-        col.items.each((index, itemEl) => {
+        col.items.each((itemEl) => {
           const item = $(itemEl).children('span');
           colWidth = Math.max(colWidth, item[0].offsetWidth);
         });
@@ -118,7 +118,7 @@ export default function pickerColumn(colEl, updateItems) {
 
     // Set 3D rotate effect
     if (picker.params.rotateEffect) {
-      col.items.each((index, itemEl) => {
+      col.items.each((itemEl) => {
         const $itemEl = $(itemEl);
         const itemOffsetTop = $itemEl.index() * itemHeight;
         const translateOffset = maxTranslate - translate;

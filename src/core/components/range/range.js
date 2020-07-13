@@ -37,7 +37,7 @@ export default {
       $(tabEl)
         .find('.range-slider-init')
         .each(
-          (index, rangeEl) =>
+          (rangeEl) =>
             new Range(app, {
               el: rangeEl,
             }),
@@ -46,21 +46,21 @@ export default {
     tabBeforeRemove(tabEl) {
       $(tabEl)
         .find('.range-slider-init')
-        .each((index, rangeEl) => {
+        .each((rangeEl) => {
           if (rangeEl.f7Range) rangeEl.f7Range.destroy();
         });
     },
     pageInit(page) {
       const app = this;
       page.$el.find('.range-slider-init').each(
-        (index, rangeEl) =>
+        (rangeEl) =>
           new Range(app, {
             el: rangeEl,
           }),
       );
     },
     pageBeforeRemove(page) {
-      page.$el.find('.range-slider-init').each((index, rangeEl) => {
+      page.$el.find('.range-slider-init').each((rangeEl) => {
         if (rangeEl.f7Range) rangeEl.f7Range.destroy();
       });
     },

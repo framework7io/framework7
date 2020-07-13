@@ -137,7 +137,7 @@ class Router extends Framework7Class {
       $newNavbarEl
         .children('.navbar-inner')
         .children('.left, .right, .title, .subnavbar')
-        .each((index, navEl) => {
+        .each((navEl) => {
           const $navEl = $(navEl);
           if ($navEl.hasClass('left') && fromLarge && direction === 'forward') return;
           if ($navEl.hasClass('title') && toLarge) return;
@@ -153,7 +153,7 @@ class Router extends Framework7Class {
         $oldNavbarEl
           .children('.navbar-inner')
           .children('.left, .right, .title, .subnavbar')
-          .each((index, navEl) => {
+          .each((navEl) => {
             const $navEl = $(navEl);
             if ($navEl.hasClass('left') && toLarge && !fromLarge && direction === 'forward') return;
             if ($navEl.hasClass('left') && toLarge && direction === 'backward') return;
@@ -402,10 +402,10 @@ class Router extends Framework7Class {
     const router = this;
     const $el = $(el);
     if ($el.length === 0) return;
-    $el.find('.tab').each((tabIndex, tabEl) => {
+    $el.find('.tab').each((tabEl) => {
       $(tabEl)
         .children()
-        .each((index, tabChild) => {
+        .each((tabChild) => {
           if (tabChild.f7Component) {
             $(tabChild).trigger('tab:beforeremove');
             tabChild.f7Component.$destroy();
@@ -457,7 +457,7 @@ class Router extends Framework7Class {
 
     let found = $container
       .find(selector)
-      .filter((index, el) => $(el).parents(modalsSelector).length === 0);
+      .filter((el) => $(el).parents(modalsSelector).length === 0);
 
     if (found.length > 1) {
       if (typeof view.selector === 'string') {
@@ -982,7 +982,7 @@ class Router extends Framework7Class {
         let $pageContent = $pageEl.find('.page-content');
         if ($pageContent.length > 0) {
           // eslint-disable-next-line
-          $pageContent = $pageContent.filter((pageContentIndex, pageContentEl) => {
+          $pageContent = $pageContent.filter((pageContentEl) => {
             return (
               $(pageContentEl).parents('.tab:not(.tab-active)').length === 0 &&
               !$(pageContentEl).is('.tab:not(.tab-active)')
@@ -1009,7 +1009,7 @@ class Router extends Framework7Class {
       let $pageContent = $pageEl.find('.page-content');
       if ($pageContent.length > 0) {
         // eslint-disable-next-line
-        $pageContent = $pageContent.filter((pageContentIndex, pageContentEl) => {
+        $pageContent = $pageContent.filter((pageContentEl) => {
           return (
             $(pageContentEl).parents('.tab:not(.tab-active)').length === 0 &&
             !$(pageContentEl).is('.tab:not(.tab-active)')
@@ -1206,7 +1206,7 @@ class Router extends Framework7Class {
     }
 
     if (router.params.stackPages) {
-      router.$el.children('.page').each((index, pageEl) => {
+      router.$el.children('.page').each((pageEl) => {
         const $pageEl = $(pageEl);
         router.initialPages.push($pageEl[0]);
         if (router.dynamicNavbar && $pageEl.children('.navbar').length > 0) {
@@ -1230,7 +1230,7 @@ class Router extends Framework7Class {
       // Init current DOM page
       let hasTabRoute;
       router.currentRoute = currentRoute;
-      router.$el.children('.page:not(.stacked)').each((index, pageEl) => {
+      router.$el.children('.page:not(.stacked)').each((pageEl) => {
         const $pageEl = $(pageEl);
         let $navbarEl;
         router.setPagePosition($pageEl, 'current');

@@ -169,7 +169,7 @@ class Modal extends Framework7Class {
     if ($backdropEl) {
       let needToHideBackdrop = true;
       if (modal.type === 'popup') {
-        modal.$el.prevAll('.popup.modal-in').each((index, popupEl) => {
+        modal.$el.prevAll('.popup.modal-in').each((popupEl) => {
           const popupInstance = popupEl.f7Modal;
           if (!popupInstance) return;
           if (

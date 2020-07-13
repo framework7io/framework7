@@ -86,7 +86,7 @@ function backward(el, backwardOptions) {
   if (masterDetailEnabled) {
     const $pagesInView = router.$el
       .children('.page:not(.stacked)')
-      .filter((index, pageInView) => pageInView !== $newPage[0]);
+      .filter((pageInView) => pageInView !== $newPage[0]);
 
     // Find Detail' master page
     for (let i = 0; i < $pagesInView.length; i += 1) {
@@ -177,7 +177,7 @@ function backward(el, backwardOptions) {
       }
 
       if (backIndex && router.params.stackPages) {
-        $oldPage.prevAll('.page-previous').each((index, pageToRemove) => {
+        $oldPage.prevAll('.page-previous').each((pageToRemove) => {
           const $pageToRemove = $(pageToRemove);
           let $navbarToRemove;
           if (dynamicNavbar) {
@@ -327,7 +327,7 @@ function backward(el, backwardOptions) {
     router.pageCallback('init', $newPage, $newNavbarEl, 'previous', 'current', options, $oldPage);
     const $previousPages = $newPage.prevAll('.page-previous:not(.stacked):not(.page-master)');
     if ($previousPages.length > 0) {
-      $previousPages.each((index, pageToRemove) => {
+      $previousPages.each((pageToRemove) => {
         const $pageToRemove = $(pageToRemove);
         let $navbarToRemove;
         if (dynamicNavbar) {
@@ -722,7 +722,7 @@ function back(...args) {
   let skipMaster;
   if (router.params.masterDetailBreakpoint > 0) {
     const classes = [];
-    router.$el.children('.page').each((index, pageEl) => {
+    router.$el.children('.page').each((pageEl) => {
       classes.push(pageEl.className);
     });
 
@@ -836,7 +836,7 @@ function back(...args) {
 
   let backForceLoaded;
   if (options.force && router.params.stackPages) {
-    router.$el.children('.page-previous.stacked').each((index, pageEl) => {
+    router.$el.children('.page-previous.stacked').each((pageEl) => {
       if (pageEl.f7Page && pageEl.f7Page.route && pageEl.f7Page.route.url === route.url) {
         backForceLoaded = true;
         router.loadBack({ el: pageEl }, options);

@@ -36,7 +36,7 @@ export default {
       const app = this;
       $(tabEl)
         .find('.stepper-init')
-        .each((index, stepperEl) => {
+        .each((stepperEl) => {
           const dataset = $(stepperEl).dataset();
           app.stepper.create(extend({ el: stepperEl }, dataset || {}));
         });
@@ -44,19 +44,19 @@ export default {
     tabBeforeRemove(tabEl) {
       $(tabEl)
         .find('.stepper-init')
-        .each((index, stepperEl) => {
+        .each((stepperEl) => {
           if (stepperEl.f7Stepper) stepperEl.f7Stepper.destroy();
         });
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.stepper-init').each((index, stepperEl) => {
+      page.$el.find('.stepper-init').each((stepperEl) => {
         const dataset = $(stepperEl).dataset();
         app.stepper.create(extend({ el: stepperEl }, dataset || {}));
       });
     },
     pageBeforeRemove(page) {
-      page.$el.find('.stepper-init').each((index, stepperEl) => {
+      page.$el.find('.stepper-init').each((stepperEl) => {
         if (stepperEl.f7Stepper) stepperEl.f7Stepper.destroy();
       });
     },

@@ -116,7 +116,7 @@ class Dialog extends Modal {
     }
     if (buttons && buttons.length > 0) {
       dialog.on('open', () => {
-        $el.find('.dialog-button').each((index, buttonEl) => {
+        $el.find('.dialog-button').each((buttonEl, index) => {
           const button = buttons[index];
           if (button.keyCodes) addKeyboardHander = true;
           $(buttonEl).on('click', buttonOnClick);
@@ -126,7 +126,7 @@ class Dialog extends Modal {
         }
       });
       dialog.on('close', () => {
-        $el.find('.dialog-button').each((index, buttonEl) => {
+        $el.find('.dialog-button').each((buttonEl) => {
           $(buttonEl).off('click', buttonOnClick);
         });
         if (addKeyboardHander && !device.ios && !device.android && !device.cordova) {

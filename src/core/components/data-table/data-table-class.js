@@ -113,7 +113,7 @@ class DataTable extends Framework7Class {
   setCollapsibleLabels() {
     const table = this;
     if (!table.collapsible) return;
-    table.$el.find('tbody td:not(.checkbox-cell)').each((index, el) => {
+    table.$el.find('tbody td:not(.checkbox-cell)').each((el) => {
       const $el = $(el);
       const elIndex = $el.index();
       const collpsibleTitle = $el.attr('data-collapsible-title');

@@ -591,14 +591,14 @@ class Searchbar extends FrameworkClass {
       $searchContainer
         .find(sb.params.searchItem)
         .removeClass('hidden-by-searchbar')
-        .each((itemIndex, itemEl) => {
+        .each((itemEl) => {
           const $itemEl = $(itemEl);
           let compareWithText = [];
           let $searchIn = sb.params.searchIn ? $itemEl.find(sb.params.searchIn) : $itemEl;
           if (sb.params.searchIn === sb.params.searchItem) {
             $searchIn = $itemEl;
           }
-          $searchIn.each((searchInIndex, searchInEl) => {
+          $searchIn.each((searchInEl) => {
             let itemText = $(searchInEl).text().trim().toLowerCase();
             if (sb.params.removeDiacritics) itemText = removeDiacritics(itemText);
             compareWithText.push(itemText);
@@ -616,7 +616,7 @@ class Searchbar extends FrameworkClass {
         });
 
       if (sb.params.hideDividers) {
-        $searchContainer.find(sb.params.searchGroupTitle).each((titleIndex, titleEl) => {
+        $searchContainer.find(sb.params.searchGroupTitle).each((titleEl) => {
           const $titleEl = $(titleEl);
           const $nextElements = $titleEl.nextAll(sb.params.searchItem);
           let hide = true;
@@ -633,11 +633,11 @@ class Searchbar extends FrameworkClass {
         });
       }
       if (sb.params.hideGroups) {
-        $searchContainer.find(sb.params.searchGroup).each((groupIndex, groupEl) => {
+        $searchContainer.find(sb.params.searchGroup).each((groupEl) => {
           const $groupEl = $(groupEl);
           const ignore = sb.params.ignore && $groupEl.is(sb.params.ignore);
           // eslint-disable-next-line
-          const notHidden = $groupEl.find(sb.params.searchItem).filter((index, el) => {
+          const notHidden = $groupEl.find(sb.params.searchItem).filter((el) => {
             return !$(el).hasClass('hidden-by-searchbar');
           });
           if (notHidden.length === 0 && !ignore) {

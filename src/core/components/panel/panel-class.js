@@ -19,7 +19,7 @@ class Panel extends Framework7Class {
       $el = $(panel.params.el).eq(0);
     } else if (panel.params.content) {
       $el = $(panel.params.content)
-        .filter((elIndex, node) => node.nodeType === 1)
+        .filter((node) => node.nodeType === 1)
         .eq(0);
     }
 

@@ -376,7 +376,7 @@ class Autocomplete extends Framework7Class {
     const $listEl = $inputEl.parents('.list');
 
     let $listParent;
-    $listEl.parents().each((index, parentEl) => {
+    $listEl.parents().each((parentEl) => {
       if ($listParent) return;
       const $parentEl = $(parentEl);
       if ($parentEl.parent($pageContentEl).length) $listParent = $parentEl;

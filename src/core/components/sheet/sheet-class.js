@@ -1,7 +1,7 @@
 import { getWindow, getDocument } from 'ssr-window';
 import $ from '../../utils/dom7';
 import { extend, now, getTranslate } from '../../utils/utils';
-import getSupport from '../../utils/get-support';
+import { getSupport } from '../../utils/get-support';
 import { getDevice } from '../../utils/get-device';
 import Modal from '../modal/modal-class';
 
@@ -27,7 +27,7 @@ class Sheet extends Modal {
     let $el;
     if (!sheet.params.el) {
       $el = $(sheet.params.content)
-        .filter((elIndex, node) => node.nodeType === 1)
+        .filter((node) => node.nodeType === 1)
         .eq(0);
     } else {
       $el = $(sheet.params.el).eq(0);

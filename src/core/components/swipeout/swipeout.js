@@ -31,7 +31,7 @@ const Swipeout = {
     let overswipeRight;
 
     function handleTouchStart(e) {
-      if (!Swipeout.allow) return;
+      if (!app.swipeout.allow) return;
       isMoved = false;
       isTouched = true;
       isScrolling = undefined;
@@ -163,7 +163,7 @@ const Swipeout = {
           progress = 0;
           buttonTranslate = 0;
         }
-        $rightButtons.each((index, buttonEl) => {
+        $rightButtons.each((buttonEl) => {
           const $buttonEl = $(buttonEl);
           if (typeof buttonEl.f7SwipeoutButtonOffset === 'undefined') {
             $buttonEl[0].f7SwipeoutButtonOffset = buttonEl.offsetLeft;
@@ -209,7 +209,7 @@ const Swipeout = {
           buttonTranslate = 0;
           progress = 0;
         }
-        $leftButtons.each((index, buttonEl) => {
+        $leftButtons.each((buttonEl, index) => {
           const $buttonEl = $(buttonEl);
           if (typeof buttonEl.f7SwipeoutButtonOffset === 'undefined') {
             $buttonEl[0].f7SwipeoutButtonOffset =
@@ -310,7 +310,7 @@ const Swipeout = {
 
       let buttonOffset;
       if ($leftButtons && $leftButtons.length > 0 && $leftButtons !== $buttons) {
-        $leftButtons.each((index, buttonEl) => {
+        $leftButtons.each((buttonEl) => {
           const $buttonEl = $(buttonEl);
           buttonOffset = buttonEl.f7SwipeoutButtonOffset;
           if (typeof buttonOffset === 'undefined') {
@@ -321,7 +321,7 @@ const Swipeout = {
         });
       }
       if ($rightButtons && $rightButtons.length > 0 && $rightButtons !== $buttons) {
-        $rightButtons.each((index, buttonEl) => {
+        $rightButtons.each((buttonEl) => {
           const $buttonEl = $(buttonEl);
           buttonOffset = buttonEl.f7SwipeoutButtonOffset;
           if (typeof buttonOffset === 'undefined') {
@@ -395,7 +395,7 @@ const Swipeout = {
     const swipeoutActionsWidth = $swipeoutActions.outerWidth();
     const translate = side === 'right' ? -swipeoutActionsWidth : swipeoutActionsWidth;
     if ($buttons.length > 1) {
-      $buttons.each((buttonIndex, buttonEl) => {
+      $buttons.each((buttonEl, buttonIndex) => {
         const $buttonEl = $(buttonEl);
         if (side === 'right') {
           $buttonEl.transform(`translate3d(${-buttonEl.offsetLeft}px,0,0)`);
@@ -435,14 +435,14 @@ const Swipeout = {
       .removeClass('swipeout-actions-opened');
     const $buttons = $swipeoutActions.children('a');
     const swipeoutActionsWidth = $swipeoutActions.outerWidth();
-    Swipeout.allow = false;
+    app.swipeout.allow = false;
     $el.trigger('swipeout:close');
     app.emit('swipeoutClose', $el[0]);
     $el.removeClass('swipeout-opened').addClass('swipeout-transitioning');
 
     let closeTimeout;
     function onSwipeoutClose() {
-      Swipeout.allow = true;
+      app.swipeout.allow = true;
       if ($el.hasClass('swipeout-opened')) return;
       $el.removeClass('swipeout-transitioning');
       $buttons.transform('');
@@ -454,7 +454,7 @@ const Swipeout = {
     $el.find('.swipeout-content').transform('').transitionEnd(onSwipeoutClose);
     closeTimeout = setTimeout(onSwipeoutClose, 500);
 
-    $buttons.each((index, buttonEl) => {
+    $buttons.each((buttonEl) => {
       const $buttonEl = $(buttonEl);
       if (side === 'right') {
         $buttonEl.transform(`translate3d(${-buttonEl.offsetLeft}px,0,0)`);
@@ -522,23 +522,6 @@ export default {
     const app = this;
     bindMethods(app, {
       swipeout: Swipeout,
-    });
-
-    Object.defineProperty(app.swipeout, 'el', {
-      enumerable: true,
-      configurable: true,
-      get: () => Swipeout.el,
-      set(el) {
-        Swipeout.el = el;
-      },
-    });
-    Object.defineProperty(app.swipeout, 'allow', {
-      enumerable: true,
-      configurable: true,
-      get: () => Swipeout.allow,
-      set(allow) {
-        Swipeout.allow = allow;
-      },
     });
   },
   clicks: {

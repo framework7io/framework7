@@ -37,7 +37,7 @@ export default {
       const $tabEl = $(tabEl);
       const $ptrEls = $tabEl.find('.ptr-content');
       if ($tabEl.is('.ptr-content')) $ptrEls.add($tabEl);
-      $ptrEls.each((index, el) => {
+      $ptrEls.each((el) => {
         app.ptr.create(el);
       });
     },
@@ -46,19 +46,19 @@ export default {
       const app = this;
       const $ptrEls = $tabEl.find('.ptr-content');
       if ($tabEl.is('.ptr-content')) $ptrEls.add($tabEl);
-      $ptrEls.each((index, el) => {
+      $ptrEls.each((el) => {
         app.ptr.destroy(el);
       });
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.ptr-content').each((index, el) => {
+      page.$el.find('.ptr-content').each((el) => {
         app.ptr.create(el);
       });
     },
     pageBeforeRemove(page) {
       const app = this;
-      page.$el.find('.ptr-content').each((index, el) => {
+      page.$el.find('.ptr-content').each((el) => {
         app.ptr.destroy(el);
       });
     },

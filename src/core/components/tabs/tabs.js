@@ -104,7 +104,7 @@ const Tab = {
     $oldTabEl.removeClass('tab-active');
     if (!animatedInit && (!swiper || (swiper && !swiper.animating) || (swiper && tabRoute))) {
       if ($oldTabEl.hasClass('view') && $oldTabEl.children('.page').length) {
-        $oldTabEl.children('.page').each((pageIndex, pageEl) => {
+        $oldTabEl.children('.page').each((pageEl) => {
           $(pageEl).trigger('page:tabhide');
           app.emit('pageTabHide', pageEl);
         });
@@ -117,7 +117,7 @@ const Tab = {
     $newTabEl.addClass('tab-active');
     if (!animatedInit && (!swiper || (swiper && !swiper.animating) || (swiper && tabRoute))) {
       if ($newTabEl.hasClass('view') && $newTabEl.children('.page').length) {
-        $newTabEl.children('.page').each((pageIndex, pageEl) => {
+        $newTabEl.children('.page').each((pageEl) => {
           $(pageEl).trigger('page:tabshow');
           app.emit('pageTabShow', pageEl);
         });
@@ -133,7 +133,7 @@ const Tab = {
       else $tabLinkEl = $(`.tab-link[href="#${$newTabEl.attr('id')}"]`);
       // Search by data-tab
       if (!$tabLinkEl || ($tabLinkEl && $tabLinkEl.length === 0)) {
-        $('[data-tab]').each((index, el) => {
+        $('[data-tab]').each((el) => {
           if ($newTabEl.is($(el).attr('data-tab'))) $tabLinkEl = $(el);
         });
       }
@@ -145,7 +145,7 @@ const Tab = {
       }
       if ($tabLinkEl.length > 1 && $newTabEl.parents('.page').length) {
         // eslint-disable-next-line
-        $tabLinkEl = $tabLinkEl.filter((index, tabLinkElement) => {
+        $tabLinkEl = $tabLinkEl.filter((tabLinkElement) => {
           return $(tabLinkElement).parents('.page')[0] === $newTabEl.parents('.page')[0];
         });
         if (app.theme === 'ios' && $tabLinkEl.length === 0 && tabRoute) {
@@ -173,7 +173,7 @@ const Tab = {
         }
         // Search by data-tab
         if (!$oldTabLinkEl || ($oldTabLinkEl && $oldTabLinkEl.length === 0)) {
-          $('[data-tab]').each((index, tabLinkElement) => {
+          $('[data-tab]').each((tabLinkElement) => {
             if ($oldTabEl.is($(tabLinkElement).attr('data-tab'))) $oldTabLinkEl = $(tabLinkElement);
           });
         }
@@ -191,7 +191,7 @@ const Tab = {
         $oldTabEl.parents('.page').length
       ) {
         // eslint-disable-next-line
-        $oldTabLinkEl = $oldTabLinkEl.filter((index, tabLinkElement) => {
+        $oldTabLinkEl = $oldTabLinkEl.filter((tabLinkElement) => {
           return $(tabLinkElement).parents('.page')[0] === $oldTabEl.parents('.page')[0];
         });
       }

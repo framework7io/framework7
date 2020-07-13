@@ -100,7 +100,7 @@ class Messages extends Framework7Class {
   getMessagesData() {
     const m = this;
     const data = [];
-    m.$el.find('.message, .messages-title').each((index, messageEl) => {
+    m.$el.find('.message, .messages-title').each((messageEl) => {
       data.push(m.getMessageData(messageEl));
     });
     return data;
@@ -230,7 +230,7 @@ class Messages extends Framework7Class {
 
   layout() {
     const m = this;
-    m.$el.find('.message, .messages-title').each((index, messageEl) => {
+    m.$el.find('.message, .messages-title').each((messageEl, index) => {
       const $messageEl = $(messageEl);
       if (!m.messages) {
         m.messages = m.getMessagesData();
@@ -319,7 +319,7 @@ class Messages extends Framework7Class {
         m.removeMessage(messageToRemove, false);
       });
     } else {
-      $(messagesToRemove).each((index, messageToRemove) => {
+      $(messagesToRemove).each((messageToRemove) => {
         m.removeMessage(messageToRemove, false);
       });
     }
