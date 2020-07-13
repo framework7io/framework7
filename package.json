@@ -59,7 +59,7 @@
     "Samsung >= 6"
   ],
   "dependencies": {
-    "dom7": "^3.0.0-alpha.5",
+    "dom7": "^3.0.0-alpha.6",
     "path-to-regexp": "^6.1.0",
     "ssr-window": "^3.0.0-alpha.4",
     "swiper": "^6.0.2",
