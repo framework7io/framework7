@@ -47,9 +47,9 @@ export default {
       }
       if (templateUrl) {
         // Load via XHR
-        if (router.xhr) {
-          router.xhr.abort();
-          router.xhr = false;
+        if (router.xhrAbortController) {
+          router.xhrAbortController.abort();
+          router.xhrAbortController = false;
         }
         router
           .xhrRequest(templateUrl, options)

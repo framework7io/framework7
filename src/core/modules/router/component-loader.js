@@ -56,9 +56,9 @@ export default {
         compile(cachedComponent);
       } else if (compiledUrl && !cachedComponent) {
         // Load via XHR
-        if (router.xhr) {
-          router.xhr.abort();
-          router.xhr = false;
+        if (router.xhrAbortController) {
+          router.xhrAbortController.abort();
+          router.xhrAbortController = false;
         }
         router
           .xhrRequest(url, options)

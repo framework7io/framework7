@@ -762,7 +762,9 @@ class Router extends Framework7Class {
           }
         }
       }
-      router.xhr = router.app.request({
+      router.xhrAbortController = router.app.request.abortController();
+      router.app.request({
+        abortController: router.xhrAbortController,
         url,
         method: 'GET',
         beforeSend(xhr) {

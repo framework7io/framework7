@@ -591,9 +591,9 @@ function loadBack(backParams, backOptions, ignorePageChange) {
     }
   } else if (url) {
     // Load using XHR
-    if (router.xhr) {
-      router.xhr.abort();
-      router.xhr = false;
+    if (router.xhrAbortController) {
+      router.xhrAbortController.abort();
+      router.xhrAbortController = false;
     }
     router
       .xhrRequest(url, options)

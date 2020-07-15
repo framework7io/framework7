@@ -5,7 +5,28 @@ interface RequestXHR extends XMLHttpRequest {
   requestUrl?: string;
 }
 
+interface RequestResponse {
+  xhr?: RequestXHR;
+  status: string;
+  options: RequestParameters;
+  data: any;
+}
+
+interface RequestError {
+  xhr?: RequestXHR;
+  status: string;
+  options: RequestParameters;
+  message: string;
+}
+
+interface AbortController {
+  abort: () => void;
+  canceled: boolean;
+}
+
 interface RequestParameters {
+  /** Request abort controller */
+  abortController: AbortController;
   /** Request url */
   url?: string;
   /** Request method (e.g. "POST", "GET", "PUT") */
@@ -50,22 +71,8 @@ interface RequestParameters {
   statusCode?: { [key: number]: any };
 }
 
-interface RequestPromise {
-  (parameters: RequestParameters): Promise<any>;
-  /** Load data from the server using a HTTP GET request */
-  get: (url: string, data?: any, dataType?: string) => Promise<any>;
-  /** Load data from the server using a HTTP POST request */
-  post: (url: string, data?: any, dataType?: string) => Promise<any>;
-  /** Load JSON-encoded data from the server using a GET HTTP request */
-  json: (url: string, data?: any) => Promise<any>;
-  /** Send JSON data using a HTTP POST request */
-  postJSON: (url: string, data?: any, dataType?: string) => Promise<any>;
-}
-
 export interface Request {
-  (parameters: RequestParameters): RequestXHR;
-  /** Promise interface */
-  promise: RequestPromise;
+  (parameters: RequestParameters): Promise<RequestResponse>;
   /** Load data from the server using a HTTP GET request */
   get: (
     url: string,
@@ -73,7 +80,7 @@ export interface Request {
     success?: (data: any, status: number | string, xhr: RequestXHR) => void,
     error?: (xhr: RequestXHR, status: number | string) => void,
     dataType?: string,
-  ) => RequestXHR;
+  ) => Promise<RequestResponse>;
   /** Load data from the server using a HTTP POST request */
   post: (
     url: string,
@@ -81,14 +88,14 @@ export interface Request {
     success?: (data: any, status: number | string, xhr: RequestXHR) => void,
     error?: (xhr: RequestXHR, status: number | string) => void,
     dataType?: string,
-  ) => RequestXHR;
+  ) => Promise<RequestResponse>;
   /** Load JSON-encoded data from the server using a GET HTTP request */
   json: (
     url: string,
     data?: any,
     success?: (data: any, status: number | string, xhr: RequestXHR) => void,
     error?: (xhr: RequestXHR, status: number | string) => void,
-  ) => RequestXHR;
+  ) => Promise<RequestResponse>;
   /** Send JSON data using a HTTP POST request */
   postJSON: (
     url: string,
@@ -96,9 +103,11 @@ export interface Request {
     success?: (data: any, status: number | string, xhr: RequestXHR) => void,
     error?: (xhr: RequestXHR, status: number | string) => void,
     dataType?: string,
-  ) => RequestXHR;
+  ) => Promise<RequestResponse>;
   /** Set default values for future Ajax requests */
   setup: (parameters: RequestParameters) => void;
+  /** Create abort controller */
+  abortController: () => AbortController;
 }
 
 declare const request: Request;

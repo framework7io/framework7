@@ -1,44 +1,68 @@
+/* eslint-disable max-classes-per-file */
 import { getWindow, getDocument } from 'ssr-window';
 import { extend, serializeObject } from './utils';
 
 const globals = {};
 let jsonpRequests = 0;
 
-function request(requestOptions) {
-  const window = getWindow();
-  const document = getDocument();
-  const globalsNoCallbacks = extend({}, globals);
-  'beforeCreate beforeOpen beforeSend error complete success statusCode'
-    .split(' ')
-    .forEach((callbackName) => {
-      delete globalsNoCallbacks[callbackName];
-    });
-  const defaults = extend(
-    {
-      url: window.location.toString(),
-      method: 'GET',
-      data: false,
-      async: true,
-      cache: true,
-      user: '',
-      password: '',
-      headers: {},
-      xhrFields: {},
-      statusCode: {},
-      processData: true,
-      dataType: 'text',
-      contentType: 'application/x-www-form-urlencoded',
-      timeout: 0,
-    },
-    globalsNoCallbacks,
-  );
+class RequestResponse {
+  constructor(obj) {
+    Object.assign(this, obj);
+  }
+}
 
-  const options = extend({}, defaults, requestOptions);
-  let proceedRequest;
+class RequestError extends Error {
+  constructor(obj) {
+    super();
+    Object.assign(this, obj);
+  }
+}
 
-  // Function to run XHR callbacks and events
-  function fireCallback(callbackName, ...data) {
-    /*
+const request = (requestOptions) =>
+  new Promise((resolve, reject) => {
+    const window = getWindow();
+    const document = getDocument();
+    const globalsNoCallbacks = extend({}, globals);
+    'beforeCreate beforeOpen beforeSend error complete success statusCode'
+      .split(' ')
+      .forEach((callbackName) => {
+        delete globalsNoCallbacks[callbackName];
+      });
+    const defaults = extend(
+      {
+        url: window.location.toString(),
+        method: 'GET',
+        data: false,
+        async: true,
+        cache: true,
+        user: '',
+        password: '',
+        headers: {},
+        xhrFields: {},
+        statusCode: {},
+        processData: true,
+        dataType: 'text',
+        contentType: 'application/x-www-form-urlencoded',
+        timeout: 0,
+      },
+      globalsNoCallbacks,
+    );
+
+    let proceedRequest;
+
+    const options = extend({}, defaults, requestOptions);
+    if (requestOptions.abortController) {
+      options.abortController = requestOptions.abortController;
+    }
+
+    if (options.abortController && options.abortController.canceled) {
+      reject(new RequestError({ options, status: 'canceled', message: 'canceled' }));
+      return;
+    }
+
+    // Function to run XHR callbacks and events
+    function fireCallback(callbackName, ...data) {
+      /*
       Callbacks:
       beforeCreate (options),
       beforeOpen (xhr, options),
@@ -48,242 +72,280 @@ function request(requestOptions) {
       success (response, status, xhr),
       statusCode ()
     */
-    let globalCallbackValue;
-    let optionCallbackValue;
-    if (globals[callbackName]) {
-      globalCallbackValue = globals[callbackName](...data);
-    }
-    if (options[callbackName]) {
-      optionCallbackValue = options[callbackName](...data);
-    }
-    if (typeof globalCallbackValue !== 'boolean') globalCallbackValue = true;
-    if (typeof optionCallbackValue !== 'boolean') optionCallbackValue = true;
-    return globalCallbackValue && optionCallbackValue;
-  }
-
-  // Before create callback
-  proceedRequest = fireCallback('beforeCreate', options);
-  if (proceedRequest === false) return undefined;
-
-  // For jQuery guys
-  if (options.type) options.method = options.type;
-
-  // Parameters Prefix
-  let paramsPrefix = options.url.indexOf('?') >= 0 ? '&' : '?';
-
-  // UC method
-  const method = options.method.toUpperCase();
-
-  // Data to modify GET URL
-  if (
-    (method === 'GET' || method === 'HEAD' || method === 'OPTIONS' || method === 'DELETE') &&
-    options.data
-  ) {
-    let stringData;
-    if (typeof options.data === 'string') {
-      // Should be key=value string
-      if (options.data.indexOf('?') >= 0) stringData = options.data.split('?')[1];
-      else stringData = options.data;
-    } else {
-      // Should be key=value object
-      stringData = serializeObject(options.data);
-    }
-    if (stringData.length) {
-      options.url += paramsPrefix + stringData;
-      if (paramsPrefix === '?') paramsPrefix = '&';
-    }
-  }
-
-  // JSONP
-  if (options.dataType === 'json' && options.url.indexOf('callback=') >= 0) {
-    const callbackName = `f7jsonp_${Date.now() + (jsonpRequests += 1)}`;
-    let abortTimeout;
-    const callbackSplit = options.url.split('callback=');
-    let requestUrl = `${callbackSplit[0]}callback=${callbackName}`;
-    if (callbackSplit[1].indexOf('&') >= 0) {
-      const addVars = callbackSplit[1]
-        .split('&')
-        .filter((el) => el.indexOf('=') > 0)
-        .join('&');
-      if (addVars.length > 0) requestUrl += `&${addVars}`;
+      let globalCallbackValue;
+      let optionCallbackValue;
+      if (globals[callbackName]) {
+        globalCallbackValue = globals[callbackName](...data);
+      }
+      if (options[callbackName]) {
+        optionCallbackValue = options[callbackName](...data);
+      }
+      if (typeof globalCallbackValue !== 'boolean') globalCallbackValue = true;
+      if (typeof optionCallbackValue !== 'boolean') optionCallbackValue = true;
+      if (
+        options.abortController &&
+        options.abortController.canceled &&
+        (callbackName === 'beforeCreate' ||
+          callbackName === 'beforeOpen' ||
+          callbackName === 'beforeSend')
+      ) {
+        return false;
+      }
+      return globalCallbackValue && optionCallbackValue;
     }
 
-    // Create script
-    let script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.onerror = function onerror() {
-      clearTimeout(abortTimeout);
-      fireCallback('error', null, 'scripterror', 'scripterror');
-      fireCallback('complete', null, 'scripterror');
-    };
-    script.src = requestUrl;
+    // Before create callback
+    proceedRequest = fireCallback('beforeCreate', options);
+    if (proceedRequest === false) {
+      reject(new RequestError({ options, status: 'canceled', message: 'canceled' }));
+      return;
+    }
 
-    // Handler
-    window[callbackName] = function jsonpCallback(data) {
-      clearTimeout(abortTimeout);
-      fireCallback('success', data);
-      script.parentNode.removeChild(script);
-      script = null;
-      delete window[callbackName];
-    };
-    document.querySelector('head').appendChild(script);
+    // For jQuery guys
+    if (options.type) options.method = options.type;
 
-    if (options.timeout > 0) {
-      abortTimeout = setTimeout(() => {
+    // Parameters Prefix
+    let paramsPrefix = options.url.indexOf('?') >= 0 ? '&' : '?';
+
+    // UC method
+    const method = options.method.toUpperCase();
+
+    // Data to modify GET URL
+    if (
+      (method === 'GET' || method === 'HEAD' || method === 'OPTIONS' || method === 'DELETE') &&
+      options.data
+    ) {
+      let stringData;
+      if (typeof options.data === 'string') {
+        // Should be key=value string
+        if (options.data.indexOf('?') >= 0) stringData = options.data.split('?')[1];
+        else stringData = options.data;
+      } else {
+        // Should be key=value object
+        stringData = serializeObject(options.data);
+      }
+      if (stringData.length) {
+        options.url += paramsPrefix + stringData;
+        if (paramsPrefix === '?') paramsPrefix = '&';
+      }
+    }
+
+    // JSONP
+    if (options.dataType === 'json' && options.url.indexOf('callback=') >= 0) {
+      const callbackName = `f7jsonp_${Date.now() + (jsonpRequests += 1)}`;
+      let abortTimeout;
+      const callbackSplit = options.url.split('callback=');
+      let requestUrl = `${callbackSplit[0]}callback=${callbackName}`;
+      if (callbackSplit[1].indexOf('&') >= 0) {
+        const addVars = callbackSplit[1]
+          .split('&')
+          .filter((el) => el.indexOf('=') > 0)
+          .join('&');
+        if (addVars.length > 0) requestUrl += `&${addVars}`;
+      }
+
+      // Create script
+      let script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.onerror = function onerror() {
+        clearTimeout(abortTimeout);
+        fireCallback('error', null, 'scripterror', 'scripterror');
+        reject(new RequestError({ options, status: 'scripterror', message: 'scripterror' }));
+        fireCallback('complete', null, 'scripterror');
+      };
+      script.src = requestUrl;
+
+      // Handler
+      window[callbackName] = function jsonpCallback(data) {
+        clearTimeout(abortTimeout);
+        fireCallback('success', data);
         script.parentNode.removeChild(script);
         script = null;
-        fireCallback('error', null, 'timeout', 'timeout');
-      }, options.timeout);
+        delete window[callbackName];
+        resolve(new RequestResponse({ options, data }));
+      };
+      document.querySelector('head').appendChild(script);
+
+      if (options.timeout > 0) {
+        abortTimeout = setTimeout(() => {
+          script.parentNode.removeChild(script);
+          script = null;
+          fireCallback('error', null, 'timeout', 'timeout');
+          reject(new RequestError({ options, status: 'timeout', message: 'timeout' }));
+        }, options.timeout);
+      }
+
+      return;
     }
 
-    return undefined;
-  }
-
-  // Cache for GET/HEAD requests
-  if (method === 'GET' || method === 'HEAD' || method === 'OPTIONS' || method === 'DELETE') {
-    if (options.cache === false) {
-      options.url += `${paramsPrefix}_nocache${Date.now()}`;
+    // Cache for GET/HEAD requests
+    if (method === 'GET' || method === 'HEAD' || method === 'OPTIONS' || method === 'DELETE') {
+      if (options.cache === false) {
+        options.url += `${paramsPrefix}_nocache${Date.now()}`;
+      }
     }
-  }
 
-  // Create XHR
-  const xhr = new XMLHttpRequest();
+    // Create XHR
+    const xhr = new XMLHttpRequest();
 
-  // Save Request URL
-  xhr.requestUrl = options.url;
-  xhr.requestParameters = options;
+    if (options.abortController) {
+      let aborted = false;
+      options.abortController.onAbort = () => {
+        if (aborted) return;
+        aborted = true;
+        xhr.abort();
+        reject(new RequestError({ options, xhr, status: 'canceled', message: 'canceled' }));
+      };
+    }
 
-  // Before open callback
-  proceedRequest = fireCallback('beforeOpen', xhr, options);
-  if (proceedRequest === false) return xhr;
+    // Save Request URL
+    xhr.requestUrl = options.url;
+    xhr.requestParameters = options;
 
-  // Open XHR
-  xhr.open(method, options.url, options.async, options.user, options.password);
+    // Before open callback
+    proceedRequest = fireCallback('beforeOpen', xhr, options);
+    if (proceedRequest === false) {
+      reject(new RequestError({ options, xhr, status: 'canceled', message: 'canceled' }));
+      return;
+    }
 
-  // Create POST Data
-  let postData = null;
+    // Open XHR
+    xhr.open(method, options.url, options.async, options.user, options.password);
 
-  if ((method === 'POST' || method === 'PUT' || method === 'PATCH') && options.data) {
-    if (options.processData) {
-      const postDataInstances = [ArrayBuffer, Blob, Document, FormData];
-      // Post Data
-      if (postDataInstances.indexOf(options.data.constructor) >= 0) {
-        postData = options.data;
-      } else {
-        // POST Headers
-        const boundary = `---------------------------${Date.now().toString(16)}`;
+    // Create POST Data
+    let postData = null;
 
-        if (options.contentType === 'multipart/form-data') {
-          xhr.setRequestHeader('Content-Type', `multipart/form-data; boundary=${boundary}`);
+    if ((method === 'POST' || method === 'PUT' || method === 'PATCH') && options.data) {
+      if (options.processData) {
+        const postDataInstances = [ArrayBuffer, Blob, Document, FormData];
+        // Post Data
+        if (postDataInstances.indexOf(options.data.constructor) >= 0) {
+          postData = options.data;
         } else {
-          xhr.setRequestHeader('Content-Type', options.contentType);
-        }
-        postData = '';
-        let data = serializeObject(options.data);
-        if (options.contentType === 'multipart/form-data') {
-          data = data.split('&');
-          const newData = [];
-          for (let i = 0; i < data.length; i += 1) {
-            newData.push(
-              `Content-Disposition: form-data; name="${data[i].split('=')[0]}"\r\n\r\n${
-                data[i].split('=')[1]
-              }\r\n`,
-            );
+          // POST Headers
+          const boundary = `---------------------------${Date.now().toString(16)}`;
+
+          if (options.contentType === 'multipart/form-data') {
+            xhr.setRequestHeader('Content-Type', `multipart/form-data; boundary=${boundary}`);
+          } else {
+            xhr.setRequestHeader('Content-Type', options.contentType);
           }
-          postData = `--${boundary}\r\n${newData.join(`--${boundary}\r\n`)}--${boundary}--\r\n`;
-        } else if (options.contentType === 'application/json') {
-          postData = JSON.stringify(options.data);
-        } else {
-          postData = data;
-        }
-      }
-    } else {
-      postData = options.data;
-      xhr.setRequestHeader('Content-Type', options.contentType);
-    }
-  }
-  if (options.dataType === 'json' && (!options.headers || !options.headers.Accept)) {
-    xhr.setRequestHeader('Accept', 'application/json');
-  }
-
-  // Additional headers
-  if (options.headers) {
-    Object.keys(options.headers).forEach((headerName) => {
-      if (typeof options.headers[headerName] === 'undefined') return;
-      xhr.setRequestHeader(headerName, options.headers[headerName]);
-    });
-  }
-
-  // Check for crossDomain
-  if (typeof options.crossDomain === 'undefined') {
-    options.crossDomain =
-      // eslint-disable-next-line
-      /^([\w-]+:)?\/\/([^\/]+)/.test(options.url) && RegExp.$2 !== window.location.host;
-  }
-
-  if (!options.crossDomain) {
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  }
-
-  if (options.xhrFields) {
-    extend(xhr, options.xhrFields);
-  }
-
-  // Handle XHR
-  xhr.onload = function onload() {
-    if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
-      let responseData;
-      if (options.dataType === 'json') {
-        let parseError;
-        try {
-          responseData = JSON.parse(xhr.responseText);
-        } catch (err) {
-          parseError = true;
-        }
-        if (!parseError) {
-          fireCallback('success', responseData, xhr.status, xhr);
-        } else {
-          fireCallback('error', xhr, 'parseerror', 'parseerror');
+          postData = '';
+          let data = serializeObject(options.data);
+          if (options.contentType === 'multipart/form-data') {
+            data = data.split('&');
+            const newData = [];
+            for (let i = 0; i < data.length; i += 1) {
+              newData.push(
+                `Content-Disposition: form-data; name="${data[i].split('=')[0]}"\r\n\r\n${
+                  data[i].split('=')[1]
+                }\r\n`,
+              );
+            }
+            postData = `--${boundary}\r\n${newData.join(`--${boundary}\r\n`)}--${boundary}--\r\n`;
+          } else if (options.contentType === 'application/json') {
+            postData = JSON.stringify(options.data);
+          } else {
+            postData = data;
+          }
         }
       } else {
-        responseData =
-          xhr.responseType === 'text' || xhr.responseType === '' ? xhr.responseText : xhr.response;
-        fireCallback('success', responseData, xhr.status, xhr);
+        postData = options.data;
+        xhr.setRequestHeader('Content-Type', options.contentType);
       }
-    } else {
-      fireCallback('error', xhr, xhr.status, xhr.statusText);
     }
-    if (options.statusCode) {
-      if (globals.statusCode && globals.statusCode[xhr.status]) globals.statusCode[xhr.status](xhr);
-      if (options.statusCode[xhr.status]) options.statusCode[xhr.status](xhr);
+    if (options.dataType === 'json' && (!options.headers || !options.headers.Accept)) {
+      xhr.setRequestHeader('Accept', 'application/json');
     }
-    fireCallback('complete', xhr, xhr.status);
-  };
 
-  xhr.onerror = function onerror() {
-    fireCallback('error', xhr, xhr.status, xhr.status);
-    fireCallback('complete', xhr, 'error');
-  };
+    // Additional headers
+    if (options.headers) {
+      Object.keys(options.headers).forEach((headerName) => {
+        if (typeof options.headers[headerName] === 'undefined') return;
+        xhr.setRequestHeader(headerName, options.headers[headerName]);
+      });
+    }
 
-  // Timeout
-  if (options.timeout > 0) {
-    xhr.timeout = options.timeout;
-    xhr.ontimeout = () => {
-      fireCallback('error', xhr, 'timeout', 'timeout');
-      fireCallback('complete', xhr, 'timeout');
+    // Check for crossDomain
+    if (typeof options.crossDomain === 'undefined') {
+      options.crossDomain =
+        // eslint-disable-next-line
+        /^([\w-]+:)?\/\/([^\/]+)/.test(options.url) && RegExp.$2 !== window.location.host;
+    }
+
+    if (!options.crossDomain) {
+      xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    }
+
+    if (options.xhrFields) {
+      extend(xhr, options.xhrFields);
+    }
+
+    // Handle XHR
+    xhr.onload = function onload() {
+      if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
+        let responseData;
+        if (options.dataType === 'json') {
+          let parseError;
+          try {
+            responseData = JSON.parse(xhr.responseText);
+          } catch (err) {
+            parseError = true;
+          }
+          if (!parseError) {
+            fireCallback('success', responseData, xhr.status, xhr);
+            resolve(new RequestResponse({ options, data: responseData, status: xhr.status, xhr }));
+          } else {
+            fireCallback('error', xhr, 'parseerror', 'parseerror');
+            reject(new RequestError({ options, xhr, status: 'parseerror', message: 'parseerror' }));
+          }
+        } else {
+          responseData =
+            xhr.responseType === 'text' || xhr.responseType === ''
+              ? xhr.responseText
+              : xhr.response;
+          fireCallback('success', responseData, xhr.status, xhr);
+          resolve(new RequestResponse({ options, data: responseData, status: xhr.status, xhr }));
+        }
+      } else {
+        fireCallback('error', xhr, xhr.status, xhr.statusText);
+        reject(new RequestError({ options, xhr, status: xhr.status, message: xhr.statusText }));
+      }
+      if (options.statusCode) {
+        if (globals.statusCode && globals.statusCode[xhr.status])
+          globals.statusCode[xhr.status](xhr);
+        if (options.statusCode[xhr.status]) options.statusCode[xhr.status](xhr);
+      }
+      fireCallback('complete', xhr, xhr.status);
     };
-  }
 
-  // Ajax start callback
-  proceedRequest = fireCallback('beforeSend', xhr, options);
-  if (proceedRequest === false) return xhr;
+    xhr.onerror = function onerror() {
+      fireCallback('error', xhr, xhr.status, xhr.status);
+      reject(new RequestError({ options, xhr, status: xhr.status, message: xhr.status }));
+      fireCallback('complete', xhr, 'error');
+    };
 
-  // Send XHR
-  xhr.send(postData);
+    // Timeout
+    if (options.timeout > 0) {
+      xhr.timeout = options.timeout;
+      xhr.ontimeout = () => {
+        fireCallback('error', xhr, 'timeout', 'timeout');
+        reject(new RequestError({ options, xhr, status: 'timeout', message: 'timeout' }));
+        fireCallback('complete', xhr, 'timeout');
+      };
+    }
 
-  // Return XHR object
-  return xhr;
-}
+    // Ajax start callback
+    proceedRequest = fireCallback('beforeSend', xhr, options);
+    if (proceedRequest === false) {
+      reject(new RequestError({ options, xhr, status: 'canceled', message: 'canceled' }));
+      return;
+    }
+
+    // Send XHR
+    xhr.send(postData);
+  });
+
 function requestShortcut(method, ...args) {
   let [url, data, success, error, dataType] = [];
   if (typeof args[1] === 'function') {
@@ -317,24 +379,7 @@ function requestShortcut(method, ...args) {
   }
   return request(requestOptions);
 }
-function requestShortcutPromise(method, ...args) {
-  const [url, data, dataType] = args;
-  return new Promise((resolve, reject) => {
-    requestShortcut(
-      method,
-      url,
-      data,
-      (responseData, status, xhr) => {
-        resolve({ data: responseData, status, xhr });
-      },
-      (xhr, status, message) => {
-        // eslint-disable-next-line
-        reject({ xhr, status, message });
-      },
-      dataType,
-    );
-  });
-}
+
 Object.assign(request, {
   get: (...args) => requestShortcut('get', ...args),
   post: (...args) => requestShortcut('post', ...args),
@@ -343,28 +388,17 @@ Object.assign(request, {
   postJSON: (...args) => requestShortcut('postJSON', ...args),
 });
 
-request.promise = function requestPromise(requestOptions) {
-  return new Promise((resolve, reject) => {
-    request(
-      Object.assign(requestOptions, {
-        success(data, status, xhr) {
-          resolve({ data, status, xhr });
-        },
-        error(xhr, status, message) {
-          // eslint-disable-next-line
-          reject({ xhr, status, message });
-        },
-      }),
-    );
-  });
+request.abortController = () => {
+  const contoller = {
+    canceled: false,
+    onAbort: null,
+    abort() {
+      contoller.canceled = true;
+      if (contoller.onAbort) contoller.onAbort();
+    },
+  };
+  return contoller;
 };
-Object.assign(request.promise, {
-  get: (...args) => requestShortcutPromise('get', ...args),
-  post: (...args) => requestShortcutPromise('post', ...args),
-  json: (...args) => requestShortcutPromise('json', ...args),
-  getJSON: (...args) => requestShortcutPromise('json', ...args),
-  postJSON: (...args) => requestShortcutPromise('postJSON', ...args),
-});
 
 request.setup = function setup(options) {
   if (options.type && !options.method) {
