@@ -78,11 +78,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://cooltechzone.com/popcorn-time-vpn" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/cooltechzone.png">
-      </a>
-    </td>
-    <td align="center" valign="middle">
       <a href="https://www.bonus.com.de/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/bonusfinder.png">
       </a>
@@ -97,13 +92,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img width="160" src="https://framework7.io/i/sponsors/kqapius.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://writersperhour.com/write-my-paper" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/writersperhour.jpg">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.colognewebdesign.de/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/colognewebdesign.png">
@@ -124,13 +119,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img width="160" src="https://framework7.io/i/sponsors/bid4papers.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://kidoverse.app" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/kidoverse.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.cyberbrain.nl/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/cyberbrain.png">
@@ -151,11 +146,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img width="160" src="https://framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
+    <td></td>
   </tr>
 </table>
 
 ## Getting Started
-  * [Getting Started Guide](https://framework7.io/docs/introduction.html)
+
+- [Getting Started Guide](https://framework7.io/docs/introduction.html)
 
 ## Framework7 Development
 
@@ -177,11 +174,11 @@ $ npm install
 
 The following npm scripts are available to create development builds:
 
-* `build:dev` - build development versions of all packages (Core, Vue, React)
-* `build-core:dev` - build development version of Core (vanilla JS) Framework7
-* `build-react:dev` - build development version of Framework7 React package
-* `build-vue:dev` - build development version of Framework7 Vue package
-* `build-svelte:dev` - build development version of Framework7 Svelte package
+- `build:dev` - build development versions of all packages (Core, Vue, React)
+- `build-core:dev` - build development version of Core (vanilla JS) Framework7
+- `build-react:dev` - build development version of Framework7 React package
+- `build-vue:dev` - build development version of Framework7 Vue package
+- `build-svelte:dev` - build development version of Framework7 Svelte package
 
 Compiled results will be available in `build/` folder.
 
@@ -189,11 +186,11 @@ Compiled results will be available in `build/` folder.
 
 To build production versions the following npm scripts are available:
 
-* `build:prod` - build production versions of all packages (Core, Vue, React)
-* `build-core:prod` - build production version of Core (vanilla JS) Framework7
-* `build-react:prod` - build production version of Framework7 React package
-* `build-vue:prod` - build production version of Framework7 Vue package
-* `build-svelte:prod` - build production version of Framework7 Svelte package
+- `build:prod` - build production versions of all packages (Core, Vue, React)
+- `build-core:prod` - build production version of Core (vanilla JS) Framework7
+- `build-react:prod` - build production version of Framework7 React package
+- `build-vue:prod` - build production version of Framework7 Vue package
+- `build-svelte:prod` - build production version of Framework7 Svelte package
 
 Compiled results will be available in `packages/` folder.
 
@@ -201,19 +198,19 @@ Compiled results will be available in `packages/` folder.
 
 To run Kitchen Sink with development environment (development version will be built first) use the following npm scripts:
 
-* `dev` - build development versions of all packages (Core, Vue, React) and run local server. With this common script it will watch for changes in all `src/` files and rebuild all packages (Core, Vue, React)
-* `core:dev` - build development version of Core (vanilla JS) Framework7 package and run core Kitchen Sink
-* `react:dev` - build development version of Framework7 React package and run React Kitchen Sink
-* `vue:dev` - build development version of Framework7 Vue package and run Vue Kitchen Sink
-* `svelte:dev` - build development version of Framework7 Svelte package and run Svelte Kitchen Sink
+- `dev` - build development versions of all packages (Core, Vue, React) and run local server. With this common script it will watch for changes in all `src/` files and rebuild all packages (Core, Vue, React)
+- `core:dev` - build development version of Core (vanilla JS) Framework7 package and run core Kitchen Sink
+- `react:dev` - build development version of Framework7 React package and run React Kitchen Sink
+- `vue:dev` - build development version of Framework7 Vue package and run Vue Kitchen Sink
+- `svelte:dev` - build development version of Framework7 Svelte package and run Svelte Kitchen Sink
 
 To Run Kitchen Sink with production builds (already compiled `/packages/` will be used), use the following npm scripts:
 
-* `prod` - build Kitchen Sinks with production versions
-* `core:prod` - run core Kitchen Sink with production Framework7 core package
-* `react:prod` - run React Kitchen Sink with production build of Framework7 React
-* `vue:prod` - run Vue Kitchen Sink with production build of Framework7 Vue
-* `svelte:prod` - run Svelte Kitchen Sink with production build of Framework7 Svelte
+- `prod` - build Kitchen Sinks with production versions
+- `core:prod` - run core Kitchen Sink with production Framework7 core package
+- `react:prod` - run React Kitchen Sink with production build of Framework7 React
+- `vue:prod` - run Vue Kitchen Sink with production build of Framework7 Vue
+- `svelte:prod` - run Svelte Kitchen Sink with production build of Framework7 Svelte
 
 ## Source Code
 
@@ -253,7 +250,7 @@ Appstore apps made with Framework7: https://framework7.io/showcase/
 
 ## Previous Versions
 
-* [v4 branch](https://github.com/framework7io/Framework7/tree/v4)
-* [v3 branch](https://github.com/framework7io/Framework7/tree/v3)
-* [v2 branch](https://github.com/framework7io/Framework7/tree/v2)
-* [v1 branch](https://github.com/framework7io/Framework7/tree/v1)
+- [v4 branch](https://github.com/framework7io/Framework7/tree/v4)
+- [v3 branch](https://github.com/framework7io/Framework7/tree/v3)
+- [v2 branch](https://github.com/framework7io/Framework7/tree/v2)
+- [v1 branch](https://github.com/framework7io/Framework7/tree/v1)
