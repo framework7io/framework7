@@ -116,7 +116,7 @@ async function buildLazyComponentsLess(components, rtl, cb) {
       console.log(err);
     }
     fs.writeFileSync(
-      `${output}/components/${component}/${component}${rtl ? '.rtl' : ''}.css`,
+      `${output}/components/${component}/${component}${rtl ? '-rtl' : ''}.css`,
       cssContent,
     );
 

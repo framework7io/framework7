@@ -16,9 +16,8 @@ packages/core/**/*.js
 packages/core/**/*.css
 packages/core/**/*.less
 packages/core/**/*.ts
-packages/core/*.js
-packages/core/*.css
-packages/core/*.less
-packages/core/*.ts
+packages/core/**/*.map
 packages/core/components
+packages/core/modules
+packages/core/utils
 woff2/

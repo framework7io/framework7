@@ -17,6 +17,7 @@ function base64Encode(file) {
 
 function build(cb) {
   const output = `${getOutput()}/core`;
+  // components package.json
   const componentsFolders = fs.readdirSync('./src/core/components').filter((folder) => {
     return fsNative.lstatSync(`./src/core/components/${folder}`).isDirectory();
   });
@@ -34,6 +35,49 @@ function build(cb) {
     );
     fs.writeFileSync(`${output}/components/${component}/package.json`, json);
   });
+
+  // modules package.json
+  const modulesFolders = fs.readdirSync('./src/core/modules').filter((folder) => {
+    return fsNative.lstatSync(`./src/core/modules/${folder}`).isDirectory();
+  });
+  modulesFolders.forEach((moduleName) => {
+    const json = JSON.stringify(
+      {
+        name: `framework7/${moduleName}`,
+        private: true,
+        sideEffects: false,
+        main: `../../cjs/modules/${moduleName}/${moduleName}.js`,
+        module: `../../esm/modules/${moduleName}/${moduleName}.js`,
+      },
+      '',
+      2,
+    );
+    fs.writeFileSync(`${output}/modules/${moduleName}/package.json`, json);
+  });
+
+  // process modules
+  glob('**/*.*', { cwd: path.resolve(__dirname, '../src/core/modules') }, (err, files) => {
+    const filesToProcess = files.filter((file) => {
+      return file.indexOf('.d.ts') >= 0;
+    });
+    filesToProcess.forEach((file) => {
+      const fileContent = fs.readFileSync(path.resolve(__dirname, '../src/core/modules', file));
+      fs.writeFileSync(path.resolve(`${output}/modules`, file), fileContent);
+    });
+  });
+
+  // process utils
+  glob('**/*.*', { cwd: path.resolve(__dirname, '../src/core/utils') }, (err, files) => {
+    const filesToProcess = files.filter((file) => {
+      return file.indexOf('.d.ts') >= 0;
+    });
+    filesToProcess.forEach((file) => {
+      const fileContent = fs.readFileSync(path.resolve(__dirname, '../src/core/utils', file));
+      fs.writeFileSync(path.resolve(`${output}/utils`, file), fileContent);
+    });
+  });
+
+  // process components
   glob('**/*.*', { cwd: path.resolve(__dirname, '../src/core/components') }, (err, files) => {
     const filesToProcess = files.filter((file) => {
       if (file.indexOf('icons/') === 0) return false;

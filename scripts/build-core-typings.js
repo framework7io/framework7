@@ -80,14 +80,16 @@ function buildTypings(cb) {
   const rootTypings = generateTypings('.', modules, components);
   const jsTypings = generateTypings('..', modules, components);
 
-  fs.writeFileSync(`${output}/js/framework7.d.ts`, jsTypings);
-  fs.writeFileSync(`${output}/js/framework7.bundle.d.ts`, jsTypings);
-  fs.writeFileSync(`${output}/js/framework7-lite.d.ts`, jsTypings);
-  fs.writeFileSync(`${output}/js/framework7-lite.bundle.d.ts`, jsTypings);
+  fs.writeFileSync(`${output}/framework7.d.ts`, jsTypings);
+  fs.writeFileSync(`${output}/framework7-bundle.d.ts`, jsTypings);
   fs.writeFileSync(`${output}/framework7.esm.d.ts`, rootTypings);
-  fs.writeFileSync(`${output}/framework7.esm.bundle.d.ts`, rootTypings);
+  fs.writeFileSync(`${output}/framework7-bundle.esm.d.ts`, rootTypings);
   fs.writeFileSync(`${output}/framework7-lite.esm.d.ts`, rootTypings);
-  fs.writeFileSync(`${output}/framework7-lite.esm.bundle.d.ts`, rootTypings);
+  fs.writeFileSync(`${output}/framework7-lite-bundle.esm.d.ts`, rootTypings);
+  fs.writeFileSync(`${output}/framework7.cjs.d.ts`, rootTypings);
+  fs.writeFileSync(`${output}/framework7-bundle.cjs.d.ts`, rootTypings);
+  fs.writeFileSync(`${output}/framework7-lite.cjs.d.ts`, rootTypings);
+  fs.writeFileSync(`${output}/framework7-lite-bundle.cjs.d.ts`, rootTypings);
 
   cb();
 }

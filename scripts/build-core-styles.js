@@ -47,7 +47,7 @@ function copyLess(config, components, cb) {
       .map((component) => `@import url('./components/${component}/${component}.less');`)
       .join('\n'),
   );
-  fs.writeFileSync(`${output}/framework7.bundle.less`, lessBundleContent);
+  fs.writeFileSync(`${output}/framework7-bundle.less`, lessBundleContent);
 
   if (cb) cb();
 }
@@ -62,7 +62,7 @@ async function buildBundle(config, components, themes, rtl, cb) {
   const includeAuroraTheme = themes.indexOf('aurora') >= 0;
   const includeDarkTheme = config.darkTheme;
   const includeLightTheme = config.lightTheme;
-  const outputFileName = `framework7.bundle${rtl ? '.rtl' : ''}`;
+  const outputFileName = `framework7-bundle${rtl ? '-rtl' : ''}`;
   const output = `${getOutput()}/core`;
 
   let lessContent = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.less'));
@@ -92,7 +92,7 @@ async function buildBundle(config, components, themes, rtl, cb) {
   }
 
   // Write file
-  fs.writeFileSync(`${output}/css/${outputFileName}.css`, `${banner}\n${cssContent}`);
+  fs.writeFileSync(`${output}/${outputFileName}.css`, `${banner}\n${cssContent}`);
 
   if (env === 'development') {
     if (cb) cb();
@@ -103,7 +103,7 @@ async function buildBundle(config, components, themes, rtl, cb) {
   const minifiedContent = await cleanCSS(cssContent);
 
   // Write file
-  fs.writeFileSync(`${output}/css/${outputFileName}.min.css`, `${banner}\n${minifiedContent}`);
+  fs.writeFileSync(`${output}/${outputFileName}.min.css`, `${banner}\n${minifiedContent}`);
 
   if (cb) cb();
 }
@@ -144,7 +144,7 @@ async function buildCore(themes, rtl, cb) {
   }
 
   // Write file
-  fs.writeFileSync(`${output}/css/framework7${rtl ? '.rtl' : ''}.css`, `${banner}\n${cssContent}`);
+  fs.writeFileSync(`${output}/framework7${rtl ? '-rtl' : ''}.css`, `${banner}\n${cssContent}`);
 
   if (env === 'development') {
     if (cb) cb();
@@ -156,7 +156,7 @@ async function buildCore(themes, rtl, cb) {
 
   // Write file
   fs.writeFileSync(
-    `${output}/css/framework7${rtl ? '.rtl' : ''}.min.css`,
+    `${output}/framework7${rtl ? '-rtl' : ''}.min.css`,
     `${banner}\n${minifiedContent}`,
   );
 
