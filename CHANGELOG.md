@@ -6,6 +6,12 @@
 
 - Request -> request
 
+# [v5.7.10](https://github.com/framework7io/framework7/compare/v5.7.9...v5.7.10) - July 14, 2020
+
+- Core
+  - Tooltip
+    - Fixed issue with positioning for SVG elements
+
 # [v5.7.9](https://github.com/framework7io/framework7/compare/v5.7.8...v5.7.9) - July 12, 2020
 
 - Core

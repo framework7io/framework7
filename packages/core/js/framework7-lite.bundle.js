@@ -1,5 +1,5 @@
 /**
- * Framework7 5.7.9
+ * Framework7 5.7.10
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 12, 2020
+ * Released on: July 14, 2020
  */
 
 (function (global, factory) {
@@ -37173,6 +37173,11 @@
       if ($targetEl && $targetEl.length > 0) {
         targetWidth = $targetEl.outerWidth();
         targetHeight = $targetEl.outerHeight();
+        if (typeof targetWidth === 'undefined' && typeof targetHeight === 'undefined') {
+          var clientRect = $targetEl[0].getBoundingClientRect();
+          targetWidth = clientRect.width;
+          targetHeight = clientRect.height;
+        }
 
         var targetOffset = $targetEl.offset();
         targetOffsetLeft = targetOffset.left - app.left;
@@ -40790,7 +40795,7 @@
   };
 
   /**
-   * Framework7 5.7.9
+   * Framework7 5.7.10
    * Full featured mobile HTML framework for building iOS & Android apps
    * https://framework7.io/
    *
@@ -40798,7 +40803,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: July 12, 2020
+   * Released on: July 14, 2020
    */
 
   // Install Core Modules & Components
