@@ -20,4 +20,5 @@ packages/core/*.js
 packages/core/*.css
 packages/core/*.less
 packages/core/*.ts
+packages/core/components
 woff2/

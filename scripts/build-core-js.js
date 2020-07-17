@@ -4,7 +4,7 @@
 /* eslint no-param-reassign: ["error", { "props": false }] */
 const exec = require('exec-sh');
 const path = require('path');
-const rollup = require('rollup');
+const { rollup } = require('rollup');
 const replace = require('@rollup/plugin-replace');
 const { default: babel } = require('@rollup/plugin-babel');
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
@@ -124,40 +124,37 @@ async function umdBundle({ components, lite } = {}) {
   const format = process.env.FORMAT || config.format || 'umd';
   const output = path.resolve(`${getOutput()}`, 'core');
 
-  return rollup
-    .rollup({
-      input: lite ? `${output}/framework7-lite-bundle.esm.js` : './src/core/framework7.js',
-      cache,
-      plugins: [
-        replace({
-          delimiters: ['', ''],
-          'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
-          'process.env.FORMAT': JSON.stringify(format),
-          '//IMPORT_COMPONENTS': components
-            .map(
-              (component) =>
-                `import ${component.capitalized} from './components/${component.name}/${component.name}';`,
-            )
-            .join('\n'),
-          '//INSTALL_COMPONENTS': components
-            .map((component) => component.capitalized)
-            .join(',\n  '),
-          '//IMPORT_HELPERS': '',
-          '//NAMED_EXPORT': '',
-          'export { Template7, $ as Dom7, request, utils, getDevice, getSupport };': '',
-        }),
-        nodeResolve({ mainFields: ['module', 'main', 'jsnext'] }),
-        commonjs(),
-        babel({ babelHelpers: 'bundled' }),
-      ],
-      onwarn(warning, warn) {
-        const ignore = ['EVAL'];
-        if (warning.code && ignore.indexOf(warning.code) >= 0) {
-          return;
-        }
-        warn(warning);
-      },
-    })
+  return rollup({
+    input: lite ? `${output}/framework7-lite-bundle.esm.js` : './src/core/framework7.js',
+    cache,
+    plugins: [
+      replace({
+        delimiters: ['', ''],
+        'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
+        'process.env.FORMAT': JSON.stringify(format),
+        '//IMPORT_COMPONENTS': components
+          .map(
+            (component) =>
+              `import ${component.capitalized} from './components/${component.name}/${component.name}';`,
+          )
+          .join('\n'),
+        '//INSTALL_COMPONENTS': components.map((component) => component.capitalized).join(',\n  '),
+        '//IMPORT_HELPERS': '',
+        '//NAMED_EXPORT': '',
+        'export { Template7, $ as Dom7, request, utils, getDevice, getSupport };': '',
+      }),
+      nodeResolve({ mainFields: ['module', 'main', 'jsnext'] }),
+      commonjs(),
+      babel({ babelHelpers: 'bundled' }),
+    ],
+    onwarn(warning, warn) {
+      const ignore = ['EVAL'];
+      if (warning.code && ignore.indexOf(warning.code) >= 0) {
+        return;
+      }
+      warn(warning);
+    },
+  })
     .then((bundle) => {
       cache = bundle;
       return bundle.write({
@@ -200,32 +197,31 @@ async function umdCore({ lite } = {}) {
   const format = process.env.FORMAT || config.format || 'umd';
   const output = path.resolve(`${getOutput()}`, 'core');
 
-  return rollup
-    .rollup({
-      input: lite ? `${output}/framework7-lite.esm.js` : './src/core/framework7.js',
-      plugins: [
-        replace({
-          delimiters: ['', ''],
-          'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
-          'process.env.FORMAT': JSON.stringify(format),
-          '//IMPORT_COMPONENTS': '',
-          '//INSTALL_COMPONENTS': '',
-          '//IMPORT_HELPERS': '',
-          '//NAMED_EXPORT': '',
-          'export { Template7, $ as Dom7, request, utils, getDevice, getSupport };': '',
-        }),
-        nodeResolve({ mainFields: ['module', 'main', 'jsnext'] }),
-        commonjs(),
-        babel({ babelHelpers: 'bundled' }),
-      ],
-      onwarn(warning, warn) {
-        const ignore = ['EVAL'];
-        if (warning.code && ignore.indexOf(warning.code) >= 0) {
-          return;
-        }
-        warn(warning);
-      },
-    })
+  return rollup({
+    input: lite ? `${output}/framework7-lite.esm.js` : './src/core/framework7.js',
+    plugins: [
+      replace({
+        delimiters: ['', ''],
+        'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
+        'process.env.FORMAT': JSON.stringify(format),
+        '//IMPORT_COMPONENTS': '',
+        '//INSTALL_COMPONENTS': '',
+        '//IMPORT_HELPERS': '',
+        '//NAMED_EXPORT': '',
+        'export { Template7, $ as Dom7, request, utils, getDevice, getSupport };': '',
+      }),
+      nodeResolve({ mainFields: ['module', 'main', 'jsnext'] }),
+      commonjs(),
+      babel({ babelHelpers: 'bundled' }),
+    ],
+    onwarn(warning, warn) {
+      const ignore = ['EVAL'];
+      if (warning.code && ignore.indexOf(warning.code) >= 0) {
+        return;
+      }
+      warn(warning);
+    },
+  })
     .then((bundle) => {
       // eslint-disable-line
       return bundle.write({

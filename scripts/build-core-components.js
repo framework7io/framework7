@@ -16,21 +16,34 @@ function base64Encode(file) {
 }
 
 function build(cb) {
-  const env = process.env.NODE_ENV || 'development';
-  const format = 'es';
   const output = `${getOutput()}/core`;
-  glob('**/*.*', { cwd: path.resolve(__dirname, '../src/core') }, (err, files) => {
-    files.forEach((file, index) => {
-      if (file.indexOf('icons/') === 0) return;
-      if (file === 'framework7.less') return;
-      if (file === 'framework7.js') return;
-      if (file === 'framework7.d.ts') return;
-      let fileContent = fs.readFileSync(path.resolve(__dirname, '../src/core', file));
-      if (file.indexOf('.js') >= 0) {
-        fileContent = fileContent
-          .replace('process.env.NODE_ENV', JSON.stringify(env))
-          .replace('process.env.FORMAT', JSON.stringify(format));
-      }
+  const componentsFolders = fs.readdirSync('./src/core/components').filter((folder) => {
+    return fsNative.lstatSync(`./src/core/components/${folder}`).isDirectory();
+  });
+  componentsFolders.forEach((component) => {
+    const json = JSON.stringify(
+      {
+        name: `framework7/${component}`,
+        private: true,
+        sideEffects: false,
+        main: `../../cjs/components/${component}/${component}.js`,
+        module: `../../esm/components/${component}/${component}.js`,
+      },
+      '',
+      2,
+    );
+    fs.writeFileSync(`${output}/components/${component}/package.json`, json);
+  });
+  glob('**/*.*', { cwd: path.resolve(__dirname, '../src/core/components') }, (err, files) => {
+    const filesToProcess = files.filter((file) => {
+      if (file.indexOf('icons/') === 0) return false;
+      if (file === 'framework7.less') return false;
+      if (file === 'framework7.d.ts') return false;
+      if (file.indexOf('.js') >= 0) return false;
+      return true;
+    });
+    filesToProcess.forEach((file, index) => {
+      let fileContent = fs.readFileSync(path.resolve(__dirname, '../src/core/components', file));
       if (file.indexOf('app.less') >= 0) {
         const iconsFontBase64 = base64Encode('./src/core/icons/font/framework7-core-icons.woff');
         const skeletonFontBase64 = base64Encode('./src/core/icons/font/framework7-skeleton.woff');
@@ -38,8 +51,10 @@ function build(cb) {
           .replace('framework7_coreIconsFont()', `'${iconsFontBase64}'`)
           .replace('framework7_skeletonFont()', `'${skeletonFontBase64}'`);
       }
-      fs.writeFileSync(path.resolve(output, file), fileContent);
-      if (index === files.length - 1) cb();
+      fs.writeFileSync(path.resolve(`${output}/components`, file), fileContent);
+      if (index === filesToProcess.length - 1) {
+        cb();
+      }
     });
   });
 }

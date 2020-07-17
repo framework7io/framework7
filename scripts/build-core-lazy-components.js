@@ -5,9 +5,9 @@
 /* eslint arrow-body-style: "off" */
 // const fs = require('fs');
 const path = require('path');
-const rollup = require('rollup');
-const buble = require('@rollup/plugin-buble');
-const resolve = require('@rollup/plugin-node-resolve');
+const { rollup } = require('rollup');
+const { default: babel } = require('@rollup/plugin-babel');
+const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
 const replace = require('@rollup/plugin-replace');
 const Terser = require('terser');
@@ -24,19 +24,16 @@ function framework7ComponentLoader(Framework7, Framework7AutoInstallComponent) {
   if (typeof Framework7AutoInstallComponent === 'undefined') {
     Framework7AutoInstallComponent = true;
   }
-  var doc = document;
-  var win = window;
   var $ = Framework7.$;
   var Template7 = Framework7.Template7;
   var Utils = Framework7.utils;
-  var Device = Framework7.device;
-  var Support = Framework7.support;
+  var getDevice = Framework7.getDevice;
+  var getSupport = Framework7.getSupport;
   var Framework7Class = Framework7.Class;
   var Modal = Framework7.Modal;
   var ConstructorMethods = Framework7.ConstructorMethods;
   var ModalMethods = Framework7.ModalMethods;
-
-  `;
+`;
 
 const install = `
   if (Framework7AutoInstallComponent) {
@@ -53,7 +50,7 @@ const install = `
 `;
 
 const outro = `
-};
+}
 `;
 
 async function buildLazyComponentsLess(components, rtl, cb) {
@@ -118,7 +115,10 @@ async function buildLazyComponentsLess(components, rtl, cb) {
     } catch (err) {
       console.log(err);
     }
-    fs.writeFileSync(`${output}/components/${component}${rtl ? '.rtl' : ''}.css`, cssContent);
+    fs.writeFileSync(
+      `${output}/components/${component}/${component}${rtl ? '.rtl' : ''}.css`,
+      cssContent,
+    );
 
     cbs += 1;
     if (cbs === componentsToProcess.length && cb) cb();
@@ -135,31 +135,28 @@ function buildLazyComponentsJs(components, cb) {
     return fs.existsSync(`./src/core/components/${component}/${component}.js`);
   });
 
-  rollup
-    .rollup({
-      input: componentsToProcess.map(
-        (component) => `./src/core/components/${component}/${component}.js`,
-      ),
-      plugins: [
-        replace({
-          delimiters: ['', ''],
-          'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
-          'process.env.FORMAT': JSON.stringify(format),
-        }),
-        resolve({ mainFields: ['module', 'main', 'jsnext'] }),
-        commonjs(),
-        buble({
-          objectAssign: 'Object.assign',
-        }),
-      ],
-      onwarn(warning, warn) {
-        const ignore = ['EVAL'];
-        if (warning.code && ignore.indexOf(warning.code) >= 0) {
-          return;
-        }
-        warn(warning);
-      },
-    })
+  rollup({
+    input: componentsToProcess.map(
+      (component) => `./src/core/components/${component}/${component}.js`,
+    ),
+    plugins: [
+      replace({
+        delimiters: ['', ''],
+        'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
+        'process.env.FORMAT': JSON.stringify(format),
+      }),
+      nodeResolve({ mainFields: ['module', 'main', 'jsnext'] }),
+      commonjs(),
+      babel({ babelHelpers: 'bundled' }),
+    ],
+    onwarn(warning, warn) {
+      const ignore = ['EVAL'];
+      if (warning.code && ignore.indexOf(warning.code) >= 0) {
+        return;
+      }
+      warn(warning);
+    },
+  })
     .then((bundle) => {
       // eslint-disable-line
       return bundle.write({
@@ -176,6 +173,7 @@ function buildLazyComponentsJs(components, cb) {
         return (
           fileName.indexOf('.js') > 0 &&
           fileName.indexOf('chunk-') < 0 &&
+          !fileName.match(/[0-9]/) &&
           coreComponents.indexOf(fileName.split('.js')[0]) < 0
         );
       });
@@ -184,46 +182,77 @@ function buildLazyComponentsJs(components, cb) {
         return (
           fileName.indexOf('.js') > 0 &&
           (fileName.indexOf('chunk-') === 0 ||
+            fileName.match(/[0-9]/) ||
             coreComponents.indexOf(fileName.split('.js')[0]) >= 0)
         );
       });
+      let babelHelpersContent = '';
+      const babelHelpersFile = files.filter(
+        (file) => file.includes('Babel') || file.includes('babel'),
+      )[0];
+      if (babelHelpersFile) {
+        babelHelpersContent = fs
+          .readFileSync(`${output}/components/${babelHelpersFile}`, 'utf-8')
+          .split('\n')
+          .filter((line) => line.indexOf('export {') < 0 && line.trim().length > 0)
+          .map((line) => `  ${line}`)
+          .join('\n');
+      }
+
       let cbs = 0;
       filesToProcess.forEach((fileName) => {
+        let fileIntro = intro;
         let fileContent = fs
           .readFileSync(`${output}/components/${fileName}`)
           .split('\n')
-          .filter((line) => line.indexOf('import ') !== 0)
+          .filter((line) => {
+            if (
+              (line.indexOf('import') >= 0 && line.indexOf('Babel') >= 0) ||
+              line.indexOf('babel') >= 0
+            ) {
+              fileIntro += `\n${babelHelpersContent}\n`;
+            }
+            if (line.indexOf('import') >= 0 && line.indexOf('utils') >= 0) {
+              const usedUtils = line.match(/ as ([a-zA-Z0-9]*)/g);
+              if (usedUtils && usedUtils.length) {
+                fileIntro += usedUtils
+                  .map((v) => v.replace(' as ', ''))
+                  .map((v) => `  var ${v} = Utils.${v};`)
+                  .join('\n');
+              }
+            }
+            return line.indexOf('import ') !== 0;
+          })
           .map((line) => (line.trim().length ? `  ${line}` : line)) // eslint-disable-line
           .join('\n');
+        fileContent = fileContent
+          .replace(/var window = getWindow\(\);/g, '')
+          .replace(/var document = getDocument\(\);/g, '');
 
-        fileContent = `${intro}${fileContent.trim()}${outro}`;
+        fileContent = `${fileIntro}\n  ${fileContent.trim()}${outro}`;
+        if (fileName.indexOf('swiper') >= 0) {
+          fileContent = fileContent
+            .replace('var getDevice = Framework7.getDevice;', '')
+            .replace('var getSupport = Framework7.getSupport;', '');
+        }
         fileContent = fileContent.replace(/export default ([a-zA-Z_]*);/, (line, name) => {
           // eslint-disable-line
           return install.replace(/COMPONENT/g, name);
         });
-        if (fileContent.indexOf('Support$1') >= 0) {
-          fileContent = fileContent.replace(
-            'var Support = Framework7.support;',
-            'var Support$1 = Framework7.support;',
-          );
-        }
-        if (fileContent.indexOf('Device$1') >= 0) {
-          fileContent = fileContent.replace(
-            'var Device = Framework7.device;',
-            'var Device$1 = Framework7.device;',
-          );
-        }
 
         fileContent = Terser.minify(fileContent).code;
         fileContent = `(${fileContent}(Framework7, typeof Framework7AutoInstallComponent === 'undefined' ? undefined : Framework7AutoInstallComponent))`;
 
-        fs.writeFileSync(`${output}/components/${fileName}`, `${fileContent}\n`);
+        fs.writeFileSync(
+          `${output}/components/${fileName.split('.js')[0]}/${fileName}`,
+          `${fileContent}\n`,
+        );
 
         cbs += 1;
         if (cbs === filesToProcess.length && cb) cb();
       });
 
-      filesToRemove.forEach((fileName) => {
+      [...filesToRemove, ...filesToProcess].forEach((fileName) => {
         fs.unlinkSync(`${output}/components/${fileName}`);
       });
     })
