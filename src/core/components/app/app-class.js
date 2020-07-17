@@ -1,4 +1,3 @@
-import Template7 from 'template7';
 import { getWindow, getDocument } from 'ssr-window';
 import { extend, nextFrame } from '../../utils/utils';
 import { getDevice } from '../../utils/get-device';
@@ -293,10 +292,6 @@ class Framework7 extends Framework7Class {
   get $() {
     return $;
   }
-  // eslint-disable-next-line
-  get t7() {
-    return Template7;
-  }
 
   static get Dom7() {
     return $;
@@ -306,8 +301,12 @@ class Framework7 extends Framework7Class {
     return $;
   }
 
-  static get Template7() {
-    return Template7;
+  static get device() {
+    return getDevice();
+  }
+
+  static get support() {
+    return getSupport();
   }
 
   static get Class() {

@@ -2,11 +2,13 @@ import Swiper from 'swiper/bundle';
 import $ from '../../utils/dom7';
 import ConstructorMethods from '../../utils/constructor-methods';
 
-// if (process.env.FORMAT !== 'es') {
-//   if (!window.Swiper) {
-//     window.Swiper = Swiper;
-//   }
-// }
+// UMD_ONLY_START
+/* eslint-disable */
+if (!window.Swiper) {
+  window.Swiper = Swiper;
+}
+/* eslint-enable */
+// UMD_ONLY_END
 
 function initSwiper(swiperEl) {
   const app = this;
