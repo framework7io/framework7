@@ -66,20 +66,20 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://paraphrasetools.com" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/paraphrasetools.png">
+      <a href="https://edubirdie.com" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/edubirdie.png">
       </a>
     </td>
   </tr>
   <tr>
     <td align="center" valign="middle">
-      <a href="https://divi-discount.com/elegant-themes/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/divi-discount.png">
+      <a href="https://paraphrasetools.com" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/paraphrasetools.png">
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://cooltechzone.com/popcorn-time-vpn" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/cooltechzone.png">
+      <a href="https://divi-discount.com/elegant-themes/" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/divi-discount.png">
       </a>
     </td>
     <td align="center" valign="middle">

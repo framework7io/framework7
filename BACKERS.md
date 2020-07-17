@@ -50,20 +50,20 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://paraphrasetools.com" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/paraphrasetools.png">
+      <a href="https://edubirdie.com" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/edubirdie.png">
       </a>
     </td>
   </tr>
   <tr>
     <td align="center" valign="middle">
-      <a href="https://divi-discount.com/elegant-themes/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/divi-discount.png">
+      <a href="https://paraphrasetools.com" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/paraphrasetools.png">
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://cooltechzone.com/popcorn-time-vpn" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/cooltechzone.png">
+      <a href="https://divi-discount.com/elegant-themes/" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/divi-discount.png">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -140,19 +140,20 @@
 
 Support Framework7 development by [pledging on Patreon](https://www.patreon.com/vladimirkharlampidi)!
 
-### $1000 Diamond Sponsor
+### \$1000 Diamond Sponsor
 
 [Currently vacant. It could be you!](https://www.patreon.com/bePatron?patAmt=1000.0&exp=1&u=4109762&rid=830901)
 
 ---
 
-### $500 Platinum Sponsor
+### \$500 Platinum Sponsor
 
 [Currently vacant. It could be you!](https://www.patreon.com/bePatron?patAmt=500.0&exp=1&u=4109762&rid=830876)
 
 ---
 
-### $250 Gold Sponsor
+### \$250 Gold Sponsor
+
 [WFM Buddy](https://www.wfmbuddy.com/) - WFM Buddy - Delighting your Workforce<br>
 [CodersRank](https://codersrank.io/?utm_source=partner&utm_medium=referral&utm_campaign=vladimir) - CodersRank - Ultimate Profile For Coders<br>
 [Sparheld.de](https://www.sparheld.de/) - Sparheld.de - save shopping online
@@ -161,7 +162,8 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 
 ---
 
-### $100 Silver Sponsor
+### \$100 Silver Sponsor
+
 [Infatica](https://infatica.io) - Global Peer-to-Business Proxy Network
 [Thorium Builder](https://www.thoriumbuilder.com/) - Full visual Framework7 app builder<br>
 Colin Adams ([App Valley](https://appvalley.vip/))<br>
@@ -172,11 +174,12 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 
 ---
 
-### $50+ Top Supporter
+### \$50+ Top Supporter
+
+[EduBirdie - The professional essay writing service for students who can't even](https://edubirdie.com)<br>
 Daniel Fratus<br>
 [Paraphrasing tool- rewrite, paraphrase your article](https://paraphrasetools.com)<br>
 [Divi-Discount.com - Divi Discount](https://divi-discount.com/elegant-themes/)<br>
-[vpn for roku](https://cooltechzone.com/roku-vpn)<br>
 [www.bonus.com.de](https://www.bonus.com.de/)<br>
 [Writers Per Hour](https://writersperhour.com/write-my-paper) - Write My Paper For Me<br>
 [Bid4Papers](https://bid4papers.com/write-my-essay.html) - Write My Essay<br>
@@ -201,14 +204,17 @@ Bart DJ
 
 ---
 
-### $25+ Awesome Supporter
+### \$25+ Awesome Supporter
+
 Danny Redfern<br>
 
 [Join here!](https://www.patreon.com/join/vladimirkharlampidi/checkout?rid=4656325)
 
 ---
 
-### $10+ Supporter
+### \$10+ Supporter
+
+Wolfgang Bochar<br>
 Picolé de Chuchu<br>
 Stan Smulders<br>
 Lailton Fernando Mariano<br>
@@ -246,7 +252,8 @@ Dave Billington
 
 ---
 
-### $5+ Thank You
+### \$5+ Thank You
+
 Ivan Ivanco<br>
 T Konink<br>
 Elijah Jahbless<br>
