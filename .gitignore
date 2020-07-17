@@ -12,4 +12,12 @@ kitchen-sink/svelte/js/app.js
 .github-access-token
 packages/*.zip
 packages/*.tar.gz
+packages/core/**/*.js
+packages/core/**/*.css
+packages/core/**/*.less
+packages/core/**/*.ts
+packages/core/*.js
+packages/core/*.css
+packages/core/*.less
+packages/core/*.ts
 woff2/
