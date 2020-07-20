@@ -1,0 +1,7 @@
+{
+  "name": "framework7/bundle",
+  "private": true,
+  "sideEffects": false,
+  "main": "../cjs/framework7-bundle.cjs.js",
+  "module": "../esm/framework7-bundle.esm.js"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "framework7/core",
+  "private": true,
+  "sideEffects": false,
+  "main": "../cjs/framework7.cjs.js",
+  "module": "../esm/framework7.esm.js"
+}
