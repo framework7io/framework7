@@ -10,12 +10,12 @@ import $ from '../../utils/dom7';
 import loadModule from './load-module';
 
 class Framework7 extends Framework7Class {
-  constructor(params) {
+  constructor(params = {}) {
     super(params);
     if (Framework7.instance) {
       throw new Error("Framework7 is already initialized and can't be initialized more than once");
     }
-    const device = getDevice();
+    const device = getDevice({ userAgent: params.userAgent || undefined });
     const support = getSupport();
 
     const passedParams = extend({}, params);

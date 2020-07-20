@@ -69,6 +69,10 @@ export interface Framework7Params {
   iosTranslucentBars?: boolean;
   /** Enable translucent effect (blur background) on modals (Dialog, Popover, Actions) for iOS theme (on iOS devices) (by default enabled) */
   iosTranslucentModals?: boolean;
+  /** userAgent string. Required for browser/device detection when rendered on server-side */
+  userAgent?: string;
+  /** Required for active route detection when rendered on server-side */
+  url?: string;
   /** Object with events handlers.. (default {}) */
   on?: {
     [event in keyof Framework7Events]?: Framework7Events[event];
@@ -175,8 +179,10 @@ declare class Framework7 implements Framework7 {
 
   static use(plugin: Framework7Plugin): void;
   static use(plugins: Framework7Plugin[]): void;
-  static getDevice: (overrides: DeviceParams) => Device;
+  static getDevice: (overrides?: DeviceParams) => Device;
   static getSupport: () => Support;
+  static device: Device;
+  static support: Support;
   static request: Request;
   static utils: Utils;
   static Events: Events;

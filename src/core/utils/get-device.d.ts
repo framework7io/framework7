@@ -49,4 +49,4 @@ export interface DeviceParams {
   userAgent: string;
 }
 
-export const getDevice: (overrides: DeviceParams) => Device;
+export const getDevice: (overrides?: DeviceParams) => Device;
