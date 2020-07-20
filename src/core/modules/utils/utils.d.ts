@@ -1,10 +1,10 @@
-import { UtilsObject } from '../../utils/utils';
+import { Utils } from '../../utils/utils';
 import Framework7, { Framework7Plugin } from '../../components/app/app-class';
 
 export namespace Utils {
   interface AppMethods {
     /** Object with set of helper methods */
-    utils: UtilsObject;
+    utils: Utils;
   }
   interface AppParams {}
   interface AppEvents {}

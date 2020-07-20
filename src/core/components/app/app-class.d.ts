@@ -4,7 +4,7 @@ import { Router } from '../../modules/router/router';
 import { DeviceParams, Device } from '../../utils/get-device';
 import { Support } from '../../utils/get-support';
 import { Request } from '../../utils/request';
-import { UtilsObject } from '../../utils/utils';
+import { Utils } from '../../utils/utils';
 import { ComponentClass, ComponentOptions } from '../../modules/component/component';
 
 // Css Selector string is an option on many F7 methods
@@ -178,7 +178,7 @@ declare class Framework7 implements Framework7 {
   static getDevice: (overrides: DeviceParams) => Device;
   static getSupport: () => Support;
   static request: Request;
-  static utils: UtilsObject;
+  static utils: Utils;
   static Events: Events;
   static Component: ComponentClass;
   /** Regiter custom component */

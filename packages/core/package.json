@@ -2,10 +2,14 @@
   "name": "framework7",
   "version": "5.7.10",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
-  "main": "js/framework7.js",
-  "typings": "js/framework7.d.ts",
-  "jsnext:main": "framework7.esm.js",
-  "module": "framework7.esm.js",
+  "main": "cjs/framework7.cjs.js",
+  "module": "esm/framework7.esm.js",
+  "jsnext:main": "esm/framework7.esm.js",
+  "typings": "framework7.d.ts",
+  "sideEffects": [
+    "*.less",
+    "*.css"
+  ],
   "scripts": {
     "postinstall": "echo \"\u001b[35m\u001b[1mLove Framework7? Support project by donating or pledging on patreon:\u001b[22m\u001b[39m\n > \u001b[32mhttps://patreon.com/vladimirkharlampidi\u001b[0m\n\""
   },

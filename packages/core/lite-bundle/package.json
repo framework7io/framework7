@@ -3,5 +3,6 @@
   "private": true,
   "sideEffects": false,
   "main": "../cjs/framework7-lite-bundle.cjs.js",
-  "module": "../esm/framework7-lite-bundle.esm.js"
+  "module": "../esm/framework7-lite-bundle.esm.js",
+  "typings": "../framework7.d.ts"
 }

@@ -29,6 +29,7 @@ function build(cb) {
         sideEffects: false,
         main: `../../cjs/components/${component}/${component}.js`,
         module: `../../esm/components/${component}/${component}.js`,
+        typings: `${component}.js`,
       },
       '',
       2,
@@ -48,6 +49,7 @@ function build(cb) {
         sideEffects: false,
         main: `../../cjs/modules/${moduleName}/${moduleName}.js`,
         module: `../../esm/modules/${moduleName}/${moduleName}.js`,
+        typings: `${moduleName}.js`,
       },
       '',
       2,
@@ -63,17 +65,6 @@ function build(cb) {
     filesToProcess.forEach((file) => {
       const fileContent = fs.readFileSync(path.resolve(__dirname, '../src/core/modules', file));
       fs.writeFileSync(path.resolve(`${output}/modules`, file), fileContent);
-    });
-  });
-
-  // process utils
-  glob('**/*.*', { cwd: path.resolve(__dirname, '../src/core/utils') }, (err, files) => {
-    const filesToProcess = files.filter((file) => {
-      return file.indexOf('.d.ts') >= 0;
-    });
-    filesToProcess.forEach((file) => {
-      const fileContent = fs.readFileSync(path.resolve(__dirname, '../src/core/utils', file));
-      fs.writeFileSync(path.resolve(`${output}/utils`, file), fileContent);
     });
   });
 

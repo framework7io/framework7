@@ -43,8 +43,7 @@ async function modular({ components, format }) {
         `export { ${
           isLite ? '' : 'Template7, Component,'
         } $ as Dom7, request, utils, getDevice, getSupport };`,
-      )
-      .replace(/ from '\.\//g, ` from './${format}/`);
+      );
   };
   const bundleComponents = (content, isLite) => {
     return removeUMD(content)
@@ -70,8 +69,7 @@ async function modular({ components, format }) {
         `export { ${
           isLite ? '' : 'Template7, Component,'
         } $ as Dom7, request, utils, getDevice, getSupport };`,
-      )
-      .replace(/ from '\.\//g, ` from './${format}/`);
+      );
   };
 
   const coreContent = coreComponents(coreSrc);
@@ -80,14 +78,14 @@ async function modular({ components, format }) {
   const liteBundleContent = bundleComponents(liteSrc, true);
 
   // Save core
-  fs.writeFileSync(`${outputDir}/framework7.${format}.js`, coreContent);
+  fs.writeFileSync(`${outputDir}/${format}/framework7.${format}.js`, coreContent);
   // Save bundle
-  fs.writeFileSync(`${outputDir}/framework7-bundle.${format}.js`, bundleContent);
+  fs.writeFileSync(`${outputDir}/${format}/framework7-bundle.${format}.js`, bundleContent);
 
   // Save lite
-  fs.writeFileSync(`${outputDir}/framework7-lite.${format}.js`, liteContent);
+  fs.writeFileSync(`${outputDir}/${format}/framework7-lite.${format}.js`, liteContent);
   // Save lite bundle
-  fs.writeFileSync(`${outputDir}/framework7-lite-bundle.${format}.js`, liteBundleContent);
+  fs.writeFileSync(`${outputDir}/${format}/framework7-lite-bundle.${format}.js`, liteBundleContent);
 
   const files = [
     `framework7.${format}.js`,
@@ -100,7 +98,7 @@ async function modular({ components, format }) {
   for (let fileName of files) {
     // eslint-disable-next-line
     await exec.promise(
-      `MODULES=${format} npx babel ${outputDir}/${fileName} --out-file ${outputDir}/${fileName}`,
+      `MODULES=${format} npx babel ${outputDir}/${format}/${fileName} --out-file ${outputDir}/${format}/${fileName}`,
     );
   }
 
@@ -113,19 +111,19 @@ async function modular({ components, format }) {
 
   // add banners
   files.forEach((fileName) => {
-    const fileContentt = fs.readFileSync(`${outputDir}/${fileName}`, 'utf-8');
-    fs.writeFileSync(`${outputDir}/${fileName}`, `${banner}\n${fileContentt}`);
+    const fileContentt = fs.readFileSync(`${outputDir}/${format}/${fileName}`, 'utf-8');
+    fs.writeFileSync(`${outputDir}/${format}/${fileName}`, `${banner}\n${fileContentt}`);
   });
 }
 
-async function umdBundle({ components, lite } = {}) {
+async function umdBundle({ components } = {}) {
   const config = getConfig();
   const env = process.env.NODE_ENV || 'development';
   const format = process.env.FORMAT || config.format || 'umd';
   const output = path.resolve(`${getOutput()}`, 'core');
 
   return rollup({
-    input: lite ? `${output}/framework7-lite-bundle.esm.js` : './src/core/framework7.js',
+    input: './src/core/framework7.js',
     cache,
     plugins: [
       replace({
@@ -191,14 +189,14 @@ async function umdBundle({ components, lite } = {}) {
     });
 }
 
-async function umdCore({ lite } = {}) {
+async function umdCore() {
   const config = getConfig();
   const env = process.env.NODE_ENV || 'development';
   const format = process.env.FORMAT || config.format || 'umd';
   const output = path.resolve(`${getOutput()}`, 'core');
 
   return rollup({
-    input: lite ? `${output}/framework7-lite.esm.js` : './src/core/framework7.js',
+    input: './src/core/framework7.js',
     plugins: [
       replace({
         delimiters: ['', ''],
