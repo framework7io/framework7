@@ -1,4 +1,5 @@
 /* eslint indent: ["off"] */
+import { getWindow } from 'ssr-window';
 import $ from '../../utils/dom7';
 import { extend, now, nextTick, deleteProps } from '../../utils/utils';
 import Framework7Class from '../../utils/class';
@@ -473,8 +474,10 @@ class PhotoBrowser extends Framework7Class {
         },
       });
     }
-
-    pb.swiper = app.swiper.create(pb.$swiperContainerEl, swiperParams);
+    const window = getWindow();
+    pb.swiper = app.swiper
+      ? app.swiper.create(pb.$swiperContainerEl, swiperParams)
+      : new window.Swiper(pb.$swiperContainerEl, swiperParams);
 
     if (pb.activeIndex === 0) {
       pb.onSlideChange(pb.swiper);
