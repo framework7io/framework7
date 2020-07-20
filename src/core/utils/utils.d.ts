@@ -6,8 +6,6 @@ export const serializeObject: (obj: object) => string;
 export const requestAnimationFrame: (callback: Function) => number;
 /** Cancels an animation frame request */
 export const cancelAnimationFrame: (requestID: number) => void;
-/** Replace diacritics in specified text string with standard latin characters */
-export const removeDiacritics: (text: string) => string;
 /** Executes code on next available animation frame */
 export const nextFrame: (callback: Function) => number;
 /** executes code after required delay. Basically alias for setTimeout */
@@ -55,8 +53,6 @@ export interface Utils {
   requestAnimationFrame: (callback: Function) => number;
   /** Cancels an animation frame request */
   cancelAnimationFrame: (requestID: number) => void;
-  /** Replace diacritics in specified text string with standard latin characters */
-  removeDiacritics: (text: string) => string;
   /** Executes code on next available animation frame */
   nextFrame: (callback: Function) => number;
   /** executes code after required delay. Basically alias for setTimeout */

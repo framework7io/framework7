@@ -1,8 +1,9 @@
 import { getDocument } from 'ssr-window';
 import $ from '../../utils/dom7';
-import { extend, nextTick, removeDiacritics, deleteProps } from '../../utils/utils';
+import { extend, nextTick, deleteProps } from '../../utils/utils';
 import FrameworkClass from '../../utils/class';
 import { getDevice } from '../../utils/get-device';
+import removeDiacritics from './remove-diacritics';
 
 class Searchbar extends FrameworkClass {
   constructor(app, params = {}) {
