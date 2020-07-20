@@ -4,6 +4,7 @@
 /* eslint no-param-reassign: ["error", { "props": false }] */
 
 const path = require('path');
+const glob = require('glob');
 const less = require('./utils/less');
 const autoprefixer = require('./utils/autoprefixer');
 const cleanCSS = require('./utils/clean-css');
@@ -48,6 +49,18 @@ function copyLess(config, components, cb) {
       .join('\n'),
   );
   fs.writeFileSync(`${output}/framework7-bundle.less`, lessBundleContent);
+
+  // copy less assets
+  glob('**/*.*', { cwd: path.resolve(__dirname, '../src/core/less') }, (err, files) => {
+    const filesToProcess = files.filter((file) => {
+      return file.indexOf('.less') >= 0;
+    });
+    filesToProcess.forEach((file) => {
+      let fileContent = fs.readFileSync(path.resolve(__dirname, '../src/core/less', file));
+      fileContent = fileContent.replace(`@plugin './plugin.js';`, '');
+      fs.writeFileSync(path.resolve(`${output}/less`, file), fileContent);
+    });
+  });
 
   if (cb) cb();
 }

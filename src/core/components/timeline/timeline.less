@@ -272,7 +272,7 @@ each(@breakpoints, {
   @cols: 5, 10, 15, 20, 25, 30, 100/3, 35, 40, 45, 50, 55, 60, 65, 100 * (2/3), 70, 75, 80, 85, 90,
     95, 100;
   each(@cols, {
-    @className: framework7_floor(@value);
+    @className: floor(@value);
     &.col-@{className} .timeline-item {
       width: ~"@{value}vw";
     }
@@ -280,7 +280,7 @@ each(@breakpoints, {
 
   @media (min-width: 768px) {
     each(@cols, {
-      @className: framework7_floor(@value);
+      @className: floor(@value);
       &.tablet-@{className} .timeline-item {
         width: ~"@{value}vw";
       }
