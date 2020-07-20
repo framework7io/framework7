@@ -4,7 +4,7 @@
   "scripts": {
     "build:dev": "cross-env-shell NODE_ENV=development \"gulp build-core && gulp phenome && gulp build-vue && gulp build-react && gulp build-svelte\"",
     "build:prod": "cross-env-shell NODE_ENV=production \"gulp build-core && gulp phenome && gulp build-vue && gulp build-react && gulp build-svelte\"",
-    "build-core-icons-font": "python ./scripts/icon-font/generate.py",
+    "build-core-icons-font": "python ./scripts/icon-font/generate.py && ttf2woff ./src/core/icons/font/framework7-core-icons.ttf ./src/core/icons/font/framework7-core-icons.woff",
     "build-core:dev": "cross-env NODE_ENV=development gulp build-core",
     "build-core:prod": "cross-env NODE_ENV=production gulp build-core",
     "build-vue:dev": "cross-env-shell NODE_ENV=development \"gulp phenome && gulp build-vue\"",
@@ -106,6 +106,7 @@
     "rollup-plugin-vue": "^5.1.6",
     "svelte": "^3.20.1",
     "terser": "^4.8.0",
+    "ttf2woff": "^2.0.2",
     "vue": "^2.6.11",
     "vue-template-compiler": "^2.6.11"
   }

@@ -100,15 +100,6 @@ f.fullname = font_name
 
 f.generate(fontfile + '.ttf')
 
-scriptPath = os.path.dirname(os.path.realpath(__file__))
-try:
-  subprocess.Popen([scriptPath + '/sfnt2woff', fontfile + '.ttf'], stdout=subprocess.PIPE)
-except OSError:
-  # If the local version of sfnt2woff fails (i.e., on Linux), try to use the
-  # global version. This allows us to avoid forcing OS X users to compile
-  # sfnt2woff from source, simplifying install.
-  subprocess.call(['sfnt2woff', fontfile + '.ttf'])
-
 
 # Hint the TTF file
 subprocess.call('ttfautohint -s -f -n ' + fontfile + '.ttf ' + fontfile + '-hinted.ttf > /dev/null 2>&1 && mv ' + fontfile + '-hinted.ttf ' + fontfile + '.ttf', shell=True)
