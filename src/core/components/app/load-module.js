@@ -41,7 +41,7 @@ function loadModule(moduleToLoad) {
           );
           return;
         }
-        modulePath = `${app.params.lazyModulesPath}/${moduleToLoad}.js`;
+        modulePath = `${app.params.lazyModulesPath}/${moduleToLoad}/${moduleToLoad}.js`;
       } else {
         modulePath = moduleToLoad;
       }
