@@ -65,9 +65,9 @@ const Actions = forwardRef((props, ref) => {
   }));
 
   // watch opened changes
-  watchProp(opened, () => {
+  watchProp(opened, (value) => {
     if (!f7Actions.current) return;
-    if (opened) {
+    if (value) {
       f7Actions.current.open();
     } else {
       f7Actions.current.close();

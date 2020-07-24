@@ -1,23 +1,32 @@
-/* eslint-disable */
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import { classNames, getDataAttrs } from '../utils/utils';
 import { colorClasses } from '../utils/mixins';
 
 /* dts-props
-  id?: string | number;
-  className?: string;
-  style?: React.CSSProperties;
+  id: string | number;
+  className: string;
+  style: React.CSSProperties;
+  padding: boolean;
   COLOR_PROPS
 */
 
-const ComponentName = forwardRef((props, ref) => {
-  const { className, id, style, children } = props;
+const CardContent = forwardRef((props, ref) => {
+  const { className, id, style, children, padding = true } = props;
   const dataAttrs = getDataAttrs(props);
 
   const elRef = useRef(null);
   useImperativeHandle(ref, () => ({
     el: elRef.current,
   }));
+
+  const classes = classNames(
+    className,
+    'card-content',
+    {
+      'card-content-padding': padding,
+    },
+    colorClasses(props),
+  );
 
   return (
     <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
@@ -26,6 +35,6 @@ const ComponentName = forwardRef((props, ref) => {
   );
 });
 
-ComponentName.displayName = 'f7-';
+CardContent.displayName = 'f7-card-content';
 
-export default ComponentName;
+export default CardContent;

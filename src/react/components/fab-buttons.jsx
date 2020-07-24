@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import { classNames, getDataAttrs } from '../utils/utils';
 import { colorClasses } from '../utils/mixins';
@@ -7,17 +6,25 @@ import { colorClasses } from '../utils/mixins';
   id?: string | number;
   className?: string;
   style?: React.CSSProperties;
+  position?: string;
   COLOR_PROPS
 */
 
-const ComponentName = forwardRef((props, ref) => {
-  const { className, id, style, children } = props;
+const FabButtons = forwardRef((props, ref) => {
+  const { className, id, style, children, position } = props;
   const dataAttrs = getDataAttrs(props);
 
   const elRef = useRef(null);
   useImperativeHandle(ref, () => ({
     el: elRef.current,
   }));
+
+  const classes = classNames(
+    className,
+    'fab-buttons',
+    `fab-buttons-${position}`,
+    colorClasses(props),
+  );
 
   return (
     <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
@@ -26,6 +33,6 @@ const ComponentName = forwardRef((props, ref) => {
   );
 });
 
-ComponentName.displayName = 'f7-';
+FabButtons.displayName = 'f7-fab-buttons';
 
-export default ComponentName;
+export default FabButtons;

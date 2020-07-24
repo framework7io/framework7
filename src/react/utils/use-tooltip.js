@@ -32,22 +32,22 @@ export const useTooltip = (elRef, props) => {
     return onDestroy;
   }, []);
 
-  watchProp(tooltip, () => {
-    if (!tooltip && f7Tooltip.current) {
+  watchProp(tooltip, (value) => {
+    if (!value && f7Tooltip.current) {
       f7Tooltip.current.destroy();
       f7Tooltip.current = null;
       delete f7Tooltip.current;
       return;
     }
-    if (tooltip && !f7Tooltip.current && f7) {
+    if (value && !f7Tooltip.current && f7) {
       f7Tooltip.current = f7.tooltip.create({
         targetEl: elRef.current,
-        text: tooltip,
+        text: value,
         trigger: tooltipTrigger,
       });
       return;
     }
-    if (!tooltip || !f7Tooltip.current) return;
-    f7Tooltip.current.setText(tooltip);
+    if (!value || !f7Tooltip.current) return;
+    f7Tooltip.current.setText(value);
   });
 };

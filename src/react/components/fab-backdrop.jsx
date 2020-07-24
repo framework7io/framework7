@@ -1,16 +1,13 @@
-/* eslint-disable */
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs } from '../utils/utils';
-import { colorClasses } from '../utils/mixins';
+import { getDataAttrs, classNames } from '../utils/utils';
 
 /* dts-props
   id?: string | number;
   className?: string;
   style?: React.CSSProperties;
-  COLOR_PROPS
 */
 
-const ComponentName = forwardRef((props, ref) => {
+const FabBackdrop = forwardRef((props, ref) => {
   const { className, id, style, children } = props;
   const dataAttrs = getDataAttrs(props);
 
@@ -19,6 +16,8 @@ const ComponentName = forwardRef((props, ref) => {
     el: elRef.current,
   }));
 
+  const classes = classNames(className, 'fab-backdrop');
+
   return (
     <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
       {children}
@@ -26,6 +25,6 @@ const ComponentName = forwardRef((props, ref) => {
   );
 });
 
-ComponentName.displayName = 'f7-';
+FabBackdrop.displayName = 'f7-fab-backdrop';
 
-export default ComponentName;
+export default FabBackdrop;
