@@ -1,8 +1,9 @@
 build
 node_modules
 packages
-src/core/modules/component/snabbdom
+kitchen-sink
 
+src/core/modules/component/snabbdom
 src/phenome
 src/svelte
-kitchen-sink
+src/react/components/components
