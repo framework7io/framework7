@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import { classNames, getDataAttrs, extend, isStringProp, emit } from '../utils/utils';
 import {
   colorClasses,
@@ -9,6 +9,7 @@ import {
 } from '../utils/mixins';
 import { useTooltip } from '../utils/use-tooltip';
 import { useIcon } from '../utils/use-icon';
+import { useRouteProps } from '../utils/use-route-props';
 
 /* dts-props
   id?: string | number;
@@ -92,7 +93,6 @@ const Button = forwardRef((props, ref) => {
     outlineAurora,
     outlineMd,
     disabled,
-    routeProps,
   } = props;
 
   const dataAttrs = getDataAttrs(props);
@@ -108,6 +108,8 @@ const Button = forwardRef((props, ref) => {
   }));
 
   useTooltip(elRef, props);
+
+  useRouteProps(elRef, props);
 
   const getClasses = () => {
     return classNames(
@@ -166,17 +168,6 @@ const Button = forwardRef((props, ref) => {
       linkActionsAttrs(props),
     );
   };
-
-  useEffect(() => {
-    if (routeProps && elRef.current) {
-      elRef.current.f7RouteProps = routeProps;
-    }
-    return () => {
-      if (elRef.current && elRef.current.f7RouteProps) {
-        delete elRef.current.f7RouteProps;
-      }
-    };
-  }, [routeProps]);
 
   const iconEl = useIcon(props);
   let textEl;
