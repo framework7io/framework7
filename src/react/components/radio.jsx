@@ -1,13 +1,12 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import { classNames, getDataAttrs, emit } from '../utils/utils';
 import { colorClasses } from '../utils/mixins';
 
 /* dts-props
-  id: string | number;
-  className: string;
-  style: React.CSSProperties;
+  id?: string | number;
+  className?: string;
+  style?: React.CSSProperties;
   checked? : boolean
-  indeterminate? : boolean
   name? : number | string
   value? : number | string | boolean
   disabled? : boolean
@@ -17,43 +16,35 @@ import { colorClasses } from '../utils/mixins';
   onChange? : (event?: any) => void
 */
 
-const Checkbox = forwardRef((props, ref) => {
+const Radio = forwardRef((props, ref) => {
   const {
     className,
     id,
     style,
     children,
-    name,
     value,
     disabled,
     readonly,
     checked,
     defaultChecked,
-    indeterminate,
   } = props;
+
   const dataAttrs = getDataAttrs(props);
 
   const elRef = useRef(null);
-  const inputElRef = useRef(null);
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    inputEl: inputElRef.current,
-  }));
 
   const onChange = (event) => {
     emit(props, 'change', event);
   };
 
-  useEffect(() => {
-    if (inputElRef.current) {
-      inputElRef.current.indeterminate = !!indeterminate;
-    }
-  }, [indeterminate]);
+  useImperativeHandle(ref, () => ({
+    el: elRef.current,
+  }));
 
   const inputEl = (
     <input
-      ref={inputElRef}
-      type="checkbox"
+      ref="inputEl"
+      type="radio"
       name={name}
       value={value}
       disabled={disabled}
@@ -64,12 +55,12 @@ const Checkbox = forwardRef((props, ref) => {
     />
   );
 
-  const iconEl = <i className="icon-checkbox" />;
+  const iconEl = <i className="icon-radio" />;
 
   const classes = classNames(
     className,
+    'radio',
     {
-      checkbox: true,
       disabled,
     },
     colorClasses(props),
@@ -84,6 +75,6 @@ const Checkbox = forwardRef((props, ref) => {
   );
 });
 
-Checkbox.displayName = 'f7-checkbox';
+Radio.displayName = 'f7-radio';
 
-export default Checkbox;
+export default Radio;
