@@ -3,8 +3,8 @@ import Dom7 from 'dom7';
 // IMPORT_BASE
 
 import request from './types/utils/request';
-import { getSupport, Support } from './types/utils/get-support';
-import { getDevice, Device } from './types/utils/get-device';
+import { getSupport } from './types/utils/get-support';
+import { getDevice } from './types/utils/get-device';
 import { Utils } from './types/utils/utils';
 
 // IMPORT_MODULES
@@ -16,17 +16,7 @@ declare module './types/components/app/app-class' {
   // INSTALL
 }
 
-export {
-  request,
-  getSupport,
-  Support,
-  getDevice,
-  Device,
-  Utils,
-  Template7,
-  Dom7,
-  Component,
-  ComponentOptions,
-};
-// EXPORT_COMPONENTS
+declare const utils: Utils;
+
+export { request, getSupport, getDevice, utils, Template7, Dom7, Component };
 export default Framework7;

@@ -41,7 +41,7 @@ function copyTypings() {
   });
 }
 
-function generateTypings(basePath, modules, components) {
+function generateTypings(content, modules, components) {
   const f7Base = `import Framework7 from './types/components/app/app-class'`;
 
   const helpers = ['request', 'utils', 'support', 'device'];
@@ -93,9 +93,7 @@ function generateTypings(basePath, modules, components) {
     })
     .join(', ');
 
-  return fs
-    .readFileSync(path.resolve(__dirname, '../src/core/framework7.d.ts'))
-    .replace(/{{basePath}}/g, basePath)
+  return content
     .replace(/\/\/ IMPORT_BASE/, f7Base)
     .replace(/\/\/ IMPORT_HELPERS/, importHelpers.join('\n'))
     .replace(/\/\/ EXPORT_HELPERS/, `export { ${exportHelpers} };`)
@@ -119,9 +117,17 @@ function buildTypings(cb) {
     return fs.existsSync(`./src/core/components/${file}/${file}.d.ts`);
   });
 
-  const rootTypings = generateTypings('.', modules, components);
+  const mainContent = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.d.ts'));
+  const typesContent = fs.readFileSync(path.resolve(__dirname, '../src/core/types.d.ts'));
 
-  fs.writeFileSync(`${output}/framework7.d.ts`, rootTypings);
+  const mainTypings = generateTypings(mainContent, modules, components);
+  const typesTypings = generateTypings(typesContent, modules, components).replace(
+    /\.\/types\//g,
+    './',
+  );
+
+  fs.writeFileSync(`${output}/framework7.d.ts`, mainTypings);
+  fs.writeFileSync(`${output}/types/types.d.ts`, typesTypings);
 
   cb();
 }

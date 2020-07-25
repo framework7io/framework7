@@ -1,18 +1,18 @@
-interface RequestXHR extends XMLHttpRequest {
+export interface RequestXHR extends XMLHttpRequest {
   /** Object with passed XHR request parameters */
   requestParameters?: any;
   /** String with request URL */
   requestUrl?: string;
 }
 
-interface RequestResponse {
+export interface RequestResponse {
   xhr?: RequestXHR;
   status: string;
   options: RequestParameters;
   data: any;
 }
 
-interface RequestError {
+export interface RequestError {
   xhr?: RequestXHR;
   status: string;
   options: RequestParameters;
@@ -24,7 +24,7 @@ interface AbortController {
   canceled: boolean;
 }
 
-interface RequestParameters {
+export interface RequestParameters {
   /** Request abort controller */
   abortController: AbortController;
   /** Request url */
