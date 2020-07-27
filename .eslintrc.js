@@ -55,7 +55,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/*.jsx', 'src/react/utils/*.js'],
+      files: ['**/*.jsx', 'src/react/shared/*.js'],
       rules: {
         'import/no-unresolved': ['off'],
         'import/no-extraneous-dependencies': ['off'],
