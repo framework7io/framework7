@@ -1,8 +1,8 @@
 /* eslint import/no-unresolved: ["off"] */
 /* eslint import/extensions: ["off"] */
-import Utils from '../utils/utils';
+import Utils from '../shared/utils';
 import F7ListItemContent from './list-item-content';
-import Mixins from '../utils/mixins';
+import Mixins from '../shared/mixins';
 
 /* phenome-dts-imports
 import { Tooltip as TooltipNamespace } from 'framework7/components/tooltip/tooltip';

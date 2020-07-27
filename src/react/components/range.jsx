@@ -1,8 +1,8 @@
 import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
-import { classNames, getDataAttrs, noUndefinedProps, emit } from '../utils/utils';
-import { colorClasses } from '../utils/mixins';
-import { f7ready, f7 } from '../utils/f7';
-import { watchProp } from '../utils/watch-prop';
+import { classNames, getDataAttrs, noUndefinedProps, emit } from '../shared/utils';
+import { colorClasses } from '../shared/mixins';
+import { f7ready, f7 } from '../shared/f7';
+import { watchProp } from '../shared/watch-prop';
 
 /* dts-props
   id?: string | number;

@@ -1,4 +1,4 @@
-import Utils from '../utils/utils';
+import Utils from '../shared/utils';
 
 export default {
   name: 'f7-swiper-slide',

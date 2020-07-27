@@ -1,6 +1,6 @@
-import Utils from '../utils/utils';
-import Mixins from '../utils/mixins';
-import f7 from '../utils/f7';
+import Utils from '../shared/utils';
+import Mixins from '../shared/mixins';
+import f7 from '../shared/f7';
 import RoutableModals from './routable-modals';
 
 /* phenome-dts-imports

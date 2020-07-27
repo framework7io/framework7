@@ -1,8 +1,8 @@
 import React, { forwardRef, useRef, useImperativeHandle, useState, useEffect } from 'react';
-import { classNames, getDataAttrs, emit, getSlots } from '../utils/utils';
-import { colorClasses } from '../utils/mixins';
-import { f7ready, f7 } from '../utils/f7';
-import { useTheme } from '../utils/use-theme';
+import { classNames, getDataAttrs, emit, getSlots } from '../shared/utils';
+import { colorClasses } from '../shared/mixins';
+import { f7ready, f7 } from '../shared/f7';
+import { useTheme } from '../shared/use-theme';
 
 import NavLeft from './nav-left';
 import NavTitle from './nav-title';

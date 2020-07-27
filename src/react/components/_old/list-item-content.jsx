@@ -1,7 +1,7 @@
 /* eslint import/no-unresolved: ["off"] */
 /* eslint import/extensions: ["off"] */
-import Utils from '../utils/utils';
-import Mixins from '../utils/mixins';
+import Utils from '../shared/utils';
+import Mixins from '../shared/mixins';
 
 import F7Badge from './badge';
 

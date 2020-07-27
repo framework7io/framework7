@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs } from '../utils/utils';
-import { colorClasses } from '../utils/mixins';
+import { classNames, getDataAttrs } from '../shared/utils';
+import { colorClasses } from '../shared/mixins';
 
 /* dts-props
   id?: string | number;
@@ -29,3 +29,12 @@ const ComponentName = forwardRef((props, ref) => {
 ComponentName.displayName = 'f7-';
 
 export default ComponentName;
+
+const onMount = () => {};
+
+const onDestroy = () => {};
+
+useEffect(() => {
+  onMount();
+  return onDestroy;
+});

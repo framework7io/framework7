@@ -4,10 +4,10 @@ import CardHeader from './card-header';
 import CardContent from './card-content';
 import CardFooter from './card-footer';
 
-import { classNames, getDataAttrs, getSlots, emit } from '../utils/utils';
-import { colorClasses } from '../utils/mixins';
-import { f7, f7ready } from '../utils/f7';
-import { watchProp } from '../utils/watch-prop';
+import { classNames, getDataAttrs, getSlots, emit } from '../shared/utils';
+import { colorClasses } from '../shared/mixins';
+import { f7, f7ready } from '../shared/f7';
+import { watchProp } from '../shared/watch-prop';
 
 /* dts-props
   id: string | number;

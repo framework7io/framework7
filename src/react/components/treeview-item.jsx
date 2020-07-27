@@ -1,14 +1,14 @@
 import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
-import { classNames, getDataAttrs, getSlots, emit } from '../utils/utils';
+import { classNames, getDataAttrs, getSlots, emit } from '../shared/utils';
 import {
   colorClasses,
   linkActionsAttrs,
   linkActionsClasses,
   linkRouterAttrs,
   linkRouterClasses,
-} from '../utils/mixins';
-import { useIcon } from '../utils/use-icon';
-import { f7ready, f7 } from '../utils/f7';
+} from '../shared/mixins';
+import { useIcon } from '../shared/use-icon';
+import { f7ready, f7 } from '../shared/f7';
 
 /* dts-props
   id?: string | number;

@@ -1,6 +1,6 @@
 /* eslint array-callback-return: "off" */
 /* eslint consistent-return: "off" */
-import f7 from '../utils/f7';
+import f7 from '../shared/f7';
 
 export default {
   name: 'f7-routable-modals',

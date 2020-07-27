@@ -1,8 +1,8 @@
 /* eslint array-callback-return: "off" */
 /* eslint consistent-return: "off" */
-import f7 from '../utils/f7';
-import Utils from '../utils/utils';
-import Mixins from '../utils/mixins';
+import f7 from '../shared/f7';
+import Utils from '../shared/utils';
+import Mixins from '../shared/mixins';
 
 export default {
   name: 'f7-tab',

@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs, getSlots } from '../utils/utils';
-import { colorClasses } from '../utils/mixins';
+import { classNames, getDataAttrs, getSlots } from '../shared/utils';
+import { colorClasses } from '../shared/mixins';
 
 /* dts-props
   id: string | number;

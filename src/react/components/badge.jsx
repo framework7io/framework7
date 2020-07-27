@@ -1,7 +1,7 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs } from '../utils/utils';
-import { colorClasses } from '../utils/mixins';
-import { useTooltip } from '../utils/use-tooltip';
+import { classNames, getDataAttrs } from '../shared/utils';
+import { colorClasses } from '../shared/mixins';
+import { useTooltip } from '../shared/use-tooltip';
 
 /* dts-imports
 import { Tooltip } from 'framework7/types';

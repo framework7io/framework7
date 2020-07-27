@@ -1,6 +1,6 @@
 /* eslint no-nested-ternary: off */
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs } from '../utils/utils';
+import { classNames, getDataAttrs } from '../shared/utils';
 
 /* dts-props
   id?: string | number;

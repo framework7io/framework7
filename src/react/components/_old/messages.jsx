@@ -1,5 +1,5 @@
-import Utils from '../utils/utils';
-import Mixins from '../utils/mixins';
+import Utils from '../shared/utils';
+import Mixins from '../shared/mixins';
 
 /* phenome-dts-imports
 import { Messages as MessagesNamespace } from 'framework7/components/messages/messages';

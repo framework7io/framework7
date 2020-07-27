@@ -1,7 +1,7 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs, emit } from '../utils/utils';
-import { colorClasses } from '../utils/mixins';
-import { useTheme } from '../utils/use-theme';
+import { classNames, getDataAttrs, emit } from '../shared/utils';
+import { colorClasses } from '../shared/mixins';
+import { useTheme } from '../shared/use-theme';
 
 import Link from './link';
 

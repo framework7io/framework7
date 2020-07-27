@@ -3,16 +3,14 @@ import { classNames, getDataAttrs } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 
 /* dts-props
-  id: string | number;
-  className: string;
-  style: React.CSSProperties;
-  large?: boolean;
-  medium?: boolean;
+  id?: string | number;
+  className?: string;
+  style?: React.CSSProperties;
   COLOR_PROPS
 */
 
-const BlockTitle = forwardRef((props, ref) => {
-  const { className, id, style, children, large, medium } = props;
+const ListItemCell = forwardRef((props, ref) => {
+  const { className, id, style, children } = props;
   const dataAttrs = getDataAttrs(props);
 
   const elRef = useRef(null);
@@ -20,15 +18,7 @@ const BlockTitle = forwardRef((props, ref) => {
     el: elRef.current,
   }));
 
-  const classes = classNames(
-    className,
-    'block-title',
-    {
-      'block-title-large': large,
-      'block-title-medium': medium,
-    },
-    colorClasses(props),
-  );
+  const classes = classNames(className, 'item-cell', colorClasses(props));
 
   return (
     <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
@@ -37,6 +27,6 @@ const BlockTitle = forwardRef((props, ref) => {
   );
 });
 
-BlockTitle.displayName = 'f7-block-title';
+ListItemCell.displayName = 'f7-list-item-cell';
 
-export default BlockTitle;
+export default ListItemCell;

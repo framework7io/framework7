@@ -3,16 +3,15 @@ import { classNames, getDataAttrs } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 
 /* dts-props
-  id: string | number;
-  className: string;
-  style: React.CSSProperties;
-  large?: boolean;
-  medium?: boolean;
+  id?: string | number;
+  className?: string;
+  style?: React.CSSProperties;
+  tabs?: boolean;
   COLOR_PROPS
 */
 
-const BlockTitle = forwardRef((props, ref) => {
-  const { className, id, style, children, large, medium } = props;
+const Views = forwardRef((props, ref) => {
+  const { className, id, style, children, tabs } = props;
   const dataAttrs = getDataAttrs(props);
 
   const elRef = useRef(null);
@@ -22,10 +21,9 @@ const BlockTitle = forwardRef((props, ref) => {
 
   const classes = classNames(
     className,
-    'block-title',
+    'views',
     {
-      'block-title-large': large,
-      'block-title-medium': medium,
+      tabs,
     },
     colorClasses(props),
   );
@@ -37,6 +35,6 @@ const BlockTitle = forwardRef((props, ref) => {
   );
 });
 
-BlockTitle.displayName = 'f7-block-title';
+Views.displayName = 'f7-views';
 
-export default BlockTitle;
+export default Views;

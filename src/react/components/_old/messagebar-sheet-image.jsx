@@ -1,6 +1,6 @@
 
-import Utils from '../utils/utils';
-import Mixins from '../utils/mixins';
+import Utils from '../shared/utils';
+import Mixins from '../shared/mixins';
 
 export default {
   name: 'f7-messagebar-sheet-image',

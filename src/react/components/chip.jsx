@@ -1,8 +1,8 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs, getSlots, emit } from '../utils/utils';
-import { colorClasses } from '../utils/mixins';
-import { useTooltip } from '../utils/use-tooltip';
-import { useIcon } from '../utils/use-icon';
+import { classNames, getDataAttrs, getSlots, emit } from '../shared/utils';
+import { colorClasses } from '../shared/mixins';
+import { useTooltip } from '../shared/use-tooltip';
+import { useIcon } from '../shared/use-icon';
 
 /* dts-props
   id: string | number;

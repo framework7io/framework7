@@ -6,28 +6,36 @@ import { colorClasses } from '../shared/mixins';
   id?: string | number;
   className?: string;
   style?: React.CSSProperties;
+  left? : boolean
+  right? : boolean
+  side? : string
   COLOR_PROPS
 */
 
-const NavTitleLarge = forwardRef((props, ref) => {
-  const { className, id, style, children } = props;
+const SwipeoutActions = forwardRef((props, ref) => {
+  const { className, id, style, children, left, right, side } = props;
   const dataAttrs = getDataAttrs(props);
 
   const elRef = useRef(null);
-
   useImperativeHandle(ref, () => ({
     el: elRef.current,
   }));
 
-  const classes = classNames(className, 'title-large', colorClasses(props));
+  let sideComputed = side;
+  if (!sideComputed) {
+    if (left) sideComputed = 'left';
+    if (right) sideComputed = 'right';
+  }
+
+  const classes = classNames(className, `swipeout-actions-${sideComputed}`, colorClasses(props));
 
   return (
     <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
-      <div className="title-large-text">{children}</div>
+      {children}
     </div>
   );
 });
 
-NavTitleLarge.displayName = 'f7-nav-title-large';
+SwipeoutActions.displayName = 'f7-swipeout-actions';
 
-export default NavTitleLarge;
+export default SwipeoutActions;

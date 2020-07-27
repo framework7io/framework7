@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { getDataAttrs, classNames } from '../utils/utils';
+import { getDataAttrs, classNames } from '../shared/utils';
 
 /* dts-props
   id?: string | number;
