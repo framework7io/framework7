@@ -11,7 +11,7 @@ export default {
     className: String, // phenome-react-line
     style: Object, // phenome-react-line
     tabActive: Boolean,
-    ...Mixins.colorProps,
+    ...colorProps,
   },
   state() {
     return {
@@ -24,13 +24,13 @@ export default {
     const { tabActive, id, className, style } = props;
     const tabContent = self.state.tabContent;
 
-    const classes = Utils.classNames(
+    const classes = classNames(
       className,
       'tab',
       {
         'tab-active': tabActive,
       },
-      Mixins.colorClasses(props),
+      colorClasses(props),
     );
 
     let TabContent;
@@ -59,7 +59,7 @@ export default {
     }
   },
   componentDidCreate() {
-    Utils.bindMethods(this, ['onTabShow', 'onTabHide']);
+    bindMethods(this, ['onTabShow', 'onTabHide']);
   },
   componentDidUpdate() {
     const self = this;

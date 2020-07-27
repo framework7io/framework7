@@ -56,7 +56,7 @@ export default {
     hideToolbarOnScroll: Boolean,
     messagesContent: Boolean,
     loginScreen: Boolean,
-    ...Mixins.colorProps,
+    ...colorProps,
   },
   state() {
     return {
@@ -174,7 +174,7 @@ export default {
       ? hasNavbarLarge || this.state.hasNavbarLarge
       : false;
 
-    const classes = Utils.classNames(
+    const classes = classNames(
       className,
       'page',
       this.state.routerPositionClass,
@@ -194,7 +194,7 @@ export default {
         'page-with-card-opened': this.state.hasCardExpandableOpened === true,
         'login-screen-page': loginScreen,
       },
-      Mixins.colorClasses(props),
+      colorClasses(props),
     );
 
     if (!pageContent) {
@@ -244,7 +244,7 @@ export default {
     );
   },
   componentDidCreate() {
-    Utils.bindMethods(this, [
+    bindMethods(this, [
       'onPtrPullStart',
       'onPtrPullMove',
       'onPtrPullEnd',

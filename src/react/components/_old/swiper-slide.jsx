@@ -17,7 +17,7 @@ export default {
       zoom,
     } = props;
 
-    const classes = Utils.classNames(
+    const classes = classNames(
       className,
       'swiper-slide',
     );

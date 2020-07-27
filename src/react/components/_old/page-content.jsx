@@ -30,7 +30,7 @@ export default {
     hideToolbarOnScroll: Boolean,
     messagesContent: Boolean,
     loginScreen: Boolean,
-    ...Mixins.colorProps,
+    ...colorProps,
   },
   render() {
     const self = this;
@@ -101,7 +101,7 @@ export default {
         messagesContent,
         loginScreen,
       } = props;
-      return Utils.classNames(
+      return classNames(
         className,
         'page-content',
         {
@@ -117,12 +117,12 @@ export default {
           'messages-content': messagesContent,
           'login-screen-content': loginScreen,
         },
-        Mixins.colorClasses(props),
+        colorClasses(props),
       );
     },
   },
   componentDidCreate() {
-    Utils.bindMethods(this, [
+    bindMethods(this, [
       'onPtrPullStart',
       'onPtrPullMove',
       'onPtrPullEnd',

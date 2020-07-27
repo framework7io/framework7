@@ -80,7 +80,7 @@ export default {
     // Text editor
     textEditorParams: Object,
 
-    ...Mixins.colorProps,
+    ...colorProps,
   },
   state() {
     return {
@@ -152,7 +152,7 @@ export default {
       if (inputType === 'datepicker' || inputType === 'colorpicker') {
         inputType = 'text';
       }
-      const inputClassName = Utils.classNames(
+      const inputClassName = classNames(
         !wrap && className,
         {
           resizable: inputType === 'textarea' && resizable,
@@ -323,14 +323,14 @@ export default {
     }
 
     if (wrap) {
-      const wrapClasses = Utils.classNames(
+      const wrapClasses = classNames(
         className,
         'input',
         {
           'input-outline': outline,
           'input-dropdown': dropdown === 'auto' ? type === 'select' : dropdown,
         },
-        Mixins.colorClasses(props),
+        colorClasses(props),
       );
       return (
         <div id={id} className={wrapClasses} style={style}>
@@ -356,12 +356,12 @@ export default {
     'props.colorPickerParams': function watchValue() {
       const self = this;
       if (!self.$f7 || !self.f7ColorPicker) return;
-      Utils.extend(self.f7ColorPicker.params, self.colorPickerParams || {});
+      extend(self.f7ColorPicker.params, self.colorPickerParams || {});
     },
     'props.calendarParams': function watchValue() {
       const self = this;
       if (!self.$f7 || !self.f7Calendar) return;
-      Utils.extend(self.f7Calendar.params, self.calendarParams || {});
+      extend(self.f7Calendar.params, self.calendarParams || {});
     },
     'props.value': function watchValue() {
       const self = this;
@@ -378,7 +378,7 @@ export default {
     },
   },
   componentDidCreate() {
-    Utils.bindMethods(this, 'onFocus onBlur onInput onChange onTextareaResize onInputNotEmpty onInputEmpty onInputClear'.split(' '));
+    bindMethods(this, 'onFocus onBlur onInput onChange onTextareaResize onInputNotEmpty onInputEmpty onInputClear'.split(' '));
   },
   componentDidMount() {
     const self = this;

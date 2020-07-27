@@ -20,7 +20,7 @@ export default {
     params?: Framework7Params
     routes?: Router.RouteParameters[]
     */
-    ...Mixins.colorProps,
+    ...colorProps,
   },
   render() {
     const self = this;
@@ -31,10 +31,10 @@ export default {
       className,
     } = props;
 
-    const classes = Utils.classNames(
+    const classes = classNames(
       className,
       'framework7-root',
-      Mixins.colorClasses(props),
+      colorClasses(props),
     );
 
     return (

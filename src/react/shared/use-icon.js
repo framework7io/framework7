@@ -1,8 +1,21 @@
 import React from 'react';
 import Icon from '../components/icon';
+import Badge from '../components/badge';
 
 export const useIcon = (props = {}) => {
-  const { icon, iconMaterial, iconF7, iconMd, iconIos, iconAurora, iconColor, iconSize } = props;
+  const {
+    icon,
+    iconMaterial,
+    iconF7,
+    iconMd,
+    iconIos,
+    iconAurora,
+    iconColor,
+    iconSize,
+    iconBadge,
+    badgeColor,
+    iconBadgeColor,
+  } = props;
   if (icon || iconMaterial || iconF7 || iconMd || iconIos || iconAurora) {
     return (
       <Icon
@@ -14,7 +27,9 @@ export const useIcon = (props = {}) => {
         aurora={iconAurora}
         color={iconColor}
         size={iconSize}
-      />
+      >
+        {iconBadge && <Badge color={badgeColor || iconBadgeColor}>{iconBadge}</Badge>}
+      </Icon>
     );
   }
   return null;

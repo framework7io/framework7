@@ -62,7 +62,7 @@ export default {
     // Virtual List
     virtualList: Boolean,
     virtualListParams: Object,
-    ...Mixins.colorProps,
+    ...colorProps,
   },
   render() {
     const self = this;
@@ -78,7 +78,7 @@ export default {
     const rootChildrenBeforeList = [];
     const rootChildrenAfterList = [];
     const ulChildren = slotsList || [];
-    const flattenSlots = Utils.flattenArray(slotsDefault);
+    const flattenSlots = flattenArray(slotsDefault);
 
     let wasUlChild = false;
     flattenSlots.forEach((child) => {
@@ -191,7 +191,7 @@ export default {
         chevronCenter,
       } = props;
 
-      return Utils.classNames(
+      return classNames(
         className,
         'list',
         {
@@ -227,12 +227,12 @@ export default {
           'no-chevron': noChevron,
           'chevron-center': chevronCenter,
         },
-        Mixins.colorClasses(props),
+        colorClasses(props),
       );
     },
   },
   componentDidCreate() {
-    Utils.bindMethods(this, [
+    bindMethods(this, [
       'onSortableEnable',
       'onSortableDisable',
       'onSortableSort',
@@ -264,7 +264,7 @@ export default {
       const vlParams = virtualListParams || {};
       if (!vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) return;
 
-      self.f7VirtualList = f7.virtualList.create(Utils.extend(
+      self.f7VirtualList = f7.virtualList.create(extend(
         {
           el,
           on: {

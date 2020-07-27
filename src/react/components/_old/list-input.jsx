@@ -96,7 +96,7 @@ export default {
     textEditorParams: Object,
 
     // Colors
-    ...Mixins.colorProps,
+    ...colorProps,
   },
   state(props) {
     return {
@@ -179,7 +179,7 @@ export default {
       if (inputType === 'datepicker' || inputType === 'colorpicker') {
         inputType = 'text';
       }
-      const inputClassName = Utils.classNames(
+      const inputClassName = classNames(
         {
           resizable: inputType === 'textarea' && resizable,
           'no-store-data': (noFormStoreData || noStoreData || ignoreStoreData),
@@ -324,11 +324,11 @@ export default {
     const hasErrorMessage = !!errorMessage || (self.slots['error-message'] && self.slots['error-message'].length);
 
     const ItemContent = (
-      <div ref="itemContentEl" className={Utils.classNames(
+      <div ref="itemContentEl" className={classNames(
         'item-content item-input',
         !wrap && className,
         !wrap && { disabled },
-        !wrap && Mixins.colorClasses(props),
+        !wrap && colorClasses(props),
         {
           'inline-label': inlineLabel,
           'item-input-outline': outline,
@@ -350,12 +350,12 @@ export default {
         <div className="item-inner">
           <slot name="inner-start"/>
           {(label || self.slots.label) && (
-            <div className={Utils.classNames('item-title item-label', { 'item-floating-label': floatingLabel })}>
+            <div className={classNames('item-title item-label', { 'item-floating-label': floatingLabel })}>
               {label}
               <slot name="label"/>
             </div>
           )}
-          <div className={Utils.classNames('item-input-wrap', {
+          <div className={classNames('item-input-wrap', {
             'input-dropdown': dropdown === 'auto' ? type === 'select' : dropdown,
           })}>
             {inputEl}
@@ -387,10 +387,10 @@ export default {
       return ItemContent;
     }
     return (
-      <li ref="el" id={id} style={style} className={Utils.classNames(
+      <li ref="el" id={id} style={style} className={classNames(
         className,
         { disabled },
-        Mixins.colorClasses(props),
+        colorClasses(props),
       )}>
         <slot name="root-start" />
         {ItemContent}
@@ -404,12 +404,12 @@ export default {
     'props.colorPickerParams': function watchValue() {
       const self = this;
       if (!self.$f7 || !self.f7ColorPicker) return;
-      Utils.extend(self.f7ColorPicker.params, self.colorPickerParams || {});
+      extend(self.f7ColorPicker.params, self.colorPickerParams || {});
     },
     'props.calendarParams': function watchValue() {
       const self = this;
       if (!self.$f7 || !self.f7Calendar) return;
-      Utils.extend(self.f7Calendar.params, self.calendarParams || {});
+      extend(self.f7Calendar.params, self.calendarParams || {});
     },
     'props.value': function watchValue() {
       const self = this;
@@ -424,7 +424,7 @@ export default {
     },
   },
   componentDidCreate() {
-    Utils.bindMethods(this, 'onChange onInput onFocus onBlur onTextareaResize onInputNotEmpty onInputEmpty onInputClear'.split(' '));
+    bindMethods(this, 'onChange onInput onFocus onBlur onTextareaResize onInputNotEmpty onInputEmpty onInputClear'.split(' '));
   },
   componentDidMount() {
     const self = this;

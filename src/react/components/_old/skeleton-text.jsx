@@ -13,7 +13,7 @@ export default {
       type: String,
       default: 'span',
     },
-    ...Mixins.colorProps,
+    ...colorProps,
   },
   render() {
     const props = this.props;
@@ -26,10 +26,10 @@ export default {
       tag,
     } = props;
 
-    const classes = Utils.classNames(
+    const classes = classNames(
       'skeleton-text',
       className,
-      Mixins.colorClasses(props),
+      colorClasses(props),
     );
 
     let styleAttribute = style;

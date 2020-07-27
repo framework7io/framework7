@@ -35,7 +35,7 @@ export default {
     readonly: Boolean,
     required: Boolean,
     disabled: Boolean,
-    ...Mixins.colorProps,
+    ...colorProps,
   },
   render() {
     const self = this;
@@ -288,7 +288,7 @@ export default {
     // Finalize
     const ItemContentTag = checkbox || radio ? 'label' : 'div';
 
-    const classes = Utils.classNames(
+    const classes = classNames(
       className,
       'item-content',
       {
@@ -297,7 +297,7 @@ export default {
         'item-radio-icon-start': radio && radioIcon === 'start',
         'item-radio-icon-end': radio && radioIcon === 'end',
       },
-      Mixins.colorClasses(props),
+      colorClasses(props),
     );
     return (
       <ItemContentTag
@@ -317,7 +317,7 @@ export default {
     );
   },
   componentDidCreate() {
-    Utils.bindMethods(this, 'onClick onChange'.split(' '));
+    bindMethods(this, 'onClick onChange'.split(' '));
   },
   componentDidMount() {
     const self = this;

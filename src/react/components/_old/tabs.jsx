@@ -14,29 +14,29 @@ export default {
       type: Object,
       default: undefined,
     },
-    ...Mixins.colorProps,
+    ...colorProps,
   },
   render() {
     const self = this;
     const props = self.props;
     const { animated, swipeable, id, style, className, routable } = props;
 
-    const classes = Utils.classNames(
+    const classes = classNames(
       className,
-      Mixins.colorClasses(props),
+      colorClasses(props),
     );
-    const wrapClasses = Utils.classNames({
+    const wrapClasses = classNames({
       'tabs-animated-wrap': animated,
       'tabs-swipeable-wrap': swipeable,
     });
-    const tabsClasses = Utils.classNames({
+    const tabsClasses = classNames({
       tabs: true,
       'tabs-routable': routable,
     });
 
     if (animated || swipeable) {
       return (
-        <div id={id} style={style} className={Utils.classNames(wrapClasses, classes)} ref="wrapEl">
+        <div id={id} style={style} className={classNames(wrapClasses, classes)} ref="wrapEl">
           <div className={tabsClasses}>
             <slot />
           </div>
@@ -45,7 +45,7 @@ export default {
     }
 
     return (
-      <div id={id} style={style} className={Utils.classNames(tabsClasses, classes)}>
+      <div id={id} style={style} className={classNames(tabsClasses, classes)}>
         <slot />
       </div>
     );

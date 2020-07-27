@@ -15,7 +15,7 @@ export default {
       type: Boolean,
       default: true,
     },
-    ...Mixins.colorProps,
+    ...colorProps,
   },
   render() {
     const self = this;
@@ -41,10 +41,10 @@ export default {
       buttonPrevEl = <div ref="prevEl" className="swiper-button-prev" />;
     }
 
-    const classes = Utils.classNames(
+    const classes = classNames(
       className,
       'swiper-container',
-      Mixins.colorClasses(props),
+      colorClasses(props),
     );
     return (
       <div id={id} style={style} ref="el" className={classes}>
@@ -104,7 +104,7 @@ export default {
         scrollbar: {},
       };
       const { params, pagination, navigation, scrollbar } = self.props;
-      if (params) Utils.extend(newParams, params);
+      if (params) extend(newParams, params);
       if (pagination && !newParams.pagination.el) newParams.pagination.el = self.refs.paginationEl;
       if (navigation && !newParams.navigation.nextEl && !newParams.navigation.prevEl) {
         newParams.navigation.nextEl = self.refs.nextEl;

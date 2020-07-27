@@ -81,9 +81,9 @@ export default {
     required: Boolean,
     disabled: Boolean,
     virtualListIndex: Number,
-    ...Mixins.colorProps,
-    ...Mixins.linkRouterProps,
-    ...Mixins.linkActionsProps,
+    ...colorProps,
+    ...linkRouterProps,
+    ...linkActionsProps,
   },
   state(props) {
     return {
@@ -209,19 +209,19 @@ export default {
         const linkAttrs = {
           href: link === true ? '' : link || href,
           target,
-          'data-tab': (Utils.isStringProp(tabLink) && tabLink) || undefined,
-          ...Mixins.linkRouterAttrs(props),
-          ...Mixins.linkActionsAttrs(props),
+          'data-tab': (isStringProp(tabLink) && tabLink) || undefined,
+          ...linkRouterAttrs(props),
+          ...linkActionsAttrs(props),
         };
-        const linkClasses = Utils.classNames(
+        const linkClasses = classNames(
           {
             'item-link': true,
             'smart-select': smartSelect,
             'tab-link': tabLink || tabLink === '',
             'tab-link-active': tabLinkActive,
           },
-          Mixins.linkRouterClasses(props),
-          Mixins.linkActionsClasses(props),
+          linkRouterClasses(props),
+          linkActionsClasses(props),
         );
         linkEl = (
           <a
@@ -235,7 +235,7 @@ export default {
       }
     }
 
-    const liClasses = Utils.classNames(
+    const liClasses = classNames(
       className,
       {
         'item-divider': divider,
@@ -249,7 +249,7 @@ export default {
         'chevron-center': chevronCenter,
         'disallow-sorting': sortable === false,
       },
-      Mixins.colorClasses(props),
+      colorClasses(props),
     );
 
     if (divider || groupTitle) {
@@ -318,7 +318,7 @@ export default {
     },
   },
   componentDidCreate() {
-    Utils.bindMethods(this, [
+    bindMethods(this, [
       'onClick',
       'onChange',
       'onSwipeoutOpen',
@@ -385,7 +385,7 @@ export default {
         f7.on('accordionClosed', self.onAccClosed);
       }
       if (smartSelect) {
-        const ssParams = Utils.extend(
+        const ssParams = extend(
           { el: el.querySelector('a.smart-select') },
           smartSelectParams || {},
         );

@@ -90,7 +90,7 @@ export default {
       default: true,
     },
 
-    ...Mixins.colorProps,
+    ...colorProps,
   },
   state() {
     return {
@@ -109,7 +109,7 @@ export default {
       className,
     } = props;
 
-    const classes = Utils.classNames(
+    const classes = classNames(
       className,
       'view',
       {
@@ -117,7 +117,7 @@ export default {
         'tab-active': tabActive,
         tab,
       },
-      Mixins.colorClasses(props),
+      colorClasses(props),
     );
 
     return (
@@ -141,7 +141,7 @@ export default {
   },
   componentDidCreate() {
     const self = this;
-    Utils.bindMethods(self, [
+    bindMethods(self, [
       'onSwipeBackMove',
       'onSwipeBackBeforeChange',
       'onSwipeBackAfterChange',
@@ -176,9 +176,9 @@ export default {
           init: self.onViewInit,
         },
         // phenome-vue-next-line
-        ...Utils.noUndefinedProps(self.$options.propsData || {}),
+        ...noUndefinedProps(self.$options.propsData || {}),
         // phenome-react-next-line
-        ...Utils.noUndefinedProps(self.props),
+        ...noUndefinedProps(self.props),
       });
       self.f7View = self.routerData.instance;
       self.f7View.on('resize', self.onResize);
