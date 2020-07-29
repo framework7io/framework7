@@ -2,10 +2,10 @@ import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import { classNames, getDataAttrs, emit } from '../shared/utils';
 import {
   colorClasses,
-  linkRouterAttrs,
-  linkRouterClasses,
-  linkActionsAttrs,
-  linkActionsClasses,
+  routerAttrs,
+  routerClasses,
+  actionsAttrs,
+  actionsClasses,
 } from '../shared/mixins';
 import { useRouteProps } from '../shared/use-route-props';
 
@@ -51,8 +51,8 @@ const MenuDropdownItem = forwardRef((props, ref) => {
     },
     className,
     colorClasses(props),
-    linkRouterClasses(props),
-    linkActionsClasses(props),
+    routerClasses(props),
+    actionsClasses(props),
     {
       'menu-close': typeof menuClose === 'undefined',
     },
@@ -63,8 +63,8 @@ const MenuDropdownItem = forwardRef((props, ref) => {
   const attrs = {
     href: hrefComputed,
     target,
-    ...linkRouterAttrs(props),
-    ...linkActionsAttrs(props),
+    ...routerAttrs(props),
+    ...actionsAttrs(props),
   };
 
   return (

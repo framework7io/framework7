@@ -22,7 +22,7 @@ export function colorClasses(props) {
     [`ripple-color-${rippleColor}`]: rippleColor,
   };
 }
-export const linkIconProps = {
+export const iconProps = {
   icon: String,
   iconMaterial: String,
   iconF7: String,
@@ -54,7 +54,7 @@ export const linkRouterProps = {
   preventRouter: Boolean,
   transition: String,
 };
-export function linkRouterAttrs(props) {
+export function routerAttrs(props) {
   const {
     force,
     reloadCurrent,
@@ -91,7 +91,7 @@ export function linkRouterAttrs(props) {
     'data-transition': isStringProp(transition) ? transition : undefined,
   };
 }
-export function linkRouterClasses(props) {
+export function routerClasses(props) {
   const { back, linkBack, external, preventRouter } = props;
 
   return {
@@ -148,7 +148,7 @@ export const linkActionsProps = {
     default: undefined,
   },
 };
-export function linkActionsAttrs(props) {
+export function actionsAttrs(props) {
   const {
     searchbarEnable,
     searchbarDisable,
@@ -215,7 +215,7 @@ export function linkActionsAttrs(props) {
       (isStringProp(cardOpen) && cardOpen) || (isStringProp(cardClose) && cardClose) || undefined,
   };
 }
-export function linkActionsClasses(props) {
+export function actionsClasses(props) {
   const {
     searchbarEnable,
     searchbarDisable,

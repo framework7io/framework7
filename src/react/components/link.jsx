@@ -2,10 +2,10 @@ import React, { forwardRef, useRef, useImperativeHandle, useEffect, useState } f
 import { classNames, getDataAttrs, isStringProp, emit, extend } from '../shared/utils';
 import {
   colorClasses,
-  linkRouterAttrs,
-  linkRouterClasses,
-  linkActionsAttrs,
-  linkActionsClasses,
+  routerAttrs,
+  routerClasses,
+  actionsAttrs,
+  actionsClasses,
 } from '../shared/mixins';
 import { useIcon } from '../shared/use-icon';
 import { useRouteProps } from '../shared/use-route-props';
@@ -146,8 +146,8 @@ const Link = forwardRef((props, ref) => {
       'smart-select': smartSelect,
     },
     colorClasses(props),
-    linkRouterClasses(props),
-    linkActionsClasses(props),
+    routerClasses(props),
+    actionsClasses(props),
   );
 
   let hrefComputed = href;
@@ -157,8 +157,8 @@ const Link = forwardRef((props, ref) => {
     href: hrefComputed,
     target,
     'data-tab': (isStringProp(tabLink) && tabLink) || undefined,
-    ...linkRouterAttrs(props),
-    ...linkActionsAttrs(props),
+    ...routerAttrs(props),
+    ...actionsAttrs(props),
   };
 
   return (

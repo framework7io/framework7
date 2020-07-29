@@ -2,10 +2,10 @@ import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import { classNames, getDataAttrs, extend, isStringProp, emit } from '../shared/utils';
 import {
   colorClasses,
-  linkActionsAttrs,
-  linkActionsClasses,
-  linkRouterAttrs,
-  linkRouterClasses,
+  actionsAttrs,
+  actionsClasses,
+  routerAttrs,
+  routerClasses,
 } from '../shared/mixins';
 import { useTooltip } from '../shared/use-tooltip';
 import { useIcon } from '../shared/use-icon';
@@ -148,8 +148,8 @@ const Button = forwardRef((props, ref) => {
         disabled,
       },
       colorClasses(props),
-      linkRouterClasses(props),
-      linkActionsClasses(props),
+      routerClasses(props),
+      actionsClasses(props),
     );
   };
 
@@ -164,8 +164,8 @@ const Button = forwardRef((props, ref) => {
         type,
         'data-tab': (isStringProp(tabLink) && tabLink) || undefined,
       },
-      linkRouterAttrs(props),
-      linkActionsAttrs(props),
+      routerAttrs(props),
+      actionsAttrs(props),
     );
   };
 

@@ -2,10 +2,10 @@ import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react
 import { classNames, getDataAttrs, getSlots, emit } from '../shared/utils';
 import {
   colorClasses,
-  linkRouterAttrs,
-  linkRouterClasses,
-  linkActionsClasses,
-  linkActionsAttrs,
+  routerAttrs,
+  routerClasses,
+  actionsClasses,
+  actionsAttrs,
 } from '../shared/mixins';
 import { useRouteProps } from '../shared/use-route-props';
 import { useIcon } from '../shared/use-icon';
@@ -85,8 +85,8 @@ const MenuItem = forwardRef((props, ref) => {
     },
     className,
     colorClasses(props),
-    linkRouterClasses(props),
-    linkActionsClasses(props),
+    routerClasses(props),
+    actionsClasses(props),
   );
 
   let hrefComputed = href;
@@ -95,8 +95,8 @@ const MenuItem = forwardRef((props, ref) => {
   const attrs = {
     href: hrefComputed,
     target,
-    ...linkRouterAttrs(props),
-    ...linkActionsAttrs(props),
+    ...routerAttrs(props),
+    ...actionsAttrs(props),
   };
 
   return (

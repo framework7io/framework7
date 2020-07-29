@@ -2,10 +2,10 @@ import React, { forwardRef, useRef, useImperativeHandle, useEffect, useState } f
 import { classNames, getDataAttrs, getSlots, emit, isStringProp, extend } from '../shared/utils';
 import {
   colorClasses,
-  linkActionsAttrs,
-  linkActionsClasses,
-  linkRouterAttrs,
-  linkRouterClasses,
+  actionsAttrs,
+  actionsClasses,
+  routerAttrs,
+  routerClasses,
 } from '../shared/mixins';
 import { useRouteProps } from '../shared/use-route-props';
 import { useTooltip } from '../shared/use-tooltip';
@@ -551,8 +551,8 @@ const ListItem = forwardRef((props, ref) => {
         href: link === true ? '' : link || href,
         target,
         'data-tab': (isStringProp(tabLink) && tabLink) || undefined,
-        ...linkRouterAttrs(props),
-        ...linkActionsAttrs(props),
+        ...routerAttrs(props),
+        ...actionsAttrs(props),
       };
       const linkClasses = classNames(
         {
@@ -561,8 +561,8 @@ const ListItem = forwardRef((props, ref) => {
           'tab-link': tabLink || tabLink === '',
           'tab-link-active': tabLinkActive,
         },
-        linkRouterClasses(props),
-        linkActionsClasses(props),
+        routerClasses(props),
+        actionsClasses(props),
       );
       linkEl = (
         <a ref={linkElRef} className={linkClasses} {...linkAttrs} onClick={onClick}>

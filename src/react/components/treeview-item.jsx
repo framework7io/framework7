@@ -2,10 +2,10 @@ import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react
 import { classNames, getDataAttrs, getSlots, emit } from '../shared/utils';
 import {
   colorClasses,
-  linkActionsAttrs,
-  linkActionsClasses,
-  linkRouterAttrs,
-  linkRouterClasses,
+  actionsAttrs,
+  actionsClasses,
+  routerAttrs,
+  routerClasses,
 } from '../shared/mixins';
 import { useIcon } from '../shared/use-icon';
 import { f7ready, f7 } from '../shared/f7';
@@ -120,8 +120,8 @@ const TreeviewItem = forwardRef((props, ref) => {
       'treeview-item-selected': selected,
       'treeview-item-toggle': itemToggle,
     },
-    linkRouterClasses(props),
-    linkActionsClasses(props),
+    routerClasses(props),
+    actionsClasses(props),
   );
 
   let href = link;
@@ -129,8 +129,8 @@ const TreeviewItem = forwardRef((props, ref) => {
   if (link === false) href = undefined; // no href attribute
   const itemRootAttrs = {
     href,
-    ...linkRouterAttrs(props),
-    ...linkActionsAttrs(props),
+    ...routerAttrs(props),
+    ...actionsAttrs(props),
   };
 
   return (
