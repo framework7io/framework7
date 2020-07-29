@@ -1,2 +1,3 @@
 - rename Framework7Params -> Framework7Parameters
 - export Framework7Parameters, Router in f7/types
+- remove "cjs"/"esm" suffixes on f7-core main files
