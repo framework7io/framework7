@@ -23,9 +23,9 @@ import { f7ready, f7 } from '../shared/f7';
   loadChildren? : boolean
   link? : boolean | string
   COLOR_PROPS
-  LINK_ACTIONS_PROPS
-  LINK_ROUTER_PROPS
-  LINK_ICON_PROPS
+  ACTIONS_PROPS
+  ROUTER_PROPS
+  ICON_PROPS
   onClick? : (event?: any) => void
   onTreeviewOpen? : (el?: HTMLElement) => void
   onTreeviewClose? : (el?: HTMLElement) => void

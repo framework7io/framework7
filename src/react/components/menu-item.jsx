@@ -16,9 +16,9 @@ import { f7ready, f7 } from '../shared/f7';
   className?: string;
   style?: React.CSSProperties;
   COLOR_PROPS
-  LINK_ICON_PROPS
-  LINK_ROUTER_PROPS
-  LINK_ACTIONS_PROPS
+  ICON_PROPS
+  ROUTER_PROPS
+  ACTIONS_PROPS
 */
 
 const MenuItem = forwardRef((props, ref) => {

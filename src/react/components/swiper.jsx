@@ -1,1 +1,3 @@
-export { Swiper } from 'swiper/react';
+import { Swiper } from 'swiper/react';
+
+export default Swiper;

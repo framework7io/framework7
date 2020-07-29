@@ -38,9 +38,9 @@ import { SmartSelect } from 'framework7/types';
   smartSelect? : boolean
   smartSelectParams? : SmartSelect.Parameters;
   COLOR_PROPS
-  LINK_ICON_PROPS
-  LINK_ACTIONS_PROPS
-  LINK_ROUTER_PROPS
+  ICON_PROPS
+  ACTIONS_PROPS
+  ROUTER_PROPS
   onClick? : (event?: any) => void
 */
 

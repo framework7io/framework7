@@ -1,1 +1,3 @@
-export { SkeletonAvatar } from '@skeleton-elements/react';
+import { SkeletonAvatar } from '@skeleton-elements/react';
+
+export default SkeletonAvatar;

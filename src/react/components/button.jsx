@@ -50,9 +50,9 @@ import { useRouteProps } from '../shared/use-route-props';
   tooltip? : string
   tooltipTrigger? : string
   COLOR_PROPS
-  LINK_ICON_PROPS
-  LINK_ROUTER_PROPS
-  LINK_ACTIONS_PROPS
+  ICON_PROPS
+  ROUTER_PROPS
+  ACTIONS_PROPS
 */
 
 const Button = forwardRef((props, ref) => {

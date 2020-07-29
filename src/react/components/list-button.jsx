@@ -24,8 +24,8 @@ import { useRouteProps } from '../shared/use-route-props';
   tooltip? : string
   tooltipTrigger? : string
   COLOR_PROPS
-  LINK_ROUTER_PROPS
-  LINK_ACTIONS_PROPS
+  ROUTER_PROPS
+  ACTIONS_PROPS
   onClick? : (event?: any) => void
 */
 

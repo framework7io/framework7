@@ -64,8 +64,8 @@ import { SmartSelect } from 'framework7/types';
   disabled? : boolean
   virtualListIndex? : number
   COLOR_PROPS
-  LINK_ROUTER_PROPS
-  LINK_ACTIONS_PROPS
+  ROUTER_PROPS
+  ACTIONS_PROPS
   onClick? : (event?: any) => void
   onSwipeoutOverswipeEnter? : (...args: any[]) => void
   onSwipeoutOverswipeExit? : (...args: any[]) => void

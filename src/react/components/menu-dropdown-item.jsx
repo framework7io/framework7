@@ -19,8 +19,8 @@ import { useRouteProps } from '../shared/use-route-props';
   target? : string;
   divider? : boolean;
   COLOR_PROPS
-  LINK_ROUTER_PROPS
-  LINK_ACTIONS_PROPS
+  ROUTER_PROPS
+  ACTIONS_PROPS
   onClick? : (event?: any) => void;
 */
 
