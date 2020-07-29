@@ -1,0 +1,2 @@
+- rename Framework7Params -> Framework7Parameters
+- export Framework7Parameters, Router in f7/types

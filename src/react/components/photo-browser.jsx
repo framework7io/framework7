@@ -187,7 +187,7 @@ const PhotoBrowser = forwardRef((props, ref) => {
   useEffect(() => {
     onMount();
     return onDestroy;
-  });
+  }, []);
 
   return null;
 });

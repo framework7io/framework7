@@ -306,7 +306,7 @@ const Input = forwardRef((props, ref) => {
   useEffect(() => {
     onMount();
     return onDestroy;
-  });
+  }, []);
 
   useEffect(() => {
     if (!f7) return;

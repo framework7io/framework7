@@ -82,7 +82,7 @@ const Toggle = forwardRef((props, ref) => {
   useEffect(() => {
     onMount();
     return onDestroy;
-  });
+  }, []);
 
   const labelClasses = classNames(
     'toggle',

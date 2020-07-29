@@ -103,7 +103,7 @@ const Link = forwardRef((props, ref) => {
   useEffect(() => {
     onMount();
     return onDestroy;
-  });
+  }, []);
 
   useEffect(() => {
     if (!elRef.current || !f7) return;

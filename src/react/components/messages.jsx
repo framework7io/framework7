@@ -134,7 +134,7 @@ const Messages = forwardRef((props, ref) => {
   useEffect(() => {
     onMount();
     return onDestroy;
-  });
+  }, []);
 
   useLayoutEffect(() => {
     if (!init || elRef.current) return;

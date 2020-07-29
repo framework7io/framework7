@@ -181,7 +181,7 @@ const Panel = forwardRef((props, ref) => {
   useEffect(() => {
     onMount();
     return onDestroy;
-  });
+  }, []);
 
   const sideComputed = side || (left ? 'left' : 'right');
   const effectComputed = effect || (reveal ? 'reveal' : 'cover');

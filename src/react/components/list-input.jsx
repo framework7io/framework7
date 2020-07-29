@@ -317,7 +317,7 @@ const ListInput = forwardRef((props, ref) => {
   useEffect(() => {
     onMount();
     return onDestroy;
-  });
+  }, []);
 
   useEffect(() => {
     const listEl = listElRef.current;

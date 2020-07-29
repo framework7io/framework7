@@ -36,10 +36,6 @@ export default {
           options.props || {},
         ),
       };
-      if (viewRouter.component) {
-        viewRouter.component.$f7router = router;
-        viewRouter.component.$f7route = options.route;
-      }
 
       let resolved;
       function onDidUpdate(componentRouterData) {
@@ -128,11 +124,6 @@ export default {
         ),
       };
 
-      if (tabRouter.component) {
-        tabRouter.component.$f7router = router;
-        tabRouter.component.$f7route = options.route;
-      }
-
       let resolved;
       function onDidUpdate(componentRouterData) {
         if (componentRouterData !== tabRouter || resolved) return;
@@ -157,8 +148,7 @@ export default {
           tabRouter = tabData;
         }
       });
-      const hasComponent = tabRouter && tabRouter.component;
-      if (!tabRouter || !hasComponent) {
+      if (!tabRouter) {
         tabEl.innerHTML = ''; // eslint-disable-line
         return;
       }
@@ -188,10 +178,6 @@ export default {
           options.props || {},
         ),
       };
-      if (modalsRouter.component) {
-        modalsRouter.component.$f7router = router;
-        modalsRouter.component.$f7route = options.route;
-      }
 
       let resolved;
       function onDidUpdate() {

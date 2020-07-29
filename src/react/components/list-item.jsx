@@ -496,12 +496,15 @@ const ListItem = forwardRef((props, ref) => {
   useEffect(() => {
     onMount();
     return onDestroy;
-  });
+  }, []);
 
   useEffect(() => {
     if (inputElRef.current) {
-      inputElRef.current.indeterminate = indeterminate;
+      inputElRef.current.indeterminate = !!indeterminate;
     }
+  }, [indeterminate]);
+
+  useEffect(() => {
     if (!listElRef.current || listElRef.current.length === 0) return;
     const isMediaNow = listElRef.current.hasClass('media-list');
     const isSimpleNow = listElRef.current.hasClass('simple-list');

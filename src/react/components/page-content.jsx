@@ -124,7 +124,7 @@ const PageContent = forwardRef((props, ref) => {
   useEffect(() => {
     onMount();
     return onDestroy;
-  });
+  }, []);
 
   let ptrEl;
   let infiniteEl;

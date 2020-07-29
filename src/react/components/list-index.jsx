@@ -93,7 +93,7 @@ const ListIndex = forwardRef((props, ref) => {
   useEffect(() => {
     onMount();
     return onDestroy;
-  });
+  }, []);
 
   const classes = classNames(className, 'list-index', colorClasses(props));
 

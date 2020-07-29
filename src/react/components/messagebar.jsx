@@ -218,7 +218,7 @@ const Messagebar = forwardRef((props, ref) => {
   useEffect(() => {
     onMount();
     return onDestroy;
-  });
+  }, []);
 
   const slots = getSlots(props);
 

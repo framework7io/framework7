@@ -205,7 +205,7 @@ const Searchbar = forwardRef((props, ref) => {
   useEffect(() => {
     onMount();
     return onDestroy;
-  });
+  }, []);
 
   let clearEl;
   let disableEl;
