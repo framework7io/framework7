@@ -20,4 +20,7 @@ packages/core/**/*.map
 packages/core/components
 packages/core/modules
 packages/core/utils
+packages/react/**/*.js
+packages/react/**/*.ts
+packages/react/components
 woff2/
