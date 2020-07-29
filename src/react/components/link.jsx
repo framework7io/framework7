@@ -14,6 +14,10 @@ import { f7ready, f7 } from '../shared/f7';
 
 import Badge from './badge';
 
+/* dts-imports
+import { SmartSelect } from 'framework7/types';
+*/
+
 /* dts-props
   id?: string | number;
   className?: string;
@@ -32,7 +36,7 @@ import Badge from './badge';
   tooltip? : string
   tooltipTrigger? : string
   smartSelect? : boolean
-  smartSelectParams? : Object
+  smartSelectParams? : SmartSelect.Parameters;
   COLOR_PROPS
   LINK_ICON_PROPS
   LINK_ACTIONS_PROPS
