@@ -15,7 +15,17 @@ import { colorClasses } from '../shared/mixins';
 */
 
 const Appbar = forwardRef((props, ref) => {
-  const { className, id, style, inner, innerClass, innerClassName, noShadow, noHairline } = props;
+  const {
+    className,
+    id,
+    style,
+    children,
+    inner,
+    innerClass,
+    innerClassName,
+    noShadow,
+    noHairline,
+  } = props;
 
   const dataAttrs = getDataAttrs(props);
 
@@ -28,9 +38,7 @@ const Appbar = forwardRef((props, ref) => {
 
   if (inner) {
     innerEl = (
-      <div className={classNames('appbar-inner', innerClass, innerClassName)}>
-        <slot />
-      </div>
+      <div className={classNames('appbar-inner', innerClass, innerClassName)}>{children}</div>
     );
   }
   const classes = classNames(

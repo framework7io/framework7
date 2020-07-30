@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useState, useEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useState, useLayoutEffect } from 'react';
 import { classNames, getDataAttrs, emit, getSlots } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
@@ -171,12 +171,12 @@ const Navbar = forwardRef((props, ref) => {
     f7.off('navbarTransparentHide', onNavbarTransparentHide);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!f7 || !elRef.current) return;
     f7.navbar.size(elRef.current);
   });
@@ -253,7 +253,7 @@ const Navbar = forwardRef((props, ref) => {
       <div className="title-large">
         <div className="title-large-text">
           {largeTitle || ''}
-          <slot name="title-large" />
+          {slots['title-large']}
         </div>
       </div>
     );

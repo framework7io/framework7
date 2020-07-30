@@ -64,22 +64,22 @@ const Message = forwardRef((props, ref) => {
     emit(props, 'click', event);
   };
   const onNameClick = (event) => {
-    emit(props, 'click:name clickName', event);
+    emit(props, 'clickName', event);
   };
   const onTextClick = (event) => {
-    emit(props, 'click:text clickText', event);
+    emit(props, 'clickText', event);
   };
   const onAvatarClick = (event) => {
-    emit(props, 'click:avatar clickAvatar', event);
+    emit(props, 'clickAvatar', event);
   };
   const onHeaderClick = (event) => {
-    emit(props, 'click:header clickHeader', event);
+    emit(props, 'clickHeader', event);
   };
   const onFooterClick = (event) => {
-    emit(props, 'click:footer clickFooter', event);
+    emit(props, 'clickFooter', event);
   };
   const onBubbleClick = (event) => {
-    emit(props, 'click:bubble clickBubble', event);
+    emit(props, 'clickBubble', event);
   };
 
   useImperativeHandle(ref, () => ({

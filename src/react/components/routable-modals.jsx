@@ -18,7 +18,9 @@ const RoutableModals = forwardRef((props, ref) => {
     routerData.current = {
       modals,
       el: elRef.current,
-      setModals,
+      setModals(newModals) {
+        setModals([...newModals])
+      },
     };
     f7routers.modals = routerData.current;
   };

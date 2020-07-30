@@ -288,7 +288,7 @@ const ListInput = forwardRef((props, ref) => {
     });
 
     listElRef.current = f7
-      .$$(elRef.current || itemContentElRef.current)
+      .$(elRef.current || itemContentElRef.current)
       .parents('.list, .list-group')
       .eq(0);
     if (listElRef.current.length) {
@@ -394,10 +394,9 @@ const ListInput = forwardRef((props, ref) => {
       if ('value' in props) valueProps.value = inputValue;
       if ('defaultValue' in props) valueProps.defaultValue = defaultValue;
     }
-
     return (
       <InputTag
-        ref="inputEl"
+        ref={inputElRef}
         style={inputStyle}
         name={name}
         type={needsType ? inputType : undefined}
@@ -466,7 +465,7 @@ const ListInput = forwardRef((props, ref) => {
         />
       );
     } else {
-      inputEl = createInput('input', props);
+      inputEl = createInput('input');
     }
   }
 
@@ -492,16 +491,16 @@ const ListInput = forwardRef((props, ref) => {
         },
       )}
     >
-      <slot name="content-start" />
+      {slots['content-start']}
 
       {(media || slots.media) && (
         <div className="item-media">
           {media && <img src={media} />}
-          <slot name="media" />
+          {slots.media}
         </div>
       )}
       <div className="item-inner">
-        <slot name="inner-start" />
+        {slots['inner-start']}
         {(label || slots.label) && (
           <div
             className={classNames('item-title item-label', {
@@ -509,7 +508,7 @@ const ListInput = forwardRef((props, ref) => {
             })}
           >
             {label}
-            <slot name="label" />
+            {slots.label}
           </div>
         )}
         <div
@@ -518,26 +517,26 @@ const ListInput = forwardRef((props, ref) => {
           })}
         >
           {inputEl}
-          <slot name="input" />
+          {slots.input}
           {hasErrorMessage && errorMessageForce && (
             <div className="item-input-error-message">
               {errorMessage}
-              <slot name="error-message" />
+              {slots['error-message']}
             </div>
           )}
           {clearButton && <span className="input-clear-button" />}
           {(info || slots.info) && (
             <div className="item-input-info">
               {info}
-              <slot name="info" />
+              {slots.info}
             </div>
           )}
         </div>
-        <slot name="inner" />
-        <slot name="inner-end" />
+        {slots.inner}
+        {slots['inner-end']}
       </div>
-      <slot name="content" />
-      <slot name="content-end" />
+      {slots.content}
+      {slots['content-end']}
     </div>
   );
   if (!wrap) {

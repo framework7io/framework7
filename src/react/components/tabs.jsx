@@ -17,7 +17,7 @@ import { SwiperOptions } from 'swiper';
 */
 
 const Tabs = forwardRef((props, ref) => {
-  const { className, id, style, animated, swipeable, routable, swiperParams } = props;
+  const { className, id, style, children, animated, swipeable, routable, swiperParams } = props;
   const dataAttrs = getDataAttrs(props);
 
   const elRef = useRef(null);
@@ -51,9 +51,7 @@ const Tabs = forwardRef((props, ref) => {
         ref={elRef}
         {...dataAttrs}
       >
-        <div className={tabsClasses}>
-          <slot />
-        </div>
+        <div className={tabsClasses}>{children}</div>
       </div>
     );
   }
@@ -66,7 +64,7 @@ const Tabs = forwardRef((props, ref) => {
       ref={elRef}
       {...dataAttrs}
     >
-      <slot />
+      {children}
     </div>
   );
 });

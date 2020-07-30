@@ -50,11 +50,11 @@ const Actions = forwardRef((props, ref) => {
   };
   const open = (animate) => {
     if (!f7Actions.current) return undefined;
-    return f7Actions.open(animate);
+    return f7Actions.current.open(animate);
   };
   const close = (animate) => {
     if (!f7Actions.current) return undefined;
-    return f7Actions.close(animate);
+    return f7Actions.current.close(animate);
   };
 
   useImperativeHandle(ref, () => ({

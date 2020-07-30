@@ -202,7 +202,7 @@ const ListItemContent = ({
       </div>
     );
   }
-  if (text || slots.text.length) {
+  if (text || (slots.text && slots.text.length)) {
     textEl = (
       <div className="item-text">
         {text}
@@ -237,13 +237,13 @@ const ListItemContent = ({
       </div>
     );
     innerEl = (
-      <div ref="innerEl" className="item-inner">
+      <div className="item-inner">
         {slots['inner-start']}
         {headerEl}
         {titleRowEl}
         {subtitleEl}
         {textEl}
-        {slots.default}
+        {swipeout || accordionItem ? null : slots.default}
         {slots.inner}
         {footerEl}
         {slots['inner-end']}
@@ -251,13 +251,13 @@ const ListItemContent = ({
     );
   } else {
     innerEl = (
-      <div ref="innerEl" className="item-inner">
+      <div className="item-inner">
         {slots['inner-start']}
         {slots['before-title']}
         {titleEl}
         {slots['after-title']}
         {afterWrapEl}
-        {slots.default}
+        {swipeout || accordionItem ? null : slots.default}
         {slots.inner}
         {slots['inner-end']}
       </div>
@@ -288,7 +288,6 @@ const ListItemContent = ({
       {innerEl}
       {slots.content}
       {slots['content-end']}
-      {swipeout || accordionItem ? null : slots.default}
     </ItemContentTag>
   );
 };
@@ -428,7 +427,7 @@ const ListItem = forwardRef((props, ref) => {
 
   const onMount = () => {
     f7ready(() => {
-      listElRef.current = f7.$$(elRef.current).parents('.list, .list-group').eq(0);
+      listElRef.current = f7.$(elRef.current).parents('.list, .list-group').eq(0);
       if (listElRef.current.length) {
         setIsMedia(listElRef.current.hasClass('media-list'));
         setIsSimple(listElRef.current.hasClass('simple-list'));

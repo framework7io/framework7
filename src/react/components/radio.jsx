@@ -43,7 +43,6 @@ const Radio = forwardRef((props, ref) => {
 
   const inputEl = (
     <input
-      ref="inputEl"
       type="radio"
       name={name}
       value={value}

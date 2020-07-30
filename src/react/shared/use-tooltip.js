@@ -23,7 +23,6 @@ export const useTooltip = (elRef, props) => {
     if (f7Tooltip.current && f7Tooltip.current.destroy) {
       f7Tooltip.current.destroy();
       f7Tooltip.current = null;
-      delete f7Tooltip.current;
     }
   };
 
@@ -36,7 +35,6 @@ export const useTooltip = (elRef, props) => {
     if (!value && f7Tooltip.current) {
       f7Tooltip.current.destroy();
       f7Tooltip.current = null;
-      delete f7Tooltip.current;
       return;
     }
     if (value && !f7Tooltip.current && f7) {

@@ -252,7 +252,6 @@ const Searchbar = forwardRef((props, ref) => {
         <div className="searchbar-input-wrap">
           {slots['input-wrap-start']}
           <input
-            ref="inputEl"
             value={value}
             placeholder={placeholder}
             type="search"

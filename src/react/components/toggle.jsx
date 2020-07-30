@@ -94,7 +94,6 @@ const Toggle = forwardRef((props, ref) => {
   );
   const inputEl = (
     <input
-      ref="inputEl"
       type="checkbox"
       name={name}
       disabled={disabled}

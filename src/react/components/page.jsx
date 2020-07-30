@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect, useState } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect, useState } from 'react';
 import { classNames, getDataAttrs, getSlots, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
@@ -280,7 +280,7 @@ const Page = forwardRef((props, ref) => {
     f7.off('pageTabHide', onPageTabHide);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

@@ -196,7 +196,6 @@ const Stepper = forwardRef((props, ref) => {
   if (input && !buttonsOnly) {
     const inputEl = (
       <input
-        ref="inputEl"
         name={name}
         id={inputId}
         type={inputType}

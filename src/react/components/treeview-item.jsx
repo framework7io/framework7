@@ -136,28 +136,28 @@ const TreeviewItem = forwardRef((props, ref) => {
   return (
     <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
       <TreeviewRootTag onClick={onClick} className={itemRootClasses} {...itemRootAttrs}>
-        <slot name="root-start" />
+        {slots['root-start']}
         {needToggle && <div className="treeview-toggle"></div>}
         <div className="treeview-item-content">
-          <slot name="content-start" />
+          {slots['content-start']}
           {iconEl}
-          <slot name="media" />
+          {slots.media}
           <div className="treeview-item-label">
-            <slot name="label-start" />
+            {slots['label-start']}
             {label}
-            <slot name="label" />
+            {slots.label}
           </div>
-          <slot name="content" />
-          <slot name="content-end" />
+          {slots.content}
+          {slots['content-end']}
         </div>
-        <slot name="root" />
-        <slot name="root-end" />
+        {slots.root}
+        {slots['root-end']}
       </TreeviewRootTag>
       {hasChildren && (
         <div className="treeview-item-children">
-          <slot name="children-start" />
-          <slot />
-          <slot name="children" />
+          {slots['children-start']}
+          {slots.default}
+          {slots.children}
         </div>
       )}
     </div>

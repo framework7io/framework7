@@ -36,7 +36,7 @@ const NavLeft = forwardRef((props, ref) => {
   const elRef = useRef(null);
 
   const onBackClick = (event) => {
-    emit('backClick clickBack', event);
+    emit(props, 'backClick clickBack', event);
   };
 
   useImperativeHandle(ref, () => ({

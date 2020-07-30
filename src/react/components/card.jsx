@@ -168,7 +168,7 @@ const Card = forwardRef((props, ref) => {
 
   const slots = getSlots(props);
 
-  if (title || (slots && slots.header)) {
+  if (title || slots.header) {
     headerEl = (
       <CardHeader>
         {title}
@@ -176,7 +176,7 @@ const Card = forwardRef((props, ref) => {
       </CardHeader>
     );
   }
-  if (content || (slots && slots.content)) {
+  if (content || slots.content) {
     contentEl = (
       <CardContent padding={padding}>
         {content}
@@ -184,11 +184,11 @@ const Card = forwardRef((props, ref) => {
       </CardContent>
     );
   }
-  if (footer || (slots && slots.footer)) {
+  if (footer || slots.footer) {
     footerEl = (
       <CardFooter>
         {footer}
-        {slots.fooer}
+        {slots.footer}
       </CardFooter>
     );
   }
@@ -227,7 +227,7 @@ const Card = forwardRef((props, ref) => {
       {headerEl}
       {contentEl}
       {footerEl}
-      <slot />
+      {slots.default}
     </div>
   );
 });

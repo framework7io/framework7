@@ -84,7 +84,14 @@ const Range = forwardRef((props, ref) => {
 
   watchProp(value, (newValue) => {
     if (!f7Range.current) return;
-    f7Range.current.setValue(newValue);
+    const rangeValue = f7Range.current.value;
+    if (Array.isArray(newValue) && Array.isArray(rangeValue)) {
+      if (rangeValue[0] !== newValue[0] || rangeValue[1] !== newValue[1]) {
+        f7Range.current.setValue(newValue);
+      }
+    } else {
+      f7Range.current.setValue(newValue);
+    }
   });
 
   const onMount = () => {

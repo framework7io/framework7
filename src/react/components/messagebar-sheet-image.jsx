@@ -38,7 +38,7 @@ const MessagebarSheetImage = forwardRef((props, ref) => {
 
   return (
     <label id={id} className={classes} style={styles} ref={elRef} {...dataAttrs}>
-      <input ref="inputEl" type="checkbox" checked={checked} onChange={onChange} />
+      <input type="checkbox" checked={checked} onChange={onChange} />
       <i className="icon icon-checkbox" />
       {children}
     </label>

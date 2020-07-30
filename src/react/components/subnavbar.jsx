@@ -37,7 +37,7 @@ const Subnavbar = forwardRef((props, ref) => {
           {children}
         </div>
       ) : (
-        { children }
+        children
       )}
     </div>
   );

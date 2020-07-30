@@ -35,9 +35,7 @@ const MessagebarAttachment = forwardRef((props, ref) => {
   return (
     <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs} onClick={onClick}>
       {image && <img src={image} />}
-      {deletable && (
-        <span ref="deleteEl" className="messagebar-attachment-delete" onClick={onDeleteClick} />
-      )}
+      {deletable && <span className="messagebar-attachment-delete" onClick={onDeleteClick} />}
       {children}
     </div>
   );
