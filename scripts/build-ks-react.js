@@ -2,10 +2,10 @@
 /* eslint no-console: ["error", { allow: ["log"] }] */
 const path = require('path');
 const rollup = require('rollup');
-const babel = require('rollup-plugin-babel');
+const { babel } = require('@rollup/plugin-babel');
 const replace = require('@rollup/plugin-replace');
 const commonjs = require('@rollup/plugin-commonjs');
-const resolve = require('@rollup/plugin-node-resolve');
+const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const fs = require('./utils/fs-extra');
 
 // let cache;
@@ -14,8 +14,8 @@ function buildKs(cb) {
   const env = process.env.NODE_ENV || 'development';
   const buildPath = env === 'development' ? './build' : './packages';
 
-  let f7ReactPath = path.resolve(__dirname, `../${buildPath}/react/framework7-react.esm.js`);
-  let f7Path = path.resolve(__dirname, `../${buildPath}/core/framework7.esm.bundle`);
+  let f7ReactPath = path.resolve(__dirname, `../${buildPath}/react`);
+  let f7Path = path.resolve(__dirname, `../${buildPath}/core/lite-bundle`);
   if (process.platform.indexOf('win') === 0) {
     f7ReactPath = f7ReactPath.replace(/\\/g, '/');
     f7Path = f7Path.replace(/\\/g, '/');
@@ -23,25 +23,15 @@ function buildKs(cb) {
 
   let index = fs.readFileSync(path.resolve(__dirname, '../kitchen-sink/react/index.html'));
   if (env === 'development') {
-    index = index
-      .replace(
-        '../../packages/core/css/framework7.bundle.min.css',
-        '../../build/core/css/framework7.bundle.css',
-      )
-      .replace(
-        '../../packages/core/js/framework7.bundle.min.js',
-        '../../build/core/js/framework7.bundle.js',
-      );
+    index = index.replace(
+      '../../packages/core/framework7-bundle.min.css',
+      '../../build/core/framework7-bundle.css',
+    );
   } else {
-    index = index
-      .replace(
-        '../../build/core/css/framework7.bundle.css',
-        '../../packages/core/css/framework7.bundle.min.css',
-      )
-      .replace(
-        '../../build/core/js/framework7.bundle.js',
-        '../../packages/core/js/framework7.bundle.min.js',
-      );
+    index = index.replace(
+      '../../build/core/framework7-bundle.css',
+      '../../packages/core/framework7-bundle.min.css',
+    );
   }
   fs.writeFileSync(path.resolve(__dirname, '../kitchen-sink/react/index.html'), index);
 
@@ -54,11 +44,14 @@ function buildKs(cb) {
           delimiters: ['', ''],
           'process.env.NODE_ENV': JSON.stringify(env),
           "'framework7-react'": () => `'${f7ReactPath}'`,
-          "'framework7/framework7.esm.bundle'": () => `'${f7Path}'`,
+          "'framework7/lite-bundle'": () => `'${f7Path}'`,
         }),
-        resolve({ mainFields: ['module', 'main', 'jsnext'] }),
+        nodeResolve({ mainFields: ['module', 'main', 'jsnext'] }),
         commonjs(),
-        babel(),
+        babel({
+          babelHelpers: 'bundled',
+          presets: ['@babel/preset-react', ['@babel/preset-env', { modules: false, loose: true }]],
+        }),
       ],
       onwarn(warning, warn) {
         const ignore = ['EVAL'];

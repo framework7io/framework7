@@ -6,4 +6,3 @@ kitchen-sink
 src/core/modules/component/snabbdom
 src/phenome
 src/svelte
-src/react/components/_old

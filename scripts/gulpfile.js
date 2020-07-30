@@ -3,6 +3,8 @@ const gulp = require('gulp');
 const connect = require('gulp-connect');
 const opn = require('opn');
 
+const buildClean = require('./build-clean');
+
 const buildKsCore = require('./build-ks-core.js');
 const buildKsVue = require('./build-ks-vue.js');
 const buildKsReact = require('./build-ks-react.js');
@@ -28,6 +30,8 @@ gulp.task('ks-core', buildKsCore);
 gulp.task('ks-vue', buildKsVue);
 gulp.task('ks-react', buildKsReact);
 gulp.task('ks-svelte', buildKsSvelte);
+
+gulp.task('core-clean', (cb) => buildClean('core', cb));
 gulp.task('core-js', buildCoreJs);
 gulp.task('core-typings', buildCoreTypings);
 gulp.task('core-styles', buildCoreLess);
@@ -35,6 +39,7 @@ gulp.task('core-components', buildCoreComponents);
 gulp.task('core-lazy-components', buildCoreLazyComponents);
 gulp.task('phenome', buildPhenome);
 
+gulp.task('react-clean', (cb) => buildClean('react', cb));
 gulp.task('react', buildReact);
 gulp.task('react-typings', buildReactTypings);
 
@@ -47,6 +52,7 @@ gulp.task('svelte', buildSvelte);
 gulp.task(
   'build-core',
   gulp.series([
+    'core-clean',
     'core-components',
     'core-js',
     'core-typings',
@@ -54,7 +60,7 @@ gulp.task(
     ...(env === 'development' ? [] : ['core-lazy-components']),
   ]),
 );
-gulp.task('build-react', gulp.series(['react', 'react-typings']));
+gulp.task('build-react', gulp.series(['react-clean', 'react', 'react-typings']));
 gulp.task('build-vue', gulp.series(['vue', 'vue-typings']));
 gulp.task('build-svelte', gulp.series(['svelte']));
 
@@ -107,8 +113,8 @@ const watch = {
     gulp.watch(['./src/core/**/*.js'], gulp.series('core-js', 'core-components', 'ks-react'));
     gulp.watch('./src/core/**/*.less', gulp.series('core-styles', 'core-components'));
     gulp.watch(
-      ['./src/phenome/**/*.js', './src/phenome/**/*.jsx'],
-      gulp.series('phenome', 'build-react', 'ks-react'),
+      ['./src/react/**/*.js', './src/react/**/*.jsx'],
+      gulp.series('build-react', 'ks-react'),
     );
     gulp.watch(
       ['./kitchen-sink/react/src/**/*.js', './kitchen-sink/react/src/**/*.jsx'],

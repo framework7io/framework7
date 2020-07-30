@@ -1,0 +1,6 @@
+{
+  "name": "framework7/types",
+  "private": true,
+  "sideEffects": false,
+  "typings": "types.d.ts"
+}

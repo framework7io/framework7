@@ -29,7 +29,7 @@ function build(cb) {
         sideEffects: false,
         main: `../../cjs/components/${component}/${component}.js`,
         module: `../../esm/components/${component}/${component}.js`,
-        typings: `${component}.d.ts`,
+        typings: `../../types/components/${component}.d.ts`,
       },
       '',
       2,
@@ -49,7 +49,7 @@ function build(cb) {
         sideEffects: false,
         main: `../../cjs/modules/${moduleName}/${moduleName}.js`,
         module: `../../esm/modules/${moduleName}/${moduleName}.js`,
-        typings: `${moduleName}.d.ts`,
+        typings: `../../types/modules/${moduleName}.d.ts`,
       },
       '',
       2,
@@ -81,14 +81,19 @@ function build(cb) {
       let fileContent = fs.readFileSync(path.resolve(__dirname, '../src/core/components', file));
       if (file.indexOf('app.less') >= 0) {
         const iconsFontBase64 = base64Encode('./src/core/icons/font/framework7-core-icons.woff');
-        fileContent = fileContent
-          .replace('framework7_coreIconsFont()', `'${iconsFontBase64}'`);
+        fileContent = fileContent.replace('framework7_coreIconsFont()', `'${iconsFontBase64}'`);
       }
       if (file.indexOf('swiper.less') >= 0) {
-        fileContent = fileContent.replace('../../../../node_modules/swiper/swiper-bundle.css', '~swiper/swiper-bundle.css');
+        fileContent = fileContent.replace(
+          '../../../../node_modules/swiper/swiper-bundle.css',
+          '~swiper/swiper-bundle.css',
+        );
       }
       if (file.indexOf('skeleton.less') >= 0) {
-        fileContent = fileContent.replace('../../../../node_modules/@skeleton-elements/core/skeleton-elements.css', '~@skeleton-elements/core/skeleton-elements.css');
+        fileContent = fileContent.replace(
+          '../../../../node_modules/@skeleton-elements/core/skeleton-elements.css',
+          '~@skeleton-elements/core/skeleton-elements.css',
+        );
       }
       fs.writeFileSync(path.resolve(`${output}/components`, file), fileContent);
       if (index === filesToProcess.length - 1) {

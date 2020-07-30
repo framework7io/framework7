@@ -1,0 +1,8 @@
+{
+  "name": "framework7-react",
+  "private": true,
+  "main": "cjs/framework7-react.js",
+  "module": "esm/framework7-react.js",
+  "jsnext:main": "esm/framework7-react.js",
+  "typings": "framework7-react.d.ts"
+}

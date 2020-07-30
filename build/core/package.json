@@ -1,0 +1,14 @@
+{
+  "name": "framework7",
+  "private": true,
+  "main": "cjs/framework7.js",
+  "module": "esm/framework7.js",
+  "jsnext:main": "esm/framework7.js",
+  "typings": "framework7.d.ts",
+  "sideEffects": [
+    "*.less",
+    "*.css",
+    "cjs/utils/dom7.js",
+    "esm/utils/dom7.js"
+  ]
+}

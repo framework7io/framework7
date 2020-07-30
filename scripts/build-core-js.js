@@ -78,20 +78,20 @@ async function modular({ components, format }) {
   const liteBundleContent = bundleComponents(liteSrc, true);
 
   // Save core
-  fs.writeFileSync(`${outputDir}/${format}/framework7.${format}.js`, coreContent);
+  fs.writeFileSync(`${outputDir}/${format}/framework7.js`, coreContent);
   // Save bundle
-  fs.writeFileSync(`${outputDir}/${format}/framework7-bundle.${format}.js`, bundleContent);
+  fs.writeFileSync(`${outputDir}/${format}/framework7-bundle.js`, bundleContent);
 
   // Save lite
-  fs.writeFileSync(`${outputDir}/${format}/framework7-lite.${format}.js`, liteContent);
+  fs.writeFileSync(`${outputDir}/${format}/framework7-lite.js`, liteContent);
   // Save lite bundle
-  fs.writeFileSync(`${outputDir}/${format}/framework7-lite-bundle.${format}.js`, liteBundleContent);
+  fs.writeFileSync(`${outputDir}/${format}/framework7-lite-bundle.js`, liteBundleContent);
 
   const files = [
-    `framework7.${format}.js`,
-    `framework7-bundle.${format}.js`,
-    `framework7-lite.${format}.js`,
-    `framework7-lite-bundle.${format}.js`,
+    'framework7.js',
+    'framework7-bundle.js',
+    'framework7-lite.js',
+    'framework7-lite-bundle.js',
   ];
 
   // eslint-disable-next-line

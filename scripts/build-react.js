@@ -10,6 +10,7 @@ const fs = require('./utils/fs-extra');
 
 // Build React
 async function buildReact(cb) {
+  const env = process.env.NODE_ENV || 'development';
   const buildPath = getOutput();
 
   const files = fs.readdirSync('src/react/components').filter((file) => file.indexOf('.d.ts') < 0);
@@ -39,39 +40,48 @@ async function buildReact(cb) {
     );
   });
 
-  let pluginContent = fs
+  const pluginContent = fs
     .readFileSync('src/react/framework7-react.js', 'utf-8')
     .replace('// IMPORT_COMPONENTS', componentImports.join('\n'))
     .replace('// EXPORT_COMPONENTS', `export { ${componentExports.join(', ')} }`);
 
-  fs.writeFileSync(`${buildPath}/react/cjs/framework7-react.js`, pluginContent);
-  fs.writeFileSync(`${buildPath}/react/esm/framework7-react.js`, pluginContent);
+  const buildCJS = async () => {
+    fs.writeFileSync(`${buildPath}/react/cjs/framework7-react.js`, pluginContent);
 
-  // proceed with babel
-  await exec.promise(
-    `MODULES=cjs npx babel --config-file ./babel-react.config.js src/react --out-dir ${buildPath}/react/cjs --ignore "src/react/framework7-react.js","*.ts"`,
-  );
-  await exec.promise(
-    `MODULES=cjs npx babel --config-file ./babel-react.config.js ${buildPath}/react/cjs/framework7-react.js --out-file ${buildPath}/react/cjs/framework7-react.js`,
-  );
-  await exec.promise(
-    `MODULES=esm npx babel --config-file ./babel-react.config.js src/react --out-dir ${buildPath}/react/esm --ignore "src/react/framework7-react.js","*.ts"`,
-  );
+    await exec.promise(
+      `MODULES=cjs npx babel --config-file ./babel-react.config.js src/react --out-dir ${buildPath}/react/cjs --ignore "src/react/framework7-react.js","*.ts"`,
+    );
+    await exec.promise(
+      `MODULES=cjs npx babel --config-file ./babel-react.config.js ${buildPath}/react/cjs/framework7-react.js --out-file ${buildPath}/react/cjs/framework7-react.js`,
+    );
 
-  // add banners
-  pluginContent = `${bannerReact.trim()}\n${pluginContent}`;
+    const cjsContent = fs.readFileSync(`${buildPath}/react/cjs/framework7-react.js`, 'utf-8');
 
-  const cjsContent = fs.readFileSync(`${buildPath}/react/cjs/framework7-react.js`, 'utf-8');
-  const esmContent = fs.readFileSync(`${buildPath}/react/esm/framework7-react.js`, 'utf-8');
+    fs.writeFileSync(
+      `${buildPath}/react/cjs/framework7-react.js`,
+      `${bannerReact.trim()}\n${cjsContent}`,
+    );
+  };
 
-  fs.writeFileSync(
-    `${buildPath}/react/cjs/framework7-react.js`,
-    `${bannerReact.trim()}\n${cjsContent}`,
-  );
-  fs.writeFileSync(
-    `${buildPath}/react/esm/framework7-react.js`,
-    `${bannerReact.trim()}\n${esmContent}`,
-  );
+  const buildEMS = async () => {
+    fs.writeFileSync(`${buildPath}/react/esm/framework7-react.js`, pluginContent);
+
+    await exec.promise(
+      `MODULES=esm npx babel --config-file ./babel-react.config.js src/react --out-dir ${buildPath}/react/esm --ignore "src/react/framework7-react.js","*.ts"`,
+    );
+
+    const esmContent = fs.readFileSync(`${buildPath}/react/esm/framework7-react.js`, 'utf-8');
+
+    fs.writeFileSync(
+      `${buildPath}/react/esm/framework7-react.js`,
+      `${bannerReact.trim()}\n${esmContent}`,
+    );
+  };
+
+  if (env === 'production') {
+    await buildCJS();
+  }
+  await buildEMS();
 
   if (cb) cb();
 }
