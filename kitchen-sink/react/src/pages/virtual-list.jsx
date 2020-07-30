@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, List, ListItem, Subnavbar, Searchbar, Block } from 'framework7-react';
+import { Navbar, Page, List, ListItem, Subnavbar, Searchbar, Block, theme } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -28,7 +28,7 @@ export default class extends React.Component {
               searchContainer=".virtual-list"
               searchItem="li"
               searchIn=".item-title"
-              disableButton={!this.$theme.aurora}
+              disableButton={!theme.aurora}
             ></Searchbar>
           </Subnavbar>
         </Navbar>
@@ -43,7 +43,7 @@ export default class extends React.Component {
           className="searchbar-found"
           medialList
           virtualList
-          virtualListParams={{ items: this.state.items, searchAll: this.searchAll, renderExternal: this.renderExternal.bind(this), height: this.$theme.ios ? 63 : (this.$theme.md ? 73 : 46)}}
+          virtualListParams={{ items: this.state.items, searchAll: this.searchAll, renderExternal: this.renderExternal.bind(this), height: theme.ios ? 63 : (theme.md ? 73 : 46)}}
         >
           <ul>
             {this.state.vlData.items.map((item, index) => (

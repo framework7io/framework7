@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, BlockTitle, Chip, Block, Icon } from 'framework7-react';
+import { Navbar, Page, BlockTitle, Chip, Block, Icon, f7 } from 'framework7-react';
 
 export default class extends React.Component {
   constructor() {
@@ -83,11 +83,9 @@ export default class extends React.Component {
     )
   }
   deleteChip(e) {
-    const $$ = this.$$;
-    const app = this.$f7;
     const target = e.target;
-    app.dialog.confirm('Do you want to delete this tiny demo Chip?', () => {
-      $$(target).parents('.chip').remove();
+    f7.dialog.confirm('Do you want to delete this tiny demo Chip?', () => {
+      f7.$(target).parents('.chip').remove();
     });
   }
 }

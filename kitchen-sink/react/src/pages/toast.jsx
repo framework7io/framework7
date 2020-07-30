@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, Block, Button } from 'framework7-react';
+import { Navbar, Page, Block, Button, theme, f7 } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -43,7 +43,7 @@ export default class extends React.Component {
     const self = this;
     // Create toast
     if (!self.toastBottom) {
-      self.toastBottom = self.$f7.toast.create({
+      self.toastBottom = f7.toast.create({
         text: 'This is default bottom positioned toast',
         closeTimeout: 2000,
       });
@@ -55,7 +55,7 @@ export default class extends React.Component {
     const self = this;
     // Create toast
     if (!self.toastTop) {
-      self.toastTop = self.$f7.toast.create({
+      self.toastTop = f7.toast.create({
         text: 'Top positioned toast',
         position: 'top',
         closeTimeout: 2000,
@@ -68,7 +68,7 @@ export default class extends React.Component {
     const self = this;
     // Create toast
     if (!self.toastCenter) {
-      self.toastCenter = self.$f7.toast.create({
+      self.toastCenter = f7.toast.create({
         text: 'I\'m on center',
         position: 'center',
         closeTimeout: 2000,
@@ -81,8 +81,8 @@ export default class extends React.Component {
     const self = this;
     // Create toast
     if (!self.toastIcon) {
-      self.toastIcon = self.$f7.toast.create({
-        icon: self.$theme.ios || self.$theme.aurora ? '<i class="f7-icons">star_fill</i>' : '<i class="material-icons">star</i>',
+      self.toastIcon = f7.toast.create({
+        icon: theme.ios || theme.aurora ? '<i class="f7-icons">star_fill</i>' : '<i class="material-icons">star</i>',
         text: 'I\'m on center',
         position: 'center',
         closeTimeout: 2000,
@@ -95,7 +95,7 @@ export default class extends React.Component {
     const self = this;
     // Create toast
     if (!self.toastLargeMessage) {
-      self.toastLargeMessage = self.$f7.toast.create({
+      self.toastLargeMessage = f7.toast.create({
         text: 'This toast contains a lot of text. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, quae, ab. Delectus amet optio facere autem sapiente quisquam beatae culpa dolore.',
         closeTimeout: 2000,
       });
@@ -107,7 +107,7 @@ export default class extends React.Component {
     const self = this;
     // Create toast
     if (!self.toastWithButton) {
-      self.toastWithButton = self.$f7.toast.create({
+      self.toastWithButton = f7.toast.create({
         text: 'Toast with additional close button',
         closeButton: true,
       });
@@ -119,7 +119,7 @@ export default class extends React.Component {
     const self = this;
     // Create toast
     if (!self.toastWithCustomButton) {
-      self.toastWithCustomButton = self.$f7.toast.create({
+      self.toastWithCustomButton = f7.toast.create({
         text: 'Custom close button',
         closeButton: true,
         closeButtonText: 'Close Me',
@@ -133,12 +133,12 @@ export default class extends React.Component {
     const self = this;
     // Create toast
     if (!self.toastWithCallback) {
-      self.toastWithCallback = self.$f7.toast.create({
+      self.toastWithCallback = f7.toast.create({
         text: 'Callback on close',
         closeButton: true,
         on: {
           close() {
-            self.$f7.dialog.alert('Toast closed');
+            f7.dialog.alert('Toast closed');
           },
         },
       });
@@ -148,7 +148,7 @@ export default class extends React.Component {
   }
   onPageBeforeOut() {
     const self = this;
-    self.$f7.toast.close();
+    f7.toast.close();
   }
   onPageBeforeRemove() {
     const self = this;

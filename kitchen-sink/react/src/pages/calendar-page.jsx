@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, NavTitle, List, ListItem, Block } from 'framework7-react';
+import { Navbar, Page, NavTitle, List, ListItem, Block, f7 } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -74,7 +74,7 @@ export default class extends React.Component {
               title={item.title}
               after={item.time}
             >
-              <div className="event-color" style={{'background-color': item.color}} slot="root-start"></div>
+              <div className="event-color" style={{backgroundColor: item.color}} slot="root-start"></div>
             </ListItem>
           ))}
           {this.state.eventItems.length === 0 && (
@@ -114,10 +114,9 @@ export default class extends React.Component {
   }
   onPageInit(page) {
     const self = this;
-    const app = self.$f7;
-    const $ = self.$$;
+    const $ = f7.$;
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    self.calendar = app.calendar.create({
+    self.calendar = f7.calendar.create({
       containerEl: '#calendar',
       toolbar: false,
       value: [self.state.today],
@@ -125,13 +124,13 @@ export default class extends React.Component {
       on: {
         init(calendar) {
           $('.navbar-calendar-title').text(`${monthNames[calendar.currentMonth]}, ${calendar.currentYear}`);
-          app.navbar.size(app.navbar.getElByPage(page.el));
+          f7.navbar.size(f7.navbar.getElByPage(page.el));
           calendar.$el.addClass('no-safe-area-right');
           self.renderEvents(calendar);
         },
         monthYearChangeStart(calendar) {
           $('.navbar-calendar-title').text(`${monthNames[calendar.currentMonth]}, ${calendar.currentYear}`);
-          app.navbar.size(app.navbar.getElByPage(page.el));
+          f7.navbar.size(f7.navbar.getElByPage(page.el));
         },
         change(calendar) {
           self.renderEvents(calendar);

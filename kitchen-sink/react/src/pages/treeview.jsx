@@ -24,8 +24,7 @@ export default class extends React.Component {
 
   toggleSelectable(e, item) {
     var self = this;
-    var $ = self.$$;
-    if ($(e.target).is('.treeview-toggle')) return;
+    if (f7.$(e.target).is('.treeview-toggle')) return;
     self.setState({selectedItem: item});
   }
 

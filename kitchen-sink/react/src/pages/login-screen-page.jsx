@@ -1,10 +1,11 @@
 import React from 'react';
-import { Page, LoginScreenTitle, List, ListInput, ListButton, BlockFooter } from 'framework7-react';
+import { Page, LoginScreenTitle, List, ListInput, ListButton, BlockFooter, f7 } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
     super(props);
 
+    this.router = props.f7router;
     this.state = {
       username: '',
       password: '',
@@ -44,10 +45,8 @@ export default class extends React.Component {
   }
   signIn() {
     const self = this;
-    const app = self.$f7;
-    const router = self.$f7router;
-    app.dialog.alert(`Username: ${self.state.username}<br>Password: ${self.state.password}`, () => {
-      router.back();
+    f7.dialog.alert(`Username: ${self.state.username}<br>Password: ${self.state.password}`, () => {
+      this.router.back();
     });
   }
 };

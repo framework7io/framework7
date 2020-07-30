@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, Block, Button } from 'framework7-react';
+import { Navbar, Page, Block, Button, f7 } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -23,7 +23,7 @@ export default class extends React.Component {
     const self = this;
     // Create toast
     if (!self.notificationFull) {
-      self.notificationFull = self.$f7.notification.create({
+      self.notificationFull = f7.notification.create({
         icon: '<i class="icon icon-f7"></i>',
         title: 'Framework7',
         titleRightText: 'now',
@@ -39,7 +39,7 @@ export default class extends React.Component {
     const self = this;
     // Create toast
     if (!self.notificationWithButton) {
-      self.notificationWithButton = self.$f7.notification.create({
+      self.notificationWithButton = f7.notification.create({
         icon: '<i class="icon icon-f7"></i>',
         title: 'Framework7',
         subtitle: 'Notification with close button',
@@ -54,7 +54,7 @@ export default class extends React.Component {
     const self = this;
     // Create toast
     if (!self.notificationCloseOnClick) {
-      self.notificationCloseOnClick = self.$f7.notification.create({
+      self.notificationCloseOnClick = f7.notification.create({
         icon: '<i class="icon icon-f7"></i>',
         title: 'Framework7',
         titleRightText: 'now',
@@ -70,7 +70,7 @@ export default class extends React.Component {
     const self = this;
     // Create toast
     if (!self.notificationCallbackOnClose) {
-      self.notificationCallbackOnClose = self.$f7.notification.create({
+      self.notificationCallbackOnClose = f7.notification.create({
         icon: '<i class="icon icon-f7"></i>',
         title: 'Framework7',
         titleRightText: 'now',
@@ -79,7 +79,7 @@ export default class extends React.Component {
         closeOnClick: true,
         on: {
           close() {
-            self.$f7.dialog.alert('Notification closed');
+            f7.dialog.alert('Notification closed');
           },
         },
       });
@@ -89,7 +89,7 @@ export default class extends React.Component {
   }
   onPageBeforeOut() {
     const self = this;
-    self.$f7.notification.close();
+    f7.notification.close();
   }
   onPageBeforeRemove() {
     const self = this;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, Block, BlockTitle, BlockHeader, List, ListInput } from 'framework7-react';
+import { Navbar, Page, Block, BlockTitle, BlockHeader, List, ListInput, f7 } from 'framework7-react';
 
 export default class extends React.Component {
   constructor() {
@@ -20,9 +20,8 @@ export default class extends React.Component {
   }
   componentDidMount() {
     const self = this;
-    const app = self.$f7;
 
-    self.colorPickerInline = app.colorPicker.create({
+    self.colorPickerInline = f7.colorPicker.create({
       value: self.state.inlinePickerValue,
       containerEl: '#demo-color-picker-inline',
       modules: ['sb-spectrum', 'hsb-sliders', 'alpha-slider'],

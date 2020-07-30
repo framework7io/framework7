@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Navbar, Page, Block, BlockTitle, List, ListItem, ListInput } from 'framework7-react';
+import { Navbar, Page, Block, BlockTitle, List, ListItem, ListInput, f7 } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -63,12 +63,11 @@ export default class extends React.Component {
   }
   onPageInit(e) {
     const self = this;
-    const app = self.$f7;
-    const $ = self.$$;
+    const $ = f7.$;
 
     // Inline with custom toolbar
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    self.calendarInline = app.calendar.create({
+    self.calendarInline = f7.calendar.create({
       containerEl: '#demo-calendar-inline-container',
       value: [new Date()],
       renderToolbar() {

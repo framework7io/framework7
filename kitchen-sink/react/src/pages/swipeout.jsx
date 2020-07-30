@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, BlockTitle, List, ListItem, Icon, SwipeoutActions, SwipeoutButton, Block } from 'framework7-react';
+import { Navbar, Page, BlockTitle, List, ListItem, Icon, SwipeoutActions, SwipeoutButton, Block, f7 } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -221,20 +221,16 @@ export default class extends React.Component {
     self.actions.open();
   }
   mark() {
-    const app = this.$f7;
-    app.dialog.alert('Mark');
+    f7.dialog.alert('Mark');
   }
   reply() {
-    const app = this.$f7;
-    app.dialog.alert('Reply');
+    f7.dialog.alert('Reply');
   }
   forward() {
-    const app = this.$f7;
-    app.dialog.alert('Forward');
+    f7.dialog.alert('Forward');
   }
   onDeleted() {
-    const app = this.$f7;
-    app.dialog.alert('Thanks, item removed!');
+    f7.dialog.alert('Thanks, item removed!');
   }
   onPageBeforeRemove() {
     const self = this;
@@ -242,8 +238,7 @@ export default class extends React.Component {
   }
   onPageInit() {
     const self = this;
-    const app = self.$f7;
-    self.actions = app.actions.create({
+    self.actions = f7.actions.create({
       buttons: [
         [
           {

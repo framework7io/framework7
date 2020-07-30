@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, NavRight, Page, Link, Icon, Block, BlockTitle, Button } from 'framework7-react';
+import { Navbar, NavRight, Page, Link, Icon, Block, BlockTitle, Button, f7 } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -34,12 +34,11 @@ export default class extends React.Component {
   }
   onPageInit() {
     const self = this;
-    const app = self.$f7;
-    self.iconTooltip = app.tooltip.create({
+    self.iconTooltip = f7.tooltip.create({
       targetEl: '.icon-tooltip',
       text: 'Tooltip text',
     });
-    self.navbarTooltip = app.tooltip.create({
+    self.navbarTooltip = f7.tooltip.create({
       targetEl: '.navbar-tooltip',
       text: 'One more tooltip<br>with more text<br><em>and custom formatting</em>'
     });

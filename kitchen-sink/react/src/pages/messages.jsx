@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, Messages, MessagesTitle, Message, Messagebar, Link, MessagebarAttachments, MessagebarAttachment, MessagebarSheet, MessagebarSheetImage } from 'framework7-react';
+import { Navbar, Page, Messages, MessagesTitle, Message, Messagebar, Link, MessagebarAttachments, MessagebarAttachment, MessagebarSheet, MessagebarSheetImage, f7ready } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -195,7 +195,7 @@ export default class extends React.Component {
   }
   componentDidMount() {
     const self = this;
-    self.$f7ready(() => {
+    f7ready(() => {
       self.messagebar = self.messagebarComponent.f7Messagebar;
       self.messages = self.messagesComponent.f7Messages;
     });
@@ -231,7 +231,7 @@ export default class extends React.Component {
   handleAttachment(e) {
     const self = this;
     const attachments = self.state.attachments;
-    const index = self.$$(e.target).parents('label.checkbox').index();
+    const index = f7.$(e.target).parents('label.checkbox').index();
     const image = self.state.images[index];
     if (e.target.checked) {
       // Add to attachments

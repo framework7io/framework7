@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Navbar, Page, BlockTitle, Block, Progressbar, Button, Segmented, List, ListItem } from 'framework7-react';
+import { Navbar, Page, BlockTitle, Block, Progressbar, Button, Segmented, List, ListItem, f7 } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -94,32 +94,29 @@ export default class extends React.Component {
     );
   }
   setInlineProgress(value) {
-    const self = this;
-    const app = self.$f7;
-    app.progressbar.set('#demo-inline-progressbar', value);
+    f7.progressbar.set('#demo-inline-progressbar', value);
   }
   showDeterminate(inline) {
     const self = this;
-    const app = self.$f7;
     if (self.determinateLoading) return;
     self.determinateLoading = true;
     let progressBarEl;
     if (inline) {
-      progressBarEl = app.progressbar.show('#demo-determinate-container', 0);
+      progressBarEl = f7.progressbar.show('#demo-determinate-container', 0);
     } else {
-      progressBarEl = app.progressbar.show(0);
+      progressBarEl = f7.progressbar.show(0);
     }
     let progress = 0;
     function simulateLoading() {
       setTimeout(() => {
         const progressBefore = progress;
         progress += Math.random() * 20;
-        app.progressbar.set(progressBarEl, progress);
+        f7.progressbar.set(progressBarEl, progress);
         if (progressBefore < 100) {
           simulateLoading(); // keep "loading"
         } else {
           self.determinateLoading = false;
-          app.progressbar.hide(progressBarEl); // hide
+          f7.progressbar.hide(progressBarEl); // hide
         }
       }, Math.random() * 200 + 200);
     }
@@ -127,17 +124,16 @@ export default class extends React.Component {
   }
   showInfinite(multiColor) {
     const self = this;
-    const app = self.$f7;
     if (self.infiniteLoading) return;
     self.infiniteLoading = true;
     if (multiColor) {
-      app.progressbar.show('multi');
+      f7.progressbar.show('multi');
     } else {
-      app.progressbar.show();
+      f7.progressbar.show();
     }
     setTimeout(() => {
       self.infiniteLoading = false;
-      app.progressbar.hide();
+      f7.progressbar.hide();
     }, 3000);
   }
 };

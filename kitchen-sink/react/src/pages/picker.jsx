@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, Block, BlockTitle, List, ListInput } from 'framework7-react';
+import { Navbar, Page, Block, BlockTitle, List, ListInput, f7 } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -43,9 +43,8 @@ export default class extends React.Component {
   onPageInit(e) {
     const self = this;
     const today = new Date();
-    const app = self.$f7;
     // iOS Device picker
-    self.pickerDevice = app.picker.create({
+    self.pickerDevice = f7.picker.create({
       inputEl: '#demo-picker-device',
       cols: [
         {
@@ -56,7 +55,7 @@ export default class extends React.Component {
     });
 
     // Describe yourself picker
-    self.pickerDescribe = app.picker.create({
+    self.pickerDescribe = f7.picker.create({
       inputEl: '#demo-picker-describe',
       rotateEffect: true,
       cols: [
@@ -76,7 +75,7 @@ export default class extends React.Component {
       German: ['Audi', 'BMW', 'Mercedes', 'Volkswagen', 'Volvo'],
       American: ['Cadillac', 'Chrysler', 'Dodge', 'Ford'],
     };
-    self.pickerDependent = app.picker.create({
+    self.pickerDependent = f7.picker.create({
       inputEl: '#demo-picker-dependent',
       rotateEffect: true,
       formatValue(values) {
@@ -100,7 +99,7 @@ export default class extends React.Component {
     });
 
     // Custom Toolbar
-    self.pickerCustomToolbar = app.picker.create({
+    self.pickerCustomToolbar = f7.picker.create({
       inputEl: '#demo-picker-custom-toolbar',
       rotateEffect: true,
       renderToolbar() {
@@ -145,7 +144,7 @@ export default class extends React.Component {
       },
     });
     // Inline date-time
-    self.pickerInline = app.picker.create({
+    self.pickerInline = f7.picker.create({
       containerEl: '#demo-picker-date-container',
       inputEl: '#demo-picker-date',
       toolbar: false,

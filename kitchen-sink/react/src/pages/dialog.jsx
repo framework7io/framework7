@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, BlockTitle, Block, Button, Row } from 'framework7-react';
+import { Navbar, Page, BlockTitle, Block, Button, Row, f7 } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -52,46 +52,39 @@ export default class extends React.Component {
     );
   }
   openAlert() {
-    const app = this.$f7;
-    app.dialog.alert('Hello!');
+    f7.dialog.alert('Hello!');
   }
   openConfirm() {
-    const app = this.$f7;
-    app.dialog.confirm('Are you feel good today?', () => {
-      app.dialog.alert('Great!');
+    f7.dialog.confirm('Are you feel good today?', () => {
+      f7.dialog.alert('Great!');
     });
   }
   openPrompt() {
-    const app = this.$f7;
-    app.dialog.prompt('What is your name?', (name) => {
-      app.dialog.confirm(`Are you sure that your name is ${name}?`, () => {
-        app.dialog.alert(`Ok, your name is ${name}`);
+    f7.dialog.prompt('What is your name?', (name) => {
+      f7.dialog.confirm(`Are you sure that your name is ${name}?`, () => {
+        f7.dialog.alert(`Ok, your name is ${name}`);
       });
     });
   }
   openLogin() {
-    const app = this.$f7;
-    app.dialog.login('Enter your username and password', (username, password) => {
-      app.dialog.alert(`Thank you!<br>Username:${username}<br>Password:${password}`);
+    f7.dialog.login('Enter your username and password', (username, password) => {
+      f7.dialog.alert(`Thank you!<br>Username:${username}<br>Password:${password}`);
     });
   }
   openPassword() {
-    const app = this.$f7;
-    app.dialog.password('Enter your username and password', (password) => {
-      app.dialog.alert(`Thank you!<br>Password:${password}`);
+    f7.dialog.password('Enter your username and password', (password) => {
+      f7.dialog.alert(`Thank you!<br>Password:${password}`);
     });
   }
   openAlerts() {
-    const app = this.$f7;
-    app.dialog.alert('Alert 1');
-    app.dialog.alert('Alert 2');
-    app.dialog.alert('Alert 3');
-    app.dialog.alert('Alert 4');
-    app.dialog.alert('Alert 5');
+    f7.dialog.alert('Alert 1');
+    f7.dialog.alert('Alert 2');
+    f7.dialog.alert('Alert 3');
+    f7.dialog.alert('Alert 4');
+    f7.dialog.alert('Alert 5');
   }
   openVerticalButtons() {
-    const app = this.$f7;
-    app.dialog.create({
+    f7.dialog.create({
       title: 'Vertical Buttons',
       buttons: [
         {
@@ -108,30 +101,26 @@ export default class extends React.Component {
     }).open();
   }
   openPreloader() {
-    const app = this.$f7;
-    app.dialog.preloader();
+    f7.dialog.preloader();
     setTimeout(() => {
-      app.dialog.close();
+      f7.dialog.close();
     }, 3000);
   }
   openCustomPreloader() {
-    const app = this.$f7;
-    app.dialog.preloader('My text...');
+    f7.dialog.preloader('My text...');
     setTimeout(() => {
-      app.dialog.close();
+      f7.dialog.close();
     }, 3000);
   }
   openInfiniteProgress() {
-    const app = this.$f7;
-    app.dialog.progress();
+    f7.dialog.progress();
     setTimeout(() => {
-      app.dialog.close();
+      f7.dialog.close();
     }, 3000);
   }
   openDeterminedProgress() {
-    const app = this.$f7;
     let progress = 0;
-    const dialog = app.dialog.progress('Loading assets', progress);
+    const dialog = f7.dialog.progress('Loading assets', progress);
     dialog.setText('Image 1 of 10');
     const interval = setInterval(() => {
       progress += 10;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page, Navbar, Sheet, PageContent, Toolbar, BlockTitle, Block, Button, Link, Row, List, ListItem } from 'framework7-react';
+import { Page, Navbar, Sheet, PageContent, Toolbar, BlockTitle, Block, Button, Link, Row, List, ListItem, f7 } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -158,24 +158,24 @@ export default class extends React.Component {
   }
   toggleSwipeStep() {
     const self = this;
-    self.$f7.sheet.stepToggle('.demo-sheet-swipe-to-step');
+    f7.sheet.stepToggle('.demo-sheet-swipe-to-step');
   }
   createSheet() {
     const self = this;
-    const $ = self.$$;
+    const $ = f7.$;
     // Create sheet modal
     if (!self.sheet) {
-      self.sheet = self.$f7.sheet.create({
+      self.sheet = f7.sheet.create({
         content: `
-          <div className="sheet-modal">
-            <div className="toolbar">
-              <div className="toolbar-inner justify-content-flex-end">
-                <a href="#" className="link sheet-close">Close</a>
+          <div class="sheet-modal sheet-modal-bottom">
+            <div class="toolbar">
+              <div class="toolbar-inner justify-content-flex-end">
+                <a href="#" class="link sheet-close">Close</a>
               </div>
             </div>
-            <div className="sheet-modal-inner">
-              <div className="page-content">
-                <div className="block">
+            <div class="sheet-modal-inner">
+              <div class="page-content">
+                <div class="block">
                   <p>This sheet modal was created dynamically</p>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse faucibus mauris leo, eu bibendum neque congue non. Ut leo mauris, eleifend eu commodo a, egestas ac urna. Maecenas in lacus faucibus, viverra ipsum pulvinar, molestie arcu. Etiam lacinia venenatis dignissim. Suspendisse non nisl semper tellus malesuada suscipit eu et eros. Nulla eu enim quis quam elementum vulputate. Mauris ornare consequat nunc viverra pellentesque. Aenean semper eu massa sit amet aliquam. Integer et neque sed libero mollis elementum at vitae ligula. Vestibulum pharetra sed libero sed porttitor. Suspendisse a faucibus lectus.</p>
                 </div>
@@ -186,14 +186,14 @@ export default class extends React.Component {
       });
     }
     // Close inline sheet
-    if ($('.demo-sheet.modal-in').length > 0) self.$f7.sheet.close('.demo-sheet');
+    if ($('.demo-sheet.modal-in').length > 0) f7.sheet.close('.demo-sheet');
     // Open it
     self.sheet.open();
   }
   onPageBeforeOut() {
     const self = this;
     // Close opened sheets on page out
-    self.$f7.sheet.close();
+    f7.sheet.close();
   }
   onPageBeforeRemove() {
     const self = this;

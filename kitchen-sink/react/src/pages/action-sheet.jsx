@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, BlockTitle, Block, Link, Button, Actions, ActionsGroup, ActionsLabel, ActionsButton } from 'framework7-react';
+import { Navbar, Page, BlockTitle, Block, Link, Button, Actions, ActionsGroup, ActionsLabel, ActionsButton, f7 } from 'framework7-react';
 
 export default class extends React.Component {
   constructor() {
@@ -106,10 +106,8 @@ export default class extends React.Component {
   }
 
   openActionsPopover() {
-    const app = this.$f7;
-
     if (!this.actionsToPopover) {
-      this.actionsToPopover = app.actions.create({
+      this.actionsToPopover = f7.actions.create({
         buttons: [
           {
             text: 'Do something',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, BlockTitle, Button, Row, Col, Block, List, ListInput, Checkbox } from 'framework7-react';
+import { Navbar, Page, BlockTitle, Button, Row, Col, Block, List, ListInput, Checkbox, f7 } from 'framework7-react';
 
 var stylesheet;
 var globalTheme = 'light';
@@ -33,7 +33,7 @@ export default class extends React.Component {
       customColor: globalCustomColor,
       customProperties: globalCustomProperties,
       colors: colors,
-      themeColor: this.$$('html').css('--f7-theme-color').trim(),
+      themeColor: f7.$('html').css('--f7-theme-color').trim(),
     };
   }
   render() {
@@ -130,7 +130,7 @@ export default class extends React.Component {
     var self = this;
     var styles = '';
     if (self.state.customColor) {
-      const colorThemeProperties = self.$f7.utils.colorThemeCSSProperties(self.state.customColor);
+      const colorThemeProperties = f7.utils.colorThemeCSSProperties(self.state.customColor);
       if (Object.keys(colorThemeProperties).length) {
         styles += `
 /* Custom color theme */
@@ -142,7 +142,7 @@ export default class extends React.Component {
       }
     }
     if (self.state.barsStyle === 'fill') {
-      const colorThemeRgb = self.$$('html').css('--f7-theme-color-rgb').trim().split(',').map(c => c.trim());
+      const colorThemeRgb = f7.$('html').css('--f7-theme-color-rgb').trim().split(',').map(c => c.trim());
       styles += `
 /* Invert navigation bars to fill style */
 :root,
@@ -201,7 +201,7 @@ export default class extends React.Component {
 
   setLayoutTheme(theme) {
     var self = this;
-    var $html = self.$$('html');
+    var $html = f7.$('html');
     globalTheme = theme;
     $html.removeClass('theme-dark theme-light').addClass('theme-' + globalTheme);
     self.setState({ theme: globalTheme });
@@ -209,7 +209,7 @@ export default class extends React.Component {
 
   setColorTheme(color) {
     var self = this;
-    var $html = self.$$('html');
+    var $html = f7.$('html');
     var currentColorClass = $html[0].className.match(/color-theme-([a-z]*)/);
     if (currentColorClass) $html.removeClass(currentColorClass[0])
     $html.addClass('color-theme-' + color);

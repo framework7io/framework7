@@ -154,7 +154,7 @@
     if (!dynamicSheet) {
       dynamicSheet = f7.sheet.create({
         content: `
-          <div class="sheet-modal">
+          <div class="sheet-modal sheet-modal-bottom">
             <div class="toolbar">
               <div class="toolbar-inner justify-content-flex-end">
                 <a href="#" class="link sheet-close">Close</a>

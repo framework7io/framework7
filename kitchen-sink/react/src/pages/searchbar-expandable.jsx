@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, Searchbar, Subnavbar, List, ListItem, Link, NavRight } from 'framework7-react';
+import { Navbar, Page, Searchbar, Subnavbar, List, ListItem, Link, NavRight, theme } from 'framework7-react';
 
 export default class extends React.Component {
   constructor() {
@@ -17,7 +17,7 @@ export default class extends React.Component {
             expandable
             searchContainer=".search-list"
             searchIn=".item-title"
-            disableButton={!this.$theme.aurora}
+            disableButton={!theme.aurora}
           ></Searchbar>
         </Navbar>
         <List className="searchbar-not-found">

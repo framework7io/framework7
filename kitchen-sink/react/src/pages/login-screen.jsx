@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, LoginScreen, ListInput, List, ListItem, Block, Button, LoginScreenTitle, BlockFooter, ListButton } from 'framework7-react';
+import { Navbar, Page, LoginScreen, ListInput, List, ListItem, Block, Button, LoginScreenTitle, BlockFooter, ListButton, f7 } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -65,10 +65,9 @@ export default class extends React.Component {
   }
   signIn() {
     const self = this;
-    const app = self.$f7;
 
-    app.dialog.alert(`Username: ${self.state.username}<br>Password: ${self.state.password}`, () => {
-      app.loginScreen.close();
+    f7.dialog.alert(`Username: ${self.state.username}<br>Password: ${self.state.password}`, () => {
+      f7.loginScreen.close();
     });
   }
 };

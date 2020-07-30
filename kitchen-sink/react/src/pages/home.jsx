@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page, Navbar, NavLeft, NavTitle, NavTitleLarge, NavRight, BlockTitle, List, ListItem, Link, Searchbar, Icon } from 'framework7-react';
+import { Page, Navbar, NavLeft, NavTitle, NavTitleLarge, NavRight, BlockTitle, List, ListItem, Link, Searchbar, Icon, theme } from 'framework7-react';
 
 export default class extends React.Component {
   constructor() {
@@ -22,7 +22,7 @@ export default class extends React.Component {
             searchContainer=".components-list"
             searchIn="a"
             expandable
-            disableButton={!this.$theme.aurora}
+            disableButton={!theme.aurora}
           />
         </Navbar>
 

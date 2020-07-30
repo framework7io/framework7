@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, BlockTitle, Block, Preloader, Col } from 'framework7-react';
+import { Navbar, Page, BlockTitle, Block, Preloader, Col, f7 } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -71,23 +71,23 @@ export default class extends React.Component {
 
   openIndicator() {
     const self = this;
-    self.$f7.preloader.show();
+    f7.preloader.show();
     setTimeout(() => {
-      self.$f7.preloader.hide();
+      f7.preloader.hide();
     }, 2000);
   }
   openDialog() {
     const self = this;
-    self.$f7.dialog.preloader();
+    f7.dialog.preloader();
     setTimeout(() => {
-      self.$f7.dialog.close();
+      f7.dialog.close();
     }, 2000);
   }
   openCustomDialog() {
     const self = this;
-    self.$f7.dialog.preloader('My text...');
+    f7.dialog.preloader('My text...');
     setTimeout(() => {
-      self.$f7.dialog.close();
+      f7.dialog.close();
     }, 2000);
   }
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, Popup, BlockTitle, Block, NavRight, Link, Button, View } from 'framework7-react';
+import { Navbar, Page, Popup, BlockTitle, Block, NavRight, Link, Button, View, f7 } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -111,7 +111,7 @@ export default class extends React.Component {
     const self = this;
     // Create popup
     if (!self.popup) {
-      self.popup = self.$f7.popup.create({
+      self.popup = f7.popup.create({
         content: `
           <div class="popup">
             <div class="page">

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page, Navbar, Block, Button } from 'framework7-react';
+import { Page, Navbar, Block, Button, f7 } from 'framework7-react';
 
 var appbarEnabled = false;
 
@@ -15,7 +15,7 @@ export default class extends React.Component {
     var self = this;
     self.setState({appbarEnabled: true});
     appbarEnabled = true;
-    self.$f7.root.prepend(`
+    f7.root.prepend(`
     <div class="appbar">
       <div class="appbar-inner">
         <div class="left">
@@ -50,7 +50,7 @@ export default class extends React.Component {
     var self = this;
     self.setState({appbarEnabled: false});
     appbarEnabled = false;
-    self.$$('.appbar').remove();
+    f7.$('.appbar').remove();
   }
   toggleAppbar () {
     var self = this;

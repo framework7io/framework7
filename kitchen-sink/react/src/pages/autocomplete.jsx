@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, BlockTitle, Subnavbar, Searchbar, Block, List, BlockHeader, ListItem, ListInput } from 'framework7-react';
+import { Navbar, Page, BlockTitle, Subnavbar, Searchbar, Block, List, BlockHeader, ListItem, ListInput, theme, f7 } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -13,7 +13,7 @@ export default class extends React.Component {
       <Page onPageInit={this.onPageInit.bind(this)} onPageBeforeRemove={this.onPageBeforeRemove.bind(this)}>
         <Navbar title="Autocomplete" backLink="Back">
           <Subnavbar inner={false}>
-            <Searchbar init={false} id="searchbar-autocomplete" disableButton={!this.$theme.aurora}></Searchbar>
+            <Searchbar init={false} id="searchbar-autocomplete" disableButton={!theme.aurora}></Searchbar>
           </Subnavbar>
         </Navbar>
 
@@ -135,12 +135,11 @@ export default class extends React.Component {
   }
   onPageInit() {
     const self = this;
-    const app = self.$f7;
     const fruits = self.state.fruits;
-    const $ = self.$$;
+    const $ = f7.$;
 
     // Simple Dropdown
-    self.autocompleteDropdownSimple = app.autocomplete.create({
+    self.autocompleteDropdownSimple = f7.autocomplete.create({
       inputEl: '#autocomplete-dropdown',
       openIn: 'dropdown',
       source(query, render) {
@@ -159,7 +158,7 @@ export default class extends React.Component {
     });
 
     // Dropdown with input expand
-    self.autocompleteDropdownExpand = app.autocomplete.create({
+    self.autocompleteDropdownExpand = f7.autocomplete.create({
       inputEl: '#autocomplete-dropdown-expand',
       openIn: 'dropdown',
       expandInput: true, // expand input
@@ -179,7 +178,7 @@ export default class extends React.Component {
     });
 
     // Dropdown with all values
-    self.autocompleteDropdownAll = app.autocomplete.create({
+    self.autocompleteDropdownAll = f7.autocomplete.create({
       inputEl: '#autocomplete-dropdown-all',
       openIn: 'dropdown',
       source(query, render) {
@@ -194,7 +193,7 @@ export default class extends React.Component {
     });
 
     // Dropdown with placeholder
-    self.autocompleteDropdownPlaceholder = app.autocomplete.create({
+    self.autocompleteDropdownPlaceholder = f7.autocomplete.create({
       inputEl: '#autocomplete-dropdown-placeholder',
       openIn: 'dropdown',
       dropdownPlaceholderText: 'Try to type "Apple"',
@@ -214,7 +213,7 @@ export default class extends React.Component {
     });
 
     // Dropdown with typeahead
-    self.autocompleteDropdownTypeahead = app.autocomplete.create({
+    self.autocompleteDropdownTypeahead = f7.autocomplete.create({
       inputEl: '#autocomplete-dropdown-typeahead',
       openIn: 'dropdown',
       dropdownPlaceholderText: 'Try to type "Pineapple"',
@@ -235,7 +234,7 @@ export default class extends React.Component {
     });
 
     // Dropdown with ajax data
-    self.autocompleteDropdownAjax = app.autocomplete.create({
+    self.autocompleteDropdownAjax = f7.autocomplete.create({
       inputEl: '#autocomplete-dropdown-ajax',
       openIn: 'dropdown',
       preloader: true, // enable preloader
@@ -255,7 +254,7 @@ export default class extends React.Component {
         autocomplete.preloaderShow();
 
         // Do Ajax request to Autocomplete data
-        app.request({
+        f7.request({
           url: './js/autocomplete-languages.json',
           method: 'GET',
           dataType: 'json',
@@ -278,7 +277,7 @@ export default class extends React.Component {
     });
 
     // Dropdown with ajax data
-    self.autocompleteDropdownAjaxTypeahead = app.autocomplete.create({
+    self.autocompleteDropdownAjaxTypeahead = f7.autocomplete.create({
       inputEl: '#autocomplete-dropdown-ajax-typeahead',
       openIn: 'dropdown',
       preloader: true, // enable preloader
@@ -299,7 +298,7 @@ export default class extends React.Component {
         autocomplete.preloaderShow();
 
         // Do Ajax request to Autocomplete data
-        app.request({
+        f7.request({
           url: './js/autocomplete-languages.json',
           method: 'GET',
           dataType: 'json',
@@ -322,7 +321,7 @@ export default class extends React.Component {
     });
 
     // Simple Standalone
-    self.autocompleteStandaloneSimple = app.autocomplete.create({
+    self.autocompleteStandaloneSimple = f7.autocomplete.create({
       openIn: 'page', // open in page
       openerEl: '#autocomplete-standalone a', // link that opens autocomplete
       closeOnSelect: true, // go back after we select something
@@ -350,7 +349,7 @@ export default class extends React.Component {
     });
 
     // Standalone Popup
-    self.autocompleteStandalonePopup = app.autocomplete.create({
+    self.autocompleteStandalonePopup = f7.autocomplete.create({
       openIn: 'popup', // open in page
       openerEl: '#autocomplete-standalone-popup a', // link that opens autocomplete
       closeOnSelect: true, // go back after we select something
@@ -378,7 +377,7 @@ export default class extends React.Component {
     });
 
     // Multiple Standalone
-    self.autocompleteStandaloneMultiple = app.autocomplete.create({
+    self.autocompleteStandaloneMultiple = f7.autocomplete.create({
       openIn: 'page', // open in page
       openerEl: '#autocomplete-standalone-multiple a', // link that opens autocomplete
       multiple: true, // allow multiple values
@@ -406,7 +405,7 @@ export default class extends React.Component {
     });
 
     // Standalone With Ajax
-    self.autocompleteStandaloneAjax = app.autocomplete.create({
+    self.autocompleteStandaloneAjax = f7.autocomplete.create({
       openIn: 'page', // open in page
       openerEl: '#autocomplete-standalone-ajax a', // link that opens autocomplete
       multiple: true, // allow multiple values
@@ -424,7 +423,7 @@ export default class extends React.Component {
         // Show Preloader
         autocomplete.preloaderShow();
         // Do Ajax request to Autocomplete data
-        app.request({
+        f7.request({
           url: './js/autocomplete-languages.json',
           method: 'GET',
           dataType: 'json',
@@ -461,7 +460,7 @@ export default class extends React.Component {
     });
 
     // Searchbar Autocomplete
-    self.autocompleteSearchbar = app.autocomplete.create({
+    self.autocompleteSearchbar = f7.autocomplete.create({
       openIn: 'dropdown',
       inputEl: '#searchbar-autocomplete input[type="search"]',
       dropdownPlaceholderText: 'Type "Apple"',
@@ -479,7 +478,7 @@ export default class extends React.Component {
         render(results);
       },
     });
-    self.searchbar = app.searchbar.create({
+    self.searchbar = f7.searchbar.create({
       el: '#searchbar-autocomplete',
       customSearch: true,
       on: {

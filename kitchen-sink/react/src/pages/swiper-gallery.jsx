@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, Swiper, SwiperSlide } from 'framework7-react';
+import { Navbar, Page, Swiper, SwiperSlide, f7 } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -56,14 +56,14 @@ export default class extends React.Component {
   onPageInit() {
     const self = this;
 
-    const swiperThumbs = self.$f7.swiper.create('.demo-swiper-gallery-thumbs', {
+    const swiperThumbs = f7.swiper.create('.demo-swiper-gallery-thumbs', {
       slidesPerView: 4,
       spaceBetween: 10,
       freeMode: true,
       watchSlidesProgress: true,
       watchSlidesVisibility: true,
     });
-    const swiperTop = self.$f7.swiper.create('.demo-swiper-gallery-top', {
+    const swiperTop = f7.swiper.create('.demo-swiper-gallery-top', {
       spaceBetween: 10,
       navigation: {
         nextEl: '.swiper-button-next',
