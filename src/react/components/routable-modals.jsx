@@ -16,7 +16,7 @@ const RoutableModals = forwardRef((props, ref) => {
 
   const onMount = () => {
     routerData.current = {
-      modals: self.state.modals,
+      modals,
       el: elRef.current,
       setModals,
     };

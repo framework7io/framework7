@@ -11,6 +11,11 @@ const f7routers = {
   modals: null,
 };
 
+const f7initEventsAndClass = (F7Class) => {
+  Framework7Class = F7Class;
+  f7events = new F7Class.Events();
+};
+
 const f7init = (rootEl, params = {}, routes) => {
   const f7Params = extend({}, params, {
     root: rootEl,
@@ -40,4 +45,4 @@ const f7ready = (callback) => {
 
 const theme = {};
 
-export { f7, theme, f7ready, f7events, f7init, f7routers, Framework7Class };
+export { f7, theme, f7ready, f7events, f7init, f7routers, f7initEventsAndClass };

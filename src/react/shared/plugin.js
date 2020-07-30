@@ -1,5 +1,5 @@
 import componentsRouter from './components-router';
-import { f7, f7ready, theme, f7events, Framework7Class } from './f7';
+import { f7, f7ready, theme, f7initEventsAndClass } from './f7';
 
 const Framework7React = {
   name: 'reactPlugin',
@@ -9,10 +9,7 @@ const Framework7React = {
     Plugin.installed = true;
 
     const Framework7 = this;
-    // eslint-disable-next-line
-    f7events = new Framework7.Events();
-    // eslint-disable-next-line
-    Framework7Class = Framework7;
+    f7initEventsAndClass(Framework7);
 
     const { paramsTheme, userAgent } = params;
     if (paramsTheme === 'md') theme.md = true;

@@ -9,7 +9,7 @@ import { colorClasses } from '../shared/mixins';
   COLOR_PROPS
 */
 
-const CardFooter = forwardRef((props, ref) => {
+const CardHeader = forwardRef((props, ref) => {
   const { className, id, style, children } = props;
   const dataAttrs = getDataAttrs(props);
 
@@ -27,4 +27,6 @@ const CardFooter = forwardRef((props, ref) => {
   );
 });
 
-CardFooter.displayName = 'f7-card-header';
+CardHeader.displayName = 'f7-card-header';
+
+export default CardHeader;

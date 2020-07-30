@@ -130,17 +130,18 @@ const Link = forwardRef((props, ref) => {
     );
   }
   const iconEl = useIcon(props);
+  let iconOnlyComputed;
   if (iconOnly || (!text && children && children.length === 0) || (!text && !children)) {
-    self.iconOnlyComputed = true;
+    iconOnlyComputed = true;
   } else {
-    self.iconOnlyComputed = false;
+    iconOnlyComputed = false;
   }
 
   const classes = classNames(
     className,
     {
       link: !(noLinkClass || isTabbarLabel),
-      'icon-only': self.iconOnlyComputed,
+      'icon-only': iconOnlyComputed,
       'tab-link': tabLink || tabLink === '',
       'tab-link-active': tabLinkActive,
       'smart-select': smartSelect,

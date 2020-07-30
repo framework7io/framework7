@@ -90,9 +90,8 @@ const View = forwardRef((props, ref) => {
   const routerData = useRef(null);
 
   const onViewInit = (view) => {
-    const self = this;
-    self.dispatchEvent('view:init viewInit', view);
-    if (!self.props.init) {
+    emit(props, 'viewInit', view);
+    if (!init) {
       routerData.current.instance = view;
       f7View.current = routerData.current.instance;
     }
@@ -130,7 +129,7 @@ const View = forwardRef((props, ref) => {
     f7ready(() => {
       routerData.current = {
         el: elRef.current,
-        pages: self.state.pages,
+        pages,
         instance: null,
         setPages,
       };

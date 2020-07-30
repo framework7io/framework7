@@ -28,3 +28,5 @@ const CardFooter = forwardRef((props, ref) => {
 });
 
 CardFooter.displayName = 'f7-card-footer';
+
+export default CardFooter;
