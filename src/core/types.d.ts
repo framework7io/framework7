@@ -11,6 +11,7 @@ import request, {
 import { getSupport, Support } from './types/utils/get-support';
 import { getDevice, Device } from './types/utils/get-device';
 import { Utils } from './types/utils/utils';
+import { Framework7Parameters, Framework7Plugin } from './types/components/app/app-class';
 
 // IMPORT_MODULES
 import { ComponentClass as Component, ComponentOptions } from './types/modules/component/component';
@@ -36,6 +37,9 @@ export {
   Dom7,
   Component,
   ComponentOptions,
+  Framework7Parameters,
+  Framework7Plugin,
+  RouterModule as Router,
 };
 // EXPORT_COMPONENTS
 export default Framework7;

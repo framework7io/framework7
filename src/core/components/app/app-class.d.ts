@@ -38,7 +38,7 @@ export interface Framework7EventsClass<Events> {
   emit<E extends keyof Events>(event: E, ...args: any[]): void;
 }
 
-export interface Framework7Params {
+export interface Framework7Parameters {
   /** App root element. If you main app layout is not a direct child of the <body> then it is required to specify root element here. (default body) */
   root?: string;
   /** App bundle id.. (default io.framework7.testapp) */
@@ -160,7 +160,7 @@ interface Framework7 extends Framework7Class<Framework7Events> {
   /** Template7 alias */
   t7: Template7;
   /** App parameters */
-  params: Framework7Params;
+  params: Framework7Parameters;
   /** Enables auto dark theme detection */
   enableAutoDarkTheme(): void;
   /** Disables auto dark theme detection */
@@ -175,7 +175,7 @@ interface Framework7 extends Framework7Class<Framework7Events> {
 interface Events extends Framework7EventsClass<Framework7Events> {}
 
 declare class Framework7 implements Framework7 {
-  constructor(parameters?: Framework7Params);
+  constructor(parameters?: Framework7Parameters);
 
   static use(plugin: Framework7Plugin): void;
   static use(plugins: Framework7Plugin[]): void;
