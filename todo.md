@@ -1,5 +1,1 @@
-- rename Framework7Params -> Framework7Parameters
-- export Framework7Parameters, Router, Framework7Plugin in f7/types
-- fix types path to /types/ in F7 core components
-- remove "cjs"/"esm" suffixes on f7-core main files
 - add aria- attrs support
