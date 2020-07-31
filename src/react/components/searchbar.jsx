@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect } from 'react';
 import { classNames, getDataAttrs, getSlots, noUndefinedProps, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
@@ -139,7 +139,7 @@ const Searchbar = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
-    f7Searchbar: f7Searchbar.current,
+    f7Searchbar: () => f7Searchbar.current,
     search,
     enable,
     disable,
@@ -202,7 +202,7 @@ const Searchbar = forwardRef((props, ref) => {
     f7Searchbar.current = null;
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect, useState } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect, useState } from 'react';
 import { f7events, f7routers, f7 } from '../shared/f7';
 
 /* dts-props
@@ -19,7 +19,7 @@ const RoutableModals = forwardRef((props, ref) => {
       modals,
       el: elRef.current,
       setModals(newModals) {
-        setModals([...newModals])
+        setModals([...newModals]);
       },
     };
     f7routers.modals = routerData.current;
@@ -31,12 +31,12 @@ const RoutableModals = forwardRef((props, ref) => {
     routerData.current = null;
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!routerData.current || !f7) return;
     f7events.emit('modalsRouterDidUpdate', routerData.current);
   });

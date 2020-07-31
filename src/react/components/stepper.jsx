@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect } from 'react';
 import { classNames, getDataAttrs, emit, noUndefinedProps } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
@@ -140,7 +140,7 @@ const Stepper = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
-    f7Stepper: f7Stepper.current,
+    f7Stepper: () => f7Stepper.current,
     increment,
     decrement,
     setValue,
@@ -186,7 +186,7 @@ const Stepper = forwardRef((props, ref) => {
     f7Stepper.current = null;
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect } from 'react';
 import { classNames, getDataAttrs, emit, getSlots } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
@@ -91,7 +91,7 @@ const Sheet = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
-    f7Sheet: f7Sheet.current,
+    f7Sheet: () => f7Sheet.current,
     open,
     close,
   }));
@@ -135,7 +135,7 @@ const Sheet = forwardRef((props, ref) => {
     f7Sheet.current = null;
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect } from 'react';
 import { classNames, getDataAttrs, emit, getSlots, noUndefinedProps } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import Link from './link';
@@ -108,7 +108,7 @@ const Messagebar = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
-    f7Messagebar: f7Messagebar.current,
+    f7Messagebar: () => f7Messagebar.current,
     clear(...args) {
       if (!f7Messagebar.current) return null;
       return f7Messagebar.current.clear(...args);
@@ -172,7 +172,7 @@ const Messagebar = forwardRef((props, ref) => {
     updateAttachmentsVisible.current = true;
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!f7Messagebar.current) return;
     if (updateSheetVisible.current) {
       updateSheetVisible.current = false;
@@ -215,7 +215,7 @@ const Messagebar = forwardRef((props, ref) => {
     f7Messagebar.current = null;
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

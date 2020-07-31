@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect, useState } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useState, useLayoutEffect } from 'react';
 import { classNames, getDataAttrs, emit, getSlots, extend } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
@@ -314,12 +314,12 @@ const ListInput = forwardRef((props, ref) => {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const listEl = listElRef.current;
     if (!listEl || (listEl && listEl.length === 0)) return;
     const isSortableNow = listEl.hasClass('sortable');

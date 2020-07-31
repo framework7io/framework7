@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect } from 'react';
 import { classNames, getDataAttrs, getSlots, noUndefinedProps, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
@@ -80,7 +80,7 @@ const TextEditor = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
-    f7TextEditor: f7TextEditor.current,
+    f7TextEditor: () => f7TextEditor.current,
   }));
 
   watchProp(value, (newValue) => {
@@ -125,7 +125,7 @@ const TextEditor = forwardRef((props, ref) => {
     f7TextEditor.current = null;
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useState, useEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useState, useLayoutEffect } from 'react';
 import { classNames, getDataAttrs, getSlots, emit, extend } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
@@ -303,12 +303,12 @@ const Input = forwardRef((props, ref) => {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!f7) return;
     if (updateInputOnDidUpdate.current) {
       if (!inputElRef.current) return;

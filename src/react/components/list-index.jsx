@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect } from 'react';
 import { classNames, getDataAttrs, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
@@ -51,7 +51,7 @@ const ListIndex = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
-    f7ListIndex: f7ListIndex.current,
+    f7ListIndex: () => f7ListIndex.current,
     update,
     scrollListToIndex,
   }));
@@ -90,7 +90,7 @@ const ListIndex = forwardRef((props, ref) => {
     f7ListIndex.current = null;
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

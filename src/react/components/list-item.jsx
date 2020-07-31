@@ -1,4 +1,11 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect, useState } from 'react';
+import React, {
+  forwardRef,
+  useRef,
+  useImperativeHandle,
+  useEffect,
+  useState,
+  useLayoutEffect,
+} from 'react';
 import { classNames, getDataAttrs, getSlots, emit, isStringProp, extend } from '../shared/utils';
 import {
   colorClasses,
@@ -409,7 +416,7 @@ const ListItem = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
-    f7SmartSelect: f7SmartSelect.current,
+    f7SmartSelect: () => f7SmartSelect.current,
   }));
 
   useTooltip(elRef, props);
@@ -492,7 +499,7 @@ const ListItem = forwardRef((props, ref) => {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);
@@ -503,7 +510,7 @@ const ListItem = forwardRef((props, ref) => {
     }
   }, [indeterminate]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!listElRef.current || listElRef.current.length === 0) return;
     const isMediaNow = listElRef.current.hasClass('media-list');
     const isSimpleNow = listElRef.current.hasClass('simple-list');

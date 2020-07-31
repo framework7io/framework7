@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect, useLayoutEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect } from 'react';
 import { classNames, getDataAttrs, noUndefinedProps } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
@@ -54,7 +54,7 @@ const Messages = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
-    f7Messages: f7Messages.current,
+    f7Messages: () => f7Messages.current,
     renderMessages(messagesToRender, method) {
       if (!f7Messages.current) return undefined;
       return f7Messages.current.renderMessages(messagesToRender, method);
@@ -131,7 +131,7 @@ const Messages = forwardRef((props, ref) => {
     if (f7Messages.current && f7Messages.current.destroy) f7Messages.current.destroy();
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

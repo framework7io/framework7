@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useImperativeHandle } from 'react';
+import React, { forwardRef, useLayoutEffect, useRef, useImperativeHandle } from 'react';
 import { classNames, getDataAttrs, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7, f7ready } from '../shared/f7';
@@ -69,7 +69,7 @@ const AccordionItem = forwardRef((props, ref) => {
     f7.off('accordionClosed', onClosed);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect } from 'react';
 import { classNames, getDataAttrs, getSlots, emit } from '../shared/utils';
 import {
   colorClasses,
@@ -57,7 +57,7 @@ const MenuItem = forwardRef((props, ref) => {
     f7.off('menuClosed', onOpened);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

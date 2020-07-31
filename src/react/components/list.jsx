@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect } from 'react';
 import { classNames, getDataAttrs, getSlots, flattenArray, emit, extend } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7, f7ready } from '../shared/f7';
@@ -128,7 +128,7 @@ const List = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
-    f7VirtualList: f7VirtualList.current,
+    f7VirtualList: () => f7VirtualList.current,
   }));
 
   const onMount = () => {
@@ -184,7 +184,7 @@ const List = forwardRef((props, ref) => {
     if (f7VirtualList.current.destroy) f7VirtualList.current.destroy();
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

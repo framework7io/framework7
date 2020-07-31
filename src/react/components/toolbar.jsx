@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useEffect, useLayoutEffect } from 'react';
 import { classNames, getDataAttrs, getSlots, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { useTheme } from '../shared/use-theme';
@@ -95,7 +95,7 @@ const Toolbar = forwardRef((props, ref) => {
     f7.off('toolbarHide', onHide);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

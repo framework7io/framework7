@@ -122,7 +122,7 @@ const View = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
-    f7View: f7View.current,
+    f7View: () => f7View.current,
   }));
 
   const onMount = () => {

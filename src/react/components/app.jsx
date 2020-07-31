@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect } from 'react';
 import { classNames, getDataAttrs } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 
@@ -30,7 +30,7 @@ const App = forwardRef((props, ref) => {
 
   const classes = classNames(className, 'framework7-root', colorClasses(props));
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const parentEl = elRef.current && elRef.current.parentNode;
     /* eslint-disable no-restricted-globals */
     if (

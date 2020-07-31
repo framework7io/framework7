@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect, useState } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useState, useLayoutEffect } from 'react';
 import { classNames, getDataAttrs, isStringProp, emit, extend } from '../shared/utils';
 import {
   colorClasses,
@@ -77,7 +77,7 @@ const Link = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
-    f7SmartSelect: f7SmartSelect.current,
+    f7SmartSelect: () => f7SmartSelect.current,
   }));
 
   useTooltip(elRef, props);
@@ -100,12 +100,12 @@ const Link = forwardRef((props, ref) => {
     f7SmartSelect.current = null;
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!elRef.current || !f7) return;
     let isTabbarLabelComputed = false;
     if (

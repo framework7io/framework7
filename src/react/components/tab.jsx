@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useState, useEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useState, useLayoutEffect } from 'react';
 import { classNames, getDataAttrs } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7routers, f7, f7events } from '../shared/f7';
@@ -52,12 +52,12 @@ const Tab = forwardRef((props, ref) => {
     routerData.current = null;
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!routerData.current || !f7) return;
     f7events.emit('tabRouterDidUpdate', routerData.current);
   });

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { watchProp } from './watch-prop';
 import { f7, f7ready } from './f7';
 
@@ -26,7 +26,7 @@ export const useTooltip = (elRef, props) => {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

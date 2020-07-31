@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect } from 'react';
 
 import CardHeader from './card-header';
 import CardContent from './card-content';
@@ -130,7 +130,7 @@ const Card = forwardRef((props, ref) => {
     f7.off('cardClosed', onClosed);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

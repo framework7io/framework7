@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { f7, f7ready } from './f7';
 import { emit } from './utils';
 
@@ -24,7 +24,7 @@ export const useTab = (elRef, props) => {
     f7.off('tabHide', onTabHide);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect } from 'react';
 import { classNames, getDataAttrs, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
@@ -49,7 +49,7 @@ const LoginScreen = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
-    f7LoginScreen: f7LoginScreen.current,
+    f7LoginScreen: () => f7LoginScreen.current,
     open,
     close,
   }));
@@ -89,7 +89,7 @@ const LoginScreen = forwardRef((props, ref) => {
     f7LoginScreen.current = null;
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

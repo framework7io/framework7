@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
+import { forwardRef, useRef, useImperativeHandle, useLayoutEffect } from 'react';
 import { extend, emit } from '../shared/utils';
 import { watchProp } from '../shared/watch-prop';
 import { f7ready, f7 } from '../shared/f7';
@@ -93,7 +93,7 @@ const PhotoBrowser = forwardRef((props, ref) => {
   };
 
   useImperativeHandle(ref, () => ({
-    f7PhotoBrowser: f7PhotoBrowser.current,
+    f7PhotoBrowser: () => f7PhotoBrowser.current,
     open,
     close,
     expositionToggle,
@@ -184,7 +184,7 @@ const PhotoBrowser = forwardRef((props, ref) => {
     f7PhotoBrowser.current = null;
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);
