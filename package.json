@@ -58,12 +58,12 @@
     "Samsung >= 6"
   ],
   "dependencies": {
-    "@skeleton-elements/core": "^0.9.0",
-    "@skeleton-elements/react": "^0.9.0",
+    "@skeleton-elements/core": "^1.0.0",
+    "@skeleton-elements/react": "^1.0.0",
     "dom7": "^3.0.0-alpha.7",
     "path-to-regexp": "^6.1.0",
     "ssr-window": "^3.0.0-alpha.4",
-    "swiper": "^6.0.4",
+    "swiper": "^6.1.1",
     "template7": "^1.4.2"
   },
   "devDependencies": {
