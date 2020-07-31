@@ -17,6 +17,7 @@
   - Request
     - Export renamed to `request`
     - only promise APIs
+    - new request.abortController()
   - Utils
     - Export renamed to `utils`
   - Device
