@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, Messages, MessagesTitle, Message, Messagebar, Link, MessagebarAttachments, MessagebarAttachment, MessagebarSheet, MessagebarSheetImage, f7ready } from 'framework7-react';
+import { Navbar, Page, Messages, MessagesTitle, Message, Messagebar, Link, MessagebarAttachments, MessagebarAttachment, MessagebarSheet, MessagebarSheetImage, f7ready, f7 } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -196,7 +196,7 @@ export default class extends React.Component {
   componentDidMount() {
     const self = this;
     f7ready(() => {
-      self.messagebar = self.messagebarComponent.f7Messagebar;
+      self.messagebar = self.messagebarComponent.f7Messagebar();
       self.messages = self.messagesComponent.f7Messages;
     });
   }
