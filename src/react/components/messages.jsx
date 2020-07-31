@@ -27,6 +27,7 @@ import { f7ready, f7 } from '../shared/f7';
 
 const Messages = forwardRef((props, ref) => {
   const f7Messages = useRef(null);
+  const mounted = useRef(false);
   const {
     className,
     id,
@@ -137,10 +138,19 @@ const Messages = forwardRef((props, ref) => {
   }, []);
 
   useLayoutEffect(() => {
-    if (!init || elRef.current) return;
+    const wasMounted = mounted.current;
+    mounted.current = true;
+    if (!init || !elRef.current) return;
 
     const childElements = elRef.current.children;
     if (!childElements) return;
+
+    if (!wasMounted) {
+      for (let i = 0; i < childElements.length; i += 1) {
+        childElements[i].classList.add('message-appeared');
+      }
+      return;
+    }
 
     for (let i = 0; i < childElements.length; i += 1) {
       if (!childElements[i].classList.contains('message-appeared')) {
