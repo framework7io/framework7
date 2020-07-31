@@ -4,7 +4,36 @@
 
 # v6.0.0 (WIP)
 
-- Request -> request
+- Core
+  - Dom7
+    - Uses new Dom7
+  - Package
+    - renamed files and imports
+    - lite version doesn't contain
+      - Template7
+      - Gauge
+      - ...
+    - New types in `framework7/types`
+  - Request
+    - Export renamed to `request`
+    - only promise APIs
+  - Utils
+    - Export renamed to `utils`
+  - Device
+    - Export renamed to `device`
+  - Swiper
+    - updated to v6
+    - used as dependency
+  - Skeleton Elements
+    - used as dependency
+    - new React, Svelte and Vue components
+- React
+  - New ref's object
+  - Rewritten with hooks
+  - Instances in refs are functions
+  - Removed all prototypes methods (\$$, $f7, $f7ready, $f7route, $f7router, $utils, $device, $theme, \$request)
+    - Now they should be imported as `import {f7, f7ready, theme} from 'framework7-react'`. Dom7, device, request can be used as `f7.` accessors or imported from `framework7`
+  - Removed `umd` version
 
 # [v5.7.10](https://github.com/framework7io/framework7/compare/v5.7.9...v5.7.10) - July 14, 2020
 
