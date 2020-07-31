@@ -1,9 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 
 export const watchProp = (value, callback) => {
   const valueRef = useRef(value);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (value !== valueRef.current && callback) {
       callback(value, valueRef.current);
     }
