@@ -148,7 +148,13 @@ function tabLoad(tabRoute, loadOptions = {}) {
       resolve(content);
     } else if (template || templateUrl) {
       try {
-        router.tabTemplateLoader(template, templateUrl, loadTabOptions, resolve, reject);
+        router.tabTemplateLoader({
+          template,
+          templateUrl,
+          options: loadTabOptions,
+          resolve,
+          reject,
+        });
       } catch (err) {
         router.allowPageChange = true;
         throw err;
@@ -158,14 +164,14 @@ function tabLoad(tabRoute, loadOptions = {}) {
     } else if (component || componentUrl) {
       // Load from component (F7/Vue/React/...)
       try {
-        router.tabComponentLoader(
-          $newTabEl[0],
+        router.tabComponentLoader({
+          tabEl: $newTabEl[0],
           component,
           componentUrl,
-          loadTabOptions,
+          options: loadTabOptions,
           resolve,
           reject,
-        );
+        });
       } catch (err) {
         router.allowPageChange = true;
         throw err;

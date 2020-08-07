@@ -81,7 +81,7 @@ export default {
       }
     },
 
-    modalComponentLoader(rootEl, component, componentUrl, options, resolve, reject) {
+    modalComponentLoader({ component, componentUrl, options, resolve, reject } = {}) {
       const router = this;
       router.componentLoader(
         component,
@@ -94,7 +94,7 @@ export default {
       );
     },
 
-    tabComponentLoader(tabEl, component, componentUrl, options, resolve, reject) {
+    tabComponentLoader({ component, componentUrl, options, resolve, reject } = {}) {
       const router = this;
       router.componentLoader(
         component,
@@ -107,7 +107,7 @@ export default {
       );
     },
 
-    pageComponentLoader(routerEl, component, componentUrl, options, resolve, reject) {
+    pageComponentLoader({ component, componentUrl, options, resolve, reject } = {}) {
       const router = this;
       router.componentLoader(
         component,

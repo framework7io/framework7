@@ -43,6 +43,7 @@ class Router extends Framework7Class {
         app,
         view,
         viewId: view.id,
+        id: view.params.routerId,
         params: view.params,
         routes: view.routes,
         $el: view.$el,

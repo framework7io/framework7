@@ -160,7 +160,13 @@ function modalLoad(modalType, route, loadOptions = {}) {
       resolve(content);
     } else if (template || templateUrl) {
       try {
-        router.modalTemplateLoader(template, templateUrl, loadModalOptions, resolve, reject);
+        router.modalTemplateLoader({
+          template,
+          templateUrl,
+          options: loadModalOptions,
+          resolve,
+          reject,
+        });
       } catch (err) {
         router.allowPageChange = true;
         throw err;
@@ -168,14 +174,14 @@ function modalLoad(modalType, route, loadOptions = {}) {
     } else if (component || componentUrl) {
       // Load from component (F7/Vue/React/...)
       try {
-        router.modalComponentLoader(
-          app.root[0],
+        router.modalComponentLoader({
+          rootEl: app.root[0],
           component,
           componentUrl,
-          loadModalOptions,
+          options: loadModalOptions,
           resolve,
           reject,
-        );
+        });
       } catch (err) {
         router.allowPageChange = true;
         throw err;

@@ -4,7 +4,7 @@ import { extend } from '../../utils/utils';
 export default {
   name: 'routerTemplateLoader',
   proto: {
-    templateLoader(template, templateUrl, options, resolve, reject) {
+    templateLoader({ template, templateUrl, options, resolve, reject } = {}) {
       const router = this;
       function compile(t) {
         let compiledHtml;
@@ -64,43 +64,39 @@ export default {
       }
     },
 
-    modalTemplateLoader(template, templateUrl, options, resolve, reject) {
+    modalTemplateLoader({ template, templateUrl, options, resolve, reject } = {}) {
       const router = this;
-      return router.templateLoader(
+      return router.templateLoader({
         template,
         templateUrl,
         options,
-        (html) => {
-          resolve(html);
-        },
+        resolve,
         reject,
-      );
+      });
     },
 
-    tabTemplateLoader(template, templateUrl, options, resolve, reject) {
+    tabTemplateLoader({ template, templateUrl, options, resolve, reject } = {}) {
       const router = this;
-      return router.templateLoader(
+      return router.templateLoader({
         template,
         templateUrl,
         options,
-        (html) => {
-          resolve(html);
-        },
+        resolve,
         reject,
-      );
+      });
     },
 
-    pageTemplateLoader(template, templateUrl, options, resolve, reject) {
+    pageTemplateLoader({ template, templateUrl, options, resolve, reject } = {}) {
       const router = this;
-      return router.templateLoader(
+      return router.templateLoader({
         template,
         templateUrl,
         options,
-        (html, newOptions = {}) => {
+        resolve: (html, newOptions = {}) => {
           resolve(router.getPageEl(html), newOptions);
         },
         reject,
-      );
+      });
     },
   },
 };

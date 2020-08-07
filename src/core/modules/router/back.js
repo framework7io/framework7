@@ -570,7 +570,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   } else if (template || templateUrl) {
     // Parse template and send page element
     try {
-      router.pageTemplateLoader(template, templateUrl, options, resolve, reject);
+      router.pageTemplateLoader({ template, templateUrl, options, resolve, reject });
     } catch (err) {
       router.allowPageChange = true;
       throw err;
@@ -584,7 +584,14 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   } else if (component || componentUrl) {
     // Load from component (F7/Vue/React/...)
     try {
-      router.pageComponentLoader(router.el, component, componentUrl, options, resolve, reject);
+      router.pageComponentLoader({
+        routerEl: router.el,
+        component,
+        componentUrl,
+        options,
+        resolve,
+        reject,
+      });
     } catch (err) {
       router.allowPageChange = true;
       throw err;
