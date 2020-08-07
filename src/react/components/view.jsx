@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getExtraAttrs, noUndefinedProps, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, noUndefinedProps, emit, now } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7routers, f7, f7events } from '../shared/f7';
 import { useTab } from '../shared/use-tab';
@@ -79,6 +79,8 @@ import { useTab } from '../shared/use-tab';
   onTabHide? : (el?: HTMLElement) => void
 */
 
+let routerIdCounter = 0;
+
 const View = forwardRef((props, ref) => {
   const { className, id, style, children, init = true, main, tab, tabActive } = props;
 
@@ -128,8 +130,10 @@ const View = forwardRef((props, ref) => {
 
   const onMount = () => {
     f7ready(() => {
+      const routerId = `${now()}_${(routerIdCounter += 1)}`;
       routerData.current = {
         el: elRef.current,
+        routerId,
         pages,
         instance: null,
         setPages(newPages) {
@@ -140,6 +144,7 @@ const View = forwardRef((props, ref) => {
       if (!init) return;
 
       routerData.current.instance = f7.views.create(elRef.current, {
+        routerId,
         on: {
           init: onViewInit,
         },

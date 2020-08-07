@@ -6,12 +6,13 @@ let routerComponentIdCounter = 0;
 
 export default {
   proto: {
-    pageComponentLoader(routerEl, component, componentUrl, options, resolve, reject) {
+    pageComponentLoader({ routerEl, component, options, resolve, reject }) {
       const router = this;
+      const routerId = router.id;
       const el = routerEl;
       let viewRouter;
       f7routers.views.forEach((data) => {
-        if (data.el && data.el === routerEl) {
+        if ((data.el && data.el === routerEl) || (data.routerId && data.routerId === routerId)) {
           viewRouter = data;
         }
       });
@@ -93,7 +94,7 @@ export default {
         pageEl.parentNode.removeChild(pageEl);
       }
     },
-    tabComponentLoader(tabEl, component, componentUrl, options, resolve, reject) {
+    tabComponentLoader({ tabEl, component, options, resolve, reject } = {}) {
       const router = this;
       if (!tabEl) reject();
 
@@ -154,7 +155,7 @@ export default {
       }
       tabRouter.setTabContent(null);
     },
-    modalComponentLoader(rootEl, component, componentUrl, options, resolve, reject) {
+    modalComponentLoader({ component, options, resolve, reject } = {}) {
       const router = this;
       const modalsRouter = f7routers.modals;
 
