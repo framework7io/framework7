@@ -1,9 +1,10 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useRef } from 'react';
+import { useIsomorphicLayoutEffect } from './use-isomorphic-layout-effect';
 
 export const watchProp = (value, callback) => {
   const valueRef = useRef(value);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (value !== valueRef.current && callback) {
       callback(value, valueRef.current);
     }

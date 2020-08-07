@@ -6,8 +6,8 @@ const Framework7React = {
   name: 'reactPlugin',
   installed: false,
   install(params = {}) {
-    if (Plugin.installed) return;
-    Plugin.installed = true;
+    if (Framework7React.installed) return;
+    Framework7React.installed = true;
 
     f7initEvents();
 
