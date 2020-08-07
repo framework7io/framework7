@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+
 import { getWindow, getDocument } from 'ssr-window';
 import { extend, nextFrame } from '../../utils/utils';
 import { getDevice } from '../../utils/get-device';
@@ -48,6 +50,7 @@ class Framework7 extends Framework7Class {
       iosTranslucentModals: true,
       component: undefined,
       componentUrl: undefined,
+      _preinit: false,
     };
 
     // Extend defaults with modules params
@@ -95,6 +98,10 @@ class Framework7 extends Framework7Class {
     // Install Modules
     app.useModules();
 
+    if (app.params._preinit) {
+      app._preinit();
+      return app;
+    }
     // Init Data & Methods
     app.initData();
 
@@ -205,7 +212,11 @@ class Framework7 extends Framework7Class {
     );
   }
 
-  // eslint-disable-next-line
+  _preinit() {
+    const app = this;
+    app.emit('_preinit');
+  }
+
   _init() {
     const app = this;
     if (app.initialized) return app;
