@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs, extend } from '../shared/utils';
+import { classNames, getExtraAttrs, extend } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { useTheme } from '../shared/use-theme';
 
@@ -14,7 +14,7 @@ import { useTheme } from '../shared/use-theme';
 const Preloader = forwardRef((props, ref) => {
   const theme = useTheme();
   const { className, id, style, size } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 

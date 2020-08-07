@@ -1,6 +1,6 @@
 /* eslint no-nested-ternary: off */
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs } from '../shared/utils';
+import { classNames, getExtraAttrs } from '../shared/utils';
 
 /* dts-props
   id?: string | number;
@@ -46,7 +46,7 @@ const Gauge = forwardRef((props, ref) => {
     labelFontWeight = 400,
   } = props;
 
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   useImperativeHandle(ref, () => ({

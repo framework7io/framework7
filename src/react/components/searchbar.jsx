@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getDataAttrs, getSlots, noUndefinedProps, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, getSlots, noUndefinedProps, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
 
@@ -92,7 +92,7 @@ const Searchbar = forwardRef((props, ref) => {
     init = true,
   } = props;
 
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 

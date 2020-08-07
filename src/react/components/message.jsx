@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs, getSlots, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 
 /* dts-props
@@ -56,7 +56,7 @@ const Message = forwardRef((props, ref) => {
     sameAvatar,
     typing,
   } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 

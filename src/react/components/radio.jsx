@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 
 /* dts-props
@@ -29,7 +29,7 @@ const Radio = forwardRef((props, ref) => {
     defaultChecked,
   } = props;
 
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 

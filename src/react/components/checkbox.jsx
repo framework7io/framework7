@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
-import { classNames, getDataAttrs, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 
 /* dts-props
@@ -31,7 +31,7 @@ const Checkbox = forwardRef((props, ref) => {
     defaultChecked,
     indeterminate,
   } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   const inputElRef = useRef(null);

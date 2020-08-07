@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getDataAttrs } from '../shared/utils';
+import { classNames, getExtraAttrs } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7routers, f7, f7events } from '../shared/f7';
 import { useTab } from '../shared/use-tab';
@@ -18,7 +18,7 @@ import { useTab } from '../shared/use-tab';
 const Tab = forwardRef((props, ref) => {
   const { className, id, style, children, tabActive } = props;
 
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const [tabContent, setTabContent] = useState(null);
 

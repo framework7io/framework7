@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { useTheme } from '../shared/use-theme';
 
@@ -31,7 +31,7 @@ const NavLeft = forwardRef((props, ref) => {
     backLinkShowText,
     sliding,
   } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 

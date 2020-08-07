@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getDataAttrs, emit, getSlots, noUndefinedProps } from '../shared/utils';
+import { classNames, getExtraAttrs, emit, getSlots, noUndefinedProps } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import Link from './link';
 import Input from './input';
@@ -68,7 +68,7 @@ const Messagebar = forwardRef((props, ref) => {
     placeholder = 'Message',
     init = true,
   } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   const areaElRef = useRef(null);

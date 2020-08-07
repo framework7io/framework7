@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs, extend } from '../shared/utils';
+import { classNames, getExtraAttrs, extend } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { useTooltip } from '../shared/use-tooltip';
 import { useTheme } from '../shared/use-theme';
@@ -23,7 +23,7 @@ import { useTheme } from '../shared/use-theme';
 const Icon = forwardRef((props, ref) => {
   const theme = useTheme();
   const { className, id, style, children, material, f7, icon, md, ios, aurora, size } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 

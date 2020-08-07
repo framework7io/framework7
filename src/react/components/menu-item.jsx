@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getDataAttrs, getSlots, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils';
 import {
   colorClasses,
   routerAttrs,
@@ -24,7 +24,7 @@ import { f7ready, f7 } from '../shared/f7';
 
 const MenuItem = forwardRef((props, ref) => {
   const { className, id, style, link, href, target, text, dropdown, iconOnly } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 

@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs, getSlots } from '../shared/utils';
+import { classNames, getExtraAttrs, getSlots } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 
 /* dts-props
@@ -27,7 +27,7 @@ const Appbar = forwardRef((props, ref) => {
     noHairline,
   } = props;
 
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   useImperativeHandle(ref, () => ({

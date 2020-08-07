@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { useTooltip } from '../shared/use-tooltip';
 
@@ -18,7 +18,7 @@ import { useTooltip } from '../shared/use-tooltip';
 
 const FabButton = forwardRef((props, ref) => {
   const { className, id, style, children, fabClose, label, target } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 

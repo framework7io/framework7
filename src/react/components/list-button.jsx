@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs, isStringProp, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, isStringProp, emit } from '../shared/utils';
 import {
   colorClasses,
   actionsAttrs,
@@ -43,7 +43,7 @@ const ListButton = forwardRef((props, ref) => {
     href,
     target,
   } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   const linkElRef = useRef(null);

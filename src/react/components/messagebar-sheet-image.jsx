@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 
 /* dts-props
@@ -16,7 +16,7 @@ import { colorClasses } from '../shared/mixins';
 
 const MessagebarSheetImage = forwardRef((props, ref) => {
   const { className, id, style, children, image, checked } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 

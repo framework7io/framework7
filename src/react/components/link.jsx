@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getDataAttrs, isStringProp, emit, extend } from '../shared/utils';
+import { classNames, getExtraAttrs, isStringProp, emit, extend } from '../shared/utils';
 import {
   colorClasses,
   routerAttrs,
@@ -68,7 +68,7 @@ const Link = forwardRef((props, ref) => {
   } = props;
   const [isTabbarLabel, setIsTabbarLabel] = useState(tabbarLabel);
 
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 

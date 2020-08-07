@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, emit } from '../shared/utils';
 import {
   colorClasses,
   routerAttrs,
@@ -26,7 +26,7 @@ import { useRouteProps } from '../shared/use-route-props';
 
 const MenuDropdownItem = forwardRef((props, ref) => {
   const { className, id, style, children, link, href, target, text, divider, menuClose } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 

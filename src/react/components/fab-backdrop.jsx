@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { getDataAttrs, classNames } from '../shared/utils';
+import { getExtraAttrs, classNames } from '../shared/utils';
 
 /* dts-props
   id?: string | number;
@@ -9,7 +9,7 @@ import { getDataAttrs, classNames } from '../shared/utils';
 
 const FabBackdrop = forwardRef((props, ref) => {
   const { className, id, style, children } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   useImperativeHandle(ref, () => ({

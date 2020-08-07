@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getDataAttrs, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7, f7ready } from '../shared/f7';
 import { watchProp } from '../shared/watch-prop';
@@ -32,7 +32,7 @@ import { Actions } from 'framework7/types';
 
 const Actions = forwardRef((props, ref) => {
   const { className, id, style, children, grid, opened = false } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   const f7Actions = useRef(null);

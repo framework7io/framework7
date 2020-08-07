@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs } from '../shared/utils';
+import { classNames, getExtraAttrs } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { useTab } from '../shared/use-tab';
 
@@ -52,7 +52,7 @@ const Block = forwardRef((props, ref) => {
     style,
     children,
   } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   useImperativeHandle(ref, () => ({

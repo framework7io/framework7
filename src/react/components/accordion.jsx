@@ -1,5 +1,5 @@
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
-import { classNames, getDataAttrs } from '../shared/utils';
+import { classNames, getExtraAttrs } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 
 /* dts-props
@@ -16,7 +16,7 @@ const Accordion = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     el: elRef.current,
   }));
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
   const classes = classNames(
     className,
     'accordion-list',

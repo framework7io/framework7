@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getDataAttrs, getSlots, flattenArray, emit, extend } from '../shared/utils';
+import { classNames, getExtraAttrs, getSlots, flattenArray, emit, extend } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7, f7ready } from '../shared/f7';
 
@@ -99,7 +99,7 @@ const List = forwardRef((props, ref) => {
     virtualList,
     virtualListParams,
   } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 

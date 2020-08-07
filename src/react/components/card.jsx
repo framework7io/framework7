@@ -5,7 +5,7 @@ import CardHeader from './card-header';
 import CardContent from './card-content';
 import CardFooter from './card-footer';
 
-import { classNames, getDataAttrs, getSlots, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7, f7ready } from '../shared/f7';
 import { watchProp } from '../shared/watch-prop';
@@ -73,7 +73,7 @@ const Card = forwardRef((props, ref) => {
     noShadow,
     noBorder,
   } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 

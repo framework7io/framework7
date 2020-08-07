@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getDataAttrs, getSlots, emit, extend } from '../shared/utils';
+import { classNames, getExtraAttrs, getSlots, emit, extend } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
 import { watchProp } from '../shared/watch-prop';
@@ -142,7 +142,7 @@ const Input = forwardRef((props, ref) => {
   const [inputInvalid, setInputInvalid] = useState(false);
   const [inputFocused, setInputFocused] = useState(false);
 
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const f7Calendar = useRef(null);
   const f7ColorPicker = useRef(null);

@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs, getSlots, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { useTooltip } from '../shared/use-tooltip';
 import { useIcon } from '../shared/use-icon';
@@ -34,7 +34,7 @@ const Chip = forwardRef((props, ref) => {
     mediaBgColor,
     outline,
   } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const onClick = (event) => {
     emit(props, 'click', event);

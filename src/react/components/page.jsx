@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getDataAttrs, getSlots, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
 
@@ -104,7 +104,7 @@ const Page = forwardRef((props, ref) => {
   const [routerPageRoleDetailRoot, setRouterPageRoleDetailRoot] = useState(false);
   const [routerPageMasterStack, setRouterPageMasterStack] = useState(false);
 
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 

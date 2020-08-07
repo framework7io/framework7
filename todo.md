@@ -5,5 +5,4 @@
 
 # React
 
-- add aria- attrs support
 - SSR

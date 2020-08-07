@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getDataAttrs } from '../shared/utils';
+import { classNames, getExtraAttrs } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 
 import RoutableModals from './routable-modals';
@@ -21,7 +21,7 @@ import { f7init, f7 } from '../shared/f7';
 
 const App = forwardRef((props, ref) => {
   const { className, id, style, children, params, routes } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 

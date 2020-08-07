@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs } from '../shared/utils';
+import { classNames, getExtraAttrs } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7 } from '../shared/f7';
 
@@ -14,7 +14,7 @@ import { f7 } from '../shared/f7';
 
 const Progressbar = forwardRef((props, ref) => {
   const { className, id, style, progress, infinite } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 

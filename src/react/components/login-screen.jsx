@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getDataAttrs, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
 import { watchProp } from '../shared/watch-prop';
@@ -23,7 +23,7 @@ import { LoginScreen } from 'framework7/types';
 const LoginScreen = forwardRef((props, ref) => {
   const f7LoginScreen = useRef(null);
   const { className, id, style, children, opened } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 

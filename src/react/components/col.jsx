@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
-import { classNames, getDataAttrs, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
 
@@ -41,7 +41,7 @@ const Col = forwardRef((props, ref) => {
     resizableAbsolute,
     resizableHandler = true,
   } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 

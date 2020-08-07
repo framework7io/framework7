@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs } from '../shared/utils';
+import { classNames, getExtraAttrs } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { useTooltip } from '../shared/use-tooltip';
 
@@ -22,7 +22,7 @@ f7Tooltip: Tooltip.Tooltip
 
 const Badge = forwardRef((props, ref) => {
   const { className, id, style, children } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   useImperativeHandle(ref, () => ({

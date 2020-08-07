@@ -132,12 +132,12 @@ export function emit(props, events, ...args) {
     });
 }
 
-export function getDataAttrs(props = {}) {
-  const dataAttrs = {};
+export function getExtraAttrs(props = {}) {
+  const extraAttrs = {};
   Object.keys(props).forEach((key) => {
-    if (key.indexOf('data-') === 0) {
-      dataAttrs[key] = props[key];
+    if (key.indexOf('data-') === 0 || key.indexOf('aria-') === 0 || key === 'role') {
+      extraAttrs[key] = props[key];
     }
   });
-  return dataAttrs;
+  return extraAttrs;
 }

@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getDataAttrs, emit, getSlots } from '../shared/utils';
+import { classNames, getExtraAttrs, emit, getSlots } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
 import { useTheme } from '../shared/use-theme';
@@ -68,7 +68,7 @@ const Navbar = forwardRef((props, ref) => {
   const [routerNavbarRoleDetailRoot, setRouterNavbarRoleDetailRoot] = useState(false);
   const [routerNavbarMasterStack, setRouterNavbarMasterStack] = useState(false);
   const [transparentVisible, setTransparentVisible] = useState(false);
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 

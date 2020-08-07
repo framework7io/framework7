@@ -1,7 +1,7 @@
 import React, { forwardRef, useRef, useImperativeHandle, useEffect, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 
-import { classNames, getDataAttrs, getSlots, emit, isStringProp, extend } from '../shared/utils';
+import { classNames, getExtraAttrs, getSlots, emit, isStringProp, extend } from '../shared/utils';
 import {
   colorClasses,
   actionsAttrs,
@@ -332,7 +332,7 @@ const ListItem = forwardRef((props, ref) => {
   const [isSortableOpposite, setIsSortableOpposite] = useState(sortableOpposite);
   const [isSimple, setIsSimple] = useState(false);
 
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   const linkElRef = useRef(null);

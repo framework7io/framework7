@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getDataAttrs, emit, getSlots, extend } from '../shared/utils';
+import { classNames, getExtraAttrs, emit, getSlots, extend } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
 
@@ -153,7 +153,7 @@ const ListInput = forwardRef((props, ref) => {
   const [inputFocused, setInputFocused] = useState(false);
   const [isSortable, setIsSortable] = useState(sortable);
 
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const f7Calendar = useRef(null);
   const f7ColorPicker = useRef(null);

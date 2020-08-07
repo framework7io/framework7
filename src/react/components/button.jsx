@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs, extend, isStringProp, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, extend, isStringProp, emit } from '../shared/utils';
 import {
   colorClasses,
   actionsAttrs,
@@ -95,7 +95,7 @@ const Button = forwardRef((props, ref) => {
     disabled,
   } = props;
 
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 

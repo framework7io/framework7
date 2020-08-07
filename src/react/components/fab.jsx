@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getDataAttrs, getSlots, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { useTooltip } from '../shared/use-tooltip';
 
@@ -20,7 +20,7 @@ import { useTooltip } from '../shared/use-tooltip';
 
 const Fab = forwardRef((props, ref) => {
   const { className, id, style, morphTo, href, target, text, position = 'right-bottom' } = props;
-  const dataAttrs = getDataAttrs(props);
+  const dataAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   const linkElRef = useRef(null);
