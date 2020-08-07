@@ -1,5 +1,6 @@
+import Framework7 from 'framework7';
 import componentsRouter from './components-router';
-import { f7, f7ready, theme, f7initEventsAndClass } from './f7';
+import { f7, f7ready, theme, f7initEvents } from './f7';
 
 const Framework7React = {
   name: 'reactPlugin',
@@ -8,8 +9,7 @@ const Framework7React = {
     if (Plugin.installed) return;
     Plugin.installed = true;
 
-    const Framework7 = this;
-    f7initEventsAndClass(Framework7);
+    f7initEvents();
 
     const { paramsTheme, userAgent } = params;
     if (paramsTheme === 'md') theme.md = true;
