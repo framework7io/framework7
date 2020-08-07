@@ -1,4 +1,5 @@
-import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 import { classNames, getDataAttrs, getSlots, emit } from '../shared/utils';
 import {
   colorClasses,
@@ -57,7 +58,7 @@ const MenuItem = forwardRef((props, ref) => {
     f7.off('menuClosed', onOpened);
   };
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

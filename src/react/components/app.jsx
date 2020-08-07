@@ -1,4 +1,5 @@
-import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 import { classNames, getDataAttrs } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 
@@ -30,7 +31,7 @@ const App = forwardRef((props, ref) => {
 
   const classes = classNames(className, 'framework7-root', colorClasses(props));
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const parentEl = elRef.current && elRef.current.parentNode;
     /* eslint-disable no-restricted-globals */
     if (

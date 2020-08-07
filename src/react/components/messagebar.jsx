@@ -1,4 +1,5 @@
-import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 import { classNames, getDataAttrs, emit, getSlots, noUndefinedProps } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import Link from './link';
@@ -172,7 +173,7 @@ const Messagebar = forwardRef((props, ref) => {
     updateAttachmentsVisible.current = true;
   });
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!f7Messagebar.current) return;
     if (updateSheetVisible.current) {
       updateSheetVisible.current = false;
@@ -215,7 +216,7 @@ const Messagebar = forwardRef((props, ref) => {
     f7Messagebar.current = null;
   };
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

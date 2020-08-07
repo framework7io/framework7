@@ -1,4 +1,5 @@
-import React, { forwardRef, useRef, useImperativeHandle, useState, useLayoutEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 import { classNames, getDataAttrs, isStringProp, emit, extend } from '../shared/utils';
 import {
   colorClasses,
@@ -100,12 +101,12 @@ const Link = forwardRef((props, ref) => {
     f7SmartSelect.current = null;
   };
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!elRef.current || !f7) return;
     let isTabbarLabelComputed = false;
     if (

@@ -1,4 +1,5 @@
-import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 import { classNames, getDataAttrs, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
@@ -118,7 +119,7 @@ const Popover = forwardRef((props, ref) => {
     f7Popover.current = null;
   };
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

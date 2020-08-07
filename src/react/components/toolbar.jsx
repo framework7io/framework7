@@ -1,4 +1,5 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect, useLayoutEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 import { classNames, getDataAttrs, getSlots, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { useTheme } from '../shared/use-theme';
@@ -95,7 +96,7 @@ const Toolbar = forwardRef((props, ref) => {
     f7.off('toolbarHide', onHide);
   };
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

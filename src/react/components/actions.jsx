@@ -1,4 +1,5 @@
-import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 import { classNames, getDataAttrs, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7, f7ready } from '../shared/f7';
@@ -121,7 +122,7 @@ const Actions = forwardRef((props, ref) => {
     f7Actions.current = null;
   };
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

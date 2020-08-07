@@ -1,4 +1,5 @@
-import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 import { classNames, getDataAttrs } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 
@@ -26,7 +27,7 @@ const Tabs = forwardRef((props, ref) => {
     el: elRef.current,
   }));
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!swipeable || !swiperParams) return;
     if (!elRef.current) return;
     elRef.current.f7SwiperParams = swiperParams;

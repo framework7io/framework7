@@ -1,4 +1,5 @@
-import React, { forwardRef, useRef, useImperativeHandle, useLayoutEffect, useState } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 import { f7events, f7routers, f7 } from '../shared/f7';
 
 /* dts-props
@@ -31,12 +32,12 @@ const RoutableModals = forwardRef((props, ref) => {
     routerData.current = null;
   };
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!routerData.current || !f7) return;
     f7events.emit('modalsRouterDidUpdate', routerData.current);
   });

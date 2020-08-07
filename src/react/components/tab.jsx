@@ -1,4 +1,5 @@
-import React, { forwardRef, useRef, useImperativeHandle, useState, useLayoutEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 import { classNames, getDataAttrs } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7routers, f7, f7events } from '../shared/f7';
@@ -52,12 +53,12 @@ const Tab = forwardRef((props, ref) => {
     routerData.current = null;
   };
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!routerData.current || !f7) return;
     f7events.emit('tabRouterDidUpdate', routerData.current);
   });

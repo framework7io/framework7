@@ -1,4 +1,5 @@
-import React, { forwardRef, useLayoutEffect, useRef, useImperativeHandle } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 import { classNames, getDataAttrs, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7, f7ready } from '../shared/f7';
@@ -69,7 +70,7 @@ const AccordionItem = forwardRef((props, ref) => {
     f7.off('accordionClosed', onClosed);
   };
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);

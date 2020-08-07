@@ -1,4 +1,5 @@
-import React, { forwardRef, useRef, useImperativeHandle, useState, useLayoutEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 import { classNames, getDataAttrs, getSlots, emit, extend } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
@@ -303,12 +304,12 @@ const Input = forwardRef((props, ref) => {
     }
   };
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!f7) return;
     if (updateInputOnDidUpdate.current) {
       if (!inputElRef.current) return;

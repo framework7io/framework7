@@ -1,11 +1,6 @@
-import React, {
-  forwardRef,
-  useRef,
-  useImperativeHandle,
-  useEffect,
-  useState,
-  useLayoutEffect,
-} from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useEffect, useState } from 'react';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
+
 import { classNames, getDataAttrs, getSlots, emit, isStringProp, extend } from '../shared/utils';
 import {
   colorClasses,
@@ -499,7 +494,7 @@ const ListItem = forwardRef((props, ref) => {
     }
   };
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);
@@ -510,7 +505,7 @@ const ListItem = forwardRef((props, ref) => {
     }
   }, [indeterminate]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!listElRef.current || listElRef.current.length === 0) return;
     const isMediaNow = listElRef.current.hasClass('media-list');
     const isSimpleNow = listElRef.current.hasClass('simple-list');

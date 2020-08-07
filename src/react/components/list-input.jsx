@@ -1,4 +1,5 @@
-import React, { forwardRef, useRef, useImperativeHandle, useState, useLayoutEffect } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 import { classNames, getDataAttrs, emit, getSlots, extend } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
@@ -314,12 +315,12 @@ const ListInput = forwardRef((props, ref) => {
     }
   };
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     onMount();
     return onDestroy;
   }, []);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const listEl = listElRef.current;
     if (!listEl || (listEl && listEl.length === 0)) return;
     const isSortableNow = listEl.hasClass('sortable');
