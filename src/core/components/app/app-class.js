@@ -50,7 +50,6 @@ class Framework7 extends Framework7Class {
       iosTranslucentModals: true,
       component: undefined,
       componentUrl: undefined,
-      _preinit: false,
     };
 
     // Extend defaults with modules params
@@ -98,10 +97,6 @@ class Framework7 extends Framework7Class {
     // Install Modules
     app.useModules();
 
-    if (app.params._preinit) {
-      app._preinit();
-      return app;
-    }
     // Init Data & Methods
     app.initData();
 
@@ -210,11 +205,6 @@ class Framework7 extends Framework7Class {
       },
       () => {},
     );
-  }
-
-  _preinit() {
-    const app = this;
-    app.emit('_preinit');
   }
 
   _init() {

@@ -11,12 +11,14 @@ class View extends Framework7Class {
     const $el = $(el);
     const view = this;
 
+    const ssr = view.params.ssr || view.params.routerId || app.params.ssr;
+
     const defaults = {
       routes: [],
       routesAdd: [],
     };
 
-    if ($el.length === 0) {
+    if ($el.length === 0 && !ssr) {
       let message = "Framework7: can't create a View instance because ";
       message +=
         typeof el === 'string'
@@ -72,7 +74,9 @@ class View extends Framework7Class {
     });
 
     // Save in DOM
-    $el[0].f7View = view;
+    if ($el && $el[0]) {
+      $el[0].f7View = view;
+    }
 
     // Install Modules
     view.useModules();

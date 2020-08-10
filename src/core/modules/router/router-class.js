@@ -1044,7 +1044,7 @@ class Router extends Framework7Class {
     const router = this;
     const window = getWindow();
     router.view.history = router.history;
-    if (router.params.pushState) {
+    if (router.params.pushState && window.localStorage) {
       window.localStorage[`f7router-${router.view.id}-history`] = JSON.stringify(router.history);
     }
   }
@@ -1052,7 +1052,11 @@ class Router extends Framework7Class {
   restoreHistory() {
     const router = this;
     const window = getWindow();
-    if (router.params.pushState && window.localStorage[`f7router-${router.view.id}-history`]) {
+    if (
+      router.params.pushState &&
+      window.localStorage &&
+      window.localStorage[`f7router-${router.view.id}-history`]
+    ) {
       router.history = JSON.parse(window.localStorage[`f7router-${router.view.id}-history`]);
       router.view.history = router.history;
     }
