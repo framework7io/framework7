@@ -1,5 +1,5 @@
-import $ from '../../utils/dom7';
-import { extend } from '../../utils/utils';
+import $ from '../../shared/dom7';
+import { extend } from '../../shared/utils';
 
 const Tab = {
   show(...args) {

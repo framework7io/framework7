@@ -1,6 +1,6 @@
 import { getWindow } from 'ssr-window';
-import $ from '../../utils/dom7';
-import { extend, nextTick } from '../../utils/utils';
+import $ from '../../shared/dom7';
+import { extend, nextTick } from '../../shared/utils';
 import Modal from '../modal/modal-class';
 
 class Toast extends Modal {

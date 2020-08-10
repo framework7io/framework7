@@ -1,4 +1,4 @@
-import { extend } from '../../utils/utils';
+import { extend } from '../../shared/utils';
 
 export default function redirect(direction, route, options) {
   const router = this;

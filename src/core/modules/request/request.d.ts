@@ -1,4 +1,4 @@
-import { Request } from '../../utils/request';
+import { Request } from '../../shared/request';
 import Framework7, { Framework7Plugin } from '../../components/app/app-class';
 
 export namespace Request {

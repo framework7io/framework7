@@ -1,7 +1,7 @@
-import $ from '../../utils/dom7';
-import { extend } from '../../utils/utils';
+import $ from '../../shared/dom7';
+import { extend } from '../../shared/utils';
 import Router from '../../modules/router/router';
-import Framework7Class from '../../utils/class';
+import Framework7Class from '../../shared/class';
 import resizableView from './resizable-view';
 
 class View extends Framework7Class {

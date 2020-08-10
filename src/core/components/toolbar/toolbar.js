@@ -1,5 +1,5 @@
-import $ from '../../utils/dom7';
-import { nextFrame, bindMethods } from '../../utils/utils';
+import $ from '../../shared/dom7';
+import { nextFrame, bindMethods } from '../../shared/utils';
 
 const Toolbar = {
   setHighlight(tabbarEl) {

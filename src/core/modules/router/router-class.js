@@ -1,7 +1,7 @@
 import { getWindow, getDocument } from 'ssr-window';
 import { pathToRegexp, compile } from 'path-to-regexp';
-import $ from '../../utils/dom7';
-import Framework7Class from '../../utils/class';
+import $ from '../../shared/dom7';
+import Framework7Class from '../../shared/class';
 import {
   extend,
   nextFrame,
@@ -9,8 +9,8 @@ import {
   serializeObject,
   now,
   eventNameToColonCase,
-} from '../../utils/utils';
-import History from '../../utils/history';
+} from '../../shared/utils';
+import History from '../../shared/history';
 import SwipeBack from './swipe-back';
 
 import { refreshPage, forward, load, navigate } from './navigate';

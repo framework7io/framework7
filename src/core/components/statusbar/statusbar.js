@@ -1,7 +1,7 @@
 import { getWindow } from 'ssr-window';
-import $ from '../../utils/dom7';
-import { bindMethods } from '../../utils/utils';
-import { getDevice } from '../../utils/get-device';
+import $ from '../../shared/dom7';
+import { bindMethods } from '../../shared/utils';
+import { getDevice } from '../../shared/get-device';
 
 const Statusbar = {
   hide() {

@@ -1,4 +1,4 @@
-import { merge } from '../../utils/utils';
+import { merge } from '../../shared/utils';
 
 export default {
   name: 'routerComponentLoader',

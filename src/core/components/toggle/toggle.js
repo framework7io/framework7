@@ -1,5 +1,5 @@
-import $ from '../../utils/dom7';
-import ConstructorMethods from '../../utils/constructor-methods';
+import $ from '../../shared/dom7';
+import ConstructorMethods from '../../shared/constructor-methods';
 import Toggle from './toggle-class';
 
 export default {

@@ -1,6 +1,6 @@
 import { getWindow, getDocument } from 'ssr-window';
-import $ from '../../utils/dom7';
-import { extend, serializeObject } from '../../utils/utils';
+import $ from '../../shared/dom7';
+import { extend, serializeObject } from '../../shared/utils';
 
 // Form Data
 const FormData = {

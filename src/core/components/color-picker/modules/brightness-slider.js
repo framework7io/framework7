@@ -1,4 +1,4 @@
-import { colorHsbToHsl } from '../../../utils/utils';
+import { colorHsbToHsl } from '../../../shared/utils';
 
 export default {
   render(self) {

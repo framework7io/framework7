@@ -1,5 +1,5 @@
 import { getWindow, getDocument } from 'ssr-window';
-import { getDevice } from '../../utils/get-device';
+import { getDevice } from '../../shared/get-device';
 
 export default {
   name: 'resize',

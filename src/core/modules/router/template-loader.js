@@ -1,5 +1,5 @@
 import Template7 from 'template7';
-import { extend } from '../../utils/utils';
+import { extend } from '../../shared/utils';
 
 export default {
   name: 'routerTemplateLoader',

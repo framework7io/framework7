@@ -1,6 +1,6 @@
 import Swiper from 'swiper/bundle';
-import $ from '../../utils/dom7';
-import ConstructorMethods from '../../utils/constructor-methods';
+import $ from '../../shared/dom7';
+import ConstructorMethods from '../../shared/constructor-methods';
 
 // UMD_ONLY_START
 /* eslint-disable */

@@ -1,4 +1,4 @@
-import { Utils } from '../../utils/utils';
+import { Utils } from '../../shared/utils';
 import Framework7, { Framework7Plugin } from '../../components/app/app-class';
 
 export namespace Utils {

@@ -8,10 +8,10 @@ import {
   colorHexToRgb,
   nextTick,
   deleteProps,
-} from '../../utils/utils';
-import Framework7Class from '../../utils/class';
-import $ from '../../utils/dom7';
-import { getDevice } from '../../utils/get-device';
+} from '../../shared/utils';
+import Framework7Class from '../../shared/class';
+import $ from '../../shared/dom7';
+import { getDevice } from '../../shared/get-device';
 
 import moduleAlphaSlider from './modules/alpha-slider';
 import moduleCurrentColor from './modules/current-color';

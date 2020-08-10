@@ -1,14 +1,14 @@
 /* eslint-disable no-underscore-dangle */
 
 import { getWindow, getDocument } from 'ssr-window';
-import { extend, nextFrame } from '../../utils/utils';
-import { getDevice } from '../../utils/get-device';
-import { getSupport } from '../../utils/get-support';
-import Framework7Class from '../../utils/class';
-import EventsClass from '../../utils/events-class';
-import ConstructorMethods from '../../utils/constructor-methods';
-import ModalMethods from '../../utils/modal-methods';
-import $ from '../../utils/dom7';
+import { extend, nextFrame } from '../../shared/utils';
+import { getDevice } from '../../shared/get-device';
+import { getSupport } from '../../shared/get-support';
+import Framework7Class from '../../shared/class';
+import EventsClass from '../../shared/events-class';
+import ConstructorMethods from '../../shared/constructor-methods';
+import ModalMethods from '../../shared/modal-methods';
+import $ from '../../shared/dom7';
 import loadModule from './load-module';
 
 class Framework7 extends Framework7Class {

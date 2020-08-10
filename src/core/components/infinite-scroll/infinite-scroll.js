@@ -1,5 +1,5 @@
-import $ from '../../utils/dom7';
-import { bindMethods } from '../../utils/utils';
+import $ from '../../shared/dom7';
+import { bindMethods } from '../../shared/utils';
 
 const InfiniteScroll = {
   handle(el, e) {

@@ -1,5 +1,5 @@
 import VirtualList from './virtual-list-class';
-import ConstructorMethods from '../../utils/constructor-methods';
+import ConstructorMethods from '../../shared/constructor-methods';
 
 export default {
   name: 'virtualList',

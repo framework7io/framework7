@@ -1,6 +1,6 @@
-import $ from '../../utils/dom7';
-import { extend, deleteProps, id, nextTick } from '../../utils/utils';
-import Framework7Class from '../../utils/class';
+import $ from '../../shared/dom7';
+import { extend, deleteProps, id, nextTick } from '../../shared/utils';
+import Framework7Class from '../../shared/class';
 
 class SmartSelect extends Framework7Class {
   constructor(app, params = {}) {

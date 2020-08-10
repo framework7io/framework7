@@ -1,6 +1,6 @@
-import $ from '../../utils/dom7';
-import { extend } from '../../utils/utils';
-import History from '../../utils/history';
+import $ from '../../shared/dom7';
+import { extend } from '../../shared/utils';
+import History from '../../shared/history';
 import asyncComponent from './async-component';
 
 function tabLoad(tabRoute, loadOptions = {}) {

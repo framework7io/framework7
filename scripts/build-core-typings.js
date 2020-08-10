@@ -26,7 +26,7 @@ function capitalize(name) {
 
 function copyTypings() {
   const output = `${getOutput()}/core/types`;
-  ['modules', 'components', 'utils'].forEach((folderName) => {
+  ['modules', 'components', 'shared'].forEach((folderName) => {
     glob('**/*.*', { cwd: path.resolve(__dirname, `../src/core/${folderName}`) }, (err, files) => {
       const filesToProcess = files.filter((file) => {
         return file.indexOf('.d.ts') >= 0;
@@ -48,7 +48,7 @@ function generateTypings(content, modules, components) {
 
   const importHelpers = helpers.map((helper) => {
     const capitalized = capitalize(helper);
-    return `import ${capitalized} from './types/utils/${helper}';`;
+    return `import ${capitalized} from './types/shared/${helper}';`;
   });
 
   const exportHelpers = helpers.map(capitalize).join(', ');

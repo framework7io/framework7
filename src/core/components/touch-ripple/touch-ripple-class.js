@@ -1,5 +1,5 @@
-import $ from '../../utils/dom7';
-import { nextTick, nextFrame } from '../../utils/utils';
+import $ from '../../shared/dom7';
+import { nextTick, nextFrame } from '../../shared/utils';
 
 export default class TouchRipple {
   constructor($el, x, y) {

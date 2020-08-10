@@ -1,5 +1,5 @@
-import $ from '../../utils/dom7';
-import { extend, now, nextTick } from '../../utils/utils';
+import $ from '../../shared/dom7';
+import { extend, now, nextTick } from '../../shared/utils';
 import Modal from '../modal/modal-class';
 
 class Notification extends Modal {

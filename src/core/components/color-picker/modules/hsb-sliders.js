@@ -1,5 +1,5 @@
-import $ from '../../../utils/dom7';
-import { colorHsbToHsl } from '../../../utils/utils';
+import $ from '../../../shared/dom7';
+import { colorHsbToHsl } from '../../../shared/utils';
 
 export default {
   render(self) {

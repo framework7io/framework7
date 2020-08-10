@@ -1,6 +1,6 @@
-import $ from '../../../utils/dom7';
-import { colorHsbToHsl } from '../../../utils/utils';
-import { getSupport } from '../../../utils/get-support';
+import $ from '../../../shared/dom7';
+import { colorHsbToHsl } from '../../../shared/utils';
+import { getSupport } from '../../../shared/get-support';
 
 export default {
   render() {

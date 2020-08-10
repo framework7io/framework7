@@ -1,7 +1,7 @@
 import { getWindow, getDocument } from 'ssr-window';
 import Template7 from 'template7';
-import $ from '../../utils/dom7';
-import { id } from '../../utils/utils';
+import $ from '../../shared/dom7';
+import { id } from '../../shared/utils';
 
 function parseComponent(componentString) {
   const window = getWindow();

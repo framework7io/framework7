@@ -1,6 +1,6 @@
-import $ from '../../utils/dom7';
-import { extend, nextFrame } from '../../utils/utils';
-import { getSupport } from '../../utils/get-support';
+import $ from '../../shared/dom7';
+import { extend, nextFrame } from '../../shared/utils';
+import { getSupport } from '../../shared/get-support';
 
 function resizablePanel(panel) {
   const app = panel.app;

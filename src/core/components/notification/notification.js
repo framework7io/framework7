@@ -1,6 +1,6 @@
-import { extend } from '../../utils/utils';
+import { extend } from '../../shared/utils';
 import Notification from './notification-class';
-import ModalMethods from '../../utils/modal-methods';
+import ModalMethods from '../../shared/modal-methods';
 
 export default {
   name: 'notification',

@@ -1,5 +1,5 @@
-import { extend, nextTick } from '../../utils/utils';
-import History from '../../utils/history';
+import { extend, nextTick } from '../../shared/utils';
+import History from '../../shared/history';
 import asyncComponent from './async-component';
 
 function modalLoad(modalType, route, loadOptions = {}) {

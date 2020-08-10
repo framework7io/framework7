@@ -1,8 +1,8 @@
-import { extend, nextTick, deleteProps } from '../../utils/utils';
-import Framework7Class from '../../utils/class';
-import $ from '../../utils/dom7';
-import { getDevice } from '../../utils/get-device';
-import { getSupport } from '../../utils/get-support';
+import { extend, nextTick, deleteProps } from '../../shared/utils';
+import Framework7Class from '../../shared/class';
+import $ from '../../shared/dom7';
+import { getDevice } from '../../shared/get-device';
+import { getSupport } from '../../shared/get-support';
 
 class Calendar extends Framework7Class {
   constructor(app, params = {}) {

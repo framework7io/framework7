@@ -36,7 +36,7 @@ async function modular({ components, format }) {
       .replace('//INSTALL_COMPONENTS\n', '')
       .replace(
         '//IMPORT_HELPERS',
-        "import request from './utils/request';\nimport * as utils from './utils/utils';\nimport { getSupport } from './utils/get-support';\nimport { getDevice } from './utils/get-device';",
+        "import request from './shared/request';\nimport * as utils from './shared/utils';\nimport { getSupport } from './shared/get-support';\nimport { getDevice } from './shared/get-device';",
       )
       .replace(
         '//NAMED_EXPORT',
@@ -62,7 +62,7 @@ async function modular({ components, format }) {
       )
       .replace(
         '//IMPORT_HELPERS',
-        "import request from './utils/request';\nimport * as utils from './utils/utils';\nimport { getSupport } from './utils/get-support';\nimport { getDevice } from './utils/get-device';",
+        "import request from './shared/request';\nimport * as utils from './shared/utils';\nimport { getSupport } from './shared/get-support';\nimport { getDevice } from './shared/get-device';",
       )
       .replace(
         '//NAMED_EXPORT',

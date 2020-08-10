@@ -1,4 +1,4 @@
-import { getSupport } from '../../utils/get-support';
+import { getSupport } from '../../shared/get-support';
 
 export default {
   name: 'support',

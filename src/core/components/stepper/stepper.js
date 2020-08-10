@@ -1,7 +1,7 @@
-import $ from '../../utils/dom7';
-import { extend } from '../../utils/utils';
+import $ from '../../shared/dom7';
+import { extend } from '../../shared/utils';
 import Stepper from './stepper-class';
-import ConstructorMethods from '../../utils/constructor-methods';
+import ConstructorMethods from '../../shared/constructor-methods';
 
 export default {
   name: 'stepper',

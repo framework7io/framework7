@@ -1,10 +1,10 @@
-import $ from '../../utils/dom7';
+import $ from '../../shared/dom7';
 import {
   bindMethods,
   iosPreloaderContent,
   mdPreloaderContent,
   auroraPreloaderContent,
-} from '../../utils/utils';
+} from '../../shared/utils';
 
 const Treeview = {
   open(itemEl) {

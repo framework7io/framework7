@@ -1,5 +1,5 @@
-import $ from '../../../utils/dom7';
-import { getSupport } from '../../../utils/get-support';
+import $ from '../../../shared/dom7';
+import { getSupport } from '../../../shared/get-support';
 
 export default {
   render() {

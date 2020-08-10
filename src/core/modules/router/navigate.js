@@ -1,7 +1,7 @@
 import { getDocument } from 'ssr-window';
-import $ from '../../utils/dom7';
-import { extend, parseUrlQuery } from '../../utils/utils';
-import History from '../../utils/history';
+import $ from '../../shared/dom7';
+import { extend, parseUrlQuery } from '../../shared/utils';
+import History from '../../shared/history';
 import redirect from './redirect';
 import processRouteQueue from './process-route-queue';
 import appRouterCheck from './app-router-check';

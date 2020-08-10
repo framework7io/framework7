@@ -2,10 +2,10 @@ import Template7 from 'template7';
 import Dom7 from 'dom7';
 // IMPORT_BASE
 
-import request from './types/utils/request';
-import { getSupport } from './types/utils/get-support';
-import { getDevice } from './types/utils/get-device';
-import { Utils } from './types/utils/utils';
+import request from './types/shared/request';
+import { getSupport } from './types/shared/get-support';
+import { getDevice } from './types/shared/get-device';
+import { Utils } from './types/shared/utils';
 
 // IMPORT_MODULES
 import { ComponentClass as Component, ComponentOptions } from './types/modules/component/component';

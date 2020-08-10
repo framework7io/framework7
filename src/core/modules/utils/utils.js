@@ -1,4 +1,4 @@
-import * as utils from '../../utils/utils';
+import * as utils from '../../shared/utils';
 
 export default {
   name: 'utils',

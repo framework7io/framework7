@@ -1,11 +1,11 @@
-import $ from './utils/dom7';
+import $ from './shared/dom7';
 import Framework7 from './components/app/app-class';
 
 //IMPORT_HELPERS
 
 import DeviceModule from './modules/device/device';
 import SupportModule from './modules/support/support';
-import UtilsModule from './modules/utils/utils';
+import UtilsModule from './modules/shared/utils';
 import ResizeModule from './modules/resize/resize';
 import RequestModule from './modules/request/request';
 import TouchModule from './modules/touch/touch';

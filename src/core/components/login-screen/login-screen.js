@@ -1,5 +1,5 @@
 import LoginScreen from './login-screen-class';
-import ModalMethods from '../../utils/modal-methods';
+import ModalMethods from '../../shared/modal-methods';
 
 export default {
   name: 'loginScreen',

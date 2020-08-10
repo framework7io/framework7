@@ -1,6 +1,6 @@
-import $ from '../../utils/dom7';
+import $ from '../../shared/dom7';
 import DataTable from './data-table-class';
-import ConstructorMethods from '../../utils/constructor-methods';
+import ConstructorMethods from '../../shared/constructor-methods';
 
 export default {
   name: 'dataTable',

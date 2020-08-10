@@ -1,7 +1,7 @@
 import { getWindow, getDocument } from 'ssr-window';
-import $ from '../../utils/dom7';
-import { extend } from '../../utils/utils';
-import { getDevice } from '../../utils/get-device';
+import $ from '../../shared/dom7';
+import { extend } from '../../shared/utils';
+import { getDevice } from '../../shared/get-device';
 import Modal from '../modal/modal-class';
 
 class Popover extends Modal {

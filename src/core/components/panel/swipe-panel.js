@@ -1,5 +1,5 @@
-import $ from '../../utils/dom7';
-import { extend, now, nextFrame } from '../../utils/utils';
+import $ from '../../shared/dom7';
+import { extend, now, nextFrame } from '../../shared/utils';
 
 function swipePanel(panel) {
   const app = panel.app;

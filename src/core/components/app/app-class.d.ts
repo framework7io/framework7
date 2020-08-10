@@ -1,10 +1,10 @@
 import { Dom7, Dom7Array } from 'dom7';
 import Template7 from 'template7';
 import { Router } from '../../modules/router/router';
-import { DeviceParams, Device } from '../../utils/get-device';
-import { Support } from '../../utils/get-support';
-import { Request } from '../../utils/request';
-import { Utils } from '../../utils/utils';
+import { DeviceParams, Device } from '../../shared/get-device';
+import { Support } from '../../shared/get-support';
+import { Request } from '../../shared/request';
+import { Utils } from '../../shared/utils';
 import { ComponentClass, ComponentOptions } from '../../modules/component/component';
 
 // Css Selector string is an option on many F7 methods

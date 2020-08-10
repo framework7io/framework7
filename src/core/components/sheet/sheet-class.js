@@ -1,8 +1,8 @@
 import { getWindow, getDocument } from 'ssr-window';
-import $ from '../../utils/dom7';
-import { extend, now, getTranslate } from '../../utils/utils';
-import { getSupport } from '../../utils/get-support';
-import { getDevice } from '../../utils/get-device';
+import $ from '../../shared/dom7';
+import { extend, now, getTranslate } from '../../shared/utils';
+import { getSupport } from '../../shared/get-support';
+import { getDevice } from '../../shared/get-device';
 import Modal from '../modal/modal-class';
 
 class Sheet extends Modal {

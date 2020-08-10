@@ -7,10 +7,10 @@ import request, {
   RequestResponse,
   RequestParameters,
   RequestXHR,
-} from './types/utils/request';
-import { getSupport, Support } from './types/utils/get-support';
-import { getDevice, Device } from './types/utils/get-device';
-import { Utils } from './types/utils/utils';
+} from './types/shared/request';
+import { getSupport, Support } from './types/shared/get-support';
+import { getDevice, Device } from './types/shared/get-device';
+import { Utils } from './types/shared/utils';
 import { Framework7Parameters, Framework7Plugin } from './types/components/app/app-class';
 
 // IMPORT_MODULES

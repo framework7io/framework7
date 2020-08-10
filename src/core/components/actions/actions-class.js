@@ -1,9 +1,9 @@
 /* eslint indent: ["off"] */
 import { getWindow, getDocument } from 'ssr-window';
-import { getDevice } from '../../utils/get-device';
-import { extend, nextTick } from '../../utils/utils';
+import { getDevice } from '../../shared/get-device';
+import { extend, nextTick } from '../../shared/utils';
 import Modal from '../modal/modal-class';
-import $ from '../../utils/dom7';
+import $ from '../../shared/dom7';
 
 class Actions extends Modal {
   constructor(app, params) {

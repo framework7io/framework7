@@ -1,7 +1,7 @@
-import $ from '../../utils/dom7';
-import { extend } from '../../utils/utils';
+import $ from '../../shared/dom7';
+import { extend } from '../../shared/utils';
 import Popover from './popover-class';
-import ModalMethods from '../../utils/modal-methods';
+import ModalMethods from '../../shared/modal-methods';
 
 export default {
   name: 'popover',

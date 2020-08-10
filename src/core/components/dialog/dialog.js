@@ -3,9 +3,9 @@ import {
   iosPreloaderContent,
   mdPreloaderContent,
   auroraPreloaderContent,
-} from '../../utils/utils';
+} from '../../shared/utils';
 import Dialog from './dialog-class';
-import ModalMethods from '../../utils/modal-methods';
+import ModalMethods from '../../shared/modal-methods';
 
 export default {
   name: 'dialog',

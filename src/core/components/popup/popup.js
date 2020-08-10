@@ -1,5 +1,5 @@
 import Popup from './popup-class';
-import ModalMethods from '../../utils/modal-methods';
+import ModalMethods from '../../shared/modal-methods';
 
 export default {
   name: 'popup',

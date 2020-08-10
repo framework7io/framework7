@@ -1,7 +1,7 @@
 import { getDocument } from 'ssr-window';
-import $ from '../../utils/dom7';
-import { bindMethods } from '../../utils/utils';
-import { getSupport } from '../../utils/get-support';
+import $ from '../../shared/dom7';
+import { bindMethods } from '../../shared/utils';
+import { getSupport } from '../../shared/get-support';
 
 const Sortable = {
   init() {

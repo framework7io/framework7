@@ -95,7 +95,6 @@ async function release() {
     'less',
     'types/components',
     'types/modules',
-    'types/utils',
     'types/shared',
     'cjs',
     'esm',
