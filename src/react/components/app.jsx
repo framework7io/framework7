@@ -16,12 +16,14 @@ import { f7init, f7 } from '../shared/f7';
   style?: React.CSSProperties;
   params?: Framework7Parameters
   routes?: Router.RouteParameters[]
+  ssr?: boolean
   COLOR_PROPS
 */
 
 const App = forwardRef((props, ref) => {
-  const { className, id, style, children, params, routes } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const { className, id, style, children, ssr, ...rest } = props;
+  const extraAttrs = getExtraAttrs(props);
+  const params = rest;
 
   const elRef = useRef(null);
 
@@ -30,6 +32,12 @@ const App = forwardRef((props, ref) => {
   }));
 
   const classes = classNames(className, 'framework7-root', colorClasses(props));
+
+  // ssr
+  // eslint-disable-next-line
+  if (typeof window === 'undefined' && ssr && !f7) {
+    f7init(elRef.current, params);
+  }
 
   useIsomorphicLayoutEffect(() => {
     const parentEl = elRef.current && elRef.current.parentNode;
@@ -44,11 +52,11 @@ const App = forwardRef((props, ref) => {
     }
     /* eslint-enable no-restricted-globals */
     if (f7) return;
-    f7init(elRef.current, params, routes);
+    f7init(elRef.current, params);
   }, []);
 
   return (
-    <div id={id || 'framework7-root'} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id || 'framework7-root'} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
       <RoutableModals />
     </div>

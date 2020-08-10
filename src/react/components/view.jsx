@@ -82,15 +82,42 @@ import { useTab } from '../shared/use-tab';
 let routerIdCounter = 0;
 
 const View = forwardRef((props, ref) => {
-  const { className, id, style, children, init = true, main, tab, tabActive } = props;
+  const { className, id, style, children, init = true, main, tab, tabActive, url } = props;
 
-  const [pages, setPages] = useState([]);
-
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const f7View = useRef(null);
   const elRef = useRef(null);
   const routerData = useRef(null);
+
+  // ssr
+  let initialPage;
+  // eslint-disable-next-line
+  if (typeof window === 'undefined' && f7 && !f7View.current) {
+    const routerId = `${now()}_${(routerIdCounter += 1)}`;
+    f7View.current = f7.views.create(elRef.current, {
+      routerId,
+      ...noUndefinedProps(props),
+    });
+    if (f7View.current && f7View.current.router && url) {
+      const initialRoute = f7View.current.router.findMatchingRoute(url);
+      if (initialRoute && initialRoute.route && initialRoute.route.component) {
+        initialPage = {
+          component: initialRoute.route.component,
+          id,
+          props: {
+            f7route: initialRoute,
+            $f7route: initialRoute,
+            f7router: f7View.current.router,
+            $f7router: f7View.current.router,
+            ...initialRoute.params,
+          },
+        };
+      }
+    }
+  }
+
+  const [pages, setPages] = useState(initialPage ? [initialPage] : []);
 
   const onViewInit = (view) => {
     emit(props, 'viewInit', view);
@@ -99,6 +126,7 @@ const View = forwardRef((props, ref) => {
       f7View.current = routerData.current.instance;
     }
   };
+
   const onResize = (view, width) => {
     emit(props, 'viewResize', width);
   };
@@ -200,7 +228,7 @@ const View = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
       {pages.map((page) => {
         const PageComponent = page.component;

@@ -15,11 +15,11 @@ const f7initEvents = () => {
   f7events = new Framework7.Events();
 };
 
-const f7init = (rootEl, params = {}, routes) => {
+const f7init = (rootEl, params = {}) => {
   const f7Params = extend({}, params, {
     root: rootEl,
   });
-  if (routes && routes.length && !f7Params.routes) f7Params.routes = routes;
+  if (!f7Params.routes) f7Params.routes = [];
 
   const instance = new Framework7(f7Params);
   f7 = instance;
