@@ -14,8 +14,6 @@ import { f7init, f7 } from '../shared/f7';
   id?: string | number;
   className?: string;
   style?: React.CSSProperties;
-  params?: Framework7Parameters
-  routes?: Router.RouteParameters[]
   ssr?: boolean
   COLOR_PROPS
 */
