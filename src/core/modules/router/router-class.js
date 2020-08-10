@@ -1044,7 +1044,11 @@ class Router extends Framework7Class {
     const router = this;
     const window = getWindow();
     router.view.history = router.history;
-    if (router.params.browserHistory && window.localStorage) {
+    if (
+      router.params.browserHistory &&
+      router.params.browserHistoryStoreHistory &&
+      window.localStorage
+    ) {
       window.localStorage[`f7router-${router.view.id}-history`] = JSON.stringify(router.history);
     }
   }
@@ -1054,6 +1058,7 @@ class Router extends Framework7Class {
     const window = getWindow();
     if (
       router.params.browserHistory &&
+      router.params.browserHistoryStoreHistory &&
       window.localStorage &&
       window.localStorage[`f7router-${router.view.id}-history`]
     ) {
@@ -1131,6 +1136,7 @@ class Router extends Framework7Class {
       browserHistoryOnLoad,
       browserHistorySeparator,
       browserHistoryAnimateOnLoad,
+      browserHistoryInitialMatch,
     } = router.params;
     let { browserHistoryRoot } = router.params;
     if (
@@ -1294,21 +1300,29 @@ class Router extends Framework7Class {
         router.pageCallback('init', $pageEl, $navbarEl, 'current', undefined, initOptions);
       });
       if (historyRestored) {
-        router.navigate(initUrl, {
-          initial: true,
-          browserHistory: false,
-          history: false,
-          animate: browserHistoryAnimateOnLoad,
-          once: {
-            pageAfterIn() {
-              const preloadPreviousPage =
-                router.params.preloadPreviousPage || router.params[`${app.theme}SwipeBack`];
-              if (preloadPreviousPage && router.history.length > 2) {
-                router.back({ preload: true });
-              }
+        if (browserHistoryInitialMatch) {
+          const preloadPreviousPage =
+            router.params.preloadPreviousPage || router.params[`${app.theme}SwipeBack`];
+          if (preloadPreviousPage && router.history.length > 2) {
+            router.back({ preload: true });
+          }
+        } else {
+          router.navigate(initUrl, {
+            initial: true,
+            browserHistory: false,
+            history: false,
+            animate: browserHistoryAnimateOnLoad,
+            once: {
+              pageAfterIn() {
+                const preloadPreviousPage =
+                  router.params.preloadPreviousPage || router.params[`${app.theme}SwipeBack`];
+                if (preloadPreviousPage && router.history.length > 2) {
+                  router.back({ preload: true });
+                }
+              },
             },
-          },
-        });
+          });
+        }
       }
       if (!historyRestored && !hasTabRoute) {
         router.history.push(initUrl);

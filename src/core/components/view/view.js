@@ -88,6 +88,8 @@ export default {
       browserHistoryAnimateOnLoad: false,
       browserHistorySeparator: '#!',
       browserHistoryOnLoad: true,
+      browserHistoryInitialMatch: false,
+      browserHistoryStoreHistory: true,
       // Animate Pages
       animate: true,
       // iOS Dynamic Navbar
