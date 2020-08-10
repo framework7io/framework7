@@ -8,3 +8,4 @@
 - SSR
   - init App without hook
   - init View without hook
+  - fix View initial page ID
