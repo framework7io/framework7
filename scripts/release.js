@@ -78,38 +78,9 @@ async function release() {
   //   JSON.stringify(pkgSvelte, null, 2),
   // );
 
-  // Clean packages
-  const cleanCore = [
-    '**/*.js',
-    '*.js',
-    '**/*.ts',
-    '*.ts',
-    '**/*.css',
-    '*.css',
-    '**/*.less',
-    '*.less',
-    '**/*.map',
-    '*.map',
-    'modules',
-    'components',
-    'less',
-    'types/components',
-    'types/modules',
-    'types/shared',
-    'cjs',
-    'esm',
-  ].map((el) => `rm -rf ${el}`);
-
-  const cleanReact = ['**/*.js', '*.js', '**/*.ts', '*.ts', 'cjs', 'components', 'esm'].map(
-    (el) => `rm -rf ${el}`,
-  );
-
   await exec.promise('git pull');
   await exec.promise('npm i');
-  await exec.promise(`cd ./packages/core && ${cleanCore.join(' && ')}`);
-  await exec.promise(`cd ./packages/react && ${cleanReact.join(' && ')}`);
-  // await exec.promise(`cd ./packages/vue && ${cleanReact.join(' && ')}`);
-  // await exec.promise(`cd ./packages/svelte && ${cleanReact.join(' && ')}`);
+
   await exec.promise(`npm run build-core:prod`);
   await exec.promise(`npm run build-react:prod`);
   // await exec.promise(`npm run build-vue:prod`);

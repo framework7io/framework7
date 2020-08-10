@@ -5,10 +5,15 @@ const getOutput = require('./get-output.js');
 async function buildClean(project, cb) {
   const output = `${getOutput()}/${project}`;
   const toRemove = [
+    '**/*.js',
     '*.js',
+    '**/*.ts',
     '*.ts',
+    '**/*.css',
     '*.css',
+    '**/*.less',
     '*.less',
+    '**/*.map',
     '*.map',
     'cjs',
     'esm',
@@ -18,7 +23,7 @@ async function buildClean(project, cb) {
     'types/*.ts',
     'types/components',
     'types/modules',
-    'types/utils',
+    'types/shared',
   ].map((command) => `rm -rf ${command}`);
 
   await exec.promise(`cd ${output} && ${toRemove.join(' && ')}`);
