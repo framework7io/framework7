@@ -139,17 +139,17 @@ export namespace View {
     /**	Enable/disable opacity animation during swipe back action. You can disable it to improve performance. For Aurora theme */
     auroraSwipeBackAnimateOpacity?: boolean;
     /**	If you develop web app (not PhoneGap or Home Screen web app) it is useful to enable hash navigation (browser url will look like "http://my-webapp.com/#!/about.html"). User as well will be able to navigate through app's history by using browser's default back and forward buttons. */
-    pushState?: boolean;
-    /**	Push state root URL separator, for example "http://my-app.com/". It is useful only in case when you use empty ("") pushStateSeparator */
-    pushStateRoot?: string;
-    /**	Enable/disable page transitions on push state change */
-    pushStateAnimate?: boolean;
-    /**	Enable/disable push state page transition on app load */
-    pushStateAnimateOnLoad?: boolean;
-    /**	Push state URL separator, can be changed for something like '#page/' and then your push state urls will look like "http://myapp.com/#page/about.html" */
-    pushStateSeparator?: string;
-    /**	Disable to ignore parsing push state URL and loading page on app load */
-    pushStateOnLoad?: boolean;
+    browserHistory?: boolean;
+    /**	Browser history root URL, for example "http://my-app.com/". It is useful only in case when you use empty ("") browserHistorySeparator */
+    browserHistoryRoot?: string;
+    /**	Enable/disable page transitions on history change */
+    browserHistoryAnimate?: boolean;
+    /**	Enable/disable page transition on app load */
+    browserHistoryAnimateOnLoad?: boolean;
+    /**	Browser history URL separator, can be changed for something like '#page/' and then your URLs will look like "http://myapp.com/#page/about.html" */
+    browserHistorySeparator?: string;
+    /**	Disable to ignore parsing browser history URL and loading page on app load */
+    browserHistoryOnLoad?: boolean;
     /** Object with events handlers.. */
     on?: {
       [event in keyof Events]?: Events[event];

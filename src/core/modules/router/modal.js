@@ -11,7 +11,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
   const options = extend(
     {
       animate: router.params.animate,
-      pushState: true,
+      browserHistory: true,
       history: true,
       on: {},
     },
@@ -82,15 +82,15 @@ function modalLoad(modalType, route, loadOptions = {}) {
 
     if (options.route) {
       // Update Browser History
-      if (router.params.pushState && options.pushState) {
+      if (router.params.browserHistory && options.browserHistory) {
         History.push(
           router.view.id,
           {
             url: options.route.url,
             modal: modalType,
           },
-          (router.params.pushStateRoot || '') +
-            router.params.pushStateSeparator +
+          (router.params.browserHistoryRoot || '') +
+            router.params.browserHistorySeparator +
             options.route.url,
         );
       }

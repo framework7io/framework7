@@ -16,13 +16,13 @@ const History = {
     const { router, stateUrl, action } = currentQueue;
 
     let animate = router.params.animate;
-    if (router.params.pushStateAnimate === false) animate = false;
+    if (router.params.browserHistoryAnimate === false) animate = false;
 
     if (action === 'back') {
-      router.back({ animate, pushState: false });
+      router.back({ animate, browserHistory: false });
     }
     if (action === 'load') {
-      router.navigate(stateUrl, { animate, pushState: false });
+      router.navigate(stateUrl, { animate, browserHistory: false });
     }
   },
   handle(e) {
@@ -42,7 +42,7 @@ const History = {
     app.views.forEach((view) => {
       const router = view.router;
       let viewState = state[view.id];
-      if (!viewState && view.params.pushState) {
+      if (!viewState && view.params.browserHistory) {
         viewState = {
           url: view.router.history[0],
         };
@@ -51,13 +51,13 @@ const History = {
       const stateUrl = viewState.url || undefined;
 
       let animate = router.params.animate;
-      if (router.params.pushStateAnimate === false) animate = false;
+      if (router.params.browserHistoryAnimate === false) animate = false;
 
       if (stateUrl !== router.url) {
         if (router.history.indexOf(stateUrl) >= 0) {
           // Go Back
           if (router.allowPageChange) {
-            router.back({ animate, pushState: false });
+            router.back({ animate, browserHistory: false });
           } else {
             History.routerQueue.push({
               action: 'back',
@@ -66,7 +66,7 @@ const History = {
           }
         } else if (router.allowPageChange) {
           // Load page
-          router.navigate(stateUrl, { animate, pushState: false });
+          router.navigate(stateUrl, { animate, browserHistory: false });
         } else {
           History.routerQueue.unshift({
             action: 'load',

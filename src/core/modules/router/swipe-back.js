@@ -601,7 +601,7 @@ function SwipeBack(r) {
         router.saveHistory();
 
         // Update push state
-        if (params.pushState) {
+        if (params.browserHistory) {
           History.back();
         }
 

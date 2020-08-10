@@ -114,8 +114,8 @@ export namespace Router {
     animate?: boolean;
     /** whether the page should be saved in router history */
     history?: boolean;
-    /** whether the page should be saved in browser state. In case you are using pushState, then you can pass here false to prevent route getting in browser history */
-    pushState?: boolean;
+    /** whether the page should be saved in browser state. In case you are using browserHistory, then you can pass here false to prevent route getting in browser history */
+    browserHistory?: boolean;
     /** replace the current page with the new one from route */
     reloadCurrent?: boolean;
     /** replace the previous page in history with the new one from route */

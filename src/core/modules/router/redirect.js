@@ -3,7 +3,7 @@ import { extend } from '../../shared/utils';
 export default function redirect(direction, route, options) {
   const router = this;
   const r = route.route.redirect;
-  if (options.initial && router.params.pushState) {
+  if (options.initial && router.params.browserHistory) {
     options.replaceState = true; // eslint-disable-line
     options.history = true; // eslint-disable-line
   }

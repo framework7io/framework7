@@ -26,7 +26,7 @@ function forward(el, forwardOptions = {}) {
     false,
     {
       animate: router.params.animate,
-      pushState: true,
+      browserHistory: true,
       replaceState: false,
       history: true,
       reloadCurrent: router.params.reloadPages,
@@ -317,11 +317,11 @@ function forward(el, forwardOptions = {}) {
 
   // Push State
   if (
-    router.params.pushState &&
-    (options.pushState || options.replaceState) &&
+    router.params.browserHistory &&
+    (options.browserHistory || options.replaceState) &&
     !options.reloadPrevious
   ) {
-    const pushStateRoot = router.params.pushStateRoot || '';
+    const browserHistoryRoot = router.params.browserHistoryRoot || '';
     History[
       options.reloadCurrent ||
       (reloadDetail && otherDetailPageEl) ||
@@ -334,7 +334,7 @@ function forward(el, forwardOptions = {}) {
       {
         url: options.route.url,
       },
-      pushStateRoot + router.params.pushStateSeparator + options.route.url,
+      browserHistoryRoot + router.params.browserHistorySeparator + options.route.url,
     );
   }
 
@@ -517,7 +517,7 @@ function forward(el, forwardOptions = {}) {
       options.route.route.tab,
       extend({}, options, {
         history: false,
-        pushState: false,
+        browserHistory: false,
       }),
     );
   }
@@ -611,7 +611,7 @@ function forward(el, forwardOptions = {}) {
     if (options.clearPreviousHistory) router.clearPreviousHistory();
     router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
 
-    if (router.params.pushState) {
+    if (router.params.browserHistory) {
       History.clearRouterQueue();
     }
   }
@@ -961,7 +961,7 @@ function navigate(navigateParams, navigateOptions = {}) {
           reloadAll: navigateOptions.reloadAll,
           reloadCurrent: navigateOptions.reloadCurrent,
           reloadPrevious: navigateOptions.reloadPrevious,
-          pushState: !navigateOptions.initial,
+          browserHistory: !navigateOptions.initial,
           history: !navigateOptions.initial,
           once: {
             pageAfterIn() {
@@ -973,7 +973,7 @@ function navigate(navigateParams, navigateOptions = {}) {
                   reloadCurrent: false,
                   reloadPrevious: false,
                   history: !navigateOptions.initial,
-                  pushState: !navigateOptions.initial,
+                  browserHistory: !navigateOptions.initial,
                 }),
               );
             },

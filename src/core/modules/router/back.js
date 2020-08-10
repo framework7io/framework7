@@ -19,7 +19,7 @@ function backward(el, backwardOptions) {
   const options = extend(
     {
       animate: router.params.animate,
-      pushState: true,
+      browserHistory: true,
       replaceState: false,
     },
     backwardOptions,
@@ -310,7 +310,7 @@ function backward(el, backwardOptions) {
         options.route.route.tab,
         extend({}, options, {
           history: false,
-          pushState: false,
+          browserHistory: false,
           preload: true,
         }),
       );
@@ -362,15 +362,15 @@ function backward(el, backwardOptions) {
 
   // History State
   if (!(device.ie || device.edge || (device.firefox && !device.ios))) {
-    if (router.params.pushState && options.pushState) {
+    if (router.params.browserHistory && options.browserHistory) {
       if (options.replaceState) {
-        const pushStateRoot = router.params.pushStateRoot || '';
+        const browserHistoryRoot = router.params.browserHistoryRoot || '';
         History.replace(
           view.id,
           {
             url: options.route.url,
           },
-          pushStateRoot + router.params.pushStateSeparator + options.route.url,
+          browserHistoryRoot + router.params.browserHistorySeparator + options.route.url,
         );
       } else if (backIndex) {
         History.go(-backIndex);
@@ -404,15 +404,15 @@ function backward(el, backwardOptions) {
 
   // History State
   if (device.ie || device.edge || (device.firefox && !device.ios)) {
-    if (router.params.pushState && options.pushState) {
+    if (router.params.browserHistory && options.browserHistory) {
       if (options.replaceState) {
-        const pushStateRoot = router.params.pushStateRoot || '';
+        const browserHistoryRoot = router.params.browserHistoryRoot || '';
         History.replace(
           view.id,
           {
             url: options.route.url,
           },
-          pushStateRoot + router.params.pushStateSeparator + options.route.url,
+          browserHistoryRoot + router.params.browserHistorySeparator + options.route.url,
         );
       } else if (backIndex) {
         History.go(-backIndex);
@@ -431,7 +431,7 @@ function backward(el, backwardOptions) {
       options.route.route.tab,
       extend({}, options, {
         history: false,
-        pushState: false,
+        browserHistory: false,
       }),
     );
   }
@@ -488,7 +488,7 @@ function backward(el, backwardOptions) {
     if (preloadPreviousPage && router.history[router.history.length - 2] && !isMaster) {
       router.back(router.history[router.history.length - 2], { preload: true });
     }
-    if (router.params.pushState) {
+    if (router.params.browserHistory) {
       History.clearRouterQueue();
     }
   }
@@ -696,16 +696,17 @@ function back(...args) {
     }
     const forceOtherUrl = navigateOptions.force && previousRoute && navigateUrl;
     if (previousRoute && modalToClose) {
-      const isBrokenPushState = device.ie || device.edge || (device.firefox && !device.ios);
-      const needHistoryBack = router.params.pushState && navigateOptions.pushState !== false;
-      if (needHistoryBack && !isBrokenPushState) {
+      const isBrokenBrowserHistory = device.ie || device.edge || (device.firefox && !device.ios);
+      const needHistoryBack =
+        router.params.browserHistory && navigateOptions.browserHistory !== false;
+      if (needHistoryBack && !isBrokenBrowserHistory) {
         History.back();
       }
       router.currentRoute = previousRoute;
       router.history.pop();
       router.saveHistory();
 
-      if (needHistoryBack && isBrokenPushState) {
+      if (needHistoryBack && isBrokenBrowserHistory) {
         History.back();
       }
 
@@ -752,7 +753,7 @@ function back(...args) {
 
   if (!navigateOptions.force && $previousPage.length && !skipMaster) {
     if (
-      router.params.pushState &&
+      router.params.browserHistory &&
       $previousPage[0].f7Page &&
       router.history[router.history.length - 2] !== $previousPage[0].f7Page.route.url
     ) {

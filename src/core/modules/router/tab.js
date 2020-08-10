@@ -8,7 +8,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
   const options = extend(
     {
       animate: router.params.animate,
-      pushState: true,
+      browserHistory: true,
       history: true,
       parentPageEl: null,
       preload: false,
@@ -34,13 +34,15 @@ function tabLoad(tabRoute, loadOptions = {}) {
     }
 
     // Update Browser History
-    if (router.params.pushState && options.pushState && !options.reloadPrevious) {
+    if (router.params.browserHistory && options.browserHistory && !options.reloadPrevious) {
       History.replace(
         router.view.id,
         {
           url: options.route.url,
         },
-        (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url,
+        (router.params.browserHistoryRoot || '') +
+          router.params.browserHistorySeparator +
+          options.route.url,
       );
     }
 

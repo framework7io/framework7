@@ -82,12 +82,12 @@ export default {
       auroraSwipeBackActiveArea: 30,
       auroraSwipeBackThreshold: 0,
       // Push State
-      pushState: false,
-      pushStateRoot: undefined,
-      pushStateAnimate: true,
-      pushStateAnimateOnLoad: false,
-      pushStateSeparator: '#!',
-      pushStateOnLoad: true,
+      browserHistory: false,
+      browserHistoryRoot: undefined,
+      browserHistoryAnimate: true,
+      browserHistoryAnimateOnLoad: false,
+      browserHistorySeparator: '#!',
+      browserHistoryOnLoad: true,
       // Animate Pages
       animate: true,
       // iOS Dynamic Navbar

@@ -49,12 +49,12 @@ import { useTab } from '../shared/use-tab';
   auroraSwipeBackAnimateOpacity? : boolean
   auroraSwipeBackActiveArea? : number
   auroraSwipeBackThreshold? : number
-  pushState? : boolean
-  pushStateRoot? : string
-  pushStateAnimate? : boolean
-  pushStateAnimateOnLoad? : boolean
-  pushStateSeparator? : string
-  pushStateOnLoad? : boolean
+  browserHistory? : boolean
+  browserHistoryRoot? : string
+  browserHistoryAnimate? : boolean
+  browserHistoryAnimateOnLoad? : boolean
+  browserHistorySeparator? : string
+  browserHistoryOnLoad? : boolean
   animate? : boolean
   transition? : string
   iosDynamicNavbar? : boolean
