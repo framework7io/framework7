@@ -71,7 +71,7 @@ export interface Framework7Parameters {
   iosTranslucentModals?: boolean;
   /** userAgent string. Required for browser/device detection when rendered on server-side */
   userAgent?: string;
-  /** Required for active route detection when rendered on server-side */
+  /** Required for current route detection when rendered on server-side */
   url?: string;
   /** Object with events handlers.. (default {}) */
   on?: {

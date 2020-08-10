@@ -1118,6 +1118,10 @@ class Router extends Framework7Class {
     const { app, view } = router;
     const window = getWindow();
     const document = getDocument();
+    const location =
+      app.params.url && typeof app.params.url === 'string' && typeof URL !== 'undefined'
+        ? new URL(app.params.url)
+        : document.location;
 
     // Init Swipeback
     if (
@@ -1129,7 +1133,7 @@ class Router extends Framework7Class {
     }
 
     let initUrl = router.params.url;
-    let documentUrl = document.location.href.split(document.location.origin)[1];
+    let documentUrl = location.href.split(location.origin)[1];
     let historyRestored;
     const {
       browserHistory,
@@ -1144,23 +1148,23 @@ class Router extends Framework7Class {
       browserHistory &&
       !browserHistorySeparator &&
       !browserHistoryRoot &&
-      document.location.pathname.indexOf('index.html')
+      location.pathname.indexOf('index.html')
     ) {
       // eslint-disable-next-line
       console.warn(
         'Framework7: wrong or not complete browserHistory configuration, trying to guess browserHistoryRoot',
       );
-      browserHistoryRoot = document.location.pathname.split('index.html')[0];
+      browserHistoryRoot = location.pathname.split('index.html')[0];
     }
     if (!browserHistory || !browserHistoryOnLoad) {
       if (!initUrl) {
         initUrl = documentUrl;
       }
-      if (document.location.search && initUrl.indexOf('?') < 0) {
-        initUrl += document.location.search;
+      if (location.search && initUrl.indexOf('?') < 0) {
+        initUrl += location.search;
       }
-      if (document.location.hash && initUrl.indexOf('#') < 0) {
-        initUrl += document.location.hash;
+      if (location.hash && initUrl.indexOf('#') < 0) {
+        initUrl += location.hash;
       }
     } else {
       if (browserHistoryRoot && documentUrl.indexOf(browserHistoryRoot) >= 0) {

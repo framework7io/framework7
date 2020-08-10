@@ -50,6 +50,8 @@ class Framework7 extends Framework7Class {
       iosTranslucentModals: true,
       component: undefined,
       componentUrl: undefined,
+      userAgent: null,
+      url: null,
     };
 
     // Extend defaults with modules params
