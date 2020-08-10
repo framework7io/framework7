@@ -11,7 +11,7 @@ import { colorClasses } from '../shared/mixins';
 
 const ActionsGroup = forwardRef((props, ref) => {
   const { className, id, style, children } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   useImperativeHandle(ref, () => ({
@@ -21,7 +21,7 @@ const ActionsGroup = forwardRef((props, ref) => {
   const classes = classNames(className, 'actions-group', colorClasses(props));
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
     </div>
   );

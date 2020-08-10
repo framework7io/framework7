@@ -34,7 +34,7 @@ const Chip = forwardRef((props, ref) => {
     mediaBgColor,
     outline,
   } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const onClick = (event) => {
     emit(props, 'click', event);
@@ -95,7 +95,7 @@ const Chip = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs} onClick={onClick}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs} onClick={onClick}>
       {mediaEl}
       {labelEl}
       {deleteEl}

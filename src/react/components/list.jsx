@@ -99,7 +99,7 @@ const List = forwardRef((props, ref) => {
     virtualList,
     virtualListParams,
   } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -270,7 +270,7 @@ const List = forwardRef((props, ref) => {
       ref={elRef}
       style={style}
       className={classes}
-      {...dataAttrs}
+      {...extraAttrs}
       data-sortable-move-elements={
         typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined
       }

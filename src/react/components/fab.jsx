@@ -20,7 +20,7 @@ import { useTooltip } from '../shared/use-tooltip';
 
 const Fab = forwardRef((props, ref) => {
   const { className, id, style, morphTo, href, target, text, position = 'right-bottom' } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   const linkElRef = useRef(null);
@@ -89,7 +89,7 @@ const Fab = forwardRef((props, ref) => {
       className={classes}
       data-morph-to={morphTo}
       ref={elRef}
-      {...dataAttrs}
+      {...extraAttrs}
     >
       {linkEl}
       {rootChildren}

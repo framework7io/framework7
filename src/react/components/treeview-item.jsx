@@ -48,7 +48,7 @@ const TreeviewItem = forwardRef((props, ref) => {
     link,
   } = props;
 
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -135,7 +135,7 @@ const TreeviewItem = forwardRef((props, ref) => {
   };
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       <TreeviewRootTag onClick={onClick} className={itemRootClasses} {...itemRootAttrs}>
         {slots['root-start']}
         {needToggle && <div className="treeview-toggle"></div>}

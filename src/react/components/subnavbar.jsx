@@ -14,7 +14,7 @@ import { colorClasses } from '../shared/mixins';
 
 const Subnavbar = forwardRef((props, ref) => {
   const { className, id, style, children, inner = true, title, sliding } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   useImperativeHandle(ref, () => ({
@@ -30,7 +30,7 @@ const Subnavbar = forwardRef((props, ref) => {
     colorClasses(props),
   );
   return (
-    <div className={classes} id={id} style={style} ref={elRef} {...dataAttrs}>
+    <div className={classes} id={id} style={style} ref={elRef} {...extraAttrs}>
       {inner ? (
         <div className="subnavbar-inner">
           {title && <div className="subnavbar-title">{title}</div>}

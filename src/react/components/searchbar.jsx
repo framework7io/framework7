@@ -92,7 +92,7 @@ const Searchbar = forwardRef((props, ref) => {
     init = true,
   } = props;
 
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -244,7 +244,7 @@ const Searchbar = forwardRef((props, ref) => {
       id={id}
       style={style}
       className={classes}
-      {...dataAttrs}
+      {...extraAttrs}
       onSubmit={onSubmit}
     >
       {slots['before-inner']}

@@ -32,7 +32,7 @@ import { Actions } from 'framework7/types';
 
 const Actions = forwardRef((props, ref) => {
   const { className, id, style, children, grid, opened = false } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   const f7Actions = useRef(null);
@@ -137,7 +137,7 @@ const Actions = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
     </div>
   );

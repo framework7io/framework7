@@ -68,7 +68,7 @@ const Navbar = forwardRef((props, ref) => {
   const [routerNavbarRoleDetailRoot, setRouterNavbarRoleDetailRoot] = useState(false);
   const [routerNavbarMasterStack, setRouterNavbarMasterStack] = useState(false);
   const [transparentVisible, setTransparentVisible] = useState(false);
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -276,7 +276,7 @@ const Navbar = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       <div className="navbar-bg" />
       {slots['before-inner']}
       {innerEl}

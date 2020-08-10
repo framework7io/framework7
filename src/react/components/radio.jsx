@@ -29,7 +29,7 @@ const Radio = forwardRef((props, ref) => {
     defaultChecked,
   } = props;
 
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -66,7 +66,7 @@ const Radio = forwardRef((props, ref) => {
   );
 
   return (
-    <label id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <label id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {inputEl}
       {iconEl}
       {children}

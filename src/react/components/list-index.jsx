@@ -37,7 +37,7 @@ const ListIndex = forwardRef((props, ref) => {
     mdItemHeight = 14,
     auroraItemHeight = 14,
   } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -99,7 +99,7 @@ const ListIndex = forwardRef((props, ref) => {
   const classes = classNames(className, 'list-index', colorClasses(props));
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
     </div>
   );

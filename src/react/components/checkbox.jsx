@@ -31,7 +31,7 @@ const Checkbox = forwardRef((props, ref) => {
     defaultChecked,
     indeterminate,
   } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   const inputElRef = useRef(null);
@@ -76,7 +76,7 @@ const Checkbox = forwardRef((props, ref) => {
   );
 
   return (
-    <label id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <label id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {inputEl}
       {iconEl}
       {children}

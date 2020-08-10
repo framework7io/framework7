@@ -15,11 +15,11 @@ const AccordionToggle = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     el: elRef.current,
   }));
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const classes = classNames(className, 'accordion-item-toggle', colorClasses(props));
   return (
-    <div id={id} style={style} className={classes} {...dataAttrs} ref={elRef}>
+    <div id={id} style={style} className={classes} {...extraAttrs} ref={elRef}>
       {children}
     </div>
   );

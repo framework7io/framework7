@@ -16,7 +16,7 @@ import { colorClasses } from '../shared/mixins';
 
 const MessagebarSheetImage = forwardRef((props, ref) => {
   const { className, id, style, children, image, checked } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -37,7 +37,7 @@ const MessagebarSheetImage = forwardRef((props, ref) => {
   };
 
   return (
-    <label id={id} className={classes} style={styles} ref={elRef} {...dataAttrs}>
+    <label id={id} className={classes} style={styles} ref={elRef} {...extraAttrs}>
       <input type="checkbox" checked={checked} onChange={onChange} />
       <i className="icon icon-checkbox" />
       {children}

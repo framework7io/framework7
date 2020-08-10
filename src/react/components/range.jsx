@@ -62,7 +62,7 @@ const Range = forwardRef((props, ref) => {
     inputId,
     disabled,
   } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -152,7 +152,7 @@ const Range = forwardRef((props, ref) => {
   );
 
   return (
-    <div ref={elRef} id={id} style={style} className={classes} {...dataAttrs}>
+    <div ref={elRef} id={id} style={style} className={classes} {...extraAttrs}>
       {input && <input type="range" name={name} id={inputId} />}
       {children}
     </div>

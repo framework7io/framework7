@@ -41,7 +41,7 @@ const Col = forwardRef((props, ref) => {
     resizableAbsolute,
     resizableHandler = true,
   } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -88,7 +88,7 @@ const Col = forwardRef((props, ref) => {
   }, []);
 
   return (
-    <ColTag id={id} style={style} className={classes} ref={elRef} {...dataAttrs} onClick={onClick}>
+    <ColTag id={id} style={style} className={classes} ref={elRef} {...extraAttrs} onClick={onClick}>
       {children}
       {resizable && resizableHandler && <span className="resize-handler" />}
     </ColTag>

@@ -15,11 +15,11 @@ const AccordionContent = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     el: elRef.current,
   }));
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const classes = classNames(className, 'accordion-item-content', colorClasses(props));
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
     </div>
   );

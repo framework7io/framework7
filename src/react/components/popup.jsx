@@ -52,7 +52,7 @@ const Popup = forwardRef((props, ref) => {
     swipeToClose = false,
     swipeHandler,
   } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -160,7 +160,7 @@ const Popup = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
     </div>
   );

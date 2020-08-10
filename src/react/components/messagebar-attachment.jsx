@@ -15,7 +15,7 @@ import { colorClasses } from '../shared/mixins';
 
 const MessagebarAttachment = forwardRef((props, ref) => {
   const { className, id, style, children, image, deletable = true } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -33,7 +33,7 @@ const MessagebarAttachment = forwardRef((props, ref) => {
   const classes = classNames(className, 'messagebar-attachment', colorClasses(props));
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs} onClick={onClick}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs} onClick={onClick}>
       {image && <img src={image} />}
       {deletable && <span className="messagebar-attachment-delete" onClick={onDeleteClick} />}
       {children}

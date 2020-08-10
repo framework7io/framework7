@@ -54,7 +54,7 @@ const Toolbar = forwardRef((props, ref) => {
     bottom,
     inner = true,
   } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -138,7 +138,7 @@ const Toolbar = forwardRef((props, ref) => {
   const slots = getSlots(props);
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {slots['before-inner']}
       {inner ? <div className="toolbar-inner">{slots.default}</div> : slots.default}
       {slots['after-inner']}

@@ -104,7 +104,7 @@ const Page = forwardRef((props, ref) => {
   const [routerPageRoleDetailRoot, setRouterPageRoleDetailRoot] = useState(false);
   const [routerPageMasterStack, setRouterPageMasterStack] = useState(false);
 
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -361,7 +361,7 @@ const Page = forwardRef((props, ref) => {
 
   if (!pageContent) {
     return (
-      <div id={id} style={style} className={classes} data-name={name} ref={elRef} {...dataAttrs}>
+      <div id={id} style={style} className={classes} data-name={name} ref={elRef} {...extraAttrs}>
         {slotsFixed}
         {slotsStatic}
         {slotsDefault}
@@ -398,7 +398,7 @@ const Page = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} data-name={name} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} data-name={name} ref={elRef} {...extraAttrs}>
       {fixedList}
       {slotsFixed}
       {pageContentEl}

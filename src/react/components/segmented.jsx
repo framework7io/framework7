@@ -42,7 +42,7 @@ const Segmented = forwardRef((props, ref) => {
     strongAurora,
     tag = 'div',
   } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   useImperativeHandle(ref, () => ({
@@ -71,7 +71,7 @@ const Segmented = forwardRef((props, ref) => {
   const SegmentedTag = tag;
 
   return (
-    <SegmentedTag id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <SegmentedTag id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
       {(strong || strongIos || strongMd || strongAurora) && (
         <span className="segmented-highlight" />

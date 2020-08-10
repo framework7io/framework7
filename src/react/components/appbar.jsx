@@ -27,7 +27,7 @@ const Appbar = forwardRef((props, ref) => {
     noHairline,
   } = props;
 
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   useImperativeHandle(ref, () => ({
@@ -54,7 +54,7 @@ const Appbar = forwardRef((props, ref) => {
   const slots = getSlots(props);
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {slots['before-inner']}
       {innerEl || slots.default}
       {slots['after-inner']}

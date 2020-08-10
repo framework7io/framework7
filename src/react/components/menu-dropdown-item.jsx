@@ -26,7 +26,7 @@ import { useRouteProps } from '../shared/use-route-props';
 
 const MenuDropdownItem = forwardRef((props, ref) => {
   const { className, id, style, children, link, href, target, text, divider, menuClose } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -74,7 +74,7 @@ const MenuDropdownItem = forwardRef((props, ref) => {
       style={style}
       ref={elRef}
       {...attrs}
-      {...dataAttrs}
+      {...extraAttrs}
       onClick={onClick}
     >
       {text}

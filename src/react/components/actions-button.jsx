@@ -15,7 +15,7 @@ import { f7 } from '../shared/f7';
 
 const ComponentName = forwardRef((props, ref) => {
   const { className, id, style, bold, close = true } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   useImperativeHandle(ref, () => ({
@@ -47,7 +47,7 @@ const ComponentName = forwardRef((props, ref) => {
   };
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs} onClick={onClick}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs} onClick={onClick}>
       {mediaEl}
       <div className="actions-button-text">{slots.default}</div>
     </div>

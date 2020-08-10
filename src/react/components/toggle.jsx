@@ -36,7 +36,7 @@ const Toggle = forwardRef((props, ref) => {
     value,
   } = props;
 
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -107,7 +107,7 @@ const Toggle = forwardRef((props, ref) => {
   );
 
   return (
-    <label id={id} style={style} className={labelClasses} ref={elRef} {...dataAttrs}>
+    <label id={id} style={style} className={labelClasses} ref={elRef} {...extraAttrs}>
       {inputEl}
       <span className="toggle-icon" />
     </label>

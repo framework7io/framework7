@@ -22,7 +22,7 @@ f7Tooltip: Tooltip.Tooltip
 
 const Badge = forwardRef((props, ref) => {
   const { className, id, style, children } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   useImperativeHandle(ref, () => ({
@@ -34,7 +34,7 @@ const Badge = forwardRef((props, ref) => {
   const classes = classNames(className, 'badge', colorClasses(props));
 
   return (
-    <span id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <span id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
     </span>
   );

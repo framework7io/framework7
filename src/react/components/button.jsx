@@ -95,7 +95,7 @@ const Button = forwardRef((props, ref) => {
     disabled,
   } = props;
 
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -184,7 +184,7 @@ const Button = forwardRef((props, ref) => {
       style={style}
       className={getClasses()}
       {...getAttrs()}
-      {...dataAttrs}
+      {...extraAttrs}
       onClick={onClick}
     >
       {iconEl}

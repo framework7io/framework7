@@ -14,7 +14,7 @@ import { useTheme } from '../shared/use-theme';
 const Preloader = forwardRef((props, ref) => {
   const theme = useTheme();
   const { className, id, style, size } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -76,7 +76,7 @@ const Preloader = forwardRef((props, ref) => {
 
   const classes = classNames(className, 'preloader', colorClasses(props));
   return (
-    <span id={id} style={preloaderStyle} className={classes} ref={elRef} {...dataAttrs}>
+    <span id={id} style={preloaderStyle} className={classes} ref={elRef} {...extraAttrs}>
       {innerEl}
     </span>
   );

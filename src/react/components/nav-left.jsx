@@ -31,7 +31,7 @@ const NavLeft = forwardRef((props, ref) => {
     backLinkShowText,
     sliding,
   } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -73,7 +73,7 @@ const NavLeft = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {linkEl}
       {children}
     </div>

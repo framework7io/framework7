@@ -43,7 +43,7 @@ const Popover = forwardRef((props, ref) => {
     closeOnEscape,
   } = props;
 
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -127,7 +127,7 @@ const Popover = forwardRef((props, ref) => {
   const classes = classNames(className, 'popover', colorClasses(props));
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       <div className="popover-angle" />
       <div className="popover-inner">{children}</div>
     </div>

@@ -26,7 +26,7 @@ const ListGroup = forwardRef((props, ref) => {
     sortableTapHold,
     sortableMoveElements,
   } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   useImperativeHandle(ref, () => ({
@@ -54,7 +54,7 @@ const ListGroup = forwardRef((props, ref) => {
         typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined
       }
       ref={elRef}
-      {...dataAttrs}
+      {...extraAttrs}
     >
       <ul>{children}</ul>
     </div>

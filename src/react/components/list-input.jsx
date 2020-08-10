@@ -153,7 +153,7 @@ const ListInput = forwardRef((props, ref) => {
   const [inputFocused, setInputFocused] = useState(false);
   const [isSortable, setIsSortable] = useState(sortable);
 
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const f7Calendar = useRef(null);
   const f7ColorPicker = useRef(null);
@@ -549,7 +549,7 @@ const ListInput = forwardRef((props, ref) => {
       id={id}
       style={style}
       className={classNames(className, { disabled }, colorClasses(props))}
-      {...dataAttrs}
+      {...extraAttrs}
     >
       {slots['root-start']}
       {ItemContent}

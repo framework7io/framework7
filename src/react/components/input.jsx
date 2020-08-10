@@ -142,7 +142,7 @@ const Input = forwardRef((props, ref) => {
   const [inputInvalid, setInputInvalid] = useState(false);
   const [inputFocused, setInputFocused] = useState(false);
 
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const f7Calendar = useRef(null);
   const f7ColorPicker = useRef(null);
@@ -489,7 +489,7 @@ const Input = forwardRef((props, ref) => {
       colorClasses(props),
     );
     return (
-      <div id={id} className={wrapClasses} style={style} ref={elRef} {...dataAttrs}>
+      <div id={id} className={wrapClasses} style={style} ref={elRef} {...extraAttrs}>
         {inputEl}
         {errorMessage && errorMessageForce && (
           <div className="input-error-message">{errorMessage}</div>

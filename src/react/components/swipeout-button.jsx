@@ -31,7 +31,7 @@ const SwipeoutButton = forwardRef((props, ref) => {
     delete: deleteProp,
     href,
   } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -62,7 +62,7 @@ const SwipeoutButton = forwardRef((props, ref) => {
       data-confirm={confirmText || undefined}
       data-confirm-title={confirmTitle || undefined}
       className={classes}
-      {...dataAttrs}
+      {...extraAttrs}
       onClick={onClick}
     >
       {children && children.length ? children : text}

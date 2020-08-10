@@ -46,7 +46,7 @@ const Gauge = forwardRef((props, ref) => {
     labelFontWeight = 400,
   } = props;
 
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   useImperativeHandle(ref, () => ({
@@ -61,7 +61,7 @@ const Gauge = forwardRef((props, ref) => {
   const progress = Math.max(Math.min(value, 1), 0);
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       <svg
         className="gauge-svg"
         width={`${size}px`}

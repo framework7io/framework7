@@ -68,7 +68,7 @@ const Link = forwardRef((props, ref) => {
   } = props;
   const [isTabbarLabel, setIsTabbarLabel] = useState(tabbarLabel);
 
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -170,7 +170,7 @@ const Link = forwardRef((props, ref) => {
       style={style}
       className={classes}
       {...attrs}
-      {...dataAttrs}
+      {...extraAttrs}
       onClick={onClick}
     >
       {iconEl}

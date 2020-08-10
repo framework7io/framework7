@@ -62,7 +62,7 @@ const PageContent = forwardRef((props, ref) => {
     loginScreen,
   } = props;
 
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -170,7 +170,7 @@ const PageContent = forwardRef((props, ref) => {
       data-ptr-mousewheel={ptrMousewheel || undefined}
       data-infinite-distance={infiniteDistance || undefined}
       ref={elRef}
-      {...dataAttrs}
+      {...extraAttrs}
     >
       {ptrBottom ? null : ptrEl}
       {infiniteTop ? infiniteEl : null}

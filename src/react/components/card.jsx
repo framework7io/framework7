@@ -73,7 +73,7 @@ const Card = forwardRef((props, ref) => {
     noShadow,
     noBorder,
   } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -223,7 +223,7 @@ const Card = forwardRef((props, ref) => {
       data-backdrop={typeof backdrop === 'undefined' ? backdrop : backdrop.toString()}
       data-backdrop-el={backdropEl}
       ref={elRef}
-      {...dataAttrs}
+      {...extraAttrs}
     >
       {headerEl}
       {contentEl}

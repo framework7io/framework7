@@ -68,7 +68,7 @@ const Messagebar = forwardRef((props, ref) => {
     placeholder = 'Message',
     init = true,
   } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   const areaElRef = useRef(null);
@@ -279,7 +279,7 @@ const Messagebar = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {slotsBeforeInner}
       <div className="toolbar-inner">
         {slotsInnerStart}

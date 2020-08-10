@@ -47,7 +47,7 @@ const TextEditor = forwardRef((props, ref) => {
     clearFormattingOnPaste,
     resizable = false,
   } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -140,7 +140,7 @@ const TextEditor = forwardRef((props, ref) => {
     colorClasses(props),
   );
   return (
-    <div ref={elRef} id={id} style={style} className={classes} {...dataAttrs}>
+    <div ref={elRef} id={id} style={style} className={classes} {...extraAttrs}>
       {slots['root-start']}
       <div className="text-editor-content" contentEditable>
         {slots.default}

@@ -16,7 +16,7 @@ import { colorClasses } from '../shared/mixins';
 
 const MenuDropdown = forwardRef((props, ref) => {
   const { className, id, style, children, contentHeight, position, left, center, right } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -37,7 +37,7 @@ const MenuDropdown = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       <div className="menu-dropdown-content" style={{ height: contentHeight }}>
         {children}
       </div>

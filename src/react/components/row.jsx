@@ -31,7 +31,7 @@ const Row = forwardRef((props, ref) => {
     resizableAbsolute,
     resizableHandler = true,
   } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -73,7 +73,7 @@ const Row = forwardRef((props, ref) => {
   );
 
   return (
-    <RowTag id={id} style={style} className={classes} ref={elRef} {...dataAttrs} onClick={onClick}>
+    <RowTag id={id} style={style} className={classes} ref={elRef} {...extraAttrs} onClick={onClick}>
       {children}
       {resizable && resizableHandler && <span className="resize-handler" />}
     </RowTag>

@@ -18,7 +18,7 @@ import { useTooltip } from '../shared/use-tooltip';
 
 const FabButton = forwardRef((props, ref) => {
   const { className, id, style, children, fabClose, label, target } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -53,7 +53,7 @@ const FabButton = forwardRef((props, ref) => {
       target={target}
       className={classes}
       ref={elRef}
-      {...dataAttrs}
+      {...extraAttrs}
       onClick={onClick}
     >
       {children}

@@ -14,7 +14,7 @@ import { colorClasses } from '../shared/mixins';
 
 const NavTitle = forwardRef((props, ref) => {
   const { className, id, style, children, title, subtitle, sliding } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -38,7 +38,7 @@ const NavTitle = forwardRef((props, ref) => {
 
   const hasChildren = children && children.length > 0;
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
       {!hasChildren && title}
       {!hasChildren && subtitleEl}

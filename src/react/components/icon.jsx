@@ -23,7 +23,7 @@ import { useTheme } from '../shared/use-theme';
 const Icon = forwardRef((props, ref) => {
   const theme = useTheme();
   const { className, id, style, children, material, f7, icon, md, ios, aurora, size } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -98,7 +98,7 @@ const Icon = forwardRef((props, ref) => {
       style={extend({ fontSize: sizeComputed, width: sizeComputed, height: sizeComputed }, style)}
       className={getClasses()}
       ref={elRef}
-      {...dataAttrs}
+      {...extraAttrs}
     >
       {getIconText()}
       {children}

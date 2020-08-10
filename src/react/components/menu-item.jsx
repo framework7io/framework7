@@ -24,7 +24,7 @@ import { f7ready, f7 } from '../shared/f7';
 
 const MenuItem = forwardRef((props, ref) => {
   const { className, id, style, link, href, target, text, dropdown, iconOnly } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -107,7 +107,7 @@ const MenuItem = forwardRef((props, ref) => {
       id={id}
       style={style}
       {...attrs}
-      {...dataAttrs}
+      {...extraAttrs}
       onClick={onClick}
     >
       {(text || (slots.text && slots.text.length) || iconEl) && (

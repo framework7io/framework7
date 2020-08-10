@@ -332,7 +332,7 @@ const ListItem = forwardRef((props, ref) => {
   const [isSortableOpposite, setIsSortableOpposite] = useState(sortableOpposite);
   const [isSimple, setIsSimple] = useState(false);
 
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   const linkElRef = useRef(null);
@@ -629,7 +629,7 @@ const ListItem = forwardRef((props, ref) => {
       style={style}
       className={liClasses}
       data-virtual-list-index={virtualListIndex}
-      {...dataAttrs}
+      {...extraAttrs}
     >
       {slots['root-start']}
       {swipeout ? <div className="swipeout-content">{linkItemEl}</div> : linkItemEl}

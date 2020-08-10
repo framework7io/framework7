@@ -18,7 +18,7 @@ import { useTab } from '../shared/use-tab';
 const Tab = forwardRef((props, ref) => {
   const { className, id, style, children, tabActive } = props;
 
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const [tabContent, setTabContent] = useState(null);
 
@@ -77,7 +77,7 @@ const Tab = forwardRef((props, ref) => {
   let TabContent;
   if (tabContent) TabContent = tabContent.component;
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {tabContent ? <TabContent key={tabContent.id} {...tabContent.props} /> : children}
     </div>
   );

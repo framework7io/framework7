@@ -75,7 +75,7 @@ const AccordionItem = forwardRef((props, ref) => {
     return onDestroy;
   }, []);
 
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
   const classes = classNames(
     className,
     'accordion-item',
@@ -86,7 +86,7 @@ const AccordionItem = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
     </div>
   );

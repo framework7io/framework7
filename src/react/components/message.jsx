@@ -56,7 +56,7 @@ const Message = forwardRef((props, ref) => {
     sameAvatar,
     typing,
   } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -107,7 +107,7 @@ const Message = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs} onClick={onClick}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs} onClick={onClick}>
       {slots.start}
       {(avatar || slots.avatar) && (
         <div

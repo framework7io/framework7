@@ -14,7 +14,7 @@ import { f7 } from '../shared/f7';
 
 const Progressbar = forwardRef((props, ref) => {
   const { className, id, style, progress, infinite } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -49,7 +49,7 @@ const Progressbar = forwardRef((props, ref) => {
       style={style}
       className={classes}
       data-progress={progress}
-      {...dataAttrs}
+      {...extraAttrs}
     >
       <span style={transformStyle} />
     </span>

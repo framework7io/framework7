@@ -43,7 +43,7 @@ const ListButton = forwardRef((props, ref) => {
     href,
     target,
   } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   const linkElRef = useRef(null);
@@ -78,7 +78,7 @@ const ListButton = forwardRef((props, ref) => {
   });
 
   return (
-    <li id={id} style={style} className={className} ref={elRef} {...dataAttrs}>
+    <li id={id} style={style} className={className} ref={elRef} {...extraAttrs}>
       <a className={linkClasses} {...linkAttrs} onClick={onClick} ref={linkElRef}>
         {children && children.length ? children : title || text}
       </a>

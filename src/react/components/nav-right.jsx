@@ -12,7 +12,7 @@ import { colorClasses } from '../shared/mixins';
 
 const NavRight = forwardRef((props, ref) => {
   const { className, id, style, children, sliding } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   useImperativeHandle(ref, () => ({
@@ -29,7 +29,7 @@ const NavRight = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
     </div>
   );

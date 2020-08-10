@@ -65,7 +65,7 @@ const Panel = forwardRef((props, ref) => {
     swipeThreshold = 0,
   } = props;
 
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -198,7 +198,7 @@ const Panel = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
       {resizable && <div className="panel-resize-handler"></div>}
     </div>

@@ -50,7 +50,7 @@ const Messages = forwardRef((props, ref) => {
     renderMessage,
     init = true,
   } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -171,7 +171,7 @@ const Messages = forwardRef((props, ref) => {
   const classes = classNames(className, 'messages', colorClasses(props));
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
     </div>
   );

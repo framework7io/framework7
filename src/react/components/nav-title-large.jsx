@@ -11,7 +11,7 @@ import { colorClasses } from '../shared/mixins';
 
 const NavTitleLarge = forwardRef((props, ref) => {
   const { className, id, style, children } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -22,7 +22,7 @@ const NavTitleLarge = forwardRef((props, ref) => {
   const classes = classNames(className, 'title-large', colorClasses(props));
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       <div className="title-large-text">{children}</div>
     </div>
   );

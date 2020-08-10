@@ -105,7 +105,7 @@ const Stepper = forwardRef((props, ref) => {
     raisedIos,
     raisedAurora,
   } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -245,7 +245,7 @@ const Stepper = forwardRef((props, ref) => {
     colorClasses(props),
   );
   return (
-    <div ref={elRef} id={id} style={style} className={classes} {...dataAttrs}>
+    <div ref={elRef} id={id} style={style} className={classes} {...extraAttrs}>
       <div className="stepper-button-minus" onClick={onMinusClick} />
       {inputWrapEl}
       {valueEl}

@@ -23,7 +23,7 @@ import { LoginScreen } from 'framework7/types';
 const LoginScreen = forwardRef((props, ref) => {
   const f7LoginScreen = useRef(null);
   const { className, id, style, children, opened } = props;
-  const dataAttrs = getExtraAttrs(props);
+  const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
@@ -98,7 +98,7 @@ const LoginScreen = forwardRef((props, ref) => {
   const classes = classNames(className, 'login-screen', colorClasses(props));
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...dataAttrs}>
+    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
     </div>
   );
