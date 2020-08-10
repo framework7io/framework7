@@ -55,6 +55,8 @@ import { useTab } from '../shared/use-tab';
   browserHistoryAnimateOnLoad? : boolean
   browserHistorySeparator? : string
   browserHistoryOnLoad? : boolean
+  browserHistoryInitialMatch?: boolean;
+  browserHistoryStoreHistory?: boolean;
   animate? : boolean
   transition? : string
   iosDynamicNavbar? : boolean
