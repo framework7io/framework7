@@ -22,7 +22,7 @@ export default {
       navbarShowCount: undefined,
       view: undefined,
       url: 'photos/',
-      routableModals: true,
+      routableModals: false,
       virtualSlides: true,
 
       renderNavbar: undefined,

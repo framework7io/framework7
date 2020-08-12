@@ -31,7 +31,7 @@ export default {
       scrollToSelectedItem: false,
       formColorTheme: undefined,
       navbarColorTheme: undefined,
-      routableModals: true,
+      routableModals: false,
       url: 'select/',
       cssClass: '',
       /*

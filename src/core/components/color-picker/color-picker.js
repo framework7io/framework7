@@ -172,7 +172,7 @@ export default {
       navbarTitleText: 'Color',
       navbarBackLinkText: 'Back',
       cssClass: null,
-      routableModals: true,
+      routableModals: false,
       view: null,
       url: 'color/',
       backdrop: null,

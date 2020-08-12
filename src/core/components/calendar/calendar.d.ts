@@ -175,7 +175,7 @@ export namespace Calendar {
     header?: boolean;
     /** Default calendar header placeholder text. (default Select date) */
     headerPlaceholder?: string;
-    /** Will add opened calendar to router history which gives ability to close calendar by going back in router history and set current route to the calendar modal. (default true) */
+    /** Will add opened calendar to router history which gives ability to close calendar by going back in router history and set current route to the calendar modal. (default false) */
     routableModals?: boolean;
     /** Calendar modal URL that will be set as a current route. (default date/) */
     url?: string;

@@ -54,7 +54,7 @@ export default {
       navbarColorTheme: undefined,
 
       // Routing
-      routableModals: true,
+      routableModals: false,
       url: 'select/',
 
       // Custom render functions

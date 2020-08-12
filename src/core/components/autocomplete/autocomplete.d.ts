@@ -97,7 +97,7 @@ export namespace Autocomplete {
     navbarColorTheme?: string;
     /** Form (checkboxes or radios) color theme. One of the default color themes. */
     formColorTheme?: string;
-    /** Will add opened autocomplete modal (when openIn: 'popup') to router history which gives ability to close autocomplete by going back in router history and set current route to the autocomplete modal. (default true) */
+    /** Will add opened autocomplete modal (when openIn: 'popup') to router history which gives ability to close autocomplete by going back in router history and set current route to the autocomplete modal. (default false) */
     routableModals?: boolean;
     /** Standalone autocomplete URL that will be set as a current route. (default select/) */
     url?: string;

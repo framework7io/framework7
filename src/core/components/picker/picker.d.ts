@@ -139,7 +139,7 @@ export namespace Picker {
     toolbar?: boolean;
     /** Text for Done/Close toolbar button. (default Done) */
     toolbarCloseText?: string;
-    /** Will add opened picker to router history which gives ability to close picker by going back in router history and set current route to the picker modal. (default true) */
+    /** Will add opened picker to router history which gives ability to close picker by going back in router history and set current route to the picker modal. (default false) */
     routableModals?: boolean;
     /** Picker modal URL that will be set as a current route. (default select/) */
     url?: string;

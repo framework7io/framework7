@@ -5,6 +5,8 @@
 # v6.0.0 (WIP)
 
 - Core
+  - Autocomplete, Calendar, Picker, Color Picker, Photo Browser, Smart Select
+    - `routableModals` is now disabled by default
   - Dom7
     - Uses new Dom7
   - Package
@@ -28,6 +30,8 @@
   - Skeleton Elements
     - used as dependency
     - new React, Svelte and Vue components
+  - View/Router
+    - `pushState...` parameters renamed to `browserHistory...`
 - React
   - New ref's object
   - Rewritten with hooks

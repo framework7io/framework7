@@ -71,7 +71,7 @@ export namespace SmartSelect {
     formColorTheme?: string;
     /** Smart select navbar color theme. One of the default colors */
     navbarColorTheme?: string;
-    /** Will add opened smart select modal (when openIn is popup, popover or sheet) to router history which gives ability to close smart select by going back in router history and set current route to the smart select modal (default true) */
+    /** Will add opened smart select modal (when openIn is popup, popover or sheet) to router history which gives ability to close smart select by going back in router history and set current route to the smart select modal (default false) */
     routableModals?: boolean;
     /** Smart select page/modal URL that will be set as a current route (default 'select/') */
     url?: string;
