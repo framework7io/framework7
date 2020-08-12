@@ -74,7 +74,7 @@ const Input = {
     }
     unsetReadonly();
     const validity = $inputEl[0].validity;
-    const validationMessage = $inputEl.dataset().errorMessage || $inputEl[0].validationMessage || '';
+    const validationMessage = $inputEl[0].validationMessage || $inputEl.dataset().errorMessage || '';
     if (!validity) {
       setReadonly();
       return true;
