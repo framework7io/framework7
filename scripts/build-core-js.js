@@ -281,8 +281,10 @@ async function buildJs(cb) {
   await modular({ components, format: 'cjs' });
   await modular({ components, format: 'esm' });
 
-  await umdCore();
-  await umdBundle({ components });
+  if (!process.env.CORE_BUILD_MODULES) {
+    await umdCore();
+    await umdBundle({ components });
+  }
 
   cb();
 }

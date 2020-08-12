@@ -16,9 +16,11 @@ function buildKs(cb) {
 
   let f7ReactPath = path.resolve(__dirname, `../${buildPath}/react`);
   let f7Path = path.resolve(__dirname, `../${buildPath}/core/lite-bundle`);
+  let f7LitePath = path.resolve(__dirname, `../${buildPath}/core/lite`);
   if (process.platform.indexOf('win') === 0) {
     f7ReactPath = f7ReactPath.replace(/\\/g, '/');
     f7Path = f7Path.replace(/\\/g, '/');
+    f7LitePath = f7LitePath.replace(/\\/g, '/');
   }
 
   let index = fs.readFileSync(path.resolve(__dirname, '../kitchen-sink/react/index.html'));
@@ -45,6 +47,7 @@ function buildKs(cb) {
           'process.env.NODE_ENV': JSON.stringify(env),
           "'framework7-react'": () => `'${f7ReactPath}'`,
           "'framework7/lite-bundle'": () => `'${f7Path}'`,
+          "'framework7/lite'": () => `'${f7LitePath}'`,
         }),
         nodeResolve({ mainFields: ['module', 'main', 'jsnext'] }),
         commonjs(),
