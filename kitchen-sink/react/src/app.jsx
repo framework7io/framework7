@@ -7,25 +7,17 @@ export default function (props) {
   if (document.location.search.indexOf('theme=') >= 0) {
     theme = document.location.search.split('theme=')[1].split('&')[0];
   }
-  const f7Params = {
-    id: 'io.framework7.testapp',
-    theme,
-    routes,
-    popup: {
-      closeOnEscape: true,
-    },
-    sheet: {
-      closeOnEscape: true,
-    },
-    popover: {
-      closeOnEscape: true,
-    },
-    actions: {
-      closeOnEscape: true,
-    },
-  }
+  
   return (
-    <App params={ f7Params }>
+    <App
+      id="io.framework7.testapp"
+      theme={theme}
+      routes={routes}
+      popup={{ closeOnEscape: true }}
+      sheet={{ closeOnEscape: true }}
+      popover={{ closeOnEscape: true }}
+      actions={{ closeOnEscape: true }}
+    >
       <Panel left cover resizable>
         <View url="/panel-left/" linksView=".view-main" />
       </Panel>
