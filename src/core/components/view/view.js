@@ -41,6 +41,7 @@ export default {
   name: 'view',
   params: {
     view: {
+      init: true,
       name: undefined,
       main: false,
       router: true,

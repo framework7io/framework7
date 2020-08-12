@@ -216,7 +216,7 @@ export default {
   create() {
     const app = this;
     bindMethods(app, {
-      lazu: Lazy,
+      lazy: Lazy,
     });
   },
   on: {

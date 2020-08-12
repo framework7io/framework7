@@ -11,15 +11,13 @@ import { f7init, f7 } from '../shared/f7';
 */
 
 /* dts-props
-  id?: string | number;
   className?: string;
   style?: React.CSSProperties;
-  ssr?: boolean
   COLOR_PROPS
 */
 
 const App = forwardRef((props, ref) => {
-  const { className, id, style, children, ssr, ...rest } = props;
+  const { className, style, children, ...rest } = props;
   const extraAttrs = getExtraAttrs(props);
   const params = rest;
 
@@ -31,10 +29,8 @@ const App = forwardRef((props, ref) => {
 
   const classes = classNames(className, 'framework7-root', colorClasses(props));
 
-  // ssr
-  // eslint-disable-next-line
-  if (typeof window === 'undefined' && ssr && !f7) {
-    f7init(elRef.current, params);
+  if (!f7) {
+    f7init(elRef.current, params, false);
   }
 
   useIsomorphicLayoutEffect(() => {
@@ -49,12 +45,15 @@ const App = forwardRef((props, ref) => {
       parentEl.style.height = '100%';
     }
     /* eslint-enable no-restricted-globals */
-    if (f7) return;
-    f7init(elRef.current, params);
+    if (f7) {
+      f7.init(elRef.current);
+      return;
+    }
+    f7init(elRef.current, params, true);
   }, []);
 
   return (
-    <div id={id || 'framework7-root'} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div id="framework7-root" style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
       <RoutableModals />
     </div>

@@ -60,8 +60,6 @@ class Framework7 extends Framework7Class {
     // Extend defaults with passed params
     app.params = extend(defaults, params);
 
-    const $rootEl = $(app.params.root);
-
     extend(app, {
       // App Id
       id: app.params.id,
@@ -73,10 +71,7 @@ class Framework7 extends Framework7Class {
       routes: app.params.routes,
       // Lang
       language: app.params.language,
-      // Root
-      root: $rootEl,
-      // RTL
-      rtl: $rootEl.css('direction') === 'rtl',
+
       // Theme
       theme: (function getTheme() {
         if (app.params.theme === 'auto') {
@@ -86,6 +81,7 @@ class Framework7 extends Framework7Class {
         }
         return app.params.theme;
       })(),
+
       // Initially passed parameters
       passedParams,
       online: window.navigator.onLine,
@@ -101,6 +97,32 @@ class Framework7 extends Framework7Class {
 
     // Init Data & Methods
     app.initData();
+
+    // Init
+    if (app.params.init) {
+      if (device.cordova && app.params.initOnDeviceReady) {
+        $(document).on('deviceready', () => {
+          app.init();
+        });
+      } else {
+        app.init();
+      }
+    }
+
+    // Return app instance
+    return app;
+  }
+
+  mount(rootEl) {
+    const app = this;
+    const window = getWindow();
+    const document = getDocument();
+    const $rootEl = $(rootEl || app.params.root).eq(0);
+    app.root = $rootEl;
+    if (app.root && app.root[0]) {
+      app.root[0].f7 = app;
+      app.rtl = $rootEl.css('direction') === 'rtl';
+    }
 
     // Auto Dark Theme
     const DARK = '(prefers-color-scheme: dark)';
@@ -125,20 +147,7 @@ class Framework7 extends Framework7Class {
         app.emit('darkThemeChange', false);
       }
     };
-
-    // Init
-    if (app.params.init) {
-      if (device.cordova && app.params.initOnDeviceReady) {
-        $(document).on('deviceready', () => {
-          app.init();
-        });
-      } else {
-        app.init();
-      }
-    }
-
-    // Return app instance
-    return app;
+    app.emit('mount');
   }
 
   initData() {
@@ -151,6 +160,7 @@ class Framework7 extends Framework7Class {
     } else if (app.params.data) {
       extend(app.data, app.params.data);
     }
+
     // Methods
     app.methods = {};
     if (app.params.methods) {
@@ -209,70 +219,70 @@ class Framework7 extends Framework7Class {
     );
   }
 
-  _init() {
+  init(rootEl) {
     const app = this;
-    if (app.initialized) return app;
 
-    app.root.addClass('framework7-initializing');
+    app.mount(rootEl);
 
-    // RTL attr
-    if (app.rtl) {
-      $('html').attr('dir', 'rtl');
-    }
+    const init = () => {
+      if (app.initialized) return;
 
-    // Auto Dark Theme
-    if (app.params.autoDarkTheme) {
-      app.enableAutoDarkTheme();
-    }
+      app.root.addClass('framework7-initializing');
 
-    // Watch for online/offline state
-    const window = getWindow();
-    window.addEventListener('offline', () => {
-      app.online = false;
-      app.emit('offline');
-      app.emit('connection', false);
-    });
-    window.addEventListener('online', () => {
-      app.online = true;
-      app.emit('online');
-      app.emit('connection', true);
-    });
+      // RTL attr
+      if (app.rtl) {
+        $('html').attr('dir', 'rtl');
+      }
 
-    // Root class
-    app.root.addClass('framework7-root');
+      // Auto Dark Theme
+      if (app.params.autoDarkTheme) {
+        app.enableAutoDarkTheme();
+      }
 
-    // Theme class
-    $('html').removeClass('ios md aurora').addClass(app.theme);
+      // Watch for online/offline state
+      const window = getWindow();
+      window.addEventListener('offline', () => {
+        app.online = false;
+        app.emit('offline');
+        app.emit('connection', false);
+      });
+      window.addEventListener('online', () => {
+        app.online = true;
+        app.emit('online');
+        app.emit('connection', true);
+      });
 
-    // iOS Translucent
-    const device = app.device;
-    if (app.params.iosTranslucentBars && app.theme === 'ios' && device.ios) {
-      $('html').addClass('ios-translucent-bars');
-    }
-    if (app.params.iosTranslucentModals && app.theme === 'ios' && device.ios) {
-      $('html').addClass('ios-translucent-modals');
-    }
+      // Root class
+      app.root.addClass('framework7-root');
 
-    // Init class
-    nextFrame(() => {
-      app.root.removeClass('framework7-initializing');
-    });
-    // Emit, init other modules
-    app.initialized = true;
-    app.emit('init');
+      // Theme class
+      $('html').removeClass('ios md aurora').addClass(app.theme);
 
-    return app;
-  }
+      // iOS Translucent
+      const device = app.device;
+      if (app.params.iosTranslucentBars && app.theme === 'ios' && device.ios) {
+        $('html').addClass('ios-translucent-bars');
+      }
+      if (app.params.iosTranslucentModals && app.theme === 'ios' && device.ios) {
+        $('html').addClass('ios-translucent-modals');
+      }
 
-  init() {
-    const app = this;
+      // Init class
+      nextFrame(() => {
+        app.root.removeClass('framework7-initializing');
+      });
+      // Emit, init other modules
+      app.initialized = true;
+      app.emit('init');
+    };
     if (app.params.component || app.params.componentUrl) {
       app.initAppComponent(() => {
-        app._init(); // eslint-disable-line
+        init();
       });
     } else {
-      app._init(); // eslint-disable-line
+      init();
     }
+    return app;
   }
 
   // eslint-disable-next-line

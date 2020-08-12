@@ -1,4 +1,4 @@
-import Framework7 from 'framework7';
+import Framework7 from 'framework7/lite';
 import componentsRouter from './components-router';
 import { f7, f7ready, theme, f7initEvents } from './f7';
 

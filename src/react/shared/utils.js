@@ -141,3 +141,16 @@ export function getExtraAttrs(props = {}) {
   });
   return extraAttrs;
 }
+
+let routerIdCounter = 0;
+let routerComponentIdCounter = 0;
+
+export function getRouterId() {
+  routerIdCounter += 1;
+  return `${now()}_${routerIdCounter}`;
+}
+
+export function getComponentId() {
+  routerComponentIdCounter += 1;
+  return `${now()}_${routerComponentIdCounter}`;
+}

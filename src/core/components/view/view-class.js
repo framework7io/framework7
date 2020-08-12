@@ -8,28 +8,30 @@ class View extends Framework7Class {
   constructor(app, el, viewParams = {}) {
     super(viewParams, [app]);
 
-    const $el = $(el);
     const view = this;
 
-    const ssr = view.params.ssr || view.params.routerId || app.params.ssr;
+    const ssr = view.params.routerId;
 
     const defaults = {
       routes: [],
       routesAdd: [],
     };
 
-    if ($el.length === 0 && !ssr) {
-      let message = "Framework7: can't create a View instance because ";
-      message +=
-        typeof el === 'string'
-          ? `the selector "${el}" didn't match any element`
-          : 'el must be an HTMLElement or Dom7 object';
+    if (!ssr) {
+      const $el = $(el);
+      if (!$el.length) {
+        let message = "Framework7: can't create a View instance because ";
+        message +=
+          typeof el === 'string'
+            ? `the selector "${el}" didn't match any element`
+            : 'el must be an HTMLElement or Dom7 object';
 
-      throw new Error(message);
+        throw new Error(message);
+      }
     }
 
     // Default View params
-    view.params = extend(defaults, app.params.view, viewParams);
+    view.params = extend({ el }, defaults, app.params.view, viewParams);
 
     // Routes
     if (view.params.routes.length > 0) {
@@ -38,45 +40,14 @@ class View extends Framework7Class {
       view.routes = [].concat(app.routes, view.params.routesAdd);
     }
 
-    // Selector
-    let selector;
-    if (typeof el === 'string') selector = el;
-    else {
-      // Supposed to be HTMLElement or Dom7
-      selector =
-        ($el.attr('id') ? `#${$el.attr('id')}` : '') +
-        ($el.attr('class')
-          ? `.${$el.attr('class').replace(/ /g, '.').replace('.active', '')}`
-          : '');
-    }
-
-    // DynamicNavbar
-    let $navbarsEl;
-    if (app.theme === 'ios' && view.params.iosDynamicNavbar) {
-      $navbarsEl = $el.children('.navbars').eq(0);
-      if ($navbarsEl.length === 0) {
-        $navbarsEl = $('<div class="navbars"></div>');
-      }
-    }
-
     // View Props
     extend(false, view, {
       app,
-      $el,
-      el: $el[0],
       name: view.params.name,
-      main: view.params.main || $el.hasClass('view-main'),
-      $navbarsEl,
-      navbarsEl: $navbarsEl ? $navbarsEl[0] : undefined,
-      selector,
+      main: view.params.main,
       history: [],
       scrollHistory: {},
     });
-
-    // Save in DOM
-    if ($el && $el[0]) {
-      $el[0].f7View = view;
-    }
 
     // Install Modules
     view.useModules();
@@ -104,6 +75,9 @@ class View extends Framework7Class {
     }
     view.id = viewId;
 
+    if (!view.params.init) {
+      return view;
+    }
     // Init View
     if (app.initialized) {
       view.init();
@@ -112,6 +86,8 @@ class View extends Framework7Class {
         view.init();
       });
     }
+
+    console.log('here?!');
 
     return view;
   }
@@ -185,8 +161,53 @@ class View extends Framework7Class {
     app.on('resize', view.checkMasterDetailBreakpoint);
   }
 
-  init() {
+  mount(viewEl) {
     const view = this;
+    const app = view.app;
+    const el = view.params.el || viewEl;
+    const $el = $(el);
+
+    // Selector
+    let selector;
+    if (typeof el === 'string') selector = el;
+    else {
+      // Supposed to be HTMLElement or Dom7
+      selector =
+        ($el.attr('id') ? `#${$el.attr('id')}` : '') +
+        ($el.attr('class')
+          ? `.${$el.attr('class').replace(/ /g, '.').replace('.active', '')}`
+          : '');
+    }
+
+    // DynamicNavbar
+    let $navbarsEl;
+    if (app.theme === 'ios' && view.params.iosDynamicNavbar) {
+      $navbarsEl = $el.children('.navbars').eq(0);
+      if ($navbarsEl.length === 0) {
+        $navbarsEl = $('<div class="navbars"></div>');
+      }
+    }
+
+    extend(view, {
+      $el,
+      el: $el[0],
+      main: view.main || $el.hasClass('view-main'),
+      $navbarsEl,
+      navbarsEl: $navbarsEl ? $navbarsEl[0] : undefined,
+      selector,
+    });
+
+    // Save in DOM
+    if ($el && $el[0]) {
+      $el[0].f7View = view;
+    }
+
+    view.emit('local::mount viewMount', view);
+  }
+
+  init(viewEl) {
+    const view = this;
+    view.mount(viewEl);
     if (view.params.router) {
       if (view.params.masterDetailBreakpoint > 0) {
         view.initMasterDetail();

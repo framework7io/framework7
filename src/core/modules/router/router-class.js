@@ -24,7 +24,6 @@ class Router extends Framework7Class {
   constructor(app, view) {
     super({}, [typeof view === 'undefined' ? app : view]);
     const router = this;
-    const document = getDocument();
 
     // Is App Router
     router.isAppRouter = typeof view === 'undefined';
@@ -46,10 +45,6 @@ class Router extends Framework7Class {
         id: view.params.routerId,
         params: view.params,
         routes: view.routes,
-        $el: view.$el,
-        el: view.el,
-        $navbarsEl: view.$navbarsEl,
-        navbarsEl: view.navbarsEl,
         history: view.history,
         scrollHistory: view.scrollHistory,
         cache: app.cache,
@@ -61,9 +56,6 @@ class Router extends Framework7Class {
 
     // Install Modules
     router.useModules();
-
-    // Temporary Dom
-    router.tempDom = document.createElement('div');
 
     // AllowPageChage
     router.allowPageChange = true;
@@ -97,6 +89,22 @@ class Router extends Framework7Class {
     });
 
     return router;
+  }
+
+  mount() {
+    const router = this;
+    const view = router.view;
+    const document = getDocument();
+
+    extend(false, router, {
+      tempDom: document.createElement('div'),
+      $el: view.$el,
+      el: view.el,
+      $navbarsEl: view.$navbarsEl,
+      navbarsEl: view.navbarsEl,
+    });
+
+    router.emit('local::mount routerMount', router);
   }
 
   animatableNavElements($newNavbarEl, $oldNavbarEl, toLarge, fromLarge, direction) {
@@ -1118,6 +1126,9 @@ class Router extends Framework7Class {
     const { app, view } = router;
     const window = getWindow();
     const document = getDocument();
+
+    router.mount();
+
     const location =
       app.params.url && typeof app.params.url === 'string' && typeof URL !== 'undefined'
         ? new URL(app.params.url)

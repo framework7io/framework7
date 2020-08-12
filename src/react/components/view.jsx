@@ -1,6 +1,13 @@
 import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getExtraAttrs, noUndefinedProps, emit, now } from '../shared/utils';
+import {
+  classNames,
+  getExtraAttrs,
+  noUndefinedProps,
+  emit,
+  getRouterId,
+  getComponentId,
+} from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7routers, f7, f7events } from '../shared/f7';
 import { useTab } from '../shared/use-tab';
@@ -81,8 +88,6 @@ import { useTab } from '../shared/use-tab';
   onTabHide? : (el?: HTMLElement) => void
 */
 
-let routerIdCounter = 0;
-
 const View = forwardRef((props, ref) => {
   const { className, id, style, children, init = true, main, tab, tabActive, url } = props;
 
@@ -92,21 +97,37 @@ const View = forwardRef((props, ref) => {
   const elRef = useRef(null);
   const routerData = useRef(null);
 
-  // ssr
   let initialPage;
-  // eslint-disable-next-line
-  if (typeof window === 'undefined' && f7 && !f7View.current) {
-    const routerId = `${now()}_${(routerIdCounter += 1)}`;
+
+  const onViewInit = (view) => {
+    emit(props, 'viewInit', view);
+    if (!init) {
+      routerData.current.instance = view;
+      f7View.current = routerData.current.instance;
+    }
+  };
+
+  if (f7 && !f7View.current && init) {
+    const routerId = getRouterId();
     f7View.current = f7.views.create(elRef.current, {
       routerId,
+      init: false,
       ...noUndefinedProps(props),
     });
+    routerData.current = {
+      routerId,
+      instance: f7View.current,
+      on: {
+        init: onViewInit,
+      },
+    };
+    f7routers.views.push(routerData.current);
     if (f7View.current && f7View.current.router && url) {
       const initialRoute = f7View.current.router.findMatchingRoute(url);
       if (initialRoute && initialRoute.route && initialRoute.route.component) {
         initialPage = {
           component: initialRoute.route.component,
-          id,
+          id: getComponentId(),
           props: {
             f7route: initialRoute,
             $f7route: initialRoute,
@@ -120,14 +141,6 @@ const View = forwardRef((props, ref) => {
   }
 
   const [pages, setPages] = useState(initialPage ? [initialPage] : []);
-
-  const onViewInit = (view) => {
-    emit(props, 'viewInit', view);
-    if (!init) {
-      routerData.current.instance = view;
-      f7View.current = routerData.current.instance;
-    }
-  };
 
   const onResize = (view, width) => {
     emit(props, 'viewResize', width);
@@ -160,27 +173,37 @@ const View = forwardRef((props, ref) => {
 
   const onMount = () => {
     f7ready(() => {
-      const routerId = `${now()}_${(routerIdCounter += 1)}`;
-      routerData.current = {
-        el: elRef.current,
-        routerId,
-        pages,
-        instance: null,
-        setPages(newPages) {
+      if (f7View.current) {
+        routerData.current.el = elRef.current;
+        routerData.current.pages = pages;
+        routerData.current.setPages = (newPages) => {
           setPages([...newPages]);
-        },
-      };
-      f7routers.views.push(routerData.current);
+        };
+        f7View.current.init(elRef.current);
+      } else {
+        const routerId = getRouterId();
+        routerData.current = {
+          el: elRef.current,
+          routerId,
+          pages,
+          instance: f7View.current,
+          setPages(newPages) {
+            setPages([...newPages]);
+          },
+        };
+        f7routers.views.push(routerData.current);
+        routerData.current.instance = f7.views.create(elRef.current, {
+          routerId,
+          ...noUndefinedProps(props),
+          on: {
+            init: onViewInit,
+          },
+        });
+        f7View.current = routerData.current.instance;
+      }
+
       if (!init) return;
 
-      routerData.current.instance = f7.views.create(elRef.current, {
-        routerId,
-        on: {
-          init: onViewInit,
-        },
-        ...noUndefinedProps(props),
-      });
-      f7View.current = routerData.current.instance;
       f7View.current.on('resize', onResize);
       f7View.current.on('swipebackMove', onSwipeBackMove);
       f7View.current.on('swipebackBeforeChange', onSwipeBackBeforeChange);
@@ -232,9 +255,8 @@ const View = forwardRef((props, ref) => {
   return (
     <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
-      {pages.map((page) => {
-        const PageComponent = page.component;
-        return <PageComponent key={page.id} {...page.props} />;
+      {pages.map(({ component: PageComponent, id: pageId, props: pageProps }) => {
+        return <PageComponent key={pageId} {...pageProps} />;
       })}
     </div>
   );

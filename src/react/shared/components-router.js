@@ -1,8 +1,6 @@
 /* eslint no-underscore-dangle: "off" */
 import { f7events, f7routers } from './f7';
-import { now, extend } from './utils';
-
-let routerComponentIdCounter = 0;
+import { extend, getComponentId } from './utils';
 
 export default {
   proto: {
@@ -22,10 +20,9 @@ export default {
         return;
       }
 
-      const id = `${now()}_${(routerComponentIdCounter += 1)}`;
       const pageData = {
         component,
-        id,
+        id: getComponentId(),
         props: extend(
           {
             f7route: options.route,
@@ -109,7 +106,7 @@ export default {
         return;
       }
 
-      const id = `${now()}_${(routerComponentIdCounter += 1)}`;
+      const id = getComponentId();
       const tabContent = {
         id,
         component,
@@ -164,10 +161,9 @@ export default {
         return;
       }
 
-      const id = `${now()}_${(routerComponentIdCounter += 1)}`;
       const modalData = {
         component,
-        id,
+        id: getComponentId(),
         props: extend(
           {
             f7route: options.route,

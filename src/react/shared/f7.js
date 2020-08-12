@@ -1,5 +1,5 @@
 /* eslint-disable import/no-mutable-exports */
-import Framework7 from 'framework7';
+import Framework7 from 'framework7/lite';
 import { extend } from './utils';
 
 let f7;
@@ -15,9 +15,10 @@ const f7initEvents = () => {
   f7events = new Framework7.Events();
 };
 
-const f7init = (rootEl, params = {}) => {
+const f7init = (rootEl, params = {}, init = true) => {
   const f7Params = extend({}, params, {
     root: rootEl,
+    init,
   });
   if (!f7Params.routes) f7Params.routes = [];
 
@@ -36,7 +37,7 @@ const f7init = (rootEl, params = {}) => {
 
 const f7ready = (callback) => {
   if (!callback) return;
-  if (f7) callback(f7);
+  if (f7 && f7.initialized) callback(f7);
   else {
     f7events.once('ready', callback);
   }
