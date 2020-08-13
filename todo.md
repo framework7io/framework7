@@ -6,6 +6,8 @@
 # React
 
 - Check page load delay
+  - move navbar/page role/position classes to refs
+- App.jsx extends F7 params
 - SSR
   - find initial page component
     - [x] when browserHistory disabled (based on view url)
@@ -13,5 +15,5 @@
   - find initial tab component
     - [ ] when browserHistory disabled (based on view url)
     - [ ] when browserHistory enabled
-  - init App without hook
-  - init View without hook
+  - [x] init App without hook
+  - [x] init View without hook
