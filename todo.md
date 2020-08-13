@@ -6,6 +6,7 @@
 # React
 
 - Check page load delay
+  - check View.jsx useEffect vs useLayoutEffect difference in router load ms
 - App.jsx extends F7 params
 - SSR
   - find initial page component
