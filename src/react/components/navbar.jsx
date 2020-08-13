@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 import { classNames, getExtraAttrs, emit, getSlots } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
@@ -62,12 +62,12 @@ const Navbar = forwardRef((props, ref) => {
     innerClass,
     innerClassName,
   } = props;
-  const [routerPositionClass, setRouterPositionClass] = useState('');
-  const [largeCollapsed, setLargeCollapsed] = useState(false);
-  const [routerNavbarRole, setRouterNavbarRole] = useState(null);
-  const [routerNavbarRoleDetailRoot, setRouterNavbarRoleDetailRoot] = useState(false);
-  const [routerNavbarMasterStack, setRouterNavbarMasterStack] = useState(false);
-  const [transparentVisible, setTransparentVisible] = useState(false);
+  const routerPositionClass = useRef('');
+  const largeCollapsed = useRef(false);
+  const routerNavbarRole = useRef(null);
+  const routerNavbarRoleDetailRoot = useRef(false);
+  const routerNavbarMasterStack = useRef(false);
+  const transparentVisible = useRef(false);
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
@@ -84,40 +84,40 @@ const Navbar = forwardRef((props, ref) => {
   };
   const onExpand = (navbarEl) => {
     if (elRef.current !== navbarEl) return;
-    setLargeCollapsed(false);
+    largeCollapsed.current = false;
     emit(props, 'navbarExpand');
   };
   const onCollapse = (navbarEl) => {
     if (elRef.current !== navbarEl) return;
-    setLargeCollapsed(true);
+    largeCollapsed.current = true;
     emit(props, 'navbarCollapse');
   };
   const onNavbarTransparentShow = (navbarEl) => {
     if (elRef.current !== navbarEl) return;
-    setTransparentVisible(true);
+    transparentVisible.current = true;
     emit(props, 'navbarTransparentShow');
   };
   const onNavbarTransparentHide = (navbarEl) => {
     if (elRef.current !== navbarEl) return;
-    setTransparentVisible(false);
+    transparentVisible.current = false;
     emit(props, 'navbarTransparentHide');
   };
   const onNavbarPosition = (navbarEl, position) => {
     if (elRef.current !== navbarEl) return;
-    setRouterPositionClass(position ? `navbar-${position}` : '');
+    routerPositionClass.current = position ? `navbar-${position}` : '';
   };
   const onNavbarRole = (navbarEl, rolesData) => {
     if (elRef.current !== navbarEl) return;
-    setRouterNavbarRole(rolesData.role);
-    setRouterNavbarRoleDetailRoot(rolesData.detailRoot);
+    routerNavbarRole.current = rolesData.role;
+    routerNavbarRoleDetailRoot.current = rolesData.detailRoot;
   };
   const onNavbarMasterStack = (navbarEl) => {
     if (elRef.current !== navbarEl) return;
-    setRouterNavbarMasterStack(true);
+    routerNavbarMasterStack.current = true;
   };
   const onNavbarMasterUnstack = (navbarEl) => {
     if (elRef.current !== navbarEl) return;
-    setRouterNavbarMasterStack(false);
+    routerNavbarMasterStack.current = false;
   };
   const hide = (animate) => {
     if (!f7) return;
@@ -196,22 +196,22 @@ const Navbar = forwardRef((props, ref) => {
 
   const isLarge = large || largeTransparent;
   const isTransparent = transparent || (isLarge && largeTransparent);
-  const isTransparentVisible = isTransparent && transparentVisible;
+  const isTransparentVisible = isTransparent && transparentVisible.current;
 
   const classes = classNames(
     className,
     'navbar',
-    routerPositionClass && routerPositionClass,
+    routerPositionClass.current,
     {
       'navbar-hidden': hidden,
       'navbar-large': isLarge,
-      'navbar-large-collapsed': isLarge && largeCollapsed,
+      'navbar-large-collapsed': isLarge && largeCollapsed.current,
       'navbar-transparent': isTransparent,
       'navbar-transparent-visible': isTransparentVisible,
-      'navbar-master': routerNavbarRole === 'master',
-      'navbar-master-detail': routerNavbarRole === 'detail',
-      'navbar-master-detail-root': routerNavbarRoleDetailRoot === true,
-      'navbar-master-stacked': routerNavbarMasterStack === true,
+      'navbar-master': routerNavbarRole.current === 'master',
+      'navbar-master-detail': routerNavbarRole.current === 'detail',
+      'navbar-master-detail-root': routerNavbarRoleDetailRoot.current === true,
+      'navbar-master-stacked': routerNavbarMasterStack.current === true,
       'no-shadow': noShadow,
       'no-hairline': noHairline,
     },

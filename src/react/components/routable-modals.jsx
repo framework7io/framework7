@@ -44,9 +44,8 @@ const RoutableModals = forwardRef((props, ref) => {
 
   return (
     <div ref={elRef} className="framework7-modals">
-      {modals.map((modal) => {
-        const ModalComponent = modal.component;
-        return <ModalComponent key={modal.id} {...modal.props} />;
+      {modals.map(({ component: ModalComponent, id: modalId, props: modalProps }) => {
+        return <ModalComponent key={modalId} {...modalProps} />;
       })}
     </div>
   );

@@ -6,7 +6,6 @@
 # React
 
 - Check page load delay
-  - move navbar/page role/position classes to refs
 - App.jsx extends F7 params
 - SSR
   - find initial page component

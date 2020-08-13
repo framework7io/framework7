@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
@@ -94,15 +94,15 @@ const Page = forwardRef((props, ref) => {
     onInfinite,
   } = props;
 
-  const [hasSubnavbar, setHasSubnavbar] = useState(false);
-  const [hasNavbarLarge, setHasNavbarLarge] = useState(false);
-  const [hasNavbarLargeCollapsed, setHasNavbarLargeCollapsed] = useState(false);
-  const [hasCardExpandableOpened, setHasCardExpandableOpened] = useState(false);
-  const [routerPositionClass, setRouterPositionClass] = useState('');
-  const [routerForceUnstack, setRouterForceUnstack] = useState(false);
-  const [routerPageRole, setRouterPageRole] = useState(null);
-  const [routerPageRoleDetailRoot, setRouterPageRoleDetailRoot] = useState(false);
-  const [routerPageMasterStack, setRouterPageMasterStack] = useState(false);
+  const hasSubnavbar = useRef(false);
+  const hasNavbarLarge = useRef(false);
+  const hasNavbarLargeCollapsed = useRef(false);
+  const hasCardExpandableOpened = useRef(false);
+  const routerPositionClass = useRef('');
+  const routerForceUnstack = useRef(false);
+  const routerPageRole = useRef(null);
+  const routerPageRoleDetailRoot = useRef(false);
+  const routerPageMasterStack = useRef(false);
 
   const extraAttrs = getExtraAttrs(props);
 
@@ -120,13 +120,13 @@ const Page = forwardRef((props, ref) => {
         (page.$navbarEl && page.$navbarEl.length && page.$navbarEl.find('.subnavbar').length) ||
         page.$el.children('.navbar').find('.subnavbar').length
       ) {
-        setHasSubnavbar(true);
+        hasSubnavbar.current = true;
       }
     }
 
     if (typeof withNavbarLarge === 'undefined' && typeof navbarLarge === 'undefined') {
       if (page.$navbarEl && page.$navbarEl.hasClass('navbar-large')) {
-        setHasNavbarLarge(true);
+        hasNavbarLarge.current = true;
       }
     }
 
@@ -140,10 +140,10 @@ const Page = forwardRef((props, ref) => {
     if (elRef.current !== page.el) return;
     if (!page.swipeBack) {
       if (page.from === 'next') {
-        setRouterPositionClass('page-next');
+        routerPositionClass.current = 'page-next';
       }
       if (page.from === 'previous') {
-        setRouterPositionClass('page-previous');
+        routerPositionClass.current = 'page-previous';
       }
     }
     emit(props, 'pageBeforeIn', page);
@@ -155,16 +155,16 @@ const Page = forwardRef((props, ref) => {
   const onPageAfterOut = (page) => {
     if (elRef.current !== page.el) return;
     if (page.to === 'next') {
-      setRouterPositionClass('page-next');
+      routerPositionClass.current = 'page-next';
     }
     if (page.to === 'previous') {
-      setRouterPositionClass('page-previous');
+      routerPositionClass.current = 'page-previous';
     }
     emit(props, 'pageAfterOut', page);
   };
   const onPageAfterIn = (page) => {
     if (elRef.current !== page.el) return;
-    setRouterPositionClass('page-current');
+    routerPositionClass.current = 'page-current';
     emit(props, 'pageAfterIn', page);
   };
   const onPageBeforeRemove = (page) => {
@@ -178,44 +178,44 @@ const Page = forwardRef((props, ref) => {
   // Helper events
   const onPageStack = (pageEl) => {
     if (elRef.current !== pageEl) return;
-    setRouterForceUnstack(false);
+    routerForceUnstack.current = false;
   };
   const onPageUnstack = (pageEl) => {
     if (elRef.current !== pageEl) return;
-    setRouterForceUnstack(true);
+    routerForceUnstack.current = true;
   };
   const onPagePosition = (pageEl, position) => {
     if (elRef.current !== pageEl) return;
-    setRouterPositionClass(`page-${position}`);
+    routerPositionClass.current = `page-${position}`;
   };
   const onPageRole = (pageEl, rolesData) => {
     if (elRef.current !== pageEl) return;
-    setRouterPageRole(rolesData.role);
-    setRouterPageRoleDetailRoot(rolesData.detailRoot);
+    routerPageRole.current = rolesData.role;
+    routerPageRoleDetailRoot.current = rolesData.detailRoot;
   };
   const onPageMasterStack = (pageEl) => {
     if (elRef.current !== pageEl) return;
-    setRouterPageMasterStack(true);
+    routerPageMasterStack.current = true;
   };
   const onPageMasterUnstack = (pageEl) => {
     if (elRef.current !== pageEl) return;
-    setRouterPageMasterStack(false);
+    routerPageMasterStack.current = false;
   };
   const onPageNavbarLargeCollapsed = (pageEl) => {
     if (elRef.current !== pageEl) return;
-    setHasNavbarLargeCollapsed(true);
+    hasNavbarLargeCollapsed.current = true;
   };
   const onPageNavbarLargeExpanded = (pageEl) => {
     if (elRef.current !== pageEl) return;
-    setHasNavbarLargeCollapsed(false);
+    hasNavbarLargeCollapsed.current = false;
   };
   const onCardOpened = (cardEl, pageEl) => {
     if (elRef.current !== pageEl) return;
-    setHasCardExpandableOpened(true);
+    hasCardExpandableOpened.current = true;
   };
   const onCardClose = (cardEl, pageEl) => {
     if (elRef.current !== pageEl) return;
-    setHasCardExpandableOpened(false);
+    hasCardExpandableOpened.current = false;
   };
   const onPageTabShow = (pageEl) => {
     if (elRef.current !== pageEl) return;
@@ -328,32 +328,32 @@ const Page = forwardRef((props, ref) => {
 
   const forceSubnavbar =
     typeof subnavbar === 'undefined' && typeof withSubnavbar === 'undefined'
-      ? hasSubnavbarComputed || hasSubnavbar
+      ? hasSubnavbarComputed || hasSubnavbar.current
       : false;
 
   const forceNavbarLarge =
     typeof navbarLarge === 'undefined' && typeof withNavbarLarge === 'undefined'
-      ? hasNavbarLargeComputed || hasNavbarLarge
+      ? hasNavbarLargeComputed || hasNavbarLarge.current
       : false;
 
   const classes = classNames(
     className,
     'page',
-    routerPositionClass,
+    routerPositionClass.current,
     {
-      stacked: stacked && !routerForceUnstack,
+      stacked: stacked && !routerForceUnstack.current,
       tabs,
       'page-with-subnavbar': subnavbar || withSubnavbar || forceSubnavbar,
       'page-with-navbar-large': navbarLarge || withNavbarLarge || forceNavbarLarge,
       'no-navbar': noNavbar,
       'no-toolbar': noToolbar,
       'no-swipeback': noSwipeback,
-      'page-master': routerPageRole === 'master',
-      'page-master-detail': routerPageRole === 'detail',
-      'page-master-detail-root': routerPageRoleDetailRoot === true,
-      'page-master-stacked': routerPageMasterStack === true,
-      'page-with-navbar-large-collapsed': hasNavbarLargeCollapsed === true,
-      'page-with-card-opened': hasCardExpandableOpened === true,
+      'page-master': routerPageRole.current === 'master',
+      'page-master-detail': routerPageRole.current === 'detail',
+      'page-master-detail-root': routerPageRoleDetailRoot.current === true,
+      'page-master-stacked': routerPageMasterStack.current === true,
+      'page-with-navbar-large-collapsed': hasNavbarLargeCollapsed.current === true,
+      'page-with-card-opened': hasCardExpandableOpened.current === true,
       'login-screen-page': loginScreen,
     },
     colorClasses(props),
