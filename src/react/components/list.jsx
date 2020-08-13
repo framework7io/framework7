@@ -3,6 +3,7 @@ import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effec
 import { classNames, getExtraAttrs, getSlots, flattenArray, emit, extend } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7, f7ready } from '../shared/f7';
+import { ListContext } from '../shared/list-context';
 
 /* dts-import
 import { VirtualList } from 'framework7/types';
@@ -278,7 +279,16 @@ const List = forwardRef((props, ref) => {
     >
       {slots['before-list']}
       {rootChildrenBeforeList}
-      {ulChildren.length > 0 && <ul>{ulChildren}</ul>}
+      <ListContext.Provider
+        value={{
+          listIsMedia: mediaList,
+          listIsSimple: simpleList,
+          listIsSortable: sortable,
+          listIsSortableOpposite: sortableOpposite,
+        }}
+      >
+        {ulChildren.length > 0 && <ul>{ulChildren}</ul>}
+      </ListContext.Provider>
 
       {slots['after-list']}
       {rootChildrenAfterList}

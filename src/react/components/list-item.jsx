@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect, useState } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useEffect, useContext } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 
 import { classNames, getExtraAttrs, getSlots, emit, isStringProp, extend } from '../shared/utils';
@@ -15,6 +15,7 @@ import { watchProp } from '../shared/watch-prop';
 import { f7ready, f7 } from '../shared/f7';
 
 import Badge from './badge';
+import { ListContext } from '../shared/list-context';
 
 /* dts-imports
 import { SmartSelect } from 'framework7/types';
@@ -327,17 +328,20 @@ const ListItem = forwardRef((props, ref) => {
     href,
   } = props;
 
-  const [isMedia, setIsMedia] = useState(mediaItem || mediaList);
-  const [isSortable, setIsSortable] = useState(sortable);
-  const [isSortableOpposite, setIsSortableOpposite] = useState(sortableOpposite);
-  const [isSimple, setIsSimple] = useState(false);
+  const listContext = useContext(ListContext);
+
+  const {
+    listIsMedia = false,
+    listIsSortable = false,
+    listIsSortableOpposite = false,
+    listIsSimple = false,
+  } = listContext || {};
 
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   const linkElRef = useRef(null);
   const f7SmartSelect = useRef(null);
-  const listElRef = useRef(null);
   const inputElRef = useRef(null);
 
   const onClick = (event) => {
@@ -429,13 +433,6 @@ const ListItem = forwardRef((props, ref) => {
 
   const onMount = () => {
     f7ready(() => {
-      listElRef.current = f7.$(elRef.current).parents('.list, .list-group').eq(0);
-      if (listElRef.current.length) {
-        setIsMedia(listElRef.current.hasClass('media-list'));
-        setIsSimple(listElRef.current.hasClass('simple-list'));
-        setIsSortable(listElRef.current.hasClass('sortable'));
-        setIsSortableOpposite(listElRef.current.hasClass('sortable-opposite'));
-      }
       if (swipeout) {
         f7.on('swipeoutOpen', onSwipeoutOpen);
         f7.on('swipeoutOpened', onSwipeoutOpened);
@@ -505,36 +502,17 @@ const ListItem = forwardRef((props, ref) => {
     }
   }, [indeterminate]);
 
-  useIsomorphicLayoutEffect(() => {
-    if (!listElRef.current || listElRef.current.length === 0) return;
-    const isMediaNow = listElRef.current.hasClass('media-list');
-    const isSimpleNow = listElRef.current.hasClass('simple-list');
-    const isSortableNow = listElRef.current.hasClass('sortable');
-    const isSortableOppositeNow = listElRef.current.hasClass('sortable-opposite');
-    if (isMediaNow !== isMedia) {
-      setIsMedia(isMediaNow);
-    }
-    if (isSimpleNow !== isSimple) {
-      setIsSimple(isSimpleNow);
-    }
-    if (isSortableNow !== isSortable) {
-      setIsSortable(isSortableNow);
-      if (isSortableOppositeNow !== isSortableOpposite) {
-        setIsSortableOpposite(isSortableOpposite);
-      }
-    }
-  });
-
   const slots = getSlots(props);
 
   let linkEl;
   let itemContentEl;
 
-  const isMediaComputed = mediaItem || mediaList || isMedia;
-  const isSortableComputed = sortable || isSortable;
-  const isSortableOppositeComputed = isSortableComputed && (sortableOpposite || isSortableOpposite);
+  const isMediaComputed = mediaItem || mediaList || listIsMedia;
+  const isSortableComputed = sortable || listIsSortable;
+  const isSortableOppositeComputed =
+    isSortableComputed && (sortableOpposite || listIsSortableOpposite);
 
-  if (!isSimple) {
+  if (!listIsSimple) {
     // Item Content
     itemContentEl = ListItemContent({
       props,
@@ -604,7 +582,7 @@ const ListItem = forwardRef((props, ref) => {
       </li>
     );
   }
-  if (isSimple) {
+  if (listIsSimple) {
     return (
       <li
         ref={elRef}

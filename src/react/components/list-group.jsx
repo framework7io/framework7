@@ -1,6 +1,7 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useContext } from 'react';
 import { classNames, getExtraAttrs } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
+import { ListContext } from '../shared/list-context';
 
 /* dts-props
   id?: string | number;
@@ -20,13 +21,17 @@ const ListGroup = forwardRef((props, ref) => {
     id,
     style,
     children,
+    simpleList,
     mediaList,
     sortable,
     sortableOpposite,
     sortableTapHold,
     sortableMoveElements,
   } = props;
+
   const extraAttrs = getExtraAttrs(props);
+
+  const listContext = useContext(ListContext);
 
   const elRef = useRef(null);
   useImperativeHandle(ref, () => ({
@@ -56,7 +61,18 @@ const ListGroup = forwardRef((props, ref) => {
       ref={elRef}
       {...extraAttrs}
     >
-      <ul>{children}</ul>
+      <ul>
+        <ListContext.Provider
+          value={{
+            listIsMedia: mediaList || listContext.listIsMedia,
+            listIsSimple: simpleList || listContext.listIsSimple,
+            listIsSortable: sortable || listContext.listIsSortable,
+            listIsSortableOpposite: sortableOpposite || listContext.listIsSortableOpposite,
+          }}
+        >
+          {children}
+        </ListContext.Provider>
+      </ul>
     </div>
   );
 });

@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useState, useContext } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 import { classNames, getExtraAttrs, emit, getSlots, extend } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
@@ -6,6 +6,7 @@ import { f7ready, f7 } from '../shared/f7';
 
 import TextEditor from './text-editor';
 import { watchProp } from '../shared/watch-prop';
+import { ListContext } from '../shared/list-context';
 
 /* dts-imports
 import { Calendar, ColorPicker, TextEditor }
@@ -151,7 +152,10 @@ const ListInput = forwardRef((props, ref) => {
 
   const [inputInvalid, setInputInvalid] = useState(false);
   const [inputFocused, setInputFocused] = useState(false);
-  const [isSortable, setIsSortable] = useState(sortable);
+
+  const listContext = useContext(ListContext);
+
+  const { listIsSortable = false } = listContext || {};
 
   const extraAttrs = getExtraAttrs(props);
 
@@ -160,7 +164,6 @@ const ListInput = forwardRef((props, ref) => {
   const elRef = useRef(null);
   const inputElRef = useRef(null);
   const itemContentElRef = useRef(null);
-  const listElRef = useRef(null);
   const updateInputOnDidUpdate = useRef(false);
 
   const getDomValue = () => {
@@ -287,14 +290,6 @@ const ListInput = forwardRef((props, ref) => {
         f7.input.resizeTextarea(inputElRef.current);
       }
     });
-
-    listElRef.current = f7
-      .$(elRef.current || itemContentElRef.current)
-      .parents('.list, .list-group')
-      .eq(0);
-    if (listElRef.current.length) {
-      setIsSortable(listElRef.current.hasClass('sortable'));
-    }
   };
 
   const onDestroy = () => {
@@ -321,12 +316,6 @@ const ListInput = forwardRef((props, ref) => {
   }, []);
 
   useIsomorphicLayoutEffect(() => {
-    const listEl = listElRef.current;
-    if (!listEl || (listEl && listEl.length === 0)) return;
-    const isSortableNow = listEl.hasClass('sortable');
-    if (isSortableNow !== isSortable) {
-      setIsSortable(isSortableNow);
-    }
     if (!f7) return;
     if (updateInputOnDidUpdate.current) {
       if (!inputElRef.current) return;
@@ -367,7 +356,7 @@ const ListInput = forwardRef((props, ref) => {
 
   const inputHasValue = isInputHasValue();
 
-  const isSortableComputed = sortable || isSortable;
+  const isSortableComputed = sortable || listIsSortable;
 
   let inputEl;
 
