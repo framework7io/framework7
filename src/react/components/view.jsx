@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useState, Suspense, lazy } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 import {
   classNames,
@@ -124,10 +124,15 @@ const View = forwardRef((props, ref) => {
     f7routers.views.push(routerData.current);
     if (f7View.current && f7View.current.router && url) {
       const initialRoute = f7View.current.router.findMatchingRoute(url);
-      if (initialRoute && initialRoute.route && initialRoute.route.component) {
+      if (
+        initialRoute &&
+        initialRoute.route &&
+        (initialRoute.route.component || initialRoute.route.asyncComponent)
+      ) {
         initialPage = {
-          component: initialRoute.route.component,
+          component: initialRoute.route.component || lazy(initialRoute.route.asyncComponent),
           id: getComponentId(),
+          asyncComponent: initialRoute.route.asyncComponent,
           props: {
             f7route: initialRoute,
             $f7route: initialRoute,
@@ -179,7 +184,21 @@ const View = forwardRef((props, ref) => {
         routerData.current.setPages = (newPages) => {
           setPages([...newPages]);
         };
-        f7View.current.init(elRef.current);
+        if (initialPage && initialPage.asyncComponent) {
+          initialPage.asyncComponent().then(() => {
+            setTimeout(() => {
+              f7View.current.init(elRef.current);
+              if (initialPage) {
+                initialPage.el = f7View.current.router.currentPageEl;
+              }
+            }, 100);
+          });
+        } else {
+          f7View.current.init(elRef.current);
+          if (initialPage) {
+            initialPage.el = f7View.current.router.currentPageEl;
+          }
+        }
       } else {
         const routerId = getRouterId();
         routerData.current = {
@@ -255,8 +274,14 @@ const View = forwardRef((props, ref) => {
   return (
     <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
-      {pages.map(({ component: PageComponent, id: pageId, props: pageProps }) => {
-        return <PageComponent key={pageId} {...pageProps} />;
+      {pages.map(({ component: PageComponent, id: pageId, props: pageProps, asyncComponent }) => {
+        return asyncComponent ? (
+          <Suspense fallback={null} key={pageId}>
+            <PageComponent {...pageProps} />
+          </Suspense>
+        ) : (
+          <PageComponent key={pageId} {...pageProps} />
+        );
       })}
     </div>
   );
