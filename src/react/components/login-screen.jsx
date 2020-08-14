@@ -4,6 +4,7 @@ import { classNames, getExtraAttrs, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
 import { watchProp } from '../shared/watch-prop';
+import { modalStateClasses } from '../shared/modal-state-classes';
 
 /* dts-imports
 import { LoginScreen } from 'framework7/types';
@@ -25,18 +26,25 @@ const LoginScreen = forwardRef((props, ref) => {
   const { className, id, style, children, opened } = props;
   const extraAttrs = getExtraAttrs(props);
 
+  const isOpened = useRef(opened);
+  const isClosing = useRef(false);
   const elRef = useRef(null);
 
   const onOpen = (instance) => {
+    isOpened.current = true;
+    isClosing.current = false;
     emit(props, 'loginScreenOpen', instance);
   };
   const onOpened = (instance) => {
     emit(props, 'loginScreenOpened', instance);
   };
   const onClose = (instance) => {
+    isOpened.current = false;
+    isClosing.current = true;
     emit(props, 'loginScreenClose', instance);
   };
   const onClosed = (instance) => {
+    isClosing.current = false;
     emit(props, 'loginScreenClosed', instance);
   };
   const open = (animate) => {
@@ -95,7 +103,12 @@ const LoginScreen = forwardRef((props, ref) => {
     return onDestroy;
   }, []);
 
-  const classes = classNames(className, 'login-screen', colorClasses(props));
+  const classes = classNames(
+    className,
+    'login-screen',
+    modalStateClasses({ isOpened, isClosing }),
+    colorClasses(props),
+  );
 
   return (
     <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>

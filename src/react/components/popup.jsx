@@ -4,6 +4,7 @@ import { classNames, getExtraAttrs, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
 import { watchProp } from '../shared/watch-prop';
+import { modalStateClasses } from '../shared/modal-state-classes';
 
 /* dts-imports
 import { Popup } from 'framework7/types';
@@ -52,9 +53,12 @@ const Popup = forwardRef((props, ref) => {
     swipeToClose = false,
     swipeHandler,
   } = props;
+
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
+  const isOpened = useRef(opened);
+  const isClosing = useRef(false);
 
   const onSwipeStart = (instance) => {
     emit(props, 'popupSwipeStart', instance);
@@ -69,15 +73,20 @@ const Popup = forwardRef((props, ref) => {
     emit(props, 'popupSwipeClose', instance);
   };
   const onOpen = (instance) => {
+    isOpened.current = true;
+    isClosing.current = false;
     emit(props, 'popupOpen', instance);
   };
   const onOpened = (instance) => {
     emit(props, 'popupOpened', instance);
   };
   const onClose = (instance) => {
+    isOpened.current = false;
+    isClosing.current = true;
     emit(props, 'popupClose', instance);
   };
   const onClosed = (instance) => {
+    isClosing.current = false;
     emit(props, 'popupClosed', instance);
   };
   const open = (anim) => {
@@ -156,6 +165,7 @@ const Popup = forwardRef((props, ref) => {
       'popup-tablet-fullscreen': tabletFullscreen,
       'popup-push': push,
     },
+    modalStateClasses({ isOpened, isClosing }),
     colorClasses(props),
   );
 

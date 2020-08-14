@@ -4,6 +4,7 @@ import { classNames, getExtraAttrs, emit, getSlots } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
 import { watchProp } from '../shared/watch-prop';
+import { modalStateClasses } from '../shared/modal-state-classes';
 
 /* dts-imports
 import { Sheet } from 'framework7/types';
@@ -59,6 +60,8 @@ const Sheet = forwardRef((props, ref) => {
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
+  const isOpened = useRef(opened);
+  const isClosing = useRef(false);
 
   const onStepProgress = (instance, progress) => {
     emit(props, 'sheetStepProgress', instance, progress);
@@ -70,15 +73,20 @@ const Sheet = forwardRef((props, ref) => {
     emit(props, 'sheetStepClose', instance);
   };
   const onOpen = (instance) => {
+    isOpened.current = true;
+    isClosing.current = false;
     emit(props, 'sheetOpen', instance);
   };
   const onOpened = (instance) => {
     emit(props, 'sheetOpened', instance);
   };
   const onClose = (instance) => {
+    isOpened.current = false;
+    isClosing.current = true;
     emit(props, 'sheetClose', instance);
   };
   const onClosed = (instance) => {
+    isClosing.current = false;
     emit(props, 'sheetClosed', instance);
   };
   const open = (animate) => {
@@ -190,6 +198,7 @@ const Sheet = forwardRef((props, ref) => {
     {
       'sheet-modal-push': push,
     },
+    modalStateClasses({ isOpened, isClosing }),
     colorClasses(props),
   );
 

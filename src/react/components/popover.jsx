@@ -4,6 +4,7 @@ import { classNames, getExtraAttrs, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
 import { watchProp } from '../shared/watch-prop';
+import { modalStateClasses } from '../shared/modal-state-classes';
 
 /* dts-imports
 import { Popover } from 'framework7/types';
@@ -46,17 +47,24 @@ const Popover = forwardRef((props, ref) => {
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
+  const isOpened = useRef(opened);
+  const isClosing = useRef(false);
 
   const onOpen = (instance) => {
+    isOpened.current = true;
+    isClosing.current = false;
     emit(props, 'popoverOpen', instance);
   };
   const onOpened = (instance) => {
     emit(props, 'popoverOpened', instance);
   };
   const onClose = (instance) => {
+    isOpened.current = false;
+    isClosing.current = true;
     emit(props, 'popoverClose', instance);
   };
   const onClosed = (instance) => {
+    isClosing.current = false;
     emit(props, 'popoverClosed', instance);
   };
   const open = (animate) => {
@@ -124,7 +132,12 @@ const Popover = forwardRef((props, ref) => {
     return onDestroy;
   }, []);
 
-  const classes = classNames(className, 'popover', colorClasses(props));
+  const classes = classNames(
+    className,
+    'popover',
+    modalStateClasses({ isOpened, isClosing }),
+    colorClasses(props),
+  );
 
   return (
     <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>

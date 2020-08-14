@@ -4,6 +4,7 @@ import { classNames, getExtraAttrs, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7, f7ready } from '../shared/f7';
 import { watchProp } from '../shared/watch-prop';
+import { modalStateClasses } from '../shared/modal-state-classes';
 
 /* dts-imports
 import { Actions } from 'framework7/types';
@@ -35,18 +36,25 @@ const Actions = forwardRef((props, ref) => {
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
+  const isOpened = useRef(opened);
+  const isClosing = useRef(false);
   const f7Actions = useRef(null);
 
   const onOpen = (instance) => {
+    isOpened.current = true;
+    isClosing.current = false;
     emit(props, 'actionsOpen', instance);
   };
   const onOpened = (instance) => {
     emit(props, 'actionsOpened', instance);
   };
   const onClose = (instance) => {
+    isOpened.current = false;
+    isClosing.current = true;
     emit(props, 'actionsClose', instance);
   };
   const onClosed = (instance) => {
+    isClosing.current = false;
     emit(props, 'actionsClosed', instance);
   };
   const open = (animate) => {
@@ -133,6 +141,7 @@ const Actions = forwardRef((props, ref) => {
     {
       'actions-grid': grid,
     },
+    modalStateClasses({ isOpened, isClosing }),
     colorClasses(props),
   );
 
