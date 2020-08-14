@@ -33,6 +33,7 @@
   - View/Router
     - `pushState...` parameters renamed to `browserHistory...`
 - React
+  - `App` component now receives all app parameters as props
   - New ref's object
   - Rewritten with hooks
   - Instances in refs are functions
