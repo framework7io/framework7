@@ -135,9 +135,7 @@ const View = forwardRef((props, ref) => {
           asyncComponent: initialRoute.route.asyncComponent,
           props: {
             f7route: initialRoute,
-            $f7route: initialRoute,
             f7router: f7View.current.router,
-            $f7router: f7View.current.router,
             ...initialRoute.params,
           },
         };
