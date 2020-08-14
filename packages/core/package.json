@@ -1,6 +1,6 @@
 {
   "name": "framework7",
-  "version": "6.0.0-alpha.4",
+  "version": "6.0.0-alpha.5",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "main": "cjs/framework7.js",
   "module": "esm/framework7.js",
