@@ -68,7 +68,7 @@ function generateTypings(content, modules, components) {
       const capitalized = capitalize(f7Module);
       return [
         `interface Framework7Class<Events> extends ${capitalized}Module.AppMethods{}`,
-        `interface Framework7Params extends ${capitalized}Module.AppParams{}`,
+        `interface Framework7Parameters extends ${capitalized}Module.AppParams{}`,
         `interface Framework7Events extends ${capitalized}Module.AppEvents{}`,
       ].join('\n  ');
     })
@@ -79,7 +79,7 @@ function generateTypings(content, modules, components) {
       const capitalized = capitalize(f7Module);
       return [
         `interface Framework7Class<Events> extends ${capitalized}.AppMethods{}`,
-        `interface Framework7Params extends ${capitalized}.AppParams{}`,
+        `interface Framework7Parameters extends ${capitalized}.AppParams{}`,
         `interface Framework7Events extends ${capitalized}.AppEvents{}`,
       ].join('\n  ');
     })
