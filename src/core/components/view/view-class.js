@@ -87,8 +87,6 @@ class View extends Framework7Class {
       });
     }
 
-    console.log('here?!');
-
     return view;
   }
 
