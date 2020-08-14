@@ -1,13 +1,11 @@
 # Core
 
-- SSR
-  - View
-
 # React
 
-- Check page load delay
-  - check View.jsx useEffect vs useLayoutEffect difference in router load ms
-- App.jsx extends F7 params
+- [ ] Check page load delay
+- [x] Remove DTS comments
+- [x] App.jsx extends F7 params
+- [x] Add modals state classes using refs
 - SSR
   - find initial page component
     - [x] when browserHistory disabled (based on view url)
