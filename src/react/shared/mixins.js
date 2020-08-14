@@ -1,14 +1,5 @@
 import { isStringProp } from './utils';
 
-export const colorProps = {
-  color: String,
-  colorTheme: String,
-  textColor: String,
-  bgColor: String,
-  borderColor: String,
-  rippleColor: String,
-  themeDark: Boolean,
-};
 export function colorClasses(props) {
   const { color, colorTheme, textColor, bgColor, borderColor, rippleColor, themeDark } = props;
 
@@ -22,38 +13,7 @@ export function colorClasses(props) {
     [`ripple-color-${rippleColor}`]: rippleColor,
   };
 }
-export const iconProps = {
-  icon: String,
-  iconMaterial: String,
-  iconF7: String,
-  iconIos: String,
-  iconMd: String,
-  iconAurora: String,
-  iconColor: String,
-  iconSize: [String, Number],
-};
-export const linkRouterProps = {
-  back: Boolean,
-  external: Boolean,
-  force: Boolean,
-  animate: {
-    type: Boolean,
-    default: undefined,
-  },
-  ignoreCache: Boolean,
-  reloadCurrent: Boolean,
-  reloadAll: Boolean,
-  reloadPrevious: Boolean,
-  reloadDetail: {
-    type: Boolean,
-    default: undefined,
-  },
-  routeTabId: String,
-  view: String,
-  routeProps: Object,
-  preventRouter: Boolean,
-  transition: String,
-};
+
 export function routerAttrs(props) {
   const {
     force,
@@ -100,54 +60,7 @@ export function routerClasses(props) {
     'prevent-router': preventRouter,
   };
 }
-export const linkActionsProps = {
-  searchbarEnable: [Boolean, String],
-  searchbarDisable: [Boolean, String],
 
-  searchbarClear: [Boolean, String],
-  searchbarToggle: [Boolean, String],
-
-  // Panel
-  panelOpen: [Boolean, String],
-  panelClose: [Boolean, String],
-  panelToggle: [Boolean, String],
-
-  // Popup
-  popupOpen: [Boolean, String],
-  popupClose: [Boolean, String],
-
-  // Actions
-  actionsOpen: [Boolean, String],
-  actionsClose: [Boolean, String],
-
-  // Popover
-  popoverOpen: [Boolean, String],
-  popoverClose: [Boolean, String],
-
-  // Login Screen
-  loginScreenOpen: [Boolean, String],
-  loginScreenClose: [Boolean, String],
-
-  // Picker
-  sheetOpen: [Boolean, String],
-  sheetClose: [Boolean, String],
-
-  // Sortable
-  sortableEnable: [Boolean, String],
-  sortableDisable: [Boolean, String],
-  sortableToggle: [Boolean, String],
-
-  // Card
-  cardOpen: [Boolean, String],
-  cardPreventOpen: [Boolean, String],
-  cardClose: [Boolean, String],
-
-  // Menu
-  menuClose: {
-    type: [Boolean, String],
-    default: undefined,
-  },
-};
 export function actionsAttrs(props) {
   const {
     searchbarEnable,

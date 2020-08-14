@@ -1,12 +1,48 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 /* eslint no-console: "off" */
 /* eslint global-require: "off" */
-/* eslint no-param-reassign: ["error", { "props": false }] */
+/* eslint no-param-reassign: ["off"] */
 
 const exec = require('exec-sh');
+const glob = require('glob');
+const path = require('path');
 const bannerReact = require('./banners/react');
 const getOutput = require('./get-output.js');
 const fs = require('./utils/fs-extra');
+
+const removeDtsComments = (buildPath, format) => {
+  glob(
+    '*.js',
+    { cwd: path.resolve(__dirname, `${buildPath}/react/${format}/components`) },
+    (err, componentFiles) => {
+      componentFiles.forEach((file) => {
+        let fileContent = fs.readFileSync(
+          path.resolve(__dirname, `${buildPath}/react/${format}/components`, file),
+        );
+        if (fileContent.indexOf('/* dts-imports') >= 0) {
+          const imports = fileContent.split('/* dts-imports')[1].split('*/')[0] || '';
+          fileContent = fileContent.replace(imports, '');
+        }
+        if (fileContent.indexOf('/* dts-props') >= 0) {
+          const props = fileContent.split('/* dts-props')[1].split('*/')[0] || '';
+          fileContent = fileContent.replace(props, '');
+        }
+        if (fileContent.indexOf('/* dts-extends') >= 0) {
+          const propsExtends = fileContent.split('/* dts-extends')[1].split('*/')[0] || '';
+          fileContent = fileContent.replace(propsExtends, '');
+        }
+        fileContent = fileContent
+          .replace('/* dts-imports*/\n', '')
+          .replace('/* dts-props*/\n', '')
+          .replace('/* dts-extends*/\n', '');
+        fs.writeFileSync(
+          path.resolve(`${buildPath}/react/${format}/components`, file),
+          fileContent,
+        );
+      });
+    },
+  );
+};
 
 // Build React
 async function buildReact(cb) {
@@ -61,6 +97,9 @@ async function buildReact(cb) {
       `${buildPath}/react/cjs/framework7-react.js`,
       `${bannerReact.trim()}\n${cjsContent}`,
     );
+
+    // remove dts-comments
+    removeDtsComments(buildPath, 'cjs');
   };
 
   const buildEMS = async () => {
@@ -76,6 +115,9 @@ async function buildReact(cb) {
       `${buildPath}/react/esm/framework7-react.js`,
       `${bannerReact.trim()}\n${esmContent}`,
     );
+
+    // remove dts-comments
+    removeDtsComments(buildPath, 'esm');
   };
 
   if (env === 'production') {

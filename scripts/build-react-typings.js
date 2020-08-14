@@ -98,17 +98,21 @@ function generateComponentTypings(componentName, fileContent) {
   if (componentName.includes('Swiper') || componentName.includes('Skeleton')) return fileContent;
   let imports = '';
   let props = '';
+  let propsExtends = '';
   if (fileContent.indexOf('/* dts-imports') >= 0) {
     imports = fileContent.split('/* dts-imports')[1].split('*/')[0] || '';
   }
   if (fileContent.indexOf('/* dts-props') >= 0) {
     props = fileContent.split('/* dts-props')[1].split('*/')[0] || '';
   }
+  if (fileContent.indexOf('/* dts-extends') >= 0) {
+    propsExtends = fileContent.split('/* dts-extends')[1].split('*/')[0] || '';
+  }
   return `
 import * as React from 'react';
 // IMPORTS
 
-interface ${componentName}Props {
+interface ${componentName}Props${propsExtends ? ` extends ${propsExtends.trim()}` : ''} {
   slot?: string;
   // PROPS
 }

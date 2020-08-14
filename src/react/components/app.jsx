@@ -7,7 +7,11 @@ import RoutableModals from './routable-modals';
 import { f7init, f7 } from '../shared/f7';
 
 /* dts-imports
-  import { Router, Framework7Parameters } from 'framework7/types';
+  import { Framework7Parameters } from 'framework7/types';
+*/
+
+/* dts-extends
+  Framework7Parameters
 */
 
 /* dts-props
