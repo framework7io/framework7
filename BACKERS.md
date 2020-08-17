@@ -45,22 +45,17 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://www.securcom.me/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/securcom.png">
-      </a>
-    </td>
-    <td align="center" valign="middle">
       <a href="https://vpn-review.com/vpn-for-torrenting" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/vpn.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://tutlance.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/tutlance.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://edubirdie.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/edubirdie.png">
@@ -72,17 +67,10 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://divi-discount.com/elegant-themes/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/divi-discount.png">
-      </a>
-    </td>
-    <td align="center" valign="middle">
       <a href="https://www.bonus.com.de/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/bonusfinder.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="http://ananyamultitech.com/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/ananya.png">
@@ -93,6 +81,8 @@
         <img width="160" src="https://framework7.io/i/sponsors/kqapius.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://writersperhour.com/write-my-paper" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/writersperhour.jpg">
@@ -108,8 +98,6 @@
         <img width="160" src="https://framework7.io/i/sponsors/rise.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://usave.co.uk/utilities/broadband" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/usave.png">
@@ -120,6 +108,8 @@
         <img width="160" src="https://framework7.io/i/sponsors/bid4papers.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://kidoverse.app" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/kidoverse.png">
@@ -135,8 +125,6 @@
         <img width="160" src="https://framework7.io/i/sponsors/hicapps.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://blokt.com/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/blokt.png">
@@ -147,9 +135,6 @@
         <img width="160" src="https://framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
-    <td></td>
-    <td></td>
-    <td></td>
   </tr>
 </table>
 
@@ -182,7 +167,6 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 [Infatica](https://infatica.io) - Global Peer-to-Business Proxy Network
 [Thorium Builder](https://www.thoriumbuilder.com/) - Full visual Framework7 app builder<br>
 Colin Adams ([App Valley](https://appvalley.vip/))<br>
-Pavol Cvengros ([securCom Inc](https://www.securcom.me/))<br>
 Mason Fok ([tommy](http://mytommy.com))<br>
 
 [Join here!](https://www.patreon.com/bePatron?patAmt=100.0&exp=1&u=4109762&rid=830841)
@@ -195,7 +179,6 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 [EduBirdie - The professional essay writing service for students who can't even](https://edubirdie.com)<br>
 Daniel Fratus<br>
 [Paraphrasing tool- rewrite, paraphrase your article](https://paraphrasetools.com)<br>
-[Divi-Discount.com - Divi Discount](https://divi-discount.com/elegant-themes/)<br>
 [www.bonus.com.de](https://www.bonus.com.de/)<br>
 [Writers Per Hour](https://writersperhour.com/write-my-paper) - Write My Paper For Me<br>
 [Bid4Papers](https://bid4papers.com/write-my-essay.html) - Write My Essay<br>
