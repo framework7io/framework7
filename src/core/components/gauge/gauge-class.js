@@ -245,7 +245,9 @@ class Gauge extends Framework7Class {
     }
     if (valueText) {
       if (!$gaugeSvgEl.find('.gauge-value-text').length) {
-        $gaugeSvgEl.append('<text class="gauge-value-text"></text>');
+        const textEl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        textEl.classList.add('gauge-value-text');
+        $gaugeSvgEl.append(textEl);
       }
       const textAttrs = {
         x: '50%',
@@ -266,7 +268,9 @@ class Gauge extends Framework7Class {
     }
     if (labelText) {
       if (!$gaugeSvgEl.find('.gauge-label-text').length) {
-        $gaugeSvgEl.append('<text class="gauge-label-text"></text>');
+        const textEl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        textEl.classList.add('gauge-label-text');
+        $gaugeSvgEl.append(textEl);
       }
       const labelAttrs = {
         x: '50%',
