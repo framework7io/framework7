@@ -125,8 +125,8 @@
     dispatch('sortableDisable');
     if (typeof $$props.onSortableDisable === 'function') $$props.onSortableDisable();
   }
-  function onSortableSort(sortableEl, sortData, listEl) {
-    if (sortableEl !== listEl) return;
+  function onSortableSort(listItemEl, sortData, listEl) {
+    if (listEl !== el) return;
     dispatch('sortableSort', [sortData]);
     if (typeof $$props.onSortableSort === 'function') $$props.onSortableSort(sortData);
   }
