@@ -1,5 +1,5 @@
 /**
- * Framework7 5.7.10
+ * Framework7 5.7.11
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 14, 2020
+ * Released on: August 17, 2020
  */
 
 (function (global, factory) {
@@ -10460,6 +10460,10 @@
         if (attrName === 'readonly') {
           attrName = 'readOnly';
         }
+        if (tagName === 'option' && attrName === 'value') {
+          if (!data.attrs) { data.attrs = {}; }
+          data.attrs.value = attrValue;
+        }
         if (booleanProps.indexOf(attrName) >= 0) {
           // eslint-disable-next-line
           data.props[attrName] = attrValue === false ? false : true;
@@ -10577,6 +10581,7 @@
     if (tagName === 'slot') {
       return getSlots(el, context, app, initial);
     }
+
     return h(
       tagName,
       getData(el, context, app, initial, isRoot, tagName),

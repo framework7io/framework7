@@ -1,5 +1,5 @@
 /**
- * Framework7 5.7.10
+ * Framework7 5.7.11
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 14, 2020
+ * Released on: August 17, 2020
  */
 
 (function (global, factory) {
@@ -37604,7 +37604,9 @@
       }
       if (valueText) {
         if (!$gaugeSvgEl.find('.gauge-value-text').length) {
-          $gaugeSvgEl.append('<text class="gauge-value-text"></text>');
+          var textEl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          textEl.classList.add('gauge-value-text');
+          $gaugeSvgEl.append(textEl);
         }
         var textAttrs = {
           x: '50%',
@@ -37625,7 +37627,9 @@
       }
       if (labelText) {
         if (!$gaugeSvgEl.find('.gauge-label-text').length) {
-          $gaugeSvgEl.append('<text class="gauge-label-text"></text>');
+          var textEl$1 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          textEl$1.classList.add('gauge-label-text');
+          $gaugeSvgEl.append(textEl$1);
         }
         var labelAttrs = {
           x: '50%',
@@ -40795,7 +40799,7 @@
   };
 
   /**
-   * Framework7 5.7.10
+   * Framework7 5.7.11
    * Full featured mobile HTML framework for building iOS & Android apps
    * https://framework7.io/
    *
@@ -40803,7 +40807,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: July 14, 2020
+   * Released on: August 17, 2020
    */
 
   // Install Core Modules & Components

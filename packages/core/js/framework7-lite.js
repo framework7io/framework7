@@ -1,5 +1,5 @@
 /**
- * Framework7 5.7.10
+ * Framework7 5.7.11
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 14, 2020
+ * Released on: August 17, 2020
  */
 
 (function (global, factory) {
@@ -11793,7 +11793,7 @@
   };
 
   /**
-   * Framework7 5.7.10
+   * Framework7 5.7.11
    * Full featured mobile HTML framework for building iOS & Android apps
    * https://framework7.io/
    *
@@ -11801,7 +11801,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: July 14, 2020
+   * Released on: August 17, 2020
    */
 
   // Install Core Modules & Components
