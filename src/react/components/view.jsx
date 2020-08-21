@@ -1,17 +1,11 @@
 import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import {
-  classNames,
-  getExtraAttrs,
-  noUndefinedProps,
-  emit,
-  getRouterId,
-  getComponentId,
-} from '../shared/utils';
+import { classNames, getExtraAttrs, noUndefinedProps, emit, getRouterId } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7routers, f7, f7events } from '../shared/f7';
 import { useTab } from '../shared/use-tab';
 import { useAsyncComponent } from '../shared/use-async-component';
+import { getRouterInitialComponent } from '../shared/get-router-initial-component';
 /* dts-imports
   import { View, Router } from 'framework7/types';
 */
@@ -127,25 +121,7 @@ const View = forwardRef((props, ref) => {
     };
     f7routers.views.push(routerData.current);
     if (f7View.current && f7View.current.router && (url || main)) {
-      const { initialUrl } = f7View.current.router.getInitialUrl();
-      const initialRoute = f7View.current.router.findMatchingRoute(initialUrl);
-      if (
-        initialRoute &&
-        initialRoute.route &&
-        (initialRoute.route.component || initialRoute.route.asyncComponent)
-      ) {
-        initialPage = {
-          component: initialRoute.route.component || initialRoute.route.asyncComponent,
-          initialComponent: initialPageComponent,
-          id: getComponentId(),
-          isAsync: !!initialRoute.route.asyncComponent,
-          props: {
-            f7route: initialRoute,
-            f7router: f7View.current.router,
-            ...initialRoute.params,
-          },
-        };
-      }
+      initialPage = getRouterInitialComponent(f7View.current.router, initialPageComponent);
     }
   }
 
