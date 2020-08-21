@@ -1,4 +1,5 @@
 /* eslint no-nested-ternary: off */
+import { getDocument } from 'ssr-window';
 import $ from '../../shared/dom7';
 import { extend, deleteProps } from '../../shared/utils';
 import Framework7Class from '../../shared/class';
@@ -157,6 +158,7 @@ class Gauge extends Framework7Class {
 
   update(newParams = {}) {
     const gauge = this;
+    const document = getDocument();
     const { params, $gaugeSvgEl } = gauge;
 
     Object.keys(newParams).forEach((param) => {
