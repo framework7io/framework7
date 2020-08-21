@@ -4,6 +4,7 @@ import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { useTheme } from '../shared/use-theme';
 import { f7ready, f7 } from '../shared/f7';
+import { TabbarContext } from '../shared/tabbar-context';
 
 /* dts-props
   id?: string | number;
@@ -139,9 +140,15 @@ const Toolbar = forwardRef((props, ref) => {
 
   return (
     <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
-      {slots['before-inner']}
-      {inner ? <div className="toolbar-inner">{slots.default}</div> : slots.default}
-      {slots['after-inner']}
+      <TabbarContext.Provider
+        value={{
+          tabbarHasLabels: labels,
+        }}
+      >
+        {slots['before-inner']}
+        {inner ? <div className="toolbar-inner">{slots.default}</div> : slots.default}
+        {slots['after-inner']}
+      </TabbarContext.Provider>
     </div>
   );
 });

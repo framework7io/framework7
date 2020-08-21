@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useContext } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 import { classNames, getExtraAttrs, isStringProp, emit, extend } from '../shared/utils';
 import {
@@ -12,6 +12,7 @@ import { useIcon } from '../shared/use-icon';
 import { useRouteProps } from '../shared/use-route-props';
 import { useTooltip } from '../shared/use-tooltip';
 import { f7ready, f7 } from '../shared/f7';
+import { TabbarContext } from '../shared/tabbar-context';
 
 import Badge from './badge';
 
@@ -66,7 +67,10 @@ const Link = forwardRef((props, ref) => {
     smartSelect,
     smartSelectParams,
   } = props;
-  const [isTabbarLabel, setIsTabbarLabel] = useState(tabbarLabel);
+
+  const tabbarContext = useContext(TabbarContext);
+
+  const isTabbarLabel = tabbarLabel || tabbarContext.tabbarHasLabels;
 
   const extraAttrs = getExtraAttrs(props);
 
@@ -105,18 +109,6 @@ const Link = forwardRef((props, ref) => {
     onMount();
     return onDestroy;
   }, []);
-
-  useIsomorphicLayoutEffect(() => {
-    if (!elRef.current || !f7) return;
-    let isTabbarLabelComputed = false;
-    if (
-      tabbarLabel ||
-      ((tabLink || tabLink === '') && f7.$(elRef.current).parents('.tabbar-labels').length)
-    ) {
-      isTabbarLabelComputed = true;
-    }
-    setIsTabbarLabel(isTabbarLabelComputed);
-  });
 
   let textEl;
   let badgeEl;
