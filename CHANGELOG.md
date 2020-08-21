@@ -16,6 +16,7 @@
       - Gauge
       - ...
     - New types in `framework7/types`
+      - Framework7Params -> Framework7Parameters
   - Request
     - Export renamed to `request`
     - only promise APIs
@@ -30,6 +31,7 @@
   - Skeleton Elements
     - used as dependency
     - new React, Svelte and Vue components
+    - CSS vars renamed without `--f7-` prefix
   - View/Router
     - `pushState...` parameters renamed to `browserHistory...`
 - React
