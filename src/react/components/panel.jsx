@@ -69,16 +69,26 @@ const Panel = forwardRef((props, ref) => {
 
   const elRef = useRef(null);
 
+  const isOpened = useRef(false);
+  const isClosing = useRef(false);
+  const isCollapsed = useRef(false);
+  const isBreakpoint = useRef(false);
+
   const onOpen = (event) => {
+    isOpened.current = true;
+    isClosing.current = false;
     emit(props, 'panelOpen', event);
   };
   const onOpened = (event) => {
     emit(props, 'panelOpened', event);
   };
   const onClose = (event) => {
+    isOpened.current = false;
+    isClosing.current = true;
     emit(props, 'panelClose', event);
   };
   const onClosed = (event) => {
+    isClosing.current = false;
     emit(props, 'panelClosed', event);
   };
   const onBackdropClick = (event) => {
@@ -91,9 +101,13 @@ const Panel = forwardRef((props, ref) => {
     emit(props, 'panelSwipeOpen', event);
   };
   const onBreakpoint = (event) => {
+    isBreakpoint.current = true;
+    isCollapsed.current = false;
     emit(props, 'panelBreakpoint', event);
   };
   const onCollapsedBreakpoint = (event) => {
+    isBreakpoint.current = false;
+    isCollapsed.current = true;
     emit(props, 'panelCollapsedBreakpoint', event);
   };
   const onResize = (...args) => {
@@ -190,6 +204,9 @@ const Panel = forwardRef((props, ref) => {
     className,
     'panel',
     {
+      'panel-in': isOpened.current && !isClosing.current && !isBreakpoint.current,
+      'panel-in-breakpoint': isBreakpoint.current,
+      'panel-in-collapsed': isCollapsed.current,
       'panel-resizable': resizable,
       [`panel-${sideComputed}`]: sideComputed,
       [`panel-${effectComputed}`]: effectComputed,
