@@ -97,7 +97,7 @@ const PageContent = forwardRef((props, ref) => {
 
   useTab(elRef, props);
 
-  const onMount = () => {
+  const attachEvents = () => {
     f7ready(() => {
       if (ptr) {
         f7.on('ptrPullStart', onPtrPullStart);
@@ -112,7 +112,7 @@ const PageContent = forwardRef((props, ref) => {
     });
   };
 
-  const onDestroy = () => {
+  const detachEvents = () => {
     if (!f7) return;
     f7.off('ptrPullStart', onPtrPullStart);
     f7.off('ptrPullMove', onPtrPullMove);
@@ -123,9 +123,9 @@ const PageContent = forwardRef((props, ref) => {
   };
 
   useIsomorphicLayoutEffect(() => {
-    onMount();
-    return onDestroy;
-  }, []);
+    attachEvents();
+    return detachEvents;
+  });
 
   let ptrEl;
   let infiniteEl;

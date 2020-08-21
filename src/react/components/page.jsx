@@ -230,7 +230,7 @@ const Page = forwardRef((props, ref) => {
     el: elRef.current,
   }));
 
-  const onMount = () => {
+  const attachEvents = () => {
     f7ready(() => {
       f7.on('pageMounted', onPageMounted);
       f7.on('pageInit', onPageInit);
@@ -256,7 +256,7 @@ const Page = forwardRef((props, ref) => {
     });
   };
 
-  const onDestroy = () => {
+  const detachEvents = () => {
     if (!f7) return;
     f7.off('pageMounted', onPageMounted);
     f7.off('pageInit', onPageInit);
@@ -282,9 +282,9 @@ const Page = forwardRef((props, ref) => {
   };
 
   useIsomorphicLayoutEffect(() => {
-    onMount();
-    return onDestroy;
-  }, []);
+    attachEvents();
+    return detachEvents;
+  });
 
   const slots = getSlots(props);
 
