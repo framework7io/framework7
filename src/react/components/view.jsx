@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 import { classNames, getExtraAttrs, noUndefinedProps, emit, getRouterId } from '../shared/utils';
@@ -6,6 +7,7 @@ import { f7ready, f7routers, f7, f7events } from '../shared/f7';
 import { useTab } from '../shared/use-tab';
 import { useAsyncComponent } from '../shared/use-async-component';
 import { getRouterInitialComponent } from '../shared/get-router-initial-component';
+import { RouterContext } from '../shared/router-context';
 /* dts-imports
   import { View, Router } from 'framework7/types';
 */
@@ -255,16 +257,23 @@ const View = forwardRef((props, ref) => {
     <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {restChildren}
       {pages.map(
-        ({ component: PageComponent, id: pageId, props: pageProps, isAsync, initialComponent }) => {
-          if (initialComponent) {
-            return React.cloneElement(initialComponent, { key: pageId, ...pageProps });
-          }
-          return isAsync ? (
-            useAsyncComponent(PageComponent, pageId, pageProps)
-          ) : (
-            <PageComponent key={pageId} {...pageProps} />
-          );
-        },
+        ({ component: PageComponent, id: pageId, props: pageProps, isAsync, initialComponent }) => (
+          <RouterContext.Provider
+            key={pageId}
+            value={{
+              router: pageProps.f7router,
+              route: pageProps.f7route,
+            }}
+          >
+            {initialComponent ? (
+              React.cloneElement(initialComponent, { ...pageProps })
+            ) : isAsync ? (
+              useAsyncComponent(PageComponent, pageProps)
+            ) : (
+              <PageComponent {...pageProps} />
+            )}
+          </RouterContext.Provider>
+        ),
       )}
     </div>
   );
