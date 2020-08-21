@@ -65,6 +65,7 @@ async function buildReact(cb) {
     const json = {
       name: `framework7-react/${fileBase}`,
       private: true,
+      sideEffects: false,
       main: `../../cjs/components/${fileBase}.js`,
       module: `../../esm/components/${fileBase}.js`,
       'jsnext:main': `../../esm/components/${fileBase}.js`,

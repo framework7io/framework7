@@ -6,6 +6,7 @@
   "module": "esm/framework7-react.js",
   "jsnext:main": "esm/framework7-react.js",
   "typings": "framework7-react.d.ts",
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "https://github.com/framework7io/framework7.git"
