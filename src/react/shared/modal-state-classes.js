@@ -1,6 +1,6 @@
-export const modalStateClasses = ({ isOpened = false, isClosing = false } = {}) => {
+export const modalStateClasses = ({ isOpened, isClosing } = {}) => {
   return {
-    'modal-in': isOpened && !isClosing,
-    'modal-out': isClosing,
+    'modal-in': isOpened.current && !isClosing.current,
+    'modal-out': isClosing.current,
   };
 };
