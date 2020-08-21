@@ -41,6 +41,7 @@
     - Now they should be imported as `import {f7, f7ready, theme} from 'framework7-react'`. Dom7, device, request can be used as `f7.` accessors or imported from `framework7`
   - Removed `umd` version
   - `browserHistory` must be used with `browserHistoryInitialMatch`
+  - Fast Refresh support
 
 # [v5.7.11](https://github.com/framework7io/framework7/compare/v5.7.10...v5.7.11) - August 17, 2020
 
