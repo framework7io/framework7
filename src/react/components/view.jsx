@@ -91,6 +91,9 @@ import { useAsyncComponent } from '../shared/use-async-component';
 
 const View = forwardRef((props, ref) => {
   const { className, id, style, children, init = true, main, tab, tabActive, url } = props;
+  const childrenArray = React.Children.toArray(children);
+  const initialPageComponent = childrenArray.filter((c) => c.props && c.props.initialPage)[0];
+  const restChildren = childrenArray.filter((c) => !c.props || !c.props.initialPage);
 
   const extraAttrs = getExtraAttrs(props);
 
@@ -123,8 +126,9 @@ const View = forwardRef((props, ref) => {
       },
     };
     f7routers.views.push(routerData.current);
-    if (f7View.current && f7View.current.router && url) {
-      const initialRoute = f7View.current.router.findMatchingRoute(url);
+    if (f7View.current && f7View.current.router && (url || main)) {
+      const { initialUrl } = f7View.current.router.getInitialUrl();
+      const initialRoute = f7View.current.router.findMatchingRoute(initialUrl);
       if (
         initialRoute &&
         initialRoute.route &&
@@ -132,6 +136,7 @@ const View = forwardRef((props, ref) => {
       ) {
         initialPage = {
           component: initialRoute.route.component || initialRoute.route.asyncComponent,
+          initialComponent: initialPageComponent,
           id: getComponentId(),
           isAsync: !!initialRoute.route.asyncComponent,
           props: {
@@ -183,7 +188,7 @@ const View = forwardRef((props, ref) => {
         routerData.current.setPages = (newPages) => {
           setPages([...newPages]);
         };
-        if (initialPage && initialPage.isAsync) {
+        if (initialPage && initialPage.isAsync && !initialPage.initialComponent) {
           initialPage.component().then(() => {
             setTimeout(() => {
               f7View.current.init(elRef.current);
@@ -272,14 +277,19 @@ const View = forwardRef((props, ref) => {
 
   return (
     <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
-      {children}
-      {pages.map(({ component: PageComponent, id: pageId, props: pageProps, isAsync }) => {
-        return isAsync ? (
-          useAsyncComponent(PageComponent, pageId, pageProps)
-        ) : (
-          <PageComponent key={pageId} {...pageProps} />
-        );
-      })}
+      {restChildren}
+      {pages.map(
+        ({ component: PageComponent, id: pageId, props: pageProps, isAsync, initialComponent }) => {
+          if (initialComponent) {
+            return React.cloneElement(initialComponent, { key: pageId, ...pageProps });
+          }
+          return isAsync ? (
+            useAsyncComponent(PageComponent, pageId, pageProps)
+          ) : (
+            <PageComponent key={pageId} {...pageProps} />
+          );
+        },
+      )}
     </div>
   );
 });
