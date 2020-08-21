@@ -1121,38 +1121,27 @@ class Router extends Framework7Class {
     router.emit('routeUrlUpdate', router.currentRoute, router);
   }
 
-  init() {
+  getInitialUrl() {
     const router = this;
+    if (router.initialUrl) {
+      return {
+        initialUrl: router.initialUrl,
+        historyRestored: router.historyRestored,
+      };
+    }
     const { app, view } = router;
-    const window = getWindow();
     const document = getDocument();
-
-    router.mount();
+    const window = getWindow();
 
     const location =
       app.params.url && typeof app.params.url === 'string' && typeof URL !== 'undefined'
         ? new URL(app.params.url)
         : document.location;
 
-    // Init Swipeback
-    if (
-      (view && router.params.iosSwipeBack && app.theme === 'ios') ||
-      (view && router.params.mdSwipeBack && app.theme === 'md') ||
-      (view && router.params.auroraSwipeBack && app.theme === 'aurora')
-    ) {
-      SwipeBack(router);
-    }
-
-    let initUrl = router.params.url;
+    let initialUrl = router.params.url;
     let documentUrl = location.href.split(location.origin)[1];
     let historyRestored;
-    const {
-      browserHistory,
-      browserHistoryOnLoad,
-      browserHistorySeparator,
-      browserHistoryAnimateOnLoad,
-      browserHistoryInitialMatch,
-    } = router.params;
+    const { browserHistory, browserHistoryOnLoad, browserHistorySeparator } = router.params;
     let { browserHistoryRoot } = router.params;
     if (
       window.cordova &&
@@ -1168,14 +1157,14 @@ class Router extends Framework7Class {
       browserHistoryRoot = location.pathname.split('index.html')[0];
     }
     if (!browserHistory || !browserHistoryOnLoad) {
-      if (!initUrl) {
-        initUrl = documentUrl;
+      if (!initialUrl) {
+        initialUrl = documentUrl;
       }
-      if (location.search && initUrl.indexOf('?') < 0) {
-        initUrl += location.search;
+      if (location.search && initialUrl.indexOf('?') < 0) {
+        initialUrl += location.search;
       }
-      if (location.hash && initUrl.indexOf('#') < 0) {
-        initUrl += location.hash;
+      if (location.hash && initialUrl.indexOf('#') < 0) {
+        initialUrl += location.hash;
       }
     } else {
       if (browserHistoryRoot && documentUrl.indexOf(browserHistoryRoot) >= 0) {
@@ -1183,23 +1172,23 @@ class Router extends Framework7Class {
         if (documentUrl === '') documentUrl = '/';
       }
       if (browserHistorySeparator.length > 0 && documentUrl.indexOf(browserHistorySeparator) >= 0) {
-        initUrl = documentUrl.split(browserHistorySeparator)[1];
+        initialUrl = documentUrl.split(browserHistorySeparator)[1];
       } else {
-        initUrl = documentUrl;
+        initialUrl = documentUrl;
       }
       router.restoreHistory();
-      if (router.history.indexOf(initUrl) >= 0) {
-        router.history = router.history.slice(0, router.history.indexOf(initUrl) + 1);
-      } else if (router.params.url === initUrl) {
-        router.history = [initUrl];
+      if (router.history.indexOf(initialUrl) >= 0) {
+        router.history = router.history.slice(0, router.history.indexOf(initialUrl) + 1);
+      } else if (router.params.url === initialUrl) {
+        router.history = [initialUrl];
       } else if (
         History.state &&
         History.state[view.id] &&
         History.state[view.id].url === router.history[router.history.length - 1]
       ) {
-        initUrl = router.history[router.history.length - 1];
+        initialUrl = router.history[router.history.length - 1];
       } else {
-        router.history = [documentUrl.split(browserHistorySeparator)[0] || '/', initUrl];
+        router.history = [documentUrl.split(browserHistorySeparator)[0] || '/', initialUrl];
       }
       if (router.history.length > 1) {
         historyRestored = true;
@@ -1208,26 +1197,59 @@ class Router extends Framework7Class {
       }
       router.saveHistory();
     }
+
+    router.initialUrl = initialUrl;
+    router.historyRestored = historyRestored;
+
+    return { initialUrl, historyRestored };
+  }
+
+  init() {
+    const router = this;
+    const { app, view } = router;
+    const document = getDocument();
+
+    router.mount();
+
+    const { initialUrl, historyRestored } = router.getInitialUrl();
+
+    // Init Swipeback
+    if (
+      (view && router.params.iosSwipeBack && app.theme === 'ios') ||
+      (view && router.params.mdSwipeBack && app.theme === 'md') ||
+      (view && router.params.auroraSwipeBack && app.theme === 'aurora')
+    ) {
+      SwipeBack(router);
+    }
+
+    const {
+      browserHistory,
+      browserHistoryOnLoad,
+      browserHistoryAnimateOnLoad,
+      browserHistoryInitialMatch,
+    } = router.params;
+
     let currentRoute;
     if (router.history.length > 1) {
       // Will load page
-      currentRoute = router.findMatchingRoute(router.history[0]);
-      if (!currentRoute) {
-        currentRoute = extend(router.parseRouteUrl(router.history[0]), {
-          route: {
-            url: router.history[0],
-            path: router.history[0].split('?')[0],
-          },
-        });
-      }
-    } else {
-      // Don't load page
+      const initUrl = browserHistoryInitialMatch ? initialUrl : router.history[0];
       currentRoute = router.findMatchingRoute(initUrl);
       if (!currentRoute) {
         currentRoute = extend(router.parseRouteUrl(initUrl), {
           route: {
             url: initUrl,
             path: initUrl.split('?')[0],
+          },
+        });
+      }
+    } else {
+      // Don't load page
+      currentRoute = router.findMatchingRoute(initialUrl);
+      if (!currentRoute) {
+        currentRoute = extend(router.parseRouteUrl(initialUrl), {
+          route: {
+            url: initialUrl,
+            path: initialUrl.split('?')[0],
           },
         });
       }
@@ -1245,11 +1267,11 @@ class Router extends Framework7Class {
 
     if (
       router.$el.children('.page:not(.stacked)').length === 0 &&
-      initUrl &&
+      initialUrl &&
       router.params.loadInitialPage
     ) {
       // No pages presented in DOM, reload new page
-      router.navigate(initUrl, {
+      router.navigate(initialUrl, {
         initial: true,
         reloadCurrent: true,
         browserHistory: false,
@@ -1318,11 +1340,11 @@ class Router extends Framework7Class {
         if (browserHistoryInitialMatch) {
           const preloadPreviousPage =
             router.params.preloadPreviousPage || router.params[`${app.theme}SwipeBack`];
-          if (preloadPreviousPage && router.history.length > 2) {
+          if (preloadPreviousPage && router.history.length > 1) {
             router.back({ preload: true });
           }
         } else {
-          router.navigate(initUrl, {
+          router.navigate(initialUrl, {
             initial: true,
             browserHistory: false,
             history: false,
@@ -1340,18 +1362,18 @@ class Router extends Framework7Class {
         }
       }
       if (!historyRestored && !hasTabRoute) {
-        router.history.push(initUrl);
+        router.history.push(initialUrl);
         router.saveHistory();
       }
     }
     if (
-      initUrl &&
+      initialUrl &&
       browserHistory &&
       browserHistoryOnLoad &&
       (!History.state || !History.state[view.id])
     ) {
       History.initViewState(view.id, {
-        url: initUrl,
+        url: initialUrl,
       });
     }
     router.emit('local::init routerInit', router);
