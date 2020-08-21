@@ -106,24 +106,18 @@ const Card = forwardRef((props, ref) => {
     emit(props, 'cardClosed', el, pageEl);
   };
 
-  const onMount = () => {
-    if (!expandable) return;
-    if (!elRef.current) return;
+  const attachEvents = () => {
+    if (!expandable || !elRef.current) return;
     f7ready(() => {
       f7.on('cardBeforeOpen', onBeforeOpen);
       f7.on('cardOpen', onOpen);
       f7.on('cardOpened', onOpened);
       f7.on('cardClose', onClose);
       f7.on('cardClosed', onClosed);
-      if (expandable && expandableOpened) {
-        f7.card.open(elRef.current, false);
-      }
     });
   };
 
-  const onDestroy = () => {
-    if (!expandable) return;
-    if (!f7) return;
+  const detachEvents = () => {
     f7.off('cardBeforeOpen', onBeforeOpen);
     f7.off('cardOpen', onOpen);
     f7.off('cardOpened', onOpened);
@@ -131,10 +125,23 @@ const Card = forwardRef((props, ref) => {
     f7.off('cardClosed', onClosed);
   };
 
+  const onMount = () => {
+    if (!expandable || !elRef.current) return;
+    f7ready(() => {
+      if (expandable && expandableOpened) {
+        f7.card.open(elRef.current, false);
+      }
+    });
+  };
+
   useIsomorphicLayoutEffect(() => {
     onMount();
-    return onDestroy;
   }, []);
+
+  useIsomorphicLayoutEffect(() => {
+    attachEvents();
+    return detachEvents;
+  });
 
   watchProp(expandableOpened, (value) => {
     if (value) {

@@ -431,7 +431,7 @@ const ListItem = forwardRef((props, ref) => {
     }
   });
 
-  const onMount = () => {
+  const attachEvents = () => {
     f7ready(() => {
       if (swipeout) {
         f7.on('swipeoutOpen', onSwipeoutOpen);
@@ -452,6 +452,30 @@ const ListItem = forwardRef((props, ref) => {
         f7.on('accordionClose', onAccClose);
         f7.on('accordionClosed', onAccClosed);
       }
+    });
+  };
+
+  const detachEvents = () => {
+    if (!f7) return;
+    f7.off('swipeoutOpen', onSwipeoutOpen);
+    f7.off('swipeoutOpened', onSwipeoutOpened);
+    f7.off('swipeoutClose', onSwipeoutClose);
+    f7.off('swipeoutClosed', onSwipeoutClosed);
+    f7.off('swipeoutDelete', onSwipeoutDelete);
+    f7.off('swipeoutDeleted', onSwipeoutDeleted);
+    f7.off('swipeoutOverswipeEnter', onSwipeoutOverswipeEnter);
+    f7.off('swipeoutOverswipeExit', onSwipeoutOverswipeExit);
+    f7.off('swipeout', onSwipeout);
+    f7.off('accordionBeforeOpen', onAccBeforeOpen);
+    f7.off('accordionOpen', onAccOpen);
+    f7.off('accordionOpened', onAccOpened);
+    f7.off('accordionBeforeClose', onAccBeforeClose);
+    f7.off('accordionClose', onAccClose);
+    f7.off('accordionClosed', onAccClosed);
+  };
+
+  const onMount = () => {
+    f7ready(() => {
       if (smartSelect) {
         const ssParams = extend(
           { el: elRef.current.querySelector('a.smart-select') },
@@ -467,25 +491,6 @@ const ListItem = forwardRef((props, ref) => {
 
   const onDestroy = () => {
     if (!f7) return;
-    if (swipeout) {
-      f7.off('swipeoutOpen', onSwipeoutOpen);
-      f7.off('swipeoutOpened', onSwipeoutOpened);
-      f7.off('swipeoutClose', onSwipeoutClose);
-      f7.off('swipeoutClosed', onSwipeoutClosed);
-      f7.off('swipeoutDelete', onSwipeoutDelete);
-      f7.off('swipeoutDeleted', onSwipeoutDeleted);
-      f7.off('swipeoutOverswipeEnter', onSwipeoutOverswipeEnter);
-      f7.off('swipeoutOverswipeExit', onSwipeoutOverswipeExit);
-      f7.off('swipeout', onSwipeout);
-    }
-    if (accordionItem) {
-      f7.off('accordionBeforeOpen', onAccBeforeOpen);
-      f7.off('accordionOpen', onAccOpen);
-      f7.off('accordionOpened', onAccOpened);
-      f7.off('accordionBeforeClose', onAccBeforeClose);
-      f7.off('accordionClose', onAccClose);
-      f7.off('accordionClosed', onAccClosed);
-    }
     if (smartSelect && f7SmartSelect.current) {
       f7SmartSelect.current.destroy();
     }
@@ -495,6 +500,11 @@ const ListItem = forwardRef((props, ref) => {
     onMount();
     return onDestroy;
   }, []);
+
+  useIsomorphicLayoutEffect(() => {
+    attachEvents();
+    return detachEvents;
+  });
 
   useEffect(() => {
     if (inputElRef.current) {

@@ -85,7 +85,7 @@ const Col = forwardRef((props, ref) => {
     return () => {
       f7.off('gridResize', onResize);
     };
-  }, []);
+  });
 
   return (
     <ColTag id={id} style={style} className={classes} ref={elRef} {...extraAttrs} onClick={onClick}>

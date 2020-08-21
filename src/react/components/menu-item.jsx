@@ -46,22 +46,22 @@ const MenuItem = forwardRef((props, ref) => {
 
   useRouteProps(elRef, props);
 
-  const onMount = () => {
+  const attachEvents = () => {
     f7ready(() => {
       f7.on('menuOpened', onOpened);
       f7.on('menuClosed', onClosed);
     });
   };
 
-  const onDestroy = () => {
+  const detachEvents = () => {
     f7.off('menuOpened', onOpened);
     f7.off('menuClosed', onOpened);
   };
 
   useIsomorphicLayoutEffect(() => {
-    onMount();
-    return onDestroy;
-  }, []);
+    attachEvents();
+    return detachEvents;
+  });
 
   const iconEl = useIcon(props);
   const slots = getSlots(props);

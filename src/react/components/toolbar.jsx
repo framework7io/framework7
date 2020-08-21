@@ -82,30 +82,19 @@ const Toolbar = forwardRef((props, ref) => {
     show,
   }));
 
-  const onMount = () => {
-    if (!elRef.current) return;
+  useIsomorphicLayoutEffect(() => {
     f7ready(() => {
-      if (tabbar) f7.toolbar.setHighlight(elRef.current);
+      if (tabbar && f7 && elRef.current) {
+        f7.toolbar.setHighlight(elRef.current);
+      }
       f7.on('toolbarShow', onShow);
       f7.on('toolbarHide', onHide);
     });
-  };
-
-  const onDestroy = () => {
-    if (!f7) return;
-    f7.off('toolbarShow', onShow);
-    f7.off('toolbarHide', onHide);
-  };
-
-  useIsomorphicLayoutEffect(() => {
-    onMount();
-    return onDestroy;
-  }, []);
-
-  useEffect(() => {
-    if (tabbar && f7 && elRef.current) {
-      f7.toolbar.setHighlight(elRef.current);
-    }
+    return () => {
+      if (!f7) return;
+      f7.off('toolbarShow', onShow);
+      f7.off('toolbarHide', onHide);
+    };
   });
 
   const theme = useTheme();

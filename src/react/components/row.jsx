@@ -56,7 +56,7 @@ const Row = forwardRef((props, ref) => {
     return () => {
       f7.off('gridResize', onResize);
     };
-  }, []);
+  });
 
   const RowTag = tag;
 

@@ -72,7 +72,7 @@ const TreeviewItem = forwardRef((props, ref) => {
     el: elRef.current,
   }));
 
-  const onMount = () => {
+  const attachEvents = () => {
     if (!elRef.current) return;
     f7ready(() => {
       f7.on('treeviewOpen', onOpen);
@@ -81,7 +81,7 @@ const TreeviewItem = forwardRef((props, ref) => {
     });
   };
 
-  const onDestroy = () => {
+  const detachEvents = () => {
     if (!f7) return;
     f7.off('treeviewOpen', onOpen);
     f7.off('treeviewClose', onClose);
@@ -89,9 +89,9 @@ const TreeviewItem = forwardRef((props, ref) => {
   };
 
   useIsomorphicLayoutEffect(() => {
-    onMount();
-    return onDestroy;
-  }, []);
+    attachEvents();
+    return detachEvents;
+  });
 
   const slots = getSlots(props);
   const hasChildren =

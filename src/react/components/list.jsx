@@ -133,14 +133,27 @@ const List = forwardRef((props, ref) => {
     f7VirtualList: () => f7VirtualList.current,
   }));
 
-  const onMount = () => {
+  const attachEvents = () => {
     f7ready(() => {
       f7.on('sortableEnable', onSortableEnable);
       f7.on('sortableDisable', onSortableDisable);
       f7.on('sortableSort', onSortableSort);
       f7.on('tabShow', onTabShow);
       f7.on('tabHide', onTabHide);
+    });
+  };
 
+  const detachEvents = () => {
+    if (!f7) return;
+    f7.off('sortableEnable', onSortableEnable);
+    f7.off('sortableDisable', onSortableDisable);
+    f7.off('sortableSort', onSortableSort);
+    f7.off('tabShow', onTabShow);
+    f7.off('tabHide', onTabHide);
+  };
+
+  const onMount = () => {
+    f7ready(() => {
       if (!virtualList) return;
       const vlParams = virtualListParams || {};
       if (!vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) return;
@@ -176,11 +189,6 @@ const List = forwardRef((props, ref) => {
 
   const onDestroy = () => {
     if (!f7) return;
-    f7.off('sortableEnable', onSortableEnable);
-    f7.off('sortableDisable', onSortableDisable);
-    f7.off('sortableSort', onSortableSort);
-    f7.off('tabShow', onTabShow);
-    f7.off('tabHide', onTabHide);
 
     if (!(virtualList && f7VirtualList.current)) return;
     if (f7VirtualList.current.destroy) f7VirtualList.current.destroy();
@@ -190,6 +198,11 @@ const List = forwardRef((props, ref) => {
     onMount();
     return onDestroy;
   }, []);
+
+  useIsomorphicLayoutEffect(() => {
+    attachEvents();
+    return detachEvents;
+  });
 
   const slots = getSlots(props);
 
@@ -277,8 +290,6 @@ const List = forwardRef((props, ref) => {
       }
       onSubmit={onSubmit}
     >
-      {slots['before-list']}
-      {rootChildrenBeforeList}
       <ListContext.Provider
         value={{
           listIsMedia: mediaList,
@@ -287,11 +298,14 @@ const List = forwardRef((props, ref) => {
           listIsSortableOpposite: sortableOpposite,
         }}
       >
-        {ulChildren.length > 0 && <ul>{ulChildren}</ul>}
-      </ListContext.Provider>
+        {slots['before-list']}
+        {rootChildrenBeforeList}
 
-      {slots['after-list']}
-      {rootChildrenAfterList}
+        {ulChildren.length > 0 && <ul>{ulChildren}</ul>}
+
+        {slots['after-list']}
+        {rootChildrenAfterList}
+      </ListContext.Provider>
     </ListTag>
   );
 });

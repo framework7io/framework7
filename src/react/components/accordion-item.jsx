@@ -50,7 +50,7 @@ const AccordionItem = forwardRef((props, ref) => {
     emit(props, 'accordionClosed');
   };
 
-  const onMount = () => {
+  const attachEvents = () => {
     f7ready(() => {
       f7.on('accordionBeforeOpen', onBeforeOpen);
       f7.on('accordionOpen', onOpen);
@@ -61,7 +61,7 @@ const AccordionItem = forwardRef((props, ref) => {
     });
   };
 
-  const onDestroy = () => {
+  const detachEvents = () => {
     f7.off('accordionBeforeOpen', onBeforeOpen);
     f7.off('accordionOpen', onOpen);
     f7.off('accordionOpened', onOpened);
@@ -71,9 +71,9 @@ const AccordionItem = forwardRef((props, ref) => {
   };
 
   useIsomorphicLayoutEffect(() => {
-    onMount();
-    return onDestroy;
-  }, []);
+    attachEvents();
+    return detachEvents;
+  });
 
   const extraAttrs = getExtraAttrs(props);
   const classes = classNames(

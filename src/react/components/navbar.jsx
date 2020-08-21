@@ -142,9 +142,10 @@ const Navbar = forwardRef((props, ref) => {
     size,
   }));
 
-  const onMount = () => {
+  const attachEvents = () => {
     if (!elRef.current) return;
     f7ready(() => {
+      f7.navbar.size(elRef.current);
       f7.on('navbarShow', onShow);
       f7.on('navbarHide', onHide);
       f7.on('navbarCollapse', onCollapse);
@@ -158,7 +159,7 @@ const Navbar = forwardRef((props, ref) => {
     });
   };
 
-  const onDestroy = () => {
+  const detachEvents = () => {
     if (!f7) return;
     f7.off('navbarShow', onShow);
     f7.off('navbarHide', onHide);
@@ -173,13 +174,8 @@ const Navbar = forwardRef((props, ref) => {
   };
 
   useIsomorphicLayoutEffect(() => {
-    onMount();
-    return onDestroy;
-  }, []);
-
-  useIsomorphicLayoutEffect(() => {
-    if (!f7 || !elRef.current) return;
-    f7.navbar.size(elRef.current);
+    attachEvents();
+    return detachEvents;
   });
 
   const slots = getSlots(props);
