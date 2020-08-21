@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useState, Suspense, lazy } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 import {
   classNames,
@@ -11,6 +11,7 @@ import {
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7routers, f7, f7events } from '../shared/f7';
 import { useTab } from '../shared/use-tab';
+import { useAsyncComponent } from '../shared/use-async-component';
 /* dts-imports
   import { View, Router } from 'framework7/types';
 */
@@ -130,9 +131,9 @@ const View = forwardRef((props, ref) => {
         (initialRoute.route.component || initialRoute.route.asyncComponent)
       ) {
         initialPage = {
-          component: initialRoute.route.component || lazy(initialRoute.route.asyncComponent),
+          component: initialRoute.route.component || initialRoute.route.asyncComponent,
           id: getComponentId(),
-          asyncComponent: initialRoute.route.asyncComponent,
+          isAsync: !!initialRoute.route.asyncComponent,
           props: {
             f7route: initialRoute,
             f7router: f7View.current.router,
@@ -182,8 +183,8 @@ const View = forwardRef((props, ref) => {
         routerData.current.setPages = (newPages) => {
           setPages([...newPages]);
         };
-        if (initialPage && initialPage.asyncComponent) {
-          initialPage.asyncComponent().then(() => {
+        if (initialPage && initialPage.isAsync) {
+          initialPage.component().then(() => {
             setTimeout(() => {
               f7View.current.init(elRef.current);
               if (initialPage) {
@@ -272,11 +273,9 @@ const View = forwardRef((props, ref) => {
   return (
     <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
-      {pages.map(({ component: PageComponent, id: pageId, props: pageProps, asyncComponent }) => {
-        return asyncComponent ? (
-          <Suspense fallback={null} key={pageId}>
-            <PageComponent {...pageProps} />
-          </Suspense>
+      {pages.map(({ component: PageComponent, id: pageId, props: pageProps, isAsync }) => {
+        return isAsync ? (
+          useAsyncComponent(PageComponent, pageId, pageProps)
         ) : (
           <PageComponent key={pageId} {...pageProps} />
         );
