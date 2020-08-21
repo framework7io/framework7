@@ -87,6 +87,10 @@ const History = {
   },
   push(viewId, viewState, url) {
     const window = getWindow();
+    if (url.substr(-3) === '#!/') {
+      // eslint-disable-next-line
+      url = url.replace('#!/', '');
+    }
     if (!History.allowChange) {
       History.queue.push(() => {
         History.push(viewId, viewState, url);
@@ -102,6 +106,10 @@ const History = {
   },
   replace(viewId, viewState, url) {
     const window = getWindow();
+    if (url.substr(-3) === '#!/') {
+      // eslint-disable-next-line
+      url = url.replace('#!/', '');
+    }
     if (!History.allowChange) {
       History.queue.push(() => {
         History.replace(viewId, viewState, url);
