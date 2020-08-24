@@ -468,7 +468,7 @@ class Autocomplete extends Framework7Class {
       <form class="searchbar">
         <div class="searchbar-inner">
           <div class="searchbar-input-wrap">
-            <input type="search" placeholder="${ac.params.searchbarPlaceholder}"/>
+            <input type="search" spellcheck="${ac.params.searchbarSpellcheck || 'false'}" placeholder="${ac.params.searchbarPlaceholder}"/>
             <i class="searchbar-icon"></i>
             <span class="input-clear-button"></span>
           </div>
