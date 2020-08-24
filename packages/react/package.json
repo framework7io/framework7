@@ -44,7 +44,6 @@
     "url": "https://www.patreon.com/vladimirkharlampidi"
   },
   "peerDependencies": {
-    "react": "16.x",
-    "prop-types": "15.x"
+    "react": "16.x"
   }
 }
