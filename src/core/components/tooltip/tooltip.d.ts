@@ -11,8 +11,10 @@ export namespace Tooltip {
     cssClass?: string;
     /** Extra offset (in px) to tooltip position */
     offset?: number;
-    /** How trigger tooltip show/hide, can be "hover" or "click" (default "hover") */
+    /** How trigger tooltip show/hide, can be "hover" or "click" or "manual" (default "hover") */
     trigger?: string;
+    /** Element to mount Tooltip to. (default app.root) */
+    containerEl?: HTMLElement | CSSSelector;
     /** Function to render tooltip element, must return full tooltip HTML layout string */
     render?: (tooltip: Tooltip) => string;
     /** Object with events handlers.. */

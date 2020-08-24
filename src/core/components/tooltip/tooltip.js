@@ -48,6 +48,7 @@ export default {
       render: null,
       offset: 0,
       trigger: 'hover',
+      containerEl: undefined,
     },
   },
   on: {

@@ -24,7 +24,7 @@ class Tooltip extends Framework7Class {
       tooltip.params.offset = 10;
     }
 
-    const { targetEl } = tooltip.params;
+    const { targetEl, containerEl } = tooltip.params;
     if (!targetEl) return tooltip;
 
     const $targetEl = $(targetEl);
@@ -32,12 +32,19 @@ class Tooltip extends Framework7Class {
 
     if ($targetEl[0].f7Tooltip) return $targetEl[0].f7Tooltip;
 
+    let $containerEl = $(containerEl || app.root).eq(0);
+    if ($containerEl.length === 0) {
+      $containerEl = app.root;
+    }
+
     const $el = $(tooltip.render()).eq(0);
 
     extend(tooltip, {
       app,
       $targetEl,
       targetEl: $targetEl && $targetEl[0],
+      $containerEl,
+      containerEl: $containerEl && $containerEl[0],
       $el,
       el: $el && $el[0],
       text: tooltip.params.text || '',
@@ -102,6 +109,7 @@ class Tooltip extends Framework7Class {
         $('html').on('click', handleClickOut);
         return;
       }
+      if (tooltip.params.trigger === 'manual') return;
       if (support.touch) {
         const passive = support.passiveListener ? { passive: true } : false;
         $targetEl.on(app.touchEvents.start, handleTouchStart, passive);
@@ -119,6 +127,7 @@ class Tooltip extends Framework7Class {
         $('html').off('click', handleClickOut);
         return;
       }
+      if (tooltip.params.trigger === 'manual') return;
       if (support.touch) {
         const passive = support.passiveListener ? { passive: true } : false;
         $targetEl.off(app.touchEvents.start, handleTouchStart, passive);
@@ -213,8 +222,8 @@ class Tooltip extends Framework7Class {
 
   show(aroundEl) {
     const tooltip = this;
-    const { app, $el, $targetEl } = tooltip;
-    app.root.append($el);
+    const { $el, $targetEl, $containerEl } = tooltip;
+    $containerEl.append($el);
     tooltip.position(aroundEl);
     const $aroundEl = $(aroundEl);
     tooltip.visible = true;
