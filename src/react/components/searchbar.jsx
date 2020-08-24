@@ -64,6 +64,7 @@ const Searchbar = forwardRef((props, ref) => {
     noHairline,
     form = true,
     placeholder = 'Search',
+    spellcheck,
     disableButton = true,
     disableButtonText = 'Cancel',
     clearButton = true,
@@ -255,6 +256,7 @@ const Searchbar = forwardRef((props, ref) => {
           <input
             value={value}
             placeholder={placeholder}
+            spellcheck={spellcheck}
             type="search"
             onInput={onInput}
             onChange={onChange}
