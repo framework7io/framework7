@@ -16,7 +16,8 @@ class Panel extends Framework7Class {
     const panel = this;
 
     panel.params = extendedParams;
-    panel.containerEl = panel.params.containerEl ? $(panel.params.containerEl).eq(0) : app.root;
+    panel.$containerEl = panel.params.containerEl ? $(panel.params.containerEl).eq(0) : app.root;
+    panel.containerEl = panel.$containerEl[0];
 
     let $el;
     if (panel.params.el) {
@@ -39,10 +40,10 @@ class Panel extends Framework7Class {
     if (panel.params.backdrop && panel.params.backdropEl) {
       $backdropEl = $(panel.params.backdropEl);
     } else if (panel.params.backdrop) {
-      $backdropEl = panel.containerEl.children('.panel-backdrop');
+      $backdropEl = panel.$containerEl.children('.panel-backdrop');
       if ($backdropEl.length === 0) {
         $backdropEl = $('<div class="panel-backdrop"></div>');
-        panel.containerEl.prepend($backdropEl);
+        panel.$containerEl.prepend($backdropEl);
       }
     }
 
@@ -70,10 +71,10 @@ class Panel extends Framework7Class {
   getViewEl() {
     const panel = this;
     let viewEl;
-    if (panel.containerEl.children('.views').length > 0) {
-      viewEl = panel.containerEl.children('.views')[0];
+    if (panel.$containerEl.children('.views').length > 0) {
+      viewEl = panel.$containerEl.children('.views')[0];
     } else {
-      viewEl = panel.containerEl.children('.view')[0];
+      viewEl = panel.$containerEl.children('.view')[0];
     }
     return viewEl;
   }
@@ -312,31 +313,31 @@ class Panel extends Framework7Class {
 
   insertToRoot() {
     const panel = this;
-    const { $el, $backdropEl } = panel;
+    const { $el, $backdropEl, $containerEl } = panel;
     const $panelParentEl = $el.parent();
     const wasInDom = $el.parents(document).length > 0;
 
-    if (!$panelParentEl.is(panel.containerEl) || $el.prevAll('.views, .view').length) {
-      const $insertBeforeEl = panel.containerEl.children('.panel, .views, .view').eq(0);
-      const $insertAfterEl = panel.containerEl.children('.panel-backdrop').eq(0);
+    if (!$panelParentEl.is($containerEl) || $el.prevAll('.views, .view').length) {
+      const $insertBeforeEl = $containerEl.children('.panel, .views, .view').eq(0);
+      const $insertAfterEl = $containerEl.children('.panel-backdrop').eq(0);
 
       if ($insertBeforeEl.length) {
         $el.insertBefore($insertBeforeEl);
       } else if ($insertAfterEl) {
         $el.insertBefore($insertAfterEl);
       } else {
-        panel.containerEl.prepend($el);
+        $containerEl.prepend($el);
       }
 
       if ($backdropEl
         && $backdropEl.length
         && (
           (
-            !$backdropEl.parent().is(panel.containerEl)
+            !$backdropEl.parent().is($containerEl)
             && $backdropEl.nextAll('.panel').length === 0
           )
           || (
-            $backdropEl.parent().is(panel.containerEl)
+            $backdropEl.parent().is($containerEl)
             && $backdropEl.nextAll('.panel').length === 0
           )
         )

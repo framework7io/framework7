@@ -80,6 +80,10 @@ export namespace Panel {
     $backdropEl: Dom7Instance
     /** Popup parameters */
     params : Parameters
+    /** Element to mount panel to. (default app.root) */
+    containerEl: HTMLElement | CSSSelector
+    /** Dom7 instance with with element to mount panel to. (default app.root) */
+    $containerEl: HTMLElement | CSSSelector
 
     /** Open panel. */
     open(animate : boolean) : void
