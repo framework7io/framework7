@@ -25,6 +25,10 @@ export default {
       type: String,
       default: 'Search',
     },
+    spellcheck: {
+      type: Boolean,
+      default: undefined,
+    },
     disableButton: {
       type: Boolean,
       default: true,
@@ -118,6 +122,7 @@ export default {
     const props = self.props;
     const {
       placeholder,
+      spellcheck,
       clearButton,
       disableButton,
       disableButtonText,
@@ -164,6 +169,7 @@ export default {
           ref="inputEl"
           value={value}
           placeholder={placeholder}
+          spellCheck={spellcheck}
           type="search"
           onInput={self.onInput}
           onChange={self.onChange.bind(self)}
@@ -178,6 +184,7 @@ export default {
           ref="inputEl"
           placeholder={placeholder}
           type="search"
+          spellCheck={spellcheck}
           domProps={{ value }}
           onInput={self.onInput}
           onChange={self.onChange}
