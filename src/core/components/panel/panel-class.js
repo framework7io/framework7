@@ -456,10 +456,7 @@ class Panel extends Framework7Class {
       // Emit close
       panel.onClose();
     } else {
-      $el
-        .addClass('not-animated')
-        .removeClass('panel-in')
-        .addClass('panel-out');
+      $el.addClass('not-animated').removeClass('panel-in').addClass('panel-out');
       // Emit close
       panel.onClose();
       panel.onClosed();
