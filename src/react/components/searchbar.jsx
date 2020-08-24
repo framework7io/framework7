@@ -256,7 +256,7 @@ const Searchbar = forwardRef((props, ref) => {
           <input
             value={value}
             placeholder={placeholder}
-            spellcheck={spellcheck}
+            spellCheck={spellcheck}
             type="search"
             onInput={onInput}
             onChange={onChange}

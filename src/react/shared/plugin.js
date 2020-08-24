@@ -17,6 +17,7 @@ const Framework7React = {
     if (paramsTheme === 'ios') theme.ios = true;
     if (paramsTheme === 'aurora') theme.aurora = true;
 
+    // eslint-disable-next-line
     const needThemeCalc = typeof window === 'undefined' ? !!userAgent : true;
     if (needThemeCalc && (!paramsTheme || paramsTheme === 'auto')) {
       const device = Framework7.getDevice({ userAgent }, true);
