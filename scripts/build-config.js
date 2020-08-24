@@ -115,6 +115,9 @@ const config = {
     // WYSIWYG Editor
     'text-editor',
 
+    // Pie Chart
+    'pie-chart',
+
     // Elevation
     'elevation',
 
