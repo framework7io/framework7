@@ -5,6 +5,8 @@ import { extend } from './utils';
 let f7;
 let f7events;
 
+const theme = {};
+
 const f7routers = {
   views: [],
   tabs: [],
@@ -21,6 +23,14 @@ const f7init = (rootEl, params = {}, init = true) => {
     init,
   });
   if (!f7Params.routes) f7Params.routes = [];
+
+  if (f7Params.userAgent && (f7Params.theme === 'auto' || !f7Params.theme)) {
+    const device = Framework7.getDevice({ userAgent: f7Params.userAgent }, true);
+    theme.ios = !!device.ios;
+    theme.aurora = device.desktop && device.electron;
+    theme.md = !theme.ios && !theme.aurora;
+  }
+  if (f7) return;
 
   const instance = new Framework7(f7Params);
   f7 = instance;
@@ -42,7 +52,5 @@ const f7ready = (callback) => {
     f7events.once('ready', callback);
   }
 };
-
-const theme = {};
 
 export { f7, theme, f7ready, f7events, f7init, f7routers, f7initEvents };

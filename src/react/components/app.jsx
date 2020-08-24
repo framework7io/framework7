@@ -33,7 +33,7 @@ const App = forwardRef((props, ref) => {
 
   const classes = classNames(className, 'framework7-root', colorClasses(props));
 
-  if (!f7) {
+  if (!f7 || typeof window === 'undefined') {
     f7init(elRef.current, params, false);
   }
 

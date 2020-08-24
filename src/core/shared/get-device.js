@@ -100,7 +100,10 @@ function calcDevice({ userAgent } = {}) {
   // iOS 8+ changed UA
   if (device.ios && device.osVersion && ua.indexOf('Version/') >= 0) {
     if (device.osVersion.split('.')[0] === '10') {
-      device.osVersion = ua.toLowerCase().split('version/')[1].split(' ')[0];
+      device.osVersion = ua
+        .toLowerCase()
+        .split('version/')[1]
+        .split(' ')[0];
     }
   }
 
@@ -150,8 +153,8 @@ function calcDevice({ userAgent } = {}) {
   return device;
 }
 
-function getDevice(overrides = {}) {
-  if (!deviceCalculated) {
+function getDevice(overrides = {}, reset) {
+  if (!deviceCalculated || reset) {
     deviceCalculated = calcDevice(overrides);
   }
   return deviceCalculated;

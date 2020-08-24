@@ -11,12 +11,15 @@ const Framework7React = {
 
     f7initEvents();
 
-    const { paramsTheme, userAgent } = params;
+    const { theme: paramsTheme, userAgent } = params;
+
     if (paramsTheme === 'md') theme.md = true;
     if (paramsTheme === 'ios') theme.ios = true;
     if (paramsTheme === 'aurora') theme.aurora = true;
-    if (!paramsTheme || paramsTheme === 'auto') {
-      const device = Framework7.getDevice({ userAgent });
+
+    const needThemeCalc = typeof window === 'undefined' ? !!userAgent : true;
+    if (needThemeCalc && (!paramsTheme || paramsTheme === 'auto')) {
+      const device = Framework7.getDevice({ userAgent }, true);
       theme.ios = !!device.ios;
       theme.aurora = device.desktop && device.electron;
       theme.md = !theme.ios && !theme.aurora;
