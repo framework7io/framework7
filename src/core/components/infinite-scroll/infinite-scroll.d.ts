@@ -2,7 +2,7 @@ import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from
 
 export namespace InfiniteScroll {
   interface DomEvents {
-    /** Event will be triggered when page scroll reaches specified (in data-distance attribute) distance to the bottom. */
+    /** Event will be triggered when page scroll reaches specified (in data-infinite-distance attribute) distance to the bottom. */
     'infinite': () => void
   }
   interface AppMethods {
