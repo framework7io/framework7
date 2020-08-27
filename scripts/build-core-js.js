@@ -125,6 +125,7 @@ async function umdBundle({ components } = {}) {
   return rollup({
     input: './src/core/framework7.js',
     cache,
+    treeshake: false,
     plugins: [
       replace({
         delimiters: ['', ''],
@@ -256,6 +257,7 @@ async function umdCore() {
 
 async function buildJs(cb) {
   const config = getConfig();
+  const env = process.env.NODE_ENV || 'development';
 
   const components = [];
   config.components.forEach((name) => {
@@ -278,11 +280,13 @@ async function buildJs(cb) {
     }
   });
 
-  await modular({ components, format: 'cjs' });
-  await modular({ components, format: 'esm' });
+  if (!process.env.CORE_BUILD_ONLY_UMD) {
+    await modular({ components, format: 'cjs' });
+    await modular({ components, format: 'esm' });
+  }
 
-  if (!process.env.CORE_BUILD_MODULES) {
-    await umdCore();
+  if (!process.env.CORE_BUILD_ONLY_MODULES) {
+    if (env !== 'development') await umdCore();
     await umdBundle({ components });
   }
 
