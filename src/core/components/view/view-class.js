@@ -195,6 +195,10 @@ class View extends Framework7Class {
       selector,
     });
 
+    if (view.main) {
+      app.views.main = view;
+    }
+
     // Save in DOM
     if ($el && $el[0]) {
       $el[0].f7View = view;
