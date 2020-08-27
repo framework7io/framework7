@@ -4,7 +4,7 @@
 
 # [v5.7.11](https://github.com/framework7io/framework7/compare/v5.7.10...v5.7.11) - August 17, 2020
   * Core
-    * Gauage
+    * Gauge
       * Fixed issue when gauge text wasn't appear on update
     * Router Component
       * Fixed issue when empty `value` attribute was removed on `<option>` element
