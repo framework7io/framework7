@@ -126,7 +126,8 @@ class PieChart extends Framework7Class {
     const { tooltip, datasets } = params;
     if (currentIndex === null && !self.f7Tooltip) return;
     if (!tooltip || !el) return;
-    self.emit('local::select selfSelect', self, currentIndex, datasets[currentIndex]);
+    self.$el.trigger('piechart:select', { index: currentIndex, dataset: datasets[currentIndex] });
+    self.emit('local::select pieChartSelect', self, currentIndex, datasets[currentIndex]);
     if (currentIndex !== null && !self.f7Tooltip) {
       self.f7Tooltip = app.tooltip.create({
         trigger: 'manual',
@@ -231,7 +232,7 @@ class PieChart extends Framework7Class {
     const self = this;
     if (!self.$el || self.destroyed) return;
     self.$el.trigger('piechart:beforedestroy');
-    self.emit('local::beforeDestroy selfBeforeDestroy', self);
+    self.emit('local::beforeDestroy pieChartBeforeDestroy', self);
     self.$el.off('click mouseenter', 'path', self.showTooltip, true);
     self.$el.off('mouseleave', 'path', self.hideTooltip, true);
     self.$svgEl.remove();

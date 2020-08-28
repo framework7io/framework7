@@ -7,7 +7,7 @@ import { f7 } from '../shared/f7';
   className?: string;
   style?: React.CSSProperties;
   lineChart?: boolean;
-  datasets?: {values: number[]; color: string; label?: any}[];
+  datasets?: {values: number[]; color?: string; label?: any}[];
   axis?: boolean;
   axisLabels?: any[];
   tooltip?: boolean;

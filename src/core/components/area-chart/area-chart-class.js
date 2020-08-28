@@ -248,6 +248,7 @@ class AreaChart extends Framework7Class {
       if (self.f7Tooltip && self.f7Tooltip.hide) self.f7Tooltip.hide();
       return;
     }
+    self.$el.trigger('areachart:select', { index: currentIndex });
     self.emit('local::select areaChartSelect', self, currentIndex);
     if (currentIndex !== null && !self.f7Tooltip) {
       self.f7Tooltip = app.tooltip.create({
