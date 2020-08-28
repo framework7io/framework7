@@ -7,7 +7,7 @@ export default {
   params: {
     pieChart: {
       el: null,
-      dataset: [],
+      datasets: [],
       size: 320,
       tooltip: false,
       formatTooltip: null,

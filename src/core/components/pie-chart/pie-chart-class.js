@@ -6,24 +6,24 @@ class PieChart extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
 
-    const pieChart = this;
+    const self = this;
 
     const defaults = extend({}, app.params.pieChart);
 
     // Extend defaults with modules params
-    pieChart.useModulesParams(defaults);
+    self.useModulesParams(defaults);
 
-    pieChart.params = extend(defaults, params);
+    self.params = extend(defaults, params);
 
-    const { el } = pieChart.params;
-    if (!el) return pieChart;
+    const { el } = self.params;
+    if (!el) return self;
 
     const $el = $(el);
-    if ($el.length === 0) return pieChart;
+    if ($el.length === 0) return self;
 
     if ($el[0].f7PieChart) return $el[0].f7PieChart;
 
-    extend(pieChart, {
+    extend(self, {
       app,
       $el,
       el: $el && $el[0],
@@ -31,23 +31,23 @@ class PieChart extends Framework7Class {
       f7Tooltip: null,
     });
 
-    $el[0].f7PieChart = pieChart;
+    $el[0].f7PieChart = self;
 
     // Install Modules
-    pieChart.useModules();
+    self.useModules();
 
-    pieChart.showTooltip = pieChart.showTooltip.bind(this);
-    pieChart.hideTooltip = pieChart.hideTooltip.bind(this);
+    self.showTooltip = self.showTooltip.bind(this);
+    self.hideTooltip = self.hideTooltip.bind(this);
 
-    pieChart.init();
+    self.init();
 
-    return pieChart;
+    return self;
   }
 
   getSummValue() {
-    const { dataset } = this.params;
+    const { datasets } = this.params;
     let summ = 0;
-    dataset
+    datasets
       .map((d) => d.value || 0)
       .forEach((value) => {
         summ += value;
@@ -56,7 +56,7 @@ class PieChart extends Framework7Class {
   }
 
   getPaths() {
-    const { dataset, size } = this.params;
+    const { datasets, size } = this.params;
     const paths = [];
 
     let cumulativePercentage = 0;
@@ -67,7 +67,7 @@ class PieChart extends Framework7Class {
       return [x, y];
     }
 
-    dataset.forEach(({ value, label, color }) => {
+    datasets.forEach(({ value, label, color }) => {
       const percentage = value / this.getSummValue();
 
       const [startX, startY] = getCoordinatesForPercentage(cumulativePercentage);
@@ -90,10 +90,10 @@ class PieChart extends Framework7Class {
   }
 
   formatTooltipText() {
-    const { dataset } = this.params;
+    const { datasets } = this.params;
     const { currentIndex } = this;
     if (currentIndex === null) return '';
-    const { value, label, color } = dataset[currentIndex];
+    const { value, label, color } = datasets[currentIndex];
     const percentage = (value / this.getSummValue()) * 100;
 
     const round = (v) => {
@@ -121,41 +121,41 @@ class PieChart extends Framework7Class {
   }
 
   setTooltip() {
-    const pieChart = this;
-    const { currentIndex, el, app, params } = pieChart;
-    const { tooltip, dataset } = params;
-    if (currentIndex === null && !pieChart.f7Tooltip) return;
+    const self = this;
+    const { currentIndex, el, app, params } = self;
+    const { tooltip, datasets } = params;
+    if (currentIndex === null && !self.f7Tooltip) return;
     if (!tooltip || !el) return;
-    pieChart.emit('local::select pieChartSelect', pieChart, currentIndex, dataset[currentIndex]);
-    if (currentIndex !== null && !pieChart.f7Tooltip) {
-      pieChart.f7Tooltip = app.tooltip.create({
+    self.emit('local::select selfSelect', self, currentIndex, datasets[currentIndex]);
+    if (currentIndex !== null && !self.f7Tooltip) {
+      self.f7Tooltip = app.tooltip.create({
         trigger: 'manual',
         containerEl: el,
         targetEl: el.querySelector(`path[data-index="${currentIndex}"]`),
-        text: pieChart.formatTooltipText(),
+        text: self.formatTooltipText(),
         cssClass: 'pie-chart-tooltip',
       });
-      pieChart.f7Tooltip.show();
+      self.f7Tooltip.show();
       return;
     }
-    if (!pieChart.f7Tooltip) return;
+    if (!self.f7Tooltip) return;
     if (currentIndex !== null) {
-      pieChart.f7Tooltip.setText(pieChart.formatTooltipText());
-      pieChart.f7Tooltip.targetEl = el.querySelector(`path[data-index="${currentIndex}"]`);
-      pieChart.f7Tooltip.$targetEl = pieChart.f7Tooltip.app.$(
+      self.f7Tooltip.setText(self.formatTooltipText());
+      self.f7Tooltip.targetEl = el.querySelector(`path[data-index="${currentIndex}"]`);
+      self.f7Tooltip.$targetEl = self.f7Tooltip.app.$(
         el.querySelector(`path[data-index="${currentIndex}"]`),
       );
 
-      pieChart.f7Tooltip.show();
+      self.f7Tooltip.show();
     } else {
-      pieChart.f7Tooltip.hide();
+      self.f7Tooltip.hide();
     }
   }
 
   render() {
-    const pieChart = this;
-    const size = pieChart.params.size;
-    const paths = pieChart.getPaths();
+    const self = this;
+    const size = self.params.size;
+    const paths = self.getPaths();
     // prettier-ignore
     return `
       <svg
@@ -176,24 +176,24 @@ class PieChart extends Framework7Class {
   }
 
   update(newParams = {}) {
-    const pieChart = this;
-    const { params } = pieChart;
+    const self = this;
+    const { params } = self;
     Object.keys(newParams).forEach((param) => {
       if (typeof newParams[param] !== 'undefined') {
         params[param] = newParams[param];
       }
     });
-    if (pieChart.$svgEl.length === 0) return pieChart;
-    pieChart.$svgEl.remove();
-    delete pieChart.$svgEl.f7PieChart;
-    const $svgEl = $(pieChart.render()).eq(0);
-    $svgEl.f7PieChart = pieChart;
-    extend(pieChart, {
+    if (self.$svgEl.length === 0) return self;
+    self.$svgEl.remove();
+    delete self.$svgEl.f7PieChart;
+    const $svgEl = $(self.render()).eq(0);
+    $svgEl.f7PieChart = self;
+    extend(self, {
       $svgEl,
       svgEl: $svgEl && $svgEl[0],
     });
-    pieChart.$el.append($svgEl);
-    return pieChart;
+    self.$el.append($svgEl);
+    return self;
   }
 
   showTooltip(e) {
@@ -214,30 +214,30 @@ class PieChart extends Framework7Class {
   }
 
   init() {
-    const pieChart = this;
-    const $svgEl = $(pieChart.render()).eq(0);
-    $svgEl.f7PieChart = pieChart;
-    extend(pieChart, {
+    const self = this;
+    const $svgEl = $(self.render()).eq(0);
+    $svgEl.f7PieChart = self;
+    extend(self, {
       $svgEl,
       svgEl: $svgEl && $svgEl[0],
     });
-    pieChart.$el.append($svgEl);
-    pieChart.$el.on('click mouseenter', 'path', pieChart.showTooltip, true);
-    pieChart.$el.on('mouseleave', 'path', pieChart.hideTooltip, true);
-    return pieChart;
+    self.$el.append($svgEl);
+    self.$el.on('click mouseenter', 'path', self.showTooltip, true);
+    self.$el.on('mouseleave', 'path', self.hideTooltip, true);
+    return self;
   }
 
   destroy() {
-    const pieChart = this;
-    if (!pieChart.$el || pieChart.destroyed) return;
-    pieChart.$el.trigger('piechart:beforedestroy');
-    pieChart.emit('local::beforeDestroy pieChartBeforeDestroy', pieChart);
-    pieChart.$el.off('click mouseenter', 'path', pieChart.showTooltip, true);
-    pieChart.$el.off('mouseleave', 'path', pieChart.hideTooltip, true);
-    pieChart.$svgEl.remove();
-    delete pieChart.$el[0].f7PieChart;
-    deleteProps(pieChart);
-    pieChart.destroyed = true;
+    const self = this;
+    if (!self.$el || self.destroyed) return;
+    self.$el.trigger('piechart:beforedestroy');
+    self.emit('local::beforeDestroy selfBeforeDestroy', self);
+    self.$el.off('click mouseenter', 'path', self.showTooltip, true);
+    self.$el.off('mouseleave', 'path', self.hideTooltip, true);
+    self.$svgEl.remove();
+    delete self.$el[0].f7PieChart;
+    deleteProps(self);
+    self.destroyed = true;
   }
 }
 

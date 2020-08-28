@@ -7,13 +7,13 @@ import { f7 } from '../shared/f7';
   className?: string;
   style?: React.CSSProperties;
   tooltip?: boolean;
-  dataset?: {value?: number; color?: string; label?: string}[];
+  datasets?: {value: number; color: string; label?: string}[];
   formatTooltip?: (data: {index: number; value: number; label: string; color: string; percentage: number}) => void;
-  onSelect? : (index: number; item: {value: number; label: string; color: string}) => void
+  onSelect? : (index: number | null; item: {value: number; label: string; color: string}) => void
 */
 
 const PieChart = forwardRef((props, ref) => {
-  const { className, id, style, size = 320, tooltip = false, dataset = [], formatTooltip } = props;
+  const { className, id, style, size = 320, tooltip = false, datasets = [], formatTooltip } = props;
 
   const extraAttrs = getExtraAttrs(props);
 
@@ -27,7 +27,7 @@ const PieChart = forwardRef((props, ref) => {
 
   const getSummValue = () => {
     let summ = 0;
-    dataset
+    datasets
       .map((d) => d.value || 0)
       .forEach((value) => {
         summ += value;
@@ -46,7 +46,7 @@ const PieChart = forwardRef((props, ref) => {
       return [x, y];
     }
 
-    dataset.forEach(({ value, label, color }) => {
+    datasets.forEach(({ value, label, color }) => {
       const percentage = value / getSummValue();
 
       const [startX, startY] = getCoordinatesForPercentage(cumulativePercentage);
@@ -70,7 +70,7 @@ const PieChart = forwardRef((props, ref) => {
 
   const formatTooltipText = () => {
     if (currentIndex === null) return '';
-    const { value, label, color } = dataset[currentIndex];
+    const { value, label, color } = datasets[currentIndex];
     const percentage = (value / getSummValue()) * 100;
 
     const round = (v) => {
@@ -100,7 +100,7 @@ const PieChart = forwardRef((props, ref) => {
   const setTooltip = () => {
     if (currentIndex === null && !f7Tooltip.current) return;
     if (!tooltip || !elRef.current || !f7) return;
-    emit(props, 'select', currentIndex, dataset[currentIndex]);
+    emit(props, 'select', currentIndex, datasets[currentIndex]);
     if (currentIndex !== null && !f7Tooltip.current) {
       f7Tooltip.current = f7.tooltip.create({
         trigger: 'manual',
@@ -118,7 +118,7 @@ const PieChart = forwardRef((props, ref) => {
       f7Tooltip.current.targetEl = elRef.current.querySelector(
         `path[data-index="${currentIndex}"]`,
       );
-      f7Tooltip.current.$targetEl = f7Tooltip.current.app.$(
+      f7Tooltip.current.$targetEl = f7.$(
         elRef.current.querySelector(`path[data-index="${currentIndex}"]`),
       );
 
