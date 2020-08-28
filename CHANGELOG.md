@@ -34,6 +34,15 @@
     - CSS vars renamed without `--f7-` prefix
   - View/Router
     - `pushState...` parameters renamed to `browserHistory...`
+  - Tooltip
+    - New `containerEl` property
+    - New `trigger: 'manual'` value
+  - Pie Chart
+    - All new Pie Chart component
+  - Area Chart
+    - All new Area Chart component
+  - Gauge
+    - Renamed `$gaugeSvgEl` property to `$svgEl`
 - React
   - `App` component now receives all app parameters as props
   - New ref's object
@@ -247,9 +256,7 @@
   - Modals (Popup, Actions, Popover, Login Screen, etc.)
     - Now it is possible to specify all modal parameters via `data-` attributes, e.g.
       ```html
-      <div class="sheet-modal" data-swipe-to-close="true" data-close-on-escape="true">
-        ...
-      </div>
+      <div class="sheet-modal" data-swipe-to-close="true" data-close-on-escape="true">...</div>
       ```
   - Swiper - updated to latest 5.3.7
     - Core
@@ -740,27 +747,21 @@
     ```html
     <div class="navbar">
       <div class="navbar-bg"></div>
-      <div class="navbar-inner">
-        ...
-      </div>
+      <div class="navbar-inner">...</div>
     </div>
     ```
   - Large Navbar should now have addition `navbar-large` class on navbar itself (instead of `navbar-large-inner` on `navbar-inner`):
     ```html
     <div class="navbar navbar-large">
       <div class="navbar-bg"></div>
-      <div class="navbar-inner">
-        ...
-      </div>
+      <div class="navbar-inner">...</div>
     </div>
     ```
   - New large transparent Navbar (like in iOS 13), can enabled with additional `navbar-large-transparent` class:
     ```html
     <div class="navbar navbar-large navbar-large-transparent">
       <div class="navbar-bg"></div>
-      <div class="navbar-inner">
-        ...
-      </div>
+      <div class="navbar-inner">...</div>
     </div>
     ```
 - **Panel**
