@@ -118,6 +118,9 @@ const config = {
     // Pie Chart
     'pie-chart',
 
+    // Area Chart
+    'area-chart',
+
     // Elevation
     'elevation',
 
