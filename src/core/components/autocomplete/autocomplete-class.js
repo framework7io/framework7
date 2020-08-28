@@ -11,6 +11,7 @@ import {
 } from '../../shared/utils';
 import { getDevice } from '../../shared/get-device';
 import Framework7Class from '../../shared/class';
+import { div, ul, li, a, icon, span, form, input, label } from '../../shared/render';
 
 class Autocomplete extends Framework7Class {
   constructor(app, params = {}) {
@@ -149,14 +150,14 @@ class Autocomplete extends Framework7Class {
       });
     }
     function onPageInputChange() {
-      const input = this;
-      const value = input.value;
-      const isValues = $(input).parents('.autocomplete-values').length > 0;
+      const inputEl = this;
+      const value = inputEl.value;
+      const isValues = $(inputEl).parents('.autocomplete-values').length > 0;
       let item;
       let itemValue;
       let aValue;
       if (isValues) {
-        if (ac.inputType === 'checkbox' && !input.checked) {
+        if (ac.inputType === 'checkbox' && !inputEl.checked) {
           for (let i = 0; i < ac.value.length; i += 1) {
             aValue =
               typeof ac.value[i] === 'string' ? ac.value[i] : ac.value[i][ac.params.valueProperty];
@@ -178,7 +179,7 @@ class Autocomplete extends Framework7Class {
       }
       if (ac.inputType === 'radio') {
         ac.value = [item];
-      } else if (input.checked) {
+      } else if (inputEl.checked) {
         ac.value.push(item);
       } else {
         for (let i = 0; i < ac.value.length; i += 1) {
@@ -194,7 +195,7 @@ class Autocomplete extends Framework7Class {
       ac.updateValues();
 
       // On Select Callback
-      if ((ac.inputType === 'radio' && input.checked) || ac.inputType === 'checkbox') {
+      if ((ac.inputType === 'radio' && inputEl.checked) || ac.inputType === 'checkbox') {
         ac.emit('local::change autocompleteChange', ac.value);
       }
     }
@@ -512,80 +513,87 @@ class Autocomplete extends Framework7Class {
       mdPreloaderContent,
       auroraPreloaderContent,
     };
+
     // prettier-ignore
-    return `
-      <div class="autocomplete-preloader preloader ${ac.params.preloaderColor ? `color-${ac.params.preloaderColor}` : ''}">${preloaders[`${ac.app.theme}PreloaderContent`] || ''}</div>
-    `.trim();
+    return div(`autocomplete-preloader preloader ${ac.params.preloaderColor ? `color-${ac.params.preloaderColor}` : ''}`, [
+      preloaders[`${ac.app.theme}PreloaderContent`] || ''
+    ])
   }
 
   renderSearchbar() {
     const ac = this;
     if (ac.params.renderSearchbar) return ac.params.renderSearchbar.call(ac);
-    // prettier-ignore
-    const searchbarHTML = `
-      <form class="searchbar">
-        <div class="searchbar-inner">
-          <div class="searchbar-input-wrap">
-            <input type="search" spellcheck="${ac.params.searchbarSpellcheck || 'false'}" placeholder="${ac.params.searchbarPlaceholder}"/>
-            <i class="searchbar-icon"></i>
-            <span class="input-clear-button"></span>
-          </div>
-          ${ac.params.searchbarDisableButton ? `
-          <span class="searchbar-disable-button">${ac.params.searchbarDisableText}</span>
-          ` : ''}
-        </div>
-      </form>
-    `.trim();
-    return searchbarHTML;
+
+    return form('searchbar', [
+      div('searchbar-inner', [
+        div('searchbar-input-wrap', [
+          input({
+            type: 'search',
+            spellcheck: ac.params.searchbarSpellcheck || 'false',
+            placeholder: ac.params.searchbarPlaceholder,
+          }),
+          icon('searchbar-icon'),
+          span('input-clear-button'),
+        ]),
+        ac.params.searchbarDisableButton
+          ? span('searchbar-disable-button', [ac.params.searchbarDisableText])
+          : '',
+      ]),
+    ]);
   }
 
   renderItem(item, index) {
     const ac = this;
     if (ac.params.renderItem) return ac.params.renderItem.call(ac, item, index);
-    let itemHtml;
+
     const itemValue =
       item.value && typeof item.value === 'string'
         ? item.value.replace(/"/g, '&quot;')
         : item.value;
     if (ac.params.openIn !== 'dropdown') {
       // prettier-ignore
-      itemHtml = `
-        <li>
-          <label class="item-${item.inputType} item-content">
-            <input type="${item.inputType}" name="${item.inputName}" value="${itemValue}" ${item.selected ? 'checked' : ''}>
-            <i class="icon icon-${item.inputType}"></i>
-            <div class="item-inner">
-              <div class="item-title">${item.text}</div>
-            </div>
-          </label>
-        </li>
-      `;
-    } else if (!item.placeholder) {
-      // Dropdown
-      // prettier-ignore
-      itemHtml = `
-        <li>
-          <label class="item-radio item-content" data-value="${itemValue}">
-            <div class="item-inner">
-              <div class="item-title">${item.text}</div>
-            </div>
-          </label>
-        </li>
-      `;
-    } else {
-      // Dropwdown placeholder
-      // prettier-ignore
-      itemHtml = `
-        <li class="autocomplete-dropdown-placeholder">
-          <label class="item-content">
-            <div class="item-inner">
-              <div class="item-title">${item.text}</div>
-            </div>
-          </label>
-        </li>
-      `;
+      return li([
+        label(`item-${item.inputType} item-content`,[
+          input({
+            type: item.inputType,
+            name: item.inputName,
+            value: itemValue,
+            _checked: item.selected,
+          }),
+          icon(`icon icon-${item.inputType}`),
+          div('item-inner', [
+            div('item-title', [
+              item.text
+            ])
+          ])
+        ])
+      ]);
     }
-    return itemHtml.trim();
+    // Dropdown
+    if (!item.placeholder) {
+      // prettier-ignore
+      return li([
+        label(`item-radio item-content" data-value="${itemValue}`, [
+          div('item-inner', [
+            div('item-title', [
+              item.text
+            ])
+          ])
+        ])
+      ]);
+    }
+
+    // Dropwdown placeholder
+    // prettier-ignore
+    return li('autocomplete-dropdown-placeholder', [
+      label('item-content', [
+        div('item-inner', [
+          div('item-title', [
+            item.text
+          ])
+        ])
+      ])
+    ])
   }
 
   renderNavbar() {
@@ -596,69 +604,50 @@ class Autocomplete extends Framework7Class {
       pageTitle = ac.$openerEl.find('.item-title').text().trim();
     }
     const inPopup = ac.params.openIn === 'popup';
+
     // prettier-ignore
+    // eslint-disable-next-line
     const navbarLeft = inPopup
-      ? `
-        ${ac.params.preloader ? `
-        <div class="left">
-          ${ac.renderPreloader()}
-        </div>
-        ` : ''}
-      `
-      : `
-        <div class="left sliding">
-          <a class="link back">
-            <i class="icon icon-back"></i>
-            <span class="if-not-md">${ac.params.pageBackLinkText}</span>
-          </a>
-        </div>
-      `;
+      ? (ac.params.preloader ? div('left', [ac.renderPreloader()]) : '')
+      : div('left sliding',[
+          a('link back', [
+            icon('icon icon-back'),
+            span('if-not-md', [ac.params.pageBackLinkText])
+          ])
+        ])
+
     // prettier-ignore
+    // eslint-disable-next-line
     const navbarRight = inPopup
-      ? `
-        <div class="right">
-          <a class="link popup-close" data-popup=".autocomplete-popup">
-            ${ac.params.popupCloseLinkText}
-          </a>
-        </div>
-      `
-      : `
-        ${ac.params.preloader ? `
-        <div class="right">
-          ${ac.renderPreloader()}
-        </div>
-        ` : ''}
-      `;
+      ? div('right', [
+          a('link popup-close', {'data-popup': '.autocomplete-popup'}, [
+            ac.params.popupCloseLinkText
+          ])
+        ])
+      : (ac.params.preloader ? div('right', [ac.renderPreloader()]) : '')
+
     // prettier-ignore
-    const navbarHtml = `
-      <div class="navbar ${ac.params.navbarColorTheme ? `color-${ac.params.navbarColorTheme}` : ''}">
-        <div class="navbar-bg"></div>
-        <div class="navbar-inner ${ac.params.navbarColorTheme ? `color-${ac.params.navbarColorTheme}` : ''}">
-          ${navbarLeft}
-          ${pageTitle ? `<div class="title sliding">${pageTitle}</div>` : ''}
-          ${navbarRight}
-          <div class="subnavbar sliding">${ac.renderSearchbar()}</div>
-        </div>
-      </div>
-    `.trim();
-    return navbarHtml;
+    return div(`navbar ${ac.params.navbarColorTheme ? `color-${ac.params.navbarColorTheme}` : ''}`, [
+      div('navbar-bg'),
+      div(`navbar-inner ${ac.params.navbarColorTheme ? `color-${ac.params.navbarColorTheme}` : ''}`, [
+        navbarLeft,
+        pageTitle ? div('title sliding',[pageTitle]) : '',
+        navbarRight,
+        div('subnavbar sliding', [ac.renderSearchbar()])
+      ])
+    ]);
   }
 
   renderDropdown() {
     const ac = this;
     if (ac.params.renderDropdown) return ac.params.renderDropdown.call(ac, ac.items);
-    // prettier-ignore
-    const dropdownHtml = `
-      <div class="autocomplete-dropdown">
-        <div class="autocomplete-dropdown-inner">
-          <div class="list ${!ac.params.expandInput ? 'no-safe-areas' : ''}">
-            <ul></ul>
-          </div>
-        </div>
-        ${ac.params.preloader ? ac.renderPreloader() : ''}
-      </div>
-    `.trim();
-    return dropdownHtml;
+
+    return div('autocomplete-dropdown', [
+      div('autocomplete-dropdown-inner', [
+        div(`list ${!ac.params.expandInput ? 'no-safe-areas' : ''}`, [ul()]),
+      ]),
+      ac.params.preloader ? ac.renderPreloader() : '',
+    ]);
   }
 
   renderPage(inPopup) {
@@ -666,40 +655,41 @@ class Autocomplete extends Framework7Class {
     if (ac.params.renderPage) return ac.params.renderPage.call(ac, ac.items);
 
     // prettier-ignore
-    const pageHtml = `
-      <div class="page page-with-subnavbar autocomplete-page" data-name="autocomplete-page">
-        ${ac.renderNavbar(inPopup)}
-        <div class="searchbar-backdrop"></div>
-        <div class="page-content">
-          <div class="list autocomplete-list autocomplete-found autocomplete-list-${ac.id} ${ac.params.formColorTheme ? `color-${ac.params.formColorTheme}` : ''}">
-            <ul></ul>
-          </div>
-          <div class="list autocomplete-not-found">
-            <ul>
-              <li class="item-content"><div class="item-inner"><div class="item-title">${ac.params.notFoundText}</div></div></li>
-            </ul>
-          </div>
-          <div class="list autocomplete-values">
-            <ul></ul>
-          </div>
-        </div>
-      </div>
-    `.trim();
-    return pageHtml;
+    return div(
+      'page page-with-subnavbar autocomplete-page',
+      { 'data-name': 'autocomplete-page' },
+      [
+        ac.renderNavbar(inPopup),
+        div('searchbar-backdrop'),
+        div('page-content', [
+          div(
+            `list autocomplete-list autocomplete-found autocomplete-list-${ac.id} ${
+              ac.params.formColorTheme ? `color-${ac.params.formColorTheme}` : ''
+            }`,
+            [ul()],
+          ),
+          div('list autocomplete-not-found', [
+            ul([
+              li('item-content', [
+                div('item-inner', [div('item-title', [ac.params.notFoundText])]),
+              ]),
+            ]),
+          ]),
+          div('list autocomplete-values', [ul()]),
+        ]),
+      ],
+    );
   }
 
   renderPopup() {
     const ac = this;
     if (ac.params.renderPopup) return ac.params.renderPopup.call(ac, ac.items);
     // prettier-ignore
-    const popupHtml = `
-      <div class="popup autocomplete-popup">
-        <div class="view">
-          ${ac.renderPage(true)};
-        </div>
-      </div>
-    `.trim();
-    return popupHtml;
+    return div('popup autocomplete-popup', [
+      div('view', [
+        ac.renderPage(true)
+      ])
+    ])
   }
 
   onOpen(type, el) {
