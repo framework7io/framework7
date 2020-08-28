@@ -10,7 +10,7 @@ const { default: babel } = require('@rollup/plugin-babel');
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
 const replace = require('@rollup/plugin-replace');
-const Terser = require('terser');
+const { minify } = require('terser');
 const less = require('./utils/less');
 const autoprefixer = require('./utils/autoprefixer');
 const cleanCSS = require('./utils/clean-css');
@@ -136,6 +136,7 @@ function buildLazyComponentsJs(components, cb) {
   });
 
   rollup({
+    treeshake: false,
     input: componentsToProcess.map(
       (component) => `./src/core/components/${component}/${component}.js`,
     ),
@@ -200,7 +201,7 @@ function buildLazyComponentsJs(components, cb) {
       }
 
       let cbs = 0;
-      filesToProcess.forEach((fileName) => {
+      filesToProcess.forEach(async (fileName) => {
         let fileIntro = intro;
         let fileContent = fs
           .readFileSync(`${output}/components/${fileName}`)
@@ -240,7 +241,7 @@ function buildLazyComponentsJs(components, cb) {
           return install.replace(/COMPONENT/g, name);
         });
 
-        fileContent = Terser.minify(fileContent).code;
+        fileContent = (await minify(fileContent)).code;
         fileContent = `(${fileContent}(Framework7, typeof Framework7AutoInstallComponent === 'undefined' ? undefined : Framework7AutoInstallComponent))`;
 
         fs.writeFileSync(

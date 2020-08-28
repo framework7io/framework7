@@ -8,7 +8,7 @@ const { rollup } = require('rollup');
 const replace = require('@rollup/plugin-replace');
 const { default: babel } = require('@rollup/plugin-babel');
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
-const Terser = require('terser');
+const { minify } = require('terser');
 const commonjs = require('@rollup/plugin-commonjs');
 const getConfig = require('./get-core-config.js');
 const banner = require('./banners/core.js');
@@ -22,7 +22,7 @@ async function modular({ components, format }) {
     `MODULES=${format} npx babel src/core --out-dir ${outputDir}/${format} --ignore "src/core/icons/**/*.*","src/core/less/*.js","src/core/*.js"`,
   );
   const removeUMD = (content) => {
-    return `${content.split('// UMD_ONLY_START')[0]}${content.split('// UMD_ONLY_END')[1]}`;
+    return `${content.split('// UMD_ONLY_START')[0]}${content.split('// UMD_ONLY_END')[1] || ''}`;
   };
   const coreSrc = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.js'), 'utf-8');
   const liteSrc = fs.readFileSync(
@@ -46,10 +46,19 @@ async function modular({ components, format }) {
       );
   };
   const bundleComponents = (content, isLite) => {
+    const comps = [...components];
+    if (isLite) {
+      const exclude = ['gauge', 'area-chart', 'pie-chart'];
+      for (let i = comps.length - 1; i >= 0; i -= 1) {
+        if (exclude.includes(comps[i].name)) {
+          comps.splice(i, 1);
+        }
+      }
+    }
     return removeUMD(content)
       .replace(
         '//IMPORT_COMPONENTS',
-        components
+        comps
           .map(
             (component) =>
               `import ${component.capitalized} from './components/${component.name}/${component.name}';`,
@@ -58,7 +67,7 @@ async function modular({ components, format }) {
       )
       .replace(
         '//INSTALL_COMPONENTS',
-        components.map((component) => component.capitalized).join(',\n  '),
+        comps.map((component) => component.capitalized).join(',\n  '),
       )
       .replace(
         '//IMPORT_HELPERS',
@@ -166,12 +175,12 @@ async function umdBundle({ components } = {}) {
         banner,
       });
     })
-    .then((bundle) => {
+    .then(async (bundle) => {
       if (env === 'development') {
         return;
       }
       const result = bundle.output[0];
-      const minified = Terser.minify(result.code, {
+      const minified = await minify(result.code, {
         sourceMap: {
           content: env === 'development' ? result.map : undefined,
           filename: env === 'development' ? undefined : `framework7-bundle.min.js`,
@@ -232,12 +241,12 @@ async function umdCore() {
         banner,
       });
     })
-    .then((bundle) => {
+    .then(async (bundle) => {
       if (env === 'development') {
         return;
       }
       const result = bundle.output[0];
-      const minified = Terser.minify(result.code, {
+      const minified = await minify(result.code, {
         sourceMap: {
           filename: `framework7.min.js`,
           url: `framework7.min.js.map`,

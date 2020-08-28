@@ -7,7 +7,7 @@ const rollup = require('rollup');
 const buble = require('@rollup/plugin-buble');
 const replace = require('@rollup/plugin-replace');
 
-const Terser = require('terser');
+const { minify } = require('terser');
 const bannerVue = require('./banners/vue');
 const getOutput = require('./get-output');
 const fs = require('./utils/fs-extra');
@@ -125,13 +125,13 @@ function buildVue(cb) {
         banner: bannerVue,
       }),
     )
-    .then((bundle) => {
+    .then(async (bundle) => {
       if (env === 'development') {
         if (cb) cb();
         return;
       }
       const result = bundle.output[0];
-      const minified = Terser.minify(result.code, {
+      const minified = await minify(result.code, {
         sourceMap: {
           filename: 'framework7-vue.bundle.min.js',
           url: 'framework7-vue.bundle.min.js.map',
