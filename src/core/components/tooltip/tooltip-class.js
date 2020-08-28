@@ -149,7 +149,8 @@ class Tooltip extends Framework7Class {
 
   position(targetEl) {
     const tooltip = this;
-    const { $el, app } = tooltip;
+    const { $el, app, $containerEl } = tooltip;
+    const hasContainerEl = !!tooltip.params.containerEl;
     const tooltipOffset = tooltip.params.offset || 0;
     $el.css({ left: '', top: '' });
     const $targetEl = $(targetEl || tooltip.targetEl);
@@ -161,6 +162,10 @@ class Tooltip extends Framework7Class {
     let targetHeight;
     let targetOffsetLeft;
     let targetOffsetTop;
+
+    const boundaries =
+      hasContainerEl && $containerEl.length ? $containerEl[0].getBoundingClientRect() : app;
+
     if ($targetEl && $targetEl.length > 0) {
       targetWidth = $targetEl.outerWidth();
       targetHeight = $targetEl.outerHeight();
@@ -171,8 +176,8 @@ class Tooltip extends Framework7Class {
       }
 
       const targetOffset = $targetEl.offset();
-      targetOffsetLeft = targetOffset.left - app.left;
-      targetOffsetTop = targetOffset.top - app.top;
+      targetOffsetLeft = targetOffset.left - boundaries.left;
+      targetOffsetTop = targetOffset.top - boundaries.top;
 
       const targetParentPage = $targetEl.parents('.page');
       if (targetParentPage.length > 0) {
@@ -187,7 +192,7 @@ class Tooltip extends Framework7Class {
     if (height + tooltipOffset < targetOffsetTop) {
       // On top
       top = targetOffsetTop - height - tooltipOffset;
-    } else if (height < app.height - targetOffsetTop - targetHeight) {
+    } else if (height < boundaries.height - targetOffsetTop - targetHeight) {
       // On bottom
       position = 'bottom';
       top = targetOffsetTop + targetHeight + tooltipOffset;
@@ -197,8 +202,8 @@ class Tooltip extends Framework7Class {
       top = targetHeight / 2 + targetOffsetTop - height / 2;
       if (top <= 0) {
         top = 8;
-      } else if (top + height >= app.height) {
-        top = app.height - height - 8;
+      } else if (top + height >= boundaries.height) {
+        top = boundaries.height - height - 8;
       }
     }
 
@@ -206,13 +211,13 @@ class Tooltip extends Framework7Class {
     if (position === 'top' || position === 'bottom') {
       left = targetWidth / 2 + targetOffsetLeft - width / 2;
       if (left < 8) left = 8;
-      if (left + width > app.width) left = app.width - width - 8;
+      if (left + width > boundaries.width) left = boundaries.width - width - 8;
       if (left < 0) left = 0;
     } else if (position === 'middle') {
       left = targetOffsetLeft - width;
-      if (left < 8 || left + width > app.width) {
+      if (left < 8 || left + width > boundaries.width) {
         if (left < 8) left = targetOffsetLeft + targetWidth;
-        if (left + width > app.width) left = app.width - width - 8;
+        if (left + width > boundaries.width) left = boundaries.width - width - 8;
       }
     }
 
