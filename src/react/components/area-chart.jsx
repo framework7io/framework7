@@ -72,7 +72,7 @@ const AreaChart = forwardRef((props, ref) => {
   const getSummValues = () => {
     const summValues = [];
     datasets
-      .filter((dataset) => !hiddenDatasets.includes(dataset.label))
+      .filter((dataset, index) => !hiddenDatasets.includes(index))
       .forEach(({ values }) => {
         values.forEach((value, valueIndex) => {
           if (!summValues[valueIndex]) summValues[valueIndex] = 0;
@@ -99,7 +99,7 @@ const AreaChart = forwardRef((props, ref) => {
     }
 
     datasets
-      .filter((dataset) => !hiddenDatasets.includes(dataset.label))
+      .filter((dataset, index) => !hiddenDatasets.includes(index))
       .forEach(({ label, values, color }) => {
         const points = values.map((originalValue, valueIndex) => {
           lastValues[valueIndex] += originalValue;
@@ -137,12 +137,12 @@ const AreaChart = forwardRef((props, ref) => {
     return lines;
   };
 
-  const toggleDataset = (label) => {
+  const toggleDataset = (index) => {
     if (!toggleDatasets) return;
-    if (hiddenDatasets.includes(label)) {
-      hiddenDatasets.splice(hiddenDatasets.indexOf(label), 1);
+    if (hiddenDatasets.includes(index)) {
+      hiddenDatasets.splice(hiddenDatasets.indexOf(index), 1);
     } else {
-      hiddenDatasets.push(label);
+      hiddenDatasets.push(index);
     }
     setHiddenDatasets([...hiddenDatasets]);
   };
@@ -169,7 +169,7 @@ const AreaChart = forwardRef((props, ref) => {
     if (currentIndex === null) return '';
     let total = 0;
     const currentValues = datasets
-      .filter((dataset) => !hiddenDatasets.includes(dataset.label))
+      .filter((dataset, index) => !hiddenDatasets.includes(index))
       .map((dataset) => ({
         color: dataset.color,
         label: dataset.label,
@@ -213,7 +213,7 @@ const AreaChart = forwardRef((props, ref) => {
   const setTooltip = () => {
     if (!tooltip) return;
     const hasVisibleDataSets =
-      datasets.filter((dataset) => !hiddenDatasets.includes(dataset.label)).length > 0;
+      datasets.filter((dataset, index) => !hiddenDatasets.includes(index)).length > 0;
     if (!hasVisibleDataSets) {
       if (f7Tooltip.current && f7Tooltip.current.hide) f7Tooltip.current.hide();
       return;
@@ -338,8 +338,6 @@ const AreaChart = forwardRef((props, ref) => {
             y1={0}
             x2={line}
             y2={height}
-            x3={10}
-            y3={10}
             className={classNames({
               'area-chart-current-line': currentIndex === index,
             })}
@@ -361,11 +359,11 @@ const AreaChart = forwardRef((props, ref) => {
             <LegendItemTag
               key={index}
               className={classNames('area-chart-legend-item', {
-                'area-chart-legend-item-hidden': hiddenDatasets.includes(dataset.label),
+                'area-chart-legend-item-hidden': hiddenDatasets.includes(index),
                 'area-chart-legend-button': toggleDatasets,
               })}
               type={toggleDatasets ? 'button' : undefined}
-              onClick={() => toggleDataset(dataset.label)}
+              onClick={() => toggleDataset(index)}
             >
               <span style={{ backgroundColor: dataset.color }}></span>
               {formatLegendLabel(dataset.label)}

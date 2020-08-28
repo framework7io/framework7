@@ -235,6 +235,9 @@ class PieChart extends Framework7Class {
     self.$el.off('click mouseenter', 'path', self.showTooltip, true);
     self.$el.off('mouseleave', 'path', self.hideTooltip, true);
     self.$svgEl.remove();
+    if (self.f7Tooltip && self.f7Tooltip.destroy) {
+      self.f7Tooltip.destroy();
+    }
     delete self.$el[0].f7PieChart;
     deleteProps(self);
     self.destroyed = true;
