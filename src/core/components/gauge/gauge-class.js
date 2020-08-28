@@ -8,54 +8,54 @@ class Gauge extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
 
-    const gauge = this;
+    const self = this;
 
     const defaults = extend({}, app.params.gauge);
 
     // Extend defaults with modules params
-    gauge.useModulesParams(defaults);
+    self.useModulesParams(defaults);
 
-    gauge.params = extend(defaults, params);
+    self.params = extend(defaults, params);
 
-    const { el } = gauge.params;
-    if (!el) return gauge;
+    const { el } = self.params;
+    if (!el) return self;
 
     const $el = $(el);
-    if ($el.length === 0) return gauge;
+    if ($el.length === 0) return self;
 
     if ($el[0].f7Gauge) return $el[0].f7Gauge;
 
-    extend(gauge, {
+    extend(self, {
       app,
       $el,
       el: $el && $el[0],
     });
 
-    $el[0].f7Gauge = gauge;
+    $el[0].f7Gauge = self;
 
     // Install Modules
-    gauge.useModules();
+    self.useModules();
 
-    gauge.init();
+    self.init();
 
-    return gauge;
+    return self;
   }
 
   calcRadius() {
-    const gauge = this;
-    const { size, borderWidth } = gauge.params;
+    const self = this;
+    const { size, borderWidth } = self.params;
     return size / 2 - borderWidth / 2;
   }
 
   calcBorderLength() {
-    const gauge = this;
-    const radius = gauge.calcRadius();
+    const self = this;
+    const radius = self.calcRadius();
     return 2 * Math.PI * radius;
   }
 
   render() {
-    const gauge = this;
-    if (gauge.params.render) return gauge.params.render.call(gauge, gauge);
+    const self = this;
+    if (self.params.render) return self.params.render.call(self, self);
 
     const {
       type,
@@ -73,11 +73,11 @@ class Gauge extends Framework7Class {
       labelTextColor,
       labelFontSize,
       labelFontWeight,
-    } = gauge.params;
+    } = self.params;
 
     const semiCircle = type === 'semicircle';
-    const radius = gauge.calcRadius();
-    const length = gauge.calcBorderLength();
+    const radius = self.calcRadius();
+    const length = self.calcBorderLength();
     const progress = Math.max(Math.min(value, 1), 0);
 
     // prettier-ignore
@@ -156,16 +156,16 @@ class Gauge extends Framework7Class {
   }
 
   update(newParams = {}) {
-    const gauge = this;
+    const self = this;
     const document = getDocument();
-    const { params, $gaugeSvgEl } = gauge;
+    const { params, $svgEl } = self;
 
     Object.keys(newParams).forEach((param) => {
       if (typeof newParams[param] !== 'undefined') {
         params[param] = newParams[param];
       }
     });
-    if ($gaugeSvgEl.length === 0) return gauge;
+    if ($svgEl.length === 0) return self;
 
     const {
       value,
@@ -184,9 +184,9 @@ class Gauge extends Framework7Class {
       labelFontWeight,
     } = params;
 
-    const length = gauge.calcBorderLength();
+    const length = self.calcBorderLength();
     const progress = Math.max(Math.min(value, 1), 0);
-    const radius = gauge.calcRadius();
+    const radius = self.calcRadius();
     const semiCircle = params.type === 'semicircle';
 
     const svgAttrs = {
@@ -195,7 +195,7 @@ class Gauge extends Framework7Class {
       viewBox: `0 0 ${size} ${semiCircle ? size / 2 : size}`,
     };
     Object.keys(svgAttrs).forEach((attr) => {
-      $gaugeSvgEl.attr(attr, svgAttrs[attr]);
+      $svgEl.attr(attr, svgAttrs[attr]);
     });
     if (semiCircle) {
       const backAttrs = {
@@ -213,10 +213,10 @@ class Gauge extends Framework7Class {
         fill: borderBgColor ? 'none' : bgColor || 'none',
       };
       Object.keys(backAttrs).forEach((attr) => {
-        $gaugeSvgEl.find('.gauge-back-semi').attr(attr, backAttrs[attr]);
+        $svgEl.find('.gauge-back-semi').attr(attr, backAttrs[attr]);
       });
       Object.keys(frontAttrs).forEach((attr) => {
-        $gaugeSvgEl.find('.gauge-front-semi').attr(attr, frontAttrs[attr]);
+        $svgEl.find('.gauge-front-semi').attr(attr, frontAttrs[attr]);
       });
     } else {
       const backAttrs = {
@@ -239,17 +239,17 @@ class Gauge extends Framework7Class {
         r: radius,
       };
       Object.keys(backAttrs).forEach((attr) => {
-        $gaugeSvgEl.find('.gauge-back-circle').attr(attr, backAttrs[attr]);
+        $svgEl.find('.gauge-back-circle').attr(attr, backAttrs[attr]);
       });
       Object.keys(frontAttrs).forEach((attr) => {
-        $gaugeSvgEl.find('.gauge-front-circle').attr(attr, frontAttrs[attr]);
+        $svgEl.find('.gauge-front-circle').attr(attr, frontAttrs[attr]);
       });
     }
     if (valueText) {
-      if (!$gaugeSvgEl.find('.gauge-value-text').length) {
+      if (!$svgEl.find('.gauge-value-text').length) {
         const textEl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         textEl.classList.add('gauge-value-text');
-        $gaugeSvgEl.append(textEl);
+        $svgEl.append(textEl);
       }
       const textAttrs = {
         x: '50%',
@@ -262,17 +262,17 @@ class Gauge extends Framework7Class {
         'dominant-baseline': !semiCircle && 'middle',
       };
       Object.keys(textAttrs).forEach((attr) => {
-        $gaugeSvgEl.find('.gauge-value-text').attr(attr, textAttrs[attr]);
+        $svgEl.find('.gauge-value-text').attr(attr, textAttrs[attr]);
       });
-      $gaugeSvgEl.find('.gauge-value-text').text(valueText);
+      $svgEl.find('.gauge-value-text').text(valueText);
     } else {
-      $gaugeSvgEl.find('.gauge-value-text').remove();
+      $svgEl.find('.gauge-value-text').remove();
     }
     if (labelText) {
-      if (!$gaugeSvgEl.find('.gauge-label-text').length) {
+      if (!$svgEl.find('.gauge-label-text').length) {
         const textEl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         textEl.classList.add('gauge-label-text');
-        $gaugeSvgEl.append(textEl);
+        $svgEl.append(textEl);
       }
       const labelAttrs = {
         x: '50%',
@@ -285,36 +285,36 @@ class Gauge extends Framework7Class {
         'dominant-baseline': !semiCircle && 'middle',
       };
       Object.keys(labelAttrs).forEach((attr) => {
-        $gaugeSvgEl.find('.gauge-label-text').attr(attr, labelAttrs[attr]);
+        $svgEl.find('.gauge-label-text').attr(attr, labelAttrs[attr]);
       });
-      $gaugeSvgEl.find('.gauge-label-text').text(labelText);
+      $svgEl.find('.gauge-label-text').text(labelText);
     } else {
-      $gaugeSvgEl.find('.gauge-label-text').remove();
+      $svgEl.find('.gauge-label-text').remove();
     }
-    return gauge;
+    return self;
   }
 
   init() {
-    const gauge = this;
-    const $gaugeSvgEl = $(gauge.render()).eq(0);
-    $gaugeSvgEl.f7Gauge = gauge;
-    extend(gauge, {
-      $gaugeSvgEl,
-      gaugeSvgEl: $gaugeSvgEl && $gaugeSvgEl[0],
+    const self = this;
+    const $svgEl = $(self.render()).eq(0);
+    $svgEl.f7Gauge = self;
+    extend(self, {
+      $svgEl,
+      svgEl: $svgEl && $svgEl[0],
     });
-    gauge.$el.append($gaugeSvgEl);
-    return gauge;
+    self.$el.append($svgEl);
+    return self;
   }
 
   destroy() {
-    const gauge = this;
-    if (!gauge.$el || gauge.destroyed) return;
-    gauge.$el.trigger('gauge:beforedestroy');
-    gauge.emit('local::beforeDestroy gaugeBeforeDestroy', gauge);
-    gauge.$gaugeSvgEl.remove();
-    delete gauge.$el[0].f7Gauge;
-    deleteProps(gauge);
-    gauge.destroyed = true;
+    const self = this;
+    if (!self.$el || self.destroyed) return;
+    self.$el.trigger('gauge:beforedestroy');
+    self.emit('local::beforeDestroy selfBeforeDestroy', self);
+    self.$svgEl.remove();
+    delete self.$el[0].f7Gauge;
+    deleteProps(self);
+    self.destroyed = true;
   }
 }
 export default Gauge;

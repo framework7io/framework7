@@ -12,7 +12,7 @@ export namespace Gauge {
     /** Gauge generated SVH HTML element */
     gaugeSvgEl: HTMLElement;
     /** Dom7 instance with generated SVH HTML element */
-    $gaugeSvgEl: Dom7Array;
+    $svgEl: Dom7Array;
     /** Gauge parameters */
     params: Parameters;
 
