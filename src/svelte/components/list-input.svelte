@@ -274,6 +274,7 @@
     if (typeof $$props.onChange === 'function') $$props.onChange(...args);
     if (type === 'texteditor') {
       dispatch('textEditorChange', [args[1]]);
+      if (typeof $$props.onTextEditorChange === 'function') $$props.onTextEditorChange(...args);
     }
   }
 
