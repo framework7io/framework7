@@ -14,7 +14,8 @@
     - lite version doesn't contain
       - Template7
       - Gauge
-      - ...
+      - Area Chart
+      - Pie Chart
     - New types in `framework7/types`
       - Framework7Params -> Framework7Parameters
   - Request
