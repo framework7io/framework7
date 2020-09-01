@@ -156,15 +156,16 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 
 [WFM Buddy](https://www.wfmbuddy.com/) - WFM Buddy - Delighting your Workforce<br>
 [CodersRank](https://codersrank.io/?utm_source=partner&utm_medium=referral&utm_campaign=vladimir) - CodersRank - Ultimate Profile For Coders<br>
-[Sparheld.de](https://www.sparheld.de/) - Sparheld.de - save shopping online
+[Sparheld.de](https://www.sparheld.de/) - Sparheld.de - save shopping online<br>
 [Privict](https://privicy.com/) - Privacy control for consumers<br>
+
 [Join here!](https://www.patreon.com/bePatron?patAmt=250.0&exp=1&u=4109762&rid=830877)
 
 ---
 
 ### \$100 Silver Sponsor
 
-[Infatica](https://infatica.io) - Global Peer-to-Business Proxy Network
+[Infatica](https://infatica.io) - Global Peer-to-Business Proxy Network<br>
 [Thorium Builder](https://www.thoriumbuilder.com/) - Full visual Framework7 app builder<br>
 Colin Adams ([App Valley](https://appvalley.vip/))<br>
 Mason Fok ([tommy](http://mytommy.com))<br>
@@ -190,7 +191,7 @@ Daniel Fratus<br>
 [Kidoverse](https://kidoverse.app) - App for kids to learn, play, create and explore<br>
 [CyberBrain IT Services](https://www.cyberbrain.nl/)<br>
 [HICAPPS](https://hicapps.cl/) - Health Informatics Custom APPs<br>
-Michael Russell
+Michael Russell<br>
 [Blokt](https://blokt.com/) - Cryptocurrency News<br>
 Alexey Victorov<br>
 [Wappler](https://wappler.io) - Visual Web App Creator, offers full visual Framework7 builder<br>
