@@ -61,17 +61,22 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
+      <a href="https://findmate.app" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/findmate.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://vpn-review.com/vpn-for-torrenting" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/vpn.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://tutlance.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/tutlance.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://edubirdie.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/edubirdie.png">
@@ -85,11 +90,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
     <td align="center" valign="middle">
       <a href="https://www.bonus.com.de/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/bonusfinder.png">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="http://ananyamultitech.com/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/ananya.png">
       </a>
     </td>
     <td align="center" valign="middle">
