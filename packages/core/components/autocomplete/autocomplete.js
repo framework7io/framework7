@@ -34,6 +34,7 @@ export default {
       searchbarPlaceholder: 'Search...',
       searchbarDisableText: 'Cancel',
       searchbarDisableButton: undefined,
+      searchbarSpellcheck: false,
 
       popupPush: false,
       popupSwipeToClose: undefined,

@@ -1,5 +1,5 @@
 /**
- * Framework7 5.7.11
+ * Framework7 5.7.12
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: August 17, 2020
+ * Released on: September 3, 2020
  */
 
 (function (global, factory) {
@@ -7962,14 +7962,15 @@
       if (previousRoute && modalToClose) {
         var isBrokenPushState = Device.ie || Device.edge || (Device.firefox && !Device.ios);
         var needHistoryBack = router.params.pushState && navigateOptions.pushState !== false;
-        if (needHistoryBack && !isBrokenPushState) {
+        var currentRouteWithoutPushState = router.currentRoute && router.currentRoute.route && router.currentRoute.route.options && router.currentRoute.route.options.pushState === false;
+        if (needHistoryBack && !isBrokenPushState && !currentRouteWithoutPushState) {
           History.back();
         }
         router.currentRoute = previousRoute;
         router.history.pop();
         router.saveHistory();
 
-        if (needHistoryBack && isBrokenPushState) {
+        if (needHistoryBack && isBrokenPushState && !currentRouteWithoutPushState) {
           History.back();
         }
 

@@ -20,6 +20,7 @@ export default {
       swipeActiveArea: 0,
       swipeThreshold: 0,
       closeByBackdropClick: true,
+      containerEl: undefined,
     },
   },
   static: {

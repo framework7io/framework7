@@ -16,6 +16,10 @@ export default {
       type: String,
       default: 'Search'
     },
+    spellcheck: {
+      type: Boolean,
+      default: undefined
+    },
     disableButton: {
       type: Boolean,
       default: true
@@ -107,6 +111,7 @@ export default {
     const props = self.props;
     const {
       placeholder,
+      spellcheck,
       clearButton,
       disableButton,
       disableButtonText,
@@ -157,7 +162,8 @@ export default {
         },
         attrs: {
           placeholder: placeholder,
-          type: 'search'
+          type: 'search',
+          spellcheck: spellcheck
         }
       });
     }

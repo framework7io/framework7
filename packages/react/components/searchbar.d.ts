@@ -11,6 +11,7 @@ declare namespace F7Searchbar {
     noHairline? : boolean
     form? : boolean
     placeholder? : string
+    spellcheck? : boolean
     disableButton? : boolean
     disableButtonText? : string
     clearButton? : boolean

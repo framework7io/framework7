@@ -344,7 +344,7 @@ class SmartSelect extends Framework7Class {
       <form class="searchbar">
         <div class="searchbar-inner">
           <div class="searchbar-input-wrap">
-            <input type="search" placeholder="${ss.params.searchbarPlaceholder}"/>
+            <input type="search" spellcheck="${ss.params.searchbarSpellcheck || 'false'}" placeholder="${ss.params.searchbarPlaceholder}"/>
             <i class="searchbar-icon"></i>
             <span class="input-clear-button"></span>
           </div>

@@ -57,6 +57,8 @@ export namespace SmartSelect {
     searchbarDisableText?: string
     /** Enables searchbar disable button. By default, disabled for Aurora theme */
     searchbarDisableButton?: boolean
+    /** Value of "spellcheck" attribute on searchbar input (default false) */
+    searchbarSpellcheck?: boolean
     /** Appends block with content that displayed when there are no Searchbar results (default false) */
     appendSearchbarNotFound?: boolean | string | HTMLElement
     /** If enabled then smart select will be automatically closed after user selectes any option (default false) */

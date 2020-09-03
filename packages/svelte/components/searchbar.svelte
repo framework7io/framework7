@@ -14,6 +14,7 @@
   export let noHairline = false;
   export let form = true;
   export let placeholder = 'Search';
+  export let spellcheck = undefined;
   export let disableButton = true;
   export let disableButtonText = 'Cancel';
   export let clearButton = true;
@@ -185,6 +186,7 @@
         <input
           value={typeof value === 'undefined' ? '' : value}
           placeholder={placeholder}
+          spellcheck={spellcheck}
           type="search"
           on:input={onInput}
           on:change={onChange}
@@ -215,6 +217,7 @@
         <input
           value={typeof value === 'undefined' ? '' : value}
           placeholder={placeholder}
+          spellcheck={spellcheck}
           type="search"
           on:input={onInput}
           on:change={onChange}

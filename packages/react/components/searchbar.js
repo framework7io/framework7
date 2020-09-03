@@ -75,6 +75,7 @@ class F7Searchbar extends React.Component {
     const props = self.props;
     const {
       placeholder,
+      spellcheck,
       clearButton,
       disableButton,
       disableButtonText,
@@ -122,6 +123,7 @@ class F7Searchbar extends React.Component {
         },
         value: value,
         placeholder: placeholder,
+        spellCheck: spellcheck,
         type: 'search',
         onInput: self.onInput,
         onChange: self.onChange.bind(self),
@@ -293,6 +295,10 @@ __reactComponentSetProps(F7Searchbar, Object.assign({
   placeholder: {
     type: String,
     default: 'Search'
+  },
+  spellcheck: {
+    type: Boolean,
+    default: undefined
   },
   disableButton: {
     type: Boolean,

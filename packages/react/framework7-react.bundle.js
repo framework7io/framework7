@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.7.11
+ * Framework7 React 5.7.12
  * Build full featured iOS & Android apps using Framework7 & React
  * https://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: August 17, 2020
+ * Released on: September 3, 2020
  */
 
 (function (global, factory) {
@@ -12062,6 +12062,7 @@
       var disableEl;
       var props = self.props;
       var placeholder = props.placeholder;
+      var spellcheck = props.spellcheck;
       var clearButton = props.clearButton;
       var disableButton = props.disableButton;
       var disableButtonText = props.disableButtonText;
@@ -12108,6 +12109,7 @@
           },
           value: value,
           placeholder: placeholder,
+          spellCheck: spellcheck,
           type: 'search',
           onInput: self.onInput,
           onChange: self.onChange.bind(self),
@@ -12282,6 +12284,10 @@
     placeholder: {
       type: String,
       default: 'Search'
+    },
+    spellcheck: {
+      type: Boolean,
+      default: undefined
     },
     disableButton: {
       type: Boolean,
@@ -14899,7 +14905,7 @@
   };
 
   /**
-   * Framework7 React 5.7.11
+   * Framework7 React 5.7.12
    * Build full featured iOS & Android apps using Framework7 & React
    * https://framework7.io/react/
    *
@@ -14907,7 +14913,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: August 17, 2020
+   * Released on: September 3, 2020
    */
 
   function f7ready(callback) {
