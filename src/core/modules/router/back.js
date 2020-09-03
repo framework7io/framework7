@@ -594,14 +594,15 @@ function back(...args) {
     if (previousRoute && modalToClose) {
       const isBrokenPushState = Device.ie || Device.edge || (Device.firefox && !Device.ios);
       const needHistoryBack = router.params.pushState && navigateOptions.pushState !== false;
-      if (needHistoryBack && !isBrokenPushState) {
+      const currentRouteWithoutPushState = router.currentRoute && router.currentRoute.route && router.currentRoute.route.options && router.currentRoute.route.options.pushState === false;
+      if (needHistoryBack && !isBrokenPushState && !currentRouteWithoutPushState) {
         History.back();
       }
       router.currentRoute = previousRoute;
       router.history.pop();
       router.saveHistory();
 
-      if (needHistoryBack && isBrokenPushState) {
+      if (needHistoryBack && isBrokenPushState && !currentRouteWithoutPushState) {
         History.back();
       }
 
