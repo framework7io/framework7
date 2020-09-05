@@ -45,7 +45,7 @@
     if (position) return position;
     if (top) return 'top';
     if (bottom) return 'bottom';
-    return 'botton';
+    return 'bottom';
   })();
 
   $: classes = Utils.classNames(
