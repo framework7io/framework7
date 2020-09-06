@@ -31,12 +31,12 @@
     <f7-block strong>
       <p>Framework7 comes with {{colors.length}} color themes set.</p>
       <f7-row>
-        <f7-col width="33" tabletWidth="25" desktopWidth="20" v-for="(color, index) in colors" :key="index">
+        <f7-col width="33" medium="25" large="20" v-for="(color, index) in colors" :key="index">
           <f7-button fill round small class="demo-color-picker-button" :color="color" @click="setColorTheme(color)">{{color}}</f7-button>
         </f7-col>
-        <f7-col width="33" tabletWidth="25" desktopWidth="20" />
-        <f7-col width="33" tabletWidth="25" desktopWidth="20" />
-        <f7-col width="33" tabletWidth="25" desktopWidth="20" />
+        <f7-col width="33" medium="25" large="20" />
+        <f7-col width="33" medium="25" large="20" />
+        <f7-col width="33" medium="25" large="20" />
       </f7-row>
     </f7-block>
     <f7-block-title medium>Custom Color Theme</f7-block-title>
