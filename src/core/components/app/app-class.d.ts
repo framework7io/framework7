@@ -182,7 +182,7 @@ declare class Framework7 implements Framework7 {
   static utils: Utils;
   static Events: Events;
   static Component: ComponentClass;
-  /** Regiter custom component */
+  /** Register custom component */
   static registerComponent(tagName: string, component: ComponentOptions | ComponentClass): void;
   /** Register component mixin */
   static registerComponentMixin(mixinName: string, mixin: ComponentOptions): void
