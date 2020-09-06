@@ -17,7 +17,7 @@
     <Tab id="tab-f7" tabActive>
       <Row>
         {#each f7Icons as icon, index}
-          <Col width="33" tabletWidth="15" class="demo-icon">
+          <Col width="33" medium="15" class="demo-icon">
             <div class="demo-icon-icon">
               <Icon f7={icon} />
             </div>
@@ -29,7 +29,7 @@
     <Tab id="tab-md">
       <Row>
         {#each mdIcons as icon, index}
-          <Col width="33" tabletWidth="15" class="demo-icon">
+          <Col width="33" medium="15" class="demo-icon">
             <div class="demo-icon-icon">
               <Icon material={icon} />
             </div>
