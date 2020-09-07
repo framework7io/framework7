@@ -1,5 +1,5 @@
 ---
-name: Framewor7-React Issue
+name: Framework7-React Issue
 about: Create a report to help us improve
 
 ---
