@@ -39,14 +39,14 @@
     <p>Framework7 comes with {colors.length} color themes set.</p>
     <Row>
       {#each colors as color, index}
-        <Col width="33" tabletWidth="25" desktopWidth="20" key={index}>
+        <Col width="33" medium="25" large="20" key={index}>
           <Button fill round small class="demo-color-picker-button" color={color} onClick={() => setColorTheme(color)}>{color}</Button>
         </Col>
       {/each}
 
-      <Col width="33" tabletWidth="25" desktopWidth="20" />
-      <Col width="33" tabletWidth="25" desktopWidth="20" />
-      <Col width="33" tabletWidth="25" desktopWidth="20" />
+      <Col width="33" medium="25" large="20" />
+      <Col width="33" medium="25" large="20" />
+      <Col width="33" medium="25" large="20" />
     </Row>
   </Block>
   <BlockTitle medium>Custom Color Theme</BlockTitle>

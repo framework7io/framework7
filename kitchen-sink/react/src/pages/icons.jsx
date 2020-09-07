@@ -25,7 +25,7 @@ export default () => (
       <Tab id="tab-f7" tabActive>
         <Row>
           {f7Icons.map((icon, index) => (
-            <Col key={index} width="33" tabletWidth="15" className="demo-icon">
+            <Col key={index} width="33" medium="15" className="demo-icon">
               <div className="demo-icon-icon">
                 <Icon f7={icon} />
               </div>
@@ -37,7 +37,7 @@ export default () => (
       <Tab id="tab-md">
         <Row>
           {mdIcons.map((icon, index) => (
-            <Col key={index} width="33" tabletWidth="15" className="demo-icon">
+            <Col key={index} width="33" medium="15" className="demo-icon">
               <div className="demo-icon-icon">
                 <Icon material={icon} />
               </div>
