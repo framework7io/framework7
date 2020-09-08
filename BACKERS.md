@@ -45,6 +45,18 @@
       </a>
     </td>
     <td align="center" valign="middle">
+      <a href="https://monovm.com/linux-vps/" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/monovm.jpg">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://findmate.app" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/findmate.png">
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle">
       <a href="https://vpn-review.com/vpn-for-torrenting" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/vpn.png">
       </a>
@@ -54,8 +66,6 @@
         <img width="160" src="https://framework7.io/i/sponsors/tutlance.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://edubirdie.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/edubirdie.png">
@@ -71,18 +81,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/bonusfinder.png">
       </a>
     </td>
-    <td align="center" valign="middle">
-      <a href="http://ananyamultitech.com/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/ananya.png">
-      </a>
-    </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://kqapi.us" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/kqapius.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://writersperhour.com/write-my-paper" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/writersperhour.jpg">
@@ -105,13 +110,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/usave.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://bid4papers.com/write-my-essay.html" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/bid4papers.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://kidoverse.app" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/kidoverse.png">
@@ -134,11 +139,17 @@
         <img width="160" src="https://framework7.io/i/sponsors/blokt.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://wappler.io/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
   </tr>
 </table>
 
@@ -182,14 +193,13 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 
 [Tutlance.com - Pay For Homework Answers, Assignments and Essay Solutions](https://tutlance.com)<br>
 [EduBirdie - The professional essay writing service for students who can't even](https://edubirdie.com)<br>
-Daniel Fratus<br>
+[Findmate - International Dating](https://findmate.app)<br>
 [Paraphrasing tool- rewrite, paraphrase your article](https://paraphrasetools.com)<br>
 [www.bonus.com.de](https://www.bonus.com.de/)<br>
 [Writers Per Hour](https://writersperhour.com/write-my-paper) - Write My Paper For Me<br>
 [Bid4Papers](https://bid4papers.com/write-my-essay.html) - Write My Essay<br>
 [COLOGNE WEBDESIGN](https://www.colognewebdesign.de/)<br>
 [Kqapius, INC.](https://kqapi.us)<br>
-[Ananya MultiTech Private Limited](http://ananyamultitech.com/)<br>
 [Rise](https://rise.co) - Creative Web Development Agency<br>
 [usave](https://usave.co.uk/utilities/broadband) - compare broadband deals on usave.co.uk<br>
 [Kidoverse](https://kidoverse.app) - App for kids to learn, play, create and explore<br>

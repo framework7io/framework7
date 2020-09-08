@@ -79,14 +79,14 @@ export default class extends React.Component {
           <p>Framework7 comes with {this.state.colors.length} color themes set.</p>
           <Row>
             {this.state.colors.map((color, index) => (
-              <Col width="33" tabletWidth="25" desktopWidth="20" key={index}>
+              <Col width="33" medium="25" large="20" key={index}>
                 <Button fill round small className="demo-color-picker-button" color={color} onClick={() => this.setColorTheme(color)}>{color}</Button>
               </Col>
             ))}
 
-            <Col width="33" tabletWidth="25" desktopWidth="20" />
-            <Col width="33" tabletWidth="25" desktopWidth="20" />
-            <Col width="33" tabletWidth="25" desktopWidth="20" />
+            <Col width="33" medium="25" large="20" />
+            <Col width="33" medium="25" large="20" />
+            <Col width="33" medium="25" large="20" />
           </Row>
         </Block>
         <BlockTitle medium>Custom Color Theme</BlockTitle>

@@ -696,17 +696,21 @@ function back(...args) {
     }
     const forceOtherUrl = navigateOptions.force && previousRoute && navigateUrl;
     if (previousRoute && modalToClose) {
-      const isBrokenBrowserHistory = device.ie || device.edge || (device.firefox && !device.ios);
-      const needHistoryBack =
-        router.params.browserHistory && navigateOptions.browserHistory !== false;
-      if (needHistoryBack && !isBrokenBrowserHistory) {
+      const isBrokenPushState = device.ie || device.edge || (device.firefox && !device.ios);
+      const needHistoryBack = router.params.pushState && navigateOptions.pushState !== false;
+      const currentRouteWithoutPushState =
+        router.currentRoute &&
+        router.currentRoute.route &&
+        router.currentRoute.route.options &&
+        router.currentRoute.route.options.pushState === false;
+      if (needHistoryBack && !isBrokenPushState && !currentRouteWithoutPushState) {
         History.back();
       }
       router.currentRoute = previousRoute;
       router.history.pop();
       router.saveHistory();
 
-      if (needHistoryBack && isBrokenBrowserHistory) {
+      if (needHistoryBack && isBrokenPushState && !currentRouteWithoutPushState) {
         History.back();
       }
 
@@ -734,7 +738,10 @@ function back(...args) {
       classes.push(pageEl.className);
     });
 
-    const $previousMaster = router.$el.children('.page-current').prevAll('.page-master').eq(0);
+    const $previousMaster = router.$el
+      .children('.page-current')
+      .prevAll('.page-master')
+      .eq(0);
     if ($previousMaster.length) {
       const expectedPreviousPageUrl = router.history[router.history.length - 2];
       const expectedPreviousPageRoute = router.findMatchingRoute(expectedPreviousPageUrl);

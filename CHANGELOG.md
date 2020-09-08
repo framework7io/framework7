@@ -56,14 +56,15 @@
   - Fast Refresh support
 
 # [v5.7.11](https://github.com/framework7io/framework7/compare/v5.7.10...v5.7.11) - August 17, 2020
-  * Core
-    * Gauge
-      * Fixed issue when gauge text wasn't appear on update
-    * Router Component
-      * Fixed issue when empty `value` attribute was removed on `<option>` element
-  * Svelte
-    * List
-      * Fixed issue with not working `sortableSort` event
+
+- Core
+  - Gauge
+    - Fixed issue when gauge text wasn't appear on update
+  - Router Component
+    - Fixed issue when empty `value` attribute was removed on `<option>` element
+- Svelte
+  - List
+    - Fixed issue with not working `sortableSort` event
 
 # [v5.7.10](https://github.com/framework7io/framework7/compare/v5.7.9...v5.7.10) - July 14, 2020
 
@@ -764,9 +765,10 @@
       <div class="navbar-inner">...</div>
     </div>
     ```
-- **Panel**
+
+* **Panel**
   - Panels functionality has been fully reworked and now behaves more like a modals, which means we now can have as many panels as we want (or need) not limited to only 2 (left and right) panels.
-  - The following parameter has been removed from `app.panel` parameters: `leftBreakpoint`, `rightBreakpoint`, `swipe`, `swipeActiveArea`, `swipeColoseAtiveSide`, `swipeOnlyClose`, `swipeThreshold`, `closeByBackdropClick`.
+  - The following parameter has been removed from `app.panel` parameters: `leftBreakpoint`, `rightBreakpoint`, `swipe`, `swipeActiveArea`, `swipeCloseActiveAreaSide`, `swipeOnlyClose`, `swipeThreshold`, `closeByBackdropClick`.
   - Now every panel must be initialized separately and panel parameters must be specified for each panel.
   - It is now possible to auto init the panel by adding `panel-init` class and specify such panel parameters with `data-` attributes, e.g.:
     ```html
@@ -776,7 +778,7 @@
     ```
   - Each panel supports new set of parameters:
     - `backdrop` - enables backdrop
-    - `backdropEl` - specify custom backdop element
+    - `backdropEl` - specify custom backdrop element
     - `collapsedBreakpoint` (number) - app width when panel becomes partially visible (collapsed)
     - `visibleBreakpoint` (number) - app width when panel becomes fully visible
     - `swipe` (boolean) - makes panel swipeable
@@ -794,8 +796,8 @@
     - `disableResizable()`
     - `enableSwipe()`
     - `disableSwipe()`
-  - `app.panel.open(panel)/close(panel)` methods now can receive panel element (or CSS selector) of the panel to open/close. `left` and `right` values are still work buton only if you have only one left or right panel
-  - The following F7 instance props and methods removed and indended to be used on panel instance instead:
+  - `app.panel.open(panel)/close(panel)` methods now can receive panel element (or CSS selector) of the panel to open/close. `left` and `right` values are still work but on only if you have only one left or right panel
+  - The following F7 instance props and methods removed and intended to be used on panel instance instead:
     - `app.panel.enableSwipe()`
     - `app.panel.disableSwipe()`
     - `app.panel.enableResizableSwipe()`
@@ -803,34 +805,34 @@
     - `app.panel.left`
     - `app.panel.right`
   - `panel-active` panel class renamed to `panel-in`
-- **PhotoBrowser**
+* **PhotoBrowser**
   - `backLinkText` parameter renamed to `pageBackLinkText`
   - New `popupCloseLinkText` parameter to specify "close" link text when it is opened as Popup or as Standalone
   - New `navbarShowCount` parameter to define should it display "3 of 5" text in navbar title or not. If not specified (undefined) then it will show this text if there is more than 1 item
   - New `popupPush` parameter - enables Photo Browser popup to push view(s) behind on open
-- **Picker**
+* **Picker**
   - Font size on picker items became smaller in iOS and MD themes
   - New `sheetPush` parameter - enables Picker sheet to push view(s) behind on open
   - New `sheetSwipeToClose` parameter - enables ability to close Picker sheet with swipe
-- **Popup**
+* **Popup**
   - New boolean `push` parameter. When enabled it will push view behind on open. Works only when top safe area is in place. It can also enabled by adding `popup-push` class to popup element.
-- **Sheet Modal**
+* **Sheet Modal**
   - In iOS theme it now has white background color by default
   - New boolean `push` parameter. When enabled it will push view behind on open. Works only when top safe area is in place. It can also enabled by adding `sheet-push` class to sheet modal element.
   - Swipeable Sheet Modal now correctly handles scrolling inside of nested `page-content` element
-- **Sortable**
+* **Sortable**
   - Sortable `sort` event data now also contain `el` property with reference to sorted item
   - Now sorting can be done on tap-hold. It can be enabled by adding additional `sortable-tap-hold` to `sortable` container. Also `app.touch.tapHold` should be enabled to emit `taphold` events.
-- **Smart Select**
+* **Smart Select**
   - Fixed behavior when it is `multiple` and with Virtual List enabled
   - New `.unsetValue()` method to unset smart select value
   - New `popupPush` parameter - enables Smart Select popup to push view(s) behind on open
   - New `popupSwipeToClose` parameter - enables ability to close Smart Select popup with swipe
   - New `sheetPush` parameter - enables Smart Select sheet to push view(s) behind on open
   - New `sheetSwipeToClose` parameter - enables ability to close Smart Select sheet with swipe
-- **Subnavbar**
+* **Subnavbar**
   - Subnavbar's title element (`<div class="title">`) now should be used with class `subnavbar-title` instead (`<div class="subnavbar-title">`)
-- **Swiper** updated to latest 5 version:
+* **Swiper** updated to latest 5 version:
   - Core
     - All new CSS Scroll Snap mode (can be enabled with `cssMode: true`). It doesn't support all of Swiper's features, but potentially should bring a much better performance in simple configurations
     - Fully removed Internet Explorer support
@@ -852,11 +854,11 @@
     - Navigation icons reworked with built-in (base64) icon font. It allows to apply any color and size without replacing image
     - Navigation buttons colors now use CSS Custom Properties. It can be defined with `--swiper-navigation-color` property (which is defaults to `--swiper-theme-color`)
     - With `--swiper-navigation-size` (defaults to `44px`) it is now possible to change size of the navigation buttons (and icons)
-- **Text Editor**
+* **Text Editor**
   - All new touch-friendly Rich Text Editor component
-- **Timeline**
+* **Timeline**
   - Now it uses new breakpoint names for `{size}-sides` classes (e.g. `tablet-sides` -> `medium-sides`, etc.)
-- **Toolbar**
+* **Toolbar**
   - Tabbar labels text (font) size increased in iOS theme
 
 ## Framework7 Router Component
@@ -1810,7 +1812,7 @@
     - Fixed issue when going back with enabled `pushState` could produce double pages back in Firefox
     - Fixed issue when changing routable swipeable tabs wasn't trigger `routeChanged` event
     - Single-file Router Components:
-      - It can now treat component template as ES template literal. Addional `es` attribute is required on template to enable, e.g. `<template es>`
+      - It can now treat component template as ES template literal. Additional `es` attribute is required on template to enable, e.g. `<template es>`
       - It is now rendered with Virtual DOM (Snabbdom library) for layout auto updating 🎉
       - It has new `$setState(mergeState)` method to set new component state and force component to update its layout
   - Searchbar

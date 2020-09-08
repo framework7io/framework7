@@ -17,7 +17,7 @@
     <f7-block strong class="tabs">
       <f7-tab id="tab-f7" tab-active>
         <f7-row>
-          <f7-col width="33" tablet-width="15" class="demo-icon" v-for="icon in f7Icons" :key="icon">
+          <f7-col width="33" medium="15" class="demo-icon" v-for="icon in f7Icons" :key="icon">
             <div class="demo-icon-icon"><i class="f7-icons">{{ icon }}</i></div>
             <div class="demo-icon-name">{{ icon }}</div>
           </f7-col>
@@ -25,7 +25,7 @@
       </f7-tab>
       <f7-tab id="tab-md">
         <f7-row>
-          <f7-col width="33" tablet-width="15" class="demo-icon" v-for="icon in mdIcons" :key="icon">
+          <f7-col width="33" medium="15" class="demo-icon" v-for="icon in mdIcons" :key="icon">
             <div class="demo-icon-icon"><i class="material-icons">{{ icon }}</i></div>
             <div class="demo-icon-name">{{ icon }}</div>
           </f7-col>

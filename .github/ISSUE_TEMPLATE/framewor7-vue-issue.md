@@ -1,5 +1,5 @@
 ---
-name: Framewor7-Vue Issue
+name: Framework7-Vue Issue
 about: Create a report to help us improve
 
 ---

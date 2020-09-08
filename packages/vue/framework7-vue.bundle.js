@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.7.11
+ * Framework7 Vue 5.7.12
  * Build full featured iOS & Android apps using Framework7 & Vue
  * https://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: August 17, 2020
+ * Released on: September 3, 2020
  */
 
 (function (global, factory) {
@@ -10794,6 +10794,10 @@
         type: String,
         default: 'Search'
       },
+      spellcheck: {
+        type: Boolean,
+        default: undefined
+      },
       disableButton: {
         type: Boolean,
         default: true
@@ -10884,6 +10888,7 @@
       var disableEl;
       var props = self.props;
       var placeholder = props.placeholder;
+      var spellcheck = props.spellcheck;
       var clearButton = props.clearButton;
       var disableButton = props.disableButton;
       var disableButtonText = props.disableButtonText;
@@ -10933,7 +10938,8 @@
           },
           attrs: {
             placeholder: placeholder,
-            type: 'search'
+            type: 'search',
+            spellcheck: spellcheck
           }
         });
       }
@@ -13427,7 +13433,7 @@
   };
 
   /**
-   * Framework7 Vue 5.7.11
+   * Framework7 Vue 5.7.12
    * Build full featured iOS & Android apps using Framework7 & Vue
    * https://framework7.io/vue/
    *
@@ -13435,7 +13441,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: August 17, 2020
+   * Released on: September 3, 2020
    */
 
   function f7ready(callback) {

@@ -92,8 +92,8 @@ export namespace Component {
         context?: object,
       ): Promise<ComponentClass>;
       /** Parse component from single file component-style string */
-      parse(componentString: string): ComponentOptions;
-      /** Regiter custom component */
+      parse(componentString: string): ComponentOptions,
+      /** Register custom component */
       registerComponent(tagName: string, component: ComponentOptions | ComponentClass): void;
       /** Register component mixin */
       registerComponentMixin(mixinName: string, mixin: ComponentOptions): void;

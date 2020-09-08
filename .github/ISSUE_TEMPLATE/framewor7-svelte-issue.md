@@ -1,5 +1,5 @@
 ---
-name: Framewor7-Svelte Issue
+name: Framework7-Svelte Issue
 about: Create a report to help us improve
 
 ---
