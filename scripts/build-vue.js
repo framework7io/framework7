@@ -75,9 +75,9 @@ async function buildVue(cb) {
   const buildEMS = async () => {
     fs.writeFileSync(`${buildPath}/vue/esm/framework7-vue.js`, pluginContent);
 
-    // await exec.promise(
-    //   `MODULES=esm npx babel --config-file ./babel-vue.config.js src/vue --out-dir ${buildPath}/vue/esm --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx --no-copy-ignored`,
-    // );
+    await exec.promise(
+      `MODULES=esm npx babel --config-file ./babel-vue.config.js src/vue --out-dir ${buildPath}/vue/esm --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx --no-copy-ignored`,
+    );
 
     await exec.promise(
       `MODULES=esm npx babel --config-file ./babel-vue.config.js vue-temp --out-dir ${buildPath}/vue/esm/components --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx`,
