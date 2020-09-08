@@ -109,7 +109,7 @@
     "svelte": "^3.24.1",
     "terser": "^5.2.1",
     "ttf2woff": "^2.0.2",
-    "vue": "^2.6.12",
+    "vue": "^3.0.0-rc.10",
     "vue-template-compiler": "^2.6.12"
   }
 }

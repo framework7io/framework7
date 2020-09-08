@@ -64,6 +64,14 @@ module.exports = {
       },
     },
     {
+      files: ['**/*.vue', 'src/vue/shared/*.js'],
+      rules: {
+        'import/no-unresolved': ['off'],
+        'import/no-extraneous-dependencies': ['off'],
+        'import/extensions': ['off'],
+      },
+    },
+    {
       files: ['**/*.svelte'],
       processor: 'svelte3/svelte3',
       rules: {
