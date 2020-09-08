@@ -6,6 +6,7 @@
   </div>
 </template>
 <script>
+import { classNames } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 
 export default {
