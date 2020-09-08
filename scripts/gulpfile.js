@@ -6,7 +6,7 @@ const opn = require('opn');
 const buildClean = require('./build-clean');
 
 const buildKsCore = require('./build-ks-core.js');
-// const buildKsVue = require('./build-ks-vue.js');
+const buildKsVue = require('./build-ks-vue.js');
 const buildKsReact = require('./build-ks-react.js');
 const buildKsSvelte = require('./build-ks-svelte.js');
 
@@ -27,7 +27,7 @@ const env = process.env.NODE_ENV || 'development';
 
 // Tasks
 gulp.task('ks-core', buildKsCore);
-// gulp.task('ks-vue', buildKsVue);
+gulp.task('ks-vue', buildKsVue);
 gulp.task('ks-react', buildKsReact);
 gulp.task('ks-svelte', buildKsSvelte);
 
@@ -73,10 +73,6 @@ const watch = {
     );
     gulp.watch(['./src/core/**/*.d.ts'], gulp.series('core-typings'));
     gulp.watch('./src/core/**/*.less', gulp.series('core-styles', 'core-components'));
-    gulp.watch(
-      ['./src/phenome/**/*.js', './src/phenome/**/*.jsx'],
-      gulp.series('phenome', 'build-react', 'build-vue', 'ks-react', 'ks-vue', 'ks-svelte'),
-    );
     gulp.watch(
       ['./kitchen-sink/react/src/**/*.js', './kitchen-sink/react/src/**/*.jsx'],
       gulp.series('ks-react'),
@@ -124,10 +120,7 @@ const watch = {
   vue() {
     gulp.watch(['./src/core/**/*.js'], gulp.series('core-js', 'core-components', 'ks-vue'));
     gulp.watch('./src/core/**/*.less', gulp.series('core-styles', 'core-components'));
-    gulp.watch(
-      ['./src/phenome/**/*.js', './src/phenome/**/*.jsx'],
-      gulp.series('phenome', 'build-vue', 'ks-vue'),
-    );
+    gulp.watch(['./src/vue/**/*.js', './src/vue/**/*.vue'], gulp.series('build-vue', 'ks-vue'));
     gulp.watch(
       ['./kitchen-sink/vue/src/**/*.js', './kitchen-sink/vue/src/**/*.vue'],
       gulp.series('ks-vue'),
@@ -136,7 +129,6 @@ const watch = {
   svelte() {
     gulp.watch(['./src/core/**/*.js'], gulp.series('core-js', 'core-components', 'ks-svelte'));
     gulp.watch('./src/core/**/*.less', gulp.series('core-styles', 'core-components'));
-    gulp.watch(['./src/phenome/**/*.js'], gulp.series('build-svelte', 'ks-svelte'));
     gulp.watch(['./src/svelte/**/*.svelte'], gulp.series('build-svelte', 'ks-svelte'));
     gulp.watch(
       ['./kitchen-sink/svelte/src/**/*.js', './kitchen-sink/svelte/src/**/*.svelte'],

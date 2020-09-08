@@ -2,10 +2,10 @@
 /* eslint no-console: ["error", { allow: ["log"] }] */
 const path = require('path');
 const rollup = require('rollup');
-const buble = require('@rollup/plugin-buble');
+const { babel } = require('@rollup/plugin-babel');
 const replace = require('@rollup/plugin-replace');
 const commonjs = require('@rollup/plugin-commonjs');
-const resolve = require('@rollup/plugin-node-resolve');
+const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const vue = require('rollup-plugin-vue');
 const fs = require('./utils/fs-extra');
 
@@ -13,34 +13,26 @@ function buildKs(cb) {
   const env = process.env.NODE_ENV || 'development';
   const buildPath = env === 'development' ? './build' : './packages';
 
-  let f7VuePath = path.resolve(__dirname, `../${buildPath}/vue/framework7-vue.esm.js`);
-  let f7Path = path.resolve(__dirname, `../${buildPath}/core/framework7.esm.bundle`);
+  let f7VuePath = path.resolve(__dirname, `../${buildPath}/vue/`);
+  let f7Path = path.resolve(__dirname, `../${buildPath}/core/lite-bundle`);
+  let f7LitePath = path.resolve(__dirname, `../${buildPath}/core/lite`);
   if (process.platform.indexOf('win') === 0) {
     f7VuePath = f7VuePath.replace(/\\/g, '/');
     f7Path = f7Path.replace(/\\/g, '/');
+    f7LitePath = f7LitePath.replace(/\\/g, '/');
   }
 
   let index = fs.readFileSync(path.resolve(__dirname, '../kitchen-sink/vue/index.html'));
   if (env === 'development') {
-    index = index
-      .replace(
-        '../../packages/core/css/framework7.bundle.min.css',
-        '../../build/core/css/framework7.bundle.css',
-      )
-      .replace(
-        '../../packages/core/js/framework7.bundle.min.js',
-        '../../build/core/js/framework7.bundle.js',
-      );
+    index = index.replace(
+      '../../packages/core/framework7-bundle.min.css',
+      '../../build/core/framework7-bundle.css',
+    );
   } else {
-    index = index
-      .replace(
-        '../../build/core/css/framework7.bundle.css',
-        '../../packages/core/css/framework7.bundle.min.css',
-      )
-      .replace(
-        '../../build/core/js/framework7.bundle.js',
-        '../../packages/core/js/framework7.bundle.min.js',
-      );
+    index = index.replace(
+      '../../build/core/framework7-bundle.css',
+      '../../packages/core/framework7-bundle.min.css',
+    );
   }
   fs.writeFileSync(path.resolve(__dirname, '../kitchen-sink/vue/index.html'), index);
 
@@ -52,9 +44,10 @@ function buildKs(cb) {
           delimiters: ['', ''],
           'process.env.NODE_ENV': JSON.stringify(env),
           "'framework7-vue'": () => `'${f7VuePath}'`,
-          "'framework7/framework7.esm.bundle'": () => `'${f7Path}'`,
+          "'framework7/lite-bundle'": () => `'${f7Path}'`,
+          "'framework7/lite'": () => `'${f7LitePath}'`,
         }),
-        resolve({ mainFields: ['module', 'main', 'jsnext'] }),
+        nodeResolve({ mainFields: ['module', 'main', 'jsnext'] }),
         commonjs(),
         vue({
           css: false,
@@ -62,9 +55,9 @@ function buildKs(cb) {
             isProduction: true,
           },
         }),
-        buble({
-          objectAssign: 'Object.assign',
-          exclude: ['node_modules/vue/dist/vue.runtime.esm.js'],
+        babel({
+          babelHelpers: 'bundled',
+          presets: [['@babel/preset-env', { modules: false, loose: true }]],
         }),
       ],
       onwarn(warning, warn) {

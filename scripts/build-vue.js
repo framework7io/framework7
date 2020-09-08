@@ -25,8 +25,8 @@ async function buildVue(cb) {
       .map((word) => word[0].toUpperCase() + word.substr(1))
       .join('');
     const fileBase = fileName.replace('.vue', '');
-    componentImports.push(`import ${componentName} from './components/${fileBase}';`);
-    componentExports.push(componentName);
+    componentImports.push(`import f7${componentName} from './components/${fileBase}';`);
+    componentExports.push(`f7${componentName}`);
     const json = {
       name: `framework7-vue/${fileBase}`,
       private: true,
