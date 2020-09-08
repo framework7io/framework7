@@ -21,7 +21,7 @@
     "core:prod": "cross-env-shell NODE_ENV=production \"gulp ks-core && gulp server-core\"",
     "react:dev": "cross-env-shell NODE_ENV=development CORE_BUILD_ONLY_MODULES=true \"gulp build-core && gulp build-react && gulp ks-react && gulp server-react\"",
     "react:prod": "cross-env-shell NODE_ENV=production \"gulp ks-react && gulp server-react\"",
-    "vue:dev": "cross-env-shell NODE_ENV=development \"gulp build-core && gulp phenome && gulp build-vue && gulp ks-vue && gulp server-vue\"",
+    "vue:dev": "cross-env-shell NODE_ENV=development CORE_BUILD_ONLY_MODULES=true  \"gulp build-core && gulp build-vue && gulp ks-vue && gulp server-vue\"",
     "vue:prod": "cross-env-shell NODE_ENV=production \"gulp ks-vue && gulp server-vue\"",
     "svelte:dev": "cross-env-shell NODE_ENV=development \"gulp build-core && gulp build-svelte && gulp ks-svelte && gulp server-svelte\"",
     "svelte:prod": "cross-env-shell NODE_ENV=production \"gulp ks-svelte && gulp server-svelte\"",
@@ -62,7 +62,7 @@
     "dom7": "^3.0.0-alpha.9",
     "path-to-regexp": "^6.1.0",
     "ssr-window": "^3.0.0-alpha.4",
-    "swiper": "^6.1.2",
+    "swiper": "^6.2.0",
     "template7": "^1.4.2"
   },
   "devDependencies": {
