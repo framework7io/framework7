@@ -1,6 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle, useContext } from 'react';
-import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getExtraAttrs, isStringProp, emit, extend } from '../shared/utils';
+import { classNames, getExtraAttrs, isStringProp, emit } from '../shared/utils';
 import {
   colorClasses,
   routerAttrs,
@@ -11,10 +10,10 @@ import {
 import { useIcon } from '../shared/use-icon';
 import { useRouteProps } from '../shared/use-route-props';
 import { useTooltip } from '../shared/use-tooltip';
-import { f7ready, f7 } from '../shared/f7';
 import { TabbarContext } from '../shared/tabbar-context';
 
 import Badge from './badge';
+import { useSmartSelect } from '../shared/use-smart-select';
 
 /* dts-imports
 import { SmartSelect } from 'framework7/types';
@@ -89,26 +88,9 @@ const Link = forwardRef((props, ref) => {
 
   useRouteProps(elRef, props);
 
-  const onMount = () => {
-    f7ready(() => {
-      if (smartSelect) {
-        const ssParams = extend({ el: elRef.current }, smartSelectParams || {});
-        f7SmartSelect.current = f7.smartSelect.create(ssParams);
-      }
-    });
-  };
-
-  const onDestroy = () => {
-    if (f7SmartSelect.current && f7SmartSelect.current.destroy) {
-      f7SmartSelect.current.destroy();
-    }
-    f7SmartSelect.current = null;
-  };
-
-  useIsomorphicLayoutEffect(() => {
-    onMount();
-    return onDestroy;
-  }, []);
+  useSmartSelect(smartSelect, smartSelectParams, f7SmartSelect, () => {
+    return elRef.current;
+  });
 
   let textEl;
   let badgeEl;

@@ -4,6 +4,7 @@ import { classNames, getExtraAttrs, getSlots, flattenArray, emit, extend } from 
 import { colorClasses } from '../shared/mixins';
 import { f7, f7ready } from '../shared/f7';
 import { ListContext } from '../shared/list-context';
+import { useTab } from '../shared/use-tab';
 
 /* dts-import
 import { VirtualList } from 'framework7/types';
@@ -119,27 +120,19 @@ const List = forwardRef((props, ref) => {
     if (elRef.current !== listEl) return;
     emit(props, 'sortableSort', sortData);
   };
-  const onTabShow = (el) => {
-    if (elRef.current !== el) return;
-    emit(props, 'tabShow', el);
-  };
-  const onTabHide = (el) => {
-    if (elRef.current !== el) return;
-    emit(props, 'tabHide', el);
-  };
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
     f7VirtualList: () => f7VirtualList.current,
   }));
 
+  useTab(elRef, props);
+
   const attachEvents = () => {
     f7ready(() => {
       f7.on('sortableEnable', onSortableEnable);
       f7.on('sortableDisable', onSortableDisable);
       f7.on('sortableSort', onSortableSort);
-      f7.on('tabShow', onTabShow);
-      f7.on('tabHide', onTabHide);
     });
   };
 
@@ -148,8 +141,6 @@ const List = forwardRef((props, ref) => {
     f7.off('sortableEnable', onSortableEnable);
     f7.off('sortableDisable', onSortableDisable);
     f7.off('sortableSort', onSortableSort);
-    f7.off('tabShow', onTabShow);
-    f7.off('tabHide', onTabHide);
   };
 
   const onMount = () => {

@@ -11,21 +11,21 @@ export const useTab = (elRef, props) => {
     if (elRef.current !== el) return;
     emit(props, 'tabHide', el);
   };
-  const onMount = () => {
+  const attachEvents = () => {
     if (!elRef.current) return;
     f7ready(() => {
       f7.on('tabShow', onTabShow);
       f7.on('tabHide', onTabHide);
     });
   };
-  const onDestroy = () => {
+  const detachEvents = () => {
     if (!f7) return;
     f7.off('tabShow', onTabShow);
     f7.off('tabHide', onTabHide);
   };
 
   useIsomorphicLayoutEffect(() => {
-    onMount();
-    return onDestroy;
-  }, []);
+    attachEvents();
+    return detachEvents;
+  });
 };

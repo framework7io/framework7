@@ -1,7 +1,7 @@
 import React, { forwardRef, useRef, useImperativeHandle, useEffect, useContext } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 
-import { classNames, getExtraAttrs, getSlots, emit, isStringProp, extend } from '../shared/utils';
+import { classNames, getExtraAttrs, getSlots, emit, isStringProp } from '../shared/utils';
 import {
   colorClasses,
   actionsAttrs,
@@ -10,6 +10,7 @@ import {
   routerClasses,
 } from '../shared/mixins';
 import { useRouteProps } from '../shared/use-route-props';
+import { useSmartSelect } from '../shared/use-smart-select';
 import { useTooltip } from '../shared/use-tooltip';
 import { watchProp } from '../shared/watch-prop';
 import { f7ready, f7 } from '../shared/f7';
@@ -474,31 +475,16 @@ const ListItem = forwardRef((props, ref) => {
     f7.off('accordionClosed', onAccClosed);
   };
 
-  const onMount = () => {
+  useSmartSelect(smartSelect, smartSelectParams, f7SmartSelect, () =>
+    elRef.current.querySelector('a.smart-select'),
+  );
+
+  useIsomorphicLayoutEffect(() => {
     f7ready(() => {
-      if (smartSelect) {
-        const ssParams = extend(
-          { el: elRef.current.querySelector('a.smart-select') },
-          smartSelectParams || {},
-        );
-        f7SmartSelect.current = f7.smartSelect.create(ssParams);
-      }
       if (swipeout && swipeoutOpened) {
         f7.swipeout.open(elRef.current);
       }
     });
-  };
-
-  const onDestroy = () => {
-    if (!f7) return;
-    if (smartSelect && f7SmartSelect.current) {
-      f7SmartSelect.current.destroy();
-    }
-  };
-
-  useIsomorphicLayoutEffect(() => {
-    onMount();
-    return onDestroy;
   }, []);
 
   useIsomorphicLayoutEffect(() => {
