@@ -93,7 +93,7 @@
         :label="true"
         :step="1"
         :value="25"
-      /></f7-range>
+      />
       <f7-range
         class="margin-horizontal"
         style="height: 160px"
@@ -103,7 +103,7 @@
         :label="true"
         :step="1"
         :value="50"
-      /></f7-range>
+      />
       <f7-range
         class="margin-horizontal"
         style="height: 160px"
@@ -113,7 +113,7 @@
         :label="true"
         :step="1"
         :value="75"
-      /></f7-range>
+      />
       <f7-range
         class="margin-left"
         style="height: 160px"
@@ -124,7 +124,7 @@
         :label="true"
         :step="1"
         :value="[25, 75]"
-      /></f7-range>
+      />
     </f7-block>
 
     <f7-block-title>Vertical Reversed</f7-block-title>
@@ -140,7 +140,7 @@
         :label="true"
         :step="1"
         :value="25"
-      /></f7-range>
+      />
       <f7-range
         class="margin-horizontal"
         color="red"
@@ -152,7 +152,7 @@
         :label="true"
         :step="1"
         :value="50"
-      /></f7-range>
+      />
       <f7-range
         class="margin-horizontal"
         color="red"
@@ -164,7 +164,7 @@
         :label="true"
         :step="1"
         :value="75"
-      /></f7-range>
+      />
       <f7-range
         class="margin-left"
         color="red"
@@ -177,7 +177,7 @@
         :label="true"
         :step="1"
         :value="[25, 75]"
-      /></f7-range>
+      />
     </f7-block>
   </f7-page>
 </template>
