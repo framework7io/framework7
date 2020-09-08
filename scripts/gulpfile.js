@@ -6,7 +6,7 @@ const opn = require('opn');
 const buildClean = require('./build-clean');
 
 const buildKsCore = require('./build-ks-core.js');
-const buildKsVue = require('./build-ks-vue.js');
+// const buildKsVue = require('./build-ks-vue.js');
 const buildKsReact = require('./build-ks-react.js');
 const buildKsSvelte = require('./build-ks-svelte.js');
 
@@ -27,7 +27,7 @@ const env = process.env.NODE_ENV || 'development';
 
 // Tasks
 gulp.task('ks-core', buildKsCore);
-gulp.task('ks-vue', buildKsVue);
+// gulp.task('ks-vue', buildKsVue);
 gulp.task('ks-react', buildKsReact);
 gulp.task('ks-svelte', buildKsSvelte);
 

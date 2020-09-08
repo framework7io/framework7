@@ -39,4 +39,6 @@ build/react/**/*.js
 build/react/**/*.ts
 build/react/components
 
+vue-temp
+
 woff2/

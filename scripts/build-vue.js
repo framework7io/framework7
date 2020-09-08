@@ -1,153 +1,102 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 /* eslint no-console: "off" */
 /* eslint global-require: "off" */
-/* eslint no-param-reassign: ["error", { "props": false }] */
+/* eslint no-param-reassign: ["off"] */
 
-const rollup = require('rollup');
-const buble = require('@rollup/plugin-buble');
-const replace = require('@rollup/plugin-replace');
-
-const { minify } = require('terser');
-const bannerVue = require('./banners/vue');
-const getOutput = require('./get-output');
+const exec = require('exec-sh');
+const bannerReact = require('./banners/vue');
+const getOutput = require('./get-output.js');
 const fs = require('./utils/fs-extra');
+const transformVueComponent = require('./transform-vue-component');
 
-function esm({ banner, componentImports, componentExports }) {
-  return `
-${banner}
-
-${componentImports.join('\n')}
-import Framework7Vue, { f7, f7ready, theme } from './utils/plugin';
-
-export {\n${componentExports.join(',\n')}\n};
-
-export { f7, f7ready, theme };
-
-export default Framework7Vue;
-  `.trim();
-}
-
-function buildVue(cb) {
+// Build Vue
+async function buildVue(cb) {
   const env = process.env.NODE_ENV || 'development';
   const buildPath = getOutput();
-  const pluginContent = fs.readFileSync(`${buildPath}/vue/utils/plugin.js`);
 
-  /* Replace plugin vars: utils/plugin.js */
-  const newPluginContent = pluginContent
-    .replace('// IMPORT_LIBRARY', "import Vue from 'vue';")
-    .replace('// IMPORT_COMPONENTS\n', '')
-    .replace('// REGISTER_COMPONENTS\n', '')
-    .replace(/EXTEND/g, 'params.Vue || Vue')
-    .replace(/COMPILER/g, "'vue'");
-
-  fs.writeFileSync(`${buildPath}/vue/utils/plugin.js`, newPluginContent);
-
-  /* Build main components esm module: framework7-vue.esm.js */
-  const files = fs
-    .readdirSync(`${buildPath}/vue/components`)
-    .filter((file) => file.indexOf('.d.ts') < 0);
-  const components = [];
+  const files = fs.readdirSync('src/vue/components').filter((file) => file.indexOf('.vue') > 0);
   const componentImports = [];
   const componentExports = [];
 
   files.forEach((fileName) => {
     const componentName = fileName
-      .replace('.js', '')
+      .replace('.vue', '')
       .split('-')
-      .map((word, index) => {
-        const capitalized = word[0].toUpperCase() + word.substr(1);
-        return index === 0 ? `f7${capitalized}` : capitalized;
-      })
+      .map((word) => word[0].toUpperCase() + word.substr(1))
       .join('');
-    components.push({
-      name: `f7-${fileName.replace('.js', '')}`,
-      importName: componentName,
-    });
-    componentImports.push(
-      `import ${componentName} from './components/${fileName.replace('.js', '')}';`,
+    const fileBase = fileName.replace('.vue', '');
+    componentImports.push(`import ${componentName} from './components/${fileBase}';`);
+    componentExports.push(componentName);
+    const json = {
+      name: `framework7-vue/${fileBase}`,
+      private: true,
+      sideEffects: false,
+      main: `../../cjs/components/${fileBase}.js`,
+      module: `../../esm/components/${fileBase}.js`,
+      'jsnext:main': `../../esm/components/${fileBase}.js`,
+      typings: `${fileBase}.d.ts`,
+    };
+    fs.writeFileSync(
+      `${buildPath}/vue/components/${fileBase}/package.json`,
+      JSON.stringify(json, '', 2),
     );
-    componentExports.push(`  ${componentName}`);
+    transformVueComponent(
+      `src/vue/components/${fileName}`,
+      `vue-temp/${fileName.replace('.vue', '.js')}`,
+    );
   });
 
-  const componentsContent = esm({
-    banner: bannerVue.trim(),
-    componentImports,
-    componentExports,
-  });
+  const pluginContent = fs
+    .readFileSync('src/vue/framework7-vue.js', 'utf-8')
+    .replace('// IMPORT_COMPONENTS', componentImports.join('\n'))
+    .replace('// EXPORT_COMPONENTS', `export { ${componentExports.join(', ')} }`);
 
-  fs.writeFileSync(`${buildPath}/vue/framework7-vue.esm.js`, componentsContent);
+  const buildCJS = async () => {
+    fs.writeFileSync(`${buildPath}/vue/cjs/framework7-vue.js`, pluginContent);
 
-  /* Build esm module bundle: components + plugin -> framework7-vue.esm.bundle.js */
-  const registerComponents = components
-    .map((c) => `Vue.component('${c.name}', ${c.importName});`)
-    .join('\n    ');
+    await exec.promise(
+      `MODULES=cjs npx babel --config-file ./babel-vue.config.js src/vue --out-dir ${buildPath}/vue/cjs --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx`,
+    );
+    await exec.promise(
+      `MODULES=cjs npx babel --config-file ./babel-vue.config.js vue-temp --out-dir ${buildPath}/vue/cjs/components --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx`,
+    );
+    await exec.promise(
+      `MODULES=cjs npx babel --config-file ./babel-vue.config.js ${buildPath}/vue/cjs/framework7-vue.js --out-file ${buildPath}/vue/cjs/framework7-vue.js`,
+    );
 
-  const esmBundlePluginContent = pluginContent
-    .replace(/ from '\.\//g, " from './utils/")
-    .replace('// IMPORT_LIBRARY', "import Vue from 'vue';")
-    .replace('// IMPORT_COMPONENTS', `${componentImports.join('\n')}\n`)
-    .replace('// REGISTER_COMPONENTS', registerComponents)
-    .replace(/EXTEND/g, 'params.Vue || Vue')
-    .replace(/COMPILER/g, "'vue'");
+    const cjsContent = fs.readFileSync(`${buildPath}/vue/cjs/framework7-vue.js`, 'utf-8');
 
-  fs.writeFileSync(
-    `${buildPath}/vue/framework7-vue.esm.bundle.js`,
-    bannerVue + esmBundlePluginContent,
-  );
+    fs.writeFileSync(
+      `${buildPath}/vue/cjs/framework7-vue.js`,
+      `${bannerReact.trim()}\n${cjsContent}`,
+    );
+  };
 
-  /* Build UMD from esm bundle: framework7-vue.esm.bundle.js -> framework7-vue.js */
-  rollup
-    .rollup({
-      input: `${buildPath}/vue/framework7-vue.esm.bundle.js`,
-      external: ['vue'],
-      plugins: [
-        replace({
-          'export { f7ready, f7Instance as f7, f7Theme as theme };': '',
-          delimiters: ['', ''],
-          'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
-        }),
-        buble({
-          objectAssign: 'Object.assign',
-        }),
-      ],
-    })
-    .then((bundle) =>
-      bundle.write({
-        globals: {
-          vue: 'Vue',
-        },
-        strict: true,
-        file: `${buildPath}/vue/framework7-vue.bundle.js`,
-        format: 'umd',
-        name: 'Framework7Vue',
-        sourcemap: env === 'development',
-        sourcemapFile: `${buildPath}/vue/framework7-vue.bundle.js.map`,
-        banner: bannerVue,
-      }),
-    )
-    .then(async (bundle) => {
-      if (env === 'development') {
-        if (cb) cb();
-        return;
-      }
-      const result = bundle.output[0];
-      const minified = await minify(result.code, {
-        sourceMap: {
-          filename: 'framework7-vue.bundle.min.js',
-          url: 'framework7-vue.bundle.min.js.map',
-        },
-        output: {
-          preamble: bannerVue,
-        },
-      });
-      fs.writeFileSync(`${buildPath}/vue/framework7-vue.bundle.min.js`, minified.code);
-      fs.writeFileSync(`${buildPath}/vue/framework7-vue.bundle.min.js.map`, minified.map);
-      if (cb) cb();
-    })
-    .catch((err) => {
-      if (cb) cb();
-      console.log(err);
-    });
+  const buildEMS = async () => {
+    fs.writeFileSync(`${buildPath}/vue/esm/framework7-vue.js`, pluginContent);
+
+    // await exec.promise(
+    //   `MODULES=esm npx babel --config-file ./babel-vue.config.js src/vue --out-dir ${buildPath}/vue/esm --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx --no-copy-ignored`,
+    // );
+
+    await exec.promise(
+      `MODULES=esm npx babel --config-file ./babel-vue.config.js vue-temp --out-dir ${buildPath}/vue/esm/components --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx`,
+    );
+
+    const esmContent = fs.readFileSync(`${buildPath}/vue/esm/framework7-vue.js`, 'utf-8');
+
+    fs.writeFileSync(
+      `${buildPath}/vue/esm/framework7-vue.js`,
+      `${bannerReact.trim()}\n${esmContent}`,
+    );
+  };
+
+  if (env === 'production') {
+    await buildCJS();
+  }
+  await buildEMS();
+
+  if (cb) cb();
 }
 
 module.exports = buildVue;
