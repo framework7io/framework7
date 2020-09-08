@@ -55,7 +55,7 @@ async function buildVue(cb) {
     fs.writeFileSync(`${buildPath}/vue/cjs/framework7-vue.js`, pluginContent);
 
     await exec.promise(
-      `MODULES=cjs npx babel --config-file ./babel-vue.config.js src/vue --out-dir ${buildPath}/vue/cjs --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx`,
+      `MODULES=cjs npx babel --config-file ./babel-vue.config.js src/vue --out-dir ${buildPath}/vue/cjs --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx --extensions .js`,
     );
     await exec.promise(
       `MODULES=cjs npx babel --config-file ./babel-vue.config.js vue-temp --out-dir ${buildPath}/vue/cjs/components --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx`,
@@ -76,7 +76,7 @@ async function buildVue(cb) {
     fs.writeFileSync(`${buildPath}/vue/esm/framework7-vue.js`, pluginContent);
 
     await exec.promise(
-      `MODULES=esm npx babel --config-file ./babel-vue.config.js src/vue --out-dir ${buildPath}/vue/esm --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx --no-copy-ignored`,
+      `MODULES=esm npx babel --config-file ./babel-vue.config.js src/vue --out-dir ${buildPath}/vue/esm --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx --extensions .js`,
     );
 
     await exec.promise(

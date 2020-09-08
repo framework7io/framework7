@@ -16,7 +16,7 @@ const buildCoreLess = require('./build-core-styles.js');
 const buildCoreComponents = require('./build-core-components.js');
 const buildCoreLazyComponents = require('./build-core-lazy-components.js');
 
-const buildPhenome = require('./build-phenome.js');
+// const buildPhenome = require('./build-phenome.js');
 const buildVue = require('./build-vue.js');
 const buildVueTypings = require('./build-vue-typings.js');
 const buildReact = require('./build-react.js');
@@ -37,7 +37,7 @@ gulp.task('core-typings', buildCoreTypings);
 gulp.task('core-styles', buildCoreLess);
 gulp.task('core-components', buildCoreComponents);
 gulp.task('core-lazy-components', buildCoreLazyComponents);
-gulp.task('phenome', buildPhenome);
+// gulp.task('phenome', buildPhenome);
 
 gulp.task('react-clean', (cb) => buildClean('react', cb));
 gulp.task('react', buildReact);

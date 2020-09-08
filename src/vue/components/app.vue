@@ -1,12 +1,12 @@
 <template>
-  <div id="framework7-root" class="classes" :ref="elRef">
+  <div id="framework7-root" :class="classes" :ref="elRef">
     <slot />
     <routable-modals />
   </div>
 </template>
 <script>
 import { classNames } from '../shared/utils';
-import { colorClasses } from '../shared/mixins';
+import { colorClasses, colorProps } from '../shared/mixins';
 
 import RoutableModals from './routable-modals';
 import { f7init, f7 } from '../shared/f7';
@@ -21,11 +21,11 @@ export default {
     routes: Array,
     ...colorProps,
   },
-  setup(params) {
+  setup(props) {
     const elRef = ref(null);
 
     if (!f7 || typeof window === 'undefined') {
-      f7init(elRef.value, params, false);
+      f7init(elRef.value, props, false);
     }
 
     onMounted(() => {
@@ -44,12 +44,12 @@ export default {
         f7.init(elRef.value);
         return;
       }
-      f7init(elRef.value, params, true);
+      f7init(elRef.value, props, true);
     }, []);
 
     const classes = classNames('framework7-root', colorClasses(props));
 
-    return { classes };
+    return { classes, elRef };
   },
 };
 </script>
