@@ -77,7 +77,7 @@ export default class extends React.Component {
   }
   openPassword() {
     const app = this.$f7;
-    app.dialog.password('Enter your username and password', (password) => {
+    app.dialog.password('Enter your password', (password) => {
       app.dialog.alert(`Thank you!<br>Password:${password}`);
     });
   }
