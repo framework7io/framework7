@@ -36,12 +36,11 @@ const NavTitle = forwardRef((props, ref) => {
     colorClasses(props),
   );
 
-  const hasChildren = children && children.length > 0;
   return (
     <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
-      {!hasChildren && title}
-      {!hasChildren && subtitleEl}
+      {title}
+      {subtitleEl}
     </div>
   );
 });

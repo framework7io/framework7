@@ -1,0 +1,34 @@
+<template>
+  <div :class="classes">
+    <slot />
+    {{ title }}
+    <span v-if="subtitle" class="subtitle">{{ subtitle }}</span>
+  </div>
+</template>
+<script>
+import { computed } from 'vue';
+import { classNames } from '../shared/utils';
+import { colorClasses, colorProps } from '../shared/mixins';
+
+export default {
+  name: 'f7-nav-title',
+  props: {
+    title: String,
+    subtitle: String,
+    sliding: Boolean,
+    ...colorProps,
+  },
+  setup(props, { slots }) {
+    const classes = computed(() =>
+      classNames(
+        'title',
+        {
+          sliding: props.sliding,
+        },
+        colorClasses(props),
+      ),
+    );
+    return { classes };
+  },
+};
+</script>

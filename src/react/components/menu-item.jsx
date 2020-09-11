@@ -16,6 +16,12 @@ import { f7ready, f7 } from '../shared/f7';
   id?: string | number;
   className?: string;
   style?: React.CSSProperties;
+  text?: string;
+  iconOnly?: boolean;
+  href?: string;
+  link?: boolean;
+  target?: string;
+  dropdown?: doolean;
   COLOR_PROPS
   ICON_PROPS
   ROUTER_PROPS

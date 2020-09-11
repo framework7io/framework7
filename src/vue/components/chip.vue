@@ -26,7 +26,7 @@ import f7Icon from './icon';
 import f7Badge from './badge';
 
 export default {
-  name: 'f7-login-screen-title',
+  name: 'f7-chip',
   components: {
     f7Icon,
     f7Badge,

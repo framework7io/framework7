@@ -29,7 +29,6 @@ export default {
   setup(props) {
     const classes = computed(() =>
       classNames(
-        className,
         'appbar',
         {
           'no-shadow': props.noShadow,

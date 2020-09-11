@@ -71,11 +71,11 @@ export default {
 
     const onHide = (toolbarEl) => {
       if (elRef.value !== toolbarEl) return;
-      emit(props, 'toolbarHide');
+      emit('toolbarHide');
     };
     const onShow = (toolbarEl) => {
       if (elRef.value !== toolbarEl) return;
-      emit(props, 'toolbarShow');
+      emit('toolbarShow');
     };
     const hide = (animate) => {
       if (!f7) return;

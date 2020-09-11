@@ -30,7 +30,7 @@ export default {
       if (elRef.value && props.close && f7) {
         f7.actions.close(f7.$(elRef.value).parents('.actions-modal'));
       }
-      emit(props, 'click', e);
+      emit('click', e);
     };
 
     const hasMedia = computed(() => slots && !!slots.media);

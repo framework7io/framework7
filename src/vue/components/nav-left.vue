@@ -1,0 +1,69 @@
+<template>
+  <div :class="classes">
+    <f7-link
+      v-if="backLink"
+      :href="backLinkUrl || '#'"
+      back
+      icon="icon-back"
+      :force="backLinkForce || undefined"
+      :class="!text ? 'icon-only' : undefined"
+      :text="text"
+      @click="onBackClick"
+    />
+    <slot />
+  </div>
+</template>
+<script>
+import { computed } from 'vue';
+import { classNames } from '../shared/utils';
+import { colorClasses, colorProps } from '../shared/mixins';
+import { useTheme } from '../shared/use-theme';
+
+import f7Link from './link';
+
+export default {
+  name: 'f7-nav-left',
+  components: {
+    f7Link,
+  },
+  props: {
+    backLink: [Boolean, String],
+    backLinkUrl: String,
+    backLinkForce: Boolean,
+    backLinkShowText: {
+      type: Boolean,
+      default: undefined,
+    },
+    sliding: Boolean,
+    ...colorProps,
+  },
+  setup(props, { slots, emit }) {
+    const onBackClick = (event) => {
+      emit('back:click', event);
+      emit('click:back', event);
+    };
+    const theme = useTheme();
+
+    const text = computed(() => {
+      let needBackLinkText = props.backLinkShowText;
+      if (typeof needBackLinkText === 'undefined') needBackLinkText = !theme.value.md;
+      let text;
+      if (props.backLink) {
+        text = props.backLink !== true && needBackLinkText ? props.backLink : undefined;
+      }
+      return text;
+    });
+
+    const classes = computed(() =>
+      classNames(
+        'left',
+        {
+          sliding: props.sliding,
+        },
+        colorClasses(props),
+      ),
+    );
+    return { classes, onBackClick, text };
+  },
+};
+</script>
