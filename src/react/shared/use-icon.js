@@ -28,7 +28,9 @@ export const useIcon = (props = {}) => {
         color={iconColor}
         size={iconSize}
       >
-        {iconBadge && <Badge color={badgeColor || iconBadgeColor}>{iconBadge}</Badge>}
+        {(iconBadge || iconBadge === 0) && (
+          <Badge color={badgeColor || iconBadgeColor}>{iconBadge}</Badge>
+        )}
       </Icon>
     );
   }

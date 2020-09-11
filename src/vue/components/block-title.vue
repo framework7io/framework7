@@ -25,7 +25,7 @@ export default {
           'block-title-medium': medium,
         },
         colorClasses(props),
-      ),
+      );
     });
 
     return {

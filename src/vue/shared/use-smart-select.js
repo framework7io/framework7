@@ -2,11 +2,11 @@ import { onMounted, onBeforeUnmount } from 'vue';
 import { f7ready, f7 } from './f7';
 import { extend } from './utils';
 
-export const useSmartSelect = (smartSelect, smartSelectParams, f7SmartSelect, getEl) => {
+export const useSmartSelect = (props, f7SmartSelect, getEl) => {
   onMounted(() => {
     f7ready(() => {
-      if (smartSelect) {
-        const ssParams = extend({ el: getEl() }, smartSelectParams || {});
+      if (props.smartSelect) {
+        const ssParams = extend({ el: getEl() }, props.smartSelectParams || {});
         f7SmartSelect.value = f7.smartSelect.create(ssParams);
       }
     });

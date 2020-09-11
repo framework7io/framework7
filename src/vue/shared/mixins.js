@@ -33,6 +33,8 @@ export const iconProps = {
   iconAurora: String,
   iconColor: String,
   iconSize: [String, Number],
+  iconBadge: [String, Number],
+  iconBadgeColor: String,
 };
 
 export const routerProps = {

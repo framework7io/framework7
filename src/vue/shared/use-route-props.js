@@ -1,6 +1,11 @@
-import { onUpdated } from 'vue';
+import { onMounted, onUpdated } from 'vue';
 
 export const useRouteProps = (elRef, { routeProps } = {}) => {
+  onMounted(() => {
+    if (elRef.value && routeProps) {
+      elRef.value.f7RouteProps = routeProps;
+    }
+  });
   onUpdated(() => {
     if (elRef.value && routeProps) {
       elRef.value.f7RouteProps = routeProps;

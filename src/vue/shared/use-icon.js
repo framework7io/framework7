@@ -1,7 +1,3 @@
-import { h } from 'vue';
-import Icon from '../components/icon';
-import Badge from '../components/badge';
-
 export const useIcon = (props = {}) => {
   const {
     icon,
@@ -17,9 +13,8 @@ export const useIcon = (props = {}) => {
     iconBadgeColor,
   } = props;
   if (icon || iconMaterial || iconF7 || iconMd || iconIos || iconAurora) {
-    return h(
-      Icon,
-      {
+    return {
+      props: {
         material: iconMaterial,
         f7: iconF7,
         icon,
@@ -29,8 +24,11 @@ export const useIcon = (props = {}) => {
         color: iconColor,
         size: iconSize,
       },
-      [iconBadge && h(Badge, { color: badgeColor || iconBadgeColor }, [iconBadge])],
-    );
+      badge:
+        iconBadge || iconBadge === 0
+          ? { props: { color: badgeColor || iconBadgeColor }, content: iconBadge }
+          : null,
+    };
   }
   return null;
 };
