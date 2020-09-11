@@ -153,10 +153,12 @@ const Button = forwardRef((props, ref) => {
     );
   };
 
+  const ButtonTag = type === 'submit' || type === 'reset' || type === 'button' ? 'button' : 'a';
+
   const getAttrs = () => {
     let hrefComputed = href;
     if (href === true) hrefComputed = '#';
-    if (href === false) hrefComputed = undefined; // no href attribute
+    if (href === false || ButtonTag === 'button') hrefComputed = undefined; // no href attribute
     return extend(
       {
         href: hrefComputed,
@@ -176,7 +178,6 @@ const Button = forwardRef((props, ref) => {
     textEl = <span>{text}</span>;
   }
 
-  const ButtonTag = type === 'submit' || type === 'reset' || type === 'button' ? 'button' : 'a';
   return (
     <ButtonTag
       ref={elRef}

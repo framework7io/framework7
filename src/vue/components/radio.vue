@@ -1,0 +1,52 @@
+<template>
+  <label :class="classes">
+    <input
+      ref="inputElRef"
+      type="checkbox"
+      :name="name"
+      :value="value"
+      :disabled="disabled"
+      :readonly="readonly"
+      :checked="checked"
+      @change="onChange"
+    />
+    <i class="icon-radio" />
+    <slot />
+  </label>
+</template>
+<script>
+import { ref, computed } from 'vue';
+import { classNames } from '../shared/utils';
+import { colorClasses, colorProps } from '../shared/mixins';
+
+export default {
+  name: 'f7-radio',
+  props: {
+    checked: Boolean,
+    name: [Number, String],
+    value: [Number, String, Boolean],
+    disabled: Boolean,
+    readonly: Boolean,
+    ...colorProps,
+  },
+  setup(props, { emit }) {
+    const inputElRef = ref(null);
+
+    const onChange = (event) => {
+      emit('update:checked', event.target.checked);
+    };
+
+    const classes = computed(() =>
+      classNames(
+        {
+          radio: true,
+          disabled: props.disabled,
+        },
+        colorClasses(props),
+      ),
+    );
+
+    return { inputElRef, classes, onChange };
+  },
+};
+</script>

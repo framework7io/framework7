@@ -1,14 +1,14 @@
 import { onMounted, onBeforeUnmount } from 'vue';
 import { f7, f7ready } from './f7';
 
-export const useTab = (elRef, props, emit) => {
+export const useTab = (elRef, emit) => {
   const onTabShow = (el) => {
     if (elRef.value !== el) return;
-    emit(props, 'tabShow', el);
+    emit('tabShow', el);
   };
   const onTabHide = (el) => {
     if (elRef.value !== el) return;
-    emit(props, 'tabHide', el);
+    emit('tabHide', el);
   };
   onMounted(() => {
     if (!elRef.value) return;

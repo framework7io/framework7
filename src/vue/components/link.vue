@@ -1,5 +1,5 @@
 <template>
-  <a ref="elRef" :class="classes" v-bind="attrs" @click="onClick">
+  <a ref="elRef" :class="classes" v-bind="attrs">
     <f7-icon v-if="icon" v-bind="icon.props">
       <f7-badge v-if="icon.badge" v-bind="icon.badge.props">{{ icon.badge.content }}</f7-badge>
     </f7-icon>
@@ -62,13 +62,9 @@ export default {
     ...actionsProps,
     ...routerProps,
   },
-  setup(props, { slots, emit }) {
+  setup(props, { slots }) {
     const elRef = ref(null);
     const f7SmartSelect = ref(null);
-
-    const onClick = (e) => {
-      emit('click', e);
-    };
 
     useTooltip(elRef, props);
 
@@ -127,7 +123,7 @@ export default {
       isTabbarLabel,
       attrs,
       classes,
-      onClick,
+      f7SmartSelect,
     };
   },
 };

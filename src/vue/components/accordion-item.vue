@@ -1,0 +1,81 @@
+<template>
+  <div :class="classes" ref="elRef">
+    <slot />
+  </div>
+</template>
+<script>
+import { computed, onBeforeUnmount, onMounted } from 'vue';
+import { classNames } from '../shared/utils';
+import { colorClasses, colorProps } from '../shared/mixins';
+import { f7, f7ready } from '../shared/f7';
+
+export default {
+  name: 'f7-accordion-item',
+  props: {
+    opened: Boolean,
+    ...colorProps,
+  },
+  setup(props, { emit }) {
+    const elRef = ref(null);
+
+    const onBeforeOpen = (el, prevent) => {
+      if (elRef.value !== el) return;
+      emit('accordionBeforeOpen', prevent);
+    };
+    const onOpen = (el) => {
+      if (elRef.value !== el) return;
+      emit('accordionOpen');
+    };
+    const onOpened = (el) => {
+      if (elRef.value !== el) return;
+      emit('accordionOpened');
+    };
+    const onBeforeClose = (el, prevent) => {
+      if (elRef.value !== el) return;
+      emit('accordionBeforeClose', prevent);
+    };
+    const onClose = (el) => {
+      if (elRef.value !== el) return;
+      emit('accordionClose');
+    };
+    const onClosed = (el) => {
+      if (elRef.value !== el) return;
+      emit('accordionClosed');
+    };
+
+    const attachEvents = () => {
+      f7ready(() => {
+        f7.on('accordionBeforeOpen', onBeforeOpen);
+        f7.on('accordionOpen', onOpen);
+        f7.on('accordionOpened', onOpened);
+        f7.on('accordionBeforeClose', onBeforeClose);
+        f7.on('accordionClose', onClose);
+        f7.on('accordionClosed', onClosed);
+      });
+    };
+
+    const detachEvents = () => {
+      f7.off('accordionBeforeOpen', onBeforeOpen);
+      f7.off('accordionOpen', onOpen);
+      f7.off('accordionOpened', onOpened);
+      f7.off('accordionBeforeClose', onBeforeClose);
+      f7.off('accordionClose', onClose);
+      f7.off('accordionClosed', onClosed);
+    };
+
+    onMounted(() => attachEvents());
+    onBeforeUnmount(() => detachEvents());
+
+    const classes = computed(() =>
+      classNames(
+        'accordion-item',
+        {
+          'accordion-item-opened': props.opened,
+        },
+        colorClasses(props),
+      ),
+    );
+    return { classes };
+  },
+};
+</script>
