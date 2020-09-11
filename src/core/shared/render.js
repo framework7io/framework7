@@ -22,10 +22,10 @@ const render = (tag, args = []) => {
     .filter((attr) => !!attr)
     .join(' ');
 
-  if (['path', 'img', 'polygon', 'line', 'input'].indexOf('tag') >= 0) {
+  if (['path', 'img', 'circle', 'text', 'polygon', 'line', 'input'].indexOf('tag') >= 0) {
     return `<${tag} ${attrsString} />`.trim();
   }
-  return `<${tag} ${attrsString}>${children.join('')}</${tag}>`.trim();
+  return `<${tag} ${attrsString}>${children.filter((c) => !!c).join('')}</${tag}>`.trim();
 };
 function div() {
   return render('div', arguments);

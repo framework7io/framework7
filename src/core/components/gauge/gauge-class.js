@@ -3,6 +3,7 @@ import { getDocument } from 'ssr-window';
 import $ from '../../shared/dom7';
 import { extend, deleteProps } from '../../shared/utils';
 import Framework7Class from '../../shared/class';
+import { svg, path, circle, text } from '../../shared/render';
 
 class Gauge extends Framework7Class {
   constructor(app, params = {}) {
@@ -81,78 +82,89 @@ class Gauge extends Framework7Class {
     const progress = Math.max(Math.min(value, 1), 0);
 
     // prettier-ignore
-    return `
-      <svg class="gauge-svg" width="${size}px" height="${semiCircle ? size / 2 : size}px" viewBox="0 0 ${size} ${semiCircle ? size / 2 : size}">
-        ${semiCircle ? `
-          <path
-            class="gauge-back-semi"
-            d="M${size - (borderWidth / 2)},${size / 2} a1,1 0 0,0 -${size - borderWidth},0"
-            stroke="${borderBgColor}"
-            stroke-width="${borderWidth}"
-            fill="${bgColor || 'none'}"
-          />
-          <path
-            class="gauge-front-semi"
-            d="M${size - (borderWidth / 2)},${size / 2} a1,1 0 0,0 -${size - borderWidth},0"
-            stroke="${borderColor}"
-            stroke-width="${borderWidth}"
-            stroke-dasharray="${length / 2}"
-            stroke-dashoffset="${(length / 2) * (1 + progress)}"
-            fill="${borderBgColor ? 'none' : (bgColor || 'none')}"
-          />
-        ` : `
-          ${borderBgColor ? `
-            <circle
-              class="gauge-back-circle"
-              stroke="${borderBgColor}"
-              stroke-width="${borderWidth}"
-              fill="${bgColor || 'none'}"
-              cx="${size / 2}"
-              cy="${size / 2}"
-              r="${radius}"
-            ></circle>
-          ` : ''}
-          <circle
-            class="gauge-front-circle"
-            transform="${`rotate(-90 ${size / 2} ${size / 2})`}"
-            stroke="${borderColor}"
-            stroke-width="${borderWidth}"
-            stroke-dasharray="${length}"
-            stroke-dashoffset="${length * (1 - progress)}"
-            fill="${borderBgColor ? 'none' : bgColor || 'none'}"
-            cx="${size / 2}"
-            cy="${size / 2}"
-            r="${radius}"
-          ></circle>
-        `}
-        ${valueText ? `
-          <text
-            class="gauge-value-text"
-            x="50%"
-            y="${semiCircle ? '100%' : '50%'}"
-            font-weight="${valueFontWeight}"
-            font-size="${valueFontSize}"
-            fill="${valueTextColor}"
-            dy="${semiCircle ? (labelText ? -labelFontSize - 15 : -5) : 0}"
-            text-anchor="middle"
-            dominant-baseline="${!semiCircle && 'middle'}"
-          >${valueText}</text>
-        ` : ''}
-        ${labelText ? `
-          <text
-            class="gauge-label-text"
-            x="50%"
-            y="${semiCircle ? '100%' : '50%'}"
-            font-weight="${labelFontWeight}"
-            font-size="${labelFontSize}"
-            fill="${labelTextColor}"
-            dy="${semiCircle ? -5 : (valueText ? ((valueFontSize / 2) + 10) : 0)}"
-            text-anchor="middle"
-            dominant-baseline="${!semiCircle && 'middle'}"
-          >${labelText}</text>
-        ` : ''}
-      </svg>
-    `.trim();
+    return svg(
+      'gauge-svg',
+      {
+        width: `${size}px`,
+        height: `${semiCircle ? size / 2 : size}px`,
+        viewBox: `0 0 ${size} ${semiCircle ? size / 2 : size}`,
+      },
+      [
+        semiCircle && path(
+          'gauge-back-semi',
+          {
+            'd': `M${size - (borderWidth / 2)},${size / 2} a1,1 0 0,0 -${size - borderWidth},0`,
+            'stroke': `${borderBgColor}`,
+            'stroke-width': `${borderWidth}`,
+            'fill': `${bgColor || 'none'}`,
+          }
+        ),
+        semiCircle && path(
+          'gauge-front-semi',
+          {
+            'd': `M${size - (borderWidth / 2)},${size / 2} a1,1 0 0,0 -${size - borderWidth},0`,
+            'stroke': `${borderColor}`,
+            'stroke-width': `${borderWidth}`,
+            'stroke-dasharray': `${length / 2}`,
+            'stroke-dashoffset': `${(length / 2) * (1 + progress)}`,
+            'fill': `${borderBgColor ? 'none' : (bgColor || 'none')}`,
+          }
+        ),
+        !semiCircle && borderBgColor && circle(
+          'gauge-back-circle',
+          {
+            'stroke': borderBgColor,
+            'stroke-width': borderWidth,
+            'fill': bgColor || 'none',
+            'cx': size / 2,
+            'cy': size / 2,
+            'r': radius,
+          }
+        ),
+        !semiCircle && circle(
+          'gauge-front-circle',
+          {
+            'transform': `rotate(-90 ${size / 2} ${size / 2})`,
+            'stroke': borderColor,
+            'stroke-width': borderWidth,
+            'stroke-dasharray': length,
+            'stroke-dashoffset': length * (1 - progress),
+            'fill': borderBgColor ? 'none' : bgColor || 'none',
+            'cx': size / 2,
+            'cy': size / 2,
+            'r': radius,
+          }
+        ),
+        valueText && text(
+          'gauge-value-text',
+          {
+            'x': '50%',
+            'y': semiCircle ? '100%' : '50%',
+            'font-weight': valueFontWeight,
+            'font-size': valueFontSize,
+            'fill': valueTextColor,
+            'dy': semiCircle ? (labelText ? -labelFontSize - 15 : -5) : 0,
+            'text-anchor': 'middle',
+            'dominant-baseline': !semiCircle && 'middle',
+          },
+          [valueText]
+        ),
+        labelText && text(
+          'gauge-label-text',
+          {
+            'x': "50%",
+            'y': semiCircle ? '100%' : '50%',
+            'font-weight': labelFontWeight,
+            'font-size': labelFontSize,
+            'fill': labelTextColor,
+            'dy': semiCircle ? -5 : (valueText ? ((valueFontSize / 2) + 10) : 0),
+            'text-anchor': 'middle',
+            'dominant-baseline': !semiCircle && 'middle',
+          },
+          [labelText]
+        ),
+      ],
+    );
   }
 
   update(newParams = {}) {
