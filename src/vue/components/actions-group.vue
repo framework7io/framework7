@@ -6,6 +6,7 @@
 <script>
 import { classNames } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
+import { computed } from 'vue';
 
 export default {
   name: 'f7-actions-group',
@@ -13,7 +14,7 @@ export default {
     ...colorProps,
   },
   setup(props) {
-    const classes = classNames('actions-group', colorClasses(props));
+    const classes = computed(() => classNames('actions-group', colorClasses(props)));
     return { classes };
   },
 };

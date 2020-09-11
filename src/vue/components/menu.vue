@@ -6,6 +6,7 @@
   </div>
 </template>
 <script>
+import { computed } from 'vue';
 import { classNames } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 
@@ -15,7 +16,7 @@ export default {
     ...colorProps,
   },
   setup(props) {
-    const classes = classNames('menu', colorClasses(props));
+    const classes = computed(() => classNames('menu', colorClasses(props)));
     return { classes };
   },
 };

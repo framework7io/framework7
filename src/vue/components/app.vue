@@ -1,16 +1,16 @@
 <template>
-  <div id="framework7-root" :class="classes" :ref="elRef">
+  <div id="framework7-root" :class="classes" ref="elRef">
     <slot />
     <routable-modals />
   </div>
 </template>
 <script>
+import { ref, onMounted, computed } from 'vue';
 import { classNames } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 
 import RoutableModals from './routable-modals';
 import { f7init, f7 } from '../shared/f7';
-import { ref, onMounted } from 'vue';
 
 export default {
   name: 'f7-app',
@@ -45,9 +45,9 @@ export default {
         return;
       }
       f7init(elRef.value, props, true);
-    }, []);
+    });
 
-    const classes = classNames('framework7-root', colorClasses(props));
+    const classes = computed(() => classNames('framework7-root', colorClasses(props)));
 
     return { classes, elRef };
   },

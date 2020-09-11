@@ -4,6 +4,7 @@
   </div>
 </template>
 <script>
+import { computed } from 'vue';
 import { classNames } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 
@@ -14,13 +15,14 @@ export default {
     ...colorProps,
   },
   setup(props) {
-    const { tabs } = props;
-    const classes = classNames(
-      'views',
-      {
-        tabs,
-      },
-      colorClasses(props),
+    const classes = computed(() =>
+      classNames(
+        'views',
+        {
+          tabs: props.tabs,
+        },
+        colorClasses(props),
+      ),
     );
     return { classes };
   },

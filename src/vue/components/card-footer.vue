@@ -4,6 +4,7 @@
   </div>
 </template>
 <script>
+import { computed } from 'vue';
 import { classNames } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 
@@ -13,7 +14,7 @@ export default {
     ...colorProps,
   },
   setup(props) {
-    const classes = classNames('card-footer', colorClasses(props));
+    const classes = computed(() => classNames('card-footer', colorClasses(props)));
     return { classes };
   },
 };

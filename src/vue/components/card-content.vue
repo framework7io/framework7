@@ -4,6 +4,7 @@
   </div>
 </template>
 <script>
+import { computed } from 'vue';
 import { classNames } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 
@@ -17,12 +18,14 @@ export default {
     ...colorProps,
   },
   setup(props) {
-    const classes = classNames(
-      'card-content',
-      {
-        'card-content-padding': props.padding,
-      },
-      colorClasses(props),
+    const classes = computed(() =>
+      classNames(
+        'card-content',
+        {
+          'card-content-padding': props.padding,
+        },
+        colorClasses(props),
+      ),
     );
     return { classes };
   },

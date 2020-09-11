@@ -1,5 +1,5 @@
 <template>
-  <div class="framework7-modals" :ref="elRef">
+  <div class="framework7-modals" ref="elRef">
     <component v-for="modal in modals" :key="modal.id" :is="modal.component" v-bind="modalProps" />
   </div>
 </template>
@@ -9,9 +9,10 @@ import { f7events, f7routers, f7 } from '../shared/f7';
 
 export default {
   name: 'f7-routable-modals',
-  setup(props) {
+  setup() {
     const elRef = ref(null);
     const modals = ref([]);
+    const routerData = ref(null);
 
     onMounted(() => {
       routerData.value = {

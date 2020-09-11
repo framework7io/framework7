@@ -1,9 +1,10 @@
 <template>
-  <div :class="classes">
+  <div :class="classes" :medium="medium">
     <slot />
   </div>
 </template>
 <script>
+import { computed, reactive } from 'vue';
 import { classNames } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 
@@ -15,16 +16,21 @@ export default {
     ...colorProps,
   },
   setup(props) {
-    const { large, medium } = props;
-    const classes = classNames(
-      'block-title',
-      {
-        'block-title-large': large,
-        'block-title-medium': medium,
-      },
-      colorClasses(props),
-    );
-    return { classes };
+    const classes = computed(() => {
+      const { large, medium } = props;
+      return classNames(
+        'block-title',
+        {
+          'block-title-large': large,
+          'block-title-medium': medium,
+        },
+        colorClasses(props),
+      ),
+    });
+
+    return {
+      classes,
+    };
   },
 };
 </script>
