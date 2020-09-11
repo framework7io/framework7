@@ -18,7 +18,7 @@ export default {
     sliding: Boolean,
     ...colorProps,
   },
-  setup(props, { slots }) {
+  setup(props) {
     const classes = computed(() =>
       classNames(
         'title',

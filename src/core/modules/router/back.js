@@ -738,10 +738,7 @@ function back(...args) {
       classes.push(pageEl.className);
     });
 
-    const $previousMaster = router.$el
-      .children('.page-current')
-      .prevAll('.page-master')
-      .eq(0);
+    const $previousMaster = router.$el.children('.page-current').prevAll('.page-master').eq(0);
     if ($previousMaster.length) {
       const expectedPreviousPageUrl = router.history[router.history.length - 2];
       const expectedPreviousPageRoute = router.findMatchingRoute(expectedPreviousPageUrl);

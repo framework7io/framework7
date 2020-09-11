@@ -64,6 +64,22 @@ module.exports = {
       },
     },
     {
+      files: ['src/**/*.vue'],
+      plugins: ['vue'],
+      extends: [
+        'plugin:vue/vue3-recommended',
+        'airbnb-base',
+        'plugin:prettier/recommended',
+        'prettier/vue',
+      ],
+      rules: {
+        'vue/component-definition-name-casing': ['error', 'kebab-case'],
+        'vue/require-default-prop': ['off'],
+        'vue/custom-event-name-casing': ['off'],
+        'prefer-destructuring': ['off'],
+      },
+    },
+    {
       files: ['**/*.vue', 'src/vue/shared/*.js'],
       rules: {
         'import/no-unresolved': ['off'],

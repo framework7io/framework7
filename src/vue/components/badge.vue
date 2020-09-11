@@ -1,11 +1,11 @@
 <template>
-  <span :class="classes" ref="elRef">
+  <span ref="elRef" :class="classes">
     <slot />
   </span>
 </template>
 <script>
-import { compile, computed, ref } from 'vue';
-import { classNames, getExtraAttrs } from '../shared/utils';
+import { computed, ref } from 'vue';
+import { classNames } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 import { useTooltip } from '../shared/use-tooltip';
 

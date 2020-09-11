@@ -1,10 +1,10 @@
 <template>
-  <div :class="classes" ref="elRef">
+  <div ref="elRef" :class="classes">
     <slot />
   </div>
 </template>
 <script>
-import { computed, onBeforeUnmount, onMounted } from 'vue';
+import { ref, computed, onBeforeUnmount, onMounted } from 'vue';
 import { classNames } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 import { f7, f7ready } from '../shared/f7';

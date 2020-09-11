@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes" ref="elRef">
+  <div ref="elRef" :class="classes">
     <slot />
   </div>
 </template>
@@ -77,6 +77,11 @@ export default {
         colorClasses(props),
       );
     });
+
+    return {
+      elRef,
+      classes,
+    };
   },
 };
 </script>

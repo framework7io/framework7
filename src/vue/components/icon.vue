@@ -1,8 +1,8 @@
 <template>
   <i
+    ref="elRef"
     :style="{ fontSize: sizeComputed, width: sizeComputed, height: sizeComputed }"
     :class="classesComputed"
-    ref="elRef"
   >
     {{ iconText }}
     <slot />
@@ -10,7 +10,7 @@
 </template>
 <script>
 import { ref, computed } from 'vue';
-import { classNames, extend } from '../shared/utils';
+import { classNames } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 import { useTooltip } from '../shared/use-tooltip';
 import { useTheme } from '../shared/use-theme';

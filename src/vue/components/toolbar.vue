@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes" ref="elRef">
+  <div ref="elRef" :class="classes">
     <slot name="before-inner" />
     <div v-if="inner" className="toolbar-inner"><slot /></div>
     <slot v-else />
@@ -10,7 +10,7 @@
 import { computed, ref, provide, onMounted, onBeforeUnmount } from 'vue';
 import { classNames } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
-import { f7ready, f7 } from '../shared/f7';
+import { f7 } from '../shared/f7';
 import { useTheme } from '../shared/use-theme';
 
 export default {
@@ -65,17 +65,18 @@ export default {
     },
     ...colorProps,
   },
-  setup(props) {
+  emits: ['toolbar:hide', 'toolbar:show'],
+  setup(props, { emit }) {
     const elRef = ref(null);
     const theme = useTheme();
 
     const onHide = (toolbarEl) => {
       if (elRef.value !== toolbarEl) return;
-      emit('toolbarHide');
+      emit('toolbar:hide');
     };
     const onShow = (toolbarEl) => {
       if (elRef.value !== toolbarEl) return;
-      emit('toolbarShow');
+      emit('toolbar:show');
     };
     const hide = (animate) => {
       if (!f7) return;

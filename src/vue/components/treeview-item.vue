@@ -1,6 +1,6 @@
 <template>
-  <div :class="classes" ref="elRef">
-    <component :is="itemRootTag" @click="onClick" :class="itemRootClasses" v-bind="itemRootAttrs">
+  <div ref="elRef" :class="classes">
+    <component :is="itemRootTag" :class="itemRootClasses" v-bind="itemRootAttrs" @click="onClick">
       <slot name="root-start" />
       <div v-if="needToggle" className="treeview-toggle" />
       <div className="treeview-item-content">
@@ -75,7 +75,7 @@ export default {
   },
   emits: ['click', 'treeview:open', 'treeview:close', 'treeview:loadchildren'],
   setup(props, { slots, emit }) {
-    const elRef = useRef(null);
+    const elRef = ref(null);
 
     const hasChildren = computed(() => {
       return slots.default || slots.children || slots['children-start'];
@@ -92,15 +92,15 @@ export default {
     };
     const onOpen = (el) => {
       if (elRef.value !== el) return;
-      emit('treeviewOpen', el);
+      emit('treeview:open', el);
     };
     const onClose = (el) => {
       if (elRef.value !== el) return;
-      emit('treeviewClose', el);
+      emit('treeview:close', el);
     };
     const onLoadChildren = (el, done) => {
       if (elRef.value !== el) return;
-      emit('treeviewLoadChildren', el, done);
+      emit('treeview:loadchildren', el, done);
     };
 
     const attachEvents = () => {

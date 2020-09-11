@@ -1,5 +1,5 @@
 <template>
-  <span :class="classes" :data-progress="progress" ref="elRef">
+  <span ref="elRef" :class="classes" :data-progress="progress">
     <span :style="transformStyle" />
   </span>
 </template>

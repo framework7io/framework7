@@ -28,9 +28,11 @@ export default {
     target: String,
     divider: Boolean,
     ...colorProps,
+    ...routerProps,
+    ...actionsProps,
   },
   emits: ['click'],
-  setup(props) {
+  setup(props, { emit }) {
     const elRef = ref(null);
 
     const onClick = (e) => {

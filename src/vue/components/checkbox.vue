@@ -30,6 +30,7 @@ export default {
     readonly: Boolean,
     ...colorProps,
   },
+  emits: ['update:checked'],
   setup(props, { emit }) {
     const inputElRef = ref(null);
 

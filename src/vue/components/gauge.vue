@@ -79,9 +79,7 @@
   </div>
 </template>
 <script>
-/* eslint no-nested-ternary: off */
 import { computed } from 'vue';
-import { classNames } from '../shared/utils';
 
 export default {
   name: 'f7-gauge',

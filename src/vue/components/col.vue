@@ -1,11 +1,11 @@
 <template>
-  <component :is="tag" :class="classes" ref="elRef">
+  <component :is="tag" ref="elRef" :class="classes">
     <slot />
     <span v-if="resizable && resizableHandler" class="resize-handler" />
   </component>
 </template>
 <script>
-import { computed, onBeforeUnmount, onMounted } from 'vue';
+import { ref, computed, onBeforeUnmount, onMounted } from 'vue';
 import { classNames } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
@@ -35,6 +35,7 @@ export default {
     },
     ...colorProps,
   },
+  emits: ['gridResize'],
   setup(props, { emit }) {
     const elRef = ref(null);
 

@@ -23,9 +23,9 @@ export default {
   setup(props) {
     const classes = computed(() => {
       let positionComputed = props.position || 'left';
-      if (left) positionComputed = 'left';
-      if (center) positionComputed = 'center';
-      if (right) positionComputed = 'right';
+      if (props.left) positionComputed = 'left';
+      if (props.center) positionComputed = 'center';
+      if (props.right) positionComputed = 'right';
       return classNames('menu-dropdown', `menu-dropdown-${positionComputed}`, colorClasses(props));
     });
 

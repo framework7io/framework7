@@ -4,9 +4,9 @@
   </div>
 </template>
 <script>
+import { computed } from 'vue';
 import { classNames } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
-import { computed } from 'vue';
 
 export default {
   name: 'f7-actions-group',

@@ -1,9 +1,11 @@
 <template>
-  <div :class="classes" ref="elRef" @click="onClick">
+  <div ref="elRef" :class="classes" @click="onClick">
     <div v-if="hasMedia" class="actions-button-media">
       <slot name="media" />
     </div>
-    <div class="actions-button-text"><slot /></div>
+    <div class="actions-button-text">
+      <slot />
+    </div>
   </div>
 </template>
 <script>

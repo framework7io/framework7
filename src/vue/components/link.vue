@@ -28,7 +28,6 @@ import {
 import { useIcon } from '../shared/use-icon';
 import { useRouteProps } from '../shared/use-route-props';
 import { useTooltip } from '../shared/use-tooltip';
-import { TabbarContext } from '../shared/tabbar-context';
 import { useSmartSelect } from '../shared/use-smart-select';
 import f7Icon from './icon';
 import f7Badge from './badge';

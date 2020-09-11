@@ -93,6 +93,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-svelte3": "^2.7.3",
+    "eslint-plugin-vue": "^7.0.0-beta.3",
     "exec-sh": "^0.3.4",
     "glob": "^7.1.6",
     "gulp": "^4.0.2",

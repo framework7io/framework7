@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes" ref="elRef">
+  <div ref="elRef" :class="classes">
     <div v-if="hasMedia" :class="mediaClasses">
       <f7-icon v-if="icon" v-bind="icon.props">
         <f7-badge v-if="icon.badge" v-bind="icon.badge.props">{{ icon.badge.content }}</f7-badge>
@@ -43,6 +43,7 @@ export default {
     ...iconProps,
     ...colorProps,
   },
+  emits: ['delete'],
   setup(props, { slots, emit }) {
     const elRef = ref(null);
 

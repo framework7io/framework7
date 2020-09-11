@@ -37,7 +37,8 @@ export default {
     sliding: Boolean,
     ...colorProps,
   },
-  setup(props, { slots, emit }) {
+  emits: ['back:click', 'click:back'],
+  setup(props, { emit }) {
     const onBackClick = (event) => {
       emit('back:click', event);
       emit('click:back', event);
@@ -47,11 +48,10 @@ export default {
     const text = computed(() => {
       let needBackLinkText = props.backLinkShowText;
       if (typeof needBackLinkText === 'undefined') needBackLinkText = !theme.value.md;
-      let text;
       if (props.backLink) {
-        text = props.backLink !== true && needBackLinkText ? props.backLink : undefined;
+        return props.backLink !== true && needBackLinkText ? props.backLink : undefined;
       }
-      return text;
+      return undefined;
     });
 
     const classes = computed(() =>

@@ -1,5 +1,5 @@
 <template>
-  <div id="framework7-root" :class="classes" ref="elRef">
+  <div id="framework7-root" ref="elRef" :class="classes">
     <slot />
     <routable-modals />
   </div>

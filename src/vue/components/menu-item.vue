@@ -44,6 +44,8 @@ export default {
     target: String,
     dropdown: Boolean,
     ...colorProps,
+    ...routerProps,
+    ...actionsProps,
   },
   emits: ['click', 'menu:opened', 'menu:closed'],
   setup(props, { slots, emit }) {
@@ -53,11 +55,11 @@ export default {
       emit('click', e);
     };
     const onOpened = (el) => {
-      if (elRef.current !== el) return;
+      if (elRef.value !== el) return;
       emit('menu:opened', el);
     };
     const onClosed = (el) => {
-      if (elRef.current !== el) return;
+      if (elRef.value !== el) return;
       emit('menu:closed', el);
     };
 
@@ -81,14 +83,14 @@ export default {
     const icon = computed(() => useIcon(props));
 
     const tag = computed(() => {
-      const isLink = link || href || href === '';
+      const isLink = props.link || props.href || props.href === '';
       return isLink ? 'a' : 'div';
     });
 
     const classes = computed(() => {
       let iconOnlyComputed;
 
-      if (iconOnly || (!props.text && !slots.text)) {
+      if (props.iconOnly || (!props.text && !slots.text)) {
         iconOnlyComputed = true;
       } else {
         iconOnlyComputed = false;

@@ -1,5 +1,5 @@
 <template>
-  <label :class="classes" ref="elRef">
+  <label ref="elRef" :class="classes">
     <input
       type="checkbox"
       :name="name"
@@ -32,7 +32,7 @@ export default {
     value: [String, Number, Array],
     ...colorProps,
   },
-  emits: ['change', 'toggle:change'],
+  emits: ['change', 'toggle:change', 'update:checked'],
   setup(props, { emit }) {
     const f7Toggle = ref(null);
     const elRef = ref(null);
@@ -58,7 +58,7 @@ export default {
           el: elRef.value,
           on: {
             change(toggleInstance) {
-              emit('toggleChange', toggleInstance.checked);
+              emit('toggle:change', toggleInstance.checked);
               emit('update:checked', toggleInstance.checked);
             },
           },
