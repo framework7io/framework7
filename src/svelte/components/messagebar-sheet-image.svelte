@@ -24,7 +24,7 @@
   $: styles = `${image ? `background-image: url(${image});` : ''}${style || ''}`;
 
   function onChange(event) {
-    if (checked) dispatch('checked', [event]);
+    if (event.target.checked) dispatch('checked', [event]);
     if (typeof $$props.onChecked === 'function') $$props.onChecked(event);
     else dispatch('unchecked', [event]);
     if (typeof $$props.onUnchecked === 'function') $$props.onUnchecked(event);

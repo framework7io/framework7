@@ -122,12 +122,14 @@ const Message = forwardRef((props, ref) => {
         {slots['content-start']}
         {(slots.name || name) && (
           <div className="message-name" onClick={onNameClick}>
-            {slots.name || name}
+            {name}
+            {slots.name}
           </div>
         )}
         {(slots.header || header) && (
           <div className="message-header" onClick={onHeaderClick}>
-            {slots.header || header}
+            {header}
+            {slots.header}
           </div>
         )}
         <div className="message-bubble" onClick={onBubbleClick}>
@@ -136,11 +138,15 @@ const Message = forwardRef((props, ref) => {
             <div className="message-image">{slots.image || <img src={image} />}</div>
           )}
           {(slots['text-header'] || textHeader) && (
-            <div className="message-text-header">{slots['text-header'] || textHeader}</div>
+            <div className="message-text-header">
+              {textHeader}
+              {slots['text-header']}
+            </div>
           )}
           {(slots.text || text || typing) && (
             <div className="message-text" onClick={onTextClick}>
-              {slots.text || text}
+              {text}
+              {slots.text}
               {typing && (
                 <div className="message-typing-indicator">
                   <div />
@@ -151,14 +157,18 @@ const Message = forwardRef((props, ref) => {
             </div>
           )}
           {(slots['text-footer'] || textFooter) && (
-            <div className="message-text-footer">{slots['text-footer'] || textFooter}</div>
+            <div className="message-text-footer">
+              {textFooter}
+              {slots['text-footer']}
+            </div>
           )}
           {slots['bubble-end']}
           {slots.default}
         </div>
         {(slots.footer || footer) && (
           <div className="message-footer" onClick={onFooterClick}>
-            {slots.footer || footer}
+            {footer}
+            {slots.footer}
           </div>
         )}
         {slots['content-end']}

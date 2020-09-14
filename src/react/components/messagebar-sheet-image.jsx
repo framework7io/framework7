@@ -21,7 +21,7 @@ const MessagebarSheetImage = forwardRef((props, ref) => {
   const elRef = useRef(null);
 
   const onChange = (event) => {
-    if (checked) emit(props, 'checked', event);
+    if (event.target.checked) emit(props, 'checked', event);
     else emit(props, 'unchecked', event);
     emit(props, 'change', event);
   };

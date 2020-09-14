@@ -131,6 +131,7 @@ const Messages = forwardRef((props, ref) => {
 
   const onDestroy = () => {
     if (f7Messages.current && f7Messages.current.destroy) f7Messages.current.destroy();
+    f7Messages.current = null;
   };
 
   useIsomorphicLayoutEffect(() => {
