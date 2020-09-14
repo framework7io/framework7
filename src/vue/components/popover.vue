@@ -1,0 +1,150 @@
+<template>
+  <div ref="elRef" :class="classes">
+    <div class="popover-angle" />
+    <div class="popover-inner"><slot /></div>
+  </div>
+</template>
+<script>
+import { computed, ref, watch, onMounted, onBeforeUnmount } from 'vue';
+import { classNames } from '../shared/utils';
+import { colorClasses, colorProps } from '../shared/mixins';
+import { f7ready, f7 } from '../shared/f7';
+import { modalStateClasses } from '../shared/modal-state-classes';
+
+export default {
+  name: 'f7-popover',
+  props: {
+    opened: Boolean,
+    animate: {
+      type: Boolean,
+      default: undefined,
+    },
+    target: {
+      type: [String, Object],
+      default: undefined,
+    },
+    backdrop: {
+      type: Boolean,
+      default: undefined,
+    },
+    backdropEl: {
+      type: [String, Object],
+      default: undefined,
+    },
+    closeByBackdropClick: {
+      type: Boolean,
+      default: undefined,
+    },
+    closeByOutsideClick: {
+      type: Boolean,
+      default: undefined,
+    },
+    closeOnEscape: {
+      type: Boolean,
+      default: undefined,
+    },
+    ...colorProps,
+  },
+  emits: ['popover:open', 'popover:opened', 'popover:close', 'popover:closed', 'update:opened'],
+  setup(props, { emit }) {
+    const f7Popover = ref(null);
+    const isOpened = ref(props.opened);
+    const isClosing = ref(false);
+    const elRef = ref(null);
+
+    const onOpen = (instance) => {
+      isOpened.value = true;
+      isClosing.value = false;
+      emit('popover:open', instance);
+      emit('update:opened', true);
+    };
+    const onOpened = (instance) => {
+      emit('popover:opened', instance);
+    };
+    const onClose = (instance) => {
+      isOpened.value = false;
+      isClosing.value = true;
+      emit('popover:close', instance);
+    };
+    const onClosed = (instance) => {
+      isClosing.value = false;
+      emit('popover:closed', instance);
+      emit('update:opened', false);
+    };
+    const open = (anim) => {
+      if (!f7Popover.value) return undefined;
+      return f7Popover.value.open(anim);
+    };
+    const close = (anim) => {
+      if (!f7Popover.value) return undefined;
+      return f7Popover.value.close(anim);
+    };
+
+    watch(
+      () => props.opened,
+      (value) => {
+        if (!f7Popover.value) return;
+        if (value) {
+          f7Popover.value.open();
+        } else {
+          f7Popover.value.close();
+        }
+      },
+    );
+
+    onMounted(() => {
+      if (!elRef.value) return;
+      const popoverParams = {
+        el: elRef.value,
+        on: {
+          open: onOpen,
+          opened: onOpened,
+          close: onClose,
+          closed: onClosed,
+        },
+      };
+      const {
+        target,
+        closeByBackdropClick,
+        closeByOutsideClick,
+        closeOnEscape,
+        backdrop,
+        backdropEl,
+      } = props;
+      if (typeof target !== 'undefined') popoverParams.target = target;
+      if (typeof closeByBackdropClick !== 'undefined')
+        popoverParams.closeByBackdropClick = closeByBackdropClick;
+      if (typeof closeByOutsideClick !== 'undefined')
+        popoverParams.closeByOutsideClick = closeByOutsideClick;
+      if (typeof closeOnEscape !== 'undefined') popoverParams.closeOnEscape = closeOnEscape;
+      if (typeof backdrop !== 'undefined') popoverParams.backdrop = backdrop;
+      if (typeof backdropEl !== 'undefined') popoverParams.backdropEl = backdropEl;
+
+      f7ready(() => {
+        f7Popover.value = f7.popover.create(popoverParams);
+        if (props.opened) {
+          f7Popover.value.open(false);
+        }
+      });
+    });
+
+    onBeforeUnmount(() => {
+      if (f7Popover.value) {
+        f7Popover.value.destroy();
+      }
+      f7Popover.value = null;
+    });
+
+    const classes = computed(() =>
+      classNames('popover', modalStateClasses({ isOpened, isClosing }), colorClasses(props)),
+    );
+
+    return {
+      open,
+      close,
+      elRef,
+      classes,
+    };
+  },
+};
+</script>
