@@ -23,7 +23,6 @@ const Fab = forwardRef((props, ref) => {
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
-  const linkElRef = useRef(null);
 
   const onClick = (e) => {
     emit(props, 'click', e);
@@ -58,12 +57,17 @@ const Fab = forwardRef((props, ref) => {
   }
   let textEl;
   if (text || (textSlots && textSlots.length)) {
-    textEl = <div className="fab-text">{text || textSlots}</div>;
+    textEl = (
+      <div className="fab-text">
+        {text}
+        {textSlots}
+      </div>
+    );
   }
   let linkEl;
   if (linkChildren.length || (linkSlots && linkSlots.length) || textEl) {
     linkEl = (
-      <a ref={linkElRef} target={target} href={hrefComputed} onClick={onClick}>
+      <a target={target} href={hrefComputed} onClick={onClick}>
         {linkChildren}
         {textEl}
         {linkSlots}
