@@ -65,7 +65,8 @@ const SwipeoutButton = forwardRef((props, ref) => {
       {...extraAttrs}
       onClick={onClick}
     >
-      {children && children.length ? children : text}
+      {children}
+      {text}
     </a>
   );
 });
