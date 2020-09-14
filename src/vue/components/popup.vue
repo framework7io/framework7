@@ -1,0 +1,187 @@
+<template>
+  <div ref="elRef" :class="classes">
+    <slot />
+  </div>
+</template>
+<script>
+import { computed, ref, watch, onMounted, onBeforeUnmount } from 'vue';
+import { classNames } from '../shared/utils';
+import { colorClasses, colorProps } from '../shared/mixins';
+import { f7ready, f7 } from '../shared/f7';
+import { modalStateClasses } from '../shared/modal-state-classes';
+
+export default {
+  name: 'f7-popup',
+  props: {
+    tabletFullscreen: Boolean,
+    opened: Boolean,
+    animate: {
+      type: Boolean,
+      default: undefined,
+    },
+    backdrop: {
+      type: Boolean,
+      default: undefined,
+    },
+    backdropEl: {
+      type: [String, Object],
+      default: undefined,
+    },
+    closeByBackdropClick: {
+      type: Boolean,
+      default: undefined,
+    },
+    closeOnEscape: {
+      type: Boolean,
+      default: undefined,
+    },
+    swipeToClose: {
+      type: [Boolean, String],
+      default: false,
+    },
+    swipeHandler: {
+      type: [String, Object],
+      default: undefined,
+    },
+    push: Boolean,
+    ...colorProps,
+  },
+  emits: [
+    'popup:swipestart',
+    'popup:swipemove',
+    'popup:swipeend',
+    'popup:swipeclose',
+    'popup:open',
+    'popup:opened',
+    'popup:close',
+    'popup:closed',
+    'update:opened',
+  ],
+  setup(props, { emit }) {
+    const f7Popup = ref(null);
+    const isOpened = ref(props.opened);
+    const isClosing = ref(false);
+    const elRef = ref(null);
+
+    const onSwipeStart = (instance) => {
+      emit('popup:swipestart', instance);
+    };
+    const onSwipeMove = (instance) => {
+      emit('popup:swipemove', instance);
+    };
+    const onSwipeEnd = (instance) => {
+      emit('popup:swipeend', instance);
+    };
+    const onSwipeClose = (instance) => {
+      emit('popup:swipeclose', instance);
+    };
+    const onOpen = (instance) => {
+      isOpened.value = true;
+      isClosing.value = false;
+      emit('popup:open', instance);
+      emit('update:opened', true);
+    };
+    const onOpened = (instance) => {
+      emit('popup:opened', instance);
+    };
+    const onClose = (instance) => {
+      isOpened.value = false;
+      isClosing.value = true;
+      emit('popup:close', instance);
+    };
+    const onClosed = (instance) => {
+      isClosing.value = false;
+      emit('popup:closed', instance);
+      emit('update:opened', false);
+    };
+    const open = (anim) => {
+      if (!f7Popup.value) return undefined;
+      return f7Popup.value.open(anim);
+    };
+    const close = (anim) => {
+      if (!f7Popup.value) return undefined;
+      return f7Popup.value.close(anim);
+    };
+
+    watch(
+      () => props.opened,
+      (value) => {
+        if (!f7Popup.value) return;
+        if (value) {
+          f7Popup.value.open();
+        } else {
+          f7Popup.value.close();
+        }
+      },
+    );
+
+    onMounted(() => {
+      if (!elRef.value) return;
+      const popupParams = {
+        el: elRef.value,
+        on: {
+          swipeStart: onSwipeStart,
+          swipeMove: onSwipeMove,
+          swipeEnd: onSwipeEnd,
+          swipeClose: onSwipeClose,
+          open: onOpen,
+          opened: onOpened,
+          close: onClose,
+          closed: onClosed,
+        },
+      };
+      const {
+        closeByBackdropClick,
+        closeOnEscape,
+        animate,
+        backdrop,
+        backdropEl,
+        swipeToClose,
+        swipeHandler,
+      } = props;
+
+      if (typeof closeByBackdropClick !== 'undefined')
+        popupParams.closeByBackdropClick = closeByBackdropClick;
+      if (typeof closeOnEscape !== 'undefined') popupParams.closeOnEscape = closeOnEscape;
+      if (typeof animate !== 'undefined') popupParams.animate = animate;
+      if (typeof backdrop !== 'undefined') popupParams.backdrop = backdrop;
+      if (typeof backdropEl !== 'undefined') popupParams.backdropEl = backdropEl;
+      if (typeof swipeToClose !== 'undefined') popupParams.swipeToClose = swipeToClose;
+      if (typeof swipeHandler !== 'undefined') popupParams.swipeHandler = swipeHandler;
+
+      f7ready(() => {
+        f7Popup.value = f7.popup.create(popupParams);
+        if (props.opened) {
+          f7Popup.value.open(false);
+        }
+      });
+    });
+
+    onBeforeUnmount(() => {
+      if (f7Popup.value) {
+        f7Popup.value.destroy();
+      }
+      f7Popup.value = null;
+    });
+
+    const classes = computed(() =>
+      classNames(
+        'popup',
+        {
+          'popup-tablet-fullscreen': props.tabletFullscreen,
+          'popup-push': props.push,
+        },
+        modalStateClasses({ isOpened, isClosing }),
+        colorClasses(props),
+      ),
+    );
+
+    return {
+      open,
+      close,
+      elRef,
+      classes,
+    };
+  },
+};
+</script>
