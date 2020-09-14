@@ -10,6 +10,9 @@
 # Svelte
 
 - [ ] add loading button
+- [ ] move to new F7 plugin helpers
+- [ ] modal classes keep state
+- [ ] panel classes keep state
 
 # Vue
 
