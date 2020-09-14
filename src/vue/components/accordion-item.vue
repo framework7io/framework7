@@ -15,32 +15,40 @@ export default {
     opened: Boolean,
     ...colorProps,
   },
+  emits: [
+    'accordion:beforeopen',
+    'accordion:open',
+    'accordion:opened',
+    'accordion:beforeclose',
+    'accordion:close',
+    'accordion:closed',
+  ],
   setup(props, { emit }) {
     const elRef = ref(null);
 
     const onBeforeOpen = (el, prevent) => {
       if (elRef.value !== el) return;
-      emit('accordionBeforeOpen', prevent);
+      emit('accordion:beforeopen', prevent);
     };
     const onOpen = (el) => {
       if (elRef.value !== el) return;
-      emit('accordionOpen');
+      emit('accordion:open');
     };
     const onOpened = (el) => {
       if (elRef.value !== el) return;
-      emit('accordionOpened');
+      emit('accordion:opened');
     };
     const onBeforeClose = (el, prevent) => {
       if (elRef.value !== el) return;
-      emit('accordionBeforeClose', prevent);
+      emit('accordion:beforeclose', prevent);
     };
     const onClose = (el) => {
       if (elRef.value !== el) return;
-      emit('accordionClose');
+      emit('accordion:close');
     };
     const onClosed = (el) => {
       if (elRef.value !== el) return;
-      emit('accordionClosed');
+      emit('accordion:closed');
     };
 
     const attachEvents = () => {

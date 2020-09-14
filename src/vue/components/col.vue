@@ -35,13 +35,13 @@ export default {
     },
     ...colorProps,
   },
-  emits: ['gridResize'],
+  emits: ['grid:resize'],
   setup(props, { emit }) {
     const elRef = ref(null);
 
     const onResize = (el) => {
       if (el === elRef.value) {
-        emit('gridResize');
+        emit('grid:resize');
       }
     };
 
