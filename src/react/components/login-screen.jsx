@@ -14,6 +14,7 @@ import { LoginScreen } from 'framework7/types';
   className?: string;
   style?: React.CSSProperties;
   opened?: boolean;
+  animate?: boolean;
   onLoginScreenOpen? : (instance: LoginScreen.LoginScreen) => void
   onLoginScreenOpened? : (instance: LoginScreen.LoginScreen) => void
   onLoginScreenClose? : (instance: LoginScreen.LoginScreen) => void
@@ -23,7 +24,7 @@ import { LoginScreen } from 'framework7/types';
 
 const LoginScreen = forwardRef((props, ref) => {
   const f7LoginScreen = useRef(null);
-  const { className, id, style, children, opened } = props;
+  const { className, id, style, children, opened, animate } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const isOpened = useRef(opened);
@@ -47,13 +48,13 @@ const LoginScreen = forwardRef((props, ref) => {
     isClosing.current = false;
     emit(props, 'loginScreenClosed', instance);
   };
-  const open = (animate) => {
+  const open = (anim) => {
     if (!f7LoginScreen.current) return undefined;
-    return f7LoginScreen.current.open(animate);
+    return f7LoginScreen.current.open(anim);
   };
-  const close = (animate) => {
+  const close = (anim) => {
     if (!f7LoginScreen.current) return undefined;
-    return f7LoginScreen.current.close(animate);
+    return f7LoginScreen.current.close(anim);
   };
 
   useImperativeHandle(ref, () => ({
@@ -76,7 +77,7 @@ const LoginScreen = forwardRef((props, ref) => {
   const onMount = () => {
     if (!elRef.current) return;
     f7ready(() => {
-      f7LoginScreen.current = f7.loginScreen.create({
+      const loginScreenParams = {
         el: elRef.current,
         on: {
           open: onOpen,
@@ -84,7 +85,9 @@ const LoginScreen = forwardRef((props, ref) => {
           close: onClose,
           closed: onClosed,
         },
-      });
+      };
+      if ('animate' in props) loginScreenParams.animate = animate;
+      f7LoginScreen.current = f7.loginScreen.create(loginScreenParams);
       if (opened) {
         f7LoginScreen.current.open(false);
       }

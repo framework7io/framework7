@@ -11,6 +11,7 @@
   export { className as class };
 
   export let opened = undefined;
+  export let animate = undefined;
   export let grid = undefined;
   export let convertToPopover = undefined;
   export let forceToPopover = undefined;
@@ -95,6 +96,7 @@
     if (typeof closeByBackdropClick !== 'undefined') params.closeByBackdropClick = closeByBackdropClick;
     if (typeof closeByOutsideClick !== 'undefined') params.closeByOutsideClick = closeByOutsideClick;
     if (typeof closeOnEscape !== 'undefined') params.closeOnEscape = closeOnEscape;
+    if (typeof animate !== 'undefined') params.animate = animate;
 
     f7.ready(() => {
       f7Actions = f7.instance.actions.create(params);

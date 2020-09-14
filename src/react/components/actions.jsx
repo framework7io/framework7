@@ -15,6 +15,7 @@ import { Actions } from 'framework7/types';
   className: string;
   style: React.CSSProperties;
   opened? : boolean
+  animate? : boolean
   grid? : boolean
   convertToPopover? : boolean
   forceToPopover? : boolean
@@ -32,7 +33,7 @@ import { Actions } from 'framework7/types';
 */
 
 const Actions = forwardRef((props, ref) => {
-  const { className, id, style, children, grid, opened = false } = props;
+  const { className, id, style, children, grid, opened = false, animate } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
@@ -57,13 +58,13 @@ const Actions = forwardRef((props, ref) => {
     isClosing.current = false;
     emit(props, 'actionsClosed', instance);
   };
-  const open = (animate) => {
+  const open = (anim) => {
     if (!f7Actions.current) return undefined;
-    return f7Actions.current.open(animate);
+    return f7Actions.current.open(anim);
   };
-  const close = (animate) => {
+  const close = (anim) => {
     if (!f7Actions.current) return undefined;
-    return f7Actions.current.close(animate);
+    return f7Actions.current.close(anim);
   };
 
   useImperativeHandle(ref, () => ({
@@ -115,6 +116,7 @@ const Actions = forwardRef((props, ref) => {
     if ('closeByBackdropClick' in props) params.closeByBackdropClick = closeByBackdropClick;
     if ('closeByOutsideClick' in props) params.closeByOutsideClick = closeByOutsideClick;
     if ('closeOnEscape' in props) params.closeOnEscape = closeOnEscape;
+    if ('animate' in props) params.animate = animate;
 
     f7ready(() => {
       f7Actions.current = f7.actions.create(params);

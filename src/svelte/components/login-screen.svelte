@@ -11,6 +11,7 @@
   export { className as class };
 
   export let opened = undefined;
+  export let animate = undefined;
 
   let el;
   let f7LoginScreen;
@@ -74,6 +75,7 @@
         closed: onClosed,
       },
     };
+    if (typeof animate !== 'undefined') params.animate = animate;
 
     f7.ready(() => {
       f7LoginScreen = f7.instance.loginScreen.create(params);

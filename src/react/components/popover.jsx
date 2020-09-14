@@ -15,6 +15,7 @@ import { Popover } from 'framework7/types';
   className?: string;
   style?: React.CSSProperties;
   opened? : boolean
+  animate? : boolean
   target? : string | Object
   backdrop? : boolean
   backdropEl? : string | Object
@@ -36,6 +37,7 @@ const Popover = forwardRef((props, ref) => {
     style,
     children,
     opened,
+    animate,
     target,
     backdrop,
     backdropEl,
@@ -67,13 +69,13 @@ const Popover = forwardRef((props, ref) => {
     isClosing.current = false;
     emit(props, 'popoverClosed', instance);
   };
-  const open = (animate) => {
+  const open = (anim) => {
     if (!f7Popover.current) return undefined;
-    return f7Popover.current.open(animate);
+    return f7Popover.current.open(anim);
   };
-  const close = (animate) => {
+  const close = (anim) => {
     if (!f7Popover.current) return undefined;
-    return f7Popover.current.close(animate);
+    return f7Popover.current.close(anim);
   };
 
   useImperativeHandle(ref, () => ({
@@ -110,6 +112,7 @@ const Popover = forwardRef((props, ref) => {
     if ('closeOnEscape' in props) popoverParams.closeOnEscape = closeOnEscape;
     if ('backdrop' in props) popoverParams.backdrop = backdrop;
     if ('backdropEl' in props) popoverParams.backdropEl = backdropEl;
+    if ('animate' in props) popoverParams.animate = animate;
 
     f7ready(() => {
       f7Popover.current = f7.popover.create(popoverParams);

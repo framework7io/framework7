@@ -15,6 +15,7 @@ import { Sheet } from 'framework7/types';
   className?: string;
   style?: React.CSSProperties;
   opened? : boolean
+  animate? : boolean
   top? : boolean
   bottom? : boolean
   position? : string
@@ -48,6 +49,7 @@ const Sheet = forwardRef((props, ref) => {
     position,
     push,
     opened,
+    animate,
     backdrop,
     backdropEl,
     closeByBackdropClick,
@@ -89,13 +91,13 @@ const Sheet = forwardRef((props, ref) => {
     isClosing.current = false;
     emit(props, 'sheetClosed', instance);
   };
-  const open = (animate) => {
+  const open = (anim) => {
     if (!f7Sheet.current) return undefined;
-    return f7Sheet.current.open(animate);
+    return f7Sheet.current.open(anim);
   };
-  const close = (animate) => {
+  const close = (anim) => {
     if (!f7Sheet.current) return undefined;
-    return f7Sheet.current.close(animate);
+    return f7Sheet.current.close(anim);
   };
 
   useImperativeHandle(ref, () => ({
@@ -120,6 +122,7 @@ const Sheet = forwardRef((props, ref) => {
       },
     };
 
+    if ('animate' in props && typeof animate !== 'undefined') sheetParams.animate = animate;
     if ('backdrop' in props && typeof backdrop !== 'undefined') sheetParams.backdrop = backdrop;
     if ('backdropEl' in props) sheetParams.backdropEl = backdropEl;
     if ('closeByBackdropClick' in props) sheetParams.closeByBackdropClick = closeByBackdropClick;

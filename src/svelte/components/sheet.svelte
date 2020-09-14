@@ -11,6 +11,7 @@
   export { className as class };
 
   export let opened = undefined;
+  export let animate = undefined;
   export let top = undefined;
   export let bottom = undefined;
   export let position = undefined;
@@ -114,6 +115,7 @@
       },
     };
     if (typeof backdrop !== 'undefined') params.backdrop = backdrop;
+    if (typeof animate !== 'undefined') params.animate = animate;
     if (typeof backdropEl !== 'undefined') params.backdropEl = backdropEl;
     if (typeof closeByBackdropClick !== 'undefined') params.closeByBackdropClick = closeByBackdropClick;
     if (typeof closeByOutsideClick !== 'undefined') params.closeByOutsideClick = closeByOutsideClick;
