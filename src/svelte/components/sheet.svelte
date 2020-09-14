@@ -152,5 +152,6 @@
   <slot name="fixed" />
   <div class="sheet-modal-inner" bind:this={innerEl}>
     <slot />
+    <slot name="static" />
   </div>
 </div>

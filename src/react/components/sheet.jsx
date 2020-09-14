@@ -187,7 +187,12 @@ const Sheet = forwardRef((props, ref) => {
       else staticList.push(child);
     });
   }
-  const innerEl = <div className="sheet-modal-inner">{staticList}</div>;
+  const innerEl = (
+    <div className="sheet-modal-inner">
+      {staticList}
+      {slots.static}
+    </div>
+  );
 
   let positionComputed = 'bottom';
   if (position) positionComputed = position;
@@ -208,6 +213,7 @@ const Sheet = forwardRef((props, ref) => {
   return (
     <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {fixedList}
+      {slots.fixed}
       {innerEl}
     </div>
   );
