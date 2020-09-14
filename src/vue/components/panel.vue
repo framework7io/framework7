@@ -1,0 +1,223 @@
+<template>
+  <div ref="elRef" :class="classes">
+    <slot />
+    <div v-if="resizable" class="panel-resize-handler"></div>
+  </div>
+</template>
+<script>
+import { computed, ref, watch, onMounted, onBeforeUnmount } from 'vue';
+import { classNames, noUndefinedProps } from '../shared/utils';
+import { colorClasses, colorProps } from '../shared/mixins';
+import { f7ready, f7 } from '../shared/f7';
+
+export default {
+  name: 'f7-panel',
+  props: {
+    side: String,
+    effect: String,
+    cover: Boolean,
+    reveal: Boolean,
+    left: Boolean,
+    right: Boolean,
+    opened: Boolean,
+    resizable: Boolean,
+    backdrop: {
+      type: Boolean,
+      default: true,
+    },
+    backdropEl: {
+      type: String,
+      default: undefined,
+    },
+    visibleBreakpoint: {
+      type: Number,
+      default: undefined,
+    },
+    collapsedBreakpoint: {
+      type: Number,
+      default: undefined,
+    },
+    swipe: Boolean,
+    swipeNoFollow: Boolean,
+    swipeOnlyClose: Boolean,
+    swipeActiveArea: {
+      type: Number,
+      default: 0,
+    },
+    swipeThreshold: {
+      type: Number,
+      default: 0,
+    },
+    ...colorProps,
+  },
+  emits: [
+    'panel:open',
+    'panel:opened',
+    'panel:close',
+    'panel:closed',
+    'click',
+    'panel:backdropclick',
+    'panel:swipe',
+    'panel:swipeopen',
+    'panel:breakpoint',
+    'panel:collapsedbreakpoint',
+    'panel:resize',
+    'update:opened',
+  ],
+  setup(props, { emit }) {
+    const f7Panel = ref(null);
+    const elRef = ref(null);
+    const isOpened = ref(false);
+    const isClosing = ref(false);
+    const isCollapsed = ref(false);
+    const isBreakpoint = ref(false);
+
+    const onOpen = (event) => {
+      isOpened.value = true;
+      isClosing.value = false;
+      emit('panel:open', event);
+      emit('update:opened', true);
+    };
+    const onOpened = (event) => {
+      emit('panel:opened', event);
+    };
+    const onClose = (event) => {
+      isOpened.value = false;
+      isClosing.value = true;
+      emit('panel:close', event);
+    };
+    const onClosed = (event) => {
+      isClosing.value = false;
+      emit('panel:closed', event);
+      emit('update:opened', false);
+    };
+    const onBackdropClick = (event) => {
+      emit('click', event);
+      emit('panel:backdropclick', event);
+    };
+    const onSwipe = (event) => {
+      emit('panel:swipe', event);
+    };
+    const onSwipeOpen = (event) => {
+      emit('panel:swipeopen', event);
+    };
+    const onBreakpoint = (event) => {
+      isBreakpoint.value = true;
+      isCollapsed.value = false;
+      emit('panel:breakpoint', event);
+    };
+    const onCollapsedBreakpoint = (event) => {
+      isBreakpoint.value = false;
+      isCollapsed.value = true;
+      emit('panel:collapsedbreakpoint', event);
+    };
+    const onResize = (...args) => {
+      emit('panel:resize', ...args);
+    };
+    const open = (animate) => {
+      if (!f7Panel.value) return;
+      f7Panel.value.open(animate);
+    };
+    const close = (animate) => {
+      if (!f7Panel.value) return;
+      f7Panel.value.close(animate);
+    };
+    const toggle = (animate) => {
+      if (!f7Panel.value) return;
+      f7Panel.value.toggle(animate);
+    };
+
+    watch(
+      () => props.resizable,
+      (newValue) => {
+        if (!f7Panel.value) return;
+        if (newValue) f7Panel.value.enableResizable();
+        else f7Panel.value.disableResizable();
+      },
+    );
+    watch(
+      () => props.opened,
+      (newValue) => {
+        if (!f7Panel.value) return;
+        if (newValue) {
+          f7Panel.value.open();
+        } else {
+          f7Panel.value.close();
+        }
+      },
+    );
+
+    onMounted(() => {
+      f7ready(() => {
+        const $ = f7.$;
+        if (!$) return;
+        if ($('.panel-backdrop').length === 0) {
+          $('<div class="panel-backdrop"></div>').insertBefore(elRef.value);
+        }
+        const params = noUndefinedProps({
+          el: elRef.value,
+          resizable: props.resizable,
+          backdrop: props.backdrop,
+          backdropEl: props.backdropEl,
+          containerEl: props.containerEl,
+          visibleBreakpoint: props.visibleBreakpoint,
+          collapsedBreakpoint: props.collapsedBreakpoint,
+          swipe: props.swipe,
+          swipeNoFollow: props.swipeNoFollow,
+          swipeOnlyClose: props.swipeOnlyClose,
+          swipeActiveArea: props.swipeActiveArea,
+          swipeThreshold: props.swipeThreshold,
+          on: {
+            open: onOpen,
+            opened: onOpened,
+            close: onClose,
+            closed: onClosed,
+            backdropClick: onBackdropClick,
+            swipe: onSwipe,
+            swipeOpen: onSwipeOpen,
+            collapsedBreakpoint: onCollapsedBreakpoint,
+            breakpoint: onBreakpoint,
+            resize: onResize,
+          },
+        });
+        f7Panel.value = f7.panel.create(params);
+        if (props.opened) {
+          f7Panel.value.open(false);
+        }
+      });
+    });
+
+    onBeforeUnmount(() => {
+      if (f7Panel.value && f7Panel.value.destroy) {
+        f7Panel.value.destroy();
+      }
+      f7Panel.value = null;
+    });
+
+    const classes = computed(() => {
+      const sideComputed = props.side || (props.left ? 'left' : 'right');
+      const effectComputed = props.effect || (props.reveal ? 'reveal' : 'cover');
+      return classNames(
+        'panel',
+        {
+          'panel-in': isOpened.value && !isClosing.value && !isBreakpoint.value,
+          'panel-in-breakpoint': isBreakpoint.value,
+          'panel-in-collapsed': isCollapsed.value,
+          'panel-resizable': props.resizable,
+          [`panel-${sideComputed}`]: sideComputed,
+          [`panel-${effectComputed}`]: effectComputed,
+        },
+        colorClasses(props),
+      );
+    });
+
+    return {
+      elRef,
+      classes,
+      open,
+      close,
+      toggle,
+    };
+  },
+};
+</script>

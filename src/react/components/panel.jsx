@@ -193,6 +193,7 @@ const Panel = forwardRef((props, ref) => {
     if (f7Panel.current && f7Panel.current.destroy) {
       f7Panel.current.destroy();
     }
+    f7Panel.current = null;
   };
 
   useIsomorphicLayoutEffect(() => {

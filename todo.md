@@ -6,6 +6,7 @@
 # React
 
 - [ ] add loading button
+- [ ] set to null on instance destroy
 
 # Svelte
 
@@ -13,6 +14,7 @@
 - [ ] move to new F7 plugin helpers
 - [ ] modal classes keep state
 - [ ] panel classes keep state
+- [ ] set to null on instance destroy
 
 # Vue
 
@@ -20,3 +22,4 @@
 - [ ] v-model to modals
 - [ ] add loading button
 - [ ] colon-case events
+- [ ] set to null on instance destroy
