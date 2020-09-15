@@ -24,6 +24,7 @@ const ListItemContent = ({
   slots,
   inputElRef,
   onChange,
+  onClick,
   isMediaComputed,
   isSortableComputed,
   isSortableOppositeComputed,
@@ -95,12 +96,17 @@ const ListItemContent = ({
   if (footer || slots.footer) {
     footerEl = h('div', { class: 'item-footer' }, [footer, slots.footer && slots.footer()]);
   }
-  if (title || slots.title || (!isMediaComputed && headerEl) || (!isMediaComputed && footerEl)) {
+  if (
+    title ||
+    slots.title ||
+    (!isMediaComputed.value && headerEl) ||
+    (!isMediaComputed.value && footerEl)
+  ) {
     titleEl = h('div', { class: 'item-title' }, [
-      !isMediaComputed && headerEl,
+      !isMediaComputed.value && headerEl,
       title,
       slots.title && slots.title(),
-      !isMediaComputed && footerEl,
+      !isMediaComputed.value && footerEl,
     ]);
   }
   if (subtitle || slots.subtitle) {
@@ -127,7 +133,7 @@ const ListItemContent = ({
       slots['after-end'] && slots['after-end'](),
     ]);
   }
-  if (isMediaComputed) {
+  if (isMediaComputed.value) {
     titleRowEl = h('div', { class: 'item-title-row' }, [
       slots['before-title'] && slots['before-title'](),
       titleEl,
@@ -161,10 +167,10 @@ const ListItemContent = ({
 
   const ItemContentTag = checkbox || radio ? 'label' : 'div';
 
-  return h(ItemContentTag, { class: itemContentClasses }, [
-    isSortableComputed &&
+  return h(ItemContentTag, { class: itemContentClasses.value, onClick }, [
+    isSortableComputed.value &&
       sortable !== false &&
-      isSortableOppositeComputed &&
+      isSortableOppositeComputed.value &&
       h('div', { class: 'sortable-handler' }),
     slots['content-start'] && slots['content-start'](),
     inputEl,
@@ -265,16 +271,20 @@ export default {
   ],
   setup(props, { slots, emit }) {
     const ListContext = inject('ListContext', {
-      listIsMedia: false,
-      listIsSortable: false,
-      listIsSortableOpposite: false,
-      listIsSimple: false,
+      value: {
+        listIsMedia: false,
+        listIsSortable: false,
+        listIsSortableOpposite: false,
+        listIsSimple: false,
+      },
     });
 
-    const listIsMedia = computed(() => ListContext.listIsMedia || false);
-    const listIsSortable = computed(() => ListContext.listIsSortable || false);
-    const listIsSortableOpposite = computed(() => ListContext.listIsSortableOpposite || false);
-    const listIsSimple = computed(() => ListContext.listIsSimple || false);
+    const listIsMedia = computed(() => ListContext.value.listIsMedia || false);
+    const listIsSortable = computed(() => ListContext.value.listIsSortable || false);
+    const listIsSortableOpposite = computed(
+      () => ListContext.value.listIsSortableOpposite || false,
+    );
+    const listIsSimple = computed(() => ListContext.value.listIsSimple || false);
 
     const elRef = ref(null);
     const linkElRef = ref(null);
@@ -469,7 +479,7 @@ export default {
         {
           'item-divider': props.divider,
           'list-group-title': props.groupTitle,
-          'media-item': isMediaComputed,
+          'media-item': isMediaComputed.value,
           swipeout: props.swipeout,
           'accordion-item': props.accordionItem,
           'accordion-item-opened': props.accordionItemOpened,
@@ -492,6 +502,10 @@ export default {
           slots,
           inputElRef,
           onChange,
+          onClick:
+            props.link || props.href || props.accordionItem || props.smartSelect
+              ? undefined
+              : onClick,
           isMediaComputed,
           isSortableComputed,
           isSortableOppositeComputed,
@@ -500,9 +514,11 @@ export default {
 
         // Link
         if (props.link || props.href || props.accordionItem || props.smartSelect) {
-          linkEl = h('a', { ref: linkElRef, class: linkClasses, ...linkAttrs, onClick }, [
-            itemContentEl,
-          ]);
+          linkEl = h(
+            'a',
+            { ref: linkElRef, class: linkClasses.value, ...linkAttrs.value, onClick },
+            [itemContentEl],
+          );
         }
       }
 
@@ -511,7 +527,7 @@ export default {
           'li',
           {
             ref: elRef,
-            class: liClasses,
+            class: liClasses.value,
             'data-virtual-list-index': props.virtualListIndex,
             onClick,
           },
@@ -523,7 +539,7 @@ export default {
           'li',
           {
             ref: elRef,
-            class: liClasses,
+            class: liClasses.value,
             onClick,
             'data-virtual-list-index': props.virtualListIndex,
           },
@@ -539,7 +555,7 @@ export default {
         'li',
         {
           ref: elRef,
-          class: liClasses,
+          class: liClasses.value,
           'data-virtual-list-index': props.virtualListIndex,
         },
         [

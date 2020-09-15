@@ -94,6 +94,7 @@ const ListItemContent = ({
   slots,
   inputElRef,
   onChange,
+  onClick,
   isMediaComputed,
   isSortableComputed,
   isSortableOppositeComputed,
@@ -282,7 +283,7 @@ const ListItemContent = ({
     colorClasses(props),
   );
   return (
-    <ItemContentTag className={classes}>
+    <ItemContentTag className={classes} onClick={onClick}>
       {isSortableComputed && sortable !== false && isSortableOppositeComputed && (
         <div className="sortable-handler" />
       )}
@@ -516,6 +517,7 @@ const ListItem = forwardRef((props, ref) => {
       slots,
       inputElRef,
       onChange,
+      onClick: link || href || accordionItem || smartSelect ? undefined : onClick,
       isMediaComputed,
       isSortableComputed,
       isSortableOppositeComputed,
