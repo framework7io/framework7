@@ -3,7 +3,7 @@
     <div class="navbar-bg" />
     <slot name="before-inner" />
     <div :class="innerClasses">
-      <nav-left
+      <f7-nav-left
         v-if="hasLeft"
         :back-link="backLink"
         :back-link-url="backLinkUrl"
@@ -13,14 +13,14 @@
       >
         <slot name="nav-left" />
         <slot name="left" />
-      </nav-left>
-      <nav-title v-if="hasTitle" :title="title" :subtitle="subtitle">
+      </f7-nav-left>
+      <f7-nav-title v-if="hasTitle" :title="title" :subtitle="subtitle">
         <slot name="title" />
-      </nav-title>
-      <nav-right v-if="hasRight">
+      </f7-nav-title>
+      <f7-nav-right v-if="hasRight">
         <slot name="nav-right" />
         <slot name="right" />
-      </nav-right>
+      </f7-nav-right>
       <div v-if="hasTitle" className="title-large">
         <div className="title-large-text">
           {{ largeTitle }}
@@ -39,16 +39,16 @@ import { colorClasses, colorProps } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
 import { useTheme } from '../shared/use-theme';
 
-import NavLeft from './nav-left';
-import NavTitle from './nav-title';
-import NavRight from './nav-right';
+import f7NavLeft from './nav-left';
+import f7NavTitle from './nav-title';
+import f7NavRight from './nav-right';
 
 export default {
   name: 'f7-navbar',
   components: {
-    NavLeft,
-    NavTitle,
-    NavRight,
+    f7NavLeft,
+    f7NavTitle,
+    f7NavRight,
   },
   props: {
     backLink: [Boolean, String],

@@ -26,18 +26,18 @@
     :data-backdrop="typeof backdrop === 'undefined' ? backdrop : backdrop.toString()"
     :data-backdrop-el="backdropEl"
   >
-    <card-header v-if="hasHeader">
+    <f7-card-header v-if="hasHeader">
       {{ title }}
       <slot name="header" />
-    </card-header>
-    <card-content v-if="hasContent" :padding="padding">
+    </f7-card-header>
+    <f7-card-content v-if="hasContent" :padding="padding">
       {{ content }}
       <slot name="content" />
-    </card-content>
-    <card-footer v-if="hasFooter">
+    </f7-card-content>
+    <f7-card-footer v-if="hasFooter">
       {{ title }}
       <slot name="footer" />
-    </card-footer>
+    </f7-card-footer>
     <slot />
   </div>
 </template>
@@ -47,16 +47,16 @@ import { classNames } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 import { f7, f7ready } from '../shared/f7';
 
-import CardHeader from './card-header';
-import CardContent from './card-content';
-import CardFooter from './card-footer';
+import f7CardHeader from './card-header';
+import f7CardContent from './card-content';
+import f7CardFooter from './card-footer';
 
 export default {
   name: 'f7-card',
   components: {
-    CardHeader,
-    CardContent,
-    CardFooter,
+    f7CardHeader,
+    f7CardContent,
+    f7CardFooter,
   },
   props: {
     title: [String, Number],
