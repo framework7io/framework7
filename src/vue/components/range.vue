@@ -146,6 +146,7 @@ export default {
     );
 
     return {
+      elRef,
       classes,
       setValue,
       getValue,
