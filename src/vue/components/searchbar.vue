@@ -267,6 +267,7 @@ export default {
     const tag = computed(() => (props.form ? 'form' : 'div'));
 
     return {
+      elRef,
       tag,
       classes,
       search,
