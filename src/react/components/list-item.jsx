@@ -102,6 +102,7 @@ const ListItemContent = ({
     radio,
     checkbox,
     value,
+    name,
     readonly,
     disabled,
     checked,
@@ -574,7 +575,10 @@ const ListItem = forwardRef((props, ref) => {
         data-virtual-list-index={virtualListIndex}
         onClick={onClick}
       >
-        <span>{children && children.length ? children : title}</span>
+        <span>
+          {title}
+          {children}
+        </span>
       </li>
     );
   }
