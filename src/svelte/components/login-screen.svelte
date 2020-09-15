@@ -36,19 +36,19 @@
 
   function onOpen(instance) {
     dispatch('loginscreenOpen', [instance]);
-    if (typeof $$props.onLoginscreenOpen === 'function') $$props.onLoginscreenOpen(instance);
+    if (typeof $$props.onLoginScreenOpen === 'function') $$props.onLoginScreenOpen(instance);
   }
   function onOpened(instance) {
     dispatch('loginscreenOpened', [instance]);
-    if (typeof $$props.onLoginscreenOpened === 'function') $$props.onLoginscreenOpened(instance);
+    if (typeof $$props.onLoginScreenOpened === 'function') $$props.onLoginScreenOpened(instance);
   }
   function onClose(instance) {
     dispatch('loginscreenClose', [instance]);
-    if (typeof $$props.onLoginscreenClose === 'function') $$props.onLoginscreenClose(instance);
+    if (typeof $$props.onLoginScreenClose === 'function') $$props.onLoginScreenClose(instance);
   }
   function onClosed(instance) {
     dispatch('loginscreenClosed', [instance]);
-    if (typeof $$props.onLoginscreenClosed === 'function') $$props.onLoginscreenClosed(instance);
+    if (typeof $$props.onLoginScreenClosed === 'function') $$props.onLoginScreenClosed(instance);
   }
 
   let initialWatched = false;
