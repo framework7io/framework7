@@ -176,7 +176,7 @@ const PhotoBrowser = forwardRef((props, ref) => {
         },
       });
 
-      f7PhotoBrowser.current = f7.photoBrowser.create(params);
+      f7PhotoBrowser.current = f7.photoBrowser.create(paramsComputed);
     });
   };
 
