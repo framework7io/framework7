@@ -255,6 +255,7 @@ export default {
     });
 
     return {
+      elRef,
       classes,
       innerClasses,
       hide,

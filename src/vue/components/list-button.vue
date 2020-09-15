@@ -74,7 +74,7 @@ export default {
       });
     });
 
-    return { linkAttrs, linkClasses, onClick };
+    return { linkAttrs, linkClasses, onClick, linkElRef };
   },
 };
 </script>

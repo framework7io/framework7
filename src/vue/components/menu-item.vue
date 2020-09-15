@@ -128,6 +128,7 @@ export default {
       attrs,
       icon,
       onClick,
+      elRef,
     };
   },
 };

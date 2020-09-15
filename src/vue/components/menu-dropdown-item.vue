@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes" v-bind="attrs" @click="onClick">
+  <div ref="elRef" :class="classes" v-bind="attrs" @click="onClick">
     {{ text }}
     <slot />
   </div>
@@ -77,6 +77,7 @@ export default {
       attrs,
       tag,
       onClick,
+      elRef,
     };
   },
 };

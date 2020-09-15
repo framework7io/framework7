@@ -168,6 +168,7 @@ export default {
       onClick,
       hasChildren,
       needToggle,
+      elRef,
     };
   },
 };

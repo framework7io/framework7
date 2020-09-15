@@ -38,7 +38,7 @@ export default {
         colorClasses(props),
       ),
     );
-    return { classes, set, transformStyle };
+    return { classes, set, transformStyle, elRef };
   },
 };
 </script>

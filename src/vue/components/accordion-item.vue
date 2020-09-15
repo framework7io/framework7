@@ -83,7 +83,7 @@ export default {
         colorClasses(props),
       ),
     );
-    return { classes };
+    return { elRef, classes };
   },
 };
 </script>
