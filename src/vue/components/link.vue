@@ -73,9 +73,9 @@ export default {
       return elRef.value;
     });
 
-    const tabbarContext = inject('tabbarContext', {});
+    const TabbarContext = inject('TabbarContext', {});
 
-    const isTabbarLabel = computed(() => props.tabbarLabel || tabbarContext.tabbarHasLabels);
+    const isTabbarLabel = computed(() => props.tabbarLabel || TabbarContext.tabbarHasLabels);
 
     const attrs = computed(() => {
       const { href, tabLink, target } = props;
