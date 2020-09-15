@@ -14,7 +14,16 @@ import { f7 } from '../shared/f7';
 */
 
 const PieChart = forwardRef((props, ref) => {
-  const { className, id, style, size = 320, tooltip = false, datasets = [], formatTooltip } = props;
+  const {
+    className,
+    id,
+    style,
+    size = 320,
+    tooltip = false,
+    datasets = [],
+    formatTooltip,
+    children,
+  } = props;
 
   const extraAttrs = getExtraAttrs(props);
 
@@ -170,6 +179,7 @@ const PieChart = forwardRef((props, ref) => {
           />
         ))}
       </svg>
+      {children}
     </div>
   );
 });
