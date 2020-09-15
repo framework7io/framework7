@@ -358,13 +358,13 @@ class AreaChart extends Framework7Class {
           ${lineChart ? `
             <path
               stroke="${data.color}"
-              fillRule="evenodd"
+              fill-rule="evenodd"
               d="${data.points}"
             />
             ` : `
             <polygon
               fill="${data.color}"
-              fillRule="evenodd"
+              fill-rule="evenodd"
               points="${data.points}"
             />
           `}

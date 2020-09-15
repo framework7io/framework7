@@ -77,7 +77,7 @@ export default {
       }
 
       props.datasets.forEach(({ value, label, color }) => {
-        const percentage = value / summValue();
+        const percentage = value / summValue.value;
 
         const [startX, startY] = getCoordinatesForPercentage(cumulativePercentage);
         cumulativePercentage += percentage;
@@ -101,7 +101,7 @@ export default {
     const formatTooltipText = () => {
       if (currentIndex.value === null) return '';
       const { value, label, color } = props.datasets[currentIndex.value];
-      const percentage = (value / summValue()) * 100;
+      const percentage = (value / summValue.value) * 100;
 
       const round = (v) => {
         if (parseInt(v, 10) === v) return v;

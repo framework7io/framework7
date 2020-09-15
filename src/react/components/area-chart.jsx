@@ -46,6 +46,7 @@ const AreaChart = forwardRef((props, ref) => {
     formatTooltipAxisLabel,
     formatTooltipTotal,
     formatTooltipDataset,
+    children,
   } = props;
 
   const [currentIndex, setCurrentIndex] = useState(null);
@@ -62,7 +63,7 @@ const AreaChart = forwardRef((props, ref) => {
     el: elRef.current,
   }));
 
-  const getVisibleLabels = () => {
+  const getVisibleLegends = () => {
     if (!maxAxisLabels || axisLabels.length <= maxAxisLabels) return axisLabels;
     const skipStep = Math.ceil(axisLabels.length / maxAxisLabels);
     const filtered = axisLabels.filter((label, index) => index % skipStep === 0);
@@ -303,7 +304,7 @@ const AreaChart = forwardRef((props, ref) => {
 
   const chartData = getChartData();
   const verticalLines = getVerticalLines();
-  const visibleLegends = getVisibleLabels();
+  const visibleLegends = getVisibleLegends();
 
   const LegendItemTag = toggleDatasets ? 'button' : 'span';
   const ChartTag = lineChart ? 'path' : 'polygon';
@@ -371,6 +372,7 @@ const AreaChart = forwardRef((props, ref) => {
           ))}
         </div>
       )}
+      {children}
     </div>
   );
 });
