@@ -21,5 +21,5 @@
 - [ ] v-model to inputs
 - [ ] v-model to modals
 - [ ] add loading button
-- [ ] colon-case events
 - [ ] set to null on instance destroy
+- [ ] check if component methods accessible in refs
