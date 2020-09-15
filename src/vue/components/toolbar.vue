@@ -100,9 +100,11 @@ export default {
       f7.off('toolbarHide', onHide);
     });
 
-    provide('TabbarContext', {
+    const TabbarContext = computed(() => ({
       tabbarHasLabels: props.labels,
-    });
+    }));
+
+    provide('TabbarContext', TabbarContext);
 
     const classes = computed(() => {
       const {

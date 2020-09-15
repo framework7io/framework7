@@ -29,19 +29,23 @@ export default {
     ...colorProps,
   },
   setup(props) {
-    const ListContext = inject('ListContext', {
-      listIsMedia: props.mediaList,
-      listIsSimple: props.simpleList,
-      listIsSortable: props.sortable,
-      listIsSortableOpposite: props.sortableOpposite,
+    const ListContextParent = inject('ListContext', {
+      value: {
+        listIsMedia: props.mediaList,
+        listIsSimple: props.simpleList,
+        listIsSortable: props.sortable,
+        listIsSortableOpposite: props.sortableOpposite,
+      },
     });
+    const ListContext = computed(() => ({
+      listIsMedia: props.mediaList || ListContextParent.value.listIsMedia,
+      listIsSimple: props.simpleList || ListContextParent.value.listIsSimple,
+      listIsSortable: props.sortable || ListContextParent.value.listIsSortable,
+      listIsSortableOpposite:
+        props.sortableOpposite || ListContextParent.value.listIsSortableOpposite,
+    }));
 
-    provide('ListContext', {
-      listIsMedia: props.mediaList || ListContext.listIsMedia,
-      listIsSimple: props.simpleList || ListContext.listIsSimple,
-      listIsSortable: props.sortable || ListContext.listIsSortable,
-      listIsSortableOpposite: props.sortableOpposite || ListContext.listIsSortableOpposite,
-    });
+    provide('ListContext', ListContext);
 
     const classes = computed(() =>
       classNames(

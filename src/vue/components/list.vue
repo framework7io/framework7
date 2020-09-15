@@ -1,8 +1,3 @@
-<template>
-  <div :class="classes">
-    <slot />
-  </div>
-</template>
 <script>
 import { computed, ref, onMounted, onBeforeUnmount, h, provide } from 'vue';
 import { classNames, extend } from '../shared/utils';
@@ -185,12 +180,14 @@ export default {
 
     const ListTag = computed(() => (props.form ? 'form' : 'div'));
 
-    provide('ListContext', {
+    const ListContext = computed(() => ({
       listIsMedia: props.mediaList,
       listIsSimple: props.simpleList,
       listIsSortable: props.sortable,
       listIsSortableOpposite: props.sortableOpposite,
-    });
+    }));
+
+    provide('ListContext', ListContext);
 
     return () => {
       const { list: slotsList, default: slotsDefault } = slots;
@@ -204,6 +201,7 @@ export default {
           const tag = vnode.type && vnode.type.name ? vnode.type.name : vnode.type;
           if (
             !tag ||
+            typeof tag === 'symbol' ||
             (tag &&
               !(
                 tag === 'li' ||
@@ -222,7 +220,7 @@ export default {
       }
 
       return h(
-        ListTag,
+        ListTag.value,
         {
           ref: elRef,
           class: classes.value,
