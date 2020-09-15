@@ -80,7 +80,9 @@ const ListButton = forwardRef((props, ref) => {
   return (
     <li id={id} style={style} className={className} ref={elRef} {...extraAttrs}>
       <a className={linkClasses} {...linkAttrs} onClick={onClick} ref={linkElRef}>
-        {children && children.length ? children : title || text}
+        {title}
+        {text}
+        {children}
       </a>
     </li>
   );

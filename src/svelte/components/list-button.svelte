@@ -105,6 +105,8 @@
 <!-- svelte-ignore a11y-missing-attribute -->
 <li class={className} {...restProps($$restProps)}>
   <a class={classes} {...attrs} on:click={onClick}>
-    <slot>{title || text}</slot>
+    {Utils.text(title)}
+    {Utils.text(text)}
+    <slot />
   </a>
 </li>
