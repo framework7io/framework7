@@ -183,6 +183,7 @@ const List = forwardRef((props, ref) => {
 
     if (!(virtualList && f7VirtualList.current)) return;
     if (f7VirtualList.current.destroy) f7VirtualList.current.destroy();
+    f7VirtualList.current = null;
   };
 
   useIsomorphicLayoutEffect(() => {
