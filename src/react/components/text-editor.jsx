@@ -55,7 +55,7 @@ const TextEditor = forwardRef((props, ref) => {
     emit(props, 'textEditorChange', editorValue);
   };
   const onInput = () => {
-    emit(props, 'textEditorChange');
+    emit(props, 'textEditorInput');
   };
   const onFocus = () => {
     emit(props, 'textEditorFocus');

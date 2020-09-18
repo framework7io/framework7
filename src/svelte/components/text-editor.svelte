@@ -48,8 +48,8 @@
     if (typeof $$props.onTextEditorChange === 'function') $$props.onTextEditorChange(editorValue);
   }
   function onInput() {
-    dispatch('textEditorChange');
-    if (typeof $$props.onTextEditorChange === 'function') $$props.onTextEditorChange();
+    dispatch('textEditorInput');
+    if (typeof $$props.onTextEditorInput === 'function') $$props.onTextEditorInput();
   }
   function onFocus() {
     dispatch('textEditorFocus');

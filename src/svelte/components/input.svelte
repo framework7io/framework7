@@ -180,6 +180,8 @@
 
   // eslint-disable-next-line
   $: hasInfoSlots = hasSlots(arguments, 'info');
+  // eslint-disable-next-line
+  $: hasErrorSlots = hasSlots(arguments, 'error-message');
 
   function onTextareaResize(event) {
     dispatch('textareaResize', [event]);
@@ -481,8 +483,11 @@
         value={type === 'datepicker' || type === 'colorpicker' || type === 'file' ? '' : inputValue}
       />
     {/if}
-    {#if errorMessage && errorMessageForce}
-      <div class="input-error-message">{errorMessage}</div>
+    {#if (errorMessage || hasErrorSlots) && errorMessageForce}
+      <div class="input-error-message">
+        {errorMessage}
+        <slot name="error-message" />
+      </div>
     {/if}
     {#if clearButton}
       <span class="input-clear-button" />

@@ -491,9 +491,13 @@ const Input = forwardRef((props, ref) => {
     return (
       <div id={id} className={wrapClasses} style={style} ref={elRef} {...extraAttrs}>
         {inputEl}
-        {errorMessage && errorMessageForce && (
-          <div className="input-error-message">{errorMessage}</div>
-        )}
+        {(errorMessage || (slots['error-message'] && slots['error-message'].length)) &&
+          errorMessageForce && (
+            <div className="input-error-message">
+              {errorMessage}
+              {slots['error-message']}
+            </div>
+          )}
         {clearButton && <span className="input-clear-button" />}
         {(info || (slots.info && slots.info.length)) && (
           <div className="input-info">

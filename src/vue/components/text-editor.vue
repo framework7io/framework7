@@ -55,7 +55,7 @@ export default {
   },
   emits: [
     'texteditor:change',
-    'texteditor:change',
+    'texteditor:input',
     'texteditor:focus',
     'texteditor:blur',
     'texteditor:buttonclick',
@@ -63,6 +63,10 @@ export default {
     'texteditor:keyboardclose',
     'texteditor:popoveropen',
     'texteditor:popoverclose',
+    'texteditorChange',
+    'texteditorInput',
+    'texteditorFocus',
+    'texteditorBlur',
   ],
   setup(props, { emit }) {
     const f7TextEditor = ref(null);
@@ -70,15 +74,19 @@ export default {
 
     const onChange = (editor, editorValue) => {
       emit('texteditor:change', editorValue);
+      emit('texteditorChange', editorValue);
     };
     const onInput = () => {
-      emit('texteditor:change');
+      emit('texteditor:input');
+      emit('texteditorInput');
     };
     const onFocus = () => {
       emit('texteditor:focus');
+      emit('texteditorFocus');
     };
     const onBlur = () => {
       emit('texteditor:blur');
+      emit('texteditorBlur');
     };
     const onButtonClick = (editor, button) => {
       emit('texteditor:buttonclick', button);

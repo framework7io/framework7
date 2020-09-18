@@ -74,6 +74,7 @@ export default {
     'ptr:pullend',
     'ptr:refresh',
     'ptr:done',
+    'infinite',
   ],
   setup(props, { emit, slots }) {
     const hasSubnavbar = ref(false);

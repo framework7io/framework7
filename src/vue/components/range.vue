@@ -77,7 +77,7 @@ export default {
     disabled: Boolean,
     ...colorProps,
   },
-  emits: ['range:change', 'range:changed'],
+  emits: ['range:change', 'range:changed', 'rangeChange', 'rangeChanged'],
   setup(props, { emit }) {
     const f7Range = ref(null);
     const elRef = ref(null);
@@ -117,9 +117,11 @@ export default {
             on: {
               change(range, val) {
                 emit('range:change', val);
+                emit('rangeChange', val);
               },
               changed(range, val) {
                 emit('range:changed', val);
+                emit('rangeChanged', val);
               },
             },
           }),
