@@ -64,29 +64,46 @@ export default {
     loginScreen: Boolean,
     ...colorProps,
   },
-  emits: ['ptr:pullstart', 'ptr:pullmove', 'ptr:pullend', 'ptr:refresh', 'ptr:done', 'infinite'],
+  emits: [
+    'ptr:pullstart',
+    'ptr:pullmove',
+    'ptr:pullend',
+    'ptr:refresh',
+    'ptr:done',
+    'infinite',
+    'ptrPullStart',
+    'ptrPullMove',
+    'ptrPullEnd',
+    'ptrRefresh',
+    'ptrDone',
+  ],
   setup(props, { emit }) {
     const elRef = ref(null);
 
     const onPtrPullStart = (el) => {
       if (elRef.value !== el) return;
       emit('ptr:pullstart');
+      emit('ptrPullStart');
     };
     const onPtrPullMove = (el) => {
       if (elRef.value !== el) return;
       emit('ptr:pullmove');
+      emit('ptrPullMove');
     };
     const onPtrPullEnd = (el) => {
       if (elRef.value !== el) return;
       emit('ptr:pullend');
+      emit('ptrPullEnd');
     };
     const onPtrRefresh = (el, done) => {
       if (elRef.value !== el) return;
       emit('ptr:refresh', done);
+      emit('ptrRefresh', done);
     };
     const onPtrDone = (el) => {
       if (elRef.value !== el) return;
       emit('ptr:done');
+      emit('ptrDone');
     };
     const onInfinite = (el) => {
       if (elRef.value !== el) return;
