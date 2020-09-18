@@ -55,6 +55,8 @@
   - `browserHistory` must be used with `browserHistoryInitialMatch`
   - Fast Refresh support
 - React/Svelte/Vue
+  - Input
+    - added `error-message` slot
   - Popover, Login Screen, Actions, Sheet
     - added `animate` property
       Sheet

@@ -451,7 +451,7 @@ const ListInput = forwardRef((props, ref) => {
           onTextEditorBlur={onBlur}
           onTextEditorInput={onInput}
           onTextEditorChange={onChange}
-          {...textEditorParams}
+          {...(textEditorParams || {})}
         />
       );
     } else {
