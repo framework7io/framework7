@@ -1,16 +1,9 @@
-export function text(value) {
-  if (typeof value === 'undefined' || value === null) return '';
-  return value;
-}
 export function noUndefinedProps(obj) {
   const o = {};
   Object.keys(obj).forEach((key) => {
     if (typeof obj[key] !== 'undefined') o[key] = obj[key];
   });
   return o;
-}
-export function isTrueProp(val) {
-  return val === true || val === '';
 }
 export function isStringProp(val) {
   return typeof val === 'string' && val !== '';

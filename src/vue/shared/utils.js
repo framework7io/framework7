@@ -1,16 +1,9 @@
-export function text(value) {
-  if (typeof value === 'undefined' || value === null) return '';
-  return value;
-}
 export function noUndefinedProps(obj) {
   const o = {};
   Object.keys(obj).forEach((key) => {
     if (typeof obj[key] !== 'undefined') o[key] = obj[key];
   });
   return o;
-}
-export function isTrueProp(val) {
-  return val === true || val === '';
 }
 export function isStringProp(val) {
   return typeof val === 'string' && val !== '';
@@ -58,14 +51,6 @@ export function extend(...args) {
   }
   return to;
 }
-export function flattenArray(...args) {
-  const arr = [];
-  args.forEach((arg) => {
-    if (Array.isArray(arg)) arr.push(...flattenArray(...arg));
-    else arr.push(arg);
-  });
-  return arr;
-}
 export function classNames(...args) {
   const classes = [];
   args.forEach((arg) => {
@@ -80,61 +65,6 @@ export function classNames(...args) {
     if (uniqueClasses.indexOf(c) < 0) uniqueClasses.push(c);
   });
   return uniqueClasses.join(' ');
-}
-export function getSlots(props = {}) {
-  const slots = {};
-  if (!props) return slots;
-  const children = props.children;
-
-  if (!children || children.length === 0) {
-    return slots;
-  }
-
-  function addChildToSlot(name, child) {
-    if (!slots[name]) slots[name] = [];
-    slots[name].push(child);
-  }
-
-  if (Array.isArray(children)) {
-    children.forEach((child) => {
-      if (!child) return;
-      const slotName = (child.props && child.props.slot) || 'default';
-      addChildToSlot(slotName, child);
-    });
-  } else {
-    let slotName = 'default';
-    if (children.props && children.props.slot) slotName = children.props.slot;
-    addChildToSlot(slotName, children);
-  }
-
-  return slots;
-}
-
-export function emit(props, events, ...args) {
-  if (!events || !events.trim().length || typeof events !== 'string') return;
-
-  events
-    .trim()
-    .split(' ')
-    .forEach((event) => {
-      let eventName = (event || '').trim();
-      if (!eventName) return;
-      eventName = eventName.charAt(0).toUpperCase() + eventName.slice(1);
-
-      const propName = `on${eventName}`;
-
-      if (props[propName]) props[propName](...args);
-    });
-}
-
-export function getExtraAttrs(props = {}) {
-  const extraAttrs = {};
-  Object.keys(props).forEach((key) => {
-    if (key.indexOf('data-') === 0 || key.indexOf('aria-') === 0 || key === 'role') {
-      extraAttrs[key] = props[key];
-    }
-  });
-  return extraAttrs;
 }
 
 let routerIdCounter = 0;
