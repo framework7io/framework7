@@ -9,7 +9,9 @@
         placeholder="Your name"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -18,7 +20,9 @@
         placeholder="Your password"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -27,7 +31,9 @@
         placeholder="Your e-mail"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -36,7 +42,9 @@
         placeholder="URL"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -45,7 +53,9 @@
         placeholder="Your phone number"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -54,7 +64,9 @@
         defaultValue="Male"
         placeholder="Please choose..."
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
       </f7-list-input>
@@ -65,7 +77,9 @@
         defaultValue="2014-04-30"
         placeholder="Please choose..."
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -73,15 +87,21 @@
         type="datetime-local"
         placeholder="Please choose..."
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
         label="Range"
         :input="false"
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
-        <f7-range slot="input" :value="50" :min="0" :max="100" :step="1"></f7-range>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
+        <template v-slot:input>
+          <f7-range :value="50" :min="0" :max="100" :step="1" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -89,7 +109,9 @@
         type="textarea"
         placeholder="Bio"
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -98,7 +120,9 @@
         resizable
         placeholder="Bio"
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
     </f7-list>
 
@@ -110,7 +134,9 @@
         placeholder="Your name"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -119,7 +145,9 @@
         placeholder="Your password"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -128,7 +156,9 @@
         placeholder="Your e-mail"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -137,7 +167,9 @@
         placeholder="URL"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -146,7 +178,9 @@
         placeholder="Your phone number"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -155,7 +189,9 @@
         defaultValue="Male"
         placeholder="Please choose..."
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
       </f7-list-input>
@@ -166,7 +202,9 @@
         defaultValue="2014-04-30"
         placeholder="Please choose..."
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -174,15 +212,21 @@
         type="datetime-local"
         placeholder="Please choose..."
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
         label="Range"
         :input="false"
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
-        <f7-range slot="input" :value="50" :min="0" :max="100" :step="1"></f7-range>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
+        <template v-slot:input>
+          <f7-range :value="50" :min="0" :max="100" :step="1" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -190,7 +234,9 @@
         type="textarea"
         placeholder="Bio"
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -199,7 +245,9 @@
         resizable
         placeholder="Bio"
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
     </f7-list>
 
@@ -212,7 +260,9 @@
         placeholder="Your name"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -222,7 +272,9 @@
         placeholder="Your password"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -232,7 +284,9 @@
         placeholder="Your e-mail"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -242,7 +296,9 @@
         placeholder="URL"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -252,7 +308,9 @@
         placeholder="Your phone number"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -262,7 +320,9 @@
         resizable
         placeholder="Bio"
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
     </f7-list>
 
@@ -276,7 +336,9 @@
         placeholder="Your name"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
       <f7-list-input
         outline
@@ -286,7 +348,9 @@
         placeholder="Your password"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
       <f7-list-input
         outline
@@ -296,7 +360,9 @@
         placeholder="Your e-mail"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
       <f7-list-input
         outline
@@ -306,7 +372,9 @@
         placeholder="URL"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
       <f7-list-input
         outline
@@ -316,7 +384,9 @@
         placeholder="Your phone number"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
       <f7-list-input
         outline
@@ -327,7 +397,9 @@
         placeholder="Bio"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
     </f7-list>
 
@@ -342,7 +414,9 @@
         validate
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -354,8 +428,12 @@
         pattern="apple|banana"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
-        <span slot="info">Pattern validation (<b>apple|banana</b>)</span>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
+        <template v-slot:info>
+          <span>Pattern validation (<b>apple|banana</b>)</span>
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -367,7 +445,9 @@
         validate
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -379,7 +459,9 @@
         validate
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -393,7 +475,9 @@
         pattern="[0-9]*"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
     </f7-list>
 
@@ -404,7 +488,9 @@
         placeholder="Your name"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -412,7 +498,9 @@
         placeholder="Your password"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -420,7 +508,9 @@
         placeholder="Your e-mail"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
       <f7-list-input
@@ -428,7 +518,9 @@
         placeholder="URL"
         clear-button
       >
-        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="demo-list-icon" />
+        </template>
       </f7-list-input>
 
     </f7-list>
