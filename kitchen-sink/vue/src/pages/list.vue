@@ -19,40 +19,60 @@
     <f7-block-title>Data list, with icons</f7-block-title>
     <f7-list>
       <f7-list-item title="Ivan Petrov" after="CEO">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
       <f7-list-item title="John Doe" badge="5">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
       <f7-list-item title="Jenna Smith">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
     </f7-list>
     <f7-block-title>Links</f7-block-title>
     <f7-list>
       <f7-list-item link="#" title="Ivan Petrov" after="CEO">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
       <f7-list-item link="#" title="John Doe" after="Cleaner">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
       <f7-list-item link="#" title="Jenna Smith">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
     </f7-list>
     <f7-block-title>Links, Header, Footer</f7-block-title>
     <f7-list>
       <f7-list-item link="#" header="Name" title="John Doe" after="Edit">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
       <f7-list-item link="#" header="Phone" title="+7 90 111-22-3344" after="Edit">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
       <f7-list-item link="#" header="Email" title="john@doe" footer="Home" after="Edit">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
       <f7-list-item link="#" header="Email" title="john@framework7" footer="Work" after="Edit">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
     </f7-list>
     <f7-block-title>Links, no icons</f7-block-title>
@@ -87,55 +107,85 @@
     <f7-block-title>Mixed and nested</f7-block-title>
     <f7-list>
       <f7-list-item link="#" title="Ivan Petrov" after="CEO">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
       <f7-list-item link="#" title="Two icons here">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
       <f7-list-item title="No icons here"></f7-list-item>
       <li>
         <ul>
           <f7-list-item link="#" title="Ivan Petrov" after="CEO">
-            <f7-icon slot="media" icon="icon-f7"></f7-icon>
+            <template v-slot:media>
+              <f7-icon icon="icon-f7" />
+            </template>
           </f7-list-item>
           <f7-list-item link="#" title="Two icons here">
-            <f7-icon slot="media" icon="icon-f7"></f7-icon>
-            <f7-icon slot="media" icon="icon-f7"></f7-icon>
+            <template v-slot:media>
+              <f7-icon icon="icon-f7" />
+              <f7-icon icon="icon-f7" />
+            </template>
           </f7-list-item>
           <f7-list-item title="No icons here"></f7-list-item>
           <f7-list-item link="#" title="Ultra long text goes here, no, it is really really long">
-            <f7-icon slot="media" icon="icon-f7"></f7-icon>
+            <template v-slot:media>
+              <f7-icon icon="icon-f7" />
+            </template>
           </f7-list-item>
           <f7-list-item title="With toggle">
-            <f7-icon slot="media" icon="icon-f7"></f7-icon>
-            <f7-toggle slot="after"></f7-toggle>
+            <template v-slot:media>
+              <f7-icon icon="icon-f7" />
+            </template>
+            <template v-slot:after>
+              <f7-toggle />
+            </template>
           </f7-list-item>
         </ul>
       </li>
       <f7-list-item link="#" title="Ultra long text goes here, no, it is really really long">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
       <f7-list-item title="With toggle">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-        <f7-toggle slot="after"></f7-toggle>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
+        <template v-slot:after>
+          <f7-toggle />
+        </template>
       </f7-list-item>
     </f7-list>
     <f7-block-title>Mixed, inset</f7-block-title>
     <f7-list inset>
       <f7-list-item link="#" title="Ivan Petrov" after="CEO">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
       <f7-list-item link="#" title="Two icons here">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
       <f7-list-item link="#" title="Ultra long text goes here, no, it is really really long">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
       <f7-list-item title="With toggle">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-        <f7-toggle slot="after"></f7-toggle>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
+        <template v-slot:after>
+          <f7-toggle />
+        </template>
       </f7-list-item>
       <f7-block-footer>
         <p>Here comes some useful information about list above</p>
@@ -144,14 +194,20 @@
     <f7-block-title>Tablet inset</f7-block-title>
     <f7-list medium-inset>
       <f7-list-item link="#" title="Ivan Petrov" after="CEO">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
       <f7-list-item link="#" title="Two icons here">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
       <f7-list-item link="#" title="Ultra long text goes here, no, it is really really long">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
       <f7-block-footer>
         <p>This list block will look like "inset" only on tablets (iPad)</p>
@@ -171,7 +227,9 @@
         subtitle="Beatles"
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
       >
-        <img slot="media" src="https://cdn.framework7.io/placeholder/people-160x160-1.jpg" width="80" />
+        <template v-slot:media>
+          <img src="https://cdn.framework7.io/placeholder/people-160x160-1.jpg" width="80" />
+        </template>
       </f7-list-item>
       <f7-list-item
         link="#"
@@ -180,7 +238,9 @@
         subtitle="Queen"
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
       >
-        <img slot="media" src="https://cdn.framework7.io/placeholder/people-160x160-2.jpg" width="80" />
+        <template v-slot:media>
+          <img src="https://cdn.framework7.io/placeholder/people-160x160-2.jpg" width="80" />
+        </template>
       </f7-list-item>
       <f7-list-item
         link="#"
@@ -189,7 +249,9 @@
         subtitle="Michael Jackson"
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
       >
-        <img slot="media" src="https://cdn.framework7.io/placeholder/people-160x160-3.jpg" width="80" />
+        <template v-slot:media>
+          <img src="https://cdn.framework7.io/placeholder/people-160x160-3.jpg" width="80" />
+        </template>
       </f7-list-item>
     </f7-list>
     <f7-block-title>Mail App</f7-block-title>
@@ -228,18 +290,24 @@
       <f7-list-item
         title="Yellow Submarine"
         subtitle="Beatles">
-        <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-1.jpg" width="44" />
+        <template v-slot:media>
+          <img src="https://cdn.framework7.io/placeholder/fashion-88x88-1.jpg" width="44" />
+        </template>
       </f7-list-item>
       <f7-list-item
         link="#"
         title="Don't Stop Me Now"
         subtitle="Queen">
-        <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-2.jpg" width="44" />
+        <template v-slot:media>
+          <img src="https://cdn.framework7.io/placeholder/fashion-88x88-2.jpg" width="44" />
+        </template>
       </f7-list-item>
       <f7-list-item
         title="Billie Jean"
         subtitle="Michael Jackson">
-        <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-3.jpg" width="44" />
+        <template v-slot:media>
+          <img src="https://cdn.framework7.io/placeholder/fashion-88x88-3.jpg" width="44" />
+        </template>
       </f7-list-item>
     </f7-list>
     <f7-block-title>Inset</f7-block-title>
@@ -248,19 +316,25 @@
         link="#"
         title="Yellow Submarine"
         subtitle="Beatles">
-        <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-4.jpg" width="44" />
+        <template v-slot:media>
+          <img src="https://cdn.framework7.io/placeholder/fashion-88x88-4.jpg" width="44" />
+        </template>
       </f7-list-item>
       <f7-list-item
         link="#"
         title="Don't Stop Me Now"
         subtitle="Queen">
-        <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-5.jpg" width="44" />
+        <template v-slot:media>
+          <img src="https://cdn.framework7.io/placeholder/fashion-88x88-5.jpg" width="44" />
+        </template>
       </f7-list-item>
       <f7-list-item
         link="#"
         title="Billie Jean"
         subtitle="Michael Jackson">
-        <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-6.jpg" width="44" />
+        <template v-slot:media>
+          <img src="https://cdn.framework7.io/placeholder/fashion-88x88-6.jpg" width="44" />
+        </template>
       </f7-list-item>
     </f7-list>
     <f7-block-title>Custom Table-like Layout</f7-block-title>

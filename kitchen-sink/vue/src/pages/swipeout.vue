@@ -13,7 +13,9 @@
       <f7-list-item
         swipeout
         title="Swipe left on me please">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
         <f7-swipeout-actions right>
           <f7-swipeout-button delete confirm-text="Are you sure you want to delete this item?">Delete</f7-swipeout-button>
         </f7-swipeout-actions>
@@ -21,14 +23,18 @@
       <f7-list-item
         swipeout
         title="Swipe left on me too">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
         <f7-swipeout-actions right>
           <f7-swipeout-button delete confirm-text="Are you sure you want to delete this item?">Delete</f7-swipeout-button>
         </f7-swipeout-actions>
       </f7-list-item>
       <f7-list-item
         title="I am not removable">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
     </f7-list>
 
@@ -37,7 +43,9 @@
       <f7-list-item
         swipeout
         title="Swipe left on me please">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
         <f7-swipeout-actions right>
           <f7-swipeout-button delete>Delete</f7-swipeout-button>
         </f7-swipeout-actions>
@@ -45,14 +53,18 @@
       <f7-list-item
         swipeout
         title="Swipe left on me too">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
         <f7-swipeout-actions right>
           <f7-swipeout-button delete>Delete</f7-swipeout-button>
         </f7-swipeout-actions>
       </f7-list-item>
       <f7-list-item
         title="I am not removable">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
     </f7-list>
 
@@ -61,7 +73,9 @@
       <f7-list-item
         swipeout
         title="Swipe left on me please">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
         <f7-swipeout-actions right>
           <f7-swipeout-button @click="more">More</f7-swipeout-button>
           <f7-swipeout-button delete>Delete</f7-swipeout-button>
@@ -70,7 +84,9 @@
       <f7-list-item
         swipeout
         title="Swipe left on me too">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
         <f7-swipeout-actions right>
           <f7-swipeout-button @click="more">More</f7-swipeout-button>
           <f7-swipeout-button delete>Delete</f7-swipeout-button>
@@ -79,7 +95,9 @@
       <f7-list-item
         swipeout
         title="You can't delete me">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
         <f7-swipeout-actions right>
           <f7-swipeout-button @click="more">More</f7-swipeout-button>
         </f7-swipeout-actions>
@@ -92,7 +110,9 @@
         swipeout
         @swipeout:deleted="onDeleted"
         title="Swipe left on me please">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
         <f7-swipeout-actions right>
           <f7-swipeout-button delete>Delete</f7-swipeout-button>
         </f7-swipeout-actions>
@@ -101,14 +121,18 @@
         swipeout
         @swipeout:deleted="onDeleted"
         title="Swipe left on me too">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
         <f7-swipeout-actions right>
           <f7-swipeout-button delete>Delete</f7-swipeout-button>
         </f7-swipeout-actions>
       </f7-list-item>
       <f7-list-item
         title="I am not removable">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
     </f7-list>
 
@@ -117,7 +141,9 @@
       <f7-list-item
         swipeout
         title="Swipe right on me please">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
         <f7-swipeout-actions left>
           <f7-swipeout-button color="green" @click="reply">Reply</f7-swipeout-button>
           <f7-swipeout-button color="blue" @click="forward">Forward</f7-swipeout-button>
@@ -126,7 +152,9 @@
       <f7-list-item
         swipeout
         title="Swipe right on me too">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template v-slot:media>
+          <f7-icon icon="icon-f7" />
+        </template>
         <f7-swipeout-actions left>
           <f7-swipeout-button color="green" @click="reply">Reply</f7-swipeout-button>
           <f7-swipeout-button color="blue" @click="forward">Forward</f7-swipeout-button>
@@ -208,7 +236,7 @@
   </f7-page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7BlockTitle, f7List, f7ListItem, f7Icon, f7SwipeoutActions, f7SwipeoutButton, f7Block } from 'framework7-vue';
+  import { f7Navbar, f7Page, f7BlockTitle, f7List, f7ListItem, f7Icon, f7SwipeoutActions, f7SwipeoutButton, f7Block, f7 } from 'framework7-vue';
 
   export default {
     components: {
@@ -228,20 +256,16 @@
         self.actions.open();
       },
       mark() {
-        const app = this.$f7;
-        app.dialog.alert('Mark');
+        f7.dialog.alert('Mark');
       },
       reply() {
-        const app = this.$f7;
-        app.dialog.alert('Reply');
+        f7.dialog.alert('Reply');
       },
       forward() {
-        const app = this.$f7;
-        app.dialog.alert('Forward');
+        f7.dialog.alert('Forward');
       },
       onDeleted() {
-        const app = this.$f7;
-        app.dialog.alert('Thanks, item removed!');
+        f7.dialog.alert('Thanks, item removed!');
       },
       onPageBeforeRemove() {
         const self = this;
@@ -249,8 +273,7 @@
       },
       onPageInit() {
         const self = this;
-        const app = self.$f7;
-        self.actions = app.actions.create({
+        self.actions = f7.actions.create({
           buttons: [
             [
               {
