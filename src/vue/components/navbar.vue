@@ -21,7 +21,7 @@
         <slot name="nav-right" />
         <slot name="right" />
       </f7-nav-right>
-      <div v-if="hasTitle" className="title-large">
+      <div v-if="hasLargeTitle" className="title-large">
         <div className="title-large-text">
           {{ largeTitle }}
           <slot name="title-large" />
@@ -86,12 +86,13 @@ export default {
     'back:click',
   ],
   setup(props, { emit, slots }) {
-    const routerPositionClass = ref('');
-    const largeCollapsed = ref(false);
-    const routerNavbarRole = ref(null);
-    const routerNavbarRoleDetailRoot = ref(false);
-    const routerNavbarMasterStack = ref(false);
-    const transparentVisible = ref(false);
+    let routerPositionClass = '';
+    let largeCollapsed = false;
+    let routerNavbarRole = null;
+    let routerNavbarRoleDetailRoot = false;
+    let routerNavbarMasterStack = false;
+    let transparentVisible = false;
+
     const elRef = ref(null);
 
     const theme = useTheme();
@@ -106,40 +107,40 @@ export default {
     };
     const onExpand = (navbarEl) => {
       if (elRef.value !== navbarEl) return;
-      largeCollapsed.value = false;
+      largeCollapsed = false;
       emit('navbar:expand');
     };
     const onCollapse = (navbarEl) => {
       if (elRef.value !== navbarEl) return;
-      largeCollapsed.value = true;
+      largeCollapsed = true;
       emit('navbar:collapse');
     };
     const onNavbarTransparentShow = (navbarEl) => {
       if (elRef.value !== navbarEl) return;
-      transparentVisible.value = true;
+      transparentVisible = true;
       emit('navbar:transparentshow');
     };
     const onNavbarTransparentHide = (navbarEl) => {
       if (elRef.value !== navbarEl) return;
-      transparentVisible.value = false;
+      transparentVisible = false;
       emit('navbar:transparenthide');
     };
     const onNavbarPosition = (navbarEl, position) => {
       if (elRef.value !== navbarEl) return;
-      routerPositionClass.value = position ? `navbar-${position}` : '';
+      routerPositionClass = position ? `navbar-${position}` : '';
     };
     const onNavbarRole = (navbarEl, rolesData) => {
       if (elRef.value !== navbarEl) return;
-      routerNavbarRole.value = rolesData.role;
-      routerNavbarRoleDetailRoot.value = rolesData.detailRoot;
+      routerNavbarRole = rolesData.role;
+      routerNavbarRoleDetailRoot = rolesData.detailRoot;
     };
     const onNavbarMasterStack = (navbarEl) => {
       if (elRef.value !== navbarEl) return;
-      routerNavbarMasterStack.value = true;
+      routerNavbarMasterStack = true;
     };
     const onNavbarMasterUnstack = (navbarEl) => {
       if (elRef.value !== navbarEl) return;
-      routerNavbarMasterStack.value = false;
+      routerNavbarMasterStack = false;
     };
     const hide = (animate) => {
       if (!f7) return;
@@ -199,24 +200,26 @@ export default {
         (theme.value && theme.value.aurora && f7 && f7.params.navbar.auroraCenterTitle),
     );
 
-    const isLarge = props.large || props.largeTransparent;
-    const isTransparent = props.transparent || (isLarge && props.largeTransparent);
-    const isTransparentVisible = isTransparent && transparentVisible.value;
+    const isLarge = computed(() => props.large || props.largeTransparent);
+    const isTransparent = computed(
+      () => props.transparent || (isLarge.value && props.largeTransparent),
+    );
+    const isTransparentVisible = computed(() => isTransparent.value && transparentVisible);
 
     const classes = computed(() =>
       classNames(
         'navbar',
-        routerPositionClass.value,
+        routerPositionClass,
         {
           'navbar-hidden': props.hidden,
-          'navbar-large': isLarge,
-          'navbar-large-collapsed': isLarge && largeCollapsed.value,
-          'navbar-transparent': isTransparent,
-          'navbar-transparent-visible': isTransparentVisible,
-          'navbar-master': routerNavbarRole.value === 'master',
-          'navbar-master-detail': routerNavbarRole.value === 'detail',
-          'navbar-master-detail-root': routerNavbarRoleDetailRoot.value === true,
-          'navbar-master-stacked': routerNavbarMasterStack.value === true,
+          'navbar-large': isLarge.value,
+          'navbar-large-collapsed': isLarge.value && largeCollapsed,
+          'navbar-transparent': isTransparent.value,
+          'navbar-transparent-visible': isTransparentVisible.value,
+          'navbar-master': routerNavbarRole === 'master',
+          'navbar-master-detail': routerNavbarRole === 'detail',
+          'navbar-master-detail-root': routerNavbarRoleDetailRoot === true,
+          'navbar-master-stacked': routerNavbarMasterStack === true,
           'no-shadow': props.noShadow,
           'no-hairline': props.noHairline,
         },

@@ -1,6 +1,6 @@
 <script>
 import { computed, ref, onMounted, onBeforeUnmount, h, watch, onUpdated } from 'vue';
-import { classNames, extend } from '../shared/utils';
+import { classNames, extend, noUndefinedProps } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
 
@@ -95,7 +95,7 @@ export default {
     const f7ColorPicker = ref(null);
     const elRef = ref(null);
     const inputElRef = ref(null);
-    const updateInputOnDidUpdate = ref(false);
+    let updateInputOnDidUpdate = false;
 
     const validateInput = () => {
       if (!f7 || !inputElRef.value) return;
@@ -252,9 +252,9 @@ export default {
 
     onUpdated(() => {
       if (!f7) return;
-      if (updateInputOnDidUpdate.value) {
+      if (updateInputOnDidUpdate) {
         if (!inputElRef.value) return;
-        updateInputOnDidUpdate.value = false;
+        updateInputOnDidUpdate = false;
         f7.input.checkEmptyState(inputElRef.value);
         if (props.validate && !props.validateOnBlur) {
           validateInput();
@@ -285,7 +285,7 @@ export default {
       () => props.value,
       (newValue) => {
         if (props.type === 'range' || props.type === 'toggle' || !f7) return;
-        updateInputOnDidUpdate.value = true;
+        updateInputOnDidUpdate = true;
         if (f7Calendar.value) {
           f7Calendar.value.setValue(newValue);
         }
@@ -333,39 +333,41 @@ export default {
       if (props.type !== 'datepicker' && props.type !== 'colorpicker') {
         if ('value' in props) valueProps.value = inputValue;
       }
+      const inputProps = noUndefinedProps({
+        name: props.name,
+        type: needsType ? inputType : undefined,
+        placeholder: props.placeholder,
+        inputmode: props.inputmode,
+        id: props.inputId,
+        size: props.size,
+        accept: props.accept,
+        autocomplete: props.autocomplete,
+        autoCorrect: props.autocorrect,
+        autocapitalize: props.autocapitalize,
+        spellcheck: props.spellcheck,
+        autofocus: props.autofocus,
+        autoSave: props.autosave,
+        checked: props.checked,
+        disabled: props.disabled,
+        max: props.max,
+        maxlength: props.maxlength,
+        min: props.min,
+        minlength: props.minlength,
+        step: props.step,
+        multiple: props.multiple,
+        readonly: props.readonly,
+        required: props.required,
+        pattern: props.pattern,
+        validate:
+          typeof props.validate === 'string' && props.validate.length ? props.validate : undefined,
+        tabindex: props.tabindex,
+      });
       return h(
         InputTag,
         {
           ref: inputElRef,
           style: props.inputStyle,
-          name: props.name,
-          type: needsType ? inputType : undefined,
-          placeholder: props.placeholder,
-          inputmode: props.inputmode,
-          id: props.inputId,
-          size: props.size,
-          accept: props.accept,
-          autocomplete: props.autocomplete,
-          autoCorrect: props.autocorrect,
-          autocapitalize: props.autocapitalize,
-          spellcheck: props.spellcheck,
-          autofocus: props.autofocus,
-          autoSave: props.autosave,
-          checked: props.checked,
-          disabled: props.disabled,
-          max: props.max,
-          maxlength: props.maxlength,
-          min: props.min,
-          minlength: props.minlength,
-          step: props.step,
-          multiple: props.multiple,
-          readonly: props.readonly,
-          required: props.required,
-          pattern: props.pattern,
-          validate:
-            typeof props.validate === 'string' && props.validate.length
-              ? props.validate
-              : undefined,
+          ...inputProps,
           'data-validate':
             props.validate === true ||
             props.validate === '' ||
@@ -375,7 +377,6 @@ export default {
               : undefined,
           'data-validate-on-blur':
             props.validateOnBlur === true || props.validateOnBlur === '' ? true : undefined,
-          tabindex: props.tabindex,
           'data-error-message': props.errorMessageForce ? undefined : props.errorMessage,
           class: inputClassName,
           onFocus,

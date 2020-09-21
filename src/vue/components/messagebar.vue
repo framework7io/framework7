@@ -62,8 +62,8 @@ export default {
     const elRef = ref(null);
     const areaElRef = ref(null);
     const f7Messagebar = ref(null);
-    const updateSheetVisible = ref(false);
-    const updateAttachmentsVisible = ref(false);
+    let updateSheetVisible = false;
+    let updateAttachmentsVisible = false;
 
     const onChange = (event) => {
       emit('change', event);
@@ -103,14 +103,14 @@ export default {
       () => props.sheetVisible,
       () => {
         if (!props.resizable || !f7Messagebar.value) return;
-        updateSheetVisible.value = true;
+        updateSheetVisible = true;
       },
     );
     watch(
       () => props.attachmentsVisible,
       () => {
         if (!props.resizable || !f7Messagebar.value) return;
-        updateAttachmentsVisible.value = true;
+        updateAttachmentsVisible = true;
       },
     );
 
@@ -140,13 +140,13 @@ export default {
 
     onUpdated(() => {
       if (!f7Messagebar.value) return;
-      if (updateSheetVisible.value) {
-        updateSheetVisible.value = false;
+      if (updateSheetVisible) {
+        updateSheetVisible = false;
         f7Messagebar.value.sheetVisible = props.sheetVisible;
         f7Messagebar.value.resizePage();
       }
-      if (updateAttachmentsVisible.value) {
-        updateAttachmentsVisible.value = false;
+      if (updateAttachmentsVisible) {
+        updateAttachmentsVisible = false;
         f7Messagebar.value.attachmentsVisible = props.attachmentsVisible;
         f7Messagebar.value.resizePage();
       }

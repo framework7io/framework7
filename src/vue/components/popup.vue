@@ -59,8 +59,9 @@ export default {
   ],
   setup(props, { emit }) {
     const f7Popup = ref(null);
-    const isOpened = ref(props.opened);
-    const isClosing = ref(false);
+    // eslint-disable-next-line
+    let isOpened = props.opened;
+    let isClosing = false;
     const elRef = ref(null);
 
     const onSwipeStart = (instance) => {
@@ -76,8 +77,8 @@ export default {
       emit('popup:swipeclose', instance);
     };
     const onOpen = (instance) => {
-      isOpened.value = true;
-      isClosing.value = false;
+      isOpened = true;
+      isClosing = false;
       emit('popup:open', instance);
       emit('update:opened', true);
     };
@@ -85,12 +86,12 @@ export default {
       emit('popup:opened', instance);
     };
     const onClose = (instance) => {
-      isOpened.value = false;
-      isClosing.value = true;
+      isOpened = false;
+      isClosing = true;
       emit('popup:close', instance);
     };
     const onClosed = (instance) => {
-      isClosing.value = false;
+      isClosing = false;
       emit('popup:closed', instance);
       emit('update:opened', false);
     };

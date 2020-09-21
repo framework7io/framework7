@@ -67,14 +67,14 @@ export default {
   setup(props, { emit }) {
     const f7Panel = ref(null);
     const elRef = ref(null);
-    const isOpened = ref(false);
-    const isClosing = ref(false);
-    const isCollapsed = ref(false);
-    const isBreakpoint = ref(false);
+    let isOpened = false;
+    let isClosing = false;
+    let isCollapsed = false;
+    let isBreakpoint = false;
 
     const onOpen = (event) => {
-      isOpened.value = true;
-      isClosing.value = false;
+      isOpened = true;
+      isClosing = false;
       emit('panel:open', event);
       emit('update:opened', true);
     };
@@ -82,12 +82,12 @@ export default {
       emit('panel:opened', event);
     };
     const onClose = (event) => {
-      isOpened.value = false;
-      isClosing.value = true;
+      isOpened = false;
+      isClosing = true;
       emit('panel:close', event);
     };
     const onClosed = (event) => {
-      isClosing.value = false;
+      isClosing = false;
       emit('panel:closed', event);
       emit('update:opened', false);
     };
@@ -102,13 +102,13 @@ export default {
       emit('panel:swipeopen', event);
     };
     const onBreakpoint = (event) => {
-      isBreakpoint.value = true;
-      isCollapsed.value = false;
+      isBreakpoint = true;
+      isCollapsed = false;
       emit('panel:breakpoint', event);
     };
     const onCollapsedBreakpoint = (event) => {
-      isBreakpoint.value = false;
-      isCollapsed.value = true;
+      isBreakpoint = false;
+      isCollapsed = true;
       emit('panel:collapsedbreakpoint', event);
     };
     const onResize = (...args) => {
@@ -200,9 +200,9 @@ export default {
       return classNames(
         'panel',
         {
-          'panel-in': isOpened.value && !isClosing.value && !isBreakpoint.value,
-          'panel-in-breakpoint': isBreakpoint.value,
-          'panel-in-collapsed': isCollapsed.value,
+          'panel-in': isOpened && !isClosing && !isBreakpoint,
+          'panel-in-breakpoint': isBreakpoint,
+          'panel-in-collapsed': isCollapsed,
           'panel-resizable': props.resizable,
           [`panel-${sideComputed}`]: sideComputed,
           [`panel-${effectComputed}`]: effectComputed,

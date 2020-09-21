@@ -63,8 +63,9 @@ export default {
   ],
   setup(props, { emit, slots }) {
     const f7Sheet = ref(null);
-    const isOpened = ref(props.opened);
-    const isClosing = ref(false);
+    // eslint-disable-next-line
+    let isOpened = props.opened;
+    let isClosing = false;
     const elRef = ref(null);
 
     const onStepProgress = (instance, progress) => {
@@ -77,8 +78,8 @@ export default {
       emit('sheet:stepclose', instance);
     };
     const onOpen = (instance) => {
-      isOpened.value = true;
-      isClosing.value = false;
+      isOpened = true;
+      isClosing = false;
       emit('sheet:open', instance);
       emit('update:opened', true);
     };
@@ -86,12 +87,12 @@ export default {
       emit('sheet:opened', instance);
     };
     const onClose = (instance) => {
-      isOpened.value = false;
-      isClosing.value = true;
+      isOpened = false;
+      isClosing = true;
       emit('sheet:close', instance);
     };
     const onClosed = (instance) => {
-      isClosing.value = false;
+      isClosing = false;
       emit('sheet:closed', instance);
       emit('update:opened', false);
     };

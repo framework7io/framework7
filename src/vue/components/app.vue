@@ -17,6 +17,7 @@ export default {
   components: {
     RoutableModals,
   },
+  inheritAttrs: false,
   props: {
     routes: Array,
     ...colorProps,

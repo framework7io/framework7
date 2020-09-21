@@ -77,15 +77,16 @@ export default {
     'infinite',
   ],
   setup(props, { emit, slots }) {
-    const hasSubnavbar = ref(false);
-    const hasNavbarLarge = ref(false);
-    const hasNavbarLargeCollapsed = ref(false);
-    const hasCardExpandableOpened = ref(false);
-    const routerPositionClass = ref('');
-    const routerForceUnstack = ref(false);
-    const routerPageRole = ref(null);
-    const routerPageRoleDetailRoot = ref(false);
-    const routerPageMasterStack = ref(false);
+    let hasSubnavbar = false;
+    let hasNavbarLarge = false;
+    let hasNavbarLargeCollapsed = false;
+    let hasCardExpandableOpened = false;
+    let routerPositionClass = '';
+    let routerForceUnstack = false;
+    let routerPageRole = null;
+    let routerPageRoleDetailRoot = false;
+    let routerPageMasterStack = false;
+
     const elRef = ref(null);
 
     // Main Page Events
@@ -100,7 +101,7 @@ export default {
           (page.$navbarEl && page.$navbarEl.length && page.$navbarEl.find('.subnavbar').length) ||
           page.$el.children('.navbar').find('.subnavbar').length
         ) {
-          hasSubnavbar.value = true;
+          hasSubnavbar = true;
         }
       }
 
@@ -109,7 +110,7 @@ export default {
         typeof props.navbarLarge === 'undefined'
       ) {
         if (page.$navbarEl && page.$navbarEl.hasClass('navbar-large')) {
-          hasNavbarLarge.value = true;
+          hasNavbarLarge = true;
         }
       }
 
@@ -123,10 +124,10 @@ export default {
       if (elRef.value !== page.el) return;
       if (!page.swipeBack) {
         if (page.from === 'next') {
-          routerPositionClass.value = 'page-next';
+          routerPositionClass = 'page-next';
         }
         if (page.from === 'previous') {
-          routerPositionClass.value = 'page-previous';
+          routerPositionClass = 'page-previous';
         }
       }
       emit('page:beforein', page);
@@ -138,16 +139,16 @@ export default {
     const onPageAfterOut = (page) => {
       if (elRef.value !== page.el) return;
       if (page.to === 'next') {
-        routerPositionClass.value = 'page-next';
+        routerPositionClass = 'page-next';
       }
       if (page.to === 'previous') {
-        routerPositionClass.value = 'page-previous';
+        routerPositionClass = 'page-previous';
       }
       emit('page:afterout', page);
     };
     const onPageAfterIn = (page) => {
       if (elRef.value !== page.el) return;
-      routerPositionClass.value = 'page-current';
+      routerPositionClass = 'page-current';
       emit('page:afterin', page);
     };
     const onPageBeforeRemove = (page) => {
@@ -161,44 +162,44 @@ export default {
     // Helper events
     const onPageStack = (pageEl) => {
       if (elRef.value !== pageEl) return;
-      routerForceUnstack.value = false;
+      routerForceUnstack = false;
     };
     const onPageUnstack = (pageEl) => {
       if (elRef.value !== pageEl) return;
-      routerForceUnstack.value = true;
+      routerForceUnstack = true;
     };
     const onPagePosition = (pageEl, position) => {
       if (elRef.value !== pageEl) return;
-      routerPositionClass.value = `page-${position}`;
+      routerPositionClass = `page-${position}`;
     };
     const onPageRole = (pageEl, rolesData) => {
       if (elRef.value !== pageEl) return;
-      routerPageRole.value = rolesData.role;
-      routerPageRoleDetailRoot.value = rolesData.detailRoot;
+      routerPageRole = rolesData.role;
+      routerPageRoleDetailRoot = rolesData.detailRoot;
     };
     const onPageMasterStack = (pageEl) => {
       if (elRef.value !== pageEl) return;
-      routerPageMasterStack.value = true;
+      routerPageMasterStack = true;
     };
     const onPageMasterUnstack = (pageEl) => {
       if (elRef.value !== pageEl) return;
-      routerPageMasterStack.value = false;
+      routerPageMasterStack = false;
     };
     const onPageNavbarLargeCollapsed = (pageEl) => {
       if (elRef.value !== pageEl) return;
-      hasNavbarLargeCollapsed.value = true;
+      hasNavbarLargeCollapsed = true;
     };
     const onPageNavbarLargeExpanded = (pageEl) => {
       if (elRef.value !== pageEl) return;
-      hasNavbarLargeCollapsed.value = false;
+      hasNavbarLargeCollapsed = false;
     };
     const onCardOpened = (cardEl, pageEl) => {
       if (elRef.value !== pageEl) return;
-      hasCardExpandableOpened.value = true;
+      hasCardExpandableOpened = true;
     };
     const onCardClose = (cardEl, pageEl) => {
       if (elRef.value !== pageEl) return;
-      hasCardExpandableOpened.value = false;
+      hasCardExpandableOpened = false;
     };
     const onPageTabShow = (pageEl) => {
       if (elRef.value !== pageEl) return;
@@ -282,21 +283,21 @@ export default {
     const classes = computed(() =>
       classNames(
         'page',
-        routerPositionClass.value,
+        routerPositionClass,
         {
-          stacked: props.stacked && !routerForceUnstack.value,
+          stacked: props.stacked && !routerForceUnstack,
           tabs: props.tabs,
           'page-with-subnavbar': props.subnavbar || props.withSubnavbar,
           'page-with-navbar-large': props.navbarLarge || props.withNavbarLarge,
           'no-navbar': props.noNavbar,
           'no-toolbar': props.noToolbar,
           'no-swipeback': props.noSwipeback,
-          'page-master': routerPageRole.value === 'master',
-          'page-master-detail': routerPageRole.value === 'detail',
-          'page-master-detail-root': routerPageRoleDetailRoot.value === true,
-          'page-master-stacked': routerPageMasterStack.value === true,
-          'page-with-navbar-large-collapsed': hasNavbarLargeCollapsed.value === true,
-          'page-with-card-opened': hasCardExpandableOpened.value === true,
+          'page-master': routerPageRole === 'master',
+          'page-master-detail': routerPageRole === 'detail',
+          'page-master-detail-root': routerPageRoleDetailRoot === true,
+          'page-master-stacked': routerPageMasterStack === true,
+          'page-with-navbar-large-collapsed': hasNavbarLargeCollapsed === true,
+          'page-with-card-opened': hasCardExpandableOpened === true,
           'login-screen-page': props.loginScreen,
         },
         colorClasses(props),
@@ -322,12 +323,13 @@ export default {
           const tag = vnode.type && vnode.type.name ? vnode.type.name : vnode.type;
           let isFixedTag = false;
           if (!tag) {
-            if (props.pageContent) staticList.push(vnode);
+            if (props.pageContent || props.pageContent === '') staticList.push(vnode);
             return;
           }
           if (tag === 'f7-subnavbar') hasSubnavbarComputed = true;
           if (tag === 'f7-navbar') {
-            if (vnode.props && vnode.props.large) hasNavbarLargeComputed = true;
+            if (vnode.props && (vnode.props.large || vnode.props.large === ''))
+              hasNavbarLargeComputed = true;
           }
           if (typeof hasMessages === 'undefined' && tag === 'f7-messages') hasMessages = true;
           if (fixedTags.indexOf(tag) >= 0) {
@@ -344,20 +346,21 @@ export default {
       let classesValue = classes.value;
 
       if (
-        hasSubnavbarComputed &&
+        (hasSubnavbarComputed || hasSubnavbar) &&
         typeof props.subnavbar === 'undefined' &&
         typeof props.withSubnavbar === 'undefined' &&
         classesValue.indexOf('page-with-subnavbar') < 0
       ) {
         classesValue += 'page-with-subnavbar';
       }
+
       if (
-        hasNavbarLargeComputed &&
-        props.navbarLarge === 'undefined' &&
+        (hasNavbarLargeComputed || hasNavbarLarge) &&
+        typeof props.navbarLarge === 'undefined' &&
         typeof props.withNavbarLarge === 'undefined' &&
         classesValue.indexOf('page-with-navbar-large') < 0
       ) {
-        classesValue += 'page-with-navbar-large';
+        classesValue += ' page-with-navbar-large';
       }
 
       if (!props.pageContent) {
@@ -395,7 +398,7 @@ export default {
             onPtrDone,
             onInfinite,
           },
-          [slotsStatic && slotsStatic(), staticList],
+          () => [slotsStatic && slotsStatic(), staticList],
         ),
       ]);
     };

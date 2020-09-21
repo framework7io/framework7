@@ -57,13 +57,14 @@ export default {
   emits: ['actions:open', 'actions:opened', 'actions:close', 'actions:closed', 'update:opened'],
   setup(props, { emit }) {
     const f7Actions = ref(null);
-    const isOpened = ref(props.opened);
-    const isClosing = ref(false);
+    // eslint-disable-next-line
+    let isOpened = props.opened;
+    let isClosing = false;
     const elRef = ref(null);
 
     const onOpen = (instance) => {
-      isOpened.value = true;
-      isClosing.value = false;
+      isOpened = true;
+      isClosing = false;
       emit('actions:open', instance);
       emit('update:opened', true);
     };
@@ -71,12 +72,12 @@ export default {
       emit('actions:opened', instance);
     };
     const onClose = (instance) => {
-      isOpened.value = false;
-      isClosing.value = true;
+      isOpened = false;
+      isClosing = true;
       emit('actions:close', instance);
     };
     const onClosed = (instance) => {
-      isClosing.value = false;
+      isClosing = false;
       emit('actions:closed', instance);
       emit('update:opened', false);
     };

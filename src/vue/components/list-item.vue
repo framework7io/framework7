@@ -123,7 +123,7 @@ const ListItemContent = ({
       afterEl = h('span', [after]);
     }
     if (badge) {
-      badgeEl = h(f7Badge, { color: badgeColor }, [badge]);
+      badgeEl = h(f7Badge, { color: badgeColor }, () => badge);
     }
     afterWrapEl = h('div', { class: 'item-after' }, [
       slots['after-start'] && slots['after-start'](),
@@ -565,7 +565,7 @@ export default {
             props.sortable !== false &&
             !isSortableOppositeComputed.value &&
             h('div', { class: 'sortable-handler' }),
-          (props.swipeout || props.accordionItem) && slots.default,
+          (props.swipeout || props.accordionItem) && slots.default(),
           slots.root && slots.root(),
           slots['root-end'] && slots['root-end'](),
         ],

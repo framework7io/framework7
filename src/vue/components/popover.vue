@@ -48,13 +48,14 @@ export default {
   emits: ['popover:open', 'popover:opened', 'popover:close', 'popover:closed', 'update:opened'],
   setup(props, { emit }) {
     const f7Popover = ref(null);
-    const isOpened = ref(props.opened);
-    const isClosing = ref(false);
+    // eslint-disable-next-line
+    let isOpened = props.opened;
+    let isClosing = false;
     const elRef = ref(null);
 
     const onOpen = (instance) => {
-      isOpened.value = true;
-      isClosing.value = false;
+      isOpened = true;
+      isClosing = false;
       emit('popover:open', instance);
       emit('update:opened', true);
     };
@@ -62,12 +63,12 @@ export default {
       emit('popover:opened', instance);
     };
     const onClose = (instance) => {
-      isOpened.value = false;
-      isClosing.value = true;
+      isOpened = false;
+      isClosing = true;
       emit('popover:close', instance);
     };
     const onClosed = (instance) => {
-      isClosing.value = false;
+      isClosing = false;
       emit('popover:closed', instance);
       emit('update:opened', false);
     };

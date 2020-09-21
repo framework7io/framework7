@@ -6,9 +6,9 @@
       <div class="searchbar-input-wrap">
         <slot name="input-wrap-start" />
         <input
-          value="{value}"
-          placeholder="{placeholder}"
-          spellcheck="{spellcheck}"
+          :value="value"
+          :placeholder="placeholder"
+          :spellcheck="spellcheck"
           type="search"
           @input="onInput"
           @change="onChange"
