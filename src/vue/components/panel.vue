@@ -65,7 +65,7 @@ export default {
     'update:opened',
   ],
   setup(props, { emit }) {
-    const f7Panel = ref(null);
+    let f7Panel = null;
     const elRef = ref(null);
     let isOpened = false;
     let isClosing = false;
@@ -115,34 +115,34 @@ export default {
       emit('panel:resize', ...args);
     };
     const open = (animate) => {
-      if (!f7Panel.value) return;
-      f7Panel.value.open(animate);
+      if (!f7Panel) return;
+      f7Panel.open(animate);
     };
     const close = (animate) => {
-      if (!f7Panel.value) return;
-      f7Panel.value.close(animate);
+      if (!f7Panel) return;
+      f7Panel.close(animate);
     };
     const toggle = (animate) => {
-      if (!f7Panel.value) return;
-      f7Panel.value.toggle(animate);
+      if (!f7Panel) return;
+      f7Panel.toggle(animate);
     };
 
     watch(
       () => props.resizable,
       (newValue) => {
-        if (!f7Panel.value) return;
-        if (newValue) f7Panel.value.enableResizable();
-        else f7Panel.value.disableResizable();
+        if (!f7Panel) return;
+        if (newValue) f7Panel.enableResizable();
+        else f7Panel.disableResizable();
       },
     );
     watch(
       () => props.opened,
       (newValue) => {
-        if (!f7Panel.value) return;
+        if (!f7Panel) return;
         if (newValue) {
-          f7Panel.value.open();
+          f7Panel.open();
         } else {
-          f7Panel.value.close();
+          f7Panel.close();
         }
       },
     );
@@ -180,18 +180,18 @@ export default {
             resize: onResize,
           },
         });
-        f7Panel.value = f7.panel.create(params);
+        f7Panel = f7.panel.create(params);
         if (props.opened) {
-          f7Panel.value.open(false);
+          f7Panel.open(false);
         }
       });
     });
 
     onBeforeUnmount(() => {
-      if (f7Panel.value && f7Panel.value.destroy) {
-        f7Panel.value.destroy();
+      if (f7Panel && f7Panel.destroy) {
+        f7Panel.destroy();
       }
-      f7Panel.value = null;
+      f7Panel = null;
     });
 
     const classes = computed(() => {

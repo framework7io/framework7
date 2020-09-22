@@ -48,7 +48,7 @@ export default {
   emits: ['select'],
   setup(props, { emit }) {
     const elRef = ref(null);
-    const f7Tooltip = ref(null);
+    let f7Tooltip = null;
     const currentIndex = ref(null);
 
     const setCurrentIndex = (index) => {
@@ -129,29 +129,29 @@ export default {
 
     const setTooltip = () => {
       const index = currentIndex.value;
-      if (index === null && !f7Tooltip.value) return;
+      if (index === null && !f7Tooltip) return;
       if (!props.tooltip || !elRef.value || !f7) return;
       emit(props, 'select', index, props.datasets[index]);
-      if (index !== null && !f7Tooltip.value) {
-        f7Tooltip.value = f7.tooltip.create({
+      if (index !== null && !f7Tooltip) {
+        f7Tooltip = f7.tooltip.create({
           trigger: 'manual',
           containerEl: elRef.value,
           targetEl: elRef.value.querySelector(`path[data-index="${index}"]`),
           text: formatTooltipText(),
           cssClass: 'pie-chart-tooltip',
         });
-        f7Tooltip.value.show();
+        f7Tooltip.show();
         return;
       }
-      if (!f7Tooltip.value) return;
+      if (!f7Tooltip) return;
       if (index !== null) {
-        f7Tooltip.value.setText(formatTooltipText());
-        f7Tooltip.value.targetEl = elRef.value.querySelector(`path[data-index="${index}"]`);
-        f7Tooltip.value.$targetEl = f7.$(elRef.value.querySelector(`path[data-index="${index}"]`));
+        f7Tooltip.setText(formatTooltipText());
+        f7Tooltip.targetEl = elRef.value.querySelector(`path[data-index="${index}"]`);
+        f7Tooltip.$targetEl = f7.$(elRef.value.querySelector(`path[data-index="${index}"]`));
 
-        f7Tooltip.value.show();
+        f7Tooltip.show();
       } else {
-        f7Tooltip.value.hide();
+        f7Tooltip.hide();
       }
     };
 
@@ -163,10 +163,10 @@ export default {
     );
 
     onBeforeUnmount(() => {
-      if (f7Tooltip.value && f7Tooltip.value.destroy) {
-        f7Tooltip.value.destroy();
+      if (f7Tooltip && f7Tooltip.destroy) {
+        f7Tooltip.destroy();
       }
-      f7Tooltip.value = null;
+      f7Tooltip = null;
     });
 
     const classes = computed(() => classNames('pie-chart'));

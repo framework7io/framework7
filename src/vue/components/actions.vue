@@ -56,7 +56,8 @@ export default {
   },
   emits: ['actions:open', 'actions:opened', 'actions:close', 'actions:closed', 'update:opened'],
   setup(props, { emit }) {
-    const f7Actions = ref(null);
+    // eslint-disable-next-line
+    let f7Actions = null;
     // eslint-disable-next-line
     let isOpened = props.opened;
     let isClosing = false;
@@ -82,22 +83,22 @@ export default {
       emit('update:opened', false);
     };
     const open = (anim) => {
-      if (!f7Actions.value) return undefined;
-      return f7Actions.value.open(anim);
+      if (!f7Actions) return undefined;
+      return f7Actions.open(anim);
     };
     const close = (anim) => {
-      if (!f7Actions.value) return undefined;
-      return f7Actions.value.close(anim);
+      if (!f7Actions) return undefined;
+      return f7Actions.close(anim);
     };
 
     watch(
       () => props.opened,
       (value) => {
-        if (!f7Actions.value) return;
+        if (!f7Actions) return;
         if (value) {
-          f7Actions.value.open();
+          f7Actions.open();
         } else {
-          f7Actions.value.close();
+          f7Actions.close();
         }
       },
     );
@@ -138,18 +139,18 @@ export default {
       if (typeof backdropEl !== 'undefined') params.backdropEl = backdropEl;
 
       f7ready(() => {
-        f7Actions.value = f7.popup.create(params);
+        f7Actions = f7.popup.create(params);
         if (props.opened) {
-          f7Actions.value.open(false);
+          f7Actions.open(false);
         }
       });
     });
 
     onBeforeUnmount(() => {
-      if (f7Actions.value) {
-        f7Actions.value.destroy();
+      if (f7Actions) {
+        f7Actions.destroy();
       }
-      f7Actions.value = null;
+      f7Actions = null;
     });
 
     const classes = computed(() =>

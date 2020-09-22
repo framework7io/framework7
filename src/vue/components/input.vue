@@ -89,10 +89,10 @@ export default {
     'colorpicker:change',
   ],
   setup(props, { emit, slots }) {
+    let f7Calendar = null;
+    let f7ColorPicker = null;
     const inputInvalid = ref(false);
     const inputFocused = ref(false);
-    const f7Calendar = ref(null);
-    const f7ColorPicker = ref(null);
     const elRef = ref(null);
     const inputElRef = ref(null);
     let updateInputOnDidUpdate = false;
@@ -183,7 +183,7 @@ export default {
         }
 
         if (type === 'datepicker') {
-          f7Calendar.value = f7.calendar.create({
+          f7Calendar = f7.calendar.create({
             inputEl: inputElRef.value,
             value,
             on: {
@@ -195,7 +195,7 @@ export default {
           });
         }
         if (type === 'colorpicker') {
-          f7ColorPicker.value = f7.colorPicker.create({
+          f7ColorPicker = f7.colorPicker.create({
             inputEl: inputElRef.value,
             value,
             on: {
@@ -240,13 +240,13 @@ export default {
         inputElRef.value.removeEventListener('input:clear', onInputClear, false);
       }
 
-      if (f7Calendar.value && f7Calendar.value.destroy) {
-        f7Calendar.value.destroy();
-        f7Calendar.value = null;
+      if (f7Calendar && f7Calendar.destroy) {
+        f7Calendar.destroy();
+        f7Calendar = null;
       }
-      if (f7ColorPicker.value && f7ColorPicker.value.destroy) {
-        f7ColorPicker.value.destroy();
-        f7ColorPicker.value = null;
+      if (f7ColorPicker && f7ColorPicker.destroy) {
+        f7ColorPicker.destroy();
+        f7ColorPicker = null;
       }
     });
 
@@ -268,16 +268,16 @@ export default {
     watch(
       () => props.colorPickerParams,
       (newValue) => {
-        if (!f7 || !f7ColorPicker.value) return;
-        extend(f7ColorPicker.value.params, newValue || {});
+        if (!f7 || !f7ColorPicker) return;
+        extend(f7ColorPicker.params, newValue || {});
       },
     );
 
     watch(
       () => props.calendarParams,
       (newValue) => {
-        if (!f7 || !f7Calendar.value) return;
-        extend(f7Calendar.value.params, newValue || {});
+        if (!f7 || !f7Calendar) return;
+        extend(f7Calendar.params, newValue || {});
       },
     );
 
@@ -286,11 +286,11 @@ export default {
       (newValue) => {
         if (props.type === 'range' || props.type === 'toggle' || !f7) return;
         updateInputOnDidUpdate = true;
-        if (f7Calendar.value) {
-          f7Calendar.value.setValue(newValue);
+        if (f7Calendar) {
+          f7Calendar.setValue(newValue);
         }
-        if (f7ColorPicker.value) {
-          f7ColorPicker.value.setValue(newValue);
+        if (f7ColorPicker) {
+          f7ColorPicker.setValue(newValue);
         }
       },
     );

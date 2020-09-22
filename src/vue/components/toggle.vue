@@ -34,10 +34,10 @@ export default {
   },
   emits: ['change', 'toggle:change', 'update:checked'],
   setup(props, { emit }) {
-    const f7Toggle = ref(null);
+    let f7Toggle = null;
     const elRef = ref(null);
     const toggle = () => {
-      if (f7Toggle.value && f7Toggle.value.toggle) f7Toggle.value.toggle();
+      if (f7Toggle && f7Toggle.toggle) f7Toggle.toggle();
     };
     const onChange = (event) => {
       emit('change', event);
@@ -46,15 +46,15 @@ export default {
     watch(
       () => props.checked,
       (newValue) => {
-        if (!f7Toggle.value) return;
-        f7Toggle.value.checked = newValue;
+        if (!f7Toggle) return;
+        f7Toggle.checked = newValue;
       },
     );
 
     onMounted(() => {
       f7ready(() => {
         if (!props.init || !elRef.value) return;
-        f7Toggle.value = f7.toggle.create({
+        f7Toggle = f7.toggle.create({
           el: elRef.value,
           on: {
             change(toggleInstance) {
@@ -67,10 +67,10 @@ export default {
     });
 
     onBeforeUnmount(() => {
-      if (f7Toggle.value && f7Toggle.value.destroy && f7Toggle.value.$el) {
-        f7Toggle.value.destroy();
+      if (f7Toggle && f7Toggle.destroy && f7Toggle.$el) {
+        f7Toggle.destroy();
       }
-      f7Toggle.value = null;
+      f7Toggle = null;
     });
 
     const classes = computed(() =>

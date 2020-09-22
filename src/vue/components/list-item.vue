@@ -288,7 +288,6 @@ export default {
 
     const elRef = ref(null);
     const linkElRef = ref(null);
-    const f7SmartSelect = ref(null);
     const inputElRef = ref(null);
 
     const onClick = (event) => {
@@ -365,7 +364,11 @@ export default {
 
     useRouteProps(linkElRef, props);
 
-    useSmartSelect(props, f7SmartSelect, () => elRef.value.querySelector('a.smart-select'));
+    useSmartSelect(
+      props,
+      () => {},
+      () => elRef.value.querySelector('a.smart-select'),
+    );
 
     watch(
       () => props.swipeoutOpened,

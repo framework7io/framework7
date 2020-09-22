@@ -51,14 +51,14 @@ export default {
     ...colorProps,
   },
   setup(props) {
-    const f7Messages = ref(null);
+    let f7Messages = null;
     const elRef = ref(null);
 
     onMounted(() => {
       if (!props.init) return;
 
       f7ready(() => {
-        f7Messages.value = f7.messages.create(
+        f7Messages = f7.messages.create(
           noUndefinedProps({
             el: elRef.value,
             autoLayout: props.autoLayout,
@@ -103,17 +103,17 @@ export default {
         }
       }
 
-      if (f7Messages.value && f7Messages.value.layout && props.autoLayout) {
-        f7Messages.value.layout();
+      if (f7Messages && f7Messages.layout && props.autoLayout) {
+        f7Messages.layout();
       }
-      if (f7Messages.value && f7Messages.value.scroll && props.scrollMessages) {
-        f7Messages.value.scroll();
+      if (f7Messages && f7Messages.scroll && props.scrollMessages) {
+        f7Messages.scroll();
       }
     });
 
     onBeforeUnmount(() => {
-      if (f7Messages.value && f7Messages.value.destroy) f7Messages.value.destroy();
-      f7Messages.value = null;
+      if (f7Messages && f7Messages.destroy) f7Messages.destroy();
+      f7Messages = null;
     });
 
     const classes = computed(() => classNames('messages', colorClasses(props)));
@@ -122,48 +122,48 @@ export default {
       elRef,
       classes,
       renderMessages(messagesToRender, method) {
-        if (!f7Messages.value) return undefined;
-        return f7Messages.value.renderMessages(messagesToRender, method);
+        if (!f7Messages) return undefined;
+        return f7Messages.renderMessages(messagesToRender, method);
       },
       layout() {
-        if (!f7Messages.value) return undefined;
-        return f7Messages.value.layout();
+        if (!f7Messages) return undefined;
+        return f7Messages.layout();
       },
       scroll(duration, scrollTop) {
-        if (!f7Messages.value) return undefined;
-        return f7Messages.value.scroll(duration, scrollTop);
+        if (!f7Messages) return undefined;
+        return f7Messages.scroll(duration, scrollTop);
       },
       clear() {
-        if (!f7Messages.value) return undefined;
-        return f7Messages.value.clear();
+        if (!f7Messages) return undefined;
+        return f7Messages.clear();
       },
       removeMessage(messageToRemove, layout) {
-        if (!f7Messages.value) return undefined;
-        return f7Messages.value.removeMessage(messageToRemove, layout);
+        if (!f7Messages) return undefined;
+        return f7Messages.removeMessage(messageToRemove, layout);
       },
       removeMessages(messagesToRemove, layout) {
-        if (!f7Messages.value) return undefined;
-        return f7Messages.value.removeMessages(messagesToRemove, layout);
+        if (!f7Messages) return undefined;
+        return f7Messages.removeMessages(messagesToRemove, layout);
       },
       addMessage(...args) {
-        if (!f7Messages.value) return undefined;
-        return f7Messages.value.addMessage(...args);
+        if (!f7Messages) return undefined;
+        return f7Messages.addMessage(...args);
       },
       addMessages(...args) {
-        if (!f7Messages.value) return undefined;
-        return f7Messages.value.addMessages(...args);
+        if (!f7Messages) return undefined;
+        return f7Messages.addMessages(...args);
       },
       showTyping(message) {
-        if (!f7Messages.value) return undefined;
-        return f7Messages.value.showTyping(message);
+        if (!f7Messages) return undefined;
+        return f7Messages.showTyping(message);
       },
       hideTyping() {
-        if (!f7Messages.value) return undefined;
-        return f7Messages.value.hideTyping();
+        if (!f7Messages) return undefined;
+        return f7Messages.hideTyping();
       },
       destroy() {
-        if (!f7Messages.value) return undefined;
-        return f7Messages.value.destroy();
+        if (!f7Messages) return undefined;
+        return f7Messages.destroy();
       },
     };
   },

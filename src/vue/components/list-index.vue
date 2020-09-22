@@ -45,23 +45,23 @@ export default {
   },
   emits: ['listindex:select'],
   setup(props, { emit }) {
-    const f7ListIndex = ref(null);
+    let f7ListIndex = null;
     const elRef = ref(null);
 
     const update = () => {
-      if (!f7ListIndex.value) return;
-      f7ListIndex.value.update();
+      if (!f7ListIndex) return;
+      f7ListIndex.update();
     };
     const scrollListToIndex = (indexContent) => {
-      if (!f7ListIndex.value) return;
-      f7ListIndex.value.scrollListToIndex(indexContent);
+      if (!f7ListIndex) return;
+      f7ListIndex.scrollListToIndex(indexContent);
     };
 
     watch(
       () => props.indexes,
       (newValue) => {
-        if (!f7ListIndex.value) return;
-        f7ListIndex.value.params.indexes = newValue;
+        if (!f7ListIndex) return;
+        f7ListIndex.params.indexes = newValue;
         update();
       },
     );
@@ -69,7 +69,7 @@ export default {
     onMounted(() => {
       if (!props.init) return;
       f7ready(() => {
-        f7ListIndex.value = f7.listIndex.create({
+        f7ListIndex = f7.listIndex.create({
           el: elRef.value,
           listEl: props.listEl,
           indexes: props.indexes,
@@ -88,10 +88,10 @@ export default {
     });
 
     onBeforeUnmount(() => {
-      if (f7ListIndex.value && f7ListIndex.value.destroy) {
-        f7ListIndex.value.destroy();
+      if (f7ListIndex && f7ListIndex.destroy) {
+        f7ListIndex.destroy();
       }
-      f7ListIndex.value = null;
+      f7ListIndex = null;
     });
 
     const classes = computed(() => classNames('list-index', colorClasses(props)));

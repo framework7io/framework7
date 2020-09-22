@@ -62,7 +62,7 @@ export default {
     'update:opened',
   ],
   setup(props, { emit, slots }) {
-    const f7Sheet = ref(null);
+    let f7Sheet = null;
     // eslint-disable-next-line
     let isOpened = props.opened;
     let isClosing = false;
@@ -136,28 +136,28 @@ export default {
       if (typeof swipeHandler !== 'undefined') sheetParams.swipeHandler = swipeHandler;
 
       f7ready(() => {
-        f7Sheet.value = f7.sheet.create(sheetParams);
+        f7Sheet = f7.sheet.create(sheetParams);
         if (props.opened) {
-          f7Sheet.value.open(false);
+          f7Sheet.open(false);
         }
       });
     });
 
     onBeforeUnmount(() => {
-      if (f7Sheet.value) {
-        f7Sheet.value.destroy();
+      if (f7Sheet) {
+        f7Sheet.destroy();
       }
-      f7Sheet.value = null;
+      f7Sheet = null;
     });
 
     watch(
       () => props.opened,
       (value) => {
-        if (!f7Sheet.value) return;
+        if (!f7Sheet) return;
         if (value) {
-          f7Sheet.value.open();
+          f7Sheet.open();
         } else {
-          f7Sheet.value.close();
+          f7Sheet.close();
         }
       },
     );

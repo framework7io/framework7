@@ -114,51 +114,51 @@ export default {
   },
   emits: ['input', 'change', 'stepper:minusclick', 'stepper:plusclick', 'stepper:change'],
   setup(props, { emit }) {
-    const f7Stepper = ref(null);
+    let f7Stepper = null;
     const elRef = ref(null);
 
     const increment = () => {
-      if (!f7Stepper.value) return;
-      f7Stepper.value.increment();
+      if (!f7Stepper) return;
+      f7Stepper.increment();
     };
     const decrement = () => {
-      if (!f7Stepper.value) return;
-      f7Stepper.value.decrement();
+      if (!f7Stepper) return;
+      f7Stepper.decrement();
     };
     const setValue = (newValue) => {
-      if (f7Stepper.value && f7Stepper.value.setValue) f7Stepper.value.setValue(newValue);
+      if (f7Stepper && f7Stepper.setValue) f7Stepper.setValue(newValue);
     };
     const getValue = () => {
-      if (f7Stepper.value && f7Stepper.value.getValue) {
-        return f7Stepper.value.getValue();
+      if (f7Stepper && f7Stepper.getValue) {
+        return f7Stepper.getValue();
       }
       return undefined;
     };
     const onInput = (event) => {
-      emit('input', event, f7Stepper.value);
+      emit('input', event, f7Stepper);
     };
     const onChange = (event) => {
-      emit('change', event, f7Stepper.value);
+      emit('change', event, f7Stepper);
     };
     const onMinusClick = (event) => {
-      emit('stepper:minusclick', event, f7Stepper.value);
+      emit('stepper:minusclick', event, f7Stepper);
     };
     const onPlusClick = (event) => {
-      emit('stepper:plusclick', event, f7Stepper.value);
+      emit('stepper:plusclick', event, f7Stepper);
     };
 
     watch(
       () => props.value,
       (newValue) => {
-        if (!f7Stepper.value) return;
-        f7Stepper.value.setValue(newValue);
+        if (!f7Stepper) return;
+        f7Stepper.setValue(newValue);
       },
     );
 
     onMounted(() => {
       f7ready(() => {
         if (!props.init || !elRef.value) return;
-        f7Stepper.value = f7.stepper.create(
+        f7Stepper = f7.stepper.create(
           noUndefinedProps({
             el: elRef.value,
             min: props.min,
@@ -183,10 +183,10 @@ export default {
     });
 
     onBeforeUnmount(() => {
-      if (f7Stepper.value && f7Stepper.value.destroy) {
-        f7Stepper.value.destroy();
+      if (f7Stepper && f7Stepper.destroy) {
+        f7Stepper.destroy();
       }
-      f7Stepper.value = null;
+      f7Stepper = null;
     });
 
     const classes = computed(() =>

@@ -79,15 +79,15 @@ export default {
   },
   emits: ['range:change', 'range:changed', 'rangeChange', 'rangeChanged'],
   setup(props, { emit }) {
-    const f7Range = ref(null);
+    let f7Range = null;
     const elRef = ref(null);
 
     const setValue = (newValue) => {
-      if (f7Range.value && f7Range.value.setValue) f7Range.value.setValue(newValue);
+      if (f7Range && f7Range.setValue) f7Range.setValue(newValue);
     };
     const getValue = () => {
-      if (f7Range.value && f7Range.value.getValue) {
-        return f7Range.value.getValue();
+      if (f7Range && f7Range.getValue) {
+        return f7Range.getValue();
       }
       return undefined;
     };
@@ -95,14 +95,14 @@ export default {
     watch(
       () => props.value,
       (newValue) => {
-        if (!f7Range.value) return;
-        const rangeValue = f7Range.value.value;
+        if (!f7Range) return;
+        const rangeValue = f7Range.value;
         if (Array.isArray(newValue) && Array.isArray(rangeValue)) {
           if (rangeValue[0] !== newValue[0] || rangeValue[1] !== newValue[1]) {
-            f7Range.value.setValue(newValue);
+            f7Range.setValue(newValue);
           }
         } else {
-          f7Range.value.setValue(newValue);
+          f7Range.setValue(newValue);
         }
       },
     );
@@ -110,7 +110,7 @@ export default {
     onMounted(() => {
       f7ready(() => {
         if (!props.init || !elRef.value) return;
-        f7Range.value = f7.range.create(
+        f7Range = f7.range.create(
           noUndefinedProps({
             el: elRef.value,
             ...props,
@@ -130,8 +130,8 @@ export default {
     });
 
     onBeforeUnmount(() => {
-      if (f7Range.value && f7Range.value.destroy) f7Range.value.destroy();
-      f7Range.value = null;
+      if (f7Range && f7Range.destroy) f7Range.destroy();
+      f7Range = null;
     });
 
     const classes = computed(() =>

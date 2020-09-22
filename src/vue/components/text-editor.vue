@@ -69,7 +69,7 @@ export default {
     'texteditorBlur',
   ],
   setup(props, { emit }) {
-    const f7TextEditor = ref(null);
+    let f7TextEditor = null;
     const elRef = ref(null);
 
     const onChange = (editor, editorValue) => {
@@ -107,8 +107,8 @@ export default {
     watch(
       () => props.value,
       (newValue) => {
-        if (f7TextEditor.value) {
-          f7TextEditor.value.setValue(newValue);
+        if (f7TextEditor) {
+          f7TextEditor.setValue(newValue);
         }
       },
     );
@@ -138,15 +138,15 @@ export default {
         },
       });
       f7ready(() => {
-        f7TextEditor.value = f7.textEditor.create(params);
+        f7TextEditor = f7.textEditor.create(params);
       });
     });
 
     onBeforeUnmount(() => {
-      if (f7TextEditor.value && f7TextEditor.value.destroy) {
-        f7TextEditor.value.destroy();
+      if (f7TextEditor && f7TextEditor.destroy) {
+        f7TextEditor.destroy();
       }
-      f7TextEditor.value = null;
+      f7TextEditor = null;
     });
 
     const classes = computed(() =>

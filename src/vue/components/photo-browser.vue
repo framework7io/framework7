@@ -1,5 +1,5 @@
 <script>
-import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
+import { watch, onMounted, onBeforeUnmount } from 'vue';
 import { extend } from '../shared/utils';
 import { f7ready, f7 } from '../shared/f7';
 
@@ -94,27 +94,27 @@ export default {
     'photobrowser:swipetoclose',
   ],
   setup(props, { emit }) {
-    const f7PhotoBrowser = ref(null);
+    let f7PhotoBrowser = null;
 
     const open = (index) => {
-      return f7PhotoBrowser.value.open(index);
+      return f7PhotoBrowser.open(index);
     };
     const close = () => {
-      return f7PhotoBrowser.value.close();
+      return f7PhotoBrowser.close();
     };
     const expositionToggle = () => {
-      return f7PhotoBrowser.value.expositionToggle();
+      return f7PhotoBrowser.expositionToggle();
     };
     const expositionEnable = () => {
-      return f7PhotoBrowser.value.expositionEnable();
+      return f7PhotoBrowser.expositionEnable();
     };
     const expositionDisable = () => {
-      return f7PhotoBrowser.value.expositionDisable();
+      return f7PhotoBrowser.expositionDisable();
     };
     watch(
       () => props.photos,
       (value) => {
-        const pb = f7PhotoBrowser.value;
+        const pb = f7PhotoBrowser;
         if (!pb) return;
         pb.params.photos = value;
         if (pb.opened && pb.swiper) {
@@ -159,13 +159,13 @@ export default {
           },
         });
 
-        f7PhotoBrowser.value = f7.photoBrowser.create(paramsComputed);
+        f7PhotoBrowser = f7.photoBrowser.create(paramsComputed);
       });
     });
 
     onBeforeUnmount(() => {
-      if (f7PhotoBrowser.value && f7PhotoBrowser.value.destroy) f7PhotoBrowser.value.destroy();
-      f7PhotoBrowser.value = null;
+      if (f7PhotoBrowser && f7PhotoBrowser.destroy) f7PhotoBrowser.destroy();
+      f7PhotoBrowser = null;
     });
 
     return {

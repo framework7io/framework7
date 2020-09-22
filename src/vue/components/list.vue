@@ -67,7 +67,7 @@ export default {
     'virtual:itemsafterinsert',
   ],
   setup(props, { emit, slots }) {
-    const f7VirtualList = ref(null);
+    let f7VirtualList = null;
     const elRef = ref(null);
 
     const onSubmit = (event) => {
@@ -98,7 +98,7 @@ export default {
         const vlParams = props.virtualListParams || {};
         if (!vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) return;
 
-        f7VirtualList.value = f7.virtualList.create(
+        f7VirtualList = f7.virtualList.create(
           extend(
             {
               el: elRef.value,
@@ -133,9 +133,9 @@ export default {
       f7.off('sortableDisable', onSortableDisable);
       f7.off('sortableSort', onSortableSort);
 
-      if (!(props.virtualList && f7VirtualList.value)) return;
-      if (f7VirtualList.value.destroy) f7VirtualList.value.destroy();
-      f7VirtualList.value = null;
+      if (!(props.virtualList && f7VirtualList)) return;
+      if (f7VirtualList.destroy) f7VirtualList.destroy();
+      f7VirtualList = null;
     });
 
     const classes = computed(() =>

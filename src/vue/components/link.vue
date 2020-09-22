@@ -63,15 +63,21 @@ export default {
   },
   setup(props, { slots }) {
     const elRef = ref(null);
-    const f7SmartSelect = ref(null);
+    let f7SmartSelect = null;
 
     useTooltip(elRef, props);
 
     useRouteProps(elRef, props);
 
-    useSmartSelect(props, f7SmartSelect, () => {
-      return elRef.value;
-    });
+    useSmartSelect(
+      props,
+      (instance) => {
+        f7SmartSelect = instance;
+      },
+      () => {
+        return elRef.value;
+      },
+    );
 
     const TabbarContext = inject('TabbarContext', { value: {} });
 

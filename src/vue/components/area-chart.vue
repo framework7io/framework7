@@ -103,11 +103,11 @@ export default {
   },
   emits: ['select'],
   setup(props, { emit }) {
+    let f7Tooltip = null;
     const currentIndex = ref(null);
     const hiddenDatasets = ref([]);
     const elRef = ref(null);
     const svgElRef = ref(null);
-    const f7Tooltip = ref(null);
     const linesOffsets = ref(null);
 
     const visibleLegends = computed(() => {
@@ -268,33 +268,33 @@ export default {
       const hasVisibleDataSets =
         datasets.filter((dataset, i) => !hiddenDatasets.value.includes(i)).length > 0;
       if (!hasVisibleDataSets) {
-        if (f7Tooltip.value && f7Tooltip.value.hide) f7Tooltip.value.hide();
+        if (f7Tooltip && f7Tooltip.hide) f7Tooltip.hide();
         return;
       }
       emit(props, 'select', index);
-      if (index !== null && !f7Tooltip.value) {
-        f7Tooltip.value = f7.tooltip.create({
+      if (index !== null && !f7Tooltip) {
+        f7Tooltip = f7.tooltip.create({
           trigger: 'manual',
           containerEl: elRef.value,
           targetEl: svgElRef.value.querySelector(`line[data-index="${index}"]`),
           text: formatTooltip(),
           cssClass: 'area-chart-tooltip',
         });
-        if (f7Tooltip.value && f7Tooltip.value.show) {
-          f7Tooltip.value.show();
+        if (f7Tooltip && f7Tooltip.show) {
+          f7Tooltip.show();
         }
         return;
       }
-      if (!f7Tooltip.value || !f7Tooltip.value.hide || !f7Tooltip.value.show) {
+      if (!f7Tooltip || !f7Tooltip.hide || !f7Tooltip.show) {
         return;
       }
       if (index !== null) {
-        f7Tooltip.value.setText(formatTooltip());
-        f7Tooltip.value.targetEl = svgElRef.value.querySelector(`line[data-index="${index}"]`);
-        f7Tooltip.value.$targetEl = f7.$(f7Tooltip.value.targetEl);
-        f7Tooltip.value.show();
+        f7Tooltip.setText(formatTooltip());
+        f7Tooltip.targetEl = svgElRef.value.querySelector(`line[data-index="${index}"]`);
+        f7Tooltip.$targetEl = f7.$(f7Tooltip.targetEl);
+        f7Tooltip.show();
       } else {
-        f7Tooltip.value.hide();
+        f7Tooltip.hide();
       }
     };
 
@@ -333,10 +333,10 @@ export default {
     });
 
     onBeforeUnmount(() => {
-      if (f7Tooltip.value && f7Tooltip.value.destroy) {
-        f7Tooltip.value.destroy();
+      if (f7Tooltip && f7Tooltip.destroy) {
+        f7Tooltip.destroy();
       }
-      f7Tooltip.value = null;
+      f7Tooltip = null;
       if (!svgElRef.value) return;
       svgElRef.value.removeEventListener('mouseenter', onMouseEnter);
       svgElRef.value.removeEventListener('mousemove', onMouseMove);

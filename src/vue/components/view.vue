@@ -207,7 +207,7 @@ export default {
     // const restChildren = childrenArray.filter((c) => !c.props || !c.props.initialPage);
     const initialPageComponent = null;
 
-    const f7View = ref(null);
+    let f7View = null;
     const elRef = ref(null);
     let routerData = null;
 
@@ -217,27 +217,27 @@ export default {
       emit('view:init', view);
       if (!props.init) {
         routerData.instance = view;
-        f7View.value = routerData.instance;
+        f7View = routerData.instance;
       }
     };
 
-    if (f7 && !f7View.value && props.init) {
+    if (f7 && !f7View && props.init) {
       const routerId = getRouterId();
-      f7View.value = f7.views.create(elRef.value, {
+      f7View = f7.views.create(elRef.value, {
         ...noUndefinedProps(props),
         routerId,
         init: false,
       });
       routerData = {
         routerId,
-        instance: f7View.value,
+        instance: f7View,
         on: {
           init: onViewInit,
         },
       };
       f7routers.views.push(routerData);
-      if (f7View.value && f7View.value.router && (props.url || props.main)) {
-        initialPage = getRouterInitialComponent(f7View.value.router, initialPageComponent);
+      if (f7View && f7View.router && (props.url || props.main)) {
+        initialPage = getRouterInitialComponent(f7View.router, initialPageComponent);
       }
     }
 
@@ -272,7 +272,7 @@ export default {
 
     onMounted(() => {
       f7ready(() => {
-        if (f7View.value) {
+        if (f7View) {
           routerData.el = elRef.value;
           routerData.pages = pages.value;
           routerData.setPages = (newPages) => {
@@ -281,16 +281,16 @@ export default {
           if (initialPage && initialPage.isAsync && !initialPage.initialComponent) {
             initialPage.component().then(() => {
               setTimeout(() => {
-                f7View.value.init(elRef.value);
+                f7View.init(elRef.value);
                 if (initialPage) {
-                  initialPage.el = f7View.value.router.valuePageEl;
+                  initialPage.el = f7View.router.valuePageEl;
                 }
               }, 100);
             });
           } else {
-            f7View.value.init(elRef.value);
+            f7View.init(elRef.value);
             if (initialPage) {
-              initialPage.el = f7View.value.router.valuePageEl;
+              initialPage.el = f7View.router.valuePageEl;
             }
           }
         } else {
@@ -299,7 +299,7 @@ export default {
             el: elRef.value,
             routerId,
             pages: pages.value,
-            instance: f7View.value,
+            instance: f7View,
             setPages(newPages) {
               setPages([...newPages]);
             },
@@ -312,30 +312,30 @@ export default {
               init: onViewInit,
             },
           });
-          f7View.value = routerData.instance;
+          f7View = routerData.instance;
         }
 
         if (!props.init) return;
 
-        f7View.value.on('resize', onResize);
-        f7View.value.on('swipebackMove', onSwipeBackMove);
-        f7View.value.on('swipebackBeforeChange', onSwipeBackBeforeChange);
-        f7View.value.on('swipebackAfterChange', onSwipeBackAfterChange);
-        f7View.value.on('swipebackBeforeReset', onSwipeBackBeforeReset);
-        f7View.value.on('swipebackAfterReset', onSwipeBackAfterReset);
+        f7View.on('resize', onResize);
+        f7View.on('swipebackMove', onSwipeBackMove);
+        f7View.on('swipebackBeforeChange', onSwipeBackBeforeChange);
+        f7View.on('swipebackAfterChange', onSwipeBackAfterChange);
+        f7View.on('swipebackBeforeReset', onSwipeBackBeforeReset);
+        f7View.on('swipebackAfterReset', onSwipeBackAfterReset);
       });
     });
 
     onBeforeUnmount(() => {
-      if (f7View.value) {
-        f7View.value.off('resize', onResize);
-        f7View.value.off('swipebackMove', onSwipeBackMove);
-        f7View.value.off('swipebackBeforeChange', onSwipeBackBeforeChange);
-        f7View.value.off('swipebackAfterChange', onSwipeBackAfterChange);
-        f7View.value.off('swipebackBeforeReset', onSwipeBackBeforeReset);
-        f7View.value.off('swipebackAfterReset', onSwipeBackAfterReset);
-        if (f7View.value.destroy) f7View.value.destroy();
-        f7View.value = null;
+      if (f7View) {
+        f7View.off('resize', onResize);
+        f7View.off('swipebackMove', onSwipeBackMove);
+        f7View.off('swipebackBeforeChange', onSwipeBackBeforeChange);
+        f7View.off('swipebackAfterChange', onSwipeBackAfterChange);
+        f7View.off('swipebackBeforeReset', onSwipeBackBeforeReset);
+        f7View.off('swipebackAfterReset', onSwipeBackAfterReset);
+        if (f7View.destroy) f7View.destroy();
+        f7View = null;
       }
 
       f7routers.views.splice(f7routers.views.indexOf(routerData), 1);

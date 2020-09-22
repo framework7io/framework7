@@ -151,28 +151,28 @@ export default {
     'searchbar:disable',
   ],
   setup(props, { emit }) {
-    const f7Searchbar = ref(null);
+    let f7Searchbar = null;
     const elRef = ref(null);
 
     const search = (query) => {
-      if (!f7Searchbar.value) return undefined;
-      return f7Searchbar.value.search(query);
+      if (!f7Searchbar) return undefined;
+      return f7Searchbar.search(query);
     };
     const enable = () => {
-      if (!f7Searchbar.value) return undefined;
-      return f7Searchbar.value.enable();
+      if (!f7Searchbar) return undefined;
+      return f7Searchbar.enable();
     };
     const disable = () => {
-      if (!f7Searchbar.value) return undefined;
-      return f7Searchbar.value.disable();
+      if (!f7Searchbar) return undefined;
+      return f7Searchbar.disable();
     };
     const toggle = () => {
-      if (!f7Searchbar.value) return undefined;
-      return f7Searchbar.value.toggle();
+      if (!f7Searchbar) return undefined;
+      return f7Searchbar.toggle();
     };
     const clear = () => {
-      if (!f7Searchbar.value) return undefined;
-      return f7Searchbar.value.clear();
+      if (!f7Searchbar) return undefined;
+      return f7Searchbar.clear();
     };
     const onChange = (event) => {
       emit('change', event);
@@ -242,13 +242,13 @@ export default {
             delete params[key];
           }
         });
-        f7Searchbar.value = f7.searchbar.create(params);
+        f7Searchbar = f7.searchbar.create(params);
       });
     });
 
     onBeforeUnmount(() => {
-      if (f7Searchbar.value && f7Searchbar.value.destroy) f7Searchbar.value.destroy();
-      f7Searchbar.value = null;
+      if (f7Searchbar && f7Searchbar.destroy) f7Searchbar.destroy();
+      f7Searchbar = null;
     });
 
     const classes = computed(() =>

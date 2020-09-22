@@ -61,7 +61,7 @@ export default {
   setup(props, { emit, slots }) {
     const elRef = ref(null);
     const areaElRef = ref(null);
-    const f7Messagebar = ref(null);
+    let f7Messagebar = null;
     let updateSheetVisible = false;
     let updateAttachmentsVisible = false;
 
@@ -80,9 +80,9 @@ export default {
     const onClick = (event) => {
       const inputValue = areaElRef.value.$el;
 
-      const clear = f7Messagebar.value
+      const clear = f7Messagebar
         ? () => {
-            f7Messagebar.value.clear();
+            f7Messagebar.clear();
           }
         : () => {};
       emit('submit', inputValue, clear);
@@ -102,14 +102,14 @@ export default {
     watch(
       () => props.sheetVisible,
       () => {
-        if (!props.resizable || !f7Messagebar.value) return;
+        if (!props.resizable || !f7Messagebar) return;
         updateSheetVisible = true;
       },
     );
     watch(
       () => props.attachmentsVisible,
       () => {
-        if (!props.resizable || !f7Messagebar.value) return;
+        if (!props.resizable || !f7Messagebar) return;
         updateAttachmentsVisible = true;
       },
     );
@@ -134,27 +134,27 @@ export default {
       });
 
       f7ready(() => {
-        f7Messagebar.value = f7.messagebar.create(params);
+        f7Messagebar = f7.messagebar.create(params);
       });
     });
 
     onUpdated(() => {
-      if (!f7Messagebar.value) return;
+      if (!f7Messagebar) return;
       if (updateSheetVisible) {
         updateSheetVisible = false;
-        f7Messagebar.value.sheetVisible = props.sheetVisible;
-        f7Messagebar.value.resizePage();
+        f7Messagebar.sheetVisible = props.sheetVisible;
+        f7Messagebar.resizePage();
       }
       if (updateAttachmentsVisible) {
         updateAttachmentsVisible = false;
-        f7Messagebar.value.attachmentsVisible = props.attachmentsVisible;
-        f7Messagebar.value.resizePage();
+        f7Messagebar.attachmentsVisible = props.attachmentsVisible;
+        f7Messagebar.resizePage();
       }
     });
 
     onBeforeUnmount(() => {
-      if (f7Messagebar.value && f7Messagebar.value.destroy) f7Messagebar.value.destroy();
-      f7Messagebar.value = null;
+      if (f7Messagebar && f7Messagebar.destroy) f7Messagebar.destroy();
+      f7Messagebar = null;
     });
 
     const classes = computed(() =>
