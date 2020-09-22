@@ -114,18 +114,6 @@ export default {
     const onResize = (...args) => {
       emit('panel:resize', ...args);
     };
-    const open = (animate) => {
-      if (!f7Panel) return;
-      f7Panel.open(animate);
-    };
-    const close = (animate) => {
-      if (!f7Panel) return;
-      f7Panel.close(animate);
-    };
-    const toggle = (animate) => {
-      if (!f7Panel) return;
-      f7Panel.toggle(animate);
-    };
 
     watch(
       () => props.resizable,
@@ -214,9 +202,6 @@ export default {
     return {
       elRef,
       classes,
-      open,
-      close,
-      toggle,
     };
   },
 };

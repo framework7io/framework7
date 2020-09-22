@@ -114,25 +114,10 @@ const Panel = forwardRef((props, ref) => {
   const onResize = (...args) => {
     emit(props, 'panelResize', ...args);
   };
-  const open = (animate) => {
-    if (!f7Panel.current) return;
-    f7Panel.current.open(animate);
-  };
-  const close = (animate) => {
-    if (!f7Panel.current) return;
-    f7Panel.current.close(animate);
-  };
-  const toggle = (animate) => {
-    if (!f7Panel.current) return;
-    f7Panel.current.toggle(animate);
-  };
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
     f7Panel: () => f7Panel.current,
-    open,
-    close,
-    toggle,
   }));
 
   watchProp(resizable, (newValue) => {

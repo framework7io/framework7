@@ -124,19 +124,6 @@
     if (typeof $$props.onPanelResize === 'function') $$props.onPanelResize(...args);
   }
 
-  export function open(animate) {
-    if (!f7Panel) return;
-    f7Panel.open(animate);
-  }
-  export function close(animate) {
-    if (!f7Panel) return;
-    f7Panel.close(animate);
-  }
-  export function toggle(animate) {
-    if (!f7Panel) return;
-    f7Panel.toggle(animate);
-	} // eslint-disable-line
-
   onMount(() => {
     f7.ready(() => {
       const dom7 = f7.instance.$;
