@@ -21,6 +21,7 @@ import { watchProp } from '../shared/watch-prop';
   clearFormattingOnPaste? : boolean
   resizable? : boolean
   onTextEditorChange? : (value?: any) => void
+  onTextEditorInput? : (value?: any) => void
   onTextEditorFocus? : (...args: any[]) => void
   onTextEditorBlur? : (...args: any[]) => void
   onTextEditorButtonClick? : (button?: any) => void
@@ -54,8 +55,8 @@ const TextEditor = forwardRef((props, ref) => {
   const onChange = (editor, editorValue) => {
     emit(props, 'textEditorChange', editorValue);
   };
-  const onInput = () => {
-    emit(props, 'textEditorInput');
+  const onInput = (editor, editorValue) => {
+    emit(props, 'textEditorInput', editorValue);
   };
   const onFocus = () => {
     emit(props, 'textEditorFocus');

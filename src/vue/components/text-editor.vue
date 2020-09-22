@@ -76,9 +76,9 @@ export default {
       emit('texteditor:change', editorValue);
       emit('texteditorChange', editorValue);
     };
-    const onInput = () => {
-      emit('texteditor:input');
-      emit('texteditorInput');
+    const onInput = (editor, editorValue) => {
+      emit('texteditor:input', editorValue);
+      emit('texteditorInput', editorValue);
     };
     const onFocus = () => {
       emit('texteditor:focus');

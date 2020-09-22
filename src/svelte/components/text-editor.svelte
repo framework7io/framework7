@@ -47,9 +47,9 @@
     dispatch('textEditorChange', [editorValue]);
     if (typeof $$props.onTextEditorChange === 'function') $$props.onTextEditorChange(editorValue);
   }
-  function onInput() {
-    dispatch('textEditorInput');
-    if (typeof $$props.onTextEditorInput === 'function') $$props.onTextEditorInput();
+  function onInput(editor, editorValue) {
+    dispatch('textEditorInput', [editorValue]);
+    if (typeof $$props.onTextEditorInput === 'function') $$props.onTextEditorInput(editorValue);
   }
   function onFocus() {
     dispatch('textEditorFocus');
