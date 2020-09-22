@@ -64,7 +64,7 @@ module.exports = {
       },
     },
     {
-      files: ['src/**/*.vue'],
+      files: ['src/**/*.vue', 'kitchen-sink/vue/src/**/*.vue'],
       plugins: ['vue'],
       extends: [
         'plugin:vue/vue3-recommended',

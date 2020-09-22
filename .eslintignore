@@ -4,7 +4,7 @@ build
 custom
 packages
 node_modules
-kitchen-sink
+kitchen-sink/core/
 src/core/framework7.js
 src/core/framework7-lite.js
 src/core/modules/demo-module.js

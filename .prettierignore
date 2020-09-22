@@ -1,7 +1,7 @@
 build
 node_modules
 packages
-kitchen-sink
+kitchen-sink/core
 
 src/core/modules/component/snabbdom
 src/phenome
