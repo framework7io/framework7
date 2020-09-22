@@ -110,58 +110,6 @@ const Messagebar = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     el: elRef.current,
     f7Messagebar: () => f7Messagebar.current,
-    clear(...args) {
-      if (!f7Messagebar.current) return null;
-      return f7Messagebar.current.clear(...args);
-    },
-    getValue(...args) {
-      if (!f7Messagebar.current) return null;
-      return f7Messagebar.current.getValue(...args);
-    },
-    setValue(...args) {
-      if (!f7Messagebar.current) return null;
-      return f7Messagebar.current.setValue(...args);
-    },
-    setPlaceholder(...args) {
-      if (!f7Messagebar.current) return null;
-      return f7Messagebar.current.setPlaceholder(...args);
-    },
-    resize(...args) {
-      if (!f7Messagebar.current) return null;
-      return f7Messagebar.current.resizePage(...args);
-    },
-    focus(...args) {
-      if (!f7Messagebar.current) return null;
-      return f7Messagebar.current.focus(...args);
-    },
-    blur(...args) {
-      if (!f7Messagebar.current) return null;
-      return f7Messagebar.current.blur(...args);
-    },
-    attachmentsShow(...args) {
-      if (!f7Messagebar.current) return null;
-      return f7Messagebar.current.attachmentsShow(...args);
-    },
-    attachmentsHide(...args) {
-      if (!f7Messagebar.current) return null;
-      return f7Messagebar.current.attachmentsHide(...args);
-    },
-    attachmentsToggle(...args) {
-      if (!f7Messagebar.current) return null;
-      return f7Messagebar.current.attachmentsToggle(...args);
-    },
-    sheetShow(...args) {
-      if (!f7Messagebar.current) return null;
-      return f7Messagebar.current.sheetShow(...args);
-    },
-    sheetHide(...args) {
-      if (!f7Messagebar.current) return null;
-      return f7Messagebar.current.sheetHide(...args);
-    },
-    sheetToggle(...args) {
-      if (!f7Messagebar.current) return null;
-      return f7Messagebar.current.sheetToggle(...args);
-    },
   }));
 
   watchProp(sheetVisible, () => {
