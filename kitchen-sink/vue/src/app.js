@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/no-extraneous-dependencies */
 import { createApp } from 'vue';
 import Framework7 from 'framework7/lite-bundle';
 import Framework7Vue from 'framework7-vue';

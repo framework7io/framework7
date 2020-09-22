@@ -16,7 +16,15 @@
           <option value="banana">Banana</option>
         </select>
       </f7-list-item>
-      <f7-list-item title="Car" smart-select :smart-select-params="{openIn: 'popup', searchbar: true, searchbarPlaceholder: 'Search car'}">
+      <f7-list-item
+        title="Car"
+        smart-select
+        :smart-select-params="{
+          openIn: 'popup',
+          searchbar: true,
+          searchbarPlaceholder: 'Search car',
+        }"
+      >
         <select name="car" multiple>
           <optgroup label="Japanese">
             <option value="honda" selected>Honda</option>
@@ -40,13 +48,13 @@
           </optgroup>
         </select>
       </f7-list-item>
-      <f7-list-item title="Mac or Windows" smart-select :smart-select-params="{openIn: 'sheet'}">
+      <f7-list-item title="Mac or Windows" smart-select :smart-select-params="{ openIn: 'sheet' }">
         <select name="mac-windows">
           <option value="mac" selected>Mac</option>
           <option value="windows">Windows</option>
         </select>
       </f7-list-item>
-      <f7-list-item title="Super Hero" smart-select :smart-select-params="{openIn: 'popover'}">
+      <f7-list-item title="Super Hero" smart-select :smart-select-params="{ openIn: 'popover' }">
         <select name="superhero" multiple>
           <option value="Batman" selected>Batman</option>
           <option value="Superman">Superman</option>
@@ -61,15 +69,15 @@
   </f7-page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7List, f7Block, f7ListItem } from 'framework7-vue';
+import { f7Navbar, f7Page, f7List, f7Block, f7ListItem } from 'framework7-vue';
 
-  export default {
-    components: {
-      f7Navbar,
-      f7Page,
-      f7List,
-      f7Block,
-      f7ListItem,
-    },
-  };
+export default {
+  components: {
+    f7Navbar,
+    f7Page,
+    f7List,
+    f7Block,
+    f7ListItem,
+  },
+};
 </script>

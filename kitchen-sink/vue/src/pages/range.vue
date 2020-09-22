@@ -6,18 +6,13 @@
     <f7-list simple-list>
       <f7-list-item>
         <f7-list-item-cell class="width-auto flex-shrink-0">
-          <f7-icon ios="f7:speaker_fill" aurora="f7:speaker_fill" md="material:volume_mute"></f7-icon>
+          <f7-icon ios="f7:speaker_fill" aurora="f7:speaker_fill" md="material:volume_mute" />
         </f7-list-item-cell>
         <f7-list-item-cell class="flex-shrink-3">
-          <f7-range
-            :min="0"
-            :max="100"
-            :step="1"
-            :value="10"
-          ></f7-range>
+          <f7-range :min="0" :max="100" :step="1" :value="10" />
         </f7-list-item-cell>
         <f7-list-item-cell class="width-auto flex-shrink-0">
-          <f7-icon ios="f7:speaker_3_fill" aurora="f7:speaker_3_fill" md="material:volume_up"></f7-icon>
+          <f7-icon ios="f7:speaker_3_fill" aurora="f7:speaker_3_fill" md="material:volume_up" />
         </f7-list-item-cell>
       </f7-list-item>
     </f7-list>
@@ -26,29 +21,28 @@
     <f7-list simple-list>
       <f7-list-item>
         <f7-list-item-cell class="width-auto flex-shrink-0">
-          <f7-icon ios="f7:sun_min" aurora="f7:sun_min" md="material:brightness_low"></f7-icon>
+          <f7-icon ios="f7:sun_min" aurora="f7:sun_min" md="material:brightness_low" />
         </f7-list-item-cell>
         <f7-list-item-cell class="flex-shrink-3">
-          <f7-range
-            :min="0"
-            :max="100"
-            :step="1"
-            :value="50"
-            :label="true"
-            color="orange"
-          ></f7-range>
+          <f7-range :min="0" :max="100" :step="1" :value="50" :label="true" color="orange" />
         </f7-list-item-cell>
         <f7-list-item-cell class="width-auto flex-shrink-0">
-          <f7-icon ios="f7:sun_max_fill" aurora="f7:sun_max_fill" md="material:brightness_high"></f7-icon>
+          <f7-icon ios="f7:sun_max_fill" aurora="f7:sun_max_fill" md="material:brightness_high" />
         </f7-list-item-cell>
       </f7-list-item>
     </f7-list>
 
-    <f7-block-title class="display-flex justify-content-space-between">Price Filter <span>${{priceMin}} - ${{priceMax}}</span></f7-block-title>
+    <f7-block-title class="display-flex justify-content-space-between"
+      >Price Filter <span>${{ priceMin }} - ${{ priceMax }}</span></f7-block-title
+    >
     <f7-list simple-list>
       <f7-list-item>
         <f7-list-item-cell class="width-auto flex-shrink-0">
-          <f7-icon ios="f7:money_dollar_circle" aurora="f7:money_dollar_circle" md="material:attach_money"></f7-icon>
+          <f7-icon
+            ios="f7:money_dollar_circle"
+            aurora="f7:money_dollar_circle"
+            md="material:attach_money"
+          />
         </f7-list-item-cell>
         <f7-list-item-cell class="flex-shrink-3">
           <f7-range
@@ -60,10 +54,14 @@
             :dual="true"
             color="green"
             @range:change="onPriceChange"
-          ></f7-range>
+          />
         </f7-list-item-cell>
         <f7-list-item-cell class="width-auto flex-shrink-0">
-          <f7-icon ios="f7:money_dollar_circle_fill" aurora="f7:money_dollar_circle_fill" md="material:monetization_on"></f7-icon>
+          <f7-icon
+            ios="f7:money_dollar_circle_fill"
+            aurora="f7:money_dollar_circle_fill"
+            md="material:monetization_on"
+          />
         </f7-list-item-cell>
       </f7-list-item>
     </f7-list>
@@ -79,7 +77,7 @@
         :scale="true"
         :scale-steps="5"
         :scale-sub-steps="4"
-      ></f7-range>
+      />
     </f7-block>
 
     <f7-block-title>Vertical</f7-block-title>
@@ -182,31 +180,41 @@
   </f7-page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7BlockTitle, f7Range, f7List, f7ListItem, f7ListItemCell, f7Icon, f7Block } from 'framework7-vue';
+import {
+  f7Navbar,
+  f7Page,
+  f7BlockTitle,
+  f7Range,
+  f7List,
+  f7ListItem,
+  f7ListItemCell,
+  f7Icon,
+  f7Block,
+} from 'framework7-vue';
 
-  export default {
-    components: {
-      f7Navbar,
-      f7Page,
-      f7BlockTitle,
-      f7Range,
-      f7List,
-      f7ListItem,
-      f7ListItemCell,
-      f7Icon,
-      f7Block,
+export default {
+  components: {
+    f7Navbar,
+    f7Page,
+    f7BlockTitle,
+    f7Range,
+    f7List,
+    f7ListItem,
+    f7ListItemCell,
+    f7Icon,
+    f7Block,
+  },
+  data() {
+    return {
+      priceMin: 200,
+      priceMax: 400,
+    };
+  },
+  methods: {
+    onPriceChange(values) {
+      this.priceMin = values[0];
+      this.priceMax = values[1];
     },
-    data() {
-      return {
-        priceMin: 200,
-        priceMax: 400,
-      };
-    },
-    methods: {
-      onPriceChange(values) {
-        this.priceMin = values[0];
-        this.priceMax = values[1];
-      },
-    },
-  };
+  },
+};
 </script>

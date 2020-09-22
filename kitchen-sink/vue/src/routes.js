@@ -654,7 +654,7 @@ export default [
         path: '/master-detail/:id/',
         component: MasterDetailDetail,
       },
-    ]
+    ],
   },
 
   // Default route (404 page). MUST BE THE LAST

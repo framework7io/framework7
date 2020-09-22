@@ -75,15 +75,21 @@
 
     <f7-block-title>Segmented</f7-block-title>
     <f7-block strong>
-       <f7-segmented tag="p">
+      <f7-segmented tag="p">
         <f7-button>Button</f7-button>
         <f7-button>Button</f7-button>
         <f7-button active>Active</f7-button>
       </f7-segmented>
       <f7-segmented strong tag="p">
-        <f7-button :active="activeStrongButton === 0" @click="activeStrongButton = 0">Button</f7-button>
-        <f7-button :active="activeStrongButton === 1" @click="activeStrongButton = 1">Button</f7-button>
-        <f7-button :active="activeStrongButton === 2" @click="activeStrongButton = 2">Button</f7-button>
+        <f7-button :active="activeStrongButton === 0" @click="activeStrongButton = 0"
+          >Button</f7-button
+        >
+        <f7-button :active="activeStrongButton === 1" @click="activeStrongButton = 1"
+          >Button</f7-button
+        >
+        <f7-button :active="activeStrongButton === 2" @click="activeStrongButton = 2"
+          >Button</f7-button
+        >
       </f7-segmented>
       <f7-segmented raised tag="p">
         <f7-button>Button</f7-button>
@@ -195,25 +201,36 @@
   </f7-page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7BlockTitle, f7Block, f7List, f7Row, f7Col, f7ListButton, f7Button, f7Segmented } from 'framework7-vue';
+import {
+  f7Navbar,
+  f7Page,
+  f7BlockTitle,
+  f7Block,
+  f7List,
+  f7Row,
+  f7Col,
+  f7ListButton,
+  f7Button,
+  f7Segmented,
+} from 'framework7-vue';
 
-  export default {
-    components: {
-      f7Navbar,
-      f7Page,
-      f7BlockTitle,
-      f7Block,
-      f7List,
-      f7Row,
-      f7Col,
-      f7ListButton,
-      f7Button,
-      f7Segmented,
-    },
-    data() {
-      return {
-        activeStrongButton: 0,
-      };
-    },
-  }
+export default {
+  components: {
+    f7Navbar,
+    f7Page,
+    f7BlockTitle,
+    f7Block,
+    f7List,
+    f7Row,
+    f7Col,
+    f7ListButton,
+    f7Button,
+    f7Segmented,
+  },
+  data() {
+    return {
+      activeStrongButton: 0,
+    };
+  },
+};
 </script>

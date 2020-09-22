@@ -173,16 +173,22 @@
   </f7-page>
 </template>
 <script>
-  import { f7Page, f7Navbar, f7List, f7ListGroup, f7ListItem, f7ListIndex } from 'framework7-vue';
+import { f7Page, f7Navbar, f7List, f7ListGroup, f7ListItem, f7ListIndex } from 'framework7-vue';
 
-  export default {
-    components: {
-      f7Page, f7Navbar, f7List, f7ListGroup, f7ListItem, f7ListIndex,
+export default {
+  components: {
+    f7Page,
+    f7Navbar,
+    f7List,
+    f7ListGroup,
+    f7ListItem,
+    f7ListIndex,
+  },
+  methods: {
+    onIndexSelect(itemContent) {
+      // eslint-disable-next-line
+      console.log(itemContent);
     },
-    methods: {
-      onIndexSelect(itemContent) {
-        console.log(itemContent);
-      },
-    },
-  };
+  },
+};
 </script>

@@ -2,7 +2,10 @@
   <f7-page>
     <f7-navbar title="Appbar" back-link="Back"></f7-navbar>
     <f7-block strong>
-      <p>Appbar is the main app bar with actions on top of the whole app. It is designed to be used in desktop apps with Aurora theme.</p>
+      <p>
+        Appbar is the main app bar with actions on top of the whole app. It is designed to be used
+        in desktop apps with Aurora theme.
+      </p>
     </f7-block>
     <f7-block strong>
       <f7-button fill @click="toggleAppbar">Toggle Appbar</f7-button>
@@ -10,27 +13,29 @@
   </f7-page>
 </template>
 <script>
-  import { f7Page, f7Navbar, f7Block, f7Button } from 'framework7-vue';
+import { f7Page, f7Navbar, f7Block, f7Button, f7 } from 'framework7-vue';
+import $ from 'dom7';
 
-  var appbarEnabled = false;
-  export default {
-    components: {
-      f7Page,
-      f7Navbar,
-      f7Block,
-      f7Button,
-    },
-    data: function () {
-      return {
-        appbarEnabled: appbarEnabled,
-      };
-    },
-    methods: {
-      enableAppbar: function () {
-        var self = this;
-        self.appbarEnabled = true;
-        appbarEnabled = true;
-        self.$f7.root.prepend(`
+let appbarEnabled = false;
+
+export default {
+  components: {
+    f7Page,
+    f7Navbar,
+    f7Block,
+    f7Button,
+  },
+  data() {
+    return {
+      appbarEnabled,
+    };
+  },
+  methods: {
+    enableAppbar() {
+      const self = this;
+      self.appbarEnabled = true;
+      appbarEnabled = true;
+      f7.root.prepend(`
         <div class="appbar">
           <div class="appbar-inner">
             <div class="left">
@@ -60,21 +65,21 @@
           </div>
         </div>
         `);
-      },
-      disableAppbar: function () {
-        var self = this;
-        self.appbarEnabled = false;
-        appbarEnabled = false;
-        self.$$('.appbar').remove();
-      },
-      toggleAppbar: function () {
-        var self = this;
-        if (self.appbarEnabled) {
-          self.disableAppbar();
-        } else {
-          self.enableAppbar();
-        }
-      },
     },
-  };
+    disableAppbar() {
+      const self = this;
+      self.appbarEnabled = false;
+      appbarEnabled = false;
+      $('.appbar').remove();
+    },
+    toggleAppbar() {
+      const self = this;
+      if (self.appbarEnabled) {
+        self.disableAppbar();
+      } else {
+        self.enableAppbar();
+      }
+    },
+  },
+};
 </script>

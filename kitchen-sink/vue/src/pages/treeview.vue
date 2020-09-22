@@ -49,54 +49,86 @@
     <f7-block strong class="no-padding-horizontal">
       <f7-treeview>
         <f7-treeview-item label="images" icon-f7="folder_fill">
-          <f7-checkbox slot="content-start"
-            :checked="Object.values(checkboxes.images).indexOf(false) < 0"
-            :indeterminate="Object.values(checkboxes.images).indexOf(false) >= 0 && Object.values(checkboxes.images).indexOf(true) >= 0"
-            @change="(e) => Object.keys(checkboxes.images).forEach(k => checkboxes.images[k] = e.target.checked)"
-          />
-          <f7-treeview-item label="avatar.png" icon-f7="photo_fill">
-            <f7-checkbox slot="content-start"
-              :checked="checkboxes.images['avatar.png']"
-              @change="checkboxes.images['avatar.png'] = $event.target.checked"
+          <template #content-start>
+            <f7-checkbox
+              :checked="Object.values(checkboxes.images).indexOf(false) < 0"
+              :indeterminate="
+                Object.values(checkboxes.images).indexOf(false) >= 0 &&
+                Object.values(checkboxes.images).indexOf(true) >= 0
+              "
+              @change="
+                (e) =>
+                  Object.keys(checkboxes.images).forEach(
+                    (k) => (checkboxes.images[k] = e.target.checked),
+                  )
+              "
             />
+          </template>
+          <f7-treeview-item label="avatar.png" icon-f7="photo_fill">
+            <template #content-start>
+              <f7-checkbox
+                :checked="checkboxes.images['avatar.png']"
+                @change="checkboxes.images['avatar.png'] = $event.target.checked"
+              />
+            </template>
           </f7-treeview-item>
           <f7-treeview-item label="background.jpg" icon-f7="photo_fill">
-            <f7-checkbox slot="content-start"
-              :checked="checkboxes.images['background.jpg']"
-              @change="checkboxes.images['background.jpg'] = $event.target.checked"
-            />
+            <template #content-start>
+              <f7-checkbox
+                :checked="checkboxes.images['background.jpg']"
+                @change="checkboxes.images['background.jpg'] = $event.target.checked"
+              />
+            </template>
           </f7-treeview-item>
         </f7-treeview-item>
         <f7-treeview-item label="documents" icon-f7="folder_fill">
-          <f7-checkbox slot="content-start"
-            :checked="Object.values(checkboxes.documents).indexOf(false) < 0"
-            :indeterminate="Object.values(checkboxes.documents).indexOf(false) >= 0 && Object.values(checkboxes.documents).indexOf(true) >= 0"
-            @change="(e) => Object.keys(checkboxes.documents).forEach(k => checkboxes.documents[k] = e.target.checked)"
-          />
-          <f7-treeview-item label="cv.docx" icon-f7="doc_text_fill">
-            <f7-checkbox slot="content-start"
-              :checked="checkboxes.documents['cv.docx']"
-              @change="checkboxes.documents['cv.docx'] = $event.target.checked"
+          <template #content-start>
+            <f7-checkbox
+              :checked="Object.values(checkboxes.documents).indexOf(false) < 0"
+              :indeterminate="
+                Object.values(checkboxes.documents).indexOf(false) >= 0 &&
+                Object.values(checkboxes.documents).indexOf(true) >= 0
+              "
+              @change="
+                (e) =>
+                  Object.keys(checkboxes.documents).forEach(
+                    (k) => (checkboxes.documents[k] = e.target.checked),
+                  )
+              "
             />
+          </template>
+          <f7-treeview-item label="cv.docx" icon-f7="doc_text_fill">
+            <template #content-start>
+              <f7-checkbox
+                :checked="checkboxes.documents['cv.docx']"
+                @change="checkboxes.documents['cv.docx'] = $event.target.checked"
+              />
+            </template>
           </f7-treeview-item>
           <f7-treeview-item label="info.docx" icon-f7="doc_text_fill">
-            <f7-checkbox slot="content-start"
-              :checked="checkboxes.documents['info.docx']"
-              @change="checkboxes.documents['info.docx'] = $event.target.checked"
-            />
+            <template #content-start>
+              <f7-checkbox
+                :checked="checkboxes.documents['info.docx']"
+                @change="checkboxes.documents['info.docx'] = $event.target.checked"
+              />
+            </template>
           </f7-treeview-item>
         </f7-treeview-item>
         <f7-treeview-item label=".gitignore" icon-f7="logo_github">
-          <f7-checkbox slot="content-start"
-            :checked="checkboxes['.gitignore']"
-            @change="checkboxes['.gitignore'] = $event.target.checked"
-          />
+          <template #content-start>
+            <f7-checkbox
+              :checked="checkboxes['.gitignore']"
+              @change="checkboxes['.gitignore'] = $event.target.checked"
+            />
+          </template>
         </f7-treeview-item>
         <f7-treeview-item label="index.html" icon-f7="doc_text_fill">
-          <f7-checkbox slot="content-start"
-            :checked="checkboxes['index.html']"
-            @change="checkboxes['index.html'] = $event.target.checked"
-          />
+          <template #content-start>
+            <f7-checkbox
+              :checked="checkboxes['index.html']"
+              @change="checkboxes['index.html'] = $event.target.checked"
+            />
+          </template>
         </f7-treeview-item>
       </f7-treeview>
     </f7-block>
@@ -218,55 +250,69 @@
   </f7-page>
 </template>
 <script>
-  import { f7Page, f7Navbar, f7BlockTitle, f7Block, f7Treeview, f7TreeviewItem, f7Checkbox } from 'framework7-vue';
+import {
+  f7Page,
+  f7Navbar,
+  f7BlockTitle,
+  f7Block,
+  f7Treeview,
+  f7TreeviewItem,
+  f7Checkbox,
+} from 'framework7-vue';
+import $ from 'dom7';
 
-  export default {
-    components: {
-      f7Page, f7Navbar, f7BlockTitle, f7Block, f7Treeview, f7TreeviewItem, f7Checkbox
-    },
-    data: function () {
-      return {
-        checkboxes: {
-          images: {
-            'avatar.png': false,
-            'background.jpg': false,
-          },
-          documents: {
-            'cv.docx': false,
-            'info.docx': false,
-          },
-          '.gitignore': false,
-          '.index.html': false,
+export default {
+  components: {
+    f7Page,
+    f7Navbar,
+    f7BlockTitle,
+    f7Block,
+    f7Treeview,
+    f7TreeviewItem,
+    f7Checkbox,
+  },
+  data() {
+    return {
+      checkboxes: {
+        images: {
+          'avatar.png': false,
+          'background.jpg': false,
         },
-        selectedItem: null,
-        loadedChildren: [],
-      };
-    },
-    methods: {
-      toggleSelectable: function (e, item) {
-        var self = this;
-        var $ = self.$$;
-        if ($(e.target).is('.treeview-toggle')) return;
-        self.selectedItem = item;
+        documents: {
+          'cv.docx': false,
+          'info.docx': false,
+        },
+        '.gitignore': false,
+        '.index.html': false,
       },
-      loadChildren: function (e, done) {
-        var self = this;
-        setTimeout(function () {
-          // call done() to hide preloader
-          done();
-          self.loadedChildren = [
-            {
-              name: 'John Doe',
-            },
-            {
-              name: 'Jane Doe',
-            },
-            {
-              name: 'Calvin Johnson',
-            },
-          ];
-        }, 2000);
-      },
+      selectedItem: null,
+      loadedChildren: [],
+    };
+  },
+  methods: {
+    toggleSelectable(e, item) {
+      const self = this;
+      if ($(e.target).is('.treeview-toggle')) return;
+      self.selectedItem = item;
     },
-  };
+    loadChildren(e, done) {
+      const self = this;
+      setTimeout(() => {
+        // call done() to hide preloader
+        done();
+        self.loadedChildren = [
+          {
+            name: 'John Doe',
+          },
+          {
+            name: 'Jane Doe',
+          },
+          {
+            name: 'Calvin Johnson',
+          },
+        ];
+      }, 2000);
+    },
+  },
+};
 </script>

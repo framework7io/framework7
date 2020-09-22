@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Data Table" back-link="Back"></f7-navbar>
+    <f7-navbar title="Data Table" back-link="Back" />
     <f7-block-title>Plain table</f7-block-title>
     <div class="data-table">
       <table>
@@ -96,7 +96,7 @@
           <tr>
             <th class="checkbox-cell">
               <label class="checkbox">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <i class="icon-checkbox"></i>
               </label>
             </th>
@@ -107,7 +107,7 @@
             <th class="numeric-cell">Protein (g)</th>
             <th class="checkbox-cell">
               <label class="checkbox">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <i class="icon-checkbox"></i>
               </label>
               <span>In Stock</span>
@@ -118,7 +118,7 @@
           <tr>
             <td class="checkbox-cell">
               <label class="checkbox">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <i class="icon-checkbox"></i>
               </label>
             </td>
@@ -129,7 +129,7 @@
             <td class="numeric-cell">4.0</td>
             <td class="checkbox-cell">
               <label class="checkbox">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <i class="icon-checkbox"></i>
               </label>
             </td>
@@ -137,7 +137,7 @@
           <tr>
             <td class="checkbox-cell">
               <label class="checkbox">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <i class="icon-checkbox"></i>
               </label>
             </td>
@@ -148,7 +148,7 @@
             <td class="numeric-cell">4.4</td>
             <td class="checkbox-cell">
               <label class="checkbox">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <i class="icon-checkbox"></i>
               </label>
             </td>
@@ -156,7 +156,7 @@
           <tr>
             <td class="checkbox-cell">
               <label class="checkbox">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <i class="icon-checkbox"></i>
               </label>
             </td>
@@ -167,7 +167,7 @@
             <td class="numeric-cell">6.0</td>
             <td class="checkbox-cell">
               <label class="checkbox">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <i class="icon-checkbox"></i>
               </label>
             </td>
@@ -175,7 +175,7 @@
           <tr>
             <td class="checkbox-cell">
               <label class="checkbox">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <i class="icon-checkbox"></i>
               </label>
             </td>
@@ -186,7 +186,7 @@
             <td class="numeric-cell">4.3</td>
             <td class="checkbox-cell">
               <label class="checkbox">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <i class="icon-checkbox"></i>
               </label>
             </td>
@@ -204,7 +204,7 @@
           <tr>
             <th class="checkbox-cell">
               <label class="checkbox">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <i class="icon-checkbox"></i>
               </label>
             </th>
@@ -213,14 +213,21 @@
             <th class="numeric-cell">Fat (g)</th>
             <th class="numeric-cell">Carbs</th>
             <th class="numeric-cell">Protein (g)</th>
-            <th class="medium-only"><f7-icon ios="f7:chat_bubble_text_fill" aurora="f7:chat_bubble_text_fill" md="material:message"></f7-icon> Comments</th>
+            <th class="medium-only">
+              <f7-icon
+                ios="f7:chat_bubble_text_fill"
+                aurora="f7:chat_bubble_text_fill"
+                md="material:message"
+              />
+              Comments
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td class="checkbox-cell">
               <label class="checkbox">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <i class="icon-checkbox"></i>
               </label>
             </td>
@@ -234,7 +241,7 @@
           <tr>
             <td class="checkbox-cell">
               <label class="checkbox">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <i class="icon-checkbox"></i>
               </label>
             </td>
@@ -248,7 +255,7 @@
           <tr>
             <td class="checkbox-cell">
               <label class="checkbox">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <i class="icon-checkbox"></i>
               </label>
             </td>
@@ -262,7 +269,7 @@
           <tr>
             <td class="checkbox-cell">
               <label class="checkbox">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <i class="icon-checkbox"></i>
               </label>
             </td>
@@ -277,7 +284,9 @@
       </table>
     </div>
     <f7-block-title>With inputs</f7-block-title>
-    <div class="block-header">Such tables are widely used in admin interfaces for filtering or search data</div>
+    <div class="block-header">
+      Such tables are widely used in admin interfaces for filtering or search data
+    </div>
     <div class="card data-table">
       <table>
         <thead>
@@ -285,19 +294,19 @@
             <th class="input-cell">
               <span class="table-head-label">ID</span>
               <div class="input" style="width: 50px">
-                <input type="number" placeholder="Filter">
+                <input type="number" placeholder="Filter" />
               </div>
             </th>
             <th class="input-cell">
               <span class="table-head-label">Name</span>
               <div class="input">
-                <input type="text" placeholder="Filter">
+                <input type="text" placeholder="Filter" />
               </div>
             </th>
             <th class="input-cell">
               <span class="table-head-label">Email</span>
               <div class="input">
-                <input type="email" placeholder="Filter">
+                <input type="email" placeholder="Filter" />
               </div>
             </th>
             <th class="input-cell">
@@ -345,8 +354,16 @@
       <div class="card-header">
         <div class="data-table-title">Nutrition</div>
         <div class="data-table-actions">
-          <f7-link icon-ios="f7:line_horizontal_3_decrease" icon-aurora="f7:line_horizontal_3_decrease" icon-md="material:sort"></f7-link>
-          <f7-link icon-ios="f7:ellipsis_vertical_circle" icon-aurora="f7:ellipsis_vertical_circle" icon-md="material:more_vert"></f7-link>
+          <f7-link
+            icon-ios="f7:line_horizontal_3_decrease"
+            icon-aurora="f7:line_horizontal_3_decrease"
+            icon-md="material:sort"
+          />
+          <f7-link
+            icon-ios="f7:ellipsis_vertical_circle"
+            icon-aurora="f7:ellipsis_vertical_circle"
+            icon-md="material:more_vert"
+          />
         </div>
       </div>
       <div class="card-content">
@@ -355,7 +372,7 @@
             <tr>
               <th class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
               </th>
@@ -364,14 +381,21 @@
               <th class="numeric-cell">Fat (g)</th>
               <th class="numeric-cell">Carbs</th>
               <th class="numeric-cell">Protein (g)</th>
-              <th class="medium-only"><f7-icon ios="f7:chat_bubble_text_fill" aurora="f7:chat_bubble_text_fill" md="material:message"></f7-icon> Comments</th>
+              <th class="medium-only">
+                <f7-icon
+                  ios="f7:chat_bubble_text_fill"
+                  aurora="f7:chat_bubble_text_fill"
+                  md="material:message"
+                />
+                Comments
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
               </td>
@@ -385,7 +409,7 @@
             <tr>
               <td class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
               </td>
@@ -399,7 +423,7 @@
             <tr>
               <td class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
               </td>
@@ -413,7 +437,7 @@
             <tr>
               <td class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
               </td>
@@ -433,8 +457,16 @@
       <div class="card-header">
         <div class="data-table-title">Nutrition</div>
         <div class="data-table-actions">
-          <f7-link icon-ios="f7:line_horizontal_3_decrease" icon-aurora="f7:line_horizontal_3_decrease" icon-md="material:sort"></f7-link>
-          <f7-link icon-ios="f7:ellipsis_vertical_circle" icon-aurora="f7:ellipsis_vertical_circle" icon-md="material:more_vert"></f7-link>
+          <f7-link
+            icon-ios="f7:line_horizontal_3_decrease"
+            icon-aurora="f7:line_horizontal_3_decrease"
+            icon-md="material:sort"
+          />
+          <f7-link
+            icon-ios="f7:ellipsis_vertical_circle"
+            icon-aurora="f7:ellipsis_vertical_circle"
+            icon-md="material:more_vert"
+          />
         </div>
       </div>
       <div class="card-content">
@@ -443,7 +475,7 @@
             <tr>
               <th class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
               </th>
@@ -452,14 +484,21 @@
               <th class="numeric-cell sortable-cell">Fat (g)</th>
               <th class="numeric-cell sortable-cell">Carbs</th>
               <th class="numeric-cell sortable-cell">Protein (g)</th>
-              <th class="medium-only"><f7-icon ios="f7:chat_bubble_text_fill" aurora="f7:chat_bubble_text_fill" md="material:message"></f7-icon> Comments</th>
+              <th class="medium-only">
+                <f7-icon
+                  ios="f7:chat_bubble_text_fill"
+                  aurora="f7:chat_bubble_text_fill"
+                  md="material:message"
+                />
+                Comments
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
               </td>
@@ -473,7 +512,7 @@
             <tr>
               <td class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
               </td>
@@ -487,7 +526,7 @@
             <tr>
               <td class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
               </td>
@@ -501,7 +540,7 @@
             <tr>
               <td class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
               </td>
@@ -522,15 +561,29 @@
         <div class="data-table-header">
           <div class="data-table-title">Nutrition</div>
           <div class="data-table-actions">
-            <f7-link icon-ios="f7:line_horizontal_3_decrease" icon-aurora="f7:line_horizontal_3_decrease" icon-md="material:sort"></f7-link>
-            <f7-link icon-ios="f7:ellipsis_vertical_circle" icon-aurora="f7:ellipsis_vertical_circle" icon-md="material:more_vert"></f7-link>
+            <f7-link
+              icon-ios="f7:line_horizontal_3_decrease"
+              icon-aurora="f7:line_horizontal_3_decrease"
+              icon-md="material:sort"
+            />
+            <f7-link
+              icon-ios="f7:ellipsis_vertical_circle"
+              icon-aurora="f7:ellipsis_vertical_circle"
+              icon-md="material:more_vert"
+            />
           </div>
         </div>
         <div class="data-table-header-selected">
-          <div class="data-table-title-selected"><span class="data-table-selected-count"></span> items selected</div>
+          <div class="data-table-title-selected">
+            <span class="data-table-selected-count"></span> items selected
+          </div>
           <div class="data-table-actions">
-            <f7-link icon-ios="f7:trash" icon-aurora="f7:trash" icon-md="material:delete"></f7-link>
-            <f7-link icon-ios="f7:ellipsis_vertical_circle" icon-aurora="f7:ellipsis_vertical_circle" icon-md="material:more_vert"></f7-link>
+            <f7-link icon-ios="f7:trash" icon-aurora="f7:trash" icon-md="material:delete" />
+            <f7-link
+              icon-ios="f7:ellipsis_vertical_circle"
+              icon-aurora="f7:ellipsis_vertical_circle"
+              icon-md="material:more_vert"
+            />
           </div>
         </div>
       </div>
@@ -540,7 +593,7 @@
             <tr>
               <th class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
               </th>
@@ -549,14 +602,21 @@
               <th class="numeric-cell">Fat (g)</th>
               <th class="numeric-cell">Carbs</th>
               <th class="numeric-cell">Protein (g)</th>
-              <th class="medium-only"><f7-icon ios="f7:chat_bubble_text_fill" aurora="f7:chat_bubble_text_fill" md="material:message"></f7-icon> Comments</th>
+              <th class="medium-only">
+                <f7-icon
+                  ios="f7:chat_bubble_text_fill"
+                  aurora="f7:chat_bubble_text_fill"
+                  md="material:message"
+                />
+                Comments
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
               </td>
@@ -570,7 +630,7 @@
             <tr>
               <td class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
               </td>
@@ -584,7 +644,7 @@
             <tr>
               <td class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
               </td>
@@ -598,7 +658,7 @@
             <tr>
               <td class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
               </td>
@@ -618,8 +678,16 @@
       <div class="card-header">
         <div class="data-table-links"><a class="button">Add</a><a class="button">Remove</a></div>
         <div class="data-table-actions">
-          <f7-link icon-ios="f7:line_horizontal_3_decrease" icon-aurora="f7:line_horizontal_3_decrease" icon-md="material:sort"></f7-link>
-          <f7-link icon-ios="f7:ellipsis_vertical_circle" icon-aurora="f7:ellipsis_vertical_circle" icon-md="material:more_vert"></f7-link>
+          <f7-link
+            icon-ios="f7:line_horizontal_3_decrease"
+            icon-aurora="f7:line_horizontal_3_decrease"
+            icon-md="material:sort"
+          />
+          <f7-link
+            icon-ios="f7:ellipsis_vertical_circle"
+            icon-aurora="f7:ellipsis_vertical_circle"
+            icon-md="material:more_vert"
+          />
         </div>
       </div>
       <div class="card-content">
@@ -628,7 +696,7 @@
             <tr>
               <th class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
               </th>
@@ -637,7 +705,14 @@
               <th class="numeric-cell">Fat (g)</th>
               <th class="numeric-cell">Carbs</th>
               <th class="numeric-cell">Protein (g)</th>
-              <th class="medium-only"><f7-icon ios="f7:chat_bubble_text_fill" aurora="f7:chat_bubble_text_fill" md="material:message"></f7-icon> Comments</th>
+              <th class="medium-only">
+                <f7-icon
+                  ios="f7:chat_bubble_text_fill"
+                  aurora="f7:chat_bubble_text_fill"
+                  md="material:message"
+                />
+                Comments
+              </th>
               <th></th>
             </tr>
           </thead>
@@ -645,7 +720,7 @@
             <tr>
               <td class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
               </td>
@@ -656,14 +731,18 @@
               <td class="numeric-cell">4.0</td>
               <td class="medium-only">I like frozen yogurt</td>
               <td class="actions-cell">
-                <f7-link icon-ios="f7:square_pencil" icon-aurora="f7:square_pencil" icon-md="material:edit"></f7-link>
-                <f7-link icon-ios="f7:trash" icon-aurora="f7:trash" icon-md="material:delete"></f7-link>
+                <f7-link
+                  icon-ios="f7:square_pencil"
+                  icon-aurora="f7:square_pencil"
+                  icon-md="material:edit"
+                />
+                <f7-link icon-ios="f7:trash" icon-aurora="f7:trash" icon-md="material:delete" />
               </td>
             </tr>
             <tr>
               <td class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
               </td>
@@ -674,14 +753,18 @@
               <td class="numeric-cell">4.4</td>
               <td class="medium-only">But like ice cream more</td>
               <td class="actions-cell">
-                <f7-link icon-ios="f7:square_pencil" icon-aurora="f7:square_pencil" icon-md="material:edit"></f7-link>
-                <f7-link icon-ios="f7:trash" icon-aurora="f7:trash" icon-md="material:delete"></f7-link>
+                <f7-link
+                  icon-ios="f7:square_pencil"
+                  icon-aurora="f7:square_pencil"
+                  icon-md="material:edit"
+                />
+                <f7-link icon-ios="f7:trash" icon-aurora="f7:trash" icon-md="material:delete" />
               </td>
             </tr>
             <tr>
               <td class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
               </td>
@@ -692,14 +775,18 @@
               <td class="numeric-cell">6.0</td>
               <td class="medium-only">Super tasty</td>
               <td class="actions-cell">
-                <f7-link icon-ios="f7:square_pencil" icon-aurora="f7:square_pencil" icon-md="material:edit"></f7-link>
-                <f7-link icon-ios="f7:trash" icon-aurora="f7:trash" icon-md="material:delete"></f7-link>
+                <f7-link
+                  icon-ios="f7:square_pencil"
+                  icon-aurora="f7:square_pencil"
+                  icon-md="material:edit"
+                />
+                <f7-link icon-ios="f7:trash" icon-aurora="f7:trash" icon-md="material:delete" />
               </td>
             </tr>
             <tr>
               <td class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
               </td>
@@ -710,8 +797,12 @@
               <td class="numeric-cell">4.3</td>
               <td class="medium-only">Don't like it</td>
               <td class="actions-cell">
-                <f7-link icon-ios="f7:square_pencil" icon-aurora="f7:square_pencil" icon-md="material:edit"></f7-link>
-                <f7-link icon-ios="f7:trash" icon-aurora="f7:trash" icon-md="material:delete"></f7-link>
+                <f7-link
+                  icon-ios="f7:square_pencil"
+                  icon-aurora="f7:square_pencil"
+                  icon-md="material:edit"
+                />
+                <f7-link icon-ios="f7:trash" icon-aurora="f7:trash" icon-md="material:delete" />
               </td>
             </tr>
           </tbody>
@@ -726,8 +817,16 @@
       <div class="card-header">
         <div class="data-table-title">Nutrition</div>
         <div class="data-table-actions">
-          <f7-link icon-ios="f7:line_horizontal_3_decrease" icon-aurora="f7:line_horizontal_3_decrease" icon-md="material:sort"></f7-link>
-          <f7-link icon-ios="f7:ellipsis_vertical_circle" icon-aurora="f7:ellipsis_vertical_circle" icon-md="material:more_vert"></f7-link>
+          <f7-link
+            icon-ios="f7:line_horizontal_3_decrease"
+            icon-aurora="f7:line_horizontal_3_decrease"
+            icon-md="material:sort"
+          />
+          <f7-link
+            icon-ios="f7:ellipsis_vertical_circle"
+            icon-aurora="f7:ellipsis_vertical_circle"
+            icon-md="material:more_vert"
+          />
         </div>
       </div>
       <div class="card-content">
@@ -777,15 +876,15 @@
   </f7-page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7BlockTitle, f7Link, f7Icon } from 'framework7-vue';
+import { f7Navbar, f7Page, f7BlockTitle, f7Link, f7Icon } from 'framework7-vue';
 
-  export default {
-    components: {
-      f7Navbar,
-      f7Page,
-      f7BlockTitle,
-      f7Link,
-      f7Icon,
-    },
-  };
+export default {
+  components: {
+    f7Navbar,
+    f7Page,
+    f7BlockTitle,
+    f7Link,
+    f7Icon,
+  },
+};
 </script>

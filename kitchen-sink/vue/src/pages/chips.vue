@@ -20,25 +20,37 @@
     <f7-block-title>Icon Chips</f7-block-title>
     <f7-block strong>
       <f7-chip text="Add Contact" media-bg-color="blue">
-        <f7-icon slot="media" ios="f7:plus_circle" aurora="f7:plus_circle" md="material:add_circle"></f7-icon>
+        <template #media>
+          <f7-icon ios="f7:plus_circle" aurora="f7:plus_circle" md="material:add_circle" />
+        </template>
       </f7-chip>
       <f7-chip text="London" media-bg-color="green">
-        <f7-icon slot="media" ios="f7:compass" aurora="f7:compass" md="material:location_on"></f7-icon>
+        <template #media>
+          <f7-icon ios="f7:compass" aurora="f7:compass" md="material:location_on" />
+        </template>
       </f7-chip>
       <f7-chip text="John Doe" media-bg-color="red">
-        <f7-icon slot="media" ios="f7:person" aurora="f7:person" md="material:person"></f7-icon>
+        <template #media>
+          <f7-icon ios="f7:person" aurora="f7:person" md="material:person" />
+        </template>
       </f7-chip>
     </f7-block>
     <f7-block-title>Contact Chips</f7-block-title>
     <f7-block strong>
       <f7-chip text="Jane Doe">
-        <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg"/>
+        <template #media>
+          <img src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg" />
+        </template>
       </f7-chip>
       <f7-chip text="John Doe">
-        <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-3.jpg"/>
+        <template #media>
+          <img src="https://cdn.framework7.io/placeholder/people-100x100-3.jpg" />
+        </template>
       </f7-chip>
       <f7-chip text="Adam Smith">
-        <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg"/>
+        <template #media>
+          <img src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg" />
+        </template>
       </f7-chip>
       <f7-chip text="Jennifer" media-bg-color="pink" media="J"></f7-chip>
       <f7-chip text="Chris" media-bg-color="yellow" media-text-color="black" media="C"></f7-chip>
@@ -47,14 +59,31 @@
     <f7-block-title>Deletable Chips / Tags</f7-block-title>
     <f7-block strong>
       <f7-chip text="Example Chip" deleteable @delete="deleteChip"></f7-chip>
-      <f7-chip text="Chris" media="C" media-bg-color="orange" text-color="black" deleteable @delete="deleteChip"></f7-chip>
+      <f7-chip
+        text="Chris"
+        media="C"
+        media-bg-color="orange"
+        text-color="black"
+        deleteable
+        @delete="deleteChip"
+      ></f7-chip>
       <f7-chip text="Jane Doe" deleteable @delete="deleteChip">
-        <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg"/>
+        <template #media>
+          <img src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg" />
+        </template>
       </f7-chip>
       <f7-chip text="One More Chip" deleteable @delete="deleteChip"></f7-chip>
-      <f7-chip text="Jennifer" media-bg-color="pink" media="J" deleteable @delete="deleteChip"></f7-chip>
+      <f7-chip
+        text="Jennifer"
+        media-bg-color="pink"
+        media="J"
+        deleteable
+        @delete="deleteChip"
+      ></f7-chip>
       <f7-chip text="Adam Smith" deleteable @delete="deleteChip">
-        <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg"/>
+        <template #media>
+          <img src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg" />
+        </template>
       </f7-chip>
     </f7-block>
     <f7-block-title>Color Chips</f7-block-title>
@@ -73,27 +102,25 @@
   </f7-page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7BlockTitle, f7Chip, f7Block, f7Icon } from 'framework7-vue';
+import { f7Navbar, f7Page, f7BlockTitle, f7Chip, f7Block, f7Icon, f7 } from 'framework7-vue';
+import $ from 'dom7';
 
-  export default {
-    components: {
-      f7Navbar,
-      f7Page,
-      f7BlockTitle,
-      f7Chip,
-      f7Block,
-      f7Icon,
+export default {
+  components: {
+    f7Navbar,
+    f7Page,
+    f7BlockTitle,
+    f7Chip,
+    f7Block,
+    f7Icon,
+  },
+  methods: {
+    deleteChip(e) {
+      const target = e.target;
+      f7.dialog.confirm('Do you want to delete this tiny demo Chip?', () => {
+        $(target).parents('.chip').remove();
+      });
     },
-    methods: {
-      deleteChip(e) {
-        const $$ = this.$$;
-        const app = this.$f7;
-        const target = e.target;
-        app.dialog.confirm('Do you want to delete this tiny demo Chip?', () => {
-          $$(target).parents('.chip').remove();
-        });
-      },
-    },
-  };
+  },
+};
 </script>
-

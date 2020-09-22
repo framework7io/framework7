@@ -32,34 +32,52 @@
 
     <f7-list>
       <f7-list-item title="Foo Bar" badge="0">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template #media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
       <f7-list-item title="Ivan Petrov" badge="CEO" badge-color="blue">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template #media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
       <f7-list-item title="John Doe" badge="5" badge-color="green">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template #media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
       <f7-list-item title="Jane Doe" badge="NEW" badge-color="orange">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+        <template #media>
+          <f7-icon icon="icon-f7" />
+        </template>
       </f7-list-item>
     </f7-list>
   </f7-page>
 </template>
 <script>
-  import { f7Navbar, f7NavRight, f7Toolbar, f7Page, f7Link, f7Badge, f7List, f7ListItem, f7Icon } from 'framework7-vue';
+import {
+  f7Navbar,
+  f7NavRight,
+  f7Toolbar,
+  f7Page,
+  f7Link,
+  f7Badge,
+  f7List,
+  f7ListItem,
+  f7Icon,
+} from 'framework7-vue';
 
-  export default {
-    components: {
-      f7Page,
-      f7Navbar,
-      f7NavRight,
-      f7Toolbar,
-      f7Link,
-      f7Badge,
-      f7List,
-      f7ListItem,
-      f7Icon,
-    },
-  };
+export default {
+  components: {
+    f7Page,
+    f7Navbar,
+    f7NavRight,
+    f7Toolbar,
+    f7Link,
+    f7Badge,
+    f7List,
+    f7ListItem,
+    f7Icon,
+  },
+};
 </script>
