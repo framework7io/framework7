@@ -14,6 +14,7 @@ import { watchProp } from '../shared/watch-prop';
   newMessagesFirst? : boolean
   scrollMessages? : boolean
   scrollMessagesOnEdge? : boolean
+  typing?: boolean
   firstMessageRule? : Function
   lastMessageRule? : Function
   tailMessageRule? : Function
