@@ -29,15 +29,6 @@
     return f7Actions;
   }
 
-  export function open(anim) {
-    if (!f7Actions) return undefined;
-    return f7Actions.open(anim);
-  }
-  export function close(anim) {
-    if (!f7Actions) return undefined;
-    return f7Actions.close(anim);
-  }
-
   $: classes = Utils.classNames(
     className,
     'actions-modal',

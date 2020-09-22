@@ -33,15 +33,6 @@
     return f7Sheet;
   }
 
-  export function open(anim) {
-    if (!f7Sheet) return undefined;
-    return f7Sheet.open(anim);
-  }
-  export function close(anim) {
-    if (!f7Sheet) return undefined;
-    return f7Sheet.close(anim);
-  }
-
   $: positionComputed = (() => {
     if (position) return position;
     if (top) return 'top';
