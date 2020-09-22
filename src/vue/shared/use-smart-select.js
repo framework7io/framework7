@@ -14,7 +14,7 @@ export const useSmartSelect = (props, setInstance, getEl) => {
     });
   });
   onBeforeUnmount(() => {
-    if (f7SmartSelect.value && f7SmartSelect.value.destroy) {
+    if (f7SmartSelect && f7SmartSelect.destroy) {
       f7SmartSelect.destroy();
     }
     f7SmartSelect = null;
