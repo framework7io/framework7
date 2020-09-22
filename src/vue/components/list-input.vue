@@ -104,6 +104,7 @@ export default {
     'focus',
     'blur',
     'input',
+    'update:value',
   ],
   setup(props, { emit, slots }) {
     const inputInvalid = ref(false);
@@ -125,10 +126,12 @@ export default {
     const itemContentElRef = ref(null);
     let updateInputOnDidUpdate = false;
 
-    const domValue = computed(() => {
+    const getDomValue = () => {
       if (!inputElRef.value) return undefined;
       return inputElRef.value.value;
-    });
+    };
+
+    const domValue = ref(getDomValue());
 
     const inputHasValue = computed(() => {
       if (props.type === 'datepicker' && Array.isArray(props.value) && props.value.length === 0) {
@@ -168,12 +171,23 @@ export default {
     };
     const onInput = (...args) => {
       emit('input', ...args);
+      if (inputElRef.value) {
+        domValue.value = inputElRef.value.value;
+      }
       if (
         !(props.validateOnBlur || props.validateOnBlur === '') &&
         (props.validate || props.validate === '') &&
         inputElRef.value
       ) {
         validateInput(inputElRef.value);
+      }
+      if (
+        inputElRef.value &&
+        props.type !== 'texteditor' &&
+        props.type !== 'colorpicker' &&
+        props.type !== 'datepicker'
+      ) {
+        emit('update:value', inputElRef.value.value);
       }
     };
     const onFocus = (...args) => {
@@ -197,6 +211,7 @@ export default {
       emit('change', ...args);
       if (props.type === 'texteditor') {
         emit('texteditor:change', args[0]);
+        emit('update:value', args[0]);
       }
     };
 
@@ -217,6 +232,7 @@ export default {
             value: props.value,
             on: {
               change(calendar, calendarValue) {
+                emit('update:value', calendarValue);
                 emit('calendar:change', calendarValue);
               },
             },
@@ -229,6 +245,7 @@ export default {
             value: props.value,
             on: {
               change(colorPicker, colorPickerValue) {
+                emit('update:value', calendarValue);
                 emit('colorpicker:change', colorPickerValue);
               },
             },

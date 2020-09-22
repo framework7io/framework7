@@ -90,6 +90,7 @@ export default {
     'texteditor:change',
     'calendar:change',
     'colorpicker:change',
+    'update:value',
   ],
   setup(props, { emit, slots }) {
     let f7Calendar = null;
@@ -98,7 +99,24 @@ export default {
     const inputFocused = ref(false);
     const elRef = ref(null);
     const inputElRef = ref(null);
+
     let updateInputOnDidUpdate = false;
+
+    const getDomValue = () => {
+      if (!inputElRef.value) return undefined;
+      return inputElRef.value.value;
+    };
+
+    const domValue = ref(getDomValue());
+
+    const inputHasValue = computed(() => {
+      if (props.type === 'datepicker' && Array.isArray(props.value) && props.value.length === 0) {
+        return false;
+      }
+      return typeof props.value === 'undefined'
+        ? domValue.value || domValue.value === 0
+        : props.value || props.value === 0;
+    });
 
     const validateInput = () => {
       if (!f7 || !inputElRef.value) return;
@@ -128,12 +146,23 @@ export default {
     };
     const onInput = (...args) => {
       emit('input', ...args);
+      if (inputElRef.value) {
+        domValue.value = inputElRef.value.value;
+      }
       if (
         !(props.validateOnBlur || props.validateOnBlur === '') &&
         (props.validate || props.validate === '') &&
         inputElRef.value
       ) {
         validateInput();
+      }
+      if (
+        inputElRef.value &&
+        props.type !== 'texteditor' &&
+        props.type !== 'colorpicker' &&
+        props.type !== 'datepicker'
+      ) {
+        emit('update:value', inputElRef.value.value);
       }
     };
     const onFocus = (...args) => {
@@ -157,6 +186,7 @@ export default {
       emit('change', ...args);
       if (props.type === 'texteditor') {
         emit('texteditor:change', args[1]);
+        emit('update:value', args[1]);
       }
     };
 
@@ -192,6 +222,7 @@ export default {
             on: {
               change(calendar, calendarValue) {
                 emit('calendar:change', calendarValue);
+                emit('update:value', calendarValue);
               },
             },
             ...(calendarParams || {}),
@@ -204,6 +235,7 @@ export default {
             on: {
               change(colorPicker, colorPickerValue) {
                 emit('colorpicker:change', colorPickerValue);
+                emit('update:value', colorPickerValue);
               },
             },
             ...(colorPickerParams || {}),
@@ -297,20 +329,6 @@ export default {
         }
       },
     );
-
-    const domValue = computed(() => {
-      if (!inputElRef.value) return undefined;
-      return inputElRef.value.value;
-    });
-
-    const inputHasValue = computed(() => {
-      if (props.type === 'datepicker' && Array.isArray(props.value) && props.value.length === 0) {
-        return false;
-      }
-      return typeof props.value === 'undefined'
-        ? domValue.value || domValue.value === 0
-        : props.value || props.value === 0;
-    });
 
     const createInput = (InputTag, children) => {
       const needsValue =
