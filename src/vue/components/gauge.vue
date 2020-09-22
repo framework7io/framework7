@@ -59,7 +59,7 @@
         text-anchor="middle"
         :dominant-baseline="!semiCircle ? 'middle' : null"
       >
-        {valueText}
+        {{ valueText }}
       </text>
       <text
         v-if="labelText"
@@ -73,7 +73,7 @@
         text-anchor="middle"
         :dominant-baseline="!semiCircle ? 'middle' : null"
       >
-        {labelText}
+        {{ labelText }}
       </text>
     </svg>
   </div>

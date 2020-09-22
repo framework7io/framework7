@@ -4,11 +4,11 @@ import { f7, f7ready } from './f7';
 export const useTab = (elRef, emit) => {
   const onTabShow = (el) => {
     if (elRef.value !== el) return;
-    emit('tabShow', el);
+    emit('tab:show', el);
   };
   const onTabHide = (el) => {
     if (elRef.value !== el) return;
-    emit('tabHide', el);
+    emit('tab:hide', el);
   };
   onMounted(() => {
     if (!elRef.value) return;

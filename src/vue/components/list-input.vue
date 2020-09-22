@@ -33,7 +33,10 @@ export default {
       default: 'text',
     },
     name: String,
-    value: [String, Number, Array, Date, Object],
+    value: {
+      type: [String, Number, Array, Date, Object],
+      default: undefined,
+    },
     inputmode: String,
     readonly: Boolean,
     required: Boolean,

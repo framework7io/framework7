@@ -12,12 +12,12 @@
     </div>
     <f7-preloader
       v-if="infinite && infinitePreloader && infiniteTop"
-      :class="infinite - scroll - preloader"
+      class="infinite-scroll-preloader"
     />
     <slot />
     <f7-preloader
       v-if="infinite && infinitePreloader && !infiniteTop"
-      :class="infinite - scroll - preloader"
+      class="infinite-scroll-preloader"
     />
     <div v-if="ptr && ptrPreloader && ptrBottom" class="ptr-preloader">
       <f7-preloader />
@@ -76,6 +76,8 @@ export default {
     'ptrPullEnd',
     'ptrRefresh',
     'ptrDone',
+    'tab:hide',
+    'tab:show',
   ],
   setup(props, { emit }) {
     const elRef = ref(null);

@@ -15,7 +15,7 @@
   </label>
 </template>
 <script>
-import { ref, computed, onMounted, onUpdated } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { classNames } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 
@@ -25,7 +25,10 @@ export default {
     checked: Boolean,
     indeterminate: Boolean,
     name: [Number, String],
-    value: [Number, String, Boolean],
+    value: {
+      type: [Number, String, Boolean],
+      default: undefined,
+    },
     disabled: Boolean,
     readonly: Boolean,
     ...colorProps,
@@ -43,11 +46,15 @@ export default {
         inputElRef.value.indeterminate = !!props.indeterminate;
       }
     });
-    onUpdated(() => {
-      if (inputElRef.value) {
-        inputElRef.value.indeterminate = !!props.indeterminate;
-      }
-    });
+
+    watch(
+      () => props.indeterminate,
+      (newValue) => {
+        if (inputElRef.value) {
+          inputElRef.value.indeterminate = !!newValue;
+        }
+      },
+    );
 
     const classes = computed(() =>
       classNames(

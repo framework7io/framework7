@@ -219,7 +219,7 @@ export default {
     const onPtrPullEnd = () => {
       emit('ptr:pullend');
     };
-    const onPtrRefresh = (el, done) => {
+    const onPtrRefresh = (done) => {
       emit('ptr:refresh', done);
     };
     const onPtrDone = () => {

@@ -1,6 +1,6 @@
 <template>
   <div ref="elRef" class="framework7-modals">
-    <component :is="modal.component" v-for="modal in modals" :key="modal.id" v-bind="modalProps" />
+    <component :is="modal.component" v-for="modal in modals" :key="modal.id" v-bind="modal.props" />
   </div>
 </template>
 <script>

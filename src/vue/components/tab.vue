@@ -26,28 +26,28 @@ export default {
   setup(props, { emit }) {
     const elRef = ref(null);
     const routerData = ref(null);
-    const RouterContext = inject('f7Router', {});
+    const route = inject('f7route', null);
+    const router = inject('f7route', null);
 
     let initialTabContent = null;
 
     if (
       !routerData.value &&
-      RouterContext &&
-      RouterContext.route &&
-      RouterContext.route.route &&
-      RouterContext.route.route.tab &&
-      RouterContext.route.route.tab.id === props.id
+      route &&
+      route.route &&
+      route.route.tab &&
+      route.route.tab.id === props.id
     ) {
-      const { component, asyncComponent } = RouterContext.route.route.tab;
+      const { component, asyncComponent } = route.route.tab;
       if (component || asyncComponent) {
         initialTabContent = {
           id: getComponentId(),
           component: component || asyncComponent,
           isAsync: !!asyncComponent,
           props: {
-            f7router: RouterContext.router,
-            f7route: RouterContext.route,
-            ...RouterContext.route.params,
+            f7router: router,
+            f7route: route,
+            ...route.params,
           },
         };
       }

@@ -65,6 +65,8 @@ export default {
     'virtual:beforeclear',
     'virtual:itemsbeforeinsert',
     'virtual:itemsafterinsert',
+    'tab:hide',
+    'tab:show',
   ],
   setup(props, { emit, slots }) {
     let f7VirtualList = null;

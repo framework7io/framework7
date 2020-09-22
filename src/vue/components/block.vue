@@ -30,6 +30,7 @@ export default {
     noHairlinesAurora: Boolean,
     ...colorProps,
   },
+  emits: ['tab:hide', 'tab:show'],
   setup(props, { emit }) {
     const elRef = ref(null);
 

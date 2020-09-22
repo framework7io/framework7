@@ -13,7 +13,10 @@ export default {
   props: {
     type: String,
     name: String,
-    value: [String, Number, Array, Date, Object],
+    value: {
+      type: [String, Number, Array, Date, Object],
+      default: undefined,
+    },
     inputmode: String,
     placeholder: String,
     inputId: [String, Number],

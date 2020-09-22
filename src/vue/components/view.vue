@@ -13,10 +13,8 @@ const PageRouterContextProvider = {
     f7router: Object,
   },
   setup({ f7route, f7router }, { slots }) {
-    provide('f7Router', {
-      route: f7route,
-      router: f7router,
-    });
+    provide('f7router', f7router);
+    provide('f7route', f7route);
     return () => slots.default();
   },
 };
@@ -200,6 +198,8 @@ export default {
     'swipeback:afterchange',
     'swipeback:beforereset',
     'swipeback:afterreset',
+    'tab:hide',
+    'tab:show',
   ],
   setup(props, { emit, slots }) {
     // const childrenArray = React.Children.toArray(children);

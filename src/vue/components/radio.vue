@@ -2,7 +2,7 @@
   <label :class="classes">
     <input
       ref="inputElRef"
-      type="checkbox"
+      type="radio"
       :name="name"
       :value="value"
       :disabled="disabled"
@@ -24,7 +24,10 @@ export default {
   props: {
     checked: Boolean,
     name: [Number, String],
-    value: [Number, String, Boolean],
+    value: {
+      type: [Number, String, Boolean],
+      default: undefined,
+    },
     disabled: Boolean,
     readonly: Boolean,
     ...colorProps,

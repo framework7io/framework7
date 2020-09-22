@@ -237,10 +237,12 @@ export default {
     radio: Boolean,
     radioIcon: String,
     checked: Boolean,
-    defaultChecked: Boolean,
     indeterminate: Boolean,
     name: String,
-    value: [String, Number, Array],
+    value: {
+      type: [String, Number, Array],
+      default: undefined,
+    },
     readonly: Boolean,
     required: Boolean,
     disabled: Boolean,
@@ -407,6 +409,9 @@ export default {
           f7.swipeout.open(elRef.value);
         }
       });
+      if (props.checkbox && inputElRef.value) {
+        inputElRef.value.indeterminate = !!props.indeterminate;
+      }
     });
 
     onBeforeUnmount(() => {

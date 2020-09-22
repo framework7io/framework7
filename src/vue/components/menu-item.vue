@@ -22,6 +22,7 @@ import {
   actionsProps,
   actionsClasses,
   actionsAttrs,
+  iconProps,
 } from '../shared/mixins';
 import { useRouteProps } from '../shared/use-route-props';
 import { useIcon } from '../shared/use-icon';
@@ -46,6 +47,7 @@ export default {
     ...colorProps,
     ...routerProps,
     ...actionsProps,
+    ...iconProps,
   },
   emits: ['click', 'menu:opened', 'menu:closed'],
   setup(props, { slots, emit }) {
