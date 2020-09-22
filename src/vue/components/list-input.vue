@@ -245,7 +245,7 @@ export default {
             value: props.value,
             on: {
               change(colorPicker, colorPickerValue) {
-                emit('update:value', calendarValue);
+                emit('update:value', colorPickerValue);
                 emit('colorpicker:change', colorPickerValue);
               },
             },
