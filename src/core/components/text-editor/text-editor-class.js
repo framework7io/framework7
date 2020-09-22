@@ -281,10 +281,11 @@ class TextEditor extends Framework7Class {
     const self = this;
     const value = self.$contentEl.html();
 
-    self.$el.trigger('texteditor:input');
-    self.emit('local:input textEditorInput', self);
-
     self.value = value;
+
+    self.$el.trigger('texteditor:input');
+    self.emit('local:input textEditorInput', self, self.value);
+
     self.$el.trigger('texteditor:change', self.value);
     self.emit('local::change textEditorChange', self, self.value);
   }
