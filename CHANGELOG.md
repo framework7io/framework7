@@ -59,8 +59,16 @@
     - added `error-message` slot
   - Popover, Login Screen, Actions, Sheet
     - added `animate` property
-      Sheet
+    - Removed component open/close methods
+  - Sheet
     - Added `fixed` and `static` slots
+  - Panel
+    - Removed component open/close methods
+  - Messagebar
+    - Removed component methods
+  - Messages
+    - Removed component methods
+    - Added `typing` prop
 
 # [v5.7.11](https://github.com/framework7io/framework7/compare/v5.7.10...v5.7.11) - August 17, 2020
 
