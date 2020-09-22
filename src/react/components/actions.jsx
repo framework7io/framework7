@@ -58,20 +58,10 @@ const Actions = forwardRef((props, ref) => {
     isClosing.current = false;
     emit(props, 'actionsClosed', instance);
   };
-  const open = (anim) => {
-    if (!f7Actions.current) return undefined;
-    return f7Actions.current.open(anim);
-  };
-  const close = (anim) => {
-    if (!f7Actions.current) return undefined;
-    return f7Actions.current.close(anim);
-  };
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
     f7Actions: () => f7Actions.current,
-    open,
-    close,
   }));
 
   // watch opened changes

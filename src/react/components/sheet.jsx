@@ -91,20 +91,10 @@ const Sheet = forwardRef((props, ref) => {
     isClosing.current = false;
     emit(props, 'sheetClosed', instance);
   };
-  const open = (anim) => {
-    if (!f7Sheet.current) return undefined;
-    return f7Sheet.current.open(anim);
-  };
-  const close = (anim) => {
-    if (!f7Sheet.current) return undefined;
-    return f7Sheet.current.close(anim);
-  };
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
     f7Sheet: () => f7Sheet.current,
-    open,
-    close,
   }));
 
   const onMount = () => {

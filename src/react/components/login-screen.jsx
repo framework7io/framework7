@@ -48,20 +48,10 @@ const LoginScreen = forwardRef((props, ref) => {
     isClosing.current = false;
     emit(props, 'loginScreenClosed', instance);
   };
-  const open = (anim) => {
-    if (!f7LoginScreen.current) return undefined;
-    return f7LoginScreen.current.open(anim);
-  };
-  const close = (anim) => {
-    if (!f7LoginScreen.current) return undefined;
-    return f7LoginScreen.current.close(anim);
-  };
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
     f7LoginScreen: () => f7LoginScreen.current,
-    open,
-    close,
   }));
 
   // watch opened changes

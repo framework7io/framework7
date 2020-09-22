@@ -69,20 +69,10 @@ const Popover = forwardRef((props, ref) => {
     isClosing.current = false;
     emit(props, 'popoverClosed', instance);
   };
-  const open = (anim) => {
-    if (!f7Popover.current) return undefined;
-    return f7Popover.current.open(anim);
-  };
-  const close = (anim) => {
-    if (!f7Popover.current) return undefined;
-    return f7Popover.current.close(anim);
-  };
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
     f7Popover: () => f7Popover.current,
-    open,
-    close,
   }));
 
   watchProp(opened, (value) => {
