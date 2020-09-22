@@ -82,14 +82,6 @@ export default {
       emit('actions:closed', instance);
       emit('update:opened', false);
     };
-    const open = (anim) => {
-      if (!f7Actions) return undefined;
-      return f7Actions.open(anim);
-    };
-    const close = (anim) => {
-      if (!f7Actions) return undefined;
-      return f7Actions.close(anim);
-    };
 
     watch(
       () => props.opened,
@@ -165,8 +157,6 @@ export default {
     );
 
     return {
-      open,
-      close,
       elRef,
       classes,
     };

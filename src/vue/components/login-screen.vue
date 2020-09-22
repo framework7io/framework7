@@ -53,14 +53,6 @@ export default {
       emit('loginscreen:closed', instance);
       emit('update:opened', false);
     };
-    const open = (anim) => {
-      if (!f7LoginScreen.value) return undefined;
-      return f7LoginScreen.value.open(anim);
-    };
-    const close = (anim) => {
-      if (!f7LoginScreen.value) return undefined;
-      return f7LoginScreen.value.close(anim);
-    };
 
     watch(
       () => props.opened,
@@ -108,8 +100,6 @@ export default {
     );
 
     return {
-      open,
-      close,
       elRef,
       classes,
     };

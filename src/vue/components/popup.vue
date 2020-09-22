@@ -95,14 +95,6 @@ export default {
       emit('popup:closed', instance);
       emit('update:opened', false);
     };
-    const open = (anim) => {
-      if (!f7Popup.value) return undefined;
-      return f7Popup.value.open(anim);
-    };
-    const close = (anim) => {
-      if (!f7Popup.value) return undefined;
-      return f7Popup.value.close(anim);
-    };
 
     watch(
       () => props.opened,
@@ -178,8 +170,6 @@ export default {
     );
 
     return {
-      open,
-      close,
       elRef,
       classes,
     };
