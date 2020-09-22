@@ -3,6 +3,7 @@ import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effec
 import { classNames, getExtraAttrs, noUndefinedProps } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
+import { watchProp } from '../shared/watch-prop';
 
 /* dts-props
   id?: string | number;
@@ -48,6 +49,7 @@ const Messages = forwardRef((props, ref) => {
     sameAvatarMessageRule,
     customClassMessageRule,
     renderMessage,
+    typing = false,
     init = true,
   } = props;
   const extraAttrs = getExtraAttrs(props);
@@ -57,50 +59,6 @@ const Messages = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     el: elRef.current,
     f7Messages: () => f7Messages.current,
-    renderMessages(messagesToRender, method) {
-      if (!f7Messages.current) return undefined;
-      return f7Messages.current.renderMessages(messagesToRender, method);
-    },
-    layout() {
-      if (!f7Messages.current) return undefined;
-      return f7Messages.current.layout();
-    },
-    scroll(duration, scrollTop) {
-      if (!f7Messages.current) return undefined;
-      return f7Messages.current.scroll(duration, scrollTop);
-    },
-    clear() {
-      if (!f7Messages.current) return undefined;
-      return f7Messages.current.clear();
-    },
-    removeMessage(messageToRemove, layout) {
-      if (!f7Messages.current) return undefined;
-      return f7Messages.current.removeMessage(messageToRemove, layout);
-    },
-    removeMessages(messagesToRemove, layout) {
-      if (!f7Messages.current) return undefined;
-      return f7Messages.current.removeMessages(messagesToRemove, layout);
-    },
-    addMessage(...args) {
-      if (!f7Messages.current) return undefined;
-      return f7Messages.current.addMessage(...args);
-    },
-    addMessages(...args) {
-      if (!f7Messages.current) return undefined;
-      return f7Messages.current.addMessages(...args);
-    },
-    showTyping(message) {
-      if (!f7Messages.current) return undefined;
-      return f7Messages.current.showTyping(message);
-    },
-    hideTyping() {
-      if (!f7Messages.current) return undefined;
-      return f7Messages.current.hideTyping();
-    },
-    destroy() {
-      if (!f7Messages.current) return undefined;
-      return f7Messages.current.destroy();
-    },
   }));
 
   const onMount = () => {
@@ -126,6 +84,9 @@ const Messages = forwardRef((props, ref) => {
           renderMessage,
         }),
       );
+      if (typing) {
+        f7Messages.current.showTyping();
+      }
     });
   };
 
@@ -167,6 +128,12 @@ const Messages = forwardRef((props, ref) => {
         f7Messages.current.scroll();
       }
     }
+  });
+
+  watchProp(typing, (newValue) => {
+    if (!f7Messages.current) return;
+    if (newValue) f7Messages.current.showTyping();
+    else f7Messages.current.hideTyping();
   });
 
   const classes = classNames(className, 'messages', colorClasses(props));

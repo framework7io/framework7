@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import { computed, ref, onMounted, onBeforeUnmount, onBeforeUpdate, onUpdated } from 'vue';
+import { computed, ref, onMounted, onBeforeUnmount, onBeforeUpdate, onUpdated, watch } from 'vue';
 import { classNames, noUndefinedProps } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
@@ -33,6 +33,10 @@ export default {
     scrollMessagesOnEdge: {
       type: Boolean,
       default: true,
+    },
+    typing: {
+      type: Boolean,
+      default: false,
     },
     firstMessageRule: Function,
     lastMessageRule: Function,
@@ -77,6 +81,9 @@ export default {
             renderMessage: props.renderMessage,
           }),
         );
+        if (f7Messages && props.typing) {
+          f7Messages.showTyping();
+        }
       });
     });
 
@@ -116,55 +123,20 @@ export default {
       f7Messages = null;
     });
 
+    watch(
+      () => props.typing,
+      (newValue) => {
+        if (!f7Messages) return;
+        if (newValue) f7Messages.showTyping();
+        else f7Messages.hideTyping();
+      },
+    );
+
     const classes = computed(() => classNames('messages', colorClasses(props)));
 
     return {
       elRef,
       classes,
-      renderMessages(messagesToRender, method) {
-        if (!f7Messages) return undefined;
-        return f7Messages.renderMessages(messagesToRender, method);
-      },
-      layout() {
-        if (!f7Messages) return undefined;
-        return f7Messages.layout();
-      },
-      scroll(duration, scrollTop) {
-        if (!f7Messages) return undefined;
-        return f7Messages.scroll(duration, scrollTop);
-      },
-      clear() {
-        if (!f7Messages) return undefined;
-        return f7Messages.clear();
-      },
-      removeMessage(messageToRemove, layout) {
-        if (!f7Messages) return undefined;
-        return f7Messages.removeMessage(messageToRemove, layout);
-      },
-      removeMessages(messagesToRemove, layout) {
-        if (!f7Messages) return undefined;
-        return f7Messages.removeMessages(messagesToRemove, layout);
-      },
-      addMessage(...args) {
-        if (!f7Messages) return undefined;
-        return f7Messages.addMessage(...args);
-      },
-      addMessages(...args) {
-        if (!f7Messages) return undefined;
-        return f7Messages.addMessages(...args);
-      },
-      showTyping(message) {
-        if (!f7Messages) return undefined;
-        return f7Messages.showTyping(message);
-      },
-      hideTyping() {
-        if (!f7Messages) return undefined;
-        return f7Messages.hideTyping();
-      },
-      destroy() {
-        if (!f7Messages) return undefined;
-        return f7Messages.destroy();
-      },
     };
   },
 };

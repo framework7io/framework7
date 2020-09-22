@@ -22,27 +22,13 @@
   export let sameAvatarMessageRule = undefined;
   export let customClassMessageRule = undefined;
   export let renderMessage = undefined;
+  export let typing = false;
 
   export let init = true;
 
   let el;
   let f7Messages;
 
-  export function instance() {
-    return f7Messages;
-  }
-  export function scroll(duration, scrollTop) {
-    if (!f7Messages) return undefined;
-    return f7Messages.scroll(duration, scrollTop);
-  }
-  export function showTyping(message) {
-    if (!f7Messages) return undefined;
-    return f7Messages.showTyping(message);
-  }
-  export function hideTyping() {
-    if (!f7Messages) return undefined;
-    return f7Messages.hideTyping();
-  }
 
   $: classes = Utils.classNames(
     className,
@@ -70,6 +56,7 @@
         customClassMessageRule,
         renderMessage,
       }));
+      if (typing) f7Messages.showTyping();
     });
   });
 
@@ -107,6 +94,19 @@
   onDestroy(() => {
     if (f7Messages && f7Messages.destroy) f7Messages.destroy();
   });
+
+  let initialWatched = false;
+  function watchTyping(typingPassed) {
+    if (!initialWatched) {
+      initialWatched = true;
+      return;
+    }
+    if (!f7Messages) return;
+    if (typingPassed) f7Messages.showTyping();
+    else f7Messages.hideTyping();
+  }
+
+  $: watchTyping(typing);
 
 </script>
 
