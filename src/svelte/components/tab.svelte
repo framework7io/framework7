@@ -61,11 +61,6 @@
     f7.routers.tabs.splice(f7.routers.tabs.indexOf(routerData), 1);
     routerData = null;
   });
-
-  export function show(animate) {
-    if (!f7.instance) return;
-    f7.instance.tab.show(el, animate);
-  }
 </script>
 
 <div class={classes} bind:this={el} {...restProps($$restProps)}>

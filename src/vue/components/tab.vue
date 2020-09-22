@@ -59,11 +59,6 @@ export default {
       tabContent.value = newContent;
     };
 
-    const show = (animate) => {
-      if (!f7) return;
-      f7.tab.show(elRef.value, animate);
-    };
-
     if (f7 && !routerData.value) {
       routerData.value = {
         setTabContent,
@@ -111,7 +106,7 @@ export default {
       ),
     );
 
-    return { classes, show, elRef, tabContent };
+    return { classes, elRef, tabContent };
   },
 };
 </script>

@@ -54,14 +54,8 @@ const Tab = forwardRef((props, ref) => {
 
   const [tabContent, setTabContent] = useState(initialTabContent || null);
 
-  const show = (animate) => {
-    if (!f7) return;
-    f7.tab.show(elRef.current, animate);
-  };
-
   useImperativeHandle(ref, () => ({
     el: elRef.current,
-    show,
   }));
 
   if (f7 && !routerData.current) {
