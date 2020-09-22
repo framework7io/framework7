@@ -1,20 +1,10 @@
-<template>
-  <div ref="elRef" :class="classes">
-    <component
-      :is="tabContent.component"
-      v-if="tabContent"
-      :key="tabContent.id"
-      v-bind="tabContent.props"
-    />
-    <slot v-else />
-  </div>
-</template>
 <script>
-import { computed, ref, inject, onMounted, onBeforeUnmount, onUpdated } from 'vue';
+import { computed, ref, inject, onMounted, onBeforeUnmount, onUpdated, toRaw, h } from 'vue';
 import { classNames, getComponentId } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 import { f7ready, f7routers, f7, f7events } from '../shared/f7';
 import { useTab } from '../shared/use-tab';
+import { RouterContextProvider } from '../shared/router-context-provider';
 
 export default {
   name: 'f7-tab',
@@ -23,7 +13,7 @@ export default {
     ...colorProps,
   },
   emits: ['tab:show', 'tab:hide'],
-  setup(props, { emit }) {
+  setup(props, { emit, slots }) {
     const elRef = ref(null);
     const routerData = ref(null);
     const route = inject('f7route', null);
@@ -106,7 +96,23 @@ export default {
       ),
     );
 
-    return { classes, elRef, tabContent };
+    return () => {
+      let tab;
+      if (tabContent.value) {
+        const { f7router, f7route } = tabContent.value.props;
+        const tabProps = { ...tabContent.value.props };
+        delete tabProps.f7router;
+        delete tabProps.f7route;
+        tab = h(RouterContextProvider, { f7router, f7route, key: tabContent.value.id }, () =>
+          h(toRaw(tabContent.value.component), {
+            ...tabProps,
+          }),
+        );
+      }
+      return h('div', { ref: elRef, class: classes.value }, [
+        tab || (slots.default && slots.default()),
+      ]);
+    };
   },
 };
 </script>

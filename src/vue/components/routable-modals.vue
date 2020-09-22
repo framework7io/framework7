@@ -1,11 +1,7 @@
-<template>
-  <div ref="elRef" class="framework7-modals">
-    <component :is="modal.component" v-for="modal in modals" :key="modal.id" v-bind="modal.props" />
-  </div>
-</template>
 <script>
-import { ref, onMounted, onBeforeUnmount, onUpdated } from 'vue';
+import { ref, onMounted, onBeforeUnmount, onUpdated, h, toRaw } from 'vue';
 import { f7events, f7routers, f7 } from '../shared/f7';
+import { RouterContextProvider } from '../shared/router-context-provider';
 
 export default {
   name: 'f7-routable-modals',
@@ -36,7 +32,23 @@ export default {
       routerData.value = null;
     });
 
-    return { elRef, modals };
+    return () => {
+      return h(
+        'div',
+        { ref: elRef, class: 'framework7-modals' },
+        modals.value.map((modal) => {
+          const { f7router, f7route } = modal.props;
+          const modalProps = { ...modal.props };
+          delete modalProps.f7router;
+          delete modalProps.f7route;
+          return h(RouterContextProvider, { f7router, f7route, key: modal.id }, () =>
+            h(toRaw(modal.component), {
+              ...modalProps,
+            }),
+          );
+        }),
+      );
+    };
   },
 };
 </script>

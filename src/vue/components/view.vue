@@ -1,23 +1,11 @@
 <script>
-import { computed, ref, onMounted, onBeforeUnmount, onUpdated, provide, h, toRaw } from 'vue';
+import { computed, ref, onMounted, onBeforeUnmount, onUpdated, h, toRaw } from 'vue';
 import { classNames, noUndefinedProps, getRouterId } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 import { f7ready, f7routers, f7, f7events } from '../shared/f7';
 import { useTab } from '../shared/use-tab';
 import { getRouterInitialComponent } from '../shared/get-router-initial-component';
-
-const PageRouterContextProvider = {
-  name: 'f7-page-router-context-provider',
-  props: {
-    f7route: Object,
-    f7router: Object,
-  },
-  setup({ f7route, f7router }, { slots }) {
-    provide('f7router', f7router);
-    provide('f7route', f7route);
-    return () => slots.default();
-  },
-};
+import { RouterContextProvider } from '../shared/router-context-provider';
 
 export default {
   name: 'f7-view',
@@ -369,7 +357,7 @@ export default {
           const pageProps = { ...page.props };
           delete pageProps.f7router;
           delete pageProps.f7route;
-          return h(PageRouterContextProvider, { f7router, f7route, key: page.id }, () =>
+          return h(RouterContextProvider, { f7router, f7route, key: page.id }, () =>
             h(toRaw(page.component), {
               ...pageProps,
             }),
@@ -379,32 +367,4 @@ export default {
     };
   },
 };
-/*
-const View = forwardRef((props, ref) => {
-  return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
-      {restChildren}
-      {pages.map(
-        ({ component: PageComponent, id: pageId, props: pageProps, isAsync, initialComponent }) => (
-          <RouterContext.Provider
-            key={pageId}
-            value={{
-              router: pageProps.f7router,
-              route: pageProps.f7route,
-            }}
-          >
-            {initialComponent ? (
-              React.cloneElement(initialComponent, { ...pageProps })
-            ) : isAsync ? (
-              useAsyncComponent(PageComponent, pageProps)
-            ) : (
-              <PageComponent {...pageProps} />
-            )}
-          </RouterContext.Provider>
-        ),
-      )}
-    </div>
-  );
-});
-*/
 </script>
