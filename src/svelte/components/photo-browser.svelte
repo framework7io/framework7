@@ -147,6 +147,9 @@
   });
 
   onDestroy(() => {
-    if (f7PhotoBrowser && f7PhotoBrowser.destroy) f7PhotoBrowser.destroy();
+    if (f7PhotoBrowser && f7PhotoBrowser.destroy) {
+      f7PhotoBrowser.destroy();
+      f7PhotoBrowser = null;
+    }
   });
 </script>

@@ -116,7 +116,7 @@
   });
   onDestroy(() => {
     if (f7Popup) f7Popup.destroy();
-    f7Popup = undefined;
+    f7Popup = null;
   });
 </script>
 <div

@@ -192,7 +192,10 @@
     f7.instance.off('tabShow', onTabShow);
     f7.instance.off('tabHide', onTabHide);
 
-    if (f7VirtualList && f7VirtualList.destroy) f7VirtualList.destroy();
+    if (f7VirtualList && f7VirtualList.destroy) {
+      f7VirtualList.destroy();
+      f7VirtualList = null;
+    }
   });
 
 </script>

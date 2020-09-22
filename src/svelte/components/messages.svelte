@@ -92,7 +92,10 @@
   });
 
   onDestroy(() => {
-    if (f7Messages && f7Messages.destroy) f7Messages.destroy();
+    if (f7Messages && f7Messages.destroy) {
+      f7Messages.destroy();
+      f7Messages = null;
+    }
   });
 
   let initialWatched = false;

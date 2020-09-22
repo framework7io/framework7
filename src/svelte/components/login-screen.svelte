@@ -77,7 +77,7 @@
   });
   onDestroy(() => {
     if (f7LoginScreen) f7LoginScreen.destroy();
-    f7LoginScreen = undefined;
+    f7LoginScreen = null;
   });
 </script>
 <div

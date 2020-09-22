@@ -132,7 +132,7 @@
 
   onDestroy(() => {
     if (f7Sheet) f7Sheet.destroy();
-    f7Sheet = undefined;
+    f7Sheet = null;
   });
 </script>
 <div

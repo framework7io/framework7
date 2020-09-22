@@ -99,7 +99,7 @@
 
   onDestroy(() => {
     if (f7Actions) f7Actions.destroy();
-    f7Actions = undefined;
+    f7Actions = null;
   });
 </script>
 <div

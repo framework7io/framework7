@@ -173,6 +173,7 @@
   onDestroy(() => {
     if (f7Searchbar && f7Searchbar.destroy) {
       f7Searchbar.destroy();
+      f7Searchbar = null;
     }
   });
 </script>

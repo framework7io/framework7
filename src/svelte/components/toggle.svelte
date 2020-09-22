@@ -67,7 +67,10 @@
   });
 
   onDestroy(() => {
-    if (f7Toggle && f7Toggle.destroy && f7Toggle.$el) f7Toggle.destroy();
+    if (f7Toggle && f7Toggle.destroy && f7Toggle.$el) {
+      f7Toggle.destroy();
+      f7Toggle = null;
+    }
   });
 </script>
 

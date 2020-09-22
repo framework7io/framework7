@@ -92,7 +92,10 @@
   });
 
   onDestroy(() => {
-    if (f7Range && f7Range.destroy) f7Range.destroy();
+    if (f7Range && f7Range.destroy) {
+      f7Range.destroy();
+      f7Range = null;
+    }
   });
 </script>
 

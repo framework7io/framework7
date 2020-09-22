@@ -141,7 +141,10 @@
   });
 
   onDestroy(() => {
-    if (f7Stepper && f7Stepper.destroy) f7Stepper.destroy();
+    if (f7Stepper && f7Stepper.destroy) {
+      f7Stepper.destroy();
+      f7Stepper = null;
+    }
   });
 </script>
 

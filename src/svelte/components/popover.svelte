@@ -91,7 +91,7 @@
 
   onDestroy(() => {
     if (f7Popover) f7Popover.destroy();
-    f7Popover = undefined;
+    f7Popover = null;
   });
 </script>
 <div

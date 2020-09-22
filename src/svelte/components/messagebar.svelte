@@ -178,7 +178,10 @@
   });
 
   onDestroy(() => {
-    if (f7Messagebar && f7Messagebar.destroy) f7Messagebar.destroy();
+    if (f7Messagebar && f7Messagebar.destroy) {
+      f7Messagebar.destroy();
+      f7Messagebar = null;
+    }
   });
 
 </script>

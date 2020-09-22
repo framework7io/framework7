@@ -112,6 +112,7 @@
   onDestroy(() => {
     if (f7TextEditor && f7TextEditor.destroy) {
       f7TextEditor.destroy();
+      f7TextEditor = null;
     }
   });
 </script>
