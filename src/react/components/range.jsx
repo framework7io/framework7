@@ -66,21 +66,9 @@ const Range = forwardRef((props, ref) => {
 
   const elRef = useRef(null);
 
-  const setValue = (newValue) => {
-    if (f7Range.current && f7Range.current.setValue) f7Range.current.setValue(newValue);
-  };
-  const getValue = () => {
-    if (f7Range.current && f7Range.current.getValue) {
-      return f7Range.current.getValue();
-    }
-    return undefined;
-  };
-
   useImperativeHandle(ref, () => ({
     el: elRef.current,
     f7Range: () => f7Range.current,
-    setValue,
-    getValue,
   }));
 
   watchProp(value, (newValue) => {

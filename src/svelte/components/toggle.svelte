@@ -25,10 +25,6 @@
     return f7Toggle;
   }
 
-  export function toggle() {
-    if (f7Toggle && f7Toggle.toggle) f7Toggle.toggle();
-  }
-
   $: classes = Utils.classNames(
     'toggle',
     className,

@@ -40,10 +40,6 @@ const Toggle = forwardRef((props, ref) => {
 
   const elRef = useRef(null);
 
-  const toggle = () => {
-    if (f7Toggle.current && f7Toggle.current.toggle) f7Toggle.current.toggle();
-  };
-
   const onChange = (event) => {
     emit(props, 'change', event);
   };
@@ -51,7 +47,6 @@ const Toggle = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     el: elRef.current,
     f7Toggle: () => f7Toggle.current,
-    toggle,
   }));
 
   watchProp(checked, (newValue) => {

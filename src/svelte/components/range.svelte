@@ -37,15 +37,6 @@
   export function instance() {
     return f7Range;
   }
-  export function setValue(newValue) {
-    if (f7Range && f7Range.setValue) f7Range.setValue(newValue);
-  }
-  export function getValue() {
-    if (f7Range && f7Range.getValue) {
-      return f7Range.getValue();
-    }
-    return undefined;
-  }
 
   $: classes = Utils.classNames(
     className,

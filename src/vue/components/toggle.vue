@@ -36,9 +36,6 @@ export default {
   setup(props, { emit }) {
     let f7Toggle = null;
     const elRef = ref(null);
-    const toggle = () => {
-      if (f7Toggle && f7Toggle.toggle) f7Toggle.toggle();
-    };
     const onChange = (event) => {
       emit('change', event);
     };
@@ -85,7 +82,6 @@ export default {
     return {
       classes,
       elRef,
-      toggle,
       f7Toggle,
       onChange,
     };

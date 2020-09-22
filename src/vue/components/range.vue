@@ -82,16 +82,6 @@ export default {
     let f7Range = null;
     const elRef = ref(null);
 
-    const setValue = (newValue) => {
-      if (f7Range && f7Range.setValue) f7Range.setValue(newValue);
-    };
-    const getValue = () => {
-      if (f7Range && f7Range.getValue) {
-        return f7Range.getValue();
-      }
-      return undefined;
-    };
-
     watch(
       () => props.value,
       (newValue) => {
@@ -150,8 +140,6 @@ export default {
     return {
       elRef,
       classes,
-      setValue,
-      getValue,
     };
   },
 };
