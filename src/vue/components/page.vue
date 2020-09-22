@@ -316,9 +316,9 @@ export default {
       let hasSubnavbarComputed = false;
       let hasNavbarLargeComputed = false;
       let hasMessages = props.messagesContent;
-
-      if (slotsDefault) {
-        slotsDefault().forEach((vnode) => {
+      const slotsDefaultRendered = slotsDefault && slotsDefault();
+      if (slotsDefaultRendered) {
+        slotsDefaultRendered.forEach((vnode) => {
           if (typeof vnode === 'undefined') return;
           const tag = vnode.type && vnode.type.name ? vnode.type.name : vnode.type;
           let isFixedTag = false;
@@ -367,7 +367,7 @@ export default {
         return h('div', { class: classesValue, ref: elRef, 'data-name': props.name }, [
           slotsFixed && slotsFixed(),
           slotsStatic && slotsStatic(),
-          slotsDefault && slotsDefault(),
+          slotsDefault && slotsDefaultRendered,
         ]);
       }
 
