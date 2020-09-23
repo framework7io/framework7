@@ -36,7 +36,6 @@ import {
   f7ListInput,
   f7,
 } from 'framework7-vue';
-import { inject } from 'vue';
 
 export default {
   components: {
@@ -47,11 +46,13 @@ export default {
     f7BlockFooter,
     f7ListInput,
   },
+  props: {
+    f7router: Object,
+  },
   data() {
     return {
       username: '',
       password: '',
-      f7router: inject('f7router'),
     };
   },
   methods: {

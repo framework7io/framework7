@@ -19,7 +19,6 @@
 </template>
 <script>
 import { f7Page, f7Navbar, f7Block } from 'framework7-vue';
-import { inject } from 'vue';
 
 export default {
   components: {
@@ -27,10 +26,8 @@ export default {
     f7Navbar,
     f7Block,
   },
-  data() {
-    return {
-      f7route: inject('f7route'),
-    };
+  props: {
+    f7route: Object,
   },
 };
 </script>
