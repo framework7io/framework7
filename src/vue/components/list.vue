@@ -201,9 +201,11 @@ export default {
         slotsDefault().forEach((vnode) => {
           if (typeof vnode === 'undefined') return;
           const tag = vnode.type && vnode.type.name ? vnode.type.name : vnode.type;
-          if (
+          if (tag && typeof tag === 'symbol') {
+            wasUlChild = true;
+            ulChildren.push(vnode);
+          } else if (
             !tag ||
-            typeof tag === 'symbol' ||
             (tag &&
               !(
                 tag === 'li' ||

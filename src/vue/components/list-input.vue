@@ -453,7 +453,7 @@ export default {
               'inline-label': props.inlineLabel,
               'item-input-outline': props.outline,
               'item-input-focused': inputFocused.value,
-              'item-input-with-info': !!props.info || (slots.info && slots.info.length),
+              'item-input-with-info': !!props.info || slots.info,
               'item-input-with-value': inputHasValue.value,
               'item-input-with-error-message':
                 (hasErrorMessage && props.errorMessageForce) || inputInvalid.value,
