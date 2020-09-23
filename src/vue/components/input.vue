@@ -347,7 +347,7 @@ export default {
       });
       let inputValue;
       if (needsValue) {
-        if (typeof value !== 'undefined') inputValue = props.value;
+        if (typeof props.value !== 'undefined') inputValue = props.value;
         else inputValue = domValue.value;
       }
       const valueProps = {};

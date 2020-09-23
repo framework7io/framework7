@@ -137,7 +137,7 @@ export default {
       if (props.type === 'datepicker' && Array.isArray(props.value) && props.value.length === 0) {
         return false;
       }
-      return typeof value === 'undefined'
+      return typeof props.value === 'undefined'
         ? domValue.value || domValue.value === 0
         : props.value || props.value === 0;
     });
