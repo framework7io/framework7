@@ -1,11 +1,21 @@
+<template>
+  <div ref="elRef" :class="classes">
+    <slot />
+    <component
+      :is="getComponent(page)"
+      v-for="page in pages"
+      :key="page.id"
+      v-bind="getProps(page)"
+    />
+  </div>
+</template>
 <script>
-import { computed, ref, onMounted, onBeforeUnmount, onUpdated, h, toRaw } from 'vue';
+import { computed, ref, onMounted, onBeforeUnmount, onUpdated, toRaw } from 'vue';
 import { classNames, noUndefinedProps, getRouterId } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 import { f7ready, f7routers, f7, f7events } from '../shared/f7';
 import { useTab } from '../shared/use-tab';
 import { getRouterInitialComponent } from '../shared/get-router-initial-component';
-import { RouterContextProvider } from '../shared/router-context-provider';
 
 export default {
   name: 'f7-view',
@@ -189,7 +199,7 @@ export default {
     'tab:hide',
     'tab:show',
   ],
-  setup(props, { emit, slots }) {
+  setup(props, { emit }) {
     // const childrenArray = React.Children.toArray(children);
     // const initialPageComponent = childrenArray.filter((c) => c.props && c.props.initialPage)[0];
     // const restChildren = childrenArray.filter((c) => !c.props || !c.props.initialPage);
@@ -215,13 +225,13 @@ export default {
         ...noUndefinedProps(props),
         routerId,
         init: false,
+        on: {
+          init: onViewInit,
+        },
       });
       routerData = {
         routerId,
         instance: f7View,
-        on: {
-          init: onViewInit,
-        },
       };
       f7routers.views.push(routerData);
       if (f7View && f7View.router && (props.url || props.main)) {
@@ -271,14 +281,14 @@ export default {
               setTimeout(() => {
                 f7View.init(elRef.value);
                 if (initialPage) {
-                  initialPage.el = f7View.router.valuePageEl;
+                  initialPage.el = f7View.router.currentPageEl;
                 }
               }, 100);
             });
           } else {
             f7View.init(elRef.value);
             if (initialPage) {
-              initialPage.el = f7View.router.valuePageEl;
+              initialPage.el = f7View.router.currentPageEl;
             }
           }
         } else {
@@ -349,21 +359,24 @@ export default {
       ),
     );
 
-    return () => {
-      return h('div', { ref: elRef, class: classes.value }, [
-        slots.default && slots.default(),
-        pages.value.map((page) => {
-          const { f7router, f7route } = page.props;
-          const pageProps = { ...page.props };
-          delete pageProps.f7router;
-          delete pageProps.f7route;
-          return h(RouterContextProvider, { f7router, f7route, key: page.id }, () =>
-            h(toRaw(page.component), {
-              ...pageProps,
-            }),
-          );
-        }),
-      ]);
+    const getComponent = (page) => toRaw(page.component);
+    const getProps = (page) => {
+      const { component: pageComponent, props: pageProps } = page;
+      let keys = [];
+      const passProps = {};
+      if (pageComponent && pageComponent.props) keys = Object.keys(pageComponent.props);
+      keys.forEach((key) => {
+        if (key in pageProps) passProps[key] = pageProps[key];
+      });
+      return passProps;
+    };
+
+    return {
+      elRef,
+      classes,
+      pages,
+      getComponent,
+      getProps,
     };
   },
 };

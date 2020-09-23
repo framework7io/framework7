@@ -1,10 +1,20 @@
+<template>
+  <div ref="elRef" :class="classes">
+    <component
+      :is="getComponent(tabContent)"
+      v-if="tabContent"
+      :key="tabContent.id"
+      v-bind="getProps(tabContent)"
+    />
+    <slot v-else />
+  </div>
+</template>
 <script>
-import { computed, ref, inject, onMounted, onBeforeUnmount, onUpdated, toRaw, h } from 'vue';
+import { computed, ref, inject, onMounted, onBeforeUnmount, onUpdated, toRaw } from 'vue';
 import { classNames, getComponentId } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 import { f7ready, f7routers, f7, f7events } from '../shared/f7';
 import { useTab } from '../shared/use-tab';
-import { RouterContextProvider } from '../shared/router-context-provider';
 
 export default {
   name: 'f7-tab',
@@ -13,7 +23,7 @@ export default {
     ...colorProps,
   },
   emits: ['tab:show', 'tab:hide'],
-  setup(props, { emit, slots }) {
+  setup(props, { emit }) {
     const elRef = ref(null);
     const routerData = ref(null);
     const route = inject('f7route', null);
@@ -96,22 +106,24 @@ export default {
       ),
     );
 
-    return () => {
-      let tab;
-      if (tabContent.value) {
-        const { f7router, f7route } = tabContent.value.props;
-        const tabProps = { ...tabContent.value.props };
-        delete tabProps.f7router;
-        delete tabProps.f7route;
-        tab = h(RouterContextProvider, { f7router, f7route, key: tabContent.value.id }, () =>
-          h(toRaw(tabContent.value.component), {
-            ...tabProps,
-          }),
-        );
-      }
-      return h('div', { ref: elRef, class: classes.value }, [
-        tab || (slots.default && slots.default()),
-      ]);
+    const getComponent = (content) => toRaw(content.component);
+    const getProps = (content) => {
+      const { component: tabComponent, props: tabProps } = content;
+      let keys = [];
+      const passProps = {};
+      if (tabComponent && tabComponent.props) keys = Object.keys(tabComponent.props);
+      keys.forEach((key) => {
+        if (key in tabProps) passProps[key] = tabProps[key];
+      });
+      return passProps;
+    };
+
+    return {
+      elRef,
+      classes,
+      tabContent,
+      getComponent,
+      getProps,
     };
   },
 };

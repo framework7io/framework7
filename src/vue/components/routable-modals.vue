@@ -1,7 +1,16 @@
+<template>
+  <div ref="elRef" class="framework7-modals">
+    <component
+      :is="getComponent(modal)"
+      v-for="modal in modals"
+      :key="modal.id"
+      v-bind="getProps(modal)"
+    />
+  </div>
+</template>
 <script>
-import { ref, onMounted, onBeforeUnmount, onUpdated, h, toRaw } from 'vue';
+import { ref, onMounted, onBeforeUnmount, onUpdated, toRaw } from 'vue';
 import { f7events, f7routers, f7 } from '../shared/f7';
-import { RouterContextProvider } from '../shared/router-context-provider';
 
 export default {
   name: 'f7-routable-modals',
@@ -32,22 +41,23 @@ export default {
       routerData.value = null;
     });
 
-    return () => {
-      return h(
-        'div',
-        { ref: elRef, class: 'framework7-modals' },
-        modals.value.map((modal) => {
-          const { f7router, f7route } = modal.props;
-          const modalProps = { ...modal.props };
-          delete modalProps.f7router;
-          delete modalProps.f7route;
-          return h(RouterContextProvider, { f7router, f7route, key: modal.id }, () =>
-            h(toRaw(modal.component), {
-              ...modalProps,
-            }),
-          );
-        }),
-      );
+    const getComponent = (modal) => toRaw(modal.component);
+    const getProps = (modal) => {
+      const { component: modalComponent, props: modalProps } = modal;
+      let keys = [];
+      const passProps = {};
+      if (modalComponent && modalComponent.props) keys = Object.keys(modalComponent.props);
+      keys.forEach((key) => {
+        if (key in modalProps) passProps[key] = modalProps[key];
+      });
+      return passProps;
+    };
+
+    return {
+      elRef,
+      modals,
+      getComponent,
+      getProps,
     };
   },
 };
