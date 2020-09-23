@@ -39,6 +39,7 @@ gulp.task('react-clean', (cb) => buildClean('react', cb));
 gulp.task('react', buildReact);
 gulp.task('react-typings', buildReactTypings);
 
+gulp.task('vue-clean', (cb) => buildClean('vue', cb));
 gulp.task('vue', buildVue);
 gulp.task('vue-typings', buildVueTypings);
 
@@ -57,7 +58,7 @@ gulp.task(
   ]),
 );
 gulp.task('build-react', gulp.series(['react-clean', 'react', 'react-typings']));
-gulp.task('build-vue', gulp.series(['vue', 'vue-typings']));
+gulp.task('build-vue', gulp.series(['vue-clean', 'vue', 'vue-typings']));
 gulp.task('build-svelte', gulp.series(['svelte']));
 
 // Watchers

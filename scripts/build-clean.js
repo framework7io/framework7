@@ -3,6 +3,10 @@ const exec = require('exec-sh');
 const getOutput = require('./get-output.js');
 
 async function buildClean(project, cb) {
+  if (process.env.NODE_ENV === 'development' && project !== 'core') {
+    cb();
+    return;
+  }
   const output = `${getOutput()}/${project}`;
   const toRemove = [
     '**/*.js',
