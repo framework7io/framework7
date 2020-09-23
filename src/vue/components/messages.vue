@@ -56,6 +56,7 @@ export default {
   },
   setup(props) {
     let f7Messages = null;
+    let childrenBeforeUpdated = null;
     const elRef = ref(null);
 
     onMounted(() => {
@@ -91,6 +92,7 @@ export default {
       if (!props.init || !elRef.value) return;
       const children = elRef.value.children;
       if (!children) return;
+      childrenBeforeUpdated = children.length;
 
       for (let i = 0; i < children.length; i += 1) {
         children[i].classList.add('message-appeared');
@@ -103,6 +105,7 @@ export default {
 
       const children = elRef.value.children;
       if (!children) return;
+      const childerAftterUpdated = children.length;
 
       for (let i = 0; i < children.length; i += 1) {
         if (!children[i].classList.contains('message-appeared')) {
@@ -113,7 +116,12 @@ export default {
       if (f7Messages && f7Messages.layout && props.autoLayout) {
         f7Messages.layout();
       }
-      if (f7Messages && f7Messages.scroll && props.scrollMessages) {
+      if (
+        childerAftterUpdated !== childrenBeforeUpdated &&
+        f7Messages &&
+        f7Messages.scroll &&
+        props.scrollMessages
+      ) {
         f7Messages.scroll();
       }
     });

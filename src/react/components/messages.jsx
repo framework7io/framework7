@@ -56,6 +56,7 @@ const Messages = forwardRef((props, ref) => {
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
+  const childrenBeforeUpdated = useRef(null);
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
@@ -108,6 +109,7 @@ const Messages = forwardRef((props, ref) => {
 
     const childElements = elRef.current.children;
     if (!childElements) return;
+    const childrenAfterUpdated = childElements.length;
 
     if (!wasMounted) {
       for (let i = 0; i < childElements.length; i += 1) {
@@ -125,10 +127,15 @@ const Messages = forwardRef((props, ref) => {
       if (f7Messages.current.layout && autoLayout) {
         f7Messages.current.layout();
       }
-      if (f7Messages.current.scroll && scrollMessages) {
+      if (
+        childrenBeforeUpdated.current !== childrenAfterUpdated &&
+        f7Messages.current.scroll &&
+        scrollMessages
+      ) {
         f7Messages.current.scroll();
       }
     }
+    childrenBeforeUpdated.current = childrenAfterUpdated;
   });
 
   watchProp(typing, (newValue) => {

@@ -28,7 +28,7 @@
 
   let el;
   let f7Messages;
-
+  let childrenBeforeUpdated = null;
 
   $: classes = Utils.classNames(
     className,
@@ -64,6 +64,7 @@
     if (!init || !el) return;
     const children = el.children;
     if (!children) return;
+    childrenBeforeUpdated = children.length;
 
     for (let i = 0; i < children.length; i += 1) {
       children[i].classList.add('message-appeared');
@@ -76,6 +77,7 @@
 
     const children = el.children;
     if (!children) return;
+    const childrenAfterUpdated = children.length;
 
     for (let i = 0; i < children.length; i += 1) {
       if (!children[i].classList.contains('message-appeared')) {
@@ -86,7 +88,7 @@
     if (f7Messages && f7Messages.layout && autoLayout) {
       f7Messages.layout();
     }
-    if (f7Messages && f7Messages.scroll && scrollMessages) {
+    if (childrenBeforeUpdated !== childrenAfterUpdated && f7Messages && f7Messages.scroll && scrollMessages) {
       f7Messages.scroll();
     }
   });
