@@ -1,12 +1,21 @@
 # Core
 
+- [ ] Add containerEl for modals
 - [ ] Add parameter on how to open the page
 - [ ] Stepper / Lines
+- [ ] set colorPicker and Calendar instance on openerEl?
+- [ ] delegated tooltip
+- [ ] tooltip set target
+- [ ] swiper colors
 
 # React
 
 - [ ] add loading button
-- [ ] set to null on instance destroy
+- [x] set to null on instance destroy
+- [x] remove components methods
+- [ ] KS
+  - [ ] Update Swiper to latest
+  - [ ] Link & Prettier
 
 # Svelte
 
@@ -14,12 +23,14 @@
 - [ ] move to new F7 plugin helpers
 - [ ] modal classes keep state
 - [ ] panel classes keep state
-- [ ] set to null on instance destroy
+- [x] set to null on instance destroy
+- [x] remove components methods
 
 # Vue
 
 - [ ] v-model to inputs
 - [ ] v-model to modals
 - [ ] add loading button
-- [ ] set to null on instance destroy
-- [ ] check if component methods accessible in refs
+- [x] router with 2 pages deep error
+- KS
+  - [ ] Swiper
