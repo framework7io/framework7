@@ -16,7 +16,7 @@
         <slot name="name" />
       </div>
       <div v-if="hasHeader" class="message-header" @click="onHeaderClick">
-        {header}
+        {{ header }}
         <slot name="header" />
       </div>
       <div class="message-bubble" @click="onBubbleClick">
@@ -31,7 +31,7 @@
           <slot name="text-header" />
         </div>
         <div v-if="hasText" class="message-text" @click="onTextClick">
-          {text}
+          {{ text }}
           <slot name="text" />
           <div v-if="typing" class="message-typing-indicator">
             <div />

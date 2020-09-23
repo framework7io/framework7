@@ -9,12 +9,12 @@ import { classNames } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 
 export default {
-  name: 'f7-messagebar-title',
+  name: 'f7-messages-title',
   props: {
     ...colorProps,
   },
   setup(props) {
-    const classes = computed(() => classNames('messagebar-title', colorClasses(props)));
+    const classes = computed(() => classNames('messages-title', colorClasses(props)));
     return { classes };
   },
 };

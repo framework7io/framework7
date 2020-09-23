@@ -57,6 +57,7 @@ export default {
     'messagebar:attachmentdelete',
     'messagebar:attachmentclick',
     'messagebar:resizepage',
+    'update:value',
   ],
   setup(props, { emit, slots }) {
     const elRef = ref(null);
@@ -70,6 +71,7 @@ export default {
     };
     const onInput = (event) => {
       emit('input', event);
+      emit('update:value', event.target.value);
     };
     const onFocus = (event) => {
       emit('focus', event);
@@ -213,7 +215,7 @@ export default {
         });
       }
 
-      return h('div', { class: classes, ref: elRef }, [
+      return h('div', { class: classes.value, ref: elRef }, [
         slotsBeforeInner && slotsBeforeInner(),
         h('div', { class: 'toolbar-inner' }, [
           slotsInnerStart && slotsInnerStart(),
