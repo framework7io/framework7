@@ -9,7 +9,7 @@ export default () => (
       <table>
         <thead>
           <tr>
-            <th className="label-cell">Desert (100g serving)</th>
+            <th className="label-cell">Dessert (100g serving)</th>
             <th className="numeric-cell">Calories</th>
             <th className="numeric-cell">Fat (g)</th>
             <th className="numeric-cell">Carbs</th>
@@ -53,7 +53,7 @@ export default () => (
       <table>
         <thead>
           <tr>
-            <th className="label-cell">Desert (100g serving)</th>
+            <th className="label-cell">Dessert (100g serving)</th>
             <th className="numeric-cell">Calories</th>
             <th className="numeric-cell">Fat (g)</th>
             <th className="numeric-cell">Carbs</th>
@@ -101,7 +101,7 @@ export default () => (
             <th className="checkbox-cell">
               <Checkbox />
             </th>
-            <th className="label-cell">Desert (100g serving)</th>
+            <th className="label-cell">Dessert (100g serving)</th>
             <th className="numeric-cell">Calories</th>
             <th className="numeric-cell">Fat (g)</th>
             <th className="numeric-cell">Carbs</th>
@@ -179,7 +179,7 @@ export default () => (
             <th className="checkbox-cell">
               <Checkbox />
             </th>
-            <th className="label-cell">Desert (100g serving)</th>
+            <th className="label-cell">Dessert (100g serving)</th>
             <th className="numeric-cell">Calories</th>
             <th className="numeric-cell">Fat (g)</th>
             <th className="numeric-cell">Carbs</th>
@@ -316,7 +316,7 @@ export default () => (
               <th className="checkbox-cell">
                 <Checkbox />
               </th>
-              <th className="label-cell">Desert (100g serving)</th>
+              <th className="label-cell">Dessert (100g serving)</th>
               <th className="numeric-cell">Calories</th>
               <th className="numeric-cell">Fat (g)</th>
               <th className="numeric-cell">Carbs</th>
@@ -390,7 +390,7 @@ export default () => (
               <th className="checkbox-cell">
                 <Checkbox />
               </th>
-              <th className="label-cell sortable-cell sortable-cell-active">Desert (100g serving)</th>
+              <th className="label-cell sortable-cell sortable-cell-active">Dessert (100g serving)</th>
               <th className="numeric-cell sortable-cell">Calories</th>
               <th className="numeric-cell sortable-cell">Fat (g)</th>
               <th className="numeric-cell sortable-cell">Carbs</th>
@@ -472,7 +472,7 @@ export default () => (
               <th className="checkbox-cell">
                 <Checkbox />
               </th>
-              <th className="label-cell">Desert (100g serving)</th>
+              <th className="label-cell">Dessert (100g serving)</th>
               <th className="numeric-cell">Calories</th>
               <th className="numeric-cell">Fat (g)</th>
               <th className="numeric-cell">Carbs</th>
@@ -546,7 +546,7 @@ export default () => (
               <th className="checkbox-cell">
                 <Checkbox />
               </th>
-              <th className="label-cell">Desert (100g serving)</th>
+              <th className="label-cell">Dessert (100g serving)</th>
               <th className="numeric-cell">Calories</th>
               <th className="numeric-cell">Fat (g)</th>
               <th className="numeric-cell">Carbs</th>
@@ -637,7 +637,7 @@ export default () => (
         <table>
           <thead>
             <tr>
-              <th className="label-cell">Desert (100g serving)</th>
+              <th className="label-cell">Dessert (100g serving)</th>
               <th className="numeric-cell">Calories</th>
               <th className="numeric-cell">Fat (g)</th>
               <th className="numeric-cell">Carbs</th>
