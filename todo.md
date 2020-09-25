@@ -6,7 +6,6 @@
 - [ ] set colorPicker and Calendar instance on openerEl?
 - [ ] delegated tooltip
 - [ ] tooltip set target
-- [ ] swiper colors
 - [ ] add containerEl to modals
 
 # React
