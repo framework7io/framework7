@@ -6,7 +6,7 @@
       <table>
         <thead>
           <tr>
-            <th class="label-cell">Desert (100g serving)</th>
+            <th class="label-cell">Dessert (100g serving)</th>
             <th class="numeric-cell">Calories</th>
             <th class="numeric-cell">Fat (g)</th>
             <th class="numeric-cell">Carbs</th>
@@ -50,7 +50,7 @@
       <table>
         <thead>
           <tr>
-            <th class="label-cell">Desert (100g serving)</th>
+            <th class="label-cell">Dessert (100g serving)</th>
             <th class="numeric-cell">Calories</th>
             <th class="numeric-cell">Fat (g)</th>
             <th class="numeric-cell">Carbs</th>
@@ -100,7 +100,7 @@
                 <i class="icon-checkbox"></i>
               </label>
             </th>
-            <th class="label-cell">Desert (100g serving)</th>
+            <th class="label-cell">Dessert (100g serving)</th>
             <th class="numeric-cell">Calories</th>
             <th class="numeric-cell">Fat (g)</th>
             <th class="numeric-cell">Carbs</th>
@@ -208,7 +208,7 @@
                 <i class="icon-checkbox"></i>
               </label>
             </th>
-            <th class="label-cell">Desert (100g serving)</th>
+            <th class="label-cell">Dessert (100g serving)</th>
             <th class="numeric-cell">Calories</th>
             <th class="numeric-cell">Fat (g)</th>
             <th class="numeric-cell">Carbs</th>
@@ -359,7 +359,7 @@
                   <i class="icon-checkbox"></i>
                 </label>
               </th>
-              <th class="label-cell">Desert (100g serving)</th>
+              <th class="label-cell">Dessert (100g serving)</th>
               <th class="numeric-cell">Calories</th>
               <th class="numeric-cell">Fat (g)</th>
               <th class="numeric-cell">Carbs</th>
@@ -447,7 +447,7 @@
                   <i class="icon-checkbox"></i>
                 </label>
               </th>
-              <th class="label-cell sortable-cell sortable-cell-active">Desert (100g serving)</th>
+              <th class="label-cell sortable-cell sortable-cell-active">Dessert (100g serving)</th>
               <th class="numeric-cell sortable-cell">Calories</th>
               <th class="numeric-cell sortable-cell">Fat (g)</th>
               <th class="numeric-cell sortable-cell">Carbs</th>
@@ -544,7 +544,7 @@
                   <i class="icon-checkbox"></i>
                 </label>
               </th>
-              <th class="label-cell">Desert (100g serving)</th>
+              <th class="label-cell">Dessert (100g serving)</th>
               <th class="numeric-cell">Calories</th>
               <th class="numeric-cell">Fat (g)</th>
               <th class="numeric-cell">Carbs</th>
@@ -632,7 +632,7 @@
                   <i class="icon-checkbox"></i>
                 </label>
               </th>
-              <th class="label-cell">Desert (100g serving)</th>
+              <th class="label-cell">Dessert (100g serving)</th>
               <th class="numeric-cell">Calories</th>
               <th class="numeric-cell">Fat (g)</th>
               <th class="numeric-cell">Carbs</th>
@@ -734,7 +734,7 @@
         <table>
           <thead>
             <tr>
-              <th class="label-cell">Desert (100g serving)</th>
+              <th class="label-cell">Dessert (100g serving)</th>
               <th class="numeric-cell">Calories</th>
               <th class="numeric-cell">Fat (g)</th>
               <th class="numeric-cell">Carbs</th>
