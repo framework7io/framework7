@@ -1,15 +1,5 @@
-<template>
-  <div ref="elRef" class="framework7-modals">
-    <component
-      :is="getComponent(modal)"
-      v-for="modal in modals"
-      :key="modal.id"
-      v-bind="getProps(modal)"
-    />
-  </div>
-</template>
 <script>
-import { ref, onMounted, onBeforeUnmount, onUpdated, toRaw } from 'vue';
+import { ref, onMounted, onBeforeUnmount, onUpdated, toRaw, h } from 'vue';
 import { f7events, f7routers, f7 } from '../shared/f7';
 
 export default {
@@ -24,6 +14,10 @@ export default {
         modals,
         el: elRef.value,
         setModals(newModals) {
+          newModals.forEach((modal) => {
+            // eslint-disable-next-line
+            modal.component = toRaw(modal.component);
+          });
           modals.value = [...newModals];
         },
       };
@@ -53,11 +47,12 @@ export default {
       return passProps;
     };
 
-    return {
-      elRef,
-      modals,
-      getComponent,
-      getProps,
+    return () => {
+      return h('div', { ref: elRef, class: 'framework7-modals' }, [
+        ...modals.value.map((modal) => {
+          return h(getComponent(modal.component), { key: modal.id, ...getProps(modal.props) });
+        }),
+      ]);
     };
   },
 };

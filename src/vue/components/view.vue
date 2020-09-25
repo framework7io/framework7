@@ -1,16 +1,5 @@
-<template>
-  <div ref="elRef" :class="classes">
-    <slot />
-    <component
-      :is="getComponent(page)"
-      v-for="page in pages"
-      :key="page.id"
-      v-bind="getProps(page)"
-    />
-  </div>
-</template>
 <script>
-import { computed, ref, onMounted, onBeforeUnmount, onUpdated, toRaw } from 'vue';
+import { computed, ref, onMounted, onBeforeUnmount, onUpdated, toRaw, h } from 'vue';
 import { classNames, noUndefinedProps, getRouterId } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 import { f7ready, f7routers, f7, f7events } from '../shared/f7';
@@ -199,7 +188,7 @@ export default {
     'tab:hide',
     'tab:show',
   ],
-  setup(props, { emit }) {
+  setup(props, { emit, slots }) {
     // const childrenArray = React.Children.toArray(children);
     // const initialPageComponent = childrenArray.filter((c) => c.props && c.props.initialPage)[0];
     // const restChildren = childrenArray.filter((c) => !c.props || !c.props.initialPage);
@@ -241,6 +230,10 @@ export default {
 
     const pages = ref(initialPage ? [initialPage] : []);
     const setPages = (newPages) => {
+      newPages.forEach((page) => {
+        // eslint-disable-next-line
+        page.component = toRaw(page.component);
+      });
       pages.value = newPages;
     };
 
@@ -371,12 +364,16 @@ export default {
       return passProps;
     };
 
-    return {
-      elRef,
-      classes,
-      pages,
-      getComponent,
-      getProps,
+    return () => {
+      return h('div', { ref: elRef, class: classes.value }, [
+        slots.default && slots.default(),
+        ...pages.value.map((page) =>
+          h(getComponent(page), {
+            key: page.id,
+            ...getProps(page),
+          }),
+        ),
+      ]);
     };
   },
 };

@@ -24,3 +24,4 @@
 - [ ] v-model to inputs
 - [ ] v-model to modals
 - [ ] add loading button
+- [ ] define all props on app
