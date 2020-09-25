@@ -8,35 +8,35 @@ export default () => (
     <List simpleList>
       <ListItem>
         <span>Batman</span>
-        <Toggle defaultChecked></Toggle>
+        <Toggle defaultChecked />
       </ListItem>
       <ListItem>
         <span>Aquaman</span>
-        <Toggle defaultChecked color="blue"></Toggle>
+        <Toggle defaultChecked color="blue" />
       </ListItem>
       <ListItem>
         <span>Superman</span>
-        <Toggle defaultChecked color="red"></Toggle>
+        <Toggle defaultChecked color="red" />
       </ListItem>
       <ListItem>
         <span>Hulk</span>
-        <Toggle color="green"></Toggle>
+        <Toggle color="green" />
       </ListItem>
       <ListItem>
         <span>Spiderman (Disabled)</span>
-        <Toggle disabled></Toggle>
+        <Toggle disabled />
       </ListItem>
       <ListItem>
         <span>Ironman (Disabled)</span>
-        <Toggle defaultChecked disabled></Toggle>
+        <Toggle defaultChecked disabled />
       </ListItem>
       <ListItem>
         <span>Thor</span>
-        <Toggle defaultChecked color="orange"></Toggle>
+        <Toggle defaultChecked color="orange" />
       </ListItem>
       <ListItem>
         <span>Wonder Woman</span>
-        <Toggle color="pink"></Toggle>
+        <Toggle color="pink" />
       </ListItem>
     </List>
   </Page>

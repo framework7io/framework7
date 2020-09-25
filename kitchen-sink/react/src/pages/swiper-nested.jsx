@@ -7,7 +7,7 @@ export default () => (
     <Swiper className="demo-swiper" pagination>
       <SwiperSlide>Horizontal Slide 1</SwiperSlide>
       <SwiperSlide>
-        <Swiper className="demo-swiper" pagination params={{ direction: 'vertical' }}>
+        <Swiper className="demo-swiper" pagination direction="vertical">
           <SwiperSlide>Vertical Slide 1</SwiperSlide>
           <SwiperSlide>Vertical Slide 2</SwiperSlide>
           <SwiperSlide>Vertical Slide 3</SwiperSlide>

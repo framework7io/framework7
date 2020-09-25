@@ -1,187 +1,182 @@
 import React from 'react';
 import { Page, Navbar, List, ListGroup, ListItem, ListIndex } from 'framework7-react';
 
-export default class extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (
-      <Page>
-        <Navbar title="List Index" backLink="Back"></Navbar>
-        <ListIndex
-          indexes="auto"
-          listEl=".list.contacts-list"
-          scrollList={true}
-          label={true}
-          onListIndexSelect={this.onIndexSelect.bind(this)}
-        ></ListIndex>
-        <List contactsList>
-          <ListGroup>
-            <ListItem title="A" groupTitle></ListItem>
-            <ListItem title="Aaron"></ListItem>
-            <ListItem title="Adam"></ListItem>
-            <ListItem title="Aiden"></ListItem>
-            <ListItem title="Albert"></ListItem>
-            <ListItem title="Alex"></ListItem>
-            <ListItem title="Alexander"></ListItem>
-            <ListItem title="Alfie"></ListItem>
-            <ListItem title="Archie"></ListItem>
-            <ListItem title="Arthur"></ListItem>
-            <ListItem title="Austin"></ListItem>
-          </ListGroup>
-          <ListGroup>
-            <ListItem title="B" groupTitle></ListItem>
-            <ListItem title="Benjamin"></ListItem>
-            <ListItem title="Blake"></ListItem>
-            <ListItem title="Bobby"></ListItem>
-          </ListGroup>
-          <ListGroup>
-            <ListItem title="C" groupTitle></ListItem>
-            <ListItem title="Caleb"></ListItem>
-            <ListItem title="Callum"></ListItem>
-            <ListItem title="Cameron"></ListItem>
-            <ListItem title="Charles"></ListItem>
-            <ListItem title="Charlie"></ListItem>
-            <ListItem title="Connor"></ListItem>
-          </ListGroup>
-          <ListGroup>
-            <ListItem title="D" groupTitle></ListItem>
-            <ListItem title="Daniel"></ListItem>
-            <ListItem title="David"></ListItem>
-            <ListItem title="Dexter"></ListItem>
-            <ListItem title="Dylan"></ListItem>
-          </ListGroup>
-          <ListGroup>
-            <ListItem title="E" groupTitle></ListItem>
-            <ListItem title="Edward"></ListItem>
-            <ListItem title="Elijah"></ListItem>
-            <ListItem title="Elliot"></ListItem>
-            <ListItem title="Elliott"></ListItem>
-            <ListItem title="Ethan"></ListItem>
-            <ListItem title="Evan"></ListItem>
-          </ListGroup>
-          <ListGroup>
-            <ListItem title="F" groupTitle></ListItem>
-            <ListItem title="Felix"></ListItem>
-            <ListItem title="Finlay"></ListItem>
-            <ListItem title="Finley"></ListItem>
-            <ListItem title="Frankie"></ListItem>
-            <ListItem title="Freddie"></ListItem>
-            <ListItem title="Frederick"></ListItem>
-          </ListGroup>
-          <ListGroup>
-            <ListItem title="G" groupTitle></ListItem>
-            <ListItem title="Gabriel"></ListItem>
-            <ListItem title="George"></ListItem>
-          </ListGroup>
-          <ListGroup>
-            <ListItem title="H" groupTitle></ListItem>
-            <ListItem title="Harley"></ListItem>
-            <ListItem title="Harrison"></ListItem>
-            <ListItem title="Harry"></ListItem>
-            <ListItem title="Harvey"></ListItem>
-            <ListItem title="Henry"></ListItem>
-            <ListItem title="Hugo"></ListItem>
-          </ListGroup>
-          <ListGroup>
-            <ListItem title="I" groupTitle></ListItem>
-            <ListItem title="Ibrahim"></ListItem>
-            <ListItem title="Isaac"></ListItem>
-          </ListGroup>
-          <ListGroup>
-            <ListItem title="J" groupTitle></ListItem>
-            <ListItem title="Jack"></ListItem>
-            <ListItem title="Jacob"></ListItem>
-            <ListItem title="Jake"></ListItem>
-            <ListItem title="James"></ListItem>
-            <ListItem title="Jamie"></ListItem>
-            <ListItem title="Jayden"></ListItem>
-            <ListItem title="Jenson"></ListItem>
-            <ListItem title="Joseph"></ListItem>
-            <ListItem title="Joshua"></ListItem>
-            <ListItem title="Jude"></ListItem>
-          </ListGroup>
-          <ListGroup>
-            <ListItem title="K" groupTitle></ListItem>
-            <ListItem title="Kai"></ListItem>
-            <ListItem title="Kian"></ListItem>
-          </ListGroup>
-          <ListGroup>
-            <ListItem title="L" groupTitle></ListItem>
-            <ListItem title="Leo"></ListItem>
-            <ListItem title="Leon"></ListItem>
-            <ListItem title="Lewis"></ListItem>
-            <ListItem title="Liam"></ListItem>
-            <ListItem title="Logan"></ListItem>
-            <ListItem title="Louie"></ListItem>
-            <ListItem title="Louis"></ListItem>
-            <ListItem title="Luca"></ListItem>
-            <ListItem title="Lucas"></ListItem>
-            <ListItem title="Luke"></ListItem>
-          </ListGroup>
-          <ListGroup>
-            <ListItem title="M" groupTitle></ListItem>
-            <ListItem title="Mason"></ListItem>
-            <ListItem title="Matthew"></ListItem>
-            <ListItem title="Max"></ListItem>
-            <ListItem title="Michael"></ListItem>
-            <ListItem title="Mohammad"></ListItem>
-            <ListItem title="Mohammed"></ListItem>
-            <ListItem title="Muhammad"></ListItem>
-          </ListGroup>
-          <ListGroup>
-            <ListItem title="N" groupTitle></ListItem>
-            <ListItem title="Nathan"></ListItem>
-            <ListItem title="Noah"></ListItem>
-          </ListGroup>
-          <ListGroup>
-            <ListItem title="O" groupTitle></ListItem>
-            <ListItem title="Oliver"></ListItem>
-            <ListItem title="Ollie"></ListItem>
-            <ListItem title="Oscar"></ListItem>
-            <ListItem title="Owen"></ListItem>
-          </ListGroup>
-          <ListGroup>
-            <ListItem title="R" groupTitle></ListItem>
-            <ListItem title="Reuben"></ListItem>
-            <ListItem title="Riley"></ListItem>
-            <ListItem title="Robert"></ListItem>
-            <ListItem title="Ronnie"></ListItem>
-            <ListItem title="Rory"></ListItem>
-            <ListItem title="Ryan"></ListItem>
-          </ListGroup>
-          <ListGroup>
-            <ListItem title="S" groupTitle></ListItem>
-            <ListItem title="Samuel"></ListItem>
-            <ListItem title="Sebastian"></ListItem>
-            <ListItem title="Seth"></ListItem>
-            <ListItem title="Sonny"></ListItem>
-            <ListItem title="Stanley"></ListItem>
-          </ListGroup>
-          <ListGroup>
-            <ListItem title="T" groupTitle></ListItem>
-            <ListItem title="Teddy"></ListItem>
-            <ListItem title="Theo"></ListItem>
-            <ListItem title="Theodore"></ListItem>
-            <ListItem title="Thomas"></ListItem>
-            <ListItem title="Toby"></ListItem>
-            <ListItem title="Tommy"></ListItem>
-            <ListItem title="Tyler"></ListItem>
-          </ListGroup>
-          <ListGroup>
-            <ListItem title="W" groupTitle></ListItem>
-            <ListItem title="William"></ListItem>
-          </ListGroup>
-          <ListGroup>
-            <ListItem title="Z" groupTitle></ListItem>
-            <ListItem title="Zachary"></ListItem>
-          </ListGroup>
-        </List>
-      </Page>
-    )
-  }
-  onIndexSelect(itemContent) {
+export default () => {
+  const onIndexSelect = (itemContent) => {
     console.log(itemContent);
-  }
-}
+  };
+  return (
+    <Page>
+      <Navbar title="List Index" backLink="Back"></Navbar>
+      <ListIndex
+        indexes="auto"
+        listEl=".list.contacts-list"
+        scrollList={true}
+        label={true}
+        onListIndexSelect={onIndexSelect}
+      />
+      <List contactsList>
+        <ListGroup>
+          <ListItem title="A" groupTitle />
+          <ListItem title="Aaron" />
+          <ListItem title="Adam" />
+          <ListItem title="Aiden" />
+          <ListItem title="Albert" />
+          <ListItem title="Alex" />
+          <ListItem title="Alexander" />
+          <ListItem title="Alfie" />
+          <ListItem title="Archie" />
+          <ListItem title="Arthur" />
+          <ListItem title="Austin" />
+        </ListGroup>
+        <ListGroup>
+          <ListItem title="B" groupTitle />
+          <ListItem title="Benjamin" />
+          <ListItem title="Blake" />
+          <ListItem title="Bobby" />
+        </ListGroup>
+        <ListGroup>
+          <ListItem title="C" groupTitle />
+          <ListItem title="Caleb" />
+          <ListItem title="Callum" />
+          <ListItem title="Cameron" />
+          <ListItem title="Charles" />
+          <ListItem title="Charlie" />
+          <ListItem title="Connor" />
+        </ListGroup>
+        <ListGroup>
+          <ListItem title="D" groupTitle />
+          <ListItem title="Daniel" />
+          <ListItem title="David" />
+          <ListItem title="Dexter" />
+          <ListItem title="Dylan" />
+        </ListGroup>
+        <ListGroup>
+          <ListItem title="E" groupTitle />
+          <ListItem title="Edward" />
+          <ListItem title="Elijah" />
+          <ListItem title="Elliot" />
+          <ListItem title="Elliott" />
+          <ListItem title="Ethan" />
+          <ListItem title="Evan" />
+        </ListGroup>
+        <ListGroup>
+          <ListItem title="F" groupTitle />
+          <ListItem title="Felix" />
+          <ListItem title="Finlay" />
+          <ListItem title="Finley" />
+          <ListItem title="Frankie" />
+          <ListItem title="Freddie" />
+          <ListItem title="Frederick" />
+        </ListGroup>
+        <ListGroup>
+          <ListItem title="G" groupTitle />
+          <ListItem title="Gabriel" />
+          <ListItem title="George" />
+        </ListGroup>
+        <ListGroup>
+          <ListItem title="H" groupTitle />
+          <ListItem title="Harley" />
+          <ListItem title="Harrison" />
+          <ListItem title="Harry" />
+          <ListItem title="Harvey" />
+          <ListItem title="Henry" />
+          <ListItem title="Hugo" />
+        </ListGroup>
+        <ListGroup>
+          <ListItem title="I" groupTitle />
+          <ListItem title="Ibrahim" />
+          <ListItem title="Isaac" />
+        </ListGroup>
+        <ListGroup>
+          <ListItem title="J" groupTitle />
+          <ListItem title="Jack" />
+          <ListItem title="Jacob" />
+          <ListItem title="Jake" />
+          <ListItem title="James" />
+          <ListItem title="Jamie" />
+          <ListItem title="Jayden" />
+          <ListItem title="Jenson" />
+          <ListItem title="Joseph" />
+          <ListItem title="Joshua" />
+          <ListItem title="Jude" />
+        </ListGroup>
+        <ListGroup>
+          <ListItem title="K" groupTitle />
+          <ListItem title="Kai" />
+          <ListItem title="Kian" />
+        </ListGroup>
+        <ListGroup>
+          <ListItem title="L" groupTitle />
+          <ListItem title="Leo" />
+          <ListItem title="Leon" />
+          <ListItem title="Lewis" />
+          <ListItem title="Liam" />
+          <ListItem title="Logan" />
+          <ListItem title="Louie" />
+          <ListItem title="Louis" />
+          <ListItem title="Luca" />
+          <ListItem title="Lucas" />
+          <ListItem title="Luke" />
+        </ListGroup>
+        <ListGroup>
+          <ListItem title="M" groupTitle />
+          <ListItem title="Mason" />
+          <ListItem title="Matthew" />
+          <ListItem title="Max" />
+          <ListItem title="Michael" />
+          <ListItem title="Mohammad" />
+          <ListItem title="Mohammed" />
+          <ListItem title="Muhammad" />
+        </ListGroup>
+        <ListGroup>
+          <ListItem title="N" groupTitle />
+          <ListItem title="Nathan" />
+          <ListItem title="Noah" />
+        </ListGroup>
+        <ListGroup>
+          <ListItem title="O" groupTitle />
+          <ListItem title="Oliver" />
+          <ListItem title="Ollie" />
+          <ListItem title="Oscar" />
+          <ListItem title="Owen" />
+        </ListGroup>
+        <ListGroup>
+          <ListItem title="R" groupTitle />
+          <ListItem title="Reuben" />
+          <ListItem title="Riley" />
+          <ListItem title="Robert" />
+          <ListItem title="Ronnie" />
+          <ListItem title="Rory" />
+          <ListItem title="Ryan" />
+        </ListGroup>
+        <ListGroup>
+          <ListItem title="S" groupTitle />
+          <ListItem title="Samuel" />
+          <ListItem title="Sebastian" />
+          <ListItem title="Seth" />
+          <ListItem title="Sonny" />
+          <ListItem title="Stanley" />
+        </ListGroup>
+        <ListGroup>
+          <ListItem title="T" groupTitle />
+          <ListItem title="Teddy" />
+          <ListItem title="Theo" />
+          <ListItem title="Theodore" />
+          <ListItem title="Thomas" />
+          <ListItem title="Toby" />
+          <ListItem title="Tommy" />
+          <ListItem title="Tyler" />
+        </ListGroup>
+        <ListGroup>
+          <ListItem title="W" groupTitle />
+          <ListItem title="William" />
+        </ListGroup>
+        <ListGroup>
+          <ListItem title="Z" groupTitle />
+          <ListItem title="Zachary" />
+        </ListGroup>
+      </List>
+    </Page>
+  );
+};

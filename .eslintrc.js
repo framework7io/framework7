@@ -54,6 +54,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
   },
   overrides: [
+    // REACT
     {
       files: ['**/*.jsx', 'src/react/shared/*.js'],
       rules: {
@@ -63,6 +64,21 @@ module.exports = {
         'no-dupe-keys': ['off'],
       },
     },
+    // REACT KITCHEN_SINK
+    {
+      files: ['kitchen-sink/react/src/**/*.jsx', 'kitchen-sink/react/src/**/*.js'],
+      rules: {
+        'react/display-name': ['off'],
+        'react/jsx-no-target-blank': ['off'],
+        'react/no-unescaped-entities': ['off'],
+        'no-console': ['off'],
+        'no-restricted-globals': ['off'],
+        'no-nested-ternary': ['off'],
+        'import/no-unresolved': ['off'],
+        'import/no-extraneous-dependencies': ['off'],
+      },
+    },
+    // VUE
     {
       files: ['src/**/*.vue', 'kitchen-sink/vue/src/**/*.vue'],
       plugins: ['vue'],
@@ -87,6 +103,7 @@ module.exports = {
         'import/extensions': ['off'],
       },
     },
+    // SVELTE
     {
       files: ['**/*.svelte'],
       processor: 'svelte3/svelte3',

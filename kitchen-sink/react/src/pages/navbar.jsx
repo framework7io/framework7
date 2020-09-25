@@ -9,7 +9,10 @@ export default () => (
       </NavRight>
     </Navbar>
     <Block>
-      <p>Navbar is a fixed (with Fixed and Through layout types) area at the top of a screen that contains Page title and navigation elements.</p>
+      <p>
+        Navbar is a fixed (with Fixed and Through layout types) area at the top of a screen that
+        contains Page title and navigation elements.
+      </p>
       <p>Navbar has 3 main parts: Left, Title and Right. Each part may contain any HTML content.</p>
     </Block>
     <List>

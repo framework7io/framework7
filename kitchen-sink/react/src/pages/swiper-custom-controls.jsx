@@ -5,15 +5,7 @@ export default () => (
   <Page>
     <Navbar title="Custom Controls" backLink="Back"></Navbar>
     <div className="demo-swiper-custom">
-      <Swiper
-        pagination
-        navigation
-        params={{
-          pagination: {
-            clickable: true,
-          },
-        }}
-      >
+      <Swiper pagination={{ clickable: true }} navigation>
         <SwiperSlide
           style={{
             backgroundImage: 'url(https://cdn.framework7.io/placeholder/nightlife-1024x1024-1.jpg)',

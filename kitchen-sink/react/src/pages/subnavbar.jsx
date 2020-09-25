@@ -1,5 +1,14 @@
 import React from 'react';
-import { Navbar, Page, Subnavbar, Segmented, Button, Block, List, ListItem } from 'framework7-react';
+import {
+  Navbar,
+  Page,
+  Subnavbar,
+  Segmented,
+  Button,
+  Block,
+  List,
+  ListItem,
+} from 'framework7-react';
 
 export default () => (
   <Page>
@@ -13,10 +22,13 @@ export default () => (
       </Subnavbar>
     </Navbar>
     <Block>
-      <p>Subnavbar is useful when you need to put any additional elements into Navbar, like Tab Links or Search Bar. It also remains visible when Navbar hidden.</p>
+      <p>
+        Subnavbar is useful when you need to put any additional elements into Navbar, like Tab Links
+        or Search Bar. It also remains visible when Navbar hidden.
+      </p>
     </Block>
     <List>
-      <ListItem link="/subnavbar-title/" title="Subnavbar Title"></ListItem>
+      <ListItem link="/subnavbar-title/" title="Subnavbar Title" />
     </List>
   </Page>
 );

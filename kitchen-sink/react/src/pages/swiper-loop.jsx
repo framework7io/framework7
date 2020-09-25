@@ -2,12 +2,9 @@ import React from 'react';
 import { Navbar, Page, Swiper, SwiperSlide } from 'framework7-react';
 
 export default () => (
-
   <Page>
     <Navbar title="Infinite Loop Mode" backLink="Back"></Navbar>
-    <Swiper className="demo-swiper" pagination params={{
-      loop: true,
-    }}>
+    <Swiper className="demo-swiper" pagination loop>
       <SwiperSlide>Slide 1</SwiperSlide>
       <SwiperSlide>Slide 2</SwiperSlide>
       <SwiperSlide>Slide 3</SwiperSlide>

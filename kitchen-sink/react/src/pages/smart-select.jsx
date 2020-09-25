@@ -19,7 +19,11 @@ export default () => (
           <option value="banana">Banana</option>
         </select>
       </ListItem>
-      <ListItem title="Car" smartSelect smartSelectParams={{openIn: 'popup', searchbar: true, searchbarPlaceholder: 'Search car'}}>
+      <ListItem
+        title="Car"
+        smartSelect
+        smartSelectParams={{ openIn: 'popup', searchbar: true, searchbarPlaceholder: 'Search car' }}
+      >
         <select name="car" multiple defaultValue={['honda', 'audi', 'ford']}>
           <optgroup label="Japanese">
             <option value="honda">Honda</option>
@@ -43,13 +47,13 @@ export default () => (
           </optgroup>
         </select>
       </ListItem>
-      <ListItem title="Mac or Windows" smartSelect smartSelectParams={{openIn: 'sheet'}}>
+      <ListItem title="Mac or Windows" smartSelect smartSelectParams={{ openIn: 'sheet' }}>
         <select name="mac-windows" defaultValue="mac">
           <option value="mac">Mac</option>
           <option value="windows">Windows</option>
         </select>
       </ListItem>
-      <ListItem title="Super Hero" smartSelect smartSelectParams={{openIn: 'popover'}}>
+      <ListItem title="Super Hero" smartSelect smartSelectParams={{ openIn: 'popover' }}>
         <select name="superhero" multiple defaultValue={['Batman']}>
           <option value="Batman">Batman</option>
           <option value="Superman">Superman</option>

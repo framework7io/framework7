@@ -5,10 +5,10 @@ export default () => (
   <Page>
     <Navbar title="Tabs" backLink="Back"></Navbar>
     <List>
-      <ListItem link="/tabs-static/" title="Static Tabs"></ListItem>
-      <ListItem link="/tabs-animated/" title="Animated Tabs"></ListItem>
-      <ListItem link="/tabs-swipeable/" title="Swipeable Tabs"></ListItem>
-      <ListItem link="/tabs-routable/" title="Routable Tabs"></ListItem>
+      <ListItem link="/tabs-static/" title="Static Tabs" />
+      <ListItem link="/tabs-animated/" title="Animated Tabs" />
+      <ListItem link="/tabs-swipeable/" title="Swipeable Tabs" />
+      <ListItem link="/tabs-routable/" title="Routable Tabs" />
     </List>
   </Page>
 );

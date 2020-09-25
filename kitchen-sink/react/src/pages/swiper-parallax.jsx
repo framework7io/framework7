@@ -8,11 +8,8 @@ export default () => (
       className="demo-swiper-parallax color-theme-white"
       pagination
       navigation
-      colorTheme="white"
-      params={{
-        parallax: true,
-        speed: 600,
-      }}
+      parallax
+      speed={600}
     >
       <div
         slot="container-start"
@@ -21,7 +18,7 @@ export default () => (
           backgroundImage: 'url(https://cdn.framework7.io/placeholder/nightlife-1024x1024-2.jpg)',
         }}
         className="swiper-parallax-bg"
-      ></div>
+      />
       <SwiperSlide>
         <div data-swiper-parallax="-300" className="swiper-slide-title">
           Slide 1

@@ -2,18 +2,9 @@ import React from 'react';
 import { Navbar, Page, Swiper, SwiperSlide } from 'framework7-react';
 
 export default () => (
-
   <Page>
     <Navbar title="Pagination Fraction" backLink="Back"></Navbar>
-    <Swiper
-      className="demo-swiper"
-      pagination
-      params={{
-        pagination: {
-          type: 'fraction',
-        }
-      }}
-    >
+    <Swiper className="demo-swiper" pagination={{ type: 'fraction' }}>
       <SwiperSlide>Slide 1</SwiperSlide>
       <SwiperSlide>Slide 2</SwiperSlide>
       <SwiperSlide>Slide 3</SwiperSlide>
@@ -26,5 +17,4 @@ export default () => (
       <SwiperSlide>Slide 10</SwiperSlide>
     </Swiper>
   </Page>
-
 );

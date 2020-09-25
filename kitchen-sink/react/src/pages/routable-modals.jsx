@@ -8,8 +8,8 @@ export default () => (
       <p>In addition to pages, Framework7 router allows to load modal components:</p>
     </Block>
     <List>
-      <ListItem title="Popup" link="popup/"></ListItem>
-      <ListItem title="Action Sheet" link="actions/"></ListItem>
+      <ListItem title="Popup" link="popup/" />
+      <ListItem title="Action Sheet" link="actions/" />
     </List>
   </Page>
 );

@@ -3,7 +3,6 @@
     <f7-navbar title="Custom Controls" back-link="Back"></f7-navbar>
     <div class="demo-swiper-custom">
       <f7-swiper :pagination="{ clickable: true }" navigation :space-between="0">
-        <div class="swiper-pagination"></div>
         <f7-swiper-slide
           style="
             background-image: url(https://cdn.framework7.io/placeholder/nightlife-1024x1024-1.jpg);
@@ -34,8 +33,6 @@
             background-image: url(https://cdn.framework7.io/placeholder/nightlife-1024x1024-6.jpg);
           "
         ></f7-swiper-slide>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
       </f7-swiper>
     </div>
   </f7-page>

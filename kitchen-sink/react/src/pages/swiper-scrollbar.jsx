@@ -2,7 +2,6 @@ import React from 'react';
 import { Navbar, Page, Swiper, SwiperSlide } from 'framework7-react';
 
 export default () => (
-
   <Page>
     <Navbar title="Scrollbar" backLink="Back"></Navbar>
     <Swiper className="demo-swiper" scrollbar>
@@ -18,5 +17,4 @@ export default () => (
       <SwiperSlide>Slide 10</SwiperSlide>
     </Swiper>
   </Page>
-
 );

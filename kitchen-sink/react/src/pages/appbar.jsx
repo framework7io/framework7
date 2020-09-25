@@ -1,20 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Page, Navbar, Block, Button, f7 } from 'framework7-react';
 
-var appbarEnabled = false;
+let appbarEnabledCache = false;
 
-export default class extends React.Component {
-  constructor() {
-    super();
+export default () => {
+  const [appbarEnabled, setAppbarEnabled] = useState(appbarEnabledCache);
 
-    this.state = {
-      appbarEnabled,
-    };
-  }
-  enableAppbar () {
-    var self = this;
-    self.setState({appbarEnabled: true});
-    appbarEnabled = true;
+  const enableAppbar = () => {
+    setAppbarEnabled(true);
+    appbarEnabledCache = true;
     f7.root.prepend(`
     <div class="appbar">
       <div class="appbar-inner">
@@ -45,32 +39,33 @@ export default class extends React.Component {
       </div>
     </div>
     `);
-  }
-  disableAppbar () {
-    var self = this;
-    self.setState({appbarEnabled: false});
-    appbarEnabled = false;
+  };
+  const disableAppbar = () => {
+    setAppbarEnabled(false);
+    appbarEnabledCache = false;
     f7.$('.appbar').remove();
-  }
-  toggleAppbar () {
-    var self = this;
-    if (self.state.appbarEnabled) {
-      self.disableAppbar();
+  };
+  const toggleAppbar = () => {
+    if (appbarEnabled) {
+      disableAppbar();
     } else {
-      self.enableAppbar();
+      enableAppbar();
     }
-  }
-  render() {
-    return (
-      <Page>
-        <Navbar title="Appbar" backLink="Back" />
-        <Block strong>
-          <p>Appbar is the main app bar with actions on top of the whole app. It is designed to be used in desktop apps with Aurora theme.</p>
-        </Block>
-        <Block strong>
-          <Button fill onClick={() => this.toggleAppbar()}>Toggle Appbar</Button>
-        </Block>
-      </Page>
-    )
-  }
+  };
+  return (
+    <Page>
+      <Navbar title="Appbar" backLink="Back" />
+      <Block strong>
+        <p>
+          Appbar is the main app bar with actions on top of the whole app. It is designed to be used
+          in desktop apps with Aurora theme.
+        </p>
+      </Block>
+      <Block strong>
+        <Button fill onClick={() => toggleAppbar()}>
+          Toggle Appbar
+        </Button>
+      </Block>
+    </Page>
+  );
 };

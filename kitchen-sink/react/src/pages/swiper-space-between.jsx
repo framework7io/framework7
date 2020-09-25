@@ -2,15 +2,9 @@ import React from 'react';
 import { Navbar, Page, Swiper, SwiperSlide } from 'framework7-react';
 
 export default () => (
-
   <Page>
     <Navbar title="Space Between Slides" backLink="Back"></Navbar>
-    <Swiper className="demo-swiper" pagination params={{
-      spaceBetween: 50,
-      pagination: {
-        hideOnClick: true,
-      }
-    }}>
+    <Swiper className="demo-swiper" spaceBetween={50} pagination={{ hideOnClick: true }}>
       <SwiperSlide>Slide 1</SwiperSlide>
       <SwiperSlide>Slide 2</SwiperSlide>
       <SwiperSlide>Slide 3</SwiperSlide>

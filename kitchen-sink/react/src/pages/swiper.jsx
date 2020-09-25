@@ -2,13 +2,15 @@ import React from 'react';
 import { Navbar, Page, Block, List, ListItem } from 'framework7-react';
 
 export default () => (
-
   <Page>
     <Navbar title="Swiper Slider" backLink="Back"></Navbar>
     <Block>
       <p>
-        Framework7 comes with powerful and most modern touch slider ever -
-        <a href="https://swiperjs.com" className="external" target="_blank">Swiper Slider</a>
+        Framework7 comes with powerful and most modern touch slider ever -<span> </span>
+        <a href="https://swiperjs.com" className="external" target="_blank">
+          Swiper Slider
+        </a>
+        <span> </span>
         with super flexible configuration and lot, lot of features. Just check the following demos:
       </p>
     </Block>
@@ -33,5 +35,4 @@ export default () => (
       <ListItem link="swiper-zoom/" title="Zoom" />
     </List>
   </Page>
-
 );
