@@ -23,7 +23,7 @@ export default () => {
     });
   };
   const openPassword = () => {
-    f7.dialog.password('Enter your username and password', (password) => {
+    f7.dialog.password('Enter your password', (password) => {
       f7.dialog.alert(`Thank you!<br>Password:${password}`);
     });
   };

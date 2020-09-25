@@ -182,7 +182,7 @@ export default () => (
     <Block>
       <p>
         Media Lists are almost the same as Data Lists, but with a more flexible layout for
-        visualization of more complex data, like products, services, userc, etc.
+        visualization of more complex data, like products, services, user, etc.
       </p>
     </Block>
     <BlockTitle>Songs</BlockTitle>
