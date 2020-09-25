@@ -44,7 +44,14 @@
     - All new Area Chart component
   - Gauge
     - Renamed `$gaugeSvgEl` property to `$svgEl`
+- Vue
+  - Rewritten to new Vue 3 API
+  - `App` component now receives all app parameters as props
+  - Removed all prototypes methods (\$$, $f7, $f7ready, $f7route, $f7router, $utils, $device, $theme, \$request)
+    - Now they should be imported as `import {f7, f7ready, theme} from 'framework7-react'`. Dom7, device, request can be used as `f7.` accessors or imported from `framework7`
+  - Removed `umd` version
 - React
+  - KS updated to use hooks API only
   - `App` component now receives all app parameters as props
   - New ref's object
   - Rewritten with hooks
@@ -55,6 +62,10 @@
   - `browserHistory` must be used with `browserHistoryInitialMatch`
   - Fast Refresh support
 - React/Svelte/Vue
+  - Pie Chart
+    - All new Pie Chart component
+  - Area Chart
+    - All new Area Chart component
   - Input
     - added `error-message` slot
   - Popover, Login Screen, Actions, Sheet
