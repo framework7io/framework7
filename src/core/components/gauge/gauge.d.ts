@@ -9,9 +9,9 @@ export namespace Gauge {
     el : HTMLElement
     /** Dom7 instance with gauge HTML element */
     $el : Dom7Instance
-    /** Gauge generated SVH HTML element */
+    /** Gauge generated SVG HTML element */
     gaugeSvgEl : HTMLElement
-    /** Dom7 instance with generated SVH HTML element */
+    /** Dom7 instance with generated SVG HTML element */
     $gaugeSvgEl : Dom7Instance
     /** Gauge parameters */
     params : Parameters
