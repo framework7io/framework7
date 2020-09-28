@@ -109,7 +109,7 @@ export namespace Router {
     history?: boolean
     /** whether the page should be saved in browser state. In case you are using pushState, then you can pass here false to prevent route getting in browser history */
     pushState?: boolean
-    /** replace the current page with the new one from route */
+    /** replace the current page with the new one from route, no animation in this case */
     reloadCurrent?: boolean
     /** replace the previous page in history with the new one from route */
     reloadPrevious?: boolean
@@ -119,7 +119,7 @@ export namespace Router {
     clearPreviousHistory?: boolean
     /** custom/extended context for Template7/Component page (when route loaded from template, templateUrl, component or componentUrl) */
     context?: object
-    /** If set to `true` then it will ignore if such URL in cache and reload it using XHR again */
+    /** if set to `true` then it will ignore if such URL in cache and reload it using XHR again */
     ignoreCache?: boolean
     /** if set to `true` then it will ignore previous page in history and load specified one */
     force?: boolean
@@ -129,6 +129,7 @@ export namespace Router {
     transition?: string
   }
   interface NavigateParameters {
+    /** object with route query. If the url is `/page/?id=5&foo=bar` then it will contain the following object `{id: '5', foo: 'bar'}` */
     query?: { [ queryParameter : string ] : number | string | undefined }
     /** route params. If we have matching route with `/page/user/:userId/post/:postId/` path and url of the page is `/page/user/55/post/12/` then it will be the following object `{userId: '55', postId: '12'}` */
     params?: { [ routeParameter : string ] : number | string | undefined }
