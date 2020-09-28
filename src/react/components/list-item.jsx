@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect, useContext } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useContext } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
 
 import { classNames, getExtraAttrs, getSlots, emit, isStringProp } from '../shared/utils';
@@ -15,7 +15,7 @@ import { useTooltip } from '../shared/use-tooltip';
 import { watchProp } from '../shared/watch-prop';
 import { f7ready, f7 } from '../shared/f7';
 
-import Badge from './badge';
+import ListItemContent from './list-item-content';
 import { ListContext } from '../shared/list-context';
 
 /* dts-imports
@@ -89,6 +89,7 @@ import { SmartSelect } from 'framework7/types';
   onChange? : (event?: any) => void
 */
 
+/*
 const ListItemContent = ({
   props,
   slots,
@@ -123,181 +124,9 @@ const ListItemContent = ({
     sortable,
     accordionItem,
   } = props;
-  let titleEl;
-  let afterWrapEl;
-  let afterEl;
-  let badgeEl;
-  let innerEl;
-  let titleRowEl;
-  let subtitleEl;
-  let textEl;
-  let mediaEl;
-  let inputEl;
-  let inputIconEl;
-  let headerEl;
-  let footerEl;
 
-  // Input
-  if (radio || checkbox) {
-    inputEl = (
-      <input
-        ref={inputElRef}
-        value={value}
-        name={name}
-        checked={checked}
-        defaultChecked={defaultChecked}
-        readOnly={readonly}
-        disabled={disabled}
-        required={required}
-        type={radio ? 'radio' : 'checkbox'}
-        onChange={onChange}
-      />
-    );
-    inputIconEl = <i className={`icon icon-${radio ? 'radio' : 'checkbox'}`} />;
-  }
-  // Media
-  if (media || (slots.media && slots.media.length)) {
-    let mediaImgEl;
-    if (media) {
-      mediaImgEl = <img src={media} />;
-    }
-    mediaEl = (
-      <div className="item-media">
-        {mediaImgEl}
-        {slots.media}
-      </div>
-    );
-  }
-  // Inner Elements
-  if (header || (slots.header && slots.header.length)) {
-    headerEl = (
-      <div className="item-header">
-        {header}
-        {slots.header}
-      </div>
-    );
-  }
-  if (footer || (slots.footer && slots.footer.length)) {
-    footerEl = (
-      <div className="item-footer">
-        {footer}
-        {slots.footer}
-      </div>
-    );
-  }
-  if (
-    title ||
-    (slots.title && slots.title.length) ||
-    (!isMediaComputed && headerEl) ||
-    (!isMediaComputed && footerEl)
-  ) {
-    titleEl = (
-      <div className="item-title">
-        {!isMediaComputed && headerEl}
-        {title}
-        {slots.title}
-        {!isMediaComputed && footerEl}
-      </div>
-    );
-  }
-  if (subtitle || (slots.subtitle && slots.subtitle.length)) {
-    subtitleEl = (
-      <div className="item-subtitle">
-        {subtitle}
-        {slots.subtitle}
-      </div>
-    );
-  }
-  if (text || (slots.text && slots.text.length)) {
-    textEl = (
-      <div className="item-text">
-        {text}
-        {slots.text}
-      </div>
-    );
-  }
-  if (after || badge || (slots.after && slots.after.length)) {
-    if (after) {
-      afterEl = <span>{after}</span>;
-    }
-    if (badge) {
-      badgeEl = <Badge color={badgeColor}>{badge}</Badge>;
-    }
-    afterWrapEl = (
-      <div className="item-after">
-        {slots['after-start']}
-        {afterEl}
-        {badgeEl}
-        {slots.after}
-        {slots['after-end']}
-      </div>
-    );
-  }
-  if (isMediaComputed) {
-    titleRowEl = (
-      <div className="item-title-row">
-        {slots['before-title']}
-        {titleEl}
-        {slots['after-title']}
-        {afterWrapEl}
-      </div>
-    );
-    innerEl = (
-      <div className="item-inner">
-        {slots['inner-start']}
-        {headerEl}
-        {titleRowEl}
-        {subtitleEl}
-        {textEl}
-        {swipeout || accordionItem ? null : slots.default}
-        {slots.inner}
-        {footerEl}
-        {slots['inner-end']}
-      </div>
-    );
-  } else {
-    innerEl = (
-      <div className="item-inner">
-        {slots['inner-start']}
-        {slots['before-title']}
-        {titleEl}
-        {slots['after-title']}
-        {afterWrapEl}
-        {swipeout || accordionItem ? null : slots.default}
-        {slots.inner}
-        {slots['inner-end']}
-      </div>
-    );
-  }
-
-  const ItemContentTag = checkbox || radio ? 'label' : 'div';
-
-  const classes = classNames(
-    'item-content',
-    {
-      'item-checkbox': checkbox,
-      'item-radio': radio,
-      'item-radio-icon-start': radio && radioIcon === 'start',
-      'item-radio-icon-end': radio && radioIcon === 'end',
-    },
-    colorClasses(props),
-  );
-  return (
-    <ItemContentTag className={classes} onClick={onClick}>
-      {isSortableComputed && sortable !== false && isSortableOppositeComputed && (
-        <div className="sortable-handler" />
-      )}
-      {slots['content-start']}
-      {inputEl}
-      {inputIconEl}
-      {mediaEl}
-      {innerEl}
-      {slots.content}
-      {slots['content-end']}
-    </ItemContentTag>
-  );
 };
-
+*/
 const ListItem = forwardRef((props, ref) => {
   const {
     className,
@@ -325,7 +154,6 @@ const ListItem = forwardRef((props, ref) => {
     chevronCenter,
     checkbox,
     radio,
-    indeterminate,
     disabled,
     virtualListIndex,
     href,
@@ -345,7 +173,6 @@ const ListItem = forwardRef((props, ref) => {
   const elRef = useRef(null);
   const linkElRef = useRef(null);
   const f7SmartSelect = useRef(null);
-  const inputElRef = useRef(null);
 
   const onClick = (event) => {
     if (event.target.tagName.toLowerCase() !== 'input') {
@@ -494,12 +321,6 @@ const ListItem = forwardRef((props, ref) => {
     return detachEvents;
   });
 
-  useEffect(() => {
-    if (inputElRef.current) {
-      inputElRef.current.indeterminate = !!indeterminate;
-    }
-  }, [indeterminate]);
-
   const slots = getSlots(props);
 
   let linkEl;
@@ -512,16 +333,17 @@ const ListItem = forwardRef((props, ref) => {
 
   if (!listIsSimple) {
     // Item Content
-    itemContentEl = ListItemContent({
-      props,
-      slots,
-      inputElRef,
-      onChange,
-      onClick: link || href || accordionItem || smartSelect ? undefined : onClick,
-      isMediaComputed,
-      isSortableComputed,
-      isSortableOppositeComputed,
-    });
+    itemContentEl = (
+      <ListItemContent
+        {...props}
+        slots={slots}
+        onChange={onChange}
+        onClick={link || href || accordionItem || smartSelect ? undefined : onClick}
+        isMediaComputed={isMediaComputed}
+        isSortableComputed={isSortableComputed}
+        isSortableOppositeComputed={isSortableOppositeComputed}
+      />
+    );
 
     // Link
     if (link || href || accordionItem || smartSelect) {
