@@ -236,8 +236,9 @@ const View = forwardRef((props, ref) => {
   }, []);
 
   useIsomorphicLayoutEffect(() => {
-    if (!routerData.current || !f7) return () => {};
-    f7events.emit('viewRouterDidUpdate', routerData.current);
+    if (routerData.current && f7) {
+      f7events.emit('viewRouterDidUpdate', routerData.current);
+    }
   });
 
   useTab(elRef, props);
