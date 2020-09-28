@@ -19,8 +19,8 @@
 - [ ] modal classes keep state
 - [ ] panel classes keep state
 - [ ] tooltip to MenuItem and to Toggle
+- [ ] define all props on app
 
 # Vue
 
 - [ ] add loading button
-- [ ] define all props on app

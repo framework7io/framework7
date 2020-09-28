@@ -45,10 +45,10 @@
   - Gauge
     - Renamed `$gaugeSvgEl` property to `$svgEl`
 - Vue
-  - Rewritten to new Vue 3 API
+  - Rewritten to new Vue v3 API (no Vue v2 support anymore)
   - `App` component now receives all app parameters as props
   - Removed all prototypes methods (\$$, $f7, $f7ready, $f7route, $f7router, $utils, $device, $theme, \$request)
-    - Now they should be imported as `import {f7, f7ready, theme} from 'framework7-react'`. Dom7, device, request can be used as `f7.` accessors or imported from `framework7`
+    - Now they should be imported as `import {f7, f7ready, theme} from 'framework7-vue'`. `Dom7`, `device`, `request` can be used as `f7.` accessors or imported from `framework7`
   - Removed `umd` version
   - Added v-model support
     - Checkbox, ListItem, Radio, Toggle, MessagebarSheetImage
@@ -66,7 +66,7 @@
   - Rewritten with hooks
   - Instances in refs are functions
   - Removed all prototypes methods (\$$, $f7, $f7ready, $f7route, $f7router, $utils, $device, $theme, \$request)
-    - Now they should be imported as `import {f7, f7ready, theme} from 'framework7-react'`. Dom7, device, request can be used as `f7.` accessors or imported from `framework7`
+    - Now they should be imported as `import {f7, f7ready, theme} from 'framework7-react'`. `Dom7`, `device`, `request` can be used as `f7.` accessors or imported from `framework7`
   - Removed `umd` version
   - `browserHistory` must be used with `browserHistoryInitialMatch`
   - Fast Refresh support
@@ -89,6 +89,10 @@
   - Messages
     - Removed component methods
     - Added `typing` prop
+  - Toggle
+    - Added support for toolip with `tooltip` and `tooltipTrigger` props
+  - Menu Item
+    - Added support for toolip with `tooltip` and `tooltipTrigger` props
 
 # [v5.7.11](https://github.com/framework7io/framework7/compare/v5.7.10...v5.7.11) - August 17, 2020
 
