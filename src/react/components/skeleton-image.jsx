@@ -1,3 +1,3 @@
-import { SkeletonImage } from '@skeleton-elements/react';
+import { SkeletonImage } from 'skeleton-elements/react';
 
 export default SkeletonImage;

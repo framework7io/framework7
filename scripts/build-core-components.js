@@ -93,8 +93,8 @@ function build(cb) {
       }
       if (file.indexOf('skeleton.less') >= 0) {
         fileContent = fileContent.replace(
-          '../../../../node_modules/@skeleton-elements/core/skeleton-elements.css',
-          '~@skeleton-elements/core/skeleton-elements.css',
+          '../../../../node_modules/skeleton-elements/skeleton-elements.css',
+          '~skeleton-elements/skeleton-elements.css',
         );
       }
       fs.writeFileSync(path.resolve(`${output}/components`, file), fileContent);

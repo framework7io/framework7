@@ -1,3 +1,3 @@
-import { SkeletonText } from '@skeleton-elements/react';
+import { SkeletonText } from 'skeleton-elements/react';
 
 export default SkeletonText;

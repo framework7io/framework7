@@ -50,8 +50,7 @@
     "url": "https://www.patreon.com/vladimirkharlampidi"
   },
   "dependencies": {
-    "@skeleton-elements/core": "^1.0.0",
-    "@skeleton-elements/react": "^1.0.0",
+    "skeleton-elements": "^1.0.0",
     "dom7": "^3.0.0-alpha.9",
     "path-to-regexp": "^6.1.0",
     "ssr-window": "^3.0.0-alpha.4",

@@ -65,10 +65,7 @@
     "Samsung >= 6"
   ],
   "dependencies": {
-    "@skeleton-elements/core": "^2.0.0",
-    "@skeleton-elements/react": "^2.0.0",
-    "@skeleton-elements/svelte": "^2.0.0",
-    "@skeleton-elements/vue": "^2.0.0",
+    "skeleton-elements": "^3.0.0",
     "dom7": "^3.0.0-alpha.9",
     "path-to-regexp": "^6.1.0",
     "ssr-window": "^3.0.0-alpha.4",
