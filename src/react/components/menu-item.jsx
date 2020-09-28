@@ -11,6 +11,7 @@ import {
 import { useRouteProps } from '../shared/use-route-props';
 import { useIcon } from '../shared/use-icon';
 import { f7ready, f7 } from '../shared/f7';
+import { useTooltip } from '../shared/use-tooltip';
 
 /* dts-props
   id?: string | number;
@@ -22,6 +23,8 @@ import { f7ready, f7 } from '../shared/f7';
   link?: boolean;
   target?: string;
   dropdown?: doolean;
+  tooltip? : string
+  tooltipTrigger? : string
   COLOR_PROPS
   ICON_PROPS
   ROUTER_PROPS
@@ -49,6 +52,8 @@ const MenuItem = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     el: elRef.current,
   }));
+
+  useTooltip(elRef, props);
 
   useRouteProps(elRef, props);
 

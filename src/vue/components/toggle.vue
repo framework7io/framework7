@@ -17,6 +17,7 @@ import { computed, ref, watch, onMounted, onBeforeUnmount } from 'vue';
 import { classNames } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
+import { useTooltip } from '../shared/use-tooltip';
 
 export default {
   name: 'f7-toggle',
@@ -30,12 +31,17 @@ export default {
     readonly: Boolean,
     name: String,
     value: [String, Number, Array],
+    tooltip: String,
+    tooltipTrigger: String,
     ...colorProps,
   },
   emits: ['change', 'toggle:change', 'update:checked'],
   setup(props, { emit }) {
     let f7Toggle = null;
     const elRef = ref(null);
+
+    useTooltip(elRef, props);
+
     const onChange = (event) => {
       emit('change', event);
     };

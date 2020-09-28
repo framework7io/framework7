@@ -11,7 +11,6 @@
 # React
 
 - [ ] add loading button
-- [ ] tooltip to MenuItem and to Toggle
 
 # Svelte
 
@@ -25,4 +24,3 @@
 
 - [ ] add loading button
 - [ ] define all props on app
-- [ ] tooltip to MenuItem and to Toggle

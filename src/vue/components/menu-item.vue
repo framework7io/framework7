@@ -27,6 +27,7 @@ import {
 import { useRouteProps } from '../shared/use-route-props';
 import { useIcon } from '../shared/use-icon';
 import { f7ready, f7 } from '../shared/f7';
+import { useTooltip } from '../shared/use-tooltip';
 
 import f7Icon from './icon';
 import f7Badge from './badge';
@@ -44,6 +45,8 @@ export default {
     link: Boolean,
     target: String,
     dropdown: Boolean,
+    tooltip: String,
+    tooltipTrigger: String,
     ...colorProps,
     ...routerProps,
     ...actionsProps,
@@ -52,6 +55,8 @@ export default {
   emits: ['click', 'menu:opened', 'menu:closed'],
   setup(props, { slots, emit }) {
     const elRef = ref(null);
+
+    useTooltip(elRef, props);
 
     const onClick = (e) => {
       emit('click', e);

@@ -4,6 +4,7 @@ import { classNames, getExtraAttrs, emit } from '../shared/utils';
 import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
 import { watchProp } from '../shared/watch-prop';
+import { useTooltip } from '../shared/use-tooltip';
 
 /* dts-props
   id?: string | number;
@@ -16,6 +17,8 @@ import { watchProp } from '../shared/watch-prop';
   readonly? : boolean
   name? : string
   value? : string | number | Array<any>
+  tooltip? : string
+  tooltipTrigger? : string
   COLOR_PROPS
   onToggleChange? : (...args: any[]) => void
   onChange? : (event?: any) => void
@@ -48,6 +51,8 @@ const Toggle = forwardRef((props, ref) => {
     el: elRef.current,
     f7Toggle: () => f7Toggle.current,
   }));
+
+  useTooltip(elRef, props);
 
   watchProp(checked, (newValue) => {
     if (!f7Toggle.current) return;
