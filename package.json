@@ -32,6 +32,7 @@
     "/*--- KS Svelte --*/": "---",
     "svelte:dev": "cross-env-shell NODE_ENV=development \"gulp build-core && gulp build-svelte && gulp ks-svelte && gulp server-svelte\"",
     "svelte:prod": "cross-env-shell NODE_ENV=production \"gulp ks-svelte && gulp server-svelte\"",
+    "/*--- Dev tools --*/": "---",
     "prettier": "prettier \"**/*.+(js|json|scss|css|less|ts|vue)\"",
     "format": "npm run prettier -- --write",
     "check-format": "npm run prettier -- --list-different",
