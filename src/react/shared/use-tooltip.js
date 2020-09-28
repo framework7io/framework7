@@ -1,5 +1,4 @@
-import { useRef } from 'react';
-import { useIsomorphicLayoutEffect } from './use-isomorphic-layout-effect';
+import { useEffect, useRef } from 'react';
 import { watchProp } from './watch-prop';
 import { f7, f7ready } from './f7';
 
@@ -27,7 +26,7 @@ export const useTooltip = (elRef, props) => {
     }
   };
 
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     onMount();
     return onDestroy;
   }, []);

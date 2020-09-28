@@ -1,4 +1,4 @@
-import { useIsomorphicLayoutEffect } from './use-isomorphic-layout-effect';
+import { useEffect } from 'react';
 import { f7ready, f7 } from './f7';
 import { extend } from './utils';
 
@@ -17,7 +17,7 @@ export const useSmartSelect = (smartSelect, smartSelectParams, f7SmartSelect, ge
     }
     f7SmartSelect.current = null;
   };
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     onMount();
     return onDestroy;
   });
