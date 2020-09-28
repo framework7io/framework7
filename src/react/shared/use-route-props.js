@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 export const useRouteProps = (elRef, { routeProps } = {}) => {
   useEffect(() => {
-    if (elRef.current && routeProps) {
+    if (elRef.current) {
       elRef.current.f7RouteProps = routeProps;
     }
     return () => {

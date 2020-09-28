@@ -113,13 +113,13 @@ const View = forwardRef((props, ref) => {
       routerId,
       init: false,
       ...noUndefinedProps(props),
+      on: {
+        init: onViewInit,
+      },
     });
     routerData.current = {
       routerId,
       instance: f7View.current,
-      on: {
-        init: onViewInit,
-      },
     };
     f7routers.views.push(routerData.current);
     if (f7View.current && f7View.current.router && (url || main)) {
@@ -236,7 +236,7 @@ const View = forwardRef((props, ref) => {
   }, []);
 
   useIsomorphicLayoutEffect(() => {
-    if (!routerData.current || !f7) return;
+    if (!routerData.current || !f7) return () => {};
     f7events.emit('viewRouterDidUpdate', routerData.current);
   });
 
