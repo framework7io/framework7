@@ -27,7 +27,7 @@ export namespace Stepper {
     formatValue?: (value: number) => string | number
     /**  */
     manualInputMode?: boolean
-    /** Enables manual input mode. This mode allows to type value from keyboar and check fractional part with defined accurancy. Also, step parameter is ignored when typing in this mode */
+    /** Enables manual input mode. This mode allows to type value from keyboard and check fractional part with defined accurancy. Also, step parameter is ignored when typing in this mode */
     decimalPoint?: number
     /** Number of digits after dot, when in manual input mode */
     buttonsEndInputMode?: boolean

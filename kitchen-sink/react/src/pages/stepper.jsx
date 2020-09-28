@@ -267,7 +267,7 @@ export default class extends React.Component {
         </List>
 
         <BlockTitle>Manual input</BlockTitle>
-        <BlockHeader>It is possible to enter value manually from keyboard or mobile keypad. When click on input field, stepper enter into manual input mode, which allow type value from keyboar and check fractional part with defined accurancy. Click outside or enter Return key, ending manual mode.</BlockHeader>
+        <BlockHeader>It is possible to enter value manually from keyboard or mobile keypad. When click on input field, stepper enter into manual input mode, which allow type value from keyboard and check fractional part with defined accurancy. Click outside or enter Return key, ending manual mode.</BlockHeader>
         <Block strong className="text-align-center">
           <Row>
             <Col>

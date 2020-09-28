@@ -1709,7 +1709,7 @@
     * Input
       * Fixed wrong resizable textarea calculation in Firefox
     * Stepper
-      * Has new "manual input mode". When enabled it allows to type value from keyboar and check fractional part with defined accurancy. Also, when enabled, then `step` parameter is ignored during typing. It has 3 new parameters:
+      * Has new "manual input mode". When enabled it allows to type value from keyboard and check fractional part with defined accurancy. Also, when enabled, then `step` parameter is ignored during typing. It has 3 new parameters:
         * `manualInputMode: false` - enables manual input mode
         * `decimalPoint: 4` - number of digits after dot
         * `buttonsEndInputMode: true` - disables manual input mode on Stepper's button click

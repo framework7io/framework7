@@ -253,7 +253,7 @@
     </f7-list>
 
     <f7-block-title>Manual input</f7-block-title>
-    <f7-block-header>It is possible to enter value manually from keyboard or mobile keypad. When click on input field, stepper enter into manual input mode, which allow type value from keyboar and check fractional part with defined accurancy. Click outside or enter Return key, ending manual mode.</f7-block-header>
+    <f7-block-header>It is possible to enter value manually from keyboard or mobile keypad. When click on input field, stepper enter into manual input mode, which allow type value from keyboard and check fractional part with defined accurancy. Click outside or enter Return key, ending manual mode.</f7-block-header>
     <f7-block strong class="text-align-center">
       <f7-row>
         <f7-col>
