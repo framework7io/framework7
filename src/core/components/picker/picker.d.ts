@@ -37,8 +37,6 @@ export namespace Picker {
     setValue(values : unknown[], duration? : number) : void
     /** Returns current picker value */
     getValue() : unknown
-    /** Adds value to the values array. Useful in case if multiple selection is enabled (with multiple: true parameter) */
-    addValue() : void
     /** Open Picker */
     open() : void
     /** Close Picker */
