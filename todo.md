@@ -11,6 +11,7 @@
 # React
 
 - [ ] add loading button
+- [ ] tooltip to MenuItem and to Toggle
 
 # Svelte
 
@@ -18,10 +19,10 @@
 - [ ] move to new F7 plugin helpers
 - [ ] modal classes keep state
 - [ ] panel classes keep state
+- [ ] tooltip to MenuItem and to Toggle
 
 # Vue
 
-- [ ] v-model to inputs
-- [ ] v-model to modals
 - [ ] add loading button
 - [ ] define all props on app
+- [ ] tooltip to MenuItem and to Toggle

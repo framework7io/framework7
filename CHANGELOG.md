@@ -50,6 +50,15 @@
   - Removed all prototypes methods (\$$, $f7, $f7ready, $f7route, $f7router, $utils, $device, $theme, \$request)
     - Now they should be imported as `import {f7, f7ready, theme} from 'framework7-react'`. Dom7, device, request can be used as `f7.` accessors or imported from `framework7`
   - Removed `umd` version
+  - Added v-model support
+    - Checkbox, ListItem, Radio, Toggle, MessagebarSheetImage
+      - support for `v-model:checked`
+    - Actions, LoginScreen, Panel, Popover, Popup, Sheet
+      - support for `v-model:opened`
+    - Card
+      - support for `v-model:expandableOpened`
+    - Input, ListInpue, Messagebar, Searchbar, Stepper, Range
+      - support for `v-model:value`
 - React
   - KS updated to use hooks API only
   - `App` component now receives all app parameters as props

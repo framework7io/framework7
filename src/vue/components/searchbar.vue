@@ -149,6 +149,7 @@ export default {
     'searchbar:clear',
     'searchbar:enable',
     'searchbar:disable',
+    'update:value',
   ],
   setup(props, { emit }) {
     let f7Searchbar = null;
@@ -179,6 +180,7 @@ export default {
     };
     const onInput = (event) => {
       emit('input', event);
+      emit('update:value', event.target.value);
     };
     const onFocus = (event) => {
       emit('focus', event);

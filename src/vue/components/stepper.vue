@@ -112,7 +112,14 @@ export default {
     raisedAurora: Boolean,
     ...colorProps,
   },
-  emits: ['input', 'change', 'stepper:minusclick', 'stepper:plusclick', 'stepper:change'],
+  emits: [
+    'input',
+    'change',
+    'stepper:minusclick',
+    'stepper:plusclick',
+    'stepper:change',
+    'update:value',
+  ],
   setup(props, { emit }) {
     let f7Stepper = null;
     const elRef = ref(null);
@@ -175,6 +182,7 @@ export default {
             on: {
               change(stepper, newValue) {
                 emit('stepper:change', newValue);
+                emit('update:value', newValue);
               },
             },
           }),
