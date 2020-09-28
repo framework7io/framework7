@@ -14,12 +14,12 @@
 
 # Svelte
 
-- [ ] add loading button
 - [ ] move to new F7 plugin helpers
 - [ ] modal classes keep state
 - [ ] panel classes keep state
 - [ ] tooltip to MenuItem and to Toggle
 - [ ] define all props on app
+- [ ] add loading button
 
 # Vue
 
