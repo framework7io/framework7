@@ -6,7 +6,7 @@
 </template>
 <script>
 import { ref, onMounted, computed } from 'vue';
-import { classNames } from '../shared/utils';
+import { classNames, noUndefinedProps } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 
 import RoutableModals from './routable-modals';
@@ -86,7 +86,7 @@ export default {
     const elRef = ref(null);
 
     if (!f7 || typeof window === 'undefined') {
-      f7init(elRef.value, props, false);
+      f7init(elRef.value, noUndefinedProps(props), false);
     }
 
     onMounted(() => {
@@ -105,7 +105,7 @@ export default {
         f7.init(elRef.value);
         return;
       }
-      f7init(elRef.value, props, true);
+      f7init(elRef.value, noUndefinedProps(props), true);
     });
 
     const classes = computed(() => classNames('framework7-root', colorClasses(props)));
