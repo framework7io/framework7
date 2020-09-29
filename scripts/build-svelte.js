@@ -39,10 +39,11 @@ async function buildSvelte(cb) {
   files.forEach((fileName) => {
     const componentName = fileName
       .replace('.svelte', '')
+      .replace('.js', '')
       .split('-')
       .map((word) => word[0].toUpperCase() + word.substr(1))
       .join('');
-    const fileBase = fileName.replace('.svelte', '');
+    const fileBase = fileName.replace('.svelte', '').replace('.js', '');
     componentImports.push(`import ${componentName} from './components/${fileBase}';`);
     componentExports.push(componentName);
     const json = {

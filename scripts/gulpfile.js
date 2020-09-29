@@ -39,6 +39,7 @@ gulp.task('vue-clean', (cb) => buildClean('vue', cb));
 gulp.task('vue', buildVue);
 gulp.task('vue-typings', buildVueTypings);
 
+gulp.task('svelte-clean', (cb) => buildClean('svelte', cb));
 gulp.task('svelte', buildSvelte);
 
 // eslint-disable-next-line
@@ -55,7 +56,7 @@ gulp.task(
 );
 gulp.task('build-react', gulp.series(['react-clean', 'react', 'react-typings']));
 gulp.task('build-vue', gulp.series(['vue-clean', 'vue', 'vue-typings']));
-gulp.task('build-svelte', gulp.series(['vue-clean', 'svelte']));
+gulp.task('build-svelte', gulp.series(['svelte-clean', 'svelte']));
 
 // Watchers
 const watch = {
@@ -96,7 +97,7 @@ const watch = {
   svelte() {
     gulp.watch(['./src/core/**/*.js'], gulp.series('core-js', 'core-components'));
     gulp.watch('./src/core/**/*.less', gulp.series('core-styles', 'core-components'));
-    gulp.watch(['./src/svelte/**/*.svelte'], gulp.series('build-svelte'));
+    gulp.watch(['./src/svelte/**/*.js', './src/svelte/**/*.svelte'], gulp.series('build-svelte'));
   },
 };
 
