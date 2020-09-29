@@ -1,51 +1,42 @@
-import { useEffect, useRef } from 'react';
-import { watchProp } from './watch-prop';
 import { f7, f7ready } from './f7';
 
-export const useTooltip = (elRef, props) => {
-  const f7Tooltip = useRef(null);
+export const useTooltip = (el, props) => {
+  let f7Tooltip = null;
   const { tooltip, tooltipTrigger } = props;
 
-  const onMount = () => {
-    if (!elRef.current) return;
-    if (!tooltip) return;
-
+  if (el && tooltip) {
     f7ready(() => {
-      f7Tooltip.current = f7.tooltip.create({
-        targetEl: elRef.current,
+      f7Tooltip = f7.tooltip.create({
+        targetEl: el,
         text: tooltip,
         trigger: tooltipTrigger,
       });
     });
+  }
+
+  return {
+    update({ tooltip: value } = {}) {
+      if (!value && f7Tooltip) {
+        f7Tooltip.destroy();
+        f7Tooltip = null;
+        return;
+      }
+      if (value && !f7Tooltip && f7) {
+        f7Tooltip = f7.tooltip.create({
+          targetEl: el,
+          text: value,
+          trigger: tooltipTrigger,
+        });
+        return;
+      }
+      if (!value || !f7Tooltip) return;
+      f7Tooltip.setText(value);
+    },
+    destroy() {
+      if (f7Tooltip && f7Tooltip.destroy) {
+        f7Tooltip.destroy();
+        f7Tooltip = null;
+      }
+    },
   };
-
-  const onDestroy = () => {
-    if (f7Tooltip.current && f7Tooltip.current.destroy) {
-      f7Tooltip.current.destroy();
-      f7Tooltip.current = null;
-    }
-  };
-
-  useEffect(() => {
-    onMount();
-    return onDestroy;
-  }, []);
-
-  watchProp(tooltip, (value) => {
-    if (!value && f7Tooltip.current) {
-      f7Tooltip.current.destroy();
-      f7Tooltip.current = null;
-      return;
-    }
-    if (value && !f7Tooltip.current && f7) {
-      f7Tooltip.current = f7.tooltip.create({
-        targetEl: elRef.current,
-        text: value,
-        trigger: tooltipTrigger,
-      });
-      return;
-    }
-    if (!value || !f7Tooltip.current) return;
-    f7Tooltip.current.setText(value);
-  });
 };
