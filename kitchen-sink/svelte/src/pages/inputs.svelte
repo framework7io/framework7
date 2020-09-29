@@ -50,7 +50,7 @@
     <ListInput
       label="Gender"
       type="select"
-      defaultValue="Male"
+      value="Male"
       placeholder="Please choose..."
     >
       <i class="icon demo-list-icon" slot="media"/>
@@ -61,7 +61,7 @@
     <ListInput
       label="Birthday"
       type="date"
-      defaultValue="2014-04-30"
+      value="2014-04-30"
       placeholder="Please choose..."
     >
       <i class="icon demo-list-icon" slot="media"/>
@@ -154,7 +154,7 @@
     <ListInput
       label="Gender"
       type="select"
-      defaultValue="Male"
+      value="Male"
       placeholder="Please choose..."
     >
       <i class="icon demo-list-icon" slot="media"/>
@@ -165,7 +165,7 @@
     <ListInput
       label="Birthday"
       type="date"
-      defaultValue="2014-04-30"
+      value="2014-04-30"
       placeholder="Please choose..."
     >
       <i class="icon demo-list-icon" slot="media"/>
