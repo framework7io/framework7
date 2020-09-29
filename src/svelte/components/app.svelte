@@ -3,7 +3,6 @@
   import { f7, f7init } from '../shared/f7';
   import { colorClasses } from '../shared/mixins';
   import { classNames, noUndefinedProps } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
 
   import RoutableModals from './routable-modals';
 
@@ -31,7 +30,7 @@
   });
 </script>
 
-<div bind:this={el} class={classes} {...restProps($$restProps)}>
+<div bind:this={el} class={classes}>
   <slot />
   <RoutableModals />
 </div>
