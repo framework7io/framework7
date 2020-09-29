@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, extend } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
 
   const dispatch = createEventDispatcher();
@@ -142,18 +142,18 @@
   }
 
   onMount(() => {
-    f7.ready(() => {
-      f7.instance.on('sortableEnable', onSortableEnable);
-      f7.instance.on('sortableDisable', onSortableDisable);
-      f7.instance.on('sortableSort', onSortableSort);
-      f7.instance.on('tabShow', onTabShow);
-      f7.instance.on('tabHide', onTabHide);
+    f7ready(() => {
+      f7.on('sortableEnable', onSortableEnable);
+      f7.on('sortableDisable', onSortableDisable);
+      f7.on('sortableSort', onSortableSort);
+      f7.on('tabShow', onTabShow);
+      f7.on('tabHide', onTabHide);
 
       if (!virtualList) return;
       const vlParams = virtualListParams || {};
       if (!vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) return;
 
-      f7VirtualList = f7.instance.virtualList.create(
+      f7VirtualList = f7.virtualList.create(
         extend(
           {
             el,
@@ -191,12 +191,12 @@
   });
 
   onDestroy(() => {
-    if (!f7.instance) return;
-    f7.instance.off('sortableEnable', onSortableEnable);
-    f7.instance.off('sortableDisable', onSortableDisable);
-    f7.instance.off('sortableSort', onSortableSort);
-    f7.instance.off('tabShow', onTabShow);
-    f7.instance.off('tabHide', onTabHide);
+    if (!f7) return;
+    f7.off('sortableEnable', onSortableEnable);
+    f7.off('sortableDisable', onSortableDisable);
+    f7.off('sortableSort', onSortableSort);
+    f7.off('tabShow', onTabShow);
+    f7.off('tabHide', onTabHide);
 
     if (f7VirtualList && f7VirtualList.destroy) {
       f7VirtualList.destroy();

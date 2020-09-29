@@ -1,6 +1,6 @@
 <script>
   import { onMount, onDestroy, afterUpdate, createEventDispatcher, tick } from 'svelte';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready, f7routers, f7events } from '../shared/f7';
   import { colorClasses } from '../shared/mixins';
   import { classNames, noUndefinedProps } from '../shared/utils';
 
@@ -79,9 +79,9 @@
 
   onMount(() => {
     if (!init) return;
-    f7.ready(() => {
-      f7.instance.on('tabShow', onTabShow);
-      f7.instance.on('tabHide', onTabHide);
+    f7ready(() => {
+      f7.on('tabShow', onTabShow);
+      f7.on('tabHide', onTabHide);
       routerData = {
         el,
         instance: null,
@@ -92,8 +92,8 @@
           });
         },
       };
-      f7.routers.views.push(routerData);
-      routerData.instance = f7.instance.views.create(el, {
+      f7routers.views.push(routerData);
+      routerData.instance = f7.views.create(el, {
         ...noUndefinedProps($$props),
         on: {
           init: onViewInit,
@@ -111,14 +111,14 @@
 
   afterUpdate(() => {
     if (!routerData) return;
-    f7.events.emit('viewRouterDidUpdate', routerData);
+    f7events.emit('viewRouterDidUpdate', routerData);
   });
 
   onDestroy(() => {
     if (!init) return;
-    if (f7.instance) {
-      f7.instance.off('tabShow', onTabShow);
-      f7.instance.off('tabHide', onTabHide);
+    if (f7) {
+      f7.off('tabShow', onTabShow);
+      f7.off('tabHide', onTabHide);
     }
     if (f7View) {
       f7View.off('resize', onResize);
@@ -131,7 +131,7 @@
         f7View.destroy();
       }
     }
-    f7.routers.views.splice(f7.routers.views.indexOf(routerData), 1);
+    f7routers.views.splice(f7routers.views.indexOf(routerData), 1);
     f7View = null;
     routerData = null;
   });

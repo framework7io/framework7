@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, noUndefinedProps, plainText } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -118,8 +118,8 @@
 
   onMount(() => {
     if (!init) return;
-    f7.ready(() => {
-      f7Stepper = f7.instance.stepper.create(
+    f7ready(() => {
+      f7Stepper = f7.stepper.create(
         noUndefinedProps({
           el,
           min,

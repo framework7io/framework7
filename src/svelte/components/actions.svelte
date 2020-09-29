@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -91,8 +91,8 @@
     if (typeof closeOnEscape !== 'undefined') params.closeOnEscape = closeOnEscape;
     if (typeof animate !== 'undefined') params.animate = animate;
 
-    f7.ready(() => {
-      f7Actions = f7.instance.actions.create(params);
+    f7ready(() => {
+      f7Actions = f7.actions.create(params);
       if (opened) {
         f7Actions.open(false);
       }

@@ -3,8 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, plainText } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { theme } from '../shared/plugin';
-  import { f7 } from '../shared/f7';
+  import { f7, theme, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
 
   import NavLeft from './nav-left';
@@ -37,7 +36,7 @@
 
   let el;
   // eslint-disable-next-line
-  let _theme = f7.instance ? theme : null;
+  let _theme = f7 ? theme : null;
   let routerPositionClass = '';
   let largeCollapsed = false;
   let routerNavbarRole = null;
@@ -55,8 +54,8 @@
     f7.navbar.size(el);
   }
 
-  if (!f7.instance) {
-    f7.ready(() => {
+  if (!f7) {
+    f7ready(() => {
       _theme = theme;
     });
   }
@@ -72,11 +71,10 @@
   // eslint-disable-next-line
   $: hasTitleLargeSlots = hasSlots(arguments, 'title-large');
 
-  $: addLeftTitleClass =
-    _theme && _theme.ios && f7.instance && !f7.instance.params.navbar.iosCenterTitle;
+  $: addLeftTitleClass = _theme && _theme.ios && f7 && !f7.params.navbar.iosCenterTitle;
   $: addCenterTitleClass =
-    (_theme && _theme.md && f7.instance && f7.instance.params.navbar.mdCenterTitle) ||
-    (_theme && _theme.aurora && f7.instance && f7.instance.params.navbar.auroraCenterTitle);
+    (_theme && _theme.md && f7 && f7.params.navbar.mdCenterTitle) ||
+    (_theme && _theme.aurora && f7 && f7.params.navbar.auroraCenterTitle);
 
   $: isLarge = large || largeTransparent;
   $: isTransparent = transparent || (isLarge && largeTransparent);
@@ -165,41 +163,41 @@
   }
 
   function mountNavbar() {
-    f7.instance.on('navbarShow', onShow);
-    f7.instance.on('navbarHide', onHide);
-    f7.instance.on('navbarCollapse', onCollapse);
-    f7.instance.on('navbarExpand', onExpand);
-    f7.instance.on('navbarPosition', onNavbarPosition);
-    f7.instance.on('navbarRole', onNavbarRole);
-    f7.instance.on('navbarMasterStack', onNavbarMasterStack);
-    f7.instance.on('navbarMasterUnstack', onNavbarMasterUnstack);
-    f7.instance.on('navbarTransparentShow', onNavbarTransparentShow);
-    f7.instance.on('navbarTransparentHide', onNavbarTransparentHide);
+    f7.on('navbarShow', onShow);
+    f7.on('navbarHide', onHide);
+    f7.on('navbarCollapse', onCollapse);
+    f7.on('navbarExpand', onExpand);
+    f7.on('navbarPosition', onNavbarPosition);
+    f7.on('navbarRole', onNavbarRole);
+    f7.on('navbarMasterStack', onNavbarMasterStack);
+    f7.on('navbarMasterUnstack', onNavbarMasterUnstack);
+    f7.on('navbarTransparentShow', onNavbarTransparentShow);
+    f7.on('navbarTransparentHide', onNavbarTransparentHide);
   }
   function destroyNavbar() {
-    f7.instance.off('navbarShow', onShow);
-    f7.instance.off('navbarHide', onHide);
-    f7.instance.off('navbarCollapse', onCollapse);
-    f7.instance.off('navbarExpand', onExpand);
-    f7.instance.off('navbarPosition', onNavbarPosition);
-    f7.instance.off('navbarRole', onNavbarRole);
-    f7.instance.off('navbarMasterStack', onNavbarMasterStack);
-    f7.instance.off('navbarMasterUnstack', onNavbarMasterUnstack);
-    f7.instance.off('navbarTransparentShow', onNavbarTransparentShow);
-    f7.instance.off('navbarTransparentHide', onNavbarTransparentHide);
+    f7.off('navbarShow', onShow);
+    f7.off('navbarHide', onHide);
+    f7.off('navbarCollapse', onCollapse);
+    f7.off('navbarExpand', onExpand);
+    f7.off('navbarPosition', onNavbarPosition);
+    f7.off('navbarRole', onNavbarRole);
+    f7.off('navbarMasterStack', onNavbarMasterStack);
+    f7.off('navbarMasterUnstack', onNavbarMasterUnstack);
+    f7.off('navbarTransparentShow', onNavbarTransparentShow);
+    f7.off('navbarTransparentHide', onNavbarTransparentHide);
   }
 
   onMount(() => {
-    f7.ready(() => {
+    f7ready(() => {
       mountNavbar();
     });
   });
   afterUpdate(() => {
-    if (!f7.instance) return;
-    f7.instance.navbar.size(el);
+    if (!f7) return;
+    f7.navbar.size(el);
   });
   onDestroy(() => {
-    if (!f7.instance) return;
+    if (!f7) return;
     destroyNavbar();
   });
 </script>

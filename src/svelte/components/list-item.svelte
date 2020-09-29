@@ -9,7 +9,7 @@
   } from '../shared/mixins';
   import { classNames, plainText, isStringProp, extend } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
 
   import Badge from './badge';
@@ -161,8 +161,8 @@
       f7Tooltip = null;
       return;
     }
-    if (newText && !f7Tooltip && f7.instance) {
-      f7Tooltip = f7.instance.tooltip.create({
+    if (newText && !f7Tooltip && f7) {
+      f7Tooltip = f7.tooltip.create({
         targetEl: el,
         text: newText,
         trigger: tooltipTrigger,
@@ -182,9 +182,9 @@
     }
     if (!swipeout) return;
     if (opened) {
-      f7.instance.swipeout.open(el);
+      f7.swipeout.open(el);
     } else {
-      f7.instance.swipeout.close(el);
+      f7.swipeout.close(el);
     }
   }
   $: watchSwipeoutOpened(swipeoutOpened);
@@ -281,35 +281,35 @@
     if (indeterminate && inputEl) {
       inputEl.indeterminate = true;
     }
-    f7.ready(() => {
+    f7ready(() => {
       if (swipeout) {
-        f7.instance.on('swipeoutOpen', onSwipeoutOpen);
-        f7.instance.on('swipeoutOpened', onSwipeoutOpened);
-        f7.instance.on('swipeoutClose', onSwipeoutClose);
-        f7.instance.on('swipeoutClosed', onSwipeoutClosed);
-        f7.instance.on('swipeoutDelete', onSwipeoutDelete);
-        f7.instance.on('swipeoutDeleted', onSwipeoutDeleted);
-        f7.instance.on('swipeoutOverswipeEnter', onSwipeoutOverswipeEnter);
-        f7.instance.on('swipeoutOverswipeExit', onSwipeoutOverswipeExit);
-        f7.instance.on('swipeout', onSwipeout);
+        f7.on('swipeoutOpen', onSwipeoutOpen);
+        f7.on('swipeoutOpened', onSwipeoutOpened);
+        f7.on('swipeoutClose', onSwipeoutClose);
+        f7.on('swipeoutClosed', onSwipeoutClosed);
+        f7.on('swipeoutDelete', onSwipeoutDelete);
+        f7.on('swipeoutDeleted', onSwipeoutDeleted);
+        f7.on('swipeoutOverswipeEnter', onSwipeoutOverswipeEnter);
+        f7.on('swipeoutOverswipeExit', onSwipeoutOverswipeExit);
+        f7.on('swipeout', onSwipeout);
       }
       if (accordionItem) {
-        f7.instance.on('accordionBeforeOpen', onAccBeforeOpen);
-        f7.instance.on('accordionOpen', onAccOpen);
-        f7.instance.on('accordionOpened', onAccOpened);
-        f7.instance.on('accordionBeforeClose', onAccBeforeClose);
-        f7.instance.on('accordionClose', onAccClose);
-        f7.instance.on('accordionClosed', onAccClosed);
+        f7.on('accordionBeforeOpen', onAccBeforeOpen);
+        f7.on('accordionOpen', onAccOpen);
+        f7.on('accordionOpened', onAccOpened);
+        f7.on('accordionBeforeClose', onAccBeforeClose);
+        f7.on('accordionClose', onAccClose);
+        f7.on('accordionClosed', onAccClosed);
       }
       if (linkEl && smartSelect) {
         const ssParams = extend({ el: linkEl }, smartSelectParams || {});
-        f7SmartSelect = f7.instance.smartSelect.create(ssParams);
+        f7SmartSelect = f7.smartSelect.create(ssParams);
       }
       if (swipeoutOpened) {
-        f7.instance.swipeout.open(el);
+        f7.swipeout.open(el);
       }
       if (tooltip) {
-        f7Tooltip = f7.instance.tooltip.create({
+        f7Tooltip = f7.tooltip.create({
           targetEl: el,
           text: tooltip,
           trigger: tooltipTrigger,
@@ -331,25 +331,25 @@
     if (linkEl) {
       delete linkEl.f7RouteProps;
     }
-    if (!f7.instance) return;
+    if (!f7) return;
     if (swipeout) {
-      f7.instance.off('swipeoutOpen', onSwipeoutOpen);
-      f7.instance.off('swipeoutOpened', onSwipeoutOpened);
-      f7.instance.off('swipeoutClose', onSwipeoutClose);
-      f7.instance.off('swipeoutClosed', onSwipeoutClosed);
-      f7.instance.off('swipeoutDelete', onSwipeoutDelete);
-      f7.instance.off('swipeoutDeleted', onSwipeoutDeleted);
-      f7.instance.off('swipeoutOverswipeEnter', onSwipeoutOverswipeEnter);
-      f7.instance.off('swipeoutOverswipeExit', onSwipeoutOverswipeExit);
-      f7.instance.off('swipeout', onSwipeout);
+      f7.off('swipeoutOpen', onSwipeoutOpen);
+      f7.off('swipeoutOpened', onSwipeoutOpened);
+      f7.off('swipeoutClose', onSwipeoutClose);
+      f7.off('swipeoutClosed', onSwipeoutClosed);
+      f7.off('swipeoutDelete', onSwipeoutDelete);
+      f7.off('swipeoutDeleted', onSwipeoutDeleted);
+      f7.off('swipeoutOverswipeEnter', onSwipeoutOverswipeEnter);
+      f7.off('swipeoutOverswipeExit', onSwipeoutOverswipeExit);
+      f7.off('swipeout', onSwipeout);
     }
     if (accordionItem) {
-      f7.instance.off('accordionBeforeOpen', onAccBeforeOpen);
-      f7.instance.off('accordionOpen', onAccOpen);
-      f7.instance.off('accordionOpened', onAccOpened);
-      f7.instance.off('accordionBeforeClose', onAccBeforeClose);
-      f7.instance.off('accordionClose', onAccClose);
-      f7.instance.off('accordionClosed', onAccClosed);
+      f7.off('accordionBeforeOpen', onAccBeforeOpen);
+      f7.off('accordionOpen', onAccOpen);
+      f7.off('accordionOpened', onAccOpened);
+      f7.off('accordionBeforeClose', onAccBeforeClose);
+      f7.off('accordionClose', onAccClose);
+      f7.off('accordionClosed', onAccClosed);
     }
     if (f7SmartSelect && f7SmartSelect.destroy) {
       f7SmartSelect.destroy();

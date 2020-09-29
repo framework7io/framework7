@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, plainText } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
 
   import CardHeader from './card-header';
@@ -57,11 +57,11 @@
   /* eslint-enable no-undef */
 
   function open() {
-    f7.instance.card.open(el);
+    f7.card.open(el);
   }
 
   function close() {
-    f7.instance.card.close(el);
+    f7.card.close(el);
   }
 
   let initialWatched = false;
@@ -107,26 +107,26 @@
 
   onMount(() => {
     if (!expandable) return;
-    f7.ready(() => {
-      f7.instance.on('cardBeforeOpen', onBeforeOpen);
-      f7.instance.on('cardOpen', onOpen);
-      f7.instance.on('cardOpened', onOpened);
-      f7.instance.on('cardClose', onClose);
-      f7.instance.on('cardClosed', onClosed);
+    f7ready(() => {
+      f7.on('cardBeforeOpen', onBeforeOpen);
+      f7.on('cardOpen', onOpen);
+      f7.on('cardOpened', onOpened);
+      f7.on('cardClose', onClose);
+      f7.on('cardClosed', onClosed);
       if (expandable && expandableOpened && el) {
-        f7.instance.card.open(el, false);
+        f7.card.open(el, false);
       }
     });
   });
 
   onDestroy(() => {
     if (!expandable) return;
-    if (!f7.instance || !el) return;
-    f7.instance.off('cardBeforeOpen', onBeforeOpen);
-    f7.instance.off('cardOpen', onOpen);
-    f7.instance.off('cardOpened', onOpened);
-    f7.instance.off('cardClose', onClose);
-    f7.instance.off('cardClosed', onClosed);
+    if (!f7 || !el) return;
+    f7.off('cardBeforeOpen', onBeforeOpen);
+    f7.off('cardOpen', onOpen);
+    f7.off('cardOpened', onOpened);
+    f7.off('cardClose', onClose);
+    f7.off('cardClosed', onClosed);
   });
 </script>
 

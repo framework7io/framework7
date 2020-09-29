@@ -9,7 +9,7 @@
   } from '../shared/mixins';
   import { classNames, extend, plainText } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
 
   import Icon from './icon';
@@ -101,18 +101,18 @@
 
   onMount(() => {
     if (!el) return;
-    f7.ready(() => {
-      f7.instance.on('treeviewOpen', onOpen);
-      f7.instance.on('treeviewClose', onClose);
-      f7.instance.on('treeviewLoadChildren', onLoadChildren);
+    f7ready(() => {
+      f7.on('treeviewOpen', onOpen);
+      f7.on('treeviewClose', onClose);
+      f7.on('treeviewLoadChildren', onLoadChildren);
     });
   });
 
   onDestroy(() => {
-    if (!el || !f7.instance) return;
-    f7.instance.off('treeviewOpen', onOpen);
-    f7.instance.off('treeviewClose', onClose);
-    f7.instance.off('treeviewLoadChildren', onLoadChildren);
+    if (!el || !f7) return;
+    f7.off('treeviewOpen', onOpen);
+    f7.off('treeviewClose', onClose);
+    f7.off('treeviewLoadChildren', onLoadChildren);
   });
 </script>
 

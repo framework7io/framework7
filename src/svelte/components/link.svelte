@@ -9,7 +9,7 @@
   } from '../shared/mixins';
   import { classNames, extend, isStringProp, plainText } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
 
   import Badge from './badge';
@@ -96,8 +96,8 @@
       f7Tooltip = null;
       return;
     }
-    if (newText && !f7Tooltip && f7.instance) {
-      f7Tooltip = f7.instance.tooltip.create({
+    if (newText && !f7Tooltip && f7) {
+      f7Tooltip = f7.tooltip.create({
         targetEl: el,
         text: newText,
         trigger: tooltipTrigger,
@@ -118,19 +118,19 @@
     if ($$props.routeProps) {
       el.f7RouteProps = $$props.routeProps;
     }
-    f7.ready(() => {
+    f7ready(() => {
       if (
         tabbarLabel ||
-        ((tabLink || tabLink === '') && f7.instance.$(el).parents('.tabbar-labels').length)
+        ((tabLink || tabLink === '') && f7.$(el).parents('.tabbar-labels').length)
       ) {
         isTabbarLabel = true;
       }
       if (smartSelect) {
         const ssParams = extend({ el }, smartSelectParams || {});
-        f7SmartSelect = f7.instance.smartSelect.create(ssParams);
+        f7SmartSelect = f7.smartSelect.create(ssParams);
       }
       if (tooltip) {
-        f7Tooltip = f7.instance.tooltip.create({
+        f7Tooltip = f7.tooltip.create({
           targetEl: el,
           text: tooltip,
           trigger: tooltipTrigger,

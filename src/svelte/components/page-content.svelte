@@ -3,7 +3,7 @@
   import { restProps } from '../shared/rest-props';
   import { colorClasses } from '../shared/mixins';
   import { classNames } from '../shared/utils';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
 
   import Preloader from './preloader';
 
@@ -93,44 +93,44 @@
 
   function mountPageContent() {
     if (ptr) {
-      f7.instance.on('ptrPullStart', onPtrPullStart);
-      f7.instance.on('ptrPullMove', onPtrPullMove);
-      f7.instance.on('ptrPullEnd', onPtrPullEnd);
-      f7.instance.on('ptrRefresh', onPtrRefresh);
-      f7.instance.on('ptrDone', onPtrDone);
+      f7.on('ptrPullStart', onPtrPullStart);
+      f7.on('ptrPullMove', onPtrPullMove);
+      f7.on('ptrPullEnd', onPtrPullEnd);
+      f7.on('ptrRefresh', onPtrRefresh);
+      f7.on('ptrDone', onPtrDone);
     }
     if (infinite) {
-      f7.instance.on('infinite', onInfinite);
+      f7.on('infinite', onInfinite);
     }
     if (tab) {
-      f7.instance.on('tabShow', onTabShow);
-      f7.instance.on('tabHide', onTabHide);
+      f7.on('tabShow', onTabShow);
+      f7.on('tabHide', onTabHide);
     }
   }
   function destroyPageContent() {
     if (ptr) {
-      f7.instance.off('ptrPullStart', onPtrPullStart);
-      f7.instance.off('ptrPullMove', onPtrPullMove);
-      f7.instance.off('ptrPullEnd', onPtrPullEnd);
-      f7.instance.off('ptrRefresh', onPtrRefresh);
-      f7.instance.off('ptrDone', onPtrDone);
+      f7.off('ptrPullStart', onPtrPullStart);
+      f7.off('ptrPullMove', onPtrPullMove);
+      f7.off('ptrPullEnd', onPtrPullEnd);
+      f7.off('ptrRefresh', onPtrRefresh);
+      f7.off('ptrDone', onPtrDone);
     }
     if (infinite) {
-      f7.instance.off('infinite', onInfinite);
+      f7.off('infinite', onInfinite);
     }
     if (tab) {
-      f7.instance.off('tabShow', onTabShow);
-      f7.instance.off('tabHide', onTabHide);
+      f7.off('tabShow', onTabShow);
+      f7.off('tabHide', onTabHide);
     }
   }
 
   onMount(() => {
-    f7.ready(() => {
+    f7ready(() => {
       mountPageContent();
     });
   });
   onDestroy(() => {
-    if (!f7.instance) return;
+    if (!f7) return;
     destroyPageContent();
   });
 </script>

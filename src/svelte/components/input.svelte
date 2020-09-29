@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
   import Toggle from './toggle';
   import Range from './range';
@@ -92,7 +92,7 @@
   }
 
   function validateInput() {
-    if (!f7.instance || !inputEl) return;
+    if (!f7 || !inputEl) return;
     const validity = inputEl.validity;
     if (!validity) return;
 
@@ -114,7 +114,7 @@
       return;
     }
     if (type === 'range' || type === 'toggle') return;
-    if (!f7.instance) return;
+    if (!f7) return;
     updateInputOnDidUpdate = true;
     if (f7Calendar) {
       f7Calendar.setValue(value);
@@ -224,7 +224,7 @@
   }
 
   onMount(() => {
-    f7.ready(() => {
+    f7ready(() => {
       if (type === 'range' || type === 'toggle') return;
       if (!inputEl) return;
 
@@ -238,7 +238,7 @@
       }
 
       if (type === 'datepicker') {
-        f7Calendar = f7.instance.calendar.create({
+        f7Calendar = f7.calendar.create({
           inputEl,
           value,
           on: {
@@ -252,7 +252,7 @@
         });
       }
       if (type === 'colorpicker') {
-        f7ColorPicker = f7.instance.colorPicker.create({
+        f7ColorPicker = f7.colorPicker.create({
           inputEl,
           value,
           on: {
@@ -266,7 +266,7 @@
         });
       }
 
-      f7.instance.input.checkEmptyState(inputEl);
+      f7.input.checkEmptyState(inputEl);
       if (
         !(validateOnBlur || validateOnBlur === '') &&
         (validate || validate === '') &&
@@ -279,22 +279,22 @@
         }, 0);
       }
       if (resizable) {
-        f7.instance.input.resizeTextarea(inputEl);
+        f7.input.resizeTextarea(inputEl);
       }
     });
   });
 
   afterUpdate(() => {
-    if (!f7.instance) return;
+    if (!f7) return;
     if (updateInputOnDidUpdate) {
       if (!inputEl) return;
       updateInputOnDidUpdate = false;
-      f7.instance.input.checkEmptyState(inputEl);
+      f7.input.checkEmptyState(inputEl);
       if (validate && !validateOnBlur) {
         validateInput();
       }
       if (resizable) {
-        f7.instance.input.resizeTextarea(inputEl);
+        f7.input.resizeTextarea(inputEl);
       }
     }
   });

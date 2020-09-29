@@ -9,7 +9,7 @@
   } from '../shared/mixins';
   import { classNames, extend, plainText } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
 
   import Icon from './icon';
@@ -89,9 +89,9 @@
     if ($$props.routeProps) {
       el.f7RouteProps = $$props.routeProps;
     }
-    f7.ready(() => {
-      f7.instance.on('menuOpened', onOpened);
-      f7.instance.on('menuClosed', onClosed);
+    f7ready(() => {
+      f7.on('menuOpened', onOpened);
+      f7.on('menuClosed', onClosed);
     });
   });
   afterUpdate(() => {
@@ -100,10 +100,10 @@
     }
   });
   onDestroy(() => {
-    if (!el || !f7.instance) return;
+    if (!el || !f7) return;
     delete el.f7RouteProps;
-    f7.instance.off('menuOpened', onOpened);
-    f7.instance.off('menuClosed', onClosed);
+    f7.off('menuOpened', onOpened);
+    f7.off('menuClosed', onClosed);
   });
 </script>
 

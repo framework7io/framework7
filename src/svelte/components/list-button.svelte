@@ -9,7 +9,7 @@
   } from '../shared/mixins';
   import { classNames, extend, plainText, isStringProp } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -62,8 +62,8 @@
       f7Tooltip = null;
       return;
     }
-    if (newText && !f7Tooltip && f7.instance) {
-      f7Tooltip = f7.instance.tooltip.create({
+    if (newText && !f7Tooltip && f7) {
+      f7Tooltip = f7.tooltip.create({
         targetEl: el,
         text: newText,
         trigger: tooltipTrigger,
@@ -84,9 +84,9 @@
     if ($$props.routeProps) {
       el.f7RouteProps = $$props.routeProps;
     }
-    f7.ready(() => {
+    f7ready(() => {
       if (tooltip) {
-        f7Tooltip = f7.instance.tooltip.create({
+        f7Tooltip = f7.tooltip.create({
           targetEl: el,
           text: tooltip,
           trigger: tooltipTrigger,

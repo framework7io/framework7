@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, noUndefinedProps } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -119,7 +119,7 @@
 
   onMount(() => {
     if (!init) return;
-    f7.ready(() => {
+    f7ready(() => {
       const params = noUndefinedProps({
         el,
         inputEvents,
@@ -170,7 +170,7 @@
           delete params[key];
         }
       });
-      f7Searchbar = f7.instance.searchbar.create(params);
+      f7Searchbar = f7.searchbar.create(params);
     });
   });
 

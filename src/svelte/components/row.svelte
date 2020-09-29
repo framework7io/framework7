@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -42,13 +42,13 @@
   }
 
   onMount(() => {
-    f7.ready(() => {
-      f7.instance.on('gridResize', onResize);
+    f7ready(() => {
+      f7.on('gridResize', onResize);
     });
   });
   onDestroy(() => {
-    if (!f7.instance) return;
-    f7.instance.off('gridResize', onResize);
+    if (!f7) return;
+    f7.off('gridResize', onResize);
   });
 </script>
 

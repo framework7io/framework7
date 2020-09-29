@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, extend } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
 
   let className = undefined;
   export { className as class };
@@ -50,7 +50,7 @@
 
   onMount(() => {
     if (!init) return;
-    f7.ready(() => {
+    f7ready(() => {
       const newParams = {
         pagination: {},
         navigation: {},
@@ -64,7 +64,7 @@
       }
       if (scrollbar && !newParams.scrollbar.el) newParams.scrollbar.el = scrollbarEl;
 
-      swiper = f7.instance.swiper.create(el, newParams);
+      swiper = f7.swiper.create(el, newParams);
     });
   });
 

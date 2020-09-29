@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -64,8 +64,8 @@
     };
     if (typeof animate !== 'undefined') params.animate = animate;
 
-    f7.ready(() => {
-      f7LoginScreen = f7.instance.loginScreen.create(params);
+    f7ready(() => {
+      f7LoginScreen = f7.loginScreen.create(params);
       if (opened) {
         f7LoginScreen.open(false);
       }

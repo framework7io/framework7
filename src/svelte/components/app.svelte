@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { f7 } from '../shared/f7';
+  import { f7, f7init } from '../shared/f7';
   import RoutableModals from './routable-modals';
   import { colorClasses } from '../shared/mixins';
   import { classNames } from '../shared/utils';
@@ -22,8 +22,8 @@
     if (parentEl && parentEl !== document.body && parentEl.parentNode === document.body) {
       parentEl.style.height = '100%';
     }
-    if (f7.instance) return;
-    f7.init(el, params, routes);
+    if (f7) return;
+    f7init(el, params, routes);
   });
 </script>
 

@@ -3,7 +3,7 @@
   import { restProps } from '../shared/rest-props';
   import { colorClasses } from '../shared/mixins';
   import { classNames, noUndefinedProps } from '../shared/utils';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -126,8 +126,8 @@
   }
 
   onMount(() => {
-    f7.ready(() => {
-      const dom7 = f7.instance.$;
+    f7ready(() => {
+      const dom7 = f7.$;
       if (dom7('.panel-backdrop').length === 0) {
         dom7('<div class="panel-backdrop"></div>').insertBefore(el);
       }
@@ -156,7 +156,7 @@
           resize: onResize,
         },
       });
-      f7Panel = f7.instance.panel.create(params);
+      f7Panel = f7.panel.create(params);
       if (opened) {
         f7Panel.open(false);
       }

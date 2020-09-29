@@ -30,9 +30,9 @@
   );
 
   function onClick() {
-    if (close && f7.instance) {
-      const dom7 = f7.instance.$;
-      f7.instance.actions.close(dom7(el).parents('.actions-modal'));
+    if (close && f7) {
+      const dom7 = f7.$;
+      f7.actions.close(dom7(el).parents('.actions-modal'));
     }
     dispatch('click');
     if (typeof $$props.onClick === 'function') $$props.onClick();

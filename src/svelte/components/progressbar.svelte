@@ -13,8 +13,8 @@
   let el;
 
   export function set(progress, speed) {
-    if (!f7.instance) return;
-    f7.instance.progressbar.set(el, progress, speed);
+    if (!f7) return;
+    f7.progressbar.set(el, progress, speed);
   }
 
   $: classes = classNames(

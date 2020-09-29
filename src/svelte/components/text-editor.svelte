@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, noUndefinedProps } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -106,8 +106,8 @@
         popoverClose: onPopoverClose,
       },
     });
-    f7.ready(() => {
-      f7TextEditor = f7.instance.textEditor.create(params);
+    f7ready(() => {
+      f7TextEditor = f7.textEditor.create(params);
     });
   });
 

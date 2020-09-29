@@ -3,8 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { theme } from '../shared/plugin';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready, theme } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -33,10 +32,10 @@
 
   let el;
   // eslint-disable-next-line
-  let _theme = f7.instance ? theme : null;
+  let _theme = f7 ? theme : null;
 
-  if (!f7.instance) {
-    f7.ready(() => {
+  if (!f7) {
+    f7ready(() => {
       _theme = theme;
     });
   }
@@ -79,23 +78,23 @@
   }
 
   onMount(() => {
-    f7.ready(() => {
-      if (tabbar) f7.instance.toolbar.setHighlight(el);
-      f7.instance.on('toolbarShow', onShow);
-      f7.instance.on('toolbarHide', onHide);
+    f7ready(() => {
+      if (tabbar) f7.toolbar.setHighlight(el);
+      f7.on('toolbarShow', onShow);
+      f7.on('toolbarHide', onHide);
     });
   });
 
   afterUpdate(() => {
-    if (tabbar && f7.instance && el) {
-      f7.instance.toolbar.setHighlight(el);
+    if (tabbar && f7 && el) {
+      f7.toolbar.setHighlight(el);
     }
   });
 
   onDestroy(() => {
-    if (!f7.instance) return;
-    f7.instance.off('toolbarShow', onShow);
-    f7.instance.off('toolbarHide', onHide);
+    if (!f7) return;
+    f7.off('toolbarShow', onShow);
+    f7.off('toolbarHide', onHide);
   });
 </script>
 

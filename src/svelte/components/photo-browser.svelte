@@ -2,7 +2,7 @@
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
 
   import { extend } from '../shared/utils';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -76,7 +76,7 @@
 
   onMount(() => {
     if (!init) return;
-    f7.ready(() => {
+    f7ready(() => {
       let pbParams;
 
       if (typeof params !== 'undefined') pbParams = params;
@@ -144,7 +144,7 @@
         },
       });
 
-      f7PhotoBrowser = f7.instance.photoBrowser.create(pbParams);
+      f7PhotoBrowser = f7.photoBrowser.create(pbParams);
     });
   });
 

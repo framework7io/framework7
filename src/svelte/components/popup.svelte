@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -108,8 +108,8 @@
     if (typeof swipeToClose !== 'undefined') popupParams.swipeToClose = swipeToClose;
     if (typeof swipeHandler !== 'undefined') popupParams.swipeHandler = swipeHandler;
 
-    f7.ready(() => {
-      f7Popup = f7.instance.popup.create(popupParams);
+    f7ready(() => {
+      f7Popup = f7.popup.create(popupParams);
       if (opened) {
         f7Popup.open(false);
       }

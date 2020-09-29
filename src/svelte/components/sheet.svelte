@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -118,15 +118,15 @@
     if (typeof swipeToStep !== 'undefined') params.swipeToStep = swipeToStep;
     if (typeof swipeHandler !== 'undefined') params.swipeHandler = swipeHandler;
 
-    f7.ready(() => {
+    f7ready(() => {
       if (el && innerEl) {
-        const dom7 = f7.instance.$;
+        const dom7 = f7.$;
         const fixedEls = dom7(innerEl).children('.navbar, .toolbar, .tabbar, .searchbar');
         if (fixedEls.length) {
           dom7(el).prepend(fixedEls);
         }
       }
-      f7Sheet = f7.instance.sheet.create(params);
+      f7Sheet = f7.sheet.create(params);
       if (opened) {
         f7Sheet.open(false);
       }

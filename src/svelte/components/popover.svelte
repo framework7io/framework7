@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -79,8 +79,8 @@
     if (typeof backdrop !== 'undefined') params.backdrop = backdrop;
     if (typeof backdropEl !== 'undefined') params.backdropEl = backdropEl;
 
-    f7.ready(() => {
-      f7Popover = f7.instance.popover.create(params);
+    f7ready(() => {
+      f7Popover = f7.popover.create(params);
       if (opened) {
         f7Popover.open(false);
       }

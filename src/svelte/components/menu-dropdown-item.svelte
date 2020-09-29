@@ -69,7 +69,7 @@
     }
   });
   onDestroy(() => {
-    if (!el || !f7.instance) return;
+    if (!el || !f7) return;
     delete el.f7RouteProps;
   });
 </script>

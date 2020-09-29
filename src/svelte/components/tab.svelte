@@ -4,7 +4,7 @@
   import { restProps } from '../shared/rest-props';
   import { colorClasses } from '../shared/mixins';
   import { classNames } from '../shared/utils';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready, f7routers, f7events } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -30,7 +30,7 @@
   }
 
   onMount(() => {
-    f7.ready(() => {
+    f7ready(() => {
       routerData = {
         el,
         setTabContent(tc) {
@@ -39,22 +39,22 @@
           });
         },
       };
-      f7.routers.tabs.push(routerData);
-      f7.instance.on('tabShow', onTabShow);
-      f7.instance.on('tabHide', onTabHide);
+      f7routers.tabs.push(routerData);
+      f7.on('tabShow', onTabShow);
+      f7.on('tabHide', onTabHide);
     });
   });
   afterUpdate(() => {
     if (!routerData) return;
-    f7.events.emit('tabRouterDidUpdate', routerData);
+    f7events.emit('tabRouterDidUpdate', routerData);
   });
   onDestroy(() => {
-    if (f7.instance) {
-      f7.instance.off('tabShow', onTabShow);
-      f7.instance.off('tabHide', onTabHide);
+    if (f7) {
+      f7.off('tabShow', onTabShow);
+      f7.off('tabHide', onTabHide);
     }
     if (!routerData) return;
-    f7.routers.tabs.splice(f7.routers.tabs.indexOf(routerData), 1);
+    f7routers.tabs.splice(f7routers.tabs.indexOf(routerData), 1);
     routerData = null;
   });
 </script>

@@ -1,9 +1,8 @@
 <script>
-  import { theme } from '../shared/plugin';
   import { restProps } from '../shared/rest-props';
   import { colorClasses } from '../shared/mixins';
   import { classNames } from '../shared/utils';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready, theme } from '../shared/f7';
 
   export let style = undefined;
 
@@ -12,10 +11,10 @@
   export let size = undefined;
 
   // eslint-disable-next-line
-  let _theme = f7.instance ? theme : null;
+  let _theme = f7 ? theme : null;
 
-  if (!f7.instance) {
-    f7.ready(() => {
+  if (!f7) {
+    f7ready(() => {
       _theme = theme;
     });
   }

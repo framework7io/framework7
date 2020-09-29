@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, noUndefinedProps } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
 
   import Link from './link';
@@ -134,16 +134,16 @@
 
   onMount(() => {
     if (!init || !el) return;
-    f7.ready(() => {
+    f7ready(() => {
       if (el) {
-        const dom7 = f7.instance.$;
+        const dom7 = f7.$;
         const attachmentsEl = dom7(el).find('.toolbar-inner > .messagebar-attachments');
         if (attachmentsEl.length) dom7(el).find('.messagebar-area').prepend(attachmentsEl);
 
         const sheetEl = dom7(el).find('.toolbar-inner > .messagebar-sheet');
         if (sheetEl.length) dom7(el).append(sheetEl);
       }
-      f7Messagebar = f7.instance.messagebar.create(
+      f7Messagebar = f7.messagebar.create(
         noUndefinedProps({
           el,
           top,
@@ -163,8 +163,8 @@
 
   afterUpdate(() => {
     if (!f7Messagebar) return;
-    if (el && f7.instance) {
-      const dom7 = f7.instance.$;
+    if (el && f7) {
+      const dom7 = f7.$;
       const attachmentsEl = dom7(el).find('.toolbar-inner > .messagebar-attachments');
       if (attachmentsEl.length) dom7(el).find('.messagebar-area').prepend(attachmentsEl);
 
