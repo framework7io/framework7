@@ -1,13 +1,3 @@
-<App params={f7Params}>
-  <Panel left cover resizable>
-    <View url="/panel-left/" links-view=".view-main" />
-  </Panel>
-  <Panel right reveal resizable>
-    <View url="/panel-right/" />
-  </Panel>
-  <View url="/" main={true} class="safe-areas" masterDetailBreakpoint={800} />
-</App>
-
 <script>
   import { App, Panel, View } from 'framework7-svelte';
   import routes from './routes';
@@ -18,7 +8,7 @@
     theme = document.location.search.split('theme=')[1].split('&')[0];
   }
 
-  let f7Params = {
+  const f7Params = {
     id: 'io.framework7.testapp',
     theme,
     routes,
@@ -34,5 +24,15 @@
     actions: {
       closeOnEscape: true,
     },
-  }
+  };
 </script>
+
+<App {...f7Params}>
+  <Panel left cover resizable>
+    <View url="/panel-left/" links-view=".view-main" />
+  </Panel>
+  <Panel right reveal resizable>
+    <View url="/panel-right/" />
+  </Panel>
+  <View url="/" main={true} class="safe-areas" masterDetailBreakpoint={800} />
+</App>
