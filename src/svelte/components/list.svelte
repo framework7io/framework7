@@ -1,10 +1,10 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy, setContext } from 'svelte';
-  import Mixins from '../utils/mixins';
-  import Utils from '../utils/utils';
-  import restProps from '../utils/rest-props';
-  import f7 from '../utils/f7';
-  import hasSlots from '../utils/has-slots';
+  import Mixins from '../shared/mixins';
+  import Utils from '../shared/utils';
+  import restProps from '../shared/rest-props';
+  import f7 from '../shared/f7';
+  import hasSlots from '../shared/has-slots';
 
   const dispatch = createEventDispatcher();
 
@@ -153,34 +153,40 @@
       const vlParams = virtualListParams || {};
       if (!vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) return;
 
-      f7VirtualList = f7.instance.virtualList.create(Utils.extend(
-        {
-          el,
-          on: {
-            itemBeforeInsert(itemEl, item) {
-              const vl = this;
-              dispatch('virtualItemBeforeInsert', [vl, itemEl, item]);
-              if (typeof $$props.onVirtualItemBeforeInsert === 'function') $$props.onVirtualItemBeforeInsert(vl, itemEl, item);
-            },
-            beforeClear(fragment) {
-              const vl = this;
-              dispatch('virtualBeforeClear', [vl, fragment]);
-              if (typeof $$props.onVirtualBeforeClear === 'function') $$props.onVirtualBeforeClear(vl, fragment);
-            },
-            itemsBeforeInsert(fragment) {
-              const vl = this;
-              dispatch('virtualItemsBeforeInsert', [vl, fragment]);
-              if (typeof $$props.onVirtualItemsBeforeInsert === 'function') $$props.onVirtualItemsBeforeInsert(vl, fragment);
-            },
-            itemsAfterInsert(fragment) {
-              const vl = this;
-              dispatch('virtualItemsAfterInsert', [vl, fragment]);
-              if (typeof $$props.onVirtualItemsAfterInsert === 'function') $$props.onVirtualItemsAfterInsert(vl, fragment);
+      f7VirtualList = f7.instance.virtualList.create(
+        Utils.extend(
+          {
+            el,
+            on: {
+              itemBeforeInsert(itemEl, item) {
+                const vl = this;
+                dispatch('virtualItemBeforeInsert', [vl, itemEl, item]);
+                if (typeof $$props.onVirtualItemBeforeInsert === 'function')
+                  $$props.onVirtualItemBeforeInsert(vl, itemEl, item);
+              },
+              beforeClear(fragment) {
+                const vl = this;
+                dispatch('virtualBeforeClear', [vl, fragment]);
+                if (typeof $$props.onVirtualBeforeClear === 'function')
+                  $$props.onVirtualBeforeClear(vl, fragment);
+              },
+              itemsBeforeInsert(fragment) {
+                const vl = this;
+                dispatch('virtualItemsBeforeInsert', [vl, fragment]);
+                if (typeof $$props.onVirtualItemsBeforeInsert === 'function')
+                  $$props.onVirtualItemsBeforeInsert(vl, fragment);
+              },
+              itemsAfterInsert(fragment) {
+                const vl = this;
+                dispatch('virtualItemsAfterInsert', [vl, fragment]);
+                if (typeof $$props.onVirtualItemsAfterInsert === 'function')
+                  $$props.onVirtualItemsAfterInsert(vl, fragment);
+              },
             },
           },
-        },
-        vlParams,
-      ));
+          vlParams,
+        ),
+      );
     });
   });
 
@@ -197,8 +203,8 @@
       f7VirtualList = null;
     }
   });
-
 </script>
+
 <!-- svelte-ignore a11y-missing-attribute -->
 {#if form}
   <form

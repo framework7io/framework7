@@ -1,8 +1,8 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
 
-  import Utils from '../utils/utils';
-  import f7 from '../utils/f7';
+  import Utils from '../shared/utils';
+  import f7 from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 

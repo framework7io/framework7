@@ -1,6 +1,6 @@
 <script>
   import { onMount, onDestroy, afterUpdate, tick } from 'svelte'; // eslint-disable-line
-  import f7 from '../utils/f7';
+  import f7 from '../shared/f7';
 
   let modals = [];
   let el;

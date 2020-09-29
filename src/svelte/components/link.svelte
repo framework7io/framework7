@@ -1,13 +1,13 @@
 <script>
   import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
-  import Mixins from '../utils/mixins';
-  import Utils from '../utils/utils';
-  import restProps from '../utils/rest-props';
-  import f7 from '../utils/f7';
-  import hasSlots from '../utils/has-slots';
+  import Mixins from '../shared/mixins';
+  import Utils from '../shared/utils';
+  import restProps from '../shared/rest-props';
+  import f7 from '../shared/f7';
+  import hasSlots from '../shared/has-slots';
 
-  import Badge from './badge.svelte';
-  import Icon from './icon.svelte';
+  import Badge from './badge';
+  import Icon from './icon';
 
   const dispatch = createEventDispatcher();
 

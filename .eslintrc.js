@@ -1,11 +1,45 @@
+const rules = {
+  'no-param-reassign': [
+    'error',
+    {
+      props: false,
+    },
+  ],
+  'no-mixed-operators': [
+    'error',
+    {
+      // the list of arthmetic groups disallows mixing `%` and `**`
+      // with other arithmetic operators.
+      groups: [
+        ['%', '**'],
+        ['%', '+'],
+        ['%', '-'],
+        ['%', '*'],
+        ['%', '/'],
+        ['&', '|', '<<', '>>', '>>>'],
+        ['==', '!=', '===', '!=='],
+        ['&&', '||'],
+      ],
+      allowSamePrecedence: false,
+    },
+  ],
+  'prefer-destructuring': ['off'],
+  'prefer-object-spread': ['off'],
+  'prefer-ob': ['off'],
+  'react/react-in-jsx-scope': ['off'],
+  'react/no-string-refs': ['off'],
+  'react/prop-types': ['off'],
+  'no-restricted-globals': ['error', 'window', 'document'],
+  'import/prefer-default-export': 'off',
+};
+
 module.exports = {
   env: {
     browser: true,
     es6: true,
     node: true,
   },
-  extends: ['plugin:react/recommended', 'airbnb-base', 'plugin:prettier/recommended'],
-  plugins: ['react', 'svelte3'],
+
   globals: {
     XMLHttpRequest: true,
     Blob: true,
@@ -16,48 +50,24 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 2018,
+    ecmaVersion: 2019,
     sourceType: 'module',
   },
   rules: {
-    'no-param-reassign': [
-      'error',
-      {
-        props: false,
-      },
-    ],
-    'no-mixed-operators': [
-      'error',
-      {
-        // the list of arthmetic groups disallows mixing `%` and `**`
-        // with other arithmetic operators.
-        groups: [
-          ['%', '**'],
-          ['%', '+'],
-          ['%', '-'],
-          ['%', '*'],
-          ['%', '/'],
-          ['&', '|', '<<', '>>', '>>>'],
-          ['==', '!=', '===', '!=='],
-          ['&&', '||'],
-        ],
-        allowSamePrecedence: false,
-      },
-    ],
-    'prefer-destructuring': ['off'],
-    'prefer-object-spread': ['off'],
-    'prefer-ob': ['off'],
-    'react/react-in-jsx-scope': ['off'],
-    'react/no-string-refs': ['off'],
-    'react/prop-types': ['off'],
-    'no-restricted-globals': ['error', 'window', 'document'],
-    'import/prefer-default-export': 'off',
+    ...rules,
   },
   overrides: [
     // REACT
     {
+      files: ['**/*.jsx', '**/*.js', '**/*.ts'],
+      extends: ['plugin:react/recommended', 'airbnb-base', 'plugin:prettier/recommended'],
+      plugins: ['react'],
+      rules: { ...rules },
+    },
+    {
       files: ['**/*.jsx', 'src/react/shared/*.js'],
       rules: {
+        ...rules,
         'import/no-unresolved': ['off'],
         'import/no-extraneous-dependencies': ['off'],
         'import/extensions': ['off'],
@@ -68,6 +78,7 @@ module.exports = {
     {
       files: ['kitchen-sink/react/src/**/*.jsx', 'kitchen-sink/react/src/**/*.js'],
       rules: {
+        ...rules,
         'react/display-name': ['off'],
         'react/jsx-no-target-blank': ['off'],
         'react/no-unescaped-entities': ['off'],
@@ -80,7 +91,7 @@ module.exports = {
     },
     // VUE
     {
-      files: ['src/**/*.vue', 'kitchen-sink/vue/src/**/*.vue'],
+      files: ['**/*.vue'],
       plugins: ['vue'],
       extends: [
         'plugin:vue/vue3-recommended',
@@ -89,25 +100,45 @@ module.exports = {
         'prettier/vue',
       ],
       rules: {
+        ...rules,
         'vue/component-definition-name-casing': ['error', 'kebab-case'],
         'vue/require-default-prop': ['off'],
         'vue/custom-event-name-casing': ['off'],
         'prefer-destructuring': ['off'],
+        'no-restricted-globals': ['off'],
       },
     },
     {
       files: ['**/*.vue', 'src/vue/shared/*.js'],
       rules: {
+        ...rules,
         'import/no-unresolved': ['off'],
         'import/no-extraneous-dependencies': ['off'],
         'import/extensions': ['off'],
+        'no-restricted-globals': ['off'],
+      },
+    },
+    // SVELTE KITCHEN_SINK
+    {
+      files: ['kitchen-sink/svelte/src/**/*.js'],
+      rules: {
+        ...rules,
+        'no-restricted-globals': ['off'],
+        'import/no-unresolved': ['off'],
+        'import/no-extraneous-dependencies': ['off'],
       },
     },
     // SVELTE
     {
+      plugins: ['svelte3'],
       files: ['**/*.svelte'],
+      extends: ['airbnb-base'],
       processor: 'svelte3/svelte3',
       rules: {
+        ...rules,
+        'object-curly-newline': ['off'],
+        curly: ['off'],
+        'nonblock-statement-body-position': ['off'],
         'import/no-mutable-exports': ['off'],
         'import/first': ['off'],
         'import/no-unresolved': ['off'],

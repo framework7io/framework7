@@ -5,4 +5,3 @@ kitchen-sink/core
 
 src/core/modules/component/snabbdom
 src/phenome
-src/svelte

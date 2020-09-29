@@ -65,27 +65,27 @@ export namespace Actions {
     /** Action sheet groups/buttons. In this case Actions layout will be generated dynamically based on passed groups and buttons. In case of groups it should array where each item represent array with buttons for group.*/
     buttons?: Button[];
     /** Enables grid buttons layout*/
-    grid?:boolean
+    grid?: boolean;
     /** When enabled, action sheet will be converted to Popover on large screens.*/
-    convertToPopover?:boolean
+    convertToPopover?: boolean;
     /** When enabled, action sheet will be always converted to Popover.*/
-    forceToPopover?:boolean
+    forceToPopover?: boolean;
     /** HTML element or string CSS selector of target element. Required when conversion to popover is in use*/
-    targetEl?: HTMLElement | CSSSelector
+    targetEl?: HTMLElement | CSSSelector;
     /** Virtual target element horizontal offset from left side of the screen. Required when conversion to popover is in use without using real target element (targetEl)*/
-    targetX?:number
+    targetX?: number;
     /** Virtual target element vertical offset from top of the screen. Required when conversion to popover is in use without using real target element (targetEl)*/
-    targetY?:number
+    targetY?: number;
     /** Virtual target element width (in px). Required when conversion to popover is in use without using real target element (targetEl)*/
-    targetWidth?:number
+    targetWidth?: number;
     /** Virtual target element height (in px). Required when conversion to popover is in use without using real target element (targetEl)*/
-    targetHeight?:number
+    targetHeight?: number;
     /** Callback function that will be executed after click on the Action Sheet button*/
     onClick?: (actions: Actions, e: unknown) => void;
     /** Custom function to render Action Sheet. Must return Action Sheet html*/
-    render?: () => string
+    render?: () => string;
     /** Custom function to render Popover when conversion to popover is in use. Must return Popover html*/
-    renderPopover?: () => string
+    renderPopover?: () => string;
     /** Object with event handlers */
     on?: {
       [event in keyof Events]?: Events[event];

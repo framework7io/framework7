@@ -1,10 +1,10 @@
 <script>
   import { onMount } from 'svelte';
-  import f7 from '../utils/f7';
-  import RoutableModals from './routable-modals.svelte';
-  import Mixins from '../utils/mixins';
-  import Utils from '../utils/utils';
-  import restProps from '../utils/rest-props';
+  import f7 from '../shared/f7';
+  import RoutableModals from './routable-modals';
+  import Mixins from '../shared/mixins';
+  import Utils from '../shared/utils';
+  import restProps from '../shared/rest-props';
 
   export let id = 'framework7-root';
   export let params = {};

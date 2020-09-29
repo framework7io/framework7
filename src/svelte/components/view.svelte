@@ -1,8 +1,8 @@
 <script>
   import { onMount, onDestroy, afterUpdate, createEventDispatcher, tick } from 'svelte';
-  import f7 from '../utils/f7';
-  import Mixins from '../utils/mixins';
-  import Utils from '../utils/utils';
+  import f7 from '../shared/f7';
+  import Mixins from '../shared/mixins';
+  import Utils from '../shared/utils';
 
   export let id = undefined;
   export let style = undefined;

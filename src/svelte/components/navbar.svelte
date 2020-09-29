@@ -1,15 +1,15 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy, afterUpdate } from 'svelte';
-  import Mixins from '../utils/mixins';
-  import Utils from '../utils/utils';
-  import restProps from '../utils/rest-props';
-  import { theme } from '../utils/plugin';
-  import f7 from '../utils/f7';
-  import hasSlots from '../utils/has-slots';
+  import Mixins from '../shared/mixins';
+  import Utils from '../shared/utils';
+  import restProps from '../shared/rest-props';
+  import { theme } from '../shared/plugin';
+  import f7 from '../shared/f7';
+  import hasSlots from '../shared/has-slots';
 
-  import NavLeft from './nav-left.svelte';
-  import NavTitle from './nav-title.svelte';
-  import NavRight from './nav-right.svelte';
+  import NavLeft from './nav-left';
+  import NavTitle from './nav-title';
+  import NavRight from './nav-right';
 
   const dispatch = createEventDispatcher();
 

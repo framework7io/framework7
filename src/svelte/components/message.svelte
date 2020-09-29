@@ -1,10 +1,10 @@
 <script>
   /* eslint-disable no-undef */
   import { createEventDispatcher } from 'svelte';
-  import Mixins from '../utils/mixins';
-  import Utils from '../utils/utils';
-  import restProps from '../utils/rest-props';
-  import hasSlots from '../utils/has-slots';
+  import Mixins from '../shared/mixins';
+  import Utils from '../shared/utils';
+  import restProps from '../shared/rest-props';
+  import hasSlots from '../shared/has-slots';
 
   const dispatch = createEventDispatcher();
 

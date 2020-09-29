@@ -1,94 +1,112 @@
-const path = require('path');
-const fs = require('./utils/fs-extra');
-const getOutput = require('./get-output');
+/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
+/* eslint no-console: "off" */
+/* eslint global-require: "off" */
+/* eslint no-param-reassign: ["off"] */
+
+const exec = require('exec-sh');
+const svelte = require('svelte/compiler');
 const bannerSvelte = require('./banners/svelte');
+const getOutput = require('./get-output.js');
+const fs = require('./utils/fs-extra');
 
-function esm({ banner, componentImports, componentExports }) {
-  return `
-${banner}
+const compileSvelteComponents = (buildPath, format) => {
+  const svelteComponents = fs
+    .readdirSync('src/svelte/components')
+    .filter((fileName) => fileName.includes('.svelte'));
 
-${componentImports.join('\n')}
-import Framework7Svelte, { f7, f7ready, theme } from './utils/plugin';
+  svelteComponents.forEach((fileName) => {
+    const fileContent = fs.readFileSync(`src/svelte/components/${fileName}`, 'utf-8');
+    const fileResult = svelte.compile(fileContent, {
+      format: 'esm',
+      filename: fileName,
+    });
+    fs.writeFileSync(
+      `${buildPath}/svelte/${format}/components/${fileName.replace('.svelte', '.js')}`,
+      fileResult.js.code,
+    );
+  });
+};
 
-export {\n${componentExports.join(',\n')}\n};
+// Build Svelte
+async function buildSvelte(cb) {
+  const env = process.env.NODE_ENV || 'development';
+  const buildPath = getOutput();
 
-export { f7, f7ready, theme };
-
-export default Framework7Svelte;
-  `.trim();
-}
-
-function buildSvelte(cb) {
-  const output = path.resolve(getOutput(), 'svelte');
-  const components = [];
+  const files = fs.readdirSync('src/svelte/components').filter((file) => file.indexOf('.d.ts') < 0);
   const componentImports = [];
   const componentExports = [];
 
-  // Copy components
-  const componentsSrc = path.resolve('./src/svelte/components');
-  fs.readdirSync(componentsSrc)
-    .filter((f) => f.indexOf('.svelte') >= 0)
-    .forEach((fileName) => {
-      const componentName = fileName
-        .replace('.svelte', '')
-        .split('-')
-        .map((word) => word[0].toUpperCase() + word.substr(1))
-        .join('');
-      components.push({
-        name: `${componentName}`,
-      });
-      componentImports.push(`import ${componentName} from './components/${fileName}';`);
-      componentExports.push(`  ${componentName}`);
-
-      fs.copyFileSync(
-        path.resolve(componentsSrc, fileName),
-        path.resolve(output, 'components', fileName),
-      );
-    });
-
-  // Copy utils
-  const phenomeUtilsSrc = path.resolve('./src/phenome/utils');
-  fs.readdirSync(phenomeUtilsSrc).forEach((fileName) => {
-    fs.copyFileSync(
-      path.resolve(phenomeUtilsSrc, fileName),
-      path.resolve(output, 'utils', fileName),
-    );
-  });
-  const svelteUtilsSrc = path.resolve('./src/svelte/utils');
-  fs.readdirSync(svelteUtilsSrc).forEach((fileName) => {
-    fs.copyFileSync(
-      path.resolve(svelteUtilsSrc, fileName),
-      path.resolve(output, 'utils', fileName),
+  files.forEach((fileName) => {
+    const componentName = fileName
+      .replace('.svelte', '')
+      .split('-')
+      .map((word) => word[0].toUpperCase() + word.substr(1))
+      .join('');
+    const fileBase = fileName.replace('.svelte', '');
+    componentImports.push(`import ${componentName} from './components/${fileBase}';`);
+    componentExports.push(componentName);
+    const json = {
+      name: `framework7-svelte/${fileBase}`,
+      private: true,
+      sideEffects: false,
+      main: `../../cjs/components/${fileBase}.js`,
+      module: `../../esm/components/${fileBase}.js`,
+      'jsnext:main': `../../esm/components/${fileBase}.js`,
+    };
+    fs.writeFileSync(
+      `${buildPath}/svelte/components/${fileBase}/package.json`,
+      JSON.stringify(json, '', 2),
     );
   });
 
-  // Tweak utils
-  let pluginContent = fs.readFileSync(path.resolve(output, 'utils/plugin.js'), 'utf8');
-  pluginContent = pluginContent
-    .replace('// IMPORT_LIBRARY\n', '')
-    .replace('// IMPORT_COMPONENTS\n', '')
-    .replace('// REGISTER_COMPONENTS\n', '')
-    .replace('const Extend = EXTEND;\n', '');
-  pluginContent = pluginContent
-    .split(/\/\/ DEFINE_INSTANCE_PROTOS_START\n|\/\/ DEFINE_INSTANCE_PROTOS_END\n/)
-    .filter((part, index) => index !== 1)
-    .join('')
-    .split(/\/\/ DEFINE_PROTOS_START|\/\/ DEFINE_PROTOS_END/)
-    .filter((part, index) => index !== 1)
-    .join('');
-  pluginContent = pluginContent.replace(/\n[ ]*\n/g, '\n');
+  const pluginContent = fs
+    .readFileSync('src/svelte/framework7-svelte.js', 'utf-8')
+    .replace('// IMPORT_COMPONENTS', componentImports.join('\n'))
+    .replace('// EXPORT_COMPONENTS', `export { ${componentExports.join(', ')} }`);
 
-  fs.writeFileSync(path.resolve(output, 'utils/plugin.js'), pluginContent);
+  const buildCJS = async () => {
+    fs.writeFileSync(`${buildPath}/svelte/cjs/framework7-svelte.js`, pluginContent);
 
-  // Create plugin
-  const componentsContent = esm({
-    banner: bannerSvelte.trim(),
-    componentImports,
-    componentExports,
-  });
-  fs.writeFileSync(`${output}/framework7-svelte.esm.js`, componentsContent);
+    await exec.promise(
+      `MODULES=cjs npx babel --config-file ./babel-svelte.config.js src/svelte --out-dir ${buildPath}/svelte/cjs --ignore "src/svelte/framework7-svelte.js","*.svelte"`,
+    );
+    await exec.promise(
+      `MODULES=cjs npx babel --config-file ./babel-svelte.config.js ${buildPath}/svelte/cjs/framework7-svelte.js --out-file ${buildPath}/svelte/cjs/framework7-svelte.js`,
+    );
 
-  cb();
+    const cjsContent = fs.readFileSync(`${buildPath}/svelte/cjs/framework7-svelte.js`, 'utf-8');
+
+    fs.writeFileSync(
+      `${buildPath}/svelte/cjs/framework7-svelte.js`,
+      `${bannerSvelte.trim()}\n${cjsContent}`,
+    );
+
+    compileSvelteComponents(buildPath, 'cjs');
+  };
+
+  const buildEMS = async () => {
+    fs.writeFileSync(`${buildPath}/svelte/esm/framework7-svelte.js`, pluginContent);
+
+    await exec.promise(
+      `MODULES=esm npx babel --config-file ./babel-svelte.config.js src/svelte --out-dir ${buildPath}/svelte/esm --ignore "src/svelte/framework7-svelte.js","*.svelte"`,
+    );
+
+    const esmContent = fs.readFileSync(`${buildPath}/svelte/esm/framework7-svelte.js`, 'utf-8');
+
+    fs.writeFileSync(
+      `${buildPath}/svelte/esm/framework7-svelte.js`,
+      `${bannerSvelte.trim()}\n${esmContent}`,
+    );
+
+    compileSvelteComponents(buildPath, 'esm');
+  };
+
+  if (env === 'production') {
+    await buildCJS();
+  }
+  await buildEMS();
+
+  if (cb) cb();
 }
 
 module.exports = buildSvelte;

@@ -5,6 +5,9 @@ custom
 packages
 node_modules
 kitchen-sink/core/
+kitchen-sink/svelte/js
+kitchen-sink/react/js
+kitchen-sink/vue/js
 src/core/framework7.js
 src/core/framework7-lite.js
 src/core/modules/demo-module.js
@@ -12,5 +15,4 @@ src/core/modules/component/snabbdom
 woff2
 
 src/phenome
-src/svelte
 vue-temp

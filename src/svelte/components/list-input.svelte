@@ -1,11 +1,11 @@
 <script>
   import { createEventDispatcher, onMount, afterUpdate, onDestroy, getContext } from 'svelte';
-  import Mixins from '../utils/mixins';
-  import Utils from '../utils/utils';
-  import restProps from '../utils/rest-props';
-  import f7 from '../utils/f7';
-  import hasSlots from '../utils/has-slots';
-  import TextEditor from './text-editor.svelte';
+  import Mixins from '../shared/mixins';
+  import Utils from '../shared/utils';
+  import restProps from '../shared/rest-props';
+  import f7 from '../shared/f7';
+  import hasSlots from '../shared/has-slots';
+  import TextEditor from './text-editor';
 
   const dispatch = createEventDispatcher();
 

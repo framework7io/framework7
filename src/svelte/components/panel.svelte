@@ -1,9 +1,9 @@
 <script>
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
-  import Utils from '../utils/utils';
-  import restProps from '../utils/rest-props';
-  import Mixins from '../utils/mixins';
-  import f7 from '../utils/f7';
+  import Utils from '../shared/utils';
+  import restProps from '../shared/rest-props';
+  import Mixins from '../shared/mixins';
+  import f7 from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
