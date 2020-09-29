@@ -1,9 +1,9 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames, plainText } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -19,13 +19,13 @@
   let el;
   let f7Tooltip;
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     {
       'fab-close': fabClose,
       'fab-label-button': label,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
   let tooltipText = tooltip;
@@ -73,8 +73,8 @@
       f7Tooltip = null;
     }
   });
-
 </script>
+
 <!-- svelte-ignore a11y-missing-attribute -->
 <a
   bind:this={el}
@@ -85,6 +85,6 @@
 >
   <slot />
   {#if typeof label !== 'undefined'}
-    <span class="fab-label">{Utils.text(label)}</span>
+    <span class="fab-label">{plainText(label)}</span>
   {/if}
 </a>

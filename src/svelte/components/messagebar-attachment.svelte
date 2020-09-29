@@ -1,8 +1,8 @@
 <script>
   import { createEventDispatcher } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
 
   const dispatch = createEventDispatcher();
 
@@ -12,11 +12,7 @@
   export let image = undefined;
   export let deletable = true;
 
-  $: classes = Utils.classNames(
-    className,
-    'messagebar-attachment',
-    Mixins.colorClasses($$props),
-  );
+  $: classes = classNames(className, 'messagebar-attachment', colorClasses($$props));
 
   function onClick(event) {
     dispatch('attachmentClick', [event]);
@@ -28,6 +24,7 @@
     if (typeof $$props.onAttachmentDelete === 'function') $$props.onAttachmentDelete(event);
   }
 </script>
+
 <!-- svelte-ignore a11y-missing-attribute -->
 <div on:click={onClick} class={classes} {...restProps($$restProps)}>
   {#if image}

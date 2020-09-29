@@ -1,10 +1,10 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy, afterUpdate } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
   import { theme } from '../shared/plugin';
-  import f7 from '../shared/f7';
+  import { f7 } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -41,20 +41,30 @@
     });
   }
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'toolbar',
     {
       tabbar,
-      'toolbar-bottom': (_theme && _theme.md && bottomMd) || (_theme && _theme.ios && bottomIos) || (_theme && _theme.aurora && bottomAurora) || bottom || position === 'bottom',
-      'toolbar-top': (_theme && _theme.md && topMd) || (_theme && _theme.ios && topIos) || (_theme && _theme.aurora && topAurora) || top || position === 'top',
+      'toolbar-bottom':
+        (_theme && _theme.md && bottomMd) ||
+        (_theme && _theme.ios && bottomIos) ||
+        (_theme && _theme.aurora && bottomAurora) ||
+        bottom ||
+        position === 'bottom',
+      'toolbar-top':
+        (_theme && _theme.md && topMd) ||
+        (_theme && _theme.ios && topIos) ||
+        (_theme && _theme.aurora && topAurora) ||
+        top ||
+        position === 'top',
       'tabbar-labels': labels,
       'tabbar-scrollable': scrollable,
       'toolbar-hidden': hidden,
       'no-shadow': noShadow,
       'no-hairline': noHairline || noBorder,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
   function onShow(toolbarEl) {

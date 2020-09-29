@@ -1,9 +1,15 @@
 <script>
   import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
+  import {
+    colorClasses,
+    routerAttrs,
+    routerClasses,
+    actionsAttrs,
+    actionsClasses,
+  } from '../shared/mixins';
+  import { classNames, extend, plainText } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -20,31 +26,31 @@
 
   $: hrefComputed = typeof href === 'undefined' && link ? '#' : href;
 
-  $: attrs = Utils.extend(
+  $: attrs = extend(
     {
       href: hrefComputed,
       target,
       ...restProps($$restProps),
     },
-    Mixins.linkRouterAttrs($$props),
-    Mixins.linkActionsAttrs($$props),
+    routerAttrs($$props),
+    actionsAttrs($$props),
   );
 
-  $: isLink = (link || href || href === '');
+  $: isLink = link || href || href === '';
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     {
       'menu-dropdown-link': isLink && !divider,
       'menu-dropdown-item': !isLink && !divider,
       'menu-dropdown-divider': divider,
     },
     className,
-    Mixins.colorClasses($$props),
-    Mixins.linkRouterClasses($$props),
-    Mixins.linkActionsClasses($$props),
+    colorClasses($$props),
+    routerClasses($$props),
+    actionsClasses($$props),
     {
       'menu-close': typeof menuClose === 'undefined',
-    }
+    },
   );
 
   function onClick(e) {
@@ -66,17 +72,17 @@
     if (!el || !f7.instance) return;
     delete el.f7RouteProps;
   });
-
 </script>
+
 <!-- svelte-ignore a11y-missing-attribute -->
 {#if isLink}
   <a on:click={onClick} bind:this={el} class={classes} {...attrs}>
-    {Utils.text(text)}
+    {plainText(text)}
     <slot />
   </a>
 {:else}
   <div on:click={onClick} bind:this={el} class={classes} {...attrs}>
-    {Utils.text(text)}
+    {plainText(text)}
     <slot />
   </div>
 {/if}

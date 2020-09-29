@@ -1,9 +1,9 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames, noUndefinedProps, plainText } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -58,7 +58,7 @@
     return f7Stepper;
   }
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'stepper',
     {
@@ -84,7 +84,7 @@
       'stepper-raised-md': raisedMd,
       'stepper-raised-aurora': raisedAurora,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
   function watchValue(newValue) {
@@ -106,37 +106,41 @@
 
   function onMinusClick(event) {
     dispatch('stepperMinusClick', [event, f7Stepper]);
-    if (typeof $$props.onStepperMinusClick === 'function') $$props.onStepperMinusClick(event, f7Stepper);
+    if (typeof $$props.onStepperMinusClick === 'function')
+      $$props.onStepperMinusClick(event, f7Stepper);
   }
 
   function onPlusClick(event) {
     dispatch('stepperPlusClick', [event, f7Stepper]);
-    if (typeof $$props.onStepperPlusClick === 'function') $$props.onStepperPlusClick(event, f7Stepper);
+    if (typeof $$props.onStepperPlusClick === 'function')
+      $$props.onStepperPlusClick(event, f7Stepper);
   }
 
   onMount(() => {
     if (!init) return;
     f7.ready(() => {
-      f7Stepper = f7.instance.stepper.create(Utils.noUndefinedProps({
-        el,
-        min,
-        max,
-        value,
-        step,
-        formatValue,
-        autorepeat,
-        autorepeatDynamic,
-        wraps,
-        manualInputMode,
-        decimalPoint,
-        buttonsEndInputMode,
-        on: {
-          change(stepper, newValue) {
-            dispatch('stepperChange', [newValue]);
-            if (typeof $$props.onStepperChange === 'function') $$props.onStepperChange(newValue);
+      f7Stepper = f7.instance.stepper.create(
+        noUndefinedProps({
+          el,
+          min,
+          max,
+          value,
+          step,
+          formatValue,
+          autorepeat,
+          autorepeatDynamic,
+          wraps,
+          manualInputMode,
+          decimalPoint,
+          buttonsEndInputMode,
+          on: {
+            change(stepper, newValue) {
+              dispatch('stepperChange', [newValue]);
+              if (typeof $$props.onStepperChange === 'function') $$props.onStepperChange(newValue);
+            },
           },
-        },
-      }));
+        }),
+      );
     });
   });
 
@@ -150,24 +154,23 @@
 
 <div bind:this={el} class={classes} {...restProps($$restProps)}>
   <div on:click={onMinusClick} class="stepper-button-minus" />
-  {#if (input && !buttonsOnly)}
-  <div class="stepper-input-wrap">
-    <input
-      name={name}
-      id={inputId}
-      type={inputType}
-      min={inputType === 'number' ? min : undefined}
-      max={inputType === 'number' ? max : undefined}
-      step={inputType === 'number' ? step : undefined}
-      on:input={onInput}
-      on:change={onChange}
-      value={typeof value === 'undefined' ? '' : value}
-      readonly={inputReadonly}
-    />
-  </div>
+  {#if input && !buttonsOnly}
+    <div class="stepper-input-wrap">
+      <input
+        {name}
+        id={inputId}
+        type={inputType}
+        min={inputType === 'number' ? min : undefined}
+        max={inputType === 'number' ? max : undefined}
+        step={inputType === 'number' ? step : undefined}
+        on:input={onInput}
+        on:change={onChange}
+        value={typeof value === 'undefined' ? '' : value}
+        readonly={inputReadonly} />
+    </div>
   {/if}
-  {#if (!input && !buttonsOnly)}
-    <div class="stepper-value">{Utils.text(value)}</div>
+  {#if !input && !buttonsOnly}
+    <div class="stepper-value">{plainText(value)}</div>
   {/if}
   <div on:click={onPlusClick} class="stepper-button-plus" />
 </div>

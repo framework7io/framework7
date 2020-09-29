@@ -1,9 +1,9 @@
 <script>
   import { onMount, onDestroy, beforeUpdate, afterUpdate } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames, noUndefinedProps } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
 
   let className = undefined;
   export { className as class };
@@ -30,32 +30,30 @@
   let f7Messages;
   let childrenBeforeUpdated = null;
 
-  $: classes = Utils.classNames(
-    className,
-    'messages',
-    Mixins.colorClasses($$props),
-  );
+  $: classes = classNames(className, 'messages', colorClasses($$props));
 
   onMount(() => {
     if (!init) return;
     f7.ready(() => {
-      f7Messages = f7.instance.messages.create(Utils.noUndefinedProps({
-        el,
-        autoLayout,
-        messages,
-        newMessagesFirst,
-        scrollMessages,
-        scrollMessagesOnEdge,
-        firstMessageRule,
-        lastMessageRule,
-        tailMessageRule,
-        sameNameMessageRule,
-        sameHeaderMessageRule,
-        sameFooterMessageRule,
-        sameAvatarMessageRule,
-        customClassMessageRule,
-        renderMessage,
-      }));
+      f7Messages = f7.instance.messages.create(
+        noUndefinedProps({
+          el,
+          autoLayout,
+          messages,
+          newMessagesFirst,
+          scrollMessages,
+          scrollMessagesOnEdge,
+          firstMessageRule,
+          lastMessageRule,
+          tailMessageRule,
+          sameNameMessageRule,
+          sameHeaderMessageRule,
+          sameFooterMessageRule,
+          sameAvatarMessageRule,
+          customClassMessageRule,
+          renderMessage,
+        }),
+      );
       if (typing) f7Messages.showTyping();
     });
   });
@@ -88,7 +86,12 @@
     if (f7Messages && f7Messages.layout && autoLayout) {
       f7Messages.layout();
     }
-    if (childrenBeforeUpdated !== childrenAfterUpdated && f7Messages && f7Messages.scroll && scrollMessages) {
+    if (
+      childrenBeforeUpdated !== childrenAfterUpdated &&
+      f7Messages &&
+      f7Messages.scroll &&
+      scrollMessages
+    ) {
       f7Messages.scroll();
     }
   });
@@ -112,7 +115,6 @@
   }
 
   $: watchTyping(typing);
-
 </script>
 
 <div bind:this={el} class={classes} {...restProps($$restProps)}>

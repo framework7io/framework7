@@ -1,10 +1,10 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
-  import hasSlots from '../shared/has-slots';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames, plainText } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
+  import { hasSlots } from '../shared/has-slots';
 
   import CardHeader from './card-header';
   import CardContent from './card-content';
@@ -37,7 +37,7 @@
 
   let el;
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'card',
     {
@@ -47,7 +47,7 @@
       'no-shadow': noShadow,
       'no-border': noBorder,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
   /* eslint-disable no-undef */
@@ -128,7 +128,6 @@
     f7.instance.off('cardClose', onClose);
     f7.instance.off('cardClosed', onClosed);
   });
-
 </script>
 
 <div
@@ -143,23 +142,22 @@
   data-close-by-backdrop-click={typeof closeByBackdropClick === 'undefined' ? closeByBackdropClick : closeByBackdropClick.toString()}
   data-backdrop={typeof backdrop === 'undefined' ? backdrop : backdrop.toString()}
   data-backdrop-el={backdropEl}
-  {...restProps($$restProps)}
->
+  {...restProps($$restProps)}>
   {#if typeof title !== 'undefined' || hasHeaderSlots}
     <CardHeader>
-      {Utils.text(title)}
+      {plainText(title)}
       <slot name="header" />
     </CardHeader>
   {/if}
   {#if typeof content !== 'undefined' || hasContentSlots}
-    <CardContent padding={padding}>
-      {Utils.text(content)}
+    <CardContent {padding}>
+      {plainText(content)}
       <slot name="content" />
     </CardContent>
   {/if}
   {#if typeof footer !== 'undefined' || hasFooterSlots}
     <CardFooter>
-      {Utils.text(footer)}
+      {plainText(footer)}
       <slot name="footer" />
     </CardFooter>
   {/if}

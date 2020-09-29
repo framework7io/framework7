@@ -1,10 +1,10 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
 
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
 
   let className = undefined;
   export { className as class };
@@ -15,11 +15,7 @@
   let el;
   let f7Tooltip;
 
-  $: classes = Utils.classNames(
-    className,
-    'badge',
-    Mixins.colorClasses($$props),
-  );
+  $: classes = classNames(className, 'badge', colorClasses($$props));
 
   let tooltipText = tooltip;
   function watchTooltip(newText) {
@@ -62,6 +58,7 @@
     }
   });
 </script>
+
 <span class={classes} {...restProps($$restProps)}>
   <slot />
 </span>

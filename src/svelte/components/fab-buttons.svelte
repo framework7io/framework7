@@ -1,20 +1,19 @@
 <script>
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
 
   let className = undefined;
   export { className as class };
 
   export let position = 'top';
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'fab-buttons',
     `fab-buttons-${position}`,
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
-
 </script>
 
 <div class={classes} {...restProps($$restProps)}>

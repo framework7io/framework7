@@ -1,9 +1,9 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames, noUndefinedProps } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -72,7 +72,7 @@
     return f7Searchbar.clear();
   }
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'searchbar',
     {
@@ -81,7 +81,7 @@
       'no-hairline': noHairline,
       'searchbar-expandable': expandable,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
   function onChange(event) {
@@ -120,7 +120,7 @@
   onMount(() => {
     if (!init) return;
     f7.ready(() => {
-      const params = Utils.noUndefinedProps({
+      const params = noUndefinedProps({
         el,
         inputEvents,
         searchContainer,
@@ -145,19 +145,23 @@
         on: {
           search(searchbar, query, previousQuery) {
             dispatch('searchbarSearch', [searchbar, query, previousQuery]);
-            if (typeof $$props.onSearchbarSearch === 'function') $$props.onSearchbarSearch(searchbar, query, previousQuery);
+            if (typeof $$props.onSearchbarSearch === 'function')
+              $$props.onSearchbarSearch(searchbar, query, previousQuery);
           },
           clear(searchbar, previousQuery) {
             dispatch('searchbarClear', [searchbar, previousQuery]);
-            if (typeof $$props.onSearchbarClear === 'function') $$props.onSearchbarClear(searchbar, previousQuery);
+            if (typeof $$props.onSearchbarClear === 'function')
+              $$props.onSearchbarClear(searchbar, previousQuery);
           },
           enable(searchbar) {
             dispatch('searchbarEnable', [searchbar]);
-            if (typeof $$props.onSearchbarEnable === 'function') $$props.onSearchbarEnable(searchbar);
+            if (typeof $$props.onSearchbarEnable === 'function')
+              $$props.onSearchbarEnable(searchbar);
           },
           disable(searchbar) {
             dispatch('searchbarDisable', [searchbar]);
-            if (typeof $$props.onSearchbarDisable === 'function') $$props.onSearchbarDisable(searchbar);
+            if (typeof $$props.onSearchbarDisable === 'function')
+              $$props.onSearchbarDisable(searchbar);
           },
         },
       });
@@ -177,8 +181,14 @@
     }
   });
 </script>
+
 {#if form}
-  <form bind:this={el} class={classes} on:submit={onSubmit} data-f7-slot={f7Slot} {...restProps($$restProps)}>
+  <form
+    bind:this={el}
+    class={classes}
+    on:submit={onSubmit}
+    data-f7-slot={f7Slot}
+    {...restProps($$restProps)}>
     <slot name="before-inner" />
     <div class="searchbar-inner">
       <slot name="inner-start" />
@@ -186,22 +196,21 @@
         <slot name="input-wrap-start" />
         <input
           value={typeof value === 'undefined' ? '' : value}
-          placeholder={placeholder}
-          spellcheck={spellcheck}
+          {placeholder}
+          {spellcheck}
           type="search"
           on:input={onInput}
           on:change={onChange}
           on:focus={onFocus}
-          on:blur={onBlur}
-        />
+          on:blur={onBlur} />
         <i class="searchbar-icon" />
-        {#if clearButton}
-          <span on:click={onClearButtonClick} class="input-clear-button" />
-        {/if}
+        {#if clearButton}<span on:click={onClearButtonClick} class="input-clear-button" />{/if}
         <slot name="input-wrap-end" />
       </div>
       {#if disableButton}
-        <span on:click={onDisableButtonClick} class="searchbar-disable-button">{disableButtonText}</span>
+        <span
+          on:click={onDisableButtonClick}
+          class="searchbar-disable-button">{disableButtonText}</span>
       {/if}
       <slot name="inner-end" />
       <slot />
@@ -217,22 +226,21 @@
         <slot name="input-wrap-start" />
         <input
           value={typeof value === 'undefined' ? '' : value}
-          placeholder={placeholder}
-          spellcheck={spellcheck}
+          {placeholder}
+          {spellcheck}
           type="search"
           on:input={onInput}
           on:change={onChange}
           on:focus={onFocus}
-          on:blur={onBlur}
-        />
+          on:blur={onBlur} />
         <i class="searchbar-icon" />
-        {#if clearButton}
-          <span on:click={onClearButtonClick} class="input-clear-button" />
-        {/if}
+        {#if clearButton}<span on:click={onClearButtonClick} class="input-clear-button" />{/if}
         <slot name="input-wrap-end" />
       </div>
       {#if disableButton}
-        <span on:click={onDisableButtonClick} class="searchbar-disable-button">{disableButtonText}</span>
+        <span
+          on:click={onDisableButtonClick}
+          class="searchbar-disable-button">{disableButtonText}</span>
       {/if}
       <slot name="inner-end" />
       <slot />

@@ -1,9 +1,9 @@
 <script>
   import { onMount, afterUpdate, onDestroy } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames, extend } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
 
   let className = undefined;
   export { className as class };
@@ -22,11 +22,7 @@
   let scrollbarEl;
   let initialUpdate = false;
 
-  $: classes = Utils.classNames(
-    className,
-    'swiper-container',
-    Mixins.colorClasses($$props),
-  );
+  $: classes = classNames(className, 'swiper-container', colorClasses($$props));
 
   $: paginationComputed = (() => {
     if (pagination === true || (params && params.pagination && !params.pagination.el)) {
@@ -43,12 +39,14 @@
   })();
 
   $: navigationComputed = (() => {
-    if (navigation === true || (params && params.navigation && !params.navigation.nextEl && !params.navigation.prevEl)) {
+    if (
+      navigation === true ||
+      (params && params.navigation && !params.navigation.nextEl && !params.navigation.prevEl)
+    ) {
       return true;
     }
     return false;
   })();
-
 
   onMount(() => {
     if (!init) return;
@@ -58,7 +56,7 @@
         navigation: {},
         scrollbar: {},
       };
-      if (params) Utils.extend(newParams, params);
+      if (params) extend(newParams, params);
       if (pagination && !newParams.pagination.el) newParams.pagination.el = paginationEl;
       if (navigation && !newParams.navigation.nextEl && !newParams.navigation.prevEl) {
         newParams.navigation.nextEl = nextEl;
@@ -82,6 +80,7 @@
     if (swiper && swiper.destroy) swiper.destroy();
   });
 </script>
+
 <div bind:this={el} class={classes} {...restProps($$restProps)}>
   <slot name="before-wrapper" />
   <div class="swiper-wrapper">

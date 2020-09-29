@@ -142,3 +142,8 @@ export function getComponentId() {
   routerComponentIdCounter += 1;
   return `${now()}_${routerComponentIdCounter}`;
 }
+
+export function plainText(text) {
+  if (typeof text === 'undefined' || text === null) return '';
+  return text;
+}

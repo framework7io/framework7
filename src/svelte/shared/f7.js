@@ -1,4 +1,5 @@
 /* eslint-disable import/no-mutable-exports */
+// eslint-disable-next-line
 import Framework7 from 'framework7/lite';
 import { extend } from './utils';
 

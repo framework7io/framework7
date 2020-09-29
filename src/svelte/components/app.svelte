@@ -1,10 +1,10 @@
 <script>
   import { onMount } from 'svelte';
-  import f7 from '../shared/f7';
+  import { f7 } from '../shared/f7';
   import RoutableModals from './routable-modals';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
 
   export let id = 'framework7-root';
   export let params = {};
@@ -15,11 +15,7 @@
 
   let el;
 
-  $: classes = Utils.classNames(
-    className,
-    'framework7-root',
-    Mixins.colorClasses($$props),
-  );
+  $: classes = classNames(className, 'framework7-root', colorClasses($$props));
 
   onMount(() => {
     const parentEl = el.parentNode;
@@ -29,10 +25,9 @@
     if (f7.instance) return;
     f7.init(el, params, routes);
   });
-
 </script>
 
-<div id={id} bind:this={el} class={classes} {...restProps($$restProps)}>
-  <slot></slot>
+<div {id} bind:this={el} class={classes} {...restProps($$restProps)}>
+  <slot />
   <RoutableModals />
 </div>

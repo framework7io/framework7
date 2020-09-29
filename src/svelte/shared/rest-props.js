@@ -1,4 +1,4 @@
-function restProps(rest = {}) {
+export function restProps(rest = {}) {
   const props = {};
   Object.keys(rest).forEach((key) => {
     if (key.indexOf('on') !== 0) {
@@ -7,5 +7,3 @@ function restProps(rest = {}) {
   });
   return props;
 }
-
-export default restProps;

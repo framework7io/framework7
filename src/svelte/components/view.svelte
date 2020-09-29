@@ -1,8 +1,8 @@
 <script>
   import { onMount, onDestroy, afterUpdate, createEventDispatcher, tick } from 'svelte';
-  import f7 from '../shared/f7';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
+  import { f7 } from '../shared/f7';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames, noUndefinedProps } from '../shared/utils';
 
   export let id = undefined;
   export let style = undefined;
@@ -14,7 +14,7 @@
   const dispatch = createEventDispatcher();
 
   const { main, tab, tabActive } = $$props;
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'view',
     {
@@ -22,7 +22,7 @@
       'tab-active': tabActive,
       tab,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
   let el;
@@ -44,7 +44,8 @@
   }
   function onSwipeBackBeforeChange(data) {
     dispatch('swipeBackBeforeChange', [data]);
-    if (typeof $$props.onSwipeBackBeforeChange === 'function') $$props.onSwipeBackBeforeChange(data);
+    if (typeof $$props.onSwipeBackBeforeChange === 'function')
+      $$props.onSwipeBackBeforeChange(data);
   }
   function onSwipeBackAfterChange(data) {
     dispatch('swipeBackAfterChange', [data]);
@@ -93,7 +94,7 @@
       };
       f7.routers.views.push(routerData);
       routerData.instance = f7.instance.views.create(el, {
-        ...Utils.noUndefinedProps($$props),
+        ...noUndefinedProps($$props),
         on: {
           init: onViewInit,
         },
@@ -136,9 +137,9 @@
   });
 </script>
 
-<div class={classes} style={style} id={id} bind:this={el}>
-  <slot></slot>
+<div class={classes} {style} {id} bind:this={el}>
+  <slot />
   {#each pages as page (page.id)}
-  <svelte:component this={page.component} {...page.props}></svelte:component>
+    <svelte:component this={page.component} {...page.props} />
   {/each}
 </div>

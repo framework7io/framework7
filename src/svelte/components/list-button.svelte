@@ -1,9 +1,15 @@
 <script>
   import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
+  import {
+    colorClasses,
+    routerAttrs,
+    routerClasses,
+    actionsAttrs,
+    actionsClasses,
+  } from '../shared/mixins';
+  import { classNames, extend, plainText, isStringProp } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -23,27 +29,27 @@
   let el;
   let f7Tooltip;
 
-  $: hrefComputed = ((typeof link === 'boolean' && typeof href === 'boolean') ? '#' : (link || href));
+  $: hrefComputed = typeof link === 'boolean' && typeof href === 'boolean' ? '#' : link || href;
 
-  $: attrs = Utils.extend(
+  $: attrs = extend(
     {
       href: hrefComputed,
       target,
-      'data-tab': (Utils.isStringProp(tabLink) && tabLink) || undefined,
+      'data-tab': (isStringProp(tabLink) && tabLink) || undefined,
     },
-    Mixins.linkRouterAttrs($$props),
-    Mixins.linkActionsAttrs($$props),
+    routerAttrs($$props),
+    actionsAttrs($$props),
   );
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     {
       'list-button': true,
       'tab-link': tabLink || tabLink === '',
       'tab-link-active': tabLinkActive,
     },
-    Mixins.colorClasses($$props),
-    Mixins.linkRouterClasses($$props),
-    Mixins.linkActionsClasses($$props),
+    colorClasses($$props),
+    routerClasses($$props),
+    actionsClasses($$props),
   );
 
   let tooltipText = tooltip;
@@ -100,13 +106,13 @@
       f7Tooltip = null;
     }
   });
-
 </script>
+
 <!-- svelte-ignore a11y-missing-attribute -->
 <li class={className} {...restProps($$restProps)}>
   <a class={classes} {...attrs} on:click={onClick}>
-    {Utils.text(title)}
-    {Utils.text(text)}
+    {plainText(title)}
+    {plainText(text)}
     <slot />
   </a>
 </li>

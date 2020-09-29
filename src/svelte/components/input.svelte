@@ -1,10 +1,10 @@
 <script>
   import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
-  import hasSlots from '../shared/has-slots';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
+  import { hasSlots } from '../shared/has-slots';
   import Toggle from './toggle';
   import Range from './range';
   import TextEditor from './text-editor';
@@ -70,7 +70,6 @@
   // Text editor
   export let textEditorParams = undefined;
 
-
   // State
   let inputEl;
   let inputFocused = false;
@@ -89,9 +88,7 @@
       return false;
     }
     const domV = domValue();
-    return typeof value === 'undefined'
-      ? (domV || domV === 0)
-      : (value || value === 0);
+    return typeof value === 'undefined' ? domV || domV === 0 : value || value === 0;
   }
 
   function validateInput() {
@@ -129,9 +126,7 @@
 
   $: watchValue(value);
 
-  $: inputType = type === 'datepicker' || type === 'colorpicker'
-    ? 'text'
-    : type;
+  $: inputType = type === 'datepicker' || type === 'colorpicker' ? 'text' : type;
 
   $: needsValue = type !== 'file' && type !== 'datepicker' && type !== 'colorpicker';
 
@@ -146,37 +141,31 @@
     return v;
   })();
 
-  $: classes = Utils.classNames(
-    !wrap && className,
-    {
-      resizable: inputType === 'textarea' && resizable,
-      'no-store-data': (noFormStoreData || noStoreData || ignoreStoreData),
-      'input-invalid': (errorMessage && errorMessageForce) || inputInvalid,
-      'input-with-value': inputHasValue(),
-      'input-focused': inputFocused,
-    }
-  );
+  $: classes = classNames(!wrap && className, {
+    resizable: inputType === 'textarea' && resizable,
+    'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
+    'input-invalid': (errorMessage && errorMessageForce) || inputInvalid,
+    'input-with-value': inputHasValue(),
+    'input-focused': inputFocused,
+  });
 
-  $: wrapClasses = Utils.classNames(
+  $: wrapClasses = classNames(
     className,
     'input',
     {
       'input-outline': outline,
       'input-dropdown': dropdown === 'auto' ? type === 'select' : dropdown,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
-  $: inputClassName = Utils.classNames(
-    !wrap && className,
-    {
-      resizable: inputType === 'textarea' && resizable,
-      'no-store-data': (noFormStoreData || noStoreData || ignoreStoreData),
-      'input-invalid': (errorMessage && errorMessageForce) || inputInvalid,
-      'input-with-value': inputHasValue(),
-      'input-focused': inputFocused,
-    }
-  );
+  $: inputClassName = classNames(!wrap && className, {
+    resizable: inputType === 'textarea' && resizable,
+    'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
+    'input-invalid': (errorMessage && errorMessageForce) || inputInvalid,
+    'input-with-value': inputHasValue(),
+    'input-focused': inputFocused,
+  });
 
   // eslint-disable-next-line
   $: hasInfoSlots = hasSlots(arguments, 'info');
@@ -255,7 +244,8 @@
           on: {
             change(calendar, calendarValue) {
               dispatch('calendarChange', [calendarValue]);
-              if (typeof $$props.onCalendarChange === 'function') $$props.onCalendarChange(calendarValue);
+              if (typeof $$props.onCalendarChange === 'function')
+                $$props.onCalendarChange(calendarValue);
             },
           },
           ...(calendarParams || {}),
@@ -268,7 +258,8 @@
           on: {
             change(colorPicker, colorPickerValue) {
               dispatch('colorpickerChange', [colorPickerValue]);
-              if (typeof $$props.onColorpickerChange === 'function') $$props.onColorpickerChange(colorPickerValue);
+              if (typeof $$props.onColorpickerChange === 'function')
+                $$props.onColorpickerChange(colorPickerValue);
             },
           },
           ...(colorPickerParams || {}),
@@ -277,9 +268,11 @@
 
       f7.instance.input.checkEmptyState(inputEl);
       if (
-        !(validateOnBlur || validateOnBlur === '')
-        && (validate || validate === '')
-        && (typeof value !== 'undefined' && value !== null && value !== '')
+        !(validateOnBlur || validateOnBlur === '') &&
+        (validate || validate === '') &&
+        typeof value !== 'undefined' &&
+        value !== null &&
+        value !== ''
       ) {
         setTimeout(() => {
           validateInput();
@@ -327,8 +320,8 @@
     f7Calendar = null;
     f7ColorPicker = null;
   });
-
 </script>
+
 <!-- svelte-ignore a11y-autofocus -->
 {#if wrap}
   <div class={wrapClasses} {...restProps($$restProps)}>

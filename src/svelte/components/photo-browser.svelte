@@ -1,8 +1,8 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
 
-  import Utils from '../shared/utils';
-  import f7 from '../shared/f7';
+  import { extend } from '../shared/utils';
+  import { f7 } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -114,10 +114,11 @@
       }
 
       Object.keys(pbParams).forEach((param) => {
-        if (typeof pbParams[param] === 'undefined' || pbParams[param] === '') delete pbParams[param];
+        if (typeof pbParams[param] === 'undefined' || pbParams[param] === '')
+          delete pbParams[param];
       });
 
-      pbParams = Utils.extend({}, pbParams, {
+      pbParams = extend({}, pbParams, {
         on: {
           open() {
             dispatch('photoBrowserOpen');
@@ -137,7 +138,8 @@
           },
           swipeToClose() {
             dispatch('photoBrowserSwipeToClose');
-            if (typeof $$props.onPhotoBrowserSwipeToClose === 'function') $$props.onPhotoBrowserSwipeToClose();
+            if (typeof $$props.onPhotoBrowserSwipeToClose === 'function')
+              $$props.onPhotoBrowserSwipeToClose();
           },
         },
       });

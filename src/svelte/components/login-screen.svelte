@@ -1,9 +1,9 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -20,11 +20,7 @@
     return f7LoginScreen;
   }
 
-  $: classes = Utils.classNames(
-    className,
-    'login-screen',
-    Mixins.colorClasses($$props),
-  );
+  $: classes = classNames(className, 'login-screen', colorClasses($$props));
 
   function onOpen(instance) {
     dispatch('loginscreenOpen', [instance]);
@@ -80,10 +76,7 @@
     f7LoginScreen = null;
   });
 </script>
-<div
-  class={classes}
-  bind:this={el}
-  {...restProps($$restProps)}
->
+
+<div class={classes} bind:this={el} {...restProps($$restProps)}>
   <slot />
 </div>

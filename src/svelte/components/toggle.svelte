@@ -1,9 +1,9 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -25,13 +25,13 @@
     return f7Toggle;
   }
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     'toggle',
     className,
     {
       disabled,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
   let initialWatched = false;
@@ -59,7 +59,8 @@
         on: {
           change(toggle) {
             dispatch('toggleChange', [toggle.checked]);
-            if (typeof $$props.onToggleChange === 'function') $$props.onToggleChange(toggle.checked);
+            if (typeof $$props.onToggleChange === 'function')
+              $$props.onToggleChange(toggle.checked);
           },
         },
       });
@@ -78,12 +79,11 @@
   <input
     bind:this={inputEl}
     type="checkbox"
-    name={name}
-    disabled={disabled}
-    readonly={readonly}
-    checked={checked}
+    {name}
+    {disabled}
+    {readonly}
+    {checked}
     value={typeof value === 'undefined' ? '' : value}
-    on:change={onChange}
-  />
+    on:change={onChange} />
   <span class="toggle-icon" />
 </label>

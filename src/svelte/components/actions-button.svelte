@@ -1,11 +1,11 @@
 <script>
   import { createEventDispatcher } from 'svelte';
 
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
-  import hasSlots from '../shared/has-slots';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
+  import { hasSlots } from '../shared/has-slots';
 
   const dispatch = createEventDispatcher();
 
@@ -20,13 +20,13 @@
   // eslint-disable-next-line
   $: hasMediaSlots = hasSlots(arguments, 'media');
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     {
       'actions-button': true,
       'actions-button-bold': bold,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
   function onClick() {
@@ -37,15 +37,9 @@
     dispatch('click');
     if (typeof $$props.onClick === 'function') $$props.onClick();
   }
-
 </script>
 
-<div
-  class={classes}
-  on:click={onClick}
-  bind:this={el}
-  {...restProps($$restProps)}
->
+<div class={classes} on:click={onClick} bind:this={el} {...restProps($$restProps)}>
   {#if hasMediaSlots}
     <div class="actions-button-media">
       <slot name="media" />

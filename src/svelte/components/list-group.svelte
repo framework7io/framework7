@@ -1,8 +1,8 @@
 <script>
   import { setContext } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
 
   let className = undefined;
   export { className as class };
@@ -25,7 +25,7 @@
     setContext('f7ListSortableOpposite', sortable);
   }
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'list-group',
     {
@@ -34,11 +34,14 @@
       'sortable-tap-hold': sortableTapHold,
       'sortable-opposite': sortableOpposite,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 </script>
 
-<div class={classes} data-sortable-move-elements={typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined} {...restProps($$restProps)}>
+<div
+  class={classes}
+  data-sortable-move-elements={typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined}
+  {...restProps($$restProps)}>
   <ul>
     <slot />
   </ul>

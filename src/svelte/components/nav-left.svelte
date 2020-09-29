@@ -1,9 +1,9 @@
 <script>
   import { createEventDispatcher } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
   import { theme } from '../shared/plugin';
 
   import Link from './link';
@@ -27,13 +27,13 @@
     });
   }
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'left',
     {
       sliding,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
   $: needBackLinkText = backLinkShowText;
@@ -48,10 +48,8 @@
     if (typeof $$props.onBackClick === 'function') $$props.onBackClick();
   }
 </script>
-<div
-  class={classes}
-  {...restProps($$restProps)}
->
+
+<div class={classes} {...restProps($$restProps)}>
   {#if backLink}
     <Link
       href={backLinkUrl || '#'}
@@ -60,8 +58,7 @@
       force={backLinkForce || undefined}
       class={!backLinkText ? 'icon-only' : undefined}
       text={backLinkText}
-      onClick={onBackClick}
-    />
+      onClick={onBackClick} />
   {/if}
   <slot />
 </div>

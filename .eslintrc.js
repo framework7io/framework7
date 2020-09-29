@@ -136,8 +136,11 @@ module.exports = {
       processor: 'svelte3/svelte3',
       rules: {
         ...rules,
+        'no-restricted-globals': ['off'],
         'object-curly-newline': ['off'],
         curly: ['off'],
+        indent: ['off'],
+        'operator-linebreak': ['off'],
         'nonblock-statement-body-position': ['off'],
         'import/no-mutable-exports': ['off'],
         'import/first': ['off'],

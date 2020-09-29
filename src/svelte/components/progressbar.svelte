@@ -1,8 +1,8 @@
 <script>
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
 
   let className = undefined;
   export { className as class };
@@ -17,13 +17,13 @@
     f7.instance.progressbar.set(el, progress, speed);
   }
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'progressbar',
     {
       'progressbar-infinite': infinite,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
   $: transformStyle = {
@@ -32,11 +32,6 @@
   };
 </script>
 
-<span
-  bind:this={el}
-  class={classes}
-  data-progress={progress}
-  {...restProps($$restProps)}
->
+<span bind:this={el} class={classes} data-progress={progress} {...restProps($$restProps)}>
   <span style={transformStyle} />
 </span>

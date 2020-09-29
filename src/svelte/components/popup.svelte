@@ -1,9 +1,9 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -28,14 +28,14 @@
     return f7Popup;
   }
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'popup',
     {
       'popup-tablet-fullscreen': tabletFullscreen,
       'popup-push': push,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
   function onSwipeStart(instance) {
@@ -99,7 +99,8 @@
         closed: onClosed,
       },
     };
-    if (typeof closeByBackdropClick !== 'undefined') popupParams.closeByBackdropClick = closeByBackdropClick;
+    if (typeof closeByBackdropClick !== 'undefined')
+      popupParams.closeByBackdropClick = closeByBackdropClick;
     if (typeof closeOnEscape !== 'undefined') popupParams.closeOnEscape = closeOnEscape;
     if (typeof animate !== 'undefined') popupParams.animate = animate;
     if (typeof backdrop !== 'undefined') popupParams.backdrop = backdrop;
@@ -119,10 +120,7 @@
     f7Popup = null;
   });
 </script>
-<div
-  class={classes}
-  bind:this={el}
-  {...restProps($$restProps)}
->
+
+<div class={classes} bind:this={el} {...restProps($$restProps)}>
   <slot />
 </div>

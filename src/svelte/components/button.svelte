@@ -1,9 +1,15 @@
 <script>
   import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
+  import {
+    colorClasses,
+    routerAttrs,
+    routerClasses,
+    actionsAttrs,
+    actionsClasses,
+  } from '../shared/mixins';
+  import { classNames, extend, isStringProp, plainText } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
 
   import Icon from './icon';
 
@@ -52,19 +58,19 @@
 
   $: hrefComputed = href === true ? '#' : href || undefined;
 
-  $: attrs = Utils.extend(
+  $: attrs = extend(
     {
       href: hrefComputed,
       target,
       type,
-      'data-tab': (Utils.isStringProp(tabLink) && tabLink) || undefined,
+      'data-tab': (isStringProp(tabLink) && tabLink) || undefined,
       ...restProps($$restProps),
     },
-    Mixins.linkRouterAttrs($$props),
-    Mixins.linkActionsAttrs($$props),
+    routerAttrs($$props),
+    actionsAttrs($$props),
   );
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'button',
     {
@@ -99,14 +105,20 @@
 
       disabled,
     },
-    Mixins.colorClasses($$props),
-    Mixins.linkRouterClasses($$props),
-    Mixins.linkActionsClasses($$props),
+    colorClasses($$props),
+    routerClasses($$props),
+    actionsClasses($$props),
   );
 
   $: tagName = type === 'submit' || type === 'reset' || type === 'button' ? 'button' : 'a';
 
-  $: hasIcon = $$props.icon || $$props.iconMaterial || $$props.iconF7 || $$props.iconMd || $$props.iconIos || $$props.iconAurora;
+  $: hasIcon =
+    $$props.icon ||
+    $$props.iconMaterial ||
+    $$props.iconF7 ||
+    $$props.iconMd ||
+    $$props.iconIos ||
+    $$props.iconAurora;
 
   let tooltipText = tooltip;
   function watchTooltip(newText) {
@@ -161,8 +173,8 @@
       f7Tooltip = null;
     }
   });
-
 </script>
+
 <!-- svelte-ignore a11y-missing-attribute -->
 {#if tagName === 'button'}
   <button
@@ -184,7 +196,7 @@
       />
     {/if}
     {#if typeof text !== 'undefined'}
-      <span>{Utils.text(text)}</span>
+      <span>{plainText(text)}</span>
     {/if}
     <slot />
   </button>
@@ -208,10 +220,8 @@
       />
     {/if}
     {#if typeof text !== 'undefined'}
-      <span>{Utils.text(text)}</span>
+      <span>{plainText(text)}</span>
     {/if}
     <slot />
   </a>
 {/if}
-
-

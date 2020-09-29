@@ -1,10 +1,10 @@
 <script>
   import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
-  import hasSlots from '../shared/has-slots';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames, plainText } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
+  import { hasSlots } from '../shared/has-slots';
 
   const dispatch = createEventDispatcher();
 
@@ -30,7 +30,7 @@
   // eslint-disable-next-line
   $: hasTextSlots = hasSlots(arguments, 'text');
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'fab',
     `fab-${position}`,
@@ -38,7 +38,7 @@
       'fab-morph': morphTo,
       'fab-extended': text || hasTextSlots || typeof textEl !== 'undefined',
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
   let tooltipText = tooltip;
@@ -99,7 +99,6 @@
       f7Tooltip = null;
     }
   });
-
 </script>
 
 <div
@@ -107,12 +106,14 @@
   data-morph-to={morphTo}
   bind:this={el}
   data-f7-slot={f7Slot}
-  {...restProps($$restProps)}
->
-  <a bind:this={linkEl} on:click={onClick} target={target} href={hrefComputed}>
+  {...restProps($$restProps)}>
+  <a bind:this={linkEl} on:click={onClick} {target} href={hrefComputed}>
     <slot />
     {#if typeof text !== 'undefined' || hasTextSlots}
-      <div class="fab-text" bind:this={textEl}>{Utils.text(text)}<slot name="text" /></div>
+      <div class="fab-text" bind:this={textEl}>
+        {plainText(text)}
+        <slot name="text" />
+      </div>
     {/if}
     <slot name="link" />
   </a>

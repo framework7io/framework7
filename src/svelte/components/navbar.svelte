@@ -1,11 +1,11 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy, afterUpdate } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames, plainText } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
   import { theme } from '../shared/plugin';
-  import f7 from '../shared/f7';
-  import hasSlots from '../shared/has-slots';
+  import { f7 } from '../shared/f7';
+  import { hasSlots } from '../shared/has-slots';
 
   import NavLeft from './nav-left';
   import NavTitle from './nav-title';
@@ -72,15 +72,17 @@
   // eslint-disable-next-line
   $: hasTitleLargeSlots = hasSlots(arguments, 'title-large');
 
-  $: addLeftTitleClass = _theme && _theme.ios && f7.instance && !f7.instance.params.navbar.iosCenterTitle;
-  $: addCenterTitleClass = (_theme && _theme.md && f7.instance && f7.instance.params.navbar.mdCenterTitle)
-    || (_theme && _theme.aurora && f7.instance && f7.instance.params.navbar.auroraCenterTitle);
+  $: addLeftTitleClass =
+    _theme && _theme.ios && f7.instance && !f7.instance.params.navbar.iosCenterTitle;
+  $: addCenterTitleClass =
+    (_theme && _theme.md && f7.instance && f7.instance.params.navbar.mdCenterTitle) ||
+    (_theme && _theme.aurora && f7.instance && f7.instance.params.navbar.auroraCenterTitle);
 
   $: isLarge = large || largeTransparent;
   $: isTransparent = transparent || (isLarge && largeTransparent);
   $: isTransparentVisible = isTransparent && transparentVisible;
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'navbar',
     routerPositionClass,
@@ -97,19 +99,14 @@
       'no-shadow': noShadow,
       'no-hairline': noHairline,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
-  $: innerClasses = Utils.classNames(
-    'navbar-inner',
-    innerClass,
-    innerClassName,
-    {
-      sliding,
-      'navbar-inner-left-title': addLeftTitleClass,
-      'navbar-inner-centered-title': addCenterTitleClass,
-    }
-  );
+  $: innerClasses = classNames('navbar-inner', innerClass, innerClassName, {
+    sliding,
+    'navbar-inner-left-title': addLeftTitleClass,
+    'navbar-inner-centered-title': addCenterTitleClass,
+  });
 
   function onHide(navbarEl) {
     if (el !== navbarEl) return;
@@ -206,32 +203,19 @@
     destroyNavbar();
   });
 </script>
-<div
-  class={classes}
-  bind:this={el}
-  data-f7-slot={f7Slot}
-  {...restProps($$restProps)}
->
-  <div class="navbar-bg"></div>
-  <slot name="before-inner"></slot>
+
+<div class={classes} bind:this={el} data-f7-slot={f7Slot} {...restProps($$restProps)}>
+  <div class="navbar-bg" />
+  <slot name="before-inner" />
   <div class={innerClasses}>
     {#if backLink || hasLeftSlots}
-      <NavLeft
-        backLink={backLink}
-        backLinkUrl={backLinkUrl}
-        backLinkForce={backLinkForce}
-        backLinkShowText={backLinkShowText}
-        onBackClick={onBackClick}
-      >
+      <NavLeft {backLink} {backLinkUrl} {backLinkForce} {backLinkShowText} {onBackClick}>
         <slot name="nav-left" />
         <slot name="left" />
       </NavLeft>
     {/if}
     {#if title || subtitle || hasTitleSlots}
-      <NavTitle
-        title={title}
-        subtitle={subtitle}
-      >
+      <NavTitle {title} {subtitle}>
         <slot name="title" />
       </NavTitle>
     {/if}
@@ -244,12 +228,12 @@
     {#if largeTitle || hasTitleLargeSlots}
       <div class="title-large">
         <div class="title-large-text">
-          {Utils.text(largeTitle)}
+          {plainText(largeTitle)}
           <slot name="title-large" />
         </div>
       </div>
     {/if}
     <slot />
   </div>
-  <slot name="after-inner"></slot>
+  <slot name="after-inner" />
 </div>

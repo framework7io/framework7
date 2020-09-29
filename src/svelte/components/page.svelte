@@ -1,9 +1,9 @@
 <script>
   import { onMount, afterUpdate, onDestroy, createEventDispatcher } from 'svelte';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import Mixins from '../shared/mixins';
-  import f7 from '../shared/f7';
+  import { restProps } from '../shared/rest-props';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { f7 } from '../shared/f7';
 
   import PageContent from './page-content';
 
@@ -52,15 +52,15 @@
   let routerPageRoleDetailRoot = false;
   let routerPageMasterStack = false;
 
-  $: forceSubnavbar = (typeof subnavbar === 'undefined' && typeof withSubnavbar === 'undefined')
-    ? hasSubnavbar
-    : false;
+  $: forceSubnavbar =
+    typeof subnavbar === 'undefined' && typeof withSubnavbar === 'undefined' ? hasSubnavbar : false;
 
-  $: forceNavbarLarge = (typeof navbarLarge === 'undefined' && typeof withNavbarLarge === 'undefined')
-    ? hasNavbarLarge
-    : false;
+  $: forceNavbarLarge =
+    typeof navbarLarge === 'undefined' && typeof withNavbarLarge === 'undefined'
+      ? hasNavbarLarge
+      : false;
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'page',
     routerPositionClass,
@@ -80,7 +80,7 @@
       'page-with-card-opened': hasCardExpandableOpened === true,
       'login-screen-page': loginScreen,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
   // Handlers
@@ -118,8 +118,8 @@
     if (el !== page.el) return;
     if (typeof withSubnavbar === 'undefined' && typeof subnavbar === 'undefined') {
       if (
-        (page.$navbarEl && page.$navbarEl.length && page.$navbarEl.find('.subnavbar').length)
-        || (page.$el.children('.navbar').find('.subnavbar').length)
+        (page.$navbarEl && page.$navbarEl.length && page.$navbarEl.find('.subnavbar').length) ||
+        page.$el.children('.navbar').find('.subnavbar').length
       ) {
         hasSubnavbar = true;
       }
@@ -127,8 +127,8 @@
 
     if (typeof withNavbarLarge === 'undefined' && typeof navbarLarge === 'undefined') {
       if (
-        (page.$navbarEl && page.$navbarEl.hasClass('navbar-large'))
-        || page.$el.children('.navbar-large').length
+        (page.$navbarEl && page.$navbarEl.hasClass('navbar-large')) ||
+        page.$el.children('.navbar-large').length
       ) {
         hasNavbarLarge = true;
       }
@@ -179,7 +179,12 @@
   }
   function onPageBeforeRemove(page) {
     if (el !== page.el) return;
-    if (page.$navbarEl && page.$navbarEl[0] && page.$navbarEl.parent()[0] && page.$navbarEl.parent()[0] !== el) {
+    if (
+      page.$navbarEl &&
+      page.$navbarEl[0] &&
+      page.$navbarEl.parent()[0] &&
+      page.$navbarEl.parent()[0] !== el
+    ) {
       page.$el.prepend(page.$navbarEl);
     }
     dispatch('pageBeforeRemove', [page]);
@@ -322,38 +327,36 @@
     destroyPage();
   });
 </script>
+
 <div bind:this={el} class={classes} data-name={name} {...restProps($$restProps)}>
-  <slot name="fixed"></slot>
+  <slot name="fixed" />
   {#if pageContent}
-  <PageContent
-    ptr={ptr}
-    ptrDistance={ptrDistance}
-    ptrPreloader={ptrPreloader}
-    ptrBottom={ptrBottom}
-    ptrMousewheel={ptrMousewheel}
-    infinite={infinite}
-    infiniteTop={infiniteTop}
-    infiniteDistance={infiniteDistance}
-    infinitePreloader={infinitePreloader}
-    hideBarsOnScroll={hideBarsOnScroll}
-    hideNavbarOnScroll={hideNavbarOnScroll}
-    hideToolbarOnScroll={hideToolbarOnScroll}
-    messagesContent={messagesContent}
-    loginScreen={loginScreen}
-    onPtrPullStart={onPtrPullStart}
-    onPtrPullMove={onPtrPullMove}
-    onPtrPullEnd={onPtrPullEnd}
-    onPtrRefresh={onPtrRefresh}
-    onPtrDone={onPtrDone}
-    onInfinite={onInfinite}
-  >
-    <slot name="static"></slot>
-    <slot></slot>
-  </PageContent>
+    <PageContent
+      {ptr}
+      {ptrDistance}
+      {ptrPreloader}
+      {ptrBottom}
+      {ptrMousewheel}
+      {infinite}
+      {infiniteTop}
+      {infiniteDistance}
+      {infinitePreloader}
+      {hideBarsOnScroll}
+      {hideNavbarOnScroll}
+      {hideToolbarOnScroll}
+      {messagesContent}
+      {loginScreen}
+      {onPtrPullStart}
+      {onPtrPullMove}
+      {onPtrPullEnd}
+      {onPtrRefresh}
+      {onPtrDone}
+      {onInfinite}>
+      <slot name="static" />
+      <slot />
+    </PageContent>
   {:else}
-  <slot name="static"></slot>
-  <slot></slot>
+    <slot name="static" />
+    <slot />
   {/if}
 </div>
-
-

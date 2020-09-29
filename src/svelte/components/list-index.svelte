@@ -1,9 +1,9 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -28,11 +28,7 @@
     return f7ListIndex;
   }
 
-  $: classes = Utils.classNames(
-    className,
-    'list-index',
-    Mixins.colorClasses($$props),
-  );
+  $: classes = classNames(className, 'list-index', colorClasses($$props));
 
   export function update() {
     if (!f7ListIndex) return;
@@ -72,7 +68,8 @@
         on: {
           select(index, itemContent, itemIndex) {
             dispatch('listIndexSelect', [itemContent, itemIndex]);
-            if (typeof $$props.onListIndexSelect === 'function') $$props.onListIndexSelect(itemContent, itemIndex);
+            if (typeof $$props.onListIndexSelect === 'function')
+              $$props.onListIndexSelect(itemContent, itemIndex);
           },
         },
       });
@@ -82,7 +79,6 @@
   onDestroy(() => {
     if (f7ListIndex && f7ListIndex.destroy) f7ListIndex.destroy();
   });
-
 </script>
 
 <div bind:this={el} class={classes} data-f7-slot={f7Slot} {...restProps($$restProps)}>

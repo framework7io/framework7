@@ -1,9 +1,10 @@
 <script>
   import { onMount, onDestroy, afterUpdate, createEventDispatcher, tick } from 'svelte';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import Mixins from '../shared/mixins';
-  import f7 from '../shared/f7';
+
+  import { restProps } from '../shared/rest-props';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { f7 } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -15,12 +16,7 @@
   let tabContent = null;
   let routerData = null;
 
-  $: classes = Utils.classNames(
-    className,
-    'tab',
-    tabActive && 'tab-active',
-    Mixins.colorClasses($$props),
-  );
+  $: classes = classNames(className, 'tab', tabActive && 'tab-active', colorClasses($$props));
 
   function onTabShow(tabEl) {
     if (tabEl !== el) return;
@@ -65,7 +61,7 @@
 
 <div class={classes} bind:this={el} {...restProps($$restProps)}>
   {#if tabContent}
-  <svelte:component this={tabContent.component} {...tabContent.props}></svelte:component>
+    <svelte:component this={tabContent.component} {...tabContent.props} />
   {/if}
-  <slot/>
+  <slot />
 </div>

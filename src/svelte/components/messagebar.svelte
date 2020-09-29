@@ -1,10 +1,10 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy, afterUpdate } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
-  import hasSlots from '../shared/has-slots';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames, noUndefinedProps } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
+  import { hasSlots } from '../shared/has-slots';
 
   import Link from './link';
   import Input from './input';
@@ -43,7 +43,7 @@
     return f7Messagebar;
   }
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'toolbar',
     'messagebar',
@@ -51,7 +51,7 @@
       'messagebar-attachments-visible': attachmentsVisible,
       'messagebar-sheet-visible': sheetVisible,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
   // eslint-disable-next-line
@@ -103,7 +103,9 @@
     const inputValue = el.querySelector('textarea');
 
     const clear = f7Messagebar
-      ? () => { f7Messagebar.clear(); }
+      ? () => {
+          f7Messagebar.clear();
+        }
       : () => {};
     dispatch('submit', [inputValue, clear]);
     if (typeof $$props.onSubmit === 'function') $$props.onSubmit(inputValue, clear);
@@ -115,12 +117,14 @@
 
   function onAttachmentDelete(inst, attachmentEl, attachmentElIndex) {
     dispatch('messagebarAttachmentDelete', [inst, attachmentEl, attachmentElIndex]);
-    if (typeof $$props.onMessagebarAttachmentDelete === 'function') $$props.onMessagebarAttachmentDelete(inst, attachmentEl, attachmentElIndex);
+    if (typeof $$props.onMessagebarAttachmentDelete === 'function')
+      $$props.onMessagebarAttachmentDelete(inst, attachmentEl, attachmentElIndex);
   }
 
   function onAttachmentClick(inst, attachmentEl, attachmentElIndex) {
     dispatch('messagebarAttachmentClick', [inst, attachmentEl, attachmentElIndex]);
-    if (typeof $$props.onMessagebarAttachmentClick === 'function') $$props.onMessagebarAttachmentClick(inst, attachmentEl, attachmentElIndex);
+    if (typeof $$props.onMessagebarAttachmentClick === 'function')
+      $$props.onMessagebarAttachmentClick(inst, attachmentEl, attachmentElIndex);
   }
 
   function onResizePage(inst) {
@@ -139,19 +143,21 @@
         const sheetEl = dom7(el).find('.toolbar-inner > .messagebar-sheet');
         if (sheetEl.length) dom7(el).append(sheetEl);
       }
-      f7Messagebar = f7.instance.messagebar.create(Utils.noUndefinedProps({
-        el,
-        top,
-        resizePage,
-        bottomOffset,
-        topOffset,
-        maxHeight,
-        on: {
-          attachmentDelete: onAttachmentDelete,
-          attachmentClick: onAttachmentClick,
-          resizePage: onResizePage,
-        },
-      }));
+      f7Messagebar = f7.instance.messagebar.create(
+        noUndefinedProps({
+          el,
+          top,
+          resizePage,
+          bottomOffset,
+          topOffset,
+          maxHeight,
+          on: {
+            attachmentDelete: onAttachmentDelete,
+            attachmentClick: onAttachmentClick,
+            resizePage: onResizePage,
+          },
+        }),
+      );
     });
   });
 
@@ -183,7 +189,6 @@
       f7Messagebar = null;
     }
   });
-
 </script>
 
 <div bind:this={el} class={classes} data-f7-slot={f7Slot} {...restProps($$restProps)}>
@@ -196,21 +201,20 @@
         id={textareaId}
         type="textarea"
         wrap={false}
-        placeholder={placeholder}
-        disabled={disabled}
-        name={name}
-        readonly={readonly}
-        resizable={resizable}
+        {placeholder}
+        {disabled}
+        {name}
+        {readonly}
+        {resizable}
         value={typeof value === 'undefined' ? '' : value}
         on:input={onInput}
         on:change={onChange}
         on:focus={onFocus}
-        on:blur={onBlur}
-      />
+        on:blur={onBlur} />
       <slot name="after-inner" />
     </div>
-    {#if ((sendLink && sendLink.length > 0) || hasSendLinkSlots)}
-      <Link onClick={onClick}>
+    {#if (sendLink && sendLink.length > 0) || hasSendLinkSlots}
+      <Link {onClick}>
         <slot name="send-link" />
         {sendLink}
       </Link>

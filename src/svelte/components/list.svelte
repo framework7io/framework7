@@ -1,10 +1,10 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy, setContext } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
-  import hasSlots from '../shared/has-slots';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames, extend } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
+  import { hasSlots } from '../shared/has-slots';
 
   const dispatch = createEventDispatcher();
 
@@ -72,7 +72,7 @@
   // eslint-disable-next-line
   $: hasUlSlots = hasSlots(arguments, 'default') || hasSlots(arguments, 'list');
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'list',
     {
@@ -108,7 +108,7 @@
       'no-chevron': noChevron,
       'chevron-center': chevronCenter,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
   function onSubmit(event) {
@@ -154,7 +154,7 @@
       if (!vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) return;
 
       f7VirtualList = f7.instance.virtualList.create(
-        Utils.extend(
+        extend(
           {
             el,
             on: {

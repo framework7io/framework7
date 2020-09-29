@@ -1,10 +1,16 @@
 <script>
   import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
-  import hasSlots from '../shared/has-slots';
+  import {
+    colorClasses,
+    routerAttrs,
+    routerClasses,
+    actionsAttrs,
+    actionsClasses,
+  } from '../shared/mixins';
+  import { classNames, extend, plainText } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
+  import { hasSlots } from '../shared/has-slots';
 
   import Icon from './icon';
 
@@ -24,14 +30,14 @@
 
   $: hrefComputed = typeof href === 'undefined' && link ? '#' : href;
 
-  $: attrs = Utils.extend(
+  $: attrs = extend(
     {
       href: hrefComputed,
       target,
       ...restProps($$restProps),
     },
-    Mixins.linkRouterAttrs($$props),
-    Mixins.linkActionsAttrs($$props),
+    routerAttrs($$props),
+    actionsAttrs($$props),
   );
 
   // eslint-disable-next-line
@@ -41,21 +47,27 @@
 
   $: iconOnlyComputed = iconOnly || (!text && !hasTextSlots);
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     {
       'menu-item': true,
       'menu-item-dropdown': dropdown || dropdown === '',
       'icon-only': iconOnlyComputed,
     },
     className,
-    Mixins.colorClasses($$props),
-    Mixins.linkRouterClasses($$props),
-    Mixins.linkActionsClasses($$props),
+    colorClasses($$props),
+    routerClasses($$props),
+    actionsClasses($$props),
   );
 
-  $: hasIcon = $$props.icon || $$props.iconMaterial || $$props.iconF7 || $$props.iconMd || $$props.iconIos || $$props.iconAurora;
+  $: hasIcon =
+    $$props.icon ||
+    $$props.iconMaterial ||
+    $$props.iconF7 ||
+    $$props.iconMd ||
+    $$props.iconIos ||
+    $$props.iconAurora;
 
-  $: isLink = (link || href || href === '');
+  $: isLink = link || href || href === '';
 
   function onClick(e) {
     dispatch('click', [e]);
@@ -93,14 +105,14 @@
     f7.instance.off('menuOpened', onOpened);
     f7.instance.off('menuClosed', onClosed);
   });
-
 </script>
+
 <!-- svelte-ignore a11y-missing-attribute -->
 {#if isLink}
   <a on:click={onClick} bind:this={el} class={classes} {...attrs}>
     {#if typeof text !== 'undefined' || hasTextSlots || hasIcon}
       <div class="menu-item-content">
-        {Utils.text(text)}
+        {plainText(text)}
         {#if hasIcon}
         <Icon
           material={$$props.iconMaterial}
@@ -122,7 +134,7 @@
   <div on:click={onClick} bind:this={el} class={classes} {...attrs}>
     {#if typeof text !== 'undefined' || hasTextSlots || hasIcon}
       <div class="menu-item-content">
-        {Utils.text(text)}
+        {plainText(text)}
         {#if hasIcon}
         <Icon
           material={$$props.iconMaterial}

@@ -1,9 +1,9 @@
 <script>
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import Mixins from '../shared/mixins';
-  import f7 from '../shared/f7';
+  import { restProps } from '../shared/rest-props';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { f7 } from '../shared/f7';
 
   import Preloader from './preloader';
 
@@ -28,10 +28,9 @@
   let className = undefined;
   export { className as class };
 
-
   let pageContentEl;
 
-  $: pageContentClasses = Utils.classNames(
+  $: pageContentClasses = classNames(
     className,
     'page-content',
     {
@@ -47,7 +46,7 @@
       'messages-content': messagesContent,
       'login-screen-content': loginScreen,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
   // Event handlers
@@ -142,8 +141,7 @@
   data-ptr-distance={ptrDistance}
   data-ptr-mousewheel={ptrMousewheel || undefined}
   data-infinite-distance={infiniteDistance || undefined}
-  {...restProps($$restProps)}
->
+  {...restProps($$restProps)}>
   {#if ptr && ptrPreloader && !ptrBottom}
     <div class="ptr-preloader">
       <Preloader />
@@ -151,11 +149,11 @@
     </div>
   {/if}
   {#if infinite && infiniteTop && infinitePreloader}
-    <Preloader class="infinite-scroll-preloader"/>
+    <Preloader class="infinite-scroll-preloader" />
   {/if}
   <slot />
   {#if infinite && !infiniteTop && infinitePreloader}
-    <Preloader class="infinite-scroll-preloader"/>
+    <Preloader class="infinite-scroll-preloader" />
   {/if}
   {#if ptr && ptrPreloader && ptrBottom}
     <div class="ptr-preloader">

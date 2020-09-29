@@ -1,9 +1,9 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames, noUndefinedProps } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -28,11 +28,11 @@
     return f7TextEditor;
   }
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'text-editor',
     resizable && 'text-editor-resizable',
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
   function watchValue(newValue) {
@@ -61,7 +61,8 @@
   }
   function onButtonClick(editor, button) {
     dispatch('textEditorButtonClick', [button]);
-    if (typeof $$props.onTextEditorButtonClick === 'function') $$props.onTextEditorButtonClick(button);
+    if (typeof $$props.onTextEditorButtonClick === 'function')
+      $$props.onTextEditorButtonClick(button);
   }
   function onKeyboardOpen() {
     dispatch('textEditorKeyboardOpen');
@@ -69,7 +70,8 @@
   }
   function onKeyboardClose() {
     dispatch('textEditorKeyboardClose');
-    if (typeof $$props.onTextEditorKeyboardClose === 'function') $$props.onTextEditorKeyboardClose();
+    if (typeof $$props.onTextEditorKeyboardClose === 'function')
+      $$props.onTextEditorKeyboardClose();
   }
   function onPopoverOpen() {
     dispatch('textEditorPopoverOpen');
@@ -81,7 +83,7 @@
   }
 
   onMount(() => {
-    const params = Utils.noUndefinedProps({
+    const params = noUndefinedProps({
       el,
       mode,
       value,
@@ -119,7 +121,9 @@
 
 <div bind:this={el} class={classes} {...restProps($$restProps)}>
   <slot name="root-start" />
-  <div class="text-editor-content" contenteditable><slot /></div>
+  <div class="text-editor-content" contenteditable>
+    <slot />
+  </div>
   <slot name="root-end" />
   <slot name="root" />
 </div>

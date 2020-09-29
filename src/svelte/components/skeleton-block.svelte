@@ -1,7 +1,7 @@
 <script>
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
 
   export let style = undefined;
 
@@ -12,11 +12,7 @@
   export let height = undefined;
   export let tag = 'div';
 
-  $: classes = Utils.classNames(
-    'skeleton-block',
-    className,
-    Mixins.colorClasses($$props),
-  );
+  $: classes = classNames('skeleton-block', className, colorClasses($$props));
 
   $: styleAttribute = (() => {
     let s = style || '';
@@ -30,14 +26,14 @@
     }
     return s;
   })();
-
 </script>
+
 {#if tag === 'div'}
-<div style={styleAttribute} class={classes} {...restProps($$restProps)}>
-  <slot />
-</div>
+  <div style={styleAttribute} class={classes} {...restProps($$restProps)}>
+    <slot />
+  </div>
 {:else if tag === 'span'}
-<span style={styleAttribute} class={classes} {...restProps($$restProps)}>
-  <slot />
-</span>
+  <span style={styleAttribute} class={classes} {...restProps($$restProps)}>
+    <slot />
+  </span>
 {/if}

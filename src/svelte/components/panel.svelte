@@ -1,9 +1,9 @@
 <script>
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import Mixins from '../shared/mixins';
-  import f7 from '../shared/f7';
+  import { restProps } from '../shared/rest-props';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames, noUndefinedProps } from '../shared/utils';
+  import { f7 } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -40,7 +40,7 @@
   $: sideComputed = side || (left ? 'left' : right ? 'right' : 'left');
   // eslint-disable-next-line
   $: effectComputed = effect || (reveal ? 'reveal' : cover ? 'cover' : 'cover');
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'panel',
     {
@@ -48,7 +48,7 @@
       [`panel-${sideComputed}`]: sideComputed,
       [`panel-${effectComputed}`]: effectComputed,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
   let resizableOld = resizable;
@@ -117,7 +117,8 @@
   }
   function onCollapsedBreakpoint(...args) {
     dispatch('panelCollapsedBreakpoint', [...args]);
-    if (typeof $$props.onPanelCollapsedBreakpoint === 'function') $$props.onPanelCollapsedBreakpoint(...args);
+    if (typeof $$props.onPanelCollapsedBreakpoint === 'function')
+      $$props.onPanelCollapsedBreakpoint(...args);
   }
   function onResize(...args) {
     dispatch('panelResize', [...args]);
@@ -130,7 +131,7 @@
       if (dom7('.panel-backdrop').length === 0) {
         dom7('<div class="panel-backdrop"></div>').insertBefore(el);
       }
-      const params = Utils.noUndefinedProps({
+      const params = noUndefinedProps({
         el,
         resizable,
         backdrop,
@@ -173,6 +174,6 @@
 <div bind:this={el} class={classes} {...restProps($$restProps)}>
   <slot />
   {#if resizable}
-    <div class="panel-resize-handler"></div>
+    <div class="panel-resize-handler" />
   {/if}
 </div>

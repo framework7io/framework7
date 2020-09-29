@@ -1,11 +1,11 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
 
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import hasSlots from '../shared/has-slots';
-  import f7 from '../shared/f7';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames, plainText } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { hasSlots } from '../shared/has-slots';
+  import { f7 } from '../shared/f7';
 
   import Icon from './icon';
 
@@ -27,16 +27,16 @@
   let el;
   let f7Tooltip;
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'chip',
     {
       'chip-outline': outline,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
-  $: mediaClasses = Utils.classNames(
+  $: mediaClasses = classNames(
     'chip-media',
     mediaTextColor && `text-color-${mediaTextColor}`,
     mediaBgColor && `bg-color-${mediaBgColor}`,
@@ -49,7 +49,13 @@
   // eslint-disable-next-line
   $: hasDefaultSlots = hasSlots(arguments, 'default');
 
-  $: hasIcon = $$props.icon || $$props.iconMaterial || $$props.iconF7 || $$props.iconMd || $$props.iconIos || $$props.iconAurora;
+  $: hasIcon =
+    $$props.icon ||
+    $$props.iconMaterial ||
+    $$props.iconF7 ||
+    $$props.iconMd ||
+    $$props.iconIos ||
+    $$props.iconAurora;
 
   let tooltipText = tooltip;
   function watchTooltip(newText) {
@@ -100,8 +106,8 @@
     dispatch('delete', [e]);
     if (typeof $$props.onDelete === 'function') $$props.onDelete(e);
   }
-
 </script>
+
 <!-- svelte-ignore a11y-missing-attribute -->
 <!-- svelte-ignore a11y-missing-content -->
 <div bind:this={el} class={classes} on:click={onClick} {...restProps($$restProps)}>
@@ -116,21 +122,18 @@
           ios={$$props.iconIos}
           aurora={$$props.iconAurora}
           color={$$props.iconColor}
-          size={$$props.iconSize}
-        />
+          size={$$props.iconSize} />
       {/if}
-      {Utils.text(media)}
+      {plainText(media)}
       <slot name="media" />
     </div>
   {/if}
   {#if text || hasTextSlots || hasDefaultSlots}
     <div class="chip-label">
-      {Utils.text(text)}
+      {plainText(text)}
       <slot name="text" />
       <slot />
     </div>
   {/if}
-  {#if deleteable}
-    <a class="chip-delete" on:click={onDeleteClick} />
-  {/if}
+  {#if deleteable}<a class="chip-delete" on:click={onDeleteClick} />{/if}
 </div>

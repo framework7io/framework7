@@ -1,9 +1,9 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames, noUndefinedProps } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -38,7 +38,7 @@
     return f7Range;
   }
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'range-slider',
     {
@@ -47,7 +47,7 @@
       'range-slider-vertical-reversed': vertical && verticalReversed,
       disabled,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
   function watchValue(newValue) {
@@ -60,34 +60,36 @@
   onMount(() => {
     if (!init) return;
     f7.ready(() => {
-      f7Range = f7.instance.range.create(Utils.noUndefinedProps({
-        el,
-        value,
-        min,
-        max,
-        step,
-        label,
-        dual,
-        draggableBar,
-        vertical,
-        verticalReversed,
-        formatLabel,
-        scale,
-        scaleSteps,
-        scaleSubSteps,
-        formatScaleLabel,
-        limitKnobPosition,
-        on: {
-          change(range, val) {
-            dispatch('rangeChange', [val]);
-            if (typeof $$props.onRangeChange === 'function') $$props.onRangeChange(val);
+      f7Range = f7.instance.range.create(
+        noUndefinedProps({
+          el,
+          value,
+          min,
+          max,
+          step,
+          label,
+          dual,
+          draggableBar,
+          vertical,
+          verticalReversed,
+          formatLabel,
+          scale,
+          scaleSteps,
+          scaleSubSteps,
+          formatScaleLabel,
+          limitKnobPosition,
+          on: {
+            change(range, val) {
+              dispatch('rangeChange', [val]);
+              if (typeof $$props.onRangeChange === 'function') $$props.onRangeChange(val);
+            },
+            changed(range, val) {
+              dispatch('rangeChanged', [val]);
+              if (typeof $$props.onRangeChanged === 'function') $$props.onRangeChanged(val);
+            },
           },
-          changed(range, val) {
-            dispatch('rangeChanged', [val]);
-            if (typeof $$props.onRangeChanged === 'function') $$props.onRangeChanged(val);
-          },
-        },
-      }));
+        }),
+      );
     });
   });
 
@@ -99,13 +101,7 @@
   });
 </script>
 
-<div
-  bind:this={el}
-  class={classes}
-  {...restProps($$restProps)}
->
-  {#if input}
-    <input type="range" name={name} id={inputId} />
-  {/if}
+<div bind:this={el} class={classes} {...restProps($$restProps)}>
+  {#if input}<input type="range" {name} id={inputId} />{/if}
   <slot />
 </div>

@@ -1,17 +1,12 @@
 <script>
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
 
   let className = undefined;
   export { className as class };
 
-  $: classes = Utils.classNames(
-    className,
-    'accordion-item-content',
-    Mixins.colorClasses($$props),
-  );
-
+  $: classes = classNames(className, 'accordion-item-content', colorClasses($$props));
 </script>
 
 <div class={classes} {...restProps($$restProps)}>

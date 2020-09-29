@@ -1,7 +1,7 @@
 <script>
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
 
   let className = undefined;
   export { className as class };
@@ -12,27 +12,20 @@
   export let innerClass = undefined;
   export let innerClassName = undefined;
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'appbar',
     {
       'no-shadow': noShadow,
       'no-hairline': noHairline,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
-  $: innerClasses = Utils.classNames(
-    'appbar-inner',
-    innerClass,
-    innerClassName,
-  );
+  $: innerClasses = classNames('appbar-inner', innerClass, innerClassName);
 </script>
 
-<div
-  class={classes}
-  {...restProps($$restProps)}
->
+<div class={classes} {...restProps($$restProps)}>
   <slot name="before-inner" />
   {#if inner}
     <div class={innerClasses}>

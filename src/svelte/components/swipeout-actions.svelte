@@ -1,7 +1,7 @@
 <script>
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
 
   let className = undefined;
   export { className as class };
@@ -10,15 +10,10 @@
   export let right = undefined;
   export let side = undefined;
 
-  $: classes = Utils.classNames(
-    className,
-    `swipeout-actions-${sideComputed}`,
-    Mixins.colorClasses($$props),
-  );
+  $: classes = classNames(className, `swipeout-actions-${sideComputed}`, colorClasses($$props));
 
   // eslint-disable-next-line
-  $: sideComputed = side || (left ? 'left' : (right ? 'right' : 'left'));
-
+  $: sideComputed = side || (left ? 'left' : right ? 'right' : 'left');
 </script>
 
 <div class={classes} {...restProps($$restProps)}>

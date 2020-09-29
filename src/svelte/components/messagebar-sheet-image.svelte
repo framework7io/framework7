@@ -1,8 +1,8 @@
 <script>
   import { createEventDispatcher } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
 
   const dispatch = createEventDispatcher();
 
@@ -14,12 +14,7 @@
   export let image = undefined;
   export let checked = false;
 
-  $: classes = Utils.classNames(
-    className,
-    'messagebar-sheet-image',
-    'checkbox',
-    Mixins.colorClasses($$props),
-  );
+  $: classes = classNames(className, 'messagebar-sheet-image', 'checkbox', colorClasses($$props));
 
   $: styles = `${image ? `background-image: url(${image});` : ''}${style || ''}`;
 
@@ -31,11 +26,10 @@
     dispatch('change', [event]);
     if (typeof $$props.onChange === 'function') $$props.onChange(event);
   }
-
 </script>
 
 <label class={classes} {...restProps($$restProps)}>
-  <input type="checkbox" checked={checked} on:change={onChange} />
+  <input type="checkbox" {checked} on:change={onChange} />
   <i class="icon icon-checkbox" />
   <slot />
 </label>

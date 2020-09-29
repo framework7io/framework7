@@ -1,10 +1,16 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
-  import hasSlots from '../shared/has-slots';
+  import {
+    colorClasses,
+    routerAttrs,
+    routerClasses,
+    actionsClasses,
+    actionsAttrs,
+  } from '../shared/mixins';
+  import { classNames, extend, plainText } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
+  import { hasSlots } from '../shared/has-slots';
 
   import Icon from './icon';
 
@@ -24,44 +30,51 @@
 
   let el;
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'treeview-item',
     {
       'treeview-item-opened': opened,
       'treeview-load-children': loadChildren,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
-  $: itemRootClasses = Utils.classNames(
+  $: itemRootClasses = classNames(
     'treeview-item-root',
     {
       'treeview-item-selectable': selectable,
       'treeview-item-selected': selected,
       'treeview-item-toggle': itemToggle,
     },
-    Mixins.linkRouterClasses($$props),
-    Mixins.linkActionsClasses($$props),
+    routerClasses($$props),
+    actionsClasses($$props),
   );
 
-  $: itemRootAttrs = Utils.extend(
+  $: itemRootAttrs = extend(
     {
       href: link === true ? '#' : link || undefined,
     },
-    Mixins.linkRouterAttrs($$props),
-    Mixins.linkActionsAttrs($$props),
+    routerAttrs($$props),
+    actionsAttrs($$props),
   );
 
   /* eslint-disable no-undef */
-  $: hasChildren = hasSlots(arguments, 'default')
-    || hasSlots(arguments, 'children')
-    || hasSlots(arguments, 'children-start');
+  $: hasChildren =
+    hasSlots(arguments, 'default') ||
+    hasSlots(arguments, 'children') ||
+    hasSlots(arguments, 'children-start');
   /* eslint-enable no-undef */
 
   $: needToggle = typeof toggle === 'undefined' ? hasChildren : toggle;
 
-  $: hasIcon = $$props.icon || $$props.iconMaterial || $$props.iconF7 || $$props.iconMd || $$props.iconIos || $$props.iconAurora;
+  $: hasIcon =
+    $$props.icon ||
+    $$props.iconMaterial ||
+    $$props.iconF7 ||
+    $$props.iconMd ||
+    $$props.iconIos ||
+    $$props.iconAurora;
 
   $: treeviewRootTag = link || link === '' ? 'a' : 'div';
 
@@ -82,7 +95,8 @@
   function onLoadChildren(itemEl, done) {
     if (itemEl !== el) return;
     dispatch('treeviewLoadChildren', [el, done]);
-    if (typeof $$props.onTreeviewLoadChildren === 'function') $$props.onTreeviewLoadChildren(el, done);
+    if (typeof $$props.onTreeviewLoadChildren === 'function')
+      $$props.onTreeviewLoadChildren(el, done);
   }
 
   onMount(() => {
@@ -101,6 +115,7 @@
     f7.instance.off('treeviewLoadChildren', onLoadChildren);
   });
 </script>
+
 <!-- svelte-ignore a11y-missing-attribute -->
 <div bind:this={el} class={classes} {...restProps($$restProps)}>
   {#if treeviewRootTag === 'div'}
@@ -130,7 +145,7 @@
         <slot name="media" />
         <div class="treeview-item-label">
           <slot name="label-start" />
-          {Utils.text(label)}
+          {plainText(label)}
           <slot name="label" />
         </div>
         <slot name="content" />
@@ -166,7 +181,7 @@
         <slot name="media" />
         <div class="treeview-item-label">
           <slot name="label-start" />
-          {Utils.text(label)}
+          {plainText(label)}
           <slot name="label" />
         </div>
         <slot name="content" />

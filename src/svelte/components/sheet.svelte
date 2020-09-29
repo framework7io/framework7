@@ -1,9 +1,9 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
 
   const dispatch = createEventDispatcher();
 
@@ -40,14 +40,14 @@
     return 'bottom';
   })();
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     'sheet-modal',
     `sheet-modal-${positionComputed}`,
     {
       'sheet-modal-push': push,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 
   function onOpen(instance) {
@@ -68,7 +68,8 @@
   }
   function onStepProgress(instance, progress) {
     dispatch('sheetStepProgress', [instance, progress]);
-    if (typeof $$props.onSheetStepProgress === 'function') $$props.onSheetStepProgress(instance, progress);
+    if (typeof $$props.onSheetStepProgress === 'function')
+      $$props.onSheetStepProgress(instance, progress);
   }
   function onStepOpen(instance) {
     dispatch('sheetStepOpen', [instance]);
@@ -108,8 +109,10 @@
     if (typeof backdrop !== 'undefined') params.backdrop = backdrop;
     if (typeof animate !== 'undefined') params.animate = animate;
     if (typeof backdropEl !== 'undefined') params.backdropEl = backdropEl;
-    if (typeof closeByBackdropClick !== 'undefined') params.closeByBackdropClick = closeByBackdropClick;
-    if (typeof closeByOutsideClick !== 'undefined') params.closeByOutsideClick = closeByOutsideClick;
+    if (typeof closeByBackdropClick !== 'undefined')
+      params.closeByBackdropClick = closeByBackdropClick;
+    if (typeof closeByOutsideClick !== 'undefined')
+      params.closeByOutsideClick = closeByOutsideClick;
     if (typeof closeOnEscape !== 'undefined') params.closeOnEscape = closeOnEscape;
     if (typeof swipeToClose !== 'undefined') params.swipeToClose = swipeToClose;
     if (typeof swipeToStep !== 'undefined') params.swipeToStep = swipeToStep;
@@ -135,11 +138,8 @@
     f7Sheet = null;
   });
 </script>
-<div
-  class={classes}
-  bind:this={el}
-  {...restProps($$restProps)}
->
+
+<div class={classes} bind:this={el} {...restProps($$restProps)}>
   <slot name="fixed" />
   <div class="sheet-modal-inner" bind:this={innerEl}>
     <slot />

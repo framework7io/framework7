@@ -1,7 +1,7 @@
 <script>
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
+  import { colorClasses } from '../shared/mixins';
+  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
 
   let className = undefined;
   export { className as class };
@@ -20,7 +20,7 @@
   export let strongAurora = false;
   export let tag = 'div';
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     {
       segmented: true,
@@ -37,27 +37,18 @@
       'segmented-strong-md': strongMd,
       'segmented-strong-aurora': strongAurora,
     },
-    Mixins.colorClasses($$props),
+    colorClasses($$props),
   );
 </script>
+
 {#if tag === 'div'}
-  <div
-    class={classes}
-    {...restProps($$restProps)}
-  >
+  <div class={classes} {...restProps($$restProps)}>
     <slot />
-    {#if strong || strongIos || strongMd || strongAurora}
-    <span class="segmented-highlight" />
-    {/if}
+    {#if strong || strongIos || strongMd || strongAurora}<span class="segmented-highlight" />{/if}
   </div>
 {:else if tag === 'p'}
-  <p
-    class={classes}
-    {...restProps($$restProps)}
-  >
+  <p class={classes} {...restProps($$restProps)}>
     <slot />
-    {#if strong || strongIos || strongMd || strongAurora}
-    <span class="segmented-highlight" />
-    {/if}
+    {#if strong || strongIos || strongMd || strongAurora}<span class="segmented-highlight" />{/if}
   </p>
 {/if}

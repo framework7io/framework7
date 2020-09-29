@@ -1,10 +1,16 @@
 <script>
   import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
-  import Mixins from '../shared/mixins';
-  import Utils from '../shared/utils';
-  import restProps from '../shared/rest-props';
-  import f7 from '../shared/f7';
-  import hasSlots from '../shared/has-slots';
+  import {
+    colorClasses,
+    routerAttrs,
+    routerClasses,
+    actionsAttrs,
+    actionsClasses,
+  } from '../shared/mixins';
+  import { classNames, extend, isStringProp, plainText } from '../shared/utils';
+  import { restProps } from '../shared/rest-props';
+  import { f7 } from '../shared/f7';
+  import { hasSlots } from '../shared/has-slots';
 
   import Badge from './badge';
   import Icon from './icon';
@@ -40,15 +46,15 @@
 
   $: hrefComputed = href === true ? '#' : href || undefined;
 
-  $: attrs = Utils.extend(
+  $: attrs = extend(
     {
       href: hrefComputed,
       target,
-      'data-tab': (Utils.isStringProp(tabLink) && tabLink) || undefined,
+      'data-tab': (isStringProp(tabLink) && tabLink) || undefined,
       ...restProps($$restProps),
     },
-    Mixins.linkRouterAttrs($$props),
-    Mixins.linkActionsAttrs($$props),
+    routerAttrs($$props),
+    actionsAttrs($$props),
   );
 
   // eslint-disable-next-line
@@ -56,7 +62,7 @@
 
   $: iconOnlyComputed = iconOnly || (!text && !hasDefaultSlots);
 
-  $: classes = Utils.classNames(
+  $: classes = classNames(
     className,
     {
       link: !(noLinkClass || isTabbarLabel),
@@ -65,12 +71,18 @@
       'tab-link-active': tabLinkActive,
       'smart-select': smartSelect,
     },
-    Mixins.colorClasses($$props),
-    Mixins.linkRouterClasses($$props),
-    Mixins.linkActionsClasses($$props),
+    colorClasses($$props),
+    routerClasses($$props),
+    actionsClasses($$props),
   );
 
-  $: hasIcon = $$props.icon || $$props.iconMaterial || $$props.iconF7 || $$props.iconMd || $$props.iconIos || $$props.iconAurora;
+  $: hasIcon =
+    $$props.icon ||
+    $$props.iconMaterial ||
+    $$props.iconF7 ||
+    $$props.iconMd ||
+    $$props.iconIos ||
+    $$props.iconAurora;
 
   $: hasIconBadge = $$props.hasIconBadge;
 
@@ -107,19 +119,14 @@
       el.f7RouteProps = $$props.routeProps;
     }
     f7.ready(() => {
-      if (tabbarLabel
-        || (
-          (tabLink || tabLink === '')
-          && f7.instance.$(el).parents('.tabbar-labels').length
-        )
+      if (
+        tabbarLabel ||
+        ((tabLink || tabLink === '') && f7.instance.$(el).parents('.tabbar-labels').length)
       ) {
         isTabbarLabel = true;
       }
       if (smartSelect) {
-        const ssParams = Utils.extend(
-          { el },
-          smartSelectParams || {},
-        );
+        const ssParams = extend({ el }, smartSelectParams || {});
         f7SmartSelect = f7.instance.smartSelect.create(ssParams);
       }
       if (tooltip) {
@@ -147,8 +154,8 @@
       f7Tooltip = null;
     }
   });
-
 </script>
+
 <!-- svelte-ignore a11y-missing-attribute -->
 <a
   bind:this={el}
@@ -171,8 +178,8 @@
   <slot />
   {#if typeof text !== 'undefined' || typeof badge !== 'undefined'}
     <span class:tabbar-label={isTabbarLabel}>
-      {Utils.text(text)}
-      {#if typeof badge !== 'undefined'}<Badge color={badgeColor}>{Utils.text(badge)}</Badge>{/if}
+      {plainText(text)}
+      {#if typeof badge !== 'undefined'}<Badge color={badgeColor}>{plainText(badge)}</Badge>{/if}
     </span>
   {/if}
 </a>

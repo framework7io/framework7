@@ -37,7 +37,7 @@
     "prettier": "prettier \"**/*.+(js|json|scss|css|less|ts|vue)\"",
     "format": "npm run prettier -- --write",
     "check-format": "npm run prettier -- --list-different",
-    "lint": "eslint --ext .js,.vue,.jsx .",
+    "lint": "eslint --ext .js,.vue,.jsx,.svelte .",
     "validate": "npm-run-all --parallel check-format lint",
     "test": "npm run build:dev && npm run lint",
     "release": "npm run validate && node ./scripts/release",
