@@ -1,49 +1,52 @@
 /* eslint no-underscore-dangle: "off" */
 import { getWindow, getDocument } from 'ssr-window';
-import Template7 from 'template7';
 import $ from '../../shared/dom7';
-import { id, merge, extend, eventNameToColonCase, deleteProps } from '../../shared/utils';
+import $h from './$h';
+import {
+  id as generateId,
+  merge,
+  extend,
+  eventNameToColonCase,
+  deleteProps,
+} from '../../shared/utils';
 import vdom from './vdom';
 import patch from './patch';
 
-import componentMixins from './component-mixins';
-
 class Component {
-  constructor(app, options = {}, extendContext = {}, children) {
+  constructor(app, component, props = {}, { root, el, context, children } = {}) {
     const window = getWindow();
     const document = getDocument();
-    const componentId = id();
-    const self = this;
-    merge(self, { $props: {} }, extendContext, {
-      $,
-      $$: $,
-      $dom7: $,
-      $app: app,
+    merge(this, {
       $f7: app,
-      $options: extend({ id: componentId }, options),
-      $id: options.isClassComponent ? self.constructor.id : options.id || componentId,
-      $mixins: options.isClassComponent ? self.constructor.mixins : options.mixins,
+      $props: props || {},
+      $context: context || {},
+      $id: component.id || generateId(),
       $children: children || [],
-      $isRootComponent: !!options.root,
+      $isRootComponent: !!root,
+      $theme: {
+        ios: app.theme === 'ios',
+        md: app.theme === 'md',
+        aurora: app.theme === 'aurora',
+      },
+      $style: component.style,
+      $styleScoped: component.styleScoped,
+      __updateQueue: [],
+      __eventHandlers: [],
+      __onceEventHandlers: [],
+      __onBeforeMount: [],
+      __onMounted: [],
+      __onBeforeUpdate: [],
+      __onUpdated: [],
+      __onBeforeUnmount: [],
+      __onUnmounted: [],
     });
-    const { $options } = self;
 
-    if (self.$mixins && self.$mixins.length) {
-      for (let i = self.$mixins.length - 1; i >= 0; i -= 1) {
-        const mixin = self.$mixins[i];
-        if (typeof mixin === 'string') {
-          if (componentMixins[mixin]) self.$mixins[i] = componentMixins[mixin];
-          else self.$mixins.splice(i, 1);
-        }
-      }
-    }
-
-    Object.defineProperty(self, '$slots', {
+    Object.defineProperty(this, '$slots', {
       enumerable: true,
       configurable: true,
-      get() {
+      get: () => {
         const slots = {};
-        self.$children.forEach((childVNode) => {
+        this.$children.forEach((childVNode) => {
           let childSlotName = 'default';
           if (childVNode.data) {
             childSlotName = (childVNode.data.attrs && childVNode.data.attrs.slot) || 'default';
@@ -56,23 +59,23 @@ class Component {
     });
 
     // Root data and methods
-    Object.defineProperty(self, '$root', {
+    Object.defineProperty(this, '$root', {
       enumerable: true,
       configurable: true,
-      get() {
-        if (self.$isRootComponent) {
-          return self;
+      get: () => {
+        if (this.$isRootComponent) {
+          return this;
         }
         if (app.rootComponent) {
-          if (!self.$onRootUpdated) {
-            self.$onRootUpdated = () => self.$update();
-            app.on('rootComponentUpdated', self.$onRootUpdated);
+          if (!this.$onRootUpdated) {
+            this.$onRootUpdated = () => this.$update();
+            app.on('rootComponentUpdated', this.$onRootUpdated);
           }
           return app.rootComponent;
         }
-        let root = merge({}, app.data, app.methods);
+        let rootData = merge({}, app.data, app.methods);
         if (window && window.Proxy) {
-          root = new window.Proxy(root, {
+          rootData = new window.Proxy(rootData, {
             set(target, name, val) {
               app.data[name] = val;
             },
@@ -85,249 +88,208 @@ class Component {
             },
           });
         }
-        return root;
+        return rootData;
       },
       set() {},
     });
 
-    // Bind render
-    if ($options.render) $options.render = $options.render.bind(self);
+    const createComponent = () => {
+      return component(this.$props, this.$getComponentContext(true));
+    };
 
-    // Bind methods
-    const methods = {};
-    if (self.$mixins && self.$mixins.length) {
-      self.$mixins.forEach((mixin) => {
-        if (mixin.methods) Object.assign(methods, mixin.methods);
+    const getRenderFuncion = (componentResult) =>
+      new Promise((resolve, reject) => {
+        if (typeof componentResult === 'function') {
+          resolve(componentResult);
+        } else if (componentResult instanceof Promise) {
+          componentResult()
+            .then((render) => {
+              resolve(render);
+            })
+            .catch((err) => {
+              reject(err);
+              throw new Error(err);
+            });
+        }
       });
-    }
-    if ($options.methods) {
-      Object.assign(methods, $options.methods);
-    }
-    Object.keys(methods).forEach((methodName) => {
-      self[methodName] = methods[methodName].bind(self);
-    });
-
-    // Bind Events
-    if ($options.on) {
-      Object.keys($options.on).forEach((eventName) => {
-        $options.on[eventName] = $options.on[eventName].bind(self);
-      });
-    }
-    if ($options.once) {
-      Object.keys($options.once).forEach((eventName) => {
-        $options.once[eventName] = $options.once[eventName].bind(self);
-      });
-    }
-
-    self.$style = $options.isClassComponent ? self.constructor.style : $options.style;
-    self.$styleScoped = $options.isClassComponent
-      ? self.constructor.styleScoped
-      : $options.styleScoped;
-
-    self.__updateQueue = [];
 
     return new Promise((resolve, reject) => {
-      self
-        .$hook('data', true)
-        .then((datas) => {
-          const data = {};
-          datas.forEach((dt) => {
-            Object.assign(data, dt || {});
-          });
-          extend(self, data);
-          self.$hook('beforeCreate');
-          let html = self.$render();
+      const componentResult = createComponent();
+      getRenderFuncion(componentResult)
+        .then((render) => {
+          this.$renderFunction = render;
 
-          if (self.$options.el) {
+          let html = this.$render();
+
+          if (el) {
             html = html.trim();
-            self.$vnode = vdom(html, self, true);
-            if (self.$style) {
-              self.$styleEl = document.createElement('style');
-              self.$styleEl.innerHTML = self.$style;
+            this.$vnode = vdom(html, this, true);
+            if (this.$style) {
+              this.$styleEl = document.createElement('style');
+              this.$styleEl.innerHTML = this.$style;
             }
-            self.el = self.$options.el;
-            patch(self.el, self.$vnode);
-            self.el = self.$vnode.elm;
-            self.$el = $(self.el);
+            this.el = el;
+            patch(this.el, this.$vnode);
+            this.el = this.$vnode.elm;
+            this.$el = $(this.el);
 
-            self.$attachEvents();
-            self.el.f7Component = self;
-            self.$hook('created');
-            self.$mount();
-            resolve(self);
+            this.$attachEvents();
+            this.el.f7Component = this;
+            this.$mount();
+            resolve(this);
             return;
           }
           // Make Dom
           if (html && typeof html === 'string') {
             html = html.trim();
-            self.$vnode = vdom(html, self, true);
-            self.el = document.createElement(self.$vnode.sel || 'div');
-            patch(self.el, self.$vnode);
-            self.$el = $(self.el);
-          } else if (html) {
-            self.el = html;
-            self.$el = $(self.el);
+            this.$vnode = vdom(html, this, true);
+            this.el = document.createElement(this.$vnode.sel || 'div');
+            patch(this.el, this.$vnode);
+            this.$el = $(this.el);
           }
-          if (self.$style) {
-            self.$styleEl = document.createElement('style');
-            self.$styleEl.innerHTML = self.$style;
+          if (this.$style) {
+            this.$styleEl = document.createElement('style');
+            this.$styleEl.innerHTML = this.$style;
           }
 
-          self.$attachEvents();
+          this.$attachEvents();
 
-          if (self.el) {
-            self.el.f7Component = self;
+          if (this.el) {
+            this.el.f7Component = this;
           }
 
-          self.$hook('created');
-          resolve(self);
+          resolve(this);
         })
         .catch((err) => {
           reject(err);
+          throw new Error(err);
         });
     });
   }
 
-  $attachEvents() {
-    const self = this;
-    const { $options, $el } = self;
-    if (self.$mixins && self.$mixins.length) {
-      self.$detachEventsHandlers = {};
-      self.$mixins.forEach((mixin) => {
-        if (mixin.on) {
-          Object.keys(mixin.on).forEach((eventName) => {
-            const handler = mixin.on[eventName].bind(self);
-            if (!self.$detachEventsHandlers[eventName]) self.$detachEventsHandlers[eventName] = [];
-            self.$detachEventsHandlers[eventName].push(handler);
-            $el.on(eventNameToColonCase(eventName), handler);
-          });
-        }
-        if (mixin.once) {
-          Object.keys(mixin.once).forEach((eventName) => {
-            const handler = mixin.once[eventName].bind(self);
-            if (!self.$detachEventsHandlers[eventName]) self.$detachEventsHandlers[eventName] = [];
-            self.$detachEventsHandlers[eventName].push(handler);
-            $el.once(eventNameToColonCase(eventName), handler);
-          });
-        }
-      });
-    }
-    if ($options.on) {
-      Object.keys($options.on).forEach((eventName) => {
-        $el.on(eventNameToColonCase(eventName), $options.on[eventName]);
-      });
-    }
-    if ($options.once) {
-      Object.keys($options.once).forEach((eventName) => {
-        $el.once(eventNameToColonCase(eventName), $options.once[eventName]);
-      });
-    }
+  $on(eventName, handler) {
+    this.__eventHandlers.push({ eventName, handler });
   }
 
-  $detachEvents() {
-    const self = this;
-    const { $options, $el } = self;
-    if ($options.on) {
-      Object.keys($options.on).forEach((eventName) => {
-        $el.off(eventNameToColonCase(eventName), $options.on[eventName]);
-      });
-    }
-    if ($options.once) {
-      Object.keys($options.once).forEach((eventName) => {
-        $el.off(eventNameToColonCase(eventName), $options.once[eventName]);
-      });
-    }
-    if (!self.$detachEventsHandlers) return;
-    Object.keys(self.$detachEventsHandlers).forEach((eventName) => {
-      const handlers = self.$detachEventsHandlers[eventName];
-      handlers.forEach((handler) => {
-        $el.off(eventNameToColonCase(eventName), handler);
-      });
-      self.$detachEventsHandlers[eventName] = [];
-      delete self.$detachEventsHandlers[eventName];
+  $once(eventName, handler) {
+    this.__onceEventHandlers.push({ eventName, handler });
+  }
+
+  $getEl() {
+    return this.$el;
+  }
+
+  $getComponentContext(includeHooks) {
+    const ctx = extend({}, this.$context, {
+      f7route: this.$context.$f7route,
+      f7router: this.$context.$f7router,
+      $h,
+      root: this.$root,
+      $,
+      id: this.$id,
+      slots: this.$slots,
+      f7: this.$f7,
+      f7ready: this.$f7ready,
+      theme: this.$theme,
+      getEl: this.$getEl.bind(this),
+      tick: this.$tick.bind(this),
+      update: this.$update.bind(this),
     });
-    self.$detachEventsHandlers = null;
-    delete self.$detachEventsHandlers;
+    if (includeHooks)
+      extend(ctx, {
+        on: this.$on.bind(this),
+        once: this.$once.bind(this),
+        onBeforeMount: (handler) => this.__onBeforeMount.push(handler),
+        onMounted: (handler) => this.__onMounted.push(handler),
+        onBeforeUpdate: (handler) => this.__onBeforeUpdate.push(handler),
+        onUpdated: (handler) => this.__onUpdated.push(handler),
+        onBeforeUnmount: (handler) => this.__onBeforeUnmount.push(handler),
+        onUnmounted: (handler) => this.__onUnmounted.push(handler),
+      });
+
+    return ctx;
   }
 
   $render() {
-    const self = this;
-    const { $options } = self;
-    let html = '';
-    if ($options.render) {
-      html = $options.render();
-    } else if (self.render) {
-      html = self.render.call(self);
-    } else if ($options.template) {
-      if (typeof $options.template === 'string') {
-        html = Template7.compile($options.template)(self);
-      } else {
-        // Supposed to be function
-        html = $options.template(self);
-      }
-    }
-    return html;
+    return this.$renderFunction(this.$getComponentContext());
+  }
+
+  $attachEvents() {
+    const { $el } = this;
+    this.__eventHandlers.forEach(({ eventName, handler }) => {
+      $el.on(eventNameToColonCase(eventName), handler);
+    });
+    this.__onceEventHandlers.forEach(({ eventName, handler }) => {
+      $el.once(eventNameToColonCase(eventName), handler);
+    });
+  }
+
+  $detachEvents() {
+    const { $el } = this;
+    this.__eventHandlers.forEach(({ eventName, handler }) => {
+      $el.on(eventNameToColonCase(eventName), handler);
+    });
+    this.__onceEventHandlers.forEach(({ eventName, handler }) => {
+      $el.once(eventNameToColonCase(eventName), handler);
+    });
   }
 
   $startUpdateQueue() {
-    const self = this;
     const window = getWindow();
-    if (self.__requestAnimationFrameId) return;
-    function update() {
-      let html = self.$render();
+    if (this.__requestAnimationFrameId) return;
+    const update = () => {
+      this.$hook('onBeforeUpdate');
+      let html = this.$render();
 
       // Make Dom
       if (html && typeof html === 'string') {
         html = html.trim();
-        const newVNode = vdom(html, self, false);
-        self.$vnode = patch(self.$vnode, newVNode);
+        const newVNode = vdom(html, this, false);
+        this.$vnode = patch(this.$vnode, newVNode);
       }
-    }
-    self.__requestAnimationFrameId = window.requestAnimationFrame(() => {
-      if (self.__updateIsPending) update();
-      let resolvers = [...self.__updateQueue];
-      self.__updateQueue = [];
-      self.__updateIsPending = false;
-      window.cancelAnimationFrame(self.__requestAnimationFrameId);
-      delete self.__requestAnimationFrameId;
-      delete self.__updateIsPending;
+    };
+    this.__requestAnimationFrameId = window.requestAnimationFrame(() => {
+      if (this.__updateIsPending) update();
+      let resolvers = [...this.__updateQueue];
+      this.__updateQueue = [];
+      this.__updateIsPending = false;
+      window.cancelAnimationFrame(this.__requestAnimationFrameId);
+      delete this.__requestAnimationFrameId;
+      delete this.__updateIsPending;
       resolvers.forEach((resolver) => resolver());
       resolvers = [];
     });
   }
 
   $tick(callback) {
-    const self = this;
     return new Promise((resolve) => {
       function resolver() {
         resolve();
         if (callback) callback();
       }
-      self.__updateQueue.push(resolver);
-      self.$startUpdateQueue();
+      this.__updateQueue.push(resolver);
+      this.$startUpdateQueue();
     });
   }
 
   $update(callback) {
-    const self = this;
     return new Promise((resolve) => {
-      function resolver() {
+      const resolver = () => {
         resolve();
         if (callback) callback();
-        if (self.$isRootComponent) {
-          self.$f7.emit('rootComponentUpdated');
+        if (this.$isRootComponent) {
+          this.$f7.emit('rootComponentUpdated');
         }
-      }
-      self.__updateIsPending = true;
-      self.__updateQueue.push(resolver);
-      self.$startUpdateQueue();
+      };
+      this.__updateIsPending = true;
+      this.__updateQueue.push(resolver);
+      this.$startUpdateQueue();
     });
   }
 
   $setState(mergeState = {}, callback) {
-    const self = this;
-    merge(self, mergeState);
-    return self.$update(callback);
+    merge(this, mergeState);
+    return this.$update(callback);
   }
 
   $f7ready(callback) {
@@ -341,69 +303,52 @@ class Component {
   }
 
   $mount(mountMethod) {
-    const self = this;
-    self.$hook('beforeMount');
-    if (self.$styleEl) $('head').append(self.$styleEl);
-    if (mountMethod) mountMethod(self.el);
-    self.$hook('mounted');
+    this.$hook('onBeforeMount');
+    if (this.$styleEl) $('head').append(this.$styleEl);
+    if (mountMethod) mountMethod(this.el);
+    this.$hook('onMounted');
   }
 
   $destroy() {
-    const self = this;
     const window = getWindow();
-    self.$hook('beforeDestroy');
+    this.$hook('onBeforeUnmount');
 
-    if (self.$styleEl) $(self.$styleEl).remove();
-    if (self.$onRootUpdated) {
-      self.$f7.off('rootComponentUpdated', self.$onRootUpdated);
-      delete self.$onRootUpdated;
+    if (this.$styleEl) $(this.$styleEl).remove();
+    if (this.$onRootUpdated) {
+      this.$f7.off('rootComponentUpdated', this.$onRootUpdated);
+      delete this.$onRootUpdated;
     }
 
-    self.$detachEvents();
-    self.$hook('destroyed');
+    this.$detachEvents();
+    this.$hook('onUnmounted');
     // Delete component instance
-    if (self.el && self.el.f7Component) {
-      self.el.f7Component = null;
-      delete self.el.f7Component;
+    if (this.el && this.el.f7Component) {
+      this.el.f7Component = null;
+      delete this.el.f7Component;
     }
     // Patch with empty node
-    if (self.$vnode) {
-      self.$vnode = patch(self.$vnode, { sel: self.$vnode.sel, data: {} });
+    if (this.$vnode) {
+      this.$vnode = patch(this.$vnode, { sel: this.$vnode.sel, data: {} });
     }
     // Clear update queue
-    window.cancelAnimationFrame(self.__requestAnimationFrameId);
-
+    window.cancelAnimationFrame(this.__requestAnimationFrameId);
+    this.__updateQueue = [];
+    this.__eventHandlers = [];
+    this.__onceEventHandlers = [];
+    this.__onBeforeMount = [];
+    this.__onMounted = [];
+    this.__onBeforeUpdate = [];
+    this.__onUpdated = [];
+    this.__onBeforeUnmount = [];
+    this.__onUnmounted = [];
     // Delete all props
-    deleteProps(self);
+    deleteProps(this);
   }
 
-  $hook(name, async) {
-    const self = this;
-    if (async) {
-      const promises = [];
-      if (self.$mixins && self.$mixins.length) {
-        self.$mixins.forEach((mixin) => {
-          if (mixin[name]) promises.push(mixin[name].call(self));
-        });
-      }
-      if (self[name] && typeof self[name] === 'function') {
-        promises.push(self[name].call(self));
-      }
-      if (self.$options[name]) {
-        promises.push(self.$options[name].call(self));
-      }
-      return Promise.all(promises);
-    }
-    if (self.$mixins && self.$mixins.length) {
-      self.$mixins.forEach((mixin) => {
-        if (mixin[name] && typeof mixin[name] === 'function') {
-          mixin[name].call(self);
-        }
-      });
-    }
-    if (self.$options[name]) return self.$options[name].call(self);
-    if (self[name]) return self[name].call(self);
-    return undefined;
+  $hook(name) {
+    this[`__${name}`].forEach((handler) => {
+      handler();
+    });
   }
 }
 

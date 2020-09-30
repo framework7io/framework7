@@ -8,7 +8,7 @@ export default {
       const { app } = router;
       const url = typeof component === 'string' ? component : componentUrl;
       const compiledUrl = router.replaceRequestUrlParams(url, options);
-      function compile(componentOptions) {
+      function compile(componentFunction) {
         let context = options.context || {};
         if (typeof context === 'function') context = context.call(router);
         else if (typeof context === 'string') {
@@ -19,25 +19,25 @@ export default {
             throw err;
           }
         }
-        const extendContext = merge({}, context, {
-          $route: options.route,
+        const componentContext = merge({}, context, {
           $f7route: options.route,
-          $router: router,
           $f7router: router,
-          $theme: {
-            ios: app.theme === 'ios',
-            md: app.theme === 'md',
-            aurora: app.theme === 'aurora',
-          },
         });
+        const componentProps = options.route.params || {};
+        let componentEl;
+        let componentRoot;
         if (options.componentOptions && options.componentOptions.el) {
-          componentOptions.el = options.componentOptions.el;
+          componentEl = options.componentOptions.el;
         }
         if (options.componentOptions && options.componentOptions.root) {
-          componentOptions.root = options.componentOptions.root;
+          componentRoot = options.componentOptions.root;
         }
         app.component
-          .create(componentOptions, extendContext)
+          .create(componentFunction, componentProps, {
+            context: componentContext,
+            el: componentEl,
+            root: componentRoot,
+          })
           .then((createdComponent) => {
             resolve(createdComponent.el);
           })

@@ -7,6 +7,14 @@
 - [ ] delegated tooltip
 - [ ] tooltip set target
 - [ ] add containerEl to modals
+- [ ] new router component
+  - [ ] rework vdom.js to work with \$h
+  - [ ] add root access data
+  - [ ] migrate KS to new components
+  - [ ] changelog
+    - new router component
+    - removed Template7
+    - removed mixins
 
 # React
 

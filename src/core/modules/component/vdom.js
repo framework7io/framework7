@@ -127,8 +127,8 @@ function getHooks(data, app, initial, isRoot, tagName) {
     postpatch.push((oldVnode, vnode) => {
       const vn = vnode || oldVnode;
       if (!vn) return;
-      if (vn.data && vn.data.context && vn.data.context.$options.updated) {
-        vn.data.context.$hook('updated');
+      if (vn.data && vn.data.context) {
+        vn.data.context.$hook('onUpdated');
       }
     });
   }
@@ -417,7 +417,7 @@ export default function vdom(html = '', context, initial) {
       rootEl = tempDOM.childNodes[i];
     }
   }
-  const result = elementToVNode(rootEl, context, context.$app, initial, true);
+  const result = elementToVNode(rootEl, context, context.$f7, initial, true);
 
   // Clean
   tempDOM.innerHTML = '';
