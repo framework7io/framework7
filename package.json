@@ -71,8 +71,7 @@
     "path-to-regexp": "^6.1.0",
     "skeleton-elements": "^3.0.0",
     "ssr-window": "^3.0.0-alpha.4",
-    "swiper": "^6.3.0",
-    "template7": "^1.4.2"
+    "swiper": "^6.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",

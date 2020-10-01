@@ -1,4 +1,3 @@
-import Template7 from 'template7';
 import Dom7 from 'dom7';
 // IMPORT_BASE
 
@@ -33,7 +32,6 @@ export {
   getDevice,
   Device,
   Utils,
-  Template7,
   Dom7,
   Component,
   ComponentOptions,

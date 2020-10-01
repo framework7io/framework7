@@ -1,4 +1,3 @@
-import Template7 from 'template7';
 import $ from './shared/dom7';
 
 import Framework7 from './components/app/app-class';
@@ -13,7 +12,6 @@ import RequestModule from './modules/request/request';
 import TouchModule from './modules/touch/touch';
 import ClicksModule from './modules/clicks/clicks';
 import RouterModule from './modules/router/router';
-import RouterTemplateLoaderModule from './modules/router/template-loader';
 import RouterComponentLoaderModule from './modules/router/component-loader';
 import ComponentModule, { Component } from './modules/component/component';
 import HistoryModule from './modules/history/history';
@@ -32,18 +30,12 @@ import Router from './modules/router/router-class';
 
 // UMD_ONLY_START
 if (typeof window !== 'undefined') {
-  // Template7
-  if (!window.Template7) window.Template7 = Template7;
-
   // Dom7
   if (!window.Dom7) window.Dom7 = $;
 }
 // UMD_ONLY_END
 
-Framework7.prototype.t7 = Template7;
-Framework7.Template7 = Template7;
-
-Router.use([RouterTemplateLoaderModule, RouterComponentLoaderModule]);
+Router.use([RouterComponentLoaderModule]);
 
 Framework7.use([
   DeviceModule,

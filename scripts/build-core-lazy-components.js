@@ -25,7 +25,6 @@ function framework7ComponentLoader(Framework7, Framework7AutoInstallComponent) {
     Framework7AutoInstallComponent = true;
   }
   var $ = Framework7.$;
-  var Template7 = Framework7.Template7;
   var Utils = Framework7.utils;
   var getDevice = Framework7.getDevice;
   var getSupport = Framework7.getSupport;

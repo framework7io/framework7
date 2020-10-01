@@ -52,8 +52,6 @@ export class ComponentClass {
 }
 export interface ComponentOptions {
   mixins?: ComponentOptions[] | string[];
-  /** Template7 template string. Will be compiled as Template7 template */
-  template?: string;
   /** Render function to render component. Must return full html string or HTMLElement */
   render?: (this: ComponentClass) => string | HTMLElement;
   /** Component data, function must return component context data or Promise that should be resolved with data */
@@ -92,7 +90,7 @@ export namespace Component {
         context?: object,
       ): Promise<ComponentClass>;
       /** Parse component from single file component-style string */
-      parse(componentString: string): ComponentOptions,
+      parse(componentString: string): ComponentOptions;
       /** Register custom component */
       registerComponent(tagName: string, component: ComponentOptions | ComponentClass): void;
       /** Register component mixin */

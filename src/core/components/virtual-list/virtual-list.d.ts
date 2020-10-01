@@ -82,8 +82,6 @@ export namespace VirtualList {
     cols?: number;
     /** If number - list item height in px. If function then function should return item height. By default equals to 44 for iOS theme, 48 for MD theme, and 38 for Aurora theme */
     height?: number | Function;
-    /** Template7 string template or Template7 compiled template that used to render single item. Template should contain full HTML layout for single item, including wrapping <li></li> tags */
-    itemTemplate?: string | Function;
     /** This optional function allows to use custom function to render item HTML. It could be used instead of template parameter */
     renderItem?(item: any): string;
     /** This optional function allows to render DOM items using some custom method. Useful in case it is used (e.g.) with Vue/React plugin to pass DOM rendering and manipulation to Vue/React. renderParameters conaints object with the following properties: fromIndex, toIndex, listHeight, topPosition, items */

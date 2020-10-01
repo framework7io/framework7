@@ -1,5 +1,4 @@
 import { Dom7, Dom7Array } from 'dom7';
-import Template7 from 'template7';
 import { Router } from '../../modules/router/router';
 import { DeviceParams, Device } from '../../shared/get-device';
 import { Support } from '../../shared/get-support';
@@ -157,8 +156,6 @@ interface Framework7 extends Framework7Class<Framework7Events> {
   initialized: boolean;
   /** Dom7 alias */
   $: Dom7;
-  /** Template7 alias */
-  t7: Template7;
   /** App parameters */
   params: Framework7Parameters;
   /** Enables auto dark theme detection */

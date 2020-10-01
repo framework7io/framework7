@@ -21,10 +21,6 @@ export namespace Router {
     content?: string | HTMLElement | Dom7Array | HTMLElement[];
     /** Load page content via Ajax. */
     url?: string;
-    /** Load page content from passed Template7 template string or function */
-    template?: string | Function;
-    /** Load page content from url via Ajax, and compile it using Template7 */
-    templateUrl?: string;
     /** Load page from passed Framework7 Router Component */
     component?: ComponentOptions | ComponentClass | Function;
     /** load pages as a component via Ajax */
@@ -58,10 +54,6 @@ export namespace Router {
     content?: string | HTMLElement | Dom7Array | HTMLElement[];
     /** Load page content via Ajax. */
     url?: string;
-    /** Load page content from passed Template7 template string or function */
-    template?: string | Function;
-    /** Load page content from url via Ajax, and compile it using Template7 */
-    templateUrl?: string;
     /** Load page from passed Framework7 Router Component */
     component?: ComponentOptions | ComponentClass | Function;
     /** load pages as a component via Ajax */
@@ -124,7 +116,7 @@ export namespace Router {
     reloadAll?: boolean;
     /** previous pages history will be cleared after reloading/navigate to the specified route */
     clearPreviousHistory?: boolean;
-    /** custom/extended context for Template7/Component page (when route loaded from template, templateUrl, component or componentUrl) */
+    /** custom/extended context for Component page (when route loaded from template, templateUrl, component or componentUrl) */
     context?: object;
     /** If set to `true` then it will ignore if such URL in cache and reload it using XHR again */
     ignoreCache?: boolean;

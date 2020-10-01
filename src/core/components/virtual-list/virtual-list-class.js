@@ -30,7 +30,6 @@ class VirtualList extends Framework7Class {
       setListHeight: true,
       searchByItem: undefined,
       searchAll: undefined,
-      itemTemplate: undefined,
       ul: null,
       createUl: true,
       scrollableParentEl: undefined,
@@ -66,11 +65,7 @@ class VirtualList extends Framework7Class {
     if (vl.params.showFilteredItemsOnly) {
       vl.filteredItems = [];
     }
-    if (vl.params.itemTemplate) {
-      if (typeof vl.params.itemTemplate === 'string')
-        vl.renderItem = app.t7.compile(vl.params.itemTemplate);
-      else if (typeof vl.params.itemTemplate === 'function') vl.renderItem = vl.params.itemTemplate;
-    } else if (vl.params.renderItem) {
+    if (vl.params.renderItem) {
       vl.renderItem = vl.params.renderItem;
     }
     vl.$pageContentEl = vl.$el.parents('.page-content');

@@ -1,4 +1,3 @@
-import Template7 from 'template7';
 import Dom7 from 'dom7';
 // IMPORT_BASE
 
@@ -18,5 +17,5 @@ declare module './types/components/app/app-class' {
 
 declare const utils: Utils;
 
-export { request, getSupport, getDevice, utils, Template7, Dom7, Component };
+export { request, getSupport, getDevice, utils, Dom7, Component };
 export default Framework7;
