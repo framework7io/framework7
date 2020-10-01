@@ -14,91 +14,95 @@
     </div>
     <div class="page-content">
       <div class="block block-strong">
-        <p>Component page is also compiled with Template7 or ES Template, but it has much more functionality. In addition to Template7 page it has lifecycle hooks, events handling, data managment and Virtual DOM data bindings.</p>
+        <p>Component page is also compiled with Template7 or ES Template, but it has much more functionality. In
+          addition to Template7 page it has lifecycle hooks, events handling, data managment and Virtual DOM data
+          bindings.</p>
         <p>It is useful to use Component page when you need page-specific logic.</p>
       </div>
       <div class="block-title">Events Handling</div>
       <div class="block block-strong">
-        <a href="#" class="button button-raised" @click="openAlert">Open Alert</a>
+        <a href="#" class="button button-raised" @click=${openAlert}>Open Alert</a>
       </div>
       <div class="block-title">Page Component Data</div>
       <div class="block block-strong">
-        <p>Hello! My name is {{name}}. I am {{age}} years old.</p>
+        <p>Hello! My name is ${name}. I am ${age} years old.</p>
         <p>I like to play:</p>
         <ul>
-          {{#each like}}
-          <li>{{this}}</li>
-          {{/each}}
+          ${like.map((item) => $h`
+          <li>${item}</li>
+          `)}
         </ul>
       </div>
       <div class="block-title">Route Context</div>
       <div class="block block-strong">
         <p>Context can be passed in route options</p>
         <ul>
-          <li>foo: {{foo}}</li>
+          <li>foo: ${$context.foo}</li>
         </ul>
       </div>
       <div class="block-title">Extended Context</div>
       <div class="block block-strong">
         <p>Component page context as Template7 page context is also extended with some additional variables.</p>
-        <h4>$route</h4>
+        <h4>$f7route</h4>
         <p>Contains properties of the current route:</p>
         <ul style="padding-left:25px;word-wrap:break-word;">
-          <li><b>$route.url</b>: {{$route.url}}</li>
-          <li><b>$route.path</b>: {{$route.path}}</li>
-          <li><b>$route.params</b>: {{js 'return JSON.stringify(this.$route.params)'}}</li>
-          <li><b>$route.hash</b>: {{$route.hash}}</li>
-          <li><b>$route.query</b>: {{js 'return JSON.stringify(this.$route.query)'}}</li>
-          <li><b>$route.context</b>: {{js 'return JSON.stringify(this.$route.context)'}}</li>
+          <li><b>$f7route.url</b>: ${$f7route.url}</li>
+          <li><b>$f7route.path</b>: ${$f7route.path}</li>
+          <li><b>$f7route.params</b>: ${JSON.stringify($f7route.params)}</li>
+          <li><b>$f7route.hash</b>: ${$f7route.hash}</li>
+          <li><b>$f7route.query</b>: ${JSON.stringify($f7route.query)}</li>
+          <li><b>$f7route.context</b>: ${JSON.stringify($f7route.context)}</li>
         </ul>
 
         <h4>$root</h4>
         <p>Root data & methods:</p>
         <ul style="padding-left:25px">
-          <li><b>$root.user.firstName</b>: {{$root.user.firstName}}</li>
-          <li><b>$root.user.lastName</b>: {{$root.user.lastName}}</li>
-          <li><a @click="$root.helloWorld()">$root.helloWorld()</a></li>
+          <li><b>$root.user.firstName</b>: ${$root.user.firstName}</li>
+          <li><b>$root.user.lastName</b>: ${$root.user.lastName}</li>
+          <li><a @click=${()=> $root.helloWorld()}>$root.helloWorld()</a></li>
         </ul>
 
         <h4>$theme</h4>
         <p>Currently active theme:</p>
         <ul style="padding-left:25px">
-          <li><b>$theme.ios</b>: {{$theme.ios}}</li>
-          <li><b>$theme.md</b>: {{$theme.md}}</li>
+          <li><b>$theme.ios</b>: ${$theme.ios}</li>
+          <li><b>$theme.md</b>: ${$theme.md}</li>
+          <li><b>$theme.aurora</b>: ${$theme.aurora}</li>
         </ul>
       </div>
       <div class="block-title">Virtual DOM</div>
       <div class="block block-strong">
-        <p>Component page is rendered using Virtual DOM. It means it can automatically update page layout depending on changed state with minimal efforts and with maxumim performance.</p>
+        <p>Component page is rendered using Virtual DOM. It means it can automatically update page layout depending on
+          changed state with minimal efforts and with maxumim performance.</p>
       </div>
       <div class="block block-strong">
-        <p>Ok, so your name is <b>{{name}}</b>?</p>
-        <div class="input {{#if $theme.md}}margin-bottom{{/if}}">
-          <input class="padding-bottom" type="text" @input="onInput" value="{{name}}" placeholder="Type your name">
+        <p>Ok, so your name is <b>${name}</b>?</p>
+        <div class=${`input ${$theme.md ? 'margin-bottom' : '' }`}>
+          <input class="padding-bottom" type="text" @input=${onInput} value=${name} placeholder="Type your name" />
           <div class="input-info">Type new name and it be dynamically changed</div>
         </div>
       </div>
       <div class="block block-strong">
-        <p>Button clicked <b>{{clickCounter}}</b> times</p>
-        <p><a class="button button-round button-fill" @click="onButtonClick">Increase Counter</a></p>
+        <p>Button clicked <b>${clickCounter}</b> times</p>
+        <p><a class="button button-round button-fill" @click=${onButtonClick}>Increase Counter</a></p>
       </div>
-      {{#if listItems}}
+      ${listItems ? $h`
       <div class="list simple-list">
         <ul>
-          {{#each listItems}}
-          <li>Item {{this}}</li>
-          {{/each}}
+          ${listItems.map((item) => $h`
+          <li>Item ${item}</li>
+          `)}
         </ul>
       </div>
-      {{else}}
+      ` : $h`
       <div class="block block-strong text-align-center">
-        {{#if listLoading}}
+        ${listLoading ? $h`
         <div class="preloader"></div>
-        {{else}}
-        <p><a class="button button-round button-fill" @click="loadList">Load List</a></p>
-        {{/if}}
+        ` : $h`
+        <p><a class="button button-round button-fill" @click=${loadList}>Load List</a></p>
+        `}
       </div>
-      {{/if}}
+      `}
     </div>
   </div>
 </template>
@@ -108,94 +112,108 @@
   }
 </style>
 <script>
+  export default (props, {
+    $f7,
+    $update,
+    $on,
+    $onBeforeMount,
+    $onMounted,
+    $onBeforeUpdate,
+    $onUpdated,
+    $onBeforeUnmount,
+    $onUnmounted,
+  }) => {
+    // Component Data
+    const age = 25;
+    const like = ['Tennis', 'Chess', 'Football'];
+
+    let name = 'Jimmy';
+    let clickCounter = 0;
+    let listItems = null;
+    let listLoading = null;
+
+    // Component Methods
+    function openAlert() {
+      $f7.dialog.alert('Hello World');
+    }
+    function onInput(e) {
+      name = e.target.value;
+      $update();
+    }
+    function onButtonClick() {
+      clickCounter += 1;
+      $update();
+    }
+    function loadList() {
+      listLoading = true;
+      $update();
+      // Emulate Ajax request
+      setTimeout(() => {
+        listLoading = false;
+        listItems = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        $update();
+      }, 2000);
+    }
+
+    // Lifecycle Hooks
+    $onBeforeMount(() => {
+      console.log('Component BeforeMount')
+    })
+    $onMounted(() => {
+      console.log('Component Mounted')
+    })
+    $onBeforeUpdate(() => {
+      console.log('Component BeforeUpdate')
+    })
+    $onUpdated(() => {
+      console.log('Component Updated')
+    })
+    $onBeforeUnmount(() => {
+      console.log('Component BeforeUnmount')
+    })
+    $onUnmounted(() => {
+      console.log('Component Unmounted')
+    })
+
+    // Page Events
+    $on('pageMounted', function (e, page) {
+      console.log('pageMounted', page);
+    })
+    $on('pageInit', function (e, page) {
+      console.log('pageInit', page);
+    })
+    $on('pageBeforeIn', function (e, page) {
+      console.log('pageBeforeIn', page);
+    })
+    $on('pageAfterIn', function (e, page) {
+      console.log('pageAfterIn', page);
+    })
+    $on('pageBeforeOut', function (e, page) {
+      console.log('pageBeforeOut', page);
+    })
+    $on('pageAfterOut', function (e, page) {
+      console.log('pageAfterOut', page);
+    })
+    $on('pageBeforeRemove', function (e, page) {
+      console.log('pageBeforeRemove', page);
+    })
+
+
+    return $render;
+  }
   return {
     // Component Data
     data: function () {
       // Must return an object
       return {
-        name: 'Jimmy',
-        age: 25,
-        like: ['Tennis', 'Chess', 'Football'],
-        clickCounter: 0,
-        listItems: null,
-        listLoading: null,
+
       }
     },
     // Component Methods
     methods: {
-      openAlert: function () {
-        var self = this;
-        self.$app.dialog.alert('Hello World');
-      },
-      onInput: function (e) {
-        var self = this;
-        self.$setState({
-          name: e.target.value,
-        });
-      },
-      onButtonClick: function () {
-        var self = this;
-        self.$setState({
-          clickCounter: self.clickCounter + 1
-        });
-      },
-      loadList: function () {
-        var self = this;
-        self.$setState({ listLoading: true });
-        // Emulate Ajax request
-        setTimeout(() => {
-          self.$setState({
-            listLoading: false,
-            listItems: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-          });
-        }, 2000);
-      },
+
     },
-    // Lifecycle Hooks
-    beforeCreate() {
-      console.log('componentBeforeCreate', this)
-    },
-    created() {
-      console.log('componentCreated', this)
-    },
-    beforeMount() {
-      console.log('componentBeforeMount', this)
-    },
-    mounted() {
-      console.log('componentMounted', this);
-    },
-    updated() {
-      console.log('componentUpdated', this);
-    },
-    beforeDestroy() {
-      console.log('componentBeforeDestroy', this);
-    },
-    destroyed() {
-      console.log('componentDestroyed', this);
-    },
-    // Page Events
-    on: {
-      pageMounted: function(e, page) {
-        console.log('pageMounted', page);
-      },
-      pageInit: function(e, page) {
-        console.log('pageInit', page);
-      },
-      pageBeforeIn: function(e, page) {
-        console.log('pageBeforeIn', page);
-      },
-      pageAfterIn: function(e, page) {
-        console.log('pageAfterIn', page);
-      },
-      pageBeforeOut: function(e, page) {
-        console.log('pageBeforeOut', page);
-      },
-      pageAfterOut: function(e, page) {
-        console.log('pageAfterOut', page);
-      },
-      pageBeforeRemove: function(e, page) {
-        console.log('pageBeforeRemove', page);
-      },
-    }
+
+
   }
 </script>

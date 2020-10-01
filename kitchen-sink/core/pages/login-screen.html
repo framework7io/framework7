@@ -14,7 +14,8 @@
     </div>
     <div class="page-content">
       <div class="block">
-        <p>Framework7 comes with ready to use Login Screen layout. It could be used inside of page or inside of popup (Embedded) or as a standalone overlay:</p>
+        <p>Framework7 comes with ready to use Login Screen layout. It could be used inside of page or inside of popup
+          (Embedded) or as a standalone overlay:</p>
       </div>
       <div class="list links-list">
         <ul>
@@ -24,7 +25,8 @@
         </ul>
       </div>
       <div class="block">
-        <a href="#" class="button button-raised button-large button-fill login-screen-open" data-login-screen=".login-screen">As Overlay</a>
+        <a href="#" class="button button-raised button-large button-fill login-screen-open"
+          data-login-screen=".login-screen">As Overlay</a>
       </div>
     </div>
     <div class="login-screen">
@@ -58,7 +60,8 @@
               <ul>
                 <li><a href="#" class="list-button" @click="signIn">Sign In</a></li>
               </ul>
-              <div class="block-footer">Some text about login information.<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+              <div class="block-footer">Some text about login information.<br />Lorem ipsum dolor sit amet, consectetur
+                adipiscing elit.</div>
             </div>
           </form>
         </div>
@@ -74,7 +77,7 @@
         var app = this.$app;
         var username = $('input#demo-username-1').val();
         var password = $('input#demo-password-1').val();
-        app.dialog.alert('Username: ' + username + '<br>Password: ' + password, function () {
+        app.dialog.alert('Username: ' + username + '<br />Password: ' + password, function () {
           app.loginScreen.close();
         })
       }

@@ -28,7 +28,8 @@
       </div>
       <div class="messagebar-sheet">
         {{#each images}}
-        <label class="checkbox messagebar-sheet-image" style="background-image:url({{this}})" @change="handleAttachment">
+        <label class="checkbox messagebar-sheet-image" style="background-image:url({{this}})"
+          @change="handleAttachment">
           <input type="checkbox">
           <i class="icon icon-checkbox"></i>
         </label>
@@ -53,7 +54,8 @@
           </div>
         </div>
         <div class="message message-received">
-          <div class="message-avatar" style="background-image:url(https://cdn.framework7.io/placeholder/people-100x100-9.jpg)"></div>
+          <div class="message-avatar"
+            style="background-image:url(https://cdn.framework7.io/placeholder/people-100x100-9.jpg)"></div>
           <div class="message-content">
             <div class="message-name">Kate</div>
             <div class="message-bubble">
@@ -62,7 +64,8 @@
           </div>
         </div>
         <div class="message message-received">
-          <div class="message-avatar" style="background-image:url(https://cdn.framework7.io/placeholder/people-100x100-7.jpg)"></div>
+          <div class="message-avatar"
+            style="background-image:url(https://cdn.framework7.io/placeholder/people-100x100-7.jpg)"></div>
           <div class="message-content">
             <div class="message-name">Blue Ninja</div>
             <div class="message-bubble">
@@ -94,7 +97,8 @@
           </div>
         </div>
         <div class="message message-received">
-          <div class="message-avatar" style="background-image:url(https://cdn.framework7.io/placeholder/people-100x100-9.jpg)"></div>
+          <div class="message-avatar"
+            style="background-image:url(https://cdn.framework7.io/placeholder/people-100x100-9.jpg)"></div>
           <div class="message-content">
             <div class="message-name">Kate</div>
             <div class="message-bubble">
@@ -103,7 +107,8 @@
           </div>
         </div>
         <div class="message message-received">
-          <div class="message-avatar" style="background-image:url(https://cdn.framework7.io/placeholder/people-100x100-9.jpg)"></div>
+          <div class="message-avatar"
+            style="background-image:url(https://cdn.framework7.io/placeholder/people-100x100-9.jpg)"></div>
           <div class="message-content">
             <div class="message-name">Kate</div>
             <div class="message-bubble">
@@ -112,7 +117,8 @@
           </div>
         </div>
         <div class="message message-received">
-          <div class="message-avatar" style="background-image:url(https://cdn.framework7.io/placeholder/people-100x100-7.jpg)"></div>
+          <div class="message-avatar"
+            style="background-image:url(https://cdn.framework7.io/placeholder/people-100x100-7.jpg)"></div>
           <div class="message-content">
             <div class="message-name">Blue Ninja</div>
             <div class="message-bubble">
@@ -208,12 +214,12 @@
       },
       sendMessage: function () {
         var self = this;
-        var text = self.messagebar.getValue().replace(/\n/g, '<br>').trim();
+        var text = self.messagebar.getValue().replace(/\n/g, '<br />').trim();
         var messagesToSend = [];
         self.messagebar.attachments.forEach(function (attachment) {
           var size = attachment.split('placeholder/cats-')[1].split('-')[0].split('x');
           messagesToSend.push({
-            image: '<img src="' + attachment + '" style="width: ' + (size[0]/2) + 'px; height: ' + (size[1]/2) + 'px">'
+            image: '<img src="' + attachment + '" style="width: ' + (size[0] / 2) + 'px; height: ' + (size[1] / 2) + 'px">'
           });
         });
         if (text.trim().length) {

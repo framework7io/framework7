@@ -14,7 +14,8 @@
     </div>
     <div class="page-content">
       <div class="block block-strong">
-        <p>Framework7 comes with ultimate modular Color Picker component that allows to create color picker with limitless combinations of color modules.</p>
+        <p>Framework7 comes with ultimate modular Color Picker component that allows to create color picker with
+          limitless combinations of color modules.</p>
       </div>
 
       <div class="block-title">Color Wheel</div>
@@ -28,7 +29,7 @@
               </div>
               <div class="item-inner">
                 <div class="item-input-wrap">
-                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-wheel"/>
+                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-wheel" />
                 </div>
               </div>
             </div>
@@ -47,7 +48,7 @@
               </div>
               <div class="item-inner">
                 <div class="item-input-wrap">
-                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-spectrum"/>
+                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-spectrum" />
                 </div>
               </div>
             </div>
@@ -66,7 +67,7 @@
               </div>
               <div class="item-inner">
                 <div class="item-input-wrap">
-                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-hs-spectrum"/>
+                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-hs-spectrum" />
                 </div>
               </div>
             </div>
@@ -85,7 +86,7 @@
               </div>
               <div class="item-inner">
                 <div class="item-input-wrap">
-                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-rgb"/>
+                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-rgb" />
                 </div>
               </div>
             </div>
@@ -104,7 +105,7 @@
               </div>
               <div class="item-inner">
                 <div class="item-input-wrap">
-                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-rgba"/>
+                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-rgba" />
                 </div>
               </div>
             </div>
@@ -123,7 +124,7 @@
               </div>
               <div class="item-inner">
                 <div class="item-input-wrap">
-                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-hsb"/>
+                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-hsb" />
                 </div>
               </div>
             </div>
@@ -142,7 +143,7 @@
               </div>
               <div class="item-inner">
                 <div class="item-input-wrap">
-                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-rgb-bars"/>
+                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-rgb-bars" />
                 </div>
               </div>
             </div>
@@ -151,7 +152,8 @@
       </div>
 
       <div class="block-title">RGB Sliders + Colors</div>
-      <div class="block-header">RGB sliders with labels and values in Popover, and previous and current color values blocks</div>
+      <div class="block-header">RGB sliders with labels and values in Popover, and previous and current color values
+        blocks</div>
       <div class="list no-hairlines-md">
         <ul>
           <li>
@@ -161,7 +163,8 @@
               </div>
               <div class="item-inner">
                 <div class="item-input-wrap">
-                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-rgb-initial-current-colors"/>
+                  <input type="text" placeholder="Color" readonly="readonly"
+                    id="demo-color-picker-rgb-initial-current-colors" />
                 </div>
               </div>
             </div>
@@ -180,7 +183,7 @@
               </div>
               <div class="item-inner">
                 <div class="item-input-wrap">
-                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-palette"/>
+                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-palette" />
                 </div>
               </div>
             </div>
@@ -189,7 +192,8 @@
       </div>
 
       <div class="block-title">Pro Mode</div>
-      <div class="block-header">Current Color + HSB Sliders + RGB sliders + Alpha Slider + HEX + Palette with labels and editable values</div>
+      <div class="block-header">Current Color + HSB Sliders + RGB sliders + Alpha Slider + HEX + Palette with labels and
+        editable values</div>
       <div class="list no-hairlines-md">
         <ul>
           <li>
@@ -199,7 +203,7 @@
               </div>
               <div class="item-inner">
                 <div class="item-input-wrap">
-                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-pro"/>
+                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-pro" />
                 </div>
               </div>
             </div>
@@ -212,13 +216,13 @@
       <div class="block block-strong no-padding">
         {{#if colorPickerInlineValue}}
         <div class="padding">
-          HEX: {{colorPickerInlineValue.hex}}<br>
-          Alpha: {{colorPickerInlineValue.alpha}}<br>
-          Hue: {{colorPickerInlineValue.hue}}<br>
-          RGB: {{join colorPickerInlineValue.rgb delimeter=", "}}<br>
-          HSL: {{join colorPickerInlineValue.hsl delimeter=", "}}<br>
-          HSB: {{join colorPickerInlineValue.hsb delimeter=", "}}<br>
-          RGBA: {{join colorPickerInlineValue.rgba delimeter=", "}}<br>
+          HEX: {{colorPickerInlineValue.hex}}<br />
+          Alpha: {{colorPickerInlineValue.alpha}}<br />
+          Hue: {{colorPickerInlineValue.hue}}<br />
+          RGB: {{join colorPickerInlineValue.rgb delimeter=", "}}<br />
+          HSL: {{join colorPickerInlineValue.hsl delimeter=", "}}<br />
+          HSB: {{join colorPickerInlineValue.hsb delimeter=", "}}<br />
+          RGBA: {{join colorPickerInlineValue.rgba delimeter=", "}}<br />
           HSLA: {{join colorPickerInlineValue.hsla delimeter=", "}}
         </div>
         {{/if}}
@@ -236,7 +240,7 @@
       }
     },
     on: {
-      pageInit: function(e, page) {
+      pageInit: function (e, page) {
         var self = this;
         var app = self.$app;
         var $ = self.$;

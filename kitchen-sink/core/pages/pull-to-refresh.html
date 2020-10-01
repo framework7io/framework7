@@ -12,79 +12,72 @@
         <div class="title">Pull To Refresh</div>
       </div>
     </div>
-    <div class="page-content ptr-content" data-ptr-mousewheel="true" @ptr:refresh="loadMore">
+    <div class="page-content ptr-content" data-ptr-mousewheel="true" @ptr:refresh=${loadMore}>
       <div class="ptr-preloader">
         <div class="preloader"></div>
         <div class="ptr-arrow"></div>
       </div>
       <div class="list media-list">
         <ul>
-          {{#each items}}
+          ${items.map((item) => $h`
           <li class="item-content">
-            <div class="item-media"><img src="{{picURL}}" width="44"/></div>
+            <div class="item-media"><img src=${item.picURL} width="44" /></div>
             <div class="item-inner">
               <div class="item-title-row">
-                <div class="item-title">{{song}}</div>
+                <div class="item-title">${item.song}</div>
               </div>
-              <div class="item-subtitle">{{author}}</div>
+              <div class="item-subtitle">${item.author}</div>
             </div>
           </li>
-          {{/each}}
+          `)}
         </ul>
         <div class="block-footer">
-          <p>Just pull page down to let the magic happen.<br>Note that pull-to-refresh feature is optimised for touch and native scrolling so it may not work on desktop browser.</p>
+          <p>Just pull page down to let the magic happen.<br />Note that pull-to-refresh feature is optimised for touch
+            and native scrolling so it may not work on desktop browser.</p>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-  return {
-    data: function () {
-      return {
-        items: [
-          {
-            picURL: 'https://cdn.framework7.io/placeholder/abstract-88x88-1.jpg',
-            song: 'Yellow Submarine',
-            author: 'Beatles',
-          },
-          {
-            picURL: 'https://cdn.framework7.io/placeholder/abstract-88x88-2.jpg',
-            song: 'Don\'t Stop Me Now',
-            author: 'Queen',
-          },
-          {
-            picURL: 'https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg',
-            song: 'Billie Jean',
-            author: 'Michael Jackson',
-          },
-        ],
-        songs: ['Yellow Submarine', 'Don\'t Stop Me Now', 'Billie Jean', 'Californication'],
-        authors: ['Beatles', 'Queen', 'Michael Jackson', 'Red Hot Chili Peppers']
-      }
-    },
-    methods: {
-      loadMore: function (e, done) {
-        var self = this;
-        var $ = self.$$;
+  export default (props, { $update }) => {
+    const songs = ['Yellow Submarine', 'Don\'t Stop Me Now', 'Billie Jean', 'Californication'];
+    const authors = ['Beatles', 'Queen', 'Michael Jackson', 'Red Hot Chili Peppers'];
+    let items = [
+      {
+        picURL: 'https://cdn.framework7.io/placeholder/abstract-88x88-1.jpg',
+        song: 'Yellow Submarine',
+        author: 'Beatles',
+      },
+      {
+        picURL: 'https://cdn.framework7.io/placeholder/abstract-88x88-2.jpg',
+        song: 'Don\'t Stop Me Now',
+        author: 'Queen',
+      },
+      {
+        picURL: 'https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg',
+        song: 'Billie Jean',
+        author: 'Michael Jackson',
+      },
+    ]
 
-        setTimeout(function () {
-          // Add new item
-          self.items.push({
-            picURL: 'https://cdn.framework7.io/placeholder/abstract-88x88-' + (Math.floor(Math.random() * 10) + 1) + '.jpg',
-            song: self.songs[Math.floor(Math.random() * self.songs.length)],
-            author: self.authors[Math.floor(Math.random() * self.authors.length)],
-          })
+    const loadMore = (e, done) => {
+      setTimeout(() => {
+        // Add new item
+        items.push({
+          picURL: 'https://cdn.framework7.io/placeholder/abstract-88x88-' + (Math.floor(Math.random() * 10) + 1) + '.jpg',
+          song: songs[Math.floor(Math.random() * songs.length)],
+          author: authors[Math.floor(Math.random() * authors.length)],
+        })
 
-          // Update state to rerender
-          self.$setState({
-            items: self.items,
-          });
+        // Update state to rerender
+        $update();
 
-          // Done
-          done();
-        }, 1000);
-      }
+        // Done
+        done();
+      }, 1000);
     }
+
+    return $render;
   }
 </script>

@@ -14,54 +14,47 @@
     </div>
     <div class="page-content">
       <div class="block block-strong">
+        <br />
         <p class="row">
-          <a href="#" class="col button button-fill" @click="openDemo1">One group</a>
-          <a href="#" class="col button button-fill" @click="openDemo2">Two groups</a>
+          <a href="#" class="col button button-fill" @click=${openDemo1}>One group</a>
+          <a href="#" class="col button button-fill" @click=${openDemo2}>Two groups</a>
         </p>
         <p>
-          <a href="#" class="button button-fill" @click="openGrid">Action Grid</a>
+          <a href="#" class="button button-fill" @click=${openGrid}>Action Grid</a>
         </p>
       </div>
       <div class="block-title">Action Sheet To Popover</div>
       <div class="block block-strong">
-        <p>Action Sheet can be automatically converted to Popover (for tablets). This button will open Popover on tablets and Action Sheet on phones: <a href="#" style="display:inline-block" class="button button-to-popover button-small" @click="openActionsPopover">Actions</a></p>
+        <p>Action Sheet can be automatically converted to Popover (for tablets). This button will open Popover on
+          tablets and Action Sheet on phones: <a href="#" style="display:inline-block"
+            class="button button-to-popover button-small" @click=${openActionsPopover}>Actions</a></p>
       </div>
     </div>
   </div>
 </template>
 <script>
-return {
-  methods: {
-    openDemo1: function () {
-      var self = this;
-      self.actions1.open();
-    },
-    openDemo2: function () {
-      var self = this;
-      self.actions2.open();
-    },
-    openGrid: function () {
-      var self = this;
-      self.actionsGrid.open();
-    },
-    openActionsPopover: function () {
-      var self = this;
-      self.actionsToPopover.open();
-    },
-  },
-  on: {
-    pageBeforeRemove: function() {
-      var self = this;
-      self.actions1.destroy();
-      self.actions2.destroy();
-      self.actionsGrid.destroy();
-      self.actionsToPopover.destroy();
-    },
-    pageInit: function(page) {
-      var self = this;
+  export default (props, { $on, $f7, $getEl }) => {
+    let actions1;
+    let actions2;
+    let actionsGrid;
+    let actionsToPopover;
 
+    const openDemo1 = () => {
+      actions1.open();
+    }
+    const openDemo2 = () => {
+      actions2.open();
+    }
+    const openGrid = () => {
+      actionsGrid.open();
+    }
+    const openActionsPopover = () => {
+      actionsToPopover.open();
+    }
+
+    $on('pageInit', () => {
       // 1 Group
-      var buttons1 = [
+      const buttons1 = [
         {
           text: 'Do something',
           label: true
@@ -80,7 +73,7 @@ return {
       ];
 
       // 2 Groups
-      var buttons2 = [
+      const buttons2 = [
         // First Group
         [
           {
@@ -105,7 +98,7 @@ return {
       ]
 
       // Grid buttons with icons/images
-      var gridButtons = [
+      const gridButtons = [
         [
           {
             text: 'Button 1',
@@ -136,17 +129,26 @@ return {
         ],
       ]
 
-      self.actions1 = self.$app.actions.create({buttons: buttons1});
-      self.actions2 = self.$app.actions.create({buttons: buttons2});
-      self.actionsGrid = self.$app.actions.create({buttons: gridButtons, grid: true});
+      actions1 = $f7.actions.create({ buttons: buttons1 });
+      actions2 = $f7.actions.create({ buttons: buttons2 });
+      actionsGrid = $f7.actions.create({ buttons: gridButtons, grid: true });
 
       // Actions To Popover
-      self.actionsToPopover = self.$app.actions.create({
+      actionsToPopover = $f7.actions.create({
         buttons: buttons1,
         // Need to specify popover target
-        targetEl: self.$el.find('.button-to-popover')
+        targetEl: $getEl().find('.button-to-popover')
       });
-    }
+    })
+
+    $on('pageBeforeRemove', () => {
+      actions1.destroy();
+      actions2.destroy();
+      actionsGrid.destroy();
+      actionsToPopover.destroy();
+    })
+
+    return $render;
   }
-}
+
 </script>

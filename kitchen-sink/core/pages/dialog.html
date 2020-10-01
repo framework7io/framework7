@@ -14,7 +14,8 @@
     </div>
     <div class="page-content">
       <div class="block block-strong">
-        <p>There are 1:1 replacements of native Alert, Prompt and Confirm modals. They support callbacks, have very easy api and can be combined with each other. Check these examples:</p>
+        <p>There are 1:1 replacements of native Alert, Prompt and Confirm modals. They support callbacks, have very easy
+          api and can be combined with each other. Check these examples:</p>
         <p class="row">
           <button class="col button button-fill" @click="openAlert">Alert</button>
           <button class="col button button-fill" @click="openConfirm">Confirm</button>
@@ -47,7 +48,8 @@
       </div>
       <div class="block-title">Dialogs Stack</div>
       <div class="block block-strong">
-        <p>This feature doesn't allow to open multiple dialogs at the same time, and will automatically open next dialog when you close the current one. Such behavior is similar to browser native dialogs: </p>
+        <p>This feature doesn't allow to open multiple dialogs at the same time, and will automatically open next dialog
+          when you close the current one. Such behavior is similar to browser native dialogs: </p>
         <p>
           <button class="button button-fill" @click="openAlerts">Open Multiple Alerts</button>
         </p>
@@ -79,13 +81,13 @@
       openLogin: function () {
         var app = this.$app;
         app.dialog.login('Enter your username and password', function (username, password) {
-          app.dialog.alert('Thank you!<br>Username:' + username + '<br>Password:' + password);
+          app.dialog.alert('Thank you!<br />Username:' + username + '<br />Password:' + password);
         });
       },
       openPassword: function () {
         var app = this.$app;
         app.dialog.password('Enter your password', function (password) {
-          app.dialog.alert('Thank you!<br>Password:' + password);
+          app.dialog.alert('Thank you!<br />Password:' + password);
         });
       },
       openAlerts: function () {

@@ -12,59 +12,51 @@
         <div class="title">Infinite Scroll</div>
       </div>
     </div>
-    <div data-infinite-distance="50" class="page-content infinite-scroll-content" @infinite="loadMore">
+    <div data-infinite-distance="50" class="page-content infinite-scroll-content" @infinite=${loadMore}>
       <div class="block-title">Scroll bottom</div>
       <div class="list simple-list">
         <ul>
-          {{#each items}}
-          <li key="{{@index}}">Item {{this}}</li>
-          {{/each}}
+          ${items.map((item, index) => $h`
+          <li key=${index}>Item ${item}</li>
+          `)}
         </ul>
       </div>
-      {{#if hasMoreItems}}
+      ${hasMoreItems && $h`
       <div class="preloader infinite-scroll-preloader"></div>
-      {{/if}}
+      `}
     </div>
   </div>
 </template>
 <script>
-  return {
-    data: function () {
-      return {
-        allowInfinite: true,
-        hasMoreItems: true,
-        lastItem: 20,
-        items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      }
-    },
-    methods: {
-      loadMore: function () {
-        var self = this;
+  export default (props, { $, $update }) => {
+    let allowInfinite = true;
+    let hasMoreItems = true;
+    let lastItem = 20;
+    const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 
-        var $ = self.$$;
-        if (!self.allowInfinite) return;
-        self.allowInfinite = false;
+    const loadMore = () => {
+      if (!allowInfinite) return;
+      allowInfinite = false;
 
-        setTimeout(function () {
-          if (self.lastItem >= 200) {
-            self.$setState({
-              hasMoreItems: false,
-            });
-            return;
-          }
+      setTimeout(function () {
+        if (lastItem >= 200) {
+          hasMoreItems = false;
+          $update();
+          return;
+        }
 
-          for (var i = 1; i <= 20; i++) {
-            self.items.push(self.lastItem + i);
-          }
+        for (var i = 1; i <= 20; i++) {
+          items.push(lastItem + i);
+        }
 
-          self.allowInfinite = true;
+        allowInfinite = true;
+        lastItem += 20;
 
-          self.$setState({
-            lastItem: self.lastItem + 20,
-            items: self.items,
-          })
-        }, 1000);
-      }
+        $update();
+      }, 1000);
     }
+
+    return $render;
+
   }
 </script>
