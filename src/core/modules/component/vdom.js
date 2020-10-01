@@ -14,7 +14,7 @@ const BOOLEAN_PROPS = 'hidden checked disabled readonly selected autofocus autop
   ' ',
 );
 
-function toCamelCase(name) {
+const toCamelCase = (name) => {
   return name
     .split('-')
     .map((word, index) => {
@@ -22,8 +22,8 @@ function toCamelCase(name) {
       return word[0].toUpperCase() + word.substr(1);
     })
     .join('');
-}
-function contextFromAttrs(...args) {
+};
+const contextFromAttrs = (...args) => {
   const context = {};
   args.forEach((obj = {}) => {
     Object.keys(obj).forEach((key) => {
@@ -32,17 +32,14 @@ function contextFromAttrs(...args) {
   });
 
   return context;
-}
+};
 
-function createCustomComponent({ f7, vnode, tagName, data }) {
+const createCustomComponent = ({ f7, treeNode, vnode, tagName, data }) => {
   f7.component
-    .create(
-      Object.assign({ el: vnode.elm }, customComponents[tagName]),
-      {
-        $props: contextFromAttrs(data.attrs || {}, data.props || {}),
-      },
-      vnode.children,
-    )
+    .create(customComponents[tagName], contextFromAttrs(data.attrs || {}, data.props || {}), {
+      el: vnode.elm,
+      children: treeNode.children,
+    })
     .then((c) => {
       if (vnode.data && vnode.data.on && c && c.$el) {
         Object.keys(vnode.data.on).forEach((eventName) => {
@@ -52,17 +49,17 @@ function createCustomComponent({ f7, vnode, tagName, data }) {
       // eslint-disable-next-line
       vnode.elm.__component__ = c;
     });
-}
-function updateCustomComponent(vnode) {
+};
+const updateCustomComponent = (vnode) => {
   // eslint-disable-next-line
   const component = vnode && vnode.elm && vnode.elm.__component__;
   if (!component) return;
   const newProps = contextFromAttrs(vnode.data.attrs || {}, vnode.data.props || {});
-  component.children = vnode.children;
+  component.children = vnode.data.treeNode.children;
   Object.assign(component.props, newProps);
   component.update();
-}
-function destroyCustomComponent(vnode) {
+};
+const destroyCustomComponent = (vnode) => {
   // eslint-disable-next-line
   const component = vnode && vnode.elm && vnode.elm.__component__;
 
@@ -77,9 +74,13 @@ function destroyCustomComponent(vnode) {
     if (el && el.parentNode) el.parentNode.removeChild(el);
     delete vnode.elm.__component__; // eslint-disable-line
   }
-}
+};
 
-function getHooks(data, f7, initial, isRoot, tagName) {
+const isCustomComponent = (tagName) => {
+  return tagName && tagName.indexOf('-') > 0 && customComponents[tagName];
+};
+
+function getHooks(treeNode, data, f7, initial, isRoot, tagName) {
   const hooks = {};
   const insert = [];
   const destroy = [];
@@ -92,11 +93,11 @@ function getHooks(data, f7, initial, isRoot, tagName) {
     delete data.attrs.component;
     isFakeElement = true;
   }
-  const isCustomComponent = tagName && tagName.indexOf('-') > 0 && customComponents[tagName];
-  if (isCustomComponent) {
+
+  if (isCustomComponent(tagName)) {
     insert.push((vnode) => {
       if (vnode.sel !== tagName && !isFakeElement) return;
-      createCustomComponent({ f7, vnode, tagName, data });
+      createCustomComponent({ f7, treeNode, vnode, tagName, data });
     });
     destroy.push((vnode) => {
       destroyCustomComponent(vnode);
@@ -178,7 +179,7 @@ const getEventHandler = (eventHandler, { stop, prevent, once } = {}) => {
 };
 
 const getData = (treeNode, component, f7, initial, isRoot) => {
-  const data = { component };
+  const data = { component, treeNode };
   const tagName = treeNode.type;
   Object.keys(treeNode.props).forEach((attrName) => {
     const attrValue = treeNode.props[attrName];
@@ -244,7 +245,7 @@ const getData = (treeNode, component, f7, initial, isRoot) => {
     if (!data.attrs) data.attrs = {};
     data.attrs[`data-f7-${component.id}`] = '';
   }
-  const hooks = getHooks(data, f7, initial, isRoot, tagName);
+  const hooks = getHooks(treeNode, data, f7, initial, isRoot, tagName);
 
   hooks.prepatch = (oldVnode, vnode) => {
     if (!oldVnode || !vnode) return;
@@ -273,7 +274,7 @@ const getChildren = (treeNode, component, f7, initial) => {
   const nodes = treeNode.children;
   for (let i = 0; i < nodes.length; i += 1) {
     const childNode = nodes[i];
-    const child = treeNodeToVNode(childNode, component, f7, initial);
+    const child = treeNodeToVNode(childNode, component, f7, initial, false);
     if (Array.isArray(child)) {
       children.push(...child);
     } else if (child) {
@@ -285,17 +286,17 @@ const getChildren = (treeNode, component, f7, initial) => {
 
 const getSlots = (treeNode, component, f7, initial) => {
   const slotName = treeNode.props.name || 'default';
-  const slots = (component.children || []).filter((childEl) => {
+  const slotNodes = (component.children || []).filter((childTreeNode) => {
     let childSlotName = 'default';
-    if (childEl.data) {
-      childSlotName = (childEl.data.attrs && childEl.data.attrs.slot) || 'default';
+    if (childTreeNode.props) {
+      childSlotName = childTreeNode.props.slot || 'default';
     }
     return childSlotName === slotName;
   });
-  if (slots.length === 0) {
+  if (slotNodes.length === 0) {
     return getChildren(treeNode, component, f7, initial);
   }
-  return slots;
+  return slotNodes.map((subTreeNode) => treeNodeToVNode(subTreeNode, component, f7, initial));
 };
 
 const isTreeNode = (treeNode) => {
@@ -309,15 +310,13 @@ const treeNodeToVNode = (treeNode, component, f7, initial, isRoot) => {
   if (treeNode.type === 'slot') {
     return getSlots(treeNode, component, f7, initial);
   }
-  return h(
-    treeNode.type,
-    getData(treeNode, component, f7, initial, isRoot, treeNode.type),
-    getChildren(treeNode, component, f7, initial),
-  );
+  const data = getData(treeNode, component, f7, initial, isRoot);
+  const children = isCustomComponent(treeNode.type)
+    ? []
+    : getChildren(treeNode, component, f7, initial);
+  return h(treeNode.type, data, children);
 };
 
 export default function vdom(tree = {}, component, initial) {
-  const result = treeNodeToVNode(tree, component, component.f7, initial, true);
-
-  return result;
+  return treeNodeToVNode(tree, component, component.f7, initial, true);
 }

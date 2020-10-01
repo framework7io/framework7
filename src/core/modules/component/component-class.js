@@ -41,23 +41,6 @@ class Component {
       __onUnmounted: [],
     });
 
-    Object.defineProperty(this, 'slots', {
-      enumerable: true,
-      configurable: true,
-      get: () => {
-        const slots = {};
-        this.children.forEach((childVNode) => {
-          let childSlotName = 'default';
-          if (childVNode.data) {
-            childSlotName = (childVNode.data.attrs && childVNode.data.attrs.slot) || 'default';
-          }
-          if (!slots[childSlotName]) slots[childSlotName] = [];
-          slots[childSlotName].push(childVNode);
-        });
-        return slots;
-      },
-    });
-
     // Root data and methods
     Object.defineProperty(this, 'root', {
       enumerable: true,
@@ -188,7 +171,6 @@ class Component {
         $root: this.root,
         $,
         $id: this.id,
-        $slots: this.slots,
         $f7: this.f7,
         $f7ready: this.f7ready,
         $theme: this.theme,
@@ -344,9 +326,11 @@ class Component {
     this.__onUnmounted = [];
     // Delete all props
     deleteProps(this);
+    this.__destroyed = true;
   }
 
   hook(name, ...args) {
+    if (this.__destroyed) return;
     this[`__${name}`].forEach((handler) => {
       handler(...args);
     });
