@@ -35,9 +35,9 @@ export namespace View {
     /**	Default (initial) View's url. If not specified, then it is equal to document url */
     url?: string;
     /**	If enabled then all previous pages in navigation chain will not be removed from DOM when you navigate deeper and deeper. It could be useful, for example, if you have some Form from 5 steps (5 pages) and when you are on last 5th page you need access to form that was on 1st page. */
-    stackPages?: boolean
+    stackPages?: boolean;
     /**	CSS Selector of another view or object with initialized View instance. By default all links in initialized (only) view will load pages in this view. This tell links to load pages in other view. */
-    linksView?: CSSSelector | View
+    linksView?: CSSSelector | View;
     /**	You may enable this parameter to allow loading of new pages that have same url as currently "active" page in View. */
     allowDuplicateUrls?: boolean;
     /**	Enables transitions between pages */
@@ -62,9 +62,9 @@ export namespace View {
     mdPageLoadDelay?: number;
     /**	Delay (in ms) after new page will be loaded and inserted to DOM and before it will be transitioned. Can be increased a bit to improve performance. Will have effect only under Aurora theme */
     auroraPageLoadDelay?: number;
-    /**	When enabled then router will pass route url query to request url query (for url, templateUrl and componentUrl route properties) */
+    /**	When enabled then router will pass route url query to request url query (for url, componentUrl route properties) */
     passRouteQueryToRequest?: boolean;
-    /**	When enabled then router will pass current route parameters to request url query (for url, templateUrl and componentUrl route properties) */
+    /**	When enabled then router will pass current route parameters to request url query (for url, componentUrl route properties) */
     passRouteParamsToRequest?: boolean;
     /**	Array with current View routes. In case if specified then will overwrite global app routes and routes only specified here will be available for the current View */
     routes?: Router.RouteParameters[];

@@ -668,7 +668,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   if (!router.allowPageChange && !ignorePageChange) return router;
   const params = loadParams;
   const options = loadOptions;
-  const { url, content, el, pageName, template, templateUrl, component, componentUrl } = params;
+  const { url, content, el, pageName, component, componentUrl } = params;
 
   if (
     !options.reloadCurrent &&
@@ -738,21 +738,13 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
     return router;
   }
 
-  if (url || templateUrl || componentUrl || component) {
+  if (url || componentUrl || component) {
     router.allowPageChange = false;
   }
 
   // Proceed
   if (content) {
     router.forward(router.getPageEl(content), options);
-  } else if (template || templateUrl) {
-    // Parse template and send page element
-    try {
-      router.pageTemplateLoader({ template, templateUrl, options, resolve, reject });
-    } catch (err) {
-      router.allowPageChange = true;
-      throw err;
-    }
   } else if (el) {
     // Load page from specified HTMLElement or by page name in pages container
     router.forward(router.getPageEl(el), options);
@@ -886,14 +878,12 @@ function navigate(navigateParams, navigateOptions = {}) {
       router.load({ el: route.route.keepAliveData.pageEl }, options, false);
       routerLoaded = true;
     }
-    'url content component pageName el componentUrl template templateUrl'
-      .split(' ')
-      .forEach((pageLoadProp) => {
-        if (route.route[pageLoadProp] && !routerLoaded) {
-          routerLoaded = true;
-          router.load({ [pageLoadProp]: route.route[pageLoadProp] }, options, false);
-        }
-      });
+    'url content component pageName el componentUrl'.split(' ').forEach((pageLoadProp) => {
+      if (route.route[pageLoadProp] && !routerLoaded) {
+        routerLoaded = true;
+        router.load({ [pageLoadProp]: route.route[pageLoadProp] }, options, false);
+      }
+    });
     if (routerLoaded) return;
     // Async
     function asyncResolve(resolveParams, resolveOptions) {

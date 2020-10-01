@@ -9,14 +9,17 @@
 - [ ] add containerEl to modals
 - [ ] new router component
   - [ ] update TS
-  - [ ] remove templateLoader
+  - [x] remove templateLoader
   - [x] rework vdom.js to work with \$h
   - [ ] add root access data
   - [ ] migrate KS to new components
-  - [ ] support for custom components
+  - [x] support for custom components
+  - [ ] remove context (replace with props)
+  - [ ] check true/false/null values
   - [ ] changelog
     - new router component
     - removed Template7
+    - removed template loader (with template and templateUrl)
     - removed mixins
 
 # React

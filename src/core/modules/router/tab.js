@@ -121,7 +121,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
   // Load Tab Content
   function loadTab(loadTabParams, loadTabOptions) {
     // Load Tab Props
-    const { url, content, el, template, templateUrl, component, componentUrl } = loadTabParams;
+    const { url, content, el, component, componentUrl } = loadTabParams;
     // Component/Template Callbacks
     function resolve(contentEl) {
       router.allowPageChange = true;
@@ -148,19 +148,6 @@ function tabLoad(tabRoute, loadOptions = {}) {
 
     if (content) {
       resolve(content);
-    } else if (template || templateUrl) {
-      try {
-        router.tabTemplateLoader({
-          template,
-          templateUrl,
-          options: loadTabOptions,
-          resolve,
-          reject,
-        });
-      } catch (err) {
-        router.allowPageChange = true;
-        throw err;
-      }
     } else if (el) {
       resolve(el);
     } else if (component || componentUrl) {
@@ -196,7 +183,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
   }
 
   let hasContentLoadProp;
-  'url content component el componentUrl template templateUrl'.split(' ').forEach((tabLoadProp) => {
+  'url content component el componentUrl'.split(' ').forEach((tabLoadProp) => {
     if (tabRoute[tabLoadProp]) {
       hasContentLoadProp = true;
       loadTab({ [tabLoadProp]: tabRoute[tabLoadProp] }, options);

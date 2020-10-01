@@ -536,7 +536,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   if (!router.allowPageChange && !ignorePageChange) return router;
   const params = backParams;
   const options = backOptions;
-  const { url, content, el, pageName, template, templateUrl, component, componentUrl } = params;
+  const { url, content, el, pageName, component, componentUrl } = params;
 
   if (
     options.route.url &&
@@ -560,21 +560,13 @@ function loadBack(backParams, backOptions, ignorePageChange) {
     return router;
   }
 
-  if (url || templateUrl || componentUrl || component) {
+  if (url || componentUrl || component) {
     router.allowPageChange = false;
   }
 
   // Proceed
   if (content) {
     router.backward(router.getPageEl(content), options);
-  } else if (template || templateUrl) {
-    // Parse template and send page element
-    try {
-      router.pageTemplateLoader({ template, templateUrl, options, resolve, reject });
-    } catch (err) {
-      router.allowPageChange = true;
-      throw err;
-    }
   } else if (el) {
     // Load page from specified HTMLElement or by page name in pages container
     router.backward(router.getPageEl(el), options);
@@ -864,14 +856,12 @@ function back(...args) {
       router.loadBack({ el: route.route.keepAliveData.pageEl }, options);
       routerLoaded = true;
     }
-    'url content component pageName el componentUrl template templateUrl'
-      .split(' ')
-      .forEach((pageLoadProp) => {
-        if (route.route[pageLoadProp] && !routerLoaded) {
-          routerLoaded = true;
-          router.loadBack({ [pageLoadProp]: route.route[pageLoadProp] }, options);
-        }
-      });
+    'url content component pageName el componentUrl'.split(' ').forEach((pageLoadProp) => {
+      if (route.route[pageLoadProp] && !routerLoaded) {
+        routerLoaded = true;
+        router.loadBack({ [pageLoadProp]: route.route[pageLoadProp] }, options);
+      }
+    });
     if (routerLoaded) return;
     // Async
     function asyncResolve(resolveParams, resolveOptions) {

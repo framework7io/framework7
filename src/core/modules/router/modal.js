@@ -133,7 +133,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
   // Load Modal Content
   function loadModal(loadModalParams, loadModalOptions) {
     // Load Modal Props
-    const { url, content, template, templateUrl, component, componentUrl } = loadModalParams;
+    const { url, content, component, componentUrl } = loadModalParams;
 
     // Component/Template Callbacks
     function resolve(contentEl) {
@@ -158,19 +158,6 @@ function modalLoad(modalType, route, loadOptions = {}) {
 
     if (content) {
       resolve(content);
-    } else if (template || templateUrl) {
-      try {
-        router.modalTemplateLoader({
-          template,
-          templateUrl,
-          options: loadModalOptions,
-          resolve,
-          reject,
-        });
-      } catch (err) {
-        router.allowPageChange = true;
-        throw err;
-      }
     } else if (component || componentUrl) {
       // Load from component (F7/Vue/React/...)
       try {
@@ -207,14 +194,12 @@ function modalLoad(modalType, route, loadOptions = {}) {
   }
 
   let foundLoadProp;
-  'url content component el componentUrl template templateUrl'
-    .split(' ')
-    .forEach((modalLoadProp) => {
-      if (modalParams[modalLoadProp] && !foundLoadProp) {
-        foundLoadProp = true;
-        loadModal({ [modalLoadProp]: modalParams[modalLoadProp] }, options);
-      }
-    });
+  'url content component el componentUrl template'.split(' ').forEach((modalLoadProp) => {
+    if (modalParams[modalLoadProp] && !foundLoadProp) {
+      foundLoadProp = true;
+      loadModal({ [modalLoadProp]: modalParams[modalLoadProp] }, options);
+    }
+  });
   if (!foundLoadProp && modalType === 'actions') {
     onModalLoaded();
   }

@@ -116,7 +116,7 @@ export namespace Router {
     reloadAll?: boolean;
     /** previous pages history will be cleared after reloading/navigate to the specified route */
     clearPreviousHistory?: boolean;
-    /** custom/extended context for Component page (when route loaded from template, templateUrl, component or componentUrl) */
+    /** custom/extended context for Component page (when route loaded from component or componentUrl) */
     context?: object;
     /** If set to `true` then it will ignore if such URL in cache and reload it using XHR again */
     ignoreCache?: boolean;
