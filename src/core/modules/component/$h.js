@@ -1,7 +1,7 @@
-import htm from './htm';
+import htm from 'htm';
 import { flattenArray } from '../../shared/utils';
 
-const ignoreChildren = ['', undefined];
+const ignoreChildren = [false, null, '', undefined];
 
 const h = (type, props, ...children) => {
   return {
