@@ -70,12 +70,13 @@ function parseComponent(componentString) {
         `function ($$ctx) {
           var $ = $$ctx.$$;
           var $h = $$ctx.$h;
-          var root = $$ctx.$root;
-          var f7 = $$ctx.$f7;
-          var f7route = $$ctx.$f7route;
-          var f7router = $$ctx.$f7router;
-          var theme = $$ctx.$theme;
-          var update = $$ctx.$update;
+          var $root = $$ctx.$root;
+          var $f7 = $$ctx.$f7;
+          var $f7route = $$ctx.$f7route;
+          var $f7router = $$ctx.$f7router;
+          var $theme = $$ctx.$theme;
+          var $update = $$ctx.$update;
+          var $context = $$ctx.$context;
 
           return $h\`${template}\`
         }

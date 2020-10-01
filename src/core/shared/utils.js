@@ -371,3 +371,12 @@ export function bindMethods(instance, obj) {
     instance[key] = obj[key];
   });
 }
+
+export function flattenArray(...args) {
+  const arr = [];
+  args.forEach((arg) => {
+    if (Array.isArray(arg)) arr.push(...flattenArray(...arg));
+    else arr.push(arg);
+  });
+  return arr;
+}

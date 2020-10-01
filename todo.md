@@ -8,10 +8,12 @@
 - [ ] tooltip set target
 - [ ] add containerEl to modals
 - [ ] new router component
+  - [ ] update TS
   - [ ] remove templateLoader
-  - [ ] rework vdom.js to work with \$h
+  - [x] rework vdom.js to work with \$h
   - [ ] add root access data
   - [ ] migrate KS to new components
+  - [ ] support for custom components
   - [ ] changelog
     - new router component
     - removed Template7

@@ -417,12 +417,12 @@ class Router extends Framework7Class {
         .each((tabChild) => {
           if (tabChild.f7Component) {
             $(tabChild).trigger('tab:beforeremove');
-            tabChild.f7Component.$destroy();
+            tabChild.f7Component.destroy();
           }
         });
     });
-    if ($el[0].f7Component && $el[0].f7Component.$destroy) {
-      $el[0].f7Component.$destroy();
+    if ($el[0].f7Component && $el[0].f7Component.destroy) {
+      $el[0].f7Component.destroy();
     }
     if (!router.params.removeElements) {
       return;

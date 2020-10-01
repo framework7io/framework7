@@ -68,7 +68,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
       );
       const modalComponent = modal.el.f7Component;
       if (modalComponent) {
-        modalComponent.$destroy();
+        modalComponent.destroy();
       }
       nextTick(() => {
         if (modalComponent || modalParams.component) {
@@ -141,7 +141,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
         if (typeof contentEl === 'string') {
           modalParams.content = contentEl;
         } else if (contentEl.f7Component) {
-          contentEl.f7Component.$mount((componentEl) => {
+          contentEl.f7Component.mount((componentEl) => {
             modalParams.el = componentEl;
             app.root.append(componentEl);
           });

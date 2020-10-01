@@ -1,10 +1,13 @@
-import htm from 'htm';
+import htm from './htm';
+import { flattenArray } from '../../shared/utils';
+
+const ignoreChildren = ['', undefined];
 
 const h = (type, props, ...children) => {
   return {
     type,
-    props,
-    children,
+    props: props || {},
+    children: flattenArray(children.filter((child) => ignoreChildren.indexOf(child) < 0)),
   };
 };
 

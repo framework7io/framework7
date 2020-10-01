@@ -20,8 +20,8 @@ export default {
           }
         }
         const componentContext = merge({}, context, {
-          $f7route: options.route,
-          $f7router: router,
+          f7route: options.route,
+          f7router: router,
         });
         const componentProps = options.route.params || {};
         let componentEl;

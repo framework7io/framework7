@@ -17,19 +17,19 @@ class Component {
     const window = getWindow();
     const document = getDocument();
     merge(this, {
-      $f7: app,
-      $props: props || {},
-      $context: context || {},
-      $id: component.id || generateId(),
-      $children: children || [],
-      $isRootComponent: !!root,
-      $theme: {
+      f7: app,
+      props: props || {},
+      context: context || {},
+      id: component.id || generateId(),
+      children: children || [],
+      isRootComponent: !!root,
+      theme: {
         ios: app.theme === 'ios',
         md: app.theme === 'md',
         aurora: app.theme === 'aurora',
       },
-      $style: component.style,
-      $styleScoped: component.styleScoped,
+      style: component.style,
+      styleScoped: component.styleScoped,
       __updateQueue: [],
       __eventHandlers: [],
       __onceEventHandlers: [],
@@ -41,12 +41,12 @@ class Component {
       __onUnmounted: [],
     });
 
-    Object.defineProperty(this, '$slots', {
+    Object.defineProperty(this, 'slots', {
       enumerable: true,
       configurable: true,
       get: () => {
         const slots = {};
-        this.$children.forEach((childVNode) => {
+        this.children.forEach((childVNode) => {
           let childSlotName = 'default';
           if (childVNode.data) {
             childSlotName = (childVNode.data.attrs && childVNode.data.attrs.slot) || 'default';
@@ -59,17 +59,17 @@ class Component {
     });
 
     // Root data and methods
-    Object.defineProperty(this, '$root', {
+    Object.defineProperty(this, 'root', {
       enumerable: true,
       configurable: true,
       get: () => {
-        if (this.$isRootComponent) {
+        if (this.isRootComponent) {
           return this;
         }
         if (app.rootComponent) {
-          if (!this.$onRootUpdated) {
-            this.$onRootUpdated = () => this.$update();
-            app.on('rootComponentUpdated', this.$onRootUpdated);
+          if (!this.onRootUpdated) {
+            this.onRootUpdated = () => this.update();
+            app.on('rootComponentUpdated', this.onRootUpdated);
           }
           return app.rootComponent;
         }
@@ -94,7 +94,7 @@ class Component {
     });
 
     const createComponent = () => {
-      return component(this.$props, this.$getComponentContext(true));
+      return component(this.props, this.getComponentContext(true));
     };
 
     const getRenderFuncion = (componentResult) =>
@@ -117,42 +117,40 @@ class Component {
       const componentResult = createComponent();
       getRenderFuncion(componentResult)
         .then((render) => {
-          this.$renderFunction = render;
+          this.renderFunction = render;
 
-          let html = this.$render();
+          const tree = this.render();
 
           if (el) {
-            html = html.trim();
-            this.$vnode = vdom(html, this, true);
-            if (this.$style) {
-              this.$styleEl = document.createElement('style');
-              this.$styleEl.innerHTML = this.$style;
+            this.vnode = vdom(tree, this, true);
+            if (this.style) {
+              this.styleEl = document.createElement('style');
+              this.styleEl.innerHTML = this.style;
             }
             this.el = el;
-            patch(this.el, this.$vnode);
-            this.el = this.$vnode.elm;
+            patch(this.el, this.vnode);
+            this.el = this.vnode.elm;
             this.$el = $(this.el);
 
-            this.$attachEvents();
+            this.attachEvents();
             this.el.f7Component = this;
-            this.$mount();
+            this.mount();
             resolve(this);
             return;
           }
           // Make Dom
-          if (html && typeof html === 'string') {
-            html = html.trim();
-            this.$vnode = vdom(html, this, true);
-            this.el = document.createElement(this.$vnode.sel || 'div');
-            patch(this.el, this.$vnode);
+          if (tree) {
+            this.vnode = vdom(tree, this, true);
+            this.el = document.createElement(this.vnode.sel || 'div');
+            patch(this.el, this.vnode);
             this.$el = $(this.el);
           }
-          if (this.$style) {
-            this.$styleEl = document.createElement('style');
-            this.$styleEl.innerHTML = this.$style;
+          if (this.style) {
+            this.styleEl = document.createElement('style');
+            this.styleEl.innerHTML = this.style;
           }
 
-          this.$attachEvents();
+          this.attachEvents();
 
           if (this.el) {
             this.el.f7Component = this;
@@ -167,54 +165,58 @@ class Component {
     });
   }
 
-  $on(eventName, handler) {
+  on(eventName, handler) {
     this.__eventHandlers.push({ eventName, handler });
   }
 
-  $once(eventName, handler) {
+  once(eventName, handler) {
     this.__onceEventHandlers.push({ eventName, handler });
   }
 
-  $getEl() {
+  getEl() {
     return this.$el;
   }
 
-  $getComponentContext(includeHooks) {
-    const ctx = extend({}, this.$context, {
-      f7route: this.$context.$f7route,
-      f7router: this.$context.$f7router,
-      $h,
-      root: this.$root,
-      $,
-      id: this.$id,
-      slots: this.$slots,
-      f7: this.$f7,
-      f7ready: this.$f7ready,
-      theme: this.$theme,
-      getEl: this.$getEl.bind(this),
-      tick: this.$tick.bind(this),
-      update: this.$update.bind(this),
-    });
+  getComponentContext(includeHooks) {
+    const ctx = extend(
+      {},
+      {
+        $context: this.context,
+        $f7route: this.context.f7route,
+        $f7router: this.context.f7router,
+        $h,
+        $root: this.root,
+        $,
+        $id: this.id,
+        $slots: this.slots,
+        $f7: this.f7,
+        $f7ready: this.f7ready,
+        $theme: this.theme,
+        $getEl: this.getEl.bind(this),
+        $tick: this.tick.bind(this),
+        $update: this.update.bind(this),
+      },
+    );
     if (includeHooks)
       extend(ctx, {
-        on: this.$on.bind(this),
-        once: this.$once.bind(this),
-        onBeforeMount: (handler) => this.__onBeforeMount.push(handler),
-        onMounted: (handler) => this.__onMounted.push(handler),
-        onBeforeUpdate: (handler) => this.__onBeforeUpdate.push(handler),
-        onUpdated: (handler) => this.__onUpdated.push(handler),
-        onBeforeUnmount: (handler) => this.__onBeforeUnmount.push(handler),
-        onUnmounted: (handler) => this.__onUnmounted.push(handler),
+        $on: this.on.bind(this),
+        $once: this.once.bind(this),
+        $onBeforeMount: (handler) => this.__onBeforeMount.push(handler),
+        $onMounted: (handler) => this.__onMounted.push(handler),
+        $onBeforeUpdate: (handler) => this.__onBeforeUpdate.push(handler),
+        $onUpdated: (handler) => this.__onUpdated.push(handler),
+        $onBeforeUnmount: (handler) => this.__onBeforeUnmount.push(handler),
+        $onUnmounted: (handler) => this.__onUnmounted.push(handler),
       });
 
     return ctx;
   }
 
-  $render() {
-    return this.$renderFunction(this.$getComponentContext());
+  render() {
+    return this.renderFunction(this.getComponentContext());
   }
 
-  $attachEvents() {
+  attachEvents() {
     const { $el } = this;
     this.__eventHandlers.forEach(({ eventName, handler }) => {
       $el.on(eventNameToColonCase(eventName), handler);
@@ -224,7 +226,7 @@ class Component {
     });
   }
 
-  $detachEvents() {
+  detachEvents() {
     const { $el } = this;
     this.__eventHandlers.forEach(({ eventName, handler }) => {
       $el.on(eventNameToColonCase(eventName), handler);
@@ -234,18 +236,17 @@ class Component {
     });
   }
 
-  $startUpdateQueue() {
+  startUpdateQueue() {
     const window = getWindow();
     if (this.__requestAnimationFrameId) return;
     const update = () => {
-      this.$hook('onBeforeUpdate');
-      let html = this.$render();
+      this.hook('onBeforeUpdate');
+      const tree = this.render();
 
       // Make Dom
-      if (html && typeof html === 'string') {
-        html = html.trim();
-        const newVNode = vdom(html, this, false);
-        this.$vnode = patch(this.$vnode, newVNode);
+      if (tree) {
+        const newVNode = vdom(tree, this, false);
+        this.vnode = patch(this.vnode, newVNode);
       }
     };
     this.__requestAnimationFrameId = window.requestAnimationFrame(() => {
@@ -261,74 +262,74 @@ class Component {
     });
   }
 
-  $tick(callback) {
+  tick(callback) {
     return new Promise((resolve) => {
       function resolver() {
         resolve();
         if (callback) callback();
       }
       this.__updateQueue.push(resolver);
-      this.$startUpdateQueue();
+      this.startUpdateQueue();
     });
   }
 
-  $update(callback) {
+  update(callback) {
     return new Promise((resolve) => {
       const resolver = () => {
         resolve();
         if (callback) callback();
-        if (this.$isRootComponent) {
-          this.$f7.emit('rootComponentUpdated');
+        if (this.isRootComponent) {
+          this.f7.emit('rootComponentUpdated');
         }
       };
       this.__updateIsPending = true;
       this.__updateQueue.push(resolver);
-      this.$startUpdateQueue();
+      this.startUpdateQueue();
     });
   }
 
-  $setState(mergeState = {}, callback) {
+  setState(mergeState = {}, callback) {
     merge(this, mergeState);
-    return this.$update(callback);
+    return this.update(callback);
   }
 
-  $f7ready(callback) {
-    if (this.$f7.initialized) {
-      callback(this.$f7);
+  f7ready(callback) {
+    if (this.f7.initialized) {
+      callback(this.f7);
       return;
     }
-    this.$f7.once('init', () => {
-      callback(this.$f7);
+    this.f7.once('init', () => {
+      callback(this.f7);
     });
   }
 
-  $mount(mountMethod) {
-    this.$hook('onBeforeMount');
-    if (this.$styleEl) $('head').append(this.$styleEl);
+  mount(mountMethod) {
+    this.hook('onBeforeMount', this.$el);
+    if (this.styleEl) $('head').append(this.styleEl);
     if (mountMethod) mountMethod(this.el);
-    this.$hook('onMounted');
+    this.hook('onMounted', this.$el);
   }
 
-  $destroy() {
+  destroy() {
     const window = getWindow();
-    this.$hook('onBeforeUnmount');
+    this.hook('onBeforeUnmount');
 
-    if (this.$styleEl) $(this.$styleEl).remove();
-    if (this.$onRootUpdated) {
-      this.$f7.off('rootComponentUpdated', this.$onRootUpdated);
-      delete this.$onRootUpdated;
+    if (this.styleEl) $(this.styleEl).remove();
+    if (this.onRootUpdated) {
+      this.f7.off('rootComponentUpdated', this.onRootUpdated);
+      delete this.onRootUpdated;
     }
 
-    this.$detachEvents();
-    this.$hook('onUnmounted');
+    this.detachEvents();
+    this.hook('onUnmounted');
     // Delete component instance
     if (this.el && this.el.f7Component) {
       this.el.f7Component = null;
       delete this.el.f7Component;
     }
     // Patch with empty node
-    if (this.$vnode) {
-      this.$vnode = patch(this.$vnode, { sel: this.$vnode.sel, data: {} });
+    if (this.vnode) {
+      this.vnode = patch(this.vnode, { sel: this.vnode.sel, data: {} });
     }
     // Clear update queue
     window.cancelAnimationFrame(this.__requestAnimationFrameId);
@@ -345,9 +346,9 @@ class Component {
     deleteProps(this);
   }
 
-  $hook(name) {
+  hook(name, ...args) {
     this[`__${name}`].forEach((handler) => {
-      handler();
+      handler(...args);
     });
   }
 }
