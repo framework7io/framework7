@@ -2043,11 +2043,11 @@
   - Card
     - New `outline` prop to make card outline
   - Chip
-    - New `outline` prop to make card outline
+    - New `outline` prop to make chip outline
   - Fab
     - New `text` prop to add text to FAB and make it as Extended FAB
     - New `label` prop for `FabButton` to add label for fab button
-  - Simplified conditional icon props for Icon, Link and Button components: `if-ios` -> `is`, `if-md` -> `md`, `icon-if-ios` -> `icon-ios`, `icon-if-md` -> `icon-md`
+  - Simplified conditional icon props for Icon, Link and Button components: `if-ios` -> `ios`, `if-md` -> `md`, `icon-if-ios` -> `icon-ios`, `icon-if-md` -> `icon-md`
   - Input
     - New `error-message-force` prop to force error message to show. Works in case of `validate` is omitted
   - Messagebar

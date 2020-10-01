@@ -649,10 +649,10 @@
               value={typeof value === 'undefined' ? '' : value}
               {resizable}
               {placeholder}
-              on:textEditorFocus={onFocus}
-              on:textEditorBlur={onBlur}
-              on:textEditorInput={onInput}
-              on:textEditorChange={onChange}
+              onTextEditorFocus={onFocus}
+              onTextEditorBlur={onBlur}
+              onTextEditorInput={onInput}
+              onTextEditorChange={onChange}
               {...textEditorParams} />
           {:else}
             <input
