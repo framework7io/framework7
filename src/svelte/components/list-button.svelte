@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   import {
     colorClasses,
     routerAttrs,
@@ -10,6 +10,7 @@
   import { classNames, extend, plainText, isStringProp, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { useTooltip } from '../shared/use-tooltip';
+  import { useRouteProps } from '../shared/use-route-props';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -25,6 +26,7 @@
   export let target = undefined;
   export let tooltip = undefined;
   export let tooltipTrigger = undefined;
+  export let routeProps = undefined;
 
   let el;
 
@@ -54,24 +56,16 @@
   function onClick() {
     emit('click');
   }
-
-  onMount(() => {
-    if ($$props.routeProps) {
-      el.f7RouteProps = $$props.routeProps;
-    }
-  });
-  afterUpdate(() => {
-    if ($$props.routeProps) {
-      el.f7RouteProps = $$props.routeProps;
-    }
-  });
-  onDestroy(() => {
-    if (el) delete el.f7RouteProps;
-  });
 </script>
 
 <!-- svelte-ignore a11y-missing-attribute -->
-<li class={className} {...restProps($$restProps)} use:useTooltip={{ tooltip, tooltipTrigger }} bind:this={el}>
+<li
+  class={className}
+  {...restProps($$restProps)}
+  bind:this={el}
+  use:useRouteProps={routeProps}
+  use:useTooltip={{ tooltip, tooltipTrigger }}
+>
   <a class={classes} {...attrs} on:click={onClick}>
     {plainText(title)}
     {plainText(text)}

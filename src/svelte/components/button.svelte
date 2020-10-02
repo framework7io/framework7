@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   import {
     colorClasses,
     routerAttrs,
@@ -10,6 +10,7 @@
   import { classNames, extend, isStringProp, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { useTooltip } from '../shared/use-tooltip';
+  import { useRouteProps } from '../shared/use-route-props';
 
   import Icon from './icon';
 
@@ -52,6 +53,7 @@
   export let disabled = false;
   export let tooltip = undefined;
   export let tooltipTrigger = undefined;
+  export let routeProps = undefined;
 
   let el;
 
@@ -122,26 +124,13 @@
   function onClick() {
     emit('click');
   }
-
-  onMount(() => {
-    if ($$props.routeProps) {
-      el.f7RouteProps = $$props.routeProps;
-    }
-  });
-  afterUpdate(() => {
-    if ($$props.routeProps) {
-      el.f7RouteProps = $$props.routeProps;
-    }
-  });
-  onDestroy(() => {
-    if (el) delete el.f7RouteProps;
-  });
 </script>
 
 <!-- svelte-ignore a11y-missing-attribute -->
 {#if tagName === 'button'}
   <button
     bind:this={el}
+    use:useRouteProps={routeProps}
     class={classes}
     on:click={onClick}
     use:useTooltip={{ tooltip, tooltipTrigger }}
@@ -167,6 +156,7 @@
 {:else}
   <a
     bind:this={el}
+    use:useRouteProps={routeProps}
     class={classes}
     on:click={onClick}
     use:useTooltip={{ tooltip, tooltipTrigger }}

@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   import {
     colorClasses,
     routerAttrs,
@@ -9,7 +9,7 @@
   } from '../shared/mixins';
   import { classNames, extend, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { useRouteProps } from '../shared/use-route-props';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -21,6 +21,7 @@
   export let link = undefined;
   export let target = undefined;
   export let divider = undefined;
+  export let routeProps = undefined;
 
   let el;
 
@@ -56,31 +57,16 @@
   function onClick(e) {
     emit('click', [e]);
   }
-
-  onMount(() => {
-    if ($$props.routeProps) {
-      el.f7RouteProps = $$props.routeProps;
-    }
-  });
-  afterUpdate(() => {
-    if ($$props.routeProps && el) {
-      el.f7RouteProps = $$props.routeProps;
-    }
-  });
-  onDestroy(() => {
-    if (!el || !f7) return;
-    delete el.f7RouteProps;
-  });
 </script>
 
 <!-- svelte-ignore a11y-missing-attribute -->
 {#if isLink}
-  <a on:click={onClick} bind:this={el} class={classes} {...attrs}>
+  <a on:click={onClick} bind:this={el} class={classes} {...attrs} use:useRouteProps={routeProps}>
     {plainText(text)}
     <slot />
   </a>
 {:else}
-  <div on:click={onClick} bind:this={el} class={classes} {...attrs}>
+  <div on:click={onClick} bind:this={el} class={classes} {...attrs} use:useRouteProps={routeProps}>
     {plainText(text)}
     <slot />
   </div>

@@ -13,6 +13,7 @@
   import { hasSlots } from '../shared/has-slots';
   import { useTooltip } from '../shared/use-tooltip';
   import { useSmartSelect } from '../shared/use-smart-select';
+  import { useRouteProps } from '../shared/use-route-props';
 
   import Badge from './badge';
 
@@ -74,6 +75,8 @@
   export let required = undefined;
   export let disabled = undefined;
   export let virtualListIndex = undefined;
+
+  export let routeProps = undefined;
 
   let el;
   let linkEl;
@@ -245,9 +248,6 @@
   );
 
   onMount(() => {
-    if (linkEl && $$props.routeProps) {
-      linkEl.f7RouteProps = $$props.routeProps;
-    }
     if (indeterminate && inputEl) {
       inputEl.indeterminate = true;
     }
@@ -278,18 +278,12 @@
   });
 
   afterUpdate(() => {
-    if (linkEl && $$props.routeProps) {
-      linkEl.f7RouteProps = $$props.routeProps;
-    }
     if (inputEl) {
       inputEl.indeterminate = indeterminate;
     }
   });
 
   onDestroy(() => {
-    if (linkEl) {
-      delete linkEl.f7RouteProps;
-    }
     if (!f7) return;
     if (swipeout) {
       f7.off('swipeoutOpen', onSwipeoutOpen);
@@ -329,7 +323,7 @@
     {#if swipeout}
       <div class="swipeout-content">
         {#if isLink}
-          <a bind:this={linkEl} class={linkClasses} {...linkAttrs} on:click={onClick}>
+          <a bind:this={linkEl} use:useRouteProps={routeProps} class={linkClasses} {...linkAttrs} on:click={onClick}>
             <!-- Item content start -->
             <div class={contentClasses}>
               <slot name="content-start" />
@@ -688,7 +682,7 @@
       </div>
     {:else}
       {#if isLink}
-        <a bind:this={linkEl} class={linkClasses} {...linkAttrs} on:click={onClick}>
+        <a bind:this={linkEl} use:useRouteProps={routeProps} class={linkClasses} {...linkAttrs} on:click={onClick}>
           <!-- Item content start -->
           <div class={contentClasses}>
             <slot name="content-start" />

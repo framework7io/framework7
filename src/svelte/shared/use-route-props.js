@@ -1,14 +1,17 @@
-import { useEffect } from 'react';
+export const useRouteProps = (el, routeProps) => {
+  if (el && routeProps) {
+    el.f7RouteProps = routeProps;
+  }
 
-export const useRouteProps = (elRef, { routeProps } = {}) => {
-  useEffect(() => {
-    if (elRef.current) {
-      elRef.current.f7RouteProps = routeProps;
-    }
-    return () => {
-      if (elRef.current && elRef.current.f7RouteProps) {
-        delete elRef.current.f7RouteProps;
+  return {
+    update(newValue) {
+      if (el && el.f7RouteProps && !newValue) delete el.f7RouteProps;
+      else if (el && newValue) el.f7RouteProps = newValue;
+    },
+    destroy() {
+      if (el && routeProps) {
+        delete el.f7RouteProps;
       }
-    };
-  }, [routeProps]);
+    },
+  };
 };

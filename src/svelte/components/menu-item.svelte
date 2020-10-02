@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
+  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import {
     colorClasses,
     routerAttrs,
@@ -12,6 +12,7 @@
   import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
   import { useTooltip } from '../shared/use-tooltip';
+  import { useRouteProps } from '../shared/use-route-props';
 
   import Icon from './icon';
 
@@ -29,6 +30,8 @@
 
   export let tooltip = undefined;
   export let tooltipTrigger = undefined;
+
+  export let routeProps = undefined;
 
   let el;
 
@@ -87,22 +90,13 @@
   }
 
   onMount(() => {
-    if ($$props.routeProps) {
-      el.f7RouteProps = $$props.routeProps;
-    }
     f7ready(() => {
       f7.on('menuOpened', onOpened);
       f7.on('menuClosed', onClosed);
     });
   });
-  afterUpdate(() => {
-    if ($$props.routeProps) {
-      el.f7RouteProps = $$props.routeProps;
-    }
-  });
   onDestroy(() => {
     if (!el || !f7) return;
-    delete el.f7RouteProps;
     f7.off('menuOpened', onOpened);
     f7.off('menuClosed', onClosed);
   });
@@ -110,7 +104,14 @@
 
 <!-- svelte-ignore a11y-missing-attribute -->
 {#if isLink}
-  <a on:click={onClick} bind:this={el} class={classes} {...attrs} use:useTooltip={{ tooltip, tooltipTrigger }}>
+  <a
+    on:click={onClick}
+    bind:this={el}
+    class={classes}
+    {...attrs}
+    use:useTooltip={{ tooltip, tooltipTrigger }}
+    use:useRouteProps={routeProps}
+  >
     {#if typeof text !== 'undefined' || hasTextSlots || hasIcon}
       <div class="menu-item-content">
         {plainText(text)}
@@ -132,7 +133,14 @@
     <slot />
   </a>
 {:else}
-  <div on:click={onClick} bind:this={el} class={classes} {...attrs} use:useTooltip={{ tooltip, tooltipTrigger }}>
+  <div
+    on:click={onClick}
+    bind:this={el}
+    class={classes}
+    {...attrs}
+    use:useTooltip={{ tooltip, tooltipTrigger }}
+    use:useRouteProps={routeProps}
+  >
     {#if typeof text !== 'undefined' || hasTextSlots || hasIcon}
       <div class="menu-item-content">
         {plainText(text)}

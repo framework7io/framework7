@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import {
     colorClasses,
     routerAttrs,
@@ -13,6 +13,7 @@
   import { hasSlots } from '../shared/has-slots';
   import { useTooltip } from '../shared/use-tooltip';
   import { useSmartSelect } from '../shared/use-smart-select';
+  import { useRouteProps } from '../shared/use-route-props';
 
   import Badge from './badge';
   import Icon from './icon';
@@ -35,6 +36,7 @@
   export let target = undefined;
   export let tooltip = undefined;
   export let tooltipTrigger = undefined;
+  export let routeProps = undefined;
 
   // Smart Select
   export let smartSelect = false;
@@ -100,9 +102,6 @@
   );
 
   onMount(() => {
-    if ($$props.routeProps) {
-      el.f7RouteProps = $$props.routeProps;
-    }
     f7ready(() => {
       if (
         tabbarLabel ||
@@ -111,14 +110,6 @@
         isTabbarLabel = true;
       }
     });
-  });
-  afterUpdate(() => {
-    if ($$props.routeProps) {
-      el.f7RouteProps = $$props.routeProps;
-    }
-  });
-  onDestroy(() => {
-    if (el) delete el.f7RouteProps;
   });
 </script>
 
@@ -129,6 +120,7 @@
   on:click={onClick}
   {...attrs}
   use:useTooltip={{ tooltip, tooltipTrigger }}
+  use:useRouteProps={routeProps}
 >
   {#if hasIcon}
     <Icon
