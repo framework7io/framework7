@@ -132,7 +132,7 @@
     {...attrs}
   >
     {#if icon}
-      <UseIconComponent {...icon} />
+      <UseIconComponent {icon} />
     {/if}
     {#if typeof text !== 'undefined'}
       <span>{plainText(text)}</span>
@@ -149,7 +149,7 @@
     {...attrs}
   >
     {#if icon}
-      <UseIconComponent {...icon} />
+      <UseIconComponent {icon} />
     {/if}
     {#if typeof text !== 'undefined'}
       <span>{plainText(text)}</span>

@@ -111,7 +111,7 @@
       <div class="menu-item-content">
         {plainText(text)}
         {#if icon}
-          <UseIconComponent {...icon} />
+          <UseIconComponent {icon} />
         {/if}
         <slot name="text" />
       </div>
@@ -131,7 +131,7 @@
       <div class="menu-item-content">
         {plainText(text)}
         {#if icon}
-          <UseIconComponent {...icon} />
+          <UseIconComponent {icon} />
         {/if}
         <slot name="text" />
       </div>

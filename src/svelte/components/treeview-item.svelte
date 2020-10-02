@@ -121,7 +121,7 @@
       <div class="treeview-item-content">
         <slot name="content-start" />
         {#if icon}
-          <UseIconComponent {...icon} />
+          <UseIconComponent {icon} />
         {/if}
         <slot name="media" />
         <div class="treeview-item-label">
@@ -148,7 +148,7 @@
       <div class="treeview-item-content">
         <slot name="content-start" />
         {#if icon}
-          <UseIconComponent {...icon} />
+          <UseIconComponent {icon} />
         {/if}
         <slot name="media" />
         <div class="treeview-item-label">

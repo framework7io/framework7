@@ -70,7 +70,7 @@
   {#if media || hasMediaSlots || icon}
     <div class={mediaClasses}>
       {#if icon}
-        <UseIconComponent {...icon} />
+        <UseIconComponent {icon} />
       {/if}
       {plainText(media)}
       <slot name="media" />
