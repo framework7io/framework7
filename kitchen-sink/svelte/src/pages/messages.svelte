@@ -16,8 +16,6 @@
     MessagebarSheetImage,
   } from 'framework7-svelte';
 
-  let pageEl;
-
   let messagebarInstance;
 
   let attachments = [];
@@ -119,7 +117,7 @@
 
   onMount(() => {
     f7ready(() => {
-      messagebarInstance = f7.messagebar.get(pageEl.querySelector('.messagebar'));
+      messagebarInstance = f7.messagebar.get('.messagebar');
     });
   });
 
@@ -226,7 +224,7 @@
 </script>
 
 <!-- svelte-ignore a11y-missing-attribute -->
-<Page bind:this={pageEl}>
+<Page>
   <Navbar title="Messages" backLink="Back"></Navbar>
 
   <Messagebar

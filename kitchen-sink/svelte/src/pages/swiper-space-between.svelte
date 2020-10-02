@@ -1,11 +1,10 @@
+<script>
+  import { Navbar, Page, Swiper, SwiperSlide } from 'framework7-svelte';
+</script>
+
 <Page>
-  <Navbar title="Space Between Slides" backLink="Back"></Navbar>
-  <Swiper class="demo-swiper" pagination params={{
-    spaceBetween: 50,
-    pagination: {
-      hideOnClick: true,
-    }
-  }}>
+  <Navbar title="Space Between Slides" backLink="Back" />
+  <Swiper class="demo-swiper" spaceBetween={50} pagination={{ hideOnClick: true }}>
     <SwiperSlide>Slide 1</SwiperSlide>
     <SwiperSlide>Slide 2</SwiperSlide>
     <SwiperSlide>Slide 3</SwiperSlide>
@@ -18,6 +17,3 @@
     <SwiperSlide>Slide 10</SwiperSlide>
   </Swiper>
 </Page>
-<script>
-  import { Navbar, Page, Swiper, SwiperSlide } from 'framework7-svelte';
-</script>

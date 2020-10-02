@@ -1,9 +1,11 @@
+<script>
+  import { Navbar, Page, BlockTitle, Swiper, SwiperSlide } from 'framework7-svelte';
+</script>
+
 <Page>
-  <Navbar title="Multiple Swipers" backLink="Back"></Navbar>
+  <Navbar title="Multiple Swipers" backLink="Back" />
   <BlockTitle>1 Slide Per View, 50px Between</BlockTitle>
-  <Swiper class="demo-swiper-multiple" pagination params={{
-    spaceBetween: 50,
-  }}>
+  <Swiper class="demo-swiper-multiple" pagination spaceBetween={50}>
     <SwiperSlide>Slide 1</SwiperSlide>
     <SwiperSlide>Slide 2</SwiperSlide>
     <SwiperSlide>Slide 3</SwiperSlide>
@@ -17,10 +19,7 @@
   </Swiper>
 
   <BlockTitle>2 Slides Per View, 20px Between</BlockTitle>
-  <Swiper class="demo-swiper-multiple" pagination params={{
-    spaceBetween: 20,
-    slidesPerView: 2,
-  }}>
+  <Swiper class="demo-swiper-multiple" pagination spaceBetween={20} slidesPerView={2}>
     <SwiperSlide>Slide 1</SwiperSlide>
     <SwiperSlide>Slide 2</SwiperSlide>
     <SwiperSlide>Slide 3</SwiperSlide>
@@ -34,10 +33,7 @@
   </Swiper>
 
   <BlockTitle>3 Slides Per View, 10px Between</BlockTitle>
-  <Swiper class="demo-swiper-multiple" pagination params={{
-    spaceBetween: 10,
-    slidesPerView: 3,
-  }}>
+  <Swiper class="demo-swiper-multiple" pagination spaceBetween={10} slidesPerView={3}>
     <SwiperSlide>Slide 1</SwiperSlide>
     <SwiperSlide>Slide 2</SwiperSlide>
     <SwiperSlide>Slide 3</SwiperSlide>
@@ -51,11 +47,12 @@
   </Swiper>
 
   <BlockTitle>Auto Slides Per View + Centered</BlockTitle>
-  <Swiper class="demo-swiper-multiple demo-swiper-multiple-auto" pagination params={{
-    spaceBetween: 10,
-    centeredSlides: true,
-    slidesPerView: 'auto',
-  }}>
+  <Swiper
+    class="demo-swiper-multiple demo-swiper-multiple-auto"
+    pagination
+    spaceBetween={10}
+    centeredSlides={true}
+    slidesPerView={'auto'}>
     <SwiperSlide>Slide 1</SwiperSlide>
     <SwiperSlide>Slide 2</SwiperSlide>
     <SwiperSlide>Slide 3</SwiperSlide>
@@ -69,10 +66,7 @@
   </Swiper>
 
   <BlockTitle>Vertical, 10px Between</BlockTitle>
-  <Swiper class="demo-swiper-multiple" pagination params={{
-    direction: 'vertical',
-    spaceBetween: 10,
-  }}>
+  <Swiper class="demo-swiper-multiple" pagination direction={'vertical'} spaceBetween={10}>
     <SwiperSlide>Slide 1</SwiperSlide>
     <SwiperSlide>Slide 2</SwiperSlide>
     <SwiperSlide>Slide 3</SwiperSlide>
@@ -86,10 +80,7 @@
   </Swiper>
 
   <BlockTitle>Slow speed</BlockTitle>
-  <Swiper class="demo-swiper-multiple" pagination params={{
-    speed: 900,
-    spaceBetween: 50,
-  }}>
+  <Swiper class="demo-swiper-multiple" pagination speed={900} spaceBetween={50}>
     <SwiperSlide>Slide 1</SwiperSlide>
     <SwiperSlide>Slide 2</SwiperSlide>
     <SwiperSlide>Slide 3</SwiperSlide>
@@ -102,6 +93,3 @@
     <SwiperSlide>Slide 10</SwiperSlide>
   </Swiper>
 </Page>
-<script>
-  import { Navbar, Page, BlockTitle, Swiper, SwiperSlide } from 'framework7-svelte';
-</script>

@@ -1,14 +1,10 @@
+<script>
+  import { Navbar, Page, Swiper, SwiperSlide } from 'framework7-svelte';
+</script>
+
 <Page>
-  <Navbar title="Progress Pagination" backLink="Back"></Navbar>
-  <Swiper
-    class="demo-swiper"
-    pagination
-    params={{
-      pagination: {
-        type: 'progressbar',
-      }
-    }}
-  >
+  <Navbar title="Progress Pagination" backLink="Back" />
+  <Swiper class="demo-swiper" pagination={{ type: 'progress' }}>
     <SwiperSlide>Slide 1</SwiperSlide>
     <SwiperSlide>Slide 2</SwiperSlide>
     <SwiperSlide>Slide 3</SwiperSlide>
@@ -21,6 +17,3 @@
     <SwiperSlide>Slide 10</SwiperSlide>
   </Swiper>
 </Page>
-<script>
-  import { Navbar, Page, Swiper, SwiperSlide } from 'framework7-svelte';
-</script>
