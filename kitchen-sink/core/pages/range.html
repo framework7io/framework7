@@ -18,17 +18,17 @@
         <ul>
           <li>
             <div class="item-cell width-auto flex-shrink-0">
-              <i class="icon f7-icons if-not-md" style="width:28px">speaker_fill</i>
-              <i class="icon material-icons md-only" style="width:24px">volume_mute</i>
+              <i class="icon f7-icons if-not-md" style="width: 28px">speaker_fill</i>
+              <i class="icon material-icons md-only" style="width: 24px">volume_mute</i>
             </div>
             <div class="item-cell flex-shrink-3">
               <div class="range-slider range-slider-init">
-                <input type="range" min="0" max="100" step="1" value="10">
+                <input type="range" min="0" max="100" step="1" value="10" />
               </div>
             </div>
             <div class="item-cell width-auto flex-shrink-0">
-              <i class="icon f7-icons if-not-md" style="width:28px">speaker_3_fill</i>
-              <i class="icon material-icons md-only" style="width:24px">volume_up</i>
+              <i class="icon f7-icons if-not-md" style="width: 28px">speaker_3_fill</i>
+              <i class="icon material-icons md-only" style="width: 24px">volume_up</i>
             </div>
           </li>
         </ul>
@@ -38,31 +38,35 @@
         <ul>
           <li>
             <div class="item-cell width-auto flex-shrink-0">
-              <i class="icon f7-icons if-not-md" style="width:28px">sun_min</i>
-              <i class="icon material-icons md-only" style="width:24px">brightness_low</i>
+              <i class="icon f7-icons if-not-md" style="width: 28px">sun_min</i>
+              <i class="icon material-icons md-only" style="width: 24px">brightness_low</i>
             </div>
             <div class="item-cell flex-shrink-3">
               <div class="range-slider range-slider-init color-orange" data-label="true">
-                <input type="range" min="0" max="100" step="1" value="50">
+                <input type="range" min="0" max="100" step="1" value="50" />
               </div>
             </div>
             <div class="item-cell width-auto flex-shrink-0">
-              <i class="icon f7-icons if-not-md" style="width:28px">sun_max_fill</i>
-              <i class="icon material-icons md-only" style="width:24px">brightness_high</i>
+              <i class="icon f7-icons if-not-md" style="width: 28px">sun_max_fill</i>
+              <i class="icon material-icons md-only" style="width: 24px">brightness_high</i>
             </div>
           </li>
         </ul>
       </div>
-      <div class="block-title display-flex justify-content-space-between">Price Filter <span class="price-value">${{priceMin}} - ${{priceMax}}</span></div>
+      <div class="block-title display-flex justify-content-space-between">
+        Price Filter <span class="price-value">$${priceMin} - $${priceMax}</span>
+      </div>
       <div class="list simple-list">
         <ul>
           <li class="item-row">
             <div class="item-cell width-auto flex-shrink-0">
-              <i class="icon f7-icons if-not-md" style="width:28px">money_dollar_circle</i>
-              <i class="icon material-icons md-only" style="width:24px">attach_money</i>
+              <i class="icon f7-icons if-not-md" style="width: 28px">money_dollar_circle</i>
+              <i class="icon material-icons md-only" style="width: 24px">attach_money</i>
             </div>
             <div class="item-cell item-cell-shrink-3">
-              <div class="range-slider range-slider-init color-green" @range:change="onPriceChange"
+              <div
+                class="range-slider range-slider-init color-green"
+                @range:change="onPriceChange"
                 data-label="true"
                 data-dual="true"
                 data-min="0"
@@ -73,15 +77,16 @@
               ></div>
             </div>
             <div class="item-cell width-auto flex-shrink-0">
-              <i class="icon f7-icons if-not-md" style="width:28px">money_dollar_circle_fill</i>
-              <i class="icon material-icons md-only" style="width:24px">monetization_on</i>
+              <i class="icon f7-icons if-not-md" style="width: 28px">money_dollar_circle_fill</i>
+              <i class="icon material-icons md-only" style="width: 24px">monetization_on</i>
             </div>
           </li>
         </ul>
       </div>
       <div class="block-title">With Scale</div>
       <div class="block block-strong">
-        <div class="range-slider range-slider-init"
+        <div
+          class="range-slider range-slider-init"
           data-min="0"
           data-max="100"
           data-label="true"
@@ -94,7 +99,8 @@
       </div>
       <div class="block-title">Vertical</div>
       <div class="block block-strong display-flex justify-content-center">
-        <div class="range-slider range-slider-init margin-right"
+        <div
+          class="range-slider range-slider-init margin-right"
           data-vertical="true"
           data-min="0"
           data-max="100"
@@ -103,7 +109,8 @@
           data-value="25"
           style="height: 160px"
         ></div>
-        <div class="range-slider range-slider-init margin-horizontal"
+        <div
+          class="range-slider range-slider-init margin-horizontal"
           data-vertical="true"
           data-min="0"
           data-max="100"
@@ -112,7 +119,8 @@
           data-value="50"
           style="height: 160px"
         ></div>
-        <div class="range-slider range-slider-init margin-horizontal"
+        <div
+          class="range-slider range-slider-init margin-horizontal"
           data-vertical="true"
           data-min="0"
           data-max="100"
@@ -121,7 +129,8 @@
           data-value="75"
           style="height: 160px"
         ></div>
-        <div class="range-slider range-slider-init margin-left"
+        <div
+          class="range-slider range-slider-init margin-left"
           data-dual="true"
           data-vertical="true"
           data-min="0"
@@ -135,7 +144,8 @@
       </div>
       <div class="block-title">Vertical Reversed</div>
       <div class="block block-strong display-flex justify-content-center">
-        <div class="range-slider range-slider-init color-red margin-right"
+        <div
+          class="range-slider range-slider-init color-red margin-right"
           data-vertical="true"
           data-vertical-reversed="true"
           data-min="0"
@@ -145,7 +155,8 @@
           data-value="25"
           style="height: 160px"
         ></div>
-        <div class="range-slider range-slider-init color-red margin-horizontal"
+        <div
+          class="range-slider range-slider-init color-red margin-horizontal"
           data-vertical="true"
           data-vertical-reversed="true"
           data-min="0"
@@ -155,7 +166,8 @@
           data-value="50"
           style="height: 160px"
         ></div>
-        <div class="range-slider range-slider-init color-red margin-horizontal"
+        <div
+          class="range-slider range-slider-init color-red margin-horizontal"
           data-vertical="true"
           data-vertical-reversed="true"
           data-min="0"
@@ -165,7 +177,8 @@
           data-value="75"
           style="height: 160px"
         ></div>
-        <div class="range-slider range-slider-init color-red margin-left"
+        <div
+          class="range-slider range-slider-init color-red margin-left"
           data-dual="true"
           data-vertical="true"
           data-vertical-reversed="true"
@@ -182,21 +195,17 @@
   </div>
 </template>
 <script>
-  return {
-    data() {
-      return {
-        priceMin: 200,
-        priceMax: 400,
-      }
-    },
-    methods: {
-      onPriceChange: function (e) {
-        var range = this.$f7.range.get(e.target);
-        this.$setState({
-          priceMin: range.value[0],
-          priceMax: range.value[1],
-        });
-      }
-    }
-  }
+  export default (props, { $f7, $el, $update }) => {
+    let priceMin = 200;
+    let priceMax = 400;
+
+    const onPriceChange = (e) => {
+      const range = $f7.range.get(e.target);
+      priceMin = range.value[0];
+      priceMax = range.value[1];
+      $update();
+    };
+
+    return $render;
+  };
 </script>

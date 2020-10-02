@@ -9,7 +9,7 @@
               <div class="item-inner">
                 <div class="item-title item-label">Username</div>
                 <div class="item-input-wrap">
-                  <input type="text" placeholder="Your username" id="demo-username-2" class="input-with-value">
+                  <input type="text" placeholder="Your username" id="demo-username-2" class="input-with-value" />
                   <span class="input-clear-button"></span>
                 </div>
               </div>
@@ -18,7 +18,7 @@
               <div class="item-inner">
                 <div class="item-title item-label">Password</div>
                 <div class="item-input-wrap">
-                  <input type="password" placeholder="Your password" id="demo-password-2" class="">
+                  <input type="password" placeholder="Your password" id="demo-password-2" class="" />
                 </div>
               </div>
             </li>
@@ -26,7 +26,7 @@
         </div>
         <div class="list">
           <ul>
-            <li><a href="#" class="list-button" @click="signIn">Sign In</a></li>
+            <li><a href="#" class="list-button" @click=${signIn}>Sign In</a></li>
           </ul>
           <div class="block-footer">Some text about login information.<br />Lorem ipsum dolor sit amet, consectetur
             adipiscing elit.</div>
@@ -36,19 +36,17 @@
   </div>
 </template>
 <script>
-  return {
-    methods: {
-      signIn: function () {
-        var $ = this.$;
-        var app = this.$app;
-        var router = this.$router;
-        var username = $('input#demo-username-2').val();
-        var password = $('input#demo-password-2').val();
-        app.dialog.alert('Username: ' + username + '<br />Password: ' + password, function () {
-          app.loginScreen.close();
-          router.back();
-        })
-      }
+  export default (props, { $, $f7, $f7router }) => {
+    const signIn = () => {
+      let username = $('input#demo-username-2').val();
+      let password = $('input#demo-password-2').val();
+      $f7.dialog.alert('Username: ' + username + '<br />Password: ' + password, function () {
+        $f7.loginScreen.close();
+        $f7router.back();
+      })
     }
-  }
+
+    return $render;
+  };
+
 </script>

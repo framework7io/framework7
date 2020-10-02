@@ -14,7 +14,8 @@
     </div>
     <div class="page-content">
       <div class="block">
-        <p>How about an activity indicator? Framework7 has a nice one. The F7 Preloader is made with SVG and animated with CSS so it can be easily resized.</p>
+        <p>How about an activity indicator? Framework7 has a nice one. The F7 Preloader is made with SVG and animated
+          with CSS so it can be easily resized.</p>
       </div>
       <div class="block-title">Default</div>
       <div class="block block-strong demo-preloaders align-items-stretch text-align-center">
@@ -58,15 +59,15 @@
       <div class="block block-strong">
         <p>With <b>app.preloader.show()</b> you can show small overlay with preloader indicator.</p>
         <p>
-          <a class="button button-fill" @click="openIndicator">Open Small Indicator</a>
+          <a class="button button-fill" @click=${openIndicator}>Open Small Indicator</a>
         </p>
         <p>With <b>app.dialog.preloader()</b> you can show dialog modal with preloader indicator.</p>
         <p>
-          <a class="button button-fill" @click="openDialog">Open Dialog Preloader</a>
+          <a class="button button-fill" @click=${openDialog}>Open Dialog Preloader</a>
         </p>
         <p>With <b>app.dialog.preloader('My text...')</b> you can show dialog preloader modal with custom title.</p>
         <p>
-          <a class="button button-fill" @click="openCustomDialog">Open Dialog Preloader</a>
+          <a class="button button-fill" @click=${openCustomDialog}>Open Dialog Preloader</a>
         </p>
       </div>
     </div>
@@ -77,38 +78,37 @@
     width: 42px;
     height: 42px;
   }
+
   .demo-preloaders .col-25 {
     padding: 5px;
     line-height: 42px;
   }
+
   .demo-black-col {
     background: #000;
   }
 </style>
 <script>
-  return {
-    methods: {
-      openIndicator: function () {
-        var self = this;
-        self.$app.preloader.show();
-        setTimeout(function () {
-          self.$app.preloader.hide();
-        }, 2000);
-      },
-      openDialog: function () {
-        var self = this;
-        self.$app.dialog.preloader();
-        setTimeout(function () {
-          self.$app.dialog.close();
-        }, 2000);
-      },
-      openCustomDialog: function () {
-        var self = this;
-        self.$app.dialog.preloader('My text...');
-        setTimeout(function () {
-          self.$app.dialog.close();
-        }, 2000);
-      },
+  export default (props, { $f7 }) => {
+    const openIndicator = () => {
+      $f7.preloader.show();
+      setTimeout(function () {
+        $f7.preloader.hide();
+      }, 2000);
     }
-  }
+    const openDialog = () => {
+      $f7.dialog.preloader();
+      setTimeout(function () {
+        $f7.dialog.close();
+      }, 2000);
+    }
+    const openCustomDialog = () => {
+      $f7.dialog.preloader('My text...');
+      setTimeout(function () {
+        $f7.dialog.close();
+      }, 2000);
+    }
+
+    return $render;
+  };
 </script>

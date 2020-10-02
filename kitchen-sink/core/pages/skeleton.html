@@ -70,15 +70,15 @@
       <div class="block block-strong">
         <p>It supports few loading effects:</p>
         <p class="row">
-          <a href="#" class="col button button-fill button-small button-round" @click="load('fade')">Fade</a>
-          <a href="#" class="col button button-fill button-small button-round" @click="load('blink')">Blink</a>
-          <a href="#" class="col button button-fill button-small button-round" @click="load('pulse')">Pulse</a>
+          <a href="#" class="col button button-fill button-small button-round" @click=${()=> load('fade')}>Fade</a>
+          <a href="#" class="col button button-fill button-small button-round" @click=${()=> load('blink')}>Blink</a>
+          <a href="#" class="col button button-fill button-small button-round" @click=${()=> load('pulse')}>Pulse</a>
         </p>
       </div>
       <div class="list media-list">
         <ul>
-          {{#if loading}}
-          <li class="item-content skeleton-text skeleton-effect-{{effect}}">
+          ${loading ? $h`
+          <li class="item-content skeleton-text skeleton-effect-${effect}">
             <div class="item-media">
               <div class="skeleton-block" style="width: 40px; height: 40px; border-radius: 50%"></div>
             </div>
@@ -93,7 +93,7 @@
                 aliquet urna, nec imperdiet felis sapien at enim.</div>
             </div>
           </li>
-          <li class="item-content skeleton-text skeleton-effect-{{effect}}">
+          <li class="item-content skeleton-text skeleton-effect-${effect}">
             <div class="item-media">
               <div class="skeleton-block" style="width: 40px; height: 40px; border-radius: 50%"></div>
             </div>
@@ -108,7 +108,7 @@
                 aliquet urna, nec imperdiet felis sapien at enim.</div>
             </div>
           </li>
-          <li class="item-content skeleton-text skeleton-effect-{{effect}}">
+          <li class="item-content skeleton-text skeleton-effect-${effect}">
             <div class="item-media">
               <div class="skeleton-block" style="width: 40px; height: 40px; border-radius: 50%"></div>
             </div>
@@ -123,10 +123,10 @@
                 aliquet urna, nec imperdiet felis sapien at enim.</div>
             </div>
           </li>
-          {{else}}
+          ` : $h`
           <li class="item-content">
             <div class="item-media">
-              <img src="https://placeimg.com/80/80/people/1" style="width: 40px; height: 40px; border-radius: 50%">
+              <img src="https://placeimg.com/80/80/people/1" style="width: 40px; height: 40px; border-radius: 50%" />
             </div>
             <div class="item-inner">
               <div class="item-title-row">
@@ -141,7 +141,7 @@
           </li>
           <li class="item-content">
             <div class="item-media">
-              <img src="https://placeimg.com/80/80/people/2" style="width: 40px; height: 40px; border-radius: 50%">
+              <img src="https://placeimg.com/80/80/people/2" style="width: 40px; height: 40px; border-radius: 50%" />
             </div>
             <div class="item-inner">
               <div class="item-title-row">
@@ -155,7 +155,7 @@
           </li>
           <li class="item-content">
             <div class="item-media">
-              <img src="https://placeimg.com/80/80/people/3" style="width: 40px; height: 40px; border-radius: 50%">
+              <img src="https://placeimg.com/80/80/people/3" style="width: 40px; height: 40px; border-radius: 50%" />
             </div>
             <div class="item-inner">
               <div class="item-title-row">
@@ -166,32 +166,28 @@
                 felis sapien at enim.</div>
             </div>
           </li>
-          {{/if}}
+          `}
+
         </ul>
       </div>
     </div>
   </div>
 </template>
 <script>
-  return {
-    data: function () {
-      return {
-        loading: false,
-        effect: null,
-      }
-    },
-    methods: {
-      load: function (effect) {
-        var self = this;
-        if (self.loading) return;
-        self.$setState({
-          effect: effect,
-          loading: true,
-        });
-        setTimeout(function () {
-          self.$setState({ loading: false });
-        }, 3000);
-      }
+  export default (props, { $update }) => {
+    let loading = false;
+    let effect = null;
+
+    const load = (newEffect) => {
+      if (loading) return;
+      effect = newEffect;
+      loading = true;
+      $update();
+      setTimeout(function () {
+        loading = false;
+        $update();
+      }, 3000);
     }
+    return $render;
   }
 </script>

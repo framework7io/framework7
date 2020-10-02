@@ -40,7 +40,7 @@
                   <div class="item-inner">
                     <div class="item-title item-label">Username</div>
                     <div class="item-input-wrap">
-                      <input type="text" name="username" id="demo-username-1" placeholder="Your username">
+                      <input type="text" name="username" id="demo-username-1" placeholder="Your username" />
                       <span class="input-clear-button"></span>
                     </div>
                   </div>
@@ -49,7 +49,7 @@
                   <div class="item-inner">
                     <div class="item-title item-label">Password</div>
                     <div class="item-input-wrap">
-                      <input type="password" name="password" id="demo-password-1" placeholder="Your password">
+                      <input type="password" name="password" id="demo-password-1" placeholder="Your password" />
                       <span class="input-clear-button"></span>
                     </div>
                   </div>
@@ -58,7 +58,7 @@
             </div>
             <div class="list">
               <ul>
-                <li><a href="#" class="list-button" @click="signIn">Sign In</a></li>
+                <li><a href="#" class="list-button" @click=${signIn}>Sign In</a></li>
               </ul>
               <div class="block-footer">Some text about login information.<br />Lorem ipsum dolor sit amet, consectetur
                 adipiscing elit.</div>
@@ -70,17 +70,15 @@
   </div>
 </template>
 <script>
-  return {
-    methods: {
-      signIn: function () {
-        var $ = this.$;
-        var app = this.$app;
-        var username = $('input#demo-username-1').val();
-        var password = $('input#demo-password-1').val();
-        app.dialog.alert('Username: ' + username + '<br />Password: ' + password, function () {
-          app.loginScreen.close();
-        })
-      }
+  export default (props, { $, $f7 }) => {
+    const signIn = () => {
+      var username = $('input#demo-username-1').val();
+      var password = $('input#demo-password-1').val();
+      $f7.dialog.alert('Username: ' + username + '<br />Password: ' + password, function () {
+        $f7.loginScreen.close();
+      })
     }
-  }
+
+    return $render;
+  };
 </script>
