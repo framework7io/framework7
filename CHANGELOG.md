@@ -60,7 +60,7 @@
       - support for `v-model:opened`
     - Card
       - support for `v-model:expandableOpened`
-    - Input, ListInpue, Messagebar, Searchbar, Stepper, Range
+    - Input, ListInput, Messagebar, Searchbar, Stepper, Range
       - support for `v-model:value`
 - React
   - KS updated to use hooks API only
@@ -94,9 +94,9 @@
     - Removed component methods
     - Added `typing` prop
   - Toggle
-    - Added support for toolip with `tooltip` and `tooltipTrigger` props
+    - Added support for tooltip with `tooltip` and `tooltipTrigger` props
   - Menu Item
-    - Added support for toolip with `tooltip` and `tooltipTrigger` props
+    - Added support for tooltip with `tooltip` and `tooltipTrigger` props
 
 # [v5.7.11](https://github.com/framework7io/framework7/compare/v5.7.10...v5.7.11) - August 17, 2020
 
