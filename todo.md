@@ -7,15 +7,16 @@
 - [ ] delegated tooltip
 - [ ] tooltip set target
 - [ ] add containerEl to modals
+- [ ] fix data table selected row
 - [ ] new router component
-  - [ ] update TS
+  - [x] update TS
   - [x] remove templateLoader
   - [x] rework vdom.js to work with \$h
   - [ ] add root access data
   - [ ] migrate KS to new components
   - [x] support for custom components
-  - [ ] remove context (replace with props)
-  - [ ] check true/false/null values
+  - [x] remove context (replace with props)
+  - [x] check true/false/null values
   - [ ] changelog
     - new router component
     - removed Template7
