@@ -20,7 +20,7 @@
       - Area Chart
       - Pie Chart
     - New types in `framework7/types`
-      - Framework7Params -> Framework7Parameters
+      - `Framework7Params` -> `Framework7Parameters`
   - Request
     - Export renamed to `request`
     - Only promise APIs
