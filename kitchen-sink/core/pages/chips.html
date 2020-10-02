@@ -76,15 +76,15 @@
       <div class="block-title">Contact Chips</div>
       <div class="block block-strong">
         <div class="chip">
-          <div class="chip-media"><img src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg"/></div>
+          <div class="chip-media"><img src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg" /></div>
           <div class="chip-label">Jane Doe</div>
         </div>
         <div class="chip">
-          <div class="chip-media"><img src="https://cdn.framework7.io/placeholder/people-100x100-3.jpg"/></div>
+          <div class="chip-media"><img src="https://cdn.framework7.io/placeholder/people-100x100-3.jpg" /></div>
           <div class="chip-label">John Doe</div>
         </div>
         <div class="chip">
-          <div class="chip-media"><img src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg"/></div>
+          <div class="chip-media"><img src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg" /></div>
           <div class="chip-label">Adam Smith</div>
         </div>
         <div class="chip">
@@ -103,26 +103,26 @@
       <div class="block-title">Deletable Chips / Tags</div>
       <div class="block block-strong">
         <div class="chip">
-          <div class="chip-label">Example Chip</div><a href="#" class="chip-delete" @click="deleteChip"></a>
+          <div class="chip-label">Example Chip</div><a href="#" class="chip-delete" @click=${deleteChip}></a>
         </div>
         <div class="chip">
           <div class="chip-media bg-color-orange text-color-black">C</div>
-          <div class="chip-label">Chris</div><a href="#" class="chip-delete" @click="deleteChip"></a>
+          <div class="chip-label">Chris</div><a href="#" class="chip-delete" @click=${deleteChip}></a>
         </div>
         <div class="chip">
-          <div class="chip-media"><img src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg"/></div>
-          <div class="chip-label">Jane Doe</div><a href="#" class="chip-delete" @click="deleteChip"></a>
+          <div class="chip-media"><img src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg" /></div>
+          <div class="chip-label">Jane Doe</div><a href="#" class="chip-delete" @click=${deleteChip}></a>
         </div>
         <div class="chip">
-          <div class="chip-label">One More Chip</div><a href="#" class="chip-delete" @click="deleteChip"></a>
+          <div class="chip-label">One More Chip</div><a href="#" class="chip-delete" @click=${deleteChip}></a>
         </div>
         <div class="chip">
           <div class="chip-media bg-color-pink">J</div>
-          <div class="chip-label">Jennifer</div><a href="#" class="chip-delete" @click="deleteChip"></a>
+          <div class="chip-label">Jennifer</div><a href="#" class="chip-delete" @click=${deleteChip}></a>
         </div>
         <div class="chip">
-          <div class="chip-media"><img src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg"/></div>
-          <div class="chip-label">Adam Smith</div><a href="#" class="chip-delete" @click="deleteChip"></a>
+          <div class="chip-media"><img src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg" /></div>
+          <div class="chip-label">Adam Smith</div><a href="#" class="chip-delete" @click=${deleteChip}></a>
         </div>
       </div>
       <div class="block-title">Color Chips</div>
@@ -162,16 +162,12 @@
   </div>
 </template>
 <script>
-  return {
-    methods: {
-      deleteChip(e) {
-        var $ = this.$;
-        var app = this.$app;
-        app.dialog.confirm('Do you want to delete this tiny demo Chip?', function () {
-          $(e.target).parents('.chip').remove();
-        });
-      }
+  export default (props, { $, $f7 }) => {
+    const deleteChip = (e) => {
+      $f7.dialog.confirm('Do you want to delete this tiny demo Chip?', function () {
+        $(e.target).parents('.chip').remove();
+      });
     }
+    return $render;
   }
 </script>
-

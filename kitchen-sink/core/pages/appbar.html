@@ -14,28 +14,25 @@
     </div>
     <div class="page-content">
       <div class="block block-strong">
-        <p>Appbar is the main app bar with actions on top of the whole app. It is designed to be used in desktop apps with Aurora theme.</p>
+        <p>Appbar is the main app bar with actions on top of the whole app. It is designed to be used in desktop apps
+          with Aurora theme.</p>
       </div>
       <div class="block block-strong">
-        <a href="#" class="button button-fill" @click="toggleAppbar">Toggle Appbar</a>
+        <a href="#" class="button button-fill" @click=${toggleAppbar}>Toggle Appbar</a>
       </div>
     </div>
   </div>
 </template>
 <script>
-  var appbarEnabled = false;
-  return {
-    data: function () {
-      return {
-        appbarEnabled: appbarEnabled,
-      };
-    },
-    methods: {
-      enableAppbar: function () {
-        var self = this;
-        self.$setState({appbarEnabled: true})
-        appbarEnabled = true;
-        self.$app.root.prepend(`
+  let globalAppbarEnabled = false;
+
+  export default (props, { $f7, $, $update }) => {
+    let appbarEnabled = globalAppbarEnabled;
+    function enableAppbar() {
+      appbarEnabled = true;
+      globalAppbarEnabled = true;
+      $update();
+      $f7.root.prepend(`
         <div class="appbar">
           <div class="appbar-inner">
             <div class="left">
@@ -65,21 +62,21 @@
           </div>
         </div>
         `);
-      },
-      disableAppbar: function () {
-        var self = this;
-        self.$setState({appbarEnabled: false})
-        appbarEnabled = false;
-        self.$('.appbar').remove();
-      },
-      toggleAppbar: function () {
-        var self = this;
-        if (self.appbarEnabled) {
-          self.disableAppbar();
-        } else {
-          self.enableAppbar();
-        }
-      },
-    },
+    }
+    function disableAppbar() {
+      appbarEnabled = false;
+      globalAppbarEnabled = false;
+      $update();
+      $('.appbar').remove();
+    }
+    function toggleAppbar() {
+      if (appbarEnabled) {
+        disableAppbar();
+      } else {
+        enableAppbar();
+      }
+    }
+
+    return $render;
   }
 </script>

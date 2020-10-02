@@ -59,11 +59,11 @@
           <button class="button button-active">Active</button>
         </p>
         <p class="segmented segmented-strong">
-          <button class=${`button ${activeStrongButton===0 ? 'button-active' : '' }`} @click=${()=>
+          <button class="button ${activeStrongButton===0 ? 'button-active' : '' }" @click=${()=>
             setStrongButton(0)}>Button</button>
-          <button class=${`button ${activeStrongButton===1 ? 'button-active' : '' }`} @click=${()=>
+          <button class="button ${activeStrongButton===1 ? 'button-active' : '' }" @click=${()=>
             setStrongButton(1)}>Button</button>
-          <button class=${`button ${activeStrongButton===2 ? 'button-active' : '' }`} @click=${()=>
+          <button class="button ${activeStrongButton===2 ? 'button-active' : '' }" @click=${()=>
             setStrongButton(2)}>Button</button>
           <span class="segmented-highlight"></span>
         </p>

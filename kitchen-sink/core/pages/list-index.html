@@ -620,35 +620,30 @@
   </div>
 </template>
 <script>
-  return {
-    data: function () {
-      return {};
-    },
-    on: {
-      pageBeforeRemove(e, page) {
-        var self = this;
-        // Destroy list index instance on page remove
-        if (self.listIndex) {
-          self.listIndex.destroy();
-        }
-      },
-      pageInit: function (e, page) {
-        var self = this;
-        var app = self.$app;
-        // Create list index instance
-        self.listIndex = app.listIndex.create({
-          // List el where to look indexes and scroll for
-          listEl: self.$el.find('.list'),
-          // ".list-index" element
-          el: self.$el.find('.list-index'),
-          // Generate indexes automatically based on ".list-group-title" and ".item-divider"
-          indexes: 'auto',
-          // Scroll list on indexes click and touchmove
-          scrollList: true,
-          // Enable bubble label when swiping over indexes
-          label: true,
-        });
+  export default (props, { $f7, $el, $onMounted, $onBeforeUnmount }) => {
+    let listIndex;
+
+    $onMounted(() => {
+      // Create list index instance
+      listIndex = $f7.listIndex.create({
+        // List el where to look indexes and scroll for
+        listEl: $el().find('.list'),
+        // ".list-index" element
+        el: $el().find('.list-index'),
+        // Generate indexes automatically based on ".list-group-title" and ".item-divider"
+        indexes: 'auto',
+        // Scroll list on indexes click and touchmove
+        scrollList: true,
+        // Enable bubble label when swiping over indexes
+        label: true,
+      });
+    })
+    $onBeforeUnmount(() => {
+      if (listIndex) {
+        listIndex.destroy();
       }
-    },
+    })
+
+    return $render;
   }
 </script>
