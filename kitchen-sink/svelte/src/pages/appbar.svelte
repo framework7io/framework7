@@ -1,19 +1,11 @@
-<Page>
-  <Navbar title="Appbar" backLink="Back" />
-  <Block strong>
-    <p>Appbar is the main app bar with actions on top of the whole app. It is designed to be used in desktop apps with Aurora theme.</p>
-  </Block>
-  <Block strong>
-    <Button fill onClick={toggleAppbar}>Toggle Appbar</Button>
-  </Block>
-</Page>
 <script context="module">
   let appbarEnabled = false;
 </script>
+
 <script>
   import { f7, Page, Navbar, Block, Button } from 'framework7-svelte';
 
-  function enableAppbar () {
+  function enableAppbar() {
     appbarEnabled = true;
     f7.root.prepend(`
     <div class="appbar">
@@ -46,16 +38,28 @@
     </div>
     `);
   }
-  function disableAppbar () {
+  function disableAppbar() {
     appbarEnabled = false;
     f7.$('.appbar').remove();
   }
-  function toggleAppbar () {
+  function toggleAppbar() {
     if (appbarEnabled) {
       disableAppbar();
     } else {
       enableAppbar();
     }
   }
-
 </script>
+
+<Page>
+  <Navbar title="Appbar" backLink="Back" />
+  <Block strong>
+    <p>
+      Appbar is the main app bar with actions on top of the whole app. It is designed to be used in
+      desktop apps with Aurora theme.
+    </p>
+  </Block>
+  <Block strong>
+    <Button fill onClick={toggleAppbar}>Toggle Appbar</Button>
+  </Block>
+</Page>

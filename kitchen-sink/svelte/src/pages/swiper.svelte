@@ -1,5 +1,9 @@
+<script>
+  import { Navbar, Page, Block, List, ListItem } from 'framework7-svelte';
+</script>
+
 <Page>
-  <Navbar title="Swiper Slider" backLink="Back"></Navbar>
+  <Navbar title="Swiper Slider" backLink="Back" />
   <Block>
     <p>
       Framework7 comes with powerful and most modern touch slider ever -
@@ -28,6 +32,3 @@
     <ListItem link="swiper-zoom/" title="Zoom" />
   </List>
 </Page>
-<script>
-  import { Navbar, Page, Block, List, ListItem } from 'framework7-svelte';
-</script>

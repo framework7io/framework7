@@ -1,3 +1,30 @@
+<script>
+  import {
+    Page,
+    Navbar,
+    BlockTitle,
+    Block,
+    List,
+    ListItem,
+    Card,
+    SkeletonBlock,
+    Row,
+    Button,
+  } from 'framework7-svelte';
+
+  let loading = false;
+  let effect = null;
+
+  function load(newEffect) {
+    if (loading) return;
+    effect = newEffect;
+    loading = true;
+    setTimeout(() => {
+      loading = false;
+    }, 3000);
+  }
+</script>
+
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
   <Navbar title="Skeleton Layouts" backLink="Back"></Navbar>
@@ -48,7 +75,7 @@
   </Block>
   {#if loading}
     <List mediaList v-if="loading">
-      {#each [1,2,3] as n}
+      {#each [1, 2, 3] as n}
         <ListItem
           key={n}
           class={`skeleton-text skeleton-effect-${effect}`}
@@ -88,18 +115,3 @@
     </List>
   {/if}
 </Page>
-<script>
-  import { Page, Navbar, BlockTitle, Block, List, ListItem, Card, SkeletonBlock, Row, Button } from 'framework7-svelte';
-
-  let loading = false;
-  let effect = null;
-
-  function load(newEffect) {
-    if (loading) return;
-    effect = newEffect;
-    loading = true;
-    setTimeout(() => {
-      loading = false;
-    }, 3000);
-  }
-</script>

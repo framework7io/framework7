@@ -21,6 +21,7 @@
 
   export let backdrop = true;
   export let backdropEl = undefined;
+  export let containerEl = undefined;
   export let visibleBreakpoint = undefined;
   export let collapsedBreakpoint = undefined;
   export let swipe = false;
@@ -144,6 +145,7 @@
         resizable,
         backdrop,
         backdropEl,
+        containerEl,
         visibleBreakpoint,
         collapsedBreakpoint,
         swipe,

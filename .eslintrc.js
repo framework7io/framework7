@@ -128,6 +128,7 @@ module.exports = {
         'import/no-extraneous-dependencies': ['off'],
       },
     },
+
     // SVELTE
     {
       plugins: ['svelte3'],
@@ -154,6 +155,17 @@ module.exports = {
         'no-nested-ternary': ['off'],
         'a11y-invalid-attribute': ['off'],
         'a11y-missing-attribute': ['off'],
+        'max-len': ['off'],
+      },
+    },
+    {
+      files: ['kitchen-sink/svelte/src/**/*.svelte'],
+      rules: {
+        ...rules,
+        'no-console': ['off'],
+        'no-return-assign': ['off'],
+        'implicit-arrow-linebreak': ['off'],
+        'no-restricted-globals': ['off'],
       },
     },
   ],

@@ -1,3 +1,16 @@
+<script>
+  import {
+    Navbar,
+    Page,
+    Block,
+    List,
+    ListItem,
+    NavRight,
+    Link,
+    BlockTitle,
+  } from 'framework7-svelte';
+</script>
+
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
   <Navbar title="Sortable List" backLink="Back">
@@ -112,6 +125,3 @@
     </ListItem>
   </List>
 </Page>
-<script>
-  import { Navbar, Page, Block, List, ListItem, NavRight, Link, Icon, BlockTitle } from 'framework7-svelte';
-</script>

@@ -1,3 +1,9 @@
+<script>
+  import { Page, Navbar, BlockTitle, Block, Row, Col, Segmented, Button } from 'framework7-svelte';
+
+  let activeStrongButton = 0;
+</script>
+
 <!-- svelte-ignore a11y-invalid-attribute -->
 <Page>
   <Navbar title="Buttons" backLink="Back" />
@@ -243,9 +249,3 @@
     </ul>
   </div>
 </Page>
-
-<script>
-  import { Page, Navbar, BlockTitle, Block, Row, Col, Segmented, Button, } from 'framework7-svelte';
-
-  let activeStrongButton = 0;
-</script>

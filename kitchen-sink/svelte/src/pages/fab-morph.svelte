@@ -1,3 +1,7 @@
+<script>
+  import { Navbar, Page, BlockTitle, Block, Fab, Link, Toolbar, Icon } from 'framework7-svelte';
+</script>
+
 <!-- svelte-ignore a11y-invalid-attribute -->
 <Page>
   <Navbar title="Floating Action Button Morph" backLink="Back"></Navbar>
@@ -52,7 +56,3 @@
     <p>Atque qui quaerat quasi officia molestiae, molestias totam incidunt reprehenderit laboriosam facilis veritatis, non iusto! Dolore ipsam obcaecati voluptates minima maxime minus qui mollitia facere. Nostrum esse recusandae voluptatibus eligendi.</p>
   </Block>
 </Page>
-
-<script>
-  import { Navbar, Page, BlockTitle, Block, Fab, Link, Toolbar, Icon } from 'framework7-svelte';
-</script>

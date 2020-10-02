@@ -1,32 +1,3 @@
-<Page onPageInit={onPageInit} onPageBeforeRemove={onPageBeforeRemove}>
-  <Navbar backLink="Back" noShadow>
-    <NavTitle class="navbar-calendar-title"></NavTitle>
-  </Navbar>
-  <Block
-    id="calendar"
-    strong
-    class="no-padding no-margin no-hairline-top"
-  ></Block>
-  <List
-    id="calendar-events"
-    noHairlines
-    class="no-margin no-safe-area-left"
-  >
-    {#each eventItems as item, index (index)}
-      <ListItem
-        title={item.title}
-        after={item.time}
-      >
-        <div class="event-color" style={`background-color: ${item.color}`} slot="root-start"></div>
-      </ListItem>
-    {/each}
-    {#if eventItems.length === 0}
-      <ListItem>
-        <span class="text-color-gray" slot="title">No events for this day</span>
-      </ListItem>
-    {/if}
-  </List>
-</Page>
 <script>
   import { f7, Navbar, Page, NavTitle, List, ListItem, Block } from 'framework7-svelte';
 
@@ -35,8 +6,8 @@
   const month = date.getMonth();
   const day = date.getDate();
 
-  let today = new Date(year, month, day);
-  let events = [
+  const today = new Date(year, month, day);
+  const events = [
     {
       date: new Date(year, month, day),
       hours: 12,
@@ -79,11 +50,11 @@
 
   function renderEvents(calendar) {
     const currentDate = calendar.value[0];
-    const currentEvents = events
-      .filter(event => (
+    const currentEvents = events.filter(
+      (event) =>
         event.date.getTime() >= currentDate.getTime() &&
-        event.date.getTime() < currentDate.getTime() + 24 * 60 * 60 * 1000
-      ));
+        event.date.getTime() < currentDate.getTime() + 24 * 60 * 60 * 1000,
+    );
 
     const newEventItems = [];
     if (currentEvents.length) {
@@ -102,22 +73,39 @@
   }
   function onPageInit(page) {
     const $ = f7.$;
-    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const monthNames = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
 
     calendar = f7.calendar.create({
       containerEl: '#calendar',
       toolbar: false,
       value: [today],
-      events: events,
+      events,
       on: {
         init(calendar) {
-          $('.navbar-calendar-title').text(`${monthNames[calendar.currentMonth]}, ${calendar.currentYear}`);
+          $('.navbar-calendar-title').text(
+            `${monthNames[calendar.currentMonth]}, ${calendar.currentYear}`,
+          );
           f7.navbar.size(f7.navbar.getElByPage(page.el));
           calendar.$el.addClass('no-safe-area-right');
           renderEvents(calendar);
         },
         monthYearChangeStart(calendar) {
-          $('.navbar-calendar-title').text(`${monthNames[calendar.currentMonth]}, ${calendar.currentYear}`);
+          $('.navbar-calendar-title').text(
+            `${monthNames[calendar.currentMonth]}, ${calendar.currentYear}`,
+          );
           f7.navbar.size(f7.navbar.getElByPage(page.el));
         },
         change(calendar) {
@@ -131,3 +119,20 @@
     calendar.destroy();
   }
 </script>
+
+<Page {onPageInit} {onPageBeforeRemove}>
+  <Navbar backLink="Back" noShadow>
+    <NavTitle class="navbar-calendar-title" />
+  </Navbar>
+  <Block id="calendar" strong class="no-padding no-margin no-hairline-top" />
+  <List id="calendar-events" noHairlines class="no-margin no-safe-area-left">
+    {#each eventItems as item, index (index)}
+      <ListItem title={item.title} after={item.time}>
+        <div class="event-color" style={`background-color: ${item.color}`} slot="root-start" />
+      </ListItem>
+    {/each}
+    {#if eventItems.length === 0}
+      <ListItem><span class="text-color-gray" slot="title">No events for this day</span></ListItem>
+    {/if}
+  </List>
+</Page>

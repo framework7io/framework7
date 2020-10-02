@@ -2,7 +2,7 @@
 
 - [ ] Add containerEl for modals
 - [ ] Add parameter on how to open the page
-- [ ] Stepper / Lines
+- [ ] New component Stepper / Lines
 - [ ] set colorPicker and Calendar instance on openerEl?
 - [ ] delegated tooltip
 - [ ] tooltip set target
@@ -29,11 +29,6 @@
 
 # Svelte
 
-- [ ] move to new F7 plugin helpers
-- [x] modal classes keep state
-- [x] panel classes keep state
-- [x] tooltip to MenuItem and to Toggle
-- [x] define all props on app
 - [ ] add loading button
 
 # Vue

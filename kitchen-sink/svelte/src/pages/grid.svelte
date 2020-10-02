@@ -1,8 +1,15 @@
+<script>
+  import { Page, Navbar, BlockTitle, Block, Row, Col } from 'framework7-svelte';
+</script>
+
 <Page class="grid-demo">
   <Navbar title="Grid / Layout" backLink="Back" />
 
   <Block>
-    <p>Columns within a row are automatically set to have equal width. Otherwise you can define your column with pourcentage of screen you want.</p>
+    <p>
+      Columns within a row are automatically set to have equal width. Otherwise you can define your
+      column with pourcentage of screen you want.
+    </p>
   </Block>
   <BlockTitle>Columns with gap</BlockTitle>
   <Block>
@@ -92,13 +99,15 @@
   <BlockTitle>Nested</BlockTitle>
   <Block>
     <Row>
-      <Col>50% (.col)
+      <Col>
+        50% (.col)
         <Row>
           <Col>50% (.col)</Col>
           <Col>50% (.col)</Col>
         </Row>
       </Col>
-      <Col>50% (.col)
+      <Col>
+        50% (.col)
         <Row>
           <Col width="33">33% (.col-33)</Col>
           <Col width="66">66% (.col-66)</Col>
@@ -132,7 +141,10 @@
   <Block class="grid-resizable-demo">
     <Row class="align-items-stretch" style="height: 300px">
       <Col resizable class="demo-col-center-content" style="min-width: 80px">Left</Col>
-      <Col resizable class="display-flex flex-direction-column" style="padding: 0px; border: none; min-width: 80px; background-color: transparent">
+      <Col
+        resizable
+        class="display-flex flex-direction-column"
+        style="padding: 0px; border: none; min-width: 80px; background-color: transparent">
         <Row resizable style="height: 50%; min-height: 50px">
           <Col class="demo-col-center-content" style="height: 100%">Center Top</Col>
         </Row>
@@ -144,7 +156,3 @@
     </Row>
   </Block>
 </Page>
-
-<script>
-  import { Page, Navbar, BlockTitle, Block, Row, Col, } from 'framework7-svelte';
-</script>

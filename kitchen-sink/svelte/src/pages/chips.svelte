@@ -1,3 +1,14 @@
+<script>
+  import { f7, Navbar, Page, BlockTitle, Chip, Block } from 'framework7-svelte';
+
+  function deleteChip(e) {
+    const target = e.target;
+    f7.dialog.confirm('Do you want to delete this tiny demo Chip?', () => {
+      f7.$(target).parents('.chip').remove();
+    });
+  }
+</script>
+
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
   <Navbar title="Chips" backLink="Back"></Navbar>
@@ -65,14 +76,3 @@
     <Chip outline text="Pink Chip" color="pink" />
   </Block>
 </Page>
-<script>
-  import { f7, Navbar, Page, BlockTitle, Chip, Block, Icon } from 'framework7-svelte';
-
-  function deleteChip(e) {
-    const target = e.target;
-    f7.dialog.confirm('Do you want to delete this tiny demo Chip?', () => {
-      f7.$(target).parents('.chip').remove();
-    });
-  }
-
-</script>

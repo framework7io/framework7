@@ -1,3 +1,7 @@
+<script>
+  import { Navbar, Page, BlockTitle } from 'framework7-svelte';
+</script>
+
 <!-- svelte-ignore a11y-invalid-attribute -->
 <Page>
   <Navbar title="Vertical Timeline" backLink="Back"></Navbar>
@@ -221,6 +225,3 @@
     </div>
   </div>
 </Page>
-<script>
-  import { Navbar, Page, BlockTitle } from 'framework7-svelte';
-</script>

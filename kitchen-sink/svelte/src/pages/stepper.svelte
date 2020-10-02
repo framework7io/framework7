@@ -1,70 +1,114 @@
+<script>
+  import {
+    Page,
+    Navbar,
+    BlockTitle,
+    Block,
+    BlockHeader,
+    Row,
+    Col,
+    List,
+    ListItem,
+    Stepper,
+  } from 'framework7-svelte';
+
+  let applesCount = 0;
+  let orangesCount = 0;
+  let meetingTime = 15;
+
+  $: meetingTimeComputed = (() => {
+    const value = meetingTime;
+
+    const hours = Math.floor(value / 60);
+    const minutes = value - hours * 60;
+    const formatted = [];
+    if (hours > 0) {
+      formatted.push(`${hours} ${hours > 1 ? 'hours' : 'hour'}`);
+    }
+    if (minutes > 0) {
+      formatted.push(`${minutes} minutes`);
+    }
+    return formatted.join(' ');
+  })();
+
+  function setApples(value) {
+    applesCount = value;
+  }
+  function setOranges(value) {
+    orangesCount = value;
+  }
+  function setMeetingTime(value) {
+    meetingTime = value;
+  }
+</script>
+
 <Page>
-  <Navbar title="Stepper" backLink="Back"></Navbar>
+  <Navbar title="Stepper" backLink="Back" />
   <BlockTitle>Shape and size</BlockTitle>
   <Block strong class="text-align-center">
     <Row>
       <Col>
         <small class="display-block">Default</small>
-        <Stepper></Stepper>
+        <Stepper />
       </Col>
       <Col>
         <small class="display-block">Round</small>
-        <Stepper round></Stepper>
+        <Stepper round />
       </Col>
     </Row>
 
     <Row class="margin-top">
       <Col>
         <small class="display-block">Fill</small>
-        <Stepper fill></Stepper>
+        <Stepper fill />
       </Col>
       <Col>
         <small class="display-block">Round Fill</small>
-        <Stepper fill round></Stepper>
+        <Stepper fill round />
       </Col>
     </Row>
 
     <Row class="margin-top">
       <Col>
         <small class="display-block">Small</small>
-        <Stepper small></Stepper>
+        <Stepper small />
       </Col>
       <Col>
         <small class="display-block">Small Round</small>
-        <Stepper small round></Stepper>
+        <Stepper small round />
       </Col>
     </Row>
 
     <Row class="margin-top">
       <Col>
         <small class="display-block">Small Fill</small>
-        <Stepper small fill></Stepper>
+        <Stepper small fill />
       </Col>
       <Col>
         <small class="display-block">Small Round Fill</small>
-        <Stepper small round fill></Stepper>
+        <Stepper small round fill />
       </Col>
     </Row>
 
     <Row class="margin-top">
       <Col>
         <small class="display-block">Large</small>
-        <Stepper large></Stepper>
+        <Stepper large />
       </Col>
       <Col>
         <small class="display-block">Large Round</small>
-        <Stepper large round></Stepper>
+        <Stepper large round />
       </Col>
     </Row>
 
     <Row class="margin-top">
       <Col>
         <small class="display-block">Large Fill</small>
-        <Stepper large fill></Stepper>
+        <Stepper large fill />
       </Col>
       <Col>
         <small class="display-block">Large Round Fill</small>
-        <Stepper large round fill></Stepper>
+        <Stepper large round fill />
       </Col>
     </Row>
   </Block>
@@ -74,66 +118,66 @@
     <Row>
       <Col>
         <small class="display-block">Default</small>
-        <Stepper raised></Stepper>
+        <Stepper raised />
       </Col>
       <Col>
         <small class="display-block">Round</small>
-        <Stepper raised round></Stepper>
+        <Stepper raised round />
       </Col>
     </Row>
 
     <Row class="margin-top">
       <Col>
         <small class="display-block">Fill</small>
-        <Stepper raised fill></Stepper>
+        <Stepper raised fill />
       </Col>
       <Col>
         <small class="display-block">Round Fill</small>
-        <Stepper raised fill round></Stepper>
+        <Stepper raised fill round />
       </Col>
     </Row>
 
     <Row class="margin-top">
       <Col>
         <small class="display-block">Small</small>
-        <Stepper raised small></Stepper>
+        <Stepper raised small />
       </Col>
       <Col>
         <small class="display-block">Small Round</small>
-        <Stepper raised small round></Stepper>
+        <Stepper raised small round />
       </Col>
     </Row>
 
     <Row class="margin-top">
       <Col>
         <small class="display-block">Small Fill</small>
-        <Stepper raised small fill></Stepper>
+        <Stepper raised small fill />
       </Col>
       <Col>
         <small class="display-block">Small Round Fill</small>
-        <Stepper raised small round fill></Stepper>
+        <Stepper raised small round fill />
       </Col>
     </Row>
 
     <Row class="margin-top">
       <Col>
         <small class="display-block">Large</small>
-        <Stepper raised large></Stepper>
+        <Stepper raised large />
       </Col>
       <Col>
         <small class="display-block">Large Round</small>
-        <Stepper raised large round></Stepper>
+        <Stepper raised large round />
       </Col>
     </Row>
 
     <Row class="margin-top">
       <Col>
         <small class="display-block">Large Fill</small>
-        <Stepper raised large fill></Stepper>
+        <Stepper raised large fill />
       </Col>
       <Col>
         <small class="display-block">Large Round Fill</small>
-        <Stepper raised large round fill></Stepper>
+        <Stepper raised large round fill />
       </Col>
     </Row>
   </Block>
@@ -141,37 +185,37 @@
   <Block strong class="text-align-center">
     <Row>
       <Col>
-        <Stepper fill color="red"></Stepper>
+        <Stepper fill color="red" />
       </Col>
       <Col>
-        <Stepper fill round color="green"></Stepper>
-      </Col>
-    </Row>
-
-    <Row class="margin-top">
-      <Col>
-        <Stepper fill color="blue"></Stepper>
-      </Col>
-      <Col>
-        <Stepper fill round color="pink"></Stepper>
+        <Stepper fill round color="green" />
       </Col>
     </Row>
 
     <Row class="margin-top">
       <Col>
-        <Stepper fill small color="yellow"></Stepper>
+        <Stepper fill color="blue" />
       </Col>
       <Col>
-        <Stepper fill small round color="orange"></Stepper>
+        <Stepper fill round color="pink" />
       </Col>
     </Row>
 
     <Row class="margin-top">
       <Col>
-        <Stepper fill small color="gray"></Stepper>
+        <Stepper fill small color="yellow" />
       </Col>
       <Col>
-        <Stepper fill small round color="black"></Stepper>
+        <Stepper fill small round color="orange" />
+      </Col>
+    </Row>
+
+    <Row class="margin-top">
+      <Col>
+        <Stepper fill small color="gray" />
+      </Col>
+      <Col>
+        <Stepper fill small round color="black" />
       </Col>
     </Row>
   </Block>
@@ -179,10 +223,10 @@
   <Block strong class="text-align-center">
     <Row>
       <Col>
-        <Stepper input={false}></Stepper>
+        <Stepper input={false} />
       </Col>
       <Col>
-        <Stepper input={false} round></Stepper>
+        <Stepper input={false} round />
       </Col>
     </Row>
   </Block>
@@ -190,35 +234,49 @@
   <Block strong class="text-align-center">
     <Row>
       <Col>
-        <Stepper fill value={100} min={0} max={1000} step={100}></Stepper>
+        <Stepper fill value={100} min={0} max={1000} step={100} />
       </Col>
       <Col>
-        <Stepper fill input={false} value={5} min={0} max={10} step={0.5}></Stepper>
+        <Stepper fill input={false} value={5} min={0} max={10} step={0.5} />
       </Col>
     </Row>
   </Block>
 
   <BlockTitle>Autorepeat (Tap & hold)</BlockTitle>
-  <BlockHeader>Pressing and holding one of its buttons increments or decrements the stepper’s value repeatedly. With dynamic autorepeat, the rate of change depends on how long the user continues pressing the control.</BlockHeader>
+  <BlockHeader>
+    Pressing and holding one of its buttons increments or decrements the stepper’s value repeatedly.
+    With dynamic autorepeat, the rate of change depends on how long the user continues pressing the
+    control.
+  </BlockHeader>
   <Block strong class="text-align-center">
     <Row>
       <Col>
         <small class="display-block">Default</small>
-        <Stepper fill value={0} min={0} max={100} step={1} autorepeat={true}></Stepper>
+        <Stepper fill value={0} min={0} max={100} step={1} autorepeat={true} />
       </Col>
       <Col>
         <small class="display-block">Dynamic</small>
-        <Stepper fill value={0} min={0} max={100} step={1} autorepeat={true} autorepeatDynamic={true}></Stepper>
+        <Stepper
+          fill
+          value={0}
+          min={0}
+          max={100}
+          step={1}
+          autorepeat={true}
+          autorepeatDynamic={true} />
       </Col>
     </Row>
   </Block>
 
   <BlockTitle>Wraps</BlockTitle>
-  <BlockHeader>In wraps mode incrementing beyond maximum value sets value to minimum value, likewise, decrementing below minimum value sets value to maximum value</BlockHeader>
+  <BlockHeader>
+    In wraps mode incrementing beyond maximum value sets value to minimum value, likewise,
+    decrementing below minimum value sets value to maximum value
+  </BlockHeader>
   <Block strong class="text-align-center">
     <Row>
       <Col>
-        <Stepper fill value={0} min={0} max={10} step={1} autorepeat={true} wraps={true}></Stepper>
+        <Stepper fill value={0} min={0} max={10} step={1} autorepeat={true} wraps={true} />
       </Col>
     </Row>
   </Block>
@@ -227,12 +285,12 @@
   <List>
     <ListItem title={`Apples ${applesCount}`}>
       <span slot="after">
-        <Stepper buttonsOnly={true} small raised onStepperChange={setApples}></Stepper>
+        <Stepper buttonsOnly={true} small raised onStepperChange={setApples} />
       </span>
     </ListItem>
     <ListItem title={`Oranges ${orangesCount}`}>
       <span slot="after">
-        <Stepper buttonsOnly={true} small raised onStepperChange={setOranges}></Stepper>
+        <Stepper buttonsOnly={true} small raised onStepperChange={setOranges} />
       </span>
     </ListItem>
   </List>
@@ -250,51 +308,31 @@
           small
           fill
           raised
-          onStepperChange={setMeetingTime}
-        ></Stepper>
+          onStepperChange={setMeetingTime} />
       </span>
     </ListItem>
   </List>
 
   <BlockTitle>Manual input</BlockTitle>
-  <BlockHeader>It is possible to enter value manually from keyboard or mobile keypad. When click on input field, stepper enter into manual input mode, which allow type value from keyboard and check fractional part with defined accurancy. Click outside or enter Return key, ending manual mode.</BlockHeader>
+  <BlockHeader>
+    It is possible to enter value manually from keyboard or mobile keypad. When click on input
+    field, stepper enter into manual input mode, which allow type value from keyboard and check
+    fractional part with defined accurancy. Click outside or enter Return key, ending manual mode.
+  </BlockHeader>
   <Block strong class="text-align-center">
     <Row>
       <Col>
-        <Stepper fill value={0} min={0} max={1000} step={1} autorepeat={true} wraps={true} manualInputMode={true} decimalPoint={2}></Stepper>
+        <Stepper
+          fill
+          value={0}
+          min={0}
+          max={1000}
+          step={1}
+          autorepeat={true}
+          wraps={true}
+          manualInputMode={true}
+          decimalPoint={2} />
       </Col>
     </Row>
   </Block>
 </Page>
-<script>
-  import { Page, Navbar, BlockTitle, Block, BlockHeader, Row, Col, List, ListItem, Stepper } from 'framework7-svelte';
-
-  let applesCount = 0;
-  let orangesCount = 0;
-  let meetingTime = 15;
-
-  $: meetingTimeComputed = (() => {
-    const value = meetingTime;
-
-    const hours = Math.floor(value / 60);
-    const minutes = value - (hours * 60);
-    const formatted = [];
-    if (hours > 0) {
-      formatted.push(hours + ' ' + (hours > 1 ? 'hours' : 'hour'));
-    }
-    if (minutes > 0) {
-      formatted.push(minutes + ' minutes');
-    }
-    return formatted.join(' ');
-  })();
-
-  function setApples(value) {
-    applesCount = value;
-  }
-  function setOranges(value) {
-    orangesCount = value;
-  }
-  function setMeetingTime(value) {
-    meetingTime = value;
-  }
-</script>

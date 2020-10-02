@@ -1,100 +1,19 @@
-<Page>
-  <Navbar title="Text Editor" backLink="Back"></Navbar>
-
-  <Block>
-    <p>Framework7 comes with a touch-friendly Rich Text Editor component. It is based on modern "contenteditable" API so it should work everywhere as is.</p>
-    <p>It comes with the basic set of formatting features. But its functionality can be easily extended and customized to fit any requirements.</p>
-  </Block>
-
-  <BlockTitle>Default Setup</BlockTitle>
-  <TextEditor />
-
-  <BlockTitle>With Placeholder</BlockTitle>
-  <TextEditor
-    placeholder="Enter text..."
-  />
-
-  <BlockTitle>With Default Value</BlockTitle>
-  <TextEditor
-    placeholder="Enter text..."
-    value={customValue}
-    onTextEditorChange={(value) => customValue = value}
-  />
-
-  <BlockTitle>Specific Buttons</BlockTitle>
-  <BlockHeader>It is possible to customize which buttons (commands) to show.</BlockHeader>
-  <TextEditor
-    placeholder="Enter text..."
-    buttons={[
-      ['bold', 'italic', 'underline', 'strikeThrough'],
-      ['orderedList', 'unorderedList']
-    ]}
-  />
-
-  <BlockTitle>Custom Button</BlockTitle>
-  <BlockHeader>It is possible to create custom editor buttons. Here is the custom "hr" button that adds horizontal rule:</BlockHeader>
-  <TextEditor
-    placeholder="Enter text..."
-    customButtons={customButtons}
-    buttons={[
-      ['bold', 'italic', 'underline', 'strikeThrough'],
-      'hr'
-    ]}
-  />
-
-  <BlockTitle>Resizable</BlockTitle>
-  <BlockHeader>Editor will be resized based on its content.</BlockHeader>
-  <TextEditor
-    placeholder="Enter text..."
-    resizable
-    buttons={['bold', 'italic', 'underline', 'strikeThrough']}
-  />
-
-  <BlockTitle>Popover Mode</BlockTitle>
-  <BlockHeader>In this mode, there is no toolbar with buttons, but they appear as popover when you select any text in editor.</BlockHeader>
-  <TextEditor
-    placeholder="Enter text..."
-    mode="popover"
-    buttons={['bold', 'italic', 'underline', 'strikeThrough']}
-    style="--f7-text-editor-height: 150px"
-  />
-
-  <BlockTitle>Keyboard Toolbar Mode</BlockTitle>
-  <BlockHeader>In this mode, toolbar with buttons will appear on top of virtual keyboard when editor is in the focus. It is supported only in iOS, Android cordova apps and in Android Chrome. When not supported it will fallback to "popover" mode.</BlockHeader>
-  <TextEditor
-    placeholder="Enter text..."
-    mode="keyboard-toolbar"
-    style="--f7-text-editor-height: 150px"
-  />
-
-  <BlockTitle>As List Input</BlockTitle>
-  <BlockHeader>Text editor can be used in list with other inputs. In this example it is enabled with "keyboard-toolbar"/"popover" type for "About" field.</BlockHeader>
-  <List>
-    <ListInput
-      type="text"
-      label="Name"
-      placeholder="Your name"
-    />
-    <ListInput
-      type="texteditor"
-      label="About"
-      placeholder="About"
-      resizable
-      textEditorParams={{
-        mode: 'popover',
-        buttons: ['bold', 'italic', 'underline', 'strikeThrough']
-      }}
-      value={listEditorValue}
-      onTextEditorChange={(value) => listEditorValue = value}
-    />
-  </List>
-</Page>
 <script>
-  import { Page, Navbar, BlockTitle, BlockHeader, Block, TextEditor, List, ListInput } from 'framework7-svelte';
+  import {
+    Page,
+    Navbar,
+    BlockTitle,
+    BlockHeader,
+    Block,
+    TextEditor,
+    List,
+    ListInput,
+  } from 'framework7-svelte';
 
-  let customButtons = {
+  const customButtons = {
     hr: {
       content: '&lt;hr&gt;',
+      // eslint-disable-next-line
       onClick(editor, buttonEl) {
         document.execCommand('insertHorizontalRule', false);
       },
@@ -109,3 +28,92 @@
 
   let listEditorValue = '';
 </script>
+
+<Page>
+  <Navbar title="Text Editor" backLink="Back" />
+
+  <Block>
+    <p>
+      Framework7 comes with a touch-friendly Rich Text Editor component. It is based on modern
+      "contenteditable" API so it should work everywhere as is.
+    </p>
+    <p>
+      It comes with the basic set of formatting features. But its functionality can be easily
+      extended and customized to fit any requirements.
+    </p>
+  </Block>
+
+  <BlockTitle>Default Setup</BlockTitle>
+  <TextEditor />
+
+  <BlockTitle>With Placeholder</BlockTitle>
+  <TextEditor placeholder="Enter text..." />
+
+  <BlockTitle>With Default Value</BlockTitle>
+  <TextEditor
+    placeholder="Enter text..."
+    value={customValue}
+    onTextEditorChange={(value) => (customValue = value)} />
+
+  <BlockTitle>Specific Buttons</BlockTitle>
+  <BlockHeader>It is possible to customize which buttons (commands) to show.</BlockHeader>
+  <TextEditor
+    placeholder="Enter text..."
+    buttons={[['bold', 'italic', 'underline', 'strikeThrough'], ['orderedList', 'unorderedList']]} />
+
+  <BlockTitle>Custom Button</BlockTitle>
+  <BlockHeader>
+    It is possible to create custom editor buttons. Here is the custom "hr" button that adds
+    horizontal rule:
+  </BlockHeader>
+  <TextEditor
+    placeholder="Enter text..."
+    {customButtons}
+    buttons={[['bold', 'italic', 'underline', 'strikeThrough'], 'hr']} />
+
+  <BlockTitle>Resizable</BlockTitle>
+  <BlockHeader>Editor will be resized based on its content.</BlockHeader>
+  <TextEditor
+    placeholder="Enter text..."
+    resizable
+    buttons={['bold', 'italic', 'underline', 'strikeThrough']} />
+
+  <BlockTitle>Popover Mode</BlockTitle>
+  <BlockHeader>
+    In this mode, there is no toolbar with buttons, but they appear as popover when you select any
+    text in editor.
+  </BlockHeader>
+  <TextEditor
+    placeholder="Enter text..."
+    mode="popover"
+    buttons={['bold', 'italic', 'underline', 'strikeThrough']}
+    style="--f7-text-editor-height: 150px" />
+
+  <BlockTitle>Keyboard Toolbar Mode</BlockTitle>
+  <BlockHeader>
+    In this mode, toolbar with buttons will appear on top of virtual keyboard when editor is in the
+    focus. It is supported only in iOS, Android cordova apps and in Android Chrome. When not
+    supported it will fallback to "popover" mode.
+  </BlockHeader>
+  <TextEditor
+    placeholder="Enter text..."
+    mode="keyboard-toolbar"
+    style="--f7-text-editor-height: 150px" />
+
+  <BlockTitle>As List Input</BlockTitle>
+  <BlockHeader>
+    Text editor can be used in list with other inputs. In this example it is enabled with
+    "keyboard-toolbar"/"popover" type for "About" field.
+  </BlockHeader>
+  <List>
+    <ListInput type="text" label="Name" placeholder="Your name" />
+    <ListInput
+      type="texteditor"
+      label="About"
+      placeholder="About"
+      resizable
+      textEditorParams={{ mode: 'popover', buttons: ['bold', 'italic', 'underline', 'strikeThrough'] }}
+      value={listEditorValue}
+      onTextEditorChange={(value) => (listEditorValue = value)} />
+  </List>
+</Page>

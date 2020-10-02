@@ -1,33 +1,3 @@
-<Page onPageBeforeRemove={onPageBeforeRemove} onPageBeforeOut={onPageBeforeOut}>
-  <Navbar title="Toast" backLink="Back"></Navbar>
-  <Block strong>
-    <p>Toasts provide brief feedback about an operation through a message on the screen.</p>
-    <p>
-      <Button fill onClick={showToastBottom}>Toast on Bottom</Button>
-    </p>
-    <p>
-      <Button fill onClick={showToastTop}>Toast on Top</Button>
-    </p>
-    <p>
-      <Button fill onClick={showToastCenter}>Toast on Center</Button>
-    </p>
-    <p>
-      <Button fill onClick={showToastIcon}>Toast with icon</Button>
-    </p>
-    <p>
-      <Button fill onClick={showToastLargeMessage}>Toast with large message</Button>
-    </p>
-    <p>
-      <Button fill onClick={showToastWithButton}>Toast with close button</Button>
-    </p>
-    <p>
-      <Button fill onClick={showToastWithCustomButton}>Toast with custom button</Button>
-    </p>
-    <p>
-      <Button fill onClick={showToastWithCallback}>Toast with callback on close</Button>
-    </p>
-  </Block>
-</Page>
 <script>
   import { f7, theme, Navbar, Page, Block, Button } from 'framework7-svelte';
 
@@ -67,7 +37,7 @@
     // Create toast
     if (!toastCenter) {
       toastCenter = f7.toast.create({
-        text: 'I\'m on center',
+        text: "I'm on center",
         position: 'center',
         closeTimeout: 2000,
       });
@@ -79,8 +49,11 @@
     // Create toast
     if (!toastIcon) {
       toastIcon = f7.toast.create({
-        icon: theme.ios || theme.aurora ? '<i class="f7-icons">star_fill</i>' : '<i class="material-icons">star</i>',
-        text: 'I\'m on center',
+        icon:
+          theme.ios || theme.aurora
+            ? '<i class="f7-icons">star_fill</i>'
+            : '<i class="material-icons">star</i>',
+        text: "I'm on center",
         position: 'center',
         closeTimeout: 2000,
       });
@@ -92,7 +65,8 @@
     // Create toast
     if (!toastLargeMessage) {
       toastLargeMessage = f7.toast.create({
-        text: 'This toast contains a lot of text. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, quae, ab. Delectus amet optio facere autem sapiente quisquam beatae culpa dolore.',
+        text:
+          'This toast contains a lot of text. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, quae, ab. Delectus amet optio facere autem sapiente quisquam beatae culpa dolore.',
         closeTimeout: 2000,
       });
     }
@@ -156,3 +130,34 @@
     if (toastWithCallback) toastWithCallback.destroy();
   }
 </script>
+
+<Page {onPageBeforeRemove} {onPageBeforeOut}>
+  <Navbar title="Toast" backLink="Back" />
+  <Block strong>
+    <p>Toasts provide brief feedback about an operation through a message on the screen.</p>
+    <p>
+      <Button fill onClick={showToastBottom}>Toast on Bottom</Button>
+    </p>
+    <p>
+      <Button fill onClick={showToastTop}>Toast on Top</Button>
+    </p>
+    <p>
+      <Button fill onClick={showToastCenter}>Toast on Center</Button>
+    </p>
+    <p>
+      <Button fill onClick={showToastIcon}>Toast with icon</Button>
+    </p>
+    <p>
+      <Button fill onClick={showToastLargeMessage}>Toast with large message</Button>
+    </p>
+    <p>
+      <Button fill onClick={showToastWithButton}>Toast with close button</Button>
+    </p>
+    <p>
+      <Button fill onClick={showToastWithCustomButton}>Toast with custom button</Button>
+    </p>
+    <p>
+      <Button fill onClick={showToastWithCallback}>Toast with callback on close</Button>
+    </p>
+  </Block>
+</Page>

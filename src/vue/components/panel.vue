@@ -29,6 +29,10 @@ export default {
       type: String,
       default: undefined,
     },
+    containerEl: {
+      type: String,
+      default: undefined,
+    },
     visibleBreakpoint: {
       type: Number,
       default: undefined,

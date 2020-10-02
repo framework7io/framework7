@@ -1,13 +1,62 @@
+<script>
+  import { onMount, onDestroy } from 'svelte';
+  import {
+    f7,
+    Navbar,
+    Page,
+    Block,
+    BlockTitle,
+    BlockHeader,
+    List,
+    ListInput,
+  } from 'framework7-svelte';
+
+  let wheePickerValue = { hex: '#00ff00' };
+  let spectrumPickerValue = { hex: '#ff0000' };
+  let hsSpectrumPickerValue = { hex: '#ff0000' };
+  let rgbPickerValue = { hex: '#0000ff' };
+  let rgbaPickerValue = { hex: '#ff00ff' };
+  let hsbPickerValue = { hex: '#00ff00' };
+  let rgbBarsPickerValue = { hex: '#0000ff' };
+  let rgbSlidersColorsPickerValue = { hex: '#ffff00' };
+  let palettePickerValue = { hex: '#FFEBEE' };
+  let proPickerValue = { hex: '#00ffff' };
+  let inlinePickerValue = { hex: '#77ff66' };
+
+  let colorPickerInline;
+
+  onMount(() => {
+    colorPickerInline = f7.colorPicker.create({
+      value: inlinePickerValue,
+      containerEl: '#demo-color-picker-inline',
+      modules: ['sb-spectrum', 'hsb-sliders', 'alpha-slider'],
+      on: {
+        change(cp, value) {
+          inlinePickerValue = value;
+        },
+      },
+    });
+  });
+
+  onDestroy(() => {
+    colorPickerInline.destroy();
+  });
+</script>
+
 <Page>
   <Navbar title="Color Picker" backLink="Back" />
 
   <Block strong>
-    <p>Framework7 comes with ultimate modular Color Picker component that allows to create color picker with limitless combinations of color modules.</p>
+    <p>
+      Framework7 comes with ultimate modular Color Picker component that allows to create color
+      picker with limitless combinations of color modules.
+    </p>
   </Block>
 
   <BlockTitle>Color Wheel</BlockTitle>
   <BlockHeader>Minimal example with color wheel in Popover</BlockHeader>
   <List noHairlinesMd>
+    <!-- prettier-ignore -->
     <ListInput
       type="colorpicker"
       placeholder="Color"
@@ -15,7 +64,7 @@
       value={wheePickerValue}
       onColorPickerChange={(value) => wheePickerValue = value}
       colorPickerParams={{
-        targetEl: '.wheel-picker-target'
+        targetEl: '.wheel-picker-target',
       }}
     >
       <i
@@ -29,6 +78,7 @@
   <BlockTitle>Saturation-Brightness Spectrum</BlockTitle>
   <BlockHeader>SB Spectrum + Hue Slider in Popover</BlockHeader>
   <List noHairlinesMd>
+    <!-- prettier-ignore -->
     <ListInput
       type="colorpicker"
       placeholder="Color"
@@ -37,7 +87,7 @@
       onColorPickerChange={(value) => spectrumPickerValue = value}
       colorPickerParams={{
         modules: ['sb-spectrum', 'hue-slider'],
-        targetEl: '.spectrum-picker-target'
+        targetEl: '.spectrum-picker-target',
       }}
     >
       <i
@@ -51,6 +101,7 @@
   <BlockTitle>Hue-Saturation Spectrum</BlockTitle>
   <BlockHeader>HS Spectrum + Brightness Slider in Popover</BlockHeader>
   <List noHairlinesMd>
+    <!-- prettier-ignore -->
     <ListInput
       type="colorpicker"
       placeholder="Color"
@@ -59,7 +110,7 @@
       onColorPickerChange={(value) => hsSpectrumPickerValue = value}
       colorPickerParams={{
         modules: ['hs-spectrum', 'brightness-slider'],
-        targetEl: '.hs-spectrum-picker-target'
+        targetEl: '.hs-spectrum-picker-target',
       }}
     >
       <i
@@ -73,6 +124,7 @@
   <BlockTitle>RGB Sliders</BlockTitle>
   <BlockHeader>RGB sliders with labels and values in Popover</BlockHeader>
   <List noHairlinesMd>
+    <!-- prettier-ignore -->
     <ListInput
       type="colorpicker"
       placeholder="Color"
@@ -83,7 +135,7 @@
         modules: ['rgb-sliders'],
         sliderValue: true,
         sliderLabel: true,
-        targetEl: '.rgb-picker-target'
+        targetEl: '.rgb-picker-target',
       }}
     >
       <i
@@ -97,6 +149,7 @@
   <BlockTitle>RGBA Sliders</BlockTitle>
   <BlockHeader>RGB sliders + Alpha Slider with labels and values in Popover</BlockHeader>
   <List noHairlinesMd>
+    <!-- prettier-ignore -->
     <ListInput
       type="colorpicker"
       placeholder="Color"
@@ -124,6 +177,7 @@
   <BlockTitle>HSB Sliders</BlockTitle>
   <BlockHeader>HSB sliders with labels and values in Popover</BlockHeader>
   <List noHairlinesMd>
+    <!-- prettier-ignore -->
     <ListInput
       type="colorpicker"
       placeholder="Color"
@@ -136,7 +190,7 @@
         sliderLabel: true,
         targetEl: '.hsb-picker-target',
         formatValue(value) {
-          return `hsb(${value.hsb[0]}, ${value.hsb[1] * 1000 / 10}%, ${value.hsb[2] * 1000 / 10}%)`
+          return `hsb(${value.hsb[0]}, ${value.hsb[1] * 1000 / 10}%, ${value.hsb[2] * 1000 / 10}%)`;
         },
       }}
     >
@@ -149,8 +203,11 @@
   </List>
 
   <BlockTitle>RGB Bars</BlockTitle>
-  <BlockHeader>RGB bars with labels and values in Popover on tablet and in Popup on phone</BlockHeader>
+  <BlockHeader>
+    RGB bars with labels and values in Popover on tablet and in Popup on phone
+  </BlockHeader>
   <List noHairlinesMd>
+    <!-- prettier-ignore -->
     <ListInput
       type="colorpicker"
       placeholder="Color"
@@ -177,8 +234,11 @@
   </List>
 
   <BlockTitle>RGB Sliders + Colors</BlockTitle>
-  <BlockHeader>RGB sliders with labels and values in Popover, and previous and current color values blocks</BlockHeader>
+  <BlockHeader>
+    RGB sliders with labels and values in Popover, and previous and current color values blocks
+  </BlockHeader>
   <List noHairlinesMd>
+    <!-- prettier-ignore -->
     <ListInput
       type="colorpicker"
       placeholder="Color"
@@ -206,6 +266,7 @@
   <BlockTitle>Palette</BlockTitle>
   <BlockHeader>Palette opened in Sheet modal on phone and Popover on larger screens</BlockHeader>
   <List noHairlinesMd>
+    <!-- prettier-ignore -->
     <ListInput
       type="colorpicker"
       placeholder="Color"
@@ -241,8 +302,12 @@
   </List>
 
   <BlockTitle>Pro Mode</BlockTitle>
-  <BlockHeader>Current Color + HSB Sliders + RGB sliders + Alpha Slider + HEX + Palette with labels and editable values</BlockHeader>
+  <BlockHeader>
+    Current Color + HSB Sliders + RGB sliders + Alpha Slider + HEX + Palette with labels and
+    editable values
+  </BlockHeader>
   <List noHairlinesMd>
+    <!-- prettier-ignore -->
     <ListInput
       type="colorpicker"
       placeholder="Color"
@@ -287,52 +352,24 @@
   <div class="block block-strong no-padding">
     {#if inlinePickerValue.rgb}
       <div class="padding">
-        HEX: {inlinePickerValue.hex}<br />
-        Alpha: {inlinePickerValue.alpha}<br />
-        Hue: {inlinePickerValue.hue}<br />
-        RGB: {inlinePickerValue.rgb.join(', ')}<br />
-        HSL: {inlinePickerValue.hsl.join(', ')}<br />
-        HSB: {inlinePickerValue.hsb.join(', ')}<br />
-        RGBA: {inlinePickerValue.rgba.join(', ')}<br />
-        HSLA: {inlinePickerValue.hsla.join(', ')}
+        HEX:
+        {inlinePickerValue.hex}<br />
+        Alpha:
+        {inlinePickerValue.alpha}<br />
+        Hue:
+        {inlinePickerValue.hue}<br />
+        RGB:
+        {inlinePickerValue.rgb.join(', ')}<br />
+        HSL:
+        {inlinePickerValue.hsl.join(', ')}<br />
+        HSB:
+        {inlinePickerValue.hsb.join(', ')}<br />
+        RGBA:
+        {inlinePickerValue.rgba.join(', ')}<br />
+        HSLA:
+        {inlinePickerValue.hsla.join(', ')}
       </div>
     {/if}
-    <div id="demo-color-picker-inline"></div>
+    <div id="demo-color-picker-inline" />
   </div>
-
 </Page>
-<script>
-  import { onMount, onDestroy } from 'svelte';
-  import { f7, Navbar, Page, Block, BlockTitle, BlockHeader, List, ListInput } from 'framework7-svelte';
-
-  let wheePickerValue = { hex: '#00ff00' };
-  let spectrumPickerValue = { hex: '#ff0000' };
-  let hsSpectrumPickerValue = { hex: '#ff0000' };
-  let rgbPickerValue = { hex: '#0000ff' };
-  let rgbaPickerValue = { hex: '#ff00ff' };
-  let hsbPickerValue = { hex: '#00ff00' };
-  let rgbBarsPickerValue = { hex: '#0000ff' };
-  let rgbSlidersColorsPickerValue = { hex: '#ffff00' };
-  let palettePickerValue = { hex: '#FFEBEE' };
-  let proPickerValue = { hex: '#00ffff' };
-  let inlinePickerValue = { hex: '#77ff66' };
-
-  let colorPickerInline;
-
-  onMount(() => {
-    colorPickerInline = f7.colorPicker.create({
-      value: inlinePickerValue,
-      containerEl: '#demo-color-picker-inline',
-      modules: ['sb-spectrum', 'hsb-sliders', 'alpha-slider'],
-      on: {
-        change(cp, value) {
-          inlinePickerValue = value;
-        },
-      },
-    });
-  });
-
-  onDestroy(() => {
-    colorPickerInline.destroy();
-  });
-</script>

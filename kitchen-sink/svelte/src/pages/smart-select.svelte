@@ -1,5 +1,9 @@
+<script>
+  import { Navbar, Page, List, Block, ListItem } from 'framework7-svelte';
+</script>
+
 <Page>
-  <Navbar title="Smart Select" backLink="Back"></Navbar>
+  <Navbar title="Smart Select" backLink="Back" />
   <Block>
     Framework7 allows you to easily convert your usual form selects to dynamic pages with radios:
   </Block>
@@ -15,7 +19,10 @@
         <option value="banana">Banana</option>
       </select>
     </ListItem>
-    <ListItem title="Car" smartSelect smartSelectParams={{openIn: 'popup', searchbar: true, searchbarPlaceholder: 'Search car'}}>
+    <ListItem
+      title="Car"
+      smartSelect
+      smartSelectParams={{ openIn: 'popup', searchbar: true, searchbarPlaceholder: 'Search car' }}>
       <select name="car" multiple value={['honda', 'audi', 'ford']}>
         <optgroup label="Japanese">
           <option value="honda">Honda</option>
@@ -39,13 +46,13 @@
         </optgroup>
       </select>
     </ListItem>
-    <ListItem title="Mac or Windows" smartSelect smartSelectParams={{openIn: 'sheet'}}>
+    <ListItem title="Mac or Windows" smartSelect smartSelectParams={{ openIn: 'sheet' }}>
       <select name="mac-windows" value="mac">
         <option value="mac">Mac</option>
         <option value="windows">Windows</option>
       </select>
     </ListItem>
-    <ListItem title="Super Hero" smartSelect smartSelectParams={{openIn: 'popover'}}>
+    <ListItem title="Super Hero" smartSelect smartSelectParams={{ openIn: 'popover' }}>
       <select name="superhero" multiple value={['Batman']}>
         <option value="Batman">Batman</option>
         <option value="Superman">Superman</option>
@@ -58,6 +65,3 @@
     </ListItem>
   </List>
 </Page>
-<script>
-  import { Navbar, Page, List, Block, ListItem } from 'framework7-svelte';
-</script>

@@ -1,84 +1,16 @@
-<Page>
-  <Navbar title="Progress Bar" backLink="Back"></Navbar>
-  <Block>
-    <p>In addition to <a href="/preloader/">Preloader</a>, Framework7 also comes with fancy animated determinate and infinite/indeterminate progress bars to indicate some activity.</p>
-  </Block>
-  <BlockTitle>Determinate Progress Bar</BlockTitle>
-  <Block strong>
-    <p>When progress bar is determinate it indicates how long an operation will take when the percentage complete is detectable.</p>
-    <p>Inline determinate progress bar:</p>
-    <div>
-      <p><Progressbar progress={10} id="demo-inline-progressbar"></Progressbar></p>
-      <Segmented raised>
-        <Button onClick={()=>{setInlineProgress(10)}}>10%</Button>
-        <Button onClick={()=>{setInlineProgress(30)}}>30%</Button>
-        <Button onClick={()=>{setInlineProgress(50)}}>50%</Button>
-        <Button onClick={()=>{setInlineProgress(100)}}>100%</Button>
-      </Segmented>
-    </div>
-    <div>
-      <p>Inline determinate load & hide:</p>
-      <p id="demo-determinate-container"></p>
-      <p>
-        <Button fill onClick={()=>{showDeterminate(true)}}>Start Loading</Button>
-      </p>
-    </div>
-    <div>
-      <p>Overlay with determinate progress bar on top of the app:</p>
-      <p>
-        <Button fill onClick={()=>{showDeterminate(false)}}>Start Loading</Button>
-      </p>
-    </div>
-  </Block>
-  <BlockTitle>Infinite Progress Bar</BlockTitle>
-  <Block strong>
-    <p>When progress bar is infinite/indeterminate it requests that the user wait while something finishes when it’s not necessary to indicate how long it will take.</p>
-    <p>Inline infinite progress bar</p>
-    <p>
-      <Progressbar infinite></Progressbar>
-    </p>
-    <p>Multi-color infinite progress bar</p>
-    <p>
-      <Progressbar infinite color="multi"></Progressbar>
-    </p>
-    <div>
-      <p>Overlay with infinite progress bar on top of the app</p>
-      <p id="demo-infinite-container"></p>
-      <p>
-        <Button fill onClick={()=>{showInfinite(false)}}>Start Loading</Button>
-      </p>
-    </div>
-    <div>
-      <p>Overlay with infinite multi-color progress bar on top of the app</p>
-      <p>
-        <Button fill onClick={()=>{showInfinite(true)}}>Start Loading</Button>
-      </p>
-    </div>
-  </Block>
-  <BlockTitle>Colors</BlockTitle>
-  <List simpleList>
-    <ListItem>
-      <Progressbar color="blue" progress={10}></Progressbar>
-    </ListItem>
-    <ListItem>
-      <Progressbar color="red" progress={20}></Progressbar>
-    </ListItem>
-    <ListItem>
-      <Progressbar color="pink" progress={30}></Progressbar>
-    </ListItem>
-    <ListItem>
-      <Progressbar color="green" progress={80}></Progressbar>
-    </ListItem>
-    <ListItem>
-      <Progressbar color="yellow" progress={90}></Progressbar>
-    </ListItem>
-    <ListItem>
-      <Progressbar color="orange" progress={100}></Progressbar>
-    </ListItem>
-  </List>
-</Page>
 <script>
-  import { f7, Navbar, Page, BlockTitle, Block, Progressbar, Button, Segmented, List, ListItem } from 'framework7-svelte';
+  import {
+    f7,
+    Navbar,
+    Page,
+    BlockTitle,
+    Block,
+    Progressbar,
+    Button,
+    Segmented,
+    List,
+    ListItem,
+  } from 'framework7-svelte';
 
   let determinateLoading = false;
   let infiniteLoading = false;
@@ -127,3 +59,100 @@
     }, 3000);
   }
 </script>
+
+<Page>
+  <Navbar title="Progress Bar" backLink="Back" />
+  <Block>
+    <p>
+      In addition to
+      <a href="/preloader/">Preloader</a>, Framework7 also comes with fancy animated determinate and
+      infinite/indeterminate progress bars to indicate some activity.
+    </p>
+  </Block>
+  <BlockTitle>Determinate Progress Bar</BlockTitle>
+  <Block strong>
+    <p>
+      When progress bar is determinate it indicates how long an operation will take when the
+      percentage complete is detectable.
+    </p>
+    <p>Inline determinate progress bar:</p>
+    <div>
+      <p>
+        <Progressbar progress={10} id="demo-inline-progressbar" />
+      </p>
+      <!-- prettier-ignore -->
+      <Segmented raised>
+        <Button onClick={() => setInlineProgress(10)}>10%</Button>
+        <Button onClick={() => setInlineProgress(30)}>30%</Button>
+        <Button onClick={() => setInlineProgress(50)}>50%</Button>
+        <Button onClick={() => setInlineProgress(100)}>100%</Button>
+      </Segmented>
+    </div>
+    <!-- prettier-ignore -->
+    <div>
+      <p>Inline determinate load & hide:</p>
+      <p id="demo-determinate-container"></p>
+      <p>
+        <Button fill onClick={() => showDeterminate(true)}>Start Loading</Button>
+      </p>
+    </div>
+    <!-- prettier-ignore -->
+    <div>
+      <p>Overlay with determinate progress bar on top of the app:</p>
+      <p>
+        <Button fill onClick={() => showDeterminate(false)}>Start Loading</Button>
+      </p>
+    </div>
+  </Block>
+  <BlockTitle>Infinite Progress Bar</BlockTitle>
+  <Block strong>
+    <p>
+      When progress bar is infinite/indeterminate it requests that the user wait while something
+      finishes when it’s not necessary to indicate how long it will take.
+    </p>
+    <p>Inline infinite progress bar</p>
+    <p>
+      <Progressbar infinite />
+    </p>
+    <p>Multi-color infinite progress bar</p>
+    <p>
+      <Progressbar infinite color="multi" />
+    </p>
+    <div>
+      <p>Overlay with infinite progress bar on top of the app</p>
+      <p id="demo-infinite-container" />
+      <!-- prettier-ignore -->
+      <p>
+        <Button fill onClick={() => showInfinite(false)}>Start Loading</Button>
+      </p>
+    </div>
+    <div>
+      <p>Overlay with infinite multi-color progress bar on top of the app</p>
+      <!-- prettier-ignore -->
+      <p>
+        <Button fill onClick={() => showInfinite(true)}>Start Loading</Button>
+      </p>
+    </div>
+  </Block>
+  <BlockTitle>Colors</BlockTitle>
+  <List simpleList>
+    <ListItem>
+      <Progressbar color="blue" progress={10} />
+    </ListItem>
+    <ListItem>
+      <Progressbar color="red" progress={20} />
+    </ListItem>
+    <ListItem>
+      <Progressbar color="pink" progress={30} />
+    </ListItem>
+    <ListItem>
+      <Progressbar color="green" progress={80} />
+    </ListItem>
+    <ListItem>
+      <Progressbar color="yellow" progress={90} />
+    </ListItem>
+    <ListItem>
+      <Progressbar color="orange" progress={100} />
+    </ListItem>
+  </List>
+</Page>

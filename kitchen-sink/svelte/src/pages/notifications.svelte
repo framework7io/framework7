@@ -1,13 +1,3 @@
-<Page onPageBeforeOut={onPageBeforeOut} onPageBeforeRemove={onPageBeforeRemove}>
-  <Navbar title="Notifications" backLink="Back"></Navbar>
-  <Block>
-    <p>Framework7 comes with simple Notifications component that allows you to show some useful messages to user and request basic actions.</p>
-    <p><Button fill onClick={showNotificationFull}>Full layout notification</Button></p>
-    <p><Button fill onClick={showNotificationWithButton}>With close button</Button></p>
-    <p><Button fill onClick={showNotificationCloseOnClick}>Click to close</Button></p>
-    <p><Button fill onClick={showNotificationCallbackOnClose}>Callback on close</Button></p>
-  </Block>
-</Page>
 <script>
   import { f7, Navbar, Page, Block, Button } from 'framework7-svelte';
 
@@ -94,3 +84,25 @@
     if (notificationCallbackOnClose) notificationCallbackOnClose.destroy();
   }
 </script>
+
+<Page {onPageBeforeOut} {onPageBeforeRemove}>
+  <Navbar title="Notifications" backLink="Back" />
+  <Block>
+    <p>
+      Framework7 comes with simple Notifications component that allows you to show some useful
+      messages to user and request basic actions.
+    </p>
+    <p>
+      <Button fill onClick={showNotificationFull}>Full layout notification</Button>
+    </p>
+    <p>
+      <Button fill onClick={showNotificationWithButton}>With close button</Button>
+    </p>
+    <p>
+      <Button fill onClick={showNotificationCloseOnClick}>Click to close</Button>
+    </p>
+    <p>
+      <Button fill onClick={showNotificationCallbackOnClose}>Callback on close</Button>
+    </p>
+  </Block>
+</Page>

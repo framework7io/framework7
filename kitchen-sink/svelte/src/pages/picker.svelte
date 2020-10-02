@@ -1,34 +1,3 @@
-<Page onPageInit={onPageInit} onPageBeforeRemove={onPageBeforeRemove}>
-  <Navbar title="Picker" backLink="Back"></Navbar>
-  <Block>
-    <p>Picker is a powerful component that allows you to create custom overlay pickers which looks like native picker.</p>
-    <p>Picker could be used as inline component or as overlay. Overlay Picker will be automatically converted to Popover on tablets (iPad).</p>
-  </Block>
-  <BlockTitle>Picker with single value</BlockTitle>
-  <List noHairlinesMd>
-    <ListInput type="text" placeholder="Your iOS device" readonly inputId="demo-picker-device"/>
-  </List>
-  <BlockTitle>2 values and 3d-rotate effect</BlockTitle>
-  <List noHairlinesMd>
-    <ListInput type="text" placeholder="Describe yourself" readonly inputId="demo-picker-describe"/>
-  </List>
-  <BlockTitle>Dependent values</BlockTitle>
-  <List noHairlinesMd>
-    <ListInput type="text" placeholder="Your car" readonly inputId="demo-picker-dependent"/>
-  </List>
-
-  <BlockTitle>Custom toolbar</BlockTitle>
-  <List noHairlinesMd>
-    <ListInput type="text" placeholder="Describe yourself" readonly inputId="demo-picker-custom-toolbar"/>
-  </List>
-  <BlockTitle>Inline Picker / Date-time</BlockTitle>
-  <List class="no-margin">
-    <ListInput type="text" placeholder="Date Time" readonly inputId="demo-picker-date"/>
-  </List>
-  <Block strong class="no-padding no-margin margin-bottom">
-    <div id="demo-picker-date-container"></div>
-  </Block>
-</Page>
 <script>
   import { f7, Navbar, Page, Block, BlockTitle, List, ListInput } from 'framework7-svelte';
 
@@ -46,7 +15,20 @@
       cols: [
         {
           textAlign: 'center',
-          values: ['iPhone 4', 'iPhone 4S', 'iPhone 5', 'iPhone 5S', 'iPhone 6', 'iPhone 6 Plus', 'iPad 2', 'iPad Retina', 'iPad Air', 'iPad mini', 'iPad mini 2', 'iPad mini 3'],
+          values: [
+            'iPhone 4',
+            'iPhone 4S',
+            'iPhone 5',
+            'iPhone 5S',
+            'iPhone 6',
+            'iPhone 6 Plus',
+            'iPad 2',
+            'iPad Retina',
+            'iPad Air',
+            'iPad mini',
+            'iPad mini 2',
+            'iPad mini 3',
+          ],
         },
       ],
     });
@@ -58,10 +40,12 @@
       cols: [
         {
           textAlign: 'left',
-          values: ('Super Amazing Bat Iron Rocket Lex Beautiful Wonderful Raining Happy Funny Cool Hot').split(' '),
+          values: 'Super Amazing Bat Iron Rocket Lex Beautiful Wonderful Raining Happy Funny Cool Hot'.split(
+            ' ',
+          ),
         },
         {
-          values: ('Man Luthor Woman Boy Girl Person Cutie Babe Raccoon').split(' '),
+          values: 'Man Luthor Woman Boy Girl Person Cutie Babe Raccoon'.split(' '),
         },
       ],
     });
@@ -100,16 +84,18 @@
       inputEl: '#demo-picker-custom-toolbar',
       rotateEffect: true,
       renderToolbar() {
-        return '<div class="toolbar">' +
-        '<div class="toolbar-inner">' +
+        return (
+          '<div class="toolbar">' +
+          '<div class="toolbar-inner">' +
           '<div class="left">' +
-            '<a href="#" class="link toolbar-randomize-link">Randomize</a>' +
+          '<a href="#" class="link toolbar-randomize-link">Randomize</a>' +
           '</div>' +
           '<div class="right">' +
-            '<a href="#" class="link sheet-close popover-close">That\'s me</a>' +
+          '<a href="#" class="link sheet-close popover-close">That\'s me</a>' +
           '</div>' +
-        '</div>' +
-      '</div>';
+          '</div>' +
+          '</div>'
+        );
       },
       cols: [
         {
@@ -117,10 +103,12 @@
         },
         {
           textAlign: 'left',
-          values: ('Super Amazing Bat Iron Rocket Lex Beautiful Wonderful Raining Happy Funny Cool Hot').split(' '),
+          values: 'Super Amazing Bat Iron Rocket Lex Beautiful Wonderful Raining Happy Funny Cool Hot'.split(
+            ' ',
+          ),
         },
         {
-          values: ('Man Luthor Woman Boy Girl Person Cutie Babe Raccoon').split(' '),
+          values: 'Man Luthor Woman Boy Girl Person Cutie Babe Raccoon'.split(' '),
         },
       ],
       on: {
@@ -158,23 +146,60 @@
         return `${displayValues[0]} ${values[1]}, ${values[2]} ${values[3]}:${values[4]}`;
       },
       cols: [
-      // Months
+        // Months
         {
-          values: ('0 1 2 3 4 5 6 7 8 9 10 11').split(' '),
-          displayValues: ('January February March April May June July August September October November December').split(' '),
+          values: '0 1 2 3 4 5 6 7 8 9 10 11'.split(' '),
+          displayValues: 'January February March April May June July August September October November December'.split(
+            ' ',
+          ),
           textAlign: 'left',
         },
         // Days
         {
-          values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+          values: [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+          ],
         },
         // Years
         {
+          // eslint-disable-next-line
           values: (function createValues() {
             const arr = [];
-            for (let i = 1950; i <= 2030; i += 1) { arr.push(i); }
+            for (let i = 1950; i <= 2030; i += 1) {
+              arr.push(i);
+            }
             return arr;
-          }()),
+          })(),
         },
         // Space divider
         {
@@ -183,11 +208,14 @@
         },
         // Hours
         {
+          // eslint-disable-next-line
           values: (function createValues() {
             const arr = [];
-            for (let i = 0; i <= 23; i += 1) { arr.push(i); }
+            for (let i = 0; i <= 23; i += 1) {
+              arr.push(i);
+            }
             return arr;
-          }()),
+          })(),
         },
         // Divider
         {
@@ -196,15 +224,18 @@
         },
         // Minutes
         {
+          // eslint-disable-next-line
           values: (function createValues() {
             const arr = [];
-            for (let i = 0; i <= 59; i += 1) { arr.push(i < 10 ? `0${i}` : i); }
+            for (let i = 0; i <= 59; i += 1) {
+              arr.push(i < 10 ? `0${i}` : i);
+            }
             return arr;
-          }()),
+          })(),
         },
       ],
       on: {
-        change(picker, values, displayValues) {
+        change(picker, values) {
           const daysInMonth = new Date(picker.value[2], picker.value[0] * 1 + 1, 0).getDate();
           if (values[1] > daysInMonth) {
             picker.cols[1].setValue(daysInMonth);
@@ -221,3 +252,49 @@
     pickerCustomToolbar.destroy();
   }
 </script>
+
+<Page {onPageInit} {onPageBeforeRemove}>
+  <Navbar title="Picker" backLink="Back" />
+  <Block>
+    <p>
+      Picker is a powerful component that allows you to create custom overlay pickers which looks
+      like native picker.
+    </p>
+    <p>
+      Picker could be used as inline component or as overlay. Overlay Picker will be automatically
+      converted to Popover on tablets (iPad).
+    </p>
+  </Block>
+  <BlockTitle>Picker with single value</BlockTitle>
+  <List noHairlinesMd>
+    <ListInput type="text" placeholder="Your iOS device" readonly inputId="demo-picker-device" />
+  </List>
+  <BlockTitle>2 values and 3d-rotate effect</BlockTitle>
+  <List noHairlinesMd>
+    <ListInput
+      type="text"
+      placeholder="Describe yourself"
+      readonly
+      inputId="demo-picker-describe" />
+  </List>
+  <BlockTitle>Dependent values</BlockTitle>
+  <List noHairlinesMd>
+    <ListInput type="text" placeholder="Your car" readonly inputId="demo-picker-dependent" />
+  </List>
+
+  <BlockTitle>Custom toolbar</BlockTitle>
+  <List noHairlinesMd>
+    <ListInput
+      type="text"
+      placeholder="Describe yourself"
+      readonly
+      inputId="demo-picker-custom-toolbar" />
+  </List>
+  <BlockTitle>Inline Picker / Date-time</BlockTitle>
+  <List class="no-margin">
+    <ListInput type="text" placeholder="Date Time" readonly inputId="demo-picker-date" />
+  </List>
+  <Block strong class="no-padding no-margin margin-bottom">
+    <div id="demo-picker-date-container" />
+  </Block>
+</Page>

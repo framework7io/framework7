@@ -1,5 +1,9 @@
+<script>
+  import { Navbar, Page } from 'framework7-svelte';
+</script>
+
 <Page>
-  <Navbar noShadow title="Horizontal Timeline Calendar" backLink="Back"></Navbar>
+  <Navbar noShadow title="Horizontal Timeline Calendar" backLink="Back" />
   <div class="timeline timeline-horizontal col-33 tablet-15">
     <div class="timeline-year">
       <div class="timeline-year-title"><span>2016</span></div>
@@ -745,6 +749,3 @@
     </div>
   </div>
 </Page>
-<script>
-  import { Navbar, Page, BlockTitle } from 'framework7-svelte';
-</script>

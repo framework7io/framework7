@@ -1,3 +1,7 @@
+<script>
+  import { Navbar, Page, Block } from 'framework7-svelte';
+</script>
+
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
   <Navbar title="Lazy Load Images" backLink="Back"></Navbar>
@@ -31,6 +35,3 @@
     <p>Suspendisse potenti. Curabitur et neque ac ante dapibus mollis tempor eget ex. Vivamus porttitor faucibus dui. Nulla eleifend hendrerit cursus. Sed elit nulla, pulvinar vitae diam eget, consectetur efficitur orci. Vivamus vel pharetra sapien. Suspendisse tortor tortor, iaculis at ullamcorper sit amet, vestibulum vel arcu. Aenean sed eleifend sapien. Praesent at varius metus.</p>
   </Block>
 </Page>
-<script>
-  import { Navbar, Page, Block } from 'framework7-svelte';
-</script>

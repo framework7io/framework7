@@ -1,3 +1,18 @@
+<script>
+  import {
+    Navbar,
+    Page,
+    BlockTitle,
+    Link,
+    Icon,
+    Card,
+    CardContent,
+    CardHeader,
+    BlockHeader,
+    Checkbox,
+  } from 'framework7-svelte';
+</script>
+
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
   <Navbar title="Data Table" backLink="Back"></Navbar>
@@ -678,6 +693,3 @@
     </CardContent>
   </Card>
 </Page>
-<script>
-  import { Navbar, Page, BlockTitle, Link, Icon, Card, CardContent, CardHeader, BlockHeader, Checkbox } from 'framework7-svelte';
-</script>

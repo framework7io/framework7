@@ -1,3 +1,17 @@
+<script>
+  import {
+    Navbar,
+    NavRight,
+    Toolbar,
+    Page,
+    Link,
+    Badge,
+    List,
+    ListItem,
+    Icon,
+  } from 'framework7-svelte';
+</script>
+
 <Page>
   <Navbar sliding backLink="Back" title="Badge">
     <NavRight>
@@ -30,9 +44,7 @@
   </Toolbar>
 
   <List>
-    <ListItem title="Foo Bar" badge="0">
-      <i slot="media" class="icon icon-f7" />
-    </ListItem>
+    <ListItem title="Foo Bar" badge="0"><i slot="media" class="icon icon-f7" /></ListItem>
     <ListItem title="Ivan Petrov" badge="CEO" badgeColor="blue">
       <i slot="media" class="icon icon-f7" />
     </ListItem>
@@ -44,6 +56,3 @@
     </ListItem>
   </List>
 </Page>
-<script>
-  import { Navbar, NavRight, Toolbar, Page, Link, Badge, List, ListItem, Icon } from 'framework7-svelte';
-</script>

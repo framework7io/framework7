@@ -1,17 +1,3 @@
-<Page
-  infinite
-  infiniteDistance={50}
-  infinitePreloader={showPreloader}
-  onInfinite={loadMore}
->
-  <Navbar title="Infinite Scroll" backLink="Back"></Navbar>
-  <BlockTitle>Scroll bottom</BlockTitle>
-  <List>
-    {#each items as item, index (index)}
-      <ListItem title={`Item ${item}`}></ListItem>
-    {/each}
-  </List>
-</Page>
 <script>
   import { Navbar, Page, BlockTitle, List, ListItem } from 'framework7-svelte';
 
@@ -40,3 +26,13 @@
     }, 1000);
   }
 </script>
+
+<Page infinite infiniteDistance={50} infinitePreloader={showPreloader} onInfinite={loadMore}>
+  <Navbar title="Infinite Scroll" backLink="Back" />
+  <BlockTitle>Scroll bottom</BlockTitle>
+  <List>
+    {#each items as item, index (index)}
+      <ListItem title={`Item ${item}`} />
+    {/each}
+  </List>
+</Page>

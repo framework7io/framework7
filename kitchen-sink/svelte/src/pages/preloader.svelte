@@ -1,3 +1,26 @@
+<script>
+  import { f7, Navbar, Page, BlockTitle, Block, Preloader, Col } from 'framework7-svelte';
+
+  function openIndicator() {
+    f7.preloader.show();
+    setTimeout(() => {
+      f7.preloader.hide();
+    }, 2000);
+  }
+  function openDialog() {
+    f7.dialog.preloader();
+    setTimeout(() => {
+      f7.dialog.close();
+    }, 2000);
+  }
+  function openCustomDialog() {
+    f7.dialog.preloader('My text...');
+    setTimeout(() => {
+      f7.dialog.close();
+    }, 2000);
+  }
+</script>
+
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
   <Navbar title="Preloader" backLink="Back"></Navbar>
@@ -58,25 +81,3 @@
     </p>
   </Block>
 </Page>
-<script>
-  import { f7, Navbar, Page, BlockTitle, Block, Preloader, Col } from 'framework7-svelte';
-
-  function openIndicator() {
-    f7.preloader.show();
-    setTimeout(() => {
-      f7.preloader.hide();
-    }, 2000);
-  }
-  function openDialog() {
-    f7.dialog.preloader();
-    setTimeout(() => {
-      f7.dialog.close();
-    }, 2000);
-  }
-  function openCustomDialog() {
-    f7.dialog.preloader('My text...');
-    setTimeout(() => {
-      f7.dialog.close();
-    }, 2000);
-  }
-</script>
