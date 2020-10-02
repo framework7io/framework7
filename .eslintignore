@@ -4,6 +4,7 @@ build
 custom
 packages
 node_modules
+*.ts
 kitchen-sink/core
 kitchen-sink/svelte/js
 kitchen-sink/react/js
