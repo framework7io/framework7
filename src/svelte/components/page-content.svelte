@@ -4,6 +4,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, createEmitter } from '../shared/utils';
   import { f7, f7ready } from '../shared/f7';
+  import { useTab } from '../shared/use-tab';
 
   import Preloader from './preloader';
 
@@ -74,14 +75,6 @@
     if (infEl !== pageContentEl) return;
     emit('infinite');
   }
-  function onTabShow(tabEl) {
-    if (pageContentEl !== tabEl) return;
-    emit('tabShow');
-  }
-  function onTabHide(tabEl) {
-    if (pageContentEl !== tabEl) return;
-    emit('tabHide');
-  }
 
   function mountPageContent() {
     if (ptr) {
@@ -93,10 +86,6 @@
     }
     if (infinite) {
       f7.on('infinite', onInfinite);
-    }
-    if (tab) {
-      f7.on('tabShow', onTabShow);
-      f7.on('tabHide', onTabHide);
     }
   }
   function destroyPageContent() {
@@ -110,11 +99,9 @@
     if (infinite) {
       f7.off('infinite', onInfinite);
     }
-    if (tab) {
-      f7.off('tabShow', onTabShow);
-      f7.off('tabHide', onTabHide);
-    }
   }
+
+  useTab(() => pageContentEl, emit);
 
   onMount(() => {
     f7ready(() => {

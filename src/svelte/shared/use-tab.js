@@ -1,18 +1,18 @@
-import { useEffect } from 'react';
+// eslint-disable-next-line
+import { onMount, onDestroy } from 'svelte';
 import { f7, f7ready } from './f7';
-import { emit } from './utils';
 
-export const useTab = (elRef, props) => {
+export const useTab = (getEl, emit) => {
   const onTabShow = (el) => {
-    if (elRef.current !== el) return;
-    emit(props, 'tabShow', el);
+    if (getEl() !== el) return;
+    emit('tabShow', [el]);
   };
   const onTabHide = (el) => {
-    if (elRef.current !== el) return;
-    emit(props, 'tabHide', el);
+    if (getEl() !== el) return;
+    emit('tabHide', [el]);
   };
   const attachEvents = () => {
-    if (!elRef.current) return;
+    if (!getEl()) return;
     f7ready(() => {
       f7.on('tabShow', onTabShow);
       f7.on('tabHide', onTabHide);
@@ -24,8 +24,10 @@ export const useTab = (elRef, props) => {
     f7.off('tabHide', onTabHide);
   };
 
-  useEffect(() => {
+  onMount(() => {
     attachEvents();
-    return detachEvents;
+  });
+  onDestroy(() => {
+    detachEvents();
   });
 };

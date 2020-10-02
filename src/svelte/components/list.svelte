@@ -5,6 +5,7 @@
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
+  import { useTab } from '../shared/use-tab';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -126,22 +127,14 @@
     if (listEl !== el) return;
     emit('sortableSort', [sortData]);
   }
-  function onTabShow(tabEl) {
-    if (tabEl !== el) return;
-    emit('tabShow');
-  }
-  function onTabHide(tabEl) {
-    if (tabEl !== el) return;
-    emit('tabHide');
-  }
+
+  useTab(() => el, emit);
 
   onMount(() => {
     f7ready(() => {
       f7.on('sortableEnable', onSortableEnable);
       f7.on('sortableDisable', onSortableDisable);
       f7.on('sortableSort', onSortableSort);
-      f7.on('tabShow', onTabShow);
-      f7.on('tabHide', onTabHide);
 
       if (!virtualList) return;
       const vlParams = virtualListParams || {};
@@ -181,8 +174,6 @@
     f7.off('sortableEnable', onSortableEnable);
     f7.off('sortableDisable', onSortableDisable);
     f7.off('sortableSort', onSortableSort);
-    f7.off('tabShow', onTabShow);
-    f7.off('tabHide', onTabHide);
 
     if (f7VirtualList && f7VirtualList.destroy) {
       f7VirtualList.destroy();

@@ -4,7 +4,8 @@
   import { restProps } from '../shared/rest-props';
   import { colorClasses } from '../shared/mixins';
   import { classNames, createEmitter } from '../shared/utils';
-  import { f7, f7ready, f7routers, f7events } from '../shared/f7';
+  import { f7ready, f7routers, f7events } from '../shared/f7';
+  import { useTab } from '../shared/use-tab';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -18,14 +19,7 @@
 
   $: classes = classNames(className, 'tab', tabActive && 'tab-active', colorClasses($$props));
 
-  function onTabShow(tabEl) {
-    if (tabEl !== el) return;
-    emit('tabShow');
-  }
-  function onTabHide(tabEl) {
-    if (tabEl !== el) return;
-    emit('tabHide');
-  }
+  useTab(() => el, emit);
 
   onMount(() => {
     f7ready(() => {
@@ -38,8 +32,6 @@
         },
       };
       f7routers.tabs.push(routerData);
-      f7.on('tabShow', onTabShow);
-      f7.on('tabHide', onTabHide);
     });
   });
   afterUpdate(() => {
@@ -47,10 +39,6 @@
     f7events.emit('tabRouterDidUpdate', routerData);
   });
   onDestroy(() => {
-    if (f7) {
-      f7.off('tabShow', onTabShow);
-      f7.off('tabHide', onTabHide);
-    }
     if (!routerData) return;
     f7routers.tabs.splice(f7routers.tabs.indexOf(routerData), 1);
     routerData = null;

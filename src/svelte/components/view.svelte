@@ -2,37 +2,60 @@
   import { onMount, onDestroy, afterUpdate, createEventDispatcher, tick } from 'svelte';
   import { f7, f7ready, f7routers, f7events } from '../shared/f7';
   import { colorClasses } from '../shared/mixins';
-  import { classNames, noUndefinedProps, createEmitter } from '../shared/utils';
+  import { classNames, noUndefinedProps, createEmitter, getRouterId } from '../shared/utils';
+  import { getRouterInitialComponent } from '../shared/get-router-initial-component';
+  import { useTab } from '../shared/use-tab';
 
   export let id = undefined;
   export let style = undefined;
 
   export let init = true;
+  export let url = undefined;
   let className = undefined;
   export { className as class };
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
   const { main, tab, tabActive } = $$props;
-  $: classes = classNames(
-    className,
-    'view',
-    {
-      'view-main': main,
-      'tab-active': tabActive,
-      tab,
-    },
-    colorClasses($$props),
-  );
 
+  let initialPage;
   let el;
-  let pages = [];
   let routerData;
   let f7View;
 
   export function instance() {
     return f7View;
   }
+
+  function onViewInit(view) {
+    emit('viewInit', [view]);
+    if (!init) {
+      f7View = view;
+      routerData.instance = view;
+    }
+  }
+
+  if (f7 && !f7View && init) {
+    const routerId = getRouterId();
+    f7View = f7.views.create(el, {
+      routerId,
+      init: false,
+      ...noUndefinedProps($$props),
+      on: {
+        init: onViewInit,
+      },
+    });
+    routerData = {
+      routerId,
+      instance: f7View,
+    };
+    f7routers.views.push(routerData);
+    if (f7View && f7View.router && (url || main)) {
+      initialPage = getRouterInitialComponent(f7View.router);
+    }
+  }
+
+  let pages = initialPage ? [initialPage] : [];
 
   function onResize(view, width) {
     emit('viewResize', [width]);
@@ -52,44 +75,71 @@
   function onSwipeBackAfterReset(data) {
     emit('swipeBackAfterReset', [data]);
   }
-  function onTabShow(tabEl) {
-    if (el !== tabEl) return;
-    emit('tabShow');
-  }
-  function onTabHide(tabEl) {
-    if (el !== tabEl) return;
-    emit('tabHide');
-  }
 
-  function onViewInit(view) {
-    f7View = view;
-    routerData.instance = view;
-    emit('viewInit', [view]);
-  }
+  $: classes = classNames(
+    className,
+    'view',
+    {
+      'view-main': main,
+      'tab-active': tabActive,
+      tab,
+    },
+    colorClasses($$props),
+  );
+
+  useTab(() => el, emit);
 
   onMount(() => {
-    if (!init) return;
     f7ready(() => {
-      f7.on('tabShow', onTabShow);
-      f7.on('tabHide', onTabHide);
-      routerData = {
-        el,
-        instance: null,
-        pages,
-        setPages(p) {
+      if (f7View) {
+        routerData.el = el;
+        routerData.pages = pages;
+        routerData.setPages = (newPages) => {
           tick().then(() => {
-            pages = p;
+            pages = newPages;
           });
-        },
-      };
-      f7routers.views.push(routerData);
-      routerData.instance = f7.views.create(el, {
-        ...noUndefinedProps($$props),
-        on: {
-          init: onViewInit,
-        },
-      });
-      if (!f7View) f7View = routerData.instance;
+        };
+        if (initialPage && initialPage.isAsync && !initialPage.initialComponent) {
+          initialPage.component().then(() => {
+            setTimeout(() => {
+              f7View.init(el);
+              if (initialPage) {
+                initialPage.el = f7View.routerPageEl;
+              }
+            }, 100);
+          });
+        } else {
+          f7View.init(el);
+          if (initialPage) {
+            initialPage.el = f7View.routerPageEl;
+          }
+        }
+      } else {
+        const routerId = getRouterId();
+        routerData = {
+          el,
+          routerId,
+          pages,
+          instance: f7View,
+          setPages(newPages) {
+            tick().then(() => {
+              pages = newPages;
+            });
+          },
+        };
+        f7routers.views.push(routerData);
+        routerData.instance = f7.views.create(el, {
+          routerId,
+          ...noUndefinedProps($$props),
+          on: {
+            init: onViewInit,
+          },
+        });
+        f7View = routerData.instance;
+      }
+
+      if (!init) return;
+
       f7View.on('resize', onResize);
       f7View.on('swipebackMove', onSwipeBackMove);
       f7View.on('swipebackBeforeChange', onSwipeBackBeforeChange);
@@ -105,11 +155,6 @@
   });
 
   onDestroy(() => {
-    if (!init) return;
-    if (f7) {
-      f7.off('tabShow', onTabShow);
-      f7.off('tabHide', onTabHide);
-    }
     if (f7View) {
       f7View.off('resize', onResize);
       f7View.off('swipebackMove', onSwipeBackMove);
@@ -117,12 +162,11 @@
       f7View.off('swipebackAfterChange', onSwipeBackAfterChange);
       f7View.off('swipebackBeforeReset', onSwipeBackBeforeReset);
       f7View.off('swipebackAfterReset', onSwipeBackAfterReset);
-      if (f7View.destroy) {
-        f7View.destroy();
-      }
+      if (f7View.destroy) f7View.destroy();
+      f7View = null;
     }
+
     f7routers.views.splice(f7routers.views.indexOf(routerData), 1);
-    f7View = null;
     routerData = null;
   });
 </script>

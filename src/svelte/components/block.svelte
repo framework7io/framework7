@@ -1,9 +1,9 @@
 <script>
-  import { onMount, onDestroy, createEventDispatcher } from 'svelte';
-  import { f7, f7ready } from '../shared/f7';
+  import { createEventDispatcher } from 'svelte';
   import { colorClasses } from '../shared/mixins';
   import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
+  import { useTab } from '../shared/use-tab';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -29,15 +29,6 @@
 
   let el;
 
-  function onTabShow(tabEl) {
-    if (el !== tabEl) return;
-    emit('tabShow');
-  }
-  function onTabHide(tabEl) {
-    if (el !== tabEl) return;
-    emit('tabHide');
-  }
-
   $: classes = classNames(
     className,
     'block',
@@ -62,19 +53,7 @@
     colorClasses($$props),
   );
 
-  onMount(() => {
-    f7ready(() => {
-      f7.on('tabShow', onTabShow);
-      f7.on('tabHide', onTabHide);
-    });
-  });
-
-  onDestroy(() => {
-    if (f7) {
-      f7.off('tabShow', onTabShow);
-      f7.off('tabHide', onTabHide);
-    }
-  });
+  useTab(() => el, emit);
 </script>
 
 <div class={classes} bind:this={el} {...restProps($$restProps)}>
