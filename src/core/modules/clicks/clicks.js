@@ -79,13 +79,6 @@ function initClicks(app) {
         if (app.views.main) view = app.views.main;
       }
       if (!view || !view.router) return;
-      if (clickedLinkData.context && typeof clickedLinkData.context === 'string') {
-        try {
-          clickedLinkData.context = JSON.parse(clickedLinkData.context);
-        } catch (err) {
-          // something wrong there
-        }
-      }
       if ($clickedLinkEl[0].f7RouteProps) {
         clickedLinkData.props = $clickedLinkEl[0].f7RouteProps;
       }

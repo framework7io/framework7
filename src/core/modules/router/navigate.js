@@ -859,11 +859,6 @@ function navigate(navigateParams, navigateOptions = {}) {
   }
   options.route = route;
 
-  if (options && options.context) {
-    route.context = options.context;
-    options.route.context = options.context;
-  }
-
   function resolve() {
     let routerLoaded = false;
     'popup popover sheet loginScreen actions customModal panel'
@@ -889,11 +884,7 @@ function navigate(navigateParams, navigateOptions = {}) {
     function asyncResolve(resolveParams, resolveOptions) {
       router.allowPageChange = false;
       let resolvedAsModal = false;
-      if (resolveOptions && resolveOptions.context) {
-        if (!route.context) route.context = resolveOptions.context;
-        else route.context = extend({}, route.context, resolveOptions.context);
-        options.route.context = route.context;
-      }
+
       'popup popover sheet loginScreen actions customModal panel'
         .split(' ')
         .forEach((modalLoadProp) => {

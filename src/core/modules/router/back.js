@@ -833,11 +833,6 @@ function back(...args) {
   }
   options.route = route;
 
-  if (options && options.context) {
-    route.context = options.context;
-    options.route.context = options.context;
-  }
-
   let backForceLoaded;
   if (options.force && router.params.stackPages) {
     router.$el.children('.page-previous.stacked').each((pageEl) => {
@@ -866,11 +861,6 @@ function back(...args) {
     // Async
     function asyncResolve(resolveParams, resolveOptions) {
       router.allowPageChange = false;
-      if (resolveOptions && resolveOptions.context) {
-        if (!route.context) route.context = resolveOptions.context;
-        else route.context = extend({}, route.context, resolveOptions.context);
-        options.route.context = route.context;
-      }
       router.loadBack(resolveParams, extend(options, resolveOptions), true);
     }
     function asyncReject() {
