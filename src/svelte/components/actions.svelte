@@ -1,11 +1,12 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
+  import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
+  import { modalStateClasses } from '../shared/modal-state-classes';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -25,6 +26,11 @@
   let el;
   let f7Actions;
 
+  const state = {
+    isOpened: opened,
+    isClosing: false,
+  };
+
   export function instance() {
     return f7Actions;
   }
@@ -35,24 +41,26 @@
     {
       'actions-grid': grid,
     },
+    modalStateClasses(state),
     colorClasses($$props),
   );
 
   function onOpen(instance) {
-    dispatch('actionsOpen', [instance]);
-    if (typeof $$props.onActionsOpen === 'function') $$props.onActionsOpen(instance);
+    state.isOpened = true;
+    state.isClosing = false;
+    emit('actionsOpen', [instance]);
   }
   function onOpened(instance) {
-    dispatch('actionsOpened', [instance]);
-    if (typeof $$props.onActionsOpened === 'function') $$props.onActionsOpened(instance);
+    emit('actionsOpened', [instance]);
   }
   function onClose(instance) {
-    dispatch('actionsClose', [instance]);
-    if (typeof $$props.onActionsClose === 'function') $$props.onActionsClose(instance);
+    state.isOpened = false;
+    state.isClosing = true;
+    emit('actionsClose', [instance]);
   }
   function onClosed(instance) {
-    dispatch('actionsClosed', [instance]);
-    if (typeof $$props.onActionsClosed === 'function') $$props.onActionsClosed(instance);
+    state.isClosing = false;
+    emit('actionsClosed', [instance]);
   }
 
   let initialWatched = false;

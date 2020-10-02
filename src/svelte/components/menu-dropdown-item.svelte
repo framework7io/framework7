@@ -7,11 +7,11 @@
     actionsAttrs,
     actionsClasses,
   } from '../shared/mixins';
-  import { classNames, extend, plainText } from '../shared/utils';
+  import { classNames, extend, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7 } from '../shared/f7';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -54,8 +54,7 @@
   );
 
   function onClick(e) {
-    dispatch('click', [e]);
-    if (typeof $$props.onClick === 'function') $$props.onClick(e);
+    emit('click', [e]);
   }
 
   onMount(() => {

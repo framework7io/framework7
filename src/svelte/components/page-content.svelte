@@ -2,12 +2,12 @@
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
   import { restProps } from '../shared/rest-props';
   import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
+  import { classNames, createEmitter } from '../shared/utils';
   import { f7, f7ready } from '../shared/f7';
 
   import Preloader from './preloader';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
   export let tab = false;
   export let tabActive = false;
   export let ptr = false;
@@ -52,43 +52,35 @@
   // Event handlers
   function onPtrPullStart(ptrEl) {
     if (ptrEl !== pageContentEl) return;
-    dispatch('ptrPullStart');
-    if (typeof $$props.onPtrPullStart === 'function') $$props.onPtrPullStart();
+    emit('ptrPullStart');
   }
   function onPtrPullMove(ptrEl) {
     if (ptrEl !== pageContentEl) return;
-    dispatch('ptrPullMove');
-    if (typeof $$props.onPtrPullMove === 'function') $$props.onPtrPullMove();
+    emit('ptrPullMove');
   }
   function onPtrPullEnd(ptrEl) {
     if (ptrEl !== pageContentEl) return;
-    dispatch('ptrPullEnd');
-    if (typeof $$props.onPtrPullEnd === 'function') $$props.onPtrPullEnd();
+    emit('ptrPullEnd');
   }
   function onPtrRefresh(ptrEl, done) {
     if (ptrEl !== pageContentEl) return;
-    dispatch('ptrRefresh', [done]);
-    if (typeof $$props.onPtrRefresh === 'function') $$props.onPtrRefresh(done);
+    emit('ptrRefresh', [done]);
   }
   function onPtrDone(ptrEl) {
     if (ptrEl !== pageContentEl) return;
-    dispatch('ptrDone');
-    if (typeof $$props.onPtrDone === 'function') $$props.onPtrDone();
+    emit('ptrDone');
   }
   function onInfinite(infEl) {
     if (infEl !== pageContentEl) return;
-    dispatch('infinite');
-    if (typeof $$props.onInfinite === 'function') $$props.onInfinite();
+    emit('infinite');
   }
   function onTabShow(tabEl) {
     if (pageContentEl !== tabEl) return;
-    dispatch('tabShow');
-    if (typeof $$props.onTabShow === 'function') $$props.onTabShow(tabEl);
+    emit('tabShow');
   }
   function onTabHide(tabEl) {
     if (pageContentEl !== tabEl) return;
-    dispatch('tabHide');
-    if (typeof $$props.onTabHide === 'function') $$props.onTabHide(tabEl);
+    emit('tabHide');
   }
 
   function mountPageContent() {

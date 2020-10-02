@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames, plainText } from '../shared/utils';
+  import { classNames, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
@@ -10,7 +10,7 @@
   import CardContent from './card-content';
   import CardFooter from './card-footer';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -81,28 +81,23 @@
 
   function onBeforeOpen(cardEl, prevent) {
     if (cardEl !== el) return;
-    dispatch('cardBeforeOpen', [el, prevent]);
-    if (typeof $$props.onCardBeforeOpen === 'function') $$props.onCardBeforeOpen(el, prevent);
+    emit('cardBeforeOpen', [el, prevent]);
   }
   function onOpen(cardEl) {
     if (cardEl !== el) return;
-    dispatch('cardOpen', [el]);
-    if (typeof $$props.onCardOpen === 'function') $$props.onCardOpen(el);
+    emit('cardOpen', [el]);
   }
   function onOpened(cardEl, pageEl) {
     if (cardEl !== el) return;
-    dispatch('cardOpened', [el, pageEl]);
-    if (typeof $$props.onCardOpened === 'function') $$props.onCardOpened(el, pageEl);
+    emit('cardOpened', [el, pageEl]);
   }
   function onClose(cardEl) {
     if (cardEl !== el) return;
-    dispatch('cardClose', [el]);
-    if (typeof $$props.onCardClose === 'function') $$props.onCardClose(el);
+    emit('cardClose', [el]);
   }
   function onClosed(cardEl, pageEl) {
     if (cardEl !== el) return;
-    dispatch('cardClosed', [el, pageEl]);
-    if (typeof $$props.onCardClosed === 'function') $$props.onCardClosed(el, pageEl);
+    emit('cardClosed', [el, pageEl]);
   }
 
   onMount(() => {

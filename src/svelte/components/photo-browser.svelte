@@ -1,10 +1,10 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
 
-  import { extend } from '../shared/utils';
+  import { extend, createEmitter } from '../shared/utils';
   import { f7, f7ready } from '../shared/f7';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   export let init = true;
   export let params = undefined;
@@ -121,25 +121,19 @@
       pbParams = extend({}, pbParams, {
         on: {
           open() {
-            dispatch('photoBrowserOpen');
-            if (typeof $$props.onPhotoBrowserOpen === 'function') $$props.onPhotoBrowserOpen();
+            emit('photoBrowserOpen');
           },
           close() {
-            dispatch('photoBrowserClose');
-            if (typeof $$props.onPhotoBrowserClose === 'function') $$props.onPhotoBrowserClose();
+            emit('photoBrowserClose');
           },
           opened() {
-            dispatch('photoBrowserOpened');
-            if (typeof $$props.onPhotoBrowserOpened === 'function') $$props.onPhotoBrowserOpened();
+            emit('photoBrowserOpened');
           },
           closed() {
-            dispatch('photoBrowserClosed');
-            if (typeof $$props.onPhotoBrowserClosed === 'function') $$props.onPhotoBrowserClosed();
+            emit('photoBrowserClosed');
           },
           swipeToClose() {
-            dispatch('photoBrowserSwipeToClose');
-            if (typeof $$props.onPhotoBrowserSwipeToClose === 'function')
-              $$props.onPhotoBrowserSwipeToClose();
+            emit('photoBrowserSwipeToClose');
           },
         },
       });

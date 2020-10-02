@@ -1,10 +1,10 @@
 <script>
   import { createEventDispatcher } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
+  import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   export let style = undefined;
 
@@ -19,12 +19,9 @@
   $: styles = `${image ? `background-image: url(${image});` : ''}${style || ''}`;
 
   function onChange(event) {
-    if (event.target.checked) dispatch('checked', [event]);
-    if (typeof $$props.onChecked === 'function') $$props.onChecked(event);
-    else dispatch('unchecked', [event]);
-    if (typeof $$props.onUnchecked === 'function') $$props.onUnchecked(event);
-    dispatch('change', [event]);
-    if (typeof $$props.onChange === 'function') $$props.onChange(event);
+    if (event.target.checked) emit('checked', [event]);
+    else emit('unchecked', [event]);
+    emit('change', [event]);
   }
 </script>
 

@@ -1,11 +1,12 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
+  import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
+  import { modalStateClasses } from '../shared/modal-state-classes';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -29,6 +30,11 @@
   let innerEl;
   let f7Sheet;
 
+  const state = {
+    isOpened: opened,
+    isClosing: false,
+  };
+
   export function instance() {
     return f7Sheet;
   }
@@ -47,37 +53,35 @@
     {
       'sheet-modal-push': push,
     },
+    modalStateClasses(state),
     colorClasses($$props),
   );
 
   function onOpen(instance) {
-    dispatch('sheetOpen', [instance]);
-    if (typeof $$props.onSheetOpen === 'function') $$props.onSheetOpen(instance);
+    state.isOpened = true;
+    state.isClosing = false;
+    emit('sheetOpen', [instance]);
   }
   function onOpened(instance) {
-    dispatch('sheetOpened', [instance]);
-    if (typeof $$props.onSheetOpened === 'function') $$props.onSheetOpened(instance);
+    emit('sheetOpened', [instance]);
   }
   function onClose(instance) {
-    dispatch('sheetClose', [instance]);
-    if (typeof $$props.onSheetClose === 'function') $$props.onSheetClose(instance);
+    state.isOpened = false;
+    state.isClosing = true;
+    emit('sheetClose', [instance]);
   }
   function onClosed(instance) {
-    dispatch('sheetClosed', [instance]);
-    if (typeof $$props.onSheetClosed === 'function') $$props.onSheetClosed(instance);
+    state.isClosing = false;
+    emit('sheetClosed', [instance]);
   }
   function onStepProgress(instance, progress) {
-    dispatch('sheetStepProgress', [instance, progress]);
-    if (typeof $$props.onSheetStepProgress === 'function')
-      $$props.onSheetStepProgress(instance, progress);
+    emit('sheetStepProgress', [instance, progress]);
   }
   function onStepOpen(instance) {
-    dispatch('sheetStepOpen', [instance]);
-    if (typeof $$props.onSheetStepOpen === 'function') $$props.onSheetStepOpen(instance);
+    emit('sheetStepOpen', [instance]);
   }
   function onStepClose(instance) {
-    dispatch('sheetStepClose', [instance]);
-    if (typeof $$props.onSheetStepClose === 'function') $$props.onSheetStepClose(instance);
+    emit('sheetStepClose', [instance]);
   }
 
   let initialWatched = false;

@@ -1,11 +1,11 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames, noUndefinedProps } from '../shared/utils';
+  import { classNames, noUndefinedProps, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -44,42 +44,31 @@
   $: watchValue(value);
 
   function onChange(editor, editorValue) {
-    dispatch('textEditorChange', [editorValue]);
-    if (typeof $$props.onTextEditorChange === 'function') $$props.onTextEditorChange(editorValue);
+    emit('textEditorChange', [editorValue]);
   }
   function onInput(editor, editorValue) {
-    dispatch('textEditorInput', [editorValue]);
-    if (typeof $$props.onTextEditorInput === 'function') $$props.onTextEditorInput(editorValue);
+    emit('textEditorInput', [editorValue]);
   }
   function onFocus() {
-    dispatch('textEditorFocus');
-    if (typeof $$props.onTextEditorFocus === 'function') $$props.onTextEditorFocus();
+    emit('textEditorFocus');
   }
   function onBlur() {
-    dispatch('textEditorBlur');
-    if (typeof $$props.onTextEditorBlur === 'function') $$props.onTextEditorBlur();
+    emit('textEditorBlur');
   }
   function onButtonClick(editor, button) {
-    dispatch('textEditorButtonClick', [button]);
-    if (typeof $$props.onTextEditorButtonClick === 'function')
-      $$props.onTextEditorButtonClick(button);
+    emit('textEditorButtonClick', [button]);
   }
   function onKeyboardOpen() {
-    dispatch('textEditorKeyboardOpen');
-    if (typeof $$props.onTextEditorKeyboardOpen === 'function') $$props.onTextEditorKeyboardOpen();
+    emit('textEditorKeyboardOpen');
   }
   function onKeyboardClose() {
-    dispatch('textEditorKeyboardClose');
-    if (typeof $$props.onTextEditorKeyboardClose === 'function')
-      $$props.onTextEditorKeyboardClose();
+    emit('textEditorKeyboardClose');
   }
   function onPopoverOpen() {
-    dispatch('textEditorPopoverOpen');
-    if (typeof $$props.onTextEditorPopoverOpen === 'function') $$props.onTextEditorPopoverOpen();
+    emit('textEditorPopoverOpen');
   }
   function onPopoverClose() {
-    dispatch('textEditorPopoverClose');
-    if (typeof $$props.onTextEditorPopoverClose === 'function') $$props.onTextEditorPopoverClose();
+    emit('textEditorPopoverClose');
   }
 
   onMount(() => {

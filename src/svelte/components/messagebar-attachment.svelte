@@ -1,10 +1,10 @@
 <script>
   import { createEventDispatcher } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
+  import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -15,13 +15,11 @@
   $: classes = classNames(className, 'messagebar-attachment', colorClasses($$props));
 
   function onClick(event) {
-    dispatch('attachmentClick', [event]);
-    if (typeof $$props.onAttachmentClick === 'function') $$props.onAttachmentClick(event);
+    emit('attachmentClick', [event]);
   }
 
   function onDeleteClick(event) {
-    dispatch('attachmentDelete', [event]);
-    if (typeof $$props.onAttachmentDelete === 'function') $$props.onAttachmentDelete(event);
+    emit('attachmentDelete', [event]);
   }
 </script>
 

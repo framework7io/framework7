@@ -1,11 +1,12 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
+  import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
+  import { modalStateClasses } from '../shared/modal-state-classes';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -24,6 +25,11 @@
   let el;
   let f7Popup;
 
+  const state = {
+    isOpened: opened,
+    isClosing: false,
+  };
+
   export function instance() {
     return f7Popup;
   }
@@ -35,41 +41,39 @@
       'popup-tablet-fullscreen': tabletFullscreen,
       'popup-push': push,
     },
+    modalStateClasses(state),
     colorClasses($$props),
   );
 
   function onSwipeStart(instance) {
-    dispatch('popupSwipeStart', [instance]);
-    if (typeof $$props.onPopupSwipeStart === 'function') $$props.onPopupSwipeStart(instance);
+    emit('popupSwipeStart', [instance]);
   }
   function onSwipeMove(instance) {
-    dispatch('popupSwipeMove', [instance]);
-    if (typeof $$props.onPopupSwipeMove === 'function') $$props.onPopupSwipeMove(instance);
+    emit('popupSwipeMove', [instance]);
   }
   function onSwipeEnd(instance) {
-    dispatch('popupSwipeEnd', [instance]);
-    if (typeof $$props.onPopupSwipeEnd === 'function') $$props.onPopupSwipeEnd(instance);
+    emit('popupSwipeEnd', [instance]);
   }
   function onSwipeClose(instance) {
-    dispatch('popupSwipeClose', [instance]);
-    if (typeof $$props.onPopupSwipeClose === 'function') $$props.onPopupSwipeClose(instance);
+    emit('popupSwipeClose', [instance]);
   }
 
   function onOpen(instance) {
-    dispatch('popupOpen', [instance]);
-    if (typeof $$props.onPopupOpen === 'function') $$props.onPopupOpen(instance);
+    state.isOpened = true;
+    state.isClosing = false;
+    emit('popupOpen', [instance]);
   }
   function onOpened(instance) {
-    dispatch('popupOpened', [instance]);
-    if (typeof $$props.onPopupOpened === 'function') $$props.onPopupOpened(instance);
+    emit('popupOpened', [instance]);
   }
   function onClose(instance) {
-    dispatch('popupClose', [instance]);
-    if (typeof $$props.onPopupClose === 'function') $$props.onPopupClose(instance);
+    state.isOpened = false;
+    state.isClosing = true;
+    emit('popupClose', [instance]);
   }
   function onClosed(instance) {
-    dispatch('popupClosed', [instance]);
-    if (typeof $$props.onPopupClosed === 'function') $$props.onPopupClosed(instance);
+    state.isClosing = false;
+    emit('popupClosed', [instance]);
   }
 
   let initialWatched = false;

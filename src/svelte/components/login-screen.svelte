@@ -1,11 +1,12 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
+  import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
+  import { modalStateClasses } from '../shared/modal-state-classes';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -16,27 +17,38 @@
   let el;
   let f7LoginScreen;
 
+  const state = {
+    isOpened: opened,
+    isClosing: false,
+  };
+
   export function instance() {
     return f7LoginScreen;
   }
 
-  $: classes = classNames(className, 'login-screen', colorClasses($$props));
+  $: classes = classNames(
+    className,
+    'login-screen',
+    modalStateClasses(state),
+    colorClasses($$props),
+  );
 
   function onOpen(instance) {
-    dispatch('loginscreenOpen', [instance]);
-    if (typeof $$props.onLoginScreenOpen === 'function') $$props.onLoginScreenOpen(instance);
+    state.isOpened = true;
+    state.isClosing = false;
+    emit('loginscreenOpen', [instance]);
   }
   function onOpened(instance) {
-    dispatch('loginscreenOpened', [instance]);
-    if (typeof $$props.onLoginScreenOpened === 'function') $$props.onLoginScreenOpened(instance);
+    emit('loginscreenOpened', [instance]);
   }
   function onClose(instance) {
-    dispatch('loginscreenClose', [instance]);
-    if (typeof $$props.onLoginScreenClose === 'function') $$props.onLoginScreenClose(instance);
+    state.isOpened = false;
+    state.isClosing = true;
+    emit('loginscreenClose', [instance]);
   }
   function onClosed(instance) {
-    dispatch('loginscreenClosed', [instance]);
-    if (typeof $$props.onLoginScreenClosed === 'function') $$props.onLoginScreenClosed(instance);
+    state.isClosing = false;
+    emit('loginscreenClosed', [instance]);
   }
 
   let initialWatched = false;

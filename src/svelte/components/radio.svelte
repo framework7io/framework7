@@ -1,10 +1,10 @@
 <script>
   import { createEventDispatcher } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
+  import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -27,8 +27,7 @@
   );
 
   function onChange(event) {
-    dispatch('change', [event]);
-    if (typeof $$props.onChange === 'function') $$props.onChange(event);
+    emit('change', [event]);
   }
 </script>
 

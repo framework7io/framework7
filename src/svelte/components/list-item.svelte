@@ -7,14 +7,16 @@
     actionsClasses,
     actionsAttrs,
   } from '../shared/mixins';
-  import { classNames, plainText, isStringProp, extend } from '../shared/utils';
+  import { classNames, plainText, isStringProp, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
+  import { useTooltip } from '../shared/use-tooltip';
+  import { useSmartSelect } from '../shared/use-smart-select';
 
   import Badge from './badge';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -79,7 +81,6 @@
   let inputEl;
 
   let f7SmartSelect;
-  let f7Tooltip;
 
   export function smartSelectInstance() {
     return f7SmartSelect;
@@ -151,29 +152,6 @@
     typeof after !== 'undefined' || typeof badge !== 'undefined' || hasSlots(arguments, 'after');
   /* eslint-enable no-undef */
 
-  let tooltipText = tooltip;
-  function watchTooltip(newText) {
-    const oldText = tooltipText;
-    if (oldText === newText) return;
-    tooltipText = newText;
-    if (!newText && f7Tooltip) {
-      f7Tooltip.destroy();
-      f7Tooltip = null;
-      return;
-    }
-    if (newText && !f7Tooltip && f7) {
-      f7Tooltip = f7.tooltip.create({
-        targetEl: el,
-        text: newText,
-        trigger: tooltipTrigger,
-      });
-      return;
-    }
-    if (!newText || !f7Tooltip) return;
-    f7Tooltip.setText(newText);
-  }
-  $: watchTooltip(tooltip);
-
   let initialWatchedOpened = false;
   function watchSwipeoutOpened(opened) {
     if (!initialWatchedOpened) {
@@ -191,89 +169,81 @@
 
   function onClick(event) {
     if (event.target.tagName.toLowerCase() !== 'input') {
-      dispatch('click', event);
-      if (typeof $$props.onClick === 'function') $$props.onClick(event);
+      emit('click', event);
     }
   }
   function onSwipeoutOverswipeEnter(eventEl) {
     if (eventEl !== el) return;
-    dispatch('swipeoutOverswipeEnter');
-    if (typeof $$props.onSwipeoutOverswipeEnter === 'function') $$props.onSwipeoutOverswipeEnter();
+    emit('swipeoutOverswipeEnter');
   }
   function onSwipeoutOverswipeExit(eventEl) {
     if (eventEl !== el) return;
-    dispatch('swipeoutOverswipeExit');
-    if (typeof $$props.onSwipeoutOverswipeExit === 'function') $$props.onSwipeoutOverswipeExit();
+    emit('swipeoutOverswipeExit');
   }
   function onSwipeoutDeleted(eventEl) {
     if (eventEl !== el) return;
-    dispatch('swipeoutDeleted');
-    if (typeof $$props.onSwipeoutDeleted === 'function') $$props.onSwipeoutDeleted();
+    emit('swipeoutDeleted');
   }
   function onSwipeoutDelete(eventEl) {
     if (eventEl !== el) return;
-    dispatch('swipeoutDelete');
-    if (typeof $$props.onSwipeoutDelete === 'function') $$props.onSwipeoutDelete();
+    emit('swipeoutDelete');
   }
   function onSwipeoutClose(eventEl) {
     if (eventEl !== el) return;
-    dispatch('swipeoutClose');
-    if (typeof $$props.onSwipeoutClose === 'function') $$props.onSwipeoutClose();
+    emit('swipeoutClose');
   }
   function onSwipeoutClosed(eventEl) {
     if (eventEl !== el) return;
-    dispatch('swipeoutClosed');
-    if (typeof $$props.onSwipeoutClosed === 'function') $$props.onSwipeoutClosed();
+    emit('swipeoutClosed');
   }
   function onSwipeoutOpen(eventEl) {
     if (eventEl !== el) return;
-    dispatch('swipeoutOpen');
-    if (typeof $$props.onSwipeoutOpen === 'function') $$props.onSwipeoutOpen();
+    emit('swipeoutOpen');
   }
   function onSwipeoutOpened(eventEl) {
     if (eventEl !== el) return;
-    dispatch('swipeoutOpened');
-    if (typeof $$props.onSwipeoutOpened === 'function') $$props.onSwipeoutOpened();
+    emit('swipeoutOpened');
   }
   function onSwipeout(eventEl, progress) {
     if (eventEl !== el) return;
-    dispatch('swipeout', progress);
+    emit('swipeout', progress);
   }
   function onAccBeforeClose(eventEl, prevent) {
     if (eventEl !== el) return;
-    dispatch('accordionBeforeClose', [prevent]);
-    if (typeof $$props.onAccordionBeforeClose === 'function')
-      $$props.onAccordionBeforeClose(prevent);
+    emit('accordionBeforeClose', [prevent]);
   }
   function onAccClose(eventEl) {
     if (eventEl !== el) return;
-    dispatch('accordionClose');
-    if (typeof $$props.onAccordionClose === 'function') $$props.onAccordionClose();
+    emit('accordionClose');
   }
   function onAccClosed(eventEl) {
     if (eventEl !== el) return;
-    dispatch('accordionClosed');
-    if (typeof $$props.onAccordionClosed === 'function') $$props.onAccordionClosed();
+    emit('accordionClosed');
   }
   function onAccBeforeOpen(eventEl, prevent) {
     if (eventEl !== el) return;
-    dispatch('accordionBeforeOpen', [prevent]);
-    if (typeof $$props.onAccordionBeforeOpen === 'function') $$props.onAccordionBeforeOpen(prevent);
+    emit('accordionBeforeOpen', [prevent]);
   }
   function onAccOpen(eventEl) {
     if (eventEl !== el) return;
-    dispatch('accordionOpen');
-    if (typeof $$props.onAccordionOpen === 'function') $$props.onAccordionOpen();
+    emit('accordionOpen');
   }
   function onAccOpened(eventEl) {
     if (eventEl !== el) return;
-    dispatch('accordionOpened');
-    if (typeof $$props.onAccordionOpened === 'function') $$props.onAccordionOpened();
+    emit('accordionOpened');
   }
   function onChange(event) {
-    dispatch('change', [event]);
-    if (typeof $$props.onChange === 'function') $$props.onChange(event);
+    emit('change', [event]);
   }
+
+  useSmartSelect(
+    { smartSelect, smartSelectParams },
+    (instance) => {
+      f7SmartSelect = instance;
+    },
+    () => linkEl,
+  );
+
   onMount(() => {
     if (linkEl && $$props.routeProps) {
       linkEl.f7RouteProps = $$props.routeProps;
@@ -301,19 +271,8 @@
         f7.on('accordionClose', onAccClose);
         f7.on('accordionClosed', onAccClosed);
       }
-      if (linkEl && smartSelect) {
-        const ssParams = extend({ el: linkEl }, smartSelectParams || {});
-        f7SmartSelect = f7.smartSelect.create(ssParams);
-      }
       if (swipeoutOpened) {
         f7.swipeout.open(el);
-      }
-      if (tooltip) {
-        f7Tooltip = f7.tooltip.create({
-          targetEl: el,
-          text: tooltip,
-          trigger: tooltipTrigger,
-        });
       }
     });
   });
@@ -351,29 +310,21 @@
       f7.off('accordionClose', onAccClose);
       f7.off('accordionClosed', onAccClosed);
     }
-    if (f7SmartSelect && f7SmartSelect.destroy) {
-      f7SmartSelect.destroy();
-      f7SmartSelect = null;
-    }
-    if (f7Tooltip && f7Tooltip.destroy) {
-      f7Tooltip.destroy();
-      f7Tooltip = null;
-    }
   });
 </script>
 
 <!-- svelte-ignore a11y-missing-attribute -->
 {#if (divider || groupTitle)}
-  <li on:click={ onClick } bind:this={el} class={liClasses} data-virtual-list-index={virtualListIndex} {...restProps($$restProps)}>
+  <li on:click={ onClick } bind:this={el} use:useTooltip={{ tooltip, tooltipTrigger }} class={liClasses} data-virtual-list-index={virtualListIndex} {...restProps($$restProps)}>
     <span><slot>{plainText(title)}</slot></span>
   </li>
 {:else if isSimple}
-  <li on:click={ onClick } bind:this={el} class={liClasses} data-virtual-list-index={virtualListIndex} {...restProps($$restProps)}>
+  <li on:click={ onClick } bind:this={el} use:useTooltip={{ tooltip, tooltipTrigger }} class={liClasses} data-virtual-list-index={virtualListIndex} {...restProps($$restProps)}>
     {plainText(title)}
     <slot />
   </li>
 {:else}
-  <li bind:this={el} class={liClasses} data-virtual-list-index={virtualListIndex} {...restProps($$restProps)}>
+  <li bind:this={el} use:useTooltip={{ tooltip, tooltipTrigger }} class={liClasses} data-virtual-list-index={virtualListIndex} {...restProps($$restProps)}>
     <slot name="root-start" />
     {#if swipeout}
       <div class="swipeout-content">

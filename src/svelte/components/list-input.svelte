@@ -1,13 +1,13 @@
 <script>
   import { createEventDispatcher, onMount, afterUpdate, onDestroy, getContext } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames, extend, plainText } from '../shared/utils';
+  import { classNames, extend, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
   import TextEditor from './text-editor';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -217,42 +217,38 @@
   $: classes = classNames(className, { disabled }, colorClasses($$props));
 
   function onTextareaResize(event) {
-    dispatch('textareaResize', [event]);
-    if (typeof $$props.onTextareaResize === 'function') $$props.onTextareaResize(event);
+    emit('textareaResize', [event]);
   }
 
   function onInputNotEmpty(event) {
-    dispatch('inputNotEmpty', [event]);
-    if (typeof $$props.onInputNotEmpty === 'function') $$props.onInputNotEmpty(event);
+    emit('inputNotEmpty', [event]);
   }
 
   function onInputEmpty(event) {
-    dispatch('inputEmpty', [event]);
-    if (typeof $$props.onInputEmpty === 'function') $$props.onInputEmpty(event);
+    emit('inputEmpty', [event]);
   }
 
   function onInputClear(event) {
-    dispatch('inputClear', [event]);
-    if (typeof $$props.onInputClear === 'function') $$props.onInputClear(event);
+    emit('inputClear', [event]);
   }
 
   function onInput(...args) {
-    dispatch('input', [...args]);
-    if (typeof $$props.onInput === 'function') $$props.onInput(...args);
+    emit('input', [...args]);
+
     if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && inputEl) {
       validateInput(inputEl);
     }
   }
 
   function onFocus(...args) {
-    dispatch('focus', [...args]);
-    if (typeof $$props.onFocus === 'function') $$props.onFocus(...args);
+    emit('focus', [...args]);
+
     inputFocused = true;
   }
 
   function onBlur(...args) {
-    dispatch('blur', [...args]);
-    if (typeof $$props.onBlur === 'function') $$props.onBlur(...args);
+    emit('blur', [...args]);
+
     if ((validate || validate === '' || validateOnBlur || validateOnBlur === '') && inputEl) {
       validateInput();
     }
@@ -260,11 +256,10 @@
   }
 
   function onChange(...args) {
-    dispatch('change', [...args]);
-    if (typeof $$props.onChange === 'function') $$props.onChange(...args);
+    emit('change', [...args]);
+
     if (type === 'texteditor') {
-      dispatch('textEditorChange', [args[1]]);
-      if (typeof $$props.onTextEditorChange === 'function') $$props.onTextEditorChange(...args);
+      emit('textEditorChange', [args[1]]);
     }
   }
 
@@ -288,9 +283,7 @@
           value,
           on: {
             change(calendar, calendarValue) {
-              dispatch('calendarChange', [calendarValue]);
-              if (typeof $$props.onCalendarChange === 'function')
-                $$props.onCalendarChange(calendarValue);
+              emit('calendarChange', [calendarValue]);
             },
           },
           ...(calendarParams || {}),
@@ -302,9 +295,7 @@
           value,
           on: {
             change(colorPicker, colorPickerValue) {
-              dispatch('colorPickerChange', [colorPickerValue]);
-              if (typeof $$props.onColorPickerChange === 'function')
-                $$props.onColorPickerChange(colorPickerValue);
+              emit('colorPickerChange', [colorPickerValue]);
             },
           },
           ...(colorPickerParams || {}),

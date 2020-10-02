@@ -7,15 +7,17 @@
     actionsAttrs,
     actionsClasses,
   } from '../shared/mixins';
-  import { classNames, extend, isStringProp, plainText } from '../shared/utils';
+  import { classNames, extend, isStringProp, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
+  import { useTooltip } from '../shared/use-tooltip';
+  import { useSmartSelect } from '../shared/use-smart-select';
 
   import Badge from './badge';
   import Icon from './icon';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -39,7 +41,6 @@
   export let smartSelectParams = undefined;
 
   let el;
-  let f7Tooltip;
   let f7SmartSelect;
 
   let isTabbarLabel = tabbarLabel;
@@ -86,33 +87,17 @@
 
   $: hasIconBadge = $$props.hasIconBadge;
 
-  let tooltipText = tooltip;
-  function watchTooltip(newText) {
-    const oldText = tooltipText;
-    if (oldText === newText) return;
-    tooltipText = newText;
-    if (!newText && f7Tooltip) {
-      f7Tooltip.destroy();
-      f7Tooltip = null;
-      return;
-    }
-    if (newText && !f7Tooltip && f7) {
-      f7Tooltip = f7.tooltip.create({
-        targetEl: el,
-        text: newText,
-        trigger: tooltipTrigger,
-      });
-      return;
-    }
-    if (!newText || !f7Tooltip) return;
-    f7Tooltip.setText(newText);
-  }
-  $: watchTooltip(tooltip);
-
   function onClick() {
-    dispatch('click');
-    if (typeof $$props.onClick === 'function') $$props.onClick();
+    emit('click');
   }
+
+  useSmartSelect(
+    { smartSelect, smartSelectParams },
+    (instance) => {
+      f7SmartSelect = instance;
+    },
+    () => el,
+  );
 
   onMount(() => {
     if ($$props.routeProps) {
@@ -125,17 +110,6 @@
       ) {
         isTabbarLabel = true;
       }
-      if (smartSelect) {
-        const ssParams = extend({ el }, smartSelectParams || {});
-        f7SmartSelect = f7.smartSelect.create(ssParams);
-      }
-      if (tooltip) {
-        f7Tooltip = f7.tooltip.create({
-          targetEl: el,
-          text: tooltip,
-          trigger: tooltipTrigger,
-        });
-      }
     });
   });
   afterUpdate(() => {
@@ -145,14 +119,6 @@
   });
   onDestroy(() => {
     if (el) delete el.f7RouteProps;
-    if (f7SmartSelect && f7SmartSelect.destroy) {
-      f7SmartSelect.destroy();
-      f7SmartSelect = null;
-    }
-    if (f7Tooltip && f7Tooltip.destroy) {
-      f7Tooltip.destroy();
-      f7Tooltip = null;
-    }
   });
 </script>
 
@@ -162,6 +128,7 @@
   class={classes}
   on:click={onClick}
   {...attrs}
+  use:useTooltip={{ tooltip, tooltipTrigger }}
 >
   {#if hasIcon}
     <Icon

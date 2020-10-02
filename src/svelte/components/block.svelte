@@ -2,10 +2,10 @@
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
   import { f7, f7ready } from '../shared/f7';
   import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
+  import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   export let inset = false;
   export let xsmallInset = false;
@@ -31,13 +31,11 @@
 
   function onTabShow(tabEl) {
     if (el !== tabEl) return;
-    dispatch('tabShow');
-    if (typeof $$props.onTabShow === 'function') $$props.onTabShow(tabEl);
+    emit('tabShow');
   }
   function onTabHide(tabEl) {
     if (el !== tabEl) return;
-    dispatch('tabHide');
-    if (typeof $$props.onTabHide === 'function') $$props.onTabHide(tabEl);
+    emit('tabHide');
   }
 
   $: classes = classNames(

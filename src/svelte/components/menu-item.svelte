@@ -7,14 +7,15 @@
     actionsAttrs,
     actionsClasses,
   } from '../shared/mixins';
-  import { classNames, extend, plainText } from '../shared/utils';
+  import { classNames, extend, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
+  import { useTooltip } from '../shared/use-tooltip';
 
   import Icon from './icon';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -25,6 +26,9 @@
   export let link = undefined;
   export let target = undefined;
   export let dropdown = undefined;
+
+  export let tooltip = undefined;
+  export let tooltipTrigger = undefined;
 
   let el;
 
@@ -70,19 +74,16 @@
   $: isLink = link || href || href === '';
 
   function onClick(e) {
-    dispatch('click', [e]);
-    if (typeof $$props.onClick === 'function') $$props.onClick(e);
+    emit('click', [e]);
   }
 
   function onOpened(itemEl) {
     if (itemEl !== el) return;
-    dispatch('menuOpened', [el]);
-    if (typeof $$props.onMenuOpened === 'function') $$props.onMenuOpened(el);
+    emit('menuOpened', [el]);
   }
   function onClosed(itemEl) {
     if (itemEl !== el) return;
-    dispatch('menuClosed', [el]);
-    if (typeof $$props.onMenuClosed === 'function') $$props.onMenuClosed(el);
+    emit('menuClosed', [el]);
   }
 
   onMount(() => {
@@ -109,7 +110,7 @@
 
 <!-- svelte-ignore a11y-missing-attribute -->
 {#if isLink}
-  <a on:click={onClick} bind:this={el} class={classes} {...attrs}>
+  <a on:click={onClick} bind:this={el} class={classes} {...attrs} use:useTooltip={{ tooltip, tooltipTrigger }}>
     {#if typeof text !== 'undefined' || hasTextSlots || hasIcon}
       <div class="menu-item-content">
         {plainText(text)}
@@ -131,7 +132,7 @@
     <slot />
   </a>
 {:else}
-  <div on:click={onClick} bind:this={el} class={classes} {...attrs}>
+  <div on:click={onClick} bind:this={el} class={classes} {...attrs} use:useTooltip={{ tooltip, tooltipTrigger }}>
     {#if typeof text !== 'undefined' || hasTextSlots || hasIcon}
       <div class="menu-item-content">
         {plainText(text)}

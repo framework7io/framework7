@@ -1,11 +1,12 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
+  import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
+  import { useTooltip } from '../shared/use-tooltip';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -16,6 +17,9 @@
   export let readonly = undefined;
   export let name = undefined;
   export let value = undefined;
+
+  export let tooltip = undefined;
+  export let tooltipTrigger = undefined;
 
   let el;
   let inputEl;
@@ -47,8 +51,7 @@
   $: watchChecked(checked);
 
   function onChange(event) {
-    dispatch('change', [event]);
-    if (typeof $$props.onChange === 'function') $$props.onChange(event);
+    emit('change', [event]);
   }
 
   onMount(() => {
@@ -58,9 +61,7 @@
         el,
         on: {
           change(toggle) {
-            dispatch('toggleChange', [toggle.checked]);
-            if (typeof $$props.onToggleChange === 'function')
-              $$props.onToggleChange(toggle.checked);
+            emit('toggleChange', [toggle.checked]);
           },
         },
       });
@@ -75,7 +76,11 @@
   });
 </script>
 
-<label bind:this={el} class={classes} {...restProps($$restProps)}>
+<label
+  bind:this={el}
+  class={classes}
+  {...restProps($$restProps)}
+  use:useTooltip={{ tooltip, tooltipTrigger }}>
   <input
     bind:this={inputEl}
     type="checkbox"

@@ -2,12 +2,12 @@
   import { createEventDispatcher } from 'svelte';
 
   import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
+  import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7 } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -34,8 +34,7 @@
       const dom7 = f7.$;
       f7.actions.close(dom7(el).parents('.actions-modal'));
     }
-    dispatch('click');
-    if (typeof $$props.onClick === 'function') $$props.onClick();
+    emit('click');
   }
 </script>
 

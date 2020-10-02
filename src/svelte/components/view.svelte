@@ -2,7 +2,7 @@
   import { onMount, onDestroy, afterUpdate, createEventDispatcher, tick } from 'svelte';
   import { f7, f7ready, f7routers, f7events } from '../shared/f7';
   import { colorClasses } from '../shared/mixins';
-  import { classNames, noUndefinedProps } from '../shared/utils';
+  import { classNames, noUndefinedProps, createEmitter } from '../shared/utils';
 
   export let id = undefined;
   export let style = undefined;
@@ -11,7 +11,7 @@
   let className = undefined;
   export { className as class };
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   const { main, tab, tabActive } = $$props;
   $: classes = classNames(
@@ -35,46 +35,36 @@
   }
 
   function onResize(view, width) {
-    dispatch('viewResize', [width]);
-    if (typeof $$props.onViewResize === 'function') $$props.onViewResize(width);
+    emit('viewResize', [width]);
   }
   function onSwipeBackMove(data) {
-    dispatch('swipeBackMove', [data]);
-    if (typeof $$props.onSwipeBackMove === 'function') $$props.onSwipeBackMove(data);
+    emit('swipeBackMove', [data]);
   }
   function onSwipeBackBeforeChange(data) {
-    dispatch('swipeBackBeforeChange', [data]);
-    if (typeof $$props.onSwipeBackBeforeChange === 'function')
-      $$props.onSwipeBackBeforeChange(data);
+    emit('swipeBackBeforeChange', [data]);
   }
   function onSwipeBackAfterChange(data) {
-    dispatch('swipeBackAfterChange', [data]);
-    if (typeof $$props.onSwipeBackAfterChange === 'function') $$props.onSwipeBackAfterChange(data);
+    emit('swipeBackAfterChange', [data]);
   }
   function onSwipeBackBeforeReset(data) {
-    dispatch('swipeBackBeforeReset', [data]);
-    if (typeof $$props.onSwipeBackBeforeReset === 'function') $$props.onSwipeBackBeforeReset(data);
+    emit('swipeBackBeforeReset', [data]);
   }
   function onSwipeBackAfterReset(data) {
-    dispatch('swipeBackAfterReset', [data]);
-    if (typeof $$props.onSwipeBackAfterReset === 'function') $$props.onSwipeBackAfterReset(data);
+    emit('swipeBackAfterReset', [data]);
   }
   function onTabShow(tabEl) {
     if (el !== tabEl) return;
-    dispatch('tabShow');
-    if (typeof $$props.onTabShow === 'function') $$props.onTabShow(tabEl);
+    emit('tabShow');
   }
   function onTabHide(tabEl) {
     if (el !== tabEl) return;
-    dispatch('tabHide');
-    if (typeof $$props.onTabHide === 'function') $$props.onTabHide(tabEl);
+    emit('tabHide');
   }
 
   function onViewInit(view) {
     f7View = view;
     routerData.instance = view;
-    dispatch('viewInit', [view]);
-    if (typeof $$props.onViewInit === 'function') $$props.onViewInit(view);
+    emit('viewInit', [view]);
   }
 
   onMount(() => {

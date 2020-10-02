@@ -2,12 +2,12 @@
   import { onMount, afterUpdate, onDestroy, createEventDispatcher } from 'svelte';
   import { restProps } from '../shared/rest-props';
   import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
+  import { classNames, createEmitter } from '../shared/utils';
   import { f7, f7ready } from '../shared/f7';
 
   import PageContent from './page-content';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   // Props
   export let name = undefined;
@@ -85,34 +85,27 @@
 
   // Handlers
   function onPtrPullStart() {
-    dispatch('ptrPullStart');
-    if (typeof $$props.onPtrPullStart === 'function') $$props.onPtrPullStart();
+    emit('ptrPullStart');
   }
   function onPtrPullMove() {
-    dispatch('ptrPullMove');
-    if (typeof $$props.onPtrPullMove === 'function') $$props.onPtrPullMove();
+    emit('ptrPullMove');
   }
   function onPtrPullEnd() {
-    dispatch('ptrPullEnd');
-    if (typeof $$props.onPtrPullEnd === 'function') $$props.onPtrPullEnd();
+    emit('ptrPullEnd');
   }
   function onPtrRefresh(done) {
-    dispatch('ptrRefresh', [done]);
-    if (typeof $$props.onPtrRefresh === 'function') $$props.onPtrRefresh(done);
+    emit('ptrRefresh', [done]);
   }
   function onPtrDone() {
-    dispatch('ptrDone');
-    if (typeof $$props.onPtrDone === 'function') $$props.onPtrDone();
+    emit('ptrDone');
   }
   function onInfinite() {
-    dispatch('infinite');
-    if (typeof $$props.onInfinite === 'function') $$props.onInfinite();
+    emit('infinite');
   }
   // Main Page Events
   function onPageMounted(page) {
     if (el !== page.el) return;
-    dispatch('pageMounted', [page]);
-    if (typeof $$props.onPageMounted === 'function') $$props.onPageMounted(page);
+    emit('pageMounted', [page]);
   }
   function onPageInit(page) {
     if (el !== page.el) return;
@@ -134,13 +127,11 @@
       }
     }
 
-    dispatch('pageInit', [page]);
-    if (typeof $$props.onPageInit === 'function') $$props.onPageInit(page);
+    emit('pageInit', [page]);
   }
   function onPageReinit(page) {
     if (el !== page.el) return;
-    dispatch('pageReinit', [page]);
-    if (typeof $$props.onPageReinit === 'function') $$props.onPageReinit(page);
+    emit('pageReinit', [page]);
   }
   function onPageBeforeIn(page) {
     if (el !== page.el) return;
@@ -152,13 +143,11 @@
         routerPositionClass = 'page-previous';
       }
     }
-    dispatch('pageBeforeIn', [page]);
-    if (typeof $$props.onPageBeforeIn === 'function') $$props.onPageBeforeIn(page);
+    emit('pageBeforeIn', [page]);
   }
   function onPageBeforeOut(page) {
     if (el !== page.el) return;
-    dispatch('pageBeforeOut', [page]);
-    if (typeof $$props.onPageBeforeOut === 'function') $$props.onPageBeforeOut(page);
+    emit('pageBeforeOut', [page]);
   }
   function onPageAfterOut(page) {
     if (el !== page.el) return;
@@ -168,14 +157,12 @@
     if (page.to === 'previous') {
       routerPositionClass = 'page-previous';
     }
-    dispatch('pageAfterOut', [page]);
-    if (typeof $$props.onPageAfterOut === 'function') $$props.onPageAfterOut(page);
+    emit('pageAfterOut', [page]);
   }
   function onPageAfterIn(page) {
     if (el !== page.el) return;
     routerPositionClass = 'page-current';
-    dispatch('pageAfterIn', [page]);
-    if (typeof $$props.onPageAfterIn === 'function') $$props.onPageAfterIn(page);
+    emit('pageAfterIn', [page]);
   }
   function onPageBeforeRemove(page) {
     if (el !== page.el) return;
@@ -187,13 +174,11 @@
     ) {
       page.$el.prepend(page.$navbarEl);
     }
-    dispatch('pageBeforeRemove', [page]);
-    if (typeof $$props.onPageBeforeRemove === 'function') $$props.onPageBeforeRemove(page);
+    emit('pageBeforeRemove', [page]);
   }
   function onPageBeforeUnmount(page) {
     if (el !== page.el) return;
-    dispatch('pageBeforeUnmount', [page]);
-    if (typeof $$props.onPageBeforeUnmount === 'function') $$props.onPageBeforeUnmount(page);
+    emit('pageBeforeUnmount', [page]);
   }
   // Helper events
   function onPageStack(pageEl) {
@@ -240,13 +225,11 @@
 
   function onPageTabShow(pageEl) {
     if (el !== pageEl) return;
-    dispatch('pageTabShow');
-    if (typeof $$props.onPageTabShow === 'function') $$props.onPageTabShow();
+    emit('pageTabShow');
   }
   function onPageTabHide(pageEl) {
     if (el !== pageEl) return;
-    dispatch('pageTabHide');
-    if (typeof $$props.onPageTabHide === 'function') $$props.onPageTabHide();
+    emit('pageTabHide');
   }
 
   // Mount/destroy

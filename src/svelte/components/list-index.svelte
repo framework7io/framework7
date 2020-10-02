@@ -1,11 +1,11 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
+  import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -67,9 +67,7 @@
         label,
         on: {
           select(index, itemContent, itemIndex) {
-            dispatch('listIndexSelect', [itemContent, itemIndex]);
-            if (typeof $$props.onListIndexSelect === 'function')
-              $$props.onListIndexSelect(itemContent, itemIndex);
+            emit('listIndexSelect', [itemContent, itemIndex]);
           },
         },
       });

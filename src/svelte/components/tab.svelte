@@ -3,10 +3,10 @@
 
   import { restProps } from '../shared/rest-props';
   import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
+  import { classNames, createEmitter } from '../shared/utils';
   import { f7, f7ready, f7routers, f7events } from '../shared/f7';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -20,13 +20,11 @@
 
   function onTabShow(tabEl) {
     if (tabEl !== el) return;
-    dispatch('tabShow');
-    if (typeof $$props.onTabShow === 'function') $$props.onTabShow(tabEl);
+    emit('tabShow');
   }
   function onTabHide(tabEl) {
     if (tabEl !== el) return;
-    dispatch('tabHide');
-    if (typeof $$props.onTabHide === 'function') $$props.onTabHide(tabEl);
+    emit('tabHide');
   }
 
   onMount(() => {

@@ -7,14 +7,14 @@
     actionsClasses,
     actionsAttrs,
   } from '../shared/mixins';
-  import { classNames, extend, plainText } from '../shared/utils';
+  import { classNames, extend, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
 
   import Icon from './icon';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -79,24 +79,19 @@
   $: treeviewRootTag = link || link === '' ? 'a' : 'div';
 
   function onClick(e) {
-    dispatch('click', [e]);
-    if (typeof $$props.onClick === 'function') $$props.onClick(e);
+    emit('click', [e]);
   }
   function onOpen(itemEl) {
     if (itemEl !== el) return;
-    dispatch('treeviewOpen', [el]);
-    if (typeof $$props.onTreeviewOpen === 'function') $$props.onTreeviewOpen(el);
+    emit('treeviewOpen', [el]);
   }
   function onClose(itemEl) {
     if (itemEl !== el) return;
-    dispatch('treeviewClose', [el]);
-    if (typeof $$props.onTreeviewClose === 'function') $$props.onTreeviewClose(el);
+    emit('treeviewClose', [el]);
   }
   function onLoadChildren(itemEl, done) {
     if (itemEl !== el) return;
-    dispatch('treeviewLoadChildren', [el, done]);
-    if (typeof $$props.onTreeviewLoadChildren === 'function')
-      $$props.onTreeviewLoadChildren(el, done);
+    emit('treeviewLoadChildren', [el, done]);
   }
 
   onMount(() => {

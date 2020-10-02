@@ -1,12 +1,12 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy, setContext } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames, extend } from '../shared/utils';
+  import { classNames, extend, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -112,33 +112,27 @@
   );
 
   function onSubmit(event) {
-    dispatch('submit', [event]);
-    if (typeof $$props.onSubmit === 'function') $$props.onSubmit(event);
+    emit('submit', [event]);
   }
   function onSortableEnable(sortableEl) {
     if (sortableEl !== el) return;
-    dispatch('sortableEnable');
-    if (typeof $$props.onSortableEnable === 'function') $$props.onSortableEnable();
+    emit('sortableEnable');
   }
   function onSortableDisable(sortableEl) {
     if (sortableEl !== el) return;
-    dispatch('sortableDisable');
-    if (typeof $$props.onSortableDisable === 'function') $$props.onSortableDisable();
+    emit('sortableDisable');
   }
   function onSortableSort(listItemEl, sortData, listEl) {
     if (listEl !== el) return;
-    dispatch('sortableSort', [sortData]);
-    if (typeof $$props.onSortableSort === 'function') $$props.onSortableSort(sortData);
+    emit('sortableSort', [sortData]);
   }
   function onTabShow(tabEl) {
     if (tabEl !== el) return;
-    dispatch('tabShow');
-    if (typeof $$props.onTabShow === 'function') $$props.onTabShow(tabEl);
+    emit('tabShow');
   }
   function onTabHide(tabEl) {
     if (tabEl !== el) return;
-    dispatch('tabHide');
-    if (typeof $$props.onTabHide === 'function') $$props.onTabHide(tabEl);
+    emit('tabHide');
   }
 
   onMount(() => {
@@ -160,27 +154,19 @@
             on: {
               itemBeforeInsert(itemEl, item) {
                 const vl = this;
-                dispatch('virtualItemBeforeInsert', [vl, itemEl, item]);
-                if (typeof $$props.onVirtualItemBeforeInsert === 'function')
-                  $$props.onVirtualItemBeforeInsert(vl, itemEl, item);
+                emit('virtualItemBeforeInsert', [vl, itemEl, item]);
               },
               beforeClear(fragment) {
                 const vl = this;
-                dispatch('virtualBeforeClear', [vl, fragment]);
-                if (typeof $$props.onVirtualBeforeClear === 'function')
-                  $$props.onVirtualBeforeClear(vl, fragment);
+                emit('virtualBeforeClear', [vl, fragment]);
               },
               itemsBeforeInsert(fragment) {
                 const vl = this;
-                dispatch('virtualItemsBeforeInsert', [vl, fragment]);
-                if (typeof $$props.onVirtualItemsBeforeInsert === 'function')
-                  $$props.onVirtualItemsBeforeInsert(vl, fragment);
+                emit('virtualItemsBeforeInsert', [vl, fragment]);
               },
               itemsAfterInsert(fragment) {
                 const vl = this;
-                dispatch('virtualItemsAfterInsert', [vl, fragment]);
-                if (typeof $$props.onVirtualItemsAfterInsert === 'function')
-                  $$props.onVirtualItemsAfterInsert(vl, fragment);
+                emit('virtualItemsAfterInsert', [vl, fragment]);
               },
             },
           },

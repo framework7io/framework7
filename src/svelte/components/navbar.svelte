@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy, afterUpdate } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames, plainText } from '../shared/utils';
+  import { classNames, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, theme, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
@@ -10,7 +10,7 @@
   import NavTitle from './nav-title';
   import NavRight from './nav-right';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -108,37 +108,31 @@
 
   function onHide(navbarEl) {
     if (el !== navbarEl) return;
-    dispatch('navbarHide');
-    if (typeof $$props.onNavbarHide === 'function') $$props.onNavbarHide();
+    emit('navbarHide');
   }
   function onShow(navbarEl) {
     if (el !== navbarEl) return;
-    dispatch('navbarShow');
-    if (typeof $$props.onNavbarShow === 'function') $$props.onNavbarShow();
+    emit('navbarShow');
   }
   function onNavbarTransparentShow(navbarEl) {
     if (el !== navbarEl) return;
     transparentVisible = true;
-    dispatch('navbarTransparentShow');
-    if (typeof $$props.onNavbarTransparentShow === 'function') $$props.onNavbarTransparentShow();
+    emit('navbarTransparentShow');
   }
   function onNavbarTransparentHide(navbarEl) {
     if (el !== navbarEl) return;
     transparentVisible = false;
-    dispatch('navbarTransparentHide');
-    if (typeof $$props.onNavbarTransparentHide === 'function') $$props.onNavbarTransparentHide();
+    emit('navbarTransparentHide');
   }
   function onExpand(navbarEl) {
     if (el !== navbarEl) return;
     largeCollapsed = false;
-    dispatch('navbarExpand');
-    if (typeof $$props.onNavbarExpand === 'function') $$props.onNavbarExpand();
+    emit('navbarExpand');
   }
   function onCollapse(navbarEl) {
     if (el !== navbarEl) return;
     largeCollapsed = true;
-    dispatch('navbarCollapse');
-    if (typeof $$props.onNavbarCollapse === 'function') $$props.onNavbarCollapse();
+    emit('navbarCollapse');
   }
   function onNavbarPosition(navbarEl, position) {
     if (el !== navbarEl) return;
@@ -158,8 +152,7 @@
     routerNavbarMasterStack = false;
   }
   function onBackClick() {
-    dispatch('clickBack');
-    if (typeof $$props.onClickBack === 'function') $$props.onClickBack();
+    emit('clickBack');
   }
 
   function mountNavbar() {

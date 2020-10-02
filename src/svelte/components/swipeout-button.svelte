@@ -2,10 +2,10 @@
   import { createEventDispatcher } from 'svelte';
 
   import { colorClasses } from '../shared/mixins';
-  import { classNames, plainText } from '../shared/utils';
+  import { classNames, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -30,8 +30,7 @@
   );
 
   function onClick() {
-    dispatch('click');
-    if (typeof $$props.onClick === 'function') $$props.onClick();
+    emit('click');
   }
 </script>
 

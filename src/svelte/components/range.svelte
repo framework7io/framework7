@@ -1,11 +1,11 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames, noUndefinedProps } from '../shared/utils';
+  import { classNames, noUndefinedProps, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -80,12 +80,10 @@
           limitKnobPosition,
           on: {
             change(range, val) {
-              dispatch('rangeChange', [val]);
-              if (typeof $$props.onRangeChange === 'function') $$props.onRangeChange(val);
+              emit('rangeChange', [val]);
             },
             changed(range, val) {
-              dispatch('rangeChanged', [val]);
-              if (typeof $$props.onRangeChanged === 'function') $$props.onRangeChanged(val);
+              emit('rangeChanged', [val]);
             },
           },
         }),

@@ -1,11 +1,11 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames, noUndefinedProps } from '../shared/utils';
+  import { classNames, noUndefinedProps, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -85,36 +85,31 @@
   );
 
   function onChange(event) {
-    dispatch('change', [event]);
-    if (typeof $$props.onChange === 'function') $$props.onChange(event);
+    emit('change', [event]);
   }
 
   function onInput(event) {
-    dispatch('input', [event]);
-    if (typeof $$props.onInput === 'function') $$props.onInput(event);
+    emit('input', [event]);
   }
 
   function onFocus(event) {
-    dispatch('focus', [event]);
-    if (typeof $$props.onFocus === 'function') $$props.onFocus(event);
+    emit('focus', [event]);
   }
 
   function onBlur(event) {
-    dispatch('blur', [event]);
-    if (typeof $$props.onBlur === 'function') $$props.onBlur(event);
+    emit('blur', [event]);
   }
 
   function onSubmit(event) {
-    dispatch('submit', [event]);
-    if (typeof $$props.onSubmit === 'function') $$props.onSubmit(event);
+    emit('submit', [event]);
   }
 
   function onClearButtonClick(event) {
-    dispatch('click:clear', [event]);
+    emit('click:clear', [event]);
   }
 
   function onDisableButtonClick(event) {
-    dispatch('click:disable', [event]);
+    emit('click:disable', [event]);
   }
 
   onMount(() => {
@@ -144,24 +139,16 @@
         inline,
         on: {
           search(searchbar, query, previousQuery) {
-            dispatch('searchbarSearch', [searchbar, query, previousQuery]);
-            if (typeof $$props.onSearchbarSearch === 'function')
-              $$props.onSearchbarSearch(searchbar, query, previousQuery);
+            emit('searchbarSearch', [searchbar, query, previousQuery]);
           },
           clear(searchbar, previousQuery) {
-            dispatch('searchbarClear', [searchbar, previousQuery]);
-            if (typeof $$props.onSearchbarClear === 'function')
-              $$props.onSearchbarClear(searchbar, previousQuery);
+            emit('searchbarClear', [searchbar, previousQuery]);
           },
           enable(searchbar) {
-            dispatch('searchbarEnable', [searchbar]);
-            if (typeof $$props.onSearchbarEnable === 'function')
-              $$props.onSearchbarEnable(searchbar);
+            emit('searchbarEnable', [searchbar]);
           },
           disable(searchbar) {
-            dispatch('searchbarDisable', [searchbar]);
-            if (typeof $$props.onSearchbarDisable === 'function')
-              $$props.onSearchbarDisable(searchbar);
+            emit('searchbarDisable', [searchbar]);
           },
         },
       });

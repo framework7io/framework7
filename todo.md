@@ -30,9 +30,9 @@
 # Svelte
 
 - [ ] move to new F7 plugin helpers
-- [ ] modal classes keep state
-- [ ] panel classes keep state
-- [ ] tooltip to MenuItem and to Toggle
+- [x] modal classes keep state
+- [x] panel classes keep state
+- [x] tooltip to MenuItem and to Toggle
 - [x] define all props on app
 - [ ] add loading button
 

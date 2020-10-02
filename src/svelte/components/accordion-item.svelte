@@ -1,11 +1,11 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
+  import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -25,34 +25,27 @@
 
   function onBeforeOpen(accEl, prevent) {
     if (accEl !== el) return;
-    dispatch('accordionBeforeOpen', [prevent]);
-    if (typeof $$props.onAccordionBeforeOpen === 'function') $$props.onAccordionBeforeOpen(prevent);
+    emit('accordionBeforeOpen', [prevent]);
   }
   function onOpen(accEl) {
     if (accEl !== el) return;
-    dispatch('accordionOpen');
-    if (typeof $$props.onAccordionOpen === 'function') $$props.onAccordionOpen();
+    emit('accordionOpen');
   }
   function onOpened(accEl) {
     if (accEl !== el) return;
-    dispatch('accordionOpened');
-    if (typeof $$props.onAccordionOpened === 'function') $$props.onAccordionOpened();
+    emit('accordionOpened');
   }
   function onBeforeClose(accEl, prevent) {
     if (accEl !== el) return;
-    dispatch('accordionBeforeClose', [prevent]);
-    if (typeof $$props.onAccordionBeforeClose === 'function')
-      $$props.onAccordionBeforeClose(prevent);
+    emit('accordionBeforeClose', [prevent]);
   }
   function onClose(accEl) {
     if (accEl !== el) return;
-    dispatch('accordionClose');
-    if (typeof $$props.onAccordionClose === 'function') $$props.onAccordionClose();
+    emit('accordionClose');
   }
   function onClosed(accEl) {
     if (accEl !== el) return;
-    dispatch('accordionClosed');
-    if (typeof $$props.onAccordionClosed === 'function') $$props.onAccordionClosed();
+    emit('accordionClosed');
   }
 
   onMount(() => {

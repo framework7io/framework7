@@ -2,10 +2,10 @@
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
   import { restProps } from '../shared/rest-props';
   import { colorClasses } from '../shared/mixins';
-  import { classNames, noUndefinedProps } from '../shared/utils';
+  import { classNames, noUndefinedProps, createEmitter } from '../shared/utils';
   import { f7, f7ready } from '../shared/f7';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -32,6 +32,13 @@
   let el;
   let f7Panel;
 
+  const state = {
+    isOpened: false,
+    isClosing: false,
+    isCollapsed: false,
+    isBreakpoint: false,
+  };
+
   export function instance() {
     return f7Panel;
   }
@@ -44,6 +51,9 @@
     className,
     'panel',
     {
+      'panel-in': state.isOpened && !state.isClosing && !state.isBreakpoint,
+      'panel-in-breakpoint': state.isBreakpoint,
+      'panel-in-collapsed': state.isCollapsed,
       'panel-resizable': resizable,
       [`panel-${sideComputed}`]: sideComputed,
       [`panel-${effectComputed}`]: effectComputed,
@@ -84,45 +94,43 @@
   $: watchOpened(opened);
 
   function onOpen(...args) {
-    dispatch('panelOpen', [...args]);
-    if (typeof $$props.onPanelOpen === 'function') $$props.onPanelOpen(...args);
+    state.isOpened = true;
+    state.isClosing = false;
+    emit('panelOpen', args);
   }
   function onOpened(...args) {
-    dispatch('panelOpened', [...args]);
-    if (typeof $$props.onPanelOpened === 'function') $$props.onPanelOpened(...args);
+    emit('panelOpened', args);
   }
   function onClose(...args) {
-    dispatch('panelClose', [...args]);
-    if (typeof $$props.onPanelClose === 'function') $$props.onPanelClose(...args);
+    state.isOpened = false;
+    state.isClosing = true;
+    emit('panelClose', args);
   }
   function onClosed(...args) {
-    dispatch('panelClosed', [...args]);
-    if (typeof $$props.onPanelClosed === 'function') $$props.onPanelClosed(...args);
+    state.isClosing = false;
+    emit('panelClosed', args);
   }
   function onBackdropClick(...args) {
-    dispatch('panelBackdropClick', [...args]);
-    if (typeof $$props.onPanelBackdropClick === 'function') $$props.onPanelBackdropClick(...args);
+    emit('panelBackdropClick', args);
   }
   function onSwipe(...args) {
-    dispatch('panelSwipe', [...args]);
-    if (typeof $$props.onPanelSwipe === 'function') $$props.onPanelSwipe(...args);
+    emit('panelSwipe', args);
   }
   function onSwipeOpen(...args) {
-    dispatch('panelSwipeOpen', [...args]);
-    if (typeof $$props.onPanelSwipeOpen === 'function') $$props.onPanelSwipeOpen(...args);
+    emit('panelSwipeOpen', args);
   }
   function onBreakpoint(...args) {
-    dispatch('panelBreakpoint', [...args]);
-    if (typeof $$props.onPanelBreakpoint === 'function') $$props.onPanelBreakpoint(...args);
+    state.isBreakpoint = true;
+    state.isCollapsed = false;
+    emit('panelBreakpoint', args);
   }
   function onCollapsedBreakpoint(...args) {
-    dispatch('panelCollapsedBreakpoint', [...args]);
-    if (typeof $$props.onPanelCollapsedBreakpoint === 'function')
-      $$props.onPanelCollapsedBreakpoint(...args);
+    state.isBreakpoint = false;
+    state.isCollapsed = true;
+    emit('panelCollapsedBreakpoint', args);
   }
   function onResize(...args) {
-    dispatch('panelResize', [...args]);
-    if (typeof $$props.onPanelResize === 'function') $$props.onPanelResize(...args);
+    emit('panelResize', args);
   }
 
   onMount(() => {

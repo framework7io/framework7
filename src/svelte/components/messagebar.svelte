@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy, afterUpdate } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames, noUndefinedProps } from '../shared/utils';
+  import { classNames, noUndefinedProps, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
@@ -9,7 +9,7 @@
   import Link from './link';
   import Input from './input';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -80,56 +80,44 @@
   $: watchAttachmentsVisible(attachmentsVisible);
 
   function onChange(event) {
-    dispatch('change', [...event.detail]);
-    if (typeof $$props.onChange === 'function') $$props.onChange(...event.detail);
+    emit('change', [...event.detail]);
   }
 
   function onInput(event) {
-    dispatch('input', [...event.detail]);
-    if (typeof $$props.onInput === 'function') $$props.onInput(...event.detail);
+    emit('input', [...event.detail]);
   }
 
   function onFocus(event) {
-    dispatch('focus', [...event.detail]);
-    if (typeof $$props.onFocus === 'function') $$props.onFocus(...event.detail);
+    emit('focus', [...event.detail]);
   }
 
   function onBlur(event) {
-    dispatch('blur', [...event.detail]);
-    if (typeof $$props.onBlur === 'function') $$props.onBlur(...event.detail);
+    emit('blur', [...event.detail]);
   }
 
   function onClick(event) {
     const inputValue = el.querySelector('textarea');
-
     const clear = f7Messagebar
       ? () => {
           f7Messagebar.clear();
         }
       : () => {};
-    dispatch('submit', [inputValue, clear]);
-    if (typeof $$props.onSubmit === 'function') $$props.onSubmit(inputValue, clear);
-    dispatch('send', [inputValue, clear]);
-    if (typeof $$props.onSend === 'function') $$props.onSend(inputValue, clear);
-    dispatch('click', [event]);
-    if (typeof $$props.onClick === 'function') $$props.onClick(event);
+
+    emit('submit', [inputValue, clear]);
+    emit('send', [inputValue, clear]);
+    emit('click', [event]);
   }
 
   function onAttachmentDelete(inst, attachmentEl, attachmentElIndex) {
-    dispatch('messagebarAttachmentDelete', [inst, attachmentEl, attachmentElIndex]);
-    if (typeof $$props.onMessagebarAttachmentDelete === 'function')
-      $$props.onMessagebarAttachmentDelete(inst, attachmentEl, attachmentElIndex);
+    emit('messagebarAttachmentDelete', [inst, attachmentEl, attachmentElIndex]);
   }
 
   function onAttachmentClick(inst, attachmentEl, attachmentElIndex) {
-    dispatch('messagebarAttachmentClick', [inst, attachmentEl, attachmentElIndex]);
-    if (typeof $$props.onMessagebarAttachmentClick === 'function')
-      $$props.onMessagebarAttachmentClick(inst, attachmentEl, attachmentElIndex);
+    emit('messagebarAttachmentClick', [inst, attachmentEl, attachmentElIndex]);
   }
 
   function onResizePage(inst) {
-    dispatch('messagebarResizePage', [inst]);
-    if (typeof $$props.onMessagebarResizePage === 'function') $$props.onMessagebarResizePage(inst);
+    emit('messagebarResizePage', [inst]);
   }
 
   onMount(() => {

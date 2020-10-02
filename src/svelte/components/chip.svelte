@@ -1,15 +1,15 @@
 <script>
-  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
 
   import { colorClasses } from '../shared/mixins';
-  import { classNames, plainText } from '../shared/utils';
+  import { classNames, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { hasSlots } from '../shared/has-slots';
-  import { f7, f7ready } from '../shared/f7';
+  import { useTooltip } from '../shared/use-tooltip';
 
   import Icon from './icon';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -25,7 +25,6 @@
   export let tooltipTrigger = undefined;
 
   let el;
-  let f7Tooltip;
 
   $: classes = classNames(
     className,
@@ -57,60 +56,22 @@
     $$props.iconIos ||
     $$props.iconAurora;
 
-  let tooltipText = tooltip;
-  function watchTooltip(newText) {
-    const oldText = tooltipText;
-    if (oldText === newText) return;
-    tooltipText = newText;
-    if (!newText && f7Tooltip) {
-      f7Tooltip.destroy();
-      f7Tooltip = null;
-      return;
-    }
-    if (newText && !f7Tooltip && f7) {
-      f7Tooltip = f7.tooltip.create({
-        targetEl: el,
-        text: newText,
-        trigger: tooltipTrigger,
-      });
-      return;
-    }
-    if (!newText || !f7Tooltip) return;
-    f7Tooltip.setText(newText);
-  }
-  $: watchTooltip(tooltip);
-
-  onMount(() => {
-    if (!tooltip) return;
-    f7ready(() => {
-      f7Tooltip = f7.tooltip.create({
-        targetEl: el,
-        text: tooltip,
-        trigger: tooltipTrigger,
-      });
-    });
-  });
-
-  onDestroy(() => {
-    if (f7Tooltip && f7Tooltip.destroy) {
-      f7Tooltip.destroy();
-      f7Tooltip = null;
-    }
-  });
-
   function onClick(e) {
-    dispatch('click', [e]);
-    if (typeof $$props.onClick === 'function') $$props.onClick(e);
+    emit('click', [e]);
   }
   function onDeleteClick(e) {
-    dispatch('delete', [e]);
-    if (typeof $$props.onDelete === 'function') $$props.onDelete(e);
+    emit('delete', [e]);
   }
 </script>
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <!-- svelte-ignore a11y-missing-content -->
-<div bind:this={el} class={classes} on:click={onClick} {...restProps($$restProps)}>
+<div
+  bind:this={el}
+  class={classes}
+  on:click={onClick}
+  {...restProps($$restProps)}
+  use:useTooltip={{ tooltip, tooltipTrigger }}>
   {#if media || hasMediaSlots || hasIcon}
     <div class={mediaClasses}>
       {#if hasIcon}

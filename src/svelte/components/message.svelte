@@ -2,11 +2,11 @@
   /* eslint-disable no-undef */
   import { createEventDispatcher } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames, plainText } from '../shared/utils';
+  import { classNames, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { hasSlots } from '../shared/has-slots';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -58,38 +58,31 @@
   $: hasFooterSlots = hasSlots(arguments, 'footer');
 
   function onClick() {
-    dispatch('click');
-    if (typeof $$props.onClick === 'function') $$props.onClick();
+    emit('click');
   }
 
   function onNameClick() {
-    dispatch('clickName');
-    if (typeof $$props.onClickName === 'function') $$props.onClickName();
+    emit('clickName');
   }
 
   function onTextClick() {
-    dispatch('clickText');
-    if (typeof $$props.onClickText === 'function') $$props.onClickText();
+    emit('clickText');
   }
 
   function onAvatarClick() {
-    dispatch('clickAvatar');
-    if (typeof $$props.onClickAvatar === 'function') $$props.onClickAvatar();
+    emit('clickAvatar');
   }
 
   function onHeaderClick() {
-    dispatch('clickHeader');
-    if (typeof $$props.onClickHeader === 'function') $$props.onClickHeader();
+    emit('clickHeader');
   }
 
   function onFooterClick() {
-    dispatch('clickFooter');
-    if (typeof $$props.onClickFooter === 'function') $$props.onClickFooter();
+    emit('clickFooter');
   }
 
   function onBubbleClick() {
-    dispatch('clickBubble');
-    if (typeof $$props.onClickBubble === 'function') $$props.onClickBubble();
+    emit('clickBubble');
   }
 </script>
 

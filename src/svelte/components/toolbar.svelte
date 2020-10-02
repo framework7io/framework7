@@ -1,11 +1,11 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy, afterUpdate } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
+  import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready, theme } from '../shared/f7';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -68,13 +68,11 @@
 
   function onShow(toolbarEl) {
     if (el !== toolbarEl) return;
-    dispatch('toolbarShow');
-    if (typeof $$props.onToolbarShow === 'function') $$props.onToolbarShow();
+    emit('toolbarShow');
   }
   function onHide(toolbarEl) {
     if (el !== toolbarEl) return;
-    dispatch('toolbarHide');
-    if (typeof $$props.onToolbarHide === 'function') $$props.onToolbarHide();
+    emit('toolbarHide');
   }
 
   onMount(() => {

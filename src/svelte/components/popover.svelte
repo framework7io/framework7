@@ -1,11 +1,12 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
+  import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
+  import { modalStateClasses } from '../shared/modal-state-classes';
 
-  const dispatch = createEventDispatcher();
+  const emit = createEmitter(createEventDispatcher, $$props);
 
   let className = undefined;
   export { className as class };
@@ -22,27 +23,33 @@
   let el;
   let f7Popover;
 
+  const state = {
+    isOpened: opened,
+    isClosing: false,
+  };
+
   export function instance() {
     return f7Popover;
   }
 
-  $: classes = classNames(className, 'popover', colorClasses($$props));
+  $: classes = classNames(className, 'popover', modalStateClasses(state), colorClasses($$props));
 
   function onOpen(instance) {
-    dispatch('popoverOpen', [instance]);
-    if (typeof $$props.onPopoverOpen === 'function') $$props.onPopoverOpen(instance);
+    state.isOpened = true;
+    state.isClosing = false;
+    emit('popoverOpen', [instance]);
   }
   function onOpened(instance) {
-    dispatch('popoverOpened', [instance]);
-    if (typeof $$props.onPopoverOpened === 'function') $$props.onPopoverOpened(instance);
+    emit('popoverOpened', [instance]);
   }
   function onClose(instance) {
-    dispatch('popoverClose', [instance]);
-    if (typeof $$props.onPopoverClose === 'function') $$props.onPopoverClose(instance);
+    state.isOpened = false;
+    state.isClosing = true;
+    emit('popoverClose', [instance]);
   }
   function onClosed(instance) {
-    dispatch('popoverClosed', [instance]);
-    if (typeof $$props.onPopoverClosed === 'function') $$props.onPopoverClosed(instance);
+    state.isClosing = false;
+    emit('popoverClosed', [instance]);
   }
 
   let initialWatched = false;

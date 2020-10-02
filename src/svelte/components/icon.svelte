@@ -1,9 +1,9 @@
 <script>
-  import { onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins';
   import { classNames } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7 as F7, f7ready, theme } from '../shared/f7';
+  import { useTooltip } from '../shared/use-tooltip';
 
   export let style = undefined;
 
@@ -23,7 +23,6 @@
   // eslint-disable-next-line
   let _theme = F7 ? theme : null;
   let el;
-  let f7Tooltip;
 
   let classes = {
     icon: true,
@@ -91,50 +90,14 @@
     (iconSize
       ? `;font-size: ${iconSize}; width: ${iconSize}; height: ${iconSize}`.replace(';;', '')
       : '');
-
-  let tooltipText = tooltip;
-  function watchTooltip(newText) {
-    const oldText = tooltipText;
-    if (oldText === newText) return;
-    tooltipText = newText;
-    if (!newText && f7Tooltip) {
-      f7Tooltip.destroy();
-      f7Tooltip = null;
-      return;
-    }
-    if (newText && !f7Tooltip && F7) {
-      f7Tooltip = F7.tooltip.create({
-        targetEl: el,
-        text: newText,
-        trigger: tooltipTrigger,
-      });
-      return;
-    }
-    if (!newText || !f7Tooltip) return;
-    f7Tooltip.setText(newText);
-  }
-  $: watchTooltip(tooltip);
-
-  onMount(() => {
-    if (!tooltip) return;
-    f7ready(() => {
-      f7Tooltip = F7.tooltip.create({
-        targetEl: el,
-        text: tooltip,
-        trigger: tooltipTrigger,
-      });
-    });
-  });
-
-  onDestroy(() => {
-    if (f7Tooltip && f7Tooltip.destroy) {
-      f7Tooltip.destroy();
-      f7Tooltip = null;
-    }
-  });
 </script>
 
-<i style={iconStyle} class={iconClasses} bind:this={el} {...restProps($$restProps)}>
+<i
+  style={iconStyle}
+  class={iconClasses}
+  bind:this={el}
+  {...restProps($$restProps)}
+  use:useTooltip={{ tooltip, tooltipTrigger }}>
   {iconText || ''}
   <slot />
 </i>
