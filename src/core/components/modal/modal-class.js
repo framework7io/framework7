@@ -98,8 +98,8 @@ class Modal extends Framework7Class {
 
     const $modalParentEl = $el.parent();
     const wasInDom = $el.parents(document).length > 0;
-    if (app.params.modal.moveToRoot && !$modalParentEl.is(app.root)) {
-      app.root.append($el);
+    if (app.params.modal.moveToRoot && !$modalParentEl.is(app.$el)) {
+      app.$el.append($el);
       modal.once(`${type}Closed`, () => {
         if (wasInDom) {
           $modalParentEl.append($el);

@@ -32,9 +32,9 @@ class Tooltip extends Framework7Class {
 
     if ($targetEl[0].f7Tooltip) return $targetEl[0].f7Tooltip;
 
-    let $containerEl = $(containerEl || app.root).eq(0);
+    let $containerEl = $(containerEl || app.$el).eq(0);
     if ($containerEl.length === 0) {
-      $containerEl = app.root;
+      $containerEl = app.$el;
     }
 
     const $el = $(tooltip.render()).eq(0);

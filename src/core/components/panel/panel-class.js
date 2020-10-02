@@ -13,7 +13,7 @@ class Panel extends Framework7Class {
     const panel = this;
 
     panel.params = extendedParams;
-    panel.$containerEl = panel.params.containerEl ? $(panel.params.containerEl).eq(0) : app.root;
+    panel.$containerEl = panel.params.containerEl ? $(panel.params.containerEl).eq(0) : app.$el;
     panel.containerEl = panel.$containerEl[0];
 
     let $el;

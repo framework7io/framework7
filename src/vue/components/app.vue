@@ -19,7 +19,6 @@ export default {
   },
   inheritAttrs: false,
   props: {
-    root: { type: String, default: undefined },
     id: { type: String, default: undefined },
     name: { type: String, default: undefined },
     version: { type: String, default: undefined },

@@ -39,7 +39,7 @@ export interface Framework7EventsClass<Events> {
 
 export interface Framework7Parameters {
   /** App root element. If you main app layout is not a direct child of the <body> then it is required to specify root element here. (default body) */
-  root?: string;
+  el?: string;
   /** App bundle id.. (default io.framework7.testapp) */
   id?: string | 'io.framework7.testapp';
   /** App name. Can be used by other components, e.g. as the default title for Dialog component.. (default Framework7) */
@@ -140,8 +140,10 @@ interface Framework7 extends Framework7Class<Framework7Events> {
   routes: Router.RouteParameters[];
   /** App language */
   language: string;
+  /** App root HTML element */
+  el: HTMLElement;
   /** Dom7 instance with app root element */
-  root: Dom7Array;
+  $el: Dom7Array;
   /** Boolean property indicating app is in RTL layout or not */
   rtl: boolean;
   /** Current app theme. Can be md or ios */

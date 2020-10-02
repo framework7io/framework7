@@ -7,12 +7,12 @@ const Progressbar = {
     let [el, progress, duration] = args;
     if (typeof args[0] === 'number') {
       [progress, duration] = args;
-      el = app.root;
+      el = app.$el;
     }
     if (typeof progress === 'undefined' || progress === null) return el;
     if (!progress) progress = 0;
 
-    const $el = $(el || app.root);
+    const $el = $(el || app.$el);
     if ($el.length === 0) {
       return el;
     }
@@ -54,20 +54,20 @@ const Progressbar = {
       } else if (typeof args[0] === 'number' && typeof args[1] === 'string') {
         // 50, 'multi'
         [progress, color] = args;
-        el = app.root;
+        el = app.$el;
       }
     } else if (args.length === 1) {
       if (typeof args[0] === 'number') {
-        el = app.root;
+        el = app.$el;
         progress = args[0];
       } else if (typeof args[0] === 'string') {
         type = 'infinite';
-        el = app.root;
+        el = app.$el;
         color = args[0];
       }
     } else if (args.length === 0) {
       type = 'infinite';
-      el = app.root;
+      el = app.$el;
     }
 
     const $el = $(el);
@@ -99,7 +99,7 @@ const Progressbar = {
   },
   hide(el, removeAfterHide = true) {
     const app = this;
-    const $el = $(el || app.root);
+    const $el = $(el || app.$el);
     if ($el.length === 0) return undefined;
     let $progressbarEl;
     if ($el.hasClass('progressbar') || $el.hasClass('progressbar-infinite')) {

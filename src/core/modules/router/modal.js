@@ -143,7 +143,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
         } else if (contentEl.f7Component) {
           contentEl.f7Component.mount((componentEl) => {
             modalParams.el = componentEl;
-            app.root.append(componentEl);
+            app.$el.append(componentEl);
           });
         } else {
           modalParams.el = contentEl;
@@ -162,7 +162,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
       // Load from component (F7/Vue/React/...)
       try {
         router.modalComponentLoader({
-          rootEl: app.root[0],
+          rootEl: app.el,
           component,
           componentUrl,
           options: loadModalOptions,

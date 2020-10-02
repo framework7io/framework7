@@ -19,7 +19,7 @@ const f7initEvents = () => {
 
 const f7init = (rootEl, params = {}, init = true) => {
   const f7Params = extend({}, params, {
-    root: rootEl,
+    el: rootEl,
     init,
   });
   if (!f7Params.routes) f7Params.routes = [];

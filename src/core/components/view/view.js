@@ -7,7 +7,7 @@ function getCurrentView(app) {
   const $popupView = $('.popup.modal-in .view');
   const $panelView = $('.panel.panel-in .view');
   let $viewsEl = $('.views');
-  if ($viewsEl.length === 0) $viewsEl = app.root;
+  if ($viewsEl.length === 0) $viewsEl = app.$el;
   // Find active view as tab
   let $viewEl = $viewsEl.children('.view');
   if ($viewEl.length === 0) {

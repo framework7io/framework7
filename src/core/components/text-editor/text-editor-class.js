@@ -254,7 +254,7 @@ class TextEditor extends Framework7Class {
       if (!selection.isCollapsed && selection.rangeCount) {
         const range = selection.getRangeAt(0);
         const rect = range.getBoundingClientRect();
-        const rootEl = self.app.root[0] || document.body;
+        const rootEl = self.app.$el[0] || document.body;
         self.openPopover(
           rect.x + (window.scrollX || 0) - rootEl.offsetLeft,
           rect.y + (window.scrollY || 0) - rootEl.offsetTop,
@@ -470,10 +470,10 @@ class TextEditor extends Framework7Class {
 
   openKeyboardToolbar() {
     const self = this;
-    if (self.$keyboardToolbarEl.parent(self.app.root).length) return;
+    if (self.$keyboardToolbarEl.parent(self.app.$el).length) return;
     self.$el.trigger('texteditor:keyboardopen');
     self.emit('local::keyboardOpen textEditorKeyboardOpen', self);
-    self.app.root.append(self.$keyboardToolbarEl);
+    self.app.$el.append(self.$keyboardToolbarEl);
   }
 
   closeKeyboardToolbar() {

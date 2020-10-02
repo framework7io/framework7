@@ -45,10 +45,10 @@ class Sheet extends Modal {
     if (sheet.params.backdrop && sheet.params.backdropEl) {
       $backdropEl = $(sheet.params.backdropEl);
     } else if (sheet.params.backdrop) {
-      $backdropEl = app.root.children('.sheet-backdrop');
+      $backdropEl = app.$el.children('.sheet-backdrop');
       if ($backdropEl.length === 0) {
         $backdropEl = $('<div class="sheet-backdrop"></div>');
-        app.root.append($backdropEl);
+        app.$el.append($backdropEl);
       }
     }
 
@@ -229,7 +229,7 @@ class Sheet extends Modal {
           }
         }
         if (sheet.push && pushOffset) {
-          $pushViewEl = app.root.children('.view, .views');
+          $pushViewEl = app.$el.children('.view, .views');
         }
         sheetElOffsetHeight = $el[0].offsetHeight;
         startTranslate = getTranslate($el[0], 'y');
@@ -459,7 +459,7 @@ class Sheet extends Modal {
           if (!sheet.params.swipeToStep) {
             sheet.$htmlEl[0].style.setProperty('--f7-sheet-push-scale', pushViewScale(pushOffset));
           } else {
-            $pushViewEl = app.root.children('.view, .views');
+            $pushViewEl = app.$el.children('.view, .views');
             pushBorderRadius = parseFloat(
               $el.css(`border-${isTopSheetModal ? 'bottom' : 'top'}-left-radius`),
             );

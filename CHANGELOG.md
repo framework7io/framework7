@@ -5,6 +5,9 @@
 # v6.0.0 (WIP)
 
 - Core
+  - App
+    - App `root` parameter to pass app root element renamed to `el`
+    - `app.root` property which contains Dom7 instance of app root element has been renamed to `app.$el` property
   - Autocomplete, Calendar, Picker, Color Picker, Photo Browser, Smart Select
     - `routableModals` is now disabled by default
   - Dom7

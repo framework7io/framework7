@@ -27,7 +27,7 @@ const Input = {
     if (!$textareaEl.length) return;
     if (!$textareaEl.hasClass('resizable')) return;
     if (Input.textareaResizableShadow.parents().length === 0) {
-      app.root.append($shadowEl);
+      app.$el.append($shadowEl);
     }
 
     const styles = window.getComputedStyle($textareaEl[0]);

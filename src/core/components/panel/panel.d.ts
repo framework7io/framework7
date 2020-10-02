@@ -57,7 +57,7 @@ export namespace Panel {
     swipeThreshold?: number;
     /** Enable/disable ability to close panel by clicking outside of panel (on panel's backdrop). (default true) */
     closeByBackdropClick?: boolean;
-    /** Element to mount panel to. (default app.root) */
+    /** Element to mount panel to. (default app.el) */
     containerEl?: HTMLElement | CSSSelector;
   }
 
@@ -80,9 +80,9 @@ export namespace Panel {
     $backdropEl: Dom7Array;
     /** Popup parameters */
     params: Parameters;
-    /** Element to mount panel to. (default app.root) */
+    /** Element to mount panel to. (default app.el) */
     containerEl: HTMLElement | CSSSelector;
-    /** Dom7 instance with with element to mount panel to. (default app.root) */
+    /** Dom7 instance with with element to mount panel to. (default app.el) */
     $containerEl: HTMLElement | CSSSelector;
 
     /** Open panel. */

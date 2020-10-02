@@ -41,7 +41,7 @@ const Statusbar = {
         .find('.page:not(.page-previous):not(.page-next):not(.cached)')
         .find('.page-content');
     } else {
-      pageContent = app.root
+      pageContent = app.$el
         .children('.view')
         .find('.page:not(.page-previous):not(.page-next):not(.cached)')
         .find('.page-content');

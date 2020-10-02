@@ -45,10 +45,10 @@ class Popover extends Modal {
     if (popover.params.backdrop && popover.params.backdropEl) {
       $backdropEl = $(popover.params.backdropEl);
     } else if (popover.params.backdrop) {
-      $backdropEl = app.root.children('.popover-backdrop');
+      $backdropEl = app.$el.children('.popover-backdrop');
       if ($backdropEl.length === 0) {
         $backdropEl = $('<div class="popover-backdrop"></div>');
-        app.root.append($backdropEl);
+        app.$el.append($backdropEl);
       }
     }
 

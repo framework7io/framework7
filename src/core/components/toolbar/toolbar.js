@@ -204,7 +204,7 @@ export default {
     },
     init() {
       const app = this;
-      app.root.find('.tabbar, .tabbar-labels').each((tabbarEl) => {
+      app.$el.find('.tabbar, .tabbar-labels').each((tabbarEl) => {
         app.toolbar.init(tabbarEl);
       });
     },

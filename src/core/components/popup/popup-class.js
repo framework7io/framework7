@@ -42,10 +42,10 @@ class Popup extends Modal {
     if (popup.params.backdrop && popup.params.backdropEl) {
       $backdropEl = $(popup.params.backdropEl);
     } else if (popup.params.backdrop) {
-      $backdropEl = app.root.children('.popup-backdrop');
+      $backdropEl = app.$el.children('.popup-backdrop');
       if ($backdropEl.length === 0) {
         $backdropEl = $('<div class="popup-backdrop"></div>');
-        app.root.append($backdropEl);
+        app.$el.append($backdropEl);
       }
     }
 
@@ -191,7 +191,7 @@ class Popup extends Modal {
           popupHeight = $el[0].offsetHeight;
           $pushEl = $el.prevAll('.popup.modal-in').eq(0);
           if ($pushEl.length === 0) {
-            $pushEl = app.root.children('.view, .views');
+            $pushEl = app.$el.children('.view, .views');
           }
         }
         if (pageContentEl) {

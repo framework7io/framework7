@@ -36,7 +36,7 @@ const Preloader = {
     const preloaderInner = preloaders[`${app.theme}PreloaderContent`] || '';
     $('html').addClass('with-modal-preloader');
     // prettier-ignore
-    app.root.append(`
+    app.$el.append(`
       <div class="preloader-backdrop"></div>
       <div class="preloader-modal">
         <div class="preloader color-${color}">${preloaderInner}</div>
@@ -54,7 +54,7 @@ const Preloader = {
     const preloaderInner = preloaders[`${app.theme}PreloaderContent`] || '';
     $(el || 'html').addClass('with-modal-preloader');
     // prettier-ignore
-    $(el || app.root).append(`
+    $(el || app.$el).append(`
       <div class="preloader-backdrop"></div>
       <div class="preloader-modal">
         <div class="preloader color-${color}">${preloaderInner}</div>
@@ -65,13 +65,13 @@ const Preloader = {
     const app = this;
     if (!Preloader.visible) return;
     $('html').removeClass('with-modal-preloader');
-    app.root.find('.preloader-backdrop, .preloader-modal').remove();
+    app.$el.find('.preloader-backdrop, .preloader-modal').remove();
     Preloader.visible = false;
   },
   hideIn(el) {
     const app = this;
     $(el || 'html').removeClass('with-modal-preloader');
-    $(el || app.root)
+    $(el || app.$el)
       .find('.preloader-backdrop, .preloader-modal')
       .remove();
   },

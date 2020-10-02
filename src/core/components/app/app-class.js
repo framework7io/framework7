@@ -37,7 +37,7 @@ class Framework7 extends Framework7Class {
     const defaults = {
       version: '1.0.0',
       id: 'io.framework7.myapp',
-      root: 'body',
+      el: 'body',
       theme: 'auto',
       language: window.navigator.language,
       routes: [],
@@ -88,8 +88,8 @@ class Framework7 extends Framework7Class {
     });
 
     // Save Root
-    if (app.root && app.root[0]) {
-      app.root[0].f7 = app;
+    if (app.$el && app.$el[0]) {
+      app.$el[0].f7 = app;
     }
 
     // Install Modules
@@ -117,10 +117,11 @@ class Framework7 extends Framework7Class {
     const app = this;
     const window = getWindow();
     const document = getDocument();
-    const $rootEl = $(rootEl || app.params.root).eq(0);
-    app.root = $rootEl;
-    if (app.root && app.root[0]) {
-      app.root[0].f7 = app;
+    const $rootEl = $(rootEl || app.params.el).eq(0);
+    app.$el = $rootEl;
+    if (app.$el && app.$el[0]) {
+      app.el = app.$el[0];
+      app.el.f7 = app;
       app.rtl = $rootEl.css('direction') === 'rtl';
     }
 
@@ -208,11 +209,11 @@ class Framework7 extends Framework7Class {
     app.router.componentLoader(
       app.params.component,
       app.params.componentUrl,
-      { componentOptions: { el: app.root[0], root: true } },
+      { componentOptions: { el: app.$el[0], root: true } },
       (el) => {
-        app.root = $(el);
-        app.root[0].f7 = app;
-        app.rootComponent = el.f7Component;
+        app.$el = $(el);
+        app.$el[0].f7 = app;
+        app.$elComponent = el.f7Component;
         if (callback) callback();
       },
       () => {},
@@ -227,7 +228,7 @@ class Framework7 extends Framework7Class {
     const init = () => {
       if (app.initialized) return;
 
-      app.root.addClass('framework7-initializing');
+      app.$el.addClass('framework7-initializing');
 
       // RTL attr
       if (app.rtl) {
@@ -253,7 +254,7 @@ class Framework7 extends Framework7Class {
       });
 
       // Root class
-      app.root.addClass('framework7-root');
+      app.$el.addClass('framework7-root');
 
       // Theme class
       $('html').removeClass('ios md aurora').addClass(app.theme);
@@ -269,7 +270,7 @@ class Framework7 extends Framework7Class {
 
       // Init class
       nextFrame(() => {
-        app.root.removeClass('framework7-initializing');
+        app.$el.removeClass('framework7-initializing');
       });
       // Emit, init other modules
       app.initialized = true;

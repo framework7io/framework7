@@ -37,10 +37,10 @@ class CustomModal extends Modal {
     }
     let $backdropEl;
     if (customModal.params.backdrop) {
-      $backdropEl = app.root.children('.custom-modal-backdrop');
+      $backdropEl = app.$el.children('.custom-modal-backdrop');
       if ($backdropEl.length === 0) {
         $backdropEl = $('<div class="custom-modal-backdrop"></div>');
-        app.root.append($backdropEl);
+        app.$el.append($backdropEl);
       }
     }
 
