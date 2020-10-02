@@ -13,8 +13,8 @@
   - Dom7
     - Uses new Dom7
   - Package
-    - renamed files and imports
-    - lite version doesn't contain
+    - Renamed files and imports
+    - Lite version doesn't contain
       - Template7
       - Gauge
       - Area Chart
@@ -23,18 +23,18 @@
       - Framework7Params -> Framework7Parameters
   - Request
     - Export renamed to `request`
-    - only promise APIs
-    - new request.abortController()
+    - Only promise APIs
+    - New `request.abortController()`
   - Utils
     - Export renamed to `utils`
   - Device
     - Export renamed to `device`
   - Swiper
-    - updated to v6
-    - used as dependency
+    - Updated to v6
+    - Used as dependency
   - Skeleton Elements
-    - used as dependency
-    - new React, Svelte and Vue components
+    - Used as dependency
+    - New React, Svelte and Vue components
     - CSS vars renamed without `--f7-` prefix
   - View/Router
     - `pushState...` parameters renamed to `browserHistory...`
@@ -55,13 +55,13 @@
   - Removed `umd` version
   - Added v-model support
     - Checkbox, ListItem, Radio, Toggle, MessagebarSheetImage
-      - support for `v-model:checked`
+      - Support for `v-model:checked`
     - Actions, LoginScreen, Panel, Popover, Popup, Sheet
-      - support for `v-model:opened`
+      - Support for `v-model:opened`
     - Card
-      - support for `v-model:expandableOpened`
+      - Support for `v-model:expandableOpened`
     - Input, ListInput, Messagebar, Searchbar, Stepper, Range
-      - support for `v-model:value`
+      - Support for `v-model:value`
 - React
   - KS updated to use hooks API only
   - `App` component now receives all app parameters as props
@@ -79,11 +79,11 @@
   - Area Chart
     - All new Area Chart component
   - Input
-    - added `error-message` slot
+    - Added `error-message` slot
   - Popover, Login Screen, Actions, Sheet
-    - added `animate` property
+    - Added `animate` property
     - Removed component open/close methods
-    - added `containerEl` property to specify where to mount the modal
+    - Added `containerEl` property to specify where to mount the modal
   - Sheet
     - Added `fixed` and `static` slots
   - Panel
