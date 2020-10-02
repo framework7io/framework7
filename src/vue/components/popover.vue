@@ -43,6 +43,10 @@ export default {
       type: Boolean,
       default: undefined,
     },
+    containerEl: {
+      type: [String, Object],
+      default: undefined,
+    },
     ...colorProps,
   },
   emits: ['popover:open', 'popover:opened', 'popover:close', 'popover:closed', 'update:opened'],
@@ -103,6 +107,7 @@ export default {
         closeOnEscape,
         backdrop,
         backdropEl,
+        containerEl,
       } = props;
       if (typeof target !== 'undefined') popoverParams.target = target;
       if (typeof closeByBackdropClick !== 'undefined')
@@ -112,6 +117,7 @@ export default {
       if (typeof closeOnEscape !== 'undefined') popoverParams.closeOnEscape = closeOnEscape;
       if (typeof backdrop !== 'undefined') popoverParams.backdrop = backdrop;
       if (typeof backdropEl !== 'undefined') popoverParams.backdropEl = backdropEl;
+      if (typeof containerEl !== 'undefined') popoverParams.containerEl = containerEl;
 
       f7ready(() => {
         f7Popover.value = f7.popover.create(popoverParams);

@@ -37,6 +37,8 @@ export namespace Sheet {
     swipeHandler?: HTMLElement | CSSSelector;
     /** When enabled it will push view behind on open. Works only when top safe area is in place. It can also be enabled by adding `sheet-modal-push` class to Sheet element. (default false) */
     push?: boolean;
+    /** Element to mount modal to. (default app.el) */
+    containerEl?: HTMLElement | CSSSelector;
 
     /** Object with events handlers.. */
     on?: {

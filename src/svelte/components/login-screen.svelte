@@ -13,6 +13,7 @@
 
   export let opened = undefined;
   export let animate = undefined;
+  export let containerEl = undefined;
 
   let el;
   let f7LoginScreen;
@@ -75,6 +76,7 @@
       },
     };
     if (typeof animate !== 'undefined') params.animate = animate;
+    if (typeof containerEl !== 'undefined') params.containerEl = animate;
 
     f7ready(() => {
       f7LoginScreen = f7.loginScreen.create(params);

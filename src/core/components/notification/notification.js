@@ -31,6 +31,7 @@ export default {
       swipeToClose: true,
       cssClass: null,
       render: null,
+      containerEl: null,
     },
   },
 };

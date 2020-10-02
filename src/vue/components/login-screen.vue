@@ -18,6 +18,10 @@ export default {
       type: Boolean,
       default: undefined,
     },
+    containerEl: {
+      type: [String, Object],
+      default: undefined,
+    },
     ...colorProps,
   },
   emits: [
@@ -80,6 +84,9 @@ export default {
         };
         if (typeof props.animate !== 'undefined') {
           loginScreenParams.animate = props.animate;
+        }
+        if (typeof props.containerEl !== 'undefined') {
+          loginScreenParams.containerEl = props.containerEl;
         }
         f7LoginScreen.value = f7.loginScreen.create(loginScreenParams);
         if (props.opened) {

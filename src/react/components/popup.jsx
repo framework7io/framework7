@@ -18,12 +18,13 @@ import { Popup } from 'framework7/types';
   opened? : boolean
   animate? : boolean
   backdrop? : boolean
-  backdropEl? : string | Object
+  backdropEl? : string | object
   closeByBackdropClick? : boolean
   closeOnEscape? : boolean
   swipeToClose? : boolean | string
-  swipeHandler? : string | Object
+  swipeHandler? : string | object
   push? : boolean
+  containerEl?: string | object
   COLOR_PROPS
   onPopupSwipeStart? : (instance?: Popup.Popup) => void
   onPopupSwipeMove? : (instance?: Popup.Popup) => void
@@ -52,6 +53,7 @@ const Popup = forwardRef((props, ref) => {
     closeOnEscape,
     swipeToClose = false,
     swipeHandler,
+    containerEl,
   } = props;
 
   const extraAttrs = getExtraAttrs(props);
@@ -127,6 +129,7 @@ const Popup = forwardRef((props, ref) => {
     if ('backdropEl' in props) popupParams.backdropEl = backdropEl;
     if ('swipeToClose' in props) popupParams.swipeToClose = swipeToClose;
     if ('swipeHandler' in props) popupParams.swipeHandler = swipeHandler;
+    if ('containerEl' in props) popupParams.containerEl = containerEl;
 
     f7ready(() => {
       f7Popup.current = f7.popup.create(popupParams);

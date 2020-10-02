@@ -52,6 +52,10 @@ export default {
       type: Boolean,
       default: undefined,
     },
+    containerEl: {
+      type: [String, Object],
+      default: undefined,
+    },
     ...colorProps,
   },
   emits: ['actions:open', 'actions:opened', 'actions:close', 'actions:closed', 'update:opened'],
@@ -107,6 +111,7 @@ export default {
         backdrop,
         backdropEl,
         grid,
+        containerEl,
       } = props;
 
       const params = {
@@ -129,6 +134,7 @@ export default {
       if (typeof closeOnEscape !== 'undefined') params.closeOnEscape = closeOnEscape;
       if (typeof backdrop !== 'undefined') params.backdrop = backdrop;
       if (typeof backdropEl !== 'undefined') params.backdropEl = backdropEl;
+      if (typeof containerEl !== 'undefined') params.containerEl = containerEl;
 
       f7ready(() => {
         f7Actions = f7.popup.create(params);

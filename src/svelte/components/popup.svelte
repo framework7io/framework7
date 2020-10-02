@@ -21,6 +21,7 @@
   export let swipeToClose = false;
   export let swipeHandler = undefined;
   export let push = undefined;
+  export let containerEl = undefined;
 
   let el;
   let f7Popup;
@@ -111,6 +112,7 @@
     if (typeof backdropEl !== 'undefined') popupParams.backdropEl = backdropEl;
     if (typeof swipeToClose !== 'undefined') popupParams.swipeToClose = swipeToClose;
     if (typeof swipeHandler !== 'undefined') popupParams.swipeHandler = swipeHandler;
+    if (typeof containerEl !== 'undefined') popupParams.containerEl = containerEl;
 
     f7ready(() => {
       f7Popup = f7.popup.create(popupParams);

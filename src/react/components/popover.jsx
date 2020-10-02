@@ -16,12 +16,13 @@ import { Popover } from 'framework7/types';
   style?: React.CSSProperties;
   opened? : boolean
   animate? : boolean
-  target? : string | Object
+  target? : string | object
   backdrop? : boolean
-  backdropEl? : string | Object
+  backdropEl? : string | object
   closeByBackdropClick? : boolean
   closeByOutsideClick? : boolean
   closeOnEscape? : boolean
+  containerEl? : string | object
   COLOR_PROPS
   onPopoverOpen? : (instance?: Popover.Popover) => void
   onPopoverOpened? : (instance?: Popover.Popover) => void
@@ -44,6 +45,7 @@ const Popover = forwardRef((props, ref) => {
     closeByBackdropClick,
     closeByOutsideClick,
     closeOnEscape,
+    containerEl,
   } = props;
 
   const extraAttrs = getExtraAttrs(props);
@@ -103,6 +105,7 @@ const Popover = forwardRef((props, ref) => {
     if ('backdrop' in props) popoverParams.backdrop = backdrop;
     if ('backdropEl' in props) popoverParams.backdropEl = backdropEl;
     if ('animate' in props) popoverParams.animate = animate;
+    if ('containerEl' in props) popoverParams.containerEl = containerEl;
 
     f7ready(() => {
       f7Popover.current = f7.popover.create(popoverParams);

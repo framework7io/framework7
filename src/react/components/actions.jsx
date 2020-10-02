@@ -19,9 +19,9 @@ import { Actions } from 'framework7/types';
   grid? : boolean
   convertToPopover? : boolean
   forceToPopover? : boolean
-  target? : string | Object
+  target? : string | object
   backdrop? : boolean
-  backdropEl? : string | Object
+  backdropEl? : string | object
   closeByBackdropClick? : boolean
   closeByOutsideClick? : boolean
   closeOnEscape? : boolean
@@ -29,6 +29,7 @@ import { Actions } from 'framework7/types';
   onActionsOpened? : (instance?: Actions.Actions) => void
   onActionsClose? : (instance?: Actions.Actions) => void
   onActionsClosed? : (instance?: Actions.Actions) => void
+  containerEl? : string | object
   COLOR_PROPS
 */
 
@@ -86,6 +87,7 @@ const Actions = forwardRef((props, ref) => {
       closeOnEscape,
       backdrop,
       backdropEl,
+      containerEl,
     } = props;
 
     const params = {
@@ -107,6 +109,7 @@ const Actions = forwardRef((props, ref) => {
     if ('closeByOutsideClick' in props) params.closeByOutsideClick = closeByOutsideClick;
     if ('closeOnEscape' in props) params.closeOnEscape = closeOnEscape;
     if ('animate' in props) params.animate = animate;
+    if ('containerEl' in props) params.containerEl = containerEl;
 
     f7ready(() => {
       f7Actions.current = f7.actions.create(params);

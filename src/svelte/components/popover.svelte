@@ -19,6 +19,7 @@
   export let closeByBackdropClick = undefined;
   export let closeByOutsideClick = undefined;
   export let closeOnEscape = undefined;
+  export let containerEl = undefined;
 
   let el;
   let f7Popover;
@@ -85,6 +86,7 @@
     if (typeof closeOnEscape !== 'undefined') params.closeOnEscape = closeOnEscape;
     if (typeof backdrop !== 'undefined') params.backdrop = backdrop;
     if (typeof backdropEl !== 'undefined') params.backdropEl = backdropEl;
+    if (typeof containerEl !== 'undefined') params.containerEl = containerEl;
 
     f7ready(() => {
       f7Popover = f7.popover.create(params);

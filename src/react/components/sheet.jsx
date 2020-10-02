@@ -20,14 +20,15 @@ import { Sheet } from 'framework7/types';
   bottom? : boolean
   position? : string
   backdrop? : boolean
-  backdropEl? : string | Object
+  backdropEl? : string | object
   closeByBackdropClick? : boolean
   closeByOutsideClick? : boolean
   closeOnEscape? : boolean
   push? : boolean
   swipeToClose? : boolean
   swipeToStep? : boolean
-  swipeHandler? : string | Object
+  swipeHandler? : string | object
+  containerEl? : string | object
   COLOR_PROPS
   onSheetStepProgress? : (instance?: Sheet.Sheet, progress?: any) => void
   onSheetStepOpen? : (instance?: Sheet.Sheet) => void
@@ -58,6 +59,7 @@ const Sheet = forwardRef((props, ref) => {
     swipeToClose,
     swipeToStep,
     swipeHandler,
+    containerEl,
   } = props;
   const extraAttrs = getExtraAttrs(props);
 
@@ -121,6 +123,7 @@ const Sheet = forwardRef((props, ref) => {
     if ('swipeToClose' in props) sheetParams.swipeToClose = swipeToClose;
     if ('swipeToStep' in props) sheetParams.swipeToStep = swipeToStep;
     if ('swipeHandler' in props) sheetParams.swipeHandler = swipeHandler;
+    if ('containerEl' in props) sheetParams.containerEl = containerEl;
 
     f7ready(() => {
       f7Sheet.current = f7.sheet.create(sheetParams);

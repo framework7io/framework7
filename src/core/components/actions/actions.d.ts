@@ -80,6 +80,8 @@ export namespace Actions {
     targetWidth?: number;
     /** Virtual target element height (in px). Required when conversion to popover is in use without using real target element (targetEl)*/
     targetHeight?: number;
+    /** Element to mount modal to. (default app.el) */
+    containerEl?: HTMLElement | CSSSelector;
     /** Callback function that will be executed after click on the Action Sheet button*/
     onClick?: (actions: Actions, e: unknown) => void;
     /** Custom function to render Action Sheet. Must return Action Sheet html*/

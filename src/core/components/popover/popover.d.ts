@@ -37,7 +37,8 @@ export namespace Popover {
     targetWidth?: number;
     /** Virtual target element height (in px). Required without using real target element (targetEl) (default 0) */
     targetHeight?: number;
-
+    /** Element to mount modal to. (default app.el) */
+    containerEl?: HTMLElement | CSSSelector;
     /** Object with events handlers.. */
     on?: {
       [event in keyof Events]?: Events[event];

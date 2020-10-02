@@ -41,6 +41,8 @@ export namespace Notification {
     swipeToClose?: boolean;
     /** Additional css class to add. */
     cssClass?: string;
+    /** Element to mount notifications to. (default app.el) */
+    containerEl?: HTMLElement | CSSSelector;
     /** Custom function to render Notification. Must return notification html. */
     render?: () => string;
     /** Object with events handlers.. */

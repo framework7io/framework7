@@ -1,12 +1,12 @@
 # Core
 
-- [ ] Add containerEl for modals
+- [x] Add containerEl for modals
 - [ ] Add parameter on how to open the page
 - [ ] New component Stepper / Lines
 - [ ] set colorPicker and Calendar instance on openerEl?
 - [ ] delegated tooltip
 - [ ] tooltip set target
-- [ ] add containerEl to modals
+- [x] add containerEl to modals
 - [ ] fix data table selected row
 - [ ] new router component
   - [x] update TS

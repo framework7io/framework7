@@ -25,7 +25,7 @@ import { f7ready, f7 } from '../shared/f7';
   url? : string
   routableModals? : boolean
   virtualSlides? : boolean
-  view? : string | Object
+  view? : string | object
   renderNavbar? : Function
   renderToolbar? : Function
   renderCaption? : Function

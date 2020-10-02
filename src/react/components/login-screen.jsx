@@ -15,6 +15,7 @@ import { LoginScreen } from 'framework7/types';
   style?: React.CSSProperties;
   opened?: boolean;
   animate?: boolean;
+  containerEl? : string | object
   onLoginScreenOpen? : (instance: LoginScreen.LoginScreen) => void
   onLoginScreenOpened? : (instance: LoginScreen.LoginScreen) => void
   onLoginScreenClose? : (instance: LoginScreen.LoginScreen) => void
@@ -24,7 +25,7 @@ import { LoginScreen } from 'framework7/types';
 
 const LoginScreen = forwardRef((props, ref) => {
   const f7LoginScreen = useRef(null);
-  const { className, id, style, children, opened, animate } = props;
+  const { className, id, style, children, opened, animate, containerEl } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const isOpened = useRef(opened);
@@ -77,6 +78,8 @@ const LoginScreen = forwardRef((props, ref) => {
         },
       };
       if ('animate' in props) loginScreenParams.animate = animate;
+      if ('containerEl' in props) loginScreenParams.containerEl = containerEl;
+
       f7LoginScreen.current = f7.loginScreen.create(loginScreenParams);
       if (opened) {
         f7LoginScreen.current.open(false);

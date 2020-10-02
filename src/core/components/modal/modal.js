@@ -17,7 +17,6 @@ export default {
   },
   params: {
     modal: {
-      moveToRoot: true,
       queueDialogs: true,
     },
   },

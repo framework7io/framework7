@@ -29,6 +29,8 @@ export namespace LoginScreen {
     content?: string;
     /** true */
     animate?: boolean;
+    /** Element to mount modal to. (default app.el) */
+    containerEl?: HTMLElement | CSSSelector;
     /** Object with events handlers.. */
     on?: {
       [event in keyof Events]?: Events[event];

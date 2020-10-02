@@ -25,6 +25,7 @@
   export let swipeToClose = undefined;
   export let swipeToStep = undefined;
   export let swipeHandler = undefined;
+  export let containerEl = undefined;
 
   let el;
   let innerEl;
@@ -121,6 +122,7 @@
     if (typeof swipeToClose !== 'undefined') params.swipeToClose = swipeToClose;
     if (typeof swipeToStep !== 'undefined') params.swipeToStep = swipeToStep;
     if (typeof swipeHandler !== 'undefined') params.swipeHandler = swipeHandler;
+    if (typeof containerEl !== 'undefined') params.containerEl = containerEl;
 
     f7ready(() => {
       if (el && innerEl) {

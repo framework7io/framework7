@@ -10,7 +10,7 @@ import { watchProp } from '../shared/watch-prop';
   className?: string;
   style?: React.CSSProperties;
   init? : boolean
-  listEl? : string | Object
+  listEl? : string | object
   indexes? : string | Array<any>
   scrollList? : boolean
   label? : boolean

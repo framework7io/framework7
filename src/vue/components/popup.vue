@@ -44,6 +44,10 @@ export default {
       default: undefined,
     },
     push: Boolean,
+    containerEl: {
+      type: [String, Object],
+      default: undefined,
+    },
     ...colorProps,
   },
   emits: [
@@ -131,6 +135,7 @@ export default {
         backdropEl,
         swipeToClose,
         swipeHandler,
+        containerEl,
       } = props;
 
       if (typeof closeByBackdropClick !== 'undefined')
@@ -141,6 +146,7 @@ export default {
       if (typeof backdropEl !== 'undefined') popupParams.backdropEl = backdropEl;
       if (typeof swipeToClose !== 'undefined') popupParams.swipeToClose = swipeToClose;
       if (typeof swipeHandler !== 'undefined') popupParams.swipeHandler = swipeHandler;
+      if (typeof containerEl !== 'undefined') popupParams.containerEl = containerEl;
 
       f7ready(() => {
         f7Popup.value = f7.popup.create(popupParams);

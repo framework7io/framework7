@@ -12,6 +12,7 @@ export default {
       swipeToClose: false,
       swipeHandler: null,
       push: false,
+      containerEl: null,
     },
   },
   static: {

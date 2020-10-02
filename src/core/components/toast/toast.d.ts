@@ -39,6 +39,8 @@ export namespace Toast {
     cssClass?: string;
     /** Destroys toast instance on close (default false) */
     destroyOnClose?: boolean;
+    /** Element to mount modal to. (default app.el) */
+    containerEl?: HTMLElement | CSSSelector;
     /** Custom function to render Toast. Must return toast html */
     render?: () => string;
 

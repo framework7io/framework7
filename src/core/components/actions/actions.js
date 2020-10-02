@@ -14,6 +14,7 @@ export default {
       closeOnEscape: false,
       render: null,
       renderPopover: null,
+      containerEl: null,
     },
   },
   static: {

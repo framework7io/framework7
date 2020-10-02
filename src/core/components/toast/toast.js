@@ -39,6 +39,7 @@ export default {
       closeTimeout: null,
       cssClass: null,
       render: null,
+      containerEl: null,
     },
   },
 };

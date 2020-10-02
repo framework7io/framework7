@@ -49,6 +49,10 @@ export default {
       type: [String, Object],
       default: undefined,
     },
+    containerEl: {
+      type: [String, Object],
+      default: undefined,
+    },
     ...colorProps,
   },
   emits: [
@@ -121,6 +125,7 @@ export default {
         swipeToClose,
         swipeToStep,
         swipeHandler,
+        containerEl,
       } = props;
 
       if (typeof animate !== 'undefined') sheetParams.animate = animate;
@@ -134,6 +139,7 @@ export default {
       if (typeof swipeToClose !== 'undefined') sheetParams.swipeToClose = swipeToClose;
       if (typeof swipeToStep !== 'undefined') sheetParams.swipeToStep = swipeToStep;
       if (typeof swipeHandler !== 'undefined') sheetParams.swipeHandler = swipeHandler;
+      if (typeof containerEl !== 'undefined') sheetParams.containerEl = containerEl;
 
       f7ready(() => {
         f7Sheet = f7.sheet.create(sheetParams);

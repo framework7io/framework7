@@ -83,6 +83,7 @@
   - Popover, Login Screen, Actions, Sheet
     - added `animate` property
     - Removed component open/close methods
+    - added `containerEl` property to specify where to mount the modal
   - Sheet
     - Added `fixed` and `static` slots
   - Panel

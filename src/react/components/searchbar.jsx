@@ -23,17 +23,17 @@ import { Searchbar } from 'framework7/types';
   inputEvents? : string
   expandable? : boolean
   inline? : boolean
-  searchContainer? : string | Object
+  searchContainer? : string | object
   searchIn? : string
   searchItem? : string
   searchGroup? : string
   searchGroupTitle? : string
-  foundEl? : string | Object
-  notFoundEl? : string | Object
+  foundEl? : string | object
+  notFoundEl? : string | object
   backdrop? : boolean
-  backdropEl? : string | Object
-  hideOnEnableEl? : string | Object
-  hideOnSearchEl? : string | Object
+  backdropEl? : string | object
+  hideOnEnableEl? : string | object
+  hideOnSearchEl? : string | object
   ignore? : string
   customSearch? : boolean
   removeDiacritics? : boolean

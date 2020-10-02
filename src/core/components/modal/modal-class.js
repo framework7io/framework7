@@ -24,6 +24,12 @@ class Modal extends Framework7Class {
     modal.params = extend(defaults, params);
     modal.opened = false;
 
+    let $containerEl = modal.params.containerEl ? $(modal.params.containerEl).eq(0) : app.$el;
+    if (!$containerEl.length) $containerEl = app.$el;
+
+    modal.$containerEl = $containerEl;
+    modal.containerEl = $containerEl[0];
+
     // Install Modules
     modal.useModules();
 
@@ -98,8 +104,8 @@ class Modal extends Framework7Class {
 
     const $modalParentEl = $el.parent();
     const wasInDom = $el.parents(document).length > 0;
-    if (app.params.modal.moveToRoot && !$modalParentEl.is(app.$el)) {
-      app.$el.append($el);
+    if (!$modalParentEl.is(modal.$containerEl)) {
+      modal.$containerEl.append($el);
       modal.once(`${type}Closed`, () => {
         if (wasInDom) {
           $modalParentEl.append($el);

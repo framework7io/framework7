@@ -22,6 +22,7 @@
   export let closeByBackdropClick = undefined;
   export let closeByOutsideClick = undefined;
   export let closeOnEscape = undefined;
+  export let containerEl = undefined;
 
   let el;
   let f7Actions;
@@ -98,6 +99,7 @@
       params.closeByOutsideClick = closeByOutsideClick;
     if (typeof closeOnEscape !== 'undefined') params.closeOnEscape = closeOnEscape;
     if (typeof animate !== 'undefined') params.animate = animate;
+    if (typeof containerEl !== 'undefined') params.containerEl = containerEl;
 
     f7ready(() => {
       f7Actions = f7.actions.create(params);
