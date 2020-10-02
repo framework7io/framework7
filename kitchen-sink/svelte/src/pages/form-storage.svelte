@@ -53,7 +53,7 @@
       label="Birthday"
       name="birthday"
       type="date"
-      defaultValue="2014-04-30"
+      value="2014-04-30"
       placeholder="Please choose..."
     />
     <ListInput
