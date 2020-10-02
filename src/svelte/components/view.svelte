@@ -6,6 +6,8 @@
   import { getRouterInitialComponent } from '../shared/get-router-initial-component';
   import { useTab } from '../shared/use-tab';
 
+  import RouterContextProvider from './router-context-provider';
+
   export let id = undefined;
   export let style = undefined;
 
@@ -174,6 +176,8 @@
 <div class={classes} {style} {id} bind:this={el}>
   <slot />
   {#each pages as page (page.id)}
-    <svelte:component this={page.component} {...page.props} />
+    <RouterContextProvider route={page.props.f7route} router={page.props.f7router}>
+      <svelte:component this={page.component} {...page.props} />
+    </RouterContextProvider>
   {/each}
 </div>
