@@ -1,10 +1,12 @@
 <script>
-  import { createEventDispatcher, onMount, afterUpdate, onDestroy, getContext } from 'svelte';
+  import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins';
   import { classNames, extend, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
+  import { getReactiveContext } from '../shared/get-reactive-context';
+
   import TextEditor from './text-editor';
 
   const emit = createEmitter(createEventDispatcher, $$props);
@@ -93,8 +95,13 @@
     return f7ColorPicker;
   }
 
-  $: isSortable = sortable || getContext('f7ListSortable');
-  $: isSortableOpposite = sortableOpposite || getContext('f7ListSortableOpposite');
+  let ListContext =
+    getReactiveContext('ListContext', (newValue) => {
+      ListContext = newValue || {};
+    }) || {};
+
+  $: isSortable = sortable || ListContext.listIsSortable;
+  $: isSortableOpposite = sortableOpposite || ListContext.listIsSortableOpposite;
 
   function domValue() {
     if (!inputEl) return undefined;

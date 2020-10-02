@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   import {
     colorClasses,
     routerAttrs,
@@ -9,15 +9,14 @@
   } from '../shared/mixins';
   import { classNames, extend, isStringProp, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
   import { useTooltip } from '../shared/use-tooltip';
   import { useSmartSelect } from '../shared/use-smart-select';
   import { useRouteProps } from '../shared/use-route-props';
   import { useIcon } from '../shared/use-icon';
+  import { getReactiveContext } from '../shared/get-reactive-context';
 
   import UseIconComponent from './use-icon-component';
-
   import Badge from './badge';
 
   const emit = createEmitter(createEventDispatcher, $$props);
@@ -46,7 +45,12 @@
   let el;
   let f7SmartSelect;
 
-  let isTabbarLabel = tabbarLabel;
+  let TabbarContext =
+    getReactiveContext('TabbarContext', (newValue) => {
+      TabbarContext = newValue;
+    }) || {};
+
+  $: isTabbarLabel = tabbarLabel || TabbarContext.tabbarHasLabels;
 
   $: hrefComputed = href === true ? '#' : href || undefined;
 
@@ -93,17 +97,6 @@
     },
     () => el,
   );
-
-  onMount(() => {
-    f7ready(() => {
-      if (
-        tabbarLabel ||
-        ((tabLink || tabLink === '') && f7.$(el).parents('.tabbar-labels').length)
-      ) {
-        isTabbarLabel = true;
-      }
-    });
-  });
 </script>
 
 <!-- svelte-ignore a11y-missing-attribute -->
@@ -116,7 +109,7 @@
   use:useRouteProps={routeProps}
 >
   {#if icon}
-    <UseIconComponent {...icon} />
+    <UseIconComponent {icon} />
   {/if}
   <slot />
   {#if typeof text !== 'undefined' || typeof badge !== 'undefined'}

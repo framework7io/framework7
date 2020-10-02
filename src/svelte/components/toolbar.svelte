@@ -5,6 +5,7 @@
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
   import { useTheme } from '../shared/use-theme';
+  import { setReactiveContext } from '../shared/set-reactive-context';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -35,6 +36,10 @@
   let theme = useTheme((t) => {
     theme = t;
   });
+
+  setReactiveContext('TabbarContext', () => ({
+    tabbarHasLabels: labels,
+  }));
 
   $: classes = classNames(
     className,

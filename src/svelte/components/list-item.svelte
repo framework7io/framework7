@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher, onMount, onDestroy, afterUpdate, getContext } from 'svelte';
+  import { createEventDispatcher, onMount, onDestroy, afterUpdate } from 'svelte';
   import {
     colorClasses,
     routerClasses,
@@ -14,6 +14,7 @@
   import { useTooltip } from '../shared/use-tooltip';
   import { useSmartSelect } from '../shared/use-smart-select';
   import { useRouteProps } from '../shared/use-route-props';
+  import { getReactiveContext } from '../shared/get-reactive-context';
 
   import Badge from './badge';
 
@@ -89,10 +90,15 @@
     return f7SmartSelect;
   }
 
-  $: isMedia = mediaList || mediaItem || getContext('f7ListMedia');
-  $: isSortable = sortable || getContext('f7ListSortable');
-  $: isSortableOpposite = sortableOpposite || getContext('f7ListSortableOpposite');
-  $: isSimple = getContext('f7ListSimple');
+  let ListContext =
+    getReactiveContext('ListContext', (value) => {
+      ListContext = value || {};
+    }) || {};
+
+  $: isMedia = mediaList || mediaItem || ListContext.listIsMedia;
+  $: isSortable = sortable || ListContext.listIsSortable;
+  $: isSortableOpposite = sortableOpposite || ListContext.listIsSortableOpposite;
+  $: isSimple = ListContext.listIsSimple;
 
   $: liClasses = classNames(
     className,

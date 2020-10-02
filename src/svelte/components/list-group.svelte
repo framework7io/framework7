@@ -1,8 +1,9 @@
 <script>
-  import { setContext } from 'svelte';
   import { colorClasses } from '../shared/mixins';
   import { classNames } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
+  import { setReactiveContext } from '../shared/set-reactive-context';
+  import { getReactiveContext } from '../shared/get-reactive-context';
 
   let className = undefined;
   export { className as class };
@@ -12,18 +13,19 @@
   export let sortableOpposite = undefined;
   export let sortableTapHold = false;
   export let sortableMoveElements = undefined;
+  export let simpleList = undefined;
 
-  $: if (typeof mediaList !== 'undefined') {
-    setContext('f7ListMedia', mediaList);
-  }
+  let ListContext =
+    getReactiveContext('ListContext', (value) => {
+      ListContext = value || {};
+    }) || {};
 
-  $: if (typeof sortable !== 'undefined') {
-    setContext('f7ListSortable', sortable);
-  }
-
-  $: if (typeof sortable !== 'undefined' && typeof sortableOpposite !== 'undefined') {
-    setContext('f7ListSortableOpposite', sortable);
-  }
+  setReactiveContext('ListContext', () => ({
+    listIsMedia: mediaList || ListContext.listIsMedia,
+    listIsSimple: simpleList || ListContext.listIsSimple,
+    listIsSortable: sortable || ListContext.listIsSortable,
+    listIsSortableOpposite: sortableOpposite || ListContext.listIsSortableOpposite,
+  }));
 
   $: classes = classNames(
     className,

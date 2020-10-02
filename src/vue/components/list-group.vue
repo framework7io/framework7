@@ -19,6 +19,7 @@ export default {
   name: 'f7-list-group',
   props: {
     mediaList: Boolean,
+    simpleList: Boolean,
     sortable: Boolean,
     sortableOpposite: Boolean,
     sortableTapHold: Boolean,

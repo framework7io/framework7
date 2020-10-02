@@ -1,11 +1,12 @@
 <script>
-  import { createEventDispatcher, onMount, onDestroy, setContext } from 'svelte';
+  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins';
   import { classNames, extend, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
   import { useTab } from '../shared/use-tab';
+  import { setReactiveContext } from '../shared/set-reactive-context';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -65,11 +66,6 @@
     return f7VirtualList;
   }
 
-  setContext('f7ListMedia', mediaList);
-  setContext('f7ListSortable', sortable);
-  setContext('f7ListSortableOpposite', sortableOpposite);
-  setContext('f7ListSimple', simpleList);
-
   // eslint-disable-next-line
   $: hasUlSlots = hasSlots(arguments, 'default') || hasSlots(arguments, 'list');
 
@@ -111,6 +107,13 @@
     },
     colorClasses($$props),
   );
+
+  setReactiveContext('ListContext', () => ({
+    listIsMedia: mediaList,
+    listIsSimple: simpleList,
+    listIsSortable: sortable,
+    listIsSortableOpposite: sortableOpposite,
+  }));
 
   function onSubmit(event) {
     emit('submit', [event]);
