@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready, theme } from '../shared/f7';
+  import { useTheme } from '../shared/use-theme';
 
   import Link from './link';
 
@@ -18,13 +18,9 @@
   export let backLinkShowText = undefined;
   export let sliding = undefined;
 
-  // eslint-disable-next-line
-  let _theme = f7 ? theme : null;
-  if (!f7) {
-    f7ready(() => {
-      _theme = theme;
-    });
-  }
+  let theme = useTheme((t) => {
+    theme = t;
+  });
 
   $: classes = classNames(
     className,
@@ -36,7 +32,7 @@
   );
 
   $: needBackLinkText = backLinkShowText;
-  $: if (typeof needBackLinkText === 'undefined') needBackLinkText = _theme && !_theme.md;
+  $: if (typeof needBackLinkText === 'undefined') needBackLinkText = theme && !theme.md;
 
   $: backLinkText = backLink !== true && needBackLinkText ? backLink : undefined;
 

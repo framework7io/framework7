@@ -2,8 +2,8 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 as F7, f7ready, theme } from '../shared/f7';
   import { useTooltip } from '../shared/use-tooltip';
+  import { useTheme } from '../shared/use-theme';
 
   export let style = undefined;
 
@@ -20,26 +20,21 @@
   export let tooltipTrigger = undefined;
   export let size = undefined;
 
-  // eslint-disable-next-line
-  let _theme = F7 ? theme : null;
   let el;
+  let theme = useTheme((t) => {
+    theme = t;
+  });
 
   let classes = {
     icon: true,
   };
 
-  if (!F7) {
-    f7ready(() => {
-      _theme = theme;
-    });
-  }
-
   let themeIcon;
 
-  $: if (_theme) {
-    if (_theme.ios) themeIcon = ios;
-    if (_theme.md) themeIcon = md;
-    if (_theme.aurora) themeIcon = aurora;
+  $: if (theme) {
+    if (theme.ios) themeIcon = ios;
+    if (theme.md) themeIcon = md;
+    if (theme.aurora) themeIcon = aurora;
   }
 
   $: if (themeIcon) {
@@ -81,7 +76,7 @@
     }
     return textComputed;
   }
-  $: iconText = iconTextComputed(_theme);
+  $: iconText = iconTextComputed(theme);
 
   $: iconSize = typeof size === 'number' || parseFloat(size) === size * 1 ? `${size}px` : size;
 

@@ -2,7 +2,7 @@
   import { restProps } from '../shared/rest-props';
   import { colorClasses } from '../shared/mixins';
   import { classNames } from '../shared/utils';
-  import { f7, f7ready, theme } from '../shared/f7';
+  import { useTheme } from '../shared/use-theme';
 
   export let style = undefined;
 
@@ -10,14 +10,9 @@
   export { className as class };
   export let size = undefined;
 
-  // eslint-disable-next-line
-  let _theme = f7 ? theme : null;
-
-  if (!f7) {
-    f7ready(() => {
-      _theme = theme;
-    });
-  }
+  let theme = useTheme((t) => {
+    theme = t;
+  });
 
   $: sizeComputed =
     size && typeof size === 'string' && size.indexOf('px') >= 0 ? size.replace('px', '') : size;
@@ -33,13 +28,13 @@
 </script>
 
 <span style={preloaderStyle} class={classes} {...restProps($$restProps)}>
-  {#if _theme && _theme.md}
+  {#if theme && theme.md}
     <span class="preloader-inner">
       <span class="preloader-inner-gap" />
       <span class="preloader-inner-left"> <span class="preloader-inner-half-circle" /> </span>
       <span class="preloader-inner-right"> <span class="preloader-inner-half-circle" /> </span>
     </span>
-  {:else if _theme && _theme.ios}
+  {:else if theme && theme.ios}
     <span class="preloader-inner">
       <span class="preloader-inner-line" />
       <span class="preloader-inner-line" />
@@ -54,7 +49,7 @@
       <span class="preloader-inner-line" />
       <span class="preloader-inner-line" />
     </span>
-  {:else if _theme && _theme.aurora}
+  {:else if theme && theme.aurora}
     <span class="preloader-inner"> <span class="preloader-inner-circle" /> </span>
   {:else}<span class="preloader-inner" />{/if}
 </span>

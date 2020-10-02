@@ -3,8 +3,9 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, theme, f7ready } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
+  import { useTheme } from '../shared/use-theme';
 
   import NavLeft from './nav-left';
   import NavTitle from './nav-title';
@@ -35,8 +36,9 @@
   export let f7Slot = 'fixed';
 
   let el;
-  // eslint-disable-next-line
-  let _theme = f7 ? theme : null;
+  let theme = useTheme((t) => {
+    theme = t;
+  });
   let routerPositionClass = '';
   let largeCollapsed = false;
   let routerNavbarRole = null;
@@ -54,12 +56,6 @@
     f7.navbar.size(el);
   }
 
-  if (!f7) {
-    f7ready(() => {
-      _theme = theme;
-    });
-  }
-
   // eslint-disable-next-line
   $: hasLeftSlots = hasSlots(arguments, 'nav-left') || hasSlots(arguments, 'left');
   // eslint-disable-next-line
@@ -71,10 +67,10 @@
   // eslint-disable-next-line
   $: hasTitleLargeSlots = hasSlots(arguments, 'title-large');
 
-  $: addLeftTitleClass = _theme && _theme.ios && f7 && !f7.params.navbar.iosCenterTitle;
+  $: addLeftTitleClass = theme && theme.ios && f7 && !f7.params.navbar.iosCenterTitle;
   $: addCenterTitleClass =
-    (_theme && _theme.md && f7 && f7.params.navbar.mdCenterTitle) ||
-    (_theme && _theme.aurora && f7 && f7.params.navbar.auroraCenterTitle);
+    (theme && theme.md && f7 && f7.params.navbar.mdCenterTitle) ||
+    (theme && theme.aurora && f7 && f7.params.navbar.auroraCenterTitle);
 
   $: isLarge = large || largeTransparent;
   $: isTransparent = transparent || (isLarge && largeTransparent);

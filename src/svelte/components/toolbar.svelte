@@ -3,7 +3,8 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready, theme } from '../shared/f7';
+  import { f7, f7ready } from '../shared/f7';
+  import { useTheme } from '../shared/use-theme';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -31,14 +32,9 @@
   export let f7Slot = 'fixed';
 
   let el;
-  // eslint-disable-next-line
-  let _theme = f7 ? theme : null;
-
-  if (!f7) {
-    f7ready(() => {
-      _theme = theme;
-    });
-  }
+  let theme = useTheme((t) => {
+    theme = t;
+  });
 
   $: classes = classNames(
     className,
@@ -46,15 +42,15 @@
     {
       tabbar,
       'toolbar-bottom':
-        (_theme && _theme.md && bottomMd) ||
-        (_theme && _theme.ios && bottomIos) ||
-        (_theme && _theme.aurora && bottomAurora) ||
+        (theme && theme.md && bottomMd) ||
+        (theme && theme.ios && bottomIos) ||
+        (theme && theme.aurora && bottomAurora) ||
         bottom ||
         position === 'bottom',
       'toolbar-top':
-        (_theme && _theme.md && topMd) ||
-        (_theme && _theme.ios && topIos) ||
-        (_theme && _theme.aurora && topAurora) ||
+        (theme && theme.md && topMd) ||
+        (theme && theme.ios && topIos) ||
+        (theme && theme.aurora && topAurora) ||
         top ||
         position === 'top',
       'tabbar-labels': labels,
