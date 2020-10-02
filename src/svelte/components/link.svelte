@@ -14,9 +14,11 @@
   import { useTooltip } from '../shared/use-tooltip';
   import { useSmartSelect } from '../shared/use-smart-select';
   import { useRouteProps } from '../shared/use-route-props';
+  import { useIcon } from '../shared/use-icon';
+
+  import UseIconComponent from './use-icon-component';
 
   import Badge from './badge';
-  import Icon from './icon';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -31,7 +33,6 @@
   export let iconOnly = false;
   export let badge = undefined;
   export let badgeColor = undefined;
-  export let iconBadge = undefined;
   export let href = '#';
   export let target = undefined;
   export let tooltip = undefined;
@@ -79,15 +80,7 @@
     actionsClasses($$props),
   );
 
-  $: hasIcon =
-    $$props.icon ||
-    $$props.iconMaterial ||
-    $$props.iconF7 ||
-    $$props.iconMd ||
-    $$props.iconIos ||
-    $$props.iconAurora;
-
-  $: hasIconBadge = $$props.hasIconBadge;
+  $: icon = useIcon($$props);
 
   function onClick() {
     emit('click');
@@ -122,17 +115,8 @@
   use:useTooltip={{ tooltip, tooltipTrigger }}
   use:useRouteProps={routeProps}
 >
-  {#if hasIcon}
-    <Icon
-      material={$$props.iconMaterial}
-      f7={$$props.iconF7}
-      icon={$$props.icon}
-      md={$$props.iconMd}
-      ios={$$props.iconIos}
-      aurora={$$props.iconAurora}
-      color={$$props.iconColor}
-      size={$$props.iconSize}
-    >{#if iconBadge}<Badge color={badgeColor}>{iconBadge}</Badge>{/if}</Icon>
+  {#if icon}
+    <UseIconComponent {...icon} />
   {/if}
   <slot />
   {#if typeof text !== 'undefined' || typeof badge !== 'undefined'}

@@ -13,8 +13,9 @@
   import { hasSlots } from '../shared/has-slots';
   import { useTooltip } from '../shared/use-tooltip';
   import { useRouteProps } from '../shared/use-route-props';
+  import { useIcon } from '../shared/use-icon';
 
-  import Icon from './icon';
+  import UseIconComponent from './use-icon-component';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -66,13 +67,7 @@
     actionsClasses($$props),
   );
 
-  $: hasIcon =
-    $$props.icon ||
-    $$props.iconMaterial ||
-    $$props.iconF7 ||
-    $$props.iconMd ||
-    $$props.iconIos ||
-    $$props.iconAurora;
+  $: icon = useIcon($$props);
 
   $: isLink = link || href || href === '';
 
@@ -112,20 +107,11 @@
     use:useTooltip={{ tooltip, tooltipTrigger }}
     use:useRouteProps={routeProps}
   >
-    {#if typeof text !== 'undefined' || hasTextSlots || hasIcon}
+    {#if typeof text !== 'undefined' || hasTextSlots || icon}
       <div class="menu-item-content">
         {plainText(text)}
-        {#if hasIcon}
-        <Icon
-          material={$$props.iconMaterial}
-          f7={$$props.iconF7}
-          icon={$$props.icon}
-          md={$$props.iconMd}
-          ios={$$props.iconIos}
-          aurora={$$props.iconAurora}
-          color={$$props.iconColor}
-          size={$$props.iconSize}
-        />
+        {#if icon}
+          <UseIconComponent {...icon} />
         {/if}
         <slot name="text" />
       </div>
@@ -141,20 +127,11 @@
     use:useTooltip={{ tooltip, tooltipTrigger }}
     use:useRouteProps={routeProps}
   >
-    {#if typeof text !== 'undefined' || hasTextSlots || hasIcon}
+    {#if typeof text !== 'undefined' || hasTextSlots || icon}
       <div class="menu-item-content">
         {plainText(text)}
-        {#if hasIcon}
-        <Icon
-          material={$$props.iconMaterial}
-          f7={$$props.iconF7}
-          icon={$$props.icon}
-          md={$$props.iconMd}
-          ios={$$props.iconIos}
-          aurora={$$props.iconAurora}
-          color={$$props.iconColor}
-          size={$$props.iconSize}
-        />
+        {#if icon}
+          <UseIconComponent {...icon} />
         {/if}
         <slot name="text" />
       </div>

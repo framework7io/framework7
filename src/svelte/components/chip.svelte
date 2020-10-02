@@ -6,8 +6,9 @@
   import { restProps } from '../shared/rest-props';
   import { hasSlots } from '../shared/has-slots';
   import { useTooltip } from '../shared/use-tooltip';
+  import { useIcon } from '../shared/use-icon';
 
-  import Icon from './icon';
+  import UseIconComponent from './use-icon-component';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -48,13 +49,7 @@
   // eslint-disable-next-line
   $: hasDefaultSlots = hasSlots(arguments, 'default');
 
-  $: hasIcon =
-    $$props.icon ||
-    $$props.iconMaterial ||
-    $$props.iconF7 ||
-    $$props.iconMd ||
-    $$props.iconIos ||
-    $$props.iconAurora;
+  $: icon = useIcon($$props);
 
   function onClick(e) {
     emit('click', [e]);
@@ -72,18 +67,10 @@
   on:click={onClick}
   {...restProps($$restProps)}
   use:useTooltip={{ tooltip, tooltipTrigger }}>
-  {#if media || hasMediaSlots || hasIcon}
+  {#if media || hasMediaSlots || icon}
     <div class={mediaClasses}>
-      {#if hasIcon}
-        <Icon
-          material={$$props.iconMaterial}
-          f7={$$props.iconF7}
-          icon={$$props.icon}
-          md={$$props.iconMd}
-          ios={$$props.iconIos}
-          aurora={$$props.iconAurora}
-          color={$$props.iconColor}
-          size={$$props.iconSize} />
+      {#if icon}
+        <UseIconComponent {...icon} />
       {/if}
       {plainText(media)}
       <slot name="media" />

@@ -11,8 +11,9 @@
   import { restProps } from '../shared/rest-props';
   import { useTooltip } from '../shared/use-tooltip';
   import { useRouteProps } from '../shared/use-route-props';
+  import { useIcon } from '../shared/use-icon';
 
-  import Icon from './icon';
+  import UseIconComponent from './use-icon-component';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -113,13 +114,7 @@
 
   $: tagName = type === 'submit' || type === 'reset' || type === 'button' ? 'button' : 'a';
 
-  $: hasIcon =
-    $$props.icon ||
-    $$props.iconMaterial ||
-    $$props.iconF7 ||
-    $$props.iconMd ||
-    $$props.iconIos ||
-    $$props.iconAurora;
+  $: icon = useIcon($$props);
 
   function onClick() {
     emit('click');
@@ -136,17 +131,8 @@
     use:useTooltip={{ tooltip, tooltipTrigger }}
     {...attrs}
   >
-    {#if hasIcon}
-      <Icon
-        material={$$props.iconMaterial}
-        f7={$$props.iconF7}
-        icon={$$props.icon}
-        md={$$props.iconMd}
-        ios={$$props.iconIos}
-        aurora={$$props.iconAurora}
-        color={$$props.iconColor}
-        size={$$props.iconSize}
-      />
+    {#if icon}
+      <UseIconComponent {...icon} />
     {/if}
     {#if typeof text !== 'undefined'}
       <span>{plainText(text)}</span>
@@ -162,17 +148,8 @@
     use:useTooltip={{ tooltip, tooltipTrigger }}
     {...attrs}
   >
-    {#if hasIcon}
-      <Icon
-        material={$$props.iconMaterial}
-        f7={$$props.iconF7}
-        icon={$$props.icon}
-        md={$$props.iconMd}
-        ios={$$props.iconIos}
-        aurora={$$props.iconAurora}
-        color={$$props.iconColor}
-        size={$$props.iconSize}
-      />
+    {#if icon}
+      <UseIconComponent {...icon} />
     {/if}
     {#if typeof text !== 'undefined'}
       <span>{plainText(text)}</span>

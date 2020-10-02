@@ -11,8 +11,9 @@
   import { restProps } from '../shared/rest-props';
   import { f7, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
+  import { useIcon } from '../shared/use-icon';
 
-  import Icon from './icon';
+  import UseIconComponent from './use-icon-component';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -68,13 +69,7 @@
 
   $: needToggle = typeof toggle === 'undefined' ? hasChildren : toggle;
 
-  $: hasIcon =
-    $$props.icon ||
-    $$props.iconMaterial ||
-    $$props.iconF7 ||
-    $$props.iconMd ||
-    $$props.iconIos ||
-    $$props.iconAurora;
+  $: icon = useIcon($$props);
 
   $: treeviewRootTag = link || link === '' ? 'a' : 'div';
 
@@ -125,17 +120,8 @@
       {/if}
       <div class="treeview-item-content">
         <slot name="content-start" />
-        {#if hasIcon}
-          <Icon
-            material={$$props.iconMaterial}
-            f7={$$props.iconF7}
-            icon={$$props.icon}
-            md={$$props.iconMd}
-            ios={$$props.iconIos}
-            aurora={$$props.iconAurora}
-            color={$$props.iconColor}
-            size={$$props.iconSize}
-          />
+        {#if icon}
+          <UseIconComponent {...icon} />
         {/if}
         <slot name="media" />
         <div class="treeview-item-label">
@@ -161,17 +147,8 @@
       {/if}
       <div class="treeview-item-content">
         <slot name="content-start" />
-        {#if hasIcon}
-          <Icon
-            material={$$props.iconMaterial}
-            f7={$$props.iconF7}
-            icon={$$props.icon}
-            md={$$props.iconMd}
-            ios={$$props.iconIos}
-            aurora={$$props.iconAurora}
-            color={$$props.iconColor}
-            size={$$props.iconSize}
-          />
+        {#if icon}
+          <UseIconComponent {...icon} />
         {/if}
         <slot name="media" />
         <div class="treeview-item-label">
