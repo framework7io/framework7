@@ -91,8 +91,13 @@ class Component {
             })
             .catch((err) => {
               reject(err);
-              throw new Error(err);
             });
+        } else {
+          reject(
+            new Error(
+              'Framework7: Component render function is not a "function" type. Didn\'t you forget to "return $render"?',
+            ),
+          );
         }
       });
 
@@ -143,7 +148,6 @@ class Component {
         })
         .catch((err) => {
           reject(err);
-          throw new Error(err);
         });
     });
   }
@@ -164,7 +168,6 @@ class Component {
     const ctx = extend(
       {},
       {
-        $context: this.context,
         $f7route: this.context.f7route,
         $f7router: this.context.f7router,
         $h,
@@ -174,9 +177,10 @@ class Component {
         $f7: this.f7,
         $f7ready: this.f7ready,
         $theme: this.theme,
-        $getEl: this.getEl.bind(this),
+        $el: this.getEl.bind(this),
         $tick: this.tick.bind(this),
         $update: this.update.bind(this),
+        $emit: this.emit.bind(this),
       },
     );
     if (includeHooks)
@@ -196,6 +200,11 @@ class Component {
 
   render() {
     return this.renderFunction(this.getComponentContext());
+  }
+
+  emit(name, data) {
+    if (!this.el) return;
+    this.$el.trigger(name, data);
   }
 
   attachEvents() {
@@ -270,8 +279,7 @@ class Component {
     });
   }
 
-  setState(mergeState = {}, callback) {
-    merge(this, mergeState);
+  setState(callback) {
     return this.update(callback);
   }
 

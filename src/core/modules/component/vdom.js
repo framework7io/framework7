@@ -7,12 +7,18 @@ import { isObject } from '../../shared/utils';
 const SELF_CLOSING = 'area base br col command embed hr img input keygen link menuitem meta param source track wbr'.split(
   ' ',
 );
-const PROPS_ATTRS = 'hidden checked disabled readonly selected autofocus autoplay required multiple value indeterminate'.split(
+const PROPS_ATTRS = 'hidden checked disabled readonly selected autofocus autoplay required multiple value indeterminate routeProps'.split(
   ' ',
 );
 const BOOLEAN_PROPS = 'hidden checked disabled readonly selected autofocus autoplay required multiple readOnly indeterminate'.split(
   ' ',
 );
+
+const getTagName = (treeNode) => {
+  return typeof treeNode.type === 'function'
+    ? treeNode.type.name || 'CustomComponent'
+    : treeNode.type;
+};
 
 const toCamelCase = (name) => {
   return name
@@ -23,7 +29,7 @@ const toCamelCase = (name) => {
     })
     .join('');
 };
-const contextFromAttrs = (...args) => {
+const propsFromAttrs = (...args) => {
   const context = {};
   args.forEach((obj = {}) => {
     Object.keys(obj).forEach((key) => {
@@ -35,8 +41,9 @@ const contextFromAttrs = (...args) => {
 };
 
 const createCustomComponent = ({ f7, treeNode, vnode, tagName, data }) => {
+  const component = typeof treeNode.type === 'function' ? treeNode.type : customComponents[tagName];
   f7.component
-    .create(customComponents[tagName], contextFromAttrs(data.attrs || {}, data.props || {}), {
+    .create(component, propsFromAttrs(data.attrs || {}, data.props || {}), {
       el: vnode.elm,
       children: treeNode.children,
     })
@@ -54,7 +61,7 @@ const updateCustomComponent = (vnode) => {
   // eslint-disable-next-line
   const component = vnode && vnode.elm && vnode.elm.__component__;
   if (!component) return;
-  const newProps = contextFromAttrs(vnode.data.attrs || {}, vnode.data.props || {});
+  const newProps = propsFromAttrs(vnode.data.attrs || {}, vnode.data.props || {});
   component.children = vnode.data.treeNode.children;
   Object.assign(component.props, newProps);
   component.update();
@@ -76,17 +83,21 @@ const destroyCustomComponent = (vnode) => {
   }
 };
 
-const isCustomComponent = (tagName) => {
-  return tagName && tagName.indexOf('-') > 0 && customComponents[tagName];
+const isCustomComponent = (treeNodeType) => {
+  return (
+    typeof treeNodeType === 'function' ||
+    (treeNodeType && treeNodeType.indexOf('-') > 0 && customComponents[treeNodeType])
+  );
 };
 
-function getHooks(treeNode, data, f7, initial, isRoot, tagName) {
+function getHooks(treeNode, data, f7, initial, isRoot) {
   const hooks = {};
   const insert = [];
   const destroy = [];
   const update = [];
   const postpatch = [];
   let isFakeElement = false;
+  const tagName = getTagName(treeNode);
   if (data && data.attrs && data.attrs.component) {
     // eslint-disable-next-line
     tagName = data.attrs.component;
@@ -94,10 +105,12 @@ function getHooks(treeNode, data, f7, initial, isRoot, tagName) {
     isFakeElement = true;
   }
 
-  if (isCustomComponent(tagName)) {
+  const isCustom = isCustomComponent(treeNode.type);
+
+  if (isCustom) {
     insert.push((vnode) => {
       if (vnode.sel !== tagName && !isFakeElement) return;
-      createCustomComponent({ f7, treeNode, vnode, tagName, data });
+      createCustomComponent({ f7, treeNode, vnode, data });
     });
     destroy.push((vnode) => {
       destroyCustomComponent(vnode);
@@ -107,7 +120,7 @@ function getHooks(treeNode, data, f7, initial, isRoot, tagName) {
     });
   }
 
-  if (!isCustomComponent) {
+  if (!isCustom) {
     if (!data || !data.attrs || !data.attrs.class) return hooks;
 
     const classNames = data.attrs.class;
@@ -180,7 +193,7 @@ const getEventHandler = (eventHandler, { stop, prevent, once } = {}) => {
 
 const getData = (treeNode, component, f7, initial, isRoot) => {
   const data = { component, treeNode };
-  const tagName = treeNode.type;
+  const tagName = getTagName(treeNode);
   Object.keys(treeNode.props).forEach((attrName) => {
     const attrValue = treeNode.props[attrName];
     if (typeof attrValue === 'undefined') return;
@@ -190,6 +203,10 @@ const getData = (treeNode, component, f7, initial, isRoot) => {
       if (attrName === 'readonly') {
         // eslint-disable-next-line
         attrName = 'readOnly';
+      }
+      if (attrName === 'routeProps') {
+        // eslint-disable-next-line
+        attrName = 'f7RouteProps';
       }
       if (tagName === 'option' && attrName === 'value') {
         if (!data.attrs) data.attrs = {};
@@ -245,7 +262,7 @@ const getData = (treeNode, component, f7, initial, isRoot) => {
     if (!data.attrs) data.attrs = {};
     data.attrs[`data-f7-${component.id}`] = '';
   }
-  const hooks = getHooks(treeNode, data, f7, initial, isRoot, tagName);
+  const hooks = getHooks(treeNode, data, f7, initial, isRoot);
 
   hooks.prepatch = (oldVnode, vnode) => {
     if (!oldVnode || !vnode) return;
@@ -314,7 +331,8 @@ const treeNodeToVNode = (treeNode, component, f7, initial, isRoot) => {
   const children = isCustomComponent(treeNode.type)
     ? []
     : getChildren(treeNode, component, f7, initial);
-  return h(treeNode.type, data, children);
+
+  return h(getTagName(treeNode), data, children);
 };
 
 export default function vdom(tree = {}, component, initial) {

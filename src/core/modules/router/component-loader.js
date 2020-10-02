@@ -23,7 +23,11 @@ export default {
           f7route: options.route,
           f7router: router,
         });
-        const componentProps = options.route.params || {};
+        const componentProps = merge(
+          options.route.params || {},
+          options.props || {},
+          options.routeProps || {},
+        );
         let componentEl;
         let componentRoot;
         if (options.componentOptions && options.componentOptions.el) {
