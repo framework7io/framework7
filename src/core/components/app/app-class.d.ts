@@ -4,7 +4,7 @@ import { DeviceParams, Device } from '../../shared/get-device';
 import { Support } from '../../shared/get-support';
 import { Request } from '../../shared/request';
 import { Utils } from '../../shared/utils';
-import { ComponentClass, ComponentOptions } from '../../modules/component/component';
+import { ComponentClass, ComponentFunction as Component } from '../../modules/component/component';
 
 // Css Selector string is an option on many F7 methods
 // Giving this alias makes the typename show in the intellisense
@@ -185,9 +185,9 @@ declare class Framework7 implements Framework7 {
   static Events: Events;
   static Component: ComponentClass;
   /** Register custom component */
-  static registerComponent(tagName: string, component: ComponentOptions | ComponentClass): void;
-  /** Register component mixin */
-  static registerComponentMixin(mixinName: string, mixin: ComponentOptions): void;
+  static registerComponent(tagName: string, component: Component): void;
+  /** Unregister custom component */
+  static unregisterComponent(tagName: string): void;
 }
 
 export default Framework7;

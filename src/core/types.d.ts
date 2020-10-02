@@ -13,7 +13,7 @@ import { Utils } from './types/shared/utils';
 import { Framework7Parameters, Framework7Plugin } from './types/components/app/app-class';
 
 // IMPORT_MODULES
-import { ComponentClass as Component, ComponentOptions } from './types/modules/component/component';
+import { ComponentFunction as Component } from './types/modules/component/component';
 
 // IMPORT_COMPONENTS
 
@@ -34,7 +34,6 @@ export {
   Utils,
   Dom7,
   Component,
-  ComponentOptions,
   Framework7Parameters,
   Framework7Plugin,
   RouterModule as Router,

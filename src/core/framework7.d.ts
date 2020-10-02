@@ -7,7 +7,7 @@ import { getDevice } from './types/shared/get-device';
 import { Utils } from './types/shared/utils';
 
 // IMPORT_MODULES
-import { ComponentClass as Component, ComponentOptions } from './types/modules/component/component';
+import { ComponentFunction as Component } from './types/modules/component/component';
 
 // IMPORT_COMPONENTS
 

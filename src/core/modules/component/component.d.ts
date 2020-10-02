@@ -6,95 +6,79 @@ import Framework7, {
 import { Dom7, Dom7Array } from 'dom7';
 import { Router } from '../../modules/router/router';
 
-export class ComponentClass {
-  constructor(app: Framework7, context?: object, options?: ComponentOptions);
+interface ComponentRender extends Function {}
+
+export interface ComponentContext {
   /** Component ID */
   $id: string | number;
   /** Dom7 library */
   $: Dom7;
-  /** Dom7 library */
-  $$: Dom7;
-  /** Dom7 library */
-  $dom7: Dom7;
   /** Current route. Contains object with route query, hash, params, path and url */
   $f7route: Router.Route;
-  /** Current route. Contains object with route query, hash, params, path and url */
-  $route: Router.Route;
-  /** Router instance */
-  $router: Router.Router;
   /** Router instance */
   $f7router: Router.Router;
   /** Framework7 app instance */
   $f7: Framework7;
-  /** Framework7 app instance */
-  $app: Framework7;
   /** Object with md, ios and aurora boolean properties which indicating current theme.  */
   $theme: {
     ios: boolean;
     md: boolean;
     aurora: boolean;
   };
-  $options: ComponentOptions;
   /** Root data and methods you have specified in data and methods properties on app init */
   $root: object;
-  /** Dom7 instance with component HTML element */
-  $el: Dom7Array;
-  /** Component's HTML element */
-  el: HTMLElement;
-  /** Props passed to custom component */
-  $props: object;
+  /** Function returns Dom7 instance with component HTML element */
+  $el: () => Dom7Array;
   /** Defer the callback to be executed after the next DOM update cycle. Use it immediately after you’ve changed some data to wait for the DOM update.  */
   $tick: (callback?: () => void) => Promise<any>;
   /** Update/rerender component when state/data changed  */
-  $update: () => void;
-  /** Component method where you pass mergeState object that will be merged with current component state */
-  $setState: (mergeState?: object) => void;
+  $update: (callback?: () => void) => Promise<any>;
+  /** Emits DOM event on component element */
+  $emit: (name: string, data: any) => void;
+  /** Tagged template literal */
+  $h: any;
+  /** Render function */
+  $render: ComponentRender;
+  /** Attach event handler to component root DOM element */
+  $on: (eventName, handler: () => void) => void;
+  /** Attach event handler to component root DOM element that will be executed only once */
+  $once: (eventName, handler: () => void) => void;
+  /** Hook called right before component will be added to DOM */
+  $onBeforeMount: (callback: () => void) => void;
+  /** Hook called right after component has been added to DOM */
+  $onMounted: (callback: () => void) => void;
+  /** Hook called right before component VDOM will be patched */
+  $onBeforeUpdate: (callback: () => void) => void;
+  /** Hook called right after component VDOM has been patched */
+  $onUpdated: (callback: () => void) => void;
+  /** Hook called right before component will be destoyed */
+  $onBeforeUnmount: (callback: () => void) => void;
+  /** Hook called when component destroyed */
+  $onUnmounted: (callback: () => void) => void;
 }
-export interface ComponentOptions {
-  mixins?: ComponentOptions[] | string[];
-  /** Render function to render component. Must return full html string or HTMLElement */
-  render?: (this: ComponentClass) => string | HTMLElement;
-  /** Component data, function must return component context data or Promise that should be resolved with data */
-  data?: (this: ComponentClass) => any;
-  /** Component CSS styles. Styles will be added to the document after component will be mounted (added to DOM), and removed after component will be destroyed (removed from the DOM) */
-  style?: string;
-  /** Object with additional component methods which extend component context */
-  methods?: { [name: string]: (this: ComponentClass, ...args: any) => any };
-  /** Object with page events handlers */
-  on?: { [event: string]: (this: ComponentClass, e: Event, page: any) => void };
-  /** Object with page events once handlers */
-  once?: { [event: string]: (this: ComponentClass, e: Event, page: any) => void };
+export interface ComponentFunction {
+  (props: any, ctx: ComponentContext): ComponentRender | any;
+}
+export class ComponentClass {
+  constructor(app: Framework7, component: ComponentFunction, props?: object, context?: object);
+}
 
-  /** Called synchronously immediately after the component has been initialized, before data and event/watcher setup. */
-  beforeCreate?: (this: ComponentClass) => void;
-  /** Called synchronously after the component is created, context data and methods are available and component element $el is also created and available */
-  created?: (this: ComponentClass) => void;
-  /** Called right before component will be added to DOM */
-  beforeMount?: (this: ComponentClass) => void;
-  /** Called right after component was be added to DOM */
-  mounted?: (this: ComponentClass) => void;
-  /** Called right after component VDOM has been patched */
-  updated?: (this: ComponentClass) => void;
-  /** Called right before component will be destoyed */
-  beforeDestroy?: (this: ComponentClass) => void;
-  /** Called when component destroyed */
-  destroyed?: (this: ComponentClass) => void;
-}
 export namespace Component {
   interface AppMethods {
     /** Object with router/view cache data */
     component: {
       /** Create and init component */
       create(
-        component: ComponentClass['constructor'] | ComponentOptions,
+        component: ComponentFunction,
+        props?: object,
         context?: object,
       ): Promise<ComponentClass>;
       /** Parse component from single file component-style string */
-      parse(componentString: string): ComponentOptions;
+      parse(componentString: string): ComponentFunction;
       /** Register custom component */
-      registerComponent(tagName: string, component: ComponentOptions | ComponentClass): void;
-      /** Register component mixin */
-      registerComponentMixin(mixinName: string, mixin: ComponentOptions): void;
+      registerComponent(tagName: string, component: ComponentFunction): void;
+      /** Unregister custom component */
+      unregisterComponent(tagName: string): void;
     };
   }
   interface AppParams {}

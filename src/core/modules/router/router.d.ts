@@ -6,7 +6,7 @@ import Framework7, {
 import { Dom7, Dom7Array } from 'dom7';
 import { View } from '../../components/view/view';
 
-import { ComponentClass, ComponentOptions } from '../../modules/component/component';
+import { ComponentFunction as Component } from '../../modules/component/component';
 import { Actions } from '../../components/actions/actions';
 import { Popup } from '../../components/popup/popup';
 import { LoginScreen } from '../../components/login-screen/login-screen';
@@ -22,7 +22,7 @@ export namespace Router {
     /** Load page content via Ajax. */
     url?: string;
     /** Load page from passed Framework7 Router Component */
-    component?: ComponentOptions | ComponentClass | Function;
+    component?: Component | Function;
     /** load pages as a component via Ajax */
     componentUrl?: string;
     /** Do required asynchronous manipulation and the return required route content and options */
@@ -55,7 +55,7 @@ export namespace Router {
     /** Load page content via Ajax. */
     url?: string;
     /** Load page from passed Framework7 Router Component */
-    component?: ComponentOptions | ComponentClass | Function;
+    component?: Component | Function;
     /** load pages as a component via Ajax */
     componentUrl?: string;
     /** Do required asynchronous manipulation and the return required route content and options */
@@ -116,8 +116,6 @@ export namespace Router {
     reloadAll?: boolean;
     /** previous pages history will be cleared after reloading/navigate to the specified route */
     clearPreviousHistory?: boolean;
-    /** custom/extended context for Component page (when route loaded from component or componentUrl) */
-    context?: object;
     /** If set to `true` then it will ignore if such URL in cache and reload it using XHR again */
     ignoreCache?: boolean;
     /** if set to `true` then it will ignore previous page in history and load specified one */
@@ -151,8 +149,8 @@ export namespace Router {
     hash: string;
     /** object with matching route from available routes */
     route: RouteParameters;
-    /** context that was passed to the route */
-    context: object;
+    /** props that were passed to the route */
+    props: object;
   }
   interface Page {
     /** Initialized app instance */
@@ -183,8 +181,6 @@ export namespace Router {
     route: Route;
     /** Page data of the page that was currently active before this new page. */
     pageFrom: Page;
-    /** Template7 context that was passed for this page when using Template7 pages */
-    context: object;
   }
   interface Router extends Framework7EventsClass<Events> {
     /** Link to global app instance */
