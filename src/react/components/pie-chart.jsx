@@ -28,6 +28,7 @@ const PieChart = forwardRef((props, ref) => {
   const extraAttrs = getExtraAttrs(props);
 
   const [currentIndex, setCurrentIndex] = useState(null);
+  const previousIndex = useRef(null);
   const elRef = useRef(null);
   const f7Tooltip = useRef(null);
 
@@ -110,7 +111,6 @@ const PieChart = forwardRef((props, ref) => {
   const setTooltip = () => {
     if (currentIndex === null && !f7Tooltip.current) return;
     if (!tooltip || !elRef.current || !f7) return;
-    emit(props, 'select', currentIndex, datasets[currentIndex]);
     if (currentIndex !== null && !f7Tooltip.current) {
       f7Tooltip.current = f7.tooltip.create({
         trigger: 'manual',
@@ -139,6 +139,9 @@ const PieChart = forwardRef((props, ref) => {
   };
 
   useEffect(() => {
+    if (previousIndex.current === currentIndex) return;
+    previousIndex.current = currentIndex;
+    emit(props, 'select', currentIndex, datasets[currentIndex]);
     setTooltip();
   }, [currentIndex]);
 

@@ -236,9 +236,10 @@ export default {
           datasets: currentValues,
         });
       }
-      const labelText = props.formatTooltipAxisLabel
+      let labelText = props.formatTooltipAxisLabel
         ? props.formatTooltipAxisLabel(props.axisLabels[index])
         : formatAxisLabelMethod(props.axisLabels[index]);
+      if (!labelText) labelText = '';
       const totalText = props.formatTooltipTotal ? props.formatTooltipTotal(total) : total;
       // prettier-ignore
       const datasetsText = currentValues.length > 0 ? `
@@ -271,7 +272,7 @@ export default {
         if (f7Tooltip && f7Tooltip.hide) f7Tooltip.hide();
         return;
       }
-      emit(props, 'select', index);
+
       if (index !== null && !f7Tooltip) {
         f7Tooltip = f7.tooltip.create({
           trigger: 'manual',
@@ -321,6 +322,7 @@ export default {
     watch(
       () => currentIndex.value,
       () => {
+        emit('select', currentIndex.value);
         setTooltip();
       },
     );

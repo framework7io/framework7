@@ -50,6 +50,7 @@ const AreaChart = forwardRef((props, ref) => {
   } = props;
 
   const [currentIndex, setCurrentIndex] = useState(null);
+  const previousIndex = useRef(null);
   const [hiddenDatasets, setHiddenDatasets] = useState([]);
 
   const extraAttrs = getExtraAttrs(props);
@@ -186,9 +187,10 @@ const AreaChart = forwardRef((props, ref) => {
         datasets: currentValues,
       });
     }
-    const labelText = formatTooltipAxisLabel
+    let labelText = formatTooltipAxisLabel
       ? formatTooltipAxisLabel(axisLabels[currentIndex])
       : formatAxisLabel(axisLabels[currentIndex]);
+    if (!labelText) labelText = '';
     const totalText = formatTooltipTotal ? formatTooltipTotal(total) : total;
     // prettier-ignore
     const datasetsText = currentValues.length > 0 ? `
@@ -219,7 +221,7 @@ const AreaChart = forwardRef((props, ref) => {
       if (f7Tooltip.current && f7Tooltip.current.hide) f7Tooltip.current.hide();
       return;
     }
-    emit(props, 'select', currentIndex);
+
     if (currentIndex !== null && !f7Tooltip.current) {
       f7Tooltip.current = f7.tooltip.create({
         trigger: 'manual',
@@ -283,6 +285,9 @@ const AreaChart = forwardRef((props, ref) => {
   };
 
   useEffect(() => {
+    if (previousIndex.current === currentIndex) return;
+    previousIndex.current = currentIndex;
+    emit(props, 'select', currentIndex);
     setTooltip();
   }, [currentIndex]);
 

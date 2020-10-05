@@ -131,7 +131,7 @@ export default {
       const index = currentIndex.value;
       if (index === null && !f7Tooltip) return;
       if (!props.tooltip || !elRef.value || !f7) return;
-      emit(props, 'select', index, props.datasets[index]);
+
       if (index !== null && !f7Tooltip) {
         f7Tooltip = f7.tooltip.create({
           trigger: 'manual',
@@ -158,6 +158,7 @@ export default {
     watch(
       () => currentIndex.value,
       () => {
+        emit('select', currentIndex.value, props.datasets[currentIndex.value]);
         setTooltip();
       },
     );

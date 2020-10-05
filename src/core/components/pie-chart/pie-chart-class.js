@@ -123,11 +123,10 @@ class PieChart extends Framework7Class {
   setTooltip() {
     const self = this;
     const { currentIndex, el, app, params } = self;
-    const { tooltip, datasets } = params;
+    const { tooltip } = params;
     if (currentIndex === null && !self.f7Tooltip) return;
     if (!tooltip || !el) return;
-    self.$el.trigger('piechart:select', { index: currentIndex, dataset: datasets[currentIndex] });
-    self.emit('local::select pieChartSelect', self, currentIndex, datasets[currentIndex]);
+
     if (currentIndex !== null && !self.f7Tooltip) {
       self.f7Tooltip = app.tooltip.create({
         trigger: 'manual',
@@ -197,8 +196,18 @@ class PieChart extends Framework7Class {
     return self;
   }
 
+  setCurrentIndex(index) {
+    const self = this;
+    if (index === self.currentIndex) return;
+    const { datasets } = self.params;
+    self.currentIndex = index;
+    self.$el.trigger('piechart:select', { index, dataset: datasets[index] });
+    self.emit('local::select pieChartSelect', self, index, datasets[index]);
+  }
+
   showTooltip(e) {
-    this.currentIndex = parseInt(e.target.getAttribute('data-index'), 10);
+    const newIndex = parseInt(e.target.getAttribute('data-index'), 10);
+    this.setCurrentIndex(newIndex);
     this.$svgEl
       .find('path')
       .removeClass('pie-chart-hidden')
@@ -209,7 +218,7 @@ class PieChart extends Framework7Class {
   }
 
   hideTooltip() {
-    this.currentIndex = null;
+    this.setCurrentIndex(null);
     this.$svgEl.find('path').removeClass('pie-chart-hidden');
     this.setTooltip();
   }

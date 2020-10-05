@@ -248,8 +248,7 @@ class AreaChart extends Framework7Class {
       if (self.f7Tooltip && self.f7Tooltip.hide) self.f7Tooltip.hide();
       return;
     }
-    self.$el.trigger('areachart:select', { index: currentIndex });
-    self.emit('local::select areaChartSelect', self, currentIndex);
+
     if (currentIndex !== null && !self.f7Tooltip) {
       self.f7Tooltip = app.tooltip.create({
         trigger: 'manual',
@@ -277,7 +276,10 @@ class AreaChart extends Framework7Class {
   }
 
   setCurrentIndex(index) {
+    if (index === this.currentIndex) return;
     this.currentIndex = index;
+    this.$el.trigger('areachart:select', { index });
+    this.emit('local::select areaChartSelect', this, index);
     this.$svgEl.find('line').removeClass('area-chart-current-line');
     this.$svgEl.find(`line[data-index="${index}"]`).addClass('area-chart-current-line');
     this.setTooltip();
