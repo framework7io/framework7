@@ -33,13 +33,6 @@
           `)}
         </ul>
       </div>
-      <div class="block-title">Route Context</div>
-      <div class="block block-strong">
-        <p>Context can be passed in route options</p>
-        <ul>
-          <li>foo: ${$context.foo}</li>
-        </ul>
-      </div>
       <div class="block-title">Extended Context</div>
       <div class="block block-strong">
         <p>Component page context as Template7 page context is also extended with some additional variables.</p>
@@ -51,23 +44,22 @@
           <li><b>$f7route.params</b>: ${JSON.stringify($f7route.params)}</li>
           <li><b>$f7route.hash</b>: ${$f7route.hash}</li>
           <li><b>$f7route.query</b>: ${JSON.stringify($f7route.query)}</li>
-          <li><b>$f7route.context</b>: ${JSON.stringify($f7route.context)}</li>
         </ul>
 
-        <h4>$root</h4>
-        <p>Root data & methods:</p>
+        <h4>$store</h4>
+        <p>Store state & methods (actions):</p>
         <ul style="padding-left:25px">
-          <li><b>$root.user.firstName</b>: ${$root.user.firstName}</li>
-          <li><b>$root.user.lastName</b>: ${$root.user.lastName}</li>
-          <li><a @click=${()=> $root.helloWorld()}>$root.helloWorld()</a></li>
+          <li><b>$store.state.firstName</b>: ${$store.state.firstName}</li>
+          <li><b>$store.state.lastName</b>: ${$store.state.lastName}</li>
+          <li><a @click=${()=> $store.action('helloWorld')}>$store.action('helloWorld')</a></li>
         </ul>
 
         <h4>$theme</h4>
         <p>Currently active theme:</p>
         <ul style="padding-left:25px">
-          <li><b>$theme.ios</b>: ${$theme.ios}</li>
-          <li><b>$theme.md</b>: ${$theme.md}</li>
-          <li><b>$theme.aurora</b>: ${$theme.aurora}</li>
+          <li><b>$theme.ios</b>: ${String($theme.ios)}</li>
+          <li><b>$theme.md</b>: ${String($theme.md)}</li>
+          <li><b>$theme.aurora</b>: ${String($theme.aurora)}</li>
         </ul>
       </div>
       <div class="block-title">Virtual DOM</div>
@@ -122,6 +114,7 @@
     $onUpdated,
     $onBeforeUnmount,
     $onUnmounted,
+    $store,
   }) => {
     // Component Data
     const age = 25;
@@ -200,20 +193,5 @@
 
 
     return $render;
-  }
-  return {
-    // Component Data
-    data: function () {
-      // Must return an object
-      return {
-
-      }
-    },
-    // Component Methods
-    methods: {
-
-    },
-
-
   }
 </script>

@@ -11,18 +11,17 @@ if (document.location.search.indexOf('theme=') >= 0) {
 var app = new Framework7({
   id: 'io.framework7.testapp',
   el: '#app',
-  theme: theme,
-  data: function () {
-    return {
-      user: {
-        firstName: 'John',
-        lastName: 'Doe',
+  theme,
+  // store,
+  store: {
+    state: {
+      firstName: 'John',
+      lastName: 'Doe',
+    },
+    actions: {
+      helloWorld(ctx) {
+        app.dialog.alert('Hello world');
       },
-    };
-  },
-  methods: {
-    helloWorld: function () {
-      app.dialog.alert('Hello World!');
     },
   },
   routes: routes,
