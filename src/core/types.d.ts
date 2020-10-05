@@ -14,6 +14,7 @@ import { Framework7Parameters, Framework7Plugin } from './types/components/app/a
 
 // IMPORT_MODULES
 import { ComponentFunction as Component } from './types/modules/component/component';
+import { StoreObject as Store, StoreParameters } from './types/modules/store/store';
 
 // IMPORT_COMPONENTS
 
@@ -37,6 +38,8 @@ export {
   Framework7Parameters,
   Framework7Plugin,
   RouterModule as Router,
+  Store,
+  StoreParameters,
 };
 // EXPORT_COMPONENTS
 export default Framework7;

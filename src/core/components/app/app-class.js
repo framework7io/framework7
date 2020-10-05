@@ -87,6 +87,8 @@ class Framework7 extends Framework7Class {
       online: window.navigator.onLine,
     });
 
+    if (params.store) app.params.store = params.store;
+
     // Save Root
     if (app.$el && app.$el[0]) {
       app.$el[0].f7 = app;
@@ -95,8 +97,8 @@ class Framework7 extends Framework7Class {
     // Install Modules
     app.useModules();
 
-    // Init Data & Methods
-    app.initData();
+    // Init Store
+    app.initStore();
 
     // Init
     if (app.params.init) {
@@ -151,27 +153,12 @@ class Framework7 extends Framework7Class {
     app.emit('mount');
   }
 
-  initData() {
+  initStore() {
     const app = this;
-
-    // Data
-    app.data = {};
-    if (app.params.data && typeof app.params.data === 'function') {
-      extend(app.data, app.params.data.bind(app)());
-    } else if (app.params.data) {
-      extend(app.data, app.params.data);
-    }
-
-    // Methods
-    app.methods = {};
-    if (app.params.methods) {
-      Object.keys(app.params.methods).forEach((methodName) => {
-        if (typeof app.params.methods[methodName] === 'function') {
-          app.methods[methodName] = app.params.methods[methodName].bind(app);
-        } else {
-          app.methods[methodName] = app.params.methods[methodName];
-        }
-      });
+    if (typeof app.params.store !== 'undefined' && app.params.store.__store) {
+      app.store = app.params.store;
+    } else {
+      app.store = app.createStore(app.params.store);
     }
   }
 
@@ -209,7 +196,7 @@ class Framework7 extends Framework7Class {
     app.router.componentLoader(
       app.params.component,
       app.params.componentUrl,
-      { componentOptions: { el: app.$el[0], root: true } },
+      { componentOptions: { el: app.$el[0] } },
       (el) => {
         app.$el = $(el);
         app.$el[0].f7 = app;

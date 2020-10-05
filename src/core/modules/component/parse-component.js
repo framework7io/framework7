@@ -76,6 +76,7 @@ function parseComponent(componentString) {
           var $f7router = $$ctx.$f7router;
           var $theme = $$ctx.$theme;
           var $update = $$ctx.$update;
+          var $store = $$ctx.$store;
 
           return $h\`${template}\`
         }

@@ -13,8 +13,7 @@ import vdom from './vdom';
 import patch from './patch';
 
 class Component {
-  constructor(app, component, props = {}, { root, el, context, children } = {}) {
-    const window = getWindow();
+  constructor(app, component, props = {}, { el, context, children } = {}) {
     const document = getDocument();
     merge(this, {
       f7: app,
@@ -22,7 +21,6 @@ class Component {
       context: context || {},
       id: component.id || generateId(),
       children: children || [],
-      isRootComponent: !!root,
       theme: {
         ios: app.theme === 'ios',
         md: app.theme === 'md',
@@ -30,6 +28,7 @@ class Component {
       },
       style: component.style,
       styleScoped: component.styleScoped,
+      __storeCallbacks: [],
       __updateQueue: [],
       __eventHandlers: [],
       __onceEventHandlers: [],
@@ -39,41 +38,6 @@ class Component {
       __onUpdated: [],
       __onBeforeUnmount: [],
       __onUnmounted: [],
-    });
-
-    // Root data and methods
-    Object.defineProperty(this, 'root', {
-      enumerable: true,
-      configurable: true,
-      get: () => {
-        if (this.isRootComponent) {
-          return this;
-        }
-        if (app.rootComponent) {
-          if (!this.onRootUpdated) {
-            this.onRootUpdated = () => this.update();
-            app.on('rootComponentUpdated', this.onRootUpdated);
-          }
-          return app.rootComponent;
-        }
-        let rootData = merge({}, app.data, app.methods);
-        if (window && window.Proxy) {
-          rootData = new window.Proxy(rootData, {
-            set(target, name, val) {
-              app.data[name] = val;
-            },
-            deleteProperty(target, name) {
-              delete app.data[name];
-              delete app.methods[name];
-            },
-            has(target, name) {
-              return name in app.data || name in app.methods;
-            },
-          });
-        }
-        return rootData;
-      },
-      set() {},
     });
 
     const createComponent = () => {
@@ -165,13 +129,29 @@ class Component {
   }
 
   getComponentContext(includeHooks) {
+    const { state, get, action } = this.f7.store;
+    const $store = {
+      state,
+      get,
+      action,
+    };
+    $store.get = (name, onUpdated) => {
+      const result = {};
+      const callback = (newValue) => {
+        result.value = newValue;
+        if (onUpdated) onUpdated(newValue);
+        this.update();
+      };
+      this.__storeCallbacks.push(callback);
+      result.value = get(name, callback);
+      return result;
+    };
     const ctx = extend(
       {},
       {
         $f7route: this.context.f7route,
         $f7router: this.context.f7router,
         $h,
-        $root: this.root,
         $,
         $id: this.id,
         $f7: this.f7,
@@ -181,6 +161,7 @@ class Component {
         $tick: this.tick.bind(this),
         $update: this.update.bind(this),
         $emit: this.emit.bind(this),
+        $store,
       },
     );
     if (includeHooks)
@@ -269,9 +250,6 @@ class Component {
       const resolver = () => {
         resolve();
         if (callback) callback();
-        if (this.isRootComponent) {
-          this.f7.emit('rootComponentUpdated');
-        }
       };
       this.__updateIsPending = true;
       this.__updateQueue.push(resolver);
@@ -305,10 +283,6 @@ class Component {
     this.hook('onBeforeUnmount');
 
     if (this.styleEl) $(this.styleEl).remove();
-    if (this.onRootUpdated) {
-      this.f7.off('rootComponentUpdated', this.onRootUpdated);
-      delete this.onRootUpdated;
-    }
 
     this.detachEvents();
     this.hook('onUnmounted');
@@ -323,6 +297,10 @@ class Component {
     }
     // Clear update queue
     window.cancelAnimationFrame(this.__requestAnimationFrameId);
+    this.__storeCallbacks.forEach((callback) => {
+      this.f7.store.__removeWatcher(callback);
+    });
+    this.__storeCallbacks = [];
     this.__updateQueue = [];
     this.__eventHandlers = [];
     this.__onceEventHandlers = [];

@@ -52,10 +52,6 @@ export interface Framework7Parameters {
   language?: string;
   /** Array with default routes to all views.. (default []) */
   routes?: Router.RouteParameters[];
-  /** App root data. Must be a function that returns an object with root data.  Note, that this inside of this data function points to app Framework7 instance.. */
-  data?: () => any;
-  /** App root methods. Object with methods.  Note, that this inside of each method points to app Framework7 instance.. (default {}) */
-  methods?: { [name: string]: () => any };
   /** Enables auto dark theme */
   autoDarkTheme?: boolean;
   /** Lazy modules path */
