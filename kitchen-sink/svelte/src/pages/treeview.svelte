@@ -20,7 +20,7 @@
       'info.docx': false,
     },
     '.gitignore': false,
-    '.index.html': false,
+    'index.html': false,
   };
   let selectedItem = null;
   let loadedChildren = [];
