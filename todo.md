@@ -8,6 +8,8 @@
 - [ ] tooltip set target
 - [x] add containerEl to modals
 - [ ] fix data table selected row
+- [x] new store
+  - [ ] changelog
 - [ ] new router component
   - [x] update TS
   - [x] remove templateLoader
