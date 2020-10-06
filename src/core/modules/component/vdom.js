@@ -40,8 +40,9 @@ const propsFromAttrs = (...args) => {
   return context;
 };
 
-const createCustomComponent = ({ f7, treeNode, vnode, tagName, data }) => {
-  const component = typeof treeNode.type === 'function' ? treeNode.type : customComponents[tagName];
+const createCustomComponent = ({ f7, treeNode, vnode, data }) => {
+  const component =
+    typeof treeNode.type === 'function' ? treeNode.type : customComponents[treeNode.type];
   f7.component
     .create(component, propsFromAttrs(data.attrs || {}, data.props || {}), {
       el: vnode.elm,
