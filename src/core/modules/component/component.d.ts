@@ -5,6 +5,7 @@ import Framework7, {
 } from '../../components/app/app-class';
 import { Dom7, Dom7Array } from 'dom7';
 import { Router } from '../../modules/router/router';
+import { StoreObject as Store } from '../../modules/store/store';
 
 interface ComponentRender extends Function {}
 
@@ -25,10 +26,13 @@ export interface ComponentContext {
     md: boolean;
     aurora: boolean;
   };
-  /** Root data and methods you have specified in data and methods properties on app init */
-  $root: object;
-  /** Function returns Dom7 instance with component HTML element */
-  $el: () => Dom7Array;
+  /** Main app store */
+  $store: Store;
+  /** Object where `value` contains Dom7 instance with component HTML element */
+  $el: {
+    value: Dom7Array;
+  };
+
   /** Defer the callback to be executed after the next DOM update cycle. Use it immediately after you’ve changed some data to wait for the DOM update.  */
   $tick: (callback?: () => void) => Promise<any>;
   /** Update/rerender component when state/data changed  */

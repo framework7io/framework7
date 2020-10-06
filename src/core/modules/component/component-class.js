@@ -2,13 +2,7 @@
 import { getWindow, getDocument } from 'ssr-window';
 import $ from '../../shared/dom7';
 import $h from './$h';
-import {
-  id as generateId,
-  merge,
-  extend,
-  eventNameToColonCase,
-  deleteProps,
-} from '../../shared/utils';
+import { id as generateId, merge, eventNameToColonCase, deleteProps } from '../../shared/utils';
 import vdom from './vdom';
 import patch from './patch';
 
@@ -124,10 +118,6 @@ class Component {
     this.__onceEventHandlers.push({ eventName, handler });
   }
 
-  getEl() {
-    return this.$el;
-  }
-
   getComponentStore() {
     const { state, get, action } = this.f7.store;
     const $store = {
@@ -158,12 +148,17 @@ class Component {
       $f7: this.f7,
       $f7ready: this.f7ready,
       $theme: this.theme,
-      $el: this.getEl.bind(this),
       $tick: this.tick.bind(this),
       $update: this.update.bind(this),
       $emit: this.emit.bind(this),
       $store: this.getComponentStore(),
+      $el: {},
     };
+    Object.defineProperty(ctx.$el, 'value', {
+      get: () => {
+        return this.$el;
+      },
+    });
     if (includeHooks)
       Object.assign(ctx, {
         $on: this.on.bind(this),
