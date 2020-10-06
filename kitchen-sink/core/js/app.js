@@ -12,18 +12,9 @@ var app = new Framework7({
   id: 'io.framework7.testapp',
   el: '#app',
   theme,
-  // store,
-  store: {
-    state: {
-      firstName: 'John',
-      lastName: 'Doe',
-    },
-    actions: {
-      helloWorld(ctx) {
-        app.dialog.alert('Hello world');
-      },
-    },
-  },
+  // store.js,
+  store: store,
+  // routes.js,
   routes: routes,
   popup: {
     closeOnEscape: true,

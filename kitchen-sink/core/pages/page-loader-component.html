@@ -46,14 +46,6 @@
           <li><b>$f7route.query</b>: ${JSON.stringify($f7route.query)}</li>
         </ul>
 
-        <h4>$store</h4>
-        <p>Store state & methods (actions):</p>
-        <ul style="padding-left:25px">
-          <li><b>$store.state.firstName</b>: ${$store.state.firstName}</li>
-          <li><b>$store.state.lastName</b>: ${$store.state.lastName}</li>
-          <li><a @click=${()=> $store.action('helloWorld')}>$store.action('helloWorld')</a></li>
-        </ul>
-
         <h4>$theme</h4>
         <p>Currently active theme:</p>
         <ul style="padding-left:25px">
@@ -69,16 +61,16 @@
       </div>
       <div class="block block-strong">
         <p>Ok, so your name is <b>${name}</b>?</p>
-        <div class=${`input ${$theme.md ? 'margin-bottom' : '' }`}>
+        <div class="input ${$theme.md ? 'margin-bottom' : '' }">
           <input class="padding-bottom" type="text" @input=${onInput} value=${name} placeholder="Type your name" />
           <div class="input-info">Type new name and it be dynamically changed</div>
         </div>
       </div>
       <div class="block block-strong">
-        <p>Button clicked <b>${clickCounter}</b> times</p>
+        <p>Button clicked <b>${clickCounter}</b> times (double is ${clickCounter * 2})</p>
         <p><a class="button button-round button-fill" @click=${onButtonClick}>Increase Counter</a></p>
       </div>
-      ${listItems ? $h`
+      ${listItems && $h`
       <div class="list simple-list">
         <ul>
           ${listItems.map((item) => $h`
@@ -86,13 +78,44 @@
           `)}
         </ul>
       </div>
-      ` : $h`
+      `}
+      ${!listItems && $h`
       <div class="block block-strong text-align-center">
         ${listLoading ? $h`
         <div class="preloader"></div>
         ` : $h`
         <p><a class="button button-round button-fill" @click=${loadList}>Load List</a></p>
         `}
+      </div>
+      `}
+
+      <div class="block-title">Store ($store)</div>
+      <div class="block block-strong">
+        <p>Store state & methods (actions):</p>
+        <ul style="padding-left:25px">
+          <li><b>$store.state.firstName</b>: ${$store.state.firstName}</li>
+          <li><b>$store.state.lastName</b>: ${$store.state.lastName}</li>
+          <li><a @click=${()=> $store.action('helloWorld')}>$store.action('helloWorld')</a></li>
+        </ul>
+      </div>
+      <div class="block-title">Store reactivity</div>
+      ${!users.value && $h`
+      <div class="block block-strong text-align-center">
+        ${usersLoading.value && $h`
+        <div class="preloader"></div>
+        `}
+        ${!usersLoading.value && $h`
+        <a class="button button-round button-fill" @click=${loadUsers}>Load Users</a>
+        `}
+      </div>
+      `}
+      ${users.value && $h`
+      <div class="list simple-list">
+        <ul>
+          ${users.value.map((user) => $h`
+          <li>${user}</li>
+          `)}
+        </ul>
       </div>
       `}
     </div>
@@ -143,9 +166,16 @@
       // Emulate Ajax request
       setTimeout(() => {
         listLoading = false;
-        listItems = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        listItems = [1, 2, 3, 4, 5];
         $update();
       }, 2000);
+    }
+
+    // Store
+    let users = $store.get('users');
+    let usersLoading = $store.get('usersLoading');
+    function loadUsers() {
+      $store.action('loadUsers');
     }
 
     // Lifecycle Hooks
