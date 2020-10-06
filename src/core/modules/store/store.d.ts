@@ -1,9 +1,12 @@
 import { Framework7Plugin } from '../app/app-class';
 
+interface StoreGetterValue {
+  value: any;
+}
 export interface StoreObject {
   state: any;
-  get: (name: string, onUpdated: (value: any) => any) => any;
-  dispatch: (name: string, data: any) => Promise<any>;
+  get: (name: string, onUpdated: (value: any) => any) => StoreGetterValue;
+  action: (name: string, data: any) => Promise<any>;
 }
 export interface StoreParameters {
   state: object;

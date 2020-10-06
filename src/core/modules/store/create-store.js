@@ -29,14 +29,22 @@ function createStore(storeParams = {}) {
   const removePropCallback = (callback) => {
     Object.keys(propsCallbacks).forEach((key) => {
       const callbacks = propsCallbacks[key];
+
       if (callbacks.indexOf(callback) >= 0) {
         callbacks.splice(callbacks.indexOf(callback), 1);
+      }
+
+      for (let i = callbacks.length - 1; i >= 0; i -= 1) {
+        const cb = callbacks[i];
+        if (cb.originalCallback && cb.originalCallback === callback) {
+          callbacks.splice(i, 1);
+        }
       }
     });
   };
 
   // eslint-disable-next-line
-  store.__removeWatcher = (callback) => {
+  store._removeCallback = (callback) => {
     removePropCallback(callback);
   };
 
@@ -55,8 +63,19 @@ function createStore(storeParams = {}) {
   store.get = (key, onUpdated) => {
     propsQueue = [];
     const value = getters[key]({ state: store.state });
-    if (onUpdated) addPropCallback(onUpdated);
-    return value;
+    const obj = {
+      value,
+      // eslint-disable-next-line
+      _callback(v) {
+        obj.value = v;
+        if (onUpdated) onUpdated(v);
+      },
+    };
+    // eslint-disable-next-line
+    obj._callback.originalCallback = onUpdated;
+    // eslint-disable-next-line
+    addPropCallback(obj._callback);
+    return obj;
   };
 
   store.action = (actionName, data) => {

@@ -125,15 +125,12 @@ class Component {
       action,
     };
     $store.get = (name, onUpdated) => {
-      const result = {};
       const callback = (newValue) => {
-        result.value = newValue;
         if (onUpdated) onUpdated(newValue);
         this.update();
       };
       this.__storeCallbacks.push(callback);
-      result.value = get(name, callback);
-      return result;
+      return get(name, callback);
     };
     return $store;
   }
@@ -293,7 +290,7 @@ class Component {
     // Clear update queue
     window.cancelAnimationFrame(this.__requestAnimationFrameId);
     this.__storeCallbacks.forEach((callback) => {
-      this.f7.store.__removeWatcher(callback);
+      this.f7.store._removeCallback(callback);
     });
     this.__storeCallbacks = [];
     this.__updateQueue = [];
