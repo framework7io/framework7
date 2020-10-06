@@ -77,6 +77,10 @@ var routes = [
     componentUrl: './pages/appbar.html',
   },
   {
+    path: '/area-chart/',
+    componentUrl: './pages/area-chart.html',
+  },
+  {
     path: '/autocomplete/',
     componentUrl: './pages/autocomplete.html',
   },
@@ -219,6 +223,10 @@ var routes = [
   {
     path: '/picker/',
     componentUrl: './pages/picker.html',
+  },
+  {
+    path: '/pie-chart/',
+    componentUrl: './pages/pie-chart.html',
   },
   {
     path: '/popup/',
