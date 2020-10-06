@@ -49,7 +49,7 @@ class Component {
         if (typeof componentResult === 'function') {
           resolve(componentResult);
         } else if (componentResult instanceof Promise) {
-          componentResult()
+          componentResult
             .then((render) => {
               resolve(render);
             })
@@ -128,11 +128,10 @@ class Component {
     return this.$el;
   }
 
-  getComponentContext(includeHooks) {
+  getComponentStore() {
     const { state, get, action } = this.f7.store;
     const $store = {
       state,
-      get,
       action,
     };
     $store.get = (name, onUpdated) => {
@@ -146,26 +145,27 @@ class Component {
       result.value = get(name, callback);
       return result;
     };
-    const ctx = extend(
-      {},
-      {
-        $f7route: this.context.f7route,
-        $f7router: this.context.f7router,
-        $h,
-        $,
-        $id: this.id,
-        $f7: this.f7,
-        $f7ready: this.f7ready,
-        $theme: this.theme,
-        $el: this.getEl.bind(this),
-        $tick: this.tick.bind(this),
-        $update: this.update.bind(this),
-        $emit: this.emit.bind(this),
-        $store,
-      },
-    );
+    return $store;
+  }
+
+  getComponentContext(includeHooks) {
+    const ctx = {
+      $f7route: this.context.f7route,
+      $f7router: this.context.f7router,
+      $h,
+      $,
+      $id: this.id,
+      $f7: this.f7,
+      $f7ready: this.f7ready,
+      $theme: this.theme,
+      $el: this.getEl.bind(this),
+      $tick: this.tick.bind(this),
+      $update: this.update.bind(this),
+      $emit: this.emit.bind(this),
+      $store: this.getComponentStore(),
+    };
     if (includeHooks)
-      extend(ctx, {
+      Object.assign(ctx, {
         $on: this.on.bind(this),
         $once: this.once.bind(this),
         $onBeforeMount: (handler) => this.__onBeforeMount.push(handler),
