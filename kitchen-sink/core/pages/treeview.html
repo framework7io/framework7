@@ -226,7 +226,7 @@
               <div class="treeview-toggle"></div>
               <div class="treeview-item-content">
                 <label class="checkbox">
-                  <input type="checkbox">
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
                 <i class="icon f7-icons">folder_fill</i>
@@ -238,7 +238,7 @@
                 <div class="treeview-item-root">
                   <div class="treeview-item-content">
                     <label class="checkbox">
-                      <input type="checkbox">
+                      <input type="checkbox" />
                       <i class="icon-checkbox"></i>
                     </label>
                     <i class="icon f7-icons">photo_fill</i>
@@ -250,7 +250,7 @@
                 <div class="treeview-item-root">
                   <div class="treeview-item-content">
                     <label class="checkbox">
-                      <input type="checkbox">
+                      <input type="checkbox" />
                       <i class="icon-checkbox"></i>
                     </label>
                     <i class="icon f7-icons">photo_fill</i>
@@ -265,7 +265,7 @@
               <div class="treeview-toggle"></div>
               <div class="treeview-item-content">
                 <label class="checkbox">
-                  <input type="checkbox">
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
                 <i class="icon f7-icons">folder_fill</i>
@@ -277,7 +277,7 @@
                 <div class="treeview-item-root">
                   <div class="treeview-item-content">
                     <label class="checkbox">
-                      <input type="checkbox">
+                      <input type="checkbox" />
                       <i class="icon-checkbox"></i>
                     </label>
                     <i class="icon f7-icons">doc_text_fill</i>
@@ -289,7 +289,7 @@
                 <div class="treeview-item-root">
                   <div class="treeview-item-content">
                     <label class="checkbox">
-                      <input type="checkbox">
+                      <input type="checkbox" />
                       <i class="icon-checkbox"></i>
                     </label>
                     <i class="icon f7-icons">doc_text_fill</i>
@@ -303,7 +303,7 @@
             <div class="treeview-item-root">
               <div class="treeview-item-content">
                 <label class="checkbox">
-                  <input type="checkbox">
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
                 <i class="icon f7-icons">logo_github</i>
@@ -315,7 +315,7 @@
             <div class="treeview-item-root">
               <div class="treeview-item-content">
                 <label class="checkbox">
-                  <input type="checkbox">
+                  <input type="checkbox" />
                   <i class="icon-checkbox"></i>
                 </label>
                 <i class="icon f7-icons">doc_text_fill</i>
@@ -406,7 +406,7 @@
       <div class="block block-strong no-padding-horizontal">
         <div class="treeview">
           <div class="treeview-item">
-            <div class="treeview-item-root treeview-item-selectable" @click="toggleSelectable">
+            <div class="treeview-item-root treeview-item-selectable" @click=${toggleSelectable}>
               <div class="treeview-toggle"></div>
               <div class="treeview-item-content">
                 <i class="icon f7-icons">folder_fill</i>
@@ -415,7 +415,7 @@
             </div>
             <div class="treeview-item-children">
               <div class="treeview-item">
-                <div class="treeview-item-root treeview-item-selectable" @click="toggleSelectable">
+                <div class="treeview-item-root treeview-item-selectable" @click=${toggleSelectable}>
                   <div class="treeview-item-content">
                     <i class="icon f7-icons">photo_fill</i>
                     <div class="treeview-item-label">avatar.png</div>
@@ -423,7 +423,7 @@
                 </div>
               </div>
               <div class="treeview-item">
-                <div class="treeview-item-root treeview-item-selectable" @click="toggleSelectable">
+                <div class="treeview-item-root treeview-item-selectable" @click=${toggleSelectable}>
                   <div class="treeview-item-content">
                     <i class="icon f7-icons">photo_fill</i>
                     <div class="treeview-item-label">background.jpg</div>
@@ -433,7 +433,7 @@
             </div>
           </div>
           <div class="treeview-item">
-            <div class="treeview-item-root treeview-item-selectable" @click="toggleSelectable">
+            <div class="treeview-item-root treeview-item-selectable" @click=${toggleSelectable}>
               <div class="treeview-toggle"></div>
               <div class="treeview-item-content">
                 <i class="icon f7-icons">folder_fill</i>
@@ -442,7 +442,7 @@
             </div>
             <div class="treeview-item-children">
               <div class="treeview-item">
-                <div class="treeview-item-root treeview-item-selectable" @click="toggleSelectable">
+                <div class="treeview-item-root treeview-item-selectable" @click=${toggleSelectable}>
                   <div class="treeview-item-content">
                     <i class="icon f7-icons">doc_text_fill</i>
                     <div class="treeview-item-label">cv.docx</div>
@@ -450,7 +450,7 @@
                 </div>
               </div>
               <div class="treeview-item">
-                <div class="treeview-item-root treeview-item-selectable" @click="toggleSelectable">
+                <div class="treeview-item-root treeview-item-selectable" @click=${toggleSelectable}>
                   <div class="treeview-item-content">
                     <i class="icon f7-icons">doc_text_fill</i>
                     <div class="treeview-item-label">info.docx</div>
@@ -460,7 +460,7 @@
             </div>
           </div>
           <div class="treeview-item">
-            <div class="treeview-item-root treeview-item-selectable" @click="toggleSelectable">
+            <div class="treeview-item-root treeview-item-selectable" @click=${toggleSelectable}>
               <div class="treeview-item-content">
                 <i class="icon f7-icons">logo_github</i>
                 <div class="treeview-item-label">.gitignore</div>
@@ -468,7 +468,7 @@
             </div>
           </div>
           <div class="treeview-item">
-            <div class="treeview-item-root treeview-item-selectable" @click="toggleSelectable">
+            <div class="treeview-item-root treeview-item-selectable" @click=${toggleSelectable}>
               <div class="treeview-item-content">
                 <i class="icon f7-icons">doc_text_fill</i>
                 <div class="treeview-item-label">index.html</div>
@@ -481,7 +481,7 @@
       <div class="block-title">Preload children</div>
       <div class="block block-strong no-padding-horizontal">
         <div class="treeview">
-          <div class="treeview-item treeview-load-children" @treeview:loadchildren="loadChildren">
+          <div class="treeview-item treeview-load-children" @treeview:loadchildren=${loadChildren}>
             <div class="treeview-item-root">
               <div class="treeview-toggle"></div>
               <div class="treeview-item-content">
@@ -490,16 +490,16 @@
               </div>
             </div>
             <div class="treeview-item-children">
-              {{#each loadedChildren}}
+              ${loadedChildren.map((item) => $h`
               <div class="treeview-item">
                 <div class="treeview-item-root">
                   <div class="treeview-item-content">
                     <i class="icon f7-icons">person_fill</i>
-                    <div class="treeview-item-label">{{name}}</div>
+                    <div class="treeview-item-label">${item.name}</div>
                   </div>
                 </div>
               </div>
-              {{/each}}
+              `)}
             </div>
           </div>
         </div>
@@ -578,65 +578,55 @@
   </div>
 </template>
 <script>
+  export default (props, { $f7, $el, $, $on, $update }) => {
+    let loadedChildren = [];
 
-  return {
-    data: function () {
-      return {
-        loadedChildren: [],
-      };
-    },
-    methods: {
-      toggleSelectable: function (e) {
-        var self = this;
-        var $ = self.$;
-        var $targetEl = $(e.target);
-        if ($targetEl.closest('.treeview-item-selected').length) return;
-        if ($targetEl.is('.treeview-toggle')) return;
-        $targetEl.parents('.treeview').find('.treeview-item-selected').removeClass('treeview-item-selected')
-        $targetEl.closest('.treeview-item-selectable').addClass('treeview-item-selected')
-      },
-      loadChildren: function (e) {
-        var self = this;
-        var done = e.detail;
-        setTimeout(function () {
-          // call done() to hide preloader
-          done();
-          self.$setState({
-            loadedChildren: [
-              {
-                name: 'John Doe',
-              },
-              {
-                name: 'Jane Doe',
-              },
-              {
-                name: 'Calvin Johnson',
-              },
-            ]
-          })
-        }, 2000);
-      },
-    },
-    on: {
-      pageInit: function () {
-        var self = this;
-        var $ = self.$;
-        $(self.$el).find('input[type="checkbox"]').on('change', function (e) {
-          var $rootEl = $(e.target).closest('.treeview-item-root');
-          var $itemEl = $rootEl.parent('.treeview-item');
-          var $childrenCheckboxes = $itemEl.find('.treeview-item-children input[type="checkbox"]');
-          var $parentItemEl = $itemEl.parents('.treeview-item');
-          var $parentCheckbox = $parentItemEl.children('.treeview-item-root').find('input[type="checkbox"]');
-          if ($childrenCheckboxes.length) {
-            $childrenCheckboxes.prop('checked', e.target.checked);
-          }
-          if ($parentItemEl) {
-            var checkedChildren = $parentItemEl.find('.treeview-item-children input[type="checkbox"]:checked').length;
-            $parentCheckbox.prop('checked', checkedChildren > 0);
-            $parentCheckbox.prop('indeterminate', checkedChildren === 1);
-          }
-        })
-      }
+    const toggleSelectable = (e) => {
+      var $targetEl = $(e.target);
+      if ($targetEl.closest('.treeview-item-selected').length) return;
+      if ($targetEl.is('.treeview-toggle')) return;
+      $targetEl.parents('.treeview').find('.treeview-item-selected').removeClass('treeview-item-selected')
+      $targetEl.closest('.treeview-item-selectable').addClass('treeview-item-selected')
     }
+    const loadChildren = (e) => {
+      var done = e.detail;
+      setTimeout(function () {
+        // call done() to hide preloader
+        done();
+        loadedChildren = [
+          {
+            name: 'John Doe',
+          },
+          {
+            name: 'Jane Doe',
+          },
+          {
+            name: 'Calvin Johnson',
+          },
+        ];
+        $update();
+      }, 2000);
+    }
+
+    $on('pageInit', () => {
+      $($el.value).find('input[type="checkbox"]').on('change', function (e) {
+        var $rootEl = $(e.target).closest('.treeview-item-root');
+        var $itemEl = $rootEl.parent('.treeview-item');
+        var $childrenCheckboxes = $itemEl.find('.treeview-item-children input[type="checkbox"]');
+        var $parentItemEl = $itemEl.parents('.treeview-item');
+        var $parentCheckbox = $parentItemEl.children('.treeview-item-root').find('input[type="checkbox"]');
+        if ($childrenCheckboxes.length) {
+          $childrenCheckboxes.prop('checked', e.target.checked);
+        }
+        if ($parentItemEl) {
+          var checkedChildren = $parentItemEl.find('.treeview-item-children input[type="checkbox"]:checked').length;
+          $parentCheckbox.prop('checked', checkedChildren > 0);
+          $parentCheckbox.prop('indeterminate', checkedChildren === 1);
+        }
+      })
+    });
+
+    return $render;
   };
+
 </script>

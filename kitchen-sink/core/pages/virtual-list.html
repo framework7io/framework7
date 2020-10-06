@@ -62,7 +62,7 @@
     $onMounted(() => {
       virtualList = $f7.virtualList.create({
         // List Element
-        el: $el().find('.virtual-list'),
+        el: $el.value.find('.virtual-list'),
         // Pass array with items
         items,
         // Custom search function for searchbar

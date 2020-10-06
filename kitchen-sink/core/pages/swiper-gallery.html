@@ -15,12 +15,18 @@
     <div class="page-content">
       <div class="swiper-container demo-swiper-gallery-top">
         <div class="swiper-wrapper">
-          <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-1.jpg)" class="swiper-slide"></div>
-          <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-2.jpg)" class="swiper-slide"></div>
-          <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-3.jpg)" class="swiper-slide"></div>
-          <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-4.jpg)" class="swiper-slide"></div>
-          <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-5.jpg)" class="swiper-slide"></div>
-          <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-6.jpg)" class="swiper-slide"></div>
+          <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-1.jpg)"
+            class="swiper-slide"></div>
+          <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-2.jpg)"
+            class="swiper-slide"></div>
+          <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-3.jpg)"
+            class="swiper-slide"></div>
+          <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-4.jpg)"
+            class="swiper-slide"></div>
+          <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-5.jpg)"
+            class="swiper-slide"></div>
+          <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-6.jpg)"
+            class="swiper-slide"></div>
         </div>
         <div class="swiper-button-next color-white"></div>
         <div class="swiper-button-prev color-white"></div>
@@ -28,22 +34,28 @@
       <div class="swiper-container demo-swiper-gallery-thumbs">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
-            <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-1.jpg)" class="swiper-slide-pic"></div>
+            <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-1.jpg)"
+              class="swiper-slide-pic"></div>
           </div>
           <div class="swiper-slide">
-            <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-2.jpg)" class="swiper-slide-pic"></div>
+            <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-2.jpg)"
+              class="swiper-slide-pic"></div>
           </div>
           <div class="swiper-slide">
-            <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-3.jpg)" class="swiper-slide-pic"></div>
+            <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-3.jpg)"
+              class="swiper-slide-pic"></div>
           </div>
           <div class="swiper-slide">
-            <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-4.jpg)" class="swiper-slide-pic"></div>
+            <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-4.jpg)"
+              class="swiper-slide-pic"></div>
           </div>
           <div class="swiper-slide">
-            <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-5.jpg)" class="swiper-slide-pic"></div>
+            <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-5.jpg)"
+              class="swiper-slide-pic"></div>
           </div>
           <div class="swiper-slide">
-            <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-6.jpg)" class="swiper-slide-pic"></div>
+            <div style="background-image:url(https://cdn.framework7.io/placeholder/nature-800x800-6.jpg)"
+              class="swiper-slide-pic"></div>
           </div>
         </div>
       </div>
@@ -51,36 +63,34 @@
   </div>
 </template>
 <script>
-  return {
-    on: {
-      pageBeforeRemove() {
-        var self = this;
-        self.swiperTop.destroy();
-        self.swiperThumbs.destroy();
-      },
-      pageInit() {
-        var self = this;
-        var swiperThumbs = self.$app.swiper.create('.demo-swiper-gallery-thumbs', {
-            slidesPerView: 4,
-            spaceBetween: 10,
-            freeMode: true,
-            watchSlidesProgress: true,
-            watchSlidesVisibility: true,
-        });
-        var swiperTop = self.$app.swiper.create('.demo-swiper-gallery-top', {
-            spaceBetween: 10,
-            navigation: {
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
-            },
-            thumbs: {
-              swiper: swiperThumbs,
-            },
-        });
+  export default (props, { $f7, $on }) => {
+    let swiperTop;
+    let swiperThumbs;
+    $on('pageInit', () => {
+      swiperThumbs = $f7.swiper.create('.demo-swiper-gallery-thumbs', {
+        slidesPerView: 4,
+        spaceBetween: 10,
+        freeMode: true,
+        watchSlidesProgress: true,
+        watchSlidesVisibility: true,
+      });
+      swiperTop = $f7.swiper.create('.demo-swiper-gallery-top', {
+        spaceBetween: 10,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        thumbs: {
+          swiper: swiperThumbs,
+        },
+      });
+    });
+    $on('pageBeforeRemove', () => {
+      swiperTop.destroy();
+      swiperThumbs.destroy();
+    });
 
-        self.swiperTop = swiperTop;
-        self.swiperThumbs = swiperThumbs;
-      }
-    }
-  }
+    return $render;
+  };
+
 </script>

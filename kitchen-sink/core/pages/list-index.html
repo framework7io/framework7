@@ -627,9 +627,9 @@
       // Create list index instance
       listIndex = $f7.listIndex.create({
         // List el where to look indexes and scroll for
-        listEl: $el().find('.list'),
+        listEl: $el.value.find('.list'),
         // ".list-index" element
-        el: $el().find('.list-index'),
+        el: $el.value.find('.list-index'),
         // Generate indexes automatically based on ".list-group-title" and ".item-divider"
         indexes: 'auto',
         // Scroll list on indexes click and touchmove
