@@ -57,6 +57,11 @@
   </tr>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://www.gunsbet.com" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/gunsbet.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://www.realtimecommunicationsworld.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/realtime.jpg">
       </a>
@@ -76,13 +81,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/tutlance.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://edubirdie.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/edubirdie.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://paraphrasetools.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/paraphrasetools.png">
@@ -103,13 +108,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/writersperhour.jpg">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.colognewebdesign.de/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/colognewebdesign.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://rise.co" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/rise.png">
@@ -130,13 +135,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/kidoverse.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.cyberbrain.nl/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/cyberbrain.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://hicapps.cl/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/hicapps.png">
@@ -152,7 +157,6 @@
         <img width="160" src="https://framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
-    <td></td>
     <td></td>
   </tr>
 </table>
@@ -195,6 +199,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 
 ### \$50+ Top Supporter
 
+[GunsBet Casino](https://www.gunsbet.com)<br>
 [Real Time Communications World](https://www.realtimecommunicationsworld.com)<br>
 [PapersOwl - Write My Essay For Me](https://papersowl.com/write-my-essay-please)<br>
 [Tutlance.com - Pay For Homework Answers, Assignments and Essay Solutions](https://tutlance.com)<br>
