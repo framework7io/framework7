@@ -8,7 +8,7 @@ export interface Framework7Theme {
   aurora: boolean;
 }
 
-/** Object with boolean properties with information about currently used theme (iOS or MD) */
+/** Object with boolean properties with information about currently used theme (iOS, MD or Aurora) */
 declare const theme: Framework7Theme;
 
 /** Main Framework7's initialized instance. It allows you to use any of Framework7 APIs */
