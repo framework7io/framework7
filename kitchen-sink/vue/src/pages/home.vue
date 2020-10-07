@@ -54,6 +54,11 @@
           <f7-icon icon="icon-f7" />
         </template>
       </f7-list-item>
+      <f7-list-item link="/area-chart/" title="Area Chart">
+        <template #media>
+          <f7-icon icon="icon-f7" />
+        </template>
+      </f7-list-item>
       <f7-list-item link="/autocomplete/" title="Autocomplete">
         <template #media>
           <f7-icon icon="icon-f7" />
@@ -215,6 +220,11 @@
         </template>
       </f7-list-item>
       <f7-list-item link="/picker/" title="Picker">
+        <template #media>
+          <f7-icon icon="icon-f7" />
+        </template>
+      </f7-list-item>
+      <f7-list-item link="/pie-chart/" title="Pie Chart">
         <template #media>
           <f7-icon icon="icon-f7" />
         </template>

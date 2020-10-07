@@ -13,19 +13,194 @@
       </div>
     </div>
     <div class="page-content">
-
+      <div class="block block-strong">
+        <p>Framework7 comes with simple to use and fully resonsive Area Chart component.</p>
+        <p>Area Chart generates SVG layout which makes it also compatible with SSR (server side rendering).</p>
+      </div>
+      <div class="block-title">Simple Area Chart</div>
+      <div class="block block-strong">
+        <div class="area-chart area-chart-simple"></div>
+      </div>
+      <div class="block-title">Area Chart With Tooltip</div>
+      <div class="block block-strong">
+        <div class="area-chart area-chart-with-tooltip"></div>
+      </div>
+      <div class="block-title">Area Chart With Axis</div>
+      <div class="block block-strong">
+        <div class="area-chart area-chart-with-axis"></div>
+      </div>
+      <div class="block-title">Area Chart With Legend</div>
+      <div class="block block-strong">
+        <div class="area-chart area-chart-with-legend"></div>
+      </div>
+      <div class="block-title">Lines Chart</div>
+      <div class="block block-strong">
+        <div class="area-chart area-chart-lines"></div>
+      </div>
     </div>
   </div>
 </template>
 <script>
   export default (props, { $f7, $onMounted, $onBeforeUnmount }) => {
+    let areaSimple;
+    let areaWithTooltip;
+    let areaWithAxis;
+    let areaWithLegend;
+    let areaLines;
+
+    // helpers data for axis
+    const dates = [];
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    for (let i = 0; i < 4; i += 1) {
+      dates.push(new Date(year, month - (3 - i)))
+    }
+    const axisDateFormat = Intl.DateTimeFormat(undefined, { month: 'short', year: 'numeric' })
+    const tooltipDateFormat = Intl.DateTimeFormat(undefined, { month: 'long', year: 'numeric' })
 
     $onMounted(() => {
+      areaSimple = $f7.areaChart.create({
+        el: '.area-chart-simple',
+        datasets: [
+          {
+            color: '#f00',
+            values: [0, 100, 250, 300, 175, 400]
+          },
+          {
+            color: '#00f',
+            values: [100, 75, 133, 237, 40, 200]
+          },
+          {
+            color: '#ff0',
+            values: [100, 300, 127, 40, 250, 80]
+          },
+        ]
+      });
+      areaWithTooltip = $f7.areaChart.create({
+        el: '.area-chart-with-tooltip',
+        tooltip: true,
+        datasets: [
+          {
+            label: 'Red data',
+            color: '#f00',
+            values: [100, 75, 133, 237, 40, 200]
+          },
+          {
+            label: 'Blue data',
+            color: '#00f',
+            values: [100, 300, 127, 40, 250, 80]
+          },
+          {
+            label: 'Yellow data',
+            color: '#ff0',
+            values: [0, 100, 250, 300, 175, 400]
+          },
+        ]
+      });
 
+      areaWithAxis = $f7.areaChart.create({
+        el: '.area-chart-with-axis',
+        tooltip: true,
+        axis: true,
+        axisLabels: dates,
+        formatAxisLabel(date) {
+          return axisDateFormat.format(date);
+        },
+        formatTooltipAxisLabel(date) {
+          return tooltipDateFormat.format(date);
+        },
+        datasets: [
+          {
+            label: 'Green data',
+            color: '#0f0',
+            values: [100, 75, 133, 237]
+          },
+          {
+            label: 'Red data',
+            color: '#f00',
+            values: [100, 300, 127, 47]
+          },
+          {
+            label: 'Yellow data',
+            color: '#ff0',
+            values: [0, 100, 250, 307]
+          },
+        ]
+      });
+
+      areaWithLegend = $f7.areaChart.create({
+        el: '.area-chart-with-legend',
+        tooltip: true,
+        axis: true,
+        axisLabels: dates,
+        legend: true,
+        toggleDatasets: true,
+        formatAxisLabel(date) {
+          return axisDateFormat.format(date);
+        },
+        formatTooltipAxisLabel(date) {
+          return tooltipDateFormat.format(date);
+        },
+        datasets: [
+          {
+            label: 'Red data',
+            color: '#f00',
+            values: [100, 300, 127, 47]
+          },
+          {
+            label: 'Blue data',
+            color: '#00f',
+            values: [100, 75, 133, 237]
+          },
+          {
+            label: 'Yellow data',
+            color: '#ff0',
+            values: [0, 100, 250, 307]
+          },
+        ]
+      });
+
+      areaLines = $f7.areaChart.create({
+        el: '.area-chart-lines',
+        tooltip: true,
+        axis: true,
+        axisLabels: dates,
+        legend: true,
+        toggleDatasets: true,
+        lineChart: true,
+        formatAxisLabel(date) {
+          return axisDateFormat.format(date);
+        },
+        formatTooltipAxisLabel(date) {
+          return tooltipDateFormat.format(date);
+        },
+        datasets: [
+          {
+            label: 'Red data',
+            color: '#f00',
+            values: [0, 300, 127, 47]
+          },
+          {
+            label: 'Blue data',
+            color: '#00f',
+            values: [0, 75, 133, 237]
+          },
+          {
+            label: 'Greed data',
+            color: '#0f0',
+            values: [0, 100, 250, 307]
+          },
+        ]
+      });
     })
 
     $onBeforeUnmount(() => {
-
+      areaSimple.destroy();
+      areaWithTooltip.destroy();
+      areaWithAxis.destroy();
+      areaWithLegend.destroy();
+      areaLines.destroy();
     })
 
     return $render;

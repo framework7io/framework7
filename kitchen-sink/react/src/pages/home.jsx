@@ -60,6 +60,9 @@ export default () => {
         <ListItem link="/appbar/" title="Appbar">
           <Icon slot="media" icon="icon-f7" />
         </ListItem>
+        <ListItem link="/area-chart/" title="Area Chart">
+          <Icon slot="media" icon="icon-f7" />
+        </ListItem>
         <ListItem link="/autocomplete/" title="Autocomplete">
           <Icon slot="media" icon="icon-f7" />
         </ListItem>
@@ -157,6 +160,9 @@ export default () => {
           <Icon slot="media" icon="icon-f7" />
         </ListItem>
         <ListItem link="/picker/" title="Picker">
+          <Icon slot="media" icon="icon-f7" />
+        </ListItem>
+        <ListItem link="/pie-chart/" title="Pie Chart">
           <Icon slot="media" icon="icon-f7" />
         </ListItem>
         <ListItem link="/popover/" title="Popover">

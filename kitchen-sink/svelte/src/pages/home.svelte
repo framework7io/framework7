@@ -52,6 +52,9 @@
       <i class="icon icon-f7" slot="media" />
     </ListItem>
     <ListItem link="/appbar/" title="Appbar"><i class="icon icon-f7" slot="media" /></ListItem>
+    <ListItem link="/area-chart/" title="Area Chart">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
     <ListItem link="/autocomplete/" title="Autocomplete">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
@@ -121,6 +124,9 @@
       <i class="icon icon-f7" slot="media" />
     </ListItem>
     <ListItem link="/picker/" title="Picker"><i class="icon icon-f7" slot="media" /></ListItem>
+    <ListItem link="/pie-chart/" title="Pie Chart">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
     <ListItem link="/popover/" title="Popover"><i class="icon icon-f7" slot="media" /></ListItem>
     <ListItem link="/popup/" title="Popup"><i class="icon icon-f7" slot="media" /></ListItem>
     <ListItem link="/preloader/" title="Preloader">

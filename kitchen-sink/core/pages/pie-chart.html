@@ -13,19 +13,103 @@
       </div>
     </div>
     <div class="page-content">
+      <div class="block block-strong">
+        <p>Framework7 comes with simple to use and fully resonsive Pie Chart component.</p>
+        <p>Pie Chart generates SVG layout which makes it also compatible with SSR (server side rendering).</p>
+      </div>
+      <div class="block-title">Simple Pie Chart</div>
+      <div class="block block-strong">
+        <div class="pie-chart pie-chart-1"></div>
+      </div>
 
+      <div class="block-title">With Tooltip</div>
+      <div class="block block-strong">
+        <div class="pie-chart pie-chart-2"></div>
+      </div>
+
+      <div class="block-title">Custom Format Tooltip</div>
+      <div class="block block-strong">
+        <div class="pie-chart pie-chart-3"></div>
+      </div>
     </div>
   </div>
 </template>
 <script>
   export default (props, { $f7, $onMounted, $onBeforeUnmount }) => {
+    let pieSimple;
+    let pieTooltip;
+    let pieCustomTooltip;
 
     $onMounted(() => {
-
+      pieSimple = $f7.pieChart.create({
+        el: '.pie-chart-1',
+        datasets: [
+          {
+            value: 100,
+            color: '#f00',
+          },
+          {
+            value: 200,
+            color: '#0f0',
+          },
+          {
+            value: 300,
+            color: '#00f',
+          },
+        ]
+      });
+      pieTooltip = $f7.pieChart.create({
+        el: '.pie-chart-2',
+        tooltip: true,
+        datasets: [
+          {
+            label: 'JavaScript',
+            value: 150,
+            color: '#ff0',
+          },
+          {
+            label: 'Vue.js',
+            value: 150,
+            color: '#0f0',
+          },
+          {
+            label: 'TypeScript',
+            value: 400,
+            color: '#00f',
+          },
+        ]
+      })
+      pieCustomTooltip = $f7.pieChart.create({
+        el: '.pie-chart-3',
+        tooltip: true,
+        datasets: [
+          {
+            label: 'JavaScript',
+            value: 1000,
+            color: '#ff0',
+          },
+          {
+            label: 'Vue.js',
+            value: 100,
+            color: '#0f0',
+          },
+          {
+            label: 'TypeScript',
+            value: 200,
+            color: '#00f',
+          },
+        ],
+        formatTooltip(data) {
+          const { value, label, color } = data;
+          return `You have <span style="color: ${color}">${value} points</span> for ${label}`;
+        }
+      })
     })
 
     $onBeforeUnmount(() => {
-
+      pieSimple.destroy();
+      pieTooltip.destroy();
+      pieCustomTooltip.destroy();
     })
 
     return $render;

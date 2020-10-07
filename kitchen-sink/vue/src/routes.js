@@ -6,6 +6,7 @@ import About from './pages/about.vue';
 import Accordion from './pages/accordion.vue';
 import ActionSheet from './pages/action-sheet.vue';
 import Appbar from './pages/appbar.vue';
+import AreaChart from './pages/area-chart.vue';
 import Autocomplete from './pages/autocomplete.vue';
 import Badge from './pages/badge.vue';
 import Buttons from './pages/buttons.vue';
@@ -42,6 +43,7 @@ import Notifications from './pages/notifications.vue';
 import Panel from './pages/panel.vue';
 import PhotoBrowser from './pages/photo-browser.vue';
 import Picker from './pages/picker.vue';
+import PieChart from './pages/pie-chart.vue';
 import Popup from './pages/popup.vue';
 import Popover from './pages/popover.vue';
 import Preloader from './pages/preloader.vue';
@@ -200,6 +202,10 @@ export default [
     component: Appbar,
   },
   {
+    path: '/area-chart/',
+    component: AreaChart,
+  },
+  {
     path: '/autocomplete/',
     component: Autocomplete,
   },
@@ -342,6 +348,10 @@ export default [
   {
     path: '/picker/',
     component: Picker,
+  },
+  {
+    path: '/pie-chart/',
+    component: PieChart,
   },
   {
     path: '/popup/',

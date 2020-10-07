@@ -1,6 +1,7 @@
 # Core
 
 - [x] Add containerEl for modals
+- [ ] Fix iOS Navbar Home <--> Accordion
 - [ ] Update Aurora theme
 - [ ] Update MD theme
   - [ ] List button should be theme color
@@ -25,8 +26,8 @@
   - [ ] changelog
     - removed app `data` and `methods`
     - new `store` parameter
-- [ ] Area chart KS demo
-- [ ] Pie chart KS demo
+- [x] Area chart KS demo
+- [x] Pie chart KS demo
 - [ ] new router component
   - [x] update TS
   - [x] remove templateLoader
@@ -44,17 +45,13 @@
 
 # React
 
-- [ ] Area chart KS demo
-- [ ] Pie chart KS demo
 - [ ] add loading button
 
 # Svelte
 
-- [ ] Area chart KS demo
 - [ ] add loading button
 
 # Vue
 
 - [ ] Bundle build
-- [ ] Pie chart KS demo
 - [ ] add loading button

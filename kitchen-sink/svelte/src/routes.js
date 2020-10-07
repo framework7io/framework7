@@ -6,6 +6,7 @@ import About from './pages/about.svelte';
 import Accordion from './pages/accordion.svelte';
 import ActionSheet from './pages/action-sheet.svelte';
 import Appbar from './pages/appbar.svelte';
+import AreaChart from './pages/area-chart.svelte';
 import Autocomplete from './pages/autocomplete.svelte';
 import Badge from './pages/badge.svelte';
 import Buttons from './pages/buttons.svelte';
@@ -42,6 +43,7 @@ import Notifications from './pages/notifications.svelte';
 import Panel from './pages/panel.svelte';
 import PhotoBrowser from './pages/photo-browser.svelte';
 import Picker from './pages/picker.svelte';
+import PieChart from './pages/pie-chart.svelte';
 import Popup from './pages/popup.svelte';
 import Popover from './pages/popover.svelte';
 import Preloader from './pages/preloader.svelte';
@@ -200,6 +202,10 @@ export default [
     component: Appbar,
   },
   {
+    path: '/area-chart/',
+    component: AreaChart,
+  },
+  {
     path: '/autocomplete/',
     component: Autocomplete,
   },
@@ -342,6 +348,10 @@ export default [
   {
     path: '/picker/',
     component: Picker,
+  },
+  {
+    path: '/pie-chart/',
+    component: PieChart,
   },
   {
     path: '/popup/',

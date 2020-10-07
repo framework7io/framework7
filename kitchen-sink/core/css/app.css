@@ -674,3 +674,14 @@ code {
 :root:not(.theme-dark) .page-about {
   --f7-page-bg-color: #fff;
 }
+
+.area-chart {
+  max-width: 768px;
+  margin: 0 auto;
+}
+.area-chart svg {
+  max-height: 320px;
+}
+.pie-chart svg {
+  max-width: 320px;
+}

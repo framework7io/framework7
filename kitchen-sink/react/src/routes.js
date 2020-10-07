@@ -5,6 +5,7 @@ import About from './pages/about.jsx';
 import Accordion from './pages/accordion.jsx';
 import ActionSheet from './pages/action-sheet.jsx';
 import Appbar from './pages/appbar.jsx';
+import AreaChart from './pages/area-chart.jsx';
 import Autocomplete from './pages/autocomplete.jsx';
 import Badge from './pages/badge.jsx';
 import Buttons from './pages/buttons.jsx';
@@ -41,6 +42,7 @@ import Notifications from './pages/notifications.jsx';
 import Panel from './pages/panel.jsx';
 import PhotoBrowser from './pages/photo-browser.jsx';
 import Picker from './pages/picker.jsx';
+import PieChart from './pages/pie-chart.jsx';
 import Popup from './pages/popup.jsx';
 import Popover from './pages/popover.jsx';
 import Preloader from './pages/preloader.jsx';
@@ -198,6 +200,10 @@ export default [
     component: Appbar,
   },
   {
+    path: '/area-chart/',
+    component: AreaChart,
+  },
+  {
     path: '/autocomplete/',
     component: Autocomplete,
   },
@@ -340,6 +346,10 @@ export default [
   {
     path: '/picker/',
     component: Picker,
+  },
+  {
+    path: '/pie-chart/',
+    component: PieChart,
   },
   {
     path: '/popup/',
