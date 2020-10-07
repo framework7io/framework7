@@ -299,7 +299,7 @@
     viewBox={`0 0 ${width} ${height}`}
     preserveAspectRatio="none"
     bind:this={svgEl}>
-    {#each chartData as data (data.label)}
+    {#each chartData as data, index (index)}
       {#if lineChart}
         <path stroke={data.color} fillRule="evenodd" d={data.points} />
       {:else}

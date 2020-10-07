@@ -324,9 +324,9 @@ const AreaChart = forwardRef((props, ref) => {
         preserveAspectRatio="none"
         ref={svgElRef}
       >
-        {chartData.map((data) => (
+        {chartData.map((data, index) => (
           <ChartTag
-            key={data.label}
+            key={`${ChartTag}-${index}`}
             fill={lineChart ? undefined : data.color}
             stroke={lineChart ? data.color : undefined}
             fillRule="evenodd"

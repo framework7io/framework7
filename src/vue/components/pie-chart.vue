@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes">
+  <div ref="elRef" :class="classes">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       :width="size"

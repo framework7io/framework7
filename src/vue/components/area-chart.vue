@@ -10,8 +10,8 @@
     >
       <component
         :is="ChartTag"
-        v-for="data in chartData"
-        :key="data.label"
+        v-for="(data, index) in chartData"
+        :key="`${ChartTag}-${index}`"
         :fill="lineChart ? undefined : data.color"
         :stroke="lineChart ? data.color : undefined"
         fill-rule="evenodd"

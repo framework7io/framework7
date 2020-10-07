@@ -206,9 +206,10 @@ class AreaChart extends Framework7Class {
         datasets: currentValues,
       });
     }
-    const labelText = formatTooltipAxisLabel
+    let labelText = formatTooltipAxisLabel
       ? formatTooltipAxisLabel.call(self, axisLabels[currentIndex])
       : this.formatAxisLabel(axisLabels[currentIndex]);
+    if (!labelText) labelText = '';
     const totalText = formatTooltipTotal ? formatTooltipTotal.call(self, total) : total;
     // prettier-ignore
     const datasetsText = currentValues.length > 0 ? `
@@ -217,7 +218,7 @@ class AreaChart extends Framework7Class {
           .map(({ label, color, value }) => {
             const valueText = formatTooltipDataset
               ? formatTooltipDataset.call(self, label, value, color)
-              : `${label}: ${value}`;
+              : `${label ? `${label}: ` : ''}${value}`;
             return `
               <li><span style="background-color: ${color};"></span>${valueText}</li>
             `;
