@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { extend } from '../../shared/utils';
 
 function createStore(storeParams = {}) {
@@ -10,48 +11,81 @@ function createStore(storeParams = {}) {
   const state = extend({}, originalState);
 
   let propsQueue = [];
-  const propsCallbacks = {};
+  const gettersDependencies = {};
+  const gettersCallbacks = {};
 
-  const addPropCallback = (onUpdated) => {
-    propsQueue.forEach((prop) => {
-      if (!propsCallbacks[prop]) propsCallbacks[prop] = [];
-      propsCallbacks[prop].push(onUpdated);
+  Object.keys(getters).forEach((key) => {
+    gettersDependencies[key] = [];
+    gettersCallbacks[key] = [];
+  });
+  const addGetterDependencies = (key, deps) => {
+    if (!gettersDependencies[key]) gettersDependencies[key] = [];
+    deps.forEach((dep) => {
+      if (gettersDependencies[key].indexOf(dep) < 0) {
+        gettersDependencies[key].push(dep);
+      }
     });
   };
 
-  const runPropCallback = (prop, value) => {
-    if (!propsCallbacks[prop] || !propsCallbacks[prop].length) return;
-    propsCallbacks[prop].forEach((callback) => {
-      callback(value);
+  const addGetterCallback = (key, callback) => {
+    if (!gettersCallbacks[key]) gettersCallbacks[key] = [];
+    gettersCallbacks[key].push(callback);
+  };
+
+  const runGetterCallbacks = (stateKey, value) => {
+    const keys = Object.keys(gettersDependencies).filter((getterKey) => {
+      return gettersDependencies[getterKey].indexOf(stateKey) >= 0;
+    });
+    keys.forEach((getterKey) => {
+      if (!gettersCallbacks[getterKey] || !gettersCallbacks[getterKey].length) return;
+      gettersCallbacks[getterKey].forEach((callback) => {
+        callback(value);
+      });
     });
   };
 
-  const removePropCallback = (callback) => {
-    Object.keys(propsCallbacks).forEach((key) => {
-      const callbacks = propsCallbacks[key];
+  const removeGetterCallback = (callback) => {
+    Object.keys(gettersCallbacks).forEach((key) => {
+      const callbacks = gettersCallbacks[key];
 
       if (callbacks.indexOf(callback) >= 0) {
         callbacks.splice(callbacks.indexOf(callback), 1);
-      }
-
-      for (let i = callbacks.length - 1; i >= 0; i -= 1) {
-        const cb = callbacks[i];
-        if (cb.originalCallback && cb.originalCallback === callback) {
-          callbacks.splice(i, 1);
-        }
       }
     });
   };
 
   // eslint-disable-next-line
-  store._removeCallback = (callback) => {
-    removePropCallback(callback);
+  store.__removeCallback = (callback) => {
+    removeGetterCallback(callback);
+  };
+
+  const getterValue = (key) => {
+    if (key === 'constructor') return;
+    propsQueue = [];
+    const value = getters[key]({ state: store.state });
+    addGetterDependencies(key, propsQueue);
+    const onUpdated = (callback) => {
+      addGetterCallback(key, callback);
+    };
+
+    const obj = {
+      value,
+      onUpdated,
+    };
+    const callback = (v) => {
+      obj.value = v;
+    };
+
+    obj.__callback = callback;
+    addGetterCallback(key, callback);
+    // eslint-disable-next-line
+    return obj;
   };
 
   store.state = new Proxy(state, {
     set: (target, prop, value) => {
       target[prop] = value;
-      runPropCallback(prop, value);
+      runGetterCallbacks(prop, value);
       return true;
     },
     get: (target, prop) => {
@@ -60,25 +94,17 @@ function createStore(storeParams = {}) {
     },
   });
 
-  store.get = (key, onUpdated) => {
-    propsQueue = [];
-    const value = getters[key]({ state: store.state });
-    const obj = {
-      value,
-      // eslint-disable-next-line
-      _callback(v) {
-        obj.value = v;
-        if (onUpdated) onUpdated(v);
-      },
-    };
-    // eslint-disable-next-line
-    obj._callback.originalCallback = onUpdated;
-    // eslint-disable-next-line
-    addPropCallback(obj._callback);
-    return obj;
-  };
+  store.getters = new Proxy(getters, {
+    set: () => false,
+    get: (target, prop) => {
+      if (!target[prop]) {
+        throw new Error(`Framework7: There is no "${prop}" getter in store`);
+      }
+      return getterValue(prop);
+    },
+  });
 
-  store.action = (actionName, data) => {
+  store.dispatch = (actionName, data) => {
     return new Promise((resolve, reject) => {
       if (!actions[actionName]) {
         reject();

@@ -95,7 +95,7 @@
         <ul style="padding-left:25px">
           <li><b>$store.state.firstName</b>: ${$store.state.firstName}</li>
           <li><b>$store.state.lastName</b>: ${$store.state.lastName}</li>
-          <li><a @click=${()=> $store.action('helloWorld')}>$store.action('helloWorld')</a></li>
+          <li><a @click=${()=> $store.dispatch('helloWorld')}>$store.dispatch('helloWorld')</a></li>
         </ul>
       </div>
       <div class="block-title">Store reactivity</div>
@@ -172,10 +172,10 @@
     }
 
     // Store
-    let users = $store.get('users');
-    let usersLoading = $store.get('usersLoading');
+    let users = $store.getters.users;
+    let usersLoading = $store.getters.usersLoading;
     function loadUsers() {
-      $store.action('loadUsers');
+      $store.dispatch('loadUsers');
     }
 
     // Lifecycle Hooks

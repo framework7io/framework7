@@ -2,11 +2,14 @@ import { Framework7Plugin } from '../app/app-class';
 
 interface StoreGetterValue {
   value: any;
+  onUpdated: (value: any) => any;
+  __callback: any;
 }
 export interface StoreObject {
   state: any;
-  get: (name: string, onUpdated: (value: any) => any) => StoreGetterValue;
-  action: (name: string, data: any) => Promise<any>;
+  getters: any;
+  dispatch: (name: string, data: any) => Promise<any>;
+  __removeCallback: (callback: any) => void;
 }
 export interface StoreParameters {
   state: object;
@@ -24,8 +27,8 @@ export namespace Store {
     createStore: (storeParameters: StoreParameters) => StoreObject;
   }
   interface AppParams {
-    /** Object with store parameters */
-    store?: StoreParameters | undefined;
+    /** Store */
+    store?: StoreParameters | StoreObject;
   }
 }
 declare const StoreModule: Framework7Plugin;

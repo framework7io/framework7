@@ -119,19 +119,23 @@ class Component {
   }
 
   getComponentStore() {
-    const { state, get, action } = this.f7.store;
+    const { state, getters, dispatch } = this.f7.store;
     const $store = {
       state,
-      action,
+      dispatch,
     };
-    $store.get = (name, onUpdated) => {
-      const callback = (newValue) => {
-        if (onUpdated) onUpdated(newValue);
-        this.update();
-      };
-      this.__storeCallbacks.push(callback);
-      return get(name, callback);
-    };
+    $store.getters = new Proxy(getters, {
+      get: (target, prop) => {
+        const obj = target[prop];
+        const callback = () => {
+          this.update();
+        };
+        obj.onUpdated(callback);
+        this.__storeCallbacks.push(callback, obj.__callback);
+        return obj;
+      },
+    });
+
     return $store;
   }
 
@@ -290,7 +294,7 @@ class Component {
     // Clear update queue
     window.cancelAnimationFrame(this.__requestAnimationFrameId);
     this.__storeCallbacks.forEach((callback) => {
-      this.f7.store._removeCallback(callback);
+      this.f7.store.__removeCallback(callback);
     });
     this.__storeCallbacks = [];
     this.__updateQueue = [];
