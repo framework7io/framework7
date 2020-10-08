@@ -6,7 +6,7 @@ export default () => {
     <Page>
       <Navbar title="Pie Chart" backLink="Back" />
       <Block strong>
-        <p>Framework7 comes with simple to use and fully resonsive Pie Chart component.</p>
+        <p>Framework7 comes with simple to use and fully responsive Pie Chart component.</p>
         <p>
           Pie Chart generates SVG layout which makes it also compatible with SSR (server side
           rendering).
