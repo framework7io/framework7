@@ -38,6 +38,13 @@
     - CSS vars renamed without `--f7-` prefix
   - View/Router
     - `pushState...` parameters renamed to `browserHistory...`
+    - Route's `beforeEnter`, `beforeLeave`, `redirect` and `async` methods now receive a single object with following props
+      - `to`
+      - `from`
+      - `resolve`
+      - `reject`
+      - `direction` (new in v6 - can be `forward` or `backward`)
+      - `router` (new in v6 - current router instance)
   - Tooltip
     - New `containerEl` property
     - New `trigger: 'manual'` value
@@ -99,19 +106,20 @@
     - Added support for tooltip with `tooltip` and `tooltipTrigger` props
 
 # [v5.7.12](https://github.com/framework7io/framework7/compare/v5.7.11...v5.7.12) - September 3, 2020
-  * Core
-    * Autocomplete
-      * Added `searchbarSpellcheck` parameter to enable/disable spell check on searchbar's input. Disabled by default
-    * Panel
-      * Now accepts new `containerEl` parameter to be able be mounted to other element rather than root
-    * Smart Select
-      * Added `searchbarSpellcheck` parameter to enable/disable spell check on searchbar's input. Disabled by default
-  * React/Svelte/Vue
-    * Searchbar
-      * Added `spellcheck` prop to set `spellcheck` attributte on input element
-    * ListInput
-      * Fixed not working `onTextEditorChange` prop in Svelte component
-    * Minor fixes
+
+- Core
+  - Autocomplete
+    - Added `searchbarSpellcheck` parameter to enable/disable spell check on searchbar's input. Disabled by default
+  - Panel
+    - Now accepts new `containerEl` parameter to be able be mounted to other element rather than root
+  - Smart Select
+    - Added `searchbarSpellcheck` parameter to enable/disable spell check on searchbar's input. Disabled by default
+- React/Svelte/Vue
+  - Searchbar
+    - Added `spellcheck` prop to set `spellcheck` attributte on input element
+  - ListInput
+    - Fixed not working `onTextEditorChange` prop in Svelte component
+  - Minor fixes
 
 # [v5.7.11](https://github.com/framework7io/framework7/compare/v5.7.10...v5.7.11) - August 17, 2020
 

@@ -774,6 +774,7 @@ function back(...args) {
         );
       },
       () => {},
+      'backward',
     );
 
     return router;
@@ -822,7 +823,7 @@ function back(...args) {
   }
 
   if (route.route.redirect) {
-    return redirect.call(router, 'back', route, navigateOptions);
+    return redirect.call(router, 'backward', route, navigateOptions);
   }
 
   const options = {};
@@ -868,7 +869,14 @@ function back(...args) {
     }
     if (route.route.async) {
       router.allowPageChange = false;
-      route.route.async.call(router, route, router.currentRoute, asyncResolve, asyncReject);
+      route.route.async.call(router, {
+        router,
+        to: route,
+        from: router.currentRoute,
+        resolve: asyncResolve,
+        reject: asyncReject,
+        direction: 'backward',
+      });
     }
     if (route.route.asyncComponent) {
       asyncComponent(router, route.route.asyncComponent, asyncResolve, asyncReject);
@@ -904,6 +912,7 @@ function back(...args) {
       () => {
         reject();
       },
+      'backward',
     );
   }
 

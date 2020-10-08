@@ -71,19 +71,23 @@ export namespace View {
     /**	Array with additional routes that will extend global app routes. This additional routes will only be available for the current View */
     routesAdd?: Router.RouteParameters[];
     /**	Function (or array of functions) that will be executed before every route load/enter. To proceed route loading resolve must be called. In case of array then every function in array must be resolved to proceed. */
-    routesBeforeEnter?(
-      to: Router.Route,
-      from: Router.Route,
-      resolve: Function,
-      reject: Function,
-    ): void;
+    routesBeforeEnter?(ctx: {
+      to: Router.Route;
+      from: Router.Route;
+      resolve: Function;
+      reject: Function;
+      router: Router.Router;
+      direction?: 'forward' | 'backward';
+    }): void;
     /**	Function (or array of functions) that will be executed before every route unload/leave. To proceed navigation resolve must be called. In case of array then every function in array must be resolved to proceed. */
-    routesBeforeLeave?(
-      to: Router.Route,
-      from: Router.Route,
-      resolve: Function,
-      reject: Function,
-    ): void;
+    routesBeforeLeave?(ctx: {
+      to: Router.Route;
+      from: Router.Route;
+      resolve: Function;
+      reject: Function;
+      router: Router.Router;
+      direction?: 'forward' | 'backward';
+    }): void;
     /**	During page transitions Router may remove unused Page and Navbar elements from DOM. Useful to be disabled in case you want to handle elements removal manually or using other library, e.g. Vue or React */
     removeElements?: boolean;
     /**	When enabled then Router will remove elements after timeout */

@@ -198,7 +198,13 @@ function tabLoad(tabRoute, loadOptions = {}) {
     router.allowPageChange = true;
   }
   if (tabRoute.async) {
-    tabRoute.async.call(router, currentRoute, previousRoute, asyncResolve, asyncReject);
+    tabRoute.async.call(router, {
+      router,
+      to: currentRoute,
+      from: previousRoute,
+      resolve: asyncResolve,
+      reject: asyncReject,
+    });
   } else if (tabRoute.asyncComponent) {
     asyncComponent(router, tabRoute.asyncComponent, asyncResolve, asyncReject);
   } else if (!hasContentLoadProp) {

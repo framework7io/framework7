@@ -33,6 +33,15 @@ export namespace Router {
 
   // interface AP extends Actions.Parameters{}
 
+  interface RouteCallbackCtx {
+    to: Route;
+    from: Route;
+    resolve: Function;
+    reject: Function;
+    router: Router;
+    direction?: 'forward' | 'backward';
+  }
+
   interface RouteParameters {
     /** Route name, e.g. home */
     name?: string;
@@ -59,7 +68,7 @@ export namespace Router {
     /** load pages as a component via Ajax */
     componentUrl?: string;
     /** Do required asynchronous manipulation and the return required route content and options */
-    async?(routeTo: Route, routeFrom: Route, resolve: Function, reject: Function): void;
+    async?(ctx: RouteCallbackCtx): void;
     /** Function that should return Promise resolved with Component or ES module with `.default` property containing Component */
     asyncComponent?(): Promise<any>;
 
@@ -83,15 +92,11 @@ export namespace Router {
     /** Route alias, or array with route aliases. We need to specify here alias path */
     alias?: string | any[];
     /** Route redirect. We need to specify here redirect url (not path) */
-    redirect?: string | ((routeTo: Route, resolve: Function, reject: Function) => void);
+    redirect?: string | ((ctx: RouteCallbackCtx) => void);
     /** Function (or array of functions) that will be executed before route load/enter. To proceed route loading resolve must be called. In case of array then every function in array must be resolved to proceed */
-    beforeEnter?:
-      | Function[]
-      | ((routeTo: Route, routeFrom: Route, resolve: Function, reject: Function) => void);
+    beforeEnter?: Function[] | ((ctx: RouteCallbackCtx) => void);
     /** Function (or array of functions) that will be executed before route unload/leave. To proceed navigation resolve must be called. In case of array then every function in array must be resolved to proceed */
-    beforeLeave?:
-      | Function[]
-      | ((routeTo: Route, routeFrom: Route, resolve: Function, reject: Function) => void);
+    beforeLeave?: Function[] | ((ctx: RouteCallbackCtx) => void);
     /** When enabled then once loaded page and its component (Vue, React or Router component) will be never destroyed. Instead, it will be detached from DOM and reused again when required */
     keepAlive?: boolean;
     /** Enables master route for Master-Detail view */

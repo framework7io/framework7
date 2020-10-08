@@ -2,7 +2,7 @@ import { extend, nextTick } from '../../shared/utils';
 import History from '../../shared/history';
 import asyncComponent from './async-component';
 
-function modalLoad(modalType, route, loadOptions = {}) {
+function modalLoad(modalType, route, loadOptions = {}, direction) {
   const router = this;
   const app = router.app;
   const isPanel = modalType === 'panel';
@@ -212,7 +212,14 @@ function modalLoad(modalType, route, loadOptions = {}) {
     router.allowPageChange = true;
   }
   if (modalParams.async) {
-    modalParams.async.call(router, options.route, router.currentRoute, asyncResolve, asyncReject);
+    modalParams.async.call(router, {
+      router,
+      to: options.route,
+      from: router.currentRoute,
+      resolve: asyncResolve,
+      reject: asyncReject,
+      direction,
+    });
   }
   if (modalParams.asyncComponent) {
     asyncComponent(router, modalParams.asyncComponent, asyncResolve, asyncReject);

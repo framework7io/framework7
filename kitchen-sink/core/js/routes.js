@@ -523,12 +523,6 @@ var routes = [
   {
     path: '/page-loader-component/:user/:userId/:posts/:postId/',
     componentUrl: './pages/page-loader-component.html',
-    // additional context
-    options: {
-      context: {
-        foo: 'bar',
-      },
-    },
   },
   {
     path: '/master-detail/',

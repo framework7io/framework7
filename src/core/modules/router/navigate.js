@@ -848,7 +848,7 @@ function navigate(navigateParams, navigateOptions = {}) {
   }
 
   if (route.route.redirect) {
-    return redirect.call(router, 'navigate', route, navigateOptions);
+    return redirect.call(router, 'forward', route, navigateOptions);
   }
 
   const options = {};
@@ -866,7 +866,7 @@ function navigate(navigateParams, navigateOptions = {}) {
       .forEach((modalLoadProp) => {
         if (route.route[modalLoadProp] && !routerLoaded) {
           routerLoaded = true;
-          router.modalLoad(modalLoadProp, route, options);
+          router.modalLoad(modalLoadProp, route, options, 'forward');
         }
       });
     if (route.route.keepAlive && route.route.keepAliveData) {
@@ -892,7 +892,7 @@ function navigate(navigateParams, navigateOptions = {}) {
             resolvedAsModal = true;
             const modalRoute = extend({}, route, { route: resolveParams });
             router.allowPageChange = true;
-            router.modalLoad(modalLoadProp, modalRoute, extend(options, resolveOptions));
+            router.modalLoad(modalLoadProp, modalRoute, extend(options, resolveOptions), 'forward');
           }
         });
       if (resolvedAsModal) return;
@@ -903,7 +903,14 @@ function navigate(navigateParams, navigateOptions = {}) {
     }
     if (route.route.async) {
       router.allowPageChange = false;
-      route.route.async.call(router, options.route, router.currentRoute, asyncResolve, asyncReject);
+      route.route.async.call(router, {
+        router,
+        to: options.route,
+        from: router.currentRoute,
+        resolve: asyncResolve,
+        reject: asyncReject,
+        direction: 'forward',
+      });
     }
     if (route.route.asyncComponent) {
       asyncComponent(router, route.route.asyncComponent, asyncResolve, asyncReject);
@@ -988,6 +995,7 @@ function navigate(navigateParams, navigateOptions = {}) {
     () => {
       reject();
     },
+    'forward',
   );
 
   // Return Router

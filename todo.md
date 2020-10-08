@@ -18,7 +18,7 @@
   - [ ] Add parameter on how to open the page `openIn`
   - [ ] View-width transition improvements
   - [ ] Navbar with Large title similar to page title in AppStore ???
-  - [ ] BeforeEnter/BeforeLeave - add direction
+  - [x] BeforeEnter/BeforeLeave - add direction
 - [ ] Nested Panels
 - [x] add containerEl to modals
 - [ ] fix data table selected row styles
