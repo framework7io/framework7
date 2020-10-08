@@ -17,7 +17,7 @@ export default () => {
     <Page>
       <Navbar title="Area Chart" backLink="Back" />
       <Block strong>
-        <p>Framework7 comes with simple to use and fully resonsive Area Chart component.</p>
+        <p>Framework7 comes with simple to use and fully responsive Area Chart component.</p>
         <p>
           Area Chart generates SVG layout which makes it also compatible with SSR (server side
           rendering).
@@ -144,7 +144,7 @@ export default () => {
               values: [0, 75, 133, 237],
             },
             {
-              label: 'Greed data',
+              label: 'Green data',
               color: '#0f0',
               values: [0, 100, 250, 307],
             },
