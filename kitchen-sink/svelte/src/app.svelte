@@ -1,6 +1,7 @@
 <script>
   import { App, Panel, View } from 'framework7-svelte';
   import routes from './routes';
+  import store from './store';
 
   // Demo Theme
   let theme = 'auto';
@@ -12,6 +13,7 @@
     id: 'io.framework7.testapp',
     theme,
     routes,
+    store,
     popup: {
       closeOnEscape: true,
     },

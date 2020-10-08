@@ -98,7 +98,7 @@ function createStore(storeParams = {}) {
     set: () => false,
     get: (target, prop) => {
       if (!target[prop]) {
-        throw new Error(`Framework7: There is no "${prop}" getter in store`);
+        return undefined;
       }
       return getterValue(prop);
     },

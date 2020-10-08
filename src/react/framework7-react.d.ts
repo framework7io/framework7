@@ -1,4 +1,5 @@
 import Framework7, { Framework7Plugin } from 'framework7/types';
+import { Store } from 'framework7/types';
 
 // IMPORT_COMPONENTS
 
@@ -17,8 +18,13 @@ declare const f7: Framework7;
 /** Callback function that will be executed when Framework7 fully intialized. Useful to use in components when you need to access Framework7 API and to be sure it is ready. So it is safe to put all Framework7 related logic into this callback. As an argument it receives initialized Framework7 instance */
 declare const f7ready: (callback: (f7: Framework7) => void) => void;
 
+interface useStore {
+  (store: Store, getter: string): any;
+  (getter: string): any;
+}
+
 declare const Framework7React: Framework7Plugin;
 
 // EXPORT_COMPONENTS
-export { f7, f7ready, theme };
+export { f7, f7ready, theme, useStore };
 export default Framework7React;

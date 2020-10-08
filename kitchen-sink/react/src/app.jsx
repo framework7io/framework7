@@ -1,6 +1,7 @@
 import React from 'react';
 import { App, Panel, View } from 'framework7-react';
 import routes from './routes';
+import store from './store';
 
 export default () => {
   let theme = 'auto';
@@ -13,6 +14,7 @@ export default () => {
       id="io.framework7.testapp"
       theme={theme}
       routes={routes}
+      store={store}
       popup={{ closeOnEscape: true }}
       sheet={{ closeOnEscape: true }}
       popover={{ closeOnEscape: true }}

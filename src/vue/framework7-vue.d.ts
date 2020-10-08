@@ -1,4 +1,5 @@
 import Framework7, { Framework7Plugin } from 'framework7/types';
+import { Store } from 'framework7/types';
 
 // IMPORT_COMPONENTS
 
@@ -21,6 +22,11 @@ declare const Framework7Vue: Framework7Plugin;
 
 declare const registerComponents: (app: any) => void;
 
+interface useStore {
+  (store: Store, getter: string): any;
+  (getter: string): any;
+}
+
 // EXPORT_COMPONENTS
-export { f7, f7ready, theme, registerComponents };
+export { f7, f7ready, theme, registerComponents, useStore };
 export default Framework7Vue;

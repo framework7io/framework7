@@ -12,6 +12,7 @@
 <script>
 import { f7App, f7Panel, f7View } from 'framework7-vue';
 import routes from './routes';
+import store from './store';
 
 export default {
   components: {
@@ -31,6 +32,7 @@ export default {
         id: 'io.framework7.testapp',
         theme,
         routes,
+        store,
         popup: {
           closeOnEscape: true,
         },

@@ -23,6 +23,7 @@
 - [x] add containerEl to modals
 - [ ] fix data table selected row styles
 - [x] new store
+  - [ ] KS demos
   - [ ] changelog
     - removed app `data` and `methods`
     - new `store` parameter
@@ -46,11 +47,14 @@
 # React
 
 - [ ] add loading button
+- [ ] new store KS demos
 
 # Svelte
 
 - [ ] add loading button
+- [ ] new store KS demos
 
 # Vue
 
 - [ ] add loading button
+- [ ] new store KS demos
