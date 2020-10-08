@@ -2,7 +2,7 @@
   <f7-page>
     <f7-navbar title="Pie Chart" back-link="Back" />
     <f7-block strong>
-      <p>Framework7 comes with simple to use and fully resonsive Pie Chart component.</p>
+      <p>Framework7 comes with simple to use and fully responsive Pie Chart component.</p>
       <p>
         Pie Chart generates SVG layout which makes it also compatible with SSR (server side
         rendering).
