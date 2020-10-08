@@ -57,6 +57,16 @@
   </tr>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://www.collegepaperworld.com/research-paper.html" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/collegeresearchpaper.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://casinofiables.com/" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/casinofiables.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://www.gunsbet.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/gunsbet.png">
       </a>
@@ -71,6 +81,8 @@
         <img width="160" src="https://framework7.io/i/sponsors/vpn.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://papersowl.com/write-my-essay-please" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/papersowl.png">
@@ -81,8 +93,6 @@
         <img width="160" src="https://framework7.io/i/sponsors/tutlance.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://edubirdie.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/edubirdie.png">
@@ -98,6 +108,8 @@
         <img width="160" src="https://framework7.io/i/sponsors/bonusfinder.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://kqapi.us" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/kqapius.png">
@@ -108,8 +120,6 @@
         <img width="160" src="https://framework7.io/i/sponsors/writersperhour.jpg">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.colognewebdesign.de/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/colognewebdesign.png">
@@ -125,6 +135,8 @@
         <img width="160" src="https://framework7.io/i/sponsors/usave.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://bid4papers.com/write-my-essay.html" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/bid4papers.png">
@@ -135,8 +147,6 @@
         <img width="160" src="https://framework7.io/i/sponsors/kidoverse.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.cyberbrain.nl/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/cyberbrain.png">
@@ -152,11 +162,16 @@
         <img width="160" src="https://framework7.io/i/sponsors/blokt.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://wappler.io/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
+    <td></td>
+    <td></td>
+    <td></td>
     <td></td>
   </tr>
 </table>
@@ -199,6 +214,8 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 
 ### \$50+ Top Supporter
 
+[College Papers for Sale | Buy Research Paper Online](https://www.collegepaperworld.com/research-paper.html)<br>
+[Casino En Ligne Canada, Les Meilleurs Casinos Virtuels Canadiens](https://casinofiables.com/)<br>
 [GunsBet Casino](https://www.gunsbet.com)<br>
 [Real Time Communications World](https://www.realtimecommunicationsworld.com)<br>
 [PapersOwl - Write My Essay For Me](https://papersowl.com/write-my-essay-please)<br>
