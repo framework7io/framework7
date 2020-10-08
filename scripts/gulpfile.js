@@ -18,6 +18,7 @@ const buildVueTypings = require('./build-vue-typings.js');
 const buildReact = require('./build-react.js');
 const buildReactTypings = require('./build-react-typings.js');
 const buildSvelte = require('./build-svelte.js');
+const buildSvelteTypings = require('./build-svelte-typings.js');
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -41,6 +42,7 @@ gulp.task('vue-typings', buildVueTypings);
 
 gulp.task('svelte-clean', (cb) => buildClean('svelte', cb));
 gulp.task('svelte', buildSvelte);
+gulp.task('svelte-typings', buildSvelteTypings);
 
 // eslint-disable-next-line
 gulp.task(
@@ -56,7 +58,7 @@ gulp.task(
 );
 gulp.task('build-react', gulp.series(['react-clean', 'react', 'react-typings']));
 gulp.task('build-vue', gulp.series(['vue-clean', 'vue', 'vue-typings']));
-gulp.task('build-svelte', gulp.series(['svelte-clean', 'svelte']));
+gulp.task('build-svelte', gulp.series(['svelte-clean', 'svelte', 'svelte-typings']));
 
 // Watchers
 const watch = {

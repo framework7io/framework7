@@ -33,7 +33,7 @@
   - [x] remove templateLoader
   - [x] rework vdom.js to work with \$h
   - [x] add root access data (store)
-  - [ ] migrate KS to new components
+  - [x] migrate KS to new components
   - [x] support for custom components
   - [x] remove context (replace with props)
   - [x] check true/false/null values
@@ -53,5 +53,4 @@
 
 # Vue
 
-- [ ] Bundle build
 - [ ] add loading button

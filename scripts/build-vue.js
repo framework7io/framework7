@@ -18,6 +18,8 @@ async function buildVue(cb) {
   const componentImports = [];
   const componentExports = [];
 
+  const componentsRegistrations = [];
+
   files.forEach((fileName) => {
     const componentName = fileName
       .replace('.vue', '')
@@ -27,6 +29,7 @@ async function buildVue(cb) {
     const fileBase = fileName.replace('.vue', '');
     componentImports.push(`import f7${componentName} from './components/${fileBase}';`);
     componentExports.push(`f7${componentName}`);
+    componentsRegistrations.push(`app.component('f7-${fileBase}', f7${componentName})`);
     const json = {
       name: `framework7-vue/${fileBase}`,
       private: true,
@@ -34,7 +37,7 @@ async function buildVue(cb) {
       main: `../../cjs/components/${fileBase}.js`,
       module: `../../esm/components/${fileBase}.js`,
       'jsnext:main': `../../esm/components/${fileBase}.js`,
-      typings: `${fileBase}.d.ts`,
+      // typings: `${fileBase}.d.ts`,
     };
     fs.writeFileSync(
       `${buildPath}/vue/components/${fileBase}/package.json`,
@@ -70,6 +73,16 @@ async function buildVue(cb) {
       `${buildPath}/vue/cjs/framework7-vue.js`,
       `${bannerReact.trim()}\n${cjsContent}`,
     );
+    // Bundle
+    const bundleContent = `
+exports.registerComponents = function registerComponents (app) {
+  ${componentsRegistrations.join(';\n  ')}
+}
+      `.trim();
+    fs.writeFileSync(
+      `${buildPath}/vue/cjs/framework7-vue-bundle.js`,
+      `${bannerReact.trim()}\n${cjsContent}\n${bundleContent}`,
+    );
   };
 
   const buildEMS = async () => {
@@ -88,6 +101,18 @@ async function buildVue(cb) {
     fs.writeFileSync(
       `${buildPath}/vue/esm/framework7-vue.js`,
       `${bannerReact.trim()}\n${esmContent}`,
+    );
+
+    // Bundle
+    const bundleContent = `
+function registerComponents(app) {
+  ${componentsRegistrations.join(';\n  ')}
+}
+export { registerComponents }
+      `.trim();
+    fs.writeFileSync(
+      `${buildPath}/vue/esm/framework7-vue-bundle.js`,
+      `${bannerReact.trim()}\n${esmContent}\n${bundleContent}`,
     );
   };
 

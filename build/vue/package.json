@@ -1,0 +1,8 @@
+{
+  "name": "framework7-vue",
+  "private": true,
+  "main": "cjs/framework7-vue.js",
+  "module": "esm/framework7-vue.js",
+  "jsnext:main": "esm/framework7-vue.js",
+  "typings": "framework7-vue.d.ts"
+}

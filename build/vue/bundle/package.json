@@ -1,0 +1,8 @@
+{
+  "name": "framework7-vue/bundle",
+  "private": true,
+  "main": "../cjs/framework7-vue-bundle.js",
+  "module": "../esm/framework7-vue-bundle.js",
+  "jsnext:main": "../esm/framework7-vue-bundle.js",
+  "typings": "../framework7-vue.d.ts"
+}

@@ -1,7 +1,5 @@
 .DS_Store
 node_modules
-build/vue
-build/svelte
 custom
 npm-debug.log
 .idea
@@ -34,10 +32,23 @@ build/core/utils
 packages/react/**/*.js
 packages/react/**/*.ts
 packages/react/components
-
 build/react/**/*.js
 build/react/**/*.ts
 build/react/components
+
+packages/svelte/**/*.js
+packages/svelte/**/*.ts
+packages/svelte/components
+build/svelte/**/*.js
+build/svelte/**/*.ts
+build/svelte/components
+
+packages/vue/**/*.js
+packages/vue/**/*.ts
+packages/vue/components
+build/vue/**/*.js
+build/vue/**/*.ts
+build/vue/components
 
 vue-temp
 

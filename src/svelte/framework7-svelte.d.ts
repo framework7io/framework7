@@ -17,10 +17,8 @@ declare const f7: Framework7;
 /** Callback function that will be executed when Framework7 fully intialized. Useful to use in components when you need to access Framework7 API and to be sure it is ready. So it is safe to put all Framework7 related logic into this callback. As an argument it receives initialized Framework7 instance */
 declare const f7ready: (callback: (f7: Framework7) => void) => void;
 
-declare const Framework7Vue: Framework7Plugin;
-
-declare const registerComponents: (app: any) => void;
+declare const Framework7Svelte: Framework7Plugin;
 
 // EXPORT_COMPONENTS
 export { f7, f7ready, theme, registerComponents };
-export default Framework7Vue;
+export default Framework7Svelte;
