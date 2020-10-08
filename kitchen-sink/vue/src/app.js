@@ -6,7 +6,7 @@ import Framework7Vue from 'framework7-vue';
 import App from './app.vue';
 
 import 'framework7/framework7-bundle.css';
-import '../css/app.css';
+import './css/app.css';
 
 Framework7.use(Framework7Vue);
 

@@ -3,7 +3,7 @@ import Framework7Svelte from 'framework7-svelte';
 import App from './app.svelte';
 
 import 'framework7/framework7-bundle.css';
-import '../css/app.css';
+import './css/app.css';
 
 Framework7.use(Framework7Svelte);
 

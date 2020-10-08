@@ -2,6 +2,7 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 
 const path = require('path');
@@ -79,7 +80,14 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          'style-loader',
+          env === 'development'
+            ? 'style-loader'
+            : {
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                  publicPath: resolvePath('kitchen-sink/react'),
+                },
+              },
           {
             loader: 'css-loader',
             options: {
@@ -95,6 +103,16 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify(env),
     }),
     new VueLoaderPlugin(),
+    ...(env === 'production'
+      ? [
+          new OptimizeCSSPlugin({
+            cssProcessorOptions: {
+              safe: true,
+              map: { inline: false },
+            },
+          }),
+        ]
+      : []),
     new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
       filename: 'css/[name].css',

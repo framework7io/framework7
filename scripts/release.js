@@ -7,8 +7,8 @@ const pkg = require('../package.json');
 
 const pkgCore = require('../packages/core/package.json');
 const pkgReact = require('../packages/react/package.json');
-// const pkgVue = require('../packages/vue/package.json');
-// const pkgSvelte = require('../packages/svelte/package.json');
+const pkgVue = require('../packages/vue/package.json');
+const pkgSvelte = require('../packages/svelte/package.json');
 
 async function release() {
   const options = await inquirer.prompt([
@@ -55,8 +55,8 @@ async function release() {
   // Set version
   pkgCore.version = options.version;
   pkgReact.version = options.version;
-  // pkgVue.version = options.version;
-  // pkgSvelte.version = options.version;
+  pkgVue.version = options.version;
+  pkgSvelte.version = options.version;
 
   // Copy dependencies
   pkgCore.dependencies = pkg.dependencies;
@@ -69,43 +69,46 @@ async function release() {
     path.resolve(__dirname, '../packages/react/package.json'),
     JSON.stringify(pkgReact, null, 2),
   );
-  // fs.writeFileSync(
-  //   path.resolve(__dirname, '../packages/vue/package.json'),
-  //   JSON.stringify(pkgVue, null, 2),
-  // );
-  // fs.writeFileSync(
-  //   path.resolve(__dirname, '../packages/svelte/package.json'),
-  //   JSON.stringify(pkgSvelte, null, 2),
-  // );
+  fs.writeFileSync(
+    path.resolve(__dirname, '../packages/vue/package.json'),
+    JSON.stringify(pkgVue, null, 2),
+  );
+  fs.writeFileSync(
+    path.resolve(__dirname, '../packages/svelte/package.json'),
+    JSON.stringify(pkgSvelte, null, 2),
+  );
 
   await exec.promise('git pull');
   await exec.promise('npm i');
 
   await exec.promise(`npm run build-core:prod`);
   await exec.promise(`npm run build-react:prod`);
-  // await exec.promise(`npm run build-vue:prod`);
-  // await exec.promise(`npm run build-svelte:prod`);
+  await exec.promise(`npm run build-vue:prod`);
+  await exec.promise(`npm run build-svelte:prod`);
 
   // NPM publish
   if (options.beta) {
     await exec.promise('cd ./packages/core && npm publish --tag beta');
     await exec.promise('cd ./packages/react && npm publish --tag beta');
-    // await exec.promise('cd ./packages/vue && npm publish --tag beta');
-    // await exec.promise('cd ./packages/svelte && npm publish --tag beta');
+    await exec.promise('cd ./packages/vue && npm publish --tag beta');
+    await exec.promise('cd ./packages/svelte && npm publish --tag beta');
   } else if (options.alpha) {
     await exec.promise('cd ./packages/core && npm publish --tag next');
     await exec.promise('cd ./packages/react && npm publish --tag next');
-    // await exec.promise('cd ./packages/vue && npm publish --tag next');
-    // await exec.promise('cd ./packages/svelte && npm publish --tag next');
+    await exec.promise('cd ./packages/vue && npm publish --tag next');
+    await exec.promise('cd ./packages/svelte && npm publish --tag next');
   } else {
     await exec.promise('cd ./packages/core && npm publish');
     await exec.promise('cd ./packages/react && npm publish');
-    // await exec.promise('cd ./packages/vue && npm publish');
-    // await exec.promise('cd ./packages/svelte && npm publish');
+    await exec.promise('cd ./packages/vue && npm publish');
+    await exec.promise('cd ./packages/svelte && npm publish');
   }
 
   // Build Production Kitchen Sink
-  // await exec.promise('npm run ks:prod');
+  await exec.promise('npm run build-ks:core');
+  await exec.promise('npm run build-ks:react');
+  await exec.promise('npm run build-ks:svelte');
+  await exec.promise('npm run build-ks:vue');
 
   // Git commit & push
   await exec.promise('git add .');
