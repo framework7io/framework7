@@ -58,6 +58,7 @@ export const routerProps = {
   routeProps: Object,
   preventRouter: Boolean,
   transition: String,
+  openIn: String,
 };
 
 export function routerAttrs(props) {
@@ -72,6 +73,7 @@ export function routerAttrs(props) {
     routeTabId,
     view,
     transition,
+    openIn,
   } = props;
 
   let dataAnimate;
@@ -95,6 +97,7 @@ export function routerAttrs(props) {
     'data-route-tab-id': routeTabId || undefined,
     'data-view': isStringProp(view) ? view : undefined,
     'data-transition': isStringProp(transition) ? transition : undefined,
+    'data-open-in': isStringProp(openIn) ? openIn : undefined,
   };
 }
 export function routerClasses(props) {

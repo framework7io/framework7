@@ -42,6 +42,7 @@ view?: string;
 routeProps?: any;
 preventRouter?: boolean;
 transition?: string;
+openIn?: string;
 `;
 
 const ACTIONS_PROPS = `
