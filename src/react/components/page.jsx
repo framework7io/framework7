@@ -293,7 +293,7 @@ const Page = forwardRef((props, ref) => {
 
   const { static: slotsStatic, fixed: slotsFixed, default: slotsDefault } = slots;
 
-  const fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index'
+  const fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index panel'
     .split(' ')
     .map((tagName) => `f7-${tagName}`);
 

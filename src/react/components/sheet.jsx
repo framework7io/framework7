@@ -157,7 +157,7 @@ const Sheet = forwardRef((props, ref) => {
   const slots = getSlots(props);
   const fixedList = [];
   const staticList = [];
-  const fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index'
+  const fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index panel'
     .split(' ')
     .map((tagName) => `f7-${tagName}`);
 

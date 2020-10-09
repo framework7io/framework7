@@ -4,10 +4,10 @@
 - [x] Add containerEl for modals
 
 - [ ] Fixes
+  - [ ] Push view popup on keyboard open
   - [ ] Fix iOS Navbar Home <--> Accordion
   - [ ] fix data table selected row styles
 - [ ] Styles
-  - [ ] Push view popup on keyboard open
   - [ ] Update Aurora theme
   - [ ] Update MD theme
     - [ ] List button should be theme color
@@ -19,7 +19,7 @@
   - [ ] tooltip
     - [ ] set target
     - [ ] delegated tooltip
-  - [ ] Nested Panels
+  - [x] Nested Panels
 - [ ] New component Stepper / Lines
 - [ ] Router
 
@@ -36,6 +36,7 @@
   - [ ] changelog
     - removed app `data` and `methods`
     - new `store` parameter
+    - new `useStore` helpers
 - [x] Area chart KS demo
 - [x] Pie chart KS demo
 - [ ] new router component

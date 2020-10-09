@@ -36,20 +36,26 @@
   $: classes = classNames(className, 'popover', modalStateClasses(state), colorClasses($$props));
 
   function onOpen(instance) {
-    state.isOpened = true;
-    state.isClosing = false;
+    Object.assign(state, {
+      isOpened: true,
+      isClosing: false,
+    });
     emit('popoverOpen', [instance]);
   }
   function onOpened(instance) {
     emit('popoverOpened', [instance]);
   }
   function onClose(instance) {
-    state.isOpened = false;
-    state.isClosing = true;
+    Object.assign(state, {
+      isOpened: false,
+      isClosing: true,
+    });
     emit('popoverClose', [instance]);
   }
   function onClosed(instance) {
-    state.isClosing = false;
+    Object.assign(state, {
+      isClosing: false,
+    });
     emit('popoverClosed', [instance]);
   }
 

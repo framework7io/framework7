@@ -30,6 +30,8 @@
   export let swipeActiveArea = 0;
   export let swipeThreshold = 0;
 
+  export let f7Slot = 'fixed';
+
   let el;
   let f7Panel;
 
@@ -95,20 +97,27 @@
   $: watchOpened(opened);
 
   function onOpen(...args) {
-    state.isOpened = true;
-    state.isClosing = false;
+    Object.assign(state, {
+      isOpened: true,
+      isClosing: false,
+    });
+
     emit('panelOpen', args);
   }
   function onOpened(...args) {
     emit('panelOpened', args);
   }
   function onClose(...args) {
-    state.isOpened = false;
-    state.isClosing = true;
+    Object.assign(state, {
+      isOpened: false,
+      isClosing: true,
+    });
     emit('panelClose', args);
   }
   function onClosed(...args) {
-    state.isClosing = false;
+    Object.assign(state, {
+      isClosing: false,
+    });
     emit('panelClosed', args);
   }
   function onBackdropClick(...args) {
@@ -121,13 +130,17 @@
     emit('panelSwipeOpen', args);
   }
   function onBreakpoint(...args) {
-    state.isBreakpoint = true;
-    state.isCollapsed = false;
+    Object.assign({
+      isBreakpoint: true,
+      isCollapsed: false,
+    });
     emit('panelBreakpoint', args);
   }
   function onCollapsedBreakpoint(...args) {
-    state.isBreakpoint = false;
-    state.isCollapsed = true;
+    Object.assign({
+      isBreakpoint: false,
+      isCollapsed: true,
+    });
     emit('panelCollapsedBreakpoint', args);
   }
   function onResize(...args) {
@@ -181,7 +194,7 @@
   });
 </script>
 
-<div bind:this={el} class={classes} {...restProps($$restProps)}>
+<div bind:this={el} class={classes} data-f7-slot={f7Slot} {...restProps($$restProps)}>
   <slot />
   {#if resizable}
     <div class="panel-resize-handler" />

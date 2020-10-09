@@ -59,20 +59,26 @@
   );
 
   function onOpen(instance) {
-    state.isOpened = true;
-    state.isClosing = false;
+    Object.assign(state, {
+      isOpened: true,
+      isClosing: false,
+    });
     emit('sheetOpen', [instance]);
   }
   function onOpened(instance) {
     emit('sheetOpened', [instance]);
   }
   function onClose(instance) {
-    state.isOpened = false;
-    state.isClosing = true;
+    Object.assign(state, {
+      isOpened: false,
+      isClosing: true,
+    });
     emit('sheetClose', [instance]);
   }
   function onClosed(instance) {
-    state.isClosing = false;
+    Object.assign(state, {
+      isClosing: false,
+    });
     emit('sheetClosed', [instance]);
   }
   function onStepProgress(instance, progress) {

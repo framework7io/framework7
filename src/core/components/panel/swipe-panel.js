@@ -279,11 +279,11 @@ function swipePanel(panel) {
         } else {
           removePanelInClass = false;
           const target = effect === 'reveal' ? $viewEl : $el;
-          $('html').addClass('with-panel-closing');
+          panel.setStateClasses('before-closing');
           target.transitionEnd(() => {
             if ($el.hasClass('panel-in')) return;
             $el.removeClass('panel-in-swipe');
-            $('html').removeClass('with-panel-closing');
+            panel.setStateClasses('after-closing');
           });
         }
       }

@@ -58,6 +58,8 @@
     - All new Area Chart component
   - Gauge
     - Renamed `$gaugeSvgEl` property to `$svgEl`
+  - Panel
+    - Improved support for nested panels. Now panel can be created and correctly opened inside of the page (including with breakpoints)
 - Vue
   - Rewritten to new Vue v3 API (no Vue v2 support anymore)
   - `App` component now receives all app parameters as props

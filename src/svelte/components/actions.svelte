@@ -47,20 +47,26 @@
   );
 
   function onOpen(instance) {
-    state.isOpened = true;
-    state.isClosing = false;
+    Object.assign(state, {
+      isOpened: true,
+      isClosing: false,
+    });
     emit('actionsOpen', [instance]);
   }
   function onOpened(instance) {
     emit('actionsOpened', [instance]);
   }
   function onClose(instance) {
-    state.isOpened = false;
-    state.isClosing = true;
+    Object.assign(state, {
+      isOpened: false,
+      isClosing: true,
+    });
     emit('actionsClose', [instance]);
   }
   function onClosed(instance) {
-    state.isClosing = false;
+    Object.assign(state, {
+      isClosing: false,
+    });
     emit('actionsClosed', [instance]);
   }
 

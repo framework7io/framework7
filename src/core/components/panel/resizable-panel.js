@@ -62,6 +62,9 @@ function resizablePanel(panel) {
       $htmlEl.css('cursor', 'col-resize');
       if (effect === 'reveal' || visibleByBreakpoint) {
         $viewEl = $(panel.getViewEl());
+        if (panel.$containerEl && panel.$containerEl.hasClass('page')) {
+          $viewEl.add(panel.$containerEl.children('.page-content, .tabs, .fab'));
+        }
       }
       if (effect === 'reveal' && !visibleByBreakpoint) {
         $backdropEl.transition(0);
