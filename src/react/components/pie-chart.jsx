@@ -125,10 +125,7 @@ const PieChart = forwardRef((props, ref) => {
     if (!f7Tooltip.current) return;
     if (currentIndex !== null) {
       f7Tooltip.current.setText(formatTooltipText());
-      f7Tooltip.current.targetEl = elRef.current.querySelector(
-        `path[data-index="${currentIndex}"]`,
-      );
-      f7Tooltip.current.$targetEl = f7.$(
+      f7Tooltip.current.setTargetEl(
         elRef.current.querySelector(`path[data-index="${currentIndex}"]`),
       );
 

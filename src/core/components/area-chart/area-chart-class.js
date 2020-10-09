@@ -268,8 +268,7 @@ class AreaChart extends Framework7Class {
     }
     if (currentIndex !== null) {
       self.f7Tooltip.setText(self.formatTooltip());
-      self.f7Tooltip.targetEl = svgEl.querySelector(`line[data-index="${currentIndex}"]`);
-      self.f7Tooltip.$targetEl = $(self.f7Tooltip.targetEl);
+      self.f7Tooltip.setTargetEl(svgEl.querySelector(`line[data-index="${currentIndex}"]`));
       self.f7Tooltip.show();
     } else {
       self.f7Tooltip.hide();

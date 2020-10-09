@@ -122,8 +122,7 @@
     if (!f7Tooltip) return;
     if (currentIndex !== null) {
       f7Tooltip.setText(formatTooltipText());
-      f7Tooltip.targetEl = el.querySelector(`path[data-index="${currentIndex}"]`);
-      f7Tooltip.$targetEl = f7.$(el.querySelector(`path[data-index="${currentIndex}"]`));
+      f7Tooltip.setTargetEl(el.querySelector(`path[data-index="${currentIndex}"]`));
 
       f7Tooltip.show();
     } else {

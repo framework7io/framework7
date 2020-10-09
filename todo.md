@@ -16,9 +16,9 @@
 - [ ] Features
   - [ ] set colorPicker and Calendar instance on openerEl?
   - [ ] Charts to render functions
-  - [ ] tooltip
-    - [ ] set target
-    - [ ] delegated tooltip
+  - [x] tooltip
+    - [x] set target
+    - [x] delegated tooltip
   - [x] Nested Panels
 - [ ] New component Stepper / Lines
 - [ ] Router

@@ -240,10 +240,9 @@ const AreaChart = forwardRef((props, ref) => {
     }
     if (currentIndex !== null) {
       f7Tooltip.current.setText(formatTooltip());
-      f7Tooltip.current.targetEl = svgElRef.current.querySelector(
-        `line[data-index="${currentIndex}"]`,
+      f7Tooltip.current.setTargetEl(
+        svgElRef.current.querySelector(`line[data-index="${currentIndex}"]`),
       );
-      f7Tooltip.current.$targetEl = f7.$(f7Tooltip.current.targetEl);
       f7Tooltip.current.show();
     } else {
       f7Tooltip.current.hide();

@@ -43,6 +43,7 @@ export default {
   params: {
     tooltip: {
       targetEl: null,
+      delegated: false,
       text: null,
       cssClass: null,
       render: null,

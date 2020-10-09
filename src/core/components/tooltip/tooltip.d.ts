@@ -5,6 +5,8 @@ export namespace Tooltip {
   interface Parameters {
     /** Tooltip target element. Tooltip will be shown around this element. HTMLElement or string with CSS selector of tooltip target element */
     targetEl: HTMLElement | CSSSelector;
+    /** Enables tooltip for all elements matching to targetEl selector (e.g. attaches event handler to document). `targetEl` parameter must be a CSS Selector (string) */
+    delegated: boolean;
     /** Tooltip text or HTML content */
     text: string;
     /** Additional css class will be added to Tooltip element. Can be used for additional tooltip styling */
@@ -61,6 +63,8 @@ export namespace Tooltip {
     hide(): Tooltip;
     /** Change tooltip text or HTML content to the new one */
     setText(text: string): Tooltip;
+    /** Change tooltip target HTML element */
+    setTargetEl(targetEl: HTMLElement | CSSSelector): Tooltip;
     /** Destroys tooltip instance */
     destroy(): void;
   }

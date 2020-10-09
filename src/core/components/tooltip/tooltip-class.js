@@ -1,3 +1,4 @@
+import { getDocument } from 'ssr-window';
 import $ from '../../shared/dom7';
 import { extend, deleteProps } from '../../shared/utils';
 import { getSupport } from '../../shared/get-support';
@@ -12,6 +13,8 @@ class Tooltip extends Framework7Class {
 
     const defaults = extend({}, app.params.tooltip);
 
+    const document = getDocument();
+
     // Extend defaults with modules params
     tooltip.useModulesParams(defaults);
 
@@ -25,12 +28,13 @@ class Tooltip extends Framework7Class {
     }
 
     const { targetEl, containerEl } = tooltip.params;
-    if (!targetEl) return tooltip;
+    if (!targetEl && !tooltip.params.delegated) return tooltip;
 
     const $targetEl = $(targetEl);
-    if ($targetEl.length === 0) return tooltip;
+    if ($targetEl.length === 0 && !tooltip.params.delegated) return tooltip;
 
-    if ($targetEl[0].f7Tooltip) return $targetEl[0].f7Tooltip;
+    if ($targetEl[0] && $targetEl[0].f7Tooltip && !tooltip.params.delegated)
+      return $targetEl[0].f7Tooltip;
 
     let $containerEl = $(containerEl || app.$el).eq(0);
     if ($containerEl.length === 0) {
@@ -52,7 +56,7 @@ class Tooltip extends Framework7Class {
       opened: false,
     });
 
-    $targetEl[0].f7Tooltip = tooltip;
+    if ($targetEl[0]) $targetEl[0].f7Tooltip = tooltip;
 
     const touchesStart = {};
     let isTouched;
@@ -105,37 +109,102 @@ class Tooltip extends Framework7Class {
     tooltip.attachEvents = function attachEvents() {
       $el.on('transitionend', handleTransitionEnd);
       if (tooltip.params.trigger === 'click') {
-        $targetEl.on('click', handleClick);
+        if (tooltip.params.delegated) {
+          $(document).on('click', tooltip.params.targetEl, handleClick);
+        } else {
+          tooltip.$targetEl.on('click', handleClick);
+        }
         $('html').on('click', handleClickOut);
         return;
       }
       if (tooltip.params.trigger === 'manual') return;
       if (support.touch) {
         const passive = support.passiveListener ? { passive: true } : false;
-        $targetEl.on(app.touchEvents.start, handleTouchStart, passive);
+        if (tooltip.params.delegated) {
+          $(document).on(app.touchEvents.start, tooltip.params.targetEl, handleTouchStart, passive);
+        } else {
+          tooltip.$targetEl.on(app.touchEvents.start, handleTouchStart, passive);
+        }
         app.on('touchmove', handleTouchMove);
         app.on('touchend:passive', handleTouchEnd);
       } else {
-        $targetEl.on(support.pointerEvents ? 'pointerenter' : 'mouseenter', handleMouseEnter);
-        $targetEl.on(support.pointerEvents ? 'pointerleave' : 'mouseleave', handleMouseLeave);
+        // eslint-disable-next-line
+        if (tooltip.params.delegated) {
+          $(document).on(
+            support.pointerEvents ? 'pointerenter' : 'mouseenter',
+            tooltip.params.targetEl,
+            handleMouseEnter,
+            true,
+          );
+          $(document).on(
+            support.pointerEvents ? 'pointerleave' : 'mouseleave',
+            tooltip.params.targetEl,
+            handleMouseLeave,
+            true,
+          );
+        } else {
+          tooltip.$targetEl.on(
+            support.pointerEvents ? 'pointerenter' : 'mouseenter',
+            handleMouseEnter,
+          );
+          tooltip.$targetEl.on(
+            support.pointerEvents ? 'pointerleave' : 'mouseleave',
+            handleMouseLeave,
+          );
+        }
       }
     };
     tooltip.detachEvents = function detachEvents() {
       $el.off('transitionend', handleTransitionEnd);
       if (tooltip.params.trigger === 'click') {
-        $targetEl.off('click', handleClick);
+        if (tooltip.params.delegated) {
+          $(document).on('click', tooltip.params.targetEl, handleClick);
+        } else {
+          tooltip.$targetEl.off('click', handleClick);
+        }
         $('html').off('click', handleClickOut);
         return;
       }
       if (tooltip.params.trigger === 'manual') return;
       if (support.touch) {
         const passive = support.passiveListener ? { passive: true } : false;
-        $targetEl.off(app.touchEvents.start, handleTouchStart, passive);
+        if (tooltip.params.delegated) {
+          $(document).off(
+            app.touchEvents.start,
+            tooltip.params.targetEl,
+            handleTouchStart,
+            passive,
+          );
+        } else {
+          tooltip.$targetEl.off(app.touchEvents.start, handleTouchStart, passive);
+        }
         app.off('touchmove', handleTouchMove);
         app.off('touchend:passive', handleTouchEnd);
       } else {
-        $targetEl.off(support.pointerEvents ? 'pointerenter' : 'mouseenter', handleMouseEnter);
-        $targetEl.off(support.pointerEvents ? 'pointerleave' : 'mouseleave', handleMouseLeave);
+        // eslint-disable-next-line
+        if (tooltip.params.delegated) {
+          $(document).off(
+            support.pointerEvents ? 'pointerenter' : 'mouseenter',
+            tooltip.params.targetEl,
+            handleMouseEnter,
+            true,
+          );
+          $(document).off(
+            support.pointerEvents ? 'pointerleave' : 'mouseleave',
+            tooltip.params.targetEl,
+            handleMouseLeave,
+            true,
+          );
+        } else {
+          tooltip.$targetEl.off(
+            support.pointerEvents ? 'pointerenter' : 'mouseenter',
+            handleMouseEnter,
+          );
+          tooltip.$targetEl.off(
+            support.pointerEvents ? 'pointerleave' : 'mouseleave',
+            handleMouseLeave,
+          );
+        }
       }
     };
 
@@ -144,6 +213,15 @@ class Tooltip extends Framework7Class {
 
     tooltip.init();
 
+    return tooltip;
+  }
+
+  setTargetEl(targetEl) {
+    const tooltip = this;
+    tooltip.detachEvents();
+    tooltip.$targetEl = $(targetEl);
+    tooltip.targetEl = tooltip.$targetEl[0];
+    tooltip.attachEvents();
     return tooltip;
   }
 
@@ -293,7 +371,7 @@ class Tooltip extends Framework7Class {
     tooltip.$targetEl.trigger('tooltip:beforedestroy');
     tooltip.emit('local::beforeDestroy tooltipBeforeDestroy', tooltip);
     tooltip.$el.remove();
-    delete tooltip.$targetEl[0].f7Tooltip;
+    if (tooltip.$targetEl[0]) delete tooltip.$targetEl[0].f7Tooltip;
     tooltip.detachEvents();
     deleteProps(tooltip);
     tooltip.destroyed = true;

@@ -146,8 +146,7 @@ export default {
       if (!f7Tooltip) return;
       if (index !== null) {
         f7Tooltip.setText(formatTooltipText());
-        f7Tooltip.targetEl = elRef.value.querySelector(`path[data-index="${index}"]`);
-        f7Tooltip.$targetEl = f7.$(elRef.value.querySelector(`path[data-index="${index}"]`));
+        f7Tooltip.setTargetEl(elRef.value.querySelector(`path[data-index="${index}"]`));
 
         f7Tooltip.show();
       } else {

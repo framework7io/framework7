@@ -223,8 +223,7 @@
     }
     if (currentIndex !== null) {
       f7Tooltip.setText(formatTooltip());
-      f7Tooltip.targetEl = svgEl.querySelector(`line[data-index="${currentIndex}"]`);
-      f7Tooltip.$targetEl = f7.$(f7Tooltip.targetEl);
+      f7Tooltip.setTargetEl(svgEl.querySelector(`line[data-index="${currentIndex}"]`));
       f7Tooltip.show();
     } else {
       f7Tooltip.hide();

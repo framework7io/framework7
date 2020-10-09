@@ -291,8 +291,7 @@ export default {
       }
       if (index !== null) {
         f7Tooltip.setText(formatTooltip());
-        f7Tooltip.targetEl = svgElRef.value.querySelector(`line[data-index="${index}"]`);
-        f7Tooltip.$targetEl = f7.$(f7Tooltip.targetEl);
+        f7Tooltip.setTargetEl(svgElRef.value.querySelector(`line[data-index="${index}"]`));
         f7Tooltip.show();
       } else {
         f7Tooltip.hide();

@@ -50,8 +50,10 @@
       <a href="/about/" data-open-in="popup">About</a>
       ```
   - Tooltip
-    - New `containerEl` property
+    - New `containerEl` parameter
+    - New `delegated` parameter. Enables tooltip for all elements matching to targetEl selector (e.g. attaches event handler to document). `targetEl` parameter must be a CSS Selector (string)
     - New `trigger: 'manual'` value
+    - New `.setTarget(targetEl)` instance method to change tooltip target after it was created
   - Pie Chart
     - All new Pie Chart component
   - Area Chart

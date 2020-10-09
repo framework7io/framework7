@@ -141,10 +141,7 @@ class PieChart extends Framework7Class {
     if (!self.f7Tooltip) return;
     if (currentIndex !== null) {
       self.f7Tooltip.setText(self.formatTooltipText());
-      self.f7Tooltip.targetEl = el.querySelector(`path[data-index="${currentIndex}"]`);
-      self.f7Tooltip.$targetEl = self.f7Tooltip.app.$(
-        el.querySelector(`path[data-index="${currentIndex}"]`),
-      );
+      self.f7Tooltip.setTargetEl(el.querySelector(`path[data-index="${currentIndex}"]`));
 
       self.f7Tooltip.show();
     } else {
