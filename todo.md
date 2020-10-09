@@ -2,7 +2,10 @@
 
 - [ ] Capacitor integration
 - [x] Add containerEl for modals
-- [ ] Fix iOS Navbar Home <--> Accordion
+
+- [ ] Fixes
+  - [ ] Fix iOS Navbar Home <--> Accordion
+  - [ ] fix data table selected row styles
 - [ ] Styles
   - [ ] Push view popup on keyboard open
   - [ ] Update Aurora theme
@@ -10,21 +13,24 @@
     - [ ] List button should be theme color
     - [ ] Remove extra maring/padding on MD theme checkboxes/radios
     - [ ] Check new touch ripple
+- [ ] Features
+  - [ ] set colorPicker and Calendar instance on openerEl?
+  - [ ] Charts to render functions
+  - [ ] tooltip
+    - [ ] set target
+    - [ ] delegated tooltip
+  - [ ] Nested Panels
 - [ ] New component Stepper / Lines
-- [ ] set colorPicker and Calendar instance on openerEl?
-- [ ] Charts to render functions
-- [ ] tooltip
-  - [ ] set target
-  - [ ] delegated tooltip
 - [ ] Router
+
   - [ ] BrowserHistory modal should preload previous page/modal
   - [ ] View-width transition improvements
   - [ ] Navbar with Large title similar to page title in AppStore ???
   - [x] Add parameter on how to open the page `openIn`
   - [x] BeforeEnter/BeforeLeave - add direction
-- [ ] Nested Panels
+
 - [x] add containerEl to modals
-- [ ] fix data table selected row styles
+
 - [x] new store
   - [x] KS demos
   - [ ] changelog
@@ -50,15 +56,12 @@
 # React
 
 - [ ] add loading button
-- [ ] new store KS demos
 
 # Svelte
 
 - [ ] add loading button
-- [ ] new store KS demos
 - [ ] value bindings
 
 # Vue
 
 - [ ] add loading button
-- [ ] new store KS demos
