@@ -68,7 +68,7 @@ const request = (requestOptions) =>
       beforeOpen (xhr, options),
       beforeSend (xhr, options),
       error (xhr, status, message),
-      complete (xhr, stautus),
+      complete (xhr, status),
       success (response, status, xhr),
       statusCode ()
     */
