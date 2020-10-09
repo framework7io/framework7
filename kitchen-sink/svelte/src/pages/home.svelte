@@ -200,5 +200,6 @@
     <ListItem title="Routable Modals" link="/routable-modals/" />
     <ListItem title="Default Route (404)" link="/load-something-that-doesnt-exist/" />
     <ListItem title="Master-Detail (Split View)" link="/master-detail/" />
+    <ListItem title="Store" link="/store/" />
   </List>
 </Page>

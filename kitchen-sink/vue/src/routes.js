@@ -112,6 +112,8 @@ import RoutableActions from './pages/routable-actions.vue';
 import MasterDetailMaster from './pages/master-detail-master.vue';
 import MasterDetailDetail from './pages/master-detail-detail.vue';
 
+import Store from './pages/store.vue';
+
 import NotFound from './pages/404.vue';
 
 // Pages
@@ -665,6 +667,10 @@ export default [
         component: MasterDetailDetail,
       },
     ],
+  },
+  {
+    path: '/store/',
+    component: Store,
   },
 
   // Default route (404 page). MUST BE THE LAST

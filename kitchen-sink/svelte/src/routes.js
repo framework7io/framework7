@@ -112,6 +112,8 @@ import RoutableActions from './pages/routable-actions.svelte';
 import MasterDetailMaster from './pages/master-detail-master.svelte';
 import MasterDetailDetail from './pages/master-detail-detail.svelte';
 
+import Store from './pages/store.svelte';
+
 import NotFound from './pages/404.svelte';
 
 // Pages
@@ -665,6 +667,10 @@ export default [
         component: MasterDetailDetail,
       },
     ],
+  },
+  {
+    path: '/store/',
+    component: Store,
   },
 
   // Default route (404 page). MUST BE THE LAST

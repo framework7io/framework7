@@ -111,6 +111,8 @@ import RoutableActions from './pages/routable-actions.jsx';
 import MasterDetailMaster from './pages/master-detail-master.jsx';
 import MasterDetailDetail from './pages/master-detail-detail.jsx';
 
+import Store from './pages/store.jsx';
+
 import NotFound from './pages/404.jsx';
 
 // Pages
@@ -661,6 +663,11 @@ export default [
   {
     path: '/master-detail/:id/',
     component: MasterDetailDetail,
+  },
+
+  {
+    path: '/store/',
+    component: Store,
   },
   // Default route (404 page). MUST BE THE LAST
   {
