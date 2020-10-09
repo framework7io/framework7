@@ -16,7 +16,7 @@ import { Popover } from 'framework7/types';
   style?: React.CSSProperties;
   opened? : boolean
   animate? : boolean
-  target? : string | object
+  targetEl? : string | object
   backdrop? : boolean
   backdropEl? : string | object
   closeByBackdropClick? : boolean
@@ -39,7 +39,7 @@ const Popover = forwardRef((props, ref) => {
     children,
     opened,
     animate,
-    target,
+    targetEl,
     backdrop,
     backdropEl,
     closeByBackdropClick,
@@ -97,7 +97,7 @@ const Popover = forwardRef((props, ref) => {
         closed: onClosed,
       },
     };
-    if (target) popoverParams.targetEl = target;
+    if (targetEl) popoverParams.targetEl = targetEl;
 
     if ('closeByBackdropClick' in props) popoverParams.closeByBackdropClick = closeByBackdropClick;
     if ('closeByOutsideClick' in props) popoverParams.closeByOutsideClick = closeByOutsideClick;
@@ -110,8 +110,8 @@ const Popover = forwardRef((props, ref) => {
     f7ready(() => {
       f7Popover.current = f7.popover.create(popoverParams);
 
-      if (opened && target) {
-        f7Popover.current.open(target, false);
+      if (opened && targetEl) {
+        f7Popover.current.open(targetEl, false);
       }
     });
   };

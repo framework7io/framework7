@@ -19,7 +19,7 @@ export default {
       type: Boolean,
       default: undefined,
     },
-    target: {
+    targetEl: {
       type: [String, Object],
       default: undefined,
     },
@@ -101,7 +101,7 @@ export default {
         },
       };
       const {
-        target,
+        targetEl,
         closeByBackdropClick,
         closeByOutsideClick,
         closeOnEscape,
@@ -109,7 +109,7 @@ export default {
         backdropEl,
         containerEl,
       } = props;
-      if (typeof target !== 'undefined') popoverParams.target = target;
+      if (typeof targetEl !== 'undefined') popoverParams.targetEl = targetEl;
       if (typeof closeByBackdropClick !== 'undefined')
         popoverParams.closeByBackdropClick = closeByBackdropClick;
       if (typeof closeByOutsideClick !== 'undefined')
@@ -122,7 +122,7 @@ export default {
       f7ready(() => {
         f7Popover.value = f7.popover.create(popoverParams);
         if (props.opened) {
-          f7Popover.value.open(false);
+          f7Popover.value.open(targetEl, false);
         }
       });
     });

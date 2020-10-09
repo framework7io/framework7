@@ -13,7 +13,7 @@
 
   export let opened = undefined;
   export let animate = undefined;
-  export let target = undefined;
+  export let targetEl = undefined;
   export let backdrop = undefined;
   export let backdropEl = undefined;
   export let closeByBackdropClick = undefined;
@@ -76,7 +76,7 @@
         closed: onClosed,
       },
     };
-    if (target) params.targetEl = target;
+    if (targetEl) params.targetEl = targetEl;
 
     if (typeof animate !== 'undefined') params.animate = animate;
     if (typeof closeByBackdropClick !== 'undefined')
@@ -91,7 +91,7 @@
     f7ready(() => {
       f7Popover = f7.popover.create(params);
       if (opened) {
-        f7Popover.open(false);
+        f7Popover.open(targetEl, false);
       }
     });
   });
