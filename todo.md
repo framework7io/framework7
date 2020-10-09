@@ -18,15 +18,15 @@
   - [ ] delegated tooltip
 - [ ] Router
   - [ ] BrowserHistory modal should preload previous page/modal
-  - [x] Add parameter on how to open the page `openIn`
   - [ ] View-width transition improvements
   - [ ] Navbar with Large title similar to page title in AppStore ???
+  - [x] Add parameter on how to open the page `openIn`
   - [x] BeforeEnter/BeforeLeave - add direction
 - [ ] Nested Panels
 - [x] add containerEl to modals
 - [ ] fix data table selected row styles
 - [x] new store
-  - [ ] KS demos
+  - [x] KS demos
   - [ ] changelog
     - removed app `data` and `methods`
     - new `store` parameter
