@@ -45,6 +45,10 @@
       - `reject`
       - `direction` (new in v6 - can be `forward` or `backward`)
       - `router` (new in v6 - current router instance)
+    - Now it is possible to specify how to open page route with `data-open-in` attribute, e.g.
+      ```html
+      <a href="/about/" data-open-in="popup">About</a>
+      ```
   - Tooltip
     - New `containerEl` property
     - New `trigger: 'manual'` value
@@ -81,12 +85,16 @@
   - `browserHistory` must be used with `browserHistoryInitialMatch`
   - Fast Refresh support
 - React/Svelte/Vue
+  - Button, Link, ListButon, ListItem, MenuDropdownItem, MenuItem, TreeviewItem
+    - New `openIn` prop to specify how to open page route (e.g. open page as `popup`, `panel` etc)
   - Pie Chart
     - All new Pie Chart component
   - Area Chart
     - All new Area Chart component
   - Input
     - Added `error-message` slot
+  - Popover
+    - `target` prop renamed to `targetEl`
   - Popover, Login Screen, Actions, Sheet
     - Added `animate` property
     - Removed component open/close methods
