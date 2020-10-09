@@ -1,12 +1,15 @@
 # Core
 
+- [ ] Capacitor integration
 - [x] Add containerEl for modals
 - [ ] Fix iOS Navbar Home <--> Accordion
-- [ ] Update Aurora theme
-- [ ] Update MD theme
-  - [ ] List button should be theme color
-  - [ ] Remove extra maring/padding on MD theme checkboxes/radios
-  - [ ] Check new touch ripple
+- [ ] Styles
+  - [ ] Push view popup on keyboard open
+  - [ ] Update Aurora theme
+  - [ ] Update MD theme
+    - [ ] List button should be theme color
+    - [ ] Remove extra maring/padding on MD theme checkboxes/radios
+    - [ ] Check new touch ripple
 - [ ] New component Stepper / Lines
 - [ ] set colorPicker and Calendar instance on openerEl?
 - [ ] Charts to render functions
@@ -15,7 +18,7 @@
   - [ ] delegated tooltip
 - [ ] Router
   - [ ] BrowserHistory modal should preload previous page/modal
-  - [ ] Add parameter on how to open the page `openIn`
+  - [x] Add parameter on how to open the page `openIn`
   - [ ] View-width transition improvements
   - [ ] Navbar with Large title similar to page title in AppStore ???
   - [x] BeforeEnter/BeforeLeave - add direction
@@ -53,6 +56,7 @@
 
 - [ ] add loading button
 - [ ] new store KS demos
+- [ ] value bindings
 
 # Vue
 
