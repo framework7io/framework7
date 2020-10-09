@@ -253,13 +253,24 @@ function SwipeBack(r) {
     return els;
   }
 
-  function setAnimatableNavElements({ progress, reset, transition } = {}) {
+  function setAnimatableNavElements({ progress, reset, transition, reflow } = {}) {
     const styles = ['overflow', 'transform', 'transform-origin', 'opacity'];
+    if (transition === true || transition === false) {
+      for (let i = 0; i < animatableNavEls.length; i += 1) {
+        const el = animatableNavEls[i];
+        if (el && el.el) {
+          if (transition === true) el.el.classList.add('navbar-page-transitioning');
+          if (transition === false) el.el.classList.remove('navbar-page-transitioning');
+        }
+      }
+    }
+    if (reflow && animatableNavEls.length && animatableNavEls[0] && animatableNavEls[0].el) {
+      // eslint-disable-next-line
+      animatableNavEls[0].el._clientLeft = animatableNavEls[0].el.clientLeft;
+    }
     for (let i = 0; i < animatableNavEls.length; i += 1) {
       const el = animatableNavEls[i];
       if (el && el.el) {
-        if (transition === true) el.el.classList.add('navbar-page-transitioning');
-        if (transition === false) el.el.classList.remove('navbar-page-transitioning');
         if (el.className && !el.classNameSet && !reset) {
           el.el.classList.add(el.className);
           el.classNameSet = true;
@@ -434,9 +445,10 @@ function SwipeBack(r) {
     isTouched = false;
     isMoved = false;
     router.swipeBackActive = false;
-    $([$currentPageEl[0], $previousPageEl[0]]).removeClass('page-swipeback-active');
+    const $pages = $([$currentPageEl[0], $previousPageEl[0]]);
+    $pages.removeClass('page-swipeback-active');
     if (touchesDiff === 0) {
-      $([$currentPageEl[0], $previousPageEl[0]]).transform('');
+      $pages.transform('');
       if ($pageShadowEl && $pageShadowEl.length > 0) $pageShadowEl.remove();
       if ($pageOpacityEl && $pageOpacityEl.length > 0) $pageOpacityEl.remove();
       if (dynamicNavbar) {
@@ -463,10 +475,15 @@ function SwipeBack(r) {
     }
     // Reset custom styles
     // Add transitioning class for transition-duration
-    $([$currentPageEl[0], $previousPageEl[0]]).addClass('page-transitioning page-transitioning-swipeback').transform('');
+    $pages.addClass('page-transitioning page-transitioning-swipeback');
+    if (!pageChanged) {
+      // eslint-disable-next-line
+      $currentPageEl[0]._clientLeft = $currentPageEl[0].clientLeft;
+    }
+    $pages.transform('');
 
     if (dynamicNavbar) {
-      setAnimatableNavElements({ progress: pageChanged ? 1 : 0, transition: true });
+      setAnimatableNavElements({ progress: pageChanged ? 1 : 0, transition: true, reflow: !pageChanged });
     }
     allowViewTouchMove = false;
     router.allowPageChange = false;
@@ -496,7 +513,7 @@ function SwipeBack(r) {
     }
 
     $currentPageEl.transitionEnd(() => {
-      $([$currentPageEl[0], $previousPageEl[0]]).removeClass('page-transitioning page-transitioning-swipeback');
+      $pages.removeClass('page-transitioning page-transitioning-swipeback');
       if (dynamicNavbar) {
         setAnimatableNavElements({ reset: true, transition: false });
       }
