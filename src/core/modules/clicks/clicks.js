@@ -55,6 +55,7 @@ function initClicks(app) {
       e.preventDefault();
       clickedLinkData = $clickedLinkEl.dataset();
     }
+    clickedLinkData.clickedEl = $clickedLinkEl[0];
 
     // Prevent Router
     if (e.preventF7Router) return;

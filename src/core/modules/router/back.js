@@ -8,8 +8,7 @@ import processRouteQueue from './process-route-queue';
 import appRouterCheck from './app-router-check';
 import asyncComponent from './async-component';
 
-function backward(el, backwardOptions) {
-  const router = this;
+function backward(router, el, backwardOptions) {
   const device = getDevice();
   const document = getDocument();
   const $el = $(el);
@@ -530,9 +529,7 @@ function backward(el, backwardOptions) {
 
   return router;
 }
-function loadBack(backParams, backOptions, ignorePageChange) {
-  const router = this;
-
+function loadBack(router, backParams, backOptions, ignorePageChange) {
   if (!router.allowPageChange && !ignorePageChange) return router;
   const params = backParams;
   const options = backOptions;
@@ -553,7 +550,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
 
   // Component Callbacks
   function resolve(pageEl, newOptions) {
-    return router.backward(pageEl, extend(options, newOptions));
+    return backward(router, pageEl, extend(options, newOptions));
   }
   function reject() {
     router.allowPageChange = true;
@@ -566,13 +563,13 @@ function loadBack(backParams, backOptions, ignorePageChange) {
 
   // Proceed
   if (content) {
-    router.backward(router.getPageEl(content), options);
+    backward(router, router.getPageEl(content), options);
   } else if (el) {
     // Load page from specified HTMLElement or by page name in pages container
-    router.backward(router.getPageEl(el), options);
+    backward(router, router.getPageEl(el), options);
   } else if (pageName) {
     // Load page by page name in pages container
-    router.backward(router.$el.children(`.page[data-name="${pageName}"]`).eq(0), options);
+    backward(router, router.$el.children(`.page[data-name="${pageName}"]`).eq(0), options);
   } else if (component || componentUrl) {
     // Load from component (F7/Vue/React/...)
     try {
@@ -597,7 +594,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
     router
       .xhrRequest(url, options)
       .then((pageContent) => {
-        router.backward(router.getPageEl(pageContent), options);
+        backward(router, router.getPageEl(pageContent), options);
       })
       .catch(() => {
         router.allowPageChange = true;
@@ -766,7 +763,8 @@ function back(...args) {
       previousPageRoute,
       router.currentRoute,
       () => {
-        router.loadBack(
+        loadBack(
+          router,
           { el: $previousPage },
           extend(navigateOptions, {
             route: previousPageRoute,
@@ -839,7 +837,7 @@ function back(...args) {
     router.$el.children('.page-previous.stacked').each((pageEl) => {
       if (pageEl.f7Page && pageEl.f7Page.route && pageEl.f7Page.route.url === route.url) {
         backForceLoaded = true;
-        router.loadBack({ el: pageEl }, options);
+        loadBack(router, { el: pageEl }, options);
       }
     });
     if (backForceLoaded) {
@@ -849,20 +847,20 @@ function back(...args) {
   function resolve() {
     let routerLoaded = false;
     if (route.route.keepAlive && route.route.keepAliveData) {
-      router.loadBack({ el: route.route.keepAliveData.pageEl }, options);
+      loadBack(router, { el: route.route.keepAliveData.pageEl }, options);
       routerLoaded = true;
     }
     'url content component pageName el componentUrl'.split(' ').forEach((pageLoadProp) => {
       if (route.route[pageLoadProp] && !routerLoaded) {
         routerLoaded = true;
-        router.loadBack({ [pageLoadProp]: route.route[pageLoadProp] }, options);
+        loadBack(router, { [pageLoadProp]: route.route[pageLoadProp] }, options);
       }
     });
     if (routerLoaded) return;
     // Async
     function asyncResolve(resolveParams, resolveOptions) {
       router.allowPageChange = false;
-      router.loadBack(resolveParams, extend(options, resolveOptions), true);
+      loadBack(router, resolveParams, extend(options, resolveOptions), true);
     }
     function asyncReject() {
       router.allowPageChange = true;
@@ -919,4 +917,4 @@ function back(...args) {
   // Return Router
   return router;
 }
-export { backward, loadBack, back };
+export { back };

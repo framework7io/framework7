@@ -13,10 +13,10 @@ import {
 import History from '../../shared/history';
 import SwipeBack from './swipe-back';
 
-import { refreshPage, forward, load, navigate } from './navigate';
+import { refreshPage, navigate } from './navigate';
 import { tabLoad, tabRemove } from './tab';
 import { modalLoad, modalRemove } from './modal';
-import { backward, loadBack, back } from './back';
+import { back } from './back';
 import { clearPreviousHistory } from './clear-previous-history';
 import appRouterCheck from './app-router-check';
 
@@ -1395,8 +1395,6 @@ class Router extends Framework7Class {
 }
 
 // Load
-Router.prototype.forward = forward;
-Router.prototype.load = load;
 Router.prototype.navigate = navigate;
 Router.prototype.refreshPage = refreshPage;
 // Tab
@@ -1406,8 +1404,6 @@ Router.prototype.tabRemove = tabRemove;
 Router.prototype.modalLoad = modalLoad;
 Router.prototype.modalRemove = modalRemove;
 // Back
-Router.prototype.backward = backward;
-Router.prototype.loadBack = loadBack;
 Router.prototype.back = back;
 // Clear history
 Router.prototype.clearPreviousHistory = clearPreviousHistory;

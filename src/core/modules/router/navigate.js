@@ -16,8 +16,7 @@ function refreshPage() {
   });
 }
 
-function forward(el, forwardOptions = {}) {
-  const router = this;
+function forward(router, el, forwardOptions = {}) {
   const document = getDocument();
   const $el = $(el);
   const app = router.app;
@@ -663,8 +662,7 @@ function forward(el, forwardOptions = {}) {
   }
   return router;
 }
-function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
-  const router = this;
+function load(router, loadParams = {}, loadOptions = {}, ignorePageChange) {
   if (!router.allowPageChange && !ignorePageChange) return router;
   const params = loadParams;
   const options = loadOptions;
@@ -731,7 +729,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
 
   // Component Callbacks
   function resolve(pageEl, newOptions) {
-    return router.forward(pageEl, extend(options, newOptions));
+    return forward(router, pageEl, extend(options, newOptions));
   }
   function reject() {
     router.allowPageChange = true;
@@ -744,13 +742,13 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
 
   // Proceed
   if (content) {
-    router.forward(router.getPageEl(content), options);
+    forward(router, router.getPageEl(content), options);
   } else if (el) {
     // Load page from specified HTMLElement or by page name in pages container
-    router.forward(router.getPageEl(el), options);
+    forward(router, router.getPageEl(el), options);
   } else if (pageName) {
     // Load page by page name in pages container
-    router.forward(router.$el.children(`.page[data-name="${pageName}"]`).eq(0), options);
+    forward(router, router.$el.children(`.page[data-name="${pageName}"]`).eq(0), options);
   } else if (component || componentUrl) {
     // Load from component (F7/Vue/React/...)
     try {
@@ -775,7 +773,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
     router
       .xhrRequest(url, options)
       .then((pageContent) => {
-        router.forward(router.getPageEl(pageContent), options);
+        forward(router, router.getPageEl(pageContent), options);
       })
       .catch(() => {
         router.allowPageChange = true;
@@ -783,8 +781,52 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   }
   return router;
 }
+
+function openIn(router, url, options) {
+  const navigateOptions = {
+    url,
+    route: {
+      path: url,
+      options: {
+        ...options,
+        openIn: undefined,
+      },
+    },
+  };
+  const params = {
+    ...options,
+  };
+  if (options.openIn === 'popup') {
+    params.content = `<div class="popup popup-router-open-in" data-url="${url}"><div class="view view-init" data-url="${url}"></div></div>`;
+    navigateOptions.route.popup = params;
+  }
+  if (options.openIn === 'loginScreen') {
+    params.content = `<div class="login-screen login-screen-router-open-in" data-url="${url}"><div class="view view-init" data-url="${url}"></div></div>`;
+    navigateOptions.route.loginScreen = params;
+  }
+  if (options.openIn === 'sheet') {
+    params.content = `<div class="sheet-modal sheet-modal-router-open-in" data-url="${url}"><div class="sheet-modal-inner"><div class="view view-init" data-url="${url}"></div></div></div>`;
+    navigateOptions.route.sheet = params;
+  }
+  if (options.openIn === 'popover') {
+    params.targetEl = options.clickedEl || options.targetEl;
+    params.content = `<div class="popover popover-router-open-in" data-url="${url}"><div class="popover-inner"><div class="view view-init" data-url="${url}"></div></div></div>`;
+    navigateOptions.route.popover = params;
+  }
+  if (options.openIn.indexOf('panel') >= 0) {
+    const parts = options.openIn.split(':');
+    const side = parts[1] || 'left';
+    const effect = parts[2] || 'cover';
+    params.targetEl = options.clickedEl || options.targetEl;
+    params.content = `<div class="panel panel-router-open-in panel-${side} panel-${effect}" data-url="${url}"><div class="view view-init" data-url="${url}"></div></div>`;
+    navigateOptions.route.panel = params;
+  }
+  return router.navigate(navigateOptions);
+}
+
 function navigate(navigateParams, navigateOptions = {}) {
   const router = this;
+
   if (router.swipeBackActive) return router;
   let url;
   let createRoute;
@@ -857,6 +899,11 @@ function navigate(navigateParams, navigateOptions = {}) {
   } else {
     extend(options, navigateOptions);
   }
+
+  if (options.openIn) {
+    return openIn(router, navigateUrl, options);
+  }
+
   options.route = route;
 
   function resolve() {
@@ -870,13 +917,13 @@ function navigate(navigateParams, navigateOptions = {}) {
         }
       });
     if (route.route.keepAlive && route.route.keepAliveData) {
-      router.load({ el: route.route.keepAliveData.pageEl }, options, false);
+      load(router, { el: route.route.keepAliveData.pageEl }, options, false);
       routerLoaded = true;
     }
     'url content component pageName el componentUrl'.split(' ').forEach((pageLoadProp) => {
       if (route.route[pageLoadProp] && !routerLoaded) {
         routerLoaded = true;
-        router.load({ [pageLoadProp]: route.route[pageLoadProp] }, options, false);
+        load(router, { [pageLoadProp]: route.route[pageLoadProp] }, options, false);
       }
     });
     if (routerLoaded) return;
@@ -896,7 +943,7 @@ function navigate(navigateParams, navigateOptions = {}) {
           }
         });
       if (resolvedAsModal) return;
-      router.load(resolveParams, extend(options, resolveOptions), true);
+      router.load(router, resolveParams, extend(options, resolveOptions), true);
     }
     function asyncReject() {
       router.allowPageChange = true;
@@ -1001,4 +1048,4 @@ function navigate(navigateParams, navigateOptions = {}) {
   // Return Router
   return router;
 }
-export { refreshPage, forward, load, navigate };
+export { refreshPage, navigate };
