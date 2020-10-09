@@ -66,25 +66,25 @@ export namespace Actions {
     buttons?: Button[]
     /** Enables grid buttons layout*/
     grid?:boolean
-    /** When enabled, action sheet will be converted to Popoveron large screens.*/
+    /** When enabled, action sheet will be converted to Popover on large screens.*/
     convertToPopover?:boolean
-    /** When enabled, action sheel will be always converted to Popover.*/
+    /** When enabled, action sheet will be always converted to Popover.*/
     forceToPopover?:boolean
-    /** HTML element or string CSS selector of target element. Required when converstion to popover is in use*/
+    /** HTML element or string CSS selector of target element. Required when conversion to popover is in use*/
     targetEl?: HTMLElement | CSSSelector
-    /** Virtual target element horizontal offset from left side of the screen. Required when converstion to popover is in use without using real target element (targetEl)*/
+    /** Virtual target element horizontal offset from left side of the screen. Required when conversion to popover is in use without using real target element (targetEl)*/
     targetX?:number
-    /** Virtual target element vertical offset from top of the screen. Required when converstion to popover is in use without using real target element (targetEl)*/
+    /** Virtual target element vertical offset from top of the screen. Required when conversion to popover is in use without using real target element (targetEl)*/
     targetY?:number
-    /** Virtual target element width (in px). Required when converstion to popover is in use without using real target element (targetEl)*/
+    /** Virtual target element width (in px). Required when conversion to popover is in use without using real target element (targetEl)*/
     targetWidth?:number
-    /** Virtual target element height (in px). Required when converstion to popover is in use without using real target element (targetEl)*/
+    /** Virtual target element height (in px). Required when conversion to popover is in use without using real target element (targetEl)*/
     targetHeight?:number
     /** Callback function that will be executed after click on the Action Sheet button*/
     onClick?: (actions : Actions, e: unknown) => void
     /** Custom function to render Action Sheet. Must return Action Sheet html*/
     render?: () => string
-    /** Custom function to render Popover when conversition to popover is in use. Must return Popover html*/
+    /** Custom function to render Popover when conversion to popover is in use. Must return Popover html*/
     renderPopover?: () => string
     /** Object with event handlers */
     on?: {

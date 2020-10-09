@@ -37,7 +37,7 @@ export namespace View {
     url?: string
     /**	If enabled then all previous pages in navigation chain will not be removed from DOM when you navigate deeper and deeper. It could be useful, for example, if you have some Form from 5 steps (5 pages) and when you are on last 5th page you need access to form that was on 1st page. */
     stackPages?: boolean
-    /**	CSS Selector of another view or object with initialized View instance. By defaul all links in initialized (only) view will load pages in this view. This tell links to load pages in other view. */
+    /**	CSS Selector of another view or object with initialized View instance. By default all links in initialized (only) view will load pages in this view. This tell links to load pages in other view. */
     linksView?: CSSSelector | View
     /**	You may enable this parameter to allow loading of new pages that have same url as currently "active" page in View. */
     allowDuplicateUrls?: boolean

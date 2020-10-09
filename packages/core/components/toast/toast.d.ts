@@ -19,7 +19,7 @@ export namespace Toast {
   interface Parameters {
     /** Toast element. Can be useful if you already have Toast element in your HTML and want to create new instance using this element. */
     el?: HTMLElement | CSSSelector
-    /** Toast icon HTML layout, e.g. <i class="f7-icons">home</i> or image <img src="path/to/icon.png"> */
+    /** Toast icon HTML layout, e.g. <i class="f7-icons">house</i> or image <img src="path/to/icon.png"> */
     icon?: string
     /** Toast inner text */
     text?: string

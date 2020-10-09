@@ -1,5 +1,5 @@
 /**
- * Framework7 5.7.12
+ * Framework7 5.7.13
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 3, 2020
+ * Released on: October 9, 2020
  */
 
 (function (global, factory) {
@@ -2908,7 +2908,11 @@
       '834x1112',
       '1112x834',
       '768x1024',
-      '1024x768' ];
+      '1024x768',
+      '820x1180',
+      '1180x820',
+      '810x1080',
+      '1080x810' ];
     if (!ipad
       && macos
       && Support.touch
@@ -5587,29 +5591,41 @@
       var progress = ref.progress;
       var reset = ref.reset;
       var transition = ref.transition;
+      var reflow = ref.reflow;
 
       var styles = ['overflow', 'transform', 'transform-origin', 'opacity'];
-      for (var i = 0; i < animatableNavEls.length; i += 1) {
-        var el = animatableNavEls[i];
-        if (el && el.el) {
-          if (transition === true) { el.el.classList.add('navbar-page-transitioning'); }
-          if (transition === false) { el.el.classList.remove('navbar-page-transitioning'); }
-          if (el.className && !el.classNameSet && !reset) {
-            el.el.classList.add(el.className);
-            el.classNameSet = true;
+      if (transition === true || transition === false) {
+        for (var i = 0; i < animatableNavEls.length; i += 1) {
+          var el = animatableNavEls[i];
+          if (el && el.el) {
+            if (transition === true) { el.el.classList.add('navbar-page-transitioning'); }
+            if (transition === false) { el.el.classList.remove('navbar-page-transitioning'); }
           }
-          if (el.className && reset) {
-            el.el.classList.remove(el.className);
+        }
+      }
+      if (reflow && animatableNavEls.length && animatableNavEls[0] && animatableNavEls[0].el) {
+        // eslint-disable-next-line
+        animatableNavEls[0].el._clientLeft = animatableNavEls[0].el.clientLeft;
+      }
+      for (var i$1 = 0; i$1 < animatableNavEls.length; i$1 += 1) {
+        var el$1 = animatableNavEls[i$1];
+        if (el$1 && el$1.el) {
+          if (el$1.className && !el$1.classNameSet && !reset) {
+            el$1.el.classList.add(el$1.className);
+            el$1.classNameSet = true;
+          }
+          if (el$1.className && reset) {
+            el$1.el.classList.remove(el$1.className);
           }
           for (var j = 0; j < styles.length; j += 1) {
             var styleProp = styles[j];
-            if (el[styleProp]) {
+            if (el$1[styleProp]) {
               if (reset) {
-                el.el.style[styleProp] = '';
-              } else if (typeof el[styleProp] === 'function') {
-                el.el.style[styleProp] = el[styleProp](progress);
+                el$1.el.style[styleProp] = '';
+              } else if (typeof el$1[styleProp] === 'function') {
+                el$1.el.style[styleProp] = el$1[styleProp](progress);
               } else {
-                el.el.style[styleProp] = el[styleProp];
+                el$1.el.style[styleProp] = el$1[styleProp];
               }
             }
           }
@@ -5768,9 +5784,10 @@
       isTouched = false;
       isMoved = false;
       router.swipeBackActive = false;
-      $([$currentPageEl[0], $previousPageEl[0]]).removeClass('page-swipeback-active');
+      var $pages = $([$currentPageEl[0], $previousPageEl[0]]);
+      $pages.removeClass('page-swipeback-active');
       if (touchesDiff === 0) {
-        $([$currentPageEl[0], $previousPageEl[0]]).transform('');
+        $pages.transform('');
         if ($pageShadowEl && $pageShadowEl.length > 0) { $pageShadowEl.remove(); }
         if ($pageOpacityEl && $pageOpacityEl.length > 0) { $pageOpacityEl.remove(); }
         if (dynamicNavbar) {
@@ -5797,10 +5814,15 @@
       }
       // Reset custom styles
       // Add transitioning class for transition-duration
-      $([$currentPageEl[0], $previousPageEl[0]]).addClass('page-transitioning page-transitioning-swipeback').transform('');
+      $pages.addClass('page-transitioning page-transitioning-swipeback');
+      if (!pageChanged) {
+        // eslint-disable-next-line
+        $currentPageEl[0]._clientLeft = $currentPageEl[0].clientLeft;
+      }
+      $pages.transform('');
 
       if (dynamicNavbar) {
-        setAnimatableNavElements({ progress: pageChanged ? 1 : 0, transition: true });
+        setAnimatableNavElements({ progress: pageChanged ? 1 : 0, transition: true, reflow: !pageChanged });
       }
       allowViewTouchMove = false;
       router.allowPageChange = false;
@@ -5830,7 +5852,7 @@
       }
 
       $currentPageEl.transitionEnd(function () {
-        $([$currentPageEl[0], $previousPageEl[0]]).removeClass('page-transitioning page-transitioning-swipeback');
+        $pages.removeClass('page-transitioning page-transitioning-swipeback');
         if (dynamicNavbar) {
           setAnimatableNavElements({ reset: true, transition: false });
         }
@@ -40804,7 +40826,7 @@
   };
 
   /**
-   * Framework7 5.7.12
+   * Framework7 5.7.13
    * Full featured mobile HTML framework for building iOS & Android apps
    * https://framework7.io/
    *
@@ -40812,7 +40834,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: September 3, 2020
+   * Released on: October 9, 2020
    */
 
   // Install Core Modules & Components

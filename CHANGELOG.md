@@ -2,6 +2,19 @@
 
 # Change Log
 
+# [v5.7.13](https://github.com/framework7io/framework7/compare/v5.7.12...v5.7.13) - October 9, 2020
+  * Core
+    * Router
+      * Fixed swipe-back issues on iOS 14
+    * Device
+      * Fixed iOS detection for newest iPads
+  * Svelte
+    * ListInput, Input
+      * Fixed not working TextEditor events
+    * LoginScreen
+      * Fixed not working eventsy
+  * Lots of docs and Kitchen Sink typos fixes by @DAnn2012
+
 # [v5.7.12](https://github.com/framework7io/framework7/compare/v5.7.11...v5.7.12) - September 3, 2020
   * Core
     * Autocomplete
