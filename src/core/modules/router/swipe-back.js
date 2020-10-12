@@ -550,7 +550,7 @@ function SwipeBack(r) {
     // Reset custom styles
     // Add transitioning class for transition-duration
     $pages.addClass('page-transitioning page-transitioning-swipeback');
-    if (!pageChanged) {
+    if (device.ios) {
       // eslint-disable-next-line
       $currentPageEl[0]._clientLeft = $currentPageEl[0].clientLeft;
     }
@@ -560,7 +560,7 @@ function SwipeBack(r) {
       setAnimatableNavElements({
         progress: pageChanged ? 1 : 0,
         transition: true,
-        reflow: !pageChanged,
+        reflow: !!device.ios,
       });
     }
     allowViewTouchMove = false;
