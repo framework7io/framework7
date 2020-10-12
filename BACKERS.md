@@ -256,7 +256,6 @@ Danny Redfern<br>
 
 ### \$10+ Supporter
 Jim Leliveld<br>
-David Fall<br>
 Wolfgang Bochar<br>
 Picolé de Chuchu<br>
 Stan Smulders<br>
@@ -267,7 +266,6 @@ Shawn Jackson<br>
 Никита Коробочкин<br>
 Nathan Harold<br>
 Paulo Vieira<br>
-Michael Powers<br>
 iOS Haven<br>
 JK<br>
 Azad Zain<br>
