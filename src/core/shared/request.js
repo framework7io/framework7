@@ -321,7 +321,7 @@ const request = (requestOptions) =>
 
     xhr.onerror = function onerror() {
       fireCallback('error', xhr, xhr.status, xhr.status);
-      reject(new RequestError({ options, xhr, status: xhr.status, message: xhr.status }));
+      reject(new RequestError({ options, xhr, status: xhr.status, message: xhr.statusText }));
       fireCallback('complete', xhr, 'error');
     };
 
