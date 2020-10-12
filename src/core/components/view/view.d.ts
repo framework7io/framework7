@@ -154,7 +154,7 @@ export namespace View {
     browserHistorySeparator?: string;
     /**	Disable to ignore parsing browser history URL and loading page on app load */
     browserHistoryOnLoad?: boolean;
-    /**	Set to true when your server cofigured to respond with content that matches to requested URL (e.g. using with server-side rendering frameworks like Nuxt.js, Next.js, and others). By default disabled */
+    /**	Set to true when your server cofigured to respond with content that matches to requested URL (e.g. using with server-side rendering frameworks like Nuxt.js, Next.js, and others). Also must be enabled when used in Framework7-React/Vue/Svelte. By default disabled */
     browserHistoryInitialMatch?: boolean;
     /**	When enabled (by default), it will store router history in localStorage and try to restore it on next web app visit */
     browserHistoryStoreHistory?: boolean;

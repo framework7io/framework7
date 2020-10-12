@@ -38,6 +38,7 @@
     - CSS vars renamed without `--f7-` prefix
   - View/Router
     - `pushState...` parameters renamed to `browserHistory...`
+    - New `browserHistoryInitialMatch` parameter
     - Route's `beforeEnter`, `beforeLeave`, `redirect` and `async` methods now receive a single object with following props
       - `to`
       - `from`
@@ -77,6 +78,7 @@
       - Support for `v-model:expandableOpened`
     - Input, ListInput, Messagebar, Searchbar, Stepper, Range
       - Support for `v-model:value`
+  - `browserHistory` must be used with `browserHistoryInitialMatch`
 - React
   - KS updated to use hooks API only
   - `App` component now receives all app parameters as props
@@ -88,6 +90,9 @@
   - Removed `umd` version
   - `browserHistory` must be used with `browserHistoryInitialMatch`
   - Fast Refresh support
+- Svelte
+  - `App` component now receives all app parameters as props
+  - `browserHistory` must be used with `browserHistoryInitialMatch`
 - React/Svelte/Vue
   - Button, Link, ListButon, ListItem, MenuDropdownItem, MenuItem, TreeviewItem
     - New `openIn` prop to specify how to open page route (e.g. open page as `popup`, `panel` etc)
