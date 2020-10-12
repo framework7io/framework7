@@ -3,6 +3,8 @@ import { getWindow } from 'ssr-window';
 import $ from '../../shared/dom7';
 import { extend, now, nextTick, deleteProps } from '../../shared/utils';
 import Framework7Class from '../../shared/class';
+/** @jsx $jsx */
+import { $jsx } from '../../shared/render';
 
 class PhotoBrowser extends Framework7Class {
   constructor(app, params = {}) {
@@ -201,37 +203,40 @@ class PhotoBrowser extends Framework7Class {
         : pb.params.navbarShowCount;
 
     const isPopup = pb.params.type !== 'page';
-    // prettier-ignore
-    const navbarHtml = `
-      <div class="navbar navbar-photo-browser ${pb.params.theme === 'dark' ? 'navbar-photo-browser-dark' : ''}">
+    return (
+      <div
+        class={`navbar navbar-photo-browser ${
+          pb.params.theme === 'dark' ? 'navbar-photo-browser-dark' : ''
+        }`}
+      >
         <div class="navbar-bg"></div>
         <div class="navbar-inner navbar-inner-centered-title sliding">
-          ${!isPopup ? `
-          <div class="left">
-            <a class="link ${!pageBackLinkText ? 'icon-only' : ''} back">
-              <i class="icon icon-back ${iconsColor ? `color-${iconsColor}` : ''}"></i>
-              ${pageBackLinkText ? `<span>${pageBackLinkText}</span>` : ''}
-            </a>
-          </div>
-          ` : ''}
-          ${renderNavbarCount ? `
-          <div class="title">
-            <span class="photo-browser-current"></span>
-            <span class="photo-browser-of">${pb.params.navbarOfText}</span>
-            <span class="photo-browser-total"></span>
-          </div>
-          ` : ''}
-          ${isPopup ? `
-          <div class="right">
-            <a class="link popup-close" data-popup=".photo-browser-popup">
-              <span>${pb.params.popupCloseLinkText}</span>
-            </a>
-          </div>
-          ` : ''}
+          {!isPopup && (
+            <div class="left">
+              <a class={`link ${!pageBackLinkText ? 'icon-only' : ''} back`}>
+                <i class={`icon icon-back ${iconsColor ? `color-${iconsColor}` : ''}`}></i>
+                {pageBackLinkText && <span>{pageBackLinkText}</span>}
+              </a>
+            </div>
+          )}
+          {renderNavbarCount && (
+            <div class="title">
+              <span class="photo-browser-current"></span>
+              <span class="photo-browser-of">{pb.params.navbarOfText}</span>
+              <span class="photo-browser-total"></span>
+            </div>
+          )}
+          $
+          {isPopup && (
+            <div class="right">
+              <a class="link popup-close" data-popup=".photo-browser-popup">
+                <span>{pb.params.popupCloseLinkText}</span>
+              </a>
+            </div>
+          )}
         </div>
       </div>
-    `.trim();
-    return navbarHtml;
+    );
   }
 
   renderToolbar() {
@@ -241,104 +246,121 @@ class PhotoBrowser extends Framework7Class {
     let iconsColor = pb.params.iconsColor;
     if (!pb.params.iconsColor && pb.params.theme === 'dark') iconsColor = 'white';
 
-    const toolbarHtml = `
+    return (
       <div class="toolbar toolbar-bottom tabbar">
         <div class="toolbar-inner">
           <a class="link photo-browser-prev">
-            <i class="icon icon-back ${iconsColor ? `color-${iconsColor}` : ''}"></i>
+            <i class={`icon icon-back ${iconsColor ? `color-${iconsColor}` : ''}`}></i>
           </a>
           <a class="link photo-browser-next">
-            <i class="icon icon-forward ${iconsColor ? `color-${iconsColor}` : ''}"></i>
+            <i class={`icon icon-forward ${iconsColor ? `color-${iconsColor}` : ''}`}></i>
           </a>
         </div>
       </div>
-    `.trim();
-    return toolbarHtml;
+    );
   }
 
   renderCaption(caption, index) {
     const pb = this;
     if (pb.params.renderCaption) return pb.params.renderCaption.call(pb, caption, index);
-    const captionHtml = `
-      <div class="photo-browser-caption" data-caption-index="${index}">
-        ${caption}
+    return (
+      <div class="photo-browser-caption" data-caption-index={index}>
+        {caption}
       </div>
-    `.trim();
-    return captionHtml;
+    );
   }
 
   renderObject(photo, index) {
     const pb = this;
     if (pb.params.renderObject) return pb.params.renderObject.call(pb, photo, index);
-    const objHtml = `
-      <div class="photo-browser-slide photo-browser-object-slide swiper-slide" data-swiper-slide-index="${index}">${
-      photo.html ? photo.html : photo
-    }</div>
-    `;
-    return objHtml;
+    return (
+      <div
+        class="photo-browser-slide photo-browser-object-slide swiper-slide"
+        data-swiper-slide-index={index}
+      >
+        {photo.html ? photo.html : photo}
+      </div>
+    );
   }
 
   renderLazyPhoto(photo, index) {
     const pb = this;
     if (pb.params.renderLazyPhoto) return pb.params.renderLazyPhoto.call(pb, photo, index);
-    const photoHtml = `
-      <div class="photo-browser-slide photo-browser-slide-lazy swiper-slide" data-swiper-slide-index="${index}">
-          <div class="swiper-lazy-preloader"></div>
-          <span class="swiper-zoom-container">
-              <img data-src="${photo.url ? photo.url : photo}" class="swiper-lazy">
-          </span>
+    return (
+      <div
+        class="photo-browser-slide photo-browser-slide-lazy swiper-slide"
+        data-swiper-slide-index={index}
+      >
+        <div class="swiper-lazy-preloader"></div>
+        <span class="swiper-zoom-container">
+          <img data-src={photo.url ? photo.url : photo} class="swiper-lazy" />
+        </span>
       </div>
-    `.trim();
-    return photoHtml;
+    );
   }
 
   renderPhoto(photo, index) {
     const pb = this;
     if (pb.params.renderPhoto) return pb.params.renderPhoto.call(pb, photo, index);
-    const photoHtml = `
-      <div class="photo-browser-slide swiper-slide" data-swiper-slide-index="${index}">
+    return (
+      <div class="photo-browser-slide swiper-slide" data-swiper-slide-index={index}>
         <span class="swiper-zoom-container">
-          <img src="${photo.url ? photo.url : photo}">
+          <img src={photo.url ? photo.url : photo} />
         </span>
       </div>
-    `.trim();
-    return photoHtml;
+    );
   }
 
   render() {
     const pb = this;
     if (pb.params.render) return pb.params.render.call(pb, pb.params);
-    // prettier-ignore
-    const html = `
-      <div class="photo-browser photo-browser-${pb.params.theme}">
+    return (
+      <div class={`photo-browser photo-browser-${pb.params.theme}`}>
         <div class="view">
-          <div class="page photo-browser-page photo-browser-page-${pb.params.theme} no-toolbar ${!pb.params.navbar ? 'no-navbar' : ''}" data-name="photo-browser-page">
-            ${pb.params.navbar ? pb.renderNavbar() : ''}
-            ${pb.params.toolbar ? pb.renderToolbar() : ''}
-            <div class="photo-browser-captions photo-browser-captions-${pb.params.captionsTheme || pb.params.theme}">
-              ${pb.params.photos.map((photo, index) => {
+          <div
+            class={`page photo-browser-page photo-browser-page-${pb.params.theme} no-toolbar ${
+              !pb.params.navbar ? 'no-navbar' : ''
+            }`}
+            data-name="photo-browser-page"
+          >
+            {pb.params.navbar && pb.renderNavbar()}
+            {pb.params.toolbar && pb.renderToolbar()}
+            <div
+              class={`photo-browser-captions photo-browser-captions-${
+                pb.params.captionsTheme || pb.params.theme
+              }`}
+            >
+              {pb.params.photos.map((photo, index) => {
                 if (photo.caption) return pb.renderCaption(photo.caption, index);
                 return '';
-              }).join(' ')}
+              })}
             </div>
             <div class="photo-browser-swiper-container swiper-container">
               <div class="photo-browser-swiper-wrapper swiper-wrapper">
-                ${pb.params.virtualSlides ? '' : pb.params.photos.map((photo, index) => {
-                  if (photo.html || ((typeof photo === 'string' || photo instanceof String) && photo.indexOf('<') >= 0 && photo.indexOf('>') >= 0)) {
-                    return pb.renderObject(photo, index);
-                  }
-                  if (pb.params.swiper.lazy === true || (pb.params.swiper.lazy && pb.params.swiper.lazy.enabled)) {
-                    return pb.renderLazyPhoto(photo, index);
-                  }
-                  return pb.renderPhoto(photo, index);
-                }).join(' ')}
+                {!pb.params.virtualSlides &&
+                  pb.params.photos.map((photo, index) => {
+                    if (
+                      photo.html ||
+                      ((typeof photo === 'string' || photo instanceof String) &&
+                        photo.indexOf('<') >= 0 &&
+                        photo.indexOf('>') >= 0)
+                    ) {
+                      return pb.renderObject(photo, index);
+                    }
+                    if (
+                      pb.params.swiper.lazy === true ||
+                      (pb.params.swiper.lazy && pb.params.swiper.lazy.enabled)
+                    ) {
+                      return pb.renderLazyPhoto(photo, index);
+                    }
+                    return pb.renderPhoto(photo, index);
+                  })}
               </div>
             </div>
           </div>
         </div>
       </div>
-    `.trim();
-    return html;
+    );
   }
 
   renderStandalone() {

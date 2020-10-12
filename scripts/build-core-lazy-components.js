@@ -146,8 +146,8 @@ function buildLazyComponentsJs(components, cb) {
         'process.env.FORMAT': JSON.stringify(format),
       }),
       nodeResolve({ mainFields: ['module', 'main', 'jsnext'] }),
-      commonjs(),
       babel({ babelHelpers: 'bundled' }),
+      commonjs(),
     ],
     onwarn(warning, warn) {
       const ignore = ['EVAL'];

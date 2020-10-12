@@ -1,6 +1,8 @@
 import $ from '../../shared/dom7';
 import { extend, deleteProps } from '../../shared/utils';
 import Framework7Class from '../../shared/class';
+/** @jsx $jsx */
+import { $jsx } from '../../shared/render';
 
 class Messages extends Framework7Class {
   constructor(app, params = {}) {
@@ -124,51 +126,45 @@ class Messages extends Framework7Class {
     const attrs = Object.keys(message.attrs)
       .map((attr) => `${attr}="${message.attrs[attr]}"`)
       .join(' ');
-    return `
-      <div class="message message-${message.type} ${message.isTyping ? 'message-typing' : ''} ${
-      message.cssClass || ''
-    }" ${attrs}>
-        ${
-          message.avatar
-            ? `
-        <div class="message-avatar" style="background-image:url(${message.avatar})"></div>
-        `
-            : ''
-        }
+    return (
+      <div
+        class={`message message-${message.type} ${message.isTyping ? 'message-typing' : ''} ${
+          message.cssClass || ''
+        }`}
+        {...attrs}
+      >
+        {message.avatar && (
+          <div class="message-avatar" style={`background-image:url(${message.avatar})`}></div>
+        )}
         <div class="message-content">
-          ${message.name ? `<div class="message-name">${message.name}</div>` : ''}
-          ${message.header ? `<div class="message-header">${message.header}</div>` : ''}
+          {message.name && <div class="message-name">{message.name}</div>}
+          {message.header && <div class="message-header">{message.header}</div>}
           <div class="message-bubble">
-            ${
-              message.textHeader
-                ? `<div class="message-text-header">${message.textHeader}</div>`
-                : ''
-            }
-            ${message.image ? `<div class="message-image">${message.image}</div>` : ''}
-            ${
-              message.imageSrc && !message.image
-                ? `<div class="message-image"><img src="${message.imageSrc}"></div>`
-                : ''
-            }
-            ${
-              message.text || message.isTyping
-                ? `<div class="message-text">${message.text || ''}${
-                    message.isTyping
-                      ? '<div class="message-typing-indicator"><div></div><div></div><div></div></div>'
-                      : ''
-                  }</div>`
-                : ''
-            }
-            ${
-              message.textFooter
-                ? `<div class="message-text-footer">${message.textFooter}</div>`
-                : ''
-            }
+            {message.textHeader && <div class="message-text-header">{message.textHeader}</div>}
+            {message.image && <div class="message-image">{message.image}</div>}
+            {message.imageSrc && !message.image && (
+              <div class="message-image">
+                <img src={message.imageSrc} />
+              </div>
+            )}
+            {(message.text || message.isTyping) && (
+              <div class="message-text">
+                {message.text || ''}
+                {message.isTyping && (
+                  <div class="message-typing-indicator">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                )}
+              </div>
+            )}
+            {message.textFooter && <div class="message-text-footer">{message.textFooter}</div>}
           </div>
-          ${message.footer ? `<div class="message-footer">${message.footer}</div>` : ''}
+          {message.footer && <div class="message-footer">{message.footer}</div>}
         </div>
       </div>
-    `;
+    );
   }
 
   renderMessages(

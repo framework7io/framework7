@@ -1,6 +1,8 @@
 import $ from '../../shared/dom7';
 import { extend, deleteProps, id, nextTick } from '../../shared/utils';
 import Framework7Class from '../../shared/class';
+/** @jsx $jsx */
+import { $jsx } from '../../shared/render';
 
 class SmartSelect extends Framework7Class {
   constructor(app, params = {}) {
@@ -364,22 +366,24 @@ class SmartSelect extends Framework7Class {
   renderSearchbar() {
     const ss = this;
     if (ss.params.renderSearchbar) return ss.params.renderSearchbar.call(ss);
-    // prettier-ignore
-    const searchbarHTML = `
+    return (
       <form class="searchbar">
         <div class="searchbar-inner">
           <div class="searchbar-input-wrap">
-            <input type="search" spellcheck="${ss.params.searchbarSpellcheck || 'false'}" placeholder="${ss.params.searchbarPlaceholder}"/>
+            <input
+              type="search"
+              spellcheck={ss.params.searchbarSpellcheck || 'false'}
+              placeholder={ss.params.searchbarPlaceholder}
+            />
             <i class="searchbar-icon"></i>
             <span class="input-clear-button"></span>
           </div>
-          ${ss.params.searchbarDisableButton ? `
-          <span class="searchbar-disable-button">${ss.params.searchbarDisableText}</span>
-          ` : ''}
+          {ss.params.searchbarDisableButton && (
+            <span class="searchbar-disable-button">{ss.params.searchbarDisableText}</span>
+          )}
         </div>
       </form>
-    `;
-    return searchbarHTML;
+    );
   }
 
   renderItem(item, index) {
@@ -421,24 +425,30 @@ class SmartSelect extends Framework7Class {
       const iconContent = getIconContent(icon || iconIos || iconMd || iconAurora || '');
       const iconClass = getIconClass(icon || iconIos || iconMd || iconAurora || '');
 
-      // prettier-ignore
-      itemHtml = `
-        <li class="${item.className || ''}${disabled ? ' disabled' : ''}">
-          <label class="item-${item.inputType} item-content">
-            <input type="${item.inputType}" name="${item.inputName}" value="${item.value}" ${selected ? 'checked' : ''}/>
-            <i class="icon icon-${item.inputType}"></i>
-            ${item.hasMedia ? `
+      itemHtml = (
+        <li class={`${item.className || ''}${disabled ? ' disabled' : ''}`}>
+          <label class={`item-${item.inputType} item-content`}>
+            <input
+              type={item.inputType}
+              name={item.inputName}
+              value={item.value}
+              _checked={selected}
+            />
+            <i class={`icon icon-${item.inputType}`}></i>
+            {item.hasMedia && (
               <div class="item-media">
-                ${hasIcon ? `<i class="icon ${iconClass}">${iconContent}</i>` : ''}
-                ${item.image ? `<img src="${item.image}">` : ''}
+                {hasIcon && <i class={`icon ${iconClass}`}>{iconContent}</i>}
+                {item.image && <img src={item.image} />}
               </div>
-            ` : ''}
+            )}
             <div class="item-inner">
-              <div class="item-title${item.color ? ` text-color-${item.color}` : ''}">${item.text}</div>
+              <div class={`item-title${item.color ? ` text-color-${item.color}` : ''}`}>
+                {item.text}
+              </div>
             </div>
           </label>
         </li>
-      `;
+      );
     }
     return itemHtml;
   }
@@ -461,31 +471,45 @@ class SmartSelect extends Framework7Class {
       pageTitle = $itemTitleEl.length ? $itemTitleEl.text().trim() : '';
     }
     const cssClass = ss.params.cssClass;
-    // prettier-ignore
-    const pageHtml = `
-      <div class="page smart-select-page ${cssClass}" data-name="smart-select-page" data-select-name="${ss.selectName}">
-        <div class="navbar ${ss.params.navbarColorTheme ? `color-${ss.params.navbarColorTheme}` : ''}">
+    return (
+      <div
+        class={`page smart-select-page ${cssClass}`}
+        data-name="smart-select-page"
+        data-select-name={ss.selectName}
+      >
+        <div
+          class={`navbar ${
+            ss.params.navbarColorTheme ? `color-${ss.params.navbarColorTheme}` : ''
+          }`}
+        >
           <div class="navbar-bg"></div>
-          <div class="navbar-inner sliding ${ss.params.navbarColorTheme ? `color-${ss.params.navbarColorTheme}` : ''}">
+          <div
+            class={`navbar-inner sliding ${
+              ss.params.navbarColorTheme ? `color-${ss.params.navbarColorTheme}` : ''
+            }`}
+          >
             <div class="left">
               <a class="link back">
                 <i class="icon icon-back"></i>
-                <span class="if-not-md">${ss.params.pageBackLinkText}</span>
+                <span class="if-not-md">{ss.params.pageBackLinkText}</span>
               </a>
             </div>
-            ${pageTitle ? `<div class="title">${pageTitle}</div>` : ''}
-            ${ss.params.searchbar ? `<div class="subnavbar">${ss.renderSearchbar()}</div>` : ''}
+            {pageTitle && <div class="title">{pageTitle}</div>}
+            {ss.params.searchbar && <div class="subnavbar">{ss.renderSearchbar()}</div>}
           </div>
         </div>
-        ${ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : ''}
+        {ss.params.searchbar && <div class="searchbar-backdrop"></div>}
         <div class="page-content">
-          <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''}">
-            <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
+          <div
+            class={`list smart-select-list-${ss.id} ${
+              ss.params.virtualList ? ' virtual-list' : ''
+            } ${ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''}`}
+          >
+            <ul>{!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
           </div>
         </div>
       </div>
-    `;
-    return pageHtml;
+    );
   }
 
   renderPopup() {
@@ -497,32 +521,51 @@ class SmartSelect extends Framework7Class {
       pageTitle = $itemTitleEl.length ? $itemTitleEl.text().trim() : '';
     }
     const cssClass = ss.params.cssClass || '';
-    // prettier-ignore
-    const popupHtml = `
-      <div class="popup smart-select-popup ${cssClass} ${ss.params.popupTabletFullscreen ? 'popup-tablet-fullscreen' : ''}" data-select-name="${ss.selectName}">
+    return (
+      <div
+        class={`popup smart-select-popup ${cssClass} ${
+          ss.params.popupTabletFullscreen ? 'popup-tablet-fullscreen' : ''
+        }`}
+        data-select-name={ss.selectName}
+      >
         <div class="view">
-          <div class="page smart-select-page ${ss.params.searchbar ? 'page-with-subnavbar' : ''}" data-name="smart-select-page">
-            <div class="navbar ${ss.params.navbarColorTheme ? `color-${ss.params.navbarColorTheme}` : ''}">
+          <div
+            class={`page smart-select-page ${ss.params.searchbar ? 'page-with-subnavbar' : ''}`}
+            data-name="smart-select-page"
+          >
+            <div
+              class={`navbar ${
+                ss.params.navbarColorTheme ? `color-${ss.params.navbarColorTheme}` : ''
+              }`}
+            >
               <div class="navbar-bg"></div>
               <div class="navbar-inner sliding">
-                ${pageTitle ? `<div class="title">${pageTitle}</div>` : ''}
+                {pageTitle && <div class="title">{pageTitle}</div>}
                 <div class="right">
-                  <a class="link popup-close" data-popup=".smart-select-popup[data-select-name='${ss.selectName}']">${ss.params.popupCloseLinkText}</span></a>
+                  <a
+                    class="link popup-close"
+                    data-popup={`.smart-select-popup[data-select-name='${ss.selectName}']`}
+                  >
+                    {ss.params.popupCloseLinkText}
+                  </a>
                 </div>
-                ${ss.params.searchbar ? `<div class="subnavbar">${ss.renderSearchbar()}</div>` : ''}
+                {ss.params.searchbar && <div class="subnavbar">{ss.renderSearchbar()}</div>}
               </div>
             </div>
-            ${ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : ''}
+            {ss.params.searchbar && <div class="searchbar-backdrop"></div>}
             <div class="page-content">
-              <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''}">
-                <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
+              <div
+                class={`list smart-select-list-${ss.id} ${
+                  ss.params.virtualList ? ' virtual-list' : ''
+                } ${ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''}`}
+              >
+                <ul>{!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
               </div>
             </div>
           </div>
         </div>
       </div>
-    `;
-    return popupHtml;
+    );
   }
 
   renderSheet() {
@@ -530,26 +573,25 @@ class SmartSelect extends Framework7Class {
     if (ss.params.renderSheet) return ss.params.renderSheet.call(ss, ss.items);
     const cssClass = ss.params.cssClass;
     // prettier-ignore
-    const sheetHtml = `
-      <div class="sheet-modal smart-select-sheet ${cssClass}" data-select-name="${ss.selectName}">
-        <div class="toolbar toolbar-top ${ss.params.toolbarColorTheme ? `color-${ss.params.toolbarColorTheme}` : ''}">
+    return (
+      <div class={`sheet-modal smart-select-sheet ${cssClass}`} data-select-name={ss.selectName}>
+        <div class={`toolbar toolbar-top ${ss.params.toolbarColorTheme ? `color-${ss.params.toolbarColorTheme}` : ''}`}>
           <div class="toolbar-inner">
             <div class="left"></div>
             <div class="right">
-              <a class="link sheet-close">${ss.params.sheetCloseLinkText}</a>
+              <a class="link sheet-close">{ss.params.sheetCloseLinkText}</a>
             </div>
           </div>
         </div>
         <div class="sheet-modal-inner">
           <div class="page-content">
-            <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''}">
-              <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
+            <div class={`list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''}`}>
+              <ul>{!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
             </div>
           </div>
         </div>
       </div>
-    `;
-    return sheetHtml;
+    )
   }
 
   renderPopover() {
@@ -557,16 +599,16 @@ class SmartSelect extends Framework7Class {
     if (ss.params.renderPopover) return ss.params.renderPopover.call(ss, ss.items);
     const cssClass = ss.params.cssClass;
     // prettier-ignore
-    const popoverHtml = `
-      <div class="popover smart-select-popover ${cssClass}" data-select-name="${ss.selectName}">
+    return (
+      <div class={`popover smart-select-popover ${cssClass}`} data-select-name={ss.selectName}>
         <div class="popover-inner">
-          <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''}">
-            <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
+          <div class={`list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''}`}>
+            <ul>{!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
           </div>
         </div>
       </div>
-    `;
-    return popoverHtml;
+
+    )
   }
 
   scrollToSelectedItem() {

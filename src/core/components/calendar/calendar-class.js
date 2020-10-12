@@ -3,6 +3,8 @@ import Framework7Class from '../../shared/class';
 import $ from '../../shared/dom7';
 import { getDevice } from '../../shared/get-device';
 import { getSupport } from '../../shared/get-support';
+/** @jsx $jsx */
+import { $jsx } from '../../shared/render';
 
 class Calendar extends Framework7Class {
   constructor(app, params = {}) {
@@ -1147,13 +1149,13 @@ class Calendar extends Framework7Class {
     if (calendar.params.renderMonths) {
       return calendar.params.renderMonths.call(calendar, date);
     }
-    return `
-    <div class="calendar-months-wrapper">
-    ${calendar.renderMonth(date, 'prev')}
-    ${calendar.renderMonth(date)}
-    ${calendar.renderMonth(date, 'next')}
-    </div>
-  `.trim();
+    return (
+      <div class="calendar-months-wrapper">
+        {calendar.renderMonth(date, 'prev')}
+        {calendar.renderMonth(date)}
+        {calendar.renderMonth(date, 'next')}
+      </div>
+    );
   }
 
   renderMonth(d, offset) {
@@ -1343,12 +1345,7 @@ class Calendar extends Framework7Class {
       const dayName = calendar.dayNamesShort[dayIndex];
       weekDaysHtml += `<div class="calendar-week-day">${dayName}</div>`;
     }
-    // prettier-ignore
-    return `
-    <div class="calendar-week-header">
-      ${weekDaysHtml}
-    </div>
-  `.trim();
+    return <div class="calendar-week-header">{weekDaysHtml}</div>;
   }
 
   renderMonthSelector() {
@@ -1356,22 +1353,21 @@ class Calendar extends Framework7Class {
     if (calendar.params.renderMonthSelector) {
       return calendar.params.renderMonthSelector.call(calendar);
     }
-    // prettier-ignore
-    return `
-    <div class="calendar-month-selector">
-      <a class="link icon-only calendar-prev-month-button">
-        <i class="icon icon-prev"></i>
-      </a>
-      ${calendar.params.monthPicker ? `
-        <a class="current-month-value link"></a>
-      ` : `
-        <span class="current-month-value"></span>
-      `}
-      <a class="link icon-only calendar-next-month-button">
-        <i class="icon icon-next"></i>
-      </a>
-    </div>
-  `.trim();
+    return (
+      <div class="calendar-month-selector">
+        <a class="link icon-only calendar-prev-month-button">
+          <i class="icon icon-prev"></i>
+        </a>
+        {calendar.params.monthPicker ? (
+          <a class="current-month-value link"></a>
+        ) : (
+          <span class="current-month-value"></span>
+        )}
+        <a class="link icon-only calendar-next-month-button">
+          <i class="icon icon-next"></i>
+        </a>
+      </div>
+    );
   }
 
   renderMonthPicker() {
@@ -1380,16 +1376,19 @@ class Calendar extends Framework7Class {
       calendar.$el.find('.calendar-month-current').attr('data-locale-month'),
       10,
     );
-    // prettier-ignore
-    return `
+    return (
       <div class="calendar-month-picker">
-        ${calendar.monthNames.map((m, index) => `
-          <div class="calendar-month-picker-item ${localeMonth === index ? 'calendar-month-picker-item-current' : ''}">
-            <span>${m}</span>
+        {calendar.monthNames.map((m, index) => (
+          <div
+            class={`calendar-month-picker-item ${
+              localeMonth === index ? 'calendar-month-picker-item-current' : ''
+            }`}
+          >
+            <span>{m}</span>
           </div>
-        `).join('')}
+        ))}
       </div>
-    `;
+    );
   }
 
   renderYearSelector() {
@@ -1397,22 +1396,21 @@ class Calendar extends Framework7Class {
     if (calendar.params.renderYearSelector) {
       return calendar.params.renderYearSelector.call(calendar);
     }
-    // prettier-ignore
-    return `
-    <div class="calendar-year-selector">
-      <a class="link icon-only calendar-prev-year-button">
-        <i class="icon icon-prev"></i>
-      </a>
-      ${calendar.params.yearPicker ? `
-        <a class="current-year-value link"></a>
-      ` : `
-        <span class="current-year-value"></span>
-      `}
-      <a class="link icon-only calendar-next-year-button">
-        <i class="icon icon-next"></i>
-      </a>
-    </div>
-  `.trim();
+    return (
+      <div class="calendar-year-selector">
+        <a class="link icon-only calendar-prev-year-button">
+          <i class="icon icon-prev"></i>
+        </a>
+        {calendar.params.yearPicker ? (
+          <a class="current-year-value link"></a>
+        ) : (
+          <span class="current-year-value"></span>
+        )}
+        <a class="link icon-only calendar-next-year-button">
+          <i class="icon icon-next"></i>
+        </a>
+      </div>
+    );
   }
 
   renderYearPicker() {
@@ -1430,16 +1428,20 @@ class Calendar extends Framework7Class {
     for (let i = yearMin; i <= yearMax; i += 1) {
       years.push(i);
     }
-    // prettier-ignore
-    return `
+    return (
       <div class="calendar-year-picker">
-        ${years.map(year => `
-          <div data-year="${year}" class="calendar-year-picker-item ${year === currentYear ? 'calendar-year-picker-item-current' : ''}">
-            <span>${calendar.yearFormatter.format(new Date().setFullYear(year))}</span>
+        {years.map((year) => (
+          <div
+            data-year={year}
+            class={`calendar-year-picker-item ${
+              year === currentYear ? 'calendar-year-picker-item-current' : ''
+            }`}
+          >
+            <span>{calendar.yearFormatter.format(new Date().setFullYear(year))}</span>
           </div>
-        `).join('')}
+        ))}
       </div>
-    `;
+    );
   }
 
   // eslint-disable-next-line
@@ -1448,11 +1450,11 @@ class Calendar extends Framework7Class {
     const value = calendar.value && calendar.value[0];
     let timeString;
     if (value) timeString = calendar.timeSelectorFormatter.format(value);
-    return `
-      <div class="calendar-time-selector"><a class="link">${
-        timeString || calendar.params.timePickerPlaceholder
-      }</a></div>
-    `;
+    return (
+      <div class="calendar-time-selector">
+        <a class="link">{timeString || calendar.params.timePickerPlaceholder}</a>
+      </div>
+    );
   }
 
   renderHeader() {
@@ -1460,12 +1462,11 @@ class Calendar extends Framework7Class {
     if (calendar.params.renderHeader) {
       return calendar.params.renderHeader.call(calendar);
     }
-    // prettier-ignore
-    return `
-    <div class="calendar-header">
-      <div class="calendar-selected-date">${calendar.params.headerPlaceholder}</div>
-    </div>
-  `.trim();
+    return (
+      <div class="calendar-header">
+        <div class="calendar-selected-date">{calendar.params.headerPlaceholder}</div>
+      </div>
+    );
   }
 
   renderFooter() {
@@ -1474,12 +1475,17 @@ class Calendar extends Framework7Class {
     if (calendar.params.renderFooter) {
       return calendar.params.renderFooter.call(calendar);
     }
-    // prettier-ignore
-    return `
-    <div class="calendar-footer">
-      <a class="${app.theme === 'md' ? 'button' : 'link'} calendar-close sheet-close popover-close">${calendar.params.toolbarCloseText}</a>
-    </div>
-  `.trim();
+    return (
+      <div class="calendar-footer">
+        <a
+          class={`${
+            app.theme === 'md' ? 'button' : 'link'
+          } calendar-close sheet-close popover-close`}
+        >
+          {calendar.params.toolbarCloseText}
+        </a>
+      </div>
+    );
   }
 
   renderToolbar() {
@@ -1488,14 +1494,14 @@ class Calendar extends Framework7Class {
       return calendar.params.renderToolbar.call(calendar, calendar);
     }
     // prettier-ignore
-    return `
+    return (
     <div class="toolbar toolbar-top no-shadow">
       <div class="toolbar-inner">
-        ${calendar.params.monthSelector ? calendar.renderMonthSelector() : ''}
-        ${calendar.params.yearSelector ? calendar.renderYearSelector() : ''}
+        {calendar.params.monthSelector ? calendar.renderMonthSelector() : ''}
+        {calendar.params.yearSelector ? calendar.renderYearSelector() : ''}
       </div>
     </div>
-  `.trim();
+    );
   }
   // eslint-disable-next-line
   renderInline() {
@@ -1503,21 +1509,18 @@ class Calendar extends Framework7Class {
     const { cssClass, toolbar, header, footer, rangePicker, weekHeader } = calendar.params;
     const { value, hasTimePicker } = calendar;
     const date = value && value.length ? value[0] : new Date().setHours(0, 0, 0);
-    // prettier-ignore
-    const inlineHtml = `
-    <div class="calendar calendar-inline ${rangePicker ? 'calendar-range' : ''} ${cssClass || ''}">
-      ${header ? calendar.renderHeader() : ''}
-      ${toolbar ? calendar.renderToolbar() : ''}
-      ${weekHeader ? calendar.renderWeekHeader() : ''}
-      <div class="calendar-months">
-        ${calendar.renderMonths(date)}
+    return (
+      <div
+        class={`calendar calendar-inline ${rangePicker ? 'calendar-range' : ''} ${cssClass || ''}`}
+      >
+        {header && calendar.renderHeader()}
+        {toolbar && calendar.renderToolbar()}
+        {weekHeader && calendar.renderWeekHeader()}
+        <div class="calendar-months">{calendar.renderMonths(date)}</div>
+        {hasTimePicker && calendar.renderTimeSelector()}
+        {footer && calendar.renderFooter()}
       </div>
-      ${hasTimePicker ? calendar.renderTimeSelector() : ''}
-      ${footer ? calendar.renderFooter() : ''}
-    </div>
-  `.trim();
-
-    return inlineHtml;
+    );
   }
 
   renderCustomModal() {
@@ -1525,21 +1528,18 @@ class Calendar extends Framework7Class {
     const { cssClass, toolbar, header, footer, rangePicker, weekHeader } = calendar.params;
     const { value, hasTimePicker } = calendar;
     const date = value && value.length ? value[0] : new Date().setHours(0, 0, 0);
-    // prettier-ignore
-    const sheetHtml = `
-    <div class="calendar calendar-modal ${rangePicker ? 'calendar-range' : ''} ${cssClass || ''}">
-      ${header ? calendar.renderHeader() : ''}
-      ${toolbar ? calendar.renderToolbar() : ''}
-      ${weekHeader ? calendar.renderWeekHeader() : ''}
-      <div class="calendar-months">
-        ${calendar.renderMonths(date)}
+    return (
+      <div
+        class={`calendar calendar-modal ${rangePicker ? 'calendar-range' : ''} ${cssClass || ''}`}
+      >
+        {header && calendar.renderHeader()}
+        {toolbar && calendar.renderToolbar()}
+        {weekHeader && calendar.renderWeekHeader()}
+        <div class="calendar-months">{calendar.renderMonths(date)}</div>
+        {hasTimePicker && calendar.renderTimeSelector()}
+        {footer && calendar.renderFooter()}
       </div>
-      ${hasTimePicker ? calendar.renderTimeSelector() : ''}
-      ${footer ? calendar.renderFooter() : ''}
-    </div>
-  `.trim();
-
-    return sheetHtml;
+    );
   }
 
   renderSheet() {
@@ -1547,21 +1547,20 @@ class Calendar extends Framework7Class {
     const { cssClass, toolbar, header, footer, rangePicker, weekHeader } = calendar.params;
     const { value, hasTimePicker } = calendar;
     const date = value && value.length ? value[0] : new Date().setHours(0, 0, 0);
-    // prettier-ignore
-    const sheetHtml = `
-    <div class="sheet-modal calendar calendar-sheet ${rangePicker ? 'calendar-range' : ''} ${cssClass || ''}">
-      ${header ? calendar.renderHeader() : ''}
-      ${toolbar ? calendar.renderToolbar() : ''}
-      ${weekHeader ? calendar.renderWeekHeader() : ''}
-      <div class="sheet-modal-inner calendar-months">
-        ${calendar.renderMonths(date)}
+    return (
+      <div
+        class={`sheet-modal calendar calendar-sheet ${rangePicker ? 'calendar-range' : ''} ${
+          cssClass || ''
+        }`}
+      >
+        {header && calendar.renderHeader()}
+        {toolbar && calendar.renderToolbar()}
+        {weekHeader && calendar.renderWeekHeader()}
+        <div class="sheet-modal-inner calendar-months">{calendar.renderMonths(date)}</div>
+        {hasTimePicker && calendar.renderTimeSelector()}
+        {footer && calendar.renderFooter()}
       </div>
-      ${hasTimePicker ? calendar.renderTimeSelector() : ''}
-      ${footer ? calendar.renderFooter() : ''}
-    </div>
-  `.trim();
-
-    return sheetHtml;
+    );
   }
 
   renderPopover() {
@@ -1569,25 +1568,20 @@ class Calendar extends Framework7Class {
     const { cssClass, toolbar, header, footer, rangePicker, weekHeader } = calendar.params;
     const { value, hasTimePicker } = calendar;
     const date = value && value.length ? value[0] : new Date().setHours(0, 0, 0);
-    // prettier-ignore
-    const popoverHtml = `
-    <div class="popover calendar-popover">
-      <div class="popover-inner">
-        <div class="calendar ${rangePicker ? 'calendar-range' : ''} ${cssClass || ''}">
-        ${header ? calendar.renderHeader() : ''}
-        ${toolbar ? calendar.renderToolbar() : ''}
-        ${weekHeader ? calendar.renderWeekHeader() : ''}
-        <div class="calendar-months">
-          ${calendar.renderMonths(date)}
-        </div>
-        ${hasTimePicker ? calendar.renderTimeSelector() : ''}
-        ${footer ? calendar.renderFooter() : ''}
+    return (
+      <div class="popover calendar-popover">
+        <div class="popover-inner">
+          <div class={`calendar ${rangePicker ? 'calendar-range' : ''} ${cssClass || ''}`}>
+            {header && calendar.renderHeader()}
+            {toolbar && calendar.renderToolbar()}
+            {weekHeader && calendar.renderWeekHeader()}
+            <div class="calendar-months">{calendar.renderMonths(date)}</div>
+            {hasTimePicker && calendar.renderTimeSelector()}
+            {footer && calendar.renderFooter()}
+          </div>
         </div>
       </div>
-    </div>
-  `.trim();
-
-    return popoverHtml;
+    );
   }
 
   render() {

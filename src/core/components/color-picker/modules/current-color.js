@@ -1,10 +1,13 @@
+/** @jsx $jsx */
+import { $jsx } from '../../../shared/render';
+
 export default {
   render() {
-    return `
+    return (
       <div class="color-picker-module color-picker-module-current-color">
         <div class="color-picker-current-color"></div>
       </div>
-    `;
+    );
   },
   update(self) {
     self.$el

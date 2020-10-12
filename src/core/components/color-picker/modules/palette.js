@@ -1,28 +1,34 @@
 /* eslint indent: ["off"] */
 import $ from '../../../shared/dom7';
+/** @jsx $jsx */
+import { $jsx } from '../../../shared/render';
 
 export default {
   render(self) {
-    // prettier-ignore
-    return `
+    return (
       <div class="color-picker-module color-picker-module-palette">
         <div class="color-picker-palette">
-          ${self.params.palette.map((p) => {
+          {self.params.palette.map((p) => {
             if (Array.isArray(p)) {
               let row = '<div class="color-picker-palette-row">';
-              row += p.map(c => `
+              // prettier-ignore
+              row += p.map((c) => `
                 <div class="color-picker-palette-value" data-palette-color="${c}" style="background-color: ${c}"></div>
               `).join('');
               row += '</div>';
               return row;
             }
-            return `
-              <div class="color-picker-palette-value" data-palette-color="${p}" style="background-color: ${p}"></div>
-            `;
-          }).join('')}
+            return (
+              <div
+                class="color-picker-palette-value"
+                data-palette-color={p}
+                style={`background-color: ${p}`}
+              ></div>
+            );
+          })}
         </div>
       </div>
-    `;
+    );
   },
   init(self) {
     function handlePaletteClick(e) {

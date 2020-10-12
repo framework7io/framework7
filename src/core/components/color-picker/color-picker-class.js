@@ -27,6 +27,9 @@ import moduleSbSpectrum from './modules/sb-spectrum';
 import moduleHsSpectrum from './modules/hs-spectrum';
 import moduleWheel from './modules/wheel';
 
+/** @jsx $jsx */
+import { $jsx } from '../../shared/render';
+
 class ColorPicker extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
@@ -419,27 +422,29 @@ class ColorPicker extends Framework7Class {
       return self.params.renderNavbar.call(self, self);
     }
     const { openIn, navbarTitleText, navbarBackLinkText, navbarCloseText } = self.params;
-    // prettier-ignore
-    return `
-    <div class="navbar">
-      <div class="navbar-bg"></div>
-      <div class="navbar-inner sliding">
-        ${openIn === 'page' ? `
-        <div class="left">
-          <a class="link back">
-            <i class="icon icon-back"></i>
-            <span class="if-not-md">${navbarBackLinkText}</span>
-          </a>
+    return (
+      <div class="navbar">
+        <div class="navbar-bg"></div>
+        <div class="navbar-inner sliding">
+          {openIn === 'page' && (
+            <div class="left">
+              <a class="link back">
+                <i class="icon icon-back"></i>
+                <span class="if-not-md">{navbarBackLinkText}</span>
+              </a>
+            </div>
+          )}
+          <div class="title">{navbarTitleText}</div>
+          {openIn !== 'page' && (
+            <div class="right">
+              <a class="link popup-close" data-popup=".color-picker-popup">
+                {navbarCloseText}
+              </a>
+            </div>
+          )}
         </div>
-        `: ''}
-        <div class="title">${navbarTitleText}</div>
-        ${openIn !== 'page' ? `
-        <div class="right">
-          <a class="link popup-close" data-popup=".color-picker-popup">${navbarCloseText}</a>
-        </div>` : ''}
       </div>
-    </div>
-  `.trim();
+    );
   }
 
   renderToolbar() {
@@ -447,103 +452,96 @@ class ColorPicker extends Framework7Class {
     if (self.params.renderToolbar) {
       return self.params.renderToolbar.call(self, self);
     }
-    return `
-    <div class="toolbar toolbar-top no-shadow">
-      <div class="toolbar-inner">
-        <div class="left"></div>
-        <div class="right">
-          <a class="link sheet-close popover-close" data-sheet=".color-picker-sheet-modal" data-popover=".color-picker-popover">${self.params.toolbarCloseText}</a>
+    return (
+      <div class="toolbar toolbar-top no-shadow">
+        <div class="toolbar-inner">
+          <div class="left"></div>
+          <div class="right">
+            <a
+              class="link sheet-close popover-close"
+              data-sheet=".color-picker-sheet-modal"
+              data-popover=".color-picker-popover"
+            >
+              {self.params.toolbarCloseText}
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-  `.trim();
+    );
   }
 
   renderInline() {
     const self = this;
     const { cssClass, groupedModules } = self.params;
-    const inlineHtml = `
-    <div class="color-picker color-picker-inline ${
-      groupedModules ? 'color-picker-grouped-modules' : ''
-    } ${cssClass || ''}">
-      ${self.renderPicker()}
-    </div>
-  `.trim();
-
-    return inlineHtml;
+    return (
+      <div
+        class={`color-picker color-picker-inline ${
+          groupedModules ? 'color-picker-grouped-modules' : ''
+        } ${cssClass || ''}`}
+      >
+        {self.renderPicker()}
+      </div>
+    );
   }
 
   renderSheet() {
     const self = this;
     const { cssClass, toolbarSheet, groupedModules } = self.params;
-    const sheetHtml = `
-    <div class="sheet-modal color-picker color-picker-sheet-modal ${
-      groupedModules ? 'color-picker-grouped-modules' : ''
-    } ${cssClass || ''}">
-      ${toolbarSheet ? self.renderToolbar() : ''}
-      <div class="sheet-modal-inner">
-        <div class="page-content">
-          ${self.renderPicker()}
+    return (
+      <div
+        class={`sheet-modal color-picker color-picker-sheet-modal ${
+          groupedModules ? 'color-picker-grouped-modules' : ''
+        } ${cssClass || ''}`}
+      >
+        {toolbarSheet && self.renderToolbar()}
+        <div class="sheet-modal-inner">
+          <div class="page-content">{self.renderPicker()}</div>
         </div>
       </div>
-    </div>
-  `.trim();
-
-    return sheetHtml;
+    );
   }
 
   renderPopover() {
     const self = this;
     const { cssClass, toolbarPopover, groupedModules } = self.params;
-    const popoverHtml = `
-    <div class="popover color-picker-popover ${cssClass || ''}">
-      <div class="popover-inner">
-        <div class="color-picker ${groupedModules ? 'color-picker-grouped-modules' : ''}">
-          ${toolbarPopover ? self.renderToolbar() : ''}
-          <div class="page-content">
-            ${self.renderPicker()}
+    return (
+      <div class={`popover color-picker-popover ${cssClass || ''}`}>
+        <div class="popover-inner">
+          <div class={`color-picker ${groupedModules ? 'color-picker-grouped-modules' : ''}`}>
+            {toolbarPopover && self.renderToolbar()}
+            <div class="page-content">{self.renderPicker()}</div>
           </div>
         </div>
       </div>
-    </div>
-  `.trim();
-
-    return popoverHtml;
+    );
   }
 
   renderPopup() {
     const self = this;
     const { cssClass, navbarPopup, groupedModules } = self.params;
-    const popupHtml = `
-    <div class="popup color-picker-popup ${cssClass || ''}">
-      <div class="page">
-        ${navbarPopup ? self.renderNavbar() : ''}
-        <div class="color-picker ${groupedModules ? 'color-picker-grouped-modules' : ''}">
-          <div class="page-content">
-            ${self.renderPicker()}
+    return (
+      <div class={`popup color-picker-popup ${cssClass || ''}`}>
+        <div class="page">
+          {navbarPopup && self.renderNavbar()}
+          <div class={`color-picker ${groupedModules ? 'color-picker-grouped-modules' : ''}`}>
+            <div class="page-content">{self.renderPicker()}</div>
           </div>
         </div>
       </div>
-    </div>
-  `.trim();
-
-    return popupHtml;
+    );
   }
 
   renderPage() {
     const self = this;
     const { cssClass, groupedModules } = self.params;
-    const pageHtml = `
-    <div class="page color-picker-page ${cssClass || ''}" data-name="color-picker-page">
-      ${self.renderNavbar()}
-      <div class="color-picker ${groupedModules ? 'color-picker-grouped-modules' : ''}">
-        <div class="page-content">
-          ${self.renderPicker()}
+    return (
+      <div class={`page color-picker-page ${cssClass || ''}`} data-name="color-picker-page">
+        {self.renderNavbar()}
+        <div class={`color-picker ${groupedModules ? 'color-picker-grouped-modules' : ''}`}>
+          <div class="page-content">{self.renderPicker()}</div>
         </div>
       </div>
-    </div>
-  `.trim();
-    return pageHtml;
+    );
   }
 
   // eslint-disable-next-line

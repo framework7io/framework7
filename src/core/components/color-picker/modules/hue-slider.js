@@ -1,26 +1,26 @@
+/** @jsx $jsx */
+import { $jsx } from '../../../shared/render';
+
 export default {
   render(self) {
     const { sliderLabel, sliderValue, sliderValueEditable, hueLabelText } = self.params;
-    // prettier-ignore
-    return `
+    return (
       <div class="color-picker-module color-picker-module-hue-slider">
         <div class="color-picker-slider-wrap">
-          ${sliderLabel ? `
-            <div class="color-picker-slider-label">${hueLabelText}</div>
-          ` : ''}
+          {sliderLabel && <div class="color-picker-slider-label">{hueLabelText}</div>}
           <div class="range-slider color-picker-slider color-picker-slider-hue"></div>
-          ${sliderValue ? `
+          {sliderValue && (
             <div class="color-picker-slider-value">
-              ${sliderValueEditable ? `
-                <input type="number" step="0.1" min="0" max="360" class="color-picker-value-hue">
-              ` : `
+              {sliderValueEditable ? (
+                <input type="number" step="0.1" min="0" max="360" class="color-picker-value-hue" />
+              ) : (
                 <span class="color-picker-value-hue"></span>
-              `}
+              )}
             </div>
-          ` : ''}
+          )}
         </div>
       </div>
-    `;
+    );
   },
   init(self) {
     self.hueRangeSlider = self.app.range.create({

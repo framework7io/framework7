@@ -57,7 +57,7 @@ module.exports = {
     ...rules,
   },
   overrides: [
-    // REACT
+    // Core + REACT
     {
       files: ['**/*.jsx', '**/*.js', '**/*.ts'],
       extends: ['plugin:react/recommended', 'airbnb-base', 'plugin:prettier/recommended'],
@@ -72,6 +72,17 @@ module.exports = {
         'import/no-extraneous-dependencies': ['off'],
         'import/extensions': ['off'],
         'no-dupe-keys': ['off'],
+      },
+    },
+    // Core
+    {
+      files: ['src/core/**/*.js'],
+      extends: ['plugin:react/recommended', 'airbnb-base', 'plugin:prettier/recommended'],
+      plugins: ['react'],
+      rules: {
+        ...rules,
+        'react/no-unknown-property': ['off'],
+        'react/jsx-key': ['off'],
       },
     },
     // REACT KITCHEN_SINK

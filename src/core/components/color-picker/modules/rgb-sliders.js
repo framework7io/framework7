@@ -1,4 +1,6 @@
 import $ from '../../../shared/dom7';
+/** @jsx $jsx */
+import { $jsx } from '../../../shared/render';
 
 export default {
   render(self) {
@@ -10,56 +12,70 @@ export default {
       greenLabelText,
       blueLabelText,
     } = self.params;
-    // prettier-ignore
-    return `
+    return (
       <div class="color-picker-module color-picker-module-rgb-sliders">
         <div class="color-picker-slider-wrap">
-          ${sliderLabel ? `
-            <div class="color-picker-slider-label">${redLabelText}</div>
-          ` : ''}
+          {sliderLabel && <div class="color-picker-slider-label">{redLabelText}</div>}
           <div class="range-slider color-picker-slider color-picker-slider-red"></div>
-          ${sliderValue ? `
+          {sliderValue && (
             <div class="color-picker-slider-value">
-              ${sliderValueEditable ? `
-                <input type="number" step="1" min="0" max="255" class="color-picker-value-red" data-color-index="0">
-              ` : `
+              {sliderValueEditable ? (
+                <input
+                  type="number"
+                  step="1"
+                  min="0"
+                  max="255"
+                  class="color-picker-value-red"
+                  data-color-index="0"
+                />
+              ) : (
                 <span class="color-picker-value-red"></span>
-              `}
+              )}
             </div>
-          ` : ''}
+          )}
         </div>
         <div class="color-picker-slider-wrap">
-          ${sliderLabel ? `
-            <div class="color-picker-slider-label">${greenLabelText}</div>
-          ` : ''}
+          {sliderLabel && <div class="color-picker-slider-label">{greenLabelText}</div>}
           <div class="range-slider color-picker-slider color-picker-slider-green"></div>
-          ${sliderValue ? `
+          {sliderValue && (
             <div class="color-picker-slider-value">
-              ${sliderValueEditable ? `
-                <input type="number" step="1" min="0" max="255" class="color-picker-value-green" data-color-index="1">
-              ` : `
+              {sliderValueEditable ? (
+                <input
+                  type="number"
+                  step="1"
+                  min="0"
+                  max="255"
+                  class="color-picker-value-green"
+                  data-color-index="1"
+                />
+              ) : (
                 <span class="color-picker-value-green"></span>
-              `}
+              )}
             </div>
-          ` : ''}
+          )}
         </div>
         <div class="color-picker-slider-wrap">
-          ${sliderLabel ? `
-            <div class="color-picker-slider-label">${blueLabelText}</div>
-          ` : ''}
+          {sliderLabel && <div class="color-picker-slider-label">{blueLabelText}</div>}
           <div class="range-slider color-picker-slider color-picker-slider-blue"></div>
-          ${sliderValue ? `
+          {sliderValue && (
             <div class="color-picker-slider-value">
-              ${sliderValueEditable ? `
-                <input type="number" step="1" min="0" max="255" class="color-picker-value-blue" data-color-index="2">
-              ` : `
+              {sliderValueEditable ? (
+                <input
+                  type="number"
+                  step="1"
+                  min="0"
+                  max="255"
+                  class="color-picker-value-blue"
+                  data-color-index="2"
+                />
+              ) : (
                 <span class="color-picker-value-blue"></span>
-              `}
+              )}
             </div>
-          ` : ''}
+          )}
         </div>
       </div>
-    `;
+    );
   },
   init(self) {
     self.redRangeSlider = self.app.range.create({

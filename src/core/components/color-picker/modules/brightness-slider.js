@@ -1,28 +1,33 @@
 import { colorHsbToHsl } from '../../../shared/utils';
+/** @jsx $jsx */
+import { $jsx } from '../../../shared/render';
 
 export default {
   render(self) {
     const { sliderLabel, sliderValue, sliderValueEditable, brightnessLabelText } = self.params;
-    // prettier-ignore
-    return `
+    return (
       <div class="color-picker-module color-picker-module-brightness-slider">
         <div class="color-picker-slider-wrap">
-          ${sliderLabel ? `
-            <div class="color-picker-slider-label">${brightnessLabelText}</div>
-          ` : ''}
+          {sliderLabel && <div class="color-picker-slider-label">{brightnessLabelText}</div>}
           <div class="range-slider color-picker-slider color-picker-slider-brightness"></div>
-          ${sliderValue ? `
+          {sliderValue && (
             <div class="color-picker-slider-value">
-              ${sliderValueEditable ? `
-                <input type="number" step="0.1" min="0" max="100" class="color-picker-value-brightness">
-              ` : `
+              {sliderValueEditable ? (
+                <input
+                  type="number"
+                  step="0.1"
+                  min="0"
+                  max="100"
+                  class="color-picker-value-brightness"
+                />
+              ) : (
                 <span class="color-picker-value-brightness"></span>
-              `}
+              )}
             </div>
-          ` : ''}
+          )}
         </div>
       </div>
-    `;
+    );
   },
   init(self) {
     self.brightnessRangeSlider = self.app.range.create({

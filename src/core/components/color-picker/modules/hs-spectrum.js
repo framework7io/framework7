@@ -1,16 +1,18 @@
 import $ from '../../../shared/dom7';
 import { colorHsbToHsl } from '../../../shared/utils';
 import { getSupport } from '../../../shared/get-support';
+/** @jsx $jsx */
+import { $jsx } from '../../../shared/render';
 
 export default {
   render() {
-    return `
+    return (
       <div class="color-picker-module color-picker-module-hs-spectrum">
         <div class="color-picker-hs-spectrum">
           <div class="color-picker-hs-spectrum-handle"></div>
         </div>
       </div>
-    `;
+    );
   },
   init(self) {
     const { app } = self;

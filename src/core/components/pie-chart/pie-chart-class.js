@@ -1,6 +1,8 @@
 import $ from '../../shared/dom7';
 import { extend, deleteProps } from '../../shared/utils';
 import Framework7Class from '../../shared/class';
+/** @jsx $jsx */
+import { $jsx } from '../../shared/render';
 
 class PieChart extends Framework7Class {
   constructor(app, params = {}) {
@@ -153,23 +155,18 @@ class PieChart extends Framework7Class {
     const self = this;
     const size = self.params.size;
     const paths = self.getPaths();
-    // prettier-ignore
-    return `
+    return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="${size}"
-        viewBox="-${size / 3} -${size / 3} ${(size * 2) / 3} ${(size * 2) / 3}"
+        width={size}
+        viewBox={`-${size / 3} -${size / 3} ${(size * 2) / 3} ${(size * 2) / 3}`}
         style="transform: rotate(-90deg)"
       >
-        ${paths.map((path, index) =>`
-          <path
-            d="${path.points}"
-            fill="${path.color}"
-            data-index="${index}"
-          />
-        `).join('')}
+        {paths.map((path, index) => (
+          <path d={path.points} fill={path.color} data-index={index} />
+        ))}
       </svg>
-    `;
+    );
   }
 
   update(newParams = {}) {

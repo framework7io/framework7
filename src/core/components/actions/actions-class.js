@@ -4,6 +4,8 @@ import { getDevice } from '../../shared/get-device';
 import { extend, nextTick } from '../../shared/utils';
 import Modal from '../modal/modal-class';
 import $ from '../../shared/dom7';
+/** @jsx $jsx */
+import { $jsx } from '../../shared/render';
 
 class Actions extends Modal {
   constructor(app, params) {
@@ -258,11 +260,11 @@ class Actions extends Modal {
     if (actions.params.render) return actions.params.render.call(actions, actions);
     const { groups } = actions;
     const cssClass = actions.params.cssClass;
-    // prettier-ignore
-    return `
-      <div class="actions-modal${actions.params.grid ? ' actions-grid' : ''} ${cssClass || ''}">
-        ${groups.map(group => `<div class="actions-group">
-            ${group.map((button) => {
+    return (
+      <div class={`actions-modal${actions.params.grid ? ' actions-grid' : ''} ${cssClass || ''}`}>
+        {groups.map((group) => (
+          <div class="actions-group">
+            {group.map((button) => {
               const buttonClasses = [`actions-${button.label ? 'label' : 'button'}`];
               const { color, bg, bold, disabled, label, text, icon } = button;
               if (color) buttonClasses.push(`color-${color}`);
@@ -270,17 +272,19 @@ class Actions extends Modal {
               if (bold) buttonClasses.push('actions-button-bold');
               if (disabled) buttonClasses.push('disabled');
               if (label) {
-                return `<div class="${buttonClasses.join(' ')}">${text}</div>`;
+                return <div class={buttonClasses.join(' ')}>{text}</div>;
               }
-              return `
-                <div class="${buttonClasses.join(' ')}">
-                  ${icon ? `<div class="actions-button-media">${icon}</div>` : ''}
-                  <div class="actions-button-text">${text}</div>
-                </div>`.trim();
-            }).join('')}
-          </div>`).join('')}
+              return (
+                <div class={buttonClasses.join(' ')}>
+                  {icon && <div class="actions-button-media">{icon}</div>}
+                  <div class="actions-button-text">{text}</div>
+                </div>
+              );
+            })}
+          </div>
+        ))}
       </div>
-    `.trim();
+    );
   }
 
   renderPopover() {
@@ -288,14 +292,13 @@ class Actions extends Modal {
     if (actions.params.renderPopover) return actions.params.renderPopover.call(actions, actions);
     const { groups } = actions;
     const cssClass = actions.params.cssClass;
-    // prettier-ignore
-    return `
-      <div class="popover popover-from-actions ${cssClass || ''}">
+    return (
+      <div class={`popover popover-from-actions ${cssClass || ''}`}>
         <div class="popover-inner">
-          ${groups.map(group => `
+          {groups.map((group) => (
             <div class="list">
               <ul>
-                ${group.map((button) => {
+                {group.map((button) => {
                   const itemClasses = [];
                   const { color, bg, bold, disabled, label, text, icon } = button;
                   if (color) itemClasses.push(`color-${color}`);
@@ -308,34 +311,30 @@ class Actions extends Modal {
                   }
                   if (icon) {
                     itemClasses.push('item-link item-content');
-                    return `
+                    return (
                       <li>
-                        <a class="${itemClasses.join(' ')}">
-                          <div class="item-media">
-                            ${icon}
-                          </div>
+                        <a class={itemClasses.join(' ')}>
+                          <div class="item-media">{icon}</div>
                           <div class="item-inner">
-                            <div class="item-title">
-                              ${text}
-                            </div>
+                            <div class="item-title">{text}</div>
                           </div>
                         </a>
                       </li>
-                    `;
+                    );
                   }
                   itemClasses.push('list-button');
-                  return `
+                  return (
                     <li>
-                      <a class="${itemClasses.join(' ')}">${text}</a>
+                      <a class={itemClasses.join(' ')}>{text}</a>
                     </li>
-                  `;
-                }).join('')}
+                  );
+                })}
               </ul>
             </div>
-          `).join('')}
+          ))}
         </div>
       </div>
-    `.trim();
+    );
   }
 }
 

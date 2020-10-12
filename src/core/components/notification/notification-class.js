@@ -1,6 +1,8 @@
 import $ from '../../shared/dom7';
 import { extend, now, nextTick } from '../../shared/utils';
 import Modal from '../modal/modal-class';
+/** @jsx $jsx */
+import { $jsx } from '../../shared/render';
 
 class Notification extends Modal {
   constructor(app, params) {
@@ -208,24 +210,20 @@ class Notification extends Modal {
       closeButton,
       cssClass,
     } = notification.params;
-    return `
-      <div class="notification ${cssClass || ''}">
+    return (
+      <div class={`notification ${cssClass || ''}`}>
         <div class="notification-header">
-          ${icon ? `<div class="notification-icon">${icon}</div>` : ''}
-          ${title ? `<div class="notification-title">${title}</div>` : ''}
-          ${
-            titleRightText
-              ? `<div class="notification-title-right-text">${titleRightText}</div>`
-              : ''
-          }
-          ${closeButton ? '<span class="notification-close-button"></span>' : ''}
+          {icon && <div class="notification-icon">{icon}</div>}
+          {title && <div class="notification-title">{title}</div>}
+          {titleRightText && <div class="notification-title-right-text">{titleRightText}</div>}
+          {closeButton && <span class="notification-close-button"></span>}
         </div>
         <div class="notification-content">
-          ${subtitle ? `<div class="notification-subtitle">${subtitle}</div>` : ''}
-          ${text ? `<div class="notification-text">${text}</div>` : ''}
+          {subtitle && <div class="notification-subtitle">{subtitle}</div>}
+          {text && <div class="notification-text">{text}</div>}
         </div>
       </div>
-    `.trim();
+    );
   }
 }
 export default Notification;

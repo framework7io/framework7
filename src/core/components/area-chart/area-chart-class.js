@@ -1,6 +1,8 @@
 import $ from '../../shared/dom7';
 import { extend, deleteProps } from '../../shared/utils';
 import Framework7Class from '../../shared/class';
+/** @jsx $jsx */
+import { $jsx } from '../../shared/render';
 
 class AreaChart extends Framework7Class {
   constructor(app, params = {}) {
@@ -346,68 +348,52 @@ class AreaChart extends Framework7Class {
     const visibleLegends = self.getVisibleLabels();
 
     const LegendItemTag = toggleDatasets ? 'button' : 'span';
-    // prettier-ignore
-    return `
-    <div>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="${width}"
-        height="${height}"
-        viewBox="${`0 0 ${width} ${height}`}"
-        preserveAspectRatio="none"
-      >
-        ${chartData.map((data) => `
-          ${lineChart ? `
-            <path
-              stroke="${data.color}"
-              fill-rule="evenodd"
-              d="${data.points}"
-            />
-            ` : `
-            <polygon
-              fill="${data.color}"
-              fill-rule="evenodd"
-              points="${data.points}"
-            />
-          `}
-        `).join('')}
+    return (
+      <div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width={width}
+          height={height}
+          viewBox={`0 0 ${width} ${height}`}
+          preserveAspectRatio="none"
+        >
+          {chartData.map((data) =>
+            lineChart ? (
+              <path stroke={data.color} fill-rule="evenodd" d={data.points} />
+            ) : (
+              <polygon fill={data.color} fill-rule="evenodd" points={data.points} />
+            ),
+          )}
 
-        ${verticalLines.map((line, index) => `
-          <line
-            data-index="${index}"
-            fill="#000"
-            x1="${line}"
-            y1="${0}"
-            x2="${line}"
-            y2="${height}"
-          />
-        `).join('')}
-      </svg>
-      ${axis ? `
-        <div class="area-chart-axis">
-          ${axisLabels.map((label) => `
-            <span>
-              ${visibleLegends.includes(label) ? `<span>${self.formatAxisLabel(label)}</span>` : ''}
-            </span>
-          `).join('')}
-        </div>
-      ` : ''}
-      ${legend ? `
-        <div class="area-chart-legend">
-          ${datasets.map((dataset, index) => `
-            <${LegendItemTag}
-              data-index="${index}"
-              class="area-chart-legend-item ${toggleDatasets ? 'area-chart-legend-button' : ''}"
-              ${toggleDatasets ? 'type="button"' : ''}
-            >
-              <span style="background-color: ${dataset.color}"></span>
-              ${self.formatLegendLabel(dataset.label)}
-            </${LegendItemTag}>
-          `).join('')}
-        </div>
-      ` : ''}
-    </div>
-    `;
+          {verticalLines.map((line, index) => (
+            <line data-index={index} fill="#000" x1={line} y1={0} x2={line} y2={height} />
+          ))}
+        </svg>
+        {axis && (
+          <div class="area-chart-axis">
+            {axisLabels.map((label) => (
+              <span>
+                {visibleLegends.includes(label) && <span>{self.formatAxisLabel(label)}</span>}
+              </span>
+            ))}
+          </div>
+        )}
+        {legend && (
+          <div class="area-chart-legend">
+            {datasets.map((dataset, index) => (
+              <LegendItemTag
+                data-index={index}
+                class={`area-chart-legend-item ${toggleDatasets ? 'area-chart-legend-button' : ''}`}
+                _type={toggleDatasets ? 'button' : undefined}
+              >
+                <span style={`background-color: ${dataset.color}`}></span>
+                {self.formatLegendLabel(dataset.label)}
+              </LegendItemTag>
+            ))}
+          </div>
+        )}
+      </div>
+    );
   }
 
   update(newParams = {}, onlySvg = false) {

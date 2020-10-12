@@ -6,6 +6,9 @@ import { getDevice } from '../../shared/get-device';
 
 import pickerColumn from './picker-column';
 
+/** @jsx $jsx */
+import { $jsx } from '../../shared/render';
+
 class Picker extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
@@ -253,16 +256,16 @@ class Picker extends Framework7Class {
   renderToolbar() {
     const picker = this;
     if (picker.params.renderToolbar) return picker.params.renderToolbar.call(picker, picker);
-    return `
+    return (
       <div class="toolbar toolbar-top no-shadow">
         <div class="toolbar-inner">
           <div class="left"></div>
           <div class="right">
-            <a class="link sheet-close popover-close">${picker.params.toolbarCloseText}</a>
+            <a class="link sheet-close popover-close">{picker.params.toolbarCloseText}</a>
           </div>
         </div>
       </div>
-    `.trim();
+    );
   }
   // eslint-disable-next-line
   renderColumn(col, onlyItems) {
@@ -298,16 +301,15 @@ class Picker extends Framework7Class {
   renderInline() {
     const picker = this;
     const { rotateEffect, cssClass, toolbar } = picker.params;
-    // prettier-ignore
-    const inlineHtml = `
-      <div class="picker picker-inline ${rotateEffect ? 'picker-3d' : ''} ${cssClass || ''}">
-        ${toolbar ? picker.renderToolbar() : ''}
+    const inlineHtml = (
+      <div class={`picker picker-inline ${rotateEffect ? 'picker-3d' : ''} ${cssClass || ''}`}>
+        {toolbar && picker.renderToolbar()}
         <div class="picker-columns">
-          ${picker.cols.map(col => picker.renderColumn(col)).join('')}
+          {picker.cols.map((col) => picker.renderColumn(col))}
           <div class="picker-center-highlight"></div>
         </div>
       </div>
-    `.trim();
+    );
 
     return inlineHtml;
   }
@@ -315,16 +317,19 @@ class Picker extends Framework7Class {
   renderSheet() {
     const picker = this;
     const { rotateEffect, cssClass, toolbar } = picker.params;
-    // prettier-ignore
-    const sheetHtml = `
-      <div class="sheet-modal picker picker-sheet ${rotateEffect ? 'picker-3d' : ''} ${cssClass || ''}">
-        ${toolbar ? picker.renderToolbar() : ''}
+    const sheetHtml = (
+      <div
+        class={`sheet-modal picker picker-sheet ${rotateEffect ? 'picker-3d' : ''} ${
+          cssClass || ''
+        }`}
+      >
+        {toolbar && picker.renderToolbar()}
         <div class="sheet-modal-inner picker-columns">
-          ${picker.cols.map(col => picker.renderColumn(col)).join('')}
+          {picker.cols.map((col) => picker.renderColumn(col))}
           <div class="picker-center-highlight"></div>
         </div>
       </div>
-    `.trim();
+    );
 
     return sheetHtml;
   }
@@ -332,20 +337,19 @@ class Picker extends Framework7Class {
   renderPopover() {
     const picker = this;
     const { rotateEffect, cssClass, toolbar } = picker.params;
-    // prettier-ignore
-    const popoverHtml = `
+    const popoverHtml = (
       <div class="popover picker-popover">
         <div class="popover-inner">
-          <div class="picker ${rotateEffect ? 'picker-3d' : ''} ${cssClass || ''}">
-            ${toolbar ? picker.renderToolbar() : ''}
+          <div class={`picker ${rotateEffect ? 'picker-3d' : ''} ${cssClass || ''}`}>
+            {toolbar && picker.renderToolbar()}
             <div class="picker-columns">
-              ${picker.cols.map(col => picker.renderColumn(col)).join('')}
+              {picker.cols.map((col) => picker.renderColumn(col))}
               <div class="picker-center-highlight"></div>
             </div>
           </div>
         </div>
       </div>
-    `.trim();
+    );
 
     return popoverHtml;
   }

@@ -1,5 +1,7 @@
 import $ from '../../../shared/dom7';
 import { getSupport } from '../../../shared/get-support';
+/** @jsx $jsx */
+import { $jsx } from '../../../shared/render';
 
 function svgWheelCircles() {
   const total = 256;
@@ -15,18 +17,19 @@ function svgWheelCircles() {
 }
 export default {
   render() {
-    // prettier-ignore
-    return `
+    return (
       <div class="color-picker-module color-picker-module-wheel">
         <div class="color-picker-wheel">
-          <svg viewBox="0 0 300 300" width="300" height="300">${svgWheelCircles()}</svg>
+          <svg viewBox="0 0 300 300" width="300" height="300">
+            {svgWheelCircles()}
+          </svg>
           <div class="color-picker-wheel-handle"></div>
           <div class="color-picker-sb-spectrum" style="background-color: hsl(0, 100%, 50%)">
             <div class="color-picker-sb-spectrum-handle"></div>
           </div>
         </div>
       </div>
-    `;
+    );
   },
   init(self) {
     const { app } = self;

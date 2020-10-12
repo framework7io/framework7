@@ -214,9 +214,8 @@ export default {
               typeof title === 'undefined' || title === null
                 ? app.params.dialog.preloaderTitle
                 : title,
-            content: `<div class="preloader${
-              color ? ` color-${color}` : ''
-            }">${preloaderInner}</div>`,
+            // prettier-ignore
+            content: `<div class="preloader${color ? ` color-${color}` : ''}">${preloaderInner}</div>`,
             cssClass: 'dialog-preloader',
             destroyOnClose,
           }).open();
@@ -238,10 +237,9 @@ export default {
           const dialog = new Dialog(app, {
             title: typeof title === 'undefined' ? app.params.dialog.progressTitle : title,
             cssClass: 'dialog-progress',
+            // prettier-ignore
             content: `
-              <div class="progressbar${infinite ? '-infinite' : ''}${
-              color ? ` color-${color}` : ''
-            }">
+              <div class="progressbar${infinite ? '-infinite' : ''}${color ? ` color-${color}` : ''}">
                 ${!infinite ? '<span></span>' : ''}
               </div>
             `,

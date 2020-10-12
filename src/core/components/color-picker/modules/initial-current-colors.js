@@ -1,13 +1,16 @@
+/** @jsx $jsx */
+import { $jsx } from '../../../shared/render';
+
 export default {
   render() {
-    return `
+    return (
       <div class="color-picker-module color-picker-module-initial-current-colors">
         <div class="color-picker-initial-current-colors">
           <div class="color-picker-initial-color"></div>
           <div class="color-picker-current-color"></div>
         </div>
       </div>
-    `;
+    );
   },
   init(self) {
     function handleInitialColorClick() {

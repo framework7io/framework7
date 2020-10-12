@@ -2,7 +2,6 @@
 
 - [ ] Capacitor integration
 - [x] Add containerEl for modals
-
 - [ ] Fixes
   - [ ] Push view popup on keyboard open
   - [ ] Fix iOS Navbar Home <--> Accordion
@@ -15,22 +14,19 @@
     - [ ] Check new touch ripple
 - [ ] Features
   - [ ] set colorPicker and Calendar instance on openerEl?
-  - [ ] Charts to render functions
+  - [x] Components to render functions
   - [x] tooltip
     - [x] set target
     - [x] delegated tooltip
   - [x] Nested Panels
 - [ ] New component Stepper / Lines
 - [ ] Router
-
   - [ ] BrowserHistory modal should preload previous page/modal
   - [ ] View-width transition improvements
   - [ ] Navbar with Large title similar to page title in AppStore ???
   - [x] Add parameter on how to open the page `openIn`
   - [x] BeforeEnter/BeforeLeave - add direction
-
 - [x] add containerEl to modals
-
 - [x] new store
   - [x] KS demos
   - [ ] changelog

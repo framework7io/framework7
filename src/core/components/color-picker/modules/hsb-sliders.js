@@ -1,5 +1,7 @@
 import $ from '../../../shared/dom7';
 import { colorHsbToHsl } from '../../../shared/utils';
+/** @jsx $jsx */
+import { $jsx } from '../../../shared/render';
 
 export default {
   render(self) {
@@ -11,56 +13,70 @@ export default {
       saturationLabelText,
       brightnessLabelText,
     } = self.params;
-    // prettier-ignore
-    return `
+    return (
       <div class="color-picker-module color-picker-module-hsb-sliders">
         <div class="color-picker-slider-wrap">
-          ${sliderLabel ? `
-            <div class="color-picker-slider-label">${hueLabelText}</div>
-          ` : ''}
+          {sliderLabel && <div class="color-picker-slider-label">{hueLabelText}</div>}
           <div class="range-slider color-picker-slider color-picker-slider-hue"></div>
-          ${sliderValue ? `
+          {sliderValue && (
             <div class="color-picker-slider-value">
-              ${sliderValueEditable ? `
-                <input type="number" step="0.1" min="0" max="360" class="color-picker-value-hue" data-color-index="0">
-              ` : `
+              {sliderValueEditable ? (
+                <input
+                  type="number"
+                  step="0.1"
+                  min="0"
+                  max="360"
+                  class="color-picker-value-hue"
+                  data-color-index="0"
+                />
+              ) : (
                 <span class="color-picker-value-hue"></span>
-              `}
+              )}
             </div>
-          ` : ''}
+          )}
         </div>
         <div class="color-picker-slider-wrap">
-          ${sliderLabel ? `
-            <div class="color-picker-slider-label">${saturationLabelText}</div>
-          ` : ''}
+          {sliderLabel && <div class="color-picker-slider-label">{saturationLabelText}</div>}
           <div class="range-slider color-picker-slider color-picker-slider-saturation"></div>
-          ${sliderValue ? `
+          {sliderValue && (
             <div class="color-picker-slider-value">
-              ${sliderValueEditable ? `
-                <input type="number" step="0.1" min="0" max="100" class="color-picker-value-saturation" data-color-index="1">
-              ` : `
+              {sliderValueEditable ? (
+                <input
+                  type="number"
+                  step="0.1"
+                  min="0"
+                  max="100"
+                  class="color-picker-value-saturation"
+                  data-color-index="1"
+                />
+              ) : (
                 <span class="color-picker-value-saturation"></span>
-              `}
+              )}
             </div>
-          ` : ''}
+          )}
         </div>
         <div class="color-picker-slider-wrap">
-          ${sliderLabel ? `
-            <div class="color-picker-slider-label">${brightnessLabelText}</div>
-          ` : ''}
+          {sliderLabel && <div class="color-picker-slider-label">{brightnessLabelText}</div>}
           <div class="range-slider color-picker-slider color-picker-slider-brightness"></div>
-          ${sliderValue ? `
+          {sliderValue && (
             <div class="color-picker-slider-value">
-              ${sliderValueEditable ? `
-                <input type="number" step="0.1" min="0" max="100" class="color-picker-value-brightness" data-color-index="2">
-              ` : `
+              {sliderValueEditable ? (
+                <input
+                  type="number"
+                  step="0.1"
+                  min="0"
+                  max="100"
+                  class="color-picker-value-brightness"
+                  data-color-index="2"
+                />
+              ) : (
                 <span class="color-picker-value-brightness"></span>
-              `}
+              )}
             </div>
-          ` : ''}
+          )}
         </div>
       </div>
-    `;
+    );
   },
   init(self) {
     self.hueRangeSlider = self.app.range.create({

@@ -1,4 +1,6 @@
 import $ from '../../../shared/dom7';
+/** @jsx $jsx */
+import { $jsx } from '../../../shared/render';
 
 export default {
   render(self) {
@@ -10,56 +12,70 @@ export default {
       greenLabelText,
       blueLabelText,
     } = self.params;
-    // prettier-ignore
-    return `
+    return (
       <div class="color-picker-module color-picker-module-rgb-bars">
         <div class="color-picker-bar-wrap">
-          ${barLabel ? `
-            <div class="color-picker-bar-label">${redLabelText}</div>
-          ` : ''}
+          {barLabel && <div class="color-picker-bar-label">{redLabelText}</div>}
           <div class="range-slider color-picker-bar color-picker-bar-red"></div>
-          ${barValue ? `
+          {barValue && (
             <div class="color-picker-bar-value">
-              ${barValueEditable ? `
-                <input type="number" step="1" min="0" max="255" class="color-picker-value-bar-red" data-color-index="0">
-              ` : `
+              {barValueEditable ? (
+                <input
+                  type="number"
+                  step="1"
+                  min="0"
+                  max="255"
+                  class="color-picker-value-bar-red"
+                  data-color-index="0"
+                />
+              ) : (
                 <span class="color-picker-value-bar-red"></span>
-              `}
+              )}
             </div>
-          ` : ''}
+          )}
         </div>
         <div class="color-picker-bar-wrap">
-          ${barLabel ? `
-            <div class="color-picker-bar-label">${greenLabelText}</div>
-          ` : ''}
+          {barLabel && <div class="color-picker-bar-label">{greenLabelText}</div>}
           <div class="range-slider color-picker-bar color-picker-bar-green"></div>
-          ${barValue ? `
+          {barValue && (
             <div class="color-picker-bar-value">
-              ${barValueEditable ? `
-                <input type="number" step="1" min="0" max="255" class="color-picker-value-bar-green" data-color-index="1">
-              ` : `
+              {barValueEditable ? (
+                <input
+                  type="number"
+                  step="1"
+                  min="0"
+                  max="255"
+                  class="color-picker-value-bar-green"
+                  data-color-index="1"
+                />
+              ) : (
                 <span class="color-picker-value-bar-green"></span>
-              `}
+              )}
             </div>
-          ` : ''}
+          )}
         </div>
         <div class="color-picker-bar-wrap">
-          ${barLabel ? `
-            <div class="color-picker-bar-label">${blueLabelText}</div>
-          ` : ''}
+          {barLabel && <div class="color-picker-bar-label">{blueLabelText}</div>}
           <div class="range-slider color-picker-bar color-picker-bar-blue"></div>
-          ${barValue ? `
+          {barValue && (
             <div class="color-picker-bar-value">
-              ${barValueEditable ? `
-                <input type="number" step="1" min="0" max="255" class="color-picker-value-bar-blue" data-color-index="2">
-              ` : `
+              {barValueEditable ? (
+                <input
+                  type="number"
+                  step="1"
+                  min="0"
+                  max="255"
+                  class="color-picker-value-bar-blue"
+                  data-color-index="2"
+                />
+              ) : (
                 <span class="color-picker-value-bar-blue"></span>
-              `}
+              )}
             </div>
-          ` : ''}
+          )}
         </div>
       </div>
-    `;
+    );
   },
   init(self) {
     self.redBar = self.app.range.create({

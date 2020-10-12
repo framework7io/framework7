@@ -2,6 +2,8 @@ import { getWindow } from 'ssr-window';
 import $ from '../../shared/dom7';
 import { extend, nextTick } from '../../shared/utils';
 import Modal from '../modal/modal-class';
+/** @jsx $jsx */
+import { $jsx } from '../../shared/render';
 
 class Toast extends Modal {
   constructor(app, params) {
@@ -106,18 +108,23 @@ class Toast extends Modal {
     } = toast.params;
     const horizontalClass =
       position === 'top' || position === 'bottom' ? `toast-horizontal-${horizontalPosition}` : '';
-    // prettier-ignore
-    return `
-      <div class="toast toast-${position} ${horizontalClass} ${cssClass || ''} ${icon ? 'toast-with-icon' : ''}">
+    return (
+      <div
+        class={`toast toast-${position} ${horizontalClass} ${cssClass || ''} ${
+          icon ? 'toast-with-icon' : ''
+        }`}
+      >
         <div class="toast-content">
-          ${icon ? `<div class="toast-icon">${icon}</div>` : ''}
-          <div class="toast-text">${text}</div>
-          ${closeButton && !icon ? `
-          <a class="toast-button button ${closeButtonColor ? `color-${closeButtonColor}` : ''}">${closeButtonText}</a>
-          `.trim() : ''}
+          {icon && <div class="toast-icon">{icon}</div>}
+          <div class="toast-text">{text}</div>
+          {closeButton && !icon && (
+            <a class={`toast-button button ${closeButtonColor ? `color-${closeButtonColor}` : ''}`}>
+              {closeButtonText}
+            </a>
+          )}
         </div>
       </div>
-    `.trim();
+    );
   }
 }
 export default Toast;

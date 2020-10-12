@@ -152,8 +152,8 @@ async function umdBundle({ components } = {}) {
         'export { $ as Dom7, request, utils, getDevice, getSupport, createStore };': '',
       }),
       nodeResolve({ mainFields: ['module', 'main', 'jsnext'] }),
-      commonjs(),
       babel({ babelHelpers: 'bundled' }),
+      commonjs(),
     ],
     onwarn(warning, warn) {
       const ignore = ['EVAL'];
@@ -219,8 +219,8 @@ async function umdCore() {
         'export { $ as Dom7, request, utils, getDevice, getSupport, createStore };': '',
       }),
       nodeResolve({ mainFields: ['module', 'main', 'jsnext'] }),
-      commonjs(),
       babel({ babelHelpers: 'bundled' }),
+      commonjs(),
     ],
     onwarn(warning, warn) {
       const ignore = ['EVAL'];

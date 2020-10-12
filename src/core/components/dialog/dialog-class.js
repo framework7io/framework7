@@ -3,6 +3,8 @@ import $ from '../../shared/dom7';
 import { extend } from '../../shared/utils';
 import { getDevice } from '../../shared/get-device';
 import Modal from '../modal/modal-class';
+/** @jsx $jsx */
+import { $jsx } from '../../shared/render';
 
 class Dialog extends Modal {
   constructor(app, params) {
@@ -50,27 +52,31 @@ class Dialog extends Modal {
 
       let buttonsHTML = '';
       if (buttons.length > 0) {
-        // prettier-ignore
-        buttonsHTML = `
+        buttonsHTML = (
           <div class="dialog-buttons">
-            ${buttons.map(button => `
-              <span class="dialog-button${button.bold ? ' dialog-button-bold' : ''}${button.color ? ` color-${button.color}` : ''}${button.cssClass ? ` ${button.cssClass}` : ''}">${button.text}</span>
-            `).join('')}
+            {buttons.map((button) => (
+              <span
+                class={`dialog-button${button.bold ? ' dialog-button-bold' : ''}${
+                  button.color ? ` color-${button.color}` : ''
+                }${button.cssClass ? ` ${button.cssClass}` : ''}`}
+              >
+                {button.text}
+              </span>
+            ))}
           </div>
-        `;
+        );
       }
 
-      // prettier-ignore
-      const dialogHtml = `
-        <div class="${dialogClasses.join(' ')}">
+      const dialogHtml = (
+        <div class={dialogClasses.join(' ')}>
           <div class="dialog-inner">
-            ${title ? `<div class="dialog-title">${title}</div>` : ''}
-            ${text ? `<div class="dialog-text">${text}</div>` : ''}
-            ${content}
+            {title && <div class="dialog-title">{title}</div>}
+            {text && <div class="dialog-text">{text}</div>}
+            {content}
           </div>
-          ${buttonsHTML}
+          {buttonsHTML}
         </div>
-      `;
+      );
       $el = $(dialogHtml);
     } else {
       $el = $(dialog.params.el);

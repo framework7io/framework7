@@ -1,15 +1,17 @@
 import $ from '../../../shared/dom7';
 import { getSupport } from '../../../shared/get-support';
+/** @jsx $jsx */
+import { $jsx } from '../../../shared/render';
 
 export default {
   render() {
-    return `
+    return (
       <div class="color-picker-module color-picker-module-sb-spectrum">
         <div class="color-picker-sb-spectrum" style="background-color: hsl(0, 100%, 50%)">
           <div class="color-picker-sb-spectrum-handle"></div>
         </div>
       </div>
-    `;
+    );
   },
   init(self) {
     const { app } = self;
