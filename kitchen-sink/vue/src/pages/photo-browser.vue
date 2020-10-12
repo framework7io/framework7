@@ -35,7 +35,7 @@
     </f7-block>
     <f7-block strong>
       <p>
-        Photo Browser suppots 2 default themes - default Light (like in previous examples) and Dark
+        Photo Browser supports 2 default themes - default Light (like in previous examples) and Dark
         theme. Here is a Dark theme examples:
       </p>
       <f7-row>
