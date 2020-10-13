@@ -8,7 +8,7 @@
   import { useTooltip } from '../shared/use-tooltip';
   import { useIcon } from '../shared/use-icon';
 
-  import UseIconComponent from './use-icon-component';
+  import UseIcon from './use-icon';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -70,7 +70,7 @@
   {#if media || hasMediaSlots || icon}
     <div class={mediaClasses}>
       {#if icon}
-        <UseIconComponent {icon} />
+        <UseIcon {icon} />
       {/if}
       {plainText(media)}
       <slot name="media" />

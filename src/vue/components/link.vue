@@ -1,8 +1,6 @@
 <template>
   <a ref="elRef" :class="classes" v-bind="attrs">
-    <f7-icon v-if="icon" v-bind="icon.props">
-      <f7-badge v-if="icon.badge" v-bind="icon.badge.props">{{ icon.badge.content }}</f7-badge>
-    </f7-icon>
+    <f7-use-icon v-if="icon" :icon="icon" />
     <span v-if="text" :class="isTabbarLabel ? 'tabbar-label' : ''">
       {{ text }}
       <f7-badge v-if="badge" :color="badgeColor">{{ badge }}</f7-badge>
@@ -29,14 +27,14 @@ import { useIcon } from '../shared/use-icon';
 import { useRouteProps } from '../shared/use-route-props';
 import { useTooltip } from '../shared/use-tooltip';
 import { useSmartSelect } from '../shared/use-smart-select';
-import f7Icon from './icon';
 import f7Badge from './badge';
+import f7UseIcon from './use-icon';
 
 export default {
   name: 'f7-link',
   components: {
-    f7Icon,
     f7Badge,
+    f7UseIcon,
   },
   props: {
     noLinkClass: Boolean,

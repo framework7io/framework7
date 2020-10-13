@@ -1,9 +1,7 @@
 <template>
   <div ref="elRef" :class="classes">
     <div v-if="hasMedia" :class="mediaClasses">
-      <f7-icon v-if="icon" v-bind="icon.props">
-        <f7-badge v-if="icon.badge" v-bind="icon.badge.props">{{ icon.badge.content }}</f7-badge>
-      </f7-icon>
+      <f7-use-icon v-if="icon" :icon="icon" />
       {{ media }}
       <slot name="media" />
     </div>
@@ -21,15 +19,12 @@ import { classNames } from '../shared/utils';
 import { colorClasses, colorProps, iconProps } from '../shared/mixins';
 import { useTooltip } from '../shared/use-tooltip';
 import { useIcon } from '../shared/use-icon';
-
-import f7Icon from './icon';
-import f7Badge from './badge';
+import f7UseIcon from './use-icon';
 
 export default {
   name: 'f7-chip',
   components: {
-    f7Icon,
-    f7Badge,
+    f7UseIcon,
   },
   props: {
     media: String,

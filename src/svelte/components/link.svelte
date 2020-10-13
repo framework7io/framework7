@@ -16,7 +16,7 @@
   import { useIcon } from '../shared/use-icon';
   import { getReactiveContext } from '../shared/get-reactive-context';
 
-  import UseIconComponent from './use-icon-component';
+  import UseIcon from './use-icon';
   import Badge from './badge';
 
   const emit = createEmitter(createEventDispatcher, $$props);
@@ -109,7 +109,7 @@
   use:useRouteProps={routeProps}
 >
   {#if icon}
-    <UseIconComponent {icon} />
+    <UseIcon {icon} />
   {/if}
   <slot />
   {#if typeof text !== 'undefined' || typeof badge !== 'undefined'}

@@ -13,7 +13,8 @@
   import { useRouteProps } from '../shared/use-route-props';
   import { useIcon } from '../shared/use-icon';
 
-  import UseIconComponent from './use-icon-component';
+  import UseIcon from './use-icon';
+  import Preloader from './preloader';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -55,6 +56,10 @@
   export let tooltip = undefined;
   export let tooltipTrigger = undefined;
   export let routeProps = undefined;
+  export let preloader = false;
+  export let preloaderSize = undefined;
+  export let preloaderColor = undefined;
+  export let loading = false;
 
   let el;
 
@@ -104,6 +109,8 @@
       'button-outline-ios': outlineIos,
       'button-outline-aurora': outlineAurora,
       'button-outline-md': outlineMd,
+      'button-preloader': preloader,
+      'button-loading': loading,
 
       disabled,
     },
@@ -131,13 +138,27 @@
     use:useTooltip={{ tooltip, tooltipTrigger }}
     {...attrs}
   >
-    {#if icon}
-      <UseIconComponent {icon} />
+    {#if preloader}
+      <Preloader size={preloaderSize} color={preloaderColor} />
+      <span>
+        {#if icon}
+          <UseIcon {icon} />
+        {/if}
+        {#if typeof text !== 'undefined'}
+          <span>{plainText(text)}</span>
+        {/if}
+        <slot />
+      </span>
+    {:else}
+      {#if icon}
+        <UseIcon {icon} />
+      {/if}
+      {#if typeof text !== 'undefined'}
+        <span>{plainText(text)}</span>
+      {/if}
+      <slot />
     {/if}
-    {#if typeof text !== 'undefined'}
-      <span>{plainText(text)}</span>
-    {/if}
-    <slot />
+
   </button>
 {:else}
   <a
@@ -148,12 +169,25 @@
     use:useTooltip={{ tooltip, tooltipTrigger }}
     {...attrs}
   >
-    {#if icon}
-      <UseIconComponent {icon} />
+    {#if preloader}
+      <Preloader size={preloaderSize} color={preloaderColor} />
+      <span>
+        {#if icon}
+          <UseIcon {icon} />
+        {/if}
+        {#if typeof text !== 'undefined'}
+          <span>{plainText(text)}</span>
+        {/if}
+        <slot />
+      </span>
+    {:else}
+      {#if icon}
+        <UseIcon {icon} />
+      {/if}
+      {#if typeof text !== 'undefined'}
+        <span>{plainText(text)}</span>
+      {/if}
+      <slot />
     {/if}
-    {#if typeof text !== 'undefined'}
-      <span>{plainText(text)}</span>
-    {/if}
-    <slot />
   </a>
 {/if}

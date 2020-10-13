@@ -11,6 +11,8 @@ import { useTooltip } from '../shared/use-tooltip';
 import { useIcon } from '../shared/use-icon';
 import { useRouteProps } from '../shared/use-route-props';
 
+import Preloader from './preloader';
+
 /* dts-props
   id?: string | number;
   className?: string;
@@ -49,6 +51,10 @@ import { useRouteProps } from '../shared/use-route-props';
   disabled? : boolean
   tooltip? : string
   tooltipTrigger? : string
+  preloader?: boolean;
+  preloaderSize?: number | string;
+  preloaderColor?: string;
+  loading?: boolean;
   COLOR_PROPS
   ICON_PROPS
   ROUTER_PROPS
@@ -93,6 +99,10 @@ const Button = forwardRef((props, ref) => {
     outlineAurora,
     outlineMd,
     disabled,
+    preloader,
+    preloaderSize,
+    preloaderColor,
+    loading,
   } = props;
 
   const extraAttrs = getExtraAttrs(props);
@@ -144,7 +154,8 @@ const Button = forwardRef((props, ref) => {
         'button-outline-ios': outlineIos,
         'button-outline-aurora': outlineAurora,
         'button-outline-md': outlineMd,
-
+        'button-preloader': preloader,
+        'button-loading': loading,
         disabled,
       },
       colorClasses(props),
@@ -176,6 +187,27 @@ const Button = forwardRef((props, ref) => {
 
   if (text) {
     textEl = <span>{text}</span>;
+  }
+
+  if (preloader) {
+    return (
+      <ButtonTag
+        ref={elRef}
+        id={id}
+        style={style}
+        className={getClasses()}
+        {...getAttrs()}
+        {...extraAttrs}
+        onClick={onClick}
+      >
+        <Preloader size={preloaderSize} color={preloaderColor} />
+        <span>
+          {iconEl}
+          {textEl}
+          {children}
+        </span>
+      </ButtonTag>
+    );
   }
 
   return (

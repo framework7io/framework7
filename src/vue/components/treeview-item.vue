@@ -5,9 +5,7 @@
       <div v-if="needToggle" className="treeview-toggle" />
       <div className="treeview-item-content">
         <slot name="content-start" />
-        <f7-icon v-if="icon" v-bind="icon.props">
-          <f7-badge v-if="icon.badge" v-bind="icon.badge.props">{{ icon.badge.content }}</f7-badge>
-        </f7-icon>
+        <f7-use-icon v-if="icon" :icon="icon" />
         <slot name="media" />
         <div className="treeview-item-label">
           <slot name="label-start" />
@@ -44,14 +42,12 @@ import {
 import { useIcon } from '../shared/use-icon';
 import { f7ready, f7 } from '../shared/f7';
 
-import f7Icon from './icon';
-import f7Badge from './badge';
+import f7UseIcon from './use-icon';
 
 export default {
   name: 'f7-treeview-item',
   components: {
-    f7Icon,
-    f7Badge,
+    f7UseIcon,
   },
   props: {
     toggle: {

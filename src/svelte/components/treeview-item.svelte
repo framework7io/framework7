@@ -13,7 +13,7 @@
   import { hasSlots } from '../shared/has-slots';
   import { useIcon } from '../shared/use-icon';
 
-  import UseIconComponent from './use-icon-component';
+  import UseIcon from './use-icon';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -121,7 +121,7 @@
       <div class="treeview-item-content">
         <slot name="content-start" />
         {#if icon}
-          <UseIconComponent {icon} />
+          <UseIcon {icon} />
         {/if}
         <slot name="media" />
         <div class="treeview-item-label">
@@ -148,7 +148,7 @@
       <div class="treeview-item-content">
         <slot name="content-start" />
         {#if icon}
-          <UseIconComponent {icon} />
+          <UseIcon {icon} />
         {/if}
         <slot name="media" />
         <div class="treeview-item-label">

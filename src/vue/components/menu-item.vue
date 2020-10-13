@@ -2,9 +2,7 @@
   <component :is="tag" ref="elRef" :class="classes" v-bind="attrs" @click="onClick">
     <div v-if="text || $slots.text || icon" class="menu-item-content">
       {{ text }}
-      <f7-icon v-if="icon" v-bind="icon.props">
-        <f7-badge v-if="icon.badge" v-bind="icon.badge.props">{{ icon.badge.content }}</f7-badge>
-      </f7-icon>
+      <f7-use-icon v-if="icon" :icon="icon" />
       <slot name="text" />
     </div>
     <slot />
@@ -29,14 +27,12 @@ import { useIcon } from '../shared/use-icon';
 import { f7ready, f7 } from '../shared/f7';
 import { useTooltip } from '../shared/use-tooltip';
 
-import f7Icon from './icon';
-import f7Badge from './badge';
+import f7UseIcon from './use-icon';
 
 export default {
   name: 'f7-menu-item',
   components: {
-    f7Icon,
-    f7Badge,
+    f7UseIcon,
   },
   props: {
     text: String,

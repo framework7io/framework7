@@ -1,10 +1,18 @@
 <template>
   <component :is="tag" ref="elRef" :class="classesComputed" v-bind="attrs">
-    <f7-icon v-if="icon" v-bind="icon.props">
-      <f7-badge v-if="icon.badge" v-bind="icon.badge.props">{{ icon.badge.content }}</f7-badge>
-    </f7-icon>
-    <span v-if="text">{{ text }}</span>
-    <slot />
+    <template v-if="preloader">
+      <f7-preloader :size="preloaderSize" :color="preloaderColor" />
+      <span>
+        <f7-use-icon v-if="icon" :icon="icon" />
+        <span v-if="text">{{ text }}</span>
+        <slot />
+      </span>
+    </template>
+    <template v-else>
+      <f7-use-icon v-if="icon" :icon="icon" />
+      <span v-if="text">{{ text }}</span>
+      <slot />
+    </template>
   </component>
 </template>
 <script>
@@ -25,14 +33,14 @@ import { useTooltip } from '../shared/use-tooltip';
 import { useIcon } from '../shared/use-icon';
 import { useRouteProps } from '../shared/use-route-props';
 
-import f7Icon from './icon';
-import f7Badge from './badge';
+import f7Preloader from './preloader';
+import f7UseIcon from './use-icon';
 
 export default {
   name: 'f7-button',
   components: {
-    f7Icon,
-    f7Badge,
+    f7Preloader,
+    f7UseIcon,
   },
   props: {
     text: String,
@@ -72,6 +80,10 @@ export default {
     disabled: Boolean,
     tooltip: String,
     tooltipTrigger: String,
+    preloader: Boolean,
+    preloaderSize: [Number, String],
+    preloaderColor: String,
+    loading: Boolean,
     ...iconProps,
     ...colorProps,
     ...actionsProps,
@@ -137,6 +149,8 @@ export default {
         outlineAurora,
         active,
         disabled,
+        preloader,
+        loading,
       } = props;
 
       return classNames(
@@ -170,6 +184,8 @@ export default {
           'button-outline-ios': outlineIos,
           'button-outline-aurora': outlineAurora,
           'button-outline-md': outlineMd,
+          'button-preloader': preloader,
+          'button-loading': loading,
 
           disabled,
         },

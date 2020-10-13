@@ -15,7 +15,7 @@
   import { useRouteProps } from '../shared/use-route-props';
   import { useIcon } from '../shared/use-icon';
 
-  import UseIconComponent from './use-icon-component';
+  import UseIcon from './use-icon';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -111,7 +111,7 @@
       <div class="menu-item-content">
         {plainText(text)}
         {#if icon}
-          <UseIconComponent {icon} />
+          <UseIcon {icon} />
         {/if}
         <slot name="text" />
       </div>
@@ -131,7 +131,7 @@
       <div class="menu-item-content">
         {plainText(text)}
         {#if icon}
-          <UseIconComponent {icon} />
+          <UseIcon {icon} />
         {/if}
         <slot name="text" />
       </div>

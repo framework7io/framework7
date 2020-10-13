@@ -242,6 +242,7 @@ class Component {
   }
 
   update(callback) {
+    if (this.__destroyed) return new Promise(() => {});
     return new Promise((resolve) => {
       const resolver = () => {
         resolve();

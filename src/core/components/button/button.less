@@ -7,7 +7,7 @@ button {
 .button {
   text-decoration: none;
   text-align: center;
-  display: block;
+  display: flex;
   appearance: none;
   background: none;
   margin: 0;
@@ -371,6 +371,46 @@ button {
 .subnavbar .segmented {
   width: 100%;
 }
+
+.button-preloader {
+  position: relative;
+  --f7-preloader-color: var(--f7-button-text-color, var(--f7-theme-color));
+  &:not(.button-large) {
+    --f7-preloader-size: calc(var(--f7-button-height) - 6px);
+  }
+  &.button-fill {
+    --f7-preloader-color: #fff;
+  }
+  & > span:not(.preloader) {
+    transition: 0.2s;
+    display: inline-flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    transform: scale(1);
+  }
+  & > .preloader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transition: 0.2s;
+    transition-property: opacity;
+    opacity: 0;
+    visibility: hidden;
+    margin-left: calc(-1 * var(--f7-preloader-size) / 2);
+    margin-top: calc(-1 * var(--f7-preloader-size) / 2);
+  }
+
+  &.button-loading > span:not(.preloader) {
+    opacity: 0;
+    transform: scale(0);
+  }
+  &.button-loading > .preloader {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
 .if-ios-theme({
   @import url('./button-ios.less');
 });
