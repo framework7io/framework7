@@ -140,7 +140,7 @@
       <div class="block-title">With callback on remove</div>
       <div class="list">
         <ul>
-          <li class="swipeout" @swipeout:deleted="onDeleted">
+          <li class="swipeout" @swipeout:deleted=${onDeleted}>
             <div class="item-content swipeout-content">
               <div class="item-inner">
                 <div class="item-title">Swipe left on me please</div>
@@ -150,7 +150,7 @@
               <a href="#" class="swipeout-delete">Delete</a>
             </div>
           </li>
-          <li class="swipeout" @swipeout:deleted="onDeleted">
+          <li class="swipeout" @swipeout:deleted=${onDeleted}>
             <div class="item-content swipeout-content">
               <div class="item-inner">
                 <div class="item-title">Swipe left on me too</div>
