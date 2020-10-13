@@ -4,7 +4,7 @@
 - [ ] Fixes
   - [ ] Push view popup on keyboard open
   - [x] Fix iOS Navbar Home <--> Accordion
-  - [ ] fix data table selected row styles
+  - [x] fix data table selected row styles
 - [ ] Styles
   - [ ] Update Aurora theme
   - [ ] Update MD theme
