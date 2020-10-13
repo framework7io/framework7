@@ -52,6 +52,7 @@
       isClosing: false,
     });
     emit('actionsOpen', [instance]);
+    opened = true;
   }
   function onOpened(instance) {
     emit('actionsOpened', [instance]);
@@ -68,6 +69,7 @@
       isClosing: false,
     });
     emit('actionsClosed', [instance]);
+    opened = false;
   }
 
   let initialWatched = false;

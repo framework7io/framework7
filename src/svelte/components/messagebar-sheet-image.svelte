@@ -22,6 +22,7 @@
     if (event.target.checked) emit('checked', [event]);
     else emit('unchecked', [event]);
     emit('change', [event]);
+    checked = event.target.checked;
   }
 </script>
 

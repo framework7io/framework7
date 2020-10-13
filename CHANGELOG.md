@@ -92,6 +92,15 @@
   - Fast Refresh support
 - Svelte
   - `App` component now receives all app parameters as props
+  - Added `bind:$property` support
+    - Checkbox, ListItem, Radio, Toggle, MessagebarSheetImage
+      - Support for `bind:checked`
+    - Actions, LoginScreen, Panel, Popover, Popup, Sheet
+      - Support for `bind:opened`
+    - Card
+      - Support for `bind:expandableOpened`
+    - Input, ListInput, Messagebar, Searchbar, Stepper, Range
+      - Support for `bind:value`
   - `browserHistory` must be used with `browserHistoryInitialMatch`
 - React/Svelte/Vue
   - Button, Link, ListButon, ListItem, MenuDropdownItem, MenuItem, TreeviewItem

@@ -40,6 +40,7 @@
       isClosing: false,
     });
     emit('loginscreenOpen', [instance]);
+    opened = true;
   }
   function onOpened(instance) {
     emit('loginscreenOpened', [instance]);
@@ -56,6 +57,7 @@
       isClosing: false,
     });
     emit('loginscreenClosed', [instance]);
+    opened = false;
   }
 
   let initialWatched = false;

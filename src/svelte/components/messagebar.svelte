@@ -85,6 +85,7 @@
 
   function onInput(event) {
     emit('input', [...event.detail]);
+    value = event.detail[0].target.value;
   }
 
   function onFocus(event) {

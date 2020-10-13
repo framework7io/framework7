@@ -64,6 +64,7 @@
       isClosing: false,
     });
     emit('sheetOpen', [instance]);
+    opened = true;
   }
   function onOpened(instance) {
     emit('sheetOpened', [instance]);
@@ -80,6 +81,7 @@
       isClosing: false,
     });
     emit('sheetClosed', [instance]);
+    opened = false;
   }
   function onStepProgress(instance, progress) {
     emit('sheetStepProgress', [instance, progress]);

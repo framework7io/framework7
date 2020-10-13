@@ -243,6 +243,7 @@
   }
   function onChange(event) {
     emit('change', [event]);
+    checked = event.target.checked;
   }
 
   useSmartSelect(

@@ -103,6 +103,7 @@
     });
 
     emit('panelOpen', args);
+    opened = true;
   }
   function onOpened(...args) {
     emit('panelOpened', args);
@@ -119,6 +120,7 @@
       isClosing: false,
     });
     emit('panelClosed', args);
+    opened = false;
   }
   function onBackdropClick(...args) {
     emit('panelBackdropClick', args);

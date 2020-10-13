@@ -194,6 +194,9 @@
     if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && inputEl) {
       validateInput(inputEl);
     }
+    if (inputEl && type !== 'texteditor' && type !== 'colorpicker' && type !== 'datepicker') {
+      value = inputEl.value;
+    }
   }
 
   function onFocus(...args) {
@@ -216,6 +219,7 @@
 
     if (type === 'texteditor') {
       emit('textEditorChange', [args[1]]);
+      value = args[1];
     }
   }
 
@@ -240,6 +244,7 @@
           on: {
             change(calendar, calendarValue) {
               emit('calendarChange', [calendarValue]);
+              value = calendarValue;
             },
           },
           ...(calendarParams || {}),
@@ -252,6 +257,7 @@
           on: {
             change(colorPicker, colorPickerValue) {
               emit('colorpickerChange', [colorPickerValue]);
+              value = colorPickerValue;
             },
           },
           ...(colorPickerParams || {}),

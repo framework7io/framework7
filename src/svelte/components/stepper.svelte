@@ -130,6 +130,7 @@
           on: {
             change(stepper, newValue) {
               emit('stepperChange', [newValue]);
+              value = newValue;
             },
           },
         }),

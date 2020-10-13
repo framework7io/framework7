@@ -90,6 +90,7 @@
 
   function onInput(event) {
     emit('input', [event]);
+    value = event.target.value;
   }
 
   function onFocus(event) {

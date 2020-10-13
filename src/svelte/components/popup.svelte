@@ -65,6 +65,7 @@
       isClosing: false,
     });
     emit('popupOpen', [instance]);
+    opened = true;
   }
   function onOpened(instance) {
     emit('popupOpened', [instance]);
@@ -81,6 +82,7 @@
       isClosing: false,
     });
     emit('popupClosed', [instance]);
+    opened = false;
   }
 
   let initialWatched = false;

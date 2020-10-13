@@ -33,12 +33,13 @@ export default {
     readonly: Boolean,
     ...colorProps,
   },
-  emits: ['update:checked'],
+  emits: ['update:checked', 'change'],
   setup(props, { emit }) {
     const inputElRef = ref(null);
 
     const onChange = (event) => {
       emit('update:checked', event.target.checked);
+      emit('change', event.target.checked);
     };
 
     onMounted(() => {

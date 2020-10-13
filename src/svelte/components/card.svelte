@@ -86,6 +86,7 @@
   function onOpen(cardEl) {
     if (cardEl !== el) return;
     emit('cardOpen', [el]);
+    expandableOpened = true;
   }
   function onOpened(cardEl, pageEl) {
     if (cardEl !== el) return;
@@ -98,6 +99,7 @@
   function onClosed(cardEl, pageEl) {
     if (cardEl !== el) return;
     emit('cardClosed', [el, pageEl]);
+    expandableOpened = false;
   }
 
   onMount(() => {

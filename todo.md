@@ -13,7 +13,6 @@
     - [ ] Remove extra maring/padding on MD theme checkboxes/radios
     - [ ] Check new touch ripple
 - [ ] Features
-  - [ ] set colorPicker and Calendar instance on openerEl?
   - [x] Components to render functions
   - [x] tooltip
     - [x] set target
@@ -57,7 +56,6 @@
 # Svelte
 
 - [ ] add loading button
-- [ ] value bindings
 
 # Vue
 

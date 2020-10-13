@@ -84,6 +84,7 @@
             },
             changed(range, val) {
               emit('rangeChanged', [val]);
+              value = val;
             },
           },
         }),

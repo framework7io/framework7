@@ -62,6 +62,7 @@
         on: {
           change(toggle) {
             emit('toggleChange', [toggle.checked]);
+            checked = toggle.checked;
           },
         },
       });
