@@ -2,7 +2,7 @@
 /* eslint import/no-named-as-default: "off" */
 import h from './snabbdom/h';
 import customComponents from './custom-components';
-import { isObject } from '../../shared/utils';
+import { isObject, eventNameToColonCase } from '../../shared/utils';
 
 const SELF_CLOSING = 'area base br col command embed hr img input keygen link menuitem meta param source track wbr'.split(
   ' ',
@@ -222,10 +222,14 @@ const getData = (treeNode, component, f7, initial, isRoot) => {
     } else if (attrName === 'key') {
       // Key
       data.key = attrValue;
-    } else if (attrName.indexOf('@') === 0) {
+    } else if (
+      attrName.indexOf('@') === 0 ||
+      (attrName.indexOf('on') >= 0 && attrName.length > 2)
+    ) {
       // Events
       if (!data.on) data.on = {};
-      let eventName = attrName.substr(1);
+      let eventName =
+        attrName.indexOf('@') === 0 ? attrName.substr(1) : eventNameToColonCase(attrName.substr(2));
       let stop = false;
       let prevent = false;
       let once = false;

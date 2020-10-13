@@ -13,7 +13,7 @@ import TouchModule from './modules/touch/touch';
 import ClicksModule from './modules/clicks/clicks';
 import RouterModule from './modules/router/router';
 import RouterComponentLoaderModule from './modules/router/component-loader';
-import ComponentModule, { Component } from './modules/component/component';
+import ComponentModule, { Component, $jsx } from './modules/component/component';
 import HistoryModule from './modules/history/history';
 import ServiceWorkerModule from './modules/service-worker/service-worker';
 import StoreModule, { createStore } from './modules/store/store';

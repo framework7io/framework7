@@ -15,7 +15,6 @@
   - Package
     - Renamed files and imports
     - Lite version doesn't contain
-      - Template7
       - Gauge
       - Area Chart
       - Pie Chart

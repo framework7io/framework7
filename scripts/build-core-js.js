@@ -42,7 +42,7 @@ async function modular({ components, format }) {
         '//NAMED_EXPORT',
         `export { ${
           isLite ? '' : 'Component,'
-        } $ as Dom7, request, utils, getDevice, getSupport, createStore };`,
+        } $ as Dom7, request, utils, getDevice, getSupport, createStore, $jsx };`,
       );
   };
   const bundleComponents = (content, isLite) => {
@@ -77,7 +77,7 @@ async function modular({ components, format }) {
         '//NAMED_EXPORT',
         `export { ${
           isLite ? '' : 'Component,'
-        } $ as Dom7, request, utils, getDevice, getSupport, createStore };`,
+        } $ as Dom7, request, utils, getDevice, getSupport, createStore, $jsx };`,
       );
   };
 
@@ -149,7 +149,7 @@ async function umdBundle({ components } = {}) {
         '//INSTALL_COMPONENTS': components.map((component) => component.capitalized).join(',\n  '),
         '//IMPORT_HELPERS': '',
         '//NAMED_EXPORT': '',
-        'export { $ as Dom7, request, utils, getDevice, getSupport, createStore };': '',
+        'export { $ as Dom7, request, utils, getDevice, getSupport, createStore, $jsx };': '',
       }),
       nodeResolve({ mainFields: ['module', 'main', 'jsnext'] }),
       babel({ babelHelpers: 'bundled' }),
@@ -216,7 +216,7 @@ async function umdCore() {
         '//INSTALL_COMPONENTS': '',
         '//IMPORT_HELPERS': '',
         '//NAMED_EXPORT': '',
-        'export { $ as Dom7, request, utils, getDevice, getSupport, createStore };': '',
+        'export { $ as Dom7, request, utils, getDevice, getSupport, createStore, $jsx };': '',
       }),
       nodeResolve({ mainFields: ['module', 'main', 'jsnext'] }),
       babel({ babelHelpers: 'bundled' }),
