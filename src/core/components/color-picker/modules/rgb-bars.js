@@ -1,6 +1,6 @@
 import $ from '../../../shared/dom7';
 /** @jsx $jsx */
-import { $jsx } from '../../../shared/render';
+import $jsx from '../../../shared/$jsx';
 
 export default {
   render(self) {

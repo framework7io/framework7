@@ -4,7 +4,7 @@ import $ from '../../shared/dom7';
 import { getDevice } from '../../shared/get-device';
 import { getSupport } from '../../shared/get-support';
 /** @jsx $jsx */
-import { $jsx } from '../../shared/render';
+import $jsx from '../../shared/$jsx';
 
 class Calendar extends Framework7Class {
   constructor(app, params = {}) {

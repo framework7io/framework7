@@ -4,7 +4,7 @@ import { extend } from '../../shared/utils';
 import { getDevice } from '../../shared/get-device';
 import Modal from '../modal/modal-class';
 /** @jsx $jsx */
-import { $jsx } from '../../shared/render';
+import $jsx from '../../shared/$jsx';
 
 class Dialog extends Modal {
   constructor(app, params) {

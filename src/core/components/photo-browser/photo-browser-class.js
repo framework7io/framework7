@@ -4,7 +4,7 @@ import $ from '../../shared/dom7';
 import { extend, now, nextTick, deleteProps } from '../../shared/utils';
 import Framework7Class from '../../shared/class';
 /** @jsx $jsx */
-import { $jsx } from '../../shared/render';
+import $jsx from '../../shared/$jsx';
 
 class PhotoBrowser extends Framework7Class {
   constructor(app, params = {}) {

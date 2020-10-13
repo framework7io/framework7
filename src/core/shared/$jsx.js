@@ -24,4 +24,4 @@ const $jsx = (tag, props, ...args) => {
   return `<${tag} ${attrsString}>${childrenContent}</${tag}>`.trim();
 };
 
-export { $jsx };
+export default $jsx;

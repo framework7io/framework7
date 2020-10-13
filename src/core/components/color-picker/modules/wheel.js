@@ -1,7 +1,7 @@
 import $ from '../../../shared/dom7';
 import { getSupport } from '../../../shared/get-support';
 /** @jsx $jsx */
-import { $jsx } from '../../../shared/render';
+import $jsx from '../../../shared/$jsx';
 
 function svgWheelCircles() {
   const total = 256;

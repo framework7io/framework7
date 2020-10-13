@@ -12,7 +12,7 @@ import {
 import { getDevice } from '../../shared/get-device';
 import Framework7Class from '../../shared/class';
 /** @jsx $jsx */
-import { $jsx } from '../../shared/render';
+import $jsx from '../../shared/$jsx';
 
 class Autocomplete extends Framework7Class {
   constructor(app, params = {}) {

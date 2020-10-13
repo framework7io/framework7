@@ -5,7 +5,7 @@ import { extend, nextTick } from '../../shared/utils';
 import Modal from '../modal/modal-class';
 import $ from '../../shared/dom7';
 /** @jsx $jsx */
-import { $jsx } from '../../shared/render';
+import $jsx from '../../shared/$jsx';
 
 class Actions extends Modal {
   constructor(app, params) {

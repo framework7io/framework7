@@ -2,7 +2,7 @@ import $ from '../../../shared/dom7';
 import { colorHsbToHsl } from '../../../shared/utils';
 import { getSupport } from '../../../shared/get-support';
 /** @jsx $jsx */
-import { $jsx } from '../../../shared/render';
+import $jsx from '../../../shared/$jsx';
 
 export default {
   render() {

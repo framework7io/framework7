@@ -2,7 +2,7 @@ import $ from '../../shared/dom7';
 import { extend, now, nextTick } from '../../shared/utils';
 import Modal from '../modal/modal-class';
 /** @jsx $jsx */
-import { $jsx } from '../../shared/render';
+import $jsx from '../../shared/$jsx';
 
 class Notification extends Modal {
   constructor(app, params) {

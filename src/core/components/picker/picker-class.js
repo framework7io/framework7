@@ -7,7 +7,7 @@ import { getDevice } from '../../shared/get-device';
 import pickerColumn from './picker-column';
 
 /** @jsx $jsx */
-import { $jsx } from '../../shared/render';
+import $jsx from '../../shared/$jsx';
 
 class Picker extends Framework7Class {
   constructor(app, params = {}) {

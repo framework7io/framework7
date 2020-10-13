@@ -28,7 +28,7 @@ import moduleHsSpectrum from './modules/hs-spectrum';
 import moduleWheel from './modules/wheel';
 
 /** @jsx $jsx */
-import { $jsx } from '../../shared/render';
+import $jsx from '../../shared/$jsx';
 
 class ColorPicker extends Framework7Class {
   constructor(app, params = {}) {
