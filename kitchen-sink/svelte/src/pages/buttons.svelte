@@ -2,6 +2,24 @@
   import { Page, Navbar, BlockTitle, Block, Row, Col, Segmented, Button } from 'framework7-svelte';
 
   let activeStrongButton = 0;
+  let isLoading1 = false;
+  let isLoading2 = false;
+
+  const load1 = () => {
+    if (isLoading1) return;
+    isLoading1 = true;
+    setTimeout(() => {
+      isLoading1 = false;
+    }, 4000);
+  };
+
+  const load2 = () => {
+    if (isLoading2) return;
+    isLoading2 = true;
+    setTimeout(() => {
+      isLoading2 = false;
+    }, 4000);
+  };
 </script>
 
 <!-- svelte-ignore a11y-invalid-attribute -->
@@ -145,24 +163,40 @@
   <Block strong>
     <Row tag="p">
       <Col tag="span">
-        <Button large small>Button</Button>
+        <Button small>Button</Button>
       </Col>
       <Col tag="span">
-        <Button large small outline>Outline</Button>
+        <Button small outline>Outline</Button>
       </Col>
       <Col tag="span">
-        <Button large small fill>Fill</Button>
+        <Button small fill>Fill</Button>
       </Col>
     </Row>
     <Row tag="p">
       <Col tag="span">
-        <Button large small round>Button</Button>
+        <Button small round>Button</Button>
       </Col>
       <Col tag="span">
-        <Button large small outline round>Outline</Button>
+        <Button small outline round>Outline</Button>
       </Col>
       <Col tag="span">
-        <Button large small fill round>Fill</Button>
+        <Button small fill round>Fill</Button>
+      </Col>
+    </Row>
+  </Block>
+
+  <BlockTitle>Preloader Buttons</BlockTitle>
+  <Block strong>
+    <Row tag="p">
+      <Col tag="span">
+        <Button preloader loading={isLoading1} onClick={load1} large>
+          Load
+        </Button>
+      </Col>
+      <Col tag="span">
+        <Button preloader loading={isLoading2} onClick={load2} large fill>
+          Load
+        </Button>
       </Col>
     </Row>
   </Block>

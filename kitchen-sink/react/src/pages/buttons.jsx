@@ -14,6 +14,24 @@ import {
 
 export default () => {
   const [activeStrongButton, setActiveStrongButton] = useState(0);
+  const [isLoading1, setIsLoading1] = useState(false);
+  const [isLoading2, setIsLoading2] = useState(false);
+
+  const load1 = () => {
+    if (isLoading1) return;
+    setIsLoading1(true);
+    setTimeout(() => {
+      setIsLoading1(false);
+    }, 4000);
+  };
+  const load2 = () => {
+    if (isLoading2) return;
+    setIsLoading2(true);
+    setTimeout(() => {
+      setIsLoading2(false);
+    }, 4000);
+  };
+
   return (
     <Page>
       <Navbar title="Buttons" backLink="Back" />
@@ -183,35 +201,49 @@ export default () => {
       <Block strong>
         <Row tag="p">
           <Col tag="span">
-            <Button large small>
-              Button
-            </Button>
+            <Button small>Button</Button>
           </Col>
           <Col tag="span">
-            <Button large small outline>
+            <Button small outline>
               Outline
             </Button>
           </Col>
           <Col tag="span">
-            <Button large small fill>
+            <Button small fill>
               Fill
             </Button>
           </Col>
         </Row>
         <Row tag="p">
           <Col tag="span">
-            <Button large small round>
+            <Button small round>
               Button
             </Button>
           </Col>
           <Col tag="span">
-            <Button large small outline round>
+            <Button small outline round>
               Outline
             </Button>
           </Col>
           <Col tag="span">
-            <Button large small fill round>
+            <Button small fill round>
               Fill
+            </Button>
+          </Col>
+        </Row>
+      </Block>
+
+      <BlockTitle>Preloader Buttons</BlockTitle>
+      <Block strong>
+        <Row tag="p">
+          <Col tag="span">
+            <Button preloader loading={isLoading1} onClick={load1} large>
+              Load
+            </Button>
+          </Col>
+          <Col tag="span">
+            <Button preloader loading={isLoading2} onClick={load2} large fill>
+              Load
             </Button>
           </Col>
         </Row>

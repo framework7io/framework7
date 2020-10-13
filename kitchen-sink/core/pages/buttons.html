@@ -135,6 +135,26 @@
           <button class="col button color-black">Black</button>
         </p>
       </div>
+
+      <div class="block-title">Preloader Buttons</div>
+      <div class="block block-strong">
+        <p class="row">
+          <span class="col">
+            <button class="button button-large button-preloader ${isLoading1 ? 'button-loading' : ''}" @click=${load1}>
+              <span class="preloader"></span>
+              <span>Load</span>
+            </button>
+          </span>
+          <span class="col">
+            <button class="button button-large button-fill button-preloader ${isLoading2 ? 'button-loading' : ''}"
+              @click=${load2}>
+              <span class="preloader"></span>
+              <span>Load</span>
+            </button>
+          </span>
+        </p>
+      </div>
+
       <div class="block-title">Color Fill Buttons</div>
       <div class="block block-strong">
         <p class="row">
@@ -172,6 +192,28 @@
 <script>
   export default (props, { $update }) => {
     let activeStrongButton = 0;
+    let isLoading1 = false;
+    let isLoading2 = false;
+
+    const load1 = () => {
+      if (isLoading1) return;
+      isLoading1 = true;
+      $update();
+      setTimeout(() => {
+        isLoading1 = false;
+        $update();
+      }, 4000);
+    };
+
+    const load2 = () => {
+      if (isLoading2) return;
+      isLoading2 = true;
+      $update();
+      setTimeout(() => {
+        isLoading2 = false;
+        $update();
+      }, 4000);
+    };
 
     const setStrongButton = (index) => {
       activeStrongButton = index;

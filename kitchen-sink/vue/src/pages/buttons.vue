@@ -137,24 +137,36 @@
     <f7-block strong>
       <f7-row tag="p">
         <f7-col tag="span">
-          <f7-button large small>Button</f7-button>
+          <f7-button small>Button</f7-button>
         </f7-col>
         <f7-col tag="span">
-          <f7-button large small outline>Outline</f7-button>
+          <f7-button small outline>Outline</f7-button>
         </f7-col>
         <f7-col tag="span">
-          <f7-button large small fill>Fill</f7-button>
+          <f7-button small fill>Fill</f7-button>
         </f7-col>
       </f7-row>
       <f7-row tag="p">
         <f7-col tag="span">
-          <f7-button large small round>Button</f7-button>
+          <f7-button small round>Button</f7-button>
         </f7-col>
         <f7-col tag="span">
-          <f7-button large small outline round>Outline</f7-button>
+          <f7-button small outline round>Outline</f7-button>
         </f7-col>
         <f7-col tag="span">
-          <f7-button large small fill round>Fill</f7-button>
+          <f7-button small fill round>Fill</f7-button>
+        </f7-col>
+      </f7-row>
+    </f7-block>
+
+    <f7-block-title>Preloader Buttons</f7-block-title>
+    <f7-block strong>
+      <f7-row tag="p">
+        <f7-col tag="span">
+          <f7-button preloader :loading="isLoading1" large @click="load1"> Load </f7-button>
+        </f7-col>
+        <f7-col tag="span">
+          <f7-button preloader :loading="isLoading2" large fill @click="load2"> Load </f7-button>
         </f7-col>
       </f7-row>
     </f7-block>
@@ -201,6 +213,7 @@
   </f7-page>
 </template>
 <script>
+import { ref } from 'vue';
 import {
   f7Navbar,
   f7Page,
@@ -227,9 +240,33 @@ export default {
     f7Button,
     f7Segmented,
   },
-  data() {
+  setup() {
+    const activeStrongButton = ref(0);
+    const isLoading1 = ref(false);
+    const isLoading2 = ref(false);
+
+    const load1 = () => {
+      if (isLoading1.value) return;
+      isLoading1.value = true;
+      setTimeout(() => {
+        isLoading1.value = false;
+      }, 4000);
+    };
+
+    const load2 = () => {
+      if (isLoading2.value) return;
+      isLoading2.value = true;
+      setTimeout(() => {
+        isLoading2.value = false;
+      }, 4000);
+    };
+
     return {
-      activeStrongButton: 0,
+      activeStrongButton,
+      isLoading1,
+      isLoading2,
+      load1,
+      load2,
     };
   },
 };
