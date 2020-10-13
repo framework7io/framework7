@@ -130,6 +130,12 @@
     - Added support for tooltip with `tooltip` and `tooltipTrigger` props
   - Menu Item
     - Added support for tooltip with `tooltip` and `tooltipTrigger` props
+  - Button
+    - Support for loading button (button with preloader) with new props:
+      - `preloader` - enables button to have preloader
+      - `loading` - controls button state to show/hide preloader and hide/show button text (switch button to loading state)
+      - `preloaderColor` - button's preloader color
+      - `preloaderSize` - button's preloader size
 
 # [v5.7.13](https://github.com/framework7io/framework7/compare/v5.7.12...v5.7.13) - October 9, 2020
 
