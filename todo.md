@@ -3,7 +3,7 @@
 - [ ] Capacitor integration
 - [ ] Fixes
   - [ ] Push view popup on keyboard open
-  - [ ] Fix iOS Navbar Home <--> Accordion
+  - [x] Fix iOS Navbar Home <--> Accordion
   - [ ] fix data table selected row styles
 - [ ] Styles
   - [ ] Update Aurora theme
@@ -17,17 +17,19 @@
   - [ ] BrowserHistory modal should preload previous page/modal
   - [ ] View-width transition improvements
   - [ ] Navbar with Large title similar to page title in AppStore ???
-- [ ] changelog
-  - [ ] new store changelog
-    - removed app `data` and `methods`
-    - new `store` parameter
-    - new `useStore` helpers
-  - [ ] new router component
-    - events can be used as camelCase, `@page:init` -> `onPageInit`
-    - new router component
-    - removed Template7
-    - removed template loader (with template and templateUrl)
-    - removed mixins
+
+# Changelog
+
+- [ ] new store changelog
+  - removed app `data` and `methods`
+  - new `store` parameter
+  - new `useStore` helpers
+- [ ] new router component
+  - events can be used as camelCase, `@page:init` -> `onPageInit`
+  - new router component
+  - removed Template7
+  - removed template loader (with template and templateUrl)
+  - removed mixins
 
 # React
 

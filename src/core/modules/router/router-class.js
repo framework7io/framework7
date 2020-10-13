@@ -248,6 +248,7 @@ class Router extends Framework7Class {
 
     let fromLarge;
     let toLarge;
+    let toDifferent;
 
     let oldIsLarge;
     let newIsLarge;
@@ -265,6 +266,7 @@ class Router extends Framework7Class {
         newIsLarge = $newNavbarEl && $newNavbarEl.hasClass('navbar-large');
         fromLarge = oldIsLarge && !$oldNavbarEl.hasClass('navbar-large-collapsed');
         toLarge = newIsLarge && !$newNavbarEl.hasClass('navbar-large-collapsed');
+        toDifferent = (fromLarge && !toLarge) || (toLarge && !fromLarge);
       }
       const navEls = router.animatableNavElements(
         $newNavbarEl,
@@ -371,8 +373,12 @@ class Router extends Framework7Class {
       animateNavbars(0);
       nextFrame(() => {
         // Add class, start animation
-        animateNavbars(1);
         router.$el.addClass(routerTransitionClass);
+        if (toDifferent) {
+          // eslint-disable-next-line
+          router.el._clientLeft = router.el.clientLeft;
+        }
+        animateNavbars(1);
       });
     } else {
       // Add class, start animation
