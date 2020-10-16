@@ -5,6 +5,9 @@
   - [ ] Push view popup on keyboard open
   - [x] Fix iOS Navbar Home <--> Accordion
   - [x] fix data table selected row styles
+  - [ ] MD preloader in iOS 14
+  - [ ] Popover safe areas
+  - [ ] Swipeout safe areas
 - [ ] Styles
   - [ ] Update Aurora theme
   - [ ] Update MD theme
