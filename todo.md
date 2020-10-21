@@ -13,7 +13,7 @@
   - [ ] Update Aurora theme
   - [ ] Update MD theme
     - [x] List button should be theme color
-    - [ ] Remove extra maring/padding on MD theme checkboxes/radios
+    - [x] Remove extra margin/padding on MD theme checkboxes/radios
     - [ ] Check new touch ripple
 - [ ] Features
   - [ ] New component Stepper / Lines

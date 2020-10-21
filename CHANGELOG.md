@@ -23,6 +23,10 @@
     - Now it considers safe-areas on positioning
   - Preloader
     - Preloader in MD theme now uses new SVG layout
+  - Checkbox
+    - Removed "extra" margin in checkboxes list in MD theme
+  - Radio
+    - Removed "extra" margin in radios list in MD theme
   - Package
     - Renamed files and imports
     - Lite version doesn't contain
