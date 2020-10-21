@@ -12,6 +12,17 @@
     - `routableModals` is now disabled by default
   - Dom7
     - Uses new Dom7
+  - Actions
+    - Actions Button text in MD & Aurora theme now uses theme color
+  - List
+    - List Button text in MD theme now uses theme color
+  - Swipeout
+    - New `app.params.swipeout.overswipeRatio` (default to `1.2`) allows to configure how more to swipe to enable overswipe
+    - Fixed styles to consider left and right safe-areas
+  - Popover
+    - Now it considers safe-areas on positioning
+  - Preloader
+    - Preloader in MD theme now uses new SVG layout
   - Package
     - Renamed files and imports
     - Lite version doesn't contain
