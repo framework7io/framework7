@@ -11,15 +11,12 @@ export function id(mask = 'xxxxxxxxxx', map = '0123456789abcdef') {
 }
 export const mdPreloaderContent = `
   <span class="preloader-inner">
-    <span class="preloader-inner-gap"></span>
-    <span class="preloader-inner-left">
-        <span class="preloader-inner-half-circle"></span>
-    </span>
-    <span class="preloader-inner-right">
-        <span class="preloader-inner-half-circle"></span>
-    </span>
+    <svg viewBox="0 0 36 36">
+      <circle cx="18" cy="18" r="16"></circle>
+    </svg>
   </span>
 `.trim();
+
 export const iosPreloaderContent = `
   <span class="preloader-inner">
     ${[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
@@ -27,6 +24,7 @@ export const iosPreloaderContent = `
       .join('')}
   </span>
 `.trim();
+
 export const auroraPreloaderContent = `
   <span class="preloader-inner">
     <span class="preloader-inner-circle"></span>

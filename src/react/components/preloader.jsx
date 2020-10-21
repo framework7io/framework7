@@ -38,40 +38,36 @@ const Preloader = forwardRef((props, ref) => {
   if (theme && theme.md) {
     innerEl = (
       <span className="preloader-inner">
-        <span className="preloader-inner-gap" />
-        <span className="preloader-inner-left">
-          <span className="preloader-inner-half-circle" />
-        </span>
-        <span className="preloader-inner-right">
-          <span className="preloader-inner-half-circle" />
-        </span>
+        <svg viewBox="0 0 36 36">
+          <circle cx="18" cy="18" r="16" />
+        </svg>
       </span>
     );
   } else if (theme && theme.ios) {
     innerEl = (
       <span className="preloader-inner">
-        <span className="preloader-inner-line"></span>
-        <span className="preloader-inner-line"></span>
-        <span className="preloader-inner-line"></span>
-        <span className="preloader-inner-line"></span>
-        <span className="preloader-inner-line"></span>
-        <span className="preloader-inner-line"></span>
-        <span className="preloader-inner-line"></span>
-        <span className="preloader-inner-line"></span>
-        <span className="preloader-inner-line"></span>
-        <span className="preloader-inner-line"></span>
-        <span className="preloader-inner-line"></span>
-        <span className="preloader-inner-line"></span>
+        <span className="preloader-inner-line" />
+        <span className="preloader-inner-line" />
+        <span className="preloader-inner-line" />
+        <span className="preloader-inner-line" />
+        <span className="preloader-inner-line" />
+        <span className="preloader-inner-line" />
+        <span className="preloader-inner-line" />
+        <span className="preloader-inner-line" />
+        <span className="preloader-inner-line" />
+        <span className="preloader-inner-line" />
+        <span className="preloader-inner-line" />
+        <span className="preloader-inner-line" />
       </span>
     );
   } else if (theme && theme.aurora) {
     innerEl = (
       <span className="preloader-inner">
-        <span className="preloader-inner-circle"></span>
+        <span className="preloader-inner-circle" />
       </span>
     );
   } else if (!theme) {
-    innerEl = <span className="preloader-inner"></span>;
+    innerEl = <span className="preloader-inner" />;
   }
 
   const classes = classNames(className, 'preloader', colorClasses(props));

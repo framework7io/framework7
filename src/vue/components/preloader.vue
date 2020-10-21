@@ -1,32 +1,28 @@
 <template>
   <div :class="classes">
     <span v-if="theme && theme.md" class="preloader-inner">
-      <span class="preloader-inner-gap" />
-      <span class="preloader-inner-left">
-        <span class="preloader-inner-half-circle" />
-      </span>
-      <span class="preloader-inner-right">
-        <span class="preloader-inner-half-circle" />
-      </span>
+      <svg viewBox="0 0 36 36">
+        <circle cx="18" cy="18" r="16" />
+      </svg>
     </span>
     <span v-else-if="theme && theme.ios" class="preloader-inner">
-      <span class="preloader-inner-line"></span>
-      <span class="preloader-inner-line"></span>
-      <span class="preloader-inner-line"></span>
-      <span class="preloader-inner-line"></span>
-      <span class="preloader-inner-line"></span>
-      <span class="preloader-inner-line"></span>
-      <span class="preloader-inner-line"></span>
-      <span class="preloader-inner-line"></span>
-      <span class="preloader-inner-line"></span>
-      <span class="preloader-inner-line"></span>
-      <span class="preloader-inner-line"></span>
-      <span class="preloader-inner-line"></span>
+      <span class="preloader-inner-line" />
+      <span class="preloader-inner-line" />
+      <span class="preloader-inner-line" />
+      <span class="preloader-inner-line" />
+      <span class="preloader-inner-line" />
+      <span class="preloader-inner-line" />
+      <span class="preloader-inner-line" />
+      <span class="preloader-inner-line" />
+      <span class="preloader-inner-line" />
+      <span class="preloader-inner-line" />
+      <span class="preloader-inner-line" />
+      <span class="preloader-inner-line" />
     </span>
     <span v-else-if="theme && theme.aurora" class="preloader-inner">
-      <span class="preloader-inner-circle"></span>
+      <span class="preloader-inner-circle" />
     </span>
-    <span v-else-if="!theme" class="preloader-inner"></span>
+    <span v-else-if="!theme" class="preloader-inner" />
   </div>
 </template>
 <script>

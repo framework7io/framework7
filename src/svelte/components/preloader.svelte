@@ -30,9 +30,9 @@
 <span style={preloaderStyle} class={classes} {...restProps($$restProps)}>
   {#if theme && theme.md}
     <span class="preloader-inner">
-      <span class="preloader-inner-gap" />
-      <span class="preloader-inner-left"> <span class="preloader-inner-half-circle" /> </span>
-      <span class="preloader-inner-right"> <span class="preloader-inner-half-circle" /> </span>
+      <svg viewBox="0 0 36 36">
+        <circle cx="18" cy="18" r="16" />
+      </svg>
     </span>
   {:else if theme && theme.ios}
     <span class="preloader-inner">

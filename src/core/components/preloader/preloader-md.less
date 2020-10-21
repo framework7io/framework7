@@ -1,172 +1,109 @@
 .md {
-  .preloader {
-    @easing: cubic-bezier(0.8, 0, 0.4, 0.8);
-    @speed: 1320ms; // animation time for each loop
-    @loops: 5; // number of points where the arc meets
-    animation: md-preloader-outer @speed * @loops / 2 linear infinite;
-    @keyframes md-preloader-outer {
-      0% {
-        transform: rotate(0);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-  }
   .preloader-inner {
-    @preloader-inner-ease: cubic-bezier(0.35, 0, 0.25, 1);
-    @preloader-inner-duration: 5.25s;
-    @preloader-inner-circle-duration: @preloader-inner-duration * 0.25;
-    @preloader-inner-outer-duration: @preloader-inner-duration * (5/9);
-    @border-width: 4px;
-    position: relative;
-    display: block;
-    width: 100%;
-    height: 100%;
-    animation: md-preloader-inner-rotate @preloader-inner-duration @preloader-inner-ease infinite;
-    .preloader-inner-gap {
-      position: absolute;
-      width: 2px;
-      left: 50%;
-      margin-left: -1px;
-      top: 0;
-      bottom: 0;
-      box-sizing: border-box;
-      border-top: @border-width solid var(--f7-preloader-color);
-    }
-    .preloader-inner-left,
-    .preloader-inner-right {
-      position: absolute;
-      top: 0;
-      height: 100%;
-      width: 50%;
-      overflow: hidden;
-    }
-    .preloader-inner-half-circle {
-      position: absolute;
-      top: 0;
-      height: 100%;
-      width: 200%;
-      box-sizing: border-box;
-      border: @border-width solid var(--f7-preloader-color);
-      border-bottom-color: transparent !important;
-      border-radius: 50%;
-      animation-iteration-count: infinite;
-      animation-duration: (@preloader-inner-duration * 0.25);
-      animation-timing-function: @preloader-inner-ease;
-    }
-    .preloader-inner-left {
-      left: 0;
-      .preloader-inner-half-circle {
-        left: 0;
-        border-right-color: transparent !important;
-        animation-name: md-preloader-left-rotate;
-      }
-    }
-    .preloader-inner-right {
-      right: 0;
-      .preloader-inner-half-circle {
-        right: 0;
-        border-left-color: transparent !important;
-        animation-name: md-preloader-right-rotate;
-      }
+    @speed: 1.4s;
+    animation: md-preloader-rotate @speed linear infinite;
+    circle {
+      fill: none;
+      stroke: var(--f7-preloader-color);
+      animation: md-preloader-circle-rotate @speed * 4 ease-in-out infinite;
+      stroke-dasharray: 100px;
+      stroke-dashoffset: 80px;
+      stroke-width: 4;
+      transform: rotate(-90deg);
+      transform-origin: 18px 18px;
     }
   }
 
   .preloader.color-multi {
-    .preloader-inner-left {
-      .preloader-inner-half-circle {
-        animation-name: md-preloader-left-rotate-multicolor;
-      }
-    }
-    .preloader-inner-right {
-      .preloader-inner-half-circle {
-        animation-name: md-preloader-right-rotate-multicolor;
-      }
+    @speed: 1.4s;
+    circle {
+      animation: md-preloader-circle-rotate @speed * 4 ease-in-out infinite,
+        md-preloader-multicolor @speed * 4 ease-in-out infinite;
     }
   }
-  @keyframes md-preloader-left-rotate {
+
+  @keyframes md-preloader-multicolor {
     0%,
     100% {
-      transform: rotate(130deg);
-    }
-    50% {
-      transform: rotate(-5deg);
-    }
-  }
-  @keyframes md-preloader-right-rotate {
-    0%,
-    100% {
-      transform: rotate(-130deg);
-    }
-    50% {
-      transform: rotate(5deg);
-    }
-  }
-  @keyframes md-preloader-inner-rotate {
-    12.5% {
-      transform: rotate(135deg);
-    }
-    25% {
-      transform: rotate(270deg);
-    }
-    37.5% {
-      transform: rotate(405deg);
-    }
-    50% {
-      transform: rotate(540deg);
-    }
-    62.5% {
-      transform: rotate(675deg);
+      stroke: #4285f4;
     }
     75% {
-      transform: rotate(810deg);
-    }
-    87.5% {
-      transform: rotate(945deg);
-    }
-    100% {
-      transform: rotate(1080deg);
-    }
-  }
-  @keyframes md-preloader-left-rotate-multicolor {
-    0%,
-    100% {
-      border-left-color: #4285f4;
-      transform: rotate(130deg);
-    }
-    75% {
-      border-left-color: #1b9a59;
-      border-top-color: #1b9a59;
+      stroke: #1b9a59;
     }
     50% {
-      border-left-color: #f7c223;
-      border-top-color: #f7c223;
-      transform: rotate(-5deg);
+      stroke: #f7c223;
     }
     25% {
-      border-left-color: #de3e35;
-      border-top-color: #de3e35;
+      stroke: #de3e35;
     }
   }
-  @keyframes md-preloader-right-rotate-multicolor {
-    0%,
-    100% {
-      border-right-color: #4285f4;
-      transform: rotate(-130deg);
-    }
-    75% {
-      border-right-color: #1b9a59;
-      border-top-color: #1b9a59;
-    }
-    50% {
-      border-right-color: #f7c223;
-      border-top-color: #f7c223;
-      transform: rotate(5deg);
-    }
-    25% {
-      border-top-color: #de3e35;
-      border-right-color: #de3e35;
-    }
+}
+@keyframes md-preloader-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes md-preloader-circle-rotate {
+  0% {
+    transform: rotate(-90deg);
+    stroke-dashoffset: 100px;
+  }
+
+  12.5% {
+    transform: rotate(-90deg);
+    stroke-dashoffset: 25px;
+  }
+
+  25% {
+    stroke-dashoffset: 100px;
+    transform: rotate(180deg);
+  }
+
+  25.1% {
+    transform: rotate(-180deg);
+    stroke-dashoffset: 100px;
+  }
+
+  37.5% {
+    transform: rotate(-180deg);
+    stroke-dashoffset: 25px;
+  }
+
+  50% {
+    stroke-dashoffset: 100px;
+    transform: rotate(90deg);
+  }
+
+  50.1% {
+    transform: rotate(90deg);
+    stroke-dashoffset: 100px;
+  }
+
+  62.5% {
+    transform: rotate(90deg);
+    stroke-dashoffset: 25px;
+  }
+
+  75% {
+    stroke-dashoffset: 100px;
+    transform: rotate(360deg);
+  }
+
+  75.1% {
+    transform: rotate(0deg);
+    stroke-dashoffset: 100px;
+  }
+
+  87.5% {
+    transform: rotate(0deg);
+    stroke-dashoffset: 25px;
+  }
+
+  100% {
+    stroke-dashoffset: 100px;
+    transform: rotate(270deg);
   }
 }
