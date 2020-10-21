@@ -1,12 +1,8 @@
 .aurora {
-  .preloader {
-  }
   .preloader-inner {
     position: absolute;
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
   }
 
   .preloader-inner-circle {
@@ -19,12 +15,12 @@
     border: calc(var(--f7-preloader-size) / 8) solid var(--f7-preloader-color);
     border-top-color: transparent;
     box-sizing: border-box;
-    animation: aurora-preloader-rotate 1s linear infinite;
+    animation: aurora-preloader-rotate 0.75s linear infinite;
   }
 
   .preloader.color-multi .preloader-inner-circle {
-    animation: aurora-preloader-rotate 1s linear infinite,
-      aurora-preloader-multicolor 2s linear infinite;
+    animation: aurora-preloader-rotate 0.75s linear infinite,
+      aurora-preloader-multicolor 3s linear infinite;
   }
 }
 
