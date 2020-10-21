@@ -181,7 +181,11 @@ class Popover extends Modal {
     let targetOffsetLeft;
     let targetOffsetTop;
     let safeAreaTop = parseInt($('html').css('--f7-safe-area-top'), 10);
+    let safeAreaLeft = parseInt($('html').css('--f7-safe-area-left'), 10);
+    let safeAreaRight = parseInt($('html').css('--f7-safe-area-right'), 10);
     if (Number.isNaN(safeAreaTop)) safeAreaTop = 0;
+    if (Number.isNaN(safeAreaLeft)) safeAreaLeft = 0;
+    if (Number.isNaN(safeAreaRight)) safeAreaRight = 0;
     if ($targetEl && $targetEl.length > 0) {
       targetWidth = $targetEl.outerWidth();
       targetHeight = $targetEl.outerHeight();
@@ -230,7 +234,7 @@ class Popover extends Modal {
         left =
           position === 'middle' ? targetOffsetLeft - width : targetOffsetLeft + targetWidth - width;
       }
-      left = Math.max(8, Math.min(left, app.width - width - 8));
+      left = Math.max(8, Math.min(left, app.width - width - 8 - safeAreaRight), safeAreaLeft);
       $el.addClass(`popover-on-${position} popover-on-${hPosition}`);
     } else {
       // ios and aurora
@@ -255,6 +259,12 @@ class Popover extends Modal {
         left = targetWidth / 2 + targetOffsetLeft - width / 2;
         diff = left;
         left = Math.max(5, Math.min(left, app.width - width - 5));
+        if (safeAreaLeft) {
+          left = Math.max(left, safeAreaLeft);
+        }
+        if (safeAreaRight && left + width > app.width - 5 - safeAreaRight) {
+          left = app.width - 5 - safeAreaRight - width;
+        }
         if (position === 'top') {
           $angleEl.addClass('on-bottom');
         }
@@ -268,9 +278,11 @@ class Popover extends Modal {
       } else if (position === 'middle') {
         left = targetOffsetLeft - width - angleSize;
         $angleEl.addClass('on-right');
-        if (left < 5 || left + width > app.width) {
+        if (left < 5 || left + width + safeAreaRight > app.width || left < safeAreaLeft) {
           if (left < 5) left = targetOffsetLeft + targetWidth + angleSize;
-          if (left + width > app.width) left = app.width - width - 5;
+          if (left + width + safeAreaRight > app.width)
+            left = app.width - width - 5 - safeAreaRight;
+          if (left < safeAreaLeft) left = safeAreaLeft;
           $angleEl.removeClass('on-right').addClass('on-left');
         }
         angleTop = height / 2 - angleSize + diff;
