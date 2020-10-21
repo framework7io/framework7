@@ -5,17 +5,18 @@
   - [ ] Push view popup on keyboard open
   - [x] Fix iOS Navbar Home <--> Accordion
   - [x] fix data table selected row styles
-  - [ ] MD preloader in iOS 14
-  - [ ] Popover safe areas
-  - [ ] Swipeout safe areas
+  - [x] MD preloader in iOS 14
+  - [x] Popover safe areas
+  - [x] Swipeout safe areas
+  - [x] Searchbar safe areas
 - [ ] Styles
   - [ ] Update Aurora theme
   - [ ] Update MD theme
-    - [ ] List button should be theme color
+    - [x] List button should be theme color
     - [ ] Remove extra maring/padding on MD theme checkboxes/radios
     - [ ] Check new touch ripple
 - [ ] Features
-- [ ] New component Stepper / Lines
+  - [ ] New component Stepper / Lines
 - [ ] Router
   - [ ] BrowserHistory modal should preload previous page/modal
   - [ ] View-width transition improvements
