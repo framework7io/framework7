@@ -153,9 +153,10 @@ const Swipeout = {
         let buttonTranslate = translate;
         progress = buttonTranslate / actionsRightWidth;
         if (buttonTranslate < -actionsRightWidth) {
+          const ratio = buttonTranslate / -actionsRightWidth;
           buttonTranslate = -actionsRightWidth - (-buttonTranslate - actionsRightWidth) ** 0.8;
           translate = buttonTranslate;
-          if ($overswipeRightButton.length > 0) {
+          if ($overswipeRightButton.length > 0 && ratio > app.params.swipeout.overswipeRatio) {
             overswipeRight = true;
           }
         }
@@ -199,9 +200,10 @@ const Swipeout = {
         let buttonTranslate = translate;
         progress = buttonTranslate / actionsLeftWidth;
         if (buttonTranslate > actionsLeftWidth) {
+          const ratio = buttonTranslate / actionsRightWidth;
           buttonTranslate = actionsLeftWidth + (buttonTranslate - actionsLeftWidth) ** 0.8;
           translate = buttonTranslate;
-          if ($overswipeLeftButton.length > 0) {
+          if ($overswipeLeftButton.length > 0 && ratio > app.params.swipeout.overswipeRatio) {
             overswipeLeft = true;
           }
         }
@@ -516,6 +518,7 @@ export default {
       removeElements: true,
       removeElementsWithTimeout: false,
       removeElementsTimeout: 0,
+      overswipeRatio: 1.2,
     },
   },
   create() {

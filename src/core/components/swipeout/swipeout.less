@@ -41,7 +41,7 @@
   > div {
     color: var(--f7-swipeout-button-text-color);
     background: var(--f7-swipeout-button-bg-color);
-    padding: var(--f7-swipeout-button-padding);
+    padding: var(--f7-swipeout-button-padding-vertical) var(--f7-swipeout-button-padding-horizontal);
     display: flex;
     align-items: center;
     position: relative;
@@ -76,6 +76,9 @@
       left: 100%;
       margin-left: -1px;
     }
+    &:last-child {
+      padding-right: calc(var(--f7-swipeout-button-padding-horizontal) + var(--f7-safe-area-right));
+    }
   }
 }
 .swipeout-actions-left {
@@ -88,6 +91,9 @@
     &:after {
       right: 100%;
       margin-right: -1px;
+    }
+    &:first-child {
+      padding-left: calc(var(--f7-swipeout-button-padding-horizontal) + var(--f7-safe-area-left));
     }
   }
 }
