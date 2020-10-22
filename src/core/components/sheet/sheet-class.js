@@ -258,7 +258,9 @@ class Sheet extends Modal {
         progress = Math.min(Math.max(progress, 0), 1);
         const pushProgress = 1 - progress;
         const scale = 1 - (1 - pushViewScale(pushOffset)) * pushProgress;
-        $pushViewEl.transition(0).transform(`translate3d(0,0,0) scale(${scale})`);
+        $pushViewEl.transition(0).forEach((el) => {
+          el.style.setProperty('transform', `translate3d(0,0,0) scale(${scale})`, 'important');
+        });
         if (sheet.params.swipeToStep) {
           $pushViewEl.css('border-radius', `${pushBorderRadius * pushProgress}px`);
         }

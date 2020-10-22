@@ -21,6 +21,8 @@
     - Fixed styles to consider left and right safe-areas
   - Popover
     - Now it considers safe-areas on positioning
+  - Popup
+    - Fixed issue when Push Popup can incorrectly transform View behind on app/window resize/rotate
   - Preloader
     - Preloader in MD theme now uses new SVG layout
   - Checkbox

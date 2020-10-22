@@ -227,16 +227,26 @@ class Popup extends Modal {
         const scale = 1 - (1 - pushViewScale(pushOffset)) * pushProgress;
         if ($pushEl.hasClass('popup')) {
           if ($pushEl.hasClass('popup-push')) {
-            $pushEl
-              .transition(0)
-              .transform(
+            $pushEl.transition(0).forEach((el) => {
+              el.style.setProperty(
+                'transform',
                 `translate3d(0, calc(-1 * ${pushProgress} * (var(--f7-popup-push-offset) + 10px)) , 0px) scale(${scale})`,
+                'important',
               );
+            });
           } else {
-            $pushEl.transition(0).transform(`translate3d(0, 0px , 0px) scale(${scale})`);
+            $pushEl.transition(0).forEach((el) => {
+              el.style.setProperty(
+                'transform',
+                `translate3d(0, 0px , 0px) scale(${scale})`,
+                'important',
+              );
+            });
           }
         } else {
-          $pushEl.transition(0).transform(`translate3d(0,0,0) scale(${scale})`);
+          $pushEl.transition(0).forEach((el) => {
+            el.style.setProperty('transform', `translate3d(0,0,0) scale(${scale})`, 'important');
+          });
         }
       }
       $el.transition(0).transform(`translate3d(0,${-touchesDiff}px,0)`);
@@ -298,12 +308,26 @@ class Popup extends Modal {
 
     let hasPreviousPushPopup;
 
-    popup.on('open', () => {
-      hasPreviousPushPopup = false;
-      if (popup.params.closeOnEscape) {
-        $(document).on('keydown', onKeyDown);
+    const updatePushOffset = () => {
+      const wasPush = isPush;
+      if (popup.push) {
+        isPush =
+          popup.push &&
+          (app.width < 630 || app.height < 630 || $el.hasClass('popup-tablet-fullscreen'));
       }
-      $el.prevAll('.popup.modal-in').addClass('popup-behind');
+      if (isPush && !wasPush) {
+        // eslint-disable-next-line
+        setPushOffset();
+      } else if (isPush && wasPush) {
+        popup.$htmlEl[0].style.setProperty('--f7-popup-push-scale', pushViewScale(pushOffset));
+      } else if (!isPush && wasPush) {
+        popup.$htmlEl.removeClass('with-modal-popup-push');
+        popup.$htmlEl[0].style.removeProperty('--f7-popup-push-scale');
+      }
+    };
+
+    const setPushOffset = () => {
+      app.off('resize', updatePushOffset);
       if (popup.push) {
         isPush =
           popup.push &&
@@ -318,6 +342,16 @@ class Popup extends Modal {
           popup.$htmlEl[0].style.setProperty('--f7-popup-push-scale', pushViewScale(pushOffset));
         }
       }
+      app.on('resize', updatePushOffset);
+    };
+
+    popup.on('open', () => {
+      hasPreviousPushPopup = false;
+      if (popup.params.closeOnEscape) {
+        $(document).on('keydown', onKeyDown);
+      }
+      $el.prevAll('.popup.modal-in').addClass('popup-behind');
+      setPushOffset();
     });
     popup.on('opened', () => {
       $el.removeClass('swipe-close-to-bottom swipe-close-to-top');
@@ -338,6 +372,7 @@ class Popup extends Modal {
         popup.$htmlEl.removeClass('with-modal-popup-push');
         popup.$htmlEl.addClass('with-modal-popup-push-closing');
       }
+      app.off('resize', updatePushOffset);
     });
     popup.on('closed', () => {
       if (isPush && pushOffset && !hasPreviousPushPopup) {

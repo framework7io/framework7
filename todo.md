@@ -1,8 +1,8 @@
 # Core
 
 - [ ] Capacitor integration
-- [ ] Fixes
-  - [ ] Push view popup on keyboard open
+- [x] Fixes
+  - [x] Push view popup on keyboard open
 - [ ] Styles
   - [ ] Update Aurora theme
   - [ ] Update MD theme
