@@ -2,6 +2,10 @@
 @import url('./searchbar-vars.less');
 
 .searchbar {
+  --f7-link-highlight-color: var(--f7-link-highlight-black);
+  .theme-dark & {
+    --f7-link-highlight-color: var(--f7-link-highlight-white);
+  }
   width: 100%;
   position: relative;
   z-index: 200;
