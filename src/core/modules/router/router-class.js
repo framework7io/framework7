@@ -296,11 +296,10 @@ class Router extends Framework7Class {
         const offset = direction === 'forward' ? navEl.rightOffset : navEl.leftOffset;
         if (navEl.isSliding) {
           if (navEl.isSubnavbar && newIsLarge) {
+            // prettier-ignore
             $el[0].style.setProperty(
               'transform',
-              `translate3d(${
-                offset * (1 - progress)
-              }px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)`,
+              `translate3d(${offset * (1 - progress)}px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)`,
               'important',
             );
           } else {
