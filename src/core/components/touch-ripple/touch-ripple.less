@@ -28,14 +28,16 @@
   margin: 0;
   font-size: 0;
   transform: translate3d(0px, 0px, 0) scale(0);
-  transition-duration: 1400ms;
+  transition-duration: 200ms;
   background-color: var(--f7-touch-ripple-color);
+  &.ripple-wave-in {
+  }
   &.ripple-wave-fill {
-    transition-duration: 300ms;
-    opacity: 0.35;
+    transition-duration: 200ms;
+    opacity: 1;
   }
   &.ripple-wave-out {
-    transition-duration: 600ms;
+    transition-duration: 200ms;
     opacity: 0;
   }
   .button-fill &,
