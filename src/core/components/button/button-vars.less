@@ -4,6 +4,7 @@
   --f7-button-border-width: 0px;
   /*
   --f7-button-text-color: var(--f7-theme-color);
+  --f7-button-pressed-bg-color: rgba(var(--f7-theme-color-rgb), .15);
   --f7-button-pressed-text-color: var(--f7-button-text-color, var(--f7-theme-color));
   --f7-button-border-color: var(--f7-theme-color);
   --f7-button-fill-text-color: #fff;
@@ -45,7 +46,6 @@
   --f7-button-letter-spacing: 0;
   --f7-button-text-transform: uppercase;
   /*
-  --f7-button-pressed-bg-color: rgba(var(--f7-theme-color-rgb), .15);
   --f7-button-fill-pressed-bg-color: var(--f7-theme-color-tint);
   */
   --f7-button-large-height: 44px;
@@ -67,7 +67,7 @@
   --f7-button-padding-horizontal: 8px;
   --f7-button-border-radius: 4px;
   --f7-button-font-weight: 500;
-  --f7-button-letter-spacing: 0.03em;
+  --f7-button-letter-spacing: 0.09em;
   --f7-button-text-transform: uppercase;
   /*
   --f7-button-fill-pressed-bg-color: var(--f7-theme-color-shade);
@@ -77,19 +77,14 @@
   --f7-button-large-font-weight: 500;
   --f7-button-large-text-transform: uppercase;
   --f7-button-small-height: 28px;
-  --f7-button-small-font-size: 12px;
+  --f7-button-small-font-size: 14px;
   --f7-button-small-font-weight: 500;
   --f7-button-small-text-transform: uppercase;
   --f7-button-small-outline-border-width: 2px;
 
   --f7-segmented-strong-button-text-transform: uppercase;
   --f7-segmented-strong-button-active-font-weight: 500;
-  .light-vars({
-    --f7-button-pressed-bg-color: rgba(0,0,0,0.1);
-  });
-  .dark-vars({
-    --f7-button-pressed-bg-color: rgba(255,255,255,0.1);
-  });
+
 });
 .aurora-vars({
   /*
@@ -105,7 +100,6 @@
   --f7-button-letter-spacing: 0.02;
   --f7-button-text-transform: none;
   /*
-  --f7-button-pressed-bg-color: rgba(var(--f7-theme-color-rgb), .15);
   --f7-button-fill-pressed-bg-color: var(--f7-theme-color-shade);
   */
   --f7-button-large-height: 34px;
