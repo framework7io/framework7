@@ -226,7 +226,6 @@ class PhotoBrowser extends Framework7Class {
               <span class="photo-browser-total"></span>
             </div>
           )}
-          $
           {isPopup && (
             <div class="right">
               <a class="link popup-close" data-popup=".photo-browser-popup">
