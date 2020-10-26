@@ -5,8 +5,12 @@
   - [x] Push view popup on keyboard open
 - [ ] Styles
   - [ ] Update Aurora theme
-  - [x] Update MD theme
+  - [ ] Update MD theme
     - [x] Check new touch ripple
+    - Make input border color independent
+  - [ ] Calendar
+    - [ ] Range starts with circles
+  - [ ] Selectable
 - [ ] Features
   - [ ] New component Stepper / Lines
 - [ ] Router
