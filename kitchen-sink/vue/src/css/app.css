@@ -66,6 +66,13 @@
   text-align: center;
 }
 
+.md {
+  --f7-theme-color: #6200ee;
+  --f7-theme-color-rgb: 98, 0, 238;
+  --f7-theme-color-shade: #5100c5;
+  --f7-theme-color-tint: #7718ff;
+}
+
 .demo-list-icon,
 .icon-f7 {
   background: #ccc;
