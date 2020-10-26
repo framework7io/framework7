@@ -271,6 +271,7 @@
   .no-hairlines-between();
 }
 .list-button {
+  --f7-touch-ripple-color: var(--f7-link-touch-ripple-color, rgba(var(--f7-theme-color-rgb), 0.25));
   padding: 0 var(--f7-list-item-padding-horizontal);
   line-height: var(--f7-list-item-min-height);
   color: var(--f7-list-button-text-color, var(--f7-theme-color));
@@ -279,7 +280,7 @@
   text-align: var(--f7-list-button-text-align);
   .hairline(bottom, var(--f7-list-button-border-color));
   &.active-state {
-    background-color: var(--f7-list-button-pressed-bg-color);
+    background-color: var(--f7-list-button-pressed-bg-color, rgba(var(--f7-theme-color-rgb), 0.15));
   }
 }
 .list-button[class*='color-'] {
