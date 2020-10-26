@@ -52,6 +52,9 @@
     - Used as dependency
     - New React, Svelte and Vue components
     - CSS vars renamed without `--f7-` prefix
+  - Touch Ripple
+    - Highly reworked Touch Ripple effect (used in MD theme by default)
+    - New `app.touch.touchRippleInsetElements` parameter to specify elements with inset touch ripple
   - View/Router
     - `pushState...` parameters renamed to `browserHistory...`
     - New `browserHistoryInitialMatch` parameter
