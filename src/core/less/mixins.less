@@ -242,21 +242,31 @@
     position: absolute;
     background-image: radial-gradient(
       circle at center,
-      var(--f7-link-highlight-color) 71%,
-      rgba(255, 255, 255, 0) 71%
+      var(--f7-link-highlight-color) 66%,
+      rgba(255, 255, 255, 0) 66%
     );
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;
     opacity: 0;
     pointer-events: none;
-    transition-duration: 600ms;
+    transition-duration: 300ms;
+    transition-property: opacity;
   }
-  &.icon-only:before {
+  &.icon-only:before,
+  &.ripple-inset:before,
+  &.searchbar-disable-button:before,
+  &.input-clear-button:before,
+  &.notification-close-button:before {
     width: 100%;
     height: 100%;
     left: 0;
     top: 0;
+    background-image: radial-gradient(
+      circle at center,
+      var(--f7-link-highlight-color) 71%,
+      rgba(255, 255, 255, 0) 71%
+    );
   }
   &.active-state:before {
     opacity: 1;

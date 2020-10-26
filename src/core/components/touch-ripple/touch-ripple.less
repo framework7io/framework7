@@ -28,17 +28,11 @@
   margin: 0;
   font-size: 0;
   transform: translate3d(0px, 0px, 0) scale(0);
-  transition-duration: 200ms;
   background-color: var(--f7-touch-ripple-color);
-  &.ripple-wave-in {
-  }
-  &.ripple-wave-fill {
-    transition-duration: 200ms;
-    opacity: 1;
-  }
+  animation: touch-ripple-in 200ms forwards;
   &.ripple-wave-out {
-    transition-duration: 200ms;
-    opacity: 0;
+    transform: var(--f7-ripple-transform);
+    animation: touch-ripple-out 300ms forwards;
   }
   .button-fill &,
   .picker-calendar-day &,
@@ -56,6 +50,23 @@
 
 [class*='ripple-color-'] {
   --f7-touch-ripple-color: var(--f7-theme-color-ripple-color);
+}
+
+@keyframes touch-ripple-in {
+  from {
+    transform: translate3d(0px, 0px, 0) scale(0);
+  }
+  to {
+    transform: var(--f7-ripple-transform);
+  }
+}
+@keyframes touch-ripple-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 .if-ios-theme({
   @import url('./touch-ripple-ios.less');
