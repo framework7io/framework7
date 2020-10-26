@@ -5,8 +5,8 @@
   - [x] Push view popup on keyboard open
 - [ ] Styles
   - [ ] Update Aurora theme
-  - [ ] Update MD theme
-    - [ ] Check new touch ripple
+  - [x] Update MD theme
+    - [x] Check new touch ripple
 - [ ] Features
   - [ ] New component Stepper / Lines
 - [ ] Router
