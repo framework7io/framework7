@@ -31,6 +31,8 @@
     - Removed "extra" margin in checkboxes list in MD theme
   - Radio
     - Removed "extra" margin in radios list in MD theme
+  - List
+    - All new Menu List style for List
   - Package
     - Renamed files and imports
     - Lite version doesn't contain
@@ -125,13 +127,17 @@
   - `browserHistory` must be used with `browserHistoryInitialMatch`
 - React/Svelte/Vue
   - Button, Link, ListButon, ListItem, MenuDropdownItem, MenuItem, TreeviewItem
-    - New `openIn` prop to specify how to open page route (e.g. open page as `popup`, `panel` etc)
+    - New `openIn` prop to specify how to open page route (e.g. open page as `popup`, `sheet`, `panel` etc)
   - Pie Chart
     - All new Pie Chart component
   - Area Chart
     - All new Area Chart component
   - Input
     - Added `error-message` slot
+  - List
+    - New `menuList` boolean property to enable Menu List
+  - ListItem
+    - New `selected` boolean property to mark menu list item as selected
   - Popover
     - `target` prop renamed to `targetEl`
   - Popover, Login Screen, Actions, Sheet
