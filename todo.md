@@ -10,7 +10,7 @@
     - Make input border color independent
   - [x] Calendar
     - [x] Range starts with circles
-  - [ ] Selectable list (menu list)
+  - [x] Selectable list (menu list)
 - [ ] Features
   - [ ] New component Stepper / Lines
 - [ ] Router
