@@ -38,9 +38,21 @@
 
   --f7-list-item-divider-line-height: inherit;
   --f7-list-group-title-line-height: inherit;
+
+  --f7-menu-list-offset: 8px;
+  --f7-menu-list-border-radius: 4px;
+  --f7-menu-list-font-size: 14px;
+  --f7-menu-list-item-title-font-size: 14px;
+  --f7-menu-list-item-title-font-weight: 500;
+  --f7-menu-list-item-subtitle-font-size: 14px;
+  --f7-menu-list-item-text-font-size: 14px;
+  --f7-menu-list-item-after-font-size: 14px;
+
   .light-vars({
     --f7-list-bg-color: #fff;
     --f7-list-chevron-icon-color: rgba(0, 0, 0, 0.2);
+    --f7-menu-list-selected-text-color: var(--f7-theme-color);
+    --f7-menu-list-selected-bg-color: rgba(var(--f7-theme-color-rgb), 0.15);
   });
   .dark-vars({
     --f7-list-button-border-color: rgba(255, 255, 255, 0.15);
@@ -51,6 +63,8 @@
     --f7-list-item-divider-bg-color: #232323;
     --f7-list-group-title-bg-color: #232323;
     --f7-list-chevron-icon-color: rgba(255, 255, 255, 0.3);
+    --f7-menu-list-selected-text-color: inherit;
+    --f7-menu-list-selected-bg-color: var(--f7-theme-color);
   });
 }
 .ios-vars({
