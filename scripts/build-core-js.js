@@ -41,8 +41,8 @@ async function modular({ components, format }) {
       .replace(
         '//NAMED_EXPORT',
         `export { ${
-          isLite ? '' : 'Component,'
-        } $ as Dom7, request, utils, getDevice, getSupport, createStore, $jsx };`,
+          isLite ? '' : 'Component, $jsx,'
+        } $ as Dom7, request, utils, getDevice, getSupport, createStore };`,
       );
   };
   const bundleComponents = (content, isLite) => {
@@ -76,8 +76,8 @@ async function modular({ components, format }) {
       .replace(
         '//NAMED_EXPORT',
         `export { ${
-          isLite ? '' : 'Component,'
-        } $ as Dom7, request, utils, getDevice, getSupport, createStore, $jsx };`,
+          isLite ? '' : 'Component, $jsx,'
+        } $ as Dom7, request, utils, getDevice, getSupport, createStore };`,
       );
   };
 
