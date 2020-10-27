@@ -76,10 +76,7 @@ function SwipeBack(r) {
         $currentNavbarEl.hasClass('sliding') ||
         $currentNavbarEl.find('.navbar-inner.sliding').length
       ) {
-        activeNavBackIconText = $currentNavbarEl
-          .find('.left')
-          .find('.back .icon + span')
-          .eq(0);
+        activeNavBackIconText = $currentNavbarEl.find('.left').find('.back .icon + span').eq(0);
       } else {
         activeNavBackIconText = $currentNavbarEl
           .find('.left.sliding')
@@ -90,10 +87,7 @@ function SwipeBack(r) {
         $previousNavbarEl.hasClass('sliding') ||
         $previousNavbarEl.find('.navbar-inner.sliding').length
       ) {
-        previousNavBackIconText = $previousNavbarEl
-          .find('.left')
-          .find('.back .icon + span')
-          .eq(0);
+        previousNavBackIconText = $previousNavbarEl.find('.left').find('.back .icon + span').eq(0);
       } else {
         previousNavBackIconText = $previousNavbarEl
           .find('.left.sliding')
@@ -147,8 +141,9 @@ function SwipeBack(r) {
               el: subNavEl,
               'transform-origin': transformOrigin,
               transform: (progress) =>
-                `translateX(calc(${progress} * (var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset)))) translateY(calc(${progress} * (var(--f7-navbar-large-title-height) - var(--f7-navbar-large-title-padding-vertical) / 2))) scale(${1 +
-                  1 * progress})`,
+                `translateX(calc(${progress} * (var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset)))) translateY(calc(${progress} * (var(--f7-navbar-large-title-height) - var(--f7-navbar-large-title-padding-vertical) / 2))) scale(${
+                  1 + 1 * progress
+                })`,
             });
           });
           return;
@@ -162,9 +157,9 @@ function SwipeBack(r) {
               el.className = 'ios-swipeback-navbar-bg-large';
             }
             el.transform = (progress) =>
-              `translateX(${100 *
-                progress *
-                inverter}%) translateY(calc(-1 * var(--f7-navbar-large-title-height)))`;
+              `translateX(${
+                100 * progress * inverter
+              }%) translateY(calc(-1 * var(--f7-navbar-large-title-height)))`;
           } else {
             el.transform = (progress) => `translateX(${100 * progress * inverter}%)`;
           }
@@ -172,17 +167,18 @@ function SwipeBack(r) {
         if (!fromLarge && toLarge) {
           el.className = 'ios-swipeback-navbar-bg-large';
           el.transform = (progress) =>
-            `translateX(${100 * progress * inverter}%) translateY(calc(-1 * ${1 -
-              progress} * var(--f7-navbar-large-title-height)))`;
+            `translateX(${100 * progress * inverter}%) translateY(calc(-1 * ${
+              1 - progress
+            } * var(--f7-navbar-large-title-height)))`;
         }
         if (fromLarge && toLarge) {
           el.transform = (progress) => `translateX(${100 * progress * inverter}%)`;
         }
         if (fromLarge && !toLarge) {
           el.transform = (progress) =>
-            `translateX(${100 *
-              progress *
-              inverter}%) translateY(calc(-${progress} * var(--f7-navbar-large-title-height)))`;
+            `translateX(${
+              100 * progress * inverter
+            }%) translateY(calc(-${progress} * var(--f7-navbar-large-title-height)))`;
         }
         return;
       }
@@ -233,11 +229,13 @@ function SwipeBack(r) {
               'transform-origin': transformOriginTitleLarge,
               opacity: (progress) => progress ** 3,
               transform: (progress) =>
-                `translateX(calc(${1 -
-                  progress} * (var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset)))) translateY(calc(${progress -
-                  1} * var(--f7-navbar-large-title-height) + ${1 -
-                  progress} * var(--f7-navbar-large-title-padding-vertical))) scale(${0.5 +
-                  progress * 0.5})`,
+                `translateX(calc(${
+                  1 - progress
+                } * (var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset)))) translateY(calc(${
+                  progress - 1
+                } * var(--f7-navbar-large-title-height) + ${
+                  1 - progress
+                } * var(--f7-navbar-large-title-padding-vertical))) scale(${0.5 + progress * 0.5})`,
             });
           });
           return;
@@ -251,22 +249,25 @@ function SwipeBack(r) {
               el.className = 'ios-swipeback-navbar-bg-large';
             }
             el.transform = (progress) =>
-              `translateX(${(-100 + 100 * progress) *
-                inverter}%) translateY(calc(-1 * var(--f7-navbar-large-title-height)))`;
+              `translateX(${
+                (-100 + 100 * progress) * inverter
+              }%) translateY(calc(-1 * var(--f7-navbar-large-title-height)))`;
           } else {
             el.transform = (progress) => `translateX(${(-100 + 100 * progress) * inverter}%)`;
           }
         }
         if (!fromLarge && toLarge) {
           el.transform = (progress) =>
-            `translateX(${(-100 + 100 * progress) * inverter}%) translateY(calc(-1 * ${1 -
-              progress} * var(--f7-navbar-large-title-height)))`;
+            `translateX(${(-100 + 100 * progress) * inverter}%) translateY(calc(-1 * ${
+              1 - progress
+            } * var(--f7-navbar-large-title-height)))`;
         }
         if (fromLarge && !toLarge) {
           el.className = 'ios-swipeback-navbar-bg-large';
           el.transform = (progress) =>
-            `translateX(${(-100 + 100 * progress) *
-              inverter}%) translateY(calc(-${progress} * var(--f7-navbar-large-title-height)))`;
+            `translateX(${
+              (-100 + 100 * progress) * inverter
+            }%) translateY(calc(-${progress} * var(--f7-navbar-large-title-height)))`;
         }
         if (fromLarge && toLarge) {
           el.transform = (progress) => `translateX(${(-100 + 100 * progress) * inverter}%)`;
