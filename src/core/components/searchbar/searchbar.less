@@ -12,6 +12,9 @@
   height: var(--f7-searchbar-height);
   background-image: var(--f7-searchbar-bg-image, var(--f7-bars-bg-image));
   background-color: var(--f7-searchbar-bg-color, var(--f7-bars-bg-color));
+  input[type='search']::-webkit-search-decoration {
+    display: none;
+  }
   .ios-translucent-bars(var(--f7-searchbar-bg-color-rgb, var(--f7-bars-bg-color-rgb)));
   .ios .subnavbar & {
     background-color: transparent;
