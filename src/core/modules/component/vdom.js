@@ -224,7 +224,7 @@ const getData = (treeNode, component, f7, initial, isRoot) => {
       data.key = attrValue;
     } else if (
       attrName.indexOf('@') === 0 ||
-      (attrName.indexOf('on') >= 0 && attrName.length > 2)
+      (attrName.indexOf('on') === 0 && attrName.length > 2)
     ) {
       // Events
       if (!data.on) data.on = {};
