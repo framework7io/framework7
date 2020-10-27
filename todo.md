@@ -1,23 +1,14 @@
 # Core
 
 - [ ] Capacitor integration
-- [x] Fixes
-  - [x] Push view popup on keyboard open
 - [ ] Styles
   - [ ] Update Aurora theme
-  - [x] Update MD theme
-    - [x] Check new touch ripple
-    - Make input border color independent
-  - [x] Calendar
-    - [x] Range starts with circles
-  - [x] Selectable list (menu list)
 - [ ] Features
   - [ ] New component Stepper / Lines
 - [ ] Router
   - [ ] BrowserHistory modal should preload previous page/modal
   - [ ] View-width transition improvements
   - [ ] Navbar with Large title similar to page title in AppStore ???
-- [x] Update to React 17
 
 # Changelog
 
