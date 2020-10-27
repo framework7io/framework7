@@ -208,10 +208,16 @@ export default {
       }
     };
 
+    const getViewParams = () => {
+      const routes = toRaw(props.routes || []);
+      const routesAdd = toRaw(props.routesAdd || []);
+      return noUndefinedProps({ ...props, routes, routesAdd });
+    };
+
     if (f7 && !f7View && props.init) {
       const routerId = getRouterId();
       f7View = f7.views.create(elRef.value, {
-        ...noUndefinedProps(props),
+        ...getViewParams(),
         routerId,
         init: false,
         on: {
@@ -298,7 +304,7 @@ export default {
           f7routers.views.push(routerData);
           routerData.instance = f7.views.create(elRef.value, {
             routerId,
-            ...noUndefinedProps(props),
+            ...getViewParams(),
             on: {
               init: onViewInit,
             },

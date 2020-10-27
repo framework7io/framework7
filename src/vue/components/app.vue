@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, toRaw } from 'vue';
 import { classNames, noUndefinedProps } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 
@@ -83,8 +83,10 @@ export default {
   setup(props) {
     const elRef = ref(null);
 
+    const routes = toRaw(props.routes);
+
     if (!f7 || typeof window === 'undefined') {
-      f7init(elRef.value, noUndefinedProps(props), false);
+      f7init(elRef.value, noUndefinedProps({ ...props, routes }), false);
     }
 
     onMounted(() => {
@@ -103,7 +105,7 @@ export default {
         f7.init(elRef.value);
         return;
       }
-      f7init(elRef.value, noUndefinedProps(props), true);
+      f7init(elRef.value, noUndefinedProps({ ...props, routes }), true);
     });
 
     const classes = computed(() => classNames('framework7-root', colorClasses(props)));
