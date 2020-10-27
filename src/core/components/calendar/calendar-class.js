@@ -681,20 +681,33 @@ class Calendar extends Framework7Class {
     const { $el, $wrapperEl, $inputEl, value, params } = calendar;
     let i;
     if ($el && $el.length > 0) {
-      $wrapperEl.find('.calendar-day-selected').removeClass('calendar-day-selected');
+      $wrapperEl
+        .find('.calendar-day-selected')
+        .removeClass(
+          'calendar-day-selected calendar-day-selected-range calendar-day-selected-left calendar-day-selected-right',
+        );
       let valueDate;
+
       if (params.rangePicker && value.length === 2) {
-        for (
-          i = new Date(value[0]).getTime();
-          i <= new Date(value[1]).getTime();
-          i += 24 * 60 * 60 * 1000
-        ) {
+        const leftDate = new Date(value[0]).getTime();
+        const rightDate = new Date(value[1]).getTime();
+        for (i = leftDate; i <= rightDate; i += 24 * 60 * 60 * 1000) {
           valueDate = new Date(i);
+          let addClass = 'calendar-day-selected';
+          if (i !== leftDate && i !== rightDate) {
+            addClass += ' calendar-day-selected-range';
+          }
+          if (i === leftDate) {
+            addClass += ' calendar-day-selected-left';
+          }
+          if (i === rightDate) {
+            addClass += ' calendar-day-selected-right';
+          }
           $wrapperEl
             .find(
               `.calendar-day[data-date="${valueDate.getFullYear()}-${valueDate.getMonth()}-${valueDate.getDate()}"]`,
             )
-            .addClass('calendar-day-selected');
+            .addClass(addClass);
         }
       } else {
         for (i = 0; i < calendar.value.length; i += 1) {
@@ -1254,8 +1267,18 @@ class Calendar extends Framework7Class {
 
         // Selected
         if (params.rangePicker && currentValues.length === 2) {
-          if (dayDate >= currentValues[0] && dayDate <= currentValues[1])
+          if (dayDate >= currentValues[0] && dayDate <= currentValues[1]) {
             addClass += ' calendar-day-selected';
+          }
+          if (dayDate > currentValues[0] && dayDate < currentValues[1]) {
+            addClass += ' calendar-day-selected-range';
+          }
+          if (dayDate === currentValues[0]) {
+            addClass += ' calendar-day-selected-left';
+          }
+          if (dayDate === currentValues[1]) {
+            addClass += ' calendar-day-selected-right';
+          }
         } else if (currentValues.indexOf(dayDate) >= 0) addClass += ' calendar-day-selected';
         // Weekend
         if (params.weekendDays.indexOf(weekDayIndex) >= 0) {
