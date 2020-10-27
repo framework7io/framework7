@@ -32,6 +32,7 @@
   export let contactsList = false;
   export let simpleList = false;
   export let linksList = false;
+  export let menuList = false;
 
   export let noHairlines = false;
   export let noHairlinesBetween = false;
@@ -82,6 +83,7 @@
       'media-list': mediaList,
       'simple-list': simpleList,
       'links-list': linksList,
+      'menu-list': menuList,
       sortable,
       'sortable-tap-hold': sortableTapHold,
       'sortable-enabled': sortableEnabled,

@@ -38,6 +38,7 @@ import { SmartSelect } from 'framework7/types';
   target? : string
   tabLink? : boolean | string
   tabLinkActive? : boolean
+  selected?: boolean
   after? : string | number
   badge? : string | number
   badgeColor? : string
@@ -138,6 +139,7 @@ const ListItem = forwardRef((props, ref) => {
     target,
     tabLink,
     tabLinkActive,
+    selected,
     mediaItem,
     mediaList,
     divider,
@@ -360,6 +362,7 @@ const ListItem = forwardRef((props, ref) => {
           'smart-select': smartSelect,
           'tab-link': tabLink || tabLink === '',
           'tab-link-active': tabLinkActive,
+          'item-selected': selected,
         },
         routerClasses(props),
         actionsClasses(props),

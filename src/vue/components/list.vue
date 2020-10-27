@@ -28,6 +28,7 @@ export default {
     contactsList: Boolean,
     simpleList: Boolean,
     linksList: Boolean,
+    menuList: Boolean,
 
     noHairlines: Boolean,
     noHairlinesBetween: Boolean,
@@ -153,6 +154,7 @@ export default {
           'media-list': props.mediaList,
           'simple-list': props.simpleList,
           'links-list': props.linksList,
+          'menu-list': props.menuList,
           sortable: props.sortable,
           'sortable-tap-hold': props.sortableTapHold,
           'sortable-enabled': props.sortableEnabled,

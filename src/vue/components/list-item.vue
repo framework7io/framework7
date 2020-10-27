@@ -202,6 +202,7 @@ export default {
 
     tabLink: [Boolean, String],
     tabLinkActive: Boolean,
+    selected: Boolean,
 
     after: [String, Number],
     badge: [String, Number],
@@ -463,6 +464,7 @@ export default {
           'smart-select': props.smartSelect,
           'tab-link': props.tabLink || props.tabLink === '',
           'tab-link-active': props.tabLinkActive,
+          'item-selected': props.selected,
         },
         routerClasses(props),
         actionsClasses(props),

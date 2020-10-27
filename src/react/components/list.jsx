@@ -30,6 +30,7 @@ import { VirtualList } from 'framework7/types';
   contactsList? : boolean
   simpleList? : boolean
   linksList? : boolean
+  menuList? : boolean
   noHairlines? : boolean
   noHairlinesBetween? : boolean
   noHairlinesMd? : boolean
@@ -83,6 +84,7 @@ const List = forwardRef((props, ref) => {
     contactsList,
     simpleList,
     linksList,
+    menuList,
     noHairlines,
     noHairlinesBetween,
     noHairlinesMd,
@@ -244,6 +246,7 @@ const List = forwardRef((props, ref) => {
       'media-list': mediaList,
       'simple-list': simpleList,
       'links-list': linksList,
+      'menu-list': menuList,
       sortable,
       'sortable-tap-hold': sortableTapHold,
       'sortable-enabled': sortableEnabled,

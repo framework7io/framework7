@@ -38,6 +38,7 @@
   export let link = undefined;
   export let tabLink = undefined;
   export let tabLinkActive = false;
+  export let selected = false;
   export let href = undefined;
   export let target = undefined;
 
@@ -135,6 +136,7 @@
       'smart-select': smartSelect,
       'tab-link': tabLink || tabLink === '',
       'tab-link-active': tabLinkActive,
+      'item-selected': selected,
     },
     routerClasses($$props),
     actionsClasses($$props),
