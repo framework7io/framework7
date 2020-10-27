@@ -694,14 +694,16 @@ class Calendar extends Framework7Class {
         for (i = leftDate; i <= rightDate; i += 24 * 60 * 60 * 1000) {
           valueDate = new Date(i);
           let addClass = 'calendar-day-selected';
-          if (i !== leftDate && i !== rightDate) {
-            addClass += ' calendar-day-selected-range';
-          }
-          if (i === leftDate) {
-            addClass += ' calendar-day-selected-left';
-          }
-          if (i === rightDate) {
-            addClass += ' calendar-day-selected-right';
+          if (leftDate !== rightDate) {
+            if (i !== leftDate && i !== rightDate) {
+              addClass += ' calendar-day-selected-range';
+            }
+            if (i === leftDate) {
+              addClass += ' calendar-day-selected-left';
+            }
+            if (i === rightDate) {
+              addClass += ' calendar-day-selected-right';
+            }
           }
           $wrapperEl
             .find(
@@ -1270,14 +1272,16 @@ class Calendar extends Framework7Class {
           if (dayDate >= currentValues[0] && dayDate <= currentValues[1]) {
             addClass += ' calendar-day-selected';
           }
-          if (dayDate > currentValues[0] && dayDate < currentValues[1]) {
-            addClass += ' calendar-day-selected-range';
-          }
-          if (dayDate === currentValues[0]) {
-            addClass += ' calendar-day-selected-left';
-          }
-          if (dayDate === currentValues[1]) {
-            addClass += ' calendar-day-selected-right';
+          if (currentValues[0] !== currentValues[1]) {
+            if (dayDate > currentValues[0] && dayDate < currentValues[1]) {
+              addClass += ' calendar-day-selected-range';
+            }
+            if (dayDate === currentValues[0]) {
+              addClass += ' calendar-day-selected-left';
+            }
+            if (dayDate === currentValues[1]) {
+              addClass += ' calendar-day-selected-right';
+            }
           }
         } else if (currentValues.indexOf(dayDate) >= 0) addClass += ' calendar-day-selected';
         // Weekend
