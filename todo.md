@@ -5,7 +5,7 @@
   - [x] Push view popup on keyboard open
 - [ ] Styles
   - [ ] Update Aurora theme
-  - [ ] Update MD theme
+  - [x] Update MD theme
     - [x] Check new touch ripple
     - Make input border color independent
   - [x] Calendar
