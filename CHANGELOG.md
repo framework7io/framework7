@@ -12,6 +12,8 @@
     - `routableModals` is now disabled by default
   - Dom7
     - Uses new Dom7
+  - Calendar
+    - New appearance for Range picker selection
   - Actions
     - Actions Button text in MD & Aurora theme now uses theme color
   - List
