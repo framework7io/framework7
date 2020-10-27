@@ -197,6 +197,10 @@ var routes = [
     componentUrl: './pages/menu.html',
   },
   {
+    path: '/menu-list/',
+    componentUrl: './pages/menu-list.html',
+  },
+  {
     path: '/messages/',
     componentUrl: './pages/messages.html',
   },

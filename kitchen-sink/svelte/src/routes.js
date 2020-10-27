@@ -36,6 +36,7 @@ import ListIndex from './pages/list-index.svelte';
 import LoginScreen from './pages/login-screen.svelte';
 import LoginScreenPage from './pages/login-screen-page.svelte';
 import Menu from './pages/menu.svelte';
+import MenuList from './pages/menu-list.svelte';
 import Messages from './pages/messages.svelte';
 import Navbar from './pages/navbar.svelte';
 import NavbarHideScroll from './pages/navbar-hide-scroll.svelte';
@@ -322,6 +323,10 @@ export default [
   {
     path: '/menu/',
     component: Menu,
+  },
+  {
+    path: '/menu-list/',
+    component: MenuList,
   },
   {
     path: '/messages/',

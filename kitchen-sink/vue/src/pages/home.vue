@@ -194,6 +194,11 @@
           <f7-icon icon="icon-f7" />
         </template>
       </f7-list-item>
+      <f7-list-item link="/menu-list/" title="Menu List">
+        <template #media>
+          <f7-icon icon="icon-f7" />
+        </template>
+      </f7-list-item>
       <f7-list-item link="/messages/" title="Messages">
         <template #media>
           <f7-icon icon="icon-f7" />

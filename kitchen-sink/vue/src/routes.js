@@ -36,6 +36,7 @@ import ListIndex from './pages/list-index.vue';
 import LoginScreen from './pages/login-screen.vue';
 import LoginScreenPage from './pages/login-screen-page.vue';
 import Menu from './pages/menu.vue';
+import MenuList from './pages/menu-list.vue';
 import Messages from './pages/messages.vue';
 import Navbar from './pages/navbar.vue';
 import NavbarHideScroll from './pages/navbar-hide-scroll.vue';
@@ -322,6 +323,10 @@ export default [
   {
     path: '/menu/',
     component: Menu,
+  },
+  {
+    path: '/menu-list/',
+    component: MenuList,
   },
   {
     path: '/messages/',

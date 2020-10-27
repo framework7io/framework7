@@ -144,6 +144,9 @@ export default () => {
         <ListItem link="/menu/" title="Menu">
           <Icon slot="media" icon="icon-f7" />
         </ListItem>
+        <ListItem link="/menu-list/" title="Menu List">
+          <Icon slot="media" icon="icon-f7" />
+        </ListItem>
         <ListItem link="/messages/" title="Messages">
           <Icon slot="media" icon="icon-f7" />
         </ListItem>
