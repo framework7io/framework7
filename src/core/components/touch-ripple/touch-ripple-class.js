@@ -1,5 +1,4 @@
 import $ from '../../shared/dom7';
-import { nextTick, nextFrame } from '../../shared/utils';
 
 export default class TouchRipple {
   constructor(app, $el, x, y) {
@@ -76,7 +75,7 @@ export default class TouchRipple {
     clearTimeout(ripple.removeTimeout);
     $rippleWaveEl.addClass('ripple-wave-out');
 
-    ripple.removeTimeout = nextTick(() => {
+    ripple.removeTimeout = setTimeout(() => {
       ripple.destroy();
     }, 300);
 
@@ -89,7 +88,7 @@ export default class TouchRipple {
   remove() {
     const ripple = this;
     if (ripple.shouldBeRemoved) return;
-    ripple.removeTimeout = nextTick(() => {
+    ripple.removeTimeout = setTimeout(() => {
       ripple.destroy();
     }, 400);
     ripple.shouldBeRemoved = true;
