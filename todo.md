@@ -8,9 +8,9 @@
   - [ ] Update MD theme
     - [x] Check new touch ripple
     - Make input border color independent
-  - [ ] Calendar
-    - [ ] Range starts with circles
-  - [ ] Selectable
+  - [x] Calendar
+    - [x] Range starts with circles
+  - [ ] Selectable list (menu list)
 - [ ] Features
   - [ ] New component Stepper / Lines
 - [ ] Router
