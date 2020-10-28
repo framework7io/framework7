@@ -711,14 +711,14 @@ class Calendar extends Framework7Class {
             )
             .addClass(addClass);
         }
-        valueDate = new Date(new Date(value[0]).getTime());
+        valueDate = new Date(leftDate);
         $wrapperEl
             .find(
               `.calendar-day[data-date="${valueDate.getFullYear()}-${valueDate.getMonth()}-${valueDate.getDate()}"]`,
             )
             .removeClass('calendar-day-selected-range')
             .addClass('calendar-day-selected calendar-day-selected-left');
-        valueDate = new Date(new Date(value[1]).getTime());
+        valueDate = new Date(rightDate);
         $wrapperEl
             .find(
               `.calendar-day[data-date="${valueDate.getFullYear()}-${valueDate.getMonth()}-${valueDate.getDate()}"]`,
