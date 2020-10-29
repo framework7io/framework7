@@ -8,7 +8,6 @@
 - [ ] Router
   - [ ] BrowserHistory modal should preload previous page/modal
   - [ ] View-width transition improvements
-  - [ ] Navbar with Large title similar to page title in AppStore ???
 
 # Changelog
 
