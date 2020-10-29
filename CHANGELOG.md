@@ -21,6 +21,8 @@
   - Swipeout
     - New `app.params.swipeout.overswipeRatio` (default to `1.2`) allows to configure how more to swipe to enable overswipe
     - Fixed styles to consider left and right safe-areas
+  - Page
+    - New Page Title element
   - Popover
     - Now it considers safe-areas on positioning
   - Popup
