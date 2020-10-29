@@ -150,7 +150,7 @@
   .item-link,
   .list-button {
     transition-duration: 300ms;
-    transition-property: background-color;
+    transition-property: background-color, color;
     display: block;
     position: relative;
     overflow: hidden;
@@ -628,6 +628,16 @@ each(@breakpoints, {
   --f7-list-item-subtitle-font-size: var(--f7-menu-list-item-subtitle-font-size);
   --f7-list-item-text-font-size: var(--f7-menu-list-item-text-font-size);
   --f7-list-item-after-font-size: var(--f7-menu-list-item-after-font-size);
+
+  .item-header,
+  .item-footer,
+  .item-title,
+  .item-after,
+  .item-text,
+  .item-subtitle {
+    transition-duration: 300ms;
+  }
+
   li:not(.item-divider):not(.list-group-title) {
     padding-top: calc(var(--f7-menu-list-offset) / 2);
     padding-bottom: calc(var(--f7-menu-list-offset) / 2);
@@ -655,6 +665,9 @@ each(@breakpoints, {
     background-color: var(--f7-menu-list-selected-bg-color);
   }
   .item-selected {
+    .item-header,
+    .item-footer,
+    .item-title,
     .item-after,
     .item-text,
     .item-subtitle {
