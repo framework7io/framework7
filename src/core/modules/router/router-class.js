@@ -1340,6 +1340,8 @@ class Router extends Framework7Class {
           router.tabLoad(initOptions.route.route.tab, extend({}, initOptions));
         }
         router.pageCallback('init', $pageEl, $navbarEl, 'current', undefined, initOptions);
+        router.pageCallback('beforeIn', $pageEl, $navbarEl, 'current', undefined, initOptions);
+        router.pageCallback('afterIn', $pageEl, $navbarEl, 'current', undefined, initOptions);
       });
       if (historyRestored) {
         if (browserHistoryInitialMatch) {
