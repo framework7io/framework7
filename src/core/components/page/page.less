@@ -175,6 +175,23 @@
   }
 }
 
+.page-title {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--f7-page-title-text-color);
+  letter-spacing: var(--f7-page-title-letter-spacing);
+  font-size: var(--f7-page-title-font-size);
+  font-weight: var(--f7-page-title-font-weight);
+  line-height: var(--f7-page-title-line-height);
+  padding-left: calc(var(--f7-page-title-padding-left) + var(--f7-safe-area-left));
+  padding-right: calc(var(--f7-page-title-padding-right) + var(--f7-safe-area-right));
+  padding-top: var(--f7-page-title-padding-vertical);
+  padding-bottom: var(--f7-page-title-padding-vertical);
+  box-sizing: border-box;
+  overflow: hidden;
+  width: 100%;
+}
+
 @import url('./page-transitions/circle.less');
 @import url('./page-transitions/cover-v.less');
 @import url('./page-transitions/cover.less');
