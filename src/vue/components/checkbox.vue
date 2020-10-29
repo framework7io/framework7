@@ -39,7 +39,7 @@ export default {
 
     const onChange = (event) => {
       emit('update:checked', event.target.checked);
-      emit('change', event.target.checked);
+      emit('change', event);
     };
 
     onMounted(() => {
