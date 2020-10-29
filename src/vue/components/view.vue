@@ -119,21 +119,29 @@ export default {
     auroraSwipeBackActiveArea: Number,
     auroraSwipeBackThreshold: Number,
     // Push State
-    pushState: {
+    browserHistory: {
       type: Boolean,
       default: undefined,
     },
-    pushStateRoot: String,
-    pushStateAnimate: {
+    browserHistoryRoot: String,
+    browserHistoryAnimate: {
       type: Boolean,
       default: undefined,
     },
-    pushStateAnimateOnLoad: {
+    browserHistoryAnimateOnLoad: {
       type: Boolean,
       default: undefined,
     },
-    pushStateSeparator: String,
-    pushStateOnLoad: {
+    browserHistorySeparator: String,
+    browserHistoryOnLoad: {
+      type: Boolean,
+      default: undefined,
+    },
+    browserHistoryInitialMatch: {
+      type: Boolean,
+      default: undefined,
+    },
+    browserHistoryStoreHistory: {
       type: Boolean,
       default: undefined,
     },
