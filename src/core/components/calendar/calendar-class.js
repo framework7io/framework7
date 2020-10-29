@@ -711,6 +711,20 @@ class Calendar extends Framework7Class {
             )
             .addClass(addClass);
         }
+        valueDate = new Date(leftDate);
+        $wrapperEl
+            .find(
+              `.calendar-day[data-date="${valueDate.getFullYear()}-${valueDate.getMonth()}-${valueDate.getDate()}"]`,
+            )
+            .removeClass('calendar-day-selected-range')
+            .addClass('calendar-day-selected calendar-day-selected-left');
+        valueDate = new Date(rightDate);
+        $wrapperEl
+            .find(
+              `.calendar-day[data-date="${valueDate.getFullYear()}-${valueDate.getMonth()}-${valueDate.getDate()}"]`,
+            )
+            .removeClass('calendar-day-selected-range')
+            .addClass('calendar-day-selected calendar-day-selected-right');
       } else {
         for (i = 0; i < calendar.value.length; i += 1) {
           valueDate = new Date(value[i]);
