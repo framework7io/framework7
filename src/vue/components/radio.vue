@@ -37,8 +37,8 @@ export default {
     const inputElRef = ref(null);
 
     const onChange = (event) => {
-      emit('change', event);
       emit('update:checked', event.target.checked);
+      emit('change', event);
     };
 
     const classes = computed(() =>
