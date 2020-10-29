@@ -41,7 +41,7 @@
           :title="item.title"
           :subtitle="item.subtitle"
           :style="`top: ${vlData.topPosition}px`"
-          :virtual-list-index="items.indexOf(item)"
+          :virtual-list-index="item.index"
         ></f7-list-item>
       </ul>
     </f7-list>
@@ -75,6 +75,7 @@ export default {
       items.push({
         title: `Item ${i}`,
         subtitle: `Subtitle ${i}`,
+        index: i,
       });
     }
     return {

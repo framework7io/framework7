@@ -1,5 +1,5 @@
 <script>
-import { computed, ref, onMounted, onBeforeUnmount, h, provide } from 'vue';
+import { computed, ref, onMounted, onBeforeUnmount, h, provide, toRaw } from 'vue';
 import { classNames, extend } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 import { f7, f7ready } from '../shared/f7';
@@ -100,6 +100,7 @@ export default {
         if (!props.virtualList) return;
         const vlParams = props.virtualListParams || {};
         if (!vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) return;
+        if (vlParams.items) vlParams.items = toRaw(vlParams.items);
 
         f7VirtualList = f7.virtualList.create(
           extend(
