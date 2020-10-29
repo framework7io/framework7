@@ -50,7 +50,7 @@ export default {
     return () => {
       return h('div', { ref: elRef, class: 'framework7-modals' }, [
         ...modals.value.map((modal) => {
-          return h(getComponent(modal.component), { key: modal.id, ...getProps(modal.props) });
+          return h(getComponent(modal), { key: modal.id, ...getProps(modal) });
         }),
       ]);
     };
