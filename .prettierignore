@@ -6,9 +6,13 @@ src/core/less/vars.less
 src/core/modules/component/htm.js
 src/core/modules/component/snabbdom
 src/phenome
+kitchen-sink/core/css/app.css
 kitchen-sink/react/js
+kitchen-sink/react/css/app.css
 kitchen-sink/vue/js
+kitchen-sink/vue/css/app.css
 kitchen-sink/svelte/js
+kitchen-sink/svelte/css/app.css
 kitchen-sink/**/*.json
 vue-temp
 
