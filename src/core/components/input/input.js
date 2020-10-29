@@ -117,7 +117,6 @@ const Input = {
     const app = this;
     const validates = $(el)
       .find('input, textarea, select')
-      .toArray()
       .map((inputEl) => app.input.validate(inputEl));
     return validates.indexOf(false) < 0;
   },
