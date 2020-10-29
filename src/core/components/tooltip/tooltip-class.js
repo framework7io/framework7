@@ -306,7 +306,9 @@ class Tooltip extends Framework7Class {
   show(aroundEl) {
     const tooltip = this;
     const { $el, $targetEl, $containerEl } = tooltip;
-    $containerEl.append($el);
+    if ($containerEl[0] && $el[0] && !$containerEl[0].contains($el[0])) {
+      $containerEl.append($el);
+    }
     tooltip.position(aroundEl);
     const $aroundEl = $(aroundEl);
     tooltip.visible = true;
