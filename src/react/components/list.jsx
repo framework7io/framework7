@@ -149,7 +149,7 @@ const List = forwardRef((props, ref) => {
     f7ready(() => {
       if (!virtualList) return;
       const vlParams = virtualListParams || {};
-      if (!vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) return;
+      if (!vlParams.renderItem && !vlParams.renderExternal) return;
 
       f7VirtualList.current = f7.virtualList.create(
         extend(

@@ -99,7 +99,7 @@ export default {
 
         if (!props.virtualList) return;
         const vlParams = props.virtualListParams || {};
-        if (!vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) return;
+        if (!vlParams.renderItem && !vlParams.renderExternal) return;
         if (vlParams.items) vlParams.items = toRaw(vlParams.items);
 
         f7VirtualList = f7.virtualList.create(

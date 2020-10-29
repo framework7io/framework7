@@ -143,7 +143,7 @@
 
       if (!virtualList) return;
       const vlParams = virtualListParams || {};
-      if (!vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) return;
+      if (!vlParams.renderItem && !vlParams.renderExternal) return;
 
       f7VirtualList = f7.virtualList.create(
         extend(
@@ -194,16 +194,15 @@
     class={classes}
     data-sortable-move-elements={typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined}
     on:submit={onSubmit}
-    {...restProps($$restProps)}
-  >
+    {...restProps($$restProps)}>
     <slot name="before-list" />
     {#if hasUlSlots && ul}
-    <ul>
-      <slot name="list" />
-      <slot />
-    </ul>
+      <ul>
+        <slot name="list" />
+        <slot />
+      </ul>
     {:else}
-    <slot />
+      <slot />
     {/if}
     <slot name="after-list" />
   </form>
@@ -212,16 +211,15 @@
     bind:this={el}
     class={classes}
     data-sortable-move-elements={typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined}
-    {...restProps($$restProps)}
-  >
+    {...restProps($$restProps)}>
     <slot name="before-list" />
     {#if hasUlSlots && ul}
-    <ul>
-      <slot name="list" />
-      <slot />
-    </ul>
+      <ul>
+        <slot name="list" />
+        <slot />
+      </ul>
     {:else}
-    <slot />
+      <slot />
     {/if}
     <slot name="after-list" />
   </div>
