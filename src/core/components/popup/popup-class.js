@@ -375,6 +375,7 @@ class Popup extends Modal {
       app.off('resize', updatePushOffset);
     });
     popup.on('closed', () => {
+      $el.removeClass('popup-behind');
       if (isPush && pushOffset && !hasPreviousPushPopup) {
         popup.$htmlEl.removeClass('with-modal-popup-push-closing');
         popup.$htmlEl[0].style.removeProperty('--f7-popup-push-scale');
