@@ -8,6 +8,7 @@
 - [ ] Router
   - [ ] BrowserHistory modal should preload previous page/modal
   - [ ] View-width transition improvements
+  - [ ] pageBefore/AfterIn events for initial page in React/Svelte/Vue
 
 # Changelog
 
