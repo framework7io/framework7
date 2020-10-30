@@ -170,7 +170,7 @@ async function umdBundle({ components } = {}) {
         file: `${output}/framework7-bundle.js`,
         format: 'umd',
         name: 'Framework7',
-        sourcemap: env === 'development',
+        sourcemap: env === 'production',
         sourcemapFile: `${output}/framework7-bundle.js.map`,
         banner,
       });
@@ -182,8 +182,8 @@ async function umdBundle({ components } = {}) {
       const result = bundle.output[0];
       const minified = await minify(result.code, {
         sourceMap: {
-          content: env === 'development' ? result.map : undefined,
-          filename: env === 'development' ? undefined : `framework7-bundle.min.js`,
+          content: env === 'production' ? result.map : undefined,
+          filename: env === 'production' ? 'framework7-bundle.min.js' : undefined,
           url: `framework7-bundle.min.js.map`,
         },
         output: {
@@ -237,7 +237,8 @@ async function umdCore() {
         file: `${output}/framework7.js`,
         format: 'umd',
         name: 'Framework7',
-        sourcemap: false,
+        sourcemap: env === 'production',
+        sourcemapFile: `${output}/framework7.js.map`,
         banner,
       });
     })
@@ -248,7 +249,8 @@ async function umdCore() {
       const result = bundle.output[0];
       const minified = await minify(result.code, {
         sourceMap: {
-          filename: `framework7.min.js`,
+          content: env === 'production' ? result.map : undefined,
+          filename: env === 'production' ? 'framework7.min.js' : undefined,
           url: `framework7.min.js.map`,
         },
         output: {
