@@ -22,7 +22,7 @@ export namespace Router {
     /** Load page content via Ajax. */
     url?: string;
     /** Load page from passed Framework7 Router Component */
-    component?: Component | Function;
+    component?: Component | Function | object;
     /** load pages as a component via Ajax */
     componentUrl?: string;
     /** Do required asynchronous manipulation and the return required route content and options */
@@ -64,7 +64,7 @@ export namespace Router {
     /** Load page content via Ajax. */
     url?: string;
     /** Load page from passed Framework7 Router Component */
-    component?: Component | Function;
+    component?: Component | Function | object;
     /** load pages as a component via Ajax */
     componentUrl?: string;
     /** Do required asynchronous manipulation and the return required route content and options */
