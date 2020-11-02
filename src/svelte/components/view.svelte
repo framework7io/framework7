@@ -18,7 +18,7 @@
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
-  const { main, tab, tabActive } = $$props;
+  const { main, tab, tabActive, browserHistoryInitialMatch = true } = $$props;
 
   let initialPage;
   let el;
@@ -43,6 +43,7 @@
       routerId,
       init: false,
       ...noUndefinedProps($$props),
+      browserHistoryInitialMatch,
       on: {
         init: onViewInit,
       },
@@ -133,6 +134,7 @@
         routerData.instance = f7.views.create(el, {
           routerId,
           ...noUndefinedProps($$props),
+          browserHistoryInitialMatch,
           on: {
             init: onViewInit,
           },

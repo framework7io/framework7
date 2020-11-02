@@ -139,7 +139,7 @@ export default {
     },
     browserHistoryInitialMatch: {
       type: Boolean,
-      default: undefined,
+      default: true,
     },
     browserHistoryStoreHistory: {
       type: Boolean,

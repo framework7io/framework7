@@ -86,7 +86,18 @@ import { RouterContext } from '../shared/router-context';
 */
 
 const View = forwardRef((props, ref) => {
-  const { className, id, style, children, init = true, main, tab, tabActive, url } = props;
+  const {
+    className,
+    id,
+    style,
+    children,
+    init = true,
+    main,
+    tab,
+    tabActive,
+    url,
+    browserHistoryInitialMatch = true,
+  } = props;
   const childrenArray = React.Children.toArray(children);
   const initialPageComponent = childrenArray.filter((c) => c.props && c.props.initialPage)[0];
   const restChildren = childrenArray.filter((c) => !c.props || !c.props.initialPage);
@@ -113,6 +124,7 @@ const View = forwardRef((props, ref) => {
       routerId,
       init: false,
       ...noUndefinedProps(props),
+      browserHistoryInitialMatch,
       on: {
         init: onViewInit,
       },
@@ -196,6 +208,7 @@ const View = forwardRef((props, ref) => {
         routerData.current.instance = f7.views.create(elRef.current, {
           routerId,
           ...noUndefinedProps(props),
+          browserHistoryInitialMatch,
           on: {
             init: onViewInit,
           },
