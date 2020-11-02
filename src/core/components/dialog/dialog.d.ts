@@ -37,7 +37,7 @@ export namespace Dialog {
     destroy(): void;
   }
 
-  interface Button {
+  interface DialogButton {
     /** String with Button's text (could be HTML string). */
     text: string;
     /** Enables bold button text. (default false) */
@@ -70,11 +70,13 @@ export namespace Dialog {
     /** Custom Dialog content that follows dialog text. */
     content?: string;
     /** Array with dialog buttons. (default []) */
-    buttons?: Button[];
+    buttons?: DialogButton[];
     /** Enables vertical buttons layout. (default false) */
     verticalButtons?: boolean;
     /** When enabled will automatically destroy Dialog on close. (default false) */
     destroyOnClose?: boolean;
+    /** Element to mount dialog to. (default app.el) */
+    containerEl?: HTMLElement | CSSSelector;
     /** Callback function that will be executed after click on the Dialog button. As an arguments it received dialog instance and clicked button index number. */
     onClick?: (dialog: Dialog, index: number) => void;
     /** Additional css class to add. */

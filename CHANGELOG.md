@@ -12,6 +12,8 @@
     - `routableModals` is now disabled by default
   - Dom7
     - Uses new Dom7
+  - Dialog
+    - Added `containerEl` property to specify where to mount the modal
   - Calendar
     - New appearance for Range picker selection
   - Actions
