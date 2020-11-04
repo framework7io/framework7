@@ -1,17 +1,17 @@
 .aurora {
   .list {
     .item-media {
-      min-width: 18px;
+      min-width: 24px;
     }
   }
   .links-list a,
-  .list .item-link,
+  .list .item-link:not(.item-selected),
   .list .list-button {
     transition-duration: 0ms;
   }
   &.device-desktop {
     .links-list a,
-    .list .item-link {
+    .list .item-link:not(.item-selected) {
       &:hover:not(.active-state):not(.no-hover) {
         background: var(--f7-list-link-hover-bg-color);
       }
