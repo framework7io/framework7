@@ -54,6 +54,9 @@ class Calendar extends Framework7Class {
       calendar.params.locale,
       calendar.params.timePickerFormat,
     );
+    const timeFormatCheckDate = calendar.timeSelectorFormatter.format(new Date()).toLowerCase();
+    calendar.is12HoursFormat =
+      timeFormatCheckDate.indexOf('pm') >= 0 || timeFormatCheckDate.indexOf('am') >= 0;
 
     // Auto names
     let { monthNames, monthNamesShort, dayNames, dayNamesShort } = calendar.params;
@@ -1642,12 +1645,14 @@ class Calendar extends Framework7Class {
 
   openTimePicker() {
     const calendar = this;
-    const { $el, app } = calendar;
+    const { $el, app, is12HoursFormat } = calendar;
     if (!$el || !$el.length) return;
     $el.append('<div class="calendar-time-picker"></div>');
     const hoursArr = [];
     const minutesArr = [];
-    for (let i = 0; i <= 23; i += 1) {
+    const hoursMin = is12HoursFormat ? 1 : 0;
+    const hoursMax = is12HoursFormat ? 12 : 23;
+    for (let i = hoursMin; i <= hoursMax; i += 1) {
       hoursArr.push(i);
     }
     for (let i = 0; i <= 59; i += 1) {
@@ -1658,6 +1663,11 @@ class Calendar extends Framework7Class {
       value = [calendar.value[0].getHours(), calendar.value[0].getMinutes()];
     } else {
       value = [new Date().getHours(), new Date().getMinutes()];
+    }
+    if (is12HoursFormat) {
+      value.push(value[0] < 12 ? 'AM' : 'PM');
+      if (value[0] > 12) value[0] -= 12;
+      if (value[0] === 0) value[0] = 12;
     }
     calendar.timePickerInstance = app.picker.create({
       containerEl: $el.find('.calendar-time-picker'),
@@ -1677,6 +1687,13 @@ class Calendar extends Framework7Class {
           values: minutesArr,
           displayValues: minutesArr.map((m) => (m < 10 ? `0${m}` : m)),
         },
+        ...(is12HoursFormat
+          ? [
+              {
+                values: ['AM', 'PM'],
+              },
+            ]
+          : []),
       ],
     });
     calendar.timePickerInstance.$el
@@ -1687,8 +1704,20 @@ class Calendar extends Framework7Class {
 
   closeTimePicker() {
     const calendar = this;
+    const { is12HoursFormat } = calendar;
     if (calendar.timePickerInstance) {
-      const [hours, minutes] = calendar.timePickerInstance.value.map((v) => parseInt(v, 10));
+      const timePickerValue = calendar.timePickerInstance.value;
+      let hours = parseInt(timePickerValue[0], 10);
+      const minutes = parseInt(timePickerValue[1], 10);
+      const period = calendar.timePickerInstance.value[2];
+      if (is12HoursFormat) {
+        if (period === 'AM' && hours === 12) {
+          hours = 0;
+        } else if (period === 'PM' && hours !== 12) {
+          hours += 12;
+        }
+      }
+
       let value = calendar.value && calendar.value.length && calendar.value[0];
       if (!value) {
         value = new Date();
