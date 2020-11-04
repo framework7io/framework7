@@ -127,13 +127,17 @@
   height: var(--f7-picker-item-height);
   box-sizing: border-box;
   position: absolute;
-  left: 0;
-  width: 100%;
+  left: 16px;
+  right: 16px;
   top: 50%;
   margin-top: calc(-1 * var(--f7-picker-item-height) / 2);
   pointer-events: none;
-  .hairline(top, var(--f7-picker-item-selected-border-color));
-  .hairline(bottom, var(--f7-picker-item-selected-border-color));
+  background-color: var(--f7-picker-item-selected-bg-color);
+  border-radius: 8px;
+  .popover & {
+    left: 8px;
+    right: 8px;
+  }
 }
 .picker-3d {
   .picker-columns {
