@@ -943,7 +943,7 @@ function navigate(navigateParams, navigateOptions = {}) {
           }
         });
       if (resolvedAsModal) return;
-      router.load(router, resolveParams, extend(options, resolveOptions), true);
+      load(router, resolveParams, extend(options, resolveOptions), true);
     }
     function asyncReject() {
       router.allowPageChange = true;
