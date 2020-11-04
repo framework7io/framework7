@@ -16,6 +16,8 @@
     - Added `containerEl` property to specify where to mount the modal
   - Calendar
     - New appearance for Range picker selection
+    - Time Picker now supports AM/PM period selection based on selected locale or timePickerFormat
+    - New appearance for Time selector link
   - Actions
     - Actions Button text in MD & Aurora theme now uses theme color
   - List
@@ -25,6 +27,8 @@
     - Fixed styles to consider left and right safe-areas
   - Page
     - New Page Title element
+  - Picker
+    - New appearance for selected item/row
   - Popover
     - Now it considers safe-areas on positioning
   - Popup
