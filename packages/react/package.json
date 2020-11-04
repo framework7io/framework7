@@ -42,8 +42,5 @@
   "funding": {
     "type": "patreon",
     "url": "https://www.patreon.com/vladimirkharlampidi"
-  },
-  "peerDependencies": {
-    "react": "17.x"
   }
 }
