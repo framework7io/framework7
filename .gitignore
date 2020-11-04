@@ -62,6 +62,6 @@ build/vue/**/*.js
 build/vue/**/*.ts
 build/vue/components
 
-vue-temp
+src/vue-temp/*.js
 
 woff2/

@@ -45,7 +45,7 @@ async function buildVue(cb) {
     );
     transformVueComponent(
       `src/vue/components/${fileName}`,
-      `vue-temp/${fileName.replace('.vue', '.js')}`,
+      `src/vue-temp/${fileName.replace('.vue', '.js')}`,
     );
   });
 
@@ -61,7 +61,7 @@ async function buildVue(cb) {
       `MODULES=cjs npx babel --config-file ./babel-vue.config.js src/vue --out-dir ${buildPath}/vue/cjs --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx --extensions .js`,
     );
     await exec.promise(
-      `MODULES=cjs npx babel --config-file ./babel-vue.config.js vue-temp --out-dir ${buildPath}/vue/cjs/components --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx`,
+      `MODULES=cjs npx babel --config-file ./babel-vue.config.js src/vue-temp --out-dir ${buildPath}/vue/cjs/components --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx`,
     );
     await exec.promise(
       `MODULES=cjs npx babel --config-file ./babel-vue.config.js ${buildPath}/vue/cjs/framework7-vue.js --out-file ${buildPath}/vue/cjs/framework7-vue.js`,
@@ -93,7 +93,7 @@ exports.registerComponents = function registerComponents (app) {
     );
 
     await exec.promise(
-      `MODULES=esm npx babel --config-file ./babel-vue.config.js vue-temp --out-dir ${buildPath}/vue/esm/components --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx`,
+      `MODULES=esm npx babel --config-file ./babel-vue.config.js src/vue-temp --out-dir ${buildPath}/vue/esm/components --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx`,
     );
 
     const esmContent = fs.readFileSync(`${buildPath}/vue/esm/framework7-vue.js`, 'utf-8');

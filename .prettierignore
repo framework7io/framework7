@@ -14,5 +14,5 @@ kitchen-sink/vue/css/app.css
 kitchen-sink/svelte/js
 kitchen-sink/svelte/css/app.css
 kitchen-sink/**/*.json
-vue-temp
+src/vue-temp
 
