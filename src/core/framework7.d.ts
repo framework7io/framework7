@@ -8,7 +8,7 @@ import { Utils } from './types/shared/utils';
 
 // IMPORT_MODULES
 import { ComponentFunction as Component } from './types/modules/component/component';
-import { StoreObject as Store, StoreParameters } from './types/modules/store/store';
+import { StoreObject as Store, StoreParameters, createStore } from './types/modules/store/store';
 
 // IMPORT_COMPONENTS
 
@@ -18,5 +18,15 @@ declare module './types/components/app/app-class' {
 
 declare const utils: Utils;
 
-export { request, getSupport, getDevice, utils, Dom7, Component, Store, StoreParameters };
+export {
+  request,
+  getSupport,
+  getDevice,
+  utils,
+  Dom7,
+  Component,
+  Store,
+  StoreParameters,
+  createStore,
+};
 export default Framework7;

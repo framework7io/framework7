@@ -5,6 +5,7 @@ import { Support } from '../../shared/get-support';
 import { Request } from '../../shared/request';
 import { Utils } from '../../shared/utils';
 import { ComponentClass, ComponentFunction as Component } from '../../modules/component/component';
+import { createStore } from '../../modules/store/store';
 
 // Css Selector string is an option on many F7 methods
 // Giving this alias makes the typename show in the intellisense
@@ -186,6 +187,8 @@ declare class Framework7 implements Framework7 {
   static registerComponent(tagName: string, component: Component): void;
   /** Unregister custom component */
   static unregisterComponent(tagName: string): void;
+  /** Create Store */
+  static createStore: createStore;
 }
 
 export default Framework7;
