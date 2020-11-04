@@ -17,9 +17,12 @@ export interface StoreParameters {
   getters?: object;
 }
 
-export interface createStore {
+/** Create new store */
+interface createStore {
   (storeParameters: StoreParameters): StoreObject;
 }
+
+export const createStore: createStore;
 
 export namespace Store {
   interface AppMethods {
