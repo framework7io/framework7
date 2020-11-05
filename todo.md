@@ -4,18 +4,18 @@
 - [ ] Styles
 
   - [ ] Update Aurora theme
-    - [ ] accordion
-    - [ ] actions
+    - [x] accordion
+    - [x] actions
     - [ ] app
-    - [ ] appbar
-    - [ ] area-chart
+    - [x] appbar
+    - [x] area-chart
     - [ ] autocomplete
     - [ ] badge
-    - [ ] block
-    - [ ] button
+    - [x] block
+    - [x] button
     - [ ] calendar
-    - [ ] card
-    - [ ] checkbox
+    - [x] card
+    - [x] checkbox
     - [ ] chip
     - [ ] color-picker
     - [ ] contacts-list
@@ -34,7 +34,7 @@
     - [x] list
     - [ ] list-index
     - [ ] login-screen
-    - [ ] menu
+    - [x] menu
     - [ ] messagebar
     - [ ] messages
     - [ ] modal
@@ -44,22 +44,22 @@
     - [ ] panel
     - [ ] photo-browser
     - [ ] picker
-    - [ ] pie-chart
+    - [x] pie-chart
     - [ ] popover
     - [ ] popup
     - [ ] preloader
     - [ ] progressbar
     - [ ] pull-to-refresh
-    - [ ] radio
+    - [x] radio
     - [ ] range
-    - [ ] searchbar
+    - [x] searchbar
     - [ ] sheet
     - [ ] skeleton
     - [ ] smart-select
     - [ ] sortable
     - [ ] statusbar
     - [ ] stepper
-    - [ ] subnavbar
+    - [x] subnavbar
     - [ ] swipeout
     - [ ] swiper
     - [ ] tabs

@@ -7,11 +7,18 @@
   .icon-prev,
   .icon-forward,
   .icon-next {
-    width: 9px;
-    height: 14px;
-    line-height: 14px;
+    width: 12px;
+    height: 20px;
+    line-height: 20px;
     &:after {
       line-height: inherit;
+    }
+  }
+
+  .icon-prev,
+  .icon-next {
+    &:after {
+      font-size: 16px;
     }
   }
 
@@ -21,7 +28,7 @@
         content: 'chevron_left_ios';
       }
     }
-    .icon-forward, .icon-next {
+  .icon-forward, .icon-next {
       &:after {
         content: 'chevron_right_ios';
       }
