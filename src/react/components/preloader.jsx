@@ -54,10 +54,6 @@ const Preloader = forwardRef((props, ref) => {
         <span className="preloader-inner-line" />
         <span className="preloader-inner-line" />
         <span className="preloader-inner-line" />
-        <span className="preloader-inner-line" />
-        <span className="preloader-inner-line" />
-        <span className="preloader-inner-line" />
-        <span className="preloader-inner-line" />
       </span>
     );
   } else if (theme && theme.aurora) {

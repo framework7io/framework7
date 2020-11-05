@@ -35,6 +35,7 @@
     - Fixed issue when Push Popup can incorrectly transform View behind on app/window resize/rotate
   - Preloader
     - Preloader in MD theme now uses new SVG layout
+    - Preloader in iOS reworked to match iOS 14 appearance
   - Checkbox
     - Removed "extra" margin in checkboxes list in MD theme
   - Radio

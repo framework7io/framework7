@@ -1,26 +1,26 @@
 .ios {
   .preloader-inner {
-    animation: ios-preloader-spin 1s steps(12, end) infinite;
+    animation: ios-preloader-spin 1s steps(8, end) infinite;
   }
 
   .preloader-inner-line {
     display: block;
-    width: 7.15%;
-    height: 28.5%;
+    width: 11.6%;
+    height: 33.33%;
     border-radius: 100px;
     background: var(--f7-preloader-color);
     position: absolute;
     left: 50%;
     top: 50%;
-    transform-origin: center 175%;
+    transform-origin: center 150%;
   }
-  @indexes: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11;
+  @indexes: 0, 1, 2, 3, 4, 5, 6, 7;
   each(@indexes, {
     @index_plus_one: @value + 1;
-    @degrees: 360deg / 12 * @value;
-    @opacity: 0.27 + (0.85 - 0.27) * @value / 11;
+    @degrees: 360deg / 8 * @value;
+    @opacity: 0.27 + (0.85 - 0.27) * @value / 7;
     .preloader-inner-line:nth-child(@{index_plus_one}) {
-      transform: translate(-50%, -175%) rotate(@degrees);
+      transform: translate(-50%, -150%) rotate(@degrees);
       opacity: @opacity;
     }
   });

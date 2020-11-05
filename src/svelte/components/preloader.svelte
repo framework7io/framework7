@@ -44,10 +44,6 @@
       <span class="preloader-inner-line" />
       <span class="preloader-inner-line" />
       <span class="preloader-inner-line" />
-      <span class="preloader-inner-line" />
-      <span class="preloader-inner-line" />
-      <span class="preloader-inner-line" />
-      <span class="preloader-inner-line" />
     </span>
   {:else if theme && theme.aurora}
     <span class="preloader-inner"> <span class="preloader-inner-circle" /> </span>

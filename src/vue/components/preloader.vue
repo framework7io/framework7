@@ -14,10 +14,6 @@
       <span class="preloader-inner-line" />
       <span class="preloader-inner-line" />
       <span class="preloader-inner-line" />
-      <span class="preloader-inner-line" />
-      <span class="preloader-inner-line" />
-      <span class="preloader-inner-line" />
-      <span class="preloader-inner-line" />
     </span>
     <span v-else-if="theme && theme.aurora" class="preloader-inner">
       <span class="preloader-inner-circle" />
