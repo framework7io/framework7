@@ -43,7 +43,7 @@ interface RequestParameters {
   /** A function to be called if the request succeeds */
   success? (data: any, status: number | string, xhr: RequestXHR): any;
   /** A function to be called if the request fails */
-  error?(xhr: RequestXHR, status: number | string, message: string): any;
+  error? (xhr: RequestXHR, status: number | string, message: string): any;
   /** A function to be called when the request finishes (after success and error callbacks are executed) */
   complete? (xhr: RequestXHR, status: number | string): any;
   /** An object of numeric HTTP codes and functions to be called when the response has the corresponding code.  */
