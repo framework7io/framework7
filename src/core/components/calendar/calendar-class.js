@@ -643,6 +643,8 @@ class Calendar extends Framework7Class {
           valueDate = new Date(i);
           $wrapperEl.find(`.calendar-day[data-date="${valueDate.getFullYear()}-${valueDate.getMonth()}-${valueDate.getDate()}"]`).addClass('calendar-day-selected');
         }
+        valueDate = new Date(new Date(value[1]).getTime());
+        $wrapperEl.find(`.calendar-day[data-date="${valueDate.getFullYear()}-${valueDate.getMonth()}-${valueDate.getDate()}"]`).addClass('calendar-day-selected');
       } else {
         for (i = 0; i < calendar.value.length; i += 1) {
           valueDate = new Date(value[i]);
