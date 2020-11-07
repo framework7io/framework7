@@ -55,7 +55,7 @@ export namespace Actions {
     /** Enables Action Sheet backdrop (dark semi transparent layer behind)*/
     backdrop?:boolean
     /** Backdrop element to share across instances */
-    backdropEl : HTMLElement | CSSSelector
+    backdropEl?: HTMLElement | CSSSelector
     /** Custom css class added to Actions Sheet element */
     cssClass?: string
     /** When enabled, action sheet will be closed on backdrop click*/

@@ -22,7 +22,7 @@ export namespace Popover {
     /** Enables Popover backdrop (dark semi transparent layer behind). (default true) */
     backdrop?: boolean
     /** Backdrop element to share across instances */
-    backdropEl : HTMLElement | CSSSelector
+    backdropEl?: HTMLElement | CSSSelector
     /** When enabled, popover will be closed on backdrop click. (default true) */
     closeByBackdropClick?: boolean
     /** When enabled, popover will be closed on when click outside of it (default true) */
