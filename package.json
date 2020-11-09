@@ -69,12 +69,12 @@
     "Samsung >= 6"
   ],
   "dependencies": {
-    "dom7": "^3.0.0-alpha.9",
+    "dom7": "^3.0.0",
     "htm": "^3.0.4",
     "path-to-regexp": "^6.2.0",
-    "skeleton-elements": "^3.0.0",
-    "ssr-window": "^3.0.0-alpha.4",
-    "swiper": "^6.3.4"
+    "skeleton-elements": "^3.2.0",
+    "ssr-window": "^3.0.0",
+    "swiper": "^6.3.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
