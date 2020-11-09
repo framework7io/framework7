@@ -86,6 +86,7 @@ export default {
       const window = getWindow();
       if (!('serviceWorker' in window.navigator)) return;
       const app = this;
+      if (app.device.cordova) return;
       if (!app.serviceWorker.container) return;
       const paths = app.params.serviceWorker.path;
       const scope = app.params.serviceWorker.scope;
