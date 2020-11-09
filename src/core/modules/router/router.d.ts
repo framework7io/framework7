@@ -293,7 +293,7 @@ export namespace Router {
     tabInit(newTabEl: HTMLElement, tabRoute: Route): void
     /** Event will be triggered right after routable Tab content will be loaded */
     tabMounted(newTabEl: HTMLElement, tabRoute: Route): void
-    /** Event will be triggered right after routable Tab content will be loaded */
+    /** Event will be triggered right before routable Tab content will be removed */
     tabBeforeRemove(oldTabEl: HTMLElement, newTabEl: HTMLElement, tabRoute: Route): void
 
     /** Event will be triggered right after routable modal content will be loaded and added to DOM */

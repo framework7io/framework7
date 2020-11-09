@@ -43,7 +43,7 @@ interface RequestParameters {
   /** A function to be called if the request succeeds */
   success? (data: any, status: number | string, xhr: RequestXHR): any;
   /** A function to be called if the request fails */
-  error? (xhr: RequestXHR, status: number | string): any;
+  error? (xhr: RequestXHR, status: number | string, message: string): any;
   /** A function to be called when the request finishes (after success and error callbacks are executed) */
   complete? (xhr: RequestXHR, status: number | string): any;
   /** An object of numeric HTTP codes and functions to be called when the response has the corresponding code.  */
@@ -86,7 +86,7 @@ export interface Request {
     url: string,
     data?: any,
     success?: (data: any, status: number | string, xhr: RequestXHR) => void,
-    error?: (xhr: RequestXHR, status: number | string) => void,
+    error?: (xhr: RequestXHR, status: number | string, message: string) => void,
     dataType?: string
   ) => RequestXHR
   /** Load data from the server using a HTTP POST request */
@@ -94,7 +94,7 @@ export interface Request {
     url: string,
     data?: any,
     success?: (data: any, status: number | string, xhr: RequestXHR) => void,
-    error?: (xhr: RequestXHR, status: number | string) => void,
+    error?: (xhr: RequestXHR, status: number | string, message: string) => void,
     dataType?: string
   ) => RequestXHR
   /** Load JSON-encoded data from the server using a GET HTTP request */
@@ -102,14 +102,14 @@ export interface Request {
     url: string,
     data?: any,
     success?: (data: any, status: number | string, xhr: RequestXHR) => void,
-    error?: (xhr: RequestXHR, status: number | string) => void
+    error?: (xhr: RequestXHR, status: number | string, message: string) => void
   ) => RequestXHR
   /** Send JSON data using a HTTP POST request */
   postJSON: (
     url: string,
     data?: any,
     success?: (data: any, status: number | string, xhr: RequestXHR) => void,
-    error?: (xhr: RequestXHR, status: number | string) => void,
+    error?: (xhr: RequestXHR, status: number | string, message: string) => void,
     dataType?: string
   ) => RequestXHR
   /** Set default values for future Ajax requests */
