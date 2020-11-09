@@ -38,7 +38,7 @@ export default {
     multiple: Boolean,
     readonly: Boolean,
     required: Boolean,
-    inputStyle: [String, Object], // phenome-vue-line
+    inputStyle: [String, Object],
     pattern: String,
     validate: [Boolean, String],
     validateOnBlur: Boolean,
