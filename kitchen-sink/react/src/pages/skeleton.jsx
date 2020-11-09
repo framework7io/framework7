@@ -80,8 +80,8 @@ export default () => {
           <Button fill small round className="col" onClick={() => load('fade')}>
             Fade
           </Button>
-          <Button fill small round className="col" onClick={() => load('blink')}>
-            Blink
+          <Button fill small round className="col" onClick={() => load('wave')}>
+            Wave
           </Button>
           <Button fill small round className="col" onClick={() => load('pulse')}>
             Pulse

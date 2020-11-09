@@ -69,7 +69,7 @@
     <p>It supports few loading effects:</p>
     <Row tag="p">
       <Button fill small round class="col" onClick={() => load('fade')}>Fade</Button>
-      <Button fill small round class="col" onClick={() => load('blink')}>Blink</Button>
+      <Button fill small round class="col" onClick={() => load('wave')}>Wave</Button>
       <Button fill small round class="col" onClick={() => load('pulse')}>Pulse</Button>
     </Row>
   </Block>

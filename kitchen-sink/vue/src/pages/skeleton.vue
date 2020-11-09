@@ -50,7 +50,7 @@
       <p>It supports few loading effects:</p>
       <f7-row tag="p">
         <f7-button fill small round class="col" @click="load('fade')">Fade</f7-button>
-        <f7-button fill small round class="col" @click="load('blink')">Blink</f7-button>
+        <f7-button fill small round class="col" @click="load('wave')">Wave</f7-button>
         <f7-button fill small round class="col" @click="load('pulse')">Pulse</f7-button>
       </f7-row>
     </f7-block>
