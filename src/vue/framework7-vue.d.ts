@@ -27,6 +27,8 @@ interface useStore {
   (getter: string): any;
 }
 
+declare const useStore: useStore;
+
 // EXPORT_COMPONENTS
 export { f7, f7ready, theme, registerComponents, useStore };
 export default Framework7Vue;

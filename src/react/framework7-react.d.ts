@@ -23,6 +23,8 @@ interface useStore {
   (getter: string): any;
 }
 
+declare const useStore: useStore;
+
 declare const Framework7React: Framework7Plugin;
 
 // EXPORT_COMPONENTS

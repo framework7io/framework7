@@ -23,8 +23,10 @@ interface useStore {
   (getter: string, callback?: (v: any) => void): any;
 }
 
+declare const useStore: useStore;
+
 declare const Framework7Svelte: Framework7Plugin;
 
 // EXPORT_COMPONENTS
-export { f7, f7ready, theme, registerComponents, useStore };
+export { f7, f7ready, theme, useStore };
 export default Framework7Svelte;
