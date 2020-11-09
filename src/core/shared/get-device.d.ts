@@ -35,13 +35,13 @@ export interface Device {
   webView: boolean;
   /** true if app runs in web view - webapp installed to home screen */
   standalone: boolean;
-  /** Contains OS can be ios, android or windows (for Windows Phone) */
+  /** Contains OS can be ios, android, macos, windows */
   os: string;
   /** Contains OS version, e.g. 11.2.0 */
   osVersion: string;
   /** Device pixel ratio */
   pixelRatio: number;
-  /** Returns 'dark' or 'light if (prefers-color-theme) media supported, otherwise returns undefined */
+  /** Returns 'dark' or 'light' if (prefers-color-theme) media supported, otherwise returns undefined */
   prefersColorScheme(): string;
 }
 
