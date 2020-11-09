@@ -88,10 +88,10 @@ async function release() {
 
   // NPM publish
   if (options.beta) {
-    await exec.promise('cd ./packages/core && npm publish --tag beta');
-    await exec.promise('cd ./packages/react && npm publish --tag beta');
-    await exec.promise('cd ./packages/vue && npm publish --tag beta');
-    await exec.promise('cd ./packages/svelte && npm publish --tag beta');
+    await exec.promise('cd ./packages/core && npm publish --tag next');
+    await exec.promise('cd ./packages/react && npm publish --tag next');
+    await exec.promise('cd ./packages/vue && npm publish --tag next');
+    await exec.promise('cd ./packages/svelte && npm publish --tag next');
   } else if (options.alpha) {
     await exec.promise('cd ./packages/core && npm publish --tag next');
     await exec.promise('cd ./packages/react && npm publish --tag next');
