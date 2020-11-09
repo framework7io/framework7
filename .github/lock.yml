@@ -1,8 +1,0 @@
-daysUntilLock: 240
-exemptLabels:
-  - Feature Request
-  - Enhancement
-  - In Progress
-  - Bug confirmed
-lockLabel: outdated
-lockComment: false
