@@ -54,7 +54,7 @@ export default class extends React.Component {
           </Row>
         </Block>
         <Block strong>
-          <p>Photo Browser suppots 2 default themes - default Light (like in previous examples) and Dark theme. Here is a Dark theme examples:</p>
+          <p>Photo Browser supports 2 default themes - default Light (like in previous examples) and Dark theme. Here is a Dark theme examples:</p>
           <Row>
             <Col>
               <PhotoBrowser photos={this.state.photos} theme="dark" ref={(el) => {this.standaloneDark = el}} />

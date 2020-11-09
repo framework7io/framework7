@@ -28,7 +28,7 @@
       </f7-row>
     </f7-block>
     <f7-block strong>
-      <p>Photo Browser suppots 2 default themes - default Light (like in previous examples) and Dark theme. Here is a Dark theme examples:</p>
+      <p>Photo Browser supports 2 default themes - default Light (like in previous examples) and Dark theme. Here is a Dark theme examples:</p>
       <f7-row>
         <f7-col>
           <f7-photo-browser :photos="photos" theme="dark" ref="standaloneDark"></f7-photo-browser>

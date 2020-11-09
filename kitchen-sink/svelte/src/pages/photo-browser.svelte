@@ -27,7 +27,7 @@
     </Row>
   </Block>
   <Block strong>
-    <p>Photo Browser suppots 2 default themes - default Light (like in previous examples) and Dark theme. Here is a Dark theme examples:</p>
+    <p>Photo Browser supports 2 default themes - default Light (like in previous examples) and Dark theme. Here is a Dark theme examples:</p>
     <Row>
       <Col>
         <PhotoBrowser photos={photos} theme="dark" bind:this={ standaloneDark } />
