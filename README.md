@@ -206,21 +206,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
 
 ## Framework7 Development
 
-Framework7 uses `gulp` and `rollup` to build a development (build) and production versions.
-
-First you need to have `gulp-cli` which you should install globally.
-
-```
-$ npm install --global gulp
-```
-
-Then install all dependencies, in repo's root:
+First, install all dependencies:
 
 ```
 $ npm install
 ```
 
-## Development Builds
+### Development Builds
 
 The following npm scripts are available to create development builds:
 
@@ -232,7 +224,7 @@ The following npm scripts are available to create development builds:
 
 Compiled results will be available in `build/` folder.
 
-## Production builds
+### Production builds
 
 To build production versions the following npm scripts are available:
 
@@ -248,27 +240,14 @@ Compiled results will be available in `packages/` folder.
 
 To run Kitchen Sink with development environment (development version will be built first) use the following npm scripts:
 
-- `dev` - build development versions of all packages (Core, Vue, React) and run local server. With this common script it will watch for changes in all `src/` files and rebuild all packages (Core, Vue, React)
-- `core:dev` - build development version of Core (vanilla JS) Framework7 package and run core Kitchen Sink
-- `react:dev` - build development version of Framework7 React package and run React Kitchen Sink
-- `vue:dev` - build development version of Framework7 Vue package and run Vue Kitchen Sink
-- `svelte:dev` - build development version of Framework7 Svelte package and run Svelte Kitchen Sink
-
-To Run Kitchen Sink with production builds (already compiled `/packages/` will be used), use the following npm scripts:
-
-- `prod` - build Kitchen Sinks with production versions
-- `core:prod` - run core Kitchen Sink with production Framework7 core package
-- `react:prod` - run React Kitchen Sink with production build of Framework7 React
-- `vue:prod` - run Vue Kitchen Sink with production build of Framework7 Vue
-- `svelte:prod` - run Svelte Kitchen Sink with production build of Framework7 Svelte
+- `core` - build development version of Core (vanilla JS) Framework7 package and run core Kitchen Sink
+- `react` - build development version of Framework7 React package and run React Kitchen Sink
+- `vue` - build development version of Framework7 Vue package and run Vue Kitchen Sink
+- `svelte` - build development version of Framework7 Svelte package and run Svelte Kitchen Sink
 
 ## Source Code
 
-Whole source code is located under `/src/` folder.
-
-Framework7 uses Phenome compiler to generate React & Vue components. So all the React & Vue related code is under the `/src/phenome/` folder
-
-Framework7 core library source code is under `/src/core/` folder
+Whole source code is located under the `/src/` folder.
 
 ## Contributing
 
@@ -300,6 +279,7 @@ Appstore apps made with Framework7: https://framework7.io/showcase/
 
 ## Previous Versions
 
+- [v5 branch](https://github.com/framework7io/Framework7/tree/v5)
 - [v4 branch](https://github.com/framework7io/Framework7/tree/v4)
 - [v3 branch](https://github.com/framework7io/Framework7/tree/v3)
 - [v2 branch](https://github.com/framework7io/Framework7/tree/v2)
