@@ -1,5 +1,5 @@
 /**
- * Framework7 5.7.13
+ * Framework7 5.7.14
  * Full featured mobile HTML framework for building iOS & Android apps
  * https://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 9, 2020
+ * Released on: November 9, 2020
  */
 
 (function (global, factory) {
@@ -3989,7 +3989,7 @@
         beforeOpen (xhr, options),
         beforeSend (xhr, options),
         error (xhr, status, message),
-        complete (xhr, stautus),
+        complete (xhr, status),
         success (response, status, xhr),
         statusCode ()
       */
@@ -24178,6 +24178,8 @@
             valueDate = new Date(i);
             $wrapperEl.find((".calendar-day[data-date=\"" + (valueDate.getFullYear()) + "-" + (valueDate.getMonth()) + "-" + (valueDate.getDate()) + "\"]")).addClass('calendar-day-selected');
           }
+          valueDate = new Date(new Date(value[1]).getTime());
+          $wrapperEl.find((".calendar-day[data-date=\"" + (valueDate.getFullYear()) + "-" + (valueDate.getMonth()) + "-" + (valueDate.getDate()) + "\"]")).addClass('calendar-day-selected');
         } else {
           for (i = 0; i < calendar.value.length; i += 1) {
             valueDate = new Date(value[i]);

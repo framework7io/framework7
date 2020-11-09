@@ -125,11 +125,11 @@ export interface Framework7Extensions {
   $request: Request
   /** Access to Utils object with few useful utilities */
   $utils: Utils
-  /** Object with boolean properties with information about currently used theme (iOS or MD) */
+  /** Object with boolean properties with information about currently used theme (iOS, MD or Aurora) */
   $theme: Framework7Theme
 }
 
-/** Object with boolean properties with information about currently used theme (iOS or MD) */
+/** Object with boolean properties with information about currently used theme (iOS, MD or Aurora) */
 declare const theme : Framework7Theme;
 /** Main Framework7's initialized instance. It allows you to use any of Framework7 APIs */
 declare const f7 : Framework7;

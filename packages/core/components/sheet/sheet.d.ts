@@ -21,6 +21,8 @@ export namespace Sheet {
     content?: string
     /** Enables Sheet Modal backdrop (dark semi transparent layer behind). (default true) */
     backdrop?: boolean
+    /** Backdrop element to share across instances */
+    backdropEl? : HTMLElement | CSSSelector
     /** HTML element or string (with CSS selector) of element. If specified, then sheet will try to scroll page content to this element on open */
     scrollToEl?: HTMLElement | CSSSelector
     /** When enabled, Sheet Modal will be closed on backdrop click. (default true) */

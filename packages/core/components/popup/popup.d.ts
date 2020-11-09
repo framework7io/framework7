@@ -29,6 +29,8 @@ export namespace Popup {
     content?: string
     /** Enables Popup backdrop (dark semi transparent layer behind). (default true) */
     backdrop?: boolean
+    /** Backdrop element to share across instances */
+    backdropEl?: HTMLElement | CSSSelector
     /** When enabled, popup will be closed on backdrop click. (default true) */
     closeByBackdropClick?: boolean
     /** Whether the Popup should be opened/closed with animation or not. Can be overwritten in .open() and .close() methods. (default true) */

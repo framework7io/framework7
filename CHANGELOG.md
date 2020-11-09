@@ -2,6 +2,14 @@
 
 # Change Log
 
+# [v5.7.14](https://github.com/framework7io/framework7/compare/v5.7.13...v5.7.14) - November 9, 2020
+  * Core
+    * Types fixes (#3759, #3758)
+    * Calendar
+      * Minor fixes upading selected value (#3761)
+  * React
+    * Removed React 16 peer dependency (to be compatible with React 17)
+
 # [v5.7.13](https://github.com/framework7io/framework7/compare/v5.7.12...v5.7.13) - October 9, 2020
   * Core
     * Router
