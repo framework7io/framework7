@@ -11,7 +11,7 @@
   - Autocomplete, Calendar, Picker, Color Picker, Photo Browser, Smart Select
     - `routableModals` is now disabled by default
   - Dom7
-    - Uses new Dom7
+    - Uses new Dom7 v3
   - Dialog
     - Added `containerEl` property to specify where to mount the modal
   - Calendar
