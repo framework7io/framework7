@@ -73,6 +73,7 @@
   - View/Router
     - `pushState...` parameters renamed to `browserHistory...`
     - New `browserHistoryInitialMatch` parameter
+    - Now `reloadDetail` will remove all detail pages in master-detail layout between master and new detail page
     - Route's `beforeEnter`, `beforeLeave`, `redirect` and `async` methods now receive a single object with following props
       - `to`
       - `from`
