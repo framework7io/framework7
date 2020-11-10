@@ -205,7 +205,7 @@
     - Added `searchbarSpellcheck` parameter to enable/disable spell check on searchbar's input. Disabled by default
 - React/Svelte/Vue
   - Searchbar
-    - Added `spellcheck` prop to set `spellcheck` attributte on input element
+    - Added `spellcheck` prop to set `spellcheck` attribute on input element
   - ListInput
     - Fixed not working `onTextEditorChange` prop in Svelte component
   - Minor fixes
