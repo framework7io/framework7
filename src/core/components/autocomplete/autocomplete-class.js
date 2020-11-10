@@ -543,7 +543,7 @@ class Autocomplete extends Framework7Class {
             <span class="input-clear-button"></span>
           </div>
           {ac.params.searchbarDisableButton && (
-            <span class="searchbar-disable-button">${ac.params.searchbarDisableText}</span>
+            <span class="searchbar-disable-button">{ac.params.searchbarDisableText}</span>
           )}
         </div>
       </form>
