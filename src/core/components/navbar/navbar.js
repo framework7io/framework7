@@ -163,10 +163,10 @@ const Navbar = {
       title.css({ left: `${titleLeft}px` });
     }
   },
-  hide(el, animate = true, hideStatusbar = false) {
+  hide(el, animate = true, hideStatusbar = false, hideOnlyCurrent = false) {
     const app = this;
     let $el = $(el);
-    const isDynamic = $el.hasClass('navbar') && $el.parent('.navbars').length;
+    const isDynamic = $el.hasClass('navbar') && $el.parent('.navbars').length && !hideOnlyCurrent;
     if (isDynamic) $el = $el.parents('.navbars');
     if (!$el.length) return;
     if ($el.hasClass('navbar-hidden')) return;
@@ -194,10 +194,10 @@ const Navbar = {
       app.emit('navbarHide', $el[0]);
     }
   },
-  show(el = '.navbar-hidden', animate = true) {
+  show(el = '.navbar-hidden', animate = true, hideOnlyCurrent = false) {
     const app = this;
     let $el = $(el);
-    const isDynamic = $el.hasClass('navbar') && $el.parent('.navbars').length;
+    const isDynamic = $el.hasClass('navbar') && $el.parent('.navbars').length && !hideOnlyCurrent;
     if (isDynamic) $el = $el.parents('.navbars');
     if (!$el.length) return;
     if (!$el.hasClass('navbar-hidden')) return;
@@ -552,10 +552,10 @@ const Navbar = {
       }
 
       if (action === 'show' && navbarHidden) {
-        app.navbar.show($navbarEl);
+        app.navbar.show($navbarEl, true, true);
         navbarHidden = false;
       } else if (action === 'hide' && !navbarHidden) {
-        app.navbar.hide($navbarEl);
+        app.navbar.hide($navbarEl, true, false, true);
         navbarHidden = true;
       }
       previousScrollTop = currentScrollTop;

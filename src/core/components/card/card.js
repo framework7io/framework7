@@ -150,7 +150,7 @@ const CardExpandable = {
         $cardEl[0].f7KeepNavbarOnClose = true;
       } else {
         delete $cardEl[0].f7KeepNavbarOnClose;
-        app.navbar.hide($navbarEl, cardParams.animate, cardParams.hideStatusbarOnOpen);
+        app.navbar.hide($navbarEl, cardParams.animate, cardParams.hideStatusbarOnOpen, true);
       }
     }
     if (cardParams.hideToolbarOnOpen && $toolbarEl && $toolbarEl.length) {
@@ -425,7 +425,7 @@ const CardExpandable = {
         if ($pageEl[0].f7Page) $navbarEl = $pageEl[0].f7Page.$navbarEl;
       }
       if ($navbarEl && $navbarEl.length && !$cardEl[0].f7KeepNavbarOnClose) {
-        app.navbar.show($navbarEl, cardParams.animate);
+        app.navbar.show($navbarEl, cardParams.animate, true);
       }
     }
     if (cardParams.hideToolbarOnOpen) {
@@ -544,7 +544,7 @@ export default {
         page.navbarEl &&
         page.$el.find('.card-opened.card-expandable').length
       ) {
-        app.navbar.hide(page.navbarEl, true, app.params.card.hideStatusbarOnOpen);
+        app.navbar.hide(page.navbarEl, true, app.params.card.hideStatusbarOnOpen, true);
       }
 
       if (
