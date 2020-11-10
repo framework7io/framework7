@@ -23,17 +23,12 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://infatica.io" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/infatica.svg">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" valign="middle">
       <a href="https://www.thoriumbuilder.com/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/thorium.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://app-valley.vip/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/appvalley.jpg">
@@ -42,6 +37,11 @@
     <td align="center" valign="middle">
       <a href="http://mytommy.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/tommy.png">
+      </a>
+    </td>
+    <td>
+      <a href="https://www.ramotion.com/agency/app-development/" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/ramotion.png">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -211,7 +211,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 
 ### \$100 Silver Sponsor
 
-[Infatica](https://infatica.io) - Global Peer-to-Business Proxy Network<br>
+[Ramotion](https://www.ramotion.com/agency/app-development/) - App Development Agency<br>
 [Thorium Builder](https://www.thoriumbuilder.com/) - Full visual Framework7 app builder<br>
 Colin Adams ([App Valley](https://appvalley.vip/))<br>
 Mason Fok ([tommy](http://mytommy.com))<br>
@@ -221,6 +221,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ---
 
 ### \$50+ Top Supporter
+
 [Buy Instagram Likes from Goread](https://goread.io/buy-instagram-likes)<br>
 [Coupons4Printing: Promotion Codes, Coupons, Coupon Codes](https://www.coupons4printing.com)<br>
 SIMPLY LAB<br>
@@ -266,6 +267,7 @@ Danny Redfern<br>
 
 ### \$10+ Supporter
 
+loopcake<br>
 Jim Leliveld<br>
 Wolfgang Bochar<br>
 Picolé de Chuchu<br>

@@ -39,17 +39,12 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://infatica.io" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/infatica.svg">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" valign="middle">
       <a href="https://www.thoriumbuilder.com/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/thorium.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://app-valley.vip/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/appvalley.jpg">
@@ -58,6 +53,11 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
     <td align="center" valign="middle">
       <a href="http://mytommy.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/tommy.png">
+      </a>
+    </td>
+    <td>
+      <a href="https://www.ramotion.com/agency/app-development/" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/ramotion.png">
       </a>
     </td>
     <td align="center" valign="middle">
