@@ -46,6 +46,7 @@ function forward(router, el, forwardOptions = {}) {
     options.route.route.master === true;
   let masterPageEl;
   let otherDetailPageEl;
+  let detailsInBetweenRemoved = 0;
 
   let currentRouteIsModal = router.currentRoute.modal;
   let modalType;
@@ -229,10 +230,25 @@ function forward(router, el, forwardOptions = {}) {
 
   // Find Old Page
   if (options.reloadCurrent || reloadDetail) {
-    $oldPage = $pagesInView.eq($pagesInView.length - 1);
-    if (dynamicNavbar) {
-      // $oldNavbarEl = $navbarsInView.eq($pagesInView.length - 1);
-      $oldNavbarEl = $(app.navbar.getElByPage($oldPage));
+    if (reloadDetail) {
+      $oldPage = $pagesInView.filter((pageEl) => !pageEl.classList.contains('page-master'));
+      if (dynamicNavbar) {
+        $oldNavbarEl = $($oldPage.map((pageEl) => app.navbar.getElByPage(pageEl)));
+      }
+      if ($oldPage.length > 1 && masterPageEl) {
+        detailsInBetweenRemoved = $oldPage.length - 1;
+        $(masterPageEl).removeClass('page-master-stacked').trigger('page:masterunstack');
+        router.emit('pageMasterUnstack', masterPageEl);
+        if (dynamicNavbar) {
+          $(app.navbar.getElByPage(masterPageEl)).removeClass('navbar-master-stacked');
+          router.emit('navbarMasterUnstack', app.navbar.getElByPage(masterPageEl));
+        }
+      }
+    } else {
+      $oldPage = $pagesInView.eq($pagesInView.length - 1);
+      if (dynamicNavbar) {
+        $oldNavbarEl = $(app.navbar.getElByPage($oldPage));
+      }
     }
   } else if (options.reloadPrevious) {
     $oldPage = $pagesInView.eq($pagesInView.length - 2);
@@ -359,6 +375,9 @@ function forward(router, el, forwardOptions = {}) {
         0 ||
       options.replaceState
     ) {
+      if (reloadDetail && detailsInBetweenRemoved > 0) {
+        router.history = router.history.slice(0, router.history.length - detailsInBetweenRemoved);
+      }
       router.history[router.history.length - (options.reloadPrevious ? 2 : 1)] = url;
     } else if (options.reloadPrevious) {
       router.history[router.history.length - 2] = url;
