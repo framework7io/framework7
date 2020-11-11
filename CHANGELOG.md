@@ -74,6 +74,7 @@
     - `pushState...` parameters renamed to `browserHistory...`
     - New `browserHistoryInitialMatch` parameter
     - Now `reloadDetail` will remove all detail pages in master-detail layout between master and new detail page
+    - Route's `master` property that indicates whether it is a master route or not now can be a method that receives `(f7, router)` (app and router instances) and should return boolean.
     - Route's `beforeEnter`, `beforeLeave`, `redirect` and `async` methods now receive a single object with following props
       - `to`
       - `from`
