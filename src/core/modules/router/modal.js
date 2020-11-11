@@ -14,12 +14,28 @@ function modalLoad(modalType, route, loadOptions = {}, direction) {
       browserHistory: true,
       history: true,
       on: {},
+      once: {},
     },
     loadOptions,
   );
 
   const modalParams = extend({}, route.route[modalType]);
   const modalRoute = route.route;
+
+  const routeCallback = (modal, name) => {
+    const { on, once } = options;
+    let callback;
+    if (name === 'open') {
+      callback = on.modalOpen || once.modalOpen || on.panelOpen || once.panelOpen;
+    }
+    if (name === 'close') {
+      callback = on.modalClose || once.modalClose || on.panelClose || once.panelClose;
+    }
+    if (name === 'closed') {
+      callback = on.modalClosed || once.modalClosed || on.panelClosed || once.panelClosed;
+    }
+    if (callback) callback(modal);
+  };
 
   function onModalLoaded() {
     // Create Modal
@@ -50,12 +66,14 @@ function modalLoad(modalType, route, loadOptions = {}, direction) {
         );
       }
       router.once('swipeBackMove', closeOnSwipeBack);
+      routeCallback(modal, 'open');
     });
     modal.on(`${modalOrPanel}Close`, () => {
       router.off('swipeBackMove', closeOnSwipeBack);
       if (!modal.closeByRouter) {
         router.back();
       }
+      routeCallback(modal, 'close');
     });
 
     modal.on(`${modalOrPanel}Closed`, () => {
@@ -67,6 +85,7 @@ function modalLoad(modalType, route, loadOptions = {}, direction) {
         modal,
       );
       const modalComponent = modal.el.f7Component;
+      routeCallback(modal, 'closed');
       if (modalComponent) {
         modalComponent.destroy();
       }
@@ -102,7 +121,7 @@ function modalLoad(modalType, route, loadOptions = {}, direction) {
       }
 
       // Update Router History
-      if (options.history) {
+      if (options.history && !options.reloadCurrent) {
         router.history.push(options.route.url);
         router.saveHistory();
       }
@@ -127,7 +146,7 @@ function modalLoad(modalType, route, loadOptions = {}, direction) {
     }
 
     // Open
-    modal.open();
+    modal.open(options.animate === false || options.animate === true ? options.animate : undefined);
   }
 
   // Load Modal Content

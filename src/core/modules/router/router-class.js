@@ -1280,6 +1280,25 @@ class Router extends Framework7Class {
         initial: true,
         reloadCurrent: true,
         browserHistory: false,
+        animate: false,
+        once: {
+          modalOpen() {
+            if (!historyRestored) return;
+            const preloadPreviousPage =
+              router.params.preloadPreviousPage || router.params[`${app.theme}SwipeBack`];
+            if (preloadPreviousPage && router.history.length > 1) {
+              router.back({ preload: true });
+            }
+          },
+          pageAfterIn() {
+            if (!historyRestored) return;
+            const preloadPreviousPage =
+              router.params.preloadPreviousPage || router.params[`${app.theme}SwipeBack`];
+            if (preloadPreviousPage && router.history.length > 1) {
+              router.back({ preload: true });
+            }
+          },
+        },
       });
     } else if (router.$el.children('.page:not(.stacked)').length) {
       // Init current DOM page

@@ -39,6 +39,7 @@ function backward(router, el, backwardOptions) {
 
   const $newPage = $el;
   const $oldPage = router.$el.children('.page-current');
+  const initialPreload = $oldPage.length === 0 && options.preload;
   const currentIsMaster = masterDetailEnabled && $oldPage.hasClass('page-master');
 
   if ($newPage.length) {
@@ -61,7 +62,7 @@ function backward(router, el, backwardOptions) {
   }
 
   router.allowPageChange = false;
-  if ($newPage.length === 0 || $oldPage.length === 0) {
+  if ($newPage.length === 0 || ($oldPage.length === 0 && !options.preload)) {
     router.allowPageChange = true;
     return router;
   }
@@ -123,16 +124,16 @@ function backward(router, el, backwardOptions) {
   // New Page
   $newPage
     .addClass(
-      `page-previous${isMaster ? ' page-master' : ''}${isDetail ? ' page-master-detail' : ''}${
-        isDetailRoot ? ' page-master-detail-root' : ''
-      }`,
+      `page-${initialPreload ? 'current' : 'previous'}${isMaster ? ' page-master' : ''}${
+        isDetail ? ' page-master-detail' : ''
+      }${isDetailRoot ? ' page-master-detail-root' : ''}`,
     )
     .removeClass('stacked')
     .removeAttr('aria-hidden')
     .trigger('page:unstack')
-    .trigger('page:position', { position: 'previous' });
+    .trigger('page:position', { position: initialPreload ? 'current' : 'previous' });
   router.emit('pageUnstack', $newPage[0]);
-  router.emit('pagePosition', $newPage[0], 'previous');
+  router.emit('pagePosition', $newPage[0], initialPreload ? 'current' : 'previous');
   if (isMaster || isDetail) {
     $newPage.trigger('page:role', { role: isMaster ? 'master' : 'detail', root: !!isDetailRoot });
     router.emit('pageRole', $newPage[0], {
@@ -144,14 +145,14 @@ function backward(router, el, backwardOptions) {
   if (dynamicNavbar && $newNavbarEl.length > 0) {
     $newNavbarEl
       .addClass(
-        `navbar-previous${isMaster ? ' navbar-master' : ''}${
+        `navbar-${initialPreload ? 'current' : 'previous'}${isMaster ? ' navbar-master' : ''}${
           isDetail ? ' navbar-master-detail' : ''
         }${isDetailRoot ? ' navbar-master-detail-root' : ''}`,
       )
       .removeClass('stacked')
       .removeAttr('aria-hidden');
-    $newNavbarEl.trigger('navbar:position', { position: 'previous' });
-    router.emit('navbarPosition', $newNavbarEl[0], 'previous');
+    $newNavbarEl.trigger('navbar:position', { position: initialPreload ? 'current' : 'previous' });
+    router.emit('navbarPosition', $newNavbarEl[0], initialPreload ? 'current' : 'previous');
     if (isMaster || isDetailRoot) {
       router.emit('navbarRole', $newNavbarEl[0], {
         role: isMaster ? 'master' : 'detail',
@@ -250,6 +251,15 @@ function backward(router, el, backwardOptions) {
   const f7Component = $newPage[0].f7Component;
 
   function insertPage() {
+    if (initialPreload) {
+      if (!newPageInDom && f7Component) {
+        f7Component.mount((componentEl) => {
+          router.$el.append(componentEl);
+        });
+      } else {
+        router.$el.append($newPage);
+      }
+    }
     if ($newPage.next($oldPage).length === 0) {
       if (!newPageInDom && f7Component) {
         f7Component.mount((componentEl) => {
@@ -326,6 +336,10 @@ function backward(router, el, backwardOptions) {
     }
     // Page init and before init events
     router.pageCallback('init', $newPage, $newNavbarEl, 'previous', 'current', options, $oldPage);
+    if (initialPreload) {
+      router.pageCallback('beforeIn', $newPage, $newNavbarEl, 'current', undefined, options);
+      router.pageCallback('afterIn', $newPage, $newNavbarEl, 'current', undefined, options);
+    }
     const $previousPages = $newPage.prevAll('.page-previous:not(.stacked):not(.page-master)');
     if ($previousPages.length > 0) {
       $previousPages.each((pageToRemove) => {
@@ -649,7 +663,7 @@ function back(...args) {
         }
       });
   }
-  if (currentRouteIsModal) {
+  if (currentRouteIsModal && !navigateOptions.preload) {
     const modalToClose =
       router.currentRoute.modal || router.currentRoute.route.modalInstance || app[modalType].get();
     const previousUrl = router.history[router.history.length - 2];
@@ -687,21 +701,22 @@ function back(...args) {
     }
     const forceOtherUrl = navigateOptions.force && previousRoute && navigateUrl;
     if (previousRoute && modalToClose) {
-      const isBrokenPushState = device.ie || device.edge || (device.firefox && !device.ios);
-      const needHistoryBack = router.params.pushState && navigateOptions.pushState !== false;
-      const currentRouteWithoutPushState =
+      const isBrokenBrowserHistory = device.ie || device.edge || (device.firefox && !device.ios);
+      const needHistoryBack =
+        router.params.browserHistory && navigateOptions.browserHistory !== false;
+      const currentRouteWithoutBrowserHistory =
         router.currentRoute &&
         router.currentRoute.route &&
         router.currentRoute.route.options &&
-        router.currentRoute.route.options.pushState === false;
-      if (needHistoryBack && !isBrokenPushState && !currentRouteWithoutPushState) {
+        router.currentRoute.route.options.browserHistory === false;
+      if (needHistoryBack && !isBrokenBrowserHistory && !currentRouteWithoutBrowserHistory) {
         History.back();
       }
       router.currentRoute = previousRoute;
       router.history.pop();
       router.saveHistory();
 
-      if (needHistoryBack && isBrokenPushState && !currentRouteWithoutPushState) {
+      if (needHistoryBack && isBrokenBrowserHistory && !currentRouteWithoutBrowserHistory) {
         History.back();
       }
 
