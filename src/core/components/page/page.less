@@ -150,6 +150,11 @@
       right: var(--f7-page-master-width);
     });
   }
+  .page-master-detail > .navbar-master-detail {
+    left: 0;
+    right: 0;
+    width: 100%;
+  }
   .page-master {
     z-index: 2;
     transform: none;
@@ -172,6 +177,9 @@
   .page-next {
     opacity: 1;
     transform: none;
+  }
+  &.view-master-detail .page-master {
+    animation: none;
   }
 }
 
