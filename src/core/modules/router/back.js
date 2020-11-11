@@ -29,7 +29,9 @@ function backward(router, el, backwardOptions) {
     masterDetailEnabled &&
     options.route &&
     options.route.route &&
-    options.route.route.master === true;
+    (options.route.route.master === true ||
+      (typeof options.route.route.master === 'function' &&
+        options.route.route.master(app, router)));
   let masterPageEl;
   let masterPageRemoved;
 

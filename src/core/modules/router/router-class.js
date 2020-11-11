@@ -1311,7 +1311,9 @@ class Router extends Framework7Class {
         if (
           router.currentRoute &&
           router.currentRoute.route &&
-          router.currentRoute.route.master &&
+          (router.currentRoute.route.master === true ||
+            (typeof router.currentRoute.route.master === 'function' &&
+              router.currentRoute.route.master(app, router))) &&
           router.params.masterDetailBreakpoint > 0
         ) {
           $pageEl.addClass('page-master');

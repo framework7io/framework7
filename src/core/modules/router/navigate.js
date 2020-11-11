@@ -43,7 +43,10 @@ function forward(router, el, forwardOptions = {}) {
     masterDetailEnabled &&
     options.route &&
     options.route.route &&
-    options.route.route.master === true;
+    (options.route.route.master === true ||
+      (typeof options.route.route.master === 'function' &&
+        options.route.route.master(app, router)));
+
   let masterPageEl;
   let otherDetailPageEl;
   let detailsInBetweenRemoved = 0;
@@ -992,7 +995,9 @@ function navigate(navigateParams, navigateOptions = {}) {
     let masterLoaded = false;
     if (router.currentRoute && router.currentRoute.route) {
       if (
-        router.currentRoute.route.master &&
+        (router.currentRoute.route.master === true ||
+          (typeof router.currentRoute.route.master === 'function' &&
+            router.currentRoute.route.master(app, router))) &&
         (router.currentRoute.route === route.route.masterRoute ||
           router.currentRoute.route.path === route.route.masterRoute.path)
       ) {

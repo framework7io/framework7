@@ -100,7 +100,7 @@ export namespace Router {
     /** When enabled then once loaded page and its component (Vue, React or Router component) will be never destroyed. Instead, it will be detached from DOM and reused again when required */
     keepAlive?: boolean;
     /** Enables master route for Master-Detail view */
-    master?: boolean;
+    master?: boolean | ((f7: Framework7, router: Router) => boolean);
     /** Detail routes this master route */
     detailRoutes?: RouteParameters[];
     /** Route page events */
