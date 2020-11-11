@@ -78,7 +78,6 @@
 - [ ] Features
   - [ ] New component Stepper / Lines
 - [ ] Router
-  - [ ] BrowserHistory modal should preload previous page/modal
   - [ ] View-width transition improvements
 
 # Changelog
