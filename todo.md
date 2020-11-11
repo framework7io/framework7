@@ -3,8 +3,6 @@
 - [ ] Capacitor integration
 - [ ] Styles
 
-  - [ ] Navbar hidden in Master Details
-  - [ ] Transition Effects with Master Details
   - [ ] Update Aurora theme
     - [x] accordion
     - [x] actions
