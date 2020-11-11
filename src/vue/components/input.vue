@@ -127,9 +127,11 @@ export default {
         if (inputInvalid.value !== true) {
           inputInvalid.value = true;
         }
-      } else if (inputInvalid.value !== false) {
+      } else {
         if (props.onValidate) props.onValidate(true);
-        inputInvalid.value = false;
+        if (inputInvalid.value !== false) {
+          inputInvalid.value = false;
+        }
       }
     };
     const onTextareaResize = (event) => {

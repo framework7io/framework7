@@ -188,9 +188,11 @@ const ListInput = forwardRef((props, ref) => {
       if (inputInvalid !== true) {
         setInputInvalid(true);
       }
-    } else if (inputInvalid !== false) {
+    } else {
       if (onValidate) onValidate(true);
-      setInputInvalid(false);
+      if (inputInvalid !== false) {
+        setInputInvalid(false);
+      }
     }
   };
 

@@ -126,9 +126,11 @@
       if (inputInvalid !== true) {
         inputInvalid = true;
       }
-    } else if (inputInvalid !== false) {
+    } else {
       if (onValidate) onValidate(true);
-      inputInvalid = false;
+      if (inputInvalid !== false) {
+        inputInvalid = false;
+      }
     }
   }
 
