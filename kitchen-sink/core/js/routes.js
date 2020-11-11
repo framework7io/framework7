@@ -2,8 +2,11 @@ var routes = [
   // Index page
   {
     path: '/',
-    url: './index.html',
+    componentUrl: './pages/home.html',
     name: 'home',
+    master(f7) {
+      return f7.theme === 'aurora';
+    },
   },
   // About page
   {
