@@ -20,7 +20,6 @@ export const useStore = (...args) => {
   const obj = store.getters[getter];
   const value = obj.value;
   if (callback) {
-    callback(value);
     obj.onUpdated(callback);
   }
 

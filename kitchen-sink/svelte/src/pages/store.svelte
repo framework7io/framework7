@@ -12,10 +12,8 @@
   } from 'framework7-svelte';
 
   // Subscribe to store getters
-  let users;
-  let loading;
-  useStore('users', (value) => (users = value));
-  useStore('usersLoading', (value) => (loading = value));
+  let users = useStore('users', (value) => (users = value));
+  let loading = useStore('usersLoading', (value) => (loading = value));
 
   // Call store action
   const load = () => f7.store.dispatch('loadUsers');
