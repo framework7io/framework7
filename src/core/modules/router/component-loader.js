@@ -24,7 +24,7 @@ export default {
           f7router: router,
         });
         const componentProps = merge(
-          options.route.params || {},
+          options.route ? options.route.params || {} : {},
           options.props || {},
           options.routeProps || {},
         );
