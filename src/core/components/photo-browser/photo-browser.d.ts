@@ -29,7 +29,7 @@ export namespace PhotoBrowser {
     /** Link to initialized View instance if you want use "page" Photo Browser type or where to set routing when routableModals enabled. By default, if not specified, it will be opened in Main View */
     view?: View.View;
     /** Define how Photo Browser should be opened. Could be standalone (will be opened as an overlay with custom transition effect), popup (will be opened as popup), page (will be injected to View and loaded as a new page). */
-    type?: 'popup' | 'page' | 'standaone';
+    type?: 'popup' | 'page' | 'standalone';
     /** Photo Browser color theme, could be light or dark (deault "light") */
     theme?: 'light' | 'dark';
     /** Captions color theme, could be also light or dark. By default, equal to theme parameter */
