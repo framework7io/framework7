@@ -27,29 +27,12 @@ function parseComponent(componentString) {
 
   // Parse Styles
   let style = null;
-  let styleScoped = false;
 
   if (componentString.indexOf('<style>') >= 0) {
     style = componentString.split('<style>')[1].split('</style>')[0];
-  } else if (componentString.indexOf('<style scoped>') >= 0) {
-    styleScoped = true;
+  }
+  if (componentString.indexOf('<style scoped>') >= 0) {
     style = componentString.split('<style scoped>')[1].split('</style>')[0];
-    style = style
-      .replace(/{{this}}/g, `[data-f7-${componentId}]`)
-      .replace(/[\n]?([^{^}]*){/gi, (string, rules) => {
-        if (rules.indexOf('"') >= 0 || rules.indexOf("'") >= 0) return string;
-        // eslint-disable-next-line
-        rules = rules
-          .split(',')
-          .map((rule) => {
-            if (rule.indexOf('@') >= 0) return rule;
-            if (rule.indexOf(`[data-f7-${componentId}]`) >= 0) return rule;
-            return `[data-f7-${componentId}] ${rule.trim()}`;
-          })
-          .join(', ');
-
-        return `\n${rules} {`;
-      });
   }
 
   // Parse Script
@@ -103,7 +86,6 @@ function parseComponent(componentString) {
   // Assign Style
   if (style) {
     component.style = style;
-    component.styleScoped = styleScoped;
   }
 
   // Component ID

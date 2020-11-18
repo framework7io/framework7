@@ -21,7 +21,6 @@ class Component {
         aurora: app.theme === 'aurora',
       },
       style: component.style,
-      styleScoped: component.styleScoped,
       __storeCallbacks: [],
       __updateQueue: [],
       __eventHandlers: [],

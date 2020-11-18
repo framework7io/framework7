@@ -263,10 +263,7 @@ const getData = (treeNode, component, f7, initial, isRoot) => {
       }
     }
   });
-  if (isRoot && component && component.id && component.style && component.styleScoped) {
-    if (!data.attrs) data.attrs = {};
-    data.attrs[`data-f7-${component.id}`] = '';
-  }
+
   const hooks = getHooks(treeNode, data, f7, initial, isRoot);
 
   hooks.prepatch = (oldVnode, vnode) => {

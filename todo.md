@@ -92,6 +92,7 @@
   - removed Template7
   - removed template loader (with template and templateUrl)
   - removed mixins
+  - removed scoped styles
 
 # React
 
