@@ -13,30 +13,30 @@ export namespace Autocomplete {
     value: unknown[];
     /** true if Autocomplete is currently opened */
     opened: boolean;
-    /** HTML element of Autcomplete opener element (if passed on init) */
+    /** HTML element of Autocomplete opener element (if passed on init) */
     openerEl: HTMLElement | undefined;
-    /** Dom7 instance of of Autcomplete opener element (if passed on init) */
+    /** Dom7 instance of of Autocomplete opener element (if passed on init) */
     $openerEl: Dom7Array | undefined;
-    /** HTML element of Autcomplete input (if passed on init) */
+    /** HTML element of Autocomplete input (if passed on init) */
     inputEl: HTMLElement | undefined;
-    /** Dom7 instance of of Autcomplete input (if passed on init) */
+    /** Dom7 instance of of Autocomplete input (if passed on init) */
     $inputEl: Dom7Array | undefined;
-    /** Dom7 instance of Autcomplete dropdown */
+    /** Dom7 instance of Autocomplete dropdown */
     $dropdownEl: Dom7Array | undefined;
-    /** Autcomplete URL (that was passed in url parameter) */
+    /** Autocomplete URL (that was passed in url parameter) */
     url: string;
-    /** Autcomplete View (that was passed in view parameter) or found parent view */
+    /** Autocomplete View (that was passed in view parameter) or found parent view */
     view: View.View;
-    /** HTML element of Autcomplete container: dropdown element, or popup element, or page element. Available when Autocomplete opened */
+    /** HTML element of Autocomplete container: dropdown element, or popup element, or page element. Available when Autocomplete opened */
     el: HTMLElement | undefined;
-    /** Dom7 instance of Autcomplete container: dropdown element, or popup element, or page element. Available when Autocomplete opened */
+    /** Dom7 instance of Autocomplete container: dropdown element, or popup element, or page element. Available when Autocomplete opened */
     $el: Dom7Array | undefined;
-    /** Autcomplete page Searchbar instance */
+    /** Autocomplete page Searchbar instance */
     searchbar: Searchbar.Searchbar;
 
     /** Open Autocomplete (Dropdown, Page or Popup) */
     open(): void;
-    /** Close Autcomplete */
+    /** Close Autocomplete */
     close(): void;
     /** Show autocomplete preloader */
     preloaderShow(): void;
@@ -103,13 +103,13 @@ export namespace Autocomplete {
     routableModals?: boolean;
     /** Standalone autocomplete URL that will be set as a current route. (default select/) */
     url?: string;
-    /** Link to initialized View instance if you want use standalone Autcomplete. By default, if not specified, it will be opened in Main View.. */
+    /** Link to initialized View instance if you want use standalone Autocomplete. By default, if not specified, it will be opened in Main View.. */
     view?: View.View;
     /** String with CSS selector or HTMLElement of related text input. */
     inputEl?: HTMLElement | CSSSelector;
-    /** Allows to configure input events used to handle Autcomplete actions and source request. Can be changed for example to change keyup compositionend if you use keyboard with composition of Chinese characters. (default input) */
+    /** Allows to configure input events used to handle Autocomplete actions and source request. Can be changed for example to change keyup compositionend if you use keyboard with composition of Chinese characters. (default input) */
     inputEvents?: string;
-    /** Highlight matches in autcomplete results. (default true) */
+    /** Highlight matches in autocomplete results. (default true) */
     highlightMatches?: boolean;
     /** Enables type ahead, will prefill input value with first item in match. (default false) */
     typeahead?: boolean;
@@ -186,6 +186,6 @@ export namespace Autocomplete {
     autocompleteBeforeDestroy: (autocomplete: Autocomplete) => void;
   }
 }
-declare const AutcompleteComponent: Framework7Plugin;
+declare const AutocompleteComponent: Framework7Plugin;
 
-export default AutcompleteComponent;
+export default AutocompleteComponent;
