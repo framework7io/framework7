@@ -1606,7 +1606,7 @@
   - Panel
     - Unset breakpoint layout on panel destroy
   - Autocomplete
-    - Fixed issue with autcomplete dropdown click on iOS devices
+    - Fixed issue with autocomplete dropdown click on iOS devices
   - Router
     - Fixed wrong behavior of navbar back link with swipe back in `ios` theme
   - Cards
@@ -2310,7 +2310,7 @@
 - Request
   - Now if you `return false` in `beforeOpen` or `beforeSend` callbacks it will cancel the XHR request
 - Autocomplete
-  - New `inputEvents` parameter (by default is `input`) allows to configure input events used to handle Autcomplete actions and source request
+  - New `inputEvents` parameter (by default is `input`) allows to configure input events used to handle Autocomplete actions and source request
 - Smart Select
   - Fixed issue when Searchbar didn't work when Smart Select opened in `page` with Searchbar in iOS theme
 - Dialog
