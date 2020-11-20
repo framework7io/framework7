@@ -129,6 +129,8 @@ export namespace Router {
     props?: object;
     /** custom page transition name */
     transition?: string;
+    /** Allows open page route as modal or panel */
+    openIn?: 'popup' | 'loginScreen' | 'sheet' | 'popover' | 'panel';
   }
   interface NavigateParameters {
     query?: { [queryParameter: string]: number | string | undefined };
