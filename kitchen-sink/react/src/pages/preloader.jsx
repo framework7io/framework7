@@ -62,7 +62,7 @@ export default () => {
         </Col>
       </Block>
 
-      <BlockTitle>Multi-color (MD-theme only)</BlockTitle>
+      <BlockTitle>Multi-color</BlockTitle>
       <Block strong className="text-align-center">
         <Preloader color="multi" />
       </Block>

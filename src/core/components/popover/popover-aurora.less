@@ -4,44 +4,44 @@
     transition-property: opacity;
   }
   .popover-angle {
-    width: 18px;
-    height: 18px;
+    width: 24px;
+    height: 24px;
     position: absolute;
-    left: -18px;
+    left: -24px;
     top: 0;
     z-index: 100;
     overflow: hidden;
     &:after {
       content: '';
       background: var(--f7-popover-bg-color);
-      width: 18px;
-      height: 18px;
+      width: 24px;
+      height: 24px;
       position: absolute;
       left: 0;
       top: 0;
-      border-radius: 2px;
+      border-radius: 4px;
       transform: rotate(45deg);
     }
     &.on-left {
-      left: -18px;
+      left: -24px;
       &:after {
-        left: 13px;
+        left: 17px;
         top: 0;
       }
     }
     &.on-right {
       left: 100%;
       &:after {
-        left: -13px;
+        left: -17px;
         top: 0;
       }
     }
     &.on-top {
       left: 0;
-      top: -18px;
+      top: -24px;
       &:after {
         left: 0;
-        top: 13px;
+        top: 17px;
       }
     }
     &.on-bottom {
@@ -49,7 +49,7 @@
       top: 100%;
       &:after {
         left: 0;
-        top: -13px;
+        top: -17px;
       }
     }
   }

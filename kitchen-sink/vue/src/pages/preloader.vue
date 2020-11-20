@@ -40,7 +40,7 @@
       </f7-col>
     </f7-block>
 
-    <f7-block-title>Multi-color (MD-theme only)</f7-block-title>
+    <f7-block-title>Multi-color</f7-block-title>
     <f7-block strong class="text-align-center">
       <f7-preloader color="multi" />
     </f7-block>

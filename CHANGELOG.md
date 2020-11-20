@@ -38,6 +38,7 @@
   - Preloader
     - Preloader in MD theme now uses new SVG layout
     - Preloader in iOS reworked to match iOS 14 appearance
+    - Preloader in iOS now also supports "multi" color
   - Checkbox
     - Removed "extra" margin in checkboxes list in MD theme
   - Radio

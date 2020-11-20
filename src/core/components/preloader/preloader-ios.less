@@ -2,7 +2,6 @@
   .preloader-inner {
     animation: ios-preloader-spin 1s steps(8, end) infinite;
   }
-
   .preloader-inner-line {
     display: block;
     width: 11.6%;
@@ -13,6 +12,9 @@
     left: 50%;
     top: 50%;
     transform-origin: center 150%;
+  }
+  .preloader.color-multi .preloader-inner-line {
+    animation: ios-preloader-multicolor 3s linear infinite;
   }
   @indexes: 0, 1, 2, 3, 4, 5, 6, 7;
   each(@indexes, {
@@ -28,5 +30,20 @@
 @keyframes ios-preloader-spin {
   100% {
     transform: rotate(360deg);
+  }
+}
+@keyframes ios-preloader-multicolor {
+  0%,
+  100% {
+    background-color: #2196f3;
+  }
+  25% {
+    background-color: #ff3b30;
+  }
+  50% {
+    background-color: #4cd964;
+  }
+  75% {
+    background-color: #ff9500;
   }
 }

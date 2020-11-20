@@ -6,6 +6,10 @@
   --f7-table-input-font-size: 14px;
   --f7-table-collapsible-cell-padding: 16px;
   --f7-table-link-icon-only-icon-size: 20px;
+  --f7-table-head-bg-color: transparent;
+  --f7-table-card-header-bg-color: transparent;
+  --f7-table-card-header-height: 64px;
+  --f7-table-cell-padding-vertical: 0px;
   .light-vars({
     --f7-table-sortable-icon-color:  #000;
   });
@@ -20,7 +24,6 @@
   --f7-table-head-cell-height: 44px;
   --f7-table-head-icon-size: 18px;
   --f7-table-body-cell-height: 44px;
-  --f7-table-cell-padding-vertical: 0px;
   --f7-table-cell-padding-horizontal: 16px;
   --f7-table-edge-cell-padding-horizontal: 16px;
   --f7-table-label-cell-padding-horizontal: 16px;
@@ -29,7 +32,6 @@
   /* --f7-table-actions-link-color: var(--f7-theme-color); */
   --f7-table-title-font-size: 17px;
   --f7-table-title-font-weight: 600;
-  --f7-table-card-header-height: 64px;
   --f7-table-footer-height: 44px;
   .light-vars({
     --f7-table-head-text-color: rgba(0,0,0,0.45);
@@ -49,14 +51,12 @@
   --f7-table-head-cell-height: 56px;
   --f7-table-head-icon-size: 16px;
   --f7-table-body-cell-height: 48px;
-  --f7-table-cell-padding-vertical: 0px;
   --f7-table-cell-padding-horizontal: 28px;
   --f7-table-edge-cell-padding-horizontal: 24px;
   --f7-table-label-cell-padding-horizontal: 24px;
   --f7-table-checkbox-cell-width: 18px;
   --f7-table-title-font-size: 20px;
   --f7-table-title-font-weight: 400;
-  --f7-table-card-header-height: 64px;
   --f7-table-footer-height: 56px;
   .light-vars({
     --f7-table-head-text-color: rgba(0,0,0,0.54);
@@ -76,32 +76,34 @@
   });
 });
 .aurora-vars({
-  --f7-table-link-icon-only-icon-size: 18px;
-  --f7-table-head-font-weight: 400;
-  --f7-table-head-cell-height: 32px;
+  --f7-table-head-font-weight: 600;
+  --f7-table-head-cell-height: 56px;
   --f7-table-head-icon-size: 18px;
-  --f7-table-body-cell-height: 32px;
-  --f7-table-cell-padding-vertical: 5px;
-  --f7-table-cell-padding-horizontal: 10px;
+
+  --f7-table-body-cell-height: 48px;
+  --f7-table-cell-padding-horizontal: 16px;
   --f7-table-edge-cell-padding-horizontal: 16px;
   --f7-table-label-cell-padding-horizontal: 16px;
   --f7-table-checkbox-cell-width: 22px;
   /* --f7-table-actions-cell-link-color: var(--f7-theme-color); */
   /* --f7-table-actions-link-color: var(--f7-theme-color); */
-  --f7-table-title-font-size: 14px;
+  --f7-table-title-font-size: 20px;
   --f7-table-title-font-weight: 600;
-  --f7-table-card-header-height: 42px;
-  --f7-table-footer-height: 32px;
+  --f7-table-footer-height: 56px;
   .light-vars({
     --f7-table-head-text-color: rgba(0,0,0,0.6);
     --f7-table-cell-border-color: rgba(0,0,0,0.12);
     --f7-table-selected-row-bg-color: rgba(0,0,0,0.03);
     --f7-table-footer-text-color: rgba(0,0,0,0.5);
     --f7-table-input-text-color: #000;
+    --f7-table-head-bg-color: #f6f6f7;
+    --f7-table-card-header-bg-color: #f6f6f7;
   });
   .dark-vars({
     --f7-table-selected-row-bg-color: rgba(255,255,255,0.03);
     --f7-table-head-text-color: rgba(255,255,255,0.54);
     --f7-table-footer-text-color: rgba(255,255,255,0.54);
+    --f7-table-head-bg-color: rgba(255, 255, 255, 0.05);
+    --f7-table-card-header-bg-color: rgba(255, 255, 255, 0.05);
   });
 });

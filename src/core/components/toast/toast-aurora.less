@@ -2,8 +2,8 @@
   .toast {
     transition-duration: 200ms;
     border-radius: var(--f7-toast-border-radius);
-    left: 10px;
-    width: calc(100% - 20px);
+    left: 16px;
+    width: calc(100% - 32px);
     transform: scale(0.9);
     &.modal-in {
       transform: scale(1);
@@ -12,7 +12,7 @@
       transform: scale(1);
     }
     &.toast-top {
-      top: 10px;
+      top: 16px;
     }
     &.toast-center {
       left: 50%;
@@ -26,7 +26,7 @@
       }
     }
     &.toast-bottom {
-      bottom: calc(10px + var(--f7-safe-area-bottom));
+      bottom: calc(16px + var(--f7-safe-area-bottom));
     }
     // 568 + 16
     @media (min-width: 584px) {
@@ -40,11 +40,11 @@
       margin-left: 0;
       width: auto;
       &.toast-horizontal-left {
-        left: 10px;
+        left: 16px;
       }
       &.toast-horizontal-right {
         left: auto;
-        right: 10px;
+        right: 16px;
       }
       &.toast-horizontal-center {
         left: 50%;
@@ -55,10 +55,10 @@
   }
   .toast-button {
     .ltr({
-      margin-left: 10px;
+      margin-left: 16px;
     });
     .rtl({
-      margin-right: 10px;
+      margin-right: 16px;
     });
   }
 }
