@@ -25,7 +25,7 @@ export namespace SmartSelect {
     view?: View.View;
     /** Visual element where to insert selected value. If not passed then it will look for <div class="item-after"> element */
     valueEl?: HTMLElement | CSSSelector;
-    /** When enabled then smart select will automaticall insert value text into "valueEl" in format returned by "formatValueText"  */
+    /** When enabled then smart select will automatically insert value text into "valueEl" in format returned by "formatValueText"  */
     setValueText?: boolean;
     /** Custom function to format smart select text value that appears on list item */
     formatValueText?: (values: any[]) => string;
