@@ -2277,7 +2277,7 @@
   - Fixed issue with undefined initial browser history state when `pushState` enabled
 - Minor fixes
 
-## [v1.7.1](https://github.com/framework7io/framework7/compare/v1.7.0...v1.7.1) - March 21, 2018
+## [v1.7.1](https://github.com/framework7io/framework7/compare/v1.7.0...v1.7.1) - April 7, 2018
 
 - Fix for touch events when app can be unresponsive iOS 11.3
 
