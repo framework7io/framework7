@@ -1281,7 +1281,7 @@
     - Fixed issue when during positioning it didn't consider top safe area
 - Phenome
   - Button, FabButton, Fab, Icon, Link, ListButton, ListItem
-    - Imporved `tooltip` prop reactivity to change, set or unset tooltip correctly
+    - Improved `tooltip` prop reactivity to change, set or unset tooltip correctly
   - ListItem
     - Now settings `sortable: false` prop on it, will prevent this specific item from sorting
   - Navbar
@@ -1960,7 +1960,7 @@
 
 - Core
   - Virtual DOM Router Components
-    - Imporved boolean attributes handling (`readonly`, `checked`, etc.)
+    - Improved boolean attributes handling (`readonly`, `checked`, etc.)
     - Fixed issue when comment inside of template can break the rendering
     - Better auto-init components cleanup
 - Minor fixes
@@ -2233,7 +2233,7 @@
   - Improved statusbar overlay detection for iOS devices
 - Autocomplete
   - New `dropdownContainerEl` parameter to define place where dropdown need to be inserted
-  - Imporved dropdown positioning
+  - Improved dropdown positioning
 - Dom7 update to latest v2.0.6:
   - Fixed issue with remove event listeners when they was not added
 - Swiper update to latest v4.3.0:
@@ -2258,7 +2258,7 @@
   - Added support for skip inputs from storing by adding `no-store-data` or `ignore-store-data` class to input element
 - Dom7 updated to latest v2.0.5
   - Support for setting array value on multiple select
-  - Imporved internal events proxies logic for better memory management
+  - Improved internal events proxies logic for better memory management
 - Swiper update to latest v4.2.5
   - Core
     - Prevent apply grab cursor when swiper is locked
@@ -2563,7 +2563,7 @@
 - Swiper updated to latest version
   - Fixed issue with not working `noSwiping` parameter
   - Parallax now considers `slidesPerGroup` parameter
-  - Zoom: imporved gestures handling
+  - Zoom: improved gestures handling
   - Pagination: fixed issues with wrong positioned dynamic-bullets when there are not enough slides
   - Fixed issues with some effects being broken with enabled `breakpoints`
 - Panels
