@@ -82,7 +82,7 @@ export namespace Panel {
     params: Parameters;
     /** Element to mount panel to. (default app.el) */
     containerEl: HTMLElement | CSSSelector;
-    /** Dom7 instance with with element to mount panel to. (default app.el) */
+    /** Dom7 instance with element to mount panel to. (default app.el) */
     $containerEl: HTMLElement | CSSSelector;
 
     /** Open panel. */
