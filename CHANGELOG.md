@@ -183,7 +183,7 @@
 - Core
   - Types fixes (#3759, #3758)
   - Calendar
-    - Minor fixes upading selected value (#3761)
+    - Minor fixes updating selected value (#3761)
 - React
   - Removed React 16 peer dependency (to be compatible with React 17)
 
@@ -198,7 +198,7 @@
   - ListInput, Input
     - Fixed not working TextEditor events
   - LoginScreen
-    - Fixed not working eventsy
+    - Fixed not working events
 - Lots of docs and Kitchen Sink typos fixes by @DAnn2012
 
 # [v5.7.12](https://github.com/framework7io/framework7/compare/v5.7.11...v5.7.12) - September 3, 2020
@@ -370,7 +370,7 @@
       - Fixed focus ring on navigation buttons (#3544)
       - Fixed RegExp issue in paginationBulletMessage (#3540, #3541)
     - Thumbs
-      - Added thumbs.autoScrollOffset parameter that allows to set on what thumbs active slide from edge it should automaticall move scroll thumbs
+      - Added thumbs.autoScrollOffset parameter that allows to set on what thumbs active slide from edge it should automatically move scroll thumbs
   - View
     - New `masterDetailResizable` parameter to enable resizable Master Detail layout
     - New `viewResize` / `view:resize` event on Master Detail resize
@@ -723,7 +723,7 @@
     - Core
       - New `centeredSlidesBounds` parameter that when enabled will keep first and last slides at bounds
       - Fixed issue when `freeMode` could break position on resize (#2708, #3303)
-      - Fixed transitin duration issue with `freeModeSticky` (#3302)
+      - Fixed transition duration issue with `freeModeSticky` (#3302)
       - Fixed issue with wrong row/column if not full groups (#3294)
       - Fixed issue when `watchOverflow` and `slidesOffsetBefore`/`slidesOffsetAfter` couldn't work together (#3291)
     - Mousewheel
@@ -1281,7 +1281,7 @@
     - Fixed issue when during positioning it didn't consider top safe area
 - Phenome
   - Button, FabButton, Fab, Icon, Link, ListButton, ListItem
-    - Imporved `tooltip` prop reactivity to change, set or unset tooltip correctly
+    - Improved `tooltip` prop reactivity to change, set or unset tooltip correctly
   - ListItem
     - Now settings `sortable: false` prop on it, will prevent this specific item from sorting
   - Navbar
@@ -1960,7 +1960,7 @@
 
 - Core
   - Virtual DOM Router Components
-    - Imporved boolean attributes handling (`readonly`, `checked`, etc.)
+    - Improved boolean attributes handling (`readonly`, `checked`, etc.)
     - Fixed issue when comment inside of template can break the rendering
     - Better auto-init components cleanup
 - Minor fixes
@@ -2233,7 +2233,7 @@
   - Improved statusbar overlay detection for iOS devices
 - Autocomplete
   - New `dropdownContainerEl` parameter to define place where dropdown need to be inserted
-  - Imporved dropdown positioning
+  - Improved dropdown positioning
 - Dom7 update to latest v2.0.6:
   - Fixed issue with remove event listeners when they was not added
 - Swiper update to latest v4.3.0:
@@ -2258,7 +2258,7 @@
   - Added support for skip inputs from storing by adding `no-store-data` or `ignore-store-data` class to input element
 - Dom7 updated to latest v2.0.5
   - Support for setting array value on multiple select
-  - Imporved internal events proxies logic for better memory management
+  - Improved internal events proxies logic for better memory management
 - Swiper update to latest v4.2.5
   - Core
     - Prevent apply grab cursor when swiper is locked
@@ -2277,7 +2277,7 @@
   - Fixed issue with undefined initial browser history state when `pushState` enabled
 - Minor fixes
 
-## [v1.7.1](https://github.com/framework7io/framework7/compare/v1.7.0...v1.7.1) - March 21, 2018
+## [v1.7.1](https://github.com/framework7io/framework7/compare/v1.7.0...v1.7.1) - April 7, 2018
 
 - Fix for touch events when app can be unresponsive iOS 11.3
 
@@ -2326,7 +2326,7 @@
 
 ## [v1.7.0](https://github.com/framework7io/framework7/compare/v1.6.5...v1.7.0) - March 21, 2018
 
-- Full iPhoneX support and required tweaks. Automatic support for top and bottom safe areas (for portrait orientation). For landscape orientation the following classes must be added to elements:
+- Full iPhone X support and required tweaks. Automatic support for top and bottom safe areas (for portrait orientation). For landscape orientation the following classes must be added to elements:
   - `ios-edges` - for full-width elements (like main View)
   - `ios-edge-left` - for elements that stick to the left edge of the screen (like left Panel)
   - `ios-edge-right` - for elements that stick to the right edge of the screen (like right Panel)
@@ -2371,7 +2371,7 @@
 - Toast
   - Added `destroyOnClose` parameter to automatically destroy toast instance on close
   - New `app.toast.show` method to automatically create and open Toast
-  - Improved iPhoneX support for bottom toast
+  - Improved iPhone X support for bottom toast
 - List
   - New `no-chevron` class on list and list item link to disable chevron icon
   - New `chevron-center` class on media list or media list item to set chevron icon position on center
@@ -2530,8 +2530,8 @@
     - `app.form.toData()` -> `app.form.convertToData()`
     - `app.form.fromData()` -> `app.form.fillFromData()`
 - CSS & Theming
-  - New "Dark Colo Theme" for both "iOS" and "MD" themes. Can be added with `theme-dark` CSS class.
-  - Full iPhoneX support and required tweaks. Automatic support for top and bottom safe areas (for portrait orientation). For landscape orientation the following classes must be added to elements:
+  - New "Dark Color Theme" for both "iOS" and "MD" themes. Can be added with `theme-dark` CSS class.
+  - Full iPhone X support and required tweaks. Automatic support for top and bottom safe areas (for portrait orientation). For landscape orientation the following classes must be added to elements:
     - `ios-edges` - for full-width elements (like main View)
     - `ios-edge-left` - for elements that stick to the left edge of the screen (like left Panel)
     - `ios-edge-right` - for elements that stick to the right edge of the screen (like right Panel)
@@ -2563,7 +2563,7 @@
 - Swiper updated to latest version
   - Fixed issue with not working `noSwiping` parameter
   - Parallax now considers `slidesPerGroup` parameter
-  - Zoom: imporved gestures handling
+  - Zoom: improved gestures handling
   - Pagination: fixed issues with wrong positioned dynamic-bullets when there are not enough slides
   - Fixed issues with some effects being broken with enabled `breakpoints`
 - Panels
@@ -2701,14 +2701,14 @@
 - Added full RTL layout support (with new `.rtl` stylesheets).
 - Removed XHR (Ajax) functionality from Dom7, including `$.ajax`, `$.get`, `$.post`, `$.getJSON`. These are replaced with new Framework7 `request` module.
 - Removed `$.` utilities from Dom7, including `$.parseUrlQuery`, `$.isArray`, `$.each`, `$.unique`, `$.serializeObject`, `$.dataset`, `$.extend`, they are available via `Framework7.utils` or `app.utils`.
-- Utils' `.promise` now returns native Promise if it is supported by browser and fallback to Promise-like polifyl if it is not supported.
+- Utils' `.promise` now returns native Promise if it is supported by browser and fallback to Promise-like polyfill if it is not supported.
 
 # [v2.0.0-beta.3](https://github.com/framework7io/framework7/compare/v2.0.0-beta.2...v2.0.0-beta.3) - September 7, 2017
 
 - Add new Autocomplete component
 - Add new Toast component
 - New modular package `framework7.modular.js`
-- New view `restoreScrollTopOnBack` parameter to restor previous page scroll position when navigating back
+- New view `restoreScrollTopOnBack` parameter to restore previous page scroll position when navigating back
 - Lots of minor fixes and improvements
 
 # [v2.0.0-beta.2](https://github.com/framework7io/framework7/compare/v2.0.0-beta.1...v2.0.0-beta.2) - September 2, 2017
