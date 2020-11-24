@@ -83,7 +83,7 @@ export namespace Panel {
     /** Element to mount panel to. (default app.el) */
     containerEl: HTMLElement | CSSSelector;
     /** Dom7 instance with element to mount panel to. (default app.el) */
-    $containerEl: HTMLElement | CSSSelector;
+    $containerEl: Dom7Array;
 
     /** Open panel. */
     open(animate: boolean): void;
