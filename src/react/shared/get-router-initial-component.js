@@ -7,7 +7,8 @@ export const getRouterInitialComponent = (router, initialComponent) => {
   if (
     initialRoute &&
     initialRoute.route &&
-    (initialRoute.route.component || initialRoute.route.asyncComponent)
+    (initialRoute.route.component || initialRoute.route.asyncComponent) &&
+    !initialRoute.route.master
   ) {
     initialComponentData = {
       component: initialRoute.route.component || initialRoute.route.asyncComponent,
