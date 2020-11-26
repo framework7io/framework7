@@ -232,6 +232,8 @@
       messagebar.clear();
       // Focus area
       if (text.length) messagebar.focus();
+      // Exit when nothing to send
+      if (!messagesToSend.length) return;
       // Send message
       messages.addMessages(messagesToSend);
 
