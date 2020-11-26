@@ -1,19 +1,6 @@
 # Core
 
 - [ ] Capacitor integration
-- [ ] Styles
-
-  - [ ] Update Aurora theme
-    - [ ] calendar
-    - [ ] color-picker
-    - [ ] input
-    - [ ] messagebar
-    - [ ] messages
-    - [ ] notification
-    - [ ] picker
-    - [ ] timeline
-    - [ ] toolbar
-
 - [ ] Features
   - [ ] New component Stepper / Lines
 - [ ] Router

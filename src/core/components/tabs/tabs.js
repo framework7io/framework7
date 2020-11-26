@@ -202,7 +202,7 @@ const Tab = {
       if ($tabLinkEl && $tabLinkEl.length > 0) {
         $tabLinkEl.addClass('tab-link-active');
         // Material Highlight
-        if (app.theme === 'md' && app.toolbar) {
+        if (app.theme !== 'ios' && app.toolbar) {
           const $tabbarEl = $tabLinkEl.parents('.tabbar, .tabbar-labels');
           if ($tabbarEl.length > 0) {
             app.toolbar.setHighlight($tabbarEl);

@@ -12,24 +12,28 @@
   }
 
   .notification-icon {
-    margin-right: 10px;
+    margin-right: 8px;
   }
   .notification-header + .notification-content {
-    margin-top: 10px;
+    margin-top: 8px;
   }
   .notification-title-right-text {
     margin-right: 0px;
     margin-left: auto;
     + .notification-close-button {
-      margin-left: 10px;
+      margin-left: 8px;
     }
   }
   .notification-close-button {
     font-size: 14px;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     opacity: 0.4;
     transition-duration: 300ms;
+    &:hover {
+      transition-duration: 0ms;
+      opacity: 0.5;
+    }
     &.active-state {
       transition-duration: 0ms;
       opacity: 0.6;
@@ -37,12 +41,12 @@
     &:after {
       color: #000;
       content: 'notification_close_ios';
-      font-size: 0.5em;
-      line-height: 38px;
-      width: 38px;
-      height: 38px;
-      margin-left: -19px;
-      margin-top: -19px;
+      font-size: 0.65em;
+      line-height: 44px;
+      width: 44px;
+      height: 44px;
+      margin-left: -22px;
+      margin-top: -22px;
     }
   }
   .if-dark-theme({

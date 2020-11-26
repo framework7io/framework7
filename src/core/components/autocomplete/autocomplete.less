@@ -83,8 +83,8 @@
     overflow: hidden;
   }
   .item-content {
-    .ltr({ padding-left: calc(var(--f7-searchbar-input-padding-horizontal) + var(--f7-searchbar-input-extra-padding-left)); });
-    .rtl({ padding-right: calc(var(--f7-searchbar-input-padding-horizontal) + var(--f7-searchbar-input-extra-padding-left)); });
+    .ltr({ padding-left: calc(var(--f7-searchbar-input-padding-horizontal) + var(--f7-searchbar-input-extra-padding-left, 0px)); });
+    .rtl({ padding-right: calc(var(--f7-searchbar-input-padding-horizontal) + var(--f7-searchbar-input-extra-padding-left, 0px)); });
   }
 }
 
