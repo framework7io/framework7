@@ -26,7 +26,7 @@ export default () => {
       <Panel right reveal resizable>
         <View url="/panel-right/" />
       </Panel>
-      <View url="/" main className="safe-areas" masterDetailBreakpoint={800} />
+      <View url="/" main className="safe-areas" masterDetailBreakpoint={768} />
     </App>
   );
 };

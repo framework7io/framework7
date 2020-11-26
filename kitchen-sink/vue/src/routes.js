@@ -123,6 +123,9 @@ export default [
   {
     path: '/',
     component: Home,
+    master(f7) {
+      return f7.theme === 'aurora';
+    },
   },
   // About page
   {

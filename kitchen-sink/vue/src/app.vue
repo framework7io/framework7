@@ -6,7 +6,7 @@
     <f7-panel right reveal resizable>
       <f7-view url="/panel-right/"></f7-view>
     </f7-panel>
-    <f7-view url="/" :main="true" class="safe-areas" :master-detail-breakpoint="800"></f7-view>
+    <f7-view url="/" :main="true" class="safe-areas" :master-detail-breakpoint="768"></f7-view>
   </f7-app>
 </template>
 <script>

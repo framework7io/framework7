@@ -122,6 +122,10 @@ export default [
   {
     path: '/',
     component: Home,
+    master(f7) {
+      console.log(f7.theme);
+      return f7.theme === 'aurora';
+    },
   },
   // About page
   {

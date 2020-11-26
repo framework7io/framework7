@@ -36,5 +36,5 @@
   <Panel right reveal resizable>
     <View url="/panel-right/" />
   </Panel>
-  <View url="/" main={true} class="safe-areas" masterDetailBreakpoint={800} />
+  <View url="/" main={true} class="safe-areas" masterDetailBreakpoint={768} />
 </App>
