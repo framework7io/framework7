@@ -289,6 +289,7 @@
   height: auto;
   background-color: transparent;
   background-image: none;
+
   &:after,
   &:before {
     display: none !important;
@@ -305,6 +306,10 @@
   input[type='text'],
   input[type='search'] {
     font-size: var(--f7-searchbar-inline-input-font-size, var(--f7-searchbar-input-font-size));
+    border-radius: var(
+      --f7-searchbar-inline-input-border-radius,
+      var(--f7-searchbar-input-border-radius)
+    );
     .ltr({
       padding-left: calc(var(--f7-searchbar-inline-input-padding-horizontal, var(--f7-searchbar-input-padding-horizontal)) + var(--f7-searchbar-input-extra-padding-left, 0px));
       padding-right: calc(var(--f7-searchbar-inline-input-padding-horizontal, var(--f7-searchbar-input-padding-horizontal)) + var(--f7-searchbar-input-extra-padding-right, 0px));;
