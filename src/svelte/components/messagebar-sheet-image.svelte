@@ -26,7 +26,7 @@
   }
 </script>
 
-<label class={classes} {...restProps($$restProps)}>
+<label class={classes} style={styles} {...restProps($$restProps)}>
   <input type="checkbox" {checked} on:change={onChange} />
   <i class="icon icon-checkbox" />
   <slot />
