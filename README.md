@@ -253,7 +253,7 @@ Whole source code is located under the `/src/` folder.
 
 Before you open an issue please review the [contributing](https://github.com/framework7io/framework7/blob/master/CONTRIBUTING.md) guideline.
 
-**All changes should be committed to `src/` files only!**.
+**All changes should be committed to `src/` files only!**
 
 Framework7 uses LESS for CSS compilations, and ES modules JS files.
 
