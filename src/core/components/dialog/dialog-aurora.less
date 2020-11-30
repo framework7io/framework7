@@ -60,10 +60,13 @@
   }
 
   // Inputs
-  .dialog-input-field {
+  div.dialog-input-field {
     margin-top: 16px;
     input.dialog-input {
       margin-top: 0;
+    }
+    &.input:after {
+      display: none !important;
     }
   }
   .dialog-input {

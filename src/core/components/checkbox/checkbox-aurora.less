@@ -28,4 +28,12 @@
     overflow: hidden;
     z-index: 0;
   }
+
+  &.device-desktop {
+    label.item-checkbox {
+      &:hover:not(.active-state):not(.no-hover) {
+        background-color: var(--f7-list-link-hover-bg-color);
+      }
+    }
+  }
 }
