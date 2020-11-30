@@ -216,7 +216,7 @@ $ npm install
 
 The following npm scripts are available to create development builds:
 
-- `build:dev` - build development versions of all packages (Core, Vue, React)
+- `build:dev` - build development versions of all packages (Core, Vue, React, Svelte)
 - `build-core:dev` - build development version of Core (vanilla JS) Framework7
 - `build-react:dev` - build development version of Framework7 React package
 - `build-vue:dev` - build development version of Framework7 Vue package
@@ -224,11 +224,11 @@ The following npm scripts are available to create development builds:
 
 Compiled results will be available in `build/` folder.
 
-### Production builds
+### Production Builds
 
 To build production versions the following npm scripts are available:
 
-- `build:prod` - build production versions of all packages (Core, Vue, React)
+- `build:prod` - build production versions of all packages (Core, Vue, React, Svelte)
 - `build-core:prod` - build production version of Core (vanilla JS) Framework7
 - `build-react:prod` - build production version of Framework7 React package
 - `build-vue:prod` - build production version of Framework7 Vue package
@@ -253,7 +253,7 @@ Whole source code is located under the `/src/` folder.
 
 Before you open an issue please review the [contributing](https://github.com/framework7io/framework7/blob/master/CONTRIBUTING.md) guideline.
 
-**All changes should be committed to `src/` files only!**.
+**All changes should be committed to `src/` files only!**
 
 Framework7 uses LESS for CSS compilations, and ES modules JS files.
 

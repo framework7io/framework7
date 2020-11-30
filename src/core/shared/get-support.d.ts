@@ -5,7 +5,7 @@ export interface Support {
   pointerEvents: boolean;
   /** Passive event listener support */
   passiveListener: boolean;
-  /** Intersection Ovserver support */
+  /** Intersection Observer support */
   intersectionObserver: boolean;
 }
 
