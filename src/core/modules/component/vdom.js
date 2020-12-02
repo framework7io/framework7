@@ -71,7 +71,7 @@ const destroyCustomComponent = (vnode) => {
   // eslint-disable-next-line
   const component = vnode && vnode.elm && vnode.elm.__component__;
 
-  if (component) {
+  if (component && Object.keys(component) > 0) {
     const { el, $el } = component;
     if (vnode.data && vnode.data.on && $el) {
       Object.keys(vnode.data.on).forEach((eventName) => {
