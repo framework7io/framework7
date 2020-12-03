@@ -89,7 +89,7 @@
       ```
   - Tooltip
     - New `containerEl` parameter
-    - New `delegated` parameter. Enables tooltip for all elements matching to targetEl selector (e.g. attaches event handler to document). `targetEl` parameter must be a CSS Selector (string)
+    - New `delegated` parameter. Enables tooltip for all elements matching to `targetEl` selector (e.g. attaches event handler to document). `targetEl` parameter must be a CSS Selector (string)
     - New `trigger: 'manual'` value
     - New `.setTarget(targetEl)` instance method to change tooltip target after it was created
   - Pie Chart
@@ -100,6 +100,8 @@
     - Renamed `$gaugeSvgEl` property to `$svgEl`
   - Panel
     - Improved support for nested panels. Now panel can be created and correctly opened inside of the page (including with breakpoints)
+  - Button
+    - New loading buttons
 - Vue
   - Rewritten to new Vue v3 API (no Vue v2 support anymore)
   - `App` component now receives all app parameters as props
@@ -139,17 +141,22 @@
     - Input, ListInput, Messagebar, Searchbar, Stepper, Range
       - Support for `bind:value`
   - `browserHistory` must be used with `browserHistoryInitialMatch`
-- React/Svelte/Vue
+- Common for React/Svelte/Vue
   - Button, Link, ListButon, ListItem, MenuDropdownItem, MenuItem, TreeviewItem
     - New `openIn` prop to specify how to open page route (e.g. open page as `popup`, `sheet`, `panel` etc)
+    - Support for loading button (button with preloader) with new props:
+      - `preloader` - enables button to have preloader
+      - `loading` - controls button state to show/hide preloader and hide/show button text (switch button to loading state)
+      - `preloaderColor` - button's preloader color
+      - `preloaderSize` - button's preloader size
   - Pie Chart
-    - All new Pie Chart component
+    - New Pie Chart component
   - Area Chart
-    - All new Area Chart component
+    - New Area Chart component
   - Input
     - Added `error-message` slot
   - List
-    - New `menuList` boolean property to enable Menu List
+    - New `menuList` boolean property to enable menu List
   - ListItem
     - New `selected` boolean property to mark menu list item as selected
   - Popover
@@ -169,14 +176,8 @@
     - Added `typing` prop
   - Toggle
     - Added support for tooltip with `tooltip` and `tooltipTrigger` props
-  - Menu Item
+  - MenuItem
     - Added support for tooltip with `tooltip` and `tooltipTrigger` props
-  - Button
-    - Support for loading button (button with preloader) with new props:
-      - `preloader` - enables button to have preloader
-      - `loading` - controls button state to show/hide preloader and hide/show button text (switch button to loading state)
-      - `preloaderColor` - button's preloader color
-      - `preloaderSize` - button's preloader size
 
 # [v5.7.14](https://github.com/framework7io/framework7/compare/v5.7.13...v5.7.14) - November 9, 2020
 
