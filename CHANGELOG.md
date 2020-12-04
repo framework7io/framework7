@@ -8,10 +8,13 @@
   - App
     - App `root` parameter to pass app root element renamed to `el`
     - `app.root` property which contains Dom7 instance of app root element has been renamed to `app.$el` property
+    - Removed app `data` and `methods` global app properties in favor of new Store
   - Autocomplete, Calendar, Picker, Color Picker, Photo Browser, Smart Select
     - `routableModals` is now disabled by default
   - Dom7
     - Uses new Dom7 v3
+  - Template7
+    - Template7 and its support has been completely removed from Framework7
   - Dialog
     - Added `containerEl` property to specify where to mount the modal
   - Calendar
@@ -53,14 +56,21 @@
       - Pie Chart
     - New types in `framework7/types`
       - `Framework7Params` -> `Framework7Parameters`
+    - Modules are babel transpiled
+    - New exports for `getSupport`, `getDevice`, `request`, `utils`
   - Request
     - Export renamed to `request`
     - Only promise APIs
     - New `request.abortController()`
   - Utils
     - Export renamed to `utils`
+    - Removed `removeDiacritics` util
   - Device
     - Export renamed to `device`
+    - Added `getDevice` export
+  - Support
+    - Export renamed to `support`
+    - Added `getSupport` export
   - Swiper
     - Updated to v6
     - Used as dependency
@@ -83,10 +93,13 @@
       - `reject`
       - `direction` (new in v6 - can be `forward` or `backward`)
       - `router` (new in v6 - current router instance)
+      - `app` (new in v6 - f7 app instance)
     - Now it is possible to specify how to open page route with `data-open-in` attribute, e.g.
       ```html
       <a href="/about/" data-open-in="popup">About</a>
       ```
+    - Route's `options.context` property has been removed
+    - Route's `template` and `templateUrl` properties have been removed with removal of Template7
   - Tooltip
     - New `containerEl` parameter
     - New `delegated` parameter. Enables tooltip for all elements matching to `targetEl` selector (e.g. attaches event handler to document). `targetEl` parameter must be a CSS Selector (string)
@@ -102,6 +115,8 @@
     - Improved support for nested panels. Now panel can be created and correctly opened inside of the page (including with breakpoints)
   - Button
     - New loading buttons
+  - Virtual List
+    - `itemTemplate` parameter has been removed with removal of Template7
 - Vue
   - Rewritten to new Vue v3 API (no Vue v2 support anymore)
   - `App` component now receives all app parameters as props
