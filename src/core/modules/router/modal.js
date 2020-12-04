@@ -238,6 +238,7 @@ function modalLoad(modalType, route, loadOptions = {}, direction) {
       resolve: asyncResolve,
       reject: asyncReject,
       direction,
+      app,
     });
   }
   if (modalParams.asyncComponent) {

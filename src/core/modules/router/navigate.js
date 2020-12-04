@@ -982,6 +982,7 @@ function navigate(navigateParams, navigateOptions = {}) {
         resolve: asyncResolve,
         reject: asyncReject,
         direction: 'forward',
+        app,
       });
     }
     if (route.route.asyncComponent) {

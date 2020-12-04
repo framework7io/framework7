@@ -891,6 +891,7 @@ function back(...args) {
         resolve: asyncResolve,
         reject: asyncReject,
         direction: 'backward',
+        app,
       });
     }
     if (route.route.asyncComponent) {

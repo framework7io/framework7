@@ -204,6 +204,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
       from: previousRoute,
       resolve: asyncResolve,
       reject: asyncReject,
+      app: router.app,
     });
   } else if (tabRoute.asyncComponent) {
     asyncComponent(router, tabRoute.asyncComponent, asyncResolve, asyncReject);

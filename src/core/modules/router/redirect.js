@@ -23,6 +23,7 @@ export default function redirect(direction, route, options) {
       resolve: redirectResolve,
       reject: redirectReject,
       direction,
+      app: router.app,
     });
     if (redirectUrl && typeof redirectUrl === 'string') {
       router.allowPageChange = true;
