@@ -1,0 +1,10 @@
+{
+  "actions" : {
+    "run" : {
+      "enabled" : true,
+      "script" : "npm run svelte"
+    }
+  },
+  "identifier" : "758B0624-CC97-44ED-A6B6-774F7E325B39",
+  "openLogOnRun" : "start"
+}

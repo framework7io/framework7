@@ -1,0 +1,10 @@
+{
+  "actions" : {
+    "run" : {
+      "enabled" : true,
+      "script" : "npm run react"
+    }
+  },
+  "identifier" : "F52B677B-1F9C-445F-A858-F1623B107D5D",
+  "openLogOnRun" : "start"
+}

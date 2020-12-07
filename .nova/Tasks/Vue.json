@@ -1,0 +1,10 @@
+{
+  "actions" : {
+    "run" : {
+      "enabled" : true,
+      "script" : "npm run vue"
+    }
+  },
+  "identifier" : "35485CB5-B3D0-4824-BF7D-ACF0A6160B91",
+  "openLogOnRun" : "start"
+}
