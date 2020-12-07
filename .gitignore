@@ -3,6 +3,7 @@ node_modules
 custom
 npm-debug.log
 .idea
+.nova
 scripts/build-config-custom.js
 scripts/build-config-*.js
 kitchen-sink/vue/js/*.js
