@@ -40,6 +40,8 @@ export namespace Swipeout {
           removeElementsWithTimeout?: boolean;
           /** Delay in ms to remove swipeout item if removeElementsWithTimeout is enabled */
           removeElementsTimeout?: number;
+          /** Defines how much/hard needed to swipe to trigger overswipe (defaults to 1.2) */
+          overswipeRatio?: number;
         }
       | undefined;
   }

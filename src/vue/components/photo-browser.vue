@@ -69,7 +69,7 @@ export default {
     },
     routableModals: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     virtualSlides: {
       type: Boolean,

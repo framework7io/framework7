@@ -63,7 +63,7 @@ const PhotoBrowser = forwardRef((props, ref) => {
     navbarShowCount,
     swiper,
     url,
-    routableModals = true,
+    routableModals = false,
     virtualSlides = true,
     view,
     renderNavbar,

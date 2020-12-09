@@ -24,7 +24,7 @@
   export let navbarShowCount = undefined;
   export let swiper = undefined;
   export let url = undefined;
-  export let routableModals = true;
+  export let routableModals = false;
   export let virtualSlides = true;
   export let view = undefined;
   export let renderNavbar = undefined;
