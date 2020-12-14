@@ -31,9 +31,8 @@ export namespace Router {
     asyncComponent?(): Promise<any>;
   }
 
-  // interface AP extends Actions.Parameters{}
-
   interface RouteCallbackCtx {
+    app: Framework7;
     to: Route;
     from: Route;
     resolve: Function;
