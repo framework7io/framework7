@@ -20,7 +20,7 @@ const Appbar = forwardRef((props, ref) => {
     id,
     style,
     children,
-    inner,
+    inner = true,
     innerClass,
     innerClassName,
     noShadow,
