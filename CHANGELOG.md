@@ -159,6 +159,7 @@
 - Common for React/Svelte/Vue
   - Button, Link, ListButon, ListItem, MenuDropdownItem, MenuItem, TreeviewItem
     - New `openIn` prop to specify how to open page route (e.g. open page as `popup`, `sheet`, `panel` etc)
+  - Button
     - Support for loading button (button with preloader) with new props:
       - `preloader` - enables button to have preloader
       - `loading` - controls button state to show/hide preloader and hide/show button text (switch button to loading state)
