@@ -110,10 +110,7 @@ function createStore(storeParams = {}) {
         reject();
         throw new Error(`Framework7: Store action "${actionName}" is not found`);
       }
-      const result = actions[actionName](
-        { state: store.state, action: store.action, get: store.get },
-        data,
-      );
+      const result = actions[actionName]({ state: store.state, dispatch: store.dispatch }, data);
       resolve(result);
     });
   };
