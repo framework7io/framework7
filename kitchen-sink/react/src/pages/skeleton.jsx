@@ -26,7 +26,7 @@ export default () => {
   };
   return (
     <Page>
-      <Navbar title="Skeleton Layouts" backLink="Back"></Navbar>
+      <Navbar title="Skeleton Elements" backLink="Back"></Navbar>
       <Block strong>
         <p>
           Skeleton (or Ghost) elements designed to improve perceived performance and make app feels

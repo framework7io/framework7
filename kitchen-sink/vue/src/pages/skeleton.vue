@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Skeleton Layouts" back-link="Back"></f7-navbar>
+    <f7-navbar title="Skeleton Elements" back-link="Back"></f7-navbar>
     <f7-block strong>
       <p>
         Skeleton (or Ghost) elements designed to improve perceived performance and make app feels

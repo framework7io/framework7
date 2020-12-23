@@ -27,10 +27,18 @@
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
-  <Navbar title="Skeleton Layouts" backLink="Back"></Navbar>
+  <Navbar title="Skeleton Elements" backLink="Back" />
   <Block strong>
-    <p>Skeleton (or Ghost) elements designed to improve perceived performance and make app feels faster.</p>
-    <p>Framework7 comes with two types of such elements: Skeleton Block and Skeleton Text. Skeleton block is a gray box that can be used as placeholder for any element. Skeleton text uses special built-in skeleton font to render each character of such text as gray rectangle. Skeleton text allows to make such elements responsive and feel more natural.</p>
+    <p>
+      Skeleton (or Ghost) elements designed to improve perceived performance and make app feels
+      faster.
+    </p>
+    <p>
+      Framework7 comes with two types of such elements: Skeleton Block and Skeleton Text. Skeleton
+      block is a gray box that can be used as placeholder for any element. Skeleton text uses
+      special built-in skeleton font to render each character of such text as gray rectangle.
+      Skeleton text allows to make such elements responsive and feel more natural.
+    </p>
     <p>It can be used in any places and with any elements.</p>
   </Block>
 
@@ -39,8 +47,7 @@
     <ListItem
       title="Title"
       subtitle="Subtitle"
-      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis et massa ac interdum."
-    >
+      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis et massa ac interdum.">
       <span slot="media">
         <SkeletonBlock style="width: 40px; height: 40px; border-radius: 50%" />
       </span>
@@ -48,8 +55,7 @@
     <ListItem
       title="Title"
       subtitle="Subtitle"
-      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis et massa ac interdum."
-    >
+      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis et massa ac interdum.">
       <span slot="media">
         <SkeletonBlock style="width: 40px; height: 40px; border-radius: 50%" />
       </span>
@@ -61,8 +67,7 @@
     class="skeleton-text"
     title="Card Header"
     content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis et massa ac interdum. Cras consequat felis at consequat hendrerit."
-    footer="Card Footer"
-  />
+    footer="Card Footer" />
 
   <BlockTitle>Loading Effects</BlockTitle>
   <Block strong>
@@ -81,8 +86,7 @@
           class={`skeleton-text skeleton-effect-${effect}`}
           title="Full Name"
           subtitle="Position"
-          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis et massa ac interdum. Cras consequat felis at consequat hendrerit. Aliquam vestibulum vitae lorem ac iaculis. Praesent nec pharetra massa, at blandit lectus. Sed tincidunt, lectus eu convallis elementum, nibh nisi aliquet urna, nec imperdiet felis sapien at enim."
-        >
+          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis et massa ac interdum. Cras consequat felis at consequat hendrerit. Aliquam vestibulum vitae lorem ac iaculis. Praesent nec pharetra massa, at blandit lectus. Sed tincidunt, lectus eu convallis elementum, nibh nisi aliquet urna, nec imperdiet felis sapien at enim.">
           <span slot="media">
             <SkeletonBlock style="width: 40px; height: 40px; border-radius: 50%" />
           </span>
@@ -94,23 +98,29 @@
       <ListItem
         title="John Doe"
         subtitle="CEO"
-        text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis et massa ac interdum. Cras consequat felis at consequat hendrerit. Aliquam vestibulum vitae lorem ac iaculis. Praesent nec pharetra massa, at blandit lectus. Sed tincidunt, lectus eu convallis elementum, nibh nisi aliquet urna, nec imperdiet felis sapien at enim."
-      >
-        <img src="https://placeimg.com/80/80/people/1" style="width: 40px; height: 40px; border-radius: 50%" slot="media" />
+        text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis et massa ac interdum. Cras consequat felis at consequat hendrerit. Aliquam vestibulum vitae lorem ac iaculis. Praesent nec pharetra massa, at blandit lectus. Sed tincidunt, lectus eu convallis elementum, nibh nisi aliquet urna, nec imperdiet felis sapien at enim.">
+        <img
+          src="https://placeimg.com/80/80/people/1"
+          style="width: 40px; height: 40px; border-radius: 50%"
+          slot="media" />
       </ListItem>
       <ListItem
         title="Jane Doe"
         subtitle="Marketing"
-        text="Cras consequat felis at consequat hendrerit. Aliquam vestibulum vitae lorem ac iaculis. Praesent nec pharetra massa, at blandit lectus. Sed tincidunt, lectus eu convallis elementum, nibh nisi aliquet urna, nec imperdiet felis sapien at enim."
-      >
-        <img src="https://placeimg.com/80/80/people/2" style="width: 40px; height: 40px; border-radius: 50%" slot="media" />
+        text="Cras consequat felis at consequat hendrerit. Aliquam vestibulum vitae lorem ac iaculis. Praesent nec pharetra massa, at blandit lectus. Sed tincidunt, lectus eu convallis elementum, nibh nisi aliquet urna, nec imperdiet felis sapien at enim.">
+        <img
+          src="https://placeimg.com/80/80/people/2"
+          style="width: 40px; height: 40px; border-radius: 50%"
+          slot="media" />
       </ListItem>
       <ListItem
         title="Kate Johnson"
         subtitle="Admin"
-        text="Sed tincidunt, lectus eu convallis elementum, nibh nisi aliquet urna, nec imperdiet felis sapien at enim."
-      >
-        <img src="https://placeimg.com/80/80/people/3" style="width: 40px; height: 40px; border-radius: 50%" slot="media" />
+        text="Sed tincidunt, lectus eu convallis elementum, nibh nisi aliquet urna, nec imperdiet felis sapien at enim.">
+        <img
+          src="https://placeimg.com/80/80/people/3"
+          style="width: 40px; height: 40px; border-radius: 50%"
+          slot="media" />
       </ListItem>
     </List>
   {/if}
