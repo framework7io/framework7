@@ -18,7 +18,7 @@ import { f7 } from '../shared/f7';
   maxAxisLabels?: number;
   formatAxisLabel?: (label: any) => string;
   formatLegendLabel?: (label: any) => string;
-  formatTooltip?: (index: number; total: number; datasets: {label: any; color: string; value: number}[]) => string;
+  formatTooltip?: (data: {index: number; total: number; datasets: {label: any; color: string; value: number}[]}) => string;
   formatTooltipAxisLabel?: (label: any) => string;
   formatTooltipTotal?: (total: number) => string;
   formatTooltipDataset?: (label: any; value: number; color: string) => string;
