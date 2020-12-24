@@ -110,10 +110,12 @@ class Component {
   }
 
   on(eventName, handler) {
+    if (!this.__eventHandlers) return;
     this.__eventHandlers.push({ eventName, handler });
   }
 
   once(eventName, handler) {
+    if (!this.__eventHandlers) return;
     this.__onceEventHandlers.push({ eventName, handler });
   }
 
@@ -185,6 +187,7 @@ class Component {
 
   attachEvents() {
     const { $el } = this;
+    if (!this.__eventHandlers) return;
     this.__eventHandlers.forEach(({ eventName, handler }) => {
       $el.on(eventNameToColonCase(eventName), handler);
     });
@@ -195,6 +198,7 @@ class Component {
 
   detachEvents() {
     const { $el } = this;
+    if (!this.__eventHandlers) return;
     this.__eventHandlers.forEach(({ eventName, handler }) => {
       $el.on(eventNameToColonCase(eventName), handler);
     });
@@ -275,6 +279,7 @@ class Component {
   }
 
   destroy() {
+    if (this.__destroyed) return;
     const window = getWindow();
     this.hook('onBeforeUnmount');
 
