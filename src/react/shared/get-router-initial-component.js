@@ -4,6 +4,12 @@ export const getRouterInitialComponent = (router, initialComponent) => {
   let initialComponentData;
   const { initialUrl } = router.getInitialUrl();
   const initialRoute = router.findMatchingRoute(initialUrl);
+  let routeProps;
+
+  if (initialRoute.route.options) {
+    routeProps = initialRoute.route.options.props;
+  }
+
   if (
     initialRoute &&
     initialRoute.route &&
@@ -18,6 +24,7 @@ export const getRouterInitialComponent = (router, initialComponent) => {
       props: {
         f7route: initialRoute,
         f7router: router,
+        ...routeProps,
         ...initialRoute.params,
       },
     };
