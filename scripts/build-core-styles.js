@@ -23,6 +23,20 @@ function copyLess(config, components, cb) {
   const includeLightTheme = config.lightTheme;
   const rtl = config.rtl;
 
+  // Common LESS
+  let lessCommonContent = fs.readFileSync(path.resolve(__dirname, '../src/core/f7-common.less'));
+  lessCommonContent = lessCommonContent
+    .replace('$includeIosTheme', includeIosTheme)
+    .replace('$includeMdTheme', includeMdTheme)
+    .replace('$includeAuroraTheme', includeAuroraTheme)
+    .replace('$includeDarkTheme', includeDarkTheme)
+    .replace('$includeLightTheme', includeLightTheme)
+    .replace('$colors', colors)
+    .replace('$themeColor', config.themeColor)
+    .replace('$rtl', rtl);
+
+  fs.writeFileSync(`${output}/f7-common.less`, lessCommonContent);
+
   // Core LESS
   let lessContent = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.less'));
   lessContent = `${banner}\n${lessContent}`;
@@ -154,6 +168,11 @@ function buildLess(cb) {
     const lessFilePath = `./src/core/components/${name}/${name}.less`;
     if (fs.existsSync(lessFilePath)) {
       components.push(name);
+
+      // Import Common LESS
+      let lessContent = fs.readFileSync(lessFilePath);
+      lessContent = `@import url('../../f7-common.less');\n${lessContent}`;
+      fs.writeFileSync(`./packages/core/components/${name}/${name}.less`, lessContent);
     }
   });
 

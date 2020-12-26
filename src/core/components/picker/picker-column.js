@@ -43,8 +43,8 @@ export default function (colEl, updateItems) {
       if (!col.width) col.$el.css({ width: '' });
     }
     let colWidth = 0;
-    const colHeight = col.$el[0].offsetHeight;
-    itemHeight = col.items[0].offsetHeight;
+    const colHeight = +window.getComputedStyle(col.$el[0]).height.replace('px', '') || col.$el[0].offsetHeight;
+    itemHeight = +window.getComputedStyle(col.items[0]).height.replace('px', '') || col.items[0].offsetHeight;
     itemsHeight = itemHeight * col.items.length;
     minTranslate = ((colHeight / 2) - itemsHeight) + (itemHeight / 2);
     maxTranslate = (colHeight / 2) - (itemHeight / 2);

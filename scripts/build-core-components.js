@@ -22,7 +22,7 @@ function build(cb) {
   glob('**/*.*', { cwd: path.resolve(__dirname, '../src/core') }, (err, files) => {
     files.forEach((file, index) => {
       if (file.indexOf('icons/') === 0) return;
-      if (file === 'framework7.less') return;
+      if (file === 'framework7.less' || file === 'f7-common.less') return;
       if (file === 'framework7.js') return;
       if (file === 'framework7.d.ts') return;
       let fileContent = fs.readFileSync(path.resolve(__dirname, '../src/core', file));
