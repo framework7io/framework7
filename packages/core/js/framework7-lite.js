@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 9, 2020
+ * Released on: December 27, 2020
  */
 
 (function (global, factory) {
@@ -11824,7 +11824,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: November 9, 2020
+   * Released on: December 27, 2020
    */
 
   // Install Core Modules & Components

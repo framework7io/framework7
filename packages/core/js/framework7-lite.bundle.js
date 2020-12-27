@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 9, 2020
+ * Released on: December 27, 2020
  */
 
 (function (global, factory) {
@@ -23560,8 +23560,8 @@
         if (!col.width) { col.$el.css({ width: '' }); }
       }
       var colWidth = 0;
-      var colHeight = col.$el[0].offsetHeight;
-      itemHeight = col.items[0].offsetHeight;
+      var colHeight = +window.getComputedStyle(col.$el[0]).height.replace('px', '') || col.$el[0].offsetHeight;
+      itemHeight = +window.getComputedStyle(col.items[0]).height.replace('px', '') || col.items[0].offsetHeight;
       itemsHeight = itemHeight * col.items.length;
       minTranslate = ((colHeight / 2) - itemsHeight) + (itemHeight / 2);
       maxTranslate = (colHeight / 2) - (itemHeight / 2);
@@ -40836,7 +40836,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: November 9, 2020
+   * Released on: December 27, 2020
    */
 
   // Install Core Modules & Components
