@@ -201,6 +201,7 @@ class Framework7 extends Framework7Class {
         app.$el = $(el);
         app.$el[0].f7 = app;
         app.$elComponent = el.f7Component;
+        app.el = app.$el[0];
         if (callback) callback();
       },
       () => {},
