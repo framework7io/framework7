@@ -56,9 +56,9 @@ export namespace PieChart {
 
   interface Events {
     /** Event will be triggered (when tooltip enabled) on chart hover */
-    select: (pieChart: Parameters, index: number | null, dataset: Dataset) => void;
+    select: (pieChart: PieChart, index: number | null, dataset: Dataset) => void;
     /** Event will be triggered right before Pie chart instance will be destroyed. As an argument event handler receives Pie chart instance */
-    beforeDestroy: (dialog: PieChart) => void;
+    beforeDestroy: (pieChart: PieChart) => void;
   }
 
   interface DomEvents {
@@ -84,9 +84,9 @@ export namespace PieChart {
   }
   interface AppEvents {
     /** Event will be triggered (when tooltip enabled) on chart hover */
-    pieChartSelect: (pieChart: Parameters, index: number | null, dataset: Dataset) => void;
+    pieChartSelect: (pieChart: PieChart, index: number | null, dataset: Dataset) => void;
     /** Event will be triggered right before PieChart instance will be destroyed. As an argument event handler receives Pie chart instance */
-    pieChartBeforeDestroy: (dialog: PieChart) => void;
+    pieChartBeforeDestroy: (pieChart: PieChart) => void;
   }
 }
 

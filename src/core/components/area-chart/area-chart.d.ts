@@ -85,9 +85,9 @@ export namespace AreaChart {
 
   interface Events {
     /** Event will be triggered (when tooltip enabled) on chart hover */
-    select: (areaChart: Parameters, index: number | null) => void;
+    select: (areaChart: AreaChart, index: number | null) => void;
     /** Event will be triggered right before Area chart instance will be destroyed. As an argument event handler receives Area chart instance */
-    beforeDestroy: (dialog: AreaChart) => void;
+    beforeDestroy: (areaChart: AreaChart) => void;
   }
 
   interface DomEvents {
@@ -113,9 +113,9 @@ export namespace AreaChart {
   }
   interface AppEvents {
     /** Event will be triggered (when tooltip enabled) on chart hover */
-    areaChartSelect: (pieChart: Parameters, index: number | null) => void;
+    areaChartSelect: (areaChart: AreaChart, index: number | null) => void;
     /** Event will be triggered right before AreaChart instance will be destroyed. As an argument event handler receives Area chart instance */
-    areaChartBeforeDestroy: (dialog: AreaChart) => void;
+    areaChartBeforeDestroy: (areaChart: AreaChart) => void;
   }
 }
 
