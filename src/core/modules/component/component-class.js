@@ -148,7 +148,7 @@ class Component {
       $,
       $id: this.id,
       $f7: this.f7,
-      $f7ready: this.f7ready,
+      $f7ready: this.f7ready.bind(this),
       $theme: this.theme,
       $tick: this.tick.bind(this),
       $update: this.update.bind(this),
