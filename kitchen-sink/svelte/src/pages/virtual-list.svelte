@@ -67,7 +67,7 @@
       items,
       searchAll,
       renderExternal,
-      height: theme.ios ? 63 : (theme.md ? 73 : 46),
+      height: theme.ios ? 63 : (theme.md ? 73 : 77),
     }}
   >
     <ul>
