@@ -130,33 +130,35 @@ const Statusbar = {
     const device = getDevice();
     const params = app.params.statusbar;
     if (!params.enabled) return;
+    const isCordova = device.cordova && window.StatusBar;
+    const isCap = isCapacitor();
 
-    if ((device.cordova && window.StatusBar) || (window.Capacitor && window.Capacitor.isNative)) {
+    if (isCordova || isCap) {
       if (params.scrollTopOnClick) {
         $(window).on('statusTap', Statusbar.onClick.bind(app));
       }
       if (device.ios) {
         if (params.iosOverlaysWebView) {
-          window.StatusBar.overlaysWebView(true);
+          Statusbar.overlaysWebView(true);
         } else {
-          window.StatusBar.overlaysWebView(false);
+          Statusbar.overlaysWebView(false);
         }
         if (params.iosTextColor === 'white') {
-          window.StatusBar.styleLightContent();
+          Statusbar.setTextColor('white');
         } else {
-          window.StatusBar.styleDefault();
+          Statusbar.setTextColor('black');
         }
       }
       if (device.android) {
         if (params.androidOverlaysWebView) {
-          window.StatusBar.overlaysWebView(true);
+          Statusbar.overlaysWebView(true);
         } else {
-          window.StatusBar.overlaysWebView(false);
+          Statusbar.overlaysWebView(false);
         }
         if (params.androidTextColor === 'white') {
-          window.StatusBar.styleLightContent();
+          Statusbar.setTextColor('white');
         } else {
-          window.StatusBar.styleDefault();
+          Statusbar.setTextColor('black');
         }
       }
     }
