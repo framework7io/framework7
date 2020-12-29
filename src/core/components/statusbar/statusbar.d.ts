@@ -39,8 +39,8 @@ export namespace Statusbar {
       setTextColor(color: string): void;
       /** Set/change statusbar background colorhex - string - Hex string (#RRGGBB) with background color */
       setBackgroundColor(hex: string): void;
-      /** Returns true if system statusbar is visible and false when it is not visible. This functionality is only available when app is running under cordova/phonegap environment with installed cordova-plugin-statusbar */
-      isVisible(): boolean;
+      /** Returns Promise resolved with "true" if system statusbar is visible and false when it is not visible. This functionality is only available when app is running under cordova/phonegap/capacitor environment with installed cordova-plugin-statusbar */
+      isVisible(): Promise<boolean>;
     };
   }
   interface AppEvents {}

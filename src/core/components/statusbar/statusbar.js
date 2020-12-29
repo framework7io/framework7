@@ -3,6 +3,16 @@ import $ from '../../shared/dom7';
 import { bindMethods } from '../../shared/utils';
 import { getDevice } from '../../shared/get-device';
 
+const isCapacitor = () => {
+  const window = getWindow();
+  return (
+    window.Capacitor &&
+    window.Capacitor.isNative &&
+    window.Capacitor.Plugins &&
+    window.Capacitor.Plugins.StatusBar
+  );
+};
+
 const Statusbar = {
   hide() {
     const window = getWindow();
@@ -10,12 +20,18 @@ const Statusbar = {
     if (device.cordova && window.StatusBar) {
       window.StatusBar.hide();
     }
+    if (isCapacitor()) {
+      window.Capacitor.Plugins.StatusBar.hide();
+    }
   },
   show() {
     const window = getWindow();
     const device = getDevice();
     if (device.cordova && window.StatusBar) {
       window.StatusBar.show();
+    }
+    if (isCapacitor()) {
+      window.Capacitor.Plugins.StatusBar.show();
     }
   },
   onClick() {
@@ -65,6 +81,13 @@ const Statusbar = {
         window.StatusBar.styleDefault();
       }
     }
+    if (isCapacitor()) {
+      if (color === 'white') {
+        window.Capacitor.Plugins.StatusBar.setStyle({ style: 'DARK' });
+      } else {
+        window.Capacitor.Plugins.StatusBar.setStyle({ style: 'LIGHT' });
+      }
+    }
   },
   setBackgroundColor(color) {
     const window = getWindow();
@@ -72,20 +95,33 @@ const Statusbar = {
     if (device.cordova && window.StatusBar) {
       window.StatusBar.backgroundColorByHexString(color);
     }
+    if (isCapacitor()) {
+      window.Capacitor.Plugins.StatusBar.setBackgroundColor({ color });
+    }
   },
   isVisible() {
     const window = getWindow();
     const device = getDevice();
-    if (device.cordova && window.StatusBar) {
-      return window.StatusBar.isVisible;
-    }
-    return false;
+    return new Promise((resolve) => {
+      if (device.cordova && window.StatusBar) {
+        resolve(window.StatusBar.isVisible);
+      }
+      if (isCapacitor()) {
+        window.Capacitor.Plugins.StatusBar.getInfo().then((info) => {
+          resolve(info.visible);
+        });
+      }
+      resolve(false);
+    });
   },
   overlaysWebView(overlays = true) {
     const window = getWindow();
     const device = getDevice();
     if (device.cordova && window.StatusBar) {
       window.StatusBar.overlaysWebView(overlays);
+    }
+    if (isCapacitor()) {
+      window.Capacitor.Plugins.StatusBar.setOverlaysWebView({ overlay: overlays });
     }
   },
   init() {
@@ -95,7 +131,7 @@ const Statusbar = {
     const params = app.params.statusbar;
     if (!params.enabled) return;
 
-    if (device.cordova && window.StatusBar) {
+    if ((device.cordova && window.StatusBar) || (window.Capacitor && window.Capacitor.isNative)) {
       if (params.scrollTopOnClick) {
         $(window).on('statusTap', Statusbar.onClick.bind(app));
       }

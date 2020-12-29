@@ -127,7 +127,13 @@ class Dialog extends Modal {
           if (button.keyCodes) addKeyboardHander = true;
           $(buttonEl).on('click', buttonOnClick);
         });
-        if (addKeyboardHander && !device.ios && !device.android && !device.cordova) {
+        if (
+          addKeyboardHander &&
+          !device.ios &&
+          !device.android &&
+          !device.cordova &&
+          !device.capacitor
+        ) {
           $(document).on('keydown', onKeyDown);
         }
       });
@@ -135,7 +141,13 @@ class Dialog extends Modal {
         $el.find('.dialog-button').each((buttonEl) => {
           $(buttonEl).off('click', buttonOnClick);
         });
-        if (addKeyboardHander && !device.ios && !device.android && !device.cordova) {
+        if (
+          addKeyboardHander &&
+          !device.ios &&
+          !device.android &&
+          !device.cordova &&
+          !device.capacitor
+        ) {
           $(document).off('keydown', onKeyDown);
         }
         addKeyboardHander = false;

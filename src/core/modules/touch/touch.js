@@ -403,7 +403,7 @@ function initTouch() {
     document.addEventListener('pointercancel', handleMouseUp, { passive: true });
   }
   document.addEventListener('contextmenu', (e) => {
-    if (params.disableContextMenu && (device.ios || device.android || device.cordova)) {
+    if (params.disableContextMenu && (device.ios || device.android || device.cordova || (window.Capacitor && window.Capacitor.isNative)) {
       e.preventDefault();
     }
     if (useRipple) {

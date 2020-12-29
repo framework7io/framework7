@@ -26,6 +26,15 @@ function initClicks(app) {
         ) {
           e.preventDefault();
           window.cordova.InAppBrowser.open(url, target);
+        } else if (
+          url &&
+          window.Capacitor &&
+          window.Capacitor.Plugins &&
+          window.Capacitor.Plugins.Browser &&
+          (target === '_system' || target === '_blank')
+        ) {
+          e.preventDefault();
+          window.Capacitor.Plugins.Browser.open({ url });
         }
         return;
       }

@@ -117,6 +117,8 @@
     - New loading buttons
   - Virtual List
     - `itemTemplate` parameter has been removed with removal of Template7
+  - Capacitor
+    - Added support for core APIs when app running under Capacitor environment (core Statusbar methods, automatic disabling of service workers and router browser history, etc.)
 - Vue
   - Rewritten to new Vue v3 API (no Vue v2 support anymore)
   - `App` component now receives all app parameters as props

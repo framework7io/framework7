@@ -25,6 +25,7 @@ function calcDevice({ userAgent } = {}) {
     cordova: !!(window.cordova || window.phonegap),
     phonegap: !!(window.cordova || window.phonegap),
     electron: false,
+    capacitor: !!window.Capacitor,
     nwjs: false,
   };
 

@@ -68,7 +68,7 @@ class TextEditor extends Framework7Class {
     }
 
     if (self.params.mode === 'keyboard-toolbar') {
-      if (!device.cordova && !device.android) {
+      if (!(device.cordova || device.capacitor) && !device.android) {
         self.params.mode = 'popover';
       }
     }
