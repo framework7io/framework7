@@ -152,6 +152,15 @@ class TextEditor extends Framework7Class {
     const self = this;
     return self.value;
   }
+  
+  clearValue() {
+    const self = this;
+    self.setValue('');
+    if (self.params.placeholder && !self.$contentEl.html()) {
+      self.insertPlaceholder();
+    }
+    return self;
+  }
 
   createLink() {
     const self = this;
