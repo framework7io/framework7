@@ -5,62 +5,25 @@
 # v6.0.0 (WIP)
 
 - Core
-  - App
+  - Package
+    - Renamed files and imports
+    - Lite version doesn't contain the following components:
+      - Gauge
+      - Area Chart
+      - Pie Chart
+    - New types module in `framework7/types`
+    - Modules are now babel transpiled
+  - App Class
     - App `root` parameter to pass app root element renamed to `el`
     - `app.root` property which contains Dom7 instance of app root element has been renamed to `app.$el` property
     - Removed app `data` and `methods` global app properties in favor of new Store
-  - Autocomplete, Calendar, Picker, Color Picker, Photo Browser, Smart Select
-    - `routableModals` is now disabled by default
   - Dom7
     - Uses new Dom7 v3
   - Template7
     - Template7 and its support has been completely removed from Framework7
-  - Dialog
-    - Added `containerEl` property to specify where to mount the modal
-  - Calendar
-    - New appearance for Range picker selection
-    - Time Picker now supports AM/PM period selection based on selected locale or timePickerFormat
-    - New appearance for Time selector link
-  - Actions
-    - Actions Button text in MD & Aurora theme now uses theme color
-  - List
-    - List Button text in MD theme now uses theme color
-  - Menu
-    - New appearance for dropdown item hover/pressed states
-  - Swipeout
-    - New `app.params.swipeout.overswipeRatio` (default to `1.2`) allows to configure how more to swipe to enable overswipe
-    - Fixed styles to consider left and right safe-areas
-  - Page
-    - New Page Title element
-  - Picker
-    - New appearance for selected item/row
-  - Popover
-    - Now it considers safe-areas on positioning
-  - Popup
-    - Fixed issue when Push Popup can incorrectly transform View behind on app/window resize/rotate
-  - Preloader
-    - Preloader in MD theme now uses new SVG layout
-    - Preloader in iOS reworked to match iOS 14 appearance
-    - Preloader in iOS now also supports "multi" color
-  - Checkbox
-    - Removed "extra" margin in checkboxes list in MD theme
-  - Radio
-    - Removed "extra" margin in radios list in MD theme
-  - List
-    - All new Menu List style for List
-  - Package
-    - Renamed files and imports
-    - Lite version doesn't contain
-      - Gauge
-      - Area Chart
-      - Pie Chart
-    - New types in `framework7/types`
-      - `Framework7Params` -> `Framework7Parameters`
-    - Modules are babel transpiled
-    - New exports for `getSupport`, `getDevice`, `request`, `utils`
   - Request
     - Export renamed to `request`
-    - Only promise APIs
+    - Now it uses only Promises API
     - New `request.abortController()`
   - Utils
     - Export renamed to `utils`
@@ -71,16 +34,76 @@
   - Support
     - Export renamed to `support`
     - Added `getSupport` export
-  - Swiper
-    - Updated to v6
-    - Used as dependency
-  - Skeleton Elements
-    - Used as dependency
-    - New React, Svelte and Vue components
-    - CSS vars renamed without `--f7-` prefix
-  - Touch Ripple
-    - Highly reworked Touch Ripple effect (used in MD theme by default)
-    - New `app.touch.touchRippleInsetElements` parameter to specify elements with inset touch ripple
+  - Components
+    - Actions
+      - Actions Button text in MD & Aurora theme now uses theme color
+    - Area Chart
+      - All new Area Chart component
+    - Autocomplete
+      - `routableModals` is now disabled by default
+    - Button
+      - New loading buttons
+    - Calendar
+      - `routableModals` is now disabled by default
+      - New appearance for Range picker selection
+      - Time Picker now supports AM/PM period selection based on selected locale or timePickerFormat
+      - New appearance for Time selector link
+    - Checkbox
+      - Removed "extra" margin in checkboxes list in MD theme
+    - Color Picker
+      - `routableModals` is now disabled by default
+    - Dialog
+      - Added `containerEl` property to specify where to mount the modal
+    - Gauge
+      - Renamed `$gaugeSvgEl` property to `$svgEl`
+    - List
+      - All new Menu List style for List
+      - List Button text in MD theme now uses theme color
+    - Menu
+      - New appearance for dropdown item hover/pressed states
+    - Page
+      - New Page Title element
+    - Panel
+      - Improved support for nested panels. Now panel can be created and correctly opened inside of the page (including with breakpoints)
+    - Photo Browser
+      - `routableModals` is now disabled by default
+    - Picker
+      - New appearance for selected item/row
+      - `routableModals` is now disabled by default
+    - Pie Chart
+      - All new Pie Chart component
+    - Popover
+      - Now it considers safe-areas on positioning
+    - Popup
+      - Fixed issue when Push Popup can incorrectly transform View behind on app/window resize/rotate
+    - Preloader
+      - Preloader in MD theme now uses new SVG layout
+      - Preloader in iOS reworked to match iOS 14 appearance
+      - Preloader in iOS now also supports "multi" color
+    - Radio
+      - Removed "extra" margin in radios list in MD theme
+    - Skeleton Elements
+      - Used as dependency
+      - New React, Svelte and Vue components
+      - CSS vars renamed without `--f7-` prefix
+    - Smart Select
+      - `routableModals` is now disabled by default
+    - Swipeout
+      - New `app.params.swipeout.overswipeRatio` (default to `1.2`) allows to configure how more to swipe to enable overswipe
+      - Fixed styles to consider left and right safe-areas
+    - Swiper
+      - Updated to all new Swiper v6
+      - Used as dependency
+    - Tooltip
+      - New `containerEl` parameter
+      - New `delegated` parameter. Enables tooltip for all elements matching to `targetEl` selector (e.g. attaches event handler to document). `targetEl` parameter must be a CSS Selector (string)
+      - New `trigger: 'manual'` value
+      - New `.setTarget(targetEl)` instance method to change tooltip target after it was created
+    - Touch Ripple
+      - Highly reworked Touch Ripple effect (used in MD theme by default)
+      - New `app.touch.touchRippleInsetElements` parameter to specify elements with inset touch ripple
+    - Virtual List
+      - `itemTemplate` parameter has been removed with removal of Template7
   - View/Router
     - `pushState...` parameters renamed to `browserHistory...`
     - New `browserHistoryInitialMatch` parameter
@@ -100,32 +123,28 @@
       ```
     - Route's `options.context` property has been removed
     - Route's `template` and `templateUrl` properties have been removed with removal of Template7
-  - Tooltip
-    - New `containerEl` parameter
-    - New `delegated` parameter. Enables tooltip for all elements matching to `targetEl` selector (e.g. attaches event handler to document). `targetEl` parameter must be a CSS Selector (string)
-    - New `trigger: 'manual'` value
-    - New `.setTarget(targetEl)` instance method to change tooltip target after it was created
-  - Pie Chart
-    - All new Pie Chart component
-  - Area Chart
-    - All new Area Chart component
-  - Gauge
-    - Renamed `$gaugeSvgEl` property to `$svgEl`
-  - Panel
-    - Improved support for nested panels. Now panel can be created and correctly opened inside of the page (including with breakpoints)
-  - Button
-    - New loading buttons
-  - Virtual List
-    - `itemTemplate` parameter has been removed with removal of Template7
+    - All new Router component
+      - Uses ES templates instead of Template7 templates
+      - Removed scoped styles
+      - Simplified component declaration to be a simple function
+      - Can be used with JSX syntax
+  - Store
+    - All new Store library for application state management
   - Capacitor
     - Added support for core APIs when app running under Capacitor environment (core Statusbar methods, automatic disabling of service workers and router browser history, etc.)
+- React
+  - `App` component now receives all app parameters as props
+  - React components rewritten with hooks
+  - Removed all prototypes methods (`$$`, `$f7`, `$f7ready`, `$f7route`, `$f7router`, `$utils`, `$device`, `$theme`, `$request`)
+    - Now they should be imported as `import {f7, f7ready, theme} from 'framework7-react'`. `Dom7`, `device`, `request` can be used as `f7.` accessors or imported from `framework7`
+  - Removed `umd` version
 - Vue
   - Rewritten to new Vue v3 API (no Vue v2 support anymore)
   - `App` component now receives all app parameters as props
-  - Removed all prototypes methods (\$$, $f7, $f7ready, $f7route, $f7router, $utils, $device, $theme, \$request)
+  - Removed all prototypes methods (`$$`, `$f7`, `$f7ready`, `$f7route`, `$f7router`, `$utils`, `$device`, `$theme`, `$request`)
     - Now they should be imported as `import {f7, f7ready, theme} from 'framework7-vue'`. `Dom7`, `device`, `request` can be used as `f7.` accessors or imported from `framework7`
   - Removed `umd` version
-  - Added v-model support
+  - Added `v-model` support
     - Checkbox, ListItem, Radio, Toggle, MessagebarSheetImage
       - Support for `v-model:checked`
     - Actions, LoginScreen, Panel, Popover, Popup, Sheet
@@ -134,18 +153,6 @@
       - Support for `v-model:expandableOpened`
     - Input, ListInput, Messagebar, Searchbar, Stepper, Range
       - Support for `v-model:value`
-  - `browserHistory` must be used with `browserHistoryInitialMatch`
-- React
-  - KS updated to use hooks API only
-  - `App` component now receives all app parameters as props
-  - New ref's object
-  - Rewritten with hooks
-  - Instances in refs are functions
-  - Removed all prototypes methods (\$$, $f7, $f7ready, $f7route, $f7router, $utils, $device, $theme, \$request)
-    - Now they should be imported as `import {f7, f7ready, theme} from 'framework7-react'`. `Dom7`, `device`, `request` can be used as `f7.` accessors or imported from `framework7`
-  - Removed `umd` version
-  - `browserHistory` must be used with `browserHistoryInitialMatch`
-  - Fast Refresh support
 - Svelte
   - `App` component now receives all app parameters as props
   - Added `bind:$property` support
@@ -157,26 +164,34 @@
       - Support for `bind:expandableOpened`
     - Input, ListInput, Messagebar, Searchbar, Stepper, Range
       - Support for `bind:value`
-  - `browserHistory` must be used with `browserHistoryInitialMatch`
 - Common for React/Svelte/Vue
   - Button, Link, ListButon, ListItem, MenuDropdownItem, MenuItem, TreeviewItem
     - New `openIn` prop to specify how to open page route (e.g. open page as `popup`, `sheet`, `panel` etc)
+  - Area Chart
+    - New Area Chart component
   - Button
     - Support for loading button (button with preloader) with new props:
       - `preloader` - enables button to have preloader
       - `loading` - controls button state to show/hide preloader and hide/show button text (switch button to loading state)
       - `preloaderColor` - button's preloader color
       - `preloaderSize` - button's preloader size
-  - Pie Chart
-    - New Pie Chart component
-  - Area Chart
-    - New Area Chart component
   - Input
     - Added `error-message` slot
   - List
     - New `menuList` boolean property to enable menu List
   - ListItem
     - New `selected` boolean property to mark menu list item as selected
+  - MenuItem
+    - Added support for tooltip with `tooltip` and `tooltipTrigger` props
+  - Messagebar
+    - Removed component methods
+  - Messages
+    - Removed component methods
+    - Added `typing` prop
+  - Panel
+    - Removed component `open`/`close` methods
+  - Pie Chart
+    - New Pie Chart component
   - Popover
     - `target` prop renamed to `targetEl`
   - Popover, Login Screen, Actions, Sheet
@@ -185,16 +200,7 @@
     - Added `containerEl` property to specify where to mount the modal
   - Sheet
     - Added `fixed` and `static` slots
-  - Panel
-    - Removed component open/close methods
-  - Messagebar
-    - Removed component methods
-  - Messages
-    - Removed component methods
-    - Added `typing` prop
   - Toggle
-    - Added support for tooltip with `tooltip` and `tooltipTrigger` props
-  - MenuItem
     - Added support for tooltip with `tooltip` and `tooltipTrigger` props
 
 # [v5.7.14](https://github.com/framework7io/framework7/compare/v5.7.13...v5.7.14) - November 9, 2020
