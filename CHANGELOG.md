@@ -94,6 +94,8 @@
     - Swiper
       - Updated to all new Swiper v6
       - Used as dependency
+    - Text Editor
+      - New `.clearValue()` method
     - Tooltip
       - New `containerEl` parameter
       - New `delegated` parameter. Enables tooltip for all elements matching to `targetEl` selector (e.g. attaches event handler to document). `targetEl` parameter must be a CSS Selector (string)
