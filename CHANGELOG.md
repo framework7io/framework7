@@ -165,7 +165,7 @@
     - Input, ListInput, Messagebar, Searchbar, Stepper, Range
       - Support for `bind:value`
 - Common for React/Svelte/Vue
-  - Button, Link, ListButon, ListItem, MenuDropdownItem, MenuItem, TreeviewItem
+  - Button, Link, ListButton, ListItem, MenuDropdownItem, MenuItem, TreeviewItem
     - New `openIn` prop to specify how to open page route (e.g. open page as `popup`, `sheet`, `panel` etc)
   - Area Chart
     - New Area Chart component

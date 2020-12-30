@@ -1,4 +1,4 @@
-import { Support } from '../../shared/support';
+import { Support } from '../../shared/get-support';
 import Framework7, { Framework7Plugin } from '../../components/app/app-class';
 
 export namespace Support {

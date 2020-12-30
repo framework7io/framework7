@@ -1,4 +1,4 @@
-import { Device } from '../../shared/device';
+import { Device } from '../../shared/get-device';
 import Framework7, { Framework7Plugin } from '../../components/app/app-class';
 
 export namespace Device {
