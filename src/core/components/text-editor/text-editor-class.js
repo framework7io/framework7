@@ -152,7 +152,7 @@ class TextEditor extends Framework7Class {
     const self = this;
     return self.value;
   }
-  
+
   clearValue() {
     const self = this;
     self.setValue('');

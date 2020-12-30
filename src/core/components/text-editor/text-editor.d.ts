@@ -48,6 +48,8 @@ export namespace TextEditor {
     getValue(): number;
     /** Set new editor value */
     setValue(value: string): TextEditor;
+    /** Clear editor value */
+    clearValue(): TextEditor;
     /** Returns current selection Range */
     getSelectionRange(): Range;
     /** Set selection based on passed Range */
