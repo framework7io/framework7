@@ -6,7 +6,7 @@ export const getRouterInitialComponent = (router, initialComponent) => {
   const initialRoute = router.findMatchingRoute(initialUrl);
   let routeProps = {};
 
-  if (initialRoute.route.options) {
+  if (initialRoute && initialRoute.route && initialRoute.route.options) {
     routeProps = initialRoute.route.options.props;
   }
 
