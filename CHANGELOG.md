@@ -2,6 +2,11 @@
 
 # Change Log
 
+# [v6.0.1](https://github.com/framework7io/framework7/compare/v6.0.0...v6.0.1) - December 31, 2020
+
+- React/Svelte/Vue
+  - Fix for getting initial route component
+
 # [v6.0.0](https://github.com/framework7io/framework7/compare/v5.7.14...v6.0.0) - December 31, 2020
 
 - Core
