@@ -10,7 +10,7 @@ export default () => (
         Framework7 - is a free and open source HTML mobile framework to develop hybrid mobile apps
         or web apps with iOS or Android (Material) native look and feel. It is also an indispensable
         prototyping apps tool to show working app prototype as soon as possible in case you need to.
-        Framework7 is created by Vladimir Kharlampidi (iDangero.us).
+        Framework7 is created by Vladimir Kharlampidi.
       </p>
       <p>
         The main approach of the Framework7 is to give you an opportunity to create iOS and Android
