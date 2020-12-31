@@ -2,7 +2,7 @@
 
 # Change Log
 
-# v6.0.0 (WIP)
+# [v6.0.0](https://github.com/framework7io/framework7/compare/v5.7.14...v6.0.0) - December 31, 2020
 
 - Core
   - Package
