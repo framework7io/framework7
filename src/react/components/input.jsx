@@ -10,7 +10,7 @@ import Range from './range';
 import TextEditor from './text-editor';
 
 /* dts-imports
-import { Calendar, ColorPicker, TextEditor }
+import { Calendar, ColorPicker, TextEditor } from 'framework7/types';
 */
 /* dts-props
   id?: string | number;

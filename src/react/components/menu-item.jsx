@@ -29,6 +29,9 @@ import { useTooltip } from '../shared/use-tooltip';
   ICON_PROPS
   ROUTER_PROPS
   ACTIONS_PROPS
+  onClick? : (event?: any) => void;
+  onMenuOpened? : (el?: HTMLElement) => void;
+  onMenuClosed? : (el?: HTMLElement) => void;
 */
 
 const MenuItem = forwardRef((props, ref) => {

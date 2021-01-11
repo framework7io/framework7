@@ -55,6 +55,7 @@ import Preloader from './preloader';
   preloaderSize?: number | string;
   preloaderColor?: string;
   loading?: boolean;
+  onClick? : (event?: any) => void;
   COLOR_PROPS
   ICON_PROPS
   ROUTER_PROPS

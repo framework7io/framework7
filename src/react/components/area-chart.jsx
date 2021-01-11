@@ -21,7 +21,7 @@ import { f7 } from '../shared/f7';
   formatTooltip?: (data: {index: number; total: number; datasets: {label: any; color: string; value: number}[]}) => string;
   formatTooltipAxisLabel?: (label: any) => string;
   formatTooltipTotal?: (total: number) => string;
-  formatTooltipDataset?: (label: any; value: number; color: string) => string;
+  formatTooltipDataset?: (label: any, value: number, color: string) => string;
   onSelect? : (index: number | null) => void
 */
 
