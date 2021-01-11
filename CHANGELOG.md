@@ -2,7 +2,7 @@
 
 # Change Log
 
-# [v6.0.2](https://github.com/framework7io/framework7/compare/v6.0.1...v6.0.2) - January 11, 2020
+# [v6.0.3](https://github.com/framework7io/framework7/compare/v6.0.1...v6.0.3) - January 11, 2020
 
 - Core
   - Added compatibility with latest `less` v4
