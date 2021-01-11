@@ -2,6 +2,15 @@
 
 # Change Log
 
+# [v6.0.2](https://github.com/framework7io/framework7/compare/v6.0.1...v6.0.2) - January 11, 2020
+
+- Core
+  - Added compatibility with latest `less` v4
+  - Swiper updated to latest v6.4.5
+- React
+  - Fixed issue with broken TypeScript declarations on some components
+- Minor fixes
+
 # [v6.0.1](https://github.com/framework7io/framework7/compare/v6.0.0...v6.0.1) - December 31, 2020
 
 - React/Svelte/Vue
