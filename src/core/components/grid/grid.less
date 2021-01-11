@@ -32,8 +32,8 @@
   }
 
   each(@cols, {
-    @className: floor(@value);
-    @n: 100 / @value;
+    @className: floor((@value));
+    @n: (100 / @value);
     .col-@{className} {
       --f7-cols-per-row: @n;
     }
@@ -47,8 +47,8 @@
 
   @media (min-width: @breakpoints[xsmall]) {
     each(@cols, {
-      @className: floor(@value);
-      @n: 100 / @value;
+      @className: floor((@value));
+      @n: (100 / @value);
       .xsmall-@{className} {
         --f7-cols-per-row: @n;
       }
@@ -62,8 +62,8 @@
   }
   @media (min-width: @breakpoints[small]) {
     each(@cols, {
-      @className: floor(@value);
-      @n: 100 / @value;
+      @className: floor((@value));
+      @n: (100 / @value);
       .small-@{className} {
         --f7-cols-per-row: @n;
       }
@@ -77,8 +77,8 @@
   }
   @media (min-width: @breakpoints[medium]) {
     each(@cols, {
-      @className: floor(@value);
-      @n: 100 / @value;
+      @className: floor((@value));
+      @n: (100 / @value);
       .medium-@{className} {
         --f7-cols-per-row: @n;
       }
@@ -92,8 +92,8 @@
   }
   @media (min-width: @breakpoints[large]) {
     each(@cols, {
-      @className: floor(@value);
-      @n: 100 / @value;
+      @className: floor((@value));
+      @n: (100 / @value);
       .large-@{className} {
         --f7-cols-per-row: @n;
       }
@@ -107,8 +107,8 @@
   }
   @media (min-width: @breakpoints[xlarge]) {
     each(@cols, {
-      @className: floor(@value);
-      @n: 100 / @value;
+      @className: floor((@value));
+      @n: (100 / @value);
       .xlarge-@{className} {
         --f7-cols-per-row: @n;
       }

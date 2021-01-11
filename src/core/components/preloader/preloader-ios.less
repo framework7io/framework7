@@ -17,10 +17,11 @@
     animation: ios-preloader-multicolor 3s linear infinite;
   }
   @indexes: 0, 1, 2, 3, 4, 5, 6, 7;
+
   each(@indexes, {
     @index_plus_one: @value + 1;
-    @degrees: 360deg / 8 * @value;
-    @opacity: 0.27 + (0.85 - 0.27) * @value / 7;
+    @degrees: (360deg / 8) * @value;
+    @opacity: (0.27 + (0.85 - 0.27) * @value / 7);
     .preloader-inner-line:nth-child(@{index_plus_one}) {
       transform: translate(-50%, -150%) rotate(@degrees);
       opacity: @opacity;
