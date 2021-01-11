@@ -72,9 +72,9 @@
     "dom7": "^3.0.0",
     "htm": "^3.0.4",
     "path-to-regexp": "^6.2.0",
-    "skeleton-elements": "^3.2.0",
+    "skeleton-elements": "^3.3.0",
     "ssr-window": "^3.0.0",
-    "swiper": "^6.3.5"
+    "swiper": "^6.4.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
