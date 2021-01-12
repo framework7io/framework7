@@ -24,6 +24,7 @@ kitchen-sink/svelte/index.html
 packages/*.zip
 packages/*.tar.gz
 packages/core/**/*.js
+!packages/core/postinstall.js
 packages/core/**/*.css
 packages/core/**/*.less
 packages/core/**/*.ts

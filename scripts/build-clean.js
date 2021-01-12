@@ -9,8 +9,8 @@ async function buildClean(project, cb) {
   }
   const output = `${getOutput()}/${project}`;
   const toRemove = [
-    '**/*.js',
-    '*.js',
+    "find **/*.js -type f -not -name 'postinstall.js' -print0 | xargs -0  -I {} rm -v {}",
+    "find *.js -type f -not -name 'postinstall.js' -print0 | xargs -0  -I {} rm -v {}",
     '**/*.ts',
     '*.ts',
     '**/*.css',
@@ -28,7 +28,7 @@ async function buildClean(project, cb) {
     'types/components',
     'types/modules',
     'types/shared',
-  ].map((command) => `rm -rf ${command}`);
+  ].map((command) => (command.includes('find') ? command : `rm -rf ${command}`));
 
   await exec.promise(`cd ${output} && ${toRemove.join(' && ')}`);
 
