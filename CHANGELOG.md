@@ -2,6 +2,15 @@
 
 # Change Log
 
+# [v6.0.4](https://github.com/framework7io/framework7/compare/v6.0.3...v6.0.4) - January 19, 2020
+
+- Package
+  - Fixed `postinstall` script
+- Vue
+  - Removed `vue@2` peer dependency
+  - Card
+    - Fixed rendering of card footer passed by `footer` prop
+
 # [v6.0.3](https://github.com/framework7io/framework7/compare/v6.0.1...v6.0.3) - January 11, 2020
 
 - Core
