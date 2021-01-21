@@ -90,7 +90,7 @@ export namespace VirtualList {
     emptyTemplate?: string;
     /** This parameter allows to control buffer size on Virtual Lists with dynamic height (when height parameter is function) as a buffer size multiplier (default 1) */
     dynamicHeightBufferSize?: number;
-    /** Disable or enable DOM cache for already rendered list items. In this case each item will be rendered only once and all futher manipulations will be with DOM element. It is useful if your list items have some user interaction elements (like form elements or swipe outs) or could be modified (default true) */
+    /** Disable or enable DOM cache for already rendered list items. In this case each item will be rendered only once and all further manipulations will be with DOM element. It is useful if your list items have some user interaction elements (like form elements or swipe outs) or could be modified (default true) */
     cache?: boolean;
     /** Is the current device updates and handles scroll events during scroll. By default (if not specified) it is "false" for all iOS devices with iOS version less than 8 */
     updatableScroll?: boolean;
