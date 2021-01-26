@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [v6.0.5](https://github.com/framework7io/framework7/compare/v6.0.4...v6.0.5) - January 26, 2021
+
+- Core
+  - Router Component
+    - Added support for HTML contents with `innerHTML` attribute/prop
+
 # [v6.0.4](https://github.com/framework7io/framework7/compare/v6.0.3...v6.0.4) - January 19, 2021
 
 - Package
