@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [v6.0.6](https://github.com/framework7io/framework7/compare/v6.0.5...v6.0.6) - January 26, 2021
+
+- Core
+  - Text Editor
+    - Fixed "add link" button functionality
+
 # [v6.0.5](https://github.com/framework7io/framework7/compare/v6.0.4...v6.0.5) - January 26, 2021
 
 - Core
