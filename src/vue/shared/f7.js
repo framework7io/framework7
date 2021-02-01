@@ -22,6 +22,7 @@ const f7init = (rootEl, params = {}, init = true) => {
     el: rootEl,
     init,
   });
+  if (typeof params.store !== 'undefined') f7Params.store = params.store;
   if (!f7Params.routes) f7Params.routes = [];
 
   if (f7Params.userAgent && (f7Params.theme === 'auto' || !f7Params.theme)) {
