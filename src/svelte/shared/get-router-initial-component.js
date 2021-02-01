@@ -10,11 +10,17 @@ export const getRouterInitialComponent = (router, initialComponent) => {
     routeProps = initialRoute.route.options.props;
   }
 
+  const isMasterRoute = (route) => {
+    if (route.master === true) return true;
+    if (typeof route.master === 'function') return route.master(router.app);
+    return false;
+  };
+
   if (
     initialRoute &&
     initialRoute.route &&
     (initialRoute.route.component || initialRoute.route.asyncComponent) &&
-    !initialRoute.route.master
+    !isMasterRoute(initialRoute.route)
   ) {
     initialComponentData = {
       component: initialRoute.route.component || initialRoute.route.asyncComponent,
