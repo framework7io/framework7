@@ -2,6 +2,13 @@
 
 # Change Log
 
+# [v6.0.7](https://github.com/framework7io/framework7/compare/v6.0.6...v6.0.7) - February 5, 2021
+
+### Bug Fixes
+
+- **frameworks:** better check if initial route is a Master route ([15c16b4](https://github.com/framework7io/framework7/commit/15c16b4cb3dd32ff13c75a0945a12b3770d95002))
+- **frameworks:** fixed issue when passed store instance became different in f7.store ([b20b05d](https://github.com/framework7io/framework7/commit/b20b05db4dd3fc158e327359c9055f023c88d8a7))
+
 # [v6.0.6](https://github.com/framework7io/framework7/compare/v6.0.5...v6.0.6) - January 26, 2021
 
 - Core
