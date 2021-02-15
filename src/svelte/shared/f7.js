@@ -1,7 +1,7 @@
 /* eslint-disable import/no-mutable-exports */
 // eslint-disable-next-line
 import Framework7 from 'framework7/lite';
-import { extend } from './utils';
+import { extend, unsetRouterIds } from './utils';
 
 let f7;
 let f7events;
@@ -12,6 +12,16 @@ const f7routers = {
   views: [],
   tabs: [],
   modals: null,
+};
+
+const cleanup = () => {
+  unsetRouterIds();
+  delete theme.ios;
+  delete theme.md;
+  delete theme.aurora;
+  f7routers.views = [];
+  f7routers.tabs = [];
+  f7routers.modals = null;
 };
 
 const f7initEvents = () => {
@@ -32,7 +42,10 @@ const f7init = (rootEl, params = {}, init = true) => {
     theme.aurora = device.desktop && device.electron;
     theme.md = !theme.ios && !theme.aurora;
   }
-  if (f7) return;
+  // eslint-disable-next-line
+  if (f7 && typeof window !== 'undefined') return;
+
+  cleanup();
 
   const instance = new Framework7(f7Params);
   f7 = instance;

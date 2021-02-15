@@ -70,6 +70,11 @@ export function classNames(...args) {
 let routerIdCounter = 0;
 let routerComponentIdCounter = 0;
 
+export function unsetRouterIds() {
+  routerIdCounter = 0;
+  routerComponentIdCounter = 0;
+}
+
 export function getRouterId() {
   routerIdCounter += 1;
   return `${now()}_${routerIdCounter}`;
