@@ -14,7 +14,8 @@ import loadModule from './load-module';
 class Framework7 extends Framework7Class {
   constructor(params = {}) {
     super(params);
-    if (Framework7.instance) {
+    // eslint-disable-next-line
+    if (Framework7.instance && typeof window !== 'undefined') {
       throw new Error("Framework7 is already initialized and can't be initialized more than once");
     }
     const device = getDevice({ userAgent: params.userAgent || undefined });
@@ -28,8 +29,8 @@ class Framework7 extends Framework7Class {
     app.device = device;
     app.support = support;
 
-    const window = getWindow();
-    const document = getDocument();
+    const w = getWindow();
+    const d = getDocument();
 
     Framework7.instance = app;
 
@@ -39,7 +40,7 @@ class Framework7 extends Framework7Class {
       id: 'io.framework7.myapp',
       el: 'body',
       theme: 'auto',
-      language: window.navigator.language,
+      language: w.navigator.language,
       routes: [],
       name: 'Framework7',
       lazyModulesPath: null,
@@ -84,7 +85,7 @@ class Framework7 extends Framework7Class {
 
       // Initially passed parameters
       passedParams,
-      online: window.navigator.onLine,
+      online: w.navigator.onLine,
     });
 
     if (params.store) app.params.store = params.store;
@@ -103,7 +104,7 @@ class Framework7 extends Framework7Class {
     // Init
     if (app.params.init) {
       if (device.cordova && app.params.initOnDeviceReady) {
-        $(document).on('deviceready', () => {
+        $(d).on('deviceready', () => {
           app.init();
         });
       } else {
