@@ -2,6 +2,13 @@
 
 # Change Log
 
+# [v6.0.8](https://github.com/framework7io/framework7/compare/v6.0.7...v6.0.8) - February 16, 2021
+
+### Bug Fixes
+
+- **components:** better SSR support ([0e7b9e8](https://github.com/framework7io/framework7/commit/0e7b9e831a8d28af3859604b0067dbd8f620407b))
+- **core:** allow to init Framework7 more than once if runs on server-side ([964af1e](https://github.com/framework7io/framework7/commit/964af1e96466b487e44c81f3e9c560f50867a78f))
+
 # [v6.0.7](https://github.com/framework7io/framework7/compare/v6.0.6...v6.0.7) - February 5, 2021
 
 ### Bug Fixes
