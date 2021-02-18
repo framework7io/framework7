@@ -2,6 +2,16 @@
 
 # Change Log
 
+# [v6.0.9](https://github.com/framework7io/framework7/compare/v6.0.8...v6.0.9) - February 18, 2021
+
+### Bug Fixes
+
+- **photo browser:** fixed issue with not working swipe to close ([1e3bcbc](https://github.com/framework7io/framework7/commit/1e3bcbcf538bc708553b1e1e621717384596b8c1))
+
+### Features
+
+- **swiper:** update Swiper to latest 6.4.15 ([b2274a1](https://github.com/framework7io/framework7/commit/b2274a1bbdfb8c572c43b55ded610ed021ac4460))
+
 # [v6.0.8](https://github.com/framework7io/framework7/compare/v6.0.7...v6.0.8) - February 16, 2021
 
 ### Bug Fixes
