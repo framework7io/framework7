@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import Framework7 from 'framework7/lite';
 import componentsRouter from './components-router';
-import { f7, f7ready, theme, f7initEvents } from './f7';
+import { f7, f7ready, theme, f7initEvents, setTheme } from './f7';
 
 const Framework7Svelte = {
   name: 'sveltePlugin',
@@ -27,9 +27,7 @@ const Framework7Svelte = {
       theme.md = !theme.ios && !theme.aurora;
     }
     f7ready(() => {
-      theme.ios = f7.theme === 'ios';
-      theme.md = f7.theme === 'md';
-      theme.aurora = f7.theme === 'aurora';
+      setTheme();
     });
 
     Framework7.Router.use(componentsRouter);

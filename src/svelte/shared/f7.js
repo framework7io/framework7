@@ -14,6 +14,13 @@ const f7routers = {
   modals: null,
 };
 
+const setTheme = () => {
+  if (!f7) return;
+  theme.ios = f7.theme === 'ios';
+  theme.md = f7.theme === 'md';
+  theme.aurora = f7.theme === 'aurora';
+};
+
 const cleanup = () => {
   unsetRouterIds();
   delete theme.ios;
@@ -45,10 +52,13 @@ const f7init = (rootEl, params = {}, init = true) => {
   // eslint-disable-next-line
   if (f7 && typeof window !== 'undefined') return;
 
-  cleanup();
+  // eslint-disable-next-line
+  if (typeof window === 'undefined') cleanup();
 
   const instance = new Framework7(f7Params);
   f7 = instance;
+  setTheme();
+
   if (instance.initialized) {
     f7 = instance;
     f7events.emit('ready', f7);
@@ -68,4 +78,4 @@ const f7ready = (callback) => {
   }
 };
 
-export { f7, theme, f7ready, f7events, f7init, f7routers, f7initEvents };
+export { f7, theme, f7ready, f7events, f7init, f7routers, f7initEvents, setTheme };
