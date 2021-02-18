@@ -2,6 +2,13 @@
 
 # Change Log
 
+# [v6.0.10](https://github.com/framework7io/framework7/compare/v6.0.9...v6.0.10) - February 18, 2021
+
+### Bug Fixes
+
+- **components:** fix theme detection for initial page ([cf53ba3](https://github.com/framework7io/framework7/commit/cf53ba371ba3eb98c4842fac204b558bd0caebab))
+- **svelte:** proper CJS components in package ([63032e3](https://github.com/framework7io/framework7/commit/63032e366e98264f2d84671ab93596a1ddc556b7))
+
 # [v6.0.9](https://github.com/framework7io/framework7/compare/v6.0.8...v6.0.9) - February 18, 2021
 
 ### Bug Fixes
