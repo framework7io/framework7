@@ -17,7 +17,7 @@ const compileSvelteComponents = (buildPath, format) => {
   svelteComponents.forEach((fileName) => {
     const fileContent = fs.readFileSync(`src/svelte/components/${fileName}`, 'utf-8');
     const fileResult = svelte.compile(fileContent, {
-      format: 'esm',
+      format,
       filename: fileName,
     });
     fs.writeFileSync(
