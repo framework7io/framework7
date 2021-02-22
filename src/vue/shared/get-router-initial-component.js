@@ -35,5 +35,8 @@ export const getRouterInitialComponent = (router, initialComponent) => {
       },
     };
   }
-  return initialComponentData;
+  return {
+    initialPage: initialComponentData,
+    initialRoute,
+  };
 };

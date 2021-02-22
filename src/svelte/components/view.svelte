@@ -21,6 +21,7 @@
   const { main, tab, tabActive, browserHistoryInitialMatch = true } = $$props;
 
   let initialPage;
+  let initialRoute;
   let el;
   let routerData;
   let f7View;
@@ -54,7 +55,9 @@
     };
     f7routers.views.push(routerData);
     if (f7View && f7View.router && (url || main)) {
-      initialPage = getRouterInitialComponent(f7View.router);
+      const initialData = getRouterInitialComponent(f7View.router);
+      initialPage = initialData.initialPage;
+      initialRoute = initialData.initialRoute;
     }
   }
 
@@ -107,14 +110,20 @@
             setTimeout(() => {
               f7View.init(el);
               if (initialPage) {
-                initialPage.el = f7View.routerPageEl;
+                initialPage.el = f7View.router.currentPageEl;
+                if (initialRoute && initialRoute.route && initialRoute.route.keepAlive) {
+                  initialRoute.route.keepAliveData = { pageEl: initialPage.el };
+                }
               }
             }, 100);
           });
         } else {
           f7View.init(el);
           if (initialPage) {
-            initialPage.el = f7View.routerPageEl;
+            initialPage.el = f7View.router.currentPageEl;
+            if (initialRoute && initialRoute.route && initialRoute.route.keepAlive) {
+              initialRoute.route.keepAliveData = { pageEl: initialPage.el };
+            }
           }
         }
       } else {
