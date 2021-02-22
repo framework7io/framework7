@@ -347,7 +347,7 @@ export default {
 
           // Do Ajax request to Autocomplete data
           f7.request({
-            url: './js/autocomplete-languages.json',
+            url: './autocomplete-languages.json',
             method: 'GET',
             dataType: 'json',
             // send "query" to server. Useful in case you generate response dynamically
@@ -392,7 +392,7 @@ export default {
 
           // Do Ajax request to Autocomplete data
           f7.request({
-            url: './js/autocomplete-languages.json',
+            url: './autocomplete-languages.json',
             method: 'GET',
             dataType: 'json',
             // send "query" to server. Useful in case you generate response dynamically
@@ -520,7 +520,7 @@ export default {
           autocomplete.preloaderShow();
           // Do Ajax request to Autocomplete data
           f7.request({
-            url: './js/autocomplete-languages.json',
+            url: './autocomplete-languages.json',
             method: 'GET',
             dataType: 'json',
             // send "query" to server. Useful in case you generate response dynamically
