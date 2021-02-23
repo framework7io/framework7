@@ -8,6 +8,11 @@
       </a>
     </td>
     <td align="center" valign="middle">
+      <a href="https://paperell.com/pay-for-research-papers" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/paperell.svg">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://privicy.com/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/privicy.png">
       </a>
@@ -22,13 +27,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/appvalley.jpg">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="http://mytommy.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/tommy.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://www.ramotion.com/agency/app-development/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/ramotion.png">
@@ -49,13 +54,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/goread.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://www.coupons4printing.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/coupons4printing.jpg">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.collegepaperworld.com/research-paper.html" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/collegeresearchpaper.png">
@@ -76,13 +81,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/realtime.jpg">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://vpn-review.com/vpn-for-torrenting" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/vpn.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://papersowl.com/write-my-essay-please" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/papersowl.png">
@@ -103,13 +108,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/paraphrasetools.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.bonus.com.de/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/bonusfinder.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://kqapi.us" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/kqapius.png">
@@ -130,13 +135,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/rise.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://usave.co.uk/utilities/broadband" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/usave.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://bid4papers.com/write-my-essay.html" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/bid4papers.png">
@@ -157,19 +162,18 @@
         <img width="160" src="https://framework7.io/i/sponsors/hicapps.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://blokt.com/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/blokt.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://wappler.io/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
-    <td></td>
     <td></td>
     <td></td>
     <td></td>
@@ -200,6 +204,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 
 ### \$100 Silver Sponsor
 
+[Paperell.com](https://paperell.com/pay-for-research-papers) - Pay for a Research Paper Writing<br>
 [Ramotion](https://www.ramotion.com/agency/app-development/) - App Development Agency<br>
 [Thorium Builder](https://www.thoriumbuilder.com/) - Full visual Framework7 app builder<br>
 Colin Adams ([App Valley](https://appvalley.vip/))<br>
