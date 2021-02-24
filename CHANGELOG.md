@@ -2,6 +2,13 @@
 
 # Change Log
 
+# [v6.0.11](https://github.com/framework7io/framework7/compare/v6.0.10...v6.0.11) - February 24, 2021
+
+### Bug Fixes
+
+- **components:** fixed issue with keepAlive not working correctly for initial page routes ([171ca2a](https://github.com/framework7io/framework7/commit/171ca2af50ab86c3f1cf36032495f3502f222750))
+- **store:** fixed issue with wrong getter value after state update ([11ac753](https://github.com/framework7io/framework7/commit/11ac75318a173ea86a185d3b782fdc142f742b29))
+
 # [v6.0.10](https://github.com/framework7io/framework7/compare/v6.0.9...v6.0.10) - February 18, 2021
 
 ### Bug Fixes
