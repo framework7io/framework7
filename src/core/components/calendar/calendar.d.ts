@@ -36,6 +36,8 @@ export namespace Calendar {
     view: View.View;
     /** Object with initialization parameters */
     params: Parameters;
+    /** Set this flag to `false` to prevent touch move interactions after initialization */
+    allowTouchMove: boolean;
 
     /** Set new selected dates. values is array where each item represents selected date */
     setValue(values: Date[]): void;
