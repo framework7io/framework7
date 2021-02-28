@@ -9,7 +9,7 @@ import { watchProp } from '../shared/watch-prop';
 import { ListContext } from '../shared/list-context';
 
 /* dts-imports
-import { Calendar, ColorPicker, TextEditor }
+import { Calendar, ColorPicker, TextEditor } from 'framework7/types';
 */
 /* dts-props
   id?: string | number;

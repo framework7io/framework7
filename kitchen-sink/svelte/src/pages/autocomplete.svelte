@@ -166,7 +166,7 @@
 
         // Do Ajax request to Autocomplete data
         f7.request({
-          url: './js/autocomplete-languages.json',
+          url: './autocomplete-languages.json',
           method: 'GET',
           dataType: 'json',
           // send "query" to server. Useful in case you generate response dynamically
@@ -211,7 +211,7 @@
 
         // Do Ajax request to Autocomplete data
         f7.request({
-          url: './js/autocomplete-languages.json',
+          url: './autocomplete-languages.json',
           method: 'GET',
           dataType: 'json',
           // send "query" to server. Useful in case you generate response dynamically
@@ -337,7 +337,7 @@
         autocomplete.preloaderShow();
         // Do Ajax request to Autocomplete data
         f7.request({
-          url: './js/autocomplete-languages.json',
+          url: './autocomplete-languages.json',
           method: 'GET',
           dataType: 'json',
           // send "query" to server. Useful in case you generate response dynamically

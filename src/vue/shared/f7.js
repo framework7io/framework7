@@ -1,6 +1,6 @@
 /* eslint-disable import/no-mutable-exports */
 import Framework7 from 'framework7/lite';
-import { extend } from './utils';
+import { extend, unsetRouterIds } from './utils';
 
 let f7;
 let f7events;
@@ -13,6 +13,23 @@ const f7routers = {
   modals: null,
 };
 
+const setTheme = () => {
+  if (!f7) return;
+  theme.ios = f7.theme === 'ios';
+  theme.md = f7.theme === 'md';
+  theme.aurora = f7.theme === 'aurora';
+};
+
+const cleanup = () => {
+  unsetRouterIds();
+  delete theme.ios;
+  delete theme.md;
+  delete theme.aurora;
+  f7routers.views = [];
+  f7routers.tabs = [];
+  f7routers.modals = null;
+};
+
 const f7initEvents = () => {
   f7events = new Framework7.Events();
 };
@@ -22,6 +39,7 @@ const f7init = (rootEl, params = {}, init = true) => {
     el: rootEl,
     init,
   });
+  if (typeof params.store !== 'undefined') f7Params.store = params.store;
   if (!f7Params.routes) f7Params.routes = [];
 
   if (f7Params.userAgent && (f7Params.theme === 'auto' || !f7Params.theme)) {
@@ -30,10 +48,15 @@ const f7init = (rootEl, params = {}, init = true) => {
     theme.aurora = device.desktop && device.electron;
     theme.md = !theme.ios && !theme.aurora;
   }
-  if (f7) return;
+  // eslint-disable-next-line
+  if (f7 && typeof window !== 'undefined') return;
+  // eslint-disable-next-line
+  if (typeof window === 'undefined') cleanup();
 
   const instance = new Framework7(f7Params);
   f7 = instance;
+  setTheme();
+
   if (instance.initialized) {
     f7 = instance;
     f7events.emit('ready', f7);
@@ -53,4 +76,4 @@ const f7ready = (callback) => {
   }
 };
 
-export { f7, theme, f7ready, f7events, f7init, f7routers, f7initEvents };
+export { f7, theme, f7ready, f7events, f7init, f7routers, f7initEvents, setTheme };

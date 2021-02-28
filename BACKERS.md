@@ -8,18 +8,13 @@
       </a>
     </td>
     <td align="center" valign="middle">
+      <a href="https://paperell.com/pay-for-research-papers" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/paperell.svg">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://privicy.com/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/privicy.png">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://codersrank.io/?utm_source=partner&utm_medium=referral&utm_campaign=vladimir" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/codersrank.svg">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://www.sparheld.de/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/sparheld.jpg">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -27,13 +22,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/thorium.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://app-valley.vip/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/appvalley.jpg">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="http://mytommy.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/tommy.png">
@@ -54,13 +49,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/findmate.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://goread.io/buy-instagram-likes" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/goread.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://www.coupons4printing.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/coupons4printing.jpg">
@@ -81,13 +76,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/gunsbet.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.realtimecommunicationsworld.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/realtime.jpg">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://vpn-review.com/vpn-for-torrenting" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/vpn.png">
@@ -108,13 +103,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/edubirdie.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://paraphrasetools.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/paraphrasetools.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.bonus.com.de/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/bonusfinder.png">
@@ -135,13 +130,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/colognewebdesign.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://rise.co" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/rise.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://usave.co.uk/utilities/broadband" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/usave.png">
@@ -162,13 +157,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/cyberbrain.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://hicapps.cl/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/hicapps.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://blokt.com/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/blokt.png">
@@ -179,6 +174,7 @@
         <img width="160" src="https://framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
+    <td></td>
     <td></td>
     <td></td>
   </tr>
@@ -201,9 +197,6 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ### \$250 Gold Sponsor
 
 [WFM Buddy](https://www.wfmbuddy.com/) - WFM Buddy - Delighting your Workforce<br>
-[CodersRank](https://codersrank.io/?utm_source=partner&utm_medium=referral&utm_campaign=vladimir) - CodersRank - Ultimate Profile For Coders<br>
-[Sparheld.de](https://www.sparheld.de/) - Sparheld.de - save shopping online<br>
-[Privict](https://privicy.com/) - Privacy control for consumers<br>
 
 [Join here!](https://www.patreon.com/bePatron?patAmt=250.0&exp=1&u=4109762&rid=830877)
 
@@ -211,6 +204,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 
 ### \$100 Silver Sponsor
 
+[Paperell.com](https://paperell.com/pay-for-research-papers) - Pay for a Research Paper Writing<br>
 [Ramotion](https://www.ramotion.com/agency/app-development/) - App Development Agency<br>
 [Thorium Builder](https://www.thoriumbuilder.com/) - Full visual Framework7 app builder<br>
 Colin Adams ([App Valley](https://appvalley.vip/))<br>
@@ -222,6 +216,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 
 ### \$50+ Top Supporter
 
+[Privicy](https://privicy.com/) - Privacy control for consumers<br>
 [Buy Instagram Likes from Goread](https://goread.io/buy-instagram-likes)<br>
 [Coupons4Printing: Promotion Codes, Coupons, Coupon Codes](https://www.coupons4printing.com)<br>
 SIMPLY LAB<br>
@@ -259,6 +254,7 @@ Bart DJ
 
 ### \$25+ Awesome Supporter
 
+Andrey Brindeyev<br>
 Danny Redfern<br>
 
 [Join here!](https://www.patreon.com/join/vladimirkharlampidi/checkout?rid=4656325)
@@ -267,6 +263,7 @@ Danny Redfern<br>
 
 ### \$10+ Supporter
 
+Franz Gusenbauer<br>
 loopcake<br>
 Jim Leliveld<br>
 Wolfgang Bochar<br>

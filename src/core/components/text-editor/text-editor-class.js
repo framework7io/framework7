@@ -184,7 +184,20 @@ class TextEditor extends Framework7Class {
           anchorNode = anchorNode.nextSibling;
         }
       }
-      $selectedLinks = $(selectedNodes).closest('a').add($(selectedNodes).children('a'));
+
+      const selectedNodesLinks = [];
+      const $selectedNodes = $(selectedNodes);
+      for (let i = 0; i < $selectedNodes.length; i += 1) {
+        const childNodes = $selectedNodes[i].children;
+        if (childNodes) {
+          for (let j = 0; j < childNodes.length; j += 1) {
+            if ($(childNodes[j]).is('a')) {
+              selectedNodesLinks.push(childNodes[j]);
+            }
+          }
+        }
+      }
+      $selectedLinks = $selectedNodes.closest('a').add($(selectedNodesLinks));
     }
     if ($selectedLinks && $selectedLinks.length) {
       $selectedLinks.each((linkNode) => {

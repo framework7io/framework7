@@ -1,6 +1,6 @@
 {
   "name": "framework7",
-  "version": "6.0.1",
+  "version": "6.0.11",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "main": "cjs/framework7.js",
   "module": "esm/framework7.js",
@@ -13,7 +13,7 @@
     "esm/utils/dom7.js"
   ],
   "scripts": {
-    "postinstall": "echo \"\u001b[35m\u001b[1mLove Framework7? Support project by donating or pledging on patreon:\u001b[22m\u001b[39m\n > \u001b[32mhttps://patreon.com/vladimirkharlampidi\u001b[0m\n\""
+    "postinstall": "node postinstall.js"
   },
   "repository": {
     "type": "git",
@@ -53,8 +53,8 @@
     "dom7": "^3.0.0",
     "htm": "^3.0.4",
     "path-to-regexp": "^6.2.0",
-    "skeleton-elements": "^3.2.0",
+    "skeleton-elements": "^3.3.0",
     "ssr-window": "^3.0.0",
-    "swiper": "^6.3.5"
+    "swiper": "^6.4.15"
   }
 }

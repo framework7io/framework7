@@ -86,7 +86,10 @@ function generateComponentProps(propsContent) {
     .filter((line) => !!line)
     .forEach((line) => {
       const propName = line.split(':')[0].replace('?', '');
-      const propValue = line.split(':').slice(1).join(':').replace(';', '');
+      let propValue = line.split(':').slice(1).join(':');
+      if (propValue.charAt(propValue.length - 1) === ';') {
+        propValue = propValue.substr(0, propValue.length - 1);
+      }
       props[propName] = propValue.trim();
     });
   const content = Object.keys(props)

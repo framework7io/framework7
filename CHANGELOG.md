@@ -2,6 +2,74 @@
 
 # Change Log
 
+# [v6.0.11](https://github.com/framework7io/framework7/compare/v6.0.10...v6.0.11) - February 24, 2021
+
+### Bug Fixes
+
+- **components:** fixed issue with keepAlive not working correctly for initial page routes ([171ca2a](https://github.com/framework7io/framework7/commit/171ca2af50ab86c3f1cf36032495f3502f222750))
+- **store:** fixed issue with wrong getter value after state update ([11ac753](https://github.com/framework7io/framework7/commit/11ac75318a173ea86a185d3b782fdc142f742b29))
+
+# [v6.0.10](https://github.com/framework7io/framework7/compare/v6.0.9...v6.0.10) - February 18, 2021
+
+### Bug Fixes
+
+- **components:** fix theme detection for initial page ([cf53ba3](https://github.com/framework7io/framework7/commit/cf53ba371ba3eb98c4842fac204b558bd0caebab))
+- **svelte:** proper CJS components in package ([63032e3](https://github.com/framework7io/framework7/commit/63032e366e98264f2d84671ab93596a1ddc556b7))
+
+# [v6.0.9](https://github.com/framework7io/framework7/compare/v6.0.8...v6.0.9) - February 18, 2021
+
+### Bug Fixes
+
+- **photo browser:** fixed issue with not working swipe to close ([1e3bcbc](https://github.com/framework7io/framework7/commit/1e3bcbcf538bc708553b1e1e621717384596b8c1))
+
+### Features
+
+- **swiper:** update Swiper to latest 6.4.15 ([b2274a1](https://github.com/framework7io/framework7/commit/b2274a1bbdfb8c572c43b55ded610ed021ac4460))
+
+# [v6.0.8](https://github.com/framework7io/framework7/compare/v6.0.7...v6.0.8) - February 16, 2021
+
+### Bug Fixes
+
+- **components:** better SSR support ([0e7b9e8](https://github.com/framework7io/framework7/commit/0e7b9e831a8d28af3859604b0067dbd8f620407b))
+- **core:** allow to init Framework7 more than once if runs on server-side ([964af1e](https://github.com/framework7io/framework7/commit/964af1e96466b487e44c81f3e9c560f50867a78f))
+
+# [v6.0.7](https://github.com/framework7io/framework7/compare/v6.0.6...v6.0.7) - February 5, 2021
+
+### Bug Fixes
+
+- **frameworks:** better check if initial route is a Master route ([15c16b4](https://github.com/framework7io/framework7/commit/15c16b4cb3dd32ff13c75a0945a12b3770d95002))
+- **frameworks:** fixed issue when passed store instance became different in f7.store ([b20b05d](https://github.com/framework7io/framework7/commit/b20b05db4dd3fc158e327359c9055f023c88d8a7))
+
+# [v6.0.6](https://github.com/framework7io/framework7/compare/v6.0.5...v6.0.6) - January 26, 2021
+
+- Core
+  - Text Editor
+    - Fixed "add link" button functionality
+
+# [v6.0.5](https://github.com/framework7io/framework7/compare/v6.0.4...v6.0.5) - January 26, 2021
+
+- Core
+  - Router Component
+    - Added support for HTML contents with `innerHTML` attribute/prop
+
+# [v6.0.4](https://github.com/framework7io/framework7/compare/v6.0.3...v6.0.4) - January 19, 2021
+
+- Package
+  - Fixed `postinstall` script
+- Vue
+  - Removed `vue@2` peer dependency
+  - Card
+    - Fixed rendering of card footer passed by `footer` prop
+
+# [v6.0.3](https://github.com/framework7io/framework7/compare/v6.0.1...v6.0.3) - January 11, 2021
+
+- Core
+  - Added compatibility with latest `less` v4
+  - Swiper updated to latest v6.4.5
+- React
+  - Fixed issue with broken TypeScript declarations on some components
+- Minor fixes
+
 # [v6.0.1](https://github.com/framework7io/framework7/compare/v6.0.0...v6.0.1) - December 31, 2020
 
 - React/Svelte/Vue

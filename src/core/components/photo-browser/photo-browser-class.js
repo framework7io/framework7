@@ -457,15 +457,15 @@ class PhotoBrowser extends Framework7Class {
     });
     if (pb.params.swipeToClose && pb.params.type !== 'page') {
       extend(swiperParams.on, {
-        touchStart(e) {
+        touchStart(swiper, e) {
           pb.onTouchStart(e);
           pb.emit('local::touchStart', e);
         },
-        touchMoveOpposite(e) {
+        touchMoveOpposite(swiper, e) {
           pb.onTouchMove(e);
           pb.emit('local::touchMoveOpposite', e);
         },
-        touchEnd(e) {
+        touchEnd(swiper, e) {
           pb.onTouchEnd(e);
           pb.emit('local::touchEnd', e);
         },

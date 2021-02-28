@@ -35,7 +35,7 @@
       <slot name="content" />
     </f7-card-content>
     <f7-card-footer v-if="hasFooter">
-      {{ title }}
+      {{ footer }}
       <slot name="footer" />
     </f7-card-footer>
     <slot />

@@ -44,6 +44,7 @@ class Calendar extends Framework7Class {
       isHorizontal,
       inverter,
       animating: false,
+      allowTouchMove: true,
       hasTimePicker:
         calendar.params.timePicker && !calendar.params.rangePicker && !calendar.params.multiple,
     });
@@ -181,7 +182,7 @@ class Calendar extends Framework7Class {
             Math.abs(touchCurrentY - touchStartY) > Math.abs(touchCurrentX - touchStartX)
           );
         }
-        if (isH && isScrolling) {
+        if ((isH && isScrolling) || !calendar.allowTouchMove) {
           isTouched = false;
           return;
         }

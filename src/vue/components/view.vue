@@ -207,6 +207,7 @@ export default {
     let routerData = null;
 
     let initialPage;
+    let initialRoute;
 
     const onViewInit = (view) => {
       emit('view:init', view);
@@ -238,7 +239,9 @@ export default {
       };
       f7routers.views.push(routerData);
       if (f7View && f7View.router && (props.url || props.main)) {
-        initialPage = getRouterInitialComponent(f7View.router, initialPageComponent);
+        const initialData = getRouterInitialComponent(f7View.router, initialPageComponent);
+        initialPage = initialData.initialPage;
+        initialRoute = initialData.initialRoute;
       }
     }
 
@@ -289,6 +292,9 @@ export default {
                 f7View.init(elRef.value);
                 if (initialPage) {
                   initialPage.el = f7View.router.currentPageEl;
+                  if (initialRoute && initialRoute.route && initialRoute.route.keepAlive) {
+                    initialRoute.route.keepAliveData = { pageEl: initialPage.el };
+                  }
                 }
               }, 100);
             });
@@ -296,6 +302,9 @@ export default {
             f7View.init(elRef.value);
             if (initialPage) {
               initialPage.el = f7View.router.currentPageEl;
+              if (initialRoute && initialRoute.route && initialRoute.route.keepAlive) {
+                initialRoute.route.keepAliveData = { pageEl: initialPage.el };
+              }
             }
           }
         } else {

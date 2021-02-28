@@ -14,39 +14,44 @@ function createStore(storeParams = {}) {
   const gettersDependencies = {};
   const gettersCallbacks = {};
 
-  Object.keys(getters).forEach((key) => {
-    gettersDependencies[key] = [];
-    gettersCallbacks[key] = [];
+  Object.keys(getters).forEach((getterKey) => {
+    gettersDependencies[getterKey] = [];
+    gettersCallbacks[getterKey] = [];
   });
-  const addGetterDependencies = (key, deps) => {
-    if (!gettersDependencies[key]) gettersDependencies[key] = [];
+
+  const getGetterValue = (getterKey) => {
+    return getters[getterKey]({ state: store.state });
+  };
+
+  const addGetterDependencies = (getterKey, deps) => {
+    if (!gettersDependencies[getterKey]) gettersDependencies[getterKey] = [];
     deps.forEach((dep) => {
-      if (gettersDependencies[key].indexOf(dep) < 0) {
-        gettersDependencies[key].push(dep);
+      if (gettersDependencies[getterKey].indexOf(dep) < 0) {
+        gettersDependencies[getterKey].push(dep);
       }
     });
   };
 
-  const addGetterCallback = (key, callback) => {
-    if (!gettersCallbacks[key]) gettersCallbacks[key] = [];
-    gettersCallbacks[key].push(callback);
+  const addGetterCallback = (getterKey, callback) => {
+    if (!gettersCallbacks[getterKey]) gettersCallbacks[getterKey] = [];
+    gettersCallbacks[getterKey].push(callback);
   };
 
-  const runGetterCallbacks = (stateKey, value) => {
+  const runGetterCallbacks = (stateKey) => {
     const keys = Object.keys(gettersDependencies).filter((getterKey) => {
       return gettersDependencies[getterKey].indexOf(stateKey) >= 0;
     });
     keys.forEach((getterKey) => {
       if (!gettersCallbacks[getterKey] || !gettersCallbacks[getterKey].length) return;
       gettersCallbacks[getterKey].forEach((callback) => {
-        callback(value);
+        callback(getGetterValue(getterKey));
       });
     });
   };
 
   const removeGetterCallback = (callback) => {
-    Object.keys(gettersCallbacks).forEach((key) => {
-      const callbacks = gettersCallbacks[key];
+    Object.keys(gettersCallbacks).forEach((stateKey) => {
+      const callbacks = gettersCallbacks[stateKey];
 
       if (callbacks.indexOf(callback) >= 0) {
         callbacks.splice(callbacks.indexOf(callback), 1);
@@ -59,13 +64,13 @@ function createStore(storeParams = {}) {
     removeGetterCallback(callback);
   };
 
-  const getterValue = (key) => {
-    if (key === 'constructor') return;
+  const getterValue = (getterKey) => {
+    if (getterKey === 'constructor') return;
     propsQueue = [];
-    const value = getters[key]({ state: store.state });
-    addGetterDependencies(key, propsQueue);
+    const value = getGetterValue(getterKey);
+    addGetterDependencies(getterKey, propsQueue);
     const onUpdated = (callback) => {
-      addGetterCallback(key, callback);
+      addGetterCallback(getterKey, callback);
     };
 
     const obj = {
@@ -77,7 +82,7 @@ function createStore(storeParams = {}) {
     };
 
     obj.__callback = callback;
-    addGetterCallback(key, callback);
+    addGetterCallback(getterKey, callback);
     // eslint-disable-next-line
     return obj;
   };
@@ -85,7 +90,7 @@ function createStore(storeParams = {}) {
   store.state = new Proxy(state, {
     set: (target, prop, value) => {
       target[prop] = value;
-      runGetterCallbacks(prop, value);
+      runGetterCallbacks(prop);
       return true;
     },
     get: (target, prop) => {
