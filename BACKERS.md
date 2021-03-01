@@ -275,7 +275,6 @@ Thomason<br>
 Shawn Jackson<br>
 Никита Коробочкин<br>
 Nathan Harold<br>
-Paulo Vieira<br>
 iOS Haven<br>
 JK<br>
 Azad Zain<br>
