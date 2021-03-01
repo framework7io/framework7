@@ -153,6 +153,8 @@ interface Framework7 extends Framework7Class<Framework7Events> {
   methods: { [name: string]: () => any };
   /** Boolean property indicating app is initialized or not */
   initialized: boolean;
+  /** Boolean property indication app connection state. (`true` if online) */
+  online: boolean;
   /** Dom7 alias */
   $: Dom7;
   /** App parameters */
