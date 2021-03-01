@@ -25,6 +25,7 @@ import { useTab } from '../shared/use-tab';
   noHairlinesAurora?: boolean
   onTabShow?: (el?: HTMLElement) => void
   onTabHide?: (el?: HTMLElement) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
   COLOR_PROPS
 */
 

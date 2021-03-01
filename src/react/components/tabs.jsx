@@ -15,6 +15,7 @@ import { SwiperOptions } from 'swiper';
   routable? : boolean
   swiperParams? : SwiperOptions
   COLOR_PROPS
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
 */
 
 const Tabs = forwardRef((props, ref) => {

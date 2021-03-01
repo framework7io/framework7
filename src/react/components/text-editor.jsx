@@ -5,6 +5,9 @@ import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
 import { watchProp } from '../shared/watch-prop';
 
+/* dts-imports
+import { TextEditor } from 'framework7/types';
+*/
 /* dts-props
   id?: string | number;
   className?: string;
@@ -29,6 +32,7 @@ import { watchProp } from '../shared/watch-prop';
   onTextEditorKeyboardClose? : (...args: any[]) => void
   onTextEditorPopoverOpen? : (...args: any[]) => void
   onTextEditorPopoverClose? : (...args: any[]) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null; f7TextEditor: () => TextEditor.TextEditor;}>;
 */
 
 const TextEditor = forwardRef((props, ref) => {

@@ -8,6 +8,7 @@ import { useTheme } from '../shared/use-theme';
   className?: string;
   style?: React.CSSProperties;
   size? : number | string;
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
   COLOR_PROPS
 */
 

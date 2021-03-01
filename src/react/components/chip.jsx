@@ -18,6 +18,7 @@ import { useIcon } from '../shared/use-icon';
   tooltipTrigger? : string
   onClick? : (event?: any) => void
   onDelete? : (event?: any) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
   COLOR_PROPS
   ICON_PROPS
 */

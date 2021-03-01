@@ -30,6 +30,7 @@ import { TabbarContext } from '../shared/tabbar-context';
   COLOR_PROPS
   onToolbarHide? : (...args: any[]) => void
   onToolbarShow? : (...args: any[]) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null; hide: () => void; show: () => void;}>;
 */
 
 const Toolbar = forwardRef((props, ref) => {

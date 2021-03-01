@@ -38,6 +38,7 @@ import NavRight from './nav-right';
   onNavbarTransparentHide? : (...args: any[]) => void
   onBackClick? : (event?: any) => void
   onClickBack? : (event?: any) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
 */
 
 const Navbar = forwardRef((props, ref) => {

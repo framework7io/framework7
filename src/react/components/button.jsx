@@ -56,6 +56,7 @@ import Preloader from './preloader';
   preloaderColor?: string;
   loading?: boolean;
   onClick? : (event?: any) => void;
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
   COLOR_PROPS
   ICON_PROPS
   ROUTER_PROPS

@@ -5,6 +5,10 @@ import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
 import { watchProp } from '../shared/watch-prop';
 
+/* dts-imports
+import { Panel } from 'framework7/types';
+*/
+
 /* dts-props
   id?: string | number;
   className?: string;
@@ -37,6 +41,7 @@ import { watchProp } from '../shared/watch-prop';
   onPanelBreakpoint? : (event?: any) => void
   onPanelCollapsedBreakpoint? : (event?: any) => void
   onPanelResize? : (...args: any[]) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null; f7Panel: () => Panel.Panel}>;
 */
 
 const Panel = forwardRef((props, ref) => {

@@ -22,6 +22,7 @@ import { useRouteProps } from '../shared/use-route-props';
   ROUTER_PROPS
   ACTIONS_PROPS
   onClick? : (event?: any) => void;
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
 */
 
 const MenuDropdownItem = forwardRef((props, ref) => {

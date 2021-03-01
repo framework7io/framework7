@@ -11,6 +11,7 @@ import { colorClasses } from '../shared/mixins';
   left? : boolean
   center? : boolean
   right? : boolean
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
   COLOR_PROPS
 */
 

@@ -15,6 +15,7 @@ import { useAsyncComponent } from '../shared/use-async-component';
   tabActive? : boolean
   onTabShow? : (el?: HTMLElement) => void
   onTabHide? : (el?: HTMLElement) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
 */
 
 const Tab = forwardRef((props, ref) => {

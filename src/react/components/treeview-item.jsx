@@ -31,6 +31,7 @@ import { f7ready, f7 } from '../shared/f7';
   onTreeviewOpen? : (el?: HTMLElement) => void
   onTreeviewClose? : (el?: HTMLElement) => void
   onTreeviewLoadChildren? : (el?: HTMLElement, done?: any) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
 */
 
 const TreeviewItem = forwardRef((props, ref) => {

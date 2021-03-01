@@ -10,6 +10,7 @@ import { f7 } from '../shared/f7';
   bold: boolean;
   close: boolean;
   onClick? : (event?: any) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
   COLOR_PROPS
 */
 

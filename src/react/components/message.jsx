@@ -31,6 +31,7 @@ import { colorClasses } from '../shared/mixins';
   onClickHeader? : (event?: any) => void
   onClickFooter? : (event?: any) => void
   onClickBubble? : (event?: any) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
 */
 
 const Message = forwardRef((props, ref) => {

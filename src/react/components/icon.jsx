@@ -17,6 +17,7 @@ import { useTheme } from '../shared/use-theme';
   tooltip? : string;
   tooltipTrigger? : string;
   size? : string | number;
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
   COLOR_PROPS
 */
 

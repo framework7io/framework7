@@ -17,6 +17,7 @@ f7Tooltip: Tooltip.Tooltip
   style: React.CSSProperties;
   tooltip: string;
   tooltipTrigger: string;
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
   COLOR_PROPS
 */
 

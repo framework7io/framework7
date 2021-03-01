@@ -15,6 +15,7 @@ import { colorClasses } from '../shared/mixins';
   defaultChecked? : boolean
   COLOR_PROPS
   onChange? : (event?: any) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null; inputEl: HTMLElement | null}>;
 */
 
 const Checkbox = forwardRef((props, ref) => {

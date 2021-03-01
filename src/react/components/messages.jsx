@@ -5,6 +5,10 @@ import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
 import { watchProp } from '../shared/watch-prop';
 
+/* dts-imports
+import { Messages } from 'framework7/types';
+*/
+
 /* dts-props
   id?: string | number;
   className?: string;
@@ -25,6 +29,7 @@ import { watchProp } from '../shared/watch-prop';
   customClassMessageRule? : Function
   renderMessage? : Function
   init? : boolean
+  ref?: React.MutableRefObject<{el: HTMLElement | null; f7Messages: Messages.Messages}>;
   COLOR_PROPS
 */
 

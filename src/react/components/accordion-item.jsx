@@ -15,6 +15,7 @@ import { f7, f7ready } from '../shared/f7';
   onAccordionBeforeClose? : (prevent?: any) => void
   onAccordionClose? : (...args: any[]) => void
   onAccordionClosed? : (...args: any[]) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
   COLOR_PROPS
 */
 

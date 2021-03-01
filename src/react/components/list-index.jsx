@@ -19,6 +19,7 @@ import { watchProp } from '../shared/watch-prop';
   auroraItemHeight? : number
   COLOR_PROPS
   onListIndexSelect? : (itemContent?: any, itemIndex?: any) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
 */
 
 const ListIndex = forwardRef((props, ref) => {

@@ -19,6 +19,7 @@ import { colorClasses } from '../shared/mixins';
   strongMd? : boolean
   strongAurora? : boolean
   tag? : string
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
   COLOR_PROPS
 */
 

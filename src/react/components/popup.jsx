@@ -34,6 +34,7 @@ import { Popup } from 'framework7/types';
   onPopupOpened? : (instance?: Popup.Popup) => void
   onPopupClose? : (instance?: Popup.Popup) => void
   onPopupClosed? : (instance?: Popup.Popup) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null; f7Popup: () => Popup.Popup}>;
 */
 
 const Popup = forwardRef((props, ref) => {

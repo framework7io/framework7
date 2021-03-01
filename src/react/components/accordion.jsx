@@ -7,6 +7,7 @@ import { colorClasses } from '../shared/mixins';
   className: string;
   style: React.CSSProperties;
   accordionOpposite: boolean;
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
   COLOR_PROPS
 */
 

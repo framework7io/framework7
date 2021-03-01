@@ -57,6 +57,7 @@ import { Stepper } from 'framework7/types';
   onChange? : (event?: any, stepper?: Stepper.Stepper) => void
   onStepperMinusClick? : (event?: any, stepper?: Stepper.Stepper) => void
   onStepperPlusClick? : (event?: any, stepper?: Stepper.Stepper) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null; f7Stepper: () => Stepper.Stepper;}>;
 */
 
 const Stepper = forwardRef((props, ref) => {

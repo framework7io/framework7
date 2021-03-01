@@ -21,6 +21,7 @@ import { classNames, getExtraAttrs } from '../shared/utils';
   labelTextColor? : string
   labelFontSize? : number | string
   labelFontWeight? : number | string
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
   COLOR_PROPS
 */
 

@@ -17,6 +17,7 @@ import Link from './link';
   COLOR_PROPS
   onBackClick? : (event?: any) => void;
   onClickBack? : (event?: any) => void;
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
 */
 
 const NavLeft = forwardRef((props, ref) => {

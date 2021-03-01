@@ -12,6 +12,7 @@ import { ListContext } from '../shared/list-context';
   sortableOpposite? : boolean
   sortableTapHold? : boolean
   sortableMoveElements? : boolean
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
   COLOR_PROPS
 */
 

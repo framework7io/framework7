@@ -14,6 +14,7 @@ import { colorClasses } from '../shared/mixins';
   defaultChecked? : boolean
   COLOR_PROPS
   onChange? : (event?: any) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
 */
 
 const Radio = forwardRef((props, ref) => {

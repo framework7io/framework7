@@ -9,6 +9,7 @@ import { colorClasses } from '../shared/mixins';
   title? : string;
   subtitle? : string;
   sliding? : boolean;
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
   COLOR_PROPS
 */
 

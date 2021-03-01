@@ -88,6 +88,7 @@ import { SmartSelect } from 'framework7/types';
   onAccordionOpen? : (...args: any[]) => void
   onAccordionOpened? : (...args: any[]) => void
   onChange? : (event?: any) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null; f7SmartSelect: () => SmartSelect.SmartSelect}>;
 */
 
 /*

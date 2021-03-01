@@ -53,6 +53,7 @@ import PageContent from './page-content';
   onPageBeforeUnmount? : (page?: any) => void
   onPageTabShow? : (...args: any[]) => void
   onPageTabHide? : (...args: any[]) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
 */
 
 const Page = forwardRef((props, ref) => {

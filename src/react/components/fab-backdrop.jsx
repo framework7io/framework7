@@ -5,6 +5,7 @@ import { getExtraAttrs, classNames } from '../shared/utils';
   id?: string | number;
   className?: string;
   style?: React.CSSProperties;
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
 */
 
 const FabBackdrop = forwardRef((props, ref) => {

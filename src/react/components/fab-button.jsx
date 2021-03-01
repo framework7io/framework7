@@ -13,6 +13,7 @@ import { useTooltip } from '../shared/use-tooltip';
   tooltip? : string;
   tooltipTrigger? : string;
   onClick? : (event?: any) => void;
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
   COLOR_PROPS
 */
 

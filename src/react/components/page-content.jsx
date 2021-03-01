@@ -36,6 +36,7 @@ import { f7ready, f7 } from '../shared/f7';
   onInfinite? : (...args: any[]) => void
   onTabShow? : (el?: HTMLElement) => void
   onTabHide? : (el?: HTMLElement) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
 */
 
 const PageContent = forwardRef((props, ref) => {

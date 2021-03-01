@@ -4,6 +4,10 @@ import { extend, emit } from '../shared/utils';
 import { watchProp } from '../shared/watch-prop';
 import { f7ready, f7 } from '../shared/f7';
 
+/* dts-imports
+import { PhotoBrowser } from 'framework7/types';
+*/
+
 /* dts-props
   init? : boolean
   params? : Object
@@ -40,6 +44,7 @@ import { f7ready, f7 } from '../shared/f7';
   onPhotoBrowserOpened? : (...args: any[]) => void
   onPhotoBrowserClosed? : (...args: any[]) => void
   onPhotoBrowserSwipeToClose? : (...args: any[]) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null; f7PhotoBrowser: () => PhotoBrowser.PhotoBrowser; open: () => void; close: () => void;}>;
 */
 
 const PhotoBrowser = forwardRef((props, ref) => {

@@ -6,6 +6,9 @@ import { f7ready, f7 } from '../shared/f7';
 import { watchProp } from '../shared/watch-prop';
 import { useTooltip } from '../shared/use-tooltip';
 
+/* dts-imports
+import { Toggle } from 'framework7/types';
+*/
 /* dts-props
   id?: string | number;
   className?: string;
@@ -22,6 +25,7 @@ import { useTooltip } from '../shared/use-tooltip';
   COLOR_PROPS
   onToggleChange? : (...args: any[]) => void
   onChange? : (event?: any) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null; f7Toggle: () => Toggle.Toggle;}>;
 */
 
 const Toggle = forwardRef((props, ref) => {

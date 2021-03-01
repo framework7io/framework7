@@ -59,6 +59,7 @@ import { VirtualList } from 'framework7/types';
   onSortableSort? : (sortData?: any) => void
   onTabShow? : (el?: HTMLElement) => void
   onTabHide? : (el?: HTMLElement) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null; f7VirtualList: () => VirtualList.VirtualList}>;
 */
 
 const List = forwardRef((props, ref) => {

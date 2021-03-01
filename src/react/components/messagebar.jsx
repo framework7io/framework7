@@ -41,6 +41,7 @@ import { Messagebar } from 'framework7/types';
   onMessagebarAttachmentDelete? : (instance?: Messagebar.Messagebar, attachmentEl?: HTMLElement, attachmentElIndex?: number) => void
   onMessagebarAttachmentClick? : (instance?: Messagebar.Messagebar, attachmentEl?: HTMLElement, attachmentElIndex?: number) => void
   onMessagebarResizePage? : (instance?: Messagebar.Messagebar) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null; f7Messagebar: () => Messagebar.Messagebar}>;
 */
 
 const Messagebar = forwardRef((props, ref) => {

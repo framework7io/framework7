@@ -5,6 +5,10 @@ import { colorClasses } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
 import { watchProp } from '../shared/watch-prop';
 
+/* dts-imports
+import { Range } from 'framework7/types';
+*/
+
 /* dts-props
   id?: string | number;
   className?: string;
@@ -32,6 +36,7 @@ import { watchProp } from '../shared/watch-prop';
   COLOR_PROPS
   onRangeChange? : (val?: any) => void
   onRangeChanged? : (val?: any) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null; f7Range: () => Range.Rage}>;
 */
 
 const Range = forwardRef((props, ref) => {

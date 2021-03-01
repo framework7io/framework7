@@ -9,6 +9,7 @@ import { f7 } from '../shared/f7';
   style?: React.CSSProperties;
   progress? : number;
   infinite? : boolean;
+  ref?: React.MutableRefObject<{el: HTMLElement | null; set: (progress: number; duration: number) => void}>;
   COLOR_PROPS
 */
 

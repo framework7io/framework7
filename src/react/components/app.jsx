@@ -17,6 +17,7 @@ import { f7init, f7 } from '../shared/f7';
 /* dts-props
   className?: string;
   style?: React.CSSProperties;
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
   COLOR_PROPS
 */
 

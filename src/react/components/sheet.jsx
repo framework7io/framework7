@@ -37,6 +37,7 @@ import { Sheet } from 'framework7/types';
   onSheetOpened? : (instance?: Sheet.Sheet) => void
   onSheetClose? : (instance?: Sheet.Sheet) => void
   onSheetClosed? : (instance?: Sheet.Sheet) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null; f7Sheet: () => Sheet.Sheet;}>;
 */
 
 const Sheet = forwardRef((props, ref) => {

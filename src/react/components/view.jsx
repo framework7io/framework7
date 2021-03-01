@@ -83,6 +83,7 @@ import { RouterContext } from '../shared/router-context';
   onSwipeBackAfterReset? : (swipeBackData?: Router.SwipeBackData) => void
   onTabShow? : (el?: HTMLElement) => void
   onTabHide? : (el?: HTMLElement) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null; f7View: () => View.View}>;
 */
 
 const View = forwardRef((props, ref) => {

@@ -15,6 +15,7 @@ import { colorClasses } from '../shared/mixins';
   href? : string
   COLOR_PROPS
   onClick? : (event?: any) => void
+  ref?: React.MutableRefObject<{el: HTMLElement | null}>;
 */
 
 const SwipeoutButton = forwardRef((props, ref) => {
