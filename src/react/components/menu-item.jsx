@@ -22,7 +22,7 @@ import { useTooltip } from '../shared/use-tooltip';
   href?: string;
   link?: boolean;
   target?: string;
-  dropdown?: doolean;
+  dropdown?: boolean;
   tooltip? : string
   tooltipTrigger? : string
   COLOR_PROPS
