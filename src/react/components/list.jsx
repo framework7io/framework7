@@ -6,7 +6,7 @@ import { f7, f7ready } from '../shared/f7';
 import { ListContext } from '../shared/list-context';
 import { useTab } from '../shared/use-tab';
 
-/* dts-import
+/* dts-imports
 import { VirtualList } from 'framework7/types';
 */
 /* dts-props
