@@ -22,7 +22,6 @@ import { classNames, getExtraAttrs } from '../shared/utils';
   labelFontSize? : number | string
   labelFontWeight? : number | string
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
-  COLOR_PROPS
 */
 
 const Gauge = forwardRef((props, ref) => {

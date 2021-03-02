@@ -33,13 +33,6 @@ import { watchProp } from '../shared/watch-prop';
   noShadow? : boolean
   noBorder? : boolean
   padding? : boolean
-  color? : string
-  colorTheme? : string
-  textColor? : string
-  bgColor? : string
-  borderColor? : string
-  rippleColor? : string
-  themeDark? : boolean
   onCardBeforeOpen? : (el?: HTMLElement, prevent?: any) => void
   onCardOpen? : (el?: HTMLElement) => void
   onCardOpened? : (el?: HTMLElement, pageEl?: HTMLElement) => void
