@@ -20,5 +20,5 @@ export const useSmartSelect = (smartSelect, smartSelectParams, f7SmartSelect, ge
   useEffect(() => {
     onMount();
     return onDestroy;
-  });
+  }, []);
 };
