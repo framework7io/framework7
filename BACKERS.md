@@ -104,8 +104,8 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://paraphrasetools.com" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/paraphrasetools.png">
+      <a href="https://uppsats.eu" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/uppsats.png">
       </a>
     </td>
   </tr>
@@ -228,7 +228,7 @@ SIMPLY LAB<br>
 [Tutlance.com - Pay For Homework Answers, Assignments and Essay Solutions](https://tutlance.com)<br>
 [EduBirdie - The professional essay writing service for students who can't even](https://edubirdie.com)<br>
 [Findmate - International Dating](https://findmate.app)<br>
-[Paraphrasing tool- rewrite, paraphrase your article](https://paraphrasetools.com)<br>
+[Tjänst för akademisk skrivning. Beställ din uppsats](https://uppsats.eu)<br>
 [www.bonus.com.de](https://www.bonus.com.de/)<br>
 [Writers Per Hour](https://writersperhour.com/write-my-paper) - Write My Paper For Me<br>
 [Bid4Papers](https://bid4papers.com/write-my-essay.html) - Write My Essay<br>

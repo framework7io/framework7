@@ -120,8 +120,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://paraphrasetools.com" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/paraphrasetools.png">
+      <a href="https://uppsats.eu" target="_blank">
+        <img width="160" src="https://framework7.io/i/sponsors/uppsats.png">
       </a>
     </td>
   </tr>
