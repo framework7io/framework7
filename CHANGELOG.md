@@ -2,6 +2,18 @@
 
 # Change Log
 
+# [v6.0.12](https://github.com/framework7io/framework7/compare/v6.0.11...v6.0.12) - March 5, 2021
+
+### Bug Fixes
+
+- **core:** typings for `f7.online` ([259c91e](https://github.com/framework7io/framework7/commit/259c91edc7c10e337ad47744771f748bed0e3f55)), closes [#3825](https://github.com/framework7io/framework7/issues/3825)
+- **react:** add typings for React components `ref`s ([3ecadc2](https://github.com/framework7io/framework7/commit/3ecadc2c58b584decd4da140a882e6be9207134b)), closes [#3827](https://github.com/framework7io/framework7/issues/3827)
+- **react:** fix smart select lifecycle hooks ([d40b13f](https://github.com/framework7io/framework7/commit/d40b13f7ca4a4523127a3364d9e2e704d96b35ad))
+
+### Features
+
+- **calendar:** new `calendar.allowTouchMove` boolean property to toggle touchmove interactions ([a58ef12](https://github.com/framework7io/framework7/commit/a58ef126cc942260623bf1dd85cd0eda9b3e8d9e))
+
 # [v6.0.11](https://github.com/framework7io/framework7/compare/v6.0.10...v6.0.11) - February 24, 2021
 
 ### Bug Fixes
