@@ -478,10 +478,9 @@ class TextEditor extends Framework7Class {
 
   createPopover() {
     const self = this;
-    const isDark = self.$el.closest('.theme-dark').length > 0;
     self.popover = self.app.popover.create({
       content: `
-        <div class="popover ${isDark ? 'theme-light' : 'theme-dark'} text-editor-popover">
+        <div class="popover theme-dark text-editor-popover">
           <div class="popover-inner">${self.renderButtons()}</div>
         </div>
       `,
