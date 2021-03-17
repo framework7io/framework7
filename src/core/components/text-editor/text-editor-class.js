@@ -466,13 +466,8 @@ class TextEditor extends Framework7Class {
 
   createKeyboardToolbar() {
     const self = this;
-    const device = getDevice();
-    const isDark =
-      self.$el.closest('.theme-dark').length > 0 || device.prefersColorScheme() === 'dark';
     self.$keyboardToolbarEl = $(
-      `<div class="toolbar toolbar-bottom text-editor-keyboard-toolbar ${
-        isDark ? 'theme-dark' : ''
-      }"><div class="toolbar-inner">${self.renderButtons()}</div></div>`,
+      `<div class="toolbar toolbar-bottom text-editor-keyboard-toolbar"><div class="toolbar-inner">${self.renderButtons()}</div></div>`,
     );
   }
 
