@@ -178,8 +178,7 @@
   top: 0;
 }
 .calendar-row {
-  height: 100% / 6;
-  height: calc(100% / 6);
+  height: (100% / 6);
   display: flex;
   flex-shrink: 1;
   width: 100%;
@@ -201,8 +200,7 @@
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  width: 100% / 7;
-  width: calc(100% / 7);
+  width: (100% / 7);
   text-align: center;
   cursor: pointer;
   z-index: 20;
@@ -368,7 +366,7 @@
 }
 .sheet-modal .calendar-month-picker-item {
   width: 25%;
-  height: calc(100% / 3);
+  height: (100% / 3);
   &:nth-child(4n + 1) {
     .hairline-remove(left);
   }
@@ -378,7 +376,7 @@
 }
 .popover .calendar-month-picker-item,
 .calendar-modal .calendar-month-picker-item {
-  width: calc(100% / 3);
+  width: (100% / 3);
   height: 25%;
   &:nth-child(3n + 1) {
     .hairline-remove(left);
