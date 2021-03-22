@@ -2,6 +2,14 @@
 
 # Change Log
 
+# [v6.0.14](https://github.com/framework7io/framework7/compare/v6.0.12...v6.0.14) - March 22, 2021
+
+### Bug Fixes
+
+- **core:** fixed `.less` division widths/heights
+- **react:** fixed typing for Progressbar
+- **text editor:** fixed wrong keyboard toolbar dark theme detection
+
 # [v6.0.12](https://github.com/framework7io/framework7/compare/v6.0.11...v6.0.12) - March 5, 2021
 
 ### Bug Fixes
