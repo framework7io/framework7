@@ -30,7 +30,7 @@ export function extend(...args) {
   for (let i = 0; i < from.length; i += 1) {
     const nextSource = args[i];
     if (nextSource !== undefined && nextSource !== null) {
-      const keysArray = Object.keys(Object(nextSource));
+      const keysArray = Object.keys(Object(nextSource)).filter((key) => key !== '__proto__');
       for (let nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex += 1) {
         const nextKey = keysArray[nextIndex];
         const desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
