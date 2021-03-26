@@ -752,7 +752,7 @@
   - Dialog
     - Added support for `backdrop` parameter to be able to disable backdrop
   - Sheet
-    - New `sheet.setSwipeSet()` method to update swipe step position if content was modified manually
+    - New `sheet.setSwipeStep()` method to update swipe step position if content was modified manually
   - Tooltip
     - New `offset` parameter to add extra offset to tooltip position
   - Touch
