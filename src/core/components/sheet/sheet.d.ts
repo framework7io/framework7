@@ -3,6 +3,12 @@ import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from
 
 export namespace Sheet {
   interface Events {
+    /** Event will be triggered on Sheet swipe step open/expand */
+    stepOpen: (sheet: Sheet) => void;
+    /** Event will be triggered on Sheet swipe step close/collapse */
+    stepClose: (sheet: Sheet) => void;
+    /** Event will be triggered on Sheet swipe step between step opened and closed state. As `progress` it receives step open progress number (from 0 to 1) */
+    stepProgress: (sheet: Sheet, progress: number) => void;
     /** Event will be triggered when Sheet Modal starts its opening animation. As an argument event handler receives sheet instance */
     open: (sheet: Sheet) => void;
     /** Event will be triggered when Sheet Modal completes its opening animation. As an argument event handler receives sheet instance */
@@ -67,6 +73,14 @@ export namespace Sheet {
     open(animate?: boolean): Sheet;
     /** Close sheet. */
     close(animate?: boolean): Sheet;
+    /** Open/expand sheet swipe step */
+    stepOpen(): void;
+    /** Close/collapse sheet swipe step */
+    stepClose(): void;
+    /** Toggle (open or close) sheet swipe step */
+    stepToggle(): void;
+    /** Update step position. Required to call after content of sheet modal has been modified manually when it is opened */
+    setSwipeStep(): void;
     /** Destroy sheet */
     destroy(): void;
   }
@@ -99,6 +113,12 @@ export namespace Sheet {
     sheet?: Parameters | undefined;
   }
   interface AppEvents {
+    /** Event will be triggered on Sheet swipe step open/expand */
+    sheetStepOpen: (sheet: Sheet) => void;
+    /** Event will be triggered on Sheet swipe step close/collapse */
+    sheetStepClose: (sheet: Sheet) => void;
+    /** Event will be triggered on Sheet swipe step between step opened and closed state. As `progress` it receives step open progress number (from 0 to 1) */
+    sheetStepProgress: (sheet: Sheet, progress: number) => void;
     /** Event will be triggered when Sheet Modal starts its opening animation. As an argument event handler receives sheet instance */
     sheetOpen: (sheet: Sheet) => void;
     /** Event will be triggered when Sheet Modal completes its opening animation. As an argument event handler receives sheet instance */
