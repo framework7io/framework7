@@ -259,7 +259,6 @@ Bart DJ
 
 ### \$25+ Awesome Supporter
 
-Andrey Brindeyev<br>
 Danny Redfern<br>
 
 [Join here!](https://www.patreon.com/join/vladimirkharlampidi/checkout?rid=4656325)
