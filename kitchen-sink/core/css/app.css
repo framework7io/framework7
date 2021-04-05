@@ -11,6 +11,13 @@
     url(../fonts/MaterialIcons-Regular.ttf) format('truetype');
 }
 
+html,
+body {
+  /* prevent ios overscroll/bounce: https://github.com/framework7io/framework7-website/issues/491 */
+  position: fixed;
+  overflow: hidden;
+}
+
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
