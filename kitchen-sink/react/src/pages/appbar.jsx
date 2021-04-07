@@ -9,7 +9,7 @@ export default () => {
   const enableAppbar = () => {
     setAppbarEnabled(true);
     appbarEnabledCache = true;
-    f7.root.prepend(`
+    f7.$el.prepend(`
     <div class="appbar">
       <div class="appbar-inner">
         <div class="left">

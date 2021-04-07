@@ -35,7 +35,7 @@ export default {
       const self = this;
       self.appbarEnabled = true;
       appbarEnabled = true;
-      f7.root.prepend(`
+      f7.$el.prepend(`
         <div class="appbar">
           <div class="appbar-inner">
             <div class="left">
