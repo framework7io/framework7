@@ -1,10 +1,10 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getExtraAttrs, emit } from '../shared/utils';
+import React, { forwardRef, useImperativeHandle, useRef } from 'react';
+import { f7, f7ready } from '../shared/f7';
 import { colorClasses } from '../shared/mixins';
-import { f7ready, f7 } from '../shared/f7';
-import { watchProp } from '../shared/watch-prop';
 import { modalStateClasses } from '../shared/modal-state-classes';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
+import { classNames, emit, getExtraAttrs } from '../shared/utils';
+import { watchProp } from '../shared/watch-prop';
 
 /* dts-imports
 import { Popup } from 'framework7/types';
@@ -107,20 +107,22 @@ const Popup = forwardRef((props, ref) => {
     }
   });
 
+  const modalEvents = (method) => {
+    if (!f7Popup.current) return;
+    f7Popup.current[method]('swipeStart', onSwipeStart);
+    f7Popup.current[method]('swipeMove', onSwipeMove);
+    f7Popup.current[method]('swipeEnd', onSwipeEnd);
+    f7Popup.current[method]('swipeClose', onSwipeClose);
+    f7Popup.current[method]('open', onOpen);
+    f7Popup.current[method]('opened', onOpened);
+    f7Popup.current[method]('close', onClose);
+    f7Popup.current[method]('closed', onClosed);
+  };
+
   const onMount = () => {
     if (!elRef.current) return;
     const popupParams = {
       el: elRef.current,
-      on: {
-        swipeStart: onSwipeStart,
-        swipeMove: onSwipeMove,
-        swipeEnd: onSwipeEnd,
-        swipeClose: onSwipeClose,
-        open: onOpen,
-        opened: onOpened,
-        close: onClose,
-        closed: onClosed,
-      },
     };
 
     if ('closeByBackdropClick' in props) popupParams.closeByBackdropClick = closeByBackdropClick;
@@ -134,6 +136,7 @@ const Popup = forwardRef((props, ref) => {
 
     f7ready(() => {
       f7Popup.current = f7.popup.create(popupParams);
+      modalEvents('on');
       if (opened) {
         f7Popup.current.open(false);
       }
@@ -146,6 +149,13 @@ const Popup = forwardRef((props, ref) => {
     }
     f7Popup.current = null;
   };
+
+  useIsomorphicLayoutEffect(() => {
+    modalEvents('on');
+    return () => {
+      modalEvents('off');
+    };
+  });
 
   useIsomorphicLayoutEffect(() => {
     onMount();

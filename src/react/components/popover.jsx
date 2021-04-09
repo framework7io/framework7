@@ -87,16 +87,18 @@ const Popover = forwardRef((props, ref) => {
     }
   });
 
+  const modalEvents = (method) => {
+    if (!f7Popover.current) return;
+    f7Popover.current[method]('open', onOpen);
+    f7Popover.current[method]('opened', onOpened);
+    f7Popover.current[method]('close', onClose);
+    f7Popover.current[method]('closed', onClosed);
+  };
+
   const onMount = () => {
     if (!elRef.current) return;
     const popoverParams = {
       el: elRef.current,
-      on: {
-        open: onOpen,
-        opened: onOpened,
-        close: onClose,
-        closed: onClosed,
-      },
     };
     if (targetEl) popoverParams.targetEl = targetEl;
 
@@ -110,6 +112,7 @@ const Popover = forwardRef((props, ref) => {
 
     f7ready(() => {
       f7Popover.current = f7.popover.create(popoverParams);
+      modalEvents('on');
 
       if (opened && targetEl) {
         f7Popover.current.open(targetEl, false);
@@ -123,6 +126,13 @@ const Popover = forwardRef((props, ref) => {
     }
     f7Popover.current = null;
   };
+
+  useIsomorphicLayoutEffect(() => {
+    modalEvents('on');
+    return () => {
+      modalEvents('off');
+    };
+  });
 
   useIsomorphicLayoutEffect(() => {
     onMount();

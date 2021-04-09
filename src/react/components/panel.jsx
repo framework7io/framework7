@@ -139,6 +139,20 @@ const Panel = forwardRef((props, ref) => {
     }
   });
 
+  const modalEvents = (method) => {
+    if (!f7Panel.current) return;
+    f7Panel.current[method]('open', onOpen);
+    f7Panel.current[method]('opened', onOpened);
+    f7Panel.current[method]('close', onClose);
+    f7Panel.current[method]('closed', onClosed);
+    f7Panel.current[method]('backdropClick', onBackdropClick);
+    f7Panel.current[method]('swipe', onSwipe);
+    f7Panel.current[method]('swipeOpen', onSwipeOpen);
+    f7Panel.current[method]('collapsedBreakpoint', onCollapsedBreakpoint);
+    f7Panel.current[method]('breakpoint', onBreakpoint);
+    f7Panel.current[method]('resize', onResize);
+  };
+
   const onMount = () => {
     f7ready(() => {
       const $ = f7.$;
@@ -159,20 +173,9 @@ const Panel = forwardRef((props, ref) => {
         swipeOnlyClose,
         swipeActiveArea,
         swipeThreshold,
-        on: {
-          open: onOpen,
-          opened: onOpened,
-          close: onClose,
-          closed: onClosed,
-          backdropClick: onBackdropClick,
-          swipe: onSwipe,
-          swipeOpen: onSwipeOpen,
-          collapsedBreakpoint: onCollapsedBreakpoint,
-          breakpoint: onBreakpoint,
-          resize: onResize,
-        },
       });
       f7Panel.current = f7.panel.create(params);
+      modalEvents('on');
       if (opened) {
         f7Panel.current.open(false);
       }
@@ -185,6 +188,13 @@ const Panel = forwardRef((props, ref) => {
     }
     f7Panel.current = null;
   };
+
+  useIsomorphicLayoutEffect(() => {
+    modalEvents('on');
+    return () => {
+      modalEvents('off');
+    };
+  });
 
   useIsomorphicLayoutEffect(() => {
     onMount();

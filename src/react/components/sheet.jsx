@@ -100,19 +100,21 @@ const Sheet = forwardRef((props, ref) => {
     f7Sheet: () => f7Sheet.current,
   }));
 
+  const modalEvents = (method) => {
+    if (!f7Sheet.current) return;
+    f7Sheet.current[method]('open', onOpen);
+    f7Sheet.current[method]('opened', onOpened);
+    f7Sheet.current[method]('close', onClose);
+    f7Sheet.current[method]('closed', onClosed);
+    f7Sheet.current[method]('stepOpen', onStepOpen);
+    f7Sheet.current[method]('stepClose', onStepClose);
+    f7Sheet.current[method]('stepProgress', onStepProgress);
+  };
+
   const onMount = () => {
     if (!elRef.current) return;
     const sheetParams = {
       el: elRef.current,
-      on: {
-        open: onOpen,
-        opened: onOpened,
-        close: onClose,
-        closed: onClosed,
-        stepOpen: onStepOpen,
-        stepClose: onStepClose,
-        stepProgress: onStepProgress,
-      },
     };
 
     if ('animate' in props && typeof animate !== 'undefined') sheetParams.animate = animate;
@@ -128,6 +130,7 @@ const Sheet = forwardRef((props, ref) => {
 
     f7ready(() => {
       f7Sheet.current = f7.sheet.create(sheetParams);
+      modalEvents('on');
       if (opened) {
         f7Sheet.current.open(false);
       }
@@ -140,6 +143,13 @@ const Sheet = forwardRef((props, ref) => {
     }
     f7Sheet.current = null;
   };
+
+  useIsomorphicLayoutEffect(() => {
+    modalEvents('on');
+    return () => {
+      modalEvents('off');
+    };
+  });
 
   useIsomorphicLayoutEffect(() => {
     onMount();

@@ -66,22 +66,25 @@ const LoginScreen = forwardRef((props, ref) => {
     }
   });
 
+  const modalEvents = (method) => {
+    if (!f7LoginScreen.current) return;
+    f7LoginScreen.current[method]('open', onOpen);
+    f7LoginScreen.current[method]('opened', onOpened);
+    f7LoginScreen.current[method]('close', onClose);
+    f7LoginScreen.current[method]('closed', onClosed);
+  };
+
   const onMount = () => {
     if (!elRef.current) return;
     f7ready(() => {
       const loginScreenParams = {
         el: elRef.current,
-        on: {
-          open: onOpen,
-          opened: onOpened,
-          close: onClose,
-          closed: onClosed,
-        },
       };
       if ('animate' in props) loginScreenParams.animate = animate;
       if ('containerEl' in props) loginScreenParams.containerEl = containerEl;
 
       f7LoginScreen.current = f7.loginScreen.create(loginScreenParams);
+      modalEvents('on');
       if (opened) {
         f7LoginScreen.current.open(false);
       }
@@ -94,6 +97,13 @@ const LoginScreen = forwardRef((props, ref) => {
     }
     f7LoginScreen.current = null;
   };
+
+  useIsomorphicLayoutEffect(() => {
+    modalEvents('on');
+    return () => {
+      modalEvents('off');
+    };
+  });
 
   useIsomorphicLayoutEffect(() => {
     onMount();

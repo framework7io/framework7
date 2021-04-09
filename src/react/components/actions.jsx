@@ -76,6 +76,14 @@ const Actions = forwardRef((props, ref) => {
     }
   });
 
+  const modalEvents = (method) => {
+    if (!f7Actions.current) return;
+    f7Actions.current[method]('open', onOpen);
+    f7Actions.current[method]('opened', onOpened);
+    f7Actions.current[method]('close', onClose);
+    f7Actions.current[method]('closed', onClosed);
+  };
+
   const onMount = () => {
     if (!elRef.current) return;
 
@@ -94,12 +102,6 @@ const Actions = forwardRef((props, ref) => {
     const params = {
       el: elRef.current,
       grid,
-      on: {
-        open: onOpen,
-        opened: onOpened,
-        close: onClose,
-        closed: onClosed,
-      },
     };
     if (target) params.targetEl = target;
     if ('convertToPopover' in props) params.convertToPopover = convertToPopover;
@@ -114,6 +116,7 @@ const Actions = forwardRef((props, ref) => {
 
     f7ready(() => {
       f7Actions.current = f7.actions.create(params);
+      modalEvents('on');
 
       if (opened) {
         f7Actions.current.open(false);
@@ -125,6 +128,13 @@ const Actions = forwardRef((props, ref) => {
     if (f7Actions.current) f7Actions.current.destroy();
     f7Actions.current = null;
   };
+
+  useIsomorphicLayoutEffect(() => {
+    modalEvents('on');
+    return () => {
+      modalEvents('off');
+    };
+  });
 
   useIsomorphicLayoutEffect(() => {
     onMount();
