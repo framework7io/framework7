@@ -351,7 +351,7 @@ export default {
         typeof props.withSubnavbar === 'undefined' &&
         classesValue.indexOf('page-with-subnavbar') < 0
       ) {
-        classesValue += 'page-with-subnavbar';
+        classesValue += ' page-with-subnavbar';
       }
 
       if (
