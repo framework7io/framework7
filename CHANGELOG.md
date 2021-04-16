@@ -2,6 +2,14 @@
 
 # Change Log
 
+# [v6.0.16](https://github.com/framework7io/framework7/compare/v6.0.15...v6.0.16) (2021-04-16)
+
+### Bug Fixes
+
+- **core messages:** fixed issue with `attrs` in `.addMessage` method ([da027b9](https://github.com/framework7io/framework7/commit/da027b9cd444254dd1ad1760ff260eabfefa3abd))
+- **react:** fix events to be reactive in Range, Stepper and Toggle ([53c5be5](https://github.com/framework7io/framework7/commit/53c5be5620927f05d406f98737ef1decee25dba8)), closes [#3872](https://github.com/framework7io/framework7/issues/3872)
+- **vue:** fixed issue with wrong `page-with-subnavbar` class
+
 # [v.6.0.15](https://github.com/framework7io/framework7/compare/v6.0.14...v6.0.15) (2021-04-09)
 
 ### Bug Fixes
