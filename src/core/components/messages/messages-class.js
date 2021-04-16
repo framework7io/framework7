@@ -123,15 +123,12 @@ class Messages extends Framework7Class {
     if (message.isTitle) {
       return `<div class="messages-title">${message.text}</div>`;
     }
-    const attrs = Object.keys(message.attrs)
-      .map((attr) => `${attr}="${message.attrs[attr]}"`)
-      .join(' ');
     return (
       <div
         class={`message message-${message.type} ${message.isTyping ? 'message-typing' : ''} ${
           message.cssClass || ''
         }`}
-        {...attrs}
+        {...message.attrs}
       >
         {message.avatar && (
           <div class="message-avatar" style={`background-image:url(${message.avatar})`}></div>
