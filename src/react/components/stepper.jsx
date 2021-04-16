@@ -154,6 +154,15 @@ const Stepper = forwardRef((props, ref) => {
     f7Stepper.current.setValue(newValue);
   });
 
+  const onStepperChange = (stepper, newValue) => {
+    emit(props, 'stepperChange', newValue);
+  };
+
+  const stepperEvents = (method) => {
+    if (!f7Stepper.current) return;
+    f7Stepper.current[method]('change', onStepperChange);
+  };
+
   const onMount = () => {
     f7ready(() => {
       if (!init || !elRef.current) return;
@@ -171,13 +180,9 @@ const Stepper = forwardRef((props, ref) => {
           manualInputMode,
           decimalPoint,
           buttonsEndInputMode,
-          on: {
-            change(stepper, newValue) {
-              emit(props, 'stepperChange', newValue);
-            },
-          },
         }),
       );
+      stepperEvents('on');
     });
   };
 
@@ -187,6 +192,13 @@ const Stepper = forwardRef((props, ref) => {
     }
     f7Stepper.current = null;
   };
+
+  useIsomorphicLayoutEffect(() => {
+    stepperEvents('on');
+    return () => {
+      stepperEvents('off');
+    };
+  });
 
   useIsomorphicLayoutEffect(() => {
     onMount();

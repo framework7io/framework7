@@ -88,6 +88,20 @@ const Range = forwardRef((props, ref) => {
     }
   });
 
+  const onChange = (range, val) => {
+    emit(props, 'rangeChange', val);
+  };
+
+  const onChanged = (range, val) => {
+    emit(props, 'rangeChanged', val);
+  };
+
+  const rangeEvents = (method) => {
+    if (!f7Range.current) return;
+    f7Range.current[method]('change', onChange);
+    f7Range.current[method]('changed', onChanged);
+  };
+
   const onMount = () => {
     f7ready(() => {
       if (!init || !elRef.current) return;
@@ -109,16 +123,9 @@ const Range = forwardRef((props, ref) => {
           scaleSubSteps,
           formatScaleLabel,
           limitKnobPosition,
-          on: {
-            change(range, val) {
-              emit(props, 'rangeChange', val);
-            },
-            changed(range, val) {
-              emit(props, 'rangeChanged', val);
-            },
-          },
         }),
       );
+      rangeEvents('on');
     });
   };
 
@@ -126,6 +133,13 @@ const Range = forwardRef((props, ref) => {
     if (f7Range.current && f7Range.current.destroy) f7Range.current.destroy();
     f7Range.current = null;
   };
+
+  useIsomorphicLayoutEffect(() => {
+    rangeEvents('on');
+    return () => {
+      rangeEvents('off');
+    };
+  });
 
   useIsomorphicLayoutEffect(() => {
     onMount();

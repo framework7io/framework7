@@ -63,17 +63,22 @@ const Toggle = forwardRef((props, ref) => {
     f7Toggle.current.checked = newValue;
   });
 
+  const onToggleChange = (toggleInstance) => {
+    emit(props, 'toggleChange', toggleInstance.checked);
+  };
+
+  const toggleEvents = (method) => {
+    if (!f7Toggle.current) return;
+    f7Toggle.current[method]('toggleChange', onToggleChange);
+  };
+
   const onMount = () => {
     f7ready(() => {
       if (!init || !elRef.current) return;
       f7Toggle.current = f7.toggle.create({
         el: elRef.current,
-        on: {
-          change(toggleInstance) {
-            emit(props, 'toggleChange', toggleInstance.checked);
-          },
-        },
       });
+      toggleEvents('on');
     });
   };
 
@@ -83,6 +88,13 @@ const Toggle = forwardRef((props, ref) => {
     }
     f7Toggle.current = null;
   };
+
+  useIsomorphicLayoutEffect(() => {
+    toggleEvents('on');
+    return () => {
+      toggleEvents('off');
+    };
+  });
 
   useIsomorphicLayoutEffect(() => {
     onMount();
