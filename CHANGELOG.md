@@ -2,6 +2,15 @@
 
 # Change Log
 
+# [v6.0.17](https://github.com/framework7io/framework7/compare/v6.0.16...v6.0.17) (2021-04-30)
+
+### Bug Fixes
+
+- **device:** fix iPhone detection on FireFox iOS ([840503e](https://github.com/framework7io/framework7/commit/840503e1984c2e0dddfe3d9eaed87e36af9b03f0)), closes [#3876](https://github.com/framework7io/framework7/issues/3876)
+- **modals:** fixed issue when initially opened modal closed without animation ([e2cff56](https://github.com/framework7io/framework7/commit/e2cff56119bbe39409ba73481f9b197d19bb7e00))
+- **svelte:** fix value of `textEditorChange` event in ListInput ([4e1d26f](https://github.com/framework7io/framework7/commit/4e1d26f8ca6a59d78c143dd76bfb58fa056de122)), closes [#3879](https://github.com/framework7io/framework7/issues/3879)
+- fix missing method definitions for sheet step methods ([73167fb](https://github.com/framework7io/framework7/commit/73167fb0b44507705e1c6c150413b701729276f3))
+
 # [v6.0.16](https://github.com/framework7io/framework7/compare/v6.0.15...v6.0.16) (2021-04-16)
 
 ### Bug Fixes
