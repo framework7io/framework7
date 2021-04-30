@@ -271,7 +271,7 @@
     emit('change', [...args]);
 
     if (type === 'texteditor') {
-      emit('textEditorChange', [args[1]]);
+      emit('textEditorChange', [args[0]]);
       value = args[1];
     }
   }
