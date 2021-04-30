@@ -107,6 +107,12 @@ export namespace Sheet {
       open(el?: HTMLElement | CSSSelector, animate?: boolean): Sheet;
       /** closes Sheet Modal */
       close(el?: HTMLElement | CSSSelector, animate?: boolean): Sheet;
+      /** open/expand Sheet swipe step */
+      stepOpen(el?: HTMLElement | CSSSelector): Sheet;
+      /** close/collapse Sheet swipe step */
+      stepClose(el?: HTMLElement | CSSSelector): Sheet;
+      /** toggle (open or close) Sheet swipe step */
+      stepToggle(el?: HTMLElement | CSSSelector): Sheet;
     };
   }
   interface AppParams {
