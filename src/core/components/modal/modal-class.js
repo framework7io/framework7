@@ -84,6 +84,9 @@ class Modal extends Framework7Class {
     }
 
     if (!$el || $el.hasClass('modal-in')) {
+      if (animateModal === false && $el[0] && type !== 'dialog') {
+        $el[0].style.display = 'block';
+      }
       return modal;
     }
 
@@ -198,6 +201,7 @@ class Modal extends Framework7Class {
 
     // Modal
     $el[animate ? 'removeClass' : 'addClass']('not-animated');
+
     function transitionEnd() {
       if ($el.hasClass('modal-out')) {
         modal.onClosed();
