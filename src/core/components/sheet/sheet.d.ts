@@ -93,6 +93,12 @@ export namespace Sheet {
     'sheet:close': () => void;
     /** Event will be triggered after Sheet Modal completes its closing animation */
     'sheet:closed': () => void;
+    /** Event will be triggered on Sheet swipe step open/expand */
+    'sheet:stepopen': () => void;
+    /** Event will be triggered on Sheet swipe step close/collapse */
+    'sheet:stepclose': () => void;
+    /** Event will be triggered on Sheet swipe step between step opened and closed state. As `progress` it receives step open progress number (from 0 to 1) */
+    'sheet:stepprogress': () => void;    
   }
 
   interface AppMethods {
