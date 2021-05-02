@@ -97,7 +97,7 @@ export namespace Sheet {
     'sheet:stepopen': () => void;
     /** Event will be triggered on Sheet swipe step close/collapse */
     'sheet:stepclose': () => void;
-    /** Event will be triggered on Sheet swipe step between step opened and closed state. As `progress` it receives step open progress number (from 0 to 1) */
+    /** Event will be triggered on Sheet swipe step between step opened and closed state. As `event.detail` it receives step open progress number (from 0 to 1) */
     'sheet:stepprogress': () => void;
   }
 
