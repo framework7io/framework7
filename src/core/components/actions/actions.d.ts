@@ -65,7 +65,7 @@ export namespace Actions {
     /** Whether the Action Sheet should be opened/closed with animation or not. Can be overwritten in .open() and .close() methods*/
     animate?: boolean;
     /** Action sheet groups/buttons. In this case Actions layout will be generated dynamically based on passed groups and buttons. In case of groups it should array where each item represent array with buttons for group.*/
-    buttons?: Button[];
+    buttons?: Button[] | Button[][];
     /** Enables grid buttons layout*/
     grid?: boolean;
     /** When enabled, action sheet will be converted to Popover on large screens.*/
