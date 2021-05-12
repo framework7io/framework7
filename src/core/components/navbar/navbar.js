@@ -651,12 +651,13 @@ export default {
     },
   },
   on: {
-    'panelBreakpoint panelCollapsedBreakpoint panelResize viewResize resize viewMasterDetailBreakpoint': function onPanelResize() {
-      const app = this;
-      $('.navbar').each((navbarEl) => {
-        app.navbar.size(navbarEl);
-      });
-    },
+    'panelBreakpoint panelCollapsedBreakpoint panelResize viewResize resize viewMasterDetailBreakpoint':
+      function onPanelResize() {
+        const app = this;
+        $('.navbar').each((navbarEl) => {
+          app.navbar.size(navbarEl);
+        });
+      },
     pageBeforeRemove(page) {
       if (page.$el[0].f7DetachNavbarScrollHandlers) {
         page.$el[0].f7DetachNavbarScrollHandlers();

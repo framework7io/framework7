@@ -42,9 +42,12 @@ const Fab = forwardRef((props, ref) => {
   const linkChildren = [];
   const rootChildren = [];
 
-  const { link: linkSlots, default: defaultSlots, root: rootSlots, text: textSlots } = getSlots(
-    props,
-  );
+  const {
+    link: linkSlots,
+    default: defaultSlots,
+    root: rootSlots,
+    text: textSlots,
+  } = getSlots(props);
 
   if (defaultSlots) {
     for (let i = 0; i < defaultSlots.length; i += 1) {

@@ -201,15 +201,8 @@ class Notification extends Modal {
     const notification = this;
     if (notification.params.render)
       return notification.params.render.call(notification, notification);
-    const {
-      icon,
-      title,
-      titleRightText,
-      subtitle,
-      text,
-      closeButton,
-      cssClass,
-    } = notification.params;
+    const { icon, title, titleRightText, subtitle, text, closeButton, cssClass } =
+      notification.params;
     return (
       <div class={`notification ${cssClass || ''}`}>
         <div class="notification-header">

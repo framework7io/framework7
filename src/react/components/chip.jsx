@@ -24,17 +24,8 @@ import { useIcon } from '../shared/use-icon';
 */
 
 const Chip = forwardRef((props, ref) => {
-  const {
-    className,
-    id,
-    style,
-    media,
-    text,
-    deleteable,
-    mediaTextColor,
-    mediaBgColor,
-    outline,
-  } = props;
+  const { className, id, style, media, text, deleteable, mediaTextColor, mediaBgColor, outline } =
+    props;
   const extraAttrs = getExtraAttrs(props);
 
   const onClick = (event) => {

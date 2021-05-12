@@ -89,8 +89,9 @@ const Grid = {
           prevElMinSize = getElMinSize(sizeProp, $prevResizableEl);
           prevElMaxSize = getElMaxSize(sizeProp, $prevResizableEl);
           parentSize = $prevResizableEl.parent()[0][getSizeProp];
-          itemsInFlow = $prevResizableEl.parent().children(isRow ? '.row' : '[class*="col-"], .col')
-            .length;
+          itemsInFlow = $prevResizableEl
+            .parent()
+            .children(isRow ? '.row' : '[class*="col-"], .col').length;
           gapSize = parseFloat($prevResizableEl.css(isRow ? '--f7-grid-row-gap' : '--f7-grid-gap'));
         }
         if ($nextResizableEl.length) {

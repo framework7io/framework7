@@ -4,14 +4,8 @@ import $jsx from '../../../shared/$jsx';
 
 export default {
   render(self) {
-    const {
-      barLabel,
-      barValue,
-      barValueEditable,
-      redLabelText,
-      greenLabelText,
-      blueLabelText,
-    } = self.params;
+    const { barLabel, barValue, barValueEditable, redLabelText, greenLabelText, blueLabelText } =
+      self.params;
     return (
       <div class="color-picker-module color-picker-module-rgb-bars">
         <div class="color-picker-bar-wrap">

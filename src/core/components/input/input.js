@@ -367,19 +367,18 @@ export default {
         app.input.resizeTextarea(textareaEl);
       });
     },
-    'panelBreakpoint panelCollapsedBreakpoint panelResize panelOpen panelSwipeOpen resize viewMasterDetailBreakpoint': function onPanelOpen(
-      instance,
-    ) {
-      const app = this;
-      if (instance && instance.$el) {
-        instance.$el.find('textarea.resizable').each((textareaEl) => {
-          app.input.resizeTextarea(textareaEl);
-        });
-      } else {
-        $('textarea.resizable').each((textareaEl) => {
-          app.input.resizeTextarea(textareaEl);
-        });
-      }
-    },
+    'panelBreakpoint panelCollapsedBreakpoint panelResize panelOpen panelSwipeOpen resize viewMasterDetailBreakpoint':
+      function onPanelOpen(instance) {
+        const app = this;
+        if (instance && instance.$el) {
+          instance.$el.find('textarea.resizable').each((textareaEl) => {
+            app.input.resizeTextarea(textareaEl);
+          });
+        } else {
+          $('textarea.resizable').each((textareaEl) => {
+            app.input.resizeTextarea(textareaEl);
+          });
+        }
+      },
   },
 };

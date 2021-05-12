@@ -104,12 +104,7 @@ module.exports = {
     {
       files: ['**/*.vue'],
       plugins: ['vue'],
-      extends: [
-        'plugin:vue/vue3-recommended',
-        'airbnb-base',
-        'plugin:prettier/recommended',
-        'prettier/vue',
-      ],
+      extends: ['plugin:vue/vue3-recommended', 'airbnb-base', 'plugin:prettier/recommended'],
       rules: {
         ...rules,
         'vue/component-definition-name-casing': ['error', 'kebab-case'],

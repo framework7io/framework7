@@ -15,9 +15,10 @@ export default {
       constructor: Messagebar,
       app,
       domProp: 'f7Messagebar',
-      addMethods: 'clear getValue setValue setPlaceholder resizePage focus blur attachmentsCreate attachmentsShow attachmentsHide attachmentsToggle renderAttachments sheetCreate sheetShow sheetHide sheetToggle'.split(
-        ' ',
-      ),
+      addMethods:
+        'clear getValue setValue setPlaceholder resizePage focus blur attachmentsCreate attachmentsShow attachmentsHide attachmentsToggle renderAttachments sheetCreate sheetShow sheetHide sheetToggle'.split(
+          ' ',
+        ),
     });
   },
   on: {

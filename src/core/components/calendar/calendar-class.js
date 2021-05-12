@@ -61,12 +61,8 @@ class Calendar extends Framework7Class {
 
     // Auto names
     let { monthNames, monthNamesShort, dayNames, dayNamesShort } = calendar.params;
-    const {
-      monthNamesIntl,
-      monthNamesShortIntl,
-      dayNamesIntl,
-      dayNamesShortIntl,
-    } = calendar.getIntlNames();
+    const { monthNamesIntl, monthNamesShortIntl, dayNamesIntl, dayNamesShortIntl } =
+      calendar.getIntlNames();
     if (monthNames === 'auto') monthNames = monthNamesIntl;
     if (monthNamesShort === 'auto') monthNamesShort = monthNamesShortIntl;
     if (dayNames === 'auto') dayNames = dayNamesIntl;

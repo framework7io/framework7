@@ -333,16 +333,8 @@ class AreaChart extends Framework7Class {
 
   render() {
     const self = this;
-    const {
-      lineChart,
-      toggleDatasets,
-      width,
-      height,
-      axis,
-      axisLabels,
-      legend,
-      datasets,
-    } = self.params;
+    const { lineChart, toggleDatasets, width, height, axis, axisLabels, legend, datasets } =
+      self.params;
     const chartData = self.getChartData();
     const verticalLines = self.getVerticalLines();
     const visibleLegends = self.getVisibleLabels();

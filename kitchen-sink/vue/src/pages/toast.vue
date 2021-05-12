@@ -101,8 +101,7 @@ export default {
       // Create toast
       if (!self.toastLargeMessage) {
         self.toastLargeMessage = f7.toast.create({
-          text:
-            'This toast contains a lot of text. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, quae, ab. Delectus amet optio facere autem sapiente quisquam beatae culpa dolore.',
+          text: 'This toast contains a lot of text. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, quae, ab. Delectus amet optio facere autem sapiente quisquam beatae culpa dolore.',
           closeTimeout: 2000,
         });
       }

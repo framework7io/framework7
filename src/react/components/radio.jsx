@@ -18,17 +18,8 @@ import { colorClasses } from '../shared/mixins';
 */
 
 const Radio = forwardRef((props, ref) => {
-  const {
-    className,
-    id,
-    style,
-    children,
-    value,
-    disabled,
-    readonly,
-    checked,
-    defaultChecked,
-  } = props;
+  const { className, id, style, children, value, disabled, readonly, checked, defaultChecked } =
+    props;
 
   const extraAttrs = getExtraAttrs(props);
 

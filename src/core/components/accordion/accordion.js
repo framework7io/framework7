@@ -112,11 +112,10 @@ export default {
     });
   },
   clicks: {
-    '.accordion-item .item-link, .accordion-item-toggle, .links-list.accordion-list > ul > li > a': function open(
-      $clickedEl,
-    ) {
-      const app = this;
-      Accordion.toggleClicked.call(app, $clickedEl);
-    },
+    '.accordion-item .item-link, .accordion-item-toggle, .links-list.accordion-list > ul > li > a':
+      function open($clickedEl) {
+        const app = this;
+        Accordion.toggleClicked.call(app, $clickedEl);
+      },
   },
 };

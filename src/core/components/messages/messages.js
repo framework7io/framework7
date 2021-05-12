@@ -14,9 +14,10 @@ export default {
       constructor: Messages,
       app,
       domProp: 'f7Messages',
-      addMethods: 'renderMessages layout scroll clear removeMessage removeMessages addMessage addMessages'.split(
-        ' ',
-      ),
+      addMethods:
+        'renderMessages layout scroll clear removeMessage removeMessages addMessage addMessages'.split(
+          ' ',
+        ),
     });
   },
   on: {

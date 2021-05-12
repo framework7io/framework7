@@ -4,26 +4,7 @@ import { Navbar, Page, BlockTitle, List, ListItem } from 'framework7-react';
 export default () => {
   const allowInfinite = useRef(true);
   const [items, setItems] = useState([
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
   ]);
   const [showPreloader, setShowPreloader] = useState(true);
 
