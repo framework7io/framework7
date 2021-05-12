@@ -204,7 +204,7 @@ class Panel extends Framework7Class {
     return panel;
   }
 
-  setCollapsedBreakpoint(emitEvents) {
+  setCollapsedBreakpoint(emitEvents = true) {
     const panel = this;
     const app = panel.app;
     if (!panel.collapsedBreakpointResizeHandler) {
