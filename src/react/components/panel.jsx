@@ -30,6 +30,7 @@ import { Panel } from 'framework7/types';
   swipeOnlyClose? : boolean
   swipeActiveArea? : number
   swipeThreshold? : number
+  containerEl? : string | object
   COLOR_PROPS
   onPanelOpen? : (event?: any) => void
   onPanelOpened? : (event?: any) => void
