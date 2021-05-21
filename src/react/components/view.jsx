@@ -140,6 +140,10 @@ const View = forwardRef((props, ref) => {
       const initialData = getRouterInitialComponent(f7View.current.router, initialPageComponent);
       initialPage = initialData.initialPage;
       initialRoute = initialData.initialRoute;
+      if (initialRoute && initialRoute.route && initialRoute.route.masterRoute) {
+        initialPage = undefined;
+        initialRoute = undefined;
+      }
     }
   }
 

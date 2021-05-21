@@ -242,6 +242,10 @@ export default {
         const initialData = getRouterInitialComponent(f7View.router, initialPageComponent);
         initialPage = initialData.initialPage;
         initialRoute = initialData.initialRoute;
+        if (initialRoute && initialRoute.route && initialRoute.route.masterRoute) {
+          initialPage = undefined;
+          initialRoute = undefined;
+        }
       }
     }
 
