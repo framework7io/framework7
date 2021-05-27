@@ -844,7 +844,7 @@ class SmartSelect extends Framework7Class {
 
     const sheetParams = {
       content: sheetHtml,
-      backdrop: false,
+      backdrop: ss.params.sheetBackdrop,
       scrollToEl: ss.$el,
       closeByOutsideClick: true,
       push: ss.params.sheetPush,

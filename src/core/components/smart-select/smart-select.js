@@ -16,6 +16,7 @@ export default {
       popupSwipeToClose: undefined, // defaults to app
       sheetPush: false,
       sheetSwipeToClose: undefined, // defaults to app
+      sheetBackdrop: false,
       pageTitle: undefined,
       pageBackLinkText: 'Back',
       popupCloseLinkText: 'Close',

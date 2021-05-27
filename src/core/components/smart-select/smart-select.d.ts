@@ -39,6 +39,8 @@ export namespace SmartSelect {
     sheetPush?: boolean;
     /** Enables ability to close smart select sheet with swipe (default undefined) */
     sheetSwipeToClose?: boolean | undefined;
+    /** Enables smart select sheet backdrop (default false) */
+    sheetBackdrop?: boolean;
     /** Smart select page title. If not passed then it will be the <div class="item-title"> text */
     pageTitle?: string;
     /** Smart select Page back link text (default 'Back') */
