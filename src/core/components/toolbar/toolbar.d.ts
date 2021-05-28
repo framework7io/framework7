@@ -25,10 +25,10 @@ export namespace Toolbar {
       | undefined;
   }
   interface AppEvents {
-    /** Event will be triggered when Tab becomes visible/active */
-    tabShow: (tabEl: HTMLElement) => void;
-    /** Event will be triggered when Tab becomes hidden/inactive */
-    tabHide: (tabEl: HTMLElement) => void;
+    /** Event will be triggered when Toolbar becomes visible */
+    toolbarShow: (toolbarEl: HTMLElement) => void;
+    /** Event will be triggered when Toolbar becomes hidden */
+    toolbarHide: (toolbarEl: HTMLElement) => void;
   }
 }
 
