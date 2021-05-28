@@ -62,7 +62,7 @@ export namespace Actions {
     closeByBackdropClick?: boolean;
     /** When enabled, action sheet will be closed on when click outside of it*/
     closeByOutsideClick?: boolean;
-    /** When enabled, popup will be closed on ESC keyboard key press (default false) */
+    /** When enabled, action sheet will be closed on ESC keyboard key press (default false) */
     closeOnEscape?: boolean;
     /** Whether the Action Sheet should be opened/closed with animation or not. Can be overwritten in .open() and .close() methods*/
     animate?: boolean;
