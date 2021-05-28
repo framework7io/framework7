@@ -55,6 +55,6 @@
     "path-to-regexp": "^6.2.0",
     "skeleton-elements": "^3.3.0",
     "ssr-window": "^3.0.0",
-    "swiper": "^6.4.15"
+    "swiper": "^6.6.2"
   }
 }
