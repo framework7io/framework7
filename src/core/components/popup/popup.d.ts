@@ -34,7 +34,7 @@ export namespace Popup {
     /** When enabled, popup will be closed on backdrop click. (default true) */
     closeByBackdropClick?: boolean;
     /** When enabled, popup will be closed on ESC keyboard key press (default false) */
-    closeOnEscape?: boolean
+    closeOnEscape?: boolean;
     /** Whether the Popup should be opened/closed with animation or not. Can be overwritten in .open() and .close() methods. (default true) */
     animate?: boolean;
     /** When enabled it will be possible to close popup with swipe, can be false, true, 'to-bottom', 'to-top' (default false) */
