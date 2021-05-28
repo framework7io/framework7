@@ -372,7 +372,6 @@ const Navbar = {
     const desktopSnapTimeout = 300;
 
     function calcScrollableDistance() {
-      console.log('calcScrollableDistance');
       $pageEl.find('.page-content').each((pageContentEl) => {
         pageContentEl.f7ScrollableDistance =
           pageContentEl.scrollHeight - pageContentEl.offsetHeight;
