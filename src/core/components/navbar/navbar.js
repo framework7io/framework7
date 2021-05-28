@@ -371,6 +371,14 @@ const Navbar = {
     const touchSnapTimeout = 70;
     const desktopSnapTimeout = 300;
 
+    function calcScrollableDistance() {
+      console.log('calcScrollableDistance');
+      $pageEl.find('.page-content').each((pageContentEl) => {
+        pageContentEl.f7ScrollableDistance =
+          pageContentEl.scrollHeight - pageContentEl.offsetHeight;
+      });
+    }
+
     function snapLargeNavbar() {
       const inSearchbarExpanded = $navbarEl.hasClass('with-searchbar-expandable-enabled');
       if (inSearchbarExpanded) return;
@@ -450,7 +458,7 @@ const Navbar = {
 
     let previousCollapseProgress = null;
     let collapseProgress = null;
-    function handleLargeNavbarCollapse() {
+    function handleLargeNavbarCollapse(pageContentEl) {
       const isHidden =
         $navbarEl.hasClass('navbar-hidden') ||
         $navbarEl.parent('.navbars').hasClass('navbar-hidden');
@@ -459,7 +467,11 @@ const Navbar = {
         $navbarEl.hasClass('navbar-large-transparent') ||
         ($navbarEl.hasClass('navbar-large') && $navbarEl.hasClass('navbar-transparent'));
       previousCollapseProgress = collapseProgress;
-      collapseProgress = Math.min(Math.max(currentScrollTop / navbarTitleLargeHeight, 0), 1);
+      const scrollableDistance = Math.min(
+        navbarTitleLargeHeight,
+        pageContentEl.f7ScrollableDistance || navbarTitleLargeHeight,
+      );
+      collapseProgress = Math.min(Math.max(currentScrollTop / scrollableDistance, 0), 1);
       const previousCollapseWasInMiddle =
         previousCollapseProgress > 0 && previousCollapseProgress < 1;
       const inSearchbarExpanded = $navbarEl.hasClass('with-searchbar-expandable-enabled');
@@ -569,7 +581,7 @@ const Navbar = {
       currentScrollTop = scrollContent.scrollTop;
       scrollChanged = currentScrollTop;
       if (needCollapse) {
-        handleLargeNavbarCollapse();
+        handleLargeNavbarCollapse(scrollContent);
       } else if (needTransparent) {
         handleNavbarTransparent();
       }
@@ -597,6 +609,7 @@ const Navbar = {
       }, touchSnapTimeout);
     }
     $pageEl.on('scroll', '.page-content', handleScroll, true);
+
     if (
       support.touch &&
       ((needCollapse && snapPageScrollToLargeTitle) ||
@@ -605,16 +618,15 @@ const Navbar = {
       app.on('touchstart:passive', handeTouchStart);
       app.on('touchend:passive', handleTouchEnd);
     }
-    if (needCollapse) {
-      $pageEl.find('.page-content').each((pageContentEl) => {
-        if (pageContentEl.scrollTop > 0) handleScroll.call(pageContentEl);
-      });
-    } else if (needTransparent) {
+    calcScrollableDistance();
+    if (needCollapse || needTransparent) {
       $pageEl.find('.page-content').each((pageContentEl) => {
         if (pageContentEl.scrollTop > 0) handleScroll.call(pageContentEl);
       });
     }
+    app.on('resize', calcScrollableDistance);
     $pageEl[0].f7DetachNavbarScrollHandlers = function f7DetachNavbarScrollHandlers() {
+      app.off('resize', calcScrollableDistance);
       delete $pageEl[0].f7DetachNavbarScrollHandlers;
       $pageEl.off('scroll', '.page-content', handleScroll, true);
       if (
