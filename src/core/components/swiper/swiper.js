@@ -84,10 +84,10 @@ function initSwiper(swiperEl) {
         let view = app.views.get($swiperEl.parents('.view'));
         if (!view) view = app.views.main;
         const router = view.router;
-        const tabRoute = router.findTabRoute(swiper.slides.eq(swiper.activeIndex)[0]);
-        if (tabRoute) {
+        const tabRouteUrl = router.findTabRouteUrl(swiper.slides.eq(swiper.activeIndex)[0]);
+        if (tabRouteUrl) {
           setTimeout(() => {
-            router.navigate(tabRoute.path);
+            router.navigate(tabRouteUrl);
           }, 0);
         }
       } else {

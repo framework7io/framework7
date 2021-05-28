@@ -601,19 +601,23 @@ class Router extends Framework7Class {
     return url;
   }
 
-  findTabRoute(tabEl) {
+  findTabRouteUrl(tabEl) {
     const router = this;
     const $tabEl = $(tabEl);
     const parentPath = router.currentRoute.route.parentPath;
     const tabId = $tabEl.attr('id');
     const flattenedRoutes = router.flattenRoutes(router.routes);
-    let foundTabRoute;
+    let foundTabRouteUrl;
     flattenedRoutes.forEach((route) => {
       if (route.parentPath === parentPath && route.tab && route.tab.id === tabId) {
-        foundTabRoute = route;
+        if (router.currentRoute.params && Object.keys(router.currentRoute.params).length > 0) {
+          foundTabRouteUrl = router.currentRoute.url;
+        } else {
+          foundTabRouteUrl = route.path;
+        }
       }
     });
-    return foundTabRoute;
+    return foundTabRouteUrl;
   }
 
   findRouteByKey(key, value) {
