@@ -35,6 +35,8 @@ export namespace Sheet {
     closeByBackdropClick?: boolean;
     /** When enabled, sheet will be closed on when click outside of it */
     closeByOutsideClick?: boolean;
+    /** When enabled, sheet will be closed on ESC keyboard key press (default false) */
+    closeOnEscape?: boolean;
     /** Whether the Sheet Modal should be opened/closed with animation or not. Can be overwritten in .open() and .close() methods. (default true) */
     animate?: boolean;
     /** When enabled it will be possible to close sheet with swipe, can be false or true (default false) */

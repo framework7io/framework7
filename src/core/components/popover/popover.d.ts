@@ -27,6 +27,8 @@ export namespace Popover {
     closeByBackdropClick?: boolean;
     /** When enabled, popover will be closed on when click outside of it (default true) */
     closeByOutsideClick?: boolean;
+    /** When enabled, popover will be closed on ESC keyboard key press (default false) */
+    closeOnEscape?: boolean;
     /** Whether the Popover should be opened/closed with animation or not. Can be overwritten in .open() and .close() methods. (default true) */
     animate?: boolean;
     /** HTML element or string CSS selector of target element */
