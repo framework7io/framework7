@@ -47,7 +47,27 @@ export namespace Navbar {
         }
       | undefined;
   }
-  interface AppEvents {}
+
+  interface DomEvents {
+    /** Event will be triggered when Navbar becomes hidden */
+    'navbar:hide': () => void;
+    /** Event will be triggered when Navbar becomes visible */
+    'navbar:show': () => void;
+    /** Event will be triggered when Navbar with large title collapsed (from large navbar to usual navbar) */
+    'navbar:collapse': () => void;
+    /** Event will be triggered when Navbar with large title expanded (from usual navbar to large navbar) */
+    'navbar:expand': () => void;
+  }
+  interface AppEvents {
+    /** Event will be triggered when Navbar becomes hidden */
+    navbarHide: (el: HTMLElement) => void;
+    /** Event will be triggered when Navbar becomes visible */
+    navbarShow: (el: HTMLElement) => void;
+    /** Event will be triggered when Navbar with large title collapsed (from large navbar to usual navbar) */
+    navbarCollapse: (el: HTMLElement) => void;
+    /** Event will be triggered when Navbar with large title expanded (from usual navbar to large navbar) */
+    navbarExpand: (el: HTMLElement) => void;
+  }
 }
 
 declare const NavbarComponent: Framework7Plugin;
