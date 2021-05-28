@@ -34,11 +34,15 @@ export default {
       };
 
       let resolved;
+
+      const childrenBefore = el.children.length;
       function onDidUpdate(componentRouterData) {
         if (componentRouterData !== viewRouter || resolved) return;
+        const childrenAfrer = el.children.length;
+        if (childrenAfrer === childrenBefore) return;
         f7events.off('viewRouterDidUpdate', onDidUpdate);
 
-        const pageEl = el.children[el.children.length - 1];
+        const pageEl = el.children[childrenAfrer - 1];
         pageData.el = pageEl;
 
         resolve(pageEl);
