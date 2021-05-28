@@ -102,8 +102,10 @@
       <i slot="media" class="icon icon-f7" />
     </ListItem>
     <ListItem link="#" title="Two icons here">
-      <i slot="media" class="icon icon-f7" />
-      <i slot="media" class="icon icon-f7" />
+      <svelte:fragment slot="media">
+        <i class="icon icon-f7" />
+        <i class="icon icon-f7" />
+      </svelte:fragment>
     </ListItem>
     <ListItem title="No icons here" />
     <li>
@@ -112,8 +114,10 @@
           <i slot="media" class="icon icon-f7" />
         </ListItem>
         <ListItem link="#" title="Two icons here">
-          <i slot="media" class="icon icon-f7" />
-          <i slot="media" class="icon icon-f7" />
+          <svelte:fragment slot="media">
+            <i class="icon icon-f7" />
+            <i class="icon icon-f7" />
+          </svelte:fragment>
         </ListItem>
         <ListItem title="No icons here" />
         <ListItem link="#" title="Ultra long text goes here, no, it is really really long">
@@ -143,8 +147,10 @@
       <i slot="media" class="icon icon-f7" />
     </ListItem>
     <ListItem link="#" title="Two icons here">
-      <i slot="media" class="icon icon-f7" />
-      <i slot="media" class="icon icon-f7" />
+      <svelte:fragment slot="media">
+        <i class="icon icon-f7" />
+        <i class="icon icon-f7" />
+      </svelte:fragment>
     </ListItem>
     <ListItem link="#" title="Ultra long text goes here, no, it is really really long">
       <i slot="media" class="icon icon-f7" />
@@ -165,8 +171,10 @@
       <i slot="media" class="icon icon-f7" />
     </ListItem>
     <ListItem link="#" title="Two icons here">
-      <i slot="media" class="icon icon-f7" />
-      <i slot="media" class="icon icon-f7" />
+      <svelte:fragment slot="media">
+        <i class="icon icon-f7" />
+        <i class="icon icon-f7" />
+      </svelte:fragment>
     </ListItem>
     <ListItem link="#" title="Ultra long text goes here, no, it is really really long">
       <i slot="media" class="icon icon-f7" />
@@ -190,33 +198,39 @@
       title="Yellow Submarine"
       after="$15"
       subtitle="Beatles"
-      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus.">
+      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
+    >
       <img
         slot="media"
         src="https://cdn.framework7.io/placeholder/people-160x160-1.jpg"
-        width="80" />
+        width="80"
+      />
     </ListItem>
     <ListItem
       link="#"
       title="Don't Stop Me Now"
       after="$22"
       subtitle="Queen"
-      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus.">
+      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
+    >
       <img
         slot="media"
         src="https://cdn.framework7.io/placeholder/people-160x160-2.jpg"
-        width="80" />
+        width="80"
+      />
     </ListItem>
     <ListItem
       link="#"
       title="Billie Jean"
       after="$16"
       subtitle="Michael Jackson"
-      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus.">
+      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
+    >
       <img
         slot="media"
         src="https://cdn.framework7.io/placeholder/people-160x160-3.jpg"
-        width="80" />
+        width="80"
+      />
     </ListItem>
   </List>
   <BlockTitle>Mail App</BlockTitle>
@@ -226,25 +240,29 @@
       title="Facebook"
       after="17:14"
       subtitle="New messages from John Doe"
-      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus." />
+      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
+    />
     <ListItem
       link="#"
       title="John Doe (via Twitter)"
       after="17:11"
       subtitle="John Doe (@_johndoe) mentioned you on Twitter!"
-      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus." />
+      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
+    />
     <ListItem
       link="#"
       title="Facebook"
       after="16:48"
       subtitle="New messages from John Doe"
-      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus." />
+      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
+    />
     <ListItem
       link="#"
       title="John Doe (via Twitter)"
       after="15:32"
       subtitle="John Doe (@_johndoe) mentioned you on Twitter!"
-      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus." />
+      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
+    />
   </List>
   <BlockTitle>Something more simple</BlockTitle>
   <List mediaList>
@@ -252,19 +270,22 @@
       <img
         slot="media"
         src="https://cdn.framework7.io/placeholder/fashion-88x88-1.jpg"
-        width="44" />
+        width="44"
+      />
     </ListItem>
     <ListItem link="#" title="Don't Stop Me Now" subtitle="Queen">
       <img
         slot="media"
         src="https://cdn.framework7.io/placeholder/fashion-88x88-2.jpg"
-        width="44" />
+        width="44"
+      />
     </ListItem>
     <ListItem title="Billie Jean" subtitle="Michael Jackson">
       <img
         slot="media"
         src="https://cdn.framework7.io/placeholder/fashion-88x88-3.jpg"
-        width="44" />
+        width="44"
+      />
     </ListItem>
   </List>
   <BlockTitle>Inset</BlockTitle>
@@ -273,19 +294,22 @@
       <img
         slot="media"
         src="https://cdn.framework7.io/placeholder/fashion-88x88-4.jpg"
-        width="44" />
+        width="44"
+      />
     </ListItem>
     <ListItem link="#" title="Don't Stop Me Now" subtitle="Queen">
       <img
         slot="media"
         src="https://cdn.framework7.io/placeholder/fashion-88x88-5.jpg"
-        width="44" />
+        width="44"
+      />
     </ListItem>
     <ListItem link="#" title="Billie Jean" subtitle="Michael Jackson">
       <img
         slot="media"
         src="https://cdn.framework7.io/placeholder/fashion-88x88-6.jpg"
-        width="44" />
+        width="44"
+      />
     </ListItem>
   </List>
   <BlockTitle>Custom Table-like Layout</BlockTitle>
