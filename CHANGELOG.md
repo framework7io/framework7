@@ -2,6 +2,24 @@
 
 # Change Log
 
+# [v6.0.18](https://github.com/framework7io/framework7/compare/v6.0.17...v6.0.18) (2021-05-28)
+
+### Bug Fixes
+
+- **navbar:** added missing TS events definitions ([3bc1eb2](https://github.com/framework7io/framework7/commit/3bc1eb2f18f5b29ebc5bfa595582182a6e1f39bd)), closes [#3895](https://github.com/framework7io/framework7/issues/3895)
+- **navbar:** fixed issue with large navbar scroll-hide on insufficient page scroll ([0b5e4ab](https://github.com/framework7io/framework7/commit/0b5e4abd0cae086dff2122b4355b1ea0e3609134))
+- **panel:** added `containerEl` typing to props in React component ([da5b38f](https://github.com/framework7io/framework7/commit/da5b38f2e2b35f6f378b6869451308bbaf25f5b0)), closes [#3892](https://github.com/framework7io/framework7/issues/3892)
+- **panel:** fix not emitting `collapsedBreakpoint` event ([03e661f](https://github.com/framework7io/framework7/commit/03e661f7858b7f22cb3d22256018ef36521f92cd)), closes [#3887](https://github.com/framework7io/framework7/issues/3887)
+- **router:** components router fix when view component updated triggered by something else ([df64010](https://github.com/framework7io/framework7/commit/df640103946b2b3e1cf3dbd4ebf1f956fba5e3e0))
+- **router:** don't set initial page component if it is master's detail page ([9e4e264](https://github.com/framework7io/framework7/commit/9e4e26429d2cb9c7a727566730bd83a88d90fb57))
+- **router:** fixed issue for routable swipeable tabs with dynamic params in route path ([4a93d90](https://github.com/framework7io/framework7/commit/4a93d90a345251c03b9df5287bbd98d8ff00cc85))
+- **toolbar:** added missing TS events definitions ([d0afb69](https://github.com/framework7io/framework7/commit/d0afb69b47e6cf06930ff4f759d523e6627e7317))
+
+### Features
+
+- **smart select:** new `sheetBackdrop` parameter to control Sheet backdrop ([0d2f60f](https://github.com/framework7io/framework7/commit/0d2f60f134624fca43384d75af2d96b0c98b55e5))
+- **swiper:** Swiper updated to latest version ([9d30e4b](https://github.com/framework7io/framework7/commit/9d30e4bbd631610c057f58a5dc48408e8aa5161e))
+
 # [v6.0.17](https://github.com/framework7io/framework7/compare/v6.0.16...v6.0.17) (2021-04-30)
 
 ### Bug Fixes
