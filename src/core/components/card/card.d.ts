@@ -31,6 +31,18 @@ export namespace Card {
         }
       | undefined;
   }
+  interface DomEvents {
+    /** Event will be triggered right before expandable card starts its opening animation. event.detail.prevent contains function that will prevent card from opening when called */
+    'card:beforeopen': () => void;
+    /** Event will be triggered when expandable card starts its opening animation */
+    'card:open': () => void;
+    /** Event will be triggered after expandable card completes its opening animation */
+    'card:opened': () => void;
+    /** Event will be triggered when expandable card starts its closing animation */
+    'card:close': () => void;
+    /** Event will be triggered after expandable card completes its closing animation */
+    'card:closed': () => void;
+  }
   interface AppEvents {
     /** Event will be triggered before expandable card content starts its opening animation */
     cardBeforeOpen: (el: HTMLElement | CSSSelector, prevent: () => void) => void;
