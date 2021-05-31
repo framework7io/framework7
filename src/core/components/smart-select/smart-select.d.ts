@@ -150,7 +150,7 @@ export namespace SmartSelect {
   }
   interface DomEvents {
     /** Event will be triggered before Smart Select open. event.detail.prevent is a function that can be called to prevent Smart Select from opening */
-    'smartselect:before': () => void;
+    'smartselect:beforeopen': () => void;
     /** Event will be triggered when Smart Select starts its opening animation */
     'smartselect:open': () => void;
     /** Event will be triggered after Smart Select completes its opening animation */

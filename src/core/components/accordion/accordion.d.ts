@@ -15,6 +15,20 @@ export namespace Accordion {
     };
   }
   interface AppParams {}
+  interface DomEvents {
+    /** Event will be triggered right before accordion content starts its opening animation. event.detail.prevent contains function that will prevent accordion from opening when called */
+    'accordion:beforeopen': () => void;
+    /** Event will be triggered when accordion content starts its opening animation */
+    'accordion:open': () => void;
+    /** Event will be triggered after accordion content completes its opening animation */
+    'accordion:opened': () => void;
+    /** Event will be triggered right before accordion content starts its closing animation. event.detail.prevent contains function that will prevent accordion from closing when called */
+    'accordion:beforeclose': () => void;
+    /** Event will be triggered when accordion content starts its closing animation */
+    'accordion:close': () => void;
+    /** Event will be triggered after accordion content completes its closing animation */
+    'accordion:closed': () => void;
+  }
   interface AppEvents {
     /** Event will be triggered before accordion content starts its opening animation */
     accordionBeforeOpen: (el: HTMLElement | CSSSelector, prevent: () => void) => void;
