@@ -595,7 +595,7 @@ class Router extends Framework7Class {
 
     if (query) {
       if (typeof query === 'string') url += `?${query}`;
-      else url += `?${serializeObject(query)}`;
+      else if (Object.keys(query).length) url += `?${serializeObject(query)}`;
     }
 
     return url;
@@ -611,7 +611,10 @@ class Router extends Framework7Class {
     flattenedRoutes.forEach((route) => {
       if (route.parentPath === parentPath && route.tab && route.tab.id === tabId) {
         if (router.currentRoute.params && Object.keys(router.currentRoute.params).length > 0) {
-          foundTabRouteUrl = router.currentRoute.url;
+          foundTabRouteUrl = router.constructRouteUrl(route, {
+            params: router.currentRoute.params,
+            query: router.currentRoute.query,
+          });
         } else {
           foundTabRouteUrl = route.path;
         }
