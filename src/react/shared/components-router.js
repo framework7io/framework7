@@ -109,6 +109,7 @@ export default {
       }
 
       const id = getComponentId();
+
       const tabContent = {
         id,
         component,
@@ -117,6 +118,11 @@ export default {
             f7route: options.route,
             f7router: router,
           },
+          (options.route.route &&
+            options.route.route.tab &&
+            options.route.route.tab.options &&
+            options.route.route.tab.options.props) ||
+            {},
           options.route.params,
           options.props || {},
         ),

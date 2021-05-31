@@ -28,13 +28,14 @@
     RouterContext.route.route.tab &&
     RouterContext.route.route.tab.id === id
   ) {
-    const { component, asyncComponent } = RouterContext.route.route.tab;
+    const { component, asyncComponent, options: tabRouteOptions } = RouterContext.route.route.tab;
     if (component || asyncComponent) {
       initialTabContent = {
         id: getComponentId(),
         component: component || asyncComponent,
         isAsync: !!asyncComponent,
         props: {
+          ...((tabRouteOptions && tabRouteOptions.props) || {}),
           f7router: RouterContext.router,
           f7route: RouterContext.route,
           ...RouterContext.route.params,

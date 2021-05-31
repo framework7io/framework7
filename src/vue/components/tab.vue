@@ -38,13 +38,14 @@ export default {
       route.route.tab &&
       route.route.tab.id === props.id
     ) {
-      const { component, asyncComponent } = route.route.tab;
+      const { component, asyncComponent, options: tabRouteOptions } = route.route.tab;
       if (component || asyncComponent) {
         initialTabContent = {
           id: getComponentId(),
           component: component || asyncComponent,
           isAsync: !!asyncComponent,
           props: {
+            ...((tabRouteOptions && tabRouteOptions.props) || {}),
             f7router: router,
             f7route: route,
             ...route.params,

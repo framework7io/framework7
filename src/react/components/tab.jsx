@@ -38,13 +38,14 @@ const Tab = forwardRef((props, ref) => {
     routerContext.route.route.tab &&
     routerContext.route.route.tab.id === id
   ) {
-    const { component, asyncComponent } = routerContext.route.route.tab;
+    const { component, asyncComponent, options: tabRouteOptions } = routerContext.route.route.tab;
     if (component || asyncComponent) {
       initialTabContent = {
         id: getComponentId(),
         component: component || asyncComponent,
         isAsync: !!asyncComponent,
         props: {
+          ...((tabRouteOptions && tabRouteOptions.props) || {}),
           f7router: routerContext.router,
           f7route: routerContext.route,
           ...routerContext.route.params,
