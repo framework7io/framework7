@@ -24,6 +24,12 @@ export namespace Toolbar {
         }
       | undefined;
   }
+  interface DomEvents {
+    /** Event will be triggered when Toolbar becomes hidden */
+    'toolbar:hide': () => void;
+    /** Event will be triggered when Toolbar becomes visible */
+    'toolbar:show': () => void;
+  }
   interface AppEvents {
     /** Event will be triggered when Toolbar becomes visible */
     toolbarShow: (toolbarEl: HTMLElement) => void;
