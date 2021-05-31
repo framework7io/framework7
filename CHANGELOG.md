@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [6.0.19](https://github.com/framework7io/framework7/compare/v6.0.18...v6.0.19) (2021-05-31)
+
+### Bug Fixes
+
+- **router:** fix for routable swipeable tabs ([c0c6414](https://github.com/framework7io/framework7/commit/c0c6414054e135caa905e730db72026005037367))
+
 # [v6.0.18](https://github.com/framework7io/framework7/compare/v6.0.17...v6.0.18) (2021-05-28)
 
 ### Bug Fixes
