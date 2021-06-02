@@ -40,11 +40,13 @@ export default {
     ) {
       const { component, asyncComponent, options: tabRouteOptions } = route.route.tab;
       if (component || asyncComponent) {
+        const parentProps = route.route.options && route.route.options.props;
         initialTabContent = {
           id: getComponentId(),
           component: component || asyncComponent,
           isAsync: !!asyncComponent,
           props: {
+            ...(parentProps || {}),
             ...((tabRouteOptions && tabRouteOptions.props) || {}),
             f7router: router,
             f7route: route,

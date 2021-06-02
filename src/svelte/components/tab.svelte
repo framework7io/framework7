@@ -30,11 +30,14 @@
   ) {
     const { component, asyncComponent, options: tabRouteOptions } = RouterContext.route.route.tab;
     if (component || asyncComponent) {
+      const parentProps =
+        RouterContext.route.route.options && RouterContext.route.route.options.props;
       initialTabContent = {
         id: getComponentId(),
         component: component || asyncComponent,
         isAsync: !!asyncComponent,
         props: {
+          ...(parentProps || {}),
           ...((tabRouteOptions && tabRouteOptions.props) || {}),
           f7router: RouterContext.router,
           f7route: RouterContext.route,
