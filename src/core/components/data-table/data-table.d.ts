@@ -38,6 +38,12 @@ export namespace DataTable {
     };
   }
   interface AppParams {}
+  interface DomEvents {
+    /** Event will be triggered data table sort changed */
+    'datatable:sort': () => void;
+    /** Event will be triggered right before Data Table instance will be destroyed */
+    'datatable:beforedestroy': () => void;
+  }
   interface AppEvents {
     /** Event will be triggered data table sort changed. As an argument event handler receives data table instance and new sort order (asc or desc) */
     dataTableSort: (dataTable: DataTable, sort: string) => void;
