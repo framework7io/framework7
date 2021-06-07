@@ -2,6 +2,15 @@
 
 # Change Log
 
+# [6.0.20](https://github.com/framework7io/framework7/compare/v6.0.19...v6.0.20) (2021-06-07)
+
+### Bug Fixes
+
+- **react store:** fixed issue with race-conditions in store updates ([40f4818](https://github.com/framework7io/framework7/commit/40f4818045644a6175e27a175f334b54963ad30b))
+- **react tabs:** fix issue when initial tabShow event not catched ([b3e1dd0](https://github.com/framework7io/framework7/commit/b3e1dd0dc8f457ee07b3436728e7c38694417efe))
+- **router:** correctly bypass `route.tab.options.props` to tab component ([f3326e2](https://github.com/framework7io/framework7/commit/f3326e2d8b868b18b0d318cf3a1e2dd90fccf71a))
+- **router:** routable Tab now inherits parent route `options.props` ([a9e32af](https://github.com/framework7io/framework7/commit/a9e32af636c1a1eca2602af00faab10dbf66e54c))
+
 # [6.0.19](https://github.com/framework7io/framework7/compare/v6.0.18...v6.0.19) (2021-05-31)
 
 ### Bug Fixes
