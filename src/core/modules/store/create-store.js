@@ -64,8 +64,8 @@ function createStore(storeParams = {}) {
     removeGetterCallback(callback);
   };
 
-  const getterValue = (getterKey) => {
-    if (getterKey === 'constructor') return;
+  const getterValue = (getterKey, addCallback = false) => {
+    if (getterKey === 'constructor') return undefined;
     propsQueue = [];
     const value = getGetterValue(getterKey);
     addGetterDependencies(getterKey, propsQueue);
@@ -77,6 +77,11 @@ function createStore(storeParams = {}) {
       value,
       onUpdated,
     };
+
+    if (!addCallback) {
+      return obj;
+    }
+
     const callback = (v) => {
       obj.value = v;
     };
@@ -106,6 +111,16 @@ function createStore(storeParams = {}) {
         return undefined;
       }
       return getterValue(prop);
+    },
+  });
+
+  store._gettersPlain = new Proxy(getters, {
+    set: () => false,
+    get: (target, prop) => {
+      if (!target[prop]) {
+        return undefined;
+      }
+      return getterValue(prop, false);
     },
   });
 

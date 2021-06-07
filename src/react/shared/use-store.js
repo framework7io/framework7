@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { f7 } from './f7';
-import { useIsomorphicLayoutEffect } from './use-isomorphic-layout-effect';
 
 export const useStore = (...args) => {
+  const assignedGetters = useRef({});
   // (store, getter)
   let store = args[0];
   let getter = args[1];
@@ -11,16 +11,23 @@ export const useStore = (...args) => {
     store = f7.store;
     getter = args[0];
   }
-  const obj = store.getters[getter];
+
+  // eslint-disable-next-line
+  const obj = store._gettersPlain[getter];
   const [value, setValue] = useState(obj.value);
-  obj.onUpdated(setValue);
-  useIsomorphicLayoutEffect(() => {
+  function onUpdated(newValue) {
+    setValue(newValue);
+  }
+  if (!assignedGetters.current[getter]) {
+    obj.onUpdated(onUpdated);
+    assignedGetters.current[getter] = true;
+  }
+
+  useEffect(() => {
     return () => {
       // eslint-disable-next-line
-      store.__removeCallback(setValue);
-      // eslint-disable-next-line
-      store.__removeCallback(obj.__callback);
+      store.__removeCallback(onUpdated);
     };
-  });
+  }, []);
   return value;
 };
