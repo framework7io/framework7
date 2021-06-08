@@ -2,6 +2,20 @@
 import { f7events, f7routers } from './f7';
 import { extend, getComponentId } from './utils';
 
+const getChildrenArray = (el) => {
+  const arr = [];
+  for (let i = 0; i < el.children.length; i += 1) {
+    arr.push(el.children[i]);
+  }
+  return arr;
+};
+const hasSameChildren = (childrenBefore, childrenAfter) => {
+  if (childrenBefore.length !== childrenAfter.length) return false;
+  const set = new Set([...childrenBefore, ...childrenAfter]);
+  if (set.size === childrenBefore.length) return true;
+  return false;
+};
+
 export default {
   proto: {
     pageComponentLoader({ routerEl, component, options, resolve, reject }) {
@@ -35,14 +49,14 @@ export default {
 
       let resolved;
 
-      const childrenBefore = el.children.length;
+      const childrenBefore = getChildrenArray(el);
       function onDidUpdate(componentRouterData) {
         if (componentRouterData !== viewRouter || resolved) return;
-        const childrenAfrer = el.children.length;
-        if (childrenAfrer === childrenBefore) return;
+        const childrenAfter = getChildrenArray(el);
+        if (hasSameChildren(childrenBefore, childrenAfter)) return;
         f7events.off('viewRouterDidUpdate', onDidUpdate);
 
-        const pageEl = el.children[childrenAfrer - 1];
+        const pageEl = el.children[el.children.length - 1];
         pageData.el = pageEl;
 
         resolve(pageEl);
