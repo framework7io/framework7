@@ -20,7 +20,7 @@ export namespace SmartSelect {
   }
   interface Parameters {
     /** Smart Select element. Can be useful if you already have Smart Select element in your HTML and want to create new instance using this element */
-    el: HTMLElement | CSSSelector;
+    el?: HTMLElement | CSSSelector;
     /** Link to initialized View instance which is required for Smart Select to work. By default, if not specified, it will be opened in parent View. */
     view?: View.View;
     /** Visual element where to insert selected value. If not passed then it will look for <div class="item-after"> element */
