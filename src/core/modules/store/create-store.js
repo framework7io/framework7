@@ -64,7 +64,7 @@ function createStore(storeParams = {}) {
     removeGetterCallback(callback);
   };
 
-  const getterValue = (getterKey, addCallback = false) => {
+  const getterValue = (getterKey, addCallback = true) => {
     if (getterKey === 'constructor') return undefined;
     propsQueue = [];
     const value = getGetterValue(getterKey);
@@ -110,7 +110,7 @@ function createStore(storeParams = {}) {
       if (!target[prop]) {
         return undefined;
       }
-      return getterValue(prop);
+      return getterValue(prop, true);
     },
   });
 

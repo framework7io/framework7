@@ -21,7 +21,6 @@ class Component {
         aurora: app.theme === 'aurora',
       },
       style: component.style,
-      __storeCallbacks: [],
       __updateQueue: [],
       __eventHandlers: [],
       __onceEventHandlers: [],
@@ -120,19 +119,19 @@ class Component {
   }
 
   getComponentStore() {
-    const { state, getters, dispatch } = this.f7.store;
+    const { state, _gettersPlain, dispatch } = this.f7.store;
     const $store = {
       state,
       dispatch,
     };
-    $store.getters = new Proxy(getters, {
+    $store.getters = new Proxy(_gettersPlain, {
       get: (target, prop) => {
         const obj = target[prop];
-        const callback = () => {
+        const callback = (v) => {
+          obj.value = v;
           this.update();
         };
         obj.onUpdated(callback);
-        this.__storeCallbacks.push(callback, obj.__callback);
         return obj;
       },
     });
@@ -298,10 +297,6 @@ class Component {
     }
     // Clear update queue
     window.cancelAnimationFrame(this.__requestAnimationFrameId);
-    this.__storeCallbacks.forEach((callback) => {
-      this.f7.store.__removeCallback(callback);
-    });
-    this.__storeCallbacks = [];
     this.__updateQueue = [];
     this.__eventHandlers = [];
     this.__onceEventHandlers = [];
