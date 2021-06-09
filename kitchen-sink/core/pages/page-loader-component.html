@@ -173,6 +173,7 @@
     // Store
     let users = $store.getters.users;
     let usersLoading = $store.getters.usersLoading;
+    window.users = users;
     function loadUsers() {
       $store.dispatch('loadUsers');
     }
