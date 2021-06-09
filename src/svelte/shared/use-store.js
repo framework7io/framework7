@@ -17,7 +17,8 @@ export const useStore = (...args) => {
     getter = args[0];
     callback = args[1];
   }
-  const obj = store.getters[getter];
+  // eslint-disable-next-line
+  const obj = store._gettersPlain[getter];
   const value = obj.value;
   if (callback) {
     obj.onUpdated(callback);
@@ -28,8 +29,6 @@ export const useStore = (...args) => {
       // eslint-disable-next-line
       store.__removeCallback(callback);
     }
-    // eslint-disable-next-line
-    store.__removeCallback(obj.__callback);
   });
   return value;
 };
