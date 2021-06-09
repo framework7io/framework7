@@ -2,6 +2,14 @@
 
 # Change Log
 
+## [6.0.21](https://github.com/framework7io/framework7/compare/v6.0.20...v6.0.21) (2021-06-09)
+
+### Bug Fixes
+
+- **router:** correctly track DOM changes in React, Vue and Svelte components router ([3f96bf1](https://github.com/framework7io/framework7/commit/3f96bf127259c5deef71a4a6b8eb6e1dd62d93fa))
+- **smart select:** mark `el` parameter optional for compatibility with `smartSelectParams` ([39a0cbf](https://github.com/framework7io/framework7/commit/39a0cbf75d650bb7a27d243efccaca7e9fcaf4ff)), closes [#3902](https://github.com/framework7io/framework7/issues/3902)
+- **store:** fixed lost reactivity in core components store ([2af3355](https://github.com/framework7io/framework7/commit/2af3355039a655083fa6e6b4486212edf8064a91))
+
 # [6.0.20](https://github.com/framework7io/framework7/compare/v6.0.19...v6.0.20) (2021-06-07)
 
 ### Bug Fixes
