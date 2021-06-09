@@ -10,7 +10,8 @@ export const useStore = (...args) => {
     store = f7.store;
     getter = args[0];
   }
-  const obj = store.getters[getter];
+  // eslint-disable-next-line
+  const obj = store._gettersPlain[getter];
   const valueRef = ref(obj.value);
   const callback = (v) => {
     valueRef.value = v;
@@ -19,8 +20,6 @@ export const useStore = (...args) => {
   onBeforeUnmount(() => {
     // eslint-disable-next-line
     store.__removeCallback(callback);
-    // eslint-disable-next-line
-    store.__removeCallback(obj.__callback);
   });
   return valueRef;
 };
