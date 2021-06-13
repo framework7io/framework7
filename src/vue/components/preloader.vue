@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes">
+  <div :class="classes" :style="style">
     <span v-if="theme && theme.md" class="preloader-inner">
       <svg viewBox="0 0 36 36">
         <circle cx="18" cy="18" r="16" />
