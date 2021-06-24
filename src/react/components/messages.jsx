@@ -139,6 +139,29 @@ const Messages = forwardRef((props, ref) => {
       ) {
         f7Messages.current.scroll();
       }
+      if (
+        childrenBeforeUpdated.current !== childrenAfterUpdated &&
+        f7Messages.current.scroll &&
+        scrollMessages
+      ) {
+        if (scrollMessagesOnEdge) {
+          // Define scroll positions before new messages added
+          const scrollHeightBefore = f7Messages.current.pageContentEl.scrollHeight;
+          const heightBefore = f7Messages.current.pageContentEl.offsetHeight;
+          const scrollBefore = f7Messages.current.pageContentEl.scrollTop;
+
+          let onEdge = false;
+          if (newMessagesFirst && scrollBefore === 0) {
+            onEdge = true;
+          }
+          if (!newMessagesFirst && scrollBefore - (scrollHeightBefore - heightBefore) >= -10) {
+            onEdge = true;
+          }
+          if (onEdge) f7Messages.current.scroll();
+        } else {
+          f7Messages.current.scroll();
+        }
+      }
     }
     childrenBeforeUpdated.current = childrenAfterUpdated;
   });
