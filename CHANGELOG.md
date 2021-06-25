@@ -2,6 +2,15 @@
 
 # Change Log
 
+# [6.0.22](https://github.com/framework7io/framework7/compare/v6.0.21...v6.0.22) (2021-06-25)
+
+### Bug Fixes
+
+- **react messages:** consider scrollMessagesOnEdge when scrolling ([05dba19](https://github.com/framework7io/framework7/commit/05dba19f42a0637773c33f6765cc512d9ea681f7)), closes [#3908](https://github.com/framework7io/framework7/issues/3908)
+- **svelte messages:** fix missing `.instance()` component prop ([e156acc](https://github.com/framework7io/framework7/commit/e156acc5839c3ded9573b2ebc81477f295e00e50)), closes [#3905](https://github.com/framework7io/framework7/issues/3905)
+- **vue:** fixes ignored Preloader `size` prop ([2cb535c](https://github.com/framework7io/framework7/commit/2cb535c6e24af1374f6c6bbb3fa7c8c04e91b178))
+- **vue messages:** consider scrollMessagesOnEdge when scrolling ([110638e](https://github.com/framework7io/framework7/commit/110638eaa5d82e2b1ea6508f51834f402ad44028))
+
 ## [6.0.21](https://github.com/framework7io/framework7/compare/v6.0.20...v6.0.21) (2021-06-09)
 
 ### Bug Fixes
