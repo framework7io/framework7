@@ -30,6 +30,10 @@
   let f7Messages;
   let childrenBeforeUpdated = null;
 
+  export function instance() {
+    return f7Messages;
+  }
+
   $: classes = classNames(className, 'messages', colorClasses($$props));
 
   onMount(() => {
