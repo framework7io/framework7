@@ -62,6 +62,7 @@ const Messages = forwardRef((props, ref) => {
 
   const elRef = useRef(null);
   const childrenBeforeUpdated = useRef(null);
+  const reactChildrenBefore = useRef(children ? React.Children.count(children) : 0);
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
@@ -107,6 +108,15 @@ const Messages = forwardRef((props, ref) => {
     return onDestroy;
   }, []);
 
+  const currentChildrenLength = children ? React.Children.count(children) : 0;
+  if (f7Messages.current && scrollMessages) {
+    const beforeChildrenLength = reactChildrenBefore.current || 0;
+    if (currentChildrenLength !== beforeChildrenLength) {
+      f7Messages.current.setScrollData();
+    }
+  }
+  reactChildrenBefore.current = currentChildrenLength;
+
   useIsomorphicLayoutEffect(() => {
     const wasMounted = mounted.current;
     mounted.current = true;
@@ -135,11 +145,13 @@ const Messages = forwardRef((props, ref) => {
       if (
         childrenBeforeUpdated.current !== childrenAfterUpdated &&
         f7Messages.current.scroll &&
+        f7Messages.current.scrollData &&
         scrollMessages
       ) {
-        f7Messages.current.scroll();
+        f7Messages.current.scrollWithEdgeCheck(true);
       }
     }
+
     childrenBeforeUpdated.current = childrenAfterUpdated;
   });
 

@@ -340,6 +340,24 @@ class Messages extends Framework7Class {
     return m.addMessages([messageToAdd], animate, method);
   }
 
+  setScrollData() {
+    const m = this;
+    // Define scroll positions before new messages added
+    const scrollHeightBefore = m.pageContentEl.scrollHeight;
+    const heightBefore = m.pageContentEl.offsetHeight;
+    const scrollBefore = m.pageContentEl.scrollTop;
+    m.scrollData = {
+      scrollHeightBefore,
+      heightBefore,
+      scrollBefore,
+    };
+    return {
+      scrollHeightBefore,
+      heightBefore,
+      scrollBefore,
+    };
+  }
+
   addMessages(...args) {
     const m = this;
     let messagesToAdd;
@@ -357,10 +375,7 @@ class Messages extends Framework7Class {
       method = m.params.newMessagesFirst ? 'prepend' : 'append';
     }
 
-    // Define scroll positions before new messages added
-    const scrollHeightBefore = m.pageContentEl.scrollHeight;
-    const heightBefore = m.pageContentEl.offsetHeight;
-    const scrollBefore = m.pageContentEl.scrollTop;
+    const { scrollHeightBefore, scrollBefore } = m.setScrollData();
 
     // Add message to DOM and data
     let messagesHTML = '';
@@ -409,21 +424,7 @@ class Messages extends Framework7Class {
       ((method === 'append' && !m.params.newMessagesFirst) ||
         (method === 'prepend' && m.params.newMessagesFirst && !typingMessage))
     ) {
-      if (m.params.scrollMessagesOnEdge) {
-        let onEdge = false;
-        if (m.params.newMessagesFirst && scrollBefore === 0) {
-          onEdge = true;
-        }
-        if (
-          !m.params.newMessagesFirst &&
-          scrollBefore - (scrollHeightBefore - heightBefore) >= -10
-        ) {
-          onEdge = true;
-        }
-        if (onEdge) m.scroll(animate ? undefined : 0);
-      } else {
-        m.scroll(animate ? undefined : 0);
-      }
+      m.scrollWithEdgeCheck(animate);
     }
 
     return m;
@@ -467,6 +468,23 @@ class Messages extends Framework7Class {
       }
     }
     return m;
+  }
+
+  scrollWithEdgeCheck(animate) {
+    const m = this;
+    const { scrollBefore, scrollHeightBefore, heightBefore } = m.scrollData;
+    if (m.params.scrollMessagesOnEdge) {
+      let onEdge = false;
+      if (m.params.newMessagesFirst && scrollBefore === 0) {
+        onEdge = true;
+      }
+      if (!m.params.newMessagesFirst && scrollBefore - (scrollHeightBefore - heightBefore) >= -10) {
+        onEdge = true;
+      }
+      if (onEdge) m.scroll(animate ? undefined : 0);
+    } else {
+      m.scroll(animate ? undefined : 0);
+    }
   }
 
   scroll(duration = 300, scrollTop) {
