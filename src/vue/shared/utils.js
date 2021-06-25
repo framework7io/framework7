@@ -1,3 +1,5 @@
+import { Comment, Fragment } from 'vue';
+
 export function noUndefinedProps(obj) {
   const o = {};
   Object.keys(obj).forEach((key) => {
@@ -83,4 +85,26 @@ export function getRouterId() {
 export function getComponentId() {
   routerComponentIdCounter += 1;
   return `${now()}_${routerComponentIdCounter}`;
+}
+
+export function getChildren(slots, slotName = 'default') {
+  const result = [];
+
+  const getElementsChildren = (els) => {
+    if (!Array.isArray(els)) {
+      return;
+    }
+    els.forEach((vnode) => {
+      const isFragment = vnode.type === Fragment;
+      if (isFragment && vnode.children) {
+        getElementsChildren(vnode.children);
+      } else if (vnode.type && vnode.type !== Comment) {
+        result.push(vnode);
+      }
+    });
+  };
+
+  if (slots[slotName]) getElementsChildren(slots[slotName]());
+
+  return result;
 }

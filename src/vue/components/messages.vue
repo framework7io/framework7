@@ -5,7 +5,7 @@
 </template>
 <script>
 import { computed, ref, onMounted, onBeforeUnmount, onBeforeUpdate, onUpdated, watch } from 'vue';
-import { classNames, noUndefinedProps } from '../shared/utils';
+import { classNames, getChildren, noUndefinedProps } from '../shared/utils';
 import { colorClasses, colorProps } from '../shared/mixins';
 import { f7ready, f7 } from '../shared/f7';
 
@@ -54,7 +54,7 @@ export default {
     },
     ...colorProps,
   },
-  setup(props) {
+  setup(props, { slots }) {
     let f7Messages = null;
     let childrenBeforeUpdated = null;
     const elRef = ref(null);
@@ -97,6 +97,10 @@ export default {
       for (let i = 0; i < children.length; i += 1) {
         children[i].classList.add('message-appeared');
       }
+      const childrenAfterUpdate = getChildren(slots);
+      if (f7Messages && props.scrollMessages && childrenBeforeUpdated !== childrenAfterUpdate) {
+        f7Messages.setScrollData();
+      }
     });
 
     onUpdated(() => {
@@ -120,9 +124,10 @@ export default {
         childerAftterUpdated !== childrenBeforeUpdated &&
         f7Messages &&
         f7Messages.scroll &&
+        f7Messages.scrollData &&
         props.scrollMessages
       ) {
-        f7Messages.scroll();
+        f7Messages.scrollWithEdgeCheck(true);
       }
     });
 
