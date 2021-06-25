@@ -205,6 +205,7 @@ export default () => {
         setTypingMessage(null);
         setMessagesData([
           ...messagesData,
+          ...messagesToSend,
           {
             text: answer,
             type: 'received',
