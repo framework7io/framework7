@@ -191,7 +191,6 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 
 [Ramotion](https://www.ramotion.com/agency/app-development/) - App Development Agency<br>
 [Thorium Builder](https://www.thoriumbuilder.com/) - Full visual Framework7 app builder<br>
-Colin Adams ([App Valley](https://appvalley.vip/))<br>
 Mason Fok ([tommy](http://mytommy.com))<br>
 
 [Join here!](https://www.patreon.com/bePatron?patAmt=100.0&exp=1&u=4109762&rid=830841)
@@ -204,7 +203,6 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 [Privicy](https://privicy.com/) - Privacy control for consumers<br>
 [Buy Instagram Likes from Goread](https://goread.io/buy-instagram-likes)<br>
 [Coupons4Printing: Promotion Codes, Coupons, Coupon Codes](https://www.coupons4printing.com)<br>
-SIMPLY LAB<br>
 [College Papers for Sale | Buy Research Paper Online](https://www.collegepaperworld.com/research-paper.html)<br>
 [Casino En Ligne Canada, Les Meilleurs Casinos Virtuels Canadiens](https://casinofiables.com/)<br>
 [GunsBet Casino](https://www.gunsbet.com)<br>
@@ -223,9 +221,7 @@ SIMPLY LAB<br>
 [Kidoverse](https://kidoverse.app) - App for kids to learn, play, create and explore<br>
 [CyberBrain IT Services](https://www.cyberbrain.nl/)<br>
 [HICAPPS](https://hicapps.cl/) - Health Informatics Custom APPs<br>
-Michael Russell<br>
 [Blokt](https://blokt.com/) - Cryptocurrency News<br>
-Alexey Victorov<br>
 [Wappler](https://wappler.io) - Visual Web App Creator, offers full visual Framework7 builder<br>
 Marcelo Lopetegui L.<br>
 Bearr Dayss<br>
@@ -246,19 +242,15 @@ Danny Redfern<br>
 
 ### \$10+ Supporter
 
+Eli Finer<br>
 Franz Gusenbauer<br>
-loopcake<br>
 Jim Leliveld<br>
 Wolfgang Bochar<br>
-Picolé de Chuchu<br>
 Stan Smulders<br>
-Lailton Fernando Mariano<br>
 User Mail<br>
 Thomason<br>
-Shawn Jackson<br>
 Никита Коробочкин<br>
 Nathan Harold<br>
-iOS Haven<br>
 JK<br>
 Azad Zain<br>
 Will Mero<br>
@@ -266,20 +258,14 @@ Jorge Pagano<br>
 Jacob Gur<br>
 Matthew Proctor<br>
 Andy Fuchs<br>
-Noah A Neibaron<br>
 José Manuel Alarcón<br>
 Matt Davis<br>
-Arsen Huang<br>
 Marc Hildmann<br>
-VOUSYS<br>
 Almaz Kazakov<br>
-plpl<br>
 Dan Boschen<br>
 Ferry van de Graaf<br>
 Denis Bousselier<br>
-Matthew Becker<br>
-Timo Ernst<br>
-Dave Billington
+Timo Ernst
 
 [Join here!](https://www.patreon.com/bePatron?exp=1&rid=830839&u=4109762&patAmt=10.0)
 
