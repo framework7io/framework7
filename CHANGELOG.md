@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [6.1.0-beta.1](https://github.com/framework7io/framework7/compare/v6.0.22...v6.1.0-beta.1) (2021-07-08)
+
+### Features
+
+- **svelte:** add .svelte components to the package ([a8f3913](https://github.com/framework7io/framework7/commit/a8f391307252acce5d314416bcfed6bf4c0c46c9))
+
 # [6.0.22](https://github.com/framework7io/framework7/compare/v6.0.21...v6.0.22) (2021-06-25)
 
 ### Bug Fixes
