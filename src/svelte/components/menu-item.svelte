@@ -9,7 +9,7 @@
   } from '../shared/mixins';
   import { classNames, extend, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
   import { useTooltip } from '../shared/use-tooltip';
   import { useRouteProps } from '../shared/use-route-props';
@@ -86,14 +86,14 @@
 
   onMount(() => {
     f7ready(() => {
-      f7.on('menuOpened', onOpened);
-      f7.on('menuClosed', onClosed);
+      app.f7.on('menuOpened', onOpened);
+      app.f7.on('menuClosed', onClosed);
     });
   });
   onDestroy(() => {
-    if (!el || !f7) return;
-    f7.off('menuOpened', onOpened);
-    f7.off('menuClosed', onClosed);
+    if (!el || !app.f7) return;
+    app.f7.off('menuOpened', onOpened);
+    app.f7.off('menuClosed', onClosed);
   });
 </script>
 

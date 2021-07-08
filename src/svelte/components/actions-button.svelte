@@ -4,7 +4,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { app } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
 
   const emit = createEmitter(createEventDispatcher, $$props);
@@ -30,9 +30,9 @@
   );
 
   function onClick() {
-    if (close && f7) {
-      const dom7 = f7.$;
-      f7.actions.close(dom7(el).parents('.actions-modal'));
+    if (close && app.f7) {
+      const dom7 = app.f7.$;
+      app.f7.actions.close(dom7(el).parents('.actions-modal'));
     }
     emit('click');
   }

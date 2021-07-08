@@ -9,7 +9,7 @@
   } from '../shared/mixins';
   import { classNames, plainText, isStringProp, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
   import { useTooltip } from '../shared/use-tooltip';
   import { useSmartSelect } from '../shared/use-smart-select';
@@ -171,9 +171,9 @@
     }
     if (!swipeout) return;
     if (opened) {
-      f7.swipeout.open(el);
+      app.f7.swipeout.open(el);
     } else {
-      f7.swipeout.close(el);
+      app.f7.swipeout.close(el);
     }
   }
   $: watchSwipeoutOpened(swipeoutOpened);
@@ -262,26 +262,26 @@
     }
     f7ready(() => {
       if (swipeout) {
-        f7.on('swipeoutOpen', onSwipeoutOpen);
-        f7.on('swipeoutOpened', onSwipeoutOpened);
-        f7.on('swipeoutClose', onSwipeoutClose);
-        f7.on('swipeoutClosed', onSwipeoutClosed);
-        f7.on('swipeoutDelete', onSwipeoutDelete);
-        f7.on('swipeoutDeleted', onSwipeoutDeleted);
-        f7.on('swipeoutOverswipeEnter', onSwipeoutOverswipeEnter);
-        f7.on('swipeoutOverswipeExit', onSwipeoutOverswipeExit);
-        f7.on('swipeout', onSwipeout);
+        app.f7.on('swipeoutOpen', onSwipeoutOpen);
+        app.f7.on('swipeoutOpened', onSwipeoutOpened);
+        app.f7.on('swipeoutClose', onSwipeoutClose);
+        app.f7.on('swipeoutClosed', onSwipeoutClosed);
+        app.f7.on('swipeoutDelete', onSwipeoutDelete);
+        app.f7.on('swipeoutDeleted', onSwipeoutDeleted);
+        app.f7.on('swipeoutOverswipeEnter', onSwipeoutOverswipeEnter);
+        app.f7.on('swipeoutOverswipeExit', onSwipeoutOverswipeExit);
+        app.f7.on('swipeout', onSwipeout);
       }
       if (accordionItem) {
-        f7.on('accordionBeforeOpen', onAccBeforeOpen);
-        f7.on('accordionOpen', onAccOpen);
-        f7.on('accordionOpened', onAccOpened);
-        f7.on('accordionBeforeClose', onAccBeforeClose);
-        f7.on('accordionClose', onAccClose);
-        f7.on('accordionClosed', onAccClosed);
+        app.f7.on('accordionBeforeOpen', onAccBeforeOpen);
+        app.f7.on('accordionOpen', onAccOpen);
+        app.f7.on('accordionOpened', onAccOpened);
+        app.f7.on('accordionBeforeClose', onAccBeforeClose);
+        app.f7.on('accordionClose', onAccClose);
+        app.f7.on('accordionClosed', onAccClosed);
       }
       if (swipeoutOpened) {
-        f7.swipeout.open(el);
+        app.f7.swipeout.open(el);
       }
     });
   });
@@ -293,46 +293,72 @@
   });
 
   onDestroy(() => {
-    if (!f7) return;
+    if (!app.f7) return;
     if (swipeout) {
-      f7.off('swipeoutOpen', onSwipeoutOpen);
-      f7.off('swipeoutOpened', onSwipeoutOpened);
-      f7.off('swipeoutClose', onSwipeoutClose);
-      f7.off('swipeoutClosed', onSwipeoutClosed);
-      f7.off('swipeoutDelete', onSwipeoutDelete);
-      f7.off('swipeoutDeleted', onSwipeoutDeleted);
-      f7.off('swipeoutOverswipeEnter', onSwipeoutOverswipeEnter);
-      f7.off('swipeoutOverswipeExit', onSwipeoutOverswipeExit);
-      f7.off('swipeout', onSwipeout);
+      app.f7.off('swipeoutOpen', onSwipeoutOpen);
+      app.f7.off('swipeoutOpened', onSwipeoutOpened);
+      app.f7.off('swipeoutClose', onSwipeoutClose);
+      app.f7.off('swipeoutClosed', onSwipeoutClosed);
+      app.f7.off('swipeoutDelete', onSwipeoutDelete);
+      app.f7.off('swipeoutDeleted', onSwipeoutDeleted);
+      app.f7.off('swipeoutOverswipeEnter', onSwipeoutOverswipeEnter);
+      app.f7.off('swipeoutOverswipeExit', onSwipeoutOverswipeExit);
+      app.f7.off('swipeout', onSwipeout);
     }
     if (accordionItem) {
-      f7.off('accordionBeforeOpen', onAccBeforeOpen);
-      f7.off('accordionOpen', onAccOpen);
-      f7.off('accordionOpened', onAccOpened);
-      f7.off('accordionBeforeClose', onAccBeforeClose);
-      f7.off('accordionClose', onAccClose);
-      f7.off('accordionClosed', onAccClosed);
+      app.f7.off('accordionBeforeOpen', onAccBeforeOpen);
+      app.f7.off('accordionOpen', onAccOpen);
+      app.f7.off('accordionOpened', onAccOpened);
+      app.f7.off('accordionBeforeClose', onAccBeforeClose);
+      app.f7.off('accordionClose', onAccClose);
+      app.f7.off('accordionClosed', onAccClosed);
     }
   });
 </script>
 
 <!-- svelte-ignore a11y-missing-attribute -->
-{#if (divider || groupTitle)}
-  <li on:click={ onClick } bind:this={el} use:useTooltip={{ tooltip, tooltipTrigger }} class={liClasses} data-virtual-list-index={virtualListIndex} {...restProps($$restProps)}>
+{#if divider || groupTitle}
+  <li
+    on:click={onClick}
+    bind:this={el}
+    use:useTooltip={{ tooltip, tooltipTrigger }}
+    class={liClasses}
+    data-virtual-list-index={virtualListIndex}
+    {...restProps($$restProps)}
+  >
     <span><slot>{plainText(title)}</slot></span>
   </li>
 {:else if isSimple}
-  <li on:click={ onClick } bind:this={el} use:useTooltip={{ tooltip, tooltipTrigger }} class={liClasses} data-virtual-list-index={virtualListIndex} {...restProps($$restProps)}>
+  <li
+    on:click={onClick}
+    bind:this={el}
+    use:useTooltip={{ tooltip, tooltipTrigger }}
+    class={liClasses}
+    data-virtual-list-index={virtualListIndex}
+    {...restProps($$restProps)}
+  >
     {plainText(title)}
     <slot />
   </li>
 {:else}
-  <li bind:this={el} use:useTooltip={{ tooltip, tooltipTrigger }} class={liClasses} data-virtual-list-index={virtualListIndex} {...restProps($$restProps)}>
+  <li
+    bind:this={el}
+    use:useTooltip={{ tooltip, tooltipTrigger }}
+    class={liClasses}
+    data-virtual-list-index={virtualListIndex}
+    {...restProps($$restProps)}
+  >
     <slot name="root-start" />
     {#if swipeout}
       <div class="swipeout-content">
         {#if isLink}
-          <a bind:this={linkEl} use:useRouteProps={routeProps} class={linkClasses} {...linkAttrs} on:click={onClick}>
+          <a
+            bind:this={linkEl}
+            use:useRouteProps={routeProps}
+            class={linkClasses}
+            {...linkAttrs}
+            on:click={onClick}
+          >
             <!-- Item content start -->
             <div class={contentClasses}>
               <slot name="content-start" />
@@ -358,7 +384,7 @@
                   {/if}
                   <div class="item-title-row">
                     <slot name="before-title" />
-                    {#if (hasTitle)}
+                    {#if hasTitle}
                       <div class="item-title">
                         {plainText(title)}
                         <slot name="title" />
@@ -403,7 +429,7 @@
                   {/if}
                 {:else}
                   <slot name="before-title" />
-                  {#if (hasTitle || hasHeader || hasFooter)}
+                  {#if hasTitle || hasHeader || hasFooter}
                     <div class="item-title">
                       {#if hasHeader}
                         <div class="item-header">
@@ -458,11 +484,11 @@
               <input
                 bind:this={inputEl}
                 value={typeof value === 'undefined' ? '' : value}
-                name={name}
-                checked={checked}
-                readonly={readonly}
-                disabled={disabled}
-                required={required}
+                {name}
+                {checked}
+                {readonly}
+                {disabled}
+                {required}
                 type={radio ? 'radio' : 'checkbox'}
                 on:change={onChange}
               />
@@ -486,7 +512,7 @@
                   {/if}
                   <div class="item-title-row">
                     <slot name="before-title" />
-                    {#if (hasTitle)}
+                    {#if hasTitle}
                       <div class="item-title">
                         {plainText(title)}
                         <slot name="title" />
@@ -531,7 +557,7 @@
                   {/if}
                 {:else}
                   <slot name="before-title" />
-                  {#if (hasTitle || hasHeader || hasFooter)}
+                  {#if hasTitle || hasHeader || hasFooter}
                     <div class="item-title">
                       {#if hasHeader}
                         <div class="item-header">
@@ -598,7 +624,7 @@
                   {/if}
                   <div class="item-title-row">
                     <slot name="before-title" />
-                    {#if (hasTitle)}
+                    {#if hasTitle}
                       <div class="item-title">
                         {plainText(title)}
                         <slot name="title" />
@@ -643,7 +669,7 @@
                   {/if}
                 {:else}
                   <slot name="before-title" />
-                  {#if (hasTitle || hasHeader || hasFooter)}
+                  {#if hasTitle || hasHeader || hasFooter}
                     <div class="item-title">
                       {#if hasHeader}
                         <div class="item-header">
@@ -689,223 +715,43 @@
           <!-- Item content end -->
         {/if}
       </div>
-    {:else}
-      {#if isLink}
-        <a bind:this={linkEl} use:useRouteProps={routeProps} class={linkClasses} {...linkAttrs} on:click={onClick}>
-          <!-- Item content start -->
-          <div class={contentClasses}>
-            <slot name="content-start" />
-            {#if isSortable && sortable !== false && isSortableOpposite}
-              <div class="sortable-handler" />
-            {/if}
-            {#if hasMedia}
-              <div class="item-media">
-                {#if typeof media !== 'undefined'}
-                  <img src={media} />
-                {/if}
-                <slot name="media" />
-              </div>
-            {/if}
-            <div bind:this={innerEl} class="item-inner">
-              <slot name="inner-start" />
-              {#if isMedia}
-                {#if hasHeader}
-                  <div class="item-header">
-                    {plainText(header)}
-                    <slot name="header" />
-                  </div>
-                {/if}
-                <div class="item-title-row">
-                  <slot name="before-title" />
-                  {#if (hasTitle)}
-                    <div class="item-title">
-                      {plainText(title)}
-                      <slot name="title" />
-                    </div>
-                  {/if}
-                  <slot name="after-title" />
-                  {#if hasAfter}
-                    <div class="item-after">
-                      <slot name="after-start" />
-                      {#if typeof after !== 'undefined'}
-                        <span>{plainText(after)}</span>
-                      {/if}
-                      {#if typeof badge !== 'undefined'}
-                        <Badge color={badgeColor}>{plainText(badge)}</Badge>
-                      {/if}
-                      <slot name="after" />
-                      <slot name="after-end" />
-                    </div>
-                  {/if}
-                </div>
-                {#if hasSubtitle}
-                  <div class="item-subtitle">
-                    {plainText(subtitle)}
-                    <slot name="subtitle" />
-                  </div>
-                {/if}
-                {#if hasText}
-                  <div class="item-text">
-                    {plainText(text)}
-                    <slot name="text" />
-                  </div>
-                {/if}
-                <slot name="inner" />
-                {#if !(swipeout || accordionItem)}
-                  <slot />
-                {/if}
-                {#if hasFooter}
-                  <div class="item-footer">
-                    {plainText(footer)}
-                    <slot name="footer" />
-                  </div>
-                {/if}
-              {:else}
-                <slot name="before-title" />
-                {#if (hasTitle || hasHeader || hasFooter)}
-                  <div class="item-title">
-                    {#if hasHeader}
-                      <div class="item-header">
-                        {plainText(header)}
-                        <slot name="header" />
-                      </div>
-                    {/if}
-                    {plainText(title)}
-                    <slot name="title" />
-                    {#if hasFooter}
-                      <div class="item-footer">
-                        {plainText(footer)}
-                        <slot name="footer" />
-                      </div>
-                    {/if}
-                  </div>
-                {/if}
-                <slot name="after-title" />
-                {#if hasAfter}
-                  <div class="item-after">
-                    <slot name="after-start" />
-                    {#if typeof after !== 'undefined'}
-                      <span>{plainText(after)}</span>
-                    {/if}
-                    {#if typeof badge !== 'undefined'}
-                      <Badge color={badgeColor}>{plainText(badge)}</Badge>
-                    {/if}
-                    <slot name="after" />
-                    <slot name="after-end" />
-                  </div>
-                {/if}
-                <slot name="inner" />
-                {#if !(swipeout || accordionItem)}
-                  <slot />
-                {/if}
-              {/if}
-              <slot name="inner-end" />
-            </div>
-            <slot name="content" />
-            <slot name="content-end" />
-          </div>
-          <!-- Item content end -->
-        </a>
-      {:else}
+    {:else if isLink}
+      <a
+        bind:this={linkEl}
+        use:useRouteProps={routeProps}
+        class={linkClasses}
+        {...linkAttrs}
+        on:click={onClick}
+      >
         <!-- Item content start -->
-        {#if checkbox || radio}
-          <label class={contentClasses} on:click={onClick}>
-            <slot name="content-start" />
-            {#if isSortable && sortable !== false && isSortableOpposite}
-              <div class="sortable-handler" />
-            {/if}
-            <input
-              bind:this={inputEl}
-              value={typeof value === 'undefined' ? '' : value}
-              name={name}
-              checked={checked}
-              readonly={readonly}
-              disabled={disabled}
-              required={required}
-              type={radio ? 'radio' : 'checkbox'}
-              on:change={onChange}
-            />
-            <i class={`icon icon-${radio ? 'radio' : 'checkbox'}`} />
-            {#if hasMedia}
-              <div class="item-media">
-                {#if typeof media !== 'undefined'}
-                  <img src={media} />
-                {/if}
-                <slot name="media" />
-              </div>
-            {/if}
-            <div bind:this={innerEl} class="item-inner">
-              <slot name="inner-start" />
-              {#if isMedia}
-                {#if hasHeader}
-                  <div class="item-header">
-                    {plainText(header)}
-                    <slot name="header" />
-                  </div>
-                {/if}
-                <div class="item-title-row">
-                  <slot name="before-title" />
-                  {#if (hasTitle)}
-                    <div class="item-title">
-                      {plainText(title)}
-                      <slot name="title" />
-                    </div>
-                  {/if}
-                  <slot name="after-title" />
-                  {#if hasAfter}
-                    <div class="item-after">
-                      <slot name="after-start" />
-                      {#if typeof after !== 'undefined'}
-                        <span>{plainText(after)}</span>
-                      {/if}
-                      {#if typeof badge !== 'undefined'}
-                        <Badge color={badgeColor}>{plainText(badge)}</Badge>
-                      {/if}
-                      <slot name="after" />
-                      <slot name="after-end" />
-                    </div>
-                  {/if}
+        <div class={contentClasses}>
+          <slot name="content-start" />
+          {#if isSortable && sortable !== false && isSortableOpposite}
+            <div class="sortable-handler" />
+          {/if}
+          {#if hasMedia}
+            <div class="item-media">
+              {#if typeof media !== 'undefined'}
+                <img src={media} />
+              {/if}
+              <slot name="media" />
+            </div>
+          {/if}
+          <div bind:this={innerEl} class="item-inner">
+            <slot name="inner-start" />
+            {#if isMedia}
+              {#if hasHeader}
+                <div class="item-header">
+                  {plainText(header)}
+                  <slot name="header" />
                 </div>
-                {#if hasSubtitle}
-                  <div class="item-subtitle">
-                    {plainText(subtitle)}
-                    <slot name="subtitle" />
-                  </div>
-                {/if}
-                {#if hasText}
-                  <div class="item-text">
-                    {plainText(text)}
-                    <slot name="text" />
-                  </div>
-                {/if}
-                <slot name="inner" />
-                {#if !(swipeout || accordionItem)}
-                  <slot />
-                {/if}
-                {#if hasFooter}
-                  <div class="item-footer">
-                    {plainText(footer)}
-                    <slot name="footer" />
-                  </div>
-                {/if}
-              {:else}
+              {/if}
+              <div class="item-title-row">
                 <slot name="before-title" />
-                {#if (hasTitle || hasHeader || hasFooter)}
+                {#if hasTitle}
                   <div class="item-title">
-                    {#if hasHeader}
-                      <div class="item-header">
-                        {plainText(header)}
-                        <slot name="header" />
-                      </div>
-                    {/if}
                     {plainText(title)}
                     <slot name="title" />
-                    {#if hasFooter}
-                      <div class="item-footer">
-                        {plainText(footer)}
-                        <slot name="footer" />
-                      </div>
-                    {/if}
                   </div>
                 {/if}
                 <slot name="after-title" />
@@ -922,136 +768,320 @@
                     <slot name="after-end" />
                   </div>
                 {/if}
-                <slot name="inner" />
-                {#if !(swipeout || accordionItem)}
-                  <slot />
-                {/if}
-              {/if}
-              <slot name="inner-end" />
-            </div>
-            <slot name="content" />
-            <slot name="content-end" />
-          </label>
-        {:else}
-          <div class={contentClasses} on:click={onClick}>
-            <slot name="content-start" />
-            {#if isSortable && sortable !== false && isSortableOpposite}
-              <div class="sortable-handler" />
-            {/if}
-            {#if hasMedia}
-              <div class="item-media">
-                {#if typeof media !== 'undefined'}
-                  <img src={media} />
-                {/if}
-                <slot name="media" />
               </div>
-            {/if}
-            <div bind:this={innerEl} class="item-inner">
-              <slot name="inner-start" />
-              {#if isMedia}
-                {#if hasHeader}
-                  <div class="item-header">
-                    {plainText(header)}
-                    <slot name="header" />
-                  </div>
-                {/if}
-                <div class="item-title-row">
-                  <slot name="before-title" />
-                  {#if (hasTitle)}
-                    <div class="item-title">
-                      {plainText(title)}
-                      <slot name="title" />
+              {#if hasSubtitle}
+                <div class="item-subtitle">
+                  {plainText(subtitle)}
+                  <slot name="subtitle" />
+                </div>
+              {/if}
+              {#if hasText}
+                <div class="item-text">
+                  {plainText(text)}
+                  <slot name="text" />
+                </div>
+              {/if}
+              <slot name="inner" />
+              {#if !(swipeout || accordionItem)}
+                <slot />
+              {/if}
+              {#if hasFooter}
+                <div class="item-footer">
+                  {plainText(footer)}
+                  <slot name="footer" />
+                </div>
+              {/if}
+            {:else}
+              <slot name="before-title" />
+              {#if hasTitle || hasHeader || hasFooter}
+                <div class="item-title">
+                  {#if hasHeader}
+                    <div class="item-header">
+                      {plainText(header)}
+                      <slot name="header" />
                     </div>
                   {/if}
-                  <slot name="after-title" />
-                  {#if hasAfter}
-                    <div class="item-after">
-                      <slot name="after-start" />
-                      {#if typeof after !== 'undefined'}
-                        <span>{plainText(after)}</span>
-                      {/if}
-                      {#if typeof badge !== 'undefined'}
-                        <Badge color={badgeColor}>{plainText(badge)}</Badge>
-                      {/if}
-                      <slot name="after" />
-                      <slot name="after-end" />
+                  {plainText(title)}
+                  <slot name="title" />
+                  {#if hasFooter}
+                    <div class="item-footer">
+                      {plainText(footer)}
+                      <slot name="footer" />
                     </div>
                   {/if}
                 </div>
-                {#if hasSubtitle}
-                  <div class="item-subtitle">
-                    {plainText(subtitle)}
-                    <slot name="subtitle" />
-                  </div>
-                {/if}
-                {#if hasText}
-                  <div class="item-text">
-                    {plainText(text)}
-                    <slot name="text" />
-                  </div>
-                {/if}
-                <slot name="inner" />
-                {#if !(swipeout || accordionItem)}
-                  <slot />
-                {/if}
-                {#if hasFooter}
-                  <div class="item-footer">
-                    {plainText(footer)}
-                    <slot name="footer" />
-                  </div>
-                {/if}
-              {:else}
-                <slot name="before-title" />
-                {#if (hasTitle || hasHeader || hasFooter)}
-                  <div class="item-title">
-                    {#if hasHeader}
-                      <div class="item-header">
-                        {plainText(header)}
-                        <slot name="header" />
-                      </div>
-                    {/if}
-                    {plainText(title)}
-                    <slot name="title" />
-                    {#if hasFooter}
-                      <div class="item-footer">
-                        {plainText(footer)}
-                        <slot name="footer" />
-                      </div>
-                    {/if}
-                  </div>
-                {/if}
-                <slot name="after-title" />
-                {#if hasAfter}
-                  <div class="item-after">
-                    <slot name="after-start" />
-                    {#if typeof after !== 'undefined'}
-                      <span>{plainText(after)}</span>
-                    {/if}
-                    {#if typeof badge !== 'undefined'}
-                      <Badge color={badgeColor}>{plainText(badge)}</Badge>
-                    {/if}
-                    <slot name="after" />
-                    <slot name="after-end" />
-                  </div>
-                {/if}
-                <slot name="inner" />
-                {#if !(swipeout || accordionItem)}
-                  <slot />
-                {/if}
               {/if}
-              <slot name="inner-end" />
-            </div>
-            <slot name="content" />
-            <slot name="content-end" />
+              <slot name="after-title" />
+              {#if hasAfter}
+                <div class="item-after">
+                  <slot name="after-start" />
+                  {#if typeof after !== 'undefined'}
+                    <span>{plainText(after)}</span>
+                  {/if}
+                  {#if typeof badge !== 'undefined'}
+                    <Badge color={badgeColor}>{plainText(badge)}</Badge>
+                  {/if}
+                  <slot name="after" />
+                  <slot name="after-end" />
+                </div>
+              {/if}
+              <slot name="inner" />
+              {#if !(swipeout || accordionItem)}
+                <slot />
+              {/if}
+            {/if}
+            <slot name="inner-end" />
           </div>
-        {/if}
+          <slot name="content" />
+          <slot name="content-end" />
+        </div>
         <!-- Item content end -->
+      </a>
+    {:else}
+      <!-- Item content start -->
+      {#if checkbox || radio}
+        <label class={contentClasses} on:click={onClick}>
+          <slot name="content-start" />
+          {#if isSortable && sortable !== false && isSortableOpposite}
+            <div class="sortable-handler" />
+          {/if}
+          <input
+            bind:this={inputEl}
+            value={typeof value === 'undefined' ? '' : value}
+            {name}
+            {checked}
+            {readonly}
+            {disabled}
+            {required}
+            type={radio ? 'radio' : 'checkbox'}
+            on:change={onChange}
+          />
+          <i class={`icon icon-${radio ? 'radio' : 'checkbox'}`} />
+          {#if hasMedia}
+            <div class="item-media">
+              {#if typeof media !== 'undefined'}
+                <img src={media} />
+              {/if}
+              <slot name="media" />
+            </div>
+          {/if}
+          <div bind:this={innerEl} class="item-inner">
+            <slot name="inner-start" />
+            {#if isMedia}
+              {#if hasHeader}
+                <div class="item-header">
+                  {plainText(header)}
+                  <slot name="header" />
+                </div>
+              {/if}
+              <div class="item-title-row">
+                <slot name="before-title" />
+                {#if hasTitle}
+                  <div class="item-title">
+                    {plainText(title)}
+                    <slot name="title" />
+                  </div>
+                {/if}
+                <slot name="after-title" />
+                {#if hasAfter}
+                  <div class="item-after">
+                    <slot name="after-start" />
+                    {#if typeof after !== 'undefined'}
+                      <span>{plainText(after)}</span>
+                    {/if}
+                    {#if typeof badge !== 'undefined'}
+                      <Badge color={badgeColor}>{plainText(badge)}</Badge>
+                    {/if}
+                    <slot name="after" />
+                    <slot name="after-end" />
+                  </div>
+                {/if}
+              </div>
+              {#if hasSubtitle}
+                <div class="item-subtitle">
+                  {plainText(subtitle)}
+                  <slot name="subtitle" />
+                </div>
+              {/if}
+              {#if hasText}
+                <div class="item-text">
+                  {plainText(text)}
+                  <slot name="text" />
+                </div>
+              {/if}
+              <slot name="inner" />
+              {#if !(swipeout || accordionItem)}
+                <slot />
+              {/if}
+              {#if hasFooter}
+                <div class="item-footer">
+                  {plainText(footer)}
+                  <slot name="footer" />
+                </div>
+              {/if}
+            {:else}
+              <slot name="before-title" />
+              {#if hasTitle || hasHeader || hasFooter}
+                <div class="item-title">
+                  {#if hasHeader}
+                    <div class="item-header">
+                      {plainText(header)}
+                      <slot name="header" />
+                    </div>
+                  {/if}
+                  {plainText(title)}
+                  <slot name="title" />
+                  {#if hasFooter}
+                    <div class="item-footer">
+                      {plainText(footer)}
+                      <slot name="footer" />
+                    </div>
+                  {/if}
+                </div>
+              {/if}
+              <slot name="after-title" />
+              {#if hasAfter}
+                <div class="item-after">
+                  <slot name="after-start" />
+                  {#if typeof after !== 'undefined'}
+                    <span>{plainText(after)}</span>
+                  {/if}
+                  {#if typeof badge !== 'undefined'}
+                    <Badge color={badgeColor}>{plainText(badge)}</Badge>
+                  {/if}
+                  <slot name="after" />
+                  <slot name="after-end" />
+                </div>
+              {/if}
+              <slot name="inner" />
+              {#if !(swipeout || accordionItem)}
+                <slot />
+              {/if}
+            {/if}
+            <slot name="inner-end" />
+          </div>
+          <slot name="content" />
+          <slot name="content-end" />
+        </label>
+      {:else}
+        <div class={contentClasses} on:click={onClick}>
+          <slot name="content-start" />
+          {#if isSortable && sortable !== false && isSortableOpposite}
+            <div class="sortable-handler" />
+          {/if}
+          {#if hasMedia}
+            <div class="item-media">
+              {#if typeof media !== 'undefined'}
+                <img src={media} />
+              {/if}
+              <slot name="media" />
+            </div>
+          {/if}
+          <div bind:this={innerEl} class="item-inner">
+            <slot name="inner-start" />
+            {#if isMedia}
+              {#if hasHeader}
+                <div class="item-header">
+                  {plainText(header)}
+                  <slot name="header" />
+                </div>
+              {/if}
+              <div class="item-title-row">
+                <slot name="before-title" />
+                {#if hasTitle}
+                  <div class="item-title">
+                    {plainText(title)}
+                    <slot name="title" />
+                  </div>
+                {/if}
+                <slot name="after-title" />
+                {#if hasAfter}
+                  <div class="item-after">
+                    <slot name="after-start" />
+                    {#if typeof after !== 'undefined'}
+                      <span>{plainText(after)}</span>
+                    {/if}
+                    {#if typeof badge !== 'undefined'}
+                      <Badge color={badgeColor}>{plainText(badge)}</Badge>
+                    {/if}
+                    <slot name="after" />
+                    <slot name="after-end" />
+                  </div>
+                {/if}
+              </div>
+              {#if hasSubtitle}
+                <div class="item-subtitle">
+                  {plainText(subtitle)}
+                  <slot name="subtitle" />
+                </div>
+              {/if}
+              {#if hasText}
+                <div class="item-text">
+                  {plainText(text)}
+                  <slot name="text" />
+                </div>
+              {/if}
+              <slot name="inner" />
+              {#if !(swipeout || accordionItem)}
+                <slot />
+              {/if}
+              {#if hasFooter}
+                <div class="item-footer">
+                  {plainText(footer)}
+                  <slot name="footer" />
+                </div>
+              {/if}
+            {:else}
+              <slot name="before-title" />
+              {#if hasTitle || hasHeader || hasFooter}
+                <div class="item-title">
+                  {#if hasHeader}
+                    <div class="item-header">
+                      {plainText(header)}
+                      <slot name="header" />
+                    </div>
+                  {/if}
+                  {plainText(title)}
+                  <slot name="title" />
+                  {#if hasFooter}
+                    <div class="item-footer">
+                      {plainText(footer)}
+                      <slot name="footer" />
+                    </div>
+                  {/if}
+                </div>
+              {/if}
+              <slot name="after-title" />
+              {#if hasAfter}
+                <div class="item-after">
+                  <slot name="after-start" />
+                  {#if typeof after !== 'undefined'}
+                    <span>{plainText(after)}</span>
+                  {/if}
+                  {#if typeof badge !== 'undefined'}
+                    <Badge color={badgeColor}>{plainText(badge)}</Badge>
+                  {/if}
+                  <slot name="after" />
+                  <slot name="after-end" />
+                </div>
+              {/if}
+              <slot name="inner" />
+              {#if !(swipeout || accordionItem)}
+                <slot />
+              {/if}
+            {/if}
+            <slot name="inner-end" />
+          </div>
+          <slot name="content" />
+          <slot name="content-end" />
+        </div>
       {/if}
+      <!-- Item content end -->
     {/if}
-    {#if (isSortable && sortable !== false && !isSortableOpposite)}
+    {#if isSortable && sortable !== false && !isSortableOpposite}
       <div class="sortable-handler" />
     {/if}
-    {#if (swipeout || accordionItem)}
+    {#if swipeout || accordionItem}
       <slot />
     {/if}
     <slot name="root" />

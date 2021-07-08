@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, noUndefinedProps, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
 
   import Link from './link';
@@ -125,14 +125,14 @@
     if (!init || !el) return;
     f7ready(() => {
       if (el) {
-        const dom7 = f7.$;
+        const dom7 = app.f7.$;
         const attachmentsEl = dom7(el).find('.toolbar-inner > .messagebar-attachments');
         if (attachmentsEl.length) dom7(el).find('.messagebar-area').prepend(attachmentsEl);
 
         const sheetEl = dom7(el).find('.toolbar-inner > .messagebar-sheet');
         if (sheetEl.length) dom7(el).append(sheetEl);
       }
-      f7Messagebar = f7.messagebar.create(
+      f7Messagebar = app.f7.messagebar.create(
         noUndefinedProps({
           el,
           top,
@@ -152,8 +152,8 @@
 
   afterUpdate(() => {
     if (!f7Messagebar) return;
-    if (el && f7) {
-      const dom7 = f7.$;
+    if (el && app.f7) {
+      const dom7 = app.f7.$;
       const attachmentsEl = dom7(el).find('.toolbar-inner > .messagebar-attachments');
       if (attachmentsEl.length) dom7(el).find('.messagebar-area').prepend(attachmentsEl);
 
@@ -199,7 +199,8 @@
         on:input={onInput}
         on:change={onChange}
         on:focus={onFocus}
-        on:blur={onBlur} />
+        on:blur={onBlur}
+      />
       <slot name="after-inner" />
     </div>
     {#if (sendLink && sendLink.length > 0) || hasSendLinkSlots}

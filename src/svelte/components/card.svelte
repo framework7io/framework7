@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
 
   import CardHeader from './card-header';
@@ -57,11 +57,11 @@
   /* eslint-enable no-undef */
 
   function open() {
-    f7.card.open(el);
+    app.f7.card.open(el);
   }
 
   function close() {
-    f7.card.close(el);
+    app.f7.card.close(el);
   }
 
   let initialWatched = false;
@@ -105,25 +105,25 @@
   onMount(() => {
     if (!expandable) return;
     f7ready(() => {
-      f7.on('cardBeforeOpen', onBeforeOpen);
-      f7.on('cardOpen', onOpen);
-      f7.on('cardOpened', onOpened);
-      f7.on('cardClose', onClose);
-      f7.on('cardClosed', onClosed);
+      app.f7.on('cardBeforeOpen', onBeforeOpen);
+      app.f7.on('cardOpen', onOpen);
+      app.f7.on('cardOpened', onOpened);
+      app.f7.on('cardClose', onClose);
+      app.f7.on('cardClosed', onClosed);
       if (expandable && expandableOpened && el) {
-        f7.card.open(el, false);
+        app.f7.card.open(el, false);
       }
     });
   });
 
   onDestroy(() => {
     if (!expandable) return;
-    if (!f7 || !el) return;
-    f7.off('cardBeforeOpen', onBeforeOpen);
-    f7.off('cardOpen', onOpen);
-    f7.off('cardOpened', onOpened);
-    f7.off('cardClose', onClose);
-    f7.off('cardClosed', onClosed);
+    if (!app.f7 || !el) return;
+    app.f7.off('cardBeforeOpen', onBeforeOpen);
+    app.f7.off('cardOpen', onOpen);
+    app.f7.off('cardOpened', onOpened);
+    app.f7.off('cardClose', onClose);
+    app.f7.off('cardClosed', onClosed);
   });
 </script>
 
@@ -131,15 +131,24 @@
   bind:this={el}
   class={classes}
   data-animate={typeof animate === 'undefined' ? animate : animate.toString()}
-  data-hide-navbar-on-open={typeof hideNavbarOnOpen === 'undefined' ? hideNavbarOnOpen : hideNavbarOnOpen.toString()}
-  data-hide-toolbar-on-open={typeof hideToolbarOnOpen === 'undefined' ? hideToolbarOnOpen : hideToolbarOnOpen.toString()}
-  data-hide-statusbar-on-open={typeof hideStatusbarOnOpen === 'undefined' ? hideStatusbarOnOpen : hideStatusbarOnOpen.toString()}
+  data-hide-navbar-on-open={typeof hideNavbarOnOpen === 'undefined'
+    ? hideNavbarOnOpen
+    : hideNavbarOnOpen.toString()}
+  data-hide-toolbar-on-open={typeof hideToolbarOnOpen === 'undefined'
+    ? hideToolbarOnOpen
+    : hideToolbarOnOpen.toString()}
+  data-hide-statusbar-on-open={typeof hideStatusbarOnOpen === 'undefined'
+    ? hideStatusbarOnOpen
+    : hideStatusbarOnOpen.toString()}
   data-scrollable-el={scrollableEl}
   data-swipe-to-close={typeof swipeToClose === 'undefined' ? swipeToClose : swipeToClose.toString()}
-  data-close-by-backdrop-click={typeof closeByBackdropClick === 'undefined' ? closeByBackdropClick : closeByBackdropClick.toString()}
+  data-close-by-backdrop-click={typeof closeByBackdropClick === 'undefined'
+    ? closeByBackdropClick
+    : closeByBackdropClick.toString()}
   data-backdrop={typeof backdrop === 'undefined' ? backdrop : backdrop.toString()}
   data-backdrop-el={backdropEl}
-  {...restProps($$restProps)}>
+  {...restProps($$restProps)}
+>
   {#if typeof title !== 'undefined' || hasHeaderSlots}
     <CardHeader>
       {plainText(title)}

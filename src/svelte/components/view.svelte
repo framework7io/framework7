@@ -1,6 +1,6 @@
 <script>
   import { onMount, onDestroy, afterUpdate, createEventDispatcher, tick } from 'svelte';
-  import { f7, f7ready, f7routers, f7events } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
   import { colorClasses } from '../shared/mixins';
   import { classNames, noUndefinedProps, createEmitter, getRouterId } from '../shared/utils';
   import { getRouterInitialComponent } from '../shared/get-router-initial-component';
@@ -38,9 +38,9 @@
     }
   }
 
-  if (f7 && !f7View && init) {
+  if (app.f7 && !f7View && init) {
     const routerId = getRouterId();
-    f7View = f7.views.create(el, {
+    f7View = app.f7.views.create(el, {
       routerId,
       init: false,
       ...noUndefinedProps($$props),
@@ -53,7 +53,7 @@
       routerId,
       instance: f7View,
     };
-    f7routers.views.push(routerData);
+    app.f7routers.views.push(routerData);
     if (f7View && f7View.router && (url || main)) {
       const initialData = getRouterInitialComponent(f7View.router);
       initialPage = initialData.initialPage;
@@ -143,8 +143,8 @@
             });
           },
         };
-        f7routers.views.push(routerData);
-        routerData.instance = f7.views.create(el, {
+        app.f7routers.views.push(routerData);
+        routerData.instance = app.f7.views.create(el, {
           routerId,
           ...noUndefinedProps($$props),
           browserHistoryInitialMatch,
@@ -168,7 +168,7 @@
 
   afterUpdate(() => {
     if (!routerData) return;
-    f7events.emit('viewRouterDidUpdate', routerData);
+    app.f7events.emit('viewRouterDidUpdate', routerData);
   });
 
   onDestroy(() => {
@@ -183,7 +183,7 @@
       f7View = null;
     }
 
-    f7routers.views.splice(f7routers.views.indexOf(routerData), 1);
+    app.f7routers.views.splice(app.f7routers.views.indexOf(routerData), 1);
     routerData = null;
   });
 </script>

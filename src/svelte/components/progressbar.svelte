@@ -2,7 +2,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { app } from '../shared/f7';
 
   let className = undefined;
   export { className as class };
@@ -13,8 +13,8 @@
   let el;
 
   export function set(progress, speed) {
-    if (!f7) return;
-    f7.progressbar.set(el, progress, speed);
+    if (!app.f7) return;
+    app.f7.progressbar.set(el, progress, speed);
   }
 
   $: classes = classNames(

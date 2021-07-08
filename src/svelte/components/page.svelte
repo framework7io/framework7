@@ -3,7 +3,7 @@
   import { restProps } from '../shared/rest-props';
   import { colorClasses } from '../shared/mixins';
   import { classNames, createEmitter } from '../shared/utils';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
 
   import PageContent from './page-content';
 
@@ -234,56 +234,56 @@
 
   // Mount/destroy
   function mountPage() {
-    f7.on('pageMounted', onPageMounted);
-    f7.on('pageInit', onPageInit);
-    f7.on('pageReinit', onPageReinit);
-    f7.on('pageBeforeIn', onPageBeforeIn);
-    f7.on('pageBeforeOut', onPageBeforeOut);
-    f7.on('pageAfterOut', onPageAfterOut);
-    f7.on('pageAfterIn', onPageAfterIn);
-    f7.on('pageBeforeRemove', onPageBeforeRemove);
-    f7.on('pageBeforeUnmount', onPageBeforeUnmount);
-    f7.on('pageStack', onPageStack);
-    f7.on('pageUnstack', onPageUnstack);
-    f7.on('pagePosition', onPagePosition);
-    f7.on('pageRole', onPageRole);
-    f7.on('pageMasterStack', onPageMasterStack);
-    f7.on('pageMasterUnstack', onPageMasterUnstack);
-    f7.on('pageNavbarLargeCollapsed', onPageNavbarLargeCollapsed);
-    f7.on('pageNavbarLargeExpanded', onPageNavbarLargeExpanded);
-    f7.on('cardOpened', onCardOpened);
-    f7.on('cardClose', onCardClose);
-    f7.on('pageTabShow', onPageTabShow);
-    f7.on('pageTabHide', onPageTabHide);
+    app.f7.on('pageMounted', onPageMounted);
+    app.f7.on('pageInit', onPageInit);
+    app.f7.on('pageReinit', onPageReinit);
+    app.f7.on('pageBeforeIn', onPageBeforeIn);
+    app.f7.on('pageBeforeOut', onPageBeforeOut);
+    app.f7.on('pageAfterOut', onPageAfterOut);
+    app.f7.on('pageAfterIn', onPageAfterIn);
+    app.f7.on('pageBeforeRemove', onPageBeforeRemove);
+    app.f7.on('pageBeforeUnmount', onPageBeforeUnmount);
+    app.f7.on('pageStack', onPageStack);
+    app.f7.on('pageUnstack', onPageUnstack);
+    app.f7.on('pagePosition', onPagePosition);
+    app.f7.on('pageRole', onPageRole);
+    app.f7.on('pageMasterStack', onPageMasterStack);
+    app.f7.on('pageMasterUnstack', onPageMasterUnstack);
+    app.f7.on('pageNavbarLargeCollapsed', onPageNavbarLargeCollapsed);
+    app.f7.on('pageNavbarLargeExpanded', onPageNavbarLargeExpanded);
+    app.f7.on('cardOpened', onCardOpened);
+    app.f7.on('cardClose', onCardClose);
+    app.f7.on('pageTabShow', onPageTabShow);
+    app.f7.on('pageTabHide', onPageTabHide);
   }
   function destroyPage() {
-    f7.off('pageMounted', onPageMounted);
-    f7.off('pageInit', onPageInit);
-    f7.off('pageReinit', onPageReinit);
-    f7.off('pageBeforeIn', onPageBeforeIn);
-    f7.off('pageBeforeOut', onPageBeforeOut);
-    f7.off('pageAfterOut', onPageAfterOut);
-    f7.off('pageAfterIn', onPageAfterIn);
-    f7.off('pageBeforeRemove', onPageBeforeRemove);
-    f7.off('pageBeforeUnmount', onPageBeforeUnmount);
-    f7.off('pageStack', onPageStack);
-    f7.off('pageUnstack', onPageUnstack);
-    f7.off('pagePosition', onPagePosition);
-    f7.off('pageRole', onPageRole);
-    f7.off('pageMasterStack', onPageMasterStack);
-    f7.off('pageMasterUnstack', onPageMasterUnstack);
-    f7.off('pageNavbarLargeCollapsed', onPageNavbarLargeCollapsed);
-    f7.off('pageNavbarLargeExpanded', onPageNavbarLargeExpanded);
-    f7.off('cardOpened', onCardOpened);
-    f7.off('cardClose', onCardClose);
-    f7.off('pageTabShow', onPageTabShow);
-    f7.off('pageTabHide', onPageTabHide);
+    app.f7.off('pageMounted', onPageMounted);
+    app.f7.off('pageInit', onPageInit);
+    app.f7.off('pageReinit', onPageReinit);
+    app.f7.off('pageBeforeIn', onPageBeforeIn);
+    app.f7.off('pageBeforeOut', onPageBeforeOut);
+    app.f7.off('pageAfterOut', onPageAfterOut);
+    app.f7.off('pageAfterIn', onPageAfterIn);
+    app.f7.off('pageBeforeRemove', onPageBeforeRemove);
+    app.f7.off('pageBeforeUnmount', onPageBeforeUnmount);
+    app.f7.off('pageStack', onPageStack);
+    app.f7.off('pageUnstack', onPageUnstack);
+    app.f7.off('pagePosition', onPagePosition);
+    app.f7.off('pageRole', onPageRole);
+    app.f7.off('pageMasterStack', onPageMasterStack);
+    app.f7.off('pageMasterUnstack', onPageMasterUnstack);
+    app.f7.off('pageNavbarLargeCollapsed', onPageNavbarLargeCollapsed);
+    app.f7.off('pageNavbarLargeExpanded', onPageNavbarLargeExpanded);
+    app.f7.off('cardOpened', onCardOpened);
+    app.f7.off('cardClose', onCardClose);
+    app.f7.off('pageTabShow', onPageTabShow);
+    app.f7.off('pageTabHide', onPageTabHide);
   }
 
   onMount(() => {
     f7ready(() => {
       if (el) {
-        const dom7 = f7.$;
+        const dom7 = app.f7.$;
         const fixedEls = dom7(el).children('.page-content').children('[data-f7-slot="fixed"]');
         if (fixedEls.length) {
           for (let i = fixedEls.length - 1; i >= 0; i -= 1) {
@@ -295,8 +295,8 @@
     });
   });
   afterUpdate(() => {
-    if (el && f7) {
-      const dom7 = f7.$;
+    if (el && app.f7) {
+      const dom7 = app.f7.$;
       const fixedEls = dom7(el).children('.page-content').children('[data-f7-slot="fixed"]');
       if (fixedEls.length) {
         for (let i = fixedEls.length - 1; i >= 0; i -= 1) {
@@ -306,7 +306,7 @@
     }
   });
   onDestroy(() => {
-    if (!f7) return;
+    if (!app.f7) return;
     destroyPage();
   });
 </script>
@@ -334,7 +334,8 @@
       {onPtrPullEnd}
       {onPtrRefresh}
       {onPtrDone}
-      {onInfinite}>
+      {onInfinite}
+    >
       <slot name="static" />
       <slot />
     </PageContent>

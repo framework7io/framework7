@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, noUndefinedProps, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -96,7 +96,7 @@
       },
     });
     f7ready(() => {
-      f7TextEditor = f7.textEditor.create(params);
+      f7TextEditor = app.f7.textEditor.create(params);
     });
   });
 

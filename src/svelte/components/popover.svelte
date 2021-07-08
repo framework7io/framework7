@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
   import { modalStateClasses } from '../shared/modal-state-classes';
 
   const emit = createEmitter(createEventDispatcher, $$props);
@@ -97,7 +97,7 @@
     if (typeof containerEl !== 'undefined') params.containerEl = containerEl;
 
     f7ready(() => {
-      f7Popover = f7.popover.create(params);
+      f7Popover = app.f7.popover.create(params);
       if (opened) {
         f7Popover.open(targetEl, false);
       }

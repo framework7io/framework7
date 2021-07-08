@@ -4,7 +4,7 @@
   import { restProps } from '../shared/rest-props';
   import { colorClasses } from '../shared/mixins';
   import { classNames, createEmitter, getComponentId } from '../shared/utils';
-  import { f7ready, f7routers, f7events } from '../shared/f7';
+  import { f7ready, app } from '../shared/f7';
   import { useTab } from '../shared/use-tab';
 
   const emit = createEmitter(createEventDispatcher, $$props);
@@ -66,7 +66,7 @@
             });
           },
         };
-        f7routers.tabs.push(routerData);
+        app.f7routers.tabs.push(routerData);
       } else {
         routerData.el = el;
       }
@@ -74,11 +74,11 @@
   });
   afterUpdate(() => {
     if (!routerData) return;
-    f7events.emit('tabRouterDidUpdate', routerData);
+    app.f7events.emit('tabRouterDidUpdate', routerData);
   });
   onDestroy(() => {
     if (!routerData) return;
-    f7routers.tabs.splice(f7routers.tabs.indexOf(routerData), 1);
+    app.f7routers.tabs.splice(app.f7routers.tabs.indexOf(routerData), 1);
     routerData = null;
   });
 </script>

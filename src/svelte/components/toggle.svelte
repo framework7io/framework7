@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
   import { useTooltip } from '../shared/use-tooltip';
 
   const emit = createEmitter(createEventDispatcher, $$props);
@@ -57,7 +57,7 @@
   onMount(() => {
     if (!init) return;
     f7ready(() => {
-      f7Toggle = f7.toggle.create({
+      f7Toggle = app.f7.toggle.create({
         el,
         on: {
           change(toggle) {
@@ -81,7 +81,8 @@
   bind:this={el}
   class={classes}
   {...restProps($$restProps)}
-  use:useTooltip={{ tooltip, tooltipTrigger }}>
+  use:useTooltip={{ tooltip, tooltipTrigger }}
+>
   <input
     bind:this={inputEl}
     type="checkbox"
@@ -90,6 +91,7 @@
     {readonly}
     {checked}
     value={typeof value === 'undefined' ? '' : value}
-    on:change={onChange} />
+    on:change={onChange}
+  />
   <span class="toggle-icon" />
 </label>

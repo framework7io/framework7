@@ -3,7 +3,7 @@
   import { restProps } from '../shared/rest-props';
   import { colorClasses } from '../shared/mixins';
   import { classNames, createEmitter } from '../shared/utils';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
   import { useTab } from '../shared/use-tab';
 
   import Preloader from './preloader';
@@ -78,26 +78,26 @@
 
   function mountPageContent() {
     if (ptr) {
-      f7.on('ptrPullStart', onPtrPullStart);
-      f7.on('ptrPullMove', onPtrPullMove);
-      f7.on('ptrPullEnd', onPtrPullEnd);
-      f7.on('ptrRefresh', onPtrRefresh);
-      f7.on('ptrDone', onPtrDone);
+      app.f7.on('ptrPullStart', onPtrPullStart);
+      app.f7.on('ptrPullMove', onPtrPullMove);
+      app.f7.on('ptrPullEnd', onPtrPullEnd);
+      app.f7.on('ptrRefresh', onPtrRefresh);
+      app.f7.on('ptrDone', onPtrDone);
     }
     if (infinite) {
-      f7.on('infinite', onInfinite);
+      app.f7.on('infinite', onInfinite);
     }
   }
   function destroyPageContent() {
     if (ptr) {
-      f7.off('ptrPullStart', onPtrPullStart);
-      f7.off('ptrPullMove', onPtrPullMove);
-      f7.off('ptrPullEnd', onPtrPullEnd);
-      f7.off('ptrRefresh', onPtrRefresh);
-      f7.off('ptrDone', onPtrDone);
+      app.f7.off('ptrPullStart', onPtrPullStart);
+      app.f7.off('ptrPullMove', onPtrPullMove);
+      app.f7.off('ptrPullEnd', onPtrPullEnd);
+      app.f7.off('ptrRefresh', onPtrRefresh);
+      app.f7.off('ptrDone', onPtrDone);
     }
     if (infinite) {
-      f7.off('infinite', onInfinite);
+      app.f7.off('infinite', onInfinite);
     }
   }
 
@@ -109,7 +109,7 @@
     });
   });
   onDestroy(() => {
-    if (!f7) return;
+    if (!app.f7) return;
     destroyPageContent();
   });
 </script>
@@ -120,7 +120,8 @@
   data-ptr-distance={ptrDistance}
   data-ptr-mousewheel={ptrMousewheel || undefined}
   data-infinite-distance={infiniteDistance || undefined}
-  {...restProps($$restProps)}>
+  {...restProps($$restProps)}
+>
   {#if ptr && ptrPreloader && !ptrBottom}
     <div class="ptr-preloader">
       <Preloader />

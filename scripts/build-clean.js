@@ -13,6 +13,8 @@ async function buildClean(project, cb) {
     "find *.js -type f -not -name 'postinstall.js' -print0 | xargs -0  -I {} rm -v {}",
     '**/*.ts',
     '*.ts',
+    '**/*.svelte',
+    '*.svelte',
     '**/*.css',
     '*.css',
     '**/*.less',

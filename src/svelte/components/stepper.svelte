@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, noUndefinedProps, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -113,7 +113,7 @@
   onMount(() => {
     if (!init) return;
     f7ready(() => {
-      f7Stepper = f7.stepper.create(
+      f7Stepper = app.f7.stepper.create(
         noUndefinedProps({
           el,
           min,
@@ -160,7 +160,8 @@
         on:input={onInput}
         on:change={onChange}
         value={typeof value === 'undefined' ? '' : value}
-        readonly={inputReadonly} />
+        readonly={inputReadonly}
+      />
     </div>
   {/if}
   {#if !input && !buttonsOnly}

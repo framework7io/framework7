@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
   import { modalStateClasses } from '../shared/modal-state-classes';
 
   const emit = createEmitter(createEventDispatcher, $$props);
@@ -134,13 +134,13 @@
 
     f7ready(() => {
       if (el && innerEl) {
-        const dom7 = f7.$;
+        const dom7 = app.f7.$;
         const fixedEls = dom7(innerEl).children('.navbar, .toolbar, .tabbar, .searchbar');
         if (fixedEls.length) {
           dom7(el).prepend(fixedEls);
         }
       }
-      f7Sheet = f7.sheet.create(params);
+      f7Sheet = app.f7.sheet.create(params);
       if (opened) {
         f7Sheet.open(false);
       }

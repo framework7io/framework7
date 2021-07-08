@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -56,7 +56,7 @@
   onMount(() => {
     if (!init || !el) return;
     f7ready(() => {
-      f7ListIndex = f7.listIndex.create({
+      f7ListIndex = app.f7.listIndex.create({
         el,
         listEl,
         indexes,

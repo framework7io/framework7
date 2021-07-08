@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
   import { useTheme } from '../shared/use-theme';
   import { setReactiveContext } from '../shared/set-reactive-context';
 
@@ -78,22 +78,22 @@
 
   onMount(() => {
     f7ready(() => {
-      if (tabbar) f7.toolbar.setHighlight(el);
-      f7.on('toolbarShow', onShow);
-      f7.on('toolbarHide', onHide);
+      if (tabbar) app.f7.toolbar.setHighlight(el);
+      app.f7.on('toolbarShow', onShow);
+      app.f7.on('toolbarHide', onHide);
     });
   });
 
   afterUpdate(() => {
-    if (tabbar && f7 && el) {
-      f7.toolbar.setHighlight(el);
+    if (tabbar && app.f7 && el) {
+      app.f7.toolbar.setHighlight(el);
     }
   });
 
   onDestroy(() => {
-    if (!f7) return;
-    f7.off('toolbarShow', onShow);
-    f7.off('toolbarHide', onHide);
+    if (!app.f7) return;
+    app.f7.off('toolbarShow', onShow);
+    app.f7.off('toolbarHide', onHide);
   });
 </script>
 

@@ -1,6 +1,6 @@
 <script>
   import { onMount, onDestroy, afterUpdate, tick } from 'svelte'; // eslint-disable-line
-  import { f7events, f7routers } from '../shared/f7';
+  import { app } from '../shared/f7';
 
   let modals = [];
   let el;
@@ -16,15 +16,15 @@
         });
       },
     };
-    f7routers.modals = routerData;
+    app.f7routers.modals = routerData;
   });
   afterUpdate(() => {
     if (!routerData) return;
-    f7events.emit('modalsRouterDidUpdate', routerData);
+    app.f7events.emit('modalsRouterDidUpdate', routerData);
   });
   onDestroy(() => {
     if (!routerData) return;
-    f7routers.modals = null;
+    app.f7routers.modals = null;
     routerData = null;
   });
 </script>

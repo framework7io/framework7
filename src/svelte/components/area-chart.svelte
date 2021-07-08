@@ -2,7 +2,7 @@
   import { createEventDispatcher, onDestroy, onMount } from 'svelte';
   import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { app } from '../shared/f7';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -206,7 +206,7 @@
     }
 
     if (currentIndex !== null && !f7Tooltip) {
-      f7Tooltip = f7.tooltip.create({
+      f7Tooltip = app.f7.tooltip.create({
         trigger: 'manual',
         containerEl: el,
         targetEl: svgEl.querySelector(`line[data-index="${currentIndex}"]`),
@@ -297,7 +297,8 @@
     {height}
     viewBox={`0 0 ${width} ${height}`}
     preserveAspectRatio="none"
-    bind:this={svgEl}>
+    bind:this={svgEl}
+  >
     {#each chartData as data, index (index)}
       {#if lineChart}
         <path stroke={data.color} fillRule="evenodd" d={data.points} />
@@ -314,7 +315,8 @@
         y1={0}
         x2={line}
         y2={height}
-        class={classNames({ 'area-chart-current-line': currentIndex === index })} />
+        class={classNames({ 'area-chart-current-line': currentIndex === index })}
+      />
     {/each}
   </svg>
   {#if axis}
@@ -336,7 +338,8 @@
               'area-chart-legend-button': toggleDatasets,
             })}
             type="button"
-            on:click={() => toggleDataset(index)}>
+            on:click={() => toggleDataset(index)}
+          >
             <span style={`background-color: ${dataset.color}`} />
             {formatLegendLabel(dataset.label)}
           </button>

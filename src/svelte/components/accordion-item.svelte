@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -50,23 +50,23 @@
 
   onMount(() => {
     f7ready(() => {
-      f7.on('accordionBeforeOpen', onBeforeOpen);
-      f7.on('accordionOpen', onOpen);
-      f7.on('accordionOpened', onOpened);
-      f7.on('accordionBeforeClose', onBeforeClose);
-      f7.on('accordionClose', onClose);
-      f7.on('accordionClosed', onClosed);
+      app.f7.on('accordionBeforeOpen', onBeforeOpen);
+      app.f7.on('accordionOpen', onOpen);
+      app.f7.on('accordionOpened', onOpened);
+      app.f7.on('accordionBeforeClose', onBeforeClose);
+      app.f7.on('accordionClose', onClose);
+      app.f7.on('accordionClosed', onClosed);
     });
   });
 
   onDestroy(() => {
-    if (!f7 || !el) return;
-    f7.off('accordionBeforeOpen', onBeforeOpen);
-    f7.off('accordionOpen', onOpen);
-    f7.off('accordionOpened', onOpened);
-    f7.off('accordionBeforeClose', onBeforeClose);
-    f7.off('accordionClose', onClose);
-    f7.off('accordionClosed', onClosed);
+    if (!app.f7 || !el) return;
+    app.f7.off('accordionBeforeOpen', onBeforeOpen);
+    app.f7.off('accordionOpen', onOpen);
+    app.f7.off('accordionOpened', onOpened);
+    app.f7.off('accordionBeforeClose', onBeforeClose);
+    app.f7.off('accordionClose', onClose);
+    app.f7.off('accordionClosed', onClosed);
   });
 </script>
 

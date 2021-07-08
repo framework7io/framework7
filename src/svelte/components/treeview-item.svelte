@@ -9,7 +9,7 @@
   } from '../shared/mixins';
   import { classNames, extend, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
   import { useIcon } from '../shared/use-icon';
 
@@ -92,31 +92,27 @@
   onMount(() => {
     if (!el) return;
     f7ready(() => {
-      f7.on('treeviewOpen', onOpen);
-      f7.on('treeviewClose', onClose);
-      f7.on('treeviewLoadChildren', onLoadChildren);
+      app.f7.on('treeviewOpen', onOpen);
+      app.f7.on('treeviewClose', onClose);
+      app.f7.on('treeviewLoadChildren', onLoadChildren);
     });
   });
 
   onDestroy(() => {
-    if (!el || !f7) return;
-    f7.off('treeviewOpen', onOpen);
-    f7.off('treeviewClose', onClose);
-    f7.off('treeviewLoadChildren', onLoadChildren);
+    if (!el || !app.f7) return;
+    app.f7.off('treeviewOpen', onOpen);
+    app.f7.off('treeviewClose', onClose);
+    app.f7.off('treeviewLoadChildren', onLoadChildren);
   });
 </script>
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <div bind:this={el} class={classes} {...restProps($$restProps)}>
   {#if treeviewRootTag === 'div'}
-    <div
-      on:click={onClick}
-      class={itemRootClasses}
-      {...itemRootAttrs}
-    >
+    <div on:click={onClick} class={itemRootClasses} {...itemRootAttrs}>
       <slot name="root-start" />
       {#if needToggle}
-        <div class="treeview-toggle"></div>
+        <div class="treeview-toggle" />
       {/if}
       <div class="treeview-item-content">
         <slot name="content-start" />
@@ -136,14 +132,10 @@
       <slot name="root-end" />
     </div>
   {:else}
-    <a
-      on:click={onClick}
-      class={itemRootClasses}
-      {...itemRootAttrs}
-    >
+    <a on:click={onClick} class={itemRootClasses} {...itemRootAttrs}>
       <slot name="root-start" />
       {#if needToggle}
-        <div class="treeview-toggle"></div>
+        <div class="treeview-toggle" />
       {/if}
       <div class="treeview-item-content">
         <slot name="content-start" />

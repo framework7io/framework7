@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready } from '../shared/f7';
+  import { f7ready, app } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
   import { useTheme } from '../shared/use-theme';
 
@@ -47,13 +47,13 @@
   let transparentVisible = false;
 
   export function hide(animate) {
-    f7.navbar.hide(el, animate);
+    app.f7.navbar.hide(el, animate);
   }
   export function show(animate) {
-    f7.navbar.show(el, animate);
+    app.f7.navbar.show(el, animate);
   }
   export function size() {
-    f7.navbar.size(el);
+    app.f7.navbar.size(el);
   }
 
   // eslint-disable-next-line
@@ -67,10 +67,10 @@
   // eslint-disable-next-line
   $: hasTitleLargeSlots = hasSlots(arguments, 'title-large');
 
-  $: addLeftTitleClass = theme && theme.ios && f7 && !f7.params.navbar.iosCenterTitle;
+  $: addLeftTitleClass = theme && theme.ios && app.f7 && !app.f7.params.navbar.iosCenterTitle;
   $: addCenterTitleClass =
-    (theme && theme.md && f7 && f7.params.navbar.mdCenterTitle) ||
-    (theme && theme.aurora && f7 && f7.params.navbar.auroraCenterTitle);
+    (theme && theme.md && app.f7 && app.f7.params.navbar.mdCenterTitle) ||
+    (theme && theme.aurora && app.f7 && app.f7.params.navbar.auroraCenterTitle);
 
   $: isLarge = large || largeTransparent;
   $: isTransparent = transparent || (isLarge && largeTransparent);
@@ -152,28 +152,28 @@
   }
 
   function mountNavbar() {
-    f7.on('navbarShow', onShow);
-    f7.on('navbarHide', onHide);
-    f7.on('navbarCollapse', onCollapse);
-    f7.on('navbarExpand', onExpand);
-    f7.on('navbarPosition', onNavbarPosition);
-    f7.on('navbarRole', onNavbarRole);
-    f7.on('navbarMasterStack', onNavbarMasterStack);
-    f7.on('navbarMasterUnstack', onNavbarMasterUnstack);
-    f7.on('navbarTransparentShow', onNavbarTransparentShow);
-    f7.on('navbarTransparentHide', onNavbarTransparentHide);
+    app.f7.on('navbarShow', onShow);
+    app.f7.on('navbarHide', onHide);
+    app.f7.on('navbarCollapse', onCollapse);
+    app.f7.on('navbarExpand', onExpand);
+    app.f7.on('navbarPosition', onNavbarPosition);
+    app.f7.on('navbarRole', onNavbarRole);
+    app.f7.on('navbarMasterStack', onNavbarMasterStack);
+    app.f7.on('navbarMasterUnstack', onNavbarMasterUnstack);
+    app.f7.on('navbarTransparentShow', onNavbarTransparentShow);
+    app.f7.on('navbarTransparentHide', onNavbarTransparentHide);
   }
   function destroyNavbar() {
-    f7.off('navbarShow', onShow);
-    f7.off('navbarHide', onHide);
-    f7.off('navbarCollapse', onCollapse);
-    f7.off('navbarExpand', onExpand);
-    f7.off('navbarPosition', onNavbarPosition);
-    f7.off('navbarRole', onNavbarRole);
-    f7.off('navbarMasterStack', onNavbarMasterStack);
-    f7.off('navbarMasterUnstack', onNavbarMasterUnstack);
-    f7.off('navbarTransparentShow', onNavbarTransparentShow);
-    f7.off('navbarTransparentHide', onNavbarTransparentHide);
+    app.f7.off('navbarShow', onShow);
+    app.f7.off('navbarHide', onHide);
+    app.f7.off('navbarCollapse', onCollapse);
+    app.f7.off('navbarExpand', onExpand);
+    app.f7.off('navbarPosition', onNavbarPosition);
+    app.f7.off('navbarRole', onNavbarRole);
+    app.f7.off('navbarMasterStack', onNavbarMasterStack);
+    app.f7.off('navbarMasterUnstack', onNavbarMasterUnstack);
+    app.f7.off('navbarTransparentShow', onNavbarTransparentShow);
+    app.f7.off('navbarTransparentHide', onNavbarTransparentHide);
   }
 
   onMount(() => {
@@ -182,11 +182,11 @@
     });
   });
   afterUpdate(() => {
-    if (!f7) return;
-    f7.navbar.size(el);
+    if (!app.f7) return;
+    app.f7.navbar.size(el);
   });
   onDestroy(() => {
-    if (!f7) return;
+    if (!app.f7) return;
     destroyNavbar();
   });
 </script>

@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, noUndefinedProps } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
 
   let className = undefined;
   export { className as class };
@@ -39,7 +39,7 @@
   onMount(() => {
     if (!init) return;
     f7ready(() => {
-      f7Messages = f7.messages.create(
+      f7Messages = app.f7.messages.create(
         noUndefinedProps({
           el,
           autoLayout,

@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
   import Toggle from './toggle';
   import Range from './range';
@@ -92,7 +92,7 @@
   }
 
   function validateInput() {
-    if (!f7 || !inputEl) return;
+    if (!app.f7 || !inputEl) return;
     const validity = inputEl.validity;
     if (!validity) return;
 
@@ -116,7 +116,7 @@
       return;
     }
     if (type === 'range' || type === 'toggle') return;
-    if (!f7) return;
+    if (!app.f7) return;
     updateInputOnDidUpdate = true;
     if (f7Calendar) {
       f7Calendar.setValue(value);
@@ -240,7 +240,7 @@
       }
 
       if (type === 'datepicker') {
-        f7Calendar = f7.calendar.create({
+        f7Calendar = app.f7.calendar.create({
           inputEl,
           value,
           on: {
@@ -253,7 +253,7 @@
         });
       }
       if (type === 'colorpicker') {
-        f7ColorPicker = f7.colorPicker.create({
+        f7ColorPicker = app.f7.colorPicker.create({
           inputEl,
           value,
           on: {
@@ -266,7 +266,7 @@
         });
       }
 
-      f7.input.checkEmptyState(inputEl);
+      app.f7.input.checkEmptyState(inputEl);
       if (
         !(validateOnBlur || validateOnBlur === '') &&
         (validate || validate === '') &&
@@ -279,22 +279,22 @@
         }, 0);
       }
       if (resizable) {
-        f7.input.resizeTextarea(inputEl);
+        app.f7.input.resizeTextarea(inputEl);
       }
     });
   });
 
   afterUpdate(() => {
-    if (!f7) return;
+    if (!app.f7) return;
     if (updateInputOnDidUpdate) {
       if (!inputEl) return;
       updateInputOnDidUpdate = false;
-      f7.input.checkEmptyState(inputEl);
+      app.f7.input.checkEmptyState(inputEl);
       if (validate && !validateOnBlur) {
         validateInput();
       }
       if (resizable) {
-        f7.input.resizeTextarea(inputEl);
+        app.f7.input.resizeTextarea(inputEl);
       }
     }
   });
@@ -352,7 +352,12 @@
         {required}
         {pattern}
         validate={typeof validate === 'string' && validate.length ? validate : undefined}
-        data-validate={validate === true || validate === '' || validateOnBlur === true || validateOnBlur === '' ? true : undefined}
+        data-validate={validate === true ||
+        validate === '' ||
+        validateOnBlur === true ||
+        validateOnBlur === ''
+          ? true
+          : undefined}
         data-validate-on-blur={validateOnBlur === true || validateOnBlur === '' ? true : undefined}
         {tabindex}
         data-error-message={errorMessageForce ? undefined : errorMessage}
@@ -361,7 +366,8 @@
         on:blur={onBlur}
         on:input={onInput}
         on:change={onChange}
-        value={inputValue}>
+        value={inputValue}
+      >
         <slot />
       </select>
     {:else if type === 'textarea'}
@@ -391,7 +397,12 @@
         {required}
         {pattern}
         validate={typeof validate === 'string' && validate.length ? validate : undefined}
-        data-validate={validate === true || validate === '' || validateOnBlur === true || validateOnBlur === '' ? true : undefined}
+        data-validate={validate === true ||
+        validate === '' ||
+        validateOnBlur === true ||
+        validateOnBlur === ''
+          ? true
+          : undefined}
         data-validate-on-blur={validateOnBlur === true || validateOnBlur === '' ? true : undefined}
         {tabindex}
         data-error-message={errorMessageForce ? undefined : errorMessage}
@@ -400,7 +411,8 @@
         on:blur={onBlur}
         on:input={onInput}
         on:change={onChange}
-        value={inputValue} />
+        value={inputValue}
+      />
     {:else if type === 'toggle'}
       <Toggle {checked} {readonly} {name} {value} {disabled} id={inputId} on:change={onChange} />
     {:else if type === 'range'}
@@ -413,7 +425,8 @@
         {name}
         id={inputId}
         input={true}
-        on:rangeChange={onChange} />
+        on:rangeChange={onChange}
+      />
     {:else if type === 'texteditor'}
       <TextEditor
         value={typeof value === 'undefined' ? '' : value}
@@ -423,7 +436,8 @@
         onTextEditorBlur={onBlur}
         onTextEditorInput={onInput}
         onTextEditorChange={onChange}
-        {...textEditorParams} />
+        {...textEditorParams}
+      />
     {:else}
       <input
         bind:this={inputEl}
@@ -452,7 +466,12 @@
         {required}
         {pattern}
         validate={typeof validate === 'string' && validate.length ? validate : undefined}
-        data-validate={validate === true || validate === '' || validateOnBlur === true || validateOnBlur === '' ? true : undefined}
+        data-validate={validate === true ||
+        validate === '' ||
+        validateOnBlur === true ||
+        validateOnBlur === ''
+          ? true
+          : undefined}
         data-validate-on-blur={validateOnBlur === true || validateOnBlur === '' ? true : undefined}
         tabIndex={tabindex}
         data-error-message={errorMessageForce ? undefined : errorMessage}
@@ -461,7 +480,8 @@
         on:blur={onBlur}
         on:input={onInput}
         on:change={onChange}
-        value={type === 'datepicker' || type === 'colorpicker' || type === 'file' ? '' : inputValue} />
+        value={type === 'datepicker' || type === 'colorpicker' || type === 'file' ? '' : inputValue}
+      />
     {/if}
     {#if (errorMessage || hasErrorSlots) && errorMessageForce}
       <div class="input-error-message">
@@ -504,7 +524,12 @@
     {required}
     {pattern}
     validate={typeof validate === 'string' && validate.length ? validate : undefined}
-    data-validate={validate === true || validate === '' || validateOnBlur === true || validateOnBlur === '' ? true : undefined}
+    data-validate={validate === true ||
+    validate === '' ||
+    validateOnBlur === true ||
+    validateOnBlur === ''
+      ? true
+      : undefined}
     data-validate-on-blur={validateOnBlur === true || validateOnBlur === '' ? true : undefined}
     {tabindex}
     data-error-message={errorMessageForce ? undefined : errorMessage}
@@ -514,7 +539,8 @@
     on:input={onInput}
     on:change={onChange}
     value={inputValue}
-    {...restProps($$restProps)}>
+    {...restProps($$restProps)}
+  >
     <slot />
   </select>
 {:else if type === 'textarea'}
@@ -544,7 +570,12 @@
     {required}
     {pattern}
     validate={typeof validate === 'string' && validate.length ? validate : undefined}
-    data-validate={validate === true || validate === '' || validateOnBlur === true || validateOnBlur === '' ? true : undefined}
+    data-validate={validate === true ||
+    validate === '' ||
+    validateOnBlur === true ||
+    validateOnBlur === ''
+      ? true
+      : undefined}
     data-validate-on-blur={validateOnBlur === true || validateOnBlur === '' ? true : undefined}
     {tabindex}
     data-error-message={errorMessageForce ? undefined : errorMessage}
@@ -554,7 +585,8 @@
     on:input={onInput}
     on:change={onChange}
     value={inputValue}
-    {...restProps($$restProps)} />
+    {...restProps($$restProps)}
+  />
 {:else if type === 'toggle'}
   <Toggle
     {checked}
@@ -564,7 +596,8 @@
     {disabled}
     id={inputId}
     on:change={onChange}
-    {...restProps($$restProps)} />
+    {...restProps($$restProps)}
+  />
 {:else if type === 'range'}
   <Range
     {value}
@@ -576,7 +609,8 @@
     id={inputId}
     input={true}
     on:rangeChange={onChange}
-    {...restProps($$restProps)} />
+    {...restProps($$restProps)}
+  />
 {:else if type === 'texteditor'}
   <TextEditor
     value={typeof value === 'undefined' ? '' : value}
@@ -587,7 +621,8 @@
     onTextEditorInput={onInput}
     onTextEditorChange={onChange}
     {...textEditorParams}
-    {...restProps($$restProps)} />
+    {...restProps($$restProps)}
+  />
 {:else}
   <input
     bind:this={inputEl}
@@ -616,7 +651,12 @@
     {required}
     {pattern}
     validate={typeof validate === 'string' && validate.length ? validate : undefined}
-    data-validate={validate === true || validate === '' || validateOnBlur === true || validateOnBlur === '' ? true : undefined}
+    data-validate={validate === true ||
+    validate === '' ||
+    validateOnBlur === true ||
+    validateOnBlur === ''
+      ? true
+      : undefined}
     data-validate-on-blur={validateOnBlur === true || validateOnBlur === '' ? true : undefined}
     tabIndex={tabindex}
     data-error-message={errorMessageForce ? undefined : errorMessage}
@@ -626,5 +666,6 @@
     on:input={onInput}
     on:change={onChange}
     value={type === 'datepicker' || type === 'colorpicker' || type === 'file' ? '' : inputValue}
-    {...restProps($$restProps)} />
+    {...restProps($$restProps)}
+  />
 {/if}

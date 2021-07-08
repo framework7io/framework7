@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, noUndefinedProps, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -60,7 +60,7 @@
   onMount(() => {
     if (!init) return;
     f7ready(() => {
-      f7Range = f7.range.create(
+      f7Range = app.f7.range.create(
         noUndefinedProps({
           el,
           value,

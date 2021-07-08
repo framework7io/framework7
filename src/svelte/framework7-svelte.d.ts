@@ -27,6 +27,13 @@ declare const useStore: useStore;
 
 declare const Framework7Svelte: Framework7Plugin;
 
+interface app {
+  theme: Framework7Theme;
+  f7: Framework7;
+}
+
+declare const app: app;
+
 // EXPORT_COMPONENTS
-export { f7, f7ready, theme, useStore };
+export { f7, f7ready, theme, useStore, app };
 export default Framework7Svelte;

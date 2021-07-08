@@ -2,7 +2,7 @@
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
 
   import { extend, createEmitter } from '../shared/utils';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -138,7 +138,7 @@
         },
       });
 
-      f7PhotoBrowser = f7.photoBrowser.create(pbParams);
+      f7PhotoBrowser = app.f7.photoBrowser.create(pbParams);
     });
   });
 

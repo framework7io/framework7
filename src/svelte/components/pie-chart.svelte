@@ -2,7 +2,7 @@
   import { createEventDispatcher, onDestroy } from 'svelte';
   import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7 } from '../shared/f7';
+  import { app } from '../shared/f7';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -107,9 +107,9 @@
 
   const setTooltip = () => {
     if (currentIndex === null && !f7Tooltip) return;
-    if (!tooltip || !el || !f7) return;
+    if (!tooltip || !el || !app.f7) return;
     if (currentIndex !== null && !f7Tooltip) {
-      f7Tooltip = f7.tooltip.create({
+      f7Tooltip = app.f7.tooltip.create({
         trigger: 'manual',
         containerEl: el,
         targetEl: el.querySelector(`path[data-index="${currentIndex}"]`),
@@ -155,7 +155,8 @@
     width={size}
     height={size}
     viewBox={`-${size / 3} -${size / 3} ${(size * 2) / 3} ${(size * 2) / 3}`}
-    style="transform: rotate(-90deg)">
+    style="transform: rotate(-90deg)"
+  >
     {#each paths as path, index (index)}
       <path
         d={path.points}
@@ -164,7 +165,8 @@
         class={classNames({ 'pie-chart-hidden': currentIndex !== null && currentIndex !== index })}
         on:click={() => setCurrentIndex(index)}
         on:mouseenter={() => setCurrentIndex(index)}
-        on:mouseleave={() => setCurrentIndex(null)} />
+        on:mouseleave={() => setCurrentIndex(null)}
+      />
     {/each}
   </svg>
   <slot />

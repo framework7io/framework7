@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
   import { modalStateClasses } from '../shared/modal-state-classes';
 
   const emit = createEmitter(createEventDispatcher, $$props);
@@ -87,7 +87,7 @@
     if (typeof containerEl !== 'undefined') params.containerEl = animate;
 
     f7ready(() => {
-      f7LoginScreen = f7.loginScreen.create(params);
+      f7LoginScreen = app.f7.loginScreen.create(params);
       if (opened) {
         f7LoginScreen.open(false);
       }

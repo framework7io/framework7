@@ -3,7 +3,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, extend, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { f7, f7ready } from '../shared/f7';
+  import { app, f7ready } from '../shared/f7';
   import { hasSlots } from '../shared/has-slots';
   import { useTab } from '../shared/use-tab';
   import { setReactiveContext } from '../shared/set-reactive-context';
@@ -137,15 +137,15 @@
 
   onMount(() => {
     f7ready(() => {
-      f7.on('sortableEnable', onSortableEnable);
-      f7.on('sortableDisable', onSortableDisable);
-      f7.on('sortableSort', onSortableSort);
+      app.f7.on('sortableEnable', onSortableEnable);
+      app.f7.on('sortableDisable', onSortableDisable);
+      app.f7.on('sortableSort', onSortableSort);
 
       if (!virtualList) return;
       const vlParams = virtualListParams || {};
       if (!vlParams.renderItem && !vlParams.renderExternal) return;
 
-      f7VirtualList = f7.virtualList.create(
+      f7VirtualList = app.f7.virtualList.create(
         extend(
           {
             el,
@@ -175,10 +175,10 @@
   });
 
   onDestroy(() => {
-    if (!f7) return;
-    f7.off('sortableEnable', onSortableEnable);
-    f7.off('sortableDisable', onSortableDisable);
-    f7.off('sortableSort', onSortableSort);
+    if (!app.f7) return;
+    app.f7.off('sortableEnable', onSortableEnable);
+    app.f7.off('sortableDisable', onSortableDisable);
+    app.f7.off('sortableSort', onSortableSort);
 
     if (f7VirtualList && f7VirtualList.destroy) {
       f7VirtualList.destroy();
@@ -192,9 +192,12 @@
   <form
     bind:this={el}
     class={classes}
-    data-sortable-move-elements={typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined}
+    data-sortable-move-elements={typeof sortableMoveElements !== 'undefined'
+      ? sortableMoveElements.toString()
+      : undefined}
     on:submit={onSubmit}
-    {...restProps($$restProps)}>
+    {...restProps($$restProps)}
+  >
     <slot name="before-list" />
     {#if hasUlSlots && ul}
       <ul>
@@ -210,8 +213,11 @@
   <div
     bind:this={el}
     class={classes}
-    data-sortable-move-elements={typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined}
-    {...restProps($$restProps)}>
+    data-sortable-move-elements={typeof sortableMoveElements !== 'undefined'
+      ? sortableMoveElements.toString()
+      : undefined}
+    {...restProps($$restProps)}
+  >
     <slot name="before-list" />
     {#if hasUlSlots && ul}
       <ul>

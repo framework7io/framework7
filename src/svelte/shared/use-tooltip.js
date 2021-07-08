@@ -1,4 +1,4 @@
-import { f7, f7ready } from './f7';
+import { app, f7ready } from './f7';
 
 export const useTooltip = (el, props) => {
   let f7Tooltip = null;
@@ -6,7 +6,7 @@ export const useTooltip = (el, props) => {
 
   if (el && tooltip) {
     f7ready(() => {
-      f7Tooltip = f7.tooltip.create({
+      f7Tooltip = app.f7.tooltip.create({
         targetEl: el,
         text: tooltip,
         trigger: tooltipTrigger,
@@ -21,8 +21,8 @@ export const useTooltip = (el, props) => {
         f7Tooltip = null;
         return;
       }
-      if (value && !f7Tooltip && f7) {
-        f7Tooltip = f7.tooltip.create({
+      if (value && !f7Tooltip && app.f7) {
+        f7Tooltip = app.f7.tooltip.create({
           targetEl: el,
           text: value,
           trigger: tooltipTrigger,

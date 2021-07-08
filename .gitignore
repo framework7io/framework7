@@ -39,9 +39,11 @@ build/react/components
 
 packages/svelte/**/*.js
 packages/svelte/**/*.ts
+packages/svelte/**/*.svelte
 packages/svelte/components
 build/svelte/**/*.js
 build/svelte/**/*.ts
+build/svelte/**/*.svelte
 build/svelte/components
 
 packages/vue/**/*.js

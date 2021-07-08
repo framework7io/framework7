@@ -16,6 +16,14 @@ const compileSvelteComponents = (buildPath, format) => {
 
   svelteComponents.forEach((fileName) => {
     const fileContent = fs.readFileSync(`src/svelte/components/${fileName}`, 'utf-8');
+    if (format === 'esm') {
+      // copy .svelte files
+      const fileContentFixImports = fileContent.replace(
+        /from '.\/([a-z-]*)';/g,
+        `from './$1.svelte';`,
+      );
+      fs.writeFileSync(`${buildPath}/svelte/${format}/svelte/${fileName}`, fileContentFixImports);
+    }
     const fileResult = svelte.compile(fileContent, {
       format,
       filename: fileName,
@@ -98,6 +106,13 @@ async function buildSvelte(cb) {
       `${buildPath}/svelte/esm/framework7-svelte.js`,
       `${bannerSvelte.trim()}\n${esmContent}`,
     );
+
+    const svelteSourceContent = esmContent
+      .replace(/\.\/components\/([a-z-]*)/g, './svelte/$1.svelte')
+      .replace(/\.\/svelte\/swiper([a-z-]*).svelte/g, './components/swiper$1')
+      .replace(/\.\/svelte\/skeleton([a-z-]*).svelte/g, './components/skeleton$1');
+
+    fs.writeFileSync(`${buildPath}/svelte/esm/framework7-svelte-src.js`, `${svelteSourceContent}`);
 
     compileSvelteComponents(buildPath, 'esm');
   };
