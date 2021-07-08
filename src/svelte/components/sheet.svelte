@@ -154,9 +154,9 @@
 </script>
 
 <div class={classes} bind:this={el} {...restProps($$restProps)}>
-  <slot name="fixed" />
+  <slot sheet={f7Sheet} name="fixed" />
   <div class="sheet-modal-inner" bind:this={innerEl}>
-    <slot />
-    <slot name="static" />
+    <slot sheet={f7Sheet} />
+    <slot sheet={f7Sheet} name="static" />
   </div>
 </div>

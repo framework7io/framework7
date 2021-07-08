@@ -178,11 +178,11 @@
     data-f7-slot={f7Slot}
     {...restProps($$restProps)}
   >
-    <slot name="before-inner" />
+    <slot searchbar={f7Searchbar} name="before-inner" />
     <div class="searchbar-inner">
-      <slot name="inner-start" />
+      <slot searchbar={f7Searchbar} name="inner-start" />
       <div class="searchbar-input-wrap">
-        <slot name="input-wrap-start" />
+        <slot searchbar={f7Searchbar} name="input-wrap-start" />
         <input
           value={typeof value === 'undefined' ? '' : value}
           {placeholder}
@@ -195,25 +195,25 @@
         />
         <i class="searchbar-icon" />
         {#if clearButton}<span on:click={onClearButtonClick} class="input-clear-button" />{/if}
-        <slot name="input-wrap-end" />
+        <slot searchbar={f7Searchbar} name="input-wrap-end" />
       </div>
       {#if disableButton}
         <span on:click={onDisableButtonClick} class="searchbar-disable-button"
           >{disableButtonText}</span
         >
       {/if}
-      <slot name="inner-end" />
-      <slot />
+      <slot searchbar={f7Searchbar} name="inner-end" />
+      <slot searchbar={f7Searchbar} />
     </div>
-    <slot name="after-inner" />
+    <slot searchbar={f7Searchbar} name="after-inner" />
   </form>
 {:else}
   <div bind:this={el} class={classes} data-f7-slot={f7Slot} {...restProps($$restProps)}>
-    <slot name="before-inner" />
+    <slot searchbar={f7Searchbar} name="before-inner" />
     <div class="searchbar-inner">
-      <slot name="inner-start" />
+      <slot searchbar={f7Searchbar} name="inner-start" />
       <div class="searchbar-input-wrap">
-        <slot name="input-wrap-start" />
+        <slot searchbar={f7Searchbar} name="input-wrap-start" />
         <input
           value={typeof value === 'undefined' ? '' : value}
           {placeholder}
@@ -226,16 +226,16 @@
         />
         <i class="searchbar-icon" />
         {#if clearButton}<span on:click={onClearButtonClick} class="input-clear-button" />{/if}
-        <slot name="input-wrap-end" />
+        <slot searchbar={f7Searchbar} name="input-wrap-end" />
       </div>
       {#if disableButton}
         <span on:click={onDisableButtonClick} class="searchbar-disable-button"
           >{disableButtonText}</span
         >
       {/if}
-      <slot name="inner-end" />
-      <slot />
+      <slot searchbar={f7Searchbar} name="inner-end" />
+      <slot searchbar={f7Searchbar} />
     </div>
-    <slot name="after-inner" />
+    <slot searchbar={f7Searchbar} name="after-inner" />
   </div>
 {/if}

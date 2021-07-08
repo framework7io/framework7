@@ -80,5 +80,5 @@
 </script>
 
 <div bind:this={el} class={classes} data-f7-slot={f7Slot} {...restProps($$restProps)}>
-  <slot />
+  <slot listIndex={f7ListIndex} />
 </div>

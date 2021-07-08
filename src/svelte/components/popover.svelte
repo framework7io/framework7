@@ -113,6 +113,6 @@
 <div class={classes} bind:this={el} {...restProps($$restProps)}>
   <div class="popover-angle" />
   <div class="popover-inner">
-    <slot />
+    <slot popover={f7Popover} />
   </div>
 </div>

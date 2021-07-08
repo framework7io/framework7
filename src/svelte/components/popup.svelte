@@ -136,5 +136,5 @@
 </script>
 
 <div class={classes} bind:this={el} {...restProps($$restProps)}>
-  <slot />
+  <slot popup={f7Popup} />
 </div>

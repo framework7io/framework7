@@ -189,7 +189,7 @@
 </script>
 
 <div class={classes} {style} {id} bind:this={el}>
-  <slot />
+  <slot view={f7View} />
   {#each pages as page (page.id)}
     <RouterContextProvider route={page.props.f7route} router={page.props.f7router}>
       <svelte:component this={page.component} {...page.props} />

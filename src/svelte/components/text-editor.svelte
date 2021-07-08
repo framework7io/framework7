@@ -109,10 +109,10 @@
 </script>
 
 <div bind:this={el} class={classes} {...restProps($$restProps)}>
-  <slot name="root-start" />
+  <slot textEditor={f7TextEditor} name="root-start" />
   <div class="text-editor-content" contenteditable>
-    <slot />
+    <slot textEditor={f7TextEditor} />
   </div>
-  <slot name="root-end" />
-  <slot name="root" />
+  <slot textEditor={f7TextEditor} name="root-end" />
+  <slot textEditor={f7TextEditor} name="root" />
 </div>

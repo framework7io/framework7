@@ -100,5 +100,5 @@
 </script>
 
 <div class={classes} bind:this={el} {...restProps($$restProps)}>
-  <slot />
+  <slot loginScreen={f7LoginScreen} />
 </div>

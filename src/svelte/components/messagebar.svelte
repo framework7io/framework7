@@ -181,11 +181,11 @@
 </script>
 
 <div bind:this={el} class={classes} data-f7-slot={f7Slot} {...restProps($$restProps)}>
-  <slot name="before-inner" />
+  <slot messagebar={f7Messagebar} name="before-inner" />
   <div class="toolbar-inner">
-    <slot name="inner-start" />
+    <slot messagebar={f7Messagebar} name="inner-start" />
     <div class="messagebar-area">
-      <slot name="before-area" />
+      <slot messagebar={f7Messagebar} name="before-area" />
       <Input
         id={textareaId}
         type="textarea"
@@ -201,16 +201,16 @@
         on:focus={onFocus}
         on:blur={onBlur}
       />
-      <slot name="after-inner" />
+      <slot messagebar={f7Messagebar} name="after-inner" />
     </div>
     {#if (sendLink && sendLink.length > 0) || hasSendLinkSlots}
       <Link {onClick}>
-        <slot name="send-link" />
+        <slot messagebar={f7Messagebar} name="send-link" />
         {sendLink}
       </Link>
     {/if}
-    <slot name="inner-end" />
-    <slot />
+    <slot messagebar={f7Messagebar} name="inner-end" />
+    <slot messagebar={f7Messagebar} />
   </div>
-  <slot name="after-inner" />
+  <slot messagebar={f7Messagebar} name="after-inner" />
 </div>

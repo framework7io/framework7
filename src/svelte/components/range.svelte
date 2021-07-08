@@ -102,5 +102,5 @@
 
 <div bind:this={el} class={classes} {...restProps($$restProps)}>
   {#if input}<input type="range" {name} id={inputId} />{/if}
-  <slot />
+  <slot range={f7Range} />
 </div>

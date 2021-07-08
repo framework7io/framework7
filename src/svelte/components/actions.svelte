@@ -124,5 +124,5 @@
 </script>
 
 <div class={classes} bind:this={el} {...restProps($$restProps)}>
-  <slot />
+  <slot actions={f7Actions} />
 </div>

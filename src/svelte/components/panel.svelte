@@ -197,7 +197,7 @@
 </script>
 
 <div bind:this={el} class={classes} data-f7-slot={f7Slot} {...restProps($$restProps)}>
-  <slot />
+  <slot panel={f7Panel} />
   {#if resizable}
     <div class="panel-resize-handler" />
   {/if}
