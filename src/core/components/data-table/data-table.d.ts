@@ -13,7 +13,7 @@ export namespace DataTable {
 
   interface Parameters {
     /** Data Table element. Can be useful if you already have Data Table element in your HTML and want to create new instance using this element */
-    el: HTMLElement;
+    el: HTMLElement | CSSSelector;
 
     on?: {
       [event in keyof Events]?: Events[event];

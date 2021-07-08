@@ -49,7 +49,7 @@ export namespace Actions {
 
   interface Parameters {
     /** Action Sheet element. Can be useful if you already have Action Sheet element in your HTML and want to create new instance using this element*/
-    el?: HTMLElement;
+    el?: HTMLElement | CSSSelector;
     /** Full Action Sheet HTML content string. Can be useful if you want to create Action Sheet element with custom HTML*/
     content?: string;
     /** Enables Action Sheet backdrop (dark semi transparent layer behind)*/

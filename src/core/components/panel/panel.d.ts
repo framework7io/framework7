@@ -28,7 +28,7 @@ export namespace Panel {
   }
   interface Parameters {
     /** Panel element. */
-    el?: HTMLElement;
+    el?: HTMLElement | CSSSelector;
     /** Panel element HTML string. */
     content?: string;
     /** Can be left or right. If not passed then will be determined based on panel-left or panel-right element classes. */

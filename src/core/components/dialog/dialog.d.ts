@@ -56,7 +56,7 @@ export namespace Dialog {
 
   interface Parameters {
     /** Dialog element. Can be useful if you already have Dialog element in your HTML and want to create new instance using this element. */
-    el?: HTMLElement;
+    el?: HTMLElement | CSSSelector;
     /** Enables Dialog backdrop (dark semi transparent layer behind). (default true) */
     backdrop?: boolean;
     /** When enabled, dialog will be closed on backdrop click. (default true) */

@@ -24,7 +24,7 @@ export namespace LoginScreen {
 
   interface Parameters {
     /**  */
-    el?: HTMLElement;
+    el?: HTMLElement | CSSSelector;
     /**  */
     content?: string;
     /** true */

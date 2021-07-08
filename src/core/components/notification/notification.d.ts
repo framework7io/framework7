@@ -20,7 +20,7 @@ export namespace Notification {
 
   interface Parameters {
     /** Notification element. Can be useful if you already have Notification element in your HTML and want to create new instance using this element. */
-    el?: HTMLElement;
+    el?: HTMLElement | CSSSelector;
     /** Notification icon HTML layout, e.g. <i class="f7-icons">house</i> or image <img src="path/to/icon.png">. */
     icon?: string;
     /** Notification title. */

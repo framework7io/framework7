@@ -27,7 +27,7 @@ export namespace Modal {
   }
   interface Parameters {
     /** Modal element. Can be useful if you already have Modal element in your HTML and want to create new instance using this element. */
-    el: HTMLElement;
+    el: HTMLElement | CSSSelector;
     /** Enables Modal backdrop (dark semi transparent layer behind). (default true) */
     backdrop?: boolean;
     /** When enabled, modal will be closed on backdrop click. (default true) */
