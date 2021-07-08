@@ -2,6 +2,16 @@
 
 # Change Log
 
+# [6.1.0-beta.2](https://github.com/framework7io/framework7/compare/v6.1.0-beta.1...v6.0.1-beta.2) (2021-07-08)
+
+### Bug Fixes
+
+- **types:** fixes for cases when `el` parameter also can be a CSS Selector ([1bdf2da](https://github.com/framework7io/framework7/commit/1bdf2da9e617be2ad4093a98a231d973d3242dc6))
+
+### Features
+
+- **svelte:** core component instance is now exposed through slot props ([6029fd1](https://github.com/framework7io/framework7/commit/6029fd197488044206f0bf062fa0068d7cbaacd0)), closes [#3899](https://github.com/framework7io/framework7/issues/3899)
+
 # [6.1.0-beta.1](https://github.com/framework7io/framework7/compare/v6.0.22...v6.1.0-beta.1) (2021-07-08)
 
 ### Features
