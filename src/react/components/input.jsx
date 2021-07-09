@@ -488,6 +488,7 @@ const Input = forwardRef((props, ref) => {
       {
         'input-outline': outline,
         'input-dropdown': dropdown === 'auto' ? type === 'select' : dropdown,
+        'input-invalid': (errorMessage && errorMessageForce) || inputInvalid,
       },
       colorClasses(props),
     );
