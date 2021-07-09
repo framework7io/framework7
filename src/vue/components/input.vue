@@ -418,6 +418,7 @@ export default {
         {
           'input-outline': props.outline,
           'input-dropdown': props.dropdown === 'auto' ? props.type === 'select' : props.dropdown,
+          'input-invalid': (props.errorMessage && props.errorMessageForce) || inputInvalid.value,
         },
         colorClasses(props),
       ),
