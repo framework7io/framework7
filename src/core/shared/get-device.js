@@ -79,7 +79,7 @@ function calcDevice({ userAgent } = {}) {
   device.firefox = firefox;
 
   // Android
-  if (android && !windows) {
+  if (android) {
     device.os = 'android';
     device.osVersion = android[2];
     device.android = true;
