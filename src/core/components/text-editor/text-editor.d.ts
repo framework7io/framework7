@@ -80,6 +80,10 @@ export namespace TextEditor {
     init: (editor: TextEditor) => void;
     /** Event will be triggered right before Text Editor instance will be destroyed. As an argument event handler receives Text Editor instance */
     beforeDestroy: (editor: TextEditor) => void;
+    /** Event will be triggered on link insert, as second argument it receives user-specified link URL (href) */
+    insertLink: (editor: TextEditor, url: string) => void;
+    /** Event will be triggered on image insert, as second argument it receives user-specified image source URL (href) */
+    insertImage: (editor: TextEditor, url: string) => void;
   }
   interface DomEvents {
     /** Event will be triggered when editor value has been changed. */
@@ -104,6 +108,10 @@ export namespace TextEditor {
     'texteditor:init': () => void;
     /** Event will be triggered right before Text Editor instance will be destroyed.*/
     'texteditor:beforedestroy': () => void;
+    /** Event will be triggered on link insert, as second argument it receives user-specified link URL (href) */
+    'texteditor:insertlink': (editor: TextEditor, url: string) => void;
+    /** Event will be triggered on image insert, as second argument it receives user-specified image source URL (href) */
+    'texteditor:insertimage': (editor: TextEditor, url: string) => void;
   }
 
   interface AppMethods {
@@ -142,6 +150,10 @@ export namespace TextEditor {
     textEditorInit: (editor: TextEditor) => void;
     /** Event will be triggered right before Text Editor instance will be destroyed. As an argument event handler receives Text Editor instance */
     textEditorBeforeDestroy: (editor: TextEditor) => void;
+    /** Event will be triggered on link insert, as second argument it receives user-specified link URL (href) */
+    textEditorInsertLink: (editor: TextEditor, url: string) => void;
+    /** Event will be triggered on image insert, as second argument it receives user-specified image source URL (href) */
+    textEditorInsertImage: (editor: TextEditor, url: string) => void;
   }
 }
 

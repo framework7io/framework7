@@ -217,6 +217,8 @@ class TextEditor extends Framework7Class {
       if (link && link.trim().length) {
         self.setSelectionRange(currentRange);
         document.execCommand('createLink', false, link.trim());
+        self.$el.trigger('texteditor:insertlink', { url: link.trim() });
+        self.emit('local:insertLink textEditorInsertLink', self, link.trim());
       }
     });
     dialog.$el.find('input').focus();
@@ -232,6 +234,8 @@ class TextEditor extends Framework7Class {
       if (imageUrl && imageUrl.trim().length) {
         self.setSelectionRange(currentRange);
         document.execCommand('insertImage', false, imageUrl.trim());
+        self.$el.trigger('texteditor:insertimage', { url: imageUrl.trim() });
+        self.emit('local:insertImage textEditorInsertImage', self, imageUrl.trim());
       }
     });
     dialog.$el.find('input').focus();

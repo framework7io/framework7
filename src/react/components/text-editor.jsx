@@ -32,6 +32,8 @@ import { TextEditor } from 'framework7/types';
   onTextEditorKeyboardClose? : (...args: any[]) => void
   onTextEditorPopoverOpen? : (...args: any[]) => void
   onTextEditorPopoverClose? : (...args: any[]) => void
+  onTextEditorInsertLink?: (...args: any[]) => void
+  onTextEditorInsertImage?: (...args: any[]) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null; f7TextEditor: () => TextEditor.TextEditor;}>;
 */
 
@@ -83,6 +85,12 @@ const TextEditor = forwardRef((props, ref) => {
   const onPopoverClose = () => {
     emit(props, 'textEditorPopoverClose');
   };
+  const onInsertLink = (editor, url) => {
+    emit(props, 'textEditorInsertLink', url);
+  };
+  const onInsertImage = (editor, url) => {
+    emit(props, 'textEditorInsertImage', url);
+  };
 
   useImperativeHandle(ref, () => ({
     el: elRef.current,
@@ -117,6 +125,8 @@ const TextEditor = forwardRef((props, ref) => {
         keyboardClose: onKeyboardClose,
         popoverOpen: onPopoverOpen,
         popoverClose: onPopoverClose,
+        insertLink: onInsertLink,
+        insertImage: onInsertImage,
       },
     });
     f7ready(() => {

@@ -63,6 +63,8 @@ export default {
     'texteditor:keyboardclose',
     'texteditor:popoveropen',
     'texteditor:popoverclose',
+    'texteditor:insertlink',
+    'texteditor:insertimage',
     'texteditorChange',
     'texteditorInput',
     'texteditorFocus',
@@ -103,6 +105,12 @@ export default {
     const onPopoverClose = () => {
       emit('texteditor:popoverclose');
     };
+    const onInsertLink = (editor, url) => {
+      emit(props, 'texteditor:insertlink', url);
+    };
+    const onInsertImage = (editor, url) => {
+      emit(props, 'texteditor:insertimage', url);
+    };
 
     watch(
       () => props.value,
@@ -135,6 +143,8 @@ export default {
           keyboardClose: onKeyboardClose,
           popoverOpen: onPopoverOpen,
           popoverClose: onPopoverClose,
+          insertLink: onInsertLink,
+          insertImage: onInsertImage,
         },
       });
       f7ready(() => {

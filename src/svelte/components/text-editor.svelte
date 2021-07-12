@@ -70,6 +70,12 @@
   function onPopoverClose() {
     emit('textEditorPopoverClose');
   }
+  const onInsertLink = (editor, url) => {
+    emit('textEditorInsertLink', [url]);
+  };
+  const onInsertImage = (editor, url) => {
+    emit('textEditorInsertImage', [url]);
+  };
 
   onMount(() => {
     const params = noUndefinedProps({
@@ -93,6 +99,8 @@
         keyboardClose: onKeyboardClose,
         popoverOpen: onPopoverOpen,
         popoverClose: onPopoverClose,
+        insertLink: onInsertLink,
+        insertImage: onInsertImage,
       },
     });
     f7ready(() => {
