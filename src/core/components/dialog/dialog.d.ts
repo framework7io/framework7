@@ -59,7 +59,7 @@ export namespace Dialog {
     el?: HTMLElement | CSSSelector;
     /** Enables Dialog backdrop (dark semi transparent layer behind). (default true) */
     backdrop?: boolean;
-    /** When enabled, dialog will be closed on backdrop click. (default true) */
+    /** When enabled, dialog will be closed on backdrop click. (default false) */
     closeByBackdropClick?: boolean;
     /** Whether the Dialog should be opened/closed with animation or not. Can be overwritten in .open() and .close() methods. (default false) */
     animate?: boolean;
