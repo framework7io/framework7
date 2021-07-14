@@ -2,6 +2,21 @@
 
 # Change Log
 
+# [6.1.0-beta.3](https://github.com/framework7io/framework7/compare/v6.1.0-beta.2...v6.1.0-beta.3) (2021-07-14)
+
+### Bug Fixes
+
+- **get-device:** allow recognition of Chrome's Android emulator on Windows as android ([008bf32](https://github.com/framework7io/framework7/commit/008bf327484af6b93b4976a2a3e7a69f1aa9ccf2))
+- **react:** display error when errorMessageForm is set on Input component ([e303b60](https://github.com/framework7io/framework7/commit/e303b60194ce47934fe0acef034e4939e1a944d9))
+- **svelte:** display error when errorMessageForm is set on Input component ([13ebe86](https://github.com/framework7io/framework7/commit/13ebe8649720b1dd4fb7564a9ea8d67cf636f383))
+- **types:** fixed default value description for Dialog `closeByBackdropClick` parameter ([62ea344](https://github.com/framework7io/framework7/commit/62ea344d9b1136aa24494a24232aeb4095a973aa)), closes [#3917](https://github.com/framework7io/framework7/issues/3917)
+- **vue:** display error when errorMessageForm is set on Input component ([741261e](https://github.com/framework7io/framework7/commit/741261e21ff3e8dc52c17be75e47237396a9337c))
+
+### Features
+
+- **text-editor:** new `insertLink` and `insertImage` events to post-process added links and images ([a57301b](https://github.com/framework7io/framework7/commit/a57301b83c0d25c051ffaf9d7f37c1c4a1242e08)), closes [#3903](https://github.com/framework7io/framework7/issues/3903)
+- **vue:** TypeScript definition for all Vue components ([b6d599a](https://github.com/framework7io/framework7/commit/b6d599ad91c8270ca7b752e256b0cb93b76d2c78))
+
 # [6.1.0-beta.2](https://github.com/framework7io/framework7/compare/v6.1.0-beta.1...v6.0.1-beta.2) (2021-07-08)
 
 ### Bug Fixes
