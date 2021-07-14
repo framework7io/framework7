@@ -37,7 +37,7 @@ async function buildVue(cb) {
       main: `../../cjs/components/${fileBase}.js`,
       module: `../../esm/components/${fileBase}.js`,
       'jsnext:main': `../../esm/components/${fileBase}.js`,
-      // typings: `${fileBase}.d.ts`,
+      typings: `${fileBase}.d.ts`,
     };
     fs.writeFileSync(
       `${buildPath}/vue/components/${fileBase}/package.json`,
