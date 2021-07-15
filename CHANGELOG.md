@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [6.1.0-beta.5](https://github.com/framework7io/framework7/compare/v6.1.0-beta.3...v6.1.0-beta.5) (2021-07-15)
+
+### Features
+
+- **svelte:** TypeScript definition for all Svelte components ([3033b3d](https://github.com/framework7io/framework7/commit/3033b3d6081b1771587df5c79f334b60a529a190)), closes [#3912](https://github.com/framework7io/framework7/issues/3912)
+
 # [6.1.0-beta.3](https://github.com/framework7io/framework7/compare/v6.1.0-beta.2...v6.1.0-beta.3) (2021-07-14)
 
 ### Bug Fixes
