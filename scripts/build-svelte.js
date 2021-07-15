@@ -61,6 +61,8 @@ async function buildSvelte(cb) {
       main: `../../cjs/components/${fileBase}.js`,
       module: `../../esm/components/${fileBase}.js`,
       'jsnext:main': `../../esm/components/${fileBase}.js`,
+      svelte: `../../esm/svelte/${fileBase}.svelte`,
+      typings: `${fileBase}.d.ts`,
     };
     fs.writeFileSync(
       `${buildPath}/svelte/components/${fileBase}/package.json`,
