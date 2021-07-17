@@ -156,6 +156,8 @@ export namespace PhotoBrowser {
     'photobrowser:close': () => void;
     /** Event will be triggered after Photo Browser completes its closing animation */
     'photobrowser:closed': () => void;
+    /** Event will be triggered right before Photo Browser instance will be destroyed */
+    'photobrowser:beforedestroy': () => void;
   }
 
   interface AppMethods {
