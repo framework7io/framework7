@@ -50,6 +50,8 @@ export namespace PhotoBrowser {
     iconsColor?: string;
     /** Swiper parameters */
     swiper?: object;
+    /** When enabled then Swiper will use Virtual Slides (default true) */
+    virtualSlides?: boolean;
 
     /** Function to render navbar, must return navbar HTML string */
     renderNavbar?: () => string;
