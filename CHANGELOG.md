@@ -2,6 +2,13 @@
 
 # Change Log
 
+# [6.1.0-beta.6](https://github.com/framework7io/framework7/compare/v6.1.0-beta.5...v6.1.0-beta.6) (2021-07-19)
+
+### Bug Fixes
+
+- **gauge:** fix typed in `gaugeBeforeDestroy` event ([efbe583](https://github.com/framework7io/framework7/commit/efbe583f152b5030245d60c2ee6c90fc385ff231)), closes [#3919](https://github.com/framework7io/framework7/issues/3919)
+- **swipeout:** check if event is cancelable before preventDefault ([c62b7f8](https://github.com/framework7io/framework7/commit/c62b7f8e1afccfdfdec2af1e7a73f8b6a6712483)), closes [#3921](https://github.com/framework7io/framework7/issues/3921)
+
 # [6.1.0-beta.5](https://github.com/framework7io/framework7/compare/v6.1.0-beta.3...v6.1.0-beta.5) (2021-07-15)
 
 ### Features
