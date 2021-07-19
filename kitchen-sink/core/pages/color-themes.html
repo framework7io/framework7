@@ -140,6 +140,15 @@
 
     let colorPicker;
 
+    const setWebThemeColor = (hexColor) => {
+      const $meta = $('meta[name="theme-color"]');
+      if (!$meta.length) {
+        $('head').append(`<meta name="theme-color" content="${hexColor}">`);
+        return;
+      }
+      $meta.attr('content', hexColor);
+    }
+
     const generateStylesheet = () => {
       var styles = '';
       if (customColor) {
@@ -206,6 +215,16 @@
 }
           `;
       }
+      setTimeout(() => {
+        if (barsStyle === 'fill') {
+          setWebThemeColor(themeColor)
+        } else if (theme === 'light') {
+          setWebThemeColor('#fff')
+        } else if (theme === 'dark') {
+          setWebThemeColor('#000')
+        }
+      })
+
       return styles.trim();
     }
     const setLayoutTheme = (newTheme) => {

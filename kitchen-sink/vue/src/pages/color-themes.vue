@@ -118,6 +118,15 @@ let globalBarsStyle = 'empty';
 let globalCustomColor = '';
 let globalCustomProperties = '';
 
+const setWebThemeColor = (hexColor) => {
+  const $meta = $('meta[name="theme-color"]');
+  if (!$meta.length) {
+    $('head').append(`<meta name="theme-color" content="${hexColor}">`);
+    return;
+  }
+  $meta.attr('content', hexColor);
+};
+
 export default {
   components: {
     f7Navbar,
@@ -232,6 +241,16 @@ export default {
 }
           `;
       }
+
+      setTimeout(() => {
+        if (self.barsStyle === 'fill') {
+          setWebThemeColor(self.themeColor);
+        } else if (self.theme === 'light') {
+          setWebThemeColor('#fff');
+        } else if (self.theme === 'dark') {
+          setWebThemeColor('#000');
+        }
+      });
       return styles.trim();
     },
     setLayoutTheme(theme) {

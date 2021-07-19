@@ -45,6 +45,15 @@
   let themeColor = f7.$('html').css('--f7-theme-color').trim();
   let timeout;
 
+  const setWebThemeColor = (hexColor) => {
+    const metaEl = f7.$('meta[name="theme-color"]');
+    if (!metaEl.length) {
+      f7.$('head').append(`<meta name="theme-color" content="${hexColor}">`);
+      return;
+    }
+    metaEl.attr('content', hexColor);
+  };
+
   function generateStylesheet() {
     let styles = '';
     if (customColor) {
@@ -113,6 +122,16 @@
 }
       `;
     }
+
+    setTimeout(() => {
+      if (self.barsStyle === 'fill') {
+        setWebThemeColor(self.themeColor);
+      } else if (self.theme === 'light') {
+        setWebThemeColor('#fff');
+      } else if (self.theme === 'dark') {
+        setWebThemeColor('#000');
+      }
+    });
     return styles.trim();
   }
 
@@ -178,7 +197,8 @@
       <Col
         width="50"
         class="bg-color-white demo-theme-picker"
-        onClick={() => setLayoutTheme('light')}>
+        onClick={() => setLayoutTheme('light')}
+      >
         {#if theme === 'light'}
           <Checkbox checked disabled />
         {/if}
@@ -186,7 +206,8 @@
       <Col
         width="50"
         class="bg-color-black demo-theme-picker"
-        onClick={() => setLayoutTheme('dark')}>
+        onClick={() => setLayoutTheme('dark')}
+      >
         {#if theme === 'dark'}
           <Checkbox checked disabled />
         {/if}
@@ -200,7 +221,8 @@
       <Col
         width="50"
         class="demo-bars-picker demo-bars-picker-empty"
-        onClick={() => setBarsStyle('empty')}>
+        onClick={() => setBarsStyle('empty')}
+      >
         <div class="demo-navbar" />
         {#if barsStyle === 'empty'}
           <Checkbox checked disabled />
@@ -209,7 +231,8 @@
       <Col
         width="50"
         class="demo-bars-picker demo-bars-picker-fill"
-        onClick={() => setBarsStyle('fill')}>
+        onClick={() => setBarsStyle('fill')}
+      >
         <div class="demo-navbar" />
         {#if barsStyle === 'fill'}
           <Checkbox checked disabled />
@@ -229,7 +252,8 @@
             small
             class="demo-color-picker-button"
             {color}
-            onClick={() => setColorTheme(color)}>
+            onClick={() => setColorTheme(color)}
+          >
             {color}
           </Button>
         </Col>
@@ -249,11 +273,13 @@
       readonly
       value={{ hex: customColor || themeColor }}
       onColorPickerChange={(value) => setCustomColor(value.hex)}
-      colorPickerParams={{ targetEl: '#color-theme-picker-color' }}>
+      colorPickerParams={{ targetEl: '#color-theme-picker-color' }}
+    >
       <div
         slot="media"
         id="color-theme-picker-color"
-        style="width: 28px; height: 28px; borderRadius: 4px; background: var(--f7-theme-color)" />
+        style="width: 28px; height: 28px; borderRadius: 4px; background: var(--f7-theme-color)"
+      />
     </ListInput>
   </List>
 

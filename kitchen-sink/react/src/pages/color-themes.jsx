@@ -45,6 +45,15 @@ export default () => {
 
   const timeout = useRef(null);
 
+  const setWebThemeColor = (hexColor) => {
+    const $meta = f7.$('meta[name="theme-color"]');
+    if (!$meta.length) {
+      f7.$('head').append(`<meta name="theme-color" content="${hexColor}">`);
+      return;
+    }
+    $meta.attr('content', hexColor);
+  };
+
   const generateStylesheet = () => {
     let styles = '';
     if (customColor) {
@@ -113,6 +122,17 @@ export default () => {
 }
       `;
     }
+
+    setTimeout(() => {
+      if (barsStyle === 'fill') {
+        setWebThemeColor(themeColor);
+      } else if (theme === 'light') {
+        setWebThemeColor('#fff');
+      } else if (theme === 'dark') {
+        setWebThemeColor('#000');
+      }
+    });
+
     return styles.trim();
   };
 
