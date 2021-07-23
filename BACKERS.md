@@ -236,7 +236,7 @@ Bart DJ
 
 Danny Redfern<br>
 
-[Join here!](https://www.patreon.com/join/vladimirkharlampidi/checkout?rid=4656325)
+[Join here!](https://www.patreon.com/join/framework7/checkout?rid=4656325)
 
 ---
 
