@@ -234,9 +234,7 @@ Bart DJ
 
 ### \$25+ Awesome Supporter
 
-Danny Redfern<br>
-
-[Join here!](https://www.patreon.com/join/vladimirkharlampidi/checkout?rid=4656325)
+[Currently vacant. It could be you!](https://www.patreon.com/join/vladimirkharlampidi/checkout?rid=4656325)
 
 ---
 
