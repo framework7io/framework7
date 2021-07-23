@@ -67,7 +67,7 @@ async function buildLazyComponentsLess(components, rtl, cb) {
   const mainLess = fs
     .readFileSync(path.resolve(__dirname, '../src/core/framework7.less'))
     .split('\n')
-    .filter((line) => line.indexOf("@import url('./components") < 0)
+    .filter((line) => line.indexOf("@import './components") < 0)
     .join('\n')
     .replace(
       "@import (reference) './less/mixins.less';",
