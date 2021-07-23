@@ -85,18 +85,7 @@ function build(cb) {
         const iconsFontBase64 = base64Encode('./src/core/icons/font/framework7-core-icons.woff');
         fileContent = fileContent.replace('framework7_coreIconsFont()', `'${iconsFontBase64}'`);
       }
-      if (file.indexOf('swiper.less') >= 0) {
-        fileContent = fileContent.replace(
-          '../../../../node_modules/swiper/swiper-bundle.css',
-          '~swiper/swiper-bundle.css',
-        );
-      }
-      if (file.indexOf('skeleton.less') >= 0) {
-        fileContent = fileContent.replace(
-          '../../../../node_modules/skeleton-elements/skeleton-elements.css',
-          '~skeleton-elements/skeleton-elements.css',
-        );
-      }
+
       fs.writeFileSync(path.resolve(`${output}/components`, file), fileContent);
       if (index === filesToProcess.length - 1) {
         cb();
