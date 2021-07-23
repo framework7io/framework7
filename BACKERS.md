@@ -165,7 +165,7 @@
   </tr>
 </table>
 
-Support Framework7 development by [pledging on Patreon](https://www.patreon.com/vladimirkharlampidi)!
+Support Framework7 development by [pledging on Patreon](https://www.patreon.com/framework7)!
 
 ### \$1000 Diamond Sponsor
 

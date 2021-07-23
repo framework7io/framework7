@@ -1,7 +1,7 @@
 <p align="center"><a href="https://framework7.io" target="_blank" rel="noopener noreferrer"><img width="150" src="https://framework7.io/i/logo.svg" alt="Framework7"></a></p>
 
 <p align="center">
-  <a href="https://www.patreon.com/vladimirkharlampidi"><img src="https://framework7.io/i/support-badge.png" height="20"></a>
+  <a href="https://www.patreon.com/framework7"><img src="https://framework7.io/i/support-badge.png" height="20"></a>
   <a href="https://travis-ci.org/framework7io/framework7"><img src="https://travis-ci.org/framework7io/framework7.svg?branch=master" alt="Build Status"></a>
   <a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/framework7io/Framework7.svg" alt="Greenkeeper"></a>
 </p>
@@ -12,7 +12,7 @@
 
 <h2 align="center">Supporting Framework7</h2>
 
-Framework7 is an MIT-licensed open source project with its ongoing development made possible entirely by the support of these awesome [backers](https://github.com/framework7io/framework7/blob/master/BACKERS.md). If you'd like to join them, please consider [becoming a backer or sponsor on Patreon.](https://www.patreon.com/vladimirkharlampidi)
+Framework7 is an MIT-licensed open source project with its ongoing development made possible entirely by the support of these awesome [backers](https://github.com/framework7io/framework7/blob/master/BACKERS.md). If you'd like to join them, please consider [becoming a backer or sponsor on Patreon.](https://www.patreon.com/framework7)
 
 <h3 align="center">Sponsors</h3>
 

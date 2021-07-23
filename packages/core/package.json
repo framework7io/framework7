@@ -47,7 +47,7 @@
   "homepage": "https://framework7.io/",
   "funding": {
     "type": "patreon",
-    "url": "https://www.patreon.com/vladimirkharlampidi"
+    "url": "https://www.patreon.com/framework7"
   },
   "dependencies": {
     "dom7": "^3.0.0",

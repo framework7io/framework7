@@ -1,4 +1,4 @@
-<a href="https://www.patreon.com/vladimirkharlampidi"><img src="https://framework7.io/i/support-badge.png" height="20"></a>
+<a href="https://www.patreon.com/framework7"><img src="https://framework7.io/i/support-badge.png" height="20"></a>
 
 # Framework7 Svelte
 
@@ -6,7 +6,7 @@ Framework7 Svelte combines power of Svelte framework with flexibility and UI of 
 
 ## Supporting Framework7
 
-Framework7 is an MIT-licensed open source project with its ongoing development made possible entirely by the support of these awesome [backers](https://github.com/framework7io/framework7/blob/master/BACKERS.md). If you'd like to join them, please consider [becoming a backer or sponsor on Patreon.](https://www.patreon.com/vladimirkharlampidi)
+Framework7 is an MIT-licensed open source project with its ongoing development made possible entirely by the support of these awesome [backers](https://github.com/framework7io/framework7/blob/master/BACKERS.md). If you'd like to join them, please consider [becoming a backer or sponsor on Patreon.](https://www.patreon.com/framework7)
 
 
 ## Getting Started with Framework7 Svelte

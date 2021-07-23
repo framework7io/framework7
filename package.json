@@ -56,7 +56,7 @@
   "homepage": "http://framework7.io/",
   "funding": {
     "type": "patreon",
-    "url": "https://www.patreon.com/vladimirkharlampidi"
+    "url": "https://www.patreon.com/framework7"
   },
   "browserslist": [
     "Android >= 7",
