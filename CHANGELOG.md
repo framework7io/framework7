@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [6.1.0-beta.7](https://github.com/framework7io/framework7/compare/v6.1.0-beta.6...v6.1.0-beta.7) (2021-07-23)
+
+### Features
+
+- **core:** refactor LESS imports to be compatible with Vite ([7e5b81d](https://github.com/framework7io/framework7/commit/7e5b81dcfce79e44dbbda5b54588e9d7ff834114))
+
 # [6.1.0-beta.6](https://github.com/framework7io/framework7/compare/v6.1.0-beta.5...v6.1.0-beta.6) (2021-07-19)
 
 ### Bug Fixes
