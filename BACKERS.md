@@ -165,7 +165,7 @@
   </tr>
 </table>
 
-Support Framework7 development by [pledging on Patreon](https://www.patreon.com/vladimirkharlampidi)!
+Support Framework7 development by [pledging on Patreon](https://www.patreon.com/framework7)!
 
 ### \$1000 Diamond Sponsor
 
@@ -234,7 +234,7 @@ Bart DJ
 
 ### \$25+ Awesome Supporter
 
-[Currently vacant. It could be you!](https://www.patreon.com/join/vladimirkharlampidi/checkout?rid=4656325)
+[Currently vacant. It could be you!](https://www.patreon.com/join/framework7/checkout?rid=4656325)
 
 ---
 
