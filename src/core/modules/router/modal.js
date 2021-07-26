@@ -90,7 +90,7 @@ function modalLoad(modalType, route, loadOptions = {}, direction) {
         modalComponent.destroy();
       }
       nextTick(() => {
-        if (modalComponent || modalParams.component) {
+        if (modalComponent || modalParams.component || modalParams.asyncComponent) {
           router.removeModal(modal.el);
         }
         modal.destroy();
