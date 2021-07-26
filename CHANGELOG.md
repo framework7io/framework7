@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [6.1.1](https://github.com/framework7io/framework7/compare/v6.1.0...v6.1.1) (2021-07-26)
+
+### Bug Fixes
+
+- **router:** fixed issue with removing routable modals specified with `asyncComponent` ([bbde9c5](https://github.com/framework7io/framework7/commit/bbde9c53cd8dca40ec4e5b45a24e9565f4640705))
+
 # [6.1.0](https://github.com/framework7io/framework7/compare/v6.0.22...v6.1.0) (2021-07-26)
 
 ### Bug Fixes
