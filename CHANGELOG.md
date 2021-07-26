@@ -2,6 +2,31 @@
 
 # Change Log
 
+# [6.1.0](https://github.com/framework7io/framework7/compare/v6.0.22...v6.1.0) (2021-07-26)
+
+### Bug Fixes
+
+- **svelte:** fix hidden initial breakpoint panel ([b9ab2c8](https://github.com/framework7io/framework7/commit/b9ab2c8383973f644525bf236a849c298b6411a4)), closes [#3824](https://github.com/framework7io/framework7/issues/3824)
+- **svelte:** ignore some predefined rest props ([5c4ea26](https://github.com/framework7io/framework7/commit/5c4ea267e42633827b2790b2105e00a7a7b7d574))
+- **svelte:** use native svelte $$slots for slots detection ([fd0ed52](https://github.com/framework7io/framework7/commit/fd0ed5266181181ed8d60d09b3d234a9ed7616c5))
+- **gauge:** fix typed in `gaugeBeforeDestroy` event ([efbe583](https://github.com/framework7io/framework7/commit/efbe583f152b5030245d60c2ee6c90fc385ff231)), closes [#3919](https://github.com/framework7io/framework7/issues/3919)
+- **swipeout:** check if event is cancelable before preventDefault ([c62b7f8](https://github.com/framework7io/framework7/commit/c62b7f8e1afccfdfdec2af1e7a73f8b6a6712483)), closes [#3921](https://github.com/framework7io/framework7/issues/3921)
+- **get-device:** allow recognition of Chrome's Android emulator on Windows as android ([008bf32](https://github.com/framework7io/framework7/commit/008bf327484af6b93b4976a2a3e7a69f1aa9ccf2))
+- **react:** display error when errorMessageForce is set on Input component ([e303b60](https://github.com/framework7io/framework7/commit/e303b60194ce47934fe0acef034e4939e1a944d9))
+- **svelte:** display error when errorMessageForce is set on Input component ([13ebe86](https://github.com/framework7io/framework7/commit/13ebe8649720b1dd4fb7564a9ea8d67cf636f383))
+- **types:** fixed default value description for Dialog `closeByBackdropClick` parameter ([62ea344](https://github.com/framework7io/framework7/commit/62ea344d9b1136aa24494a24232aeb4095a973aa)), closes [#3917](https://github.com/framework7io/framework7/issues/3917)
+- **vue:** display error when errorMessageForce is set on Input component ([741261e](https://github.com/framework7io/framework7/commit/741261e21ff3e8dc52c17be75e47237396a9337c))
+- **types:** fixes for cases when `el` parameter also can be a CSS Selector ([1bdf2da](https://github.com/framework7io/framework7/commit/1bdf2da9e617be2ad4093a98a231d973d3242dc6))
+
+### Features
+
+- **core:** refactor LESS imports to be compatible with Vite ([7e5b81d](https://github.com/framework7io/framework7/commit/7e5b81dcfce79e44dbbda5b54588e9d7ff834114))
+- **svelte:** TypeScript definition for all Svelte components ([3033b3d](https://github.com/framework7io/framework7/commit/3033b3d6081b1771587df5c79f334b60a529a190)), closes [#3912](https://github.com/framework7io/framework7/issues/3912)
+- **text-editor:** new `insertLink` and `insertImage` events to post-process added links and images ([a57301b](https://github.com/framework7io/framework7/commit/a57301b83c0d25c051ffaf9d7f37c1c4a1242e08)), closes [#3903](https://github.com/framework7io/framework7/issues/3903)
+- **vue:** TypeScript definition for all Vue components ([b6d599a](https://github.com/framework7io/framework7/commit/b6d599ad91c8270ca7b752e256b0cb93b76d2c78))
+- **svelte:** core component instance is now exposed through slot props ([6029fd1](https://github.com/framework7io/framework7/commit/6029fd197488044206f0bf062fa0068d7cbaacd0)), closes [#3899](https://github.com/framework7io/framework7/issues/3899)
+- **svelte:** add .svelte components to the package ([a8f3913](https://github.com/framework7io/framework7/commit/a8f391307252acce5d314416bcfed6bf4c0c46c9))
+
 # [6.1.0-beta.7](https://github.com/framework7io/framework7/compare/v6.1.0-beta.6...v6.1.0-beta.7) (2021-07-23)
 
 ### Features
@@ -26,10 +51,10 @@
 ### Bug Fixes
 
 - **get-device:** allow recognition of Chrome's Android emulator on Windows as android ([008bf32](https://github.com/framework7io/framework7/commit/008bf327484af6b93b4976a2a3e7a69f1aa9ccf2))
-- **react:** display error when errorMessageForm is set on Input component ([e303b60](https://github.com/framework7io/framework7/commit/e303b60194ce47934fe0acef034e4939e1a944d9))
-- **svelte:** display error when errorMessageForm is set on Input component ([13ebe86](https://github.com/framework7io/framework7/commit/13ebe8649720b1dd4fb7564a9ea8d67cf636f383))
+- **react:** display error when errorMessageForce is set on Input component ([e303b60](https://github.com/framework7io/framework7/commit/e303b60194ce47934fe0acef034e4939e1a944d9))
+- **svelte:** display error when errorMessageForce is set on Input component ([13ebe86](https://github.com/framework7io/framework7/commit/13ebe8649720b1dd4fb7564a9ea8d67cf636f383))
 - **types:** fixed default value description for Dialog `closeByBackdropClick` parameter ([62ea344](https://github.com/framework7io/framework7/commit/62ea344d9b1136aa24494a24232aeb4095a973aa)), closes [#3917](https://github.com/framework7io/framework7/issues/3917)
-- **vue:** display error when errorMessageForm is set on Input component ([741261e](https://github.com/framework7io/framework7/commit/741261e21ff3e8dc52c17be75e47237396a9337c))
+- **vue:** display error when errorMessageForce is set on Input component ([741261e](https://github.com/framework7io/framework7/commit/741261e21ff3e8dc52c17be75e47237396a9337c))
 
 ### Features
 
