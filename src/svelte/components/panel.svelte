@@ -132,14 +132,14 @@
     emit('panelSwipeOpen', args);
   }
   function onBreakpoint(...args) {
-    Object.assign({
+    Object.assign(state, {
       isBreakpoint: true,
       isCollapsed: false,
     });
     emit('panelBreakpoint', args);
   }
   function onCollapsedBreakpoint(...args) {
-    Object.assign({
+    Object.assign(state, {
       isBreakpoint: false,
       isCollapsed: true,
     });
