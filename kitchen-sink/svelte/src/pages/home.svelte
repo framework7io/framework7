@@ -64,7 +64,8 @@
         searchbarEnable=".searchbar-components"
         iconIos="f7:search"
         iconAurora="f7:search"
-        iconMd="material:search" />
+        iconMd="material:search"
+      />
     </NavRight>
     <NavTitleLarge>Framework7 Svelte</NavTitleLarge>
     <Searchbar
@@ -72,7 +73,8 @@
       searchContainer=".components-list"
       searchIn="a"
       expandable
-      disableButton={!theme.aurora} />
+      disableButton={!theme.aurora}
+    />
   </Navbar>
 
   <List class="searchbar-hide-on-search">
@@ -227,7 +229,8 @@
     <ListItem
       reloadDetail={theme.aurora}
       link="/searchbar-expandable/"
-      title="Searchbar Expandable">
+      title="Searchbar Expandable"
+    >
       <i class="icon icon-f7" slot="media" />
     </ListItem>
     <ListItem reloadDetail={theme.aurora} link="/sheet-modal/" title="Sheet Modal">
@@ -299,7 +302,8 @@
     <ListItem
       title="Default Route (404)"
       reloadDetail={theme.aurora}
-      link="/load-something-that-doesnt-exist/" />
+      link="/load-something-that-doesnt-exist/"
+    />
     {#if !theme.aurora}
       <ListItem title="Master-Detail (Split View)" link="/master-detail/" />
     {/if}
