@@ -9,7 +9,6 @@
   } from '../shared/mixins';
   import { classNames, extend, isStringProp, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { hasSlots } from '../shared/has-slots';
   import { useTooltip } from '../shared/use-tooltip';
   import { useSmartSelect } from '../shared/use-smart-select';
   import { useRouteProps } from '../shared/use-route-props';
@@ -66,7 +65,7 @@
   );
 
   // eslint-disable-next-line
-  $: hasDefaultSlots = hasSlots(arguments, 'default');
+  $: hasDefaultSlots = $$slots.default;
 
   $: iconOnlyComputed = iconOnly || (!text && !hasDefaultSlots);
 

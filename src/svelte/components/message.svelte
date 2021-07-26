@@ -4,7 +4,6 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { hasSlots } from '../shared/has-slots';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -48,14 +47,14 @@
     colorClasses($$props),
   );
 
-  $: hasAvatarSlots = hasSlots(arguments, 'avatar');
-  $: hasNameSlots = hasSlots(arguments, 'name');
-  $: hasHeaderSlots = hasSlots(arguments, 'header');
-  $: hasImageSlots = hasSlots(arguments, 'image');
-  $: hasTextHeaderSlots = hasSlots(arguments, 'text-header');
-  $: hasTextFooterSlots = hasSlots(arguments, 'text-footer');
-  $: hasTextSlots = hasSlots(arguments, 'text');
-  $: hasFooterSlots = hasSlots(arguments, 'footer');
+  $: hasAvatarSlots = $$slots.avatar;
+  $: hasNameSlots = $$slots.name;
+  $: hasHeaderSlots = $$slots.header;
+  $: hasImageSlots = $$slots.image;
+  $: hasTextHeaderSlots = $$slots['text-header'];
+  $: hasTextFooterSlots = $$slots['text-footer'];
+  $: hasTextSlots = $$slots.text;
+  $: hasFooterSlots = $$slots.footer;
 
   function onClick() {
     emit('click');
@@ -88,51 +87,51 @@
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <div class={classes} on:click={onClick} {...restProps($$restProps)}>
-  <slot name="start"/>
-  {#if (avatar || hasAvatarSlots)}
+  <slot name="start" />
+  {#if avatar || hasAvatarSlots}
     <div
       on:click={onAvatarClick}
       class="message-avatar"
-      style={ avatar ? `background-image: url(${avatar})` : undefined }
+      style={avatar ? `background-image: url(${avatar})` : undefined}
     >
-      <slot name="avatar"/>
+      <slot name="avatar" />
     </div>
   {/if}
   <div class="message-content">
-    <slot name="content-start"/>
-    {#if (hasNameSlots || name)}
+    <slot name="content-start" />
+    {#if hasNameSlots || name}
       <div class="message-name" on:click={onNameClick}>
         {plainText(name)}
-        <slot name="name"/>
+        <slot name="name" />
       </div>
     {/if}
-    {#if (hasHeaderSlots || header)}
+    {#if hasHeaderSlots || header}
       <div class="message-header" on:click={onHeaderClick}>
         {plainText(header)}
-        <slot name="header"/>
+        <slot name="header" />
       </div>
     {/if}
     <div class="message-bubble" on:click={onBubbleClick}>
-      <slot name="bubble-start"/>
-      {#if (hasImageSlots || image)}
+      <slot name="bubble-start" />
+      {#if hasImageSlots || image}
         <div class="message-image">
           {#if image}
             <img src={image} />
           {/if}
-          <slot name="image"/>
+          <slot name="image" />
         </div>
       {/if}
-      {#if (hasTextHeaderSlots || textHeader)}
+      {#if hasTextHeaderSlots || textHeader}
         <div class="message-text-header">
           {plainText(textHeader)}
-          <slot name="text-header"/>
+          <slot name="text-header" />
         </div>
       {/if}
-      {#if (hasTextSlots || text || htmlText || typing)}
+      {#if hasTextSlots || text || htmlText || typing}
         <div class="message-text" on:click={onTextClick}>
           {plainText(text)}
           {#if htmlText}{@html htmlText}{/if}
-          <slot name="text"/>
+          <slot name="text" />
           {#if typing}
             <div class="message-typing-indicator">
               <div />
@@ -142,22 +141,22 @@
           {/if}
         </div>
       {/if}
-      {#if (hasTextFooterSlots || textFooter)}
+      {#if hasTextFooterSlots || textFooter}
         <div class="message-text-footer">
           {plainText(textFooter)}
-          <slot name="text-footer"/>
+          <slot name="text-footer" />
         </div>
       {/if}
-      <slot name="bubble-end"/>
+      <slot name="bubble-end" />
       <slot />
     </div>
-    {#if (hasFooterSlots || footer)}
+    {#if hasFooterSlots || footer}
       <div class="message-footer" on:click={onFooterClick}>
         {plainText(footer)}
-        <slot name="footer"/>
+        <slot name="footer" />
       </div>
     {/if}
-    <slot name="content-end"/>
+    <slot name="content-end" />
   </div>
-  <slot name="end"/>
+  <slot name="end" />
 </div>

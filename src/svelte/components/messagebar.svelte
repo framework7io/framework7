@@ -4,7 +4,6 @@
   import { classNames, noUndefinedProps, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { app, f7ready } from '../shared/f7';
-  import { hasSlots } from '../shared/has-slots';
 
   import Link from './link';
   import Input from './input';
@@ -54,8 +53,7 @@
     colorClasses($$props),
   );
 
-  // eslint-disable-next-line
-  $: hasSendLinkSlots = hasSlots(arguments, 'send-link');
+  $: hasSendLinkSlots = $$slots['send-link'];
 
   let initialWatchedSheet = false;
   function watchSheetVisible() {

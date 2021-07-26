@@ -5,7 +5,6 @@
   import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { app } from '../shared/f7';
-  import { hasSlots } from '../shared/has-slots';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -18,7 +17,7 @@
   let el;
 
   // eslint-disable-next-line
-  $: hasMediaSlots = hasSlots(arguments, 'media');
+  $: hasMediaSlots = $$slots.media;
 
   $: classes = classNames(
     className,

@@ -4,7 +4,6 @@
   import { classNames, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { f7ready, app } from '../shared/f7';
-  import { hasSlots } from '../shared/has-slots';
   import { useTheme } from '../shared/use-theme';
 
   import NavLeft from './nav-left';
@@ -57,15 +56,15 @@
   }
 
   // eslint-disable-next-line
-  $: hasLeftSlots = hasSlots(arguments, 'nav-left') || hasSlots(arguments, 'left');
+  $: hasLeftSlots = $$slots['nav-left'] || $$slots['left'];
   // eslint-disable-next-line
-  $: hasRightSlots = hasSlots(arguments, 'nav-right') || hasSlots(arguments, 'right');
+  $: hasRightSlots = $$slots['nav-right'] || $$slots['right'];
   // eslint-disable-next-line
-  $: hasTitleSlots = hasSlots(arguments, 'title');
+  $: hasTitleSlots = $$slots['title'];
 
   $: largeTitle = titleLarge || (large && title);
   // eslint-disable-next-line
-  $: hasTitleLargeSlots = hasSlots(arguments, 'title-large');
+  $: hasTitleLargeSlots = $$slots['title-large'];
 
   $: addLeftTitleClass = theme && theme.ios && app.f7 && !app.f7.params.navbar.iosCenterTitle;
   $: addCenterTitleClass =

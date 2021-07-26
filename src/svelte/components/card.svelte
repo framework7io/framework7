@@ -4,7 +4,6 @@
   import { classNames, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { app, f7ready } from '../shared/f7';
-  import { hasSlots } from '../shared/has-slots';
 
   import CardHeader from './card-header';
   import CardContent from './card-content';
@@ -51,9 +50,9 @@
   );
 
   /* eslint-disable no-undef */
-  $: hasHeaderSlots = hasSlots(arguments, 'header');
-  $: hasContentSlots = hasSlots(arguments, 'content');
-  $: hasFooterSlots = hasSlots(arguments, 'footer');
+  $: hasHeaderSlots = $$slots.header;
+  $: hasContentSlots = $$slots.content;
+  $: hasFooterSlots = $$slots.footer;
   /* eslint-enable no-undef */
 
   function open() {

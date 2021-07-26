@@ -4,7 +4,6 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
-  import { hasSlots } from '../shared/has-slots';
   import { useTooltip } from '../shared/use-tooltip';
   import { useIcon } from '../shared/use-icon';
 
@@ -43,11 +42,11 @@
   );
 
   // eslint-disable-next-line
-  $: hasMediaSlots = hasSlots(arguments, 'media');
+  $: hasMediaSlots = $$slots.media;
   // eslint-disable-next-line
-  $: hasTextSlots = hasSlots(arguments, 'text');
+  $: hasTextSlots = $$slots.text;
   // eslint-disable-next-line
-  $: hasDefaultSlots = hasSlots(arguments, 'default');
+  $: hasDefaultSlots = $$slots.default;
 
   $: icon = useIcon($$props);
 
@@ -66,7 +65,8 @@
   class={classes}
   on:click={onClick}
   {...restProps($$restProps)}
-  use:useTooltip={{ tooltip, tooltipTrigger }}>
+  use:useTooltip={{ tooltip, tooltipTrigger }}
+>
   {#if media || hasMediaSlots || icon}
     <div class={mediaClasses}>
       {#if icon}

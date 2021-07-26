@@ -4,7 +4,6 @@
   import { classNames, extend, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { app, f7ready } from '../shared/f7';
-  import { hasSlots } from '../shared/has-slots';
   import { useTab } from '../shared/use-tab';
   import { setReactiveContext } from '../shared/set-reactive-context';
 
@@ -68,7 +67,7 @@
   }
 
   // eslint-disable-next-line
-  $: hasUlSlots = hasSlots(arguments, 'default') || hasSlots(arguments, 'list');
+  $: hasUlSlots = $$slots.default || $$slots.list;
 
   $: classes = classNames(
     className,

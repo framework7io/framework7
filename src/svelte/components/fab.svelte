@@ -4,7 +4,6 @@
   import { classNames, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { app, f7ready } from '../shared/f7';
-  import { hasSlots } from '../shared/has-slots';
   import { useTooltip } from '../shared/use-tooltip';
 
   const emit = createEmitter(createEventDispatcher, $$props);
@@ -28,7 +27,7 @@
   $: hrefComputed = href === true ? '#' : href || undefined;
 
   // eslint-disable-next-line
-  $: hasTextSlots = hasSlots(arguments, 'text');
+  $: hasTextSlots = $$slots.text;
 
   $: classes = classNames(
     className,

@@ -4,7 +4,6 @@
   import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { app, f7ready } from '../shared/f7';
-  import { hasSlots } from '../shared/has-slots';
   import Toggle from './toggle';
   import Range from './range';
   import TextEditor from './text-editor';
@@ -171,9 +170,9 @@
   });
 
   // eslint-disable-next-line
-  $: hasInfoSlots = hasSlots(arguments, 'info');
+  $: hasInfoSlots = $$slots.info;
   // eslint-disable-next-line
-  $: hasErrorSlots = hasSlots(arguments, 'error-message');
+  $: hasErrorSlots = $$slots['error-message'];
 
   function onTextareaResize(event) {
     emit('textareaResize', [event]);

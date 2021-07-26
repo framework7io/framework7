@@ -4,7 +4,6 @@
   import { classNames, extend, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { app, f7ready } from '../shared/f7';
-  import { hasSlots } from '../shared/has-slots';
   import { getReactiveContext } from '../shared/get-reactive-context';
 
   import TextEditor from './text-editor';
@@ -180,14 +179,10 @@
     return v;
   })();
 
-  // eslint-disable-next-line
-  $: hasInfoSlots = hasSlots(arguments, 'info');
-  // eslint-disable-next-line
-  $: hasErrorSlots = hasSlots(arguments, 'error-message');
-  // eslint-disable-next-line
-  $: hasMediaSlots = hasSlots(arguments, 'media');
-  // eslint-disable-next-line
-  $: hasLabelSlots = hasSlots(arguments, 'label');
+  $: hasInfoSlots = $$slots.info;
+  $: hasErrorSlots = $$slots['error-message'];
+  $: hasMediaSlots = $$slots.media;
+  $: hasLabelSlots = $$slots.label;
 
   $: hasErrorMessage = !!errorMessage || hasErrorSlots;
 

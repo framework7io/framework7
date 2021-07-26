@@ -10,7 +10,6 @@
   import { classNames, extend, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { app, f7ready } from '../shared/f7';
-  import { hasSlots } from '../shared/has-slots';
   import { useIcon } from '../shared/use-icon';
 
   import UseIcon from './use-icon';
@@ -61,10 +60,7 @@
   );
 
   /* eslint-disable no-undef */
-  $: hasChildren =
-    hasSlots(arguments, 'default') ||
-    hasSlots(arguments, 'children') ||
-    hasSlots(arguments, 'children-start');
+  $: hasChildren = $$slots.default || $$slots.children || $$slots['children-start'];
   /* eslint-enable no-undef */
 
   $: needToggle = typeof toggle === 'undefined' ? hasChildren : toggle;

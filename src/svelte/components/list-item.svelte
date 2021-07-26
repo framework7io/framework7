@@ -10,7 +10,6 @@
   import { classNames, plainText, isStringProp, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { app, f7ready } from '../shared/f7';
-  import { hasSlots } from '../shared/has-slots';
   import { useTooltip } from '../shared/use-tooltip';
   import { useSmartSelect } from '../shared/use-smart-select';
   import { useRouteProps } from '../shared/use-route-props';
@@ -153,14 +152,13 @@
   $: isLink = link || href || smartSelect || accordionItem;
 
   /* eslint-disable no-undef */
-  $: hasMedia = typeof media !== 'undefined' || hasSlots(arguments, 'media');
-  $: hasTitle = typeof title !== 'undefined' || hasSlots(arguments, 'title');
-  $: hasHeader = typeof header !== 'undefined' || hasSlots(arguments, 'header');
-  $: hasFooter = typeof footer !== 'undefined' || hasSlots(arguments, 'footer');
-  $: hasSubtitle = typeof subtitle !== 'undefined' || hasSlots(arguments, 'subtitle');
-  $: hasText = typeof text !== 'undefined' || hasSlots(arguments, 'text');
-  $: hasAfter =
-    typeof after !== 'undefined' || typeof badge !== 'undefined' || hasSlots(arguments, 'after');
+  $: hasMedia = typeof media !== 'undefined' || $$slots.media;
+  $: hasTitle = typeof title !== 'undefined' || $$slots.title;
+  $: hasHeader = typeof header !== 'undefined' || $$slots.header;
+  $: hasFooter = typeof footer !== 'undefined' || $$slots.footer;
+  $: hasSubtitle = typeof subtitle !== 'undefined' || $$slots.subtitle;
+  $: hasText = typeof text !== 'undefined' || $$slots.text;
+  $: hasAfter = typeof after !== 'undefined' || typeof badge !== 'undefined' || $$slots.after;
   /* eslint-enable no-undef */
 
   let initialWatchedOpened = false;

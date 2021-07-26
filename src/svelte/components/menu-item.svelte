@@ -10,7 +10,6 @@
   import { classNames, extend, plainText, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { app, f7ready } from '../shared/f7';
-  import { hasSlots } from '../shared/has-slots';
   import { useTooltip } from '../shared/use-tooltip';
   import { useRouteProps } from '../shared/use-route-props';
   import { useIcon } from '../shared/use-icon';
@@ -48,10 +47,8 @@
     actionsAttrs($$props),
   );
 
-  // eslint-disable-next-line
-  $: hasDefaultSlots = hasSlots(arguments, 'default');
-  // eslint-disable-next-line
-  $: hasTextSlots = hasSlots(arguments, 'text');
+  $: hasDefaultSlots = $$slots.default;
+  $: hasTextSlots = $$slots.text;
 
   $: iconOnlyComputed = iconOnly || (!text && !hasTextSlots);
 
