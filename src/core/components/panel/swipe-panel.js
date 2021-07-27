@@ -143,13 +143,14 @@ function swipePanel(panel) {
     }
 
     isMoved = true;
-
-    e.preventDefault();
+    if (e.cancelable) {
+      e.preventDefault();
+    }
 
     touchesDiff = pageX - touchesStart.x + threshold;
 
     if (side === 'right') {
-      if (effect === 'cover') {
+      if (effect === 'cover' || effect === 'push') {
         translate = touchesDiff + (panel.opened ? 0 : panelWidth);
         if (translate < 0) translate = 0;
         if (translate > panelWidth) {
@@ -181,11 +182,15 @@ function swipePanel(panel) {
     } else {
       if (side === 'left') translate -= panelWidth;
       if (!params.swipeNoFollow) {
-        $el.transform(`translate3d(${translate}px,0,0)`).transition(0);
-
         $backdropEl.transition(0);
         backdropOpacity = 1 - Math.abs(translate / panelWidth);
         $backdropEl.css({ opacity: backdropOpacity });
+        $el.transform(`translate3d(${translate}px,0,0)`).transition(0);
+        if (effect === 'push') {
+          const viewTranslate = side === 'left' ? translate + panelWidth : translate - panelWidth;
+          $viewEl.transform(`translate3d(${viewTranslate}px,0,0)`).transition(0);
+          $backdropEl.transform(`translate3d(${viewTranslate}px,0,0)`).transition(0);
+        }
       }
 
       $el.trigger('panel:swipe', Math.abs(translate / panelWidth));
@@ -222,7 +227,7 @@ function swipePanel(panel) {
     } else if (!panel.opened) {
       if (Math.abs(touchesDiff) < threshold) {
         action = 'reset';
-      } else if (effect === 'cover') {
+      } else if (effect === 'cover' || effect === 'push') {
         if (translate === 0) {
           action = 'swap'; // open
         } else if (timeDiff < 300 && Math.abs(translate) > 0) {
@@ -242,7 +247,7 @@ function swipePanel(panel) {
       } else {
         action = 'reset';
       }
-    } else if (effect === 'cover') {
+    } else if (effect === 'cover' || effect === 'push') {
       if (translate === 0) {
         action = 'reset'; // open
       } else if (timeDiff < 300 && Math.abs(translate) > 0) {
@@ -288,7 +293,7 @@ function swipePanel(panel) {
         }
       }
     }
-    if (effect === 'reveal') {
+    if (effect === 'reveal' || effect === 'push') {
       nextFrame(() => {
         $viewEl.transition('');
         $viewEl.transform('');

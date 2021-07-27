@@ -14,6 +14,7 @@
   export let effect = undefined;
   export let cover = false;
   export let reveal = false;
+  export let push = false;
   export let left = false;
   export let right = false;
   export let opened = false;
@@ -49,7 +50,7 @@
   // eslint-disable-next-line
   $: sideComputed = side || (left ? 'left' : right ? 'right' : 'left');
   // eslint-disable-next-line
-  $: effectComputed = effect || (reveal ? 'reveal' : cover ? 'cover' : 'cover');
+  $: effectComputed = effect || (reveal ? 'reveal' : push ? 'push' : 'cover');
   $: classes = classNames(
     className,
     'panel',

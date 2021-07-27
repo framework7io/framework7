@@ -17,6 +17,7 @@ import { Panel } from 'framework7/types';
   effect? : string
   cover? : boolean
   reveal? : boolean
+  push? : boolean
   left? : boolean
   right? : boolean
   opened? : boolean
@@ -54,8 +55,10 @@ const Panel = forwardRef((props, ref) => {
     children,
     side,
     effect,
-    // cover,
+    // eslint-disable-next-line
+    cover,
     reveal,
+    push,
     left,
     // right,
     opened,
@@ -203,7 +206,8 @@ const Panel = forwardRef((props, ref) => {
   }, []);
 
   const sideComputed = side || (left ? 'left' : 'right');
-  const effectComputed = effect || (reveal ? 'reveal' : 'cover');
+  // eslint-disable-next-line
+  const effectComputed = effect || (reveal ? 'reveal' : push ? 'push' : 'cover');
   const classes = classNames(
     className,
     'panel',

@@ -36,7 +36,13 @@ class Panel extends Framework7Class {
 
     let { side, effect, resizable } = panel.params;
     if (typeof side === 'undefined') side = $el.hasClass('panel-left') ? 'left' : 'right';
-    if (typeof effect === 'undefined') effect = $el.hasClass('panel-cover') ? 'cover' : 'reveal';
+    if (typeof effect === 'undefined')
+      // eslint-disable-next-line
+      effect = $el.hasClass('panel-cover')
+        ? 'cover'
+        : $el.hasClass('panel-push')
+        ? 'push'
+        : 'reveal';
     if (typeof resizable === 'undefined') resizable = $el.hasClass('panel-resizable');
 
     let $backdropEl;
@@ -103,7 +109,9 @@ class Panel extends Framework7Class {
       $targetEl.removeClass('with-panel-closing');
     }
     if (state === 'closed') {
-      $targetEl.removeClass(`with-panel-${side}-reveal with-panel-${side}-cover with-panel`);
+      $targetEl.removeClass(
+        `with-panel-${side}-reveal with-panel-${side}-cover with-panel-${side}-push with-panel`,
+      );
     }
   }
 
@@ -420,7 +428,7 @@ class Panel extends Framework7Class {
       $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
     }
 
-    if (panel.effect === 'cover') {
+    if (panel.effect === 'cover' || panel.effect === 'push') {
       /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
       panel._clientLeft = $el[0].clientLeft;
     }

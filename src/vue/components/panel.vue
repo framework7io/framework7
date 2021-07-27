@@ -17,6 +17,7 @@ export default {
     effect: String,
     cover: Boolean,
     reveal: Boolean,
+    push: Boolean,
     left: Boolean,
     right: Boolean,
     opened: Boolean,
@@ -188,7 +189,8 @@ export default {
 
     const classes = computed(() => {
       const sideComputed = props.side || (props.left ? 'left' : 'right');
-      const effectComputed = props.effect || (props.reveal ? 'reveal' : 'cover');
+      const effectComputed =
+        props.effect || (props.reveal ? 'reveal' : props.push ? 'push' : 'cover'); // eslint-disable-line
       return classNames(
         'panel',
         {

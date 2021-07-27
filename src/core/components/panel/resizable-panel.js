@@ -60,13 +60,13 @@ function resizablePanel(panel) {
       $el.transition(0);
       $el.addClass('panel-resizing');
       $htmlEl.css('cursor', 'col-resize');
-      if (effect === 'reveal' || visibleByBreakpoint) {
+      if (effect !== 'cover' || visibleByBreakpoint) {
         $viewEl = $(panel.getViewEl());
         if (panel.$containerEl && panel.$containerEl.hasClass('page')) {
           $viewEl.add(panel.$containerEl.children('.page-content, .tabs, .fab'));
         }
       }
-      if (effect === 'reveal' && !visibleByBreakpoint) {
+      if (effect !== 'cover' && !visibleByBreakpoint) {
         $backdropEl.transition(0);
         $viewEl.transition(0);
       }
@@ -89,7 +89,7 @@ function resizablePanel(panel) {
 
     panel.resizableWidth = newPanelWidth;
     $el[0].style.width = `${newPanelWidth}px`;
-    if (effect === 'reveal' && !visibleByBreakpoint) {
+    if (effect !== 'cover' && !visibleByBreakpoint) {
       if ($viewEl) {
         $viewEl.transform(
           `translate3d(${side === 'left' ? newPanelWidth : -newPanelWidth}px, 0, 0)`,
@@ -119,14 +119,14 @@ function resizablePanel(panel) {
 
     $htmlEl[0].style.setProperty(`--f7-panel-${side}-width`, `${panel.resizableWidth}px`);
     $el[0].style.width = '';
-    if (effect === 'reveal' && !visibleByBreakpoint) {
+    if (effect !== 'cover' && !visibleByBreakpoint) {
       $viewEl.transform('');
       $backdropEl.transform('');
     }
     $el.removeClass('panel-resizing');
     nextFrame(() => {
       $el.transition('');
-      if (effect === 'reveal') {
+      if (effect !== 'cover') {
         $backdropEl.transition('');
         if ($viewEl) $viewEl.transition('');
       }
