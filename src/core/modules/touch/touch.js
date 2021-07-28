@@ -193,10 +193,15 @@ function initTouch() {
     }
   }
 
+  let isScrolling;
+  let isSegmentedStrong = false;
+  let segmentedStrongEl = null;
+
   function handleTouchStart(e) {
     isMoved = false;
     tapHoldFired = false;
     preventClick = false;
+    isScrolling = undefined;
     if (e.targetTouches.length > 1) {
       if (activableElement) removeActive();
       return true;
@@ -218,6 +223,12 @@ function initTouch() {
     targetElement = e.target;
     touchStartX = e.targetTouches[0].pageX;
     touchStartY = e.targetTouches[0].pageY;
+    isSegmentedStrong = e.target.closest(
+      '.segmented-strong .button-active, .segmented-strong .tab-link-active',
+    );
+    if (isSegmentedStrong) {
+      segmentedStrongEl = isSegmentedStrong.closest('.segmented-strong');
+    }
 
     if (params.activeState) {
       activableElement = findActivableElement(targetElement);
@@ -238,6 +249,30 @@ function initTouch() {
     if (e.type === 'touchmove') {
       touch = e.targetTouches[0];
       distance = params.touchClicksDistanceThreshold;
+    }
+
+    const touchCurrentX = e.targetTouches[0].pageX;
+    const touchCurrentY = e.targetTouches[0].pageY;
+
+    if (typeof isScrolling === 'undefined') {
+      isScrolling = !!(
+        isScrolling || Math.abs(touchCurrentY - touchStartY) > Math.abs(touchCurrentX - touchStartX)
+      );
+    }
+
+    if (!isScrolling && isSegmentedStrong && segmentedStrongEl) {
+      if (e.cancelable) e.preventDefault();
+      const elementFromPoint = document.elementFromPoint(
+        e.targetTouches[0].clientX,
+        e.targetTouches[0].clientY,
+      );
+      const buttonEl = elementFromPoint.closest(
+        '.segmented-strong .button:not(.button-active):not(.tab-link-active)',
+      );
+      if (buttonEl && segmentedStrongEl.contains(buttonEl)) {
+        $(buttonEl).trigger('click', 'f7Segmented');
+        targetElement = buttonEl;
+      }
     }
 
     if (distance && touch) {
@@ -264,6 +299,9 @@ function initTouch() {
     }
   }
   function handleTouchEnd(e) {
+    isScrolling = undefined;
+    isSegmentedStrong = false;
+    segmentedStrongEl = null;
     clearTimeout(activeTimeout);
     clearTimeout(tapHoldTimeout);
     if (document.activeElement === e.target) {
@@ -289,9 +327,10 @@ function initTouch() {
   }
   function handleClick(e) {
     const isOverswipe = e && e.detail && e.detail === 'f7Overswipe';
+    const isSegmented = e && e.detail && e.detail === 'f7Segmented';
     let localPreventClick = preventClick;
     if (targetElement && e.target !== targetElement) {
-      if (isOverswipe) {
+      if (isOverswipe || isSegmented) {
         localPreventClick = false;
       } else {
         localPreventClick = true;
