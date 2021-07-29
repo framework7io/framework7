@@ -1,6 +1,5 @@
 import fontforge
 import os
-import md5
 import subprocess
 import tempfile
 import json
@@ -12,8 +11,6 @@ INPUT_SVG_DIR = os.path.join(SCRIPT_PATH, '..', '..', 'src/core/icons/svg')
 OUTPUT_FONT_DIR = os.path.join(SCRIPT_PATH, '..', '..', 'src/core/icons/font')
 AUTO_WIDTH = True
 KERNING = 15
-
-m = md5.new()
 
 f = fontforge.font()
 f.encoding = 'UnicodeFull'
@@ -33,7 +30,6 @@ for char in "0123456789abcdefghijklmnopqrstuvwzxyz_- ":
   glyph.width = 0
 
 font_name = 'framework7-core-icons';
-m.update(font_name + ';')
 
 for dirname, dirnames, filenames in os.walk(INPUT_SVG_DIR):
   for filename in filenames:
@@ -52,15 +48,14 @@ for dirname, dirnames, filenames in os.walk(INPUT_SVG_DIR):
         svgtext = svgtext.replace('<switch>', '')
         svgtext = svgtext.replace('</switch>', '')
 
-        tmpsvgfile.file.write(svgtext)
+        bytes = svgtext.encode(encoding='UTF-8')
+        tmpsvgfile.file.write(bytes)
 
         svgfile.close()
         tmpsvgfile.file.close()
 
         filePath = tmpsvgfile.name
         # end hack
-
-      m.update(name + str(size) + ';')
 
       glyph = f.createChar(-1, name)
       glyph.importOutlines(filePath)
@@ -91,15 +86,13 @@ for dirname, dirnames, filenames in os.walk(INPUT_SVG_DIR):
       f.autoWidth(0, 0, 512)
 
 fontfile = '%s/framework7-core-icons' % (OUTPUT_FONT_DIR)
-print fontfile;
-build_hash = m.hexdigest()
+print(fontfile);
 
 f.fontname = font_name
 f.familyname = font_name
 f.fullname = font_name
 
 f.generate(fontfile + '.ttf')
-
 
 # Hint the TTF file
 subprocess.call('ttfautohint -s -f -n ' + fontfile + '.ttf ' + fontfile + '-hinted.ttf > /dev/null 2>&1 && mv ' + fontfile + '-hinted.ttf ' + fontfile + '.ttf', shell=True)
