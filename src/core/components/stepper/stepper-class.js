@@ -381,6 +381,7 @@ class Stepper extends Framework7Class {
     const stepper = this;
     stepper.typeModeChanged = true;
     let inputTxt = String(value);
+    if (inputTxt.length === 1 && inputTxt === '-') return stepper;
     if (
       inputTxt.lastIndexOf('.') + 1 === inputTxt.length ||
       inputTxt.lastIndexOf(',') + 1 === inputTxt.length
