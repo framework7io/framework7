@@ -43,6 +43,7 @@
   </Block>
 
   <Block>
+    {loginScreenOpened}
     <Button raised large fill onClick={() => (loginScreenOpened = true)}>
       Open Via Prop Change
     </Button>
@@ -51,7 +52,11 @@
   <LoginScreen
     class="demo-login-screen"
     opened={loginScreenOpened}
-    onLoginScreenClosed={() => (loginScreenOpened = false)}>
+    onLoginScreenClosed={() => {
+      loginScreenOpened = false;
+      console.log('foobar');
+    }}
+  >
     <Page loginScreen>
       <LoginScreenTitle>Framework7</LoginScreenTitle>
       <List form>
@@ -60,13 +65,15 @@
           type="text"
           placeholder="Your username"
           value={username}
-          onInput={(e) => (username = e.target.value)} />
+          onInput={(e) => (username = e.target.value)}
+        />
         <ListInput
           label="Password"
           type="password"
           placeholder="Your password"
           value={password}
-          onInput={(e) => (password = e.target.value)} />
+          onInput={(e) => (password = e.target.value)}
+        />
       </List>
       <List>
         <ListButton onClick={signIn}>Sign In</ListButton>

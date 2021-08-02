@@ -2,6 +2,24 @@
 
 # Change Log
 
+# [6.2.0](https://github.com/framework7io/framework7/compare/v6.1.1...v6.2.0) (2021-08-02)
+
+### Bug Fixes
+
+- **navbar:** don't scroll page top on navbar title's click when clicked on `<a>` and `<button>` ([2d78b63](https://github.com/framework7io/framework7/commit/2d78b63cf23fad615a618f220e4ef658512a4f7c))
+- **stepper:** allow to enter negative numbers in manualMode ([94aec9e](https://github.com/framework7io/framework7/commit/94aec9ef6e61c26e32b0dfabad0878b2e14ed891)), closes [#3933](https://github.com/framework7io/framework7/issues/3933)
+- **svelte:** fixed not working LoginScreen events ([5ae9b47](https://github.com/framework7io/framework7/commit/5ae9b47557b8b9335ecafe7e1397f56c7b27f278)), closes [#3934](https://github.com/framework7io/framework7/issues/3934)
+
+### Features
+
+- **checkbox:** black checkbox icon in dark theme ([fd3c3ff](https://github.com/framework7io/framework7/commit/fd3c3ff850c4befa8ab76c81fcaa8b3b73c20936))
+- **checkbox:** update iOS checkbox icon to match iOS 15 look ([ac5b5ee](https://github.com/framework7io/framework7/commit/ac5b5ee62bfc96a4c14991da64e52d17120563eb))
+- **panel:** new `push` effect ([6216d11](https://github.com/framework7io/framework7/commit/6216d1173b02c0b53f953330d6e34df0ab7797b7))
+- **radio:** update iOS radio icon to match iOS 15 look ([a6c4bb4](https://github.com/framework7io/framework7/commit/a6c4bb483f19083229fd02d181692654f0da8f33))
+- **range:** tweak Range Slider styles to match iOS 15 look ([cdf7fe5](https://github.com/framework7io/framework7/commit/cdf7fe5070d8811d5f3d2b0c5bc3eaf22dc83ea1))
+- **segmented:** swipeable segmented strong in iOS theme ([29906e4](https://github.com/framework7io/framework7/commit/29906e4b7b76c49e49e82bcce817b006c6333019))
+- **touch:** swipeable/activable Dialog and Actions buttons in iOS theme ([25a07ef](https://github.com/framework7io/framework7/commit/25a07ef19adae0f4294f6926cd39b5f8d09cafcb))
+
 # [6.1.1](https://github.com/framework7io/framework7/compare/v6.1.0...v6.1.1) (2021-07-26)
 
 ### Bug Fixes
