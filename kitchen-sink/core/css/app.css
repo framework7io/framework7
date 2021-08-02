@@ -4,7 +4,6 @@
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: url(../fonts/MaterialIcons-Regular.eot); /* For IE6-8 */
   src: local('Material Icons'), local('MaterialIcons-Regular'),
     url(../fonts/MaterialIcons-Regular.woff2) format('woff2'),
     url(../fonts/MaterialIcons-Regular.woff) format('woff'),
@@ -40,7 +39,6 @@
   font-family: 'Framework7 Icons';
   font-style: normal;
   font-weight: 400;
-  src: url('../fonts/Framework7Icons-Regular.eot');
   src: url('../fonts/Framework7Icons-Regular.woff2') format('woff2'),
     url('../fonts/Framework7Icons-Regular.woff') format('woff'),
     url('../fonts/Framework7Icons-Regular.ttf') format('truetype');
