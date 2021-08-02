@@ -39,24 +39,24 @@
       isOpened: true,
       isClosing: false,
     });
-    emit('loginscreenOpen', [instance]);
+    emit('loginscreenOpen loginScreenOpen', [instance]);
     opened = true;
   }
   function onOpened(instance) {
-    emit('loginscreenOpened', [instance]);
+    emit('loginscreenOpened loginScreenOpened', [instance]);
   }
   function onClose(instance) {
     Object.assign(state, {
       isOpened: false,
       isClosing: true,
     });
-    emit('loginscreenClose', [instance]);
+    emit('loginscreenClose loginScreenClose', [instance]);
   }
   function onClosed(instance) {
     Object.assign(state, {
       isClosing: false,
     });
-    emit('loginscreenClosed', [instance]);
+    emit('loginscreenClosed loginScreenClosed', [instance]);
     opened = false;
   }
 
