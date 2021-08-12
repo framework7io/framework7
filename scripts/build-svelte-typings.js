@@ -17,7 +17,7 @@ interface {{componentName}}Props extends svelte.JSX.HTMLAttributes<HTMLElementTa
 
 {{EXTENDS}}
 
-export default class {{componentName}} extends SvelteComponentTyped<
+class {{componentName}} extends SvelteComponentTyped<
   {{componentName}}Props,
   { {{EVENTS}} },
   { {{SLOTS}} }
