@@ -99,6 +99,11 @@ class Popover extends Modal {
       });
     });
 
+    let touchStartTarget = null;
+    function handleTouchStart(e) {
+      touchStartTarget = e.target;
+    }
+
     function handleClick(e) {
       const target = e.target;
       const $target = $(target);
@@ -115,10 +120,11 @@ class Popover extends Modal {
           popover.params.closeByBackdropClick &&
           popover.params.backdrop &&
           popover.backdropEl &&
-          popover.backdropEl === target
+          popover.backdropEl === target &&
+          touchStartTarget === target
         ) {
           popover.close();
-        } else if (popover.params.closeByOutsideClick) {
+        } else if (popover.params.closeByOutsideClick && touchStartTarget === target) {
           popover.close();
         }
       }
@@ -142,11 +148,13 @@ class Popover extends Modal {
 
     popover.on('popoverOpened', () => {
       if (popover.params.closeByOutsideClick || popover.params.closeByBackdropClick) {
+        app.on('touchstart', handleTouchStart);
         app.on('click', handleClick);
       }
     });
     popover.on('popoverClose', () => {
       if (popover.params.closeByOutsideClick || popover.params.closeByBackdropClick) {
+        app.off('touchstart', handleTouchStart);
         app.off('click', handleClick);
       }
     });
