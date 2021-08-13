@@ -18,7 +18,7 @@
   }
   .ptr-content:not(.ptr-refreshing):not(.ptr-pull-up):not(.ptr-pull-down),
   .ptr-content.ptr-closing {
-    .preloader-inner-line {
+    .ptr-preloader .preloader-inner-line {
       opacity: 0 !important;
     }
   }
@@ -26,19 +26,19 @@
   .ptr-transitioning,
   .ptr-refreshing {
     > * {
-      transition-duration: 300ms;
+      transition-duration: 200ms;
       transition-property: transform;
     }
   }
 
   .ptr-transitioning {
-    .preloader-inner-line {
-      transition-duration: 100ms;
+    .ptr-preloader .preloader-inner-line {
+      transition-duration: 200ms;
     }
   }
 
   .ptr-pull-up {
-    .preloader {
+    .ptr-preloader .preloader {
       animation: ios-ptr-preloader-spin 1s ease-out forwards;
     }
   }
