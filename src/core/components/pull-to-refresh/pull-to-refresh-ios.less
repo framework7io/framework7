@@ -1,71 +1,63 @@
 .ios {
   .ptr-preloader {
-    margin-top: calc(-1 * var(--f7-ptr-size));
+    margin-bottom: calc(-1 * var(--f7-ptr-size));
     width: 100%;
     left: 0;
-  }
-  .ptr-arrow {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    background: no-repeat center;
-    z-index: 10;
-    transform: rotate(0deg) translate3d(0, 0, 0);
-    transition-duration: 300ms;
-    transition-property: transform, opacity;
-    width: 12px;
-    height: 20px;
-    margin-left: -6px;
-    margin-top: -10px;
-    visibility: visible;
-    color: var(--f7-preloader-color);
-    &:after {
-      .core-icons-font();
-      width: 12px;
-      height: 20px;
-      line-height: 20px;
-      font-size: 10px;
-      content: 'ptr_arrow_ios';
+    top: 0;
+    position: relative;
+    .preloader {
+      visibility: visible;
     }
   }
-  .ptr-content:not(.ptr-refreshing) {
+
+  .ptr-content:not(.ptr-refreshing):not(.ptr-pull-up) {
     .ptr-preloader .preloader,
     .ptr-preloader .preloader-inner {
       animation: none;
     }
   }
+  .ptr-content:not(.ptr-refreshing):not(.ptr-pull-up):not(.ptr-pull-down),
+  .ptr-content.ptr-closing {
+    .preloader-inner-line {
+      opacity: 0 !important;
+    }
+  }
+
   .ptr-transitioning,
   .ptr-refreshing {
-    transition-duration: 300ms;
-    transition-property: transform;
-  }
-  .ptr-refreshing {
-    transform: translate3d(0, var(--f7-ptr-size), 0);
-    .ptr-arrow {
-      visibility: hidden;
-    }
-    .ptr-preloader .preloader {
-      visibility: visible;
+    > * {
+      transition-duration: 300ms;
+      transition-property: transform;
     }
   }
+
+  .ptr-transitioning {
+    .preloader-inner-line {
+      transition-duration: 100ms;
+    }
+  }
+
   .ptr-pull-up {
-    .ptr-arrow {
-      transform: rotate(180deg) translate3d(0, 0, 0);
+    .preloader {
+      animation: ios-ptr-preloader-spin 1s ease-out forwards;
     }
   }
-  .ptr-no-navbar,
-  .ptr-with-navbar-large-transparent,
-  .ptr-with-navbar-transparent {
-    margin-top: calc(-1 * var(--f7-ptr-size));
-    height: calc(100% + var(--f7-ptr-size));
-    .ptr-preloader {
-      margin-top: 0;
+
+  .ptr-refreshing:not(.ptr-bottom) {
+    transform: none;
+    > * {
+      transform: translate3d(0, var(--f7-ptr-size), 0);
+    }
+    > .ptr-preloader {
+      transform: translate3d(0, 0, 0);
     }
   }
+
   .ptr-bottom {
     .ptr-preloader {
-      margin-top: 0;
-      margin-bottom: calc(-1 * var(--f7-ptr-size));
+      margin-bottom: 0;
+      margin-top: calc(-1 * var(--f7-ptr-size));
+      position: relative;
     }
     &.ptr-transitioning,
     &.ptr-refreshing {
@@ -79,44 +71,18 @@
       > * {
         transform: translate3d(0, calc(-1 * var(--f7-ptr-size)), 0);
       }
-    }
-    .ptr-arrow {
-      transform: rotate(180deg) translate3d(0, 0, 0);
-    }
-    &.ptr-pull-up {
-      .ptr-arrow {
-        transform: rotate(0deg) translate3d(0, 0, 0);
+      > .ptr-preloader {
+        transform: translate3d(0, 0, 0);
       }
     }
   }
-  .ptr-with-navbar-large-transparent,
-  .ptr-with-navbar-transparent {
-    .ptr-preloader {
-      .preloader,
-      .ptr-arrow {
-        opacity: 0;
-        transition-duration: 300ms;
-        transition-property: transform, opacity;
-      }
-    }
-    &.ptr-pull-down,
-    &.ptr-pull-up,
-    &.ptr-refreshing {
-      .ptr-preloader {
-        .preloader,
-        .ptr-arrow {
-          opacity: 1;
-        }
-      }
-    }
-    &.ptr-closing {
-      .ptr-preloader {
-        .preloader,
-        .ptr-arrow {
-          opacity: 0;
-          transition-duration: 300ms;
-        }
-      }
-    }
+}
+
+@keyframes ios-ptr-preloader-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(135deg);
   }
 }
