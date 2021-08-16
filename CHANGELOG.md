@@ -2,6 +2,19 @@
 
 # Change Log
 
+# [6.3.0](https://github.com/framework7io/framework7/compare/v6.2.0...v6.3.0) (2021-08-16)
+
+### Bug Fixes
+
+- **picker:** prevent closing picker on backdrop drag click ([7abae46](https://github.com/framework7io/framework7/commit/7abae4679113914bc6fffd7911624d8de040f68c))
+- **popover:** prevent closing popover on backdrop drag click ([fef522e](https://github.com/framework7io/framework7/commit/fef522e3d437bcf33d4f3b38debfbf9bb7f0c3df))
+- **pull-to-refresh:** fix ptr-closing class removal ([93951d2](https://github.com/framework7io/framework7/commit/93951d22161178c9849f9a4e427b4134dad37eee))
+- **svelte:** fix duplicated export in typings ([1ed6d4b](https://github.com/framework7io/framework7/commit/1ed6d4b1be90a3b38d3b92d7e713b5ba7ad52bc8))
+
+### Features
+
+- **pull-to-refresh:** new system-like PTR behavior in iOS theme ([14a9c14](https://github.com/framework7io/framework7/commit/14a9c1482ccdae33ef4577bec140e1fddc50317f))
+
 # [6.2.0](https://github.com/framework7io/framework7/compare/v6.1.1...v6.2.0) (2021-08-02)
 
 ### Bug Fixes
