@@ -143,7 +143,10 @@ function generateComponentProps(fileContent) {
 }
 
 function generateComponentTypings(componentName, fileContent) {
-  if (componentName.includes('Swiper') || componentName.includes('Skeleton')) return fileContent;
+  if (componentName.includes('Swiper') || componentName.includes('Skeleton')) {
+    return fileContent.replace('<script>', '').replace('</script>', '');
+  }
+
   return `
 import { ComponentOptionsMixin, DefineComponent, PropType } from 'vue';
 // IMPORTS
