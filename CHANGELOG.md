@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [6.3.1](https://github.com/framework7io/framework7/compare/v6.3.0...v6.3.1) (2021-08-23)
+
+### Bug Fixes
+
+- **vue:** fix vue typings for Swiper and Skeleton Elements ([6c37be6](https://github.com/framework7io/framework7/commit/6c37be6a04938378e1ba9336d76b5ed9e48c95f5))
+
 # [6.3.0](https://github.com/framework7io/framework7/compare/v6.2.0...v6.3.0) (2021-08-16)
 
 ### Bug Fixes
