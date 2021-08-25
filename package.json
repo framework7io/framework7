@@ -68,11 +68,11 @@
   ],
   "dependencies": {
     "dom7": "^3.0.0",
-    "htm": "^3.0.4",
+    "htm": "^3.1.0",
     "path-to-regexp": "^6.2.0",
-    "skeleton-elements": "^3.3.0",
+    "skeleton-elements": "^3.5.0",
     "ssr-window": "^3.0.0",
-    "swiper": "^6.6.2"
+    "swiper": "^6.8.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.16",
