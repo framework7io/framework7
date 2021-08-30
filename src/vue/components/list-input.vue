@@ -432,10 +432,10 @@ export default {
             value: props.value,
             resizable: props.resizable,
             placeholder: props.placeholder,
-            onTextEditorFocus: onFocus,
-            onTextEditorBlur: onBlur,
-            onTextEditorInput: onInput,
-            onTextEditorChange: onChange,
+            onTexteditorFocus: onFocus,
+            onTexteditorBlur: onBlur,
+            onTexteditorInput: onInput,
+            onTexteditorChange: onChange,
             ...(props.textEditorParams || {}),
           });
         } else {
