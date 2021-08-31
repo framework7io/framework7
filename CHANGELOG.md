@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [6.3.2](https://github.com/framework7io/framework7/compare/v6.3.1...v6.3.2) (2021-08-31)
+
+### Bug Fixes
+
+- **vue:** fix text editor events ([378a594](https://github.com/framework7io/framework7/commit/378a594ad5ace6ebb545acb51d38539e75ec55a1)), closes [#3940](https://github.com/framework7io/framework7/issues/3940)
+
 # [6.3.1](https://github.com/framework7io/framework7/compare/v6.3.0...v6.3.1) (2021-08-23)
 
 ### Bug Fixes
