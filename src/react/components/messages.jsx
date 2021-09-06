@@ -29,7 +29,7 @@ import { Messages } from 'framework7/types';
   customClassMessageRule? : Function
   renderMessage? : Function
   init? : boolean
-  ref?: React.MutableRefObject<{el: HTMLElement | null; f7Messages: Messages.Messages}>;
+  ref?: React.MutableRefObject<{el: HTMLElement | null; f7Messages: () => Messages.Messages}>;
   COLOR_PROPS
 */
 
