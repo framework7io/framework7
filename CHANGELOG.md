@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [6.3.3](https://github.com/framework7io/framework7/compare/v6.3.2...v6.3.3) (2021-09-07)
+
+### Features
+
+- **progressbar:** tweak iOS progressbar size to match iOS 15 ([88f002a](https://github.com/framework7io/framework7/commit/88f002a447e33d52ec8e2c75b1189e18857b6570))
+
 # [6.3.2](https://github.com/framework7io/framework7/compare/v6.3.1...v6.3.2) (2021-08-31)
 
 ### Bug Fixes
