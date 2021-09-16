@@ -2,6 +2,17 @@
 
 # Change Log
 
+# [6.3.4](https://github.com/framework7io/framework7/compare/v6.3.3...v6.3.4) (2021-09-16)
+
+### Bug Fixes
+
+- **actions:** bypass `containerEl` parameter when opened in Popover ([05ad92c](https://github.com/framework7io/framework7/commit/05ad92c8071b6244b2e5892a1a8c3ac1ad9b5e37))
+- **smart-select:** fix `scrollToSelectedItem` in popover ([84b552a](https://github.com/framework7io/framework7/commit/84b552ad32e5b68ddad181ae00019feda38412d1))
+
+### Features
+
+- **router component:** add support for fragments `<>...</>` in JSX templates ([5c2ac50](https://github.com/framework7io/framework7/commit/5c2ac506c3ff10a310d1b940156b3d512ea2fdef))
+
 # [6.3.3](https://github.com/framework7io/framework7/compare/v6.3.2...v6.3.3) (2021-09-07)
 
 ### Features
