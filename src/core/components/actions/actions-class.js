@@ -106,6 +106,7 @@ class Actions extends Modal {
       }
       if (convertToPopover && actions.popoverHtml) {
         popover = app.popover.create({
+          containerEl: actions.params.containerEl,
           content: actions.popoverHtml,
           backdrop: actions.params.backdrop,
           targetEl,
