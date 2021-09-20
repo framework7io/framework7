@@ -359,7 +359,7 @@ const ListInput = forwardRef((props, ref) => {
 
   const inputHasValue = isInputHasValue();
 
-  const isSortableComputed = sortable || listIsSortable;
+  const isSortableComputed = sortable === true || sortable === false ? sortable : listIsSortable;
 
   let inputEl;
 
