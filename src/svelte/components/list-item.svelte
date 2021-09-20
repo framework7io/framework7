@@ -96,7 +96,7 @@
     }) || {};
 
   $: isMedia = mediaList || mediaItem || ListContext.listIsMedia;
-  $: isSortable = sortable || ListContext.listIsSortable;
+  $: isSortable = sortable === true || sortable === false ? sortable : ListContext.listIsSortable;
   $: isSortableOpposite = sortableOpposite || ListContext.listIsSortableOpposite;
   $: isSimple = ListContext.listIsSimple;
 
