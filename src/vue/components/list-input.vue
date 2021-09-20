@@ -333,8 +333,10 @@ export default {
       },
     );
 
-    const isSortableComputed = computed(
-      () => props.sortable || ListContext.value.listIsSortable || false,
+    const isSortableComputed = computed(() =>
+      props.sortable === true || props.sortable === false
+        ? props.sortable
+        : ListContext.value.listIsSortable || false,
     );
 
     const createInput = (InputTag, children) => {
