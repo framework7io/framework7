@@ -444,7 +444,9 @@ export default {
     );
 
     const isMediaComputed = computed(() => props.mediaItem || props.mediaList || listIsMedia.value);
-    const isSortableComputed = computed(() => props.sortable || listIsSortable.value);
+    const isSortableComputed = computed(() =>
+      props.sortable === true || props.sortable === false ? props.sortable : listIsSortable.value,
+    );
     const isSortableOppositeComputed = computed(
       () => isSortableComputed.value && (props.sortableOpposite || listIsSortableOpposite.value),
     );

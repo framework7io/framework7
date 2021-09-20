@@ -330,7 +330,7 @@ const ListItem = forwardRef((props, ref) => {
   let itemContentEl;
 
   const isMediaComputed = mediaItem || mediaList || listIsMedia;
-  const isSortableComputed = sortable || listIsSortable;
+  const isSortableComputed = sortable === true || sortable === false ? sortable : listIsSortable;
   const isSortableOppositeComputed =
     isSortableComputed && (sortableOpposite || listIsSortableOpposite);
 

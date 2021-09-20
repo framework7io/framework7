@@ -99,7 +99,7 @@
       ListContext = newValue || {};
     }) || {};
 
-  $: isSortable = sortable || ListContext.listIsSortable;
+  $: isSortable = sortable === true || sortable === false ? sortable : ListContext.listIsSortable;
   $: isSortableOpposite = sortableOpposite || ListContext.listIsSortableOpposite;
 
   function domValue() {
