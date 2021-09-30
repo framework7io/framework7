@@ -1,5 +1,4 @@
 /* eslint indent: ["off"] */
-// eslint-disable-next-line
 import { getWindow } from 'ssr-window';
 import $ from '../../shared/dom7';
 import { extend, now, nextTick, deleteProps } from '../../shared/utils';

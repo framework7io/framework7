@@ -7,7 +7,7 @@ const exec = require('exec-sh');
 const glob = require('glob');
 const path = require('path');
 const bannerReact = require('./banners/react');
-const getOutput = require('./get-output.js');
+const getOutput = require('./get-output');
 const fs = require('./utils/fs-extra');
 
 const removeDtsComments = (buildPath, format) => {

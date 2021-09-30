@@ -5,7 +5,7 @@
 
 const path = require('path');
 const glob = require('glob');
-const getOutput = require('./get-output.js');
+const getOutput = require('./get-output');
 const fs = require('./utils/fs-extra');
 
 function capitalize(name) {

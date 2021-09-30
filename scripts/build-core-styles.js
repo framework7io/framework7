@@ -8,9 +8,9 @@ const glob = require('glob');
 const less = require('./utils/less');
 const autoprefixer = require('./utils/autoprefixer');
 const cleanCSS = require('./utils/clean-css');
-const getConfig = require('./get-core-config.js');
-const getOutput = require('./get-output.js');
-const banner = require('./banners/core.js');
+const getConfig = require('./get-core-config');
+const getOutput = require('./get-output');
+const banner = require('./banners/core');
 const fs = require('./utils/fs-extra');
 
 // Copy LESS

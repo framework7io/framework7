@@ -6,7 +6,7 @@
 const exec = require('exec-sh');
 const svelte = require('svelte/compiler');
 const bannerSvelte = require('./banners/svelte');
-const getOutput = require('./get-output.js');
+const getOutput = require('./get-output');
 const fs = require('./utils/fs-extra');
 
 const compileSvelteComponents = (buildPath, format) => {

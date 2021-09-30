@@ -31,6 +31,7 @@ const rules = {
   'react/prop-types': ['off'],
   'no-restricted-globals': ['error', 'window', 'document'],
   'import/prefer-default-export': 'off',
+  'import/no-unresolved': [2, { ignore: ['ssr-window', 'framework7-svelte', 'swiper/svelte'] }],
 };
 
 module.exports = {

@@ -1,6 +1,6 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 const exec = require('exec-sh');
-const getOutput = require('./get-output.js');
+const getOutput = require('./get-output');
 
 async function buildClean(project, cb) {
   if (process.env.NODE_ENV === 'development' && project !== 'core') {

@@ -5,7 +5,7 @@
 
 const exec = require('exec-sh');
 const bannerReact = require('./banners/vue');
-const getOutput = require('./get-output.js');
+const getOutput = require('./get-output');
 const fs = require('./utils/fs-extra');
 const transformVueComponent = require('./transform-vue-component');
 

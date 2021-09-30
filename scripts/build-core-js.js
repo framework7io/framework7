@@ -10,9 +10,9 @@ const { default: babel } = require('@rollup/plugin-babel');
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const { minify } = require('terser');
 const commonjs = require('@rollup/plugin-commonjs');
-const getConfig = require('./get-core-config.js');
-const banner = require('./banners/core.js');
-const getOutput = require('./get-output.js');
+const getConfig = require('./get-core-config');
+const banner = require('./banners/core');
+const getOutput = require('./get-output');
 const fs = require('./utils/fs-extra');
 
 let cache;

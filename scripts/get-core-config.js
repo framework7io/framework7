@@ -2,7 +2,7 @@
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
 const path = require('path');
-let config = require('./build-config.js');
+let config = require('./build-config');
 
 // Overwrite with local config
 try {
