@@ -32,6 +32,8 @@ export interface ComponentContext {
   $el: {
     value: Dom7Array;
   };
+  /** Create reactive variable */
+  $ref: (initialValue: any) => { value: any };
 
   /** Defer the callback to be executed after the next DOM update cycle. Use it immediately after you’ve changed some data to wait for the DOM update.  */
   $tick: (callback?: () => void) => Promise<any>;

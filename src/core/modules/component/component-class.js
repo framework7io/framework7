@@ -118,6 +118,24 @@ class Component {
     this.__onceEventHandlers.push({ eventName, handler });
   }
 
+  getComponentRef() {
+    const self = this;
+    return (initialValue) => {
+      let value = initialValue;
+      const obj = {};
+      Object.defineProperty(obj, 'value', {
+        get() {
+          return value;
+        },
+        set(v) {
+          value = v;
+          self.update();
+        },
+      });
+      return obj;
+    };
+  }
+
   getComponentStore() {
     const { state, _gettersPlain, dispatch } = this.f7.store;
     const $store = {
@@ -153,6 +171,7 @@ class Component {
       $update: this.update.bind(this),
       $emit: this.emit.bind(this),
       $store: this.getComponentStore(),
+      $ref: this.getComponentRef(),
       $el: {},
     };
     Object.defineProperty(ctx.$el, 'value', {

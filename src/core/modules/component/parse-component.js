@@ -60,6 +60,7 @@ function parseComponent(componentString) {
           var $theme = $$ctx.$theme;
           var $update = $$ctx.$update;
           var $store = $$ctx.$store;
+          var $ref = $$ctx.$ref;
 
           return $h\`${template}\`
         }
