@@ -41,6 +41,9 @@ export default {
         speed: 300,
         loop: false,
         preloadImages: true,
+        keyboard: {
+          enabled: true,
+        },
         navigation: {
           nextEl: '.photo-browser-next',
           prevEl: '.photo-browser-prev',
