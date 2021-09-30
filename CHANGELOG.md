@@ -2,6 +2,17 @@
 
 # Change Log
 
+# [6.3.5](https://github.com/framework7io/framework7/compare/v6.3.4...v6.3.5) (2021-09-30)
+
+### Bug Fixes
+
+- **list-input:** don't ignore sortable=false props in React, Vue, Svelte components
+- **list-item:** don't ignore sortable=false props in React, Vue, Svelte components
+
+### Features
+
+- **component:** new `$ref` function to create reactive variables ([108b63b](https://github.com/framework7io/framework7/commit/108b63b5bcd4979a828fb8ceeee6752d95c20f7d))
+
 # [6.3.4](https://github.com/framework7io/framework7/compare/v6.3.3...v6.3.4) (2021-09-16)
 
 ### Bug Fixes
