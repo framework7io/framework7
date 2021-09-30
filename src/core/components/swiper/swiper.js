@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import Swiper from 'swiper/bundle';
 import $ from '../../shared/dom7';
 import ConstructorMethods from '../../shared/constructor-methods';

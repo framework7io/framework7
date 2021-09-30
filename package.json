@@ -67,12 +67,12 @@
     "Samsung >= 6"
   ],
   "dependencies": {
-    "dom7": "^3.0.0",
+    "dom7": "^4.0.0",
     "htm": "^3.1.0",
     "path-to-regexp": "^6.2.0",
     "skeleton-elements": "^3.5.0",
-    "ssr-window": "^3.0.0",
-    "swiper": "^6.8.4"
+    "ssr-window": "^4.0.0",
+    "swiper": "^7.0.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.16",
@@ -92,7 +92,7 @@
     "eslint": "^7.26.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-svelte3": "^3.2.0",

@@ -50,11 +50,11 @@
     "url": "https://www.patreon.com/framework7"
   },
   "dependencies": {
-    "dom7": "^3.0.0",
+    "dom7": "^4.0.0",
     "htm": "^3.1.0",
     "path-to-regexp": "^6.2.0",
     "skeleton-elements": "^3.5.0",
-    "ssr-window": "^3.0.0",
-    "swiper": "^6.8.4"
+    "ssr-window": "^4.0.0",
+    "swiper": "^7.0.7"
   }
 }
