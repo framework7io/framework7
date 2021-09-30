@@ -335,7 +335,7 @@ div.demo-lazy {
 .demo-swiper-custom {
   height: 100%;
 }
-.demo-swiper-custom .swiper-container {
+.demo-swiper-custom .swiper {
   background: #000;
   height: 100%;
 }

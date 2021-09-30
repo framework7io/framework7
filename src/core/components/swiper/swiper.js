@@ -22,7 +22,7 @@ function initSwiper(swiperEl) {
   let isRoutableTabs;
   if ($swiperEl.hasClass('tabs-swipeable-wrap')) {
     $swiperEl
-      .addClass('swiper-container')
+      .addClass('swiper')
       .children('.tabs')
       .addClass('swiper-wrapper')
       .children('.tab')
@@ -108,7 +108,7 @@ export default {
   create() {
     const app = this;
     app.swiper = ConstructorMethods({
-      defaultSelector: '.swiper-container',
+      defaultSelector: '.swiper',
       constructor: Swiper,
       domProp: 'swiper',
     });
