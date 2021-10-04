@@ -193,7 +193,7 @@ function buildTypings(cb) {
       fs.readFileSync(`src/vue/components/${fileName}`, 'utf-8'),
     );
 
-    fs.writeFileSync(`${output}/components/${fileBase}/${fileBase}.d.ts`, typingsContent);
+    fs.writeFileSync(`${output}/components/${fileBase}.d.ts`, typingsContent);
   });
 
   const mainTypings = fs
