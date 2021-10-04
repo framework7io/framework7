@@ -2,6 +2,20 @@
 
 # Change Log
 
+# [7.0.0-beta.1](https://github.com/framework7io/framework7/compare/v6.3.5...v7.0.0-beta.1) (2021-10-04)
+
+### Features
+
+- **core:** update Skeleton Elements to latest v4 ([5ee286d](https://github.com/framework7io/framework7/commit/5ee286d37b5b7d45e7c46ecab8224f9d8356f472))
+- **core:** update Swiper to latest v7 ([6eee6b7](https://github.com/framework7io/framework7/commit/6eee6b760087c5c23aade50f990db5e09330c66d))
+- **core:** update Swiper to latest v7 ([9bd6f48](https://github.com/framework7io/framework7/commit/9bd6f4857445452cf510a06ec1908641d8f40cdc))
+- **framework7-core:** move to pure ES module package ([3549b76](https://github.com/framework7io/framework7/commit/3549b7634d444aa0e58f0b89fae015a42cb92032))
+- **framework7-react:** move to pure ES module package ([6abf98a](https://github.com/framework7io/framework7/commit/6abf98a53fdb4ddf86e4b6c3f785264be40c6493))
+- **framework7-svelte:** move to pure ES module package and keep only .svelte components ([74b8e4d](https://github.com/framework7io/framework7/commit/74b8e4d84923f2b743eaef0141a8fcbae45af11f))
+- **framework7-vue:** move to pure ES module package ([e9adee6](https://github.com/framework7io/framework7/commit/e9adee62efd67559f33ed2ce4ec57f4892b0d519))
+- increase build target to more modern browsers ([5efd721](https://github.com/framework7io/framework7/commit/5efd7212c1040c430646cb3acd825879640ca768))
+- **photo-browser:** enables cssMode by default for iOS and Android devices ([d6cb8e3](https://github.com/framework7io/framework7/commit/d6cb8e327165105421587e60ea175d3a7fc257f7))
+
 # [6.3.5](https://github.com/framework7io/framework7/compare/v6.3.4...v6.3.5) (2021-09-30)
 
 ### Bug Fixes

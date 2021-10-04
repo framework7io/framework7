@@ -1,6 +1,6 @@
 {
   "name": "framework7",
-  "version": "6.3.5",
+  "version": "7.0.0-beta.2",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "type": "module",
   "exports": {
@@ -8,6 +8,7 @@
     "./core": "./framework7.esm.js",
     "./bundle": "./framework7-bundle.esm.js",
     "./lite": "./framework7-lite.esm.js",
+    "./lite/bundle": "./framework7-lite-bundle.esm.js",
     "./lite-bundle": "./framework7-lite-bundle.esm.js",
     "./less": "./framework7.less",
     "./css": "./framework7.css",
