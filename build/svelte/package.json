@@ -1,9 +1,7 @@
 {
   "name": "framework7-svelte",
   "private": true,
-  "main": "cjs/framework7-svelte.js",
-  "module": "esm/framework7-svelte.js",
-  "svelte": "esm/framework7-svelte-src.js",
-  "jsnext:main": "esm/framework7-svelte.js",
+  "module": "framework7-svelte.js",
+  "svelte": "framework7-svelte-src.js",
   "typings": "framework7-svelte.d.ts"
 }
