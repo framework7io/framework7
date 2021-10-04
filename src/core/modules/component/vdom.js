@@ -101,9 +101,8 @@ function getHooks(treeNode, data, f7, initial, isRoot) {
   const update = [];
   const postpatch = [];
   let isFakeElement = false;
-  const tagName = getTagName(treeNode);
+  let tagName = getTagName(treeNode);
   if (data && data.attrs && data.attrs.component) {
-    // eslint-disable-next-line
     tagName = data.attrs.component;
     delete data.attrs.component;
     isFakeElement = true;
