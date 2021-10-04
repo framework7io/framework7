@@ -10,14 +10,14 @@ const bannerReact = require('./banners/react');
 const getOutput = require('./get-output');
 const fs = require('./utils/fs-extra');
 
-const removeDtsComments = (buildPath, format) => {
+const removeDtsComments = (buildPath) => {
   glob(
     '*.js',
-    { cwd: path.resolve(__dirname, `${buildPath}/react/${format}/components`) },
+    { cwd: path.resolve(__dirname, `${buildPath}/react/components`) },
     (err, componentFiles) => {
       componentFiles.forEach((file) => {
         let fileContent = fs.readFileSync(
-          path.resolve(__dirname, `${buildPath}/react/${format}/components`, file),
+          path.resolve(__dirname, `${buildPath}/react/components`, file),
         );
         if (fileContent.indexOf('/* dts-imports') >= 0) {
           const imports = fileContent.split('/* dts-imports')[1].split('*/')[0] || '';
@@ -35,10 +35,7 @@ const removeDtsComments = (buildPath, format) => {
           .replace('/* dts-imports*/\n', '')
           .replace('/* dts-props*/\n', '')
           .replace('/* dts-extends*/\n', '');
-        fs.writeFileSync(
-          path.resolve(`${buildPath}/react/${format}/components`, file),
-          fileContent,
-        );
+        fs.writeFileSync(path.resolve(`${buildPath}/react/components`, file), fileContent);
       });
     },
   );
@@ -46,7 +43,6 @@ const removeDtsComments = (buildPath, format) => {
 
 // Build React
 async function buildReact(cb) {
-  const env = process.env.NODE_ENV || 'development';
   const buildPath = getOutput();
 
   const files = fs.readdirSync('src/react/components').filter((file) => file.indexOf('.d.ts') < 0);
@@ -62,19 +58,6 @@ async function buildReact(cb) {
     const fileBase = fileName.replace('.jsx', '');
     componentImports.push(`import ${componentName} from './components/${fileBase}';`);
     componentExports.push(componentName);
-    const json = {
-      name: `framework7-react/${fileBase}`,
-      private: true,
-      sideEffects: false,
-      main: `../../cjs/components/${fileBase}.js`,
-      module: `../../esm/components/${fileBase}.js`,
-      'jsnext:main': `../../esm/components/${fileBase}.js`,
-      typings: `${fileBase}.d.ts`,
-    };
-    fs.writeFileSync(
-      `${buildPath}/react/components/${fileBase}/package.json`,
-      JSON.stringify(json, '', 2),
-    );
   });
 
   const pluginContent = fs
@@ -82,49 +65,21 @@ async function buildReact(cb) {
     .replace('// IMPORT_COMPONENTS', componentImports.join('\n'))
     .replace('// EXPORT_COMPONENTS', `export { ${componentExports.join(', ')} }`);
 
-  const buildCJS = async () => {
-    fs.writeFileSync(`${buildPath}/react/cjs/framework7-react.js`, pluginContent);
+  fs.writeFileSync(`${buildPath}/react/framework7-react.js`, pluginContent);
 
-    await exec.promise(
-      `MODULES=cjs npx babel --config-file ./babel-react.config.js src/react --out-dir ${buildPath}/react/cjs --ignore "src/react/framework7-react.js","*.ts"`,
-    );
-    await exec.promise(
-      `MODULES=cjs npx babel --config-file ./babel-react.config.js ${buildPath}/react/cjs/framework7-react.js --out-file ${buildPath}/react/cjs/framework7-react.js`,
-    );
+  await exec.promise(
+    `MODULES=esm npx babel --config-file ./babel-react.config.js src/react --out-dir ${buildPath}/react --ignore "src/react/framework7-react.js","*.ts"`,
+  );
 
-    const cjsContent = fs.readFileSync(`${buildPath}/react/cjs/framework7-react.js`, 'utf-8');
+  const esmContent = fs.readFileSync(`${buildPath}/react/framework7-react.js`, 'utf-8');
 
-    fs.writeFileSync(
-      `${buildPath}/react/cjs/framework7-react.js`,
-      `${bannerReact.trim()}\n${cjsContent}`,
-    );
+  fs.writeFileSync(
+    `${buildPath}/react/framework7-react.js`,
+    `${bannerReact.trim()}\n${esmContent}`,
+  );
 
-    // remove dts-comments
-    removeDtsComments(buildPath, 'cjs');
-  };
-
-  const buildEMS = async () => {
-    fs.writeFileSync(`${buildPath}/react/esm/framework7-react.js`, pluginContent);
-
-    await exec.promise(
-      `MODULES=esm npx babel --config-file ./babel-react.config.js src/react --out-dir ${buildPath}/react/esm --ignore "src/react/framework7-react.js","*.ts"`,
-    );
-
-    const esmContent = fs.readFileSync(`${buildPath}/react/esm/framework7-react.js`, 'utf-8');
-
-    fs.writeFileSync(
-      `${buildPath}/react/esm/framework7-react.js`,
-      `${bannerReact.trim()}\n${esmContent}`,
-    );
-
-    // remove dts-comments
-    removeDtsComments(buildPath, 'esm');
-  };
-
-  if (env === 'production') {
-    await buildCJS();
-  }
-  await buildEMS();
+  // remove dts-comments
+  removeDtsComments(buildPath);
 
   if (cb) cb();
 }
