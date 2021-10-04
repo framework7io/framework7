@@ -1,6 +1,7 @@
 /* eslint no-underscore-dangle: "off" */
 import { f7events, f7routers } from './f7';
 import { extend, getComponentId } from './utils';
+import { routerOpenIn } from './router-open-in';
 
 const getChildrenArray = (el) => {
   const arr = [];
@@ -18,6 +19,9 @@ const hasSameChildren = (childrenBefore, childrenAfter) => {
 
 export default {
   proto: {
+    openIn(router, navigateUrl, options) {
+      return routerOpenIn(router, navigateUrl, options);
+    },
     pageComponentLoader({ routerEl, component, options, resolve, reject }) {
       const router = this;
       const routerId = router.id;
