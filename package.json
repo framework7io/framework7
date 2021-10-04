@@ -59,12 +59,11 @@
     "url": "https://www.patreon.com/framework7"
   },
   "browserslist": [
-    "Android >= 7",
-    "IOS >= 11",
-    "Safari >= 11",
-    "Chrome >= 49",
-    "Firefox >= 52",
-    "Samsung >= 6"
+    "IOS >= 13",
+    "Safari >= 13",
+    "last 5 Chrome versions",
+    "last 5 Firefox versions",
+    "Samsung >= 12"
   ],
   "dependencies": {
     "dom7": "^4.0.0",
@@ -72,7 +71,7 @@
     "path-to-regexp": "^6.2.0",
     "skeleton-elements": "^4.0.0-beta.2",
     "ssr-window": "^4.0.0",
-    "swiper": "^7.0.7"
+    "swiper": "^7.0.8"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.16",
