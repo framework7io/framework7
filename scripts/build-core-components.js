@@ -17,47 +17,6 @@ function base64Encode(file) {
 
 function build(cb) {
   const output = `${getOutput()}/core`;
-  // components package.json
-  const componentsFolders = fs.readdirSync('./src/core/components').filter((folder) => {
-    return fsNative.lstatSync(`./src/core/components/${folder}`).isDirectory();
-  });
-  componentsFolders.forEach((component) => {
-    const json = JSON.stringify(
-      {
-        name: `framework7/${component}`,
-        private: true,
-        sideEffects: false,
-        main: `../../cjs/components/${component}/${component}.js`,
-        module: `../../esm/components/${component}/${component}.js`,
-        'jsnext:main': `../../esm/components/${component}/${component}.js`,
-        typings: `../../types/components/${component}/${component}.d.ts`,
-      },
-      '',
-      2,
-    );
-    fs.writeFileSync(`${output}/components/${component}/package.json`, json);
-  });
-
-  // modules package.json
-  const modulesFolders = fs.readdirSync('./src/core/modules').filter((folder) => {
-    return fsNative.lstatSync(`./src/core/modules/${folder}`).isDirectory();
-  });
-  modulesFolders.forEach((moduleName) => {
-    const json = JSON.stringify(
-      {
-        name: `framework7/${moduleName}`,
-        private: true,
-        sideEffects: false,
-        main: `../../cjs/modules/${moduleName}/${moduleName}.js`,
-        module: `../../esm/modules/${moduleName}/${moduleName}.js`,
-        'jsnext:main': `../../esm/modules/${moduleName}/${moduleName}.js`,
-        typings: `../../types/modules/${moduleName}/${moduleName}.d.ts`,
-      },
-      '',
-      2,
-    );
-    fs.writeFileSync(`${output}/modules/${moduleName}/package.json`, json);
-  });
 
   // process modules
   glob('**/*.*', { cwd: path.resolve(__dirname, '../src/core/modules') }, (err, files) => {

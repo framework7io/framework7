@@ -16,10 +16,10 @@ const getOutput = require('./get-output');
 const fs = require('./utils/fs-extra');
 
 let cache;
-async function modular({ components, format }) {
+async function modular({ components }) {
   const outputDir = path.resolve(`${getOutput()}`, 'core');
   await exec.promise(
-    `MODULES=${format} npx babel src/core --out-dir ${outputDir}/${format} --ignore "src/core/icons/**/*.*","src/core/less/*.js","src/core/*.js"`,
+    `MODULES=esm npx babel src/core --out-dir ${outputDir} --ignore "src/core/icons/**/*.*","src/core/less/*.js","src/core/*.js"`,
   );
   const removeUMD = (content) => {
     return `${content.split('// UMD_ONLY_START')[0]}${content.split('// UMD_ONLY_END')[1] || ''}`;
@@ -87,42 +87,58 @@ async function modular({ components, format }) {
   const liteBundleContent = bundleComponents(liteSrc, true);
 
   // Save core
-  fs.writeFileSync(`${outputDir}/${format}/framework7.js`, coreContent);
+  fs.writeFileSync(`${outputDir}/framework7.esm.js`, coreContent);
   // Save bundle
-  fs.writeFileSync(`${outputDir}/${format}/framework7-bundle.js`, bundleContent);
+  fs.writeFileSync(`${outputDir}/framework7-bundle.esm.js`, bundleContent);
 
   // Save lite
-  fs.writeFileSync(`${outputDir}/${format}/framework7-lite.js`, liteContent);
+  fs.writeFileSync(`${outputDir}/framework7-lite.esm.js`, liteContent);
   // Save lite bundle
-  fs.writeFileSync(`${outputDir}/${format}/framework7-lite-bundle.js`, liteBundleContent);
+  fs.writeFileSync(`${outputDir}/framework7-lite-bundle.esm.js`, liteBundleContent);
 
   const files = [
-    'framework7.js',
-    'framework7-bundle.js',
-    'framework7-lite.js',
-    'framework7-lite-bundle.js',
+    'framework7.esm.js',
+    'framework7-bundle.esm.js',
+    'framework7-lite.esm.js',
+    'framework7-lite-bundle.esm.js',
   ];
 
   // eslint-disable-next-line
   for (let fileName of files) {
     // eslint-disable-next-line
     await exec.promise(
-      `MODULES=${format} npx babel ${outputDir}/${format}/${fileName} --out-file ${outputDir}/${format}/${fileName}`,
+      `MODULES=esm npx babel ${outputDir}/${fileName} --out-file ${outputDir}/${fileName}`,
     );
   }
 
   // update swipers
-  const swiperContent = fs.readFileSync(
-    `${outputDir}/${format}/components/swiper/swiper.js`,
-    'utf-8',
-  );
-  fs.writeFileSync(`${outputDir}/${format}/components/swiper/swiper.js`, removeUMD(swiperContent));
+  const swiperContent = fs.readFileSync(`${outputDir}/components/swiper/swiper.js`, 'utf-8');
+  fs.writeFileSync(`${outputDir}/components/swiper/swiper.js`, removeUMD(swiperContent));
 
   // add banners
   files.forEach((fileName) => {
-    const fileContentt = fs.readFileSync(`${outputDir}/${format}/${fileName}`, 'utf-8');
-    fs.writeFileSync(`${outputDir}/${format}/${fileName}`, `${banner}\n${fileContentt}`);
+    const fileContentt = fs.readFileSync(`${outputDir}/${fileName}`, 'utf-8');
+    fs.writeFileSync(`${outputDir}/${fileName}`, `${banner}\n${fileContentt}`);
   });
+
+  // update package.json
+  if (process.env.NODE_ENV === 'production') {
+    // eslint-disable-next-line
+    const targetPkg = require(`${outputDir}/package.json`);
+    Object.keys(targetPkg.exports).forEach((key) => {
+      if (key[0] === './components/') delete targetPkg.exports[key];
+    });
+    components.forEach((c) => {
+      targetPkg.exports[`./components/${c.name}`] = `./components/${c.name}/${c.name}.js`;
+      targetPkg.exports[`./components/${c.name}/less`] = `./components/${c.name}/${c.name}.less`;
+      targetPkg.exports[`./components/${c.name}/css`] = `./components/${c.name}/${c.name}.css`;
+      // eslint-disable-next-line
+      targetPkg.exports[
+        `./components/${c.name}/css/rtl`
+      ] = `./components/${c.name}/${c.name}-rtl.css`;
+    });
+    fs.writeFileSync(`${outputDir}/package.json`, `${JSON.stringify(targetPkg, '', 2)}\n`);
+  }
 }
 
 async function umdBundle({ components } = {}) {
@@ -292,8 +308,7 @@ async function buildJs(cb) {
   });
 
   if (!process.env.CORE_BUILD_ONLY_UMD) {
-    await modular({ components, format: 'cjs' });
-    await modular({ components, format: 'esm' });
+    await modular({ components });
   }
 
   if (!process.env.CORE_BUILD_ONLY_MODULES) {
