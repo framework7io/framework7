@@ -5,9 +5,9 @@
   import { restProps } from '../shared/rest-props';
   import { app, f7ready } from '../shared/f7';
 
-  import CardHeader from './card-header';
-  import CardContent from './card-content';
-  import CardFooter from './card-footer';
+  import CardHeader from './card-header.svelte';
+  import CardContent from './card-content.svelte';
+  import CardFooter from './card-footer.svelte';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 

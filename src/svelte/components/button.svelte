@@ -13,8 +13,8 @@
   import { useRouteProps } from '../shared/use-route-props';
   import { useIcon } from '../shared/use-icon';
 
-  import UseIcon from './use-icon';
-  import Preloader from './preloader';
+  import UseIcon from './use-icon.svelte';
+  import Preloader from './preloader.svelte';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -158,7 +158,6 @@
       {/if}
       <slot />
     {/if}
-
   </button>
 {:else}
   <a

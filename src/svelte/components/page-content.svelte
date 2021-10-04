@@ -6,7 +6,7 @@
   import { app, f7ready } from '../shared/f7';
   import { useTab } from '../shared/use-tab';
 
-  import Preloader from './preloader';
+  import Preloader from './preloader.svelte';
 
   const emit = createEmitter(createEventDispatcher, $$props);
   export let tab = false;

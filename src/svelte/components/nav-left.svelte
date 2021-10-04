@@ -5,7 +5,7 @@
   import { restProps } from '../shared/rest-props';
   import { useTheme } from '../shared/use-theme';
 
-  import Link from './link';
+  import Link from './link.svelte';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -51,7 +51,8 @@
       force={backLinkForce || undefined}
       class={!backLinkText ? 'icon-only' : undefined}
       text={backLinkText}
-      onClick={onBackClick} />
+      onClick={onBackClick}
+    />
   {/if}
   <slot />
 </div>

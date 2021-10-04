@@ -12,7 +12,7 @@
   import { app, f7ready } from '../shared/f7';
   import { useIcon } from '../shared/use-icon';
 
-  import UseIcon from './use-icon';
+  import UseIcon from './use-icon.svelte';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 

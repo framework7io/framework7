@@ -6,7 +6,7 @@
   import { getRouterInitialComponent } from '../shared/get-router-initial-component';
   import { useTab } from '../shared/use-tab';
 
-  import RouterContextProvider from './router-context-provider';
+  import RouterContextProvider from './router-context-provider.svelte';
 
   export let id = undefined;
   export let style = undefined;

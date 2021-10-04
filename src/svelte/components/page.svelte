@@ -5,7 +5,7 @@
   import { classNames, createEmitter } from '../shared/utils';
   import { app, f7ready } from '../shared/f7';
 
-  import PageContent from './page-content';
+  import PageContent from './page-content.svelte';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 

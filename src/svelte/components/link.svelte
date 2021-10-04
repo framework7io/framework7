@@ -15,8 +15,8 @@
   import { useIcon } from '../shared/use-icon';
   import { getReactiveContext } from '../shared/get-reactive-context';
 
-  import UseIcon from './use-icon';
-  import Badge from './badge';
+  import UseIcon from './use-icon.svelte';
+  import Badge from './badge.svelte';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 

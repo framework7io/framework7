@@ -15,7 +15,7 @@
   import { useRouteProps } from '../shared/use-route-props';
   import { getReactiveContext } from '../shared/get-reactive-context';
 
-  import Badge from './badge';
+  import Badge from './badge.svelte';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 

@@ -5,8 +5,8 @@
   import { restProps } from '../shared/rest-props';
   import { app, f7ready } from '../shared/f7';
 
-  import Link from './link';
-  import Input from './input';
+  import Link from './link.svelte';
+  import Input from './input.svelte';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 

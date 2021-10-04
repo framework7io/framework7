@@ -4,9 +4,9 @@
   import { classNames, createEmitter } from '../shared/utils';
   import { restProps } from '../shared/rest-props';
   import { app, f7ready } from '../shared/f7';
-  import Toggle from './toggle';
-  import Range from './range';
-  import TextEditor from './text-editor';
+  import Toggle from './toggle.svelte';
+  import Range from './range.svelte';
+  import TextEditor from './text-editor.svelte';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 

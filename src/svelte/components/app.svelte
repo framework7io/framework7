@@ -4,7 +4,7 @@
   import { colorClasses } from '../shared/mixins';
   import { classNames, noUndefinedProps } from '../shared/utils';
 
-  import RoutableModals from './routable-modals';
+  import RoutableModals from './routable-modals.svelte';
 
   let className = undefined;
   export { className as class };

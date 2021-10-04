@@ -14,7 +14,7 @@
   import { useRouteProps } from '../shared/use-route-props';
   import { useIcon } from '../shared/use-icon';
 
-  import UseIcon from './use-icon';
+  import UseIcon from './use-icon.svelte';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 

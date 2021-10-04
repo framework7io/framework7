@@ -6,7 +6,7 @@
   import { app, f7ready } from '../shared/f7';
   import { getReactiveContext } from '../shared/get-reactive-context';
 
-  import TextEditor from './text-editor';
+  import TextEditor from './text-editor.svelte';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
