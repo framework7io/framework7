@@ -129,7 +129,7 @@ function buildTypings(cb) {
       reactContent,
     );
 
-    fs.writeFileSync(`${output}/components/${fileBase}/${fileBase}.d.ts`, typingsContent);
+    fs.writeFileSync(`${output}/components/${fileBase}.d.ts`, typingsContent);
   });
 
   const mainTypings = fs
