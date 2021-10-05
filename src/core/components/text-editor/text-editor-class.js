@@ -479,7 +479,7 @@ class TextEditor extends Framework7Class {
     const self = this;
     self.popover = self.app.popover.create({
       content: `
-        <div class="popover theme-dark text-editor-popover">
+        <div class="popover dark text-editor-popover">
           <div class="popover-inner">${self.renderButtons()}</div>
         </div>
       `,

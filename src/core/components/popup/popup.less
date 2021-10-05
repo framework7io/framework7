@@ -18,8 +18,8 @@
   z-index: 11000;
   overflow: hidden;
   border-radius: var(--f7-popup-border-radius);
-  .theme-dark &,
-  &.theme-dark {
+  .dark &,
+  &.dark {
     background: #000;
   }
   &.modal-in,
@@ -105,14 +105,14 @@ html.with-modal-popup-push-closing {
   }
 
   .if-dark-theme({
-    &.theme-dark .framework7-root > .views,
-    &.theme-dark .framework7-root > .view,
-    .theme-dark .framework7-root > .views,
-    .theme-dark .framework7-root > .view,
-    .theme-dark.framework7-root > .views,
-    .theme-dark.framework7-root > .view,
-    .framework7-root > .views.theme-dark,
-    .framework7-root > .view.theme-dark {
+    &.dark .framework7-root > .views,
+    &.dark .framework7-root > .view,
+    .dark .framework7-root > .views,
+    .dark .framework7-root > .view,
+    .dark.framework7-root > .views,
+    .dark.framework7-root > .view,
+    .framework7-root > .views.dark,
+    .framework7-root > .view.dark {
       &:after {
         content: '';
         position: absolute;
@@ -155,9 +155,9 @@ html.with-modal-popup-push {
     opacity: 0;
   }
   .if-dark-theme({
-    &.theme-dark .popup:after,
-    .theme-dark .popup:after,
-    .theme-dark.popup:after {
+    &.dark .popup:after,
+    .dark .popup:after,
+    .dark.popup:after {
       background: rgba(255,255,255,0.05);
     }
   });
@@ -187,14 +187,14 @@ html.with-modal-popup-push {
 
 .if-dark-theme({
   html.with-modal-popup-push-closing {
-    &.theme-dark .framework7-root > .views,
-    &.theme-dark .framework7-root > .view,
-    .theme-dark .framework7-root > .views,
-    .theme-dark .framework7-root > .view,
-    .theme-dark.framework7-root > .views,
-    .theme-dark.framework7-root > .view,
-    .framework7-root > .views.theme-dark,
-    .framework7-root > .view.theme-dark {
+    &.dark .framework7-root > .views,
+    &.dark .framework7-root > .view,
+    .dark .framework7-root > .views,
+    .dark .framework7-root > .view,
+    .dark.framework7-root > .views,
+    .dark.framework7-root > .view,
+    .framework7-root > .views.dark,
+    .framework7-root > .view.dark {
       &:after {
         animation: popup-dark-push-overlay-fade-out var(--f7-popup-transition-duration) forwards;
       }
