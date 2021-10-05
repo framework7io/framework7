@@ -26,7 +26,7 @@ export default {
     language: { type: String, default: undefined },
     routes: { type: Array, default: () => [] },
     store: Object,
-    autoDarkTheme: { type: Boolean, default: undefined },
+    autoDarkMode: { type: Boolean, default: undefined },
     lazyModulesPath: { type: String, default: undefined },
     initOnDeviceReady: { type: Boolean, default: undefined },
     iosTranslucentBars: { type: Boolean, default: undefined },
