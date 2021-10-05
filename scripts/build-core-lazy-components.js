@@ -244,7 +244,7 @@ function buildLazyComponentsJs(components, cb) {
         fileContent = `(${fileContent}(Framework7, typeof Framework7AutoInstallComponent === 'undefined' ? undefined : Framework7AutoInstallComponent))`;
 
         fs.writeFileSync(
-          `${output}/components/${fileName.split('.js')[0]}/${fileName.replace('.js', '.umd.js')}`,
+          `${output}/components/${fileName.split('.js')[0]}/${fileName.replace('.js', '.lazy.js')}`,
           `${fileContent}\n`,
         );
 

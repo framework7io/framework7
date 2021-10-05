@@ -41,7 +41,7 @@ function loadModule(moduleToLoad) {
           );
           return;
         }
-        modulePath = `${app.params.lazyModulesPath}/${moduleToLoad}/${moduleToLoad}.js`;
+        modulePath = `${app.params.lazyModulesPath}/${moduleToLoad}/${moduleToLoad}.lazy.js`;
       } else {
         modulePath = moduleToLoad;
       }
@@ -134,7 +134,9 @@ function loadModule(moduleToLoad) {
       });
       const styleLoad = new Promise((resolveStyle) => {
         Framework7.request.get(
-          modulePath.replace('.js', app.rtl ? '.rtl.css' : '.css'),
+          modulePath
+            .replace('.lazy.js', app.rtl ? '.rtl.css' : '.css')
+            .replace('.js', app.rtl ? '.rtl.css' : '.css'),
           (styleContent) => {
             const styleEl = document.createElement('style');
             styleEl.innerHTML = styleContent;
