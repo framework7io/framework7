@@ -53,8 +53,8 @@ export interface Framework7Parameters {
   language?: string;
   /** Array with default routes to all views.. (default []) */
   routes?: Router.RouteParameters[];
-  /** Enables auto dark theme */
-  autoDarkTheme?: boolean;
+  /** Enables auto dark mode */
+  autoDarkMode?: boolean;
   /** Lazy modules path */
   lazyModulesPath?: string;
   /** By default Framework7 will be initialized automatically when you call new Framework7(). If you want to prevent this behavior you can disable it with this option and then initialize it manually with init() when you need it.. (default true) */
@@ -116,8 +116,8 @@ export interface Framework7Plugin {
 export interface Framework7Events {
   /** Event will be fired on app initialization. Automatically after new Framework7() or after app.init() if you disabled auto init. */
   init: () => void;
-  /** Event will be fired on device preferred color scheme change. It has effect only when `autoDarkTheme` enabled */
-  darkThemeChange: (isDark: boolean) => void;
+  /** Event will be fired on device preferred color scheme change. It has effect only when `autoDarkMode` enabled */
+  darkModeChange: (isDark: boolean) => void;
   /** Event will be fired when app goes online */
   online: () => void;
   /** Event will be fired when app goes offline */
@@ -145,8 +145,8 @@ interface Framework7 extends Framework7Class<Framework7Events> {
   rtl: boolean;
   /** Current app theme. Can be md, ios or aurora */
   theme: string;
-  /** Indicates whether the dark theme active or not. This property has effect only when `autoDarkTheme` enabled */
-  darkTheme: boolean;
+  /** Indicates whether the dark theme active or not. This property has effect only when `autoDarkMode` enabled */
+  darkMode: boolean;
   /** Object with app root data passed on intialization */
   data: any;
   /** Object with app root methods */
@@ -159,10 +159,10 @@ interface Framework7 extends Framework7Class<Framework7Events> {
   $: Dom7;
   /** App parameters */
   params: Framework7Parameters;
-  /** Enables auto dark theme detection */
-  enableAutoDarkTheme(): void;
-  /** Disables auto dark theme detection */
-  disableAutoDarkTheme(): void;
+  /** Enables auto dark mode detection */
+  enableAutoDarkMode(): void;
+  /** Disables auto dark mode detection */
+  disableAutoDarkMode(): void;
   /** Initialize app. In case you disabled auto initialization with init: false parameter */
   init(): void;
   /** Load module */

@@ -46,7 +46,7 @@ class Framework7 extends Framework7Class {
       lazyModulesPath: null,
       initOnDeviceReady: true,
       init: true,
-      autoDarkTheme: false,
+      autoDarkMode: false,
       iosTranslucentBars: true,
       iosTranslucentModals: true,
       component: undefined,
@@ -142,13 +142,13 @@ class Framework7 extends Framework7Class {
       }
       const html = document.querySelector('html');
       if (media === DARK) {
-        html.classList.add('theme-dark');
-        app.darkTheme = true;
-        app.emit('darkThemeChange', true);
+        html.classList.add('dark');
+        app.darkMode = true;
+        app.emit('darkModeChange', true);
       } else if (media === LIGHT) {
-        html.classList.remove('theme-dark');
-        app.darkTheme = false;
-        app.emit('darkThemeChange', false);
+        html.classList.remove('dark');
+        app.darkMode = false;
+        app.emit('darkModeChange', false);
       }
     };
     app.emit('mount');
@@ -163,7 +163,7 @@ class Framework7 extends Framework7Class {
     }
   }
 
-  enableAutoDarkTheme() {
+  enableAutoDarkMode() {
     const window = getWindow();
     const document = getDocument();
     if (!window.matchMedia) return;
@@ -174,17 +174,17 @@ class Framework7 extends Framework7Class {
       app.mq.light.addListener(app.colorSchemeListener);
     }
     if (app.mq.dark && app.mq.dark.matches) {
-      html.classList.add('theme-dark');
-      app.darkTheme = true;
-      app.emit('darkThemeChange', true);
+      html.classList.add('dark');
+      app.darkMode = true;
+      app.emit('darkModeChange', true);
     } else if (app.mq.light && app.mq.light.matches) {
-      html.classList.remove('theme-dark');
-      app.darkTheme = false;
-      app.emit('darkThemeChange', false);
+      html.classList.remove('dark');
+      app.darkMode = false;
+      app.emit('darkModeChange', false);
     }
   }
 
-  disableAutoDarkTheme() {
+  disableAutoDarkMode() {
     const window = getWindow();
     if (!window.matchMedia) return;
     const app = this;
@@ -225,8 +225,8 @@ class Framework7 extends Framework7Class {
       }
 
       // Auto Dark Theme
-      if (app.params.autoDarkTheme) {
-        app.enableAutoDarkTheme();
+      if (app.params.autoDarkMode) {
+        app.enableAutoDarkMode();
       }
 
       // Watch for online/offline state
