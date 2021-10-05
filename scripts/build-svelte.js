@@ -13,6 +13,9 @@ async function buildSvelte(cb) {
   const buildPath = getOutput();
 
   const files = fs.readdirSync('src/svelte/components').filter((file) => file.indexOf('.d.ts') < 0);
+  const svelteShared = fs
+    .readdirSync('src/svelte/shared')
+    .filter((file) => file.indexOf('.svelte') > 0);
   const componentImports = [];
   const componentExports = [];
   const svelteComponents = [];
@@ -46,6 +49,9 @@ async function buildSvelte(cb) {
       `src/svelte/components/${fileName}`,
       `${buildPath}/svelte/components/${fileName}`,
     );
+  });
+  svelteShared.forEach((fileName) => {
+    fs.copyFileSync(`src/svelte/shared/${fileName}`, `${buildPath}/svelte/shared/${fileName}`);
   });
 
   const esmContent = fs.readFileSync(`${buildPath}/svelte/framework7-svelte.js`, 'utf-8');

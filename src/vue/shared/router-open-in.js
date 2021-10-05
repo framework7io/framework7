@@ -76,7 +76,6 @@ export const routerOpenIn = (router, url, options) => {
     const parts = options.openIn.split(':');
     const side = parts[1] || 'left';
     const effect = parts[2] || 'cover';
-    params.targetEl = options.clickedEl || options.targetEl;
     params.component = {
       setup() {
         return () =>
