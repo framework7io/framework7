@@ -79,7 +79,7 @@
   display: block;
   position: relative;
 }
-.theme-dark .demo-list-icon {
+.dark .demo-list-icon {
   background-color: #555;
 }
 .icon-f7 {
@@ -200,7 +200,7 @@ div.demo-lazy {
   align-items: center;
   justify-content: center;
 }
-.theme-dark .grid-demo div[class*='col'] {
+.dark .grid-demo div[class*='col'] {
   background-color: #000;
   color: #fff;
   border-color: #444;
@@ -235,7 +235,7 @@ div.demo-lazy {
 .demo-facebook-card .card-footer {
   background: #fafafa;
 }
-.theme-dark .demo-facebook-card .card-footer {
+.dark .demo-facebook-card .card-footer {
   background-color: transparent;
 }
 .demo-facebook-card .card-footer a {
@@ -267,8 +267,8 @@ div.demo-lazy {
   background: #ddd;
   z-index: 1000;
 }
-.ios .theme-dark .panel-right.panel-in ~ .view-main:after,
-.ios .theme-dark .panel-right.panel-out ~ .view-main:after {
+.ios .dark .panel-right.panel-in ~ .view-main:after,
+.ios .dark .panel-right.panel-out ~ .view-main:after {
   background: #282828;
 }
 
@@ -282,7 +282,7 @@ div.demo-lazy {
   background: #ddd;
   z-index: 1000;
 }
-.ios .theme-dark .panel-left:after {
+.ios .dark .panel-left:after {
   background: #282828;
 }
 
@@ -466,7 +466,7 @@ code {
   padding: 5px;
   font-size: 12px;
 }
-.theme-dark code {
+.dark code {
   background: #000;
 }
 .demo-icon {
@@ -475,7 +475,7 @@ code {
   margin-bottom: 15px;
   color: #333;
 }
-.theme-dark .demo-icon {
+.dark .demo-icon {
   color: #fff;
 }
 .demo-icon .demo-icon-name {
@@ -485,7 +485,7 @@ code {
   text-overflow: ellipsis;
   overflow: hidden;
 }
-.theme-dark .demo-icon .demo-icon-name {
+.dark .demo-icon .demo-icon-name {
   color: #aaa;
 }
 #calendar,
@@ -523,7 +523,7 @@ code {
     margin-left: 50% !important;
     border-left: 1px solid #eee;
   }
-  .theme-dark #calendar-events {
+  .dark #calendar-events {
     border-left-color: #282828;
   }
 }
@@ -536,7 +536,7 @@ code {
   text-align: center;
   line-height: 100px;
 }
-.theme-dark .elevation-demo {
+.dark .elevation-demo {
   background: none;
 }
 /* Demo Color Themes */
@@ -604,7 +604,7 @@ code {
   background: #f7f7f8;
   border-color: rgba(0, 0, 0, 0.1);
 }
-.theme-dark .demo-bars-picker-empty .demo-navbar {
+.dark .demo-bars-picker-empty .demo-navbar {
   background: #1b1b1b;
   border-color: #282829;
 }
@@ -709,8 +709,8 @@ code {
   --f7-block-strong-border-color: transparent;
   --f7-block-font-size: 16px;
 }
-:root:not(.theme-dark) .page-home,
-:root:not(.theme-dark) .page-about {
+:root:not(.dark) .page-home,
+:root:not(.dark) .page-about {
   --f7-page-bg-color: #fff;
 }
 
