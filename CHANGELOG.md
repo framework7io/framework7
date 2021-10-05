@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [7.0.0-beta.4](https://github.com/framework7io/framework7/compare/v7.0.0-beta.3...v7.0.0-beta.4) (2021-10-05)
+
+### Features
+
+- use `.lazy` prefix for browser loaded JS lazy components ([d419269](https://github.com/framework7io/framework7/commit/d419269d3c9ec36efab057ad21eb76ec6c185382))
+
 # [7.0.0-beta.3](https://github.com/framework7io/framework7/compare/v7.0.0-beta.2...v7.0.0-beta.3) (2021-10-05)
 
 ### Features
