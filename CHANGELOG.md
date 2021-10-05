@@ -2,6 +2,28 @@
 
 # Change Log
 
+# [7.0.0-beta.3](https://github.com/framework7io/framework7/compare/v7.0.0-beta.2...v7.0.0-beta.3) (2021-10-05)
+
+### Features
+
+- use new dark classes in Kitchen Sink ([f61cace](https://github.com/framework7io/framework7/commit/f61cace2b2cf9418e17dda03469902cdf6d390dd))
+- **core:** rename "theme-dark" class for dark mode to "dark" ([8144a59](https://github.com/framework7io/framework7/commit/8144a59d24dd40515b2d3f9282f95f03646bc449))
+- **core:** rename dark mode params, props, events and methods ([e283e8b](https://github.com/framework7io/framework7/commit/e283e8b78c8bd7bc3c35b2c4abad2c933bab182b))
+  - App parameter: `autoDarkTheme` -> `autoDarkMode`
+  - App event: `darkThemeChange` -> `darkModeChange`
+  - App prop: `darkTheme` -> `darkMode`
+  - App methods:
+    - `enableAutoDarkTheme` -> `enableAutoDarkMode`
+    - `disableAutoDarkTheme` -> `disableAutoDarkMode`
+- **react:** rename components `themeDark` prop to `dark` ([0dd8967](https://github.com/framework7io/framework7/commit/0dd89675ef7e2061c27a4137bb768a88de86e426))
+- **react:** support `open-in` functionality with react components router ([8894a77](https://github.com/framework7io/framework7/commit/8894a77f87b0e49d1e38c2f74734405b64306258))
+- **router:** move `open-in` functionality to component router ([7877e59](https://github.com/framework7io/framework7/commit/7877e590fa32cccd394911749f0be2bccc88f4c5))
+- **svelte:** rename components `themeDark` prop to `dark` ([f75b582](https://github.com/framework7io/framework7/commit/f75b582860cc3f045ca20bc778e3123a49a378a3))
+- **svelte:** support `open-in` functionality with svelte components router ([e03477e](https://github.com/framework7io/framework7/commit/e03477e8cf406a57ade823a1199cb1093dab0533))
+- **vue:** rename App's prop `autoDarkTheme` to `autoDarkMode` ([0be0730](https://github.com/framework7io/framework7/commit/0be07307e77fe393fb54e008d8dfb74f291d45dd))
+- **vue:** rename components `themeDark` prop to `dark` ([1b857bf](https://github.com/framework7io/framework7/commit/1b857bfa50c9791b0c1894e0c79682d04eced586))
+- **vue:** support `open-in` functionality with vue components route ([6610feb](https://github.com/framework7io/framework7/commit/6610febe13dbed7eb88707a3460d2a133e09131a))
+
 # [7.0.0-beta.1](https://github.com/framework7io/framework7/compare/v6.3.5...v7.0.0-beta.1) (2021-10-04)
 
 ### Features
