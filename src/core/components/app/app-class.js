@@ -128,7 +128,7 @@ class Framework7 extends Framework7Class {
       app.rtl = $rootEl.css('direction') === 'rtl';
     }
 
-    // Auto Dark Theme
+    // Auto Dark Mode
     const DARK = '(prefers-color-scheme: dark)';
     const LIGHT = '(prefers-color-scheme: light)';
     app.mq = {};
@@ -224,7 +224,7 @@ class Framework7 extends Framework7Class {
         $('html').attr('dir', 'rtl');
       }
 
-      // Auto Dark Theme
+      // Auto Dark Mode
       if (app.params.autoDarkMode) {
         app.enableAutoDarkMode();
       }
