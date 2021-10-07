@@ -145,7 +145,7 @@ interface Framework7 extends Framework7Class<Framework7Events> {
   rtl: boolean;
   /** Current app theme. Can be md, ios or aurora */
   theme: string;
-  /** Indicates whether the dark theme active or not. This property has effect only when `autoDarkMode` enabled */
+  /** Indicates whether the dark mode active or not. This property has effect only when `autoDarkMode` enabled */
   darkMode: boolean;
   /** Object with app root data passed on intialization */
   data: any;
