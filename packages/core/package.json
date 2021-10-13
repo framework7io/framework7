@@ -1,6 +1,6 @@
 {
   "name": "framework7",
-  "version": "7.0.0-beta.6",
+  "version": "7.0.0-beta.8",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "type": "module",
   "exports": {
@@ -294,7 +294,7 @@
     "dom7": "^4.0.0",
     "htm": "^3.1.0",
     "path-to-regexp": "^6.2.0",
-    "skeleton-elements": "^4.0.0-beta.2",
+    "skeleton-elements": "^4.0.0-beta.6",
     "ssr-window": "^4.0.0",
     "swiper": "^7.0.8"
   }
