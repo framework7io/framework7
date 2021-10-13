@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [7.0.0-beta.6](https://github.com/framework7io/framework7/compare/v7.0.0-beta.5...v7.0.0-beta.6) (2021-10-13)
+
+### Bug Fixes
+
+- **vue:** fix missing imports extensions ([3692e28](https://github.com/framework7io/framework7/commit/3692e28d676e478b7dc2cca47262c6e02b5ee8d7))
+
 # [7.0.0-beta.5](https://github.com/framework7io/framework7/compare/v7.0.0-beta.4...v7.0.0-beta.5) (2021-10-13)
 
 ### Bug Fixes
