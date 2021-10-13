@@ -1,7 +1,7 @@
-import $ from '../../shared/dom7';
-import { extend } from '../../shared/utils';
-import SmartSelect from './smart-select-class';
-import ConstructorMethods from '../../shared/constructor-methods';
+import $ from '../../shared/dom7.js';
+import { extend } from '../../shared/utils.js';
+import SmartSelect from './smart-select-class.js';
+import ConstructorMethods from '../../shared/constructor-methods.js';
 
 export default {
   name: 'smartSelect',

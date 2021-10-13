@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import { onMount, onDestroy } from 'svelte';
-import { f7ready, app } from './f7';
-import { extend } from './utils';
+import { f7ready, app } from './f7.js';
+import { extend } from './utils.js';
 
 export const useSmartSelect = (props, setInstance, getEl) => {
   let f7SmartSelect;

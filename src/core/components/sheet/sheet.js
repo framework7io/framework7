@@ -1,7 +1,7 @@
-import $ from '../../shared/dom7';
-import { extend } from '../../shared/utils';
-import Sheet from './sheet-class';
-import ModalMethods from '../../shared/modal-methods';
+import $ from '../../shared/dom7.js';
+import { extend } from '../../shared/utils.js';
+import Sheet from './sheet-class.js';
+import ModalMethods from '../../shared/modal-methods.js';
 
 export default {
   name: 'sheet',

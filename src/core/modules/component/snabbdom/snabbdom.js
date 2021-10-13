@@ -1,6 +1,6 @@
-import vnode from './vnode';
-import * as is from './is';
-import htmlDomApi from './htmldomapi';
+import vnode from './vnode.js';
+import * as is from './is.js';
+import htmlDomApi from './htmldomapi.js';
 function isUndef(s) { return s === undefined; }
 function isDef(s) { return s !== undefined; }
 var emptyNode = vnode('', {}, [], undefined, undefined);

@@ -6,14 +6,14 @@
     routerClasses,
     actionsAttrs,
     actionsClasses,
-  } from '../shared/mixins';
-  import { classNames, extend, isStringProp, plainText, createEmitter } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
-  import { useTooltip } from '../shared/use-tooltip';
-  import { useSmartSelect } from '../shared/use-smart-select';
-  import { useRouteProps } from '../shared/use-route-props';
-  import { useIcon } from '../shared/use-icon';
-  import { getReactiveContext } from '../shared/get-reactive-context';
+  } from '../shared/mixins.js';
+  import { classNames, extend, isStringProp, plainText, createEmitter } from '../shared/utils.js';
+  import { restProps } from '../shared/rest-props.js';
+  import { useTooltip } from '../shared/use-tooltip.js';
+  import { useSmartSelect } from '../shared/use-smart-select.js';
+  import { useRouteProps } from '../shared/use-route-props.js';
+  import { useIcon } from '../shared/use-icon.js';
+  import { getReactiveContext } from '../shared/get-reactive-context.js';
 
   import UseIcon from './use-icon.svelte';
   import Badge from './badge.svelte';

@@ -1,10 +1,10 @@
 /* eslint no-underscore-dangle: "off" */
 import { getWindow, getDocument } from 'ssr-window';
-import $ from '../../shared/dom7';
-import $h from './$h';
-import { id as generateId, merge, eventNameToColonCase, deleteProps } from '../../shared/utils';
-import vdom from './vdom';
-import patch from './patch';
+import $ from '../../shared/dom7.js';
+import $h from './$h.js';
+import { id as generateId, merge, eventNameToColonCase, deleteProps } from '../../shared/utils.js';
+import vdom from './vdom.js';
+import patch from './patch.js';
 
 class Component {
   constructor(app, component, props = {}, { el, context, children } = {}) {

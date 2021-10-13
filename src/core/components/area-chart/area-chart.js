@@ -1,6 +1,6 @@
-import $ from '../../shared/dom7';
-import AreaChart from './area-chart-class';
-import ConstructorMethods from '../../shared/constructor-methods';
+import $ from '../../shared/dom7.js';
+import AreaChart from './area-chart-class.js';
+import ConstructorMethods from '../../shared/constructor-methods.js';
 
 export default {
   name: 'areaChart',

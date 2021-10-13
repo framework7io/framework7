@@ -1,10 +1,10 @@
 <script>
   import { onMount, onDestroy, afterUpdate, createEventDispatcher, tick } from 'svelte';
-  import { app, f7ready } from '../shared/f7';
-  import { colorClasses } from '../shared/mixins';
-  import { classNames, noUndefinedProps, createEmitter, getRouterId } from '../shared/utils';
-  import { getRouterInitialComponent } from '../shared/get-router-initial-component';
-  import { useTab } from '../shared/use-tab';
+  import { app, f7ready } from '../shared/f7.js';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames, noUndefinedProps, createEmitter, getRouterId } from '../shared/utils.js';
+  import { getRouterInitialComponent } from '../shared/get-router-initial-component.js';
+  import { useTab } from '../shared/use-tab.js';
 
   import RouterContextProvider from './router-context-provider.svelte';
 

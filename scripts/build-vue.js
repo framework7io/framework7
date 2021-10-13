@@ -4,10 +4,10 @@
 /* eslint no-param-reassign: ["off"] */
 
 const exec = require('exec-sh');
-const bannerReact = require('./banners/vue');
-const getOutput = require('./get-output');
-const fs = require('./utils/fs-extra');
-const transformVueComponent = require('./transform-vue-component');
+const bannerReact = require('./banners/vue.js');
+const getOutput = require('./get-output.js');
+const fs = require('./utils/fs-extra.js');
+const transformVueComponent = require('./transform-vue-component.js');
 
 // Build Vue
 async function buildVue(cb) {

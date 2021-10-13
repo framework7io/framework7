@@ -1,8 +1,8 @@
-import $ from '../../shared/dom7';
-import { extend, now, nextTick } from '../../shared/utils';
-import Modal from '../modal/modal-class';
+import $ from '../../shared/dom7.js';
+import { extend, now, nextTick } from '../../shared/utils.js';
+import Modal from '../modal/modal-class.js';
 /** @jsx $jsx */
-import $jsx from '../../shared/$jsx';
+import $jsx from '../../shared/$jsx.js';
 
 class Notification extends Modal {
   constructor(app, params) {

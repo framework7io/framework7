@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
-import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { f7events, f7routers, f7 } from '../shared/f7';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
+import { f7events, f7routers, f7 } from '../shared/f7.js';
 
 /* dts-props
  */

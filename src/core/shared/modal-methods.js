@@ -1,6 +1,6 @@
-import $ from './dom7';
-import { extend } from './utils';
-import ConstructorMethods from './constructor-methods';
+import $ from './dom7.js';
+import { extend } from './utils.js';
+import ConstructorMethods from './constructor-methods.js';
 
 export default function ModalMethods(parameters = {}) {
   const { defaultSelector, constructor: Constructor, app } = parameters;

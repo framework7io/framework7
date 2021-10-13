@@ -1,13 +1,13 @@
 /* eslint-disable no-nested-ternary */
 import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
-import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getExtraAttrs, noUndefinedProps, emit, getRouterId } from '../shared/utils';
-import { colorClasses } from '../shared/mixins';
-import { f7ready, f7routers, f7, f7events } from '../shared/f7';
-import { useTab } from '../shared/use-tab';
-import { useAsyncComponent } from '../shared/use-async-component';
-import { getRouterInitialComponent } from '../shared/get-router-initial-component';
-import { RouterContext } from '../shared/router-context';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
+import { classNames, getExtraAttrs, noUndefinedProps, emit, getRouterId } from '../shared/utils.js';
+import { colorClasses } from '../shared/mixins.js';
+import { f7ready, f7routers, f7, f7events } from '../shared/f7.js';
+import { useTab } from '../shared/use-tab.js';
+import { useAsyncComponent } from '../shared/use-async-component.js';
+import { getRouterInitialComponent } from '../shared/get-router-initial-component.js';
+import { RouterContext } from '../shared/router-context.js';
 /* dts-imports
   import { View, Router } from 'framework7/types';
 */

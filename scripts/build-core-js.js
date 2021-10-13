@@ -10,10 +10,10 @@ const { default: babel } = require('@rollup/plugin-babel');
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const { minify } = require('terser');
 const commonjs = require('@rollup/plugin-commonjs');
-const getConfig = require('./get-core-config');
-const banner = require('./banners/core');
-const getOutput = require('./get-output');
-const fs = require('./utils/fs-extra');
+const getConfig = require('./get-core-config.js');
+const banner = require('./banners/core.js');
+const getOutput = require('./get-output.js');
+const fs = require('./utils/fs-extra.js');
 
 let cache;
 async function modular({ components }) {
@@ -36,7 +36,7 @@ async function modular({ components }) {
       .replace('//INSTALL_COMPONENTS\n', '')
       .replace(
         '//IMPORT_HELPERS',
-        "import request from './shared/request';\nimport * as utils from './shared/utils';\nimport { getSupport } from './shared/get-support';\nimport { getDevice } from './shared/get-device';",
+        "import request from './shared/request.js';\nimport * as utils from './shared/utils.js';\nimport { getSupport } from './shared/get-support.js';\nimport { getDevice } from './shared/get-device.js';",
       )
       .replace(
         '//NAMED_EXPORT',
@@ -61,7 +61,7 @@ async function modular({ components }) {
         comps
           .map(
             (component) =>
-              `import ${component.capitalized} from './components/${component.name}/${component.name}';`,
+              `import ${component.capitalized} from './components/${component.name}/${component.name}.js';`,
           )
           .join('\n'),
       )
@@ -71,7 +71,7 @@ async function modular({ components }) {
       )
       .replace(
         '//IMPORT_HELPERS',
-        "import request from './shared/request';\nimport * as utils from './shared/utils';\nimport { getSupport } from './shared/get-support';\nimport { getDevice } from './shared/get-device';",
+        "import request from './shared/request.js';\nimport * as utils from './shared/utils.js';\nimport { getSupport } from './shared/get-support.js';\nimport { getDevice } from './shared/get-device.js';",
       )
       .replace(
         '//NAMED_EXPORT',
@@ -159,7 +159,7 @@ async function umdBundle({ components } = {}) {
         '//IMPORT_COMPONENTS': components
           .map(
             (component) =>
-              `import ${component.capitalized} from './components/${component.name}/${component.name}';`,
+              `import ${component.capitalized} from './components/${component.name}/${component.name}.js';`,
           )
           .join('\n'),
         '//INSTALL_COMPONENTS': components.map((component) => component.capitalized).join(',\n  '),

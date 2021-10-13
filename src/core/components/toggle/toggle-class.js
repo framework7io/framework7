@@ -1,7 +1,7 @@
-import $ from '../../shared/dom7';
-import { extend, now, nextTick, deleteProps } from '../../shared/utils';
-import Framework7Class from '../../shared/class';
-import { getSupport } from '../../shared/get-support';
+import $ from '../../shared/dom7.js';
+import { extend, now, nextTick, deleteProps } from '../../shared/utils.js';
+import Framework7Class from '../../shared/class.js';
+import { getSupport } from '../../shared/get-support.js';
 
 class Toggle extends Framework7Class {
   constructor(app, params = {}) {

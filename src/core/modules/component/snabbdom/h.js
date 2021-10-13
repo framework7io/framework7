@@ -1,4 +1,4 @@
-import { vnode } from './vnode';
+import { vnode } from './vnode.js';
 import * as is from './is';
 function addNS(data, children, sel) {
     data.ns = 'http://www.w3.org/2000/svg';

@@ -1,7 +1,7 @@
-import $ from '../../../shared/dom7';
-import { colorHsbToHsl } from '../../../shared/utils';
+import $ from '../../../shared/dom7.js';
+import { colorHsbToHsl } from '../../../shared/utils.js';
 /** @jsx $jsx */
-import $jsx from '../../../shared/$jsx';
+import $jsx from '../../../shared/$jsx.js';
 
 export default {
   render(self) {

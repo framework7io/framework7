@@ -1,12 +1,12 @@
 <script>
 import { computed, ref, onMounted, onBeforeUnmount, h, watch, onUpdated } from 'vue';
-import { classNames, extend, noUndefinedProps } from '../shared/utils';
-import { colorClasses, colorProps } from '../shared/mixins';
-import { f7ready, f7 } from '../shared/f7';
+import { classNames, extend, noUndefinedProps } from '../shared/utils.js';
+import { colorClasses, colorProps } from '../shared/mixins.js';
+import { f7ready, f7 } from '../shared/f7.js';
 
-import f7Toggle from './toggle';
-import f7Range from './range';
-import f7TextEditor from './text-editor';
+import f7Toggle from './toggle.js';
+import f7Range from './range.js';
+import f7TextEditor from './text-editor.js';
 
 export default {
   name: 'f7-input',

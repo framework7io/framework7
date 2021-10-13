@@ -1,5 +1,5 @@
-import Actions from './actions-class';
-import ModalMethods from '../../shared/modal-methods';
+import Actions from './actions-class.js';
+import ModalMethods from '../../shared/modal-methods.js';
 
 export default {
   name: 'actions',

@@ -1,7 +1,7 @@
-import $ from '../../shared/dom7';
-import { extend } from '../../shared/utils';
-import TextEditor from './text-editor-class';
-import ConstructorMethods from '../../shared/constructor-methods';
+import $ from '../../shared/dom7.js';
+import { extend } from '../../shared/utils.js';
+import TextEditor from './text-editor-class.js';
+import ConstructorMethods from '../../shared/constructor-methods.js';
 
 export default {
   name: 'textEditor',

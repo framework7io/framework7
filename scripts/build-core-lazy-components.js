@@ -11,13 +11,13 @@ const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
 const replace = require('@rollup/plugin-replace');
 const { minify } = require('terser');
-const less = require('./utils/less');
-const autoprefixer = require('./utils/autoprefixer');
-const cleanCSS = require('./utils/clean-css');
-const getConfig = require('./get-core-config');
-const getOutput = require('./get-output');
-const coreComponents = require('./core-components-list');
-const fs = require('./utils/fs-extra');
+const less = require('./utils/less.js');
+const autoprefixer = require('./utils/autoprefixer.js');
+const cleanCSS = require('./utils/clean-css.js');
+const getConfig = require('./get-core-config.js');
+const getOutput = require('./get-output.js');
+const coreComponents = require('./core-components-list.js');
+const fs = require('./utils/fs-extra.js');
 
 const intro = `
 function framework7ComponentLoader(Framework7, Framework7AutoInstallComponent) {

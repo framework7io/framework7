@@ -1,5 +1,5 @@
 /** @jsx $jsx */
-import $jsx from '../../../shared/$jsx';
+import $jsx from '../../../shared/$jsx.js';
 
 export default {
   render() {

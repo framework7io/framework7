@@ -1,11 +1,11 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getExtraAttrs, emit } from '../shared/utils';
-import { colorClasses } from '../shared/mixins';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
+import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
+import { colorClasses } from '../shared/mixins.js';
 
-import Preloader from './preloader';
-import { useTab } from '../shared/use-tab';
-import { f7ready, f7 } from '../shared/f7';
+import Preloader from './preloader.js';
+import { useTab } from '../shared/use-tab.js';
+import { f7ready, f7 } from '../shared/f7.js';
 
 /* dts-props
   id?: string | number;

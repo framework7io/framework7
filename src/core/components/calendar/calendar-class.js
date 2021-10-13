@@ -1,10 +1,10 @@
-import { extend, nextTick, deleteProps } from '../../shared/utils';
-import Framework7Class from '../../shared/class';
-import $ from '../../shared/dom7';
-import { getDevice } from '../../shared/get-device';
-import { getSupport } from '../../shared/get-support';
+import { extend, nextTick, deleteProps } from '../../shared/utils.js';
+import Framework7Class from '../../shared/class.js';
+import $ from '../../shared/dom7.js';
+import { getDevice } from '../../shared/get-device.js';
+import { getSupport } from '../../shared/get-support.js';
 /** @jsx $jsx */
-import $jsx from '../../shared/$jsx';
+import $jsx from '../../shared/$jsx.js';
 
 class Calendar extends Framework7Class {
   constructor(app, params = {}) {

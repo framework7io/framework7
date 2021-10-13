@@ -1,10 +1,10 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getExtraAttrs } from '../shared/utils';
-import { colorClasses } from '../shared/mixins';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
+import { classNames, getExtraAttrs } from '../shared/utils.js';
+import { colorClasses } from '../shared/mixins.js';
 
-import RoutableModals from './routable-modals';
-import { f7init, f7 } from '../shared/f7';
+import RoutableModals from './routable-modals.js';
+import { f7init, f7 } from '../shared/f7.js';
 
 /* dts-imports
   import { Framework7Parameters } from 'framework7/types';

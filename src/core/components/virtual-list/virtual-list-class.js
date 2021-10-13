@@ -1,8 +1,8 @@
 import { getDocument } from 'ssr-window';
-import $ from '../../shared/dom7';
-import { extend, deleteProps } from '../../shared/utils';
-import Framework7Class from '../../shared/class';
-import { getDevice } from '../../shared/get-device';
+import $ from '../../shared/dom7.js';
+import { extend, deleteProps } from '../../shared/utils.js';
+import Framework7Class from '../../shared/class.js';
+import { getDevice } from '../../shared/get-device.js';
 
 class VirtualList extends Framework7Class {
   constructor(app, params = {}) {

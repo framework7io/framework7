@@ -1,12 +1,12 @@
 import React, { forwardRef, useRef, useImperativeHandle, useState, useContext } from 'react';
-import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getExtraAttrs, emit, getSlots, extend } from '../shared/utils';
-import { colorClasses } from '../shared/mixins';
-import { f7ready, f7 } from '../shared/f7';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
+import { classNames, getExtraAttrs, emit, getSlots, extend } from '../shared/utils.js';
+import { colorClasses } from '../shared/mixins.js';
+import { f7ready, f7 } from '../shared/f7.js';
 
-import TextEditor from './text-editor';
-import { watchProp } from '../shared/watch-prop';
-import { ListContext } from '../shared/list-context';
+import TextEditor from './text-editor.js';
+import { watchProp } from '../shared/watch-prop.js';
+import { ListContext } from '../shared/list-context.js';
 
 /* dts-imports
 import { Calendar, ColorPicker, TextEditor } from 'framework7/types';

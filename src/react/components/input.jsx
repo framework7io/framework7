@@ -1,13 +1,13 @@
 import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
-import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getExtraAttrs, getSlots, emit, extend } from '../shared/utils';
-import { colorClasses } from '../shared/mixins';
-import { f7ready, f7 } from '../shared/f7';
-import { watchProp } from '../shared/watch-prop';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
+import { classNames, getExtraAttrs, getSlots, emit, extend } from '../shared/utils.js';
+import { colorClasses } from '../shared/mixins.js';
+import { f7ready, f7 } from '../shared/f7.js';
+import { watchProp } from '../shared/watch-prop.js';
 
-import Toggle from './toggle';
-import Range from './range';
-import TextEditor from './text-editor';
+import Toggle from './toggle.js';
+import Range from './range.js';
+import TextEditor from './text-editor.js';
 
 /* dts-imports
 import { Calendar, ColorPicker, TextEditor } from 'framework7/types';

@@ -1,5 +1,5 @@
-import VirtualList from './virtual-list-class';
-import ConstructorMethods from '../../shared/constructor-methods';
+import VirtualList from './virtual-list-class.js';
+import ConstructorMethods from '../../shared/constructor-methods.js';
 
 export default {
   name: 'virtualList',

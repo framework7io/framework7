@@ -17,7 +17,7 @@
 </template>
 <script>
 import { ref, computed } from 'vue';
-import { classNames, extend, isStringProp } from '../shared/utils';
+import { classNames, extend, isStringProp } from '../shared/utils.js';
 import {
   colorClasses,
   actionsAttrs,
@@ -28,13 +28,13 @@ import {
   colorProps,
   actionsProps,
   routerProps,
-} from '../shared/mixins';
-import { useTooltip } from '../shared/use-tooltip';
-import { useIcon } from '../shared/use-icon';
-import { useRouteProps } from '../shared/use-route-props';
+} from '../shared/mixins.js';
+import { useTooltip } from '../shared/use-tooltip.js';
+import { useIcon } from '../shared/use-icon.js';
+import { useRouteProps } from '../shared/use-route-props.js';
 
-import f7Preloader from './preloader';
-import f7UseIcon from './use-icon';
+import f7Preloader from './preloader.js';
+import f7UseIcon from './use-icon.js';
 
 export default {
   name: 'f7-button',

@@ -1,6 +1,6 @@
 import { onMounted, onBeforeUnmount } from 'vue';
-import { f7ready, f7 } from './f7';
-import { extend } from './utils';
+import { f7ready, f7 } from './f7.js';
+import { extend } from './utils.js';
 
 export const useSmartSelect = (props, setInstance, getEl) => {
   let f7SmartSelect;

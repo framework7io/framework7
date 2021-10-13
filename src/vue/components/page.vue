@@ -1,9 +1,9 @@
 <script>
 import { computed, ref, onMounted, onBeforeUnmount, h } from 'vue';
-import { classNames } from '../shared/utils';
-import { colorClasses, colorProps } from '../shared/mixins';
-import { f7ready, f7 } from '../shared/f7';
-import f7PageContent from './page-content';
+import { classNames } from '../shared/utils.js';
+import { colorClasses, colorProps } from '../shared/mixins.js';
+import { f7ready, f7 } from '../shared/f7.js';
+import f7PageContent from './page-content.js';
 
 export default {
   name: 'f7-page',

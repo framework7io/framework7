@@ -1,6 +1,6 @@
 import React from 'react';
-import Icon from '../components/icon';
-import Badge from '../components/badge';
+import Icon from '../components/icon.js';
+import Badge from '../components/badge.js';
 
 export const useIcon = (props = {}) => {
   const {

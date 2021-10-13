@@ -1,6 +1,6 @@
-import $ from '../../shared/dom7';
-import { bindMethods } from '../../shared/utils';
-import { getSupport } from '../../shared/get-support';
+import $ from '../../shared/dom7.js';
+import { bindMethods } from '../../shared/utils.js';
+import { getSupport } from '../../shared/get-support.js';
 
 const Navbar = {
   size(el) {

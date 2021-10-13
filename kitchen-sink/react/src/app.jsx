@@ -1,7 +1,7 @@
 import React from 'react';
 import { App, Panel, View } from 'framework7-react';
-import routes from './routes';
-import store from './store';
+import routes from './routes.js';
+import store from './store.js';
 
 export default () => {
   let theme = 'auto';

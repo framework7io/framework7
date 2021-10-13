@@ -1,5 +1,5 @@
-import $ from '../../shared/dom7';
-import { nextFrame, bindMethods } from '../../shared/utils';
+import $ from '../../shared/dom7.js';
+import { nextFrame, bindMethods } from '../../shared/utils.js';
 
 const Accordion = {
   toggleClicked($clickedEl) {

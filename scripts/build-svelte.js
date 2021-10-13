@@ -4,9 +4,9 @@
 /* eslint no-param-reassign: ["off"] */
 
 const exec = require('exec-sh');
-const bannerSvelte = require('./banners/svelte');
-const getOutput = require('./get-output');
-const fs = require('./utils/fs-extra');
+const bannerSvelte = require('./banners/svelte.js');
+const getOutput = require('./get-output.js');
+const fs = require('./utils/fs-extra.js');
 
 // Build Svelte
 async function buildSvelte(cb) {

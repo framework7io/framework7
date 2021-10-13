@@ -1,15 +1,15 @@
 /* eslint-disable no-underscore-dangle */
 
 import { getWindow, getDocument } from 'ssr-window';
-import { extend, nextFrame } from '../../shared/utils';
-import { getDevice } from '../../shared/get-device';
-import { getSupport } from '../../shared/get-support';
-import Framework7Class from '../../shared/class';
-import EventsClass from '../../shared/events-class';
-import ConstructorMethods from '../../shared/constructor-methods';
-import ModalMethods from '../../shared/modal-methods';
-import $ from '../../shared/dom7';
-import loadModule from './load-module';
+import { extend, nextFrame } from '../../shared/utils.js';
+import { getDevice } from '../../shared/get-device.js';
+import { getSupport } from '../../shared/get-support.js';
+import Framework7Class from '../../shared/class.js';
+import EventsClass from '../../shared/events-class.js';
+import ConstructorMethods from '../../shared/constructor-methods.js';
+import ModalMethods from '../../shared/modal-methods.js';
+import $ from '../../shared/dom7.js';
+import loadModule from './load-module.js';
 
 class Framework7 extends Framework7Class {
   constructor(params = {}) {

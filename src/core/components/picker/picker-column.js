@@ -1,6 +1,6 @@
-import $ from '../../shared/dom7';
-import { requestAnimationFrame, getTranslate } from '../../shared/utils';
-import { getSupport } from '../../shared/get-support';
+import $ from '../../shared/dom7.js';
+import { requestAnimationFrame, getTranslate } from '../../shared/utils.js';
+import { getSupport } from '../../shared/get-support.js';
 
 export default function pickerColumn(colEl, updateItems) {
   const picker = this;

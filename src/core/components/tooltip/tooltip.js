@@ -1,6 +1,6 @@
-import $ from '../../shared/dom7';
-import Tooltip from './tooltip-class';
-import ConstructorMethods from '../../shared/constructor-methods';
+import $ from '../../shared/dom7.js';
+import Tooltip from './tooltip-class.js';
+import ConstructorMethods from '../../shared/constructor-methods.js';
 
 export default {
   name: 'tooltip',

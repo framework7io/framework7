@@ -1,5 +1,5 @@
 import htm from 'htm';
-import { flattenArray } from '../../shared/utils';
+import { flattenArray } from '../../shared/utils.js';
 
 const ignoreChildren = [false, null, '', undefined];
 

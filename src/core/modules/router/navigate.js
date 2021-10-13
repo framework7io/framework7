@@ -1,11 +1,11 @@
 import { getDocument } from 'ssr-window';
-import $ from '../../shared/dom7';
-import { extend, parseUrlQuery } from '../../shared/utils';
-import History from '../../shared/history';
-import redirect from './redirect';
-import processRouteQueue from './process-route-queue';
-import appRouterCheck from './app-router-check';
-import asyncComponent from './async-component';
+import $ from '../../shared/dom7.js';
+import { extend, parseUrlQuery } from '../../shared/utils.js';
+import History from '../../shared/history.js';
+import redirect from './redirect.js';
+import processRouteQueue from './process-route-queue.js';
+import appRouterCheck from './app-router-check.js';
+import asyncComponent from './async-component.js';
 
 function refreshPage() {
   const router = this;

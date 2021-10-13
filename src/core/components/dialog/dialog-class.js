@@ -1,10 +1,10 @@
 import { getDocument } from 'ssr-window';
-import $ from '../../shared/dom7';
-import { extend } from '../../shared/utils';
-import { getDevice } from '../../shared/get-device';
-import Modal from '../modal/modal-class';
+import $ from '../../shared/dom7.js';
+import { extend } from '../../shared/utils.js';
+import { getDevice } from '../../shared/get-device.js';
+import Modal from '../modal/modal-class.js';
 /** @jsx $jsx */
-import $jsx from '../../shared/$jsx';
+import $jsx from '../../shared/$jsx.js';
 
 class Dialog extends Modal {
   constructor(app, params) {

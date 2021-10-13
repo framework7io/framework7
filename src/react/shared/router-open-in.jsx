@@ -1,10 +1,10 @@
 import React from 'react';
-import Popup from '../components/popup';
-import View from '../components/view';
-import LoginScreen from '../components/login-screen';
-import Sheet from '../components/sheet';
-import Popover from '../components/popover';
-import Panel from '../components/panel';
+import Popup from '../components/popup.js';
+import View from '../components/view.js';
+import LoginScreen from '../components/login-screen.js';
+import Sheet from '../components/sheet.js';
+import Popover from '../components/popover.js';
+import Panel from '../components/panel.js';
 
 export const routerOpenIn = (router, url, options) => {
   const navigateOptions = {

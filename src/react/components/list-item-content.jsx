@@ -1,8 +1,8 @@
 import React, { useRef, useEffect } from 'react';
-import { classNames } from '../shared/utils';
-import { colorClasses } from '../shared/mixins';
+import { classNames } from '../shared/utils.js';
+import { colorClasses } from '../shared/mixins.js';
 
-import Badge from './badge';
+import Badge from './badge.js';
 
 const ListItemContent = (props) => {
   const {

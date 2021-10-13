@@ -1,7 +1,7 @@
 import { getDocument } from 'ssr-window';
-import $ from '../../shared/dom7';
-import { extend, deleteProps } from '../../shared/utils';
-import Framework7Class from '../../shared/class';
+import $ from '../../shared/dom7.js';
+import { extend, deleteProps } from '../../shared/utils.js';
+import Framework7Class from '../../shared/class.js';
 
 const openedModals = [];
 const dialogsQueue = [];

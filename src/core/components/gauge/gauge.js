@@ -1,7 +1,7 @@
-import $ from '../../shared/dom7';
-import Gauge from './gauge-class';
-import ConstructorMethods from '../../shared/constructor-methods';
-import { extend } from '../../shared/utils';
+import $ from '../../shared/dom7.js';
+import Gauge from './gauge-class.js';
+import ConstructorMethods from '../../shared/constructor-methods.js';
+import { extend } from '../../shared/utils.js';
 
 export default {
   name: 'gauge',

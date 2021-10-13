@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useIsomorphicLayoutEffect } from './use-isomorphic-layout-effect';
+import { useIsomorphicLayoutEffect } from './use-isomorphic-layout-effect.js';
 
 export const watchProp = (value, callback) => {
   const valueRef = useRef(value);

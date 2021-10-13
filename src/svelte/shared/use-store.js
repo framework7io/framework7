@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import { onDestroy } from 'svelte';
-import { f7 } from './f7';
+import { f7 } from './f7.js';
 
 export const useStore = (...args) => {
   // (store, getter, callback)

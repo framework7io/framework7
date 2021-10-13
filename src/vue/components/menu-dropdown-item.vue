@@ -6,7 +6,7 @@
 </template>
 <script>
 import { computed, ref } from 'vue';
-import { classNames } from '../shared/utils';
+import { classNames } from '../shared/utils.js';
 import {
   colorClasses,
   colorProps,
@@ -16,8 +16,8 @@ import {
   actionsProps,
   actionsAttrs,
   actionsClasses,
-} from '../shared/mixins';
-import { useRouteProps } from '../shared/use-route-props';
+} from '../shared/mixins.js';
+import { useRouteProps } from '../shared/use-route-props.js';
 
 export default {
   name: 'f7-menu-dropdown-item',

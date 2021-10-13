@@ -14,10 +14,10 @@
 </template>
 <script>
 import { computed, ref, watch, onMounted, onBeforeUnmount } from 'vue';
-import { classNames } from '../shared/utils';
-import { colorClasses, colorProps } from '../shared/mixins';
-import { f7ready, f7 } from '../shared/f7';
-import { useTooltip } from '../shared/use-tooltip';
+import { classNames } from '../shared/utils.js';
+import { colorClasses, colorProps } from '../shared/mixins.js';
+import { f7ready, f7 } from '../shared/f7.js';
+import { useTooltip } from '../shared/use-tooltip.js';
 
 export default {
   name: 'f7-toggle',

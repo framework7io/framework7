@@ -1,5 +1,5 @@
 import { onBeforeUnmount, ref } from 'vue';
-import { f7 } from './f7';
+import { f7 } from './f7.js';
 
 export const useStore = (...args) => {
   // (store, getter)

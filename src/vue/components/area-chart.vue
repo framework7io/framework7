@@ -63,8 +63,8 @@
 </template>
 <script>
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
-import { classNames } from '../shared/utils';
-import { f7 } from '../shared/f7';
+import { classNames } from '../shared/utils.js';
+import { f7 } from '../shared/f7.js';
 
 export default {
   name: 'f7-area-chart',

@@ -1,6 +1,6 @@
-import { extend, nextTick } from '../../shared/utils';
-import History from '../../shared/history';
-import asyncComponent from './async-component';
+import { extend, nextTick } from '../../shared/utils.js';
+import History from '../../shared/history.js';
+import asyncComponent from './async-component.js';
 
 function modalLoad(modalType, route, loadOptions = {}, direction) {
   const router = this;

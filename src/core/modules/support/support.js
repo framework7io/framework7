@@ -1,4 +1,4 @@
-import { getSupport } from '../../shared/get-support';
+import { getSupport } from '../../shared/get-support.js';
 
 export default {
   name: 'support',

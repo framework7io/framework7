@@ -10,7 +10,7 @@
 </template>
 <script>
 import { computed, ref, inject } from 'vue';
-import { classNames, isStringProp } from '../shared/utils';
+import { classNames, isStringProp } from '../shared/utils.js';
 import {
   colorClasses,
   routerAttrs,
@@ -21,14 +21,14 @@ import {
   actionsProps,
   routerProps,
   iconProps,
-} from '../shared/mixins';
+} from '../shared/mixins.js';
 
-import { useIcon } from '../shared/use-icon';
-import { useRouteProps } from '../shared/use-route-props';
-import { useTooltip } from '../shared/use-tooltip';
-import { useSmartSelect } from '../shared/use-smart-select';
-import f7Badge from './badge';
-import f7UseIcon from './use-icon';
+import { useIcon } from '../shared/use-icon.js';
+import { useRouteProps } from '../shared/use-route-props.js';
+import { useTooltip } from '../shared/use-tooltip.js';
+import { useSmartSelect } from '../shared/use-smart-select.js';
+import f7Badge from './badge.js';
+import f7UseIcon from './use-icon.js';
 
 export default {
   name: 'f7-link',

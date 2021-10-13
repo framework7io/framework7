@@ -1,7 +1,7 @@
-import $ from '../../shared/dom7';
-import { extend } from '../../shared/utils';
-import PullToRefresh from './pull-to-refresh-class';
-import ConstructorMethods from '../../shared/constructor-methods';
+import $ from '../../shared/dom7.js';
+import { extend } from '../../shared/utils.js';
+import PullToRefresh from './pull-to-refresh-class.js';
+import ConstructorMethods from '../../shared/constructor-methods.js';
 
 export default {
   name: 'pullToRefresh',

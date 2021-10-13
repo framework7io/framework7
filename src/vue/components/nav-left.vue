@@ -15,11 +15,11 @@
 </template>
 <script>
 import { computed } from 'vue';
-import { classNames } from '../shared/utils';
-import { colorClasses, colorProps } from '../shared/mixins';
-import { useTheme } from '../shared/use-theme';
+import { classNames } from '../shared/utils.js';
+import { colorClasses, colorProps } from '../shared/mixins.js';
+import { useTheme } from '../shared/use-theme.js';
 
-import f7Link from './link';
+import f7Link from './link.js';
 
 export default {
   name: 'f7-nav-left',

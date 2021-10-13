@@ -1,6 +1,6 @@
-import $ from '../../shared/dom7';
-import DataTable from './data-table-class';
-import ConstructorMethods from '../../shared/constructor-methods';
+import $ from '../../shared/dom7.js';
+import DataTable from './data-table-class.js';
+import ConstructorMethods from '../../shared/constructor-methods.js';
 
 export default {
   name: 'dataTable',

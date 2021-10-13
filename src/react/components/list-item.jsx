@@ -1,22 +1,22 @@
 import React, { forwardRef, useRef, useImperativeHandle, useContext } from 'react';
-import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 
-import { classNames, getExtraAttrs, getSlots, emit, isStringProp } from '../shared/utils';
+import { classNames, getExtraAttrs, getSlots, emit, isStringProp } from '../shared/utils.js';
 import {
   colorClasses,
   actionsAttrs,
   actionsClasses,
   routerAttrs,
   routerClasses,
-} from '../shared/mixins';
-import { useRouteProps } from '../shared/use-route-props';
-import { useSmartSelect } from '../shared/use-smart-select';
-import { useTooltip } from '../shared/use-tooltip';
-import { watchProp } from '../shared/watch-prop';
-import { f7ready, f7 } from '../shared/f7';
+} from '../shared/mixins.js';
+import { useRouteProps } from '../shared/use-route-props.js';
+import { useSmartSelect } from '../shared/use-smart-select.js';
+import { useTooltip } from '../shared/use-tooltip.js';
+import { watchProp } from '../shared/watch-prop.js';
+import { f7ready, f7 } from '../shared/f7.js';
 
-import ListItemContent from './list-item-content';
-import { ListContext } from '../shared/list-context';
+import ListItemContent from './list-item-content.js';
+import { ListContext } from '../shared/list-context.js';
 
 /* dts-imports
 import { SmartSelect } from 'framework7/types';

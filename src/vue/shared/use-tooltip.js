@@ -1,5 +1,5 @@
 import { watch, onMounted, onBeforeUnmount } from 'vue';
-import { f7, f7ready } from './f7';
+import { f7, f7ready } from './f7.js';
 
 export const useTooltip = (elRef, props) => {
   let f7Tooltip = null;

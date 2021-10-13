@@ -1,7 +1,7 @@
 /* eslint no-underscore-dangle: "off" */
-import { f7events, f7routers } from './f7';
-import { extend, getComponentId } from './utils';
-import { routerOpenIn } from './router-open-in';
+import { f7events, f7routers } from './f7.js';
+import { extend, getComponentId } from './utils.js';
+import { routerOpenIn } from './router-open-in.js';
 
 const getChildrenArray = (el) => {
   const arr = [];

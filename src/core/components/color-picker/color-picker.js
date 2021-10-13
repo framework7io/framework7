@@ -1,6 +1,6 @@
-import $ from '../../shared/dom7';
-import ConstructorMethods from '../../shared/constructor-methods';
-import ColorPicker from './color-picker-class';
+import $ from '../../shared/dom7.js';
+import ConstructorMethods from '../../shared/constructor-methods.js';
+import ColorPicker from './color-picker-class.js';
 
 export default {
   name: 'colorPicker',

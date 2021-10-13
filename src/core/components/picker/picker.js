@@ -1,6 +1,6 @@
-import $ from '../../shared/dom7';
-import ConstructorMethods from '../../shared/constructor-methods';
-import Picker from './picker-class';
+import $ from '../../shared/dom7.js';
+import ConstructorMethods from '../../shared/constructor-methods.js';
+import Picker from './picker-class.js';
 
 export default {
   name: 'picker',

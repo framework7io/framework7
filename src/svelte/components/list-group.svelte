@@ -1,9 +1,9 @@
 <script>
-  import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
-  import { setReactiveContext } from '../shared/set-reactive-context';
-  import { getReactiveContext } from '../shared/get-reactive-context';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames } from '../shared/utils.js';
+  import { restProps } from '../shared/rest-props.js';
+  import { setReactiveContext } from '../shared/set-reactive-context.js';
+  import { getReactiveContext } from '../shared/get-reactive-context.js';
 
   let className = undefined;
   export { className as class };
@@ -42,8 +42,11 @@
 
 <div
   class={classes}
-  data-sortable-move-elements={typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined}
-  {...restProps($$restProps)}>
+  data-sortable-move-elements={typeof sortableMoveElements !== 'undefined'
+    ? sortableMoveElements.toString()
+    : undefined}
+  {...restProps($$restProps)}
+>
   <ul>
     <slot />
   </ul>

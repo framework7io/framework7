@@ -1,5 +1,5 @@
-import LoginScreen from './login-screen-class';
-import ModalMethods from '../../shared/modal-methods';
+import LoginScreen from './login-screen-class.js';
+import ModalMethods from '../../shared/modal-methods.js';
 
 export default {
   name: 'loginScreen',

@@ -1,5 +1,5 @@
-import PhotoBrowser from './photo-browser-class';
-import ConstructorMethods from '../../shared/constructor-methods';
+import PhotoBrowser from './photo-browser-class.js';
+import ConstructorMethods from '../../shared/constructor-methods.js';
 
 export default {
   name: 'photoBrowser',

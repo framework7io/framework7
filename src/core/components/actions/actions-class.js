@@ -1,11 +1,11 @@
 /* eslint indent: ["off"] */
 import { getWindow, getDocument } from 'ssr-window';
-import { getDevice } from '../../shared/get-device';
-import { extend, nextTick } from '../../shared/utils';
-import Modal from '../modal/modal-class';
-import $ from '../../shared/dom7';
+import { getDevice } from '../../shared/get-device.js';
+import { extend, nextTick } from '../../shared/utils.js';
+import Modal from '../modal/modal-class.js';
+import $ from '../../shared/dom7.js';
 /** @jsx $jsx */
-import $jsx from '../../shared/$jsx';
+import $jsx from '../../shared/$jsx.js';
 
 class Actions extends Modal {
   constructor(app, params) {

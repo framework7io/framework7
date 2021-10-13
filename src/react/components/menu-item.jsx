@@ -1,17 +1,17 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
+import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils.js';
 import {
   colorClasses,
   routerAttrs,
   routerClasses,
   actionsClasses,
   actionsAttrs,
-} from '../shared/mixins';
-import { useRouteProps } from '../shared/use-route-props';
-import { useIcon } from '../shared/use-icon';
-import { f7ready, f7 } from '../shared/f7';
-import { useTooltip } from '../shared/use-tooltip';
+} from '../shared/mixins.js';
+import { useRouteProps } from '../shared/use-route-props.js';
+import { useIcon } from '../shared/use-icon.js';
+import { f7ready, f7 } from '../shared/f7.js';
+import { useTooltip } from '../shared/use-tooltip.js';
 
 /* dts-props
   id?: string | number;

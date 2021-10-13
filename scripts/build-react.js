@@ -6,9 +6,9 @@
 const exec = require('exec-sh');
 const glob = require('glob');
 const path = require('path');
-const bannerReact = require('./banners/react');
-const getOutput = require('./get-output');
-const fs = require('./utils/fs-extra');
+const bannerReact = require('./banners/react.js');
+const getOutput = require('./get-output.js');
+const fs = require('./utils/fs-extra.js');
 
 const removeDtsComments = (buildPath) => {
   glob(
@@ -56,7 +56,7 @@ async function buildReact(cb) {
       .map((word) => word[0].toUpperCase() + word.substr(1))
       .join('');
     const fileBase = fileName.replace('.jsx', '');
-    componentImports.push(`import ${componentName} from './components/${fileBase}';`);
+    componentImports.push(`import ${componentName} from './components/${fileBase}.js';`);
     componentExports.push(componentName);
   });
 

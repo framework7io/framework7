@@ -1,9 +1,9 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getExtraAttrs, emit } from '../shared/utils';
-import { colorClasses } from '../shared/mixins';
-import { useTheme } from '../shared/use-theme';
+import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
+import { colorClasses } from '../shared/mixins.js';
+import { useTheme } from '../shared/use-theme.js';
 
-import Link from './link';
+import Link from './link.js';
 
 /* dts-props
   id?: string | number;

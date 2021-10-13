@@ -1,14 +1,14 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 
-import CardHeader from './card-header';
-import CardContent from './card-content';
-import CardFooter from './card-footer';
+import CardHeader from './card-header.js';
+import CardContent from './card-content.js';
+import CardFooter from './card-footer.js';
 
-import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils';
-import { colorClasses } from '../shared/mixins';
-import { f7, f7ready } from '../shared/f7';
-import { watchProp } from '../shared/watch-prop';
+import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils.js';
+import { colorClasses } from '../shared/mixins.js';
+import { f7, f7ready } from '../shared/f7.js';
+import { watchProp } from '../shared/watch-prop.js';
 
 /* dts-props
   id: string | number;

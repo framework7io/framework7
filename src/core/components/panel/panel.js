@@ -1,6 +1,6 @@
-import $ from '../../shared/dom7';
-import { extend } from '../../shared/utils';
-import Panel from './panel-class';
+import $ from '../../shared/dom7.js';
+import { extend } from '../../shared/utils.js';
+import Panel from './panel-class.js';
 
 export default {
   name: 'panel',

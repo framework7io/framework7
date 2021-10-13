@@ -1,5 +1,5 @@
-import $ from '../../shared/dom7';
-import { bindMethods } from '../../shared/utils';
+import $ from '../../shared/dom7.js';
+import { bindMethods } from '../../shared/utils.js';
 
 const Menu = {
   open(el = '.menu-item-dropdown') {

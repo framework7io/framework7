@@ -1,9 +1,9 @@
 <script>
   import { createEventDispatcher } from 'svelte';
-  import { colorClasses } from '../shared/mixins';
-  import { classNames, createEmitter } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
-  import { useTheme } from '../shared/use-theme';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames, createEmitter } from '../shared/utils.js';
+  import { restProps } from '../shared/rest-props.js';
+  import { useTheme } from '../shared/use-theme.js';
 
   import Link from './link.svelte';
 

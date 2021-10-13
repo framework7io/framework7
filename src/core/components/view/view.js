@@ -1,6 +1,6 @@
-import $ from '../../shared/dom7';
-import { extend } from '../../shared/utils';
-import View from './view-class';
+import $ from '../../shared/dom7.js';
+import { extend } from '../../shared/utils.js';
+import View from './view-class.js';
 
 function getCurrentView(app) {
   const $popoverView = $('.popover.modal-in .view');

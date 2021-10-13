@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import { onMount, onDestroy } from 'svelte';
-import { f7, f7ready } from './f7';
+import { f7, f7ready } from './f7.js';
 
 export const useTab = (getEl, emit) => {
   const onTabShow = (el) => {

@@ -10,7 +10,7 @@
 </template>
 <script>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
-import { classNames } from '../shared/utils';
+import { classNames } from '../shared/utils.js';
 import {
   colorClasses,
   colorProps,
@@ -21,13 +21,13 @@ import {
   actionsClasses,
   actionsAttrs,
   iconProps,
-} from '../shared/mixins';
-import { useRouteProps } from '../shared/use-route-props';
-import { useIcon } from '../shared/use-icon';
-import { f7ready, f7 } from '../shared/f7';
-import { useTooltip } from '../shared/use-tooltip';
+} from '../shared/mixins.js';
+import { useRouteProps } from '../shared/use-route-props.js';
+import { useIcon } from '../shared/use-icon.js';
+import { f7ready, f7 } from '../shared/f7.js';
+import { useTooltip } from '../shared/use-tooltip.js';
 
-import f7UseIcon from './use-icon';
+import f7UseIcon from './use-icon.js';
 
 export default {
   name: 'f7-menu-item',

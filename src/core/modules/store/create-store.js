@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { extend } from '../../shared/utils';
+import { extend } from '../../shared/utils.js';
 
 function createStore(storeParams = {}) {
   const store = {

@@ -1,6 +1,6 @@
 import { getWindow, getDocument } from 'ssr-window';
-import { id } from '../../shared/utils';
-import $ from '../../shared/dom7';
+import { id } from '../../shared/utils.js';
+import $ from '../../shared/dom7.js';
 
 const fetchedModules = [];
 function loadModule(moduleToLoad) {

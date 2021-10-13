@@ -1,7 +1,7 @@
-import Component from './component-class';
-import parseComponent from './parse-component';
-import customComponents from './custom-components';
-import $jsx from './$jsx';
+import Component from './component-class.js';
+import parseComponent from './parse-component.js';
+import customComponents from './custom-components.js';
+import $jsx from './$jsx.js';
 
 function registerComponent(tagName, component) {
   customComponents[tagName] = component;

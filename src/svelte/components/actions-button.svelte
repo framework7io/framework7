@@ -1,10 +1,10 @@
 <script>
   import { createEventDispatcher } from 'svelte';
 
-  import { colorClasses } from '../shared/mixins';
-  import { classNames, createEmitter } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
-  import { app } from '../shared/f7';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames, createEmitter } from '../shared/utils.js';
+  import { restProps } from '../shared/rest-props.js';
+  import { app } from '../shared/f7.js';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 

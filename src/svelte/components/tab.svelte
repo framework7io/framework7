@@ -1,11 +1,11 @@
 <script>
   import { onMount, onDestroy, afterUpdate, createEventDispatcher, tick, getContext } from 'svelte';
 
-  import { restProps } from '../shared/rest-props';
-  import { colorClasses } from '../shared/mixins';
-  import { classNames, createEmitter, getComponentId } from '../shared/utils';
-  import { f7ready, app } from '../shared/f7';
-  import { useTab } from '../shared/use-tab';
+  import { restProps } from '../shared/rest-props.js';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames, createEmitter, getComponentId } from '../shared/utils.js';
+  import { f7ready, app } from '../shared/f7.js';
+  import { useTab } from '../shared/use-tab.js';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 

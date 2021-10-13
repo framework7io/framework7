@@ -1,11 +1,11 @@
 import React, { forwardRef, useRef, useImperativeHandle, useState, useContext } from 'react';
-import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getExtraAttrs, getComponentId } from '../shared/utils';
-import { colorClasses } from '../shared/mixins';
-import { f7ready, f7routers, f7, f7events } from '../shared/f7';
-import { useTab } from '../shared/use-tab';
-import { RouterContext } from '../shared/router-context';
-import { useAsyncComponent } from '../shared/use-async-component';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
+import { classNames, getExtraAttrs, getComponentId } from '../shared/utils.js';
+import { colorClasses } from '../shared/mixins.js';
+import { f7ready, f7routers, f7, f7events } from '../shared/f7.js';
+import { useTab } from '../shared/use-tab.js';
+import { RouterContext } from '../shared/router-context.js';
+import { useAsyncComponent } from '../shared/use-async-component.js';
 
 /* dts-props
   id?: string | number;

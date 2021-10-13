@@ -1,6 +1,6 @@
-import $ from '../../shared/dom7';
-import { extend } from '../../shared/utils';
-import { getSupport } from '../../shared/get-support';
+import $ from '../../shared/dom7.js';
+import { extend } from '../../shared/utils.js';
+import { getSupport } from '../../shared/get-support.js';
 
 function resizableView(view) {
   const app = view.app;

@@ -1,10 +1,10 @@
 /* eslint indent: ["off"] */
 import { getWindow } from 'ssr-window';
-import $ from '../../shared/dom7';
-import { extend, now, nextTick, deleteProps } from '../../shared/utils';
-import Framework7Class from '../../shared/class';
+import $ from '../../shared/dom7.js';
+import { extend, now, nextTick, deleteProps } from '../../shared/utils.js';
+import Framework7Class from '../../shared/class.js';
 /** @jsx $jsx */
-import $jsx from '../../shared/$jsx';
+import $jsx from '../../shared/$jsx.js';
 
 class PhotoBrowser extends Framework7Class {
   constructor(app, params = {}) {

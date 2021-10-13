@@ -3,9 +3,9 @@
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: "off" */
 
-const getOutput = require('./get-output');
-const fs = require('./utils/fs-extra');
-const { COLOR_PROPS, ICON_PROPS, ROUTER_PROPS, ACTIONS_PROPS } = require('./ts-extend-props');
+const getOutput = require('./get-output.js');
+const fs = require('./utils/fs-extra.js');
+const { COLOR_PROPS, ICON_PROPS, ROUTER_PROPS, ACTIONS_PROPS } = require('./ts-extend-props.js');
 
 function generateComponentProps(propsContent) {
   // eslint-disable-next-line

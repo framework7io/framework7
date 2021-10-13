@@ -1,4 +1,4 @@
-import $ from '../../shared/dom7';
+import $ from '../../shared/dom7.js';
 
 function invokeHandler(handler, event, args) {
   if (typeof handler === 'function') {

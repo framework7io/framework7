@@ -1,8 +1,8 @@
-import $ from '../../shared/dom7';
-import { deleteProps } from '../../shared/utils';
-import Framework7Class from '../../shared/class';
-import { getSupport } from '../../shared/get-support';
-import { getDevice } from '../../shared/get-device';
+import $ from '../../shared/dom7.js';
+import { deleteProps } from '../../shared/utils.js';
+import Framework7Class from '../../shared/class.js';
+import { getSupport } from '../../shared/get-support.js';
+import { getDevice } from '../../shared/get-device.js';
 
 class PullToRefresh extends Framework7Class {
   constructor(app, el) {

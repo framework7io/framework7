@@ -1,4 +1,4 @@
-import { isStringProp } from './utils';
+import { isStringProp } from './utils.js';
 
 export function colorClasses(props) {
   const { color, colorTheme, textColor, bgColor, borderColor, rippleColor, dark } = props;

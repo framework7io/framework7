@@ -3,22 +3,22 @@ const gulp = require('gulp');
 const connect = require('gulp-connect');
 const opn = require('opn');
 
-const buildClean = require('./build-clean');
+const buildClean = require('./build-clean.js');
 
-const buildKsCore = require('./build-ks-core');
+const buildKsCore = require('./build-ks-core.js');
 
-const buildCoreJs = require('./build-core-js');
-const buildCoreTypings = require('./build-core-typings');
-const buildCoreLess = require('./build-core-styles');
-const buildCoreComponents = require('./build-core-components');
-const buildCoreLazyComponents = require('./build-core-lazy-components');
+const buildCoreJs = require('./build-core-js.js');
+const buildCoreTypings = require('./build-core-typings.js');
+const buildCoreLess = require('./build-core-styles.js');
+const buildCoreComponents = require('./build-core-components.js');
+const buildCoreLazyComponents = require('./build-core-lazy-components.js');
 
-const buildVue = require('./build-vue');
-const buildVueTypings = require('./build-vue-typings');
-const buildReact = require('./build-react');
-const buildReactTypings = require('./build-react-typings');
-const buildSvelte = require('./build-svelte');
-const buildSvelteTypings = require('./build-svelte-typings');
+const buildVue = require('./build-vue.js');
+const buildVueTypings = require('./build-vue-typings.js');
+const buildReact = require('./build-react.js');
+const buildReactTypings = require('./build-react-typings.js');
+const buildSvelte = require('./build-svelte.js');
+const buildSvelteTypings = require('./build-svelte-typings.js');
 
 const env = process.env.NODE_ENV || 'development';
 

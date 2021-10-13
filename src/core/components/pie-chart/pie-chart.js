@@ -1,6 +1,6 @@
-import $ from '../../shared/dom7';
-import PieChart from './pie-chart-class';
-import ConstructorMethods from '../../shared/constructor-methods';
+import $ from '../../shared/dom7.js';
+import PieChart from './pie-chart-class.js';
+import ConstructorMethods from '../../shared/constructor-methods.js';
 
 export default {
   name: 'pieChart',

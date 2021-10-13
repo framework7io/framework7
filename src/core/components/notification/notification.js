@@ -1,6 +1,6 @@
-import { extend } from '../../shared/utils';
-import Notification from './notification-class';
-import ModalMethods from '../../shared/modal-methods';
+import { extend } from '../../shared/utils.js';
+import Notification from './notification-class.js';
+import ModalMethods from '../../shared/modal-methods.js';
 
 export default {
   name: 'notification',

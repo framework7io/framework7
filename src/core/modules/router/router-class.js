@@ -1,7 +1,7 @@
 import { getWindow, getDocument } from 'ssr-window';
 import { pathToRegexp, compile } from 'path-to-regexp';
-import $ from '../../shared/dom7';
-import Framework7Class from '../../shared/class';
+import $ from '../../shared/dom7.js';
+import Framework7Class from '../../shared/class.js';
 import {
   extend,
   nextFrame,
@@ -9,16 +9,16 @@ import {
   serializeObject,
   now,
   eventNameToColonCase,
-} from '../../shared/utils';
-import History from '../../shared/history';
-import SwipeBack from './swipe-back';
+} from '../../shared/utils.js';
+import History from '../../shared/history.js';
+import SwipeBack from './swipe-back.js';
 
-import { refreshPage, navigate } from './navigate';
-import { tabLoad, tabRemove } from './tab';
-import { modalLoad, modalRemove } from './modal';
-import { back } from './back';
-import { clearPreviousHistory } from './clear-previous-history';
-import appRouterCheck from './app-router-check';
+import { refreshPage, navigate } from './navigate.js';
+import { tabLoad, tabRemove } from './tab.js';
+import { modalLoad, modalRemove } from './modal.js';
+import { back } from './back.js';
+import { clearPreviousHistory } from './clear-previous-history.js';
+import appRouterCheck from './app-router-check.js';
 
 class Router extends Framework7Class {
   constructor(app, view) {

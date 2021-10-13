@@ -30,9 +30,9 @@
 </template>
 <script>
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue';
-import { classNames, noUndefinedProps } from '../shared/utils';
-import { colorClasses, colorProps } from '../shared/mixins';
-import { f7ready, f7 } from '../shared/f7';
+import { classNames, noUndefinedProps } from '../shared/utils.js';
+import { colorClasses, colorProps } from '../shared/mixins.js';
+import { f7ready, f7 } from '../shared/f7.js';
 
 export default {
   name: 'f7-searchbar',

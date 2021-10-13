@@ -1,5 +1,5 @@
-import $ from '../../shared/dom7';
-import appRouterCheck from './app-router-check';
+import $ from '../../shared/dom7.js';
+import appRouterCheck from './app-router-check.js';
 
 function clearPreviousPages(router) {
   appRouterCheck(router, 'clearPreviousPages');

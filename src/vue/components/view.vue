@@ -1,10 +1,10 @@
 <script>
 import { computed, ref, onMounted, onBeforeUnmount, onUpdated, toRaw, h } from 'vue';
-import { classNames, noUndefinedProps, getRouterId } from '../shared/utils';
-import { colorClasses, colorProps } from '../shared/mixins';
-import { f7ready, f7routers, f7, f7events } from '../shared/f7';
-import { useTab } from '../shared/use-tab';
-import { getRouterInitialComponent } from '../shared/get-router-initial-component';
+import { classNames, noUndefinedProps, getRouterId } from '../shared/utils.js';
+import { colorClasses, colorProps } from '../shared/mixins.js';
+import { f7ready, f7routers, f7, f7events } from '../shared/f7.js';
+import { useTab } from '../shared/use-tab.js';
+import { getRouterInitialComponent } from '../shared/get-router-initial-component.js';
 
 export default {
   name: 'f7-view',

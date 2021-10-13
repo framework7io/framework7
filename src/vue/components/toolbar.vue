@@ -8,10 +8,10 @@
 </template>
 <script>
 import { computed, ref, provide, onMounted, onBeforeUnmount } from 'vue';
-import { classNames } from '../shared/utils';
-import { colorClasses, colorProps } from '../shared/mixins';
-import { f7 } from '../shared/f7';
-import { useTheme } from '../shared/use-theme';
+import { classNames } from '../shared/utils.js';
+import { colorClasses, colorProps } from '../shared/mixins.js';
+import { f7 } from '../shared/f7.js';
+import { useTheme } from '../shared/use-theme.js';
 
 export default {
   name: 'f7-toolbar',

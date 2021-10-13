@@ -1,13 +1,13 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getExtraAttrs, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
 import {
   colorClasses,
   routerAttrs,
   routerClasses,
   actionsAttrs,
   actionsClasses,
-} from '../shared/mixins';
-import { useRouteProps } from '../shared/use-route-props';
+} from '../shared/mixins.js';
+import { useRouteProps } from '../shared/use-route-props.js';
 
 /* dts-props
   id?: string | number;
