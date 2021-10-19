@@ -245,8 +245,9 @@
     swipeToClose
     swipeToStep
     push
-    backdrop>
-    <div class="swipe-handler" onClick={() => toggleSwipeStep()} />
+    backdrop
+  >
+    <div class="swipe-handler" on:click={() => toggleSwipeStep()} />
     <div class="sheet-modal-swipe-step">
       <div class="display-flex padding justify-content-space-between align-items-center">
         <div style="font-size: 18px"><b>Total:</b></div>

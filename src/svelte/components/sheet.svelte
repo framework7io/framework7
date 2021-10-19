@@ -34,6 +34,7 @@
   const state = {
     isOpened: opened,
     isClosing: false,
+    swipeStep: false,
   };
 
   export function instance() {
@@ -53,7 +54,9 @@
     `sheet-modal-${positionComputed}`,
     {
       'sheet-modal-push': push,
+      'modal-in-swipe-step': state.swipeStep,
     },
+
     modalStateClasses(state),
     colorClasses($$props),
   );
@@ -117,6 +120,10 @@
         stepOpen: onStepOpen,
         stepClose: onStepClose,
         stepProgress: onStepProgress,
+        // eslint-disable-next-line
+        _swipeStep(isSwipeStep) {
+          state.swipeStep = isSwipeStep;
+        },
       },
     };
     if (typeof backdrop !== 'undefined') params.backdrop = backdrop;
