@@ -56,6 +56,12 @@
 - increase build target to more modern browsers ([5efd721](https://github.com/framework7io/framework7/commit/5efd7212c1040c430646cb3acd825879640ca768))
 - **photo-browser:** enables cssMode by default for iOS and Android devices ([d6cb8e3](https://github.com/framework7io/framework7/commit/d6cb8e327165105421587e60ea175d3a7fc257f7))
 
+# [6.3.6](https://github.com/framework7io/framework7/compare/v6.3.5...v6.3.6) (2021-10-25)
+
+### Bug Fixes
+
+- **svelte:** fix swipe-to-step behavior in Sheet component ([6e0fa74](https://github.com/framework7io/framework7/commit/6e0fa7494997f6370f6f98b5744a9cfe401f7434))
+
 # [6.3.5](https://github.com/framework7io/framework7/compare/v6.3.4...v6.3.5) (2021-09-30)
 
 ### Bug Fixes

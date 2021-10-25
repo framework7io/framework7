@@ -318,6 +318,7 @@ class Sheet extends Modal {
           $el.removeClass('modal-in-swipe-step');
           $el.trigger('sheet:stepprogress', 1);
           sheet.emit('local::stepProgress sheetStepProgress', sheet, 1);
+          sheet.emit('local::_swipeStep', false);
           $el.trigger('sheet:stepopen');
           sheet.emit('local::stepOpen sheetStepOpen', sheet);
           if (sheet.push && pushOffset) {
@@ -334,6 +335,7 @@ class Sheet extends Modal {
             $el.addClass('modal-in-swipe-step');
             $el.trigger('sheet:stepprogress', 0);
             sheet.emit('local::stepProgress sheetStepProgress', sheet, 0);
+            sheet.emit('local::_swipeStep', true);
             $el.trigger('sheet:stepclose');
             sheet.emit('local::stepClose sheetStepClose', sheet);
             if (sheet.push && pushOffset) {
@@ -347,6 +349,7 @@ class Sheet extends Modal {
           $el.addClass('modal-in-swipe-step');
           $el.trigger('sheet:stepprogress', 0);
           sheet.emit('local::stepProgress sheetStepProgress', sheet, 0);
+          sheet.emit('local::_swipeStep', true);
           $el.trigger('sheet:stepclose');
           sheet.emit('local::stepClose sheetStepClose', sheet);
           if (sheet.push && pushOffset) {
@@ -364,6 +367,7 @@ class Sheet extends Modal {
             $el.removeClass('modal-in-swipe-step');
             $el.trigger('sheet:stepprogress', 1);
             sheet.emit('local::stepProgress sheetStepProgress', sheet, 1);
+            sheet.emit('local::_swipeStep', false);
             $el.trigger('sheet:stepopen');
             sheet.emit('local::stepOpen sheetStepOpen', sheet);
             if (sheet.push && pushOffset) {
@@ -392,6 +396,7 @@ class Sheet extends Modal {
             $el.addClass('modal-in-swipe-step');
             $el.trigger('sheet:stepprogress', 0);
             sheet.emit('local::stepProgress sheetStepProgress', sheet, 0);
+            sheet.emit('local::_swipeStep', true);
             $el.trigger('sheet:stepclose');
             sheet.emit('local::stepClose sheetStepClose', sheet);
             if (sheet.push && pushOffset) {
@@ -420,6 +425,7 @@ class Sheet extends Modal {
       $el[0].style.setProperty('--f7-sheet-swipe-step', `${swipeStepTranslate}px`);
       if (!byResize) {
         $el.addClass('modal-in-swipe-step');
+        sheet.emit('local::_swipeStep', true);
       }
     };
 
@@ -478,6 +484,7 @@ class Sheet extends Modal {
     sheet.on('close', () => {
       if (sheet.params.swipeToStep) {
         $el.removeClass('modal-in-swipe-step');
+        sheet.emit('local::_swipeStep', false);
         app.off('resize', onResize);
       }
       if (sheet.params.closeOnEscape) {
@@ -504,6 +511,7 @@ class Sheet extends Modal {
 
     sheet.stepOpen = function stepOpen() {
       $el.removeClass('modal-in-swipe-step');
+      sheet.emit('local::_swipeStep', false);
       if (sheet.push) {
         if (!pushOffset) {
           pushOffset = parseInt($el.css('--f7-sheet-push-offset'), 10);
@@ -516,12 +524,14 @@ class Sheet extends Modal {
     };
     sheet.stepClose = function stepClose() {
       $el.addClass('modal-in-swipe-step');
+      sheet.emit('local::_swipeStep', true);
       if (sheet.push) {
         sheet.$htmlEl[0].style.removeProperty('--f7-sheet-push-scale');
       }
     };
     sheet.stepToggle = function stepToggle() {
       $el.toggleClass('modal-in-swipe-step');
+      sheet.emit('local::_swipeStep', $el.hasClass('modal-in-swipe-step'));
     };
 
     $el[0].f7Modal = sheet;
