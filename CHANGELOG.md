@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [6.3.6](https://github.com/framework7io/framework7/compare/v6.3.5...v6.3.6) (2021-10-25)
+
+### Bug Fixes
+
+- **svelte:** fix swipe-to-step behavior in Sheet component ([6e0fa74](https://github.com/framework7io/framework7/commit/6e0fa7494997f6370f6f98b5744a9cfe401f7434))
+
 # [6.3.5](https://github.com/framework7io/framework7/compare/v6.3.4...v6.3.5) (2021-09-30)
 
 ### Bug Fixes
