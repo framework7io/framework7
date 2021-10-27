@@ -577,7 +577,7 @@ class Searchbar extends FrameworkClass {
         foundItems = sb.virtualList.params.searchAll(vlQuery, sb.virtualList.items) || [];
       } else if (sb.virtualList.params.searchByItem) {
         for (let i = 0; i < sb.virtualList.items.length; i += 1) {
-          if (sb.virtualList.params.searchByItem(vlQuery, sb.virtualList.params.items[i], i)) {
+          if (sb.virtualList.params.searchByItem(vlQuery, sb.virtualList.items[i], i)) {
             foundItems.push(i);
           }
         }
