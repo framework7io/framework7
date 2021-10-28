@@ -168,6 +168,18 @@ export default {
       },
     );
 
+    ['closeByBackdropClick', 'closeByOutsideClick', 'closeOnEscape', 'swipeToClose'].forEach(
+      (propName) => {
+        watch(
+          () => props[propName],
+          (propValue) => {
+            if (!f7Sheet) return;
+            f7Sheet.params[propName] = propValue;
+          },
+        );
+      },
+    );
+
     const classes = computed(() => {
       let positionComputed = 'bottom';
       if (props.position) positionComputed = props.position;

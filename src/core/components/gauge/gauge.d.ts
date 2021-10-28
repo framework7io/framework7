@@ -17,7 +17,7 @@ export namespace Gauge {
     params: Parameters;
 
     /** Update/rerender gauge SVG element according to passed parameters. It accepts object with same parameters required for gauge initialization. You can pass only parameters that needs to be updated */
-    update(parameters: Parameters): Gauge;
+    update(parameters: Omit<Parameters, 'el'>): Gauge;
     /** Destroys gauge instance */
     destroy(): void;
   }
@@ -79,7 +79,7 @@ export namespace Gauge {
       /** get Gauge instance by HTML element */
       get(el: HTMLElement | CSSSelector): Gauge;
       /** update/rerender Gauge SVG according to passed parameters */
-      update(parameters: Parameters): Gauge;
+      update(parameters: Omit<Parameters, 'el'>): Gauge;
     };
   }
   interface AppParams {

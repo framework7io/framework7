@@ -2770,7 +2770,7 @@
 - Actions
   - Fixed issue with error when pass already rendered HTML element to the `actions.create` constructor
   - Fixed issue with not setting actions button bg color
-  - Addedd support for `closeByOutsideClick` logic
+  - Added support for `closeByOutsideClick` logic
 - Searchbar
   - Now hides elements (when required) by setting/unsetting classes instead of directly modifying element `display` property
 - Toast
@@ -3020,7 +3020,7 @@
   - `pushState` now supports for multiple Views at a time
   - Router component's context now can be extended with `options.context` route parameter
   - Router component now supports inline nested `<template>` that won't be parsed by Template7
-  - Addded support for dynamic routes
+  - Added support for dynamic routes
   - Route events, now it is possible to specify `on` object with page events on route object
 - PhotoBrowser
   - Now uses Virtual Slides by default
