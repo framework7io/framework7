@@ -2,6 +2,62 @@
 
 # Change Log
 
+# [7.0.0-beta.10](https://github.com/framework7io/framework7/compare/v7.0.0-beta.8...v7.0.0-beta.10) (2021-10-28)
+
+### Features
+
+- update Swiper and Skeleton Elements to latest ([947529e](https://github.com/framework7io/framework7/commit/947529e7510f951651253bc4a9af75f7251374b5))
+
+# [7.0.0-beta.8](https://github.com/framework7io/framework7/compare/v7.0.0-beta.6...v7.0.0-beta.8) (2021-10-13)
+
+# [7.0.0-beta.6](https://github.com/framework7io/framework7/compare/v7.0.0-beta.5...v7.0.0-beta.6) (2021-10-13)
+
+### Bug Fixes
+
+- **vue:** fix missing imports extensions ([3692e28](https://github.com/framework7io/framework7/commit/3692e28d676e478b7dc2cca47262c6e02b5ee8d7))
+
+# [7.0.0-beta.5](https://github.com/framework7io/framework7/compare/v7.0.0-beta.4...v7.0.0-beta.5) (2021-10-13)
+
+### Bug Fixes
+
+- use file extensions in all imports ([f85d52f](https://github.com/framework7io/framework7/commit/f85d52fe7b71c920553872036a2c67da604ec9a7))
+
+# [7.0.0-beta.4](https://github.com/framework7io/framework7/compare/v7.0.0-beta.3...v7.0.0-beta.4) (2021-10-05)
+
+### Features
+
+- use `.lazy` prefix for browser loaded JS lazy components ([d419269](https://github.com/framework7io/framework7/commit/d419269d3c9ec36efab057ad21eb76ec6c185382))
+
+# [7.0.0-beta.3](https://github.com/framework7io/framework7/compare/v7.0.0-beta.2...v7.0.0-beta.3) (2021-10-05)
+
+### Features
+
+- use new dark classes in Kitchen Sink ([f61cace](https://github.com/framework7io/framework7/commit/f61cace2b2cf9418e17dda03469902cdf6d390dd))
+- **core:** rename "theme-dark" class for dark mode to "dark" ([8144a59](https://github.com/framework7io/framework7/commit/8144a59d24dd40515b2d3f9282f95f03646bc449))
+- **core:** rename dark mode params, props, events and methods ([e283e8b](https://github.com/framework7io/framework7/commit/e283e8b78c8bd7bc3c35b2c4abad2c933bab182b))
+- **react:** rename components `themeDark` prop to `dark` ([0dd8967](https://github.com/framework7io/framework7/commit/0dd89675ef7e2061c27a4137bb768a88de86e426))
+- **react:** support `open-in` functionality with react components router ([8894a77](https://github.com/framework7io/framework7/commit/8894a77f87b0e49d1e38c2f74734405b64306258))
+- **router:** move `open-in` functionality to component router ([7877e59](https://github.com/framework7io/framework7/commit/7877e590fa32cccd394911749f0be2bccc88f4c5))
+- **svelte:** rename components `themeDark` prop to `dark` ([f75b582](https://github.com/framework7io/framework7/commit/f75b582860cc3f045ca20bc778e3123a49a378a3))
+- **svelte:** support `open-in` functionality with svelte components router ([e03477e](https://github.com/framework7io/framework7/commit/e03477e8cf406a57ade823a1199cb1093dab0533))
+- **vue:** rename App's prop `autoDarkTheme` to `autoDarkMode` ([0be0730](https://github.com/framework7io/framework7/commit/0be07307e77fe393fb54e008d8dfb74f291d45dd))
+- **vue:** rename components `themeDark` prop to `dark` ([1b857bf](https://github.com/framework7io/framework7/commit/1b857bfa50c9791b0c1894e0c79682d04eced586))
+- **vue:** support `open-in` functionality with vue components route ([6610feb](https://github.com/framework7io/framework7/commit/6610febe13dbed7eb88707a3460d2a133e09131a))
+
+# [7.0.0-beta.2](https://github.com/framework7io/framework7/compare/v6.3.5...v7.0.0-beta.2) (2021-10-04)
+
+### Features
+
+- **core:** update Skeleton Elements to latest v4 ([5ee286d](https://github.com/framework7io/framework7/commit/5ee286d37b5b7d45e7c46ecab8224f9d8356f472))
+- **core:** update Swiper to latest v7 ([6eee6b7](https://github.com/framework7io/framework7/commit/6eee6b760087c5c23aade50f990db5e09330c66d))
+- **core:** update Swiper to latest v7 ([9bd6f48](https://github.com/framework7io/framework7/commit/9bd6f4857445452cf510a06ec1908641d8f40cdc))
+- **framework7-core:** move to pure ES module package ([3549b76](https://github.com/framework7io/framework7/commit/3549b7634d444aa0e58f0b89fae015a42cb92032))
+- **framework7-react:** move to pure ES module package ([6abf98a](https://github.com/framework7io/framework7/commit/6abf98a53fdb4ddf86e4b6c3f785264be40c6493))
+- **framework7-svelte:** move to pure ES module package and keep only .svelte components ([74b8e4d](https://github.com/framework7io/framework7/commit/74b8e4d84923f2b743eaef0141a8fcbae45af11f))
+- **framework7-vue:** move to pure ES module package ([e9adee6](https://github.com/framework7io/framework7/commit/e9adee62efd67559f33ed2ce4ec57f4892b0d519))
+- increase build target to more modern browsers ([5efd721](https://github.com/framework7io/framework7/commit/5efd7212c1040c430646cb3acd825879640ca768))
+- **photo-browser:** enables cssMode by default for iOS and Android devices ([d6cb8e3](https://github.com/framework7io/framework7/commit/d6cb8e327165105421587e60ea175d3a7fc257f7))
+
 # [7.0.0-beta.6](https://github.com/framework7io/framework7/compare/v7.0.0-beta.5...v7.0.0-beta.6) (2021-10-13)
 
 ### Bug Fixes
