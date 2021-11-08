@@ -2,6 +2,17 @@
 
 # Change Log
 
+# [6.3.8](https://github.com/framework7io/framework7/compare/v6.3.7...v6.3.8) (2021-11-08)
+
+### Bug Fixes
+
+- **react:** fix not working correctly change event with swipe ([9888e16](https://github.com/framework7io/framework7/commit/9888e167b38397c12311ae55cc276c57b79cd7fa))
+- **svelte:** method to get Smart Select instance in Link component ([558b629](https://github.com/framework7io/framework7/commit/558b629b46bb78ef065c2d4bc700bfd0e273ef06)), closes [#3954](https://github.com/framework7io/framework7/issues/3954)
+
+### Features
+
+- **vue:** add web-types for JetBrains editors ([f2bd8f9](https://github.com/framework7io/framework7/commit/f2bd8f9903252c49ddc5b81819e22f8dfaed488f))
+
 # [6.3.7](https://github.com/framework7io/framework7/compare/v6.3.6...v6.3.7) (2021-10-28)
 
 ### Bug Fixes
