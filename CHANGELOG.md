@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [6.3.9](https://github.com/framework7io/framework7/compare/v6.3.8...v6.3.9) (2021-11-18)
+
+### Bug Fixes
+
+- **preloader:** add `showIn` and `hideIn` to types ([e9d0db7](https://github.com/framework7io/framework7/commit/e9d0db713efee6951f02d90d41a69c065a7df93f)), closes [#3956](https://github.com/framework7io/framework7/issues/3956)
+
 # [6.3.8](https://github.com/framework7io/framework7/compare/v6.3.7...v6.3.8) (2021-11-08)
 
 ### Bug Fixes
