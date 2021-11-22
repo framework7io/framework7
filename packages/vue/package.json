@@ -6,7 +6,7 @@
   "module": "esm/framework7-vue.js",
   "jsnext:main": "esm/framework7-vue.js",
   "typings": "framework7-vue.d.ts",
-  "web-types": "./framework7-vue-web-types.json",
+  "web-types": "framework7-vue-web-types.json",
   "repository": {
     "type": "git",
     "url": "https://github.com/framework7io/framework7.git"
