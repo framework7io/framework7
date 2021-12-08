@@ -127,7 +127,7 @@ const List = forwardRef((props, ref) => {
 
   const onSortableMove = (el, listEl) => {
     if (elRef.current !== listEl) return;
-    emit(props, 'sortableMove', el);
+    emit(props, 'sortableMove', el, listEl);
   };
 
   useImperativeHandle(ref, () => ({

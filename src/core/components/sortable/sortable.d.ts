@@ -12,6 +12,8 @@ export namespace Sortable {
     'sortable:disable': (event: any) => void;
     /** Event will be triggered after user release currently sorting element in new position. event.detail will contain object with from and to properties with from/to index numbers of sorted list item */
     'sortable:sort': (event: any, indexes: SortIndexes) => void;
+    /** Event will be triggered on every list item move during sorting */
+    'sortable:move': (event: any) => void;
   }
   interface AppMethods {
     sortable: {

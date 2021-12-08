@@ -133,7 +133,7 @@
   }
   function onSortableMove(listItemEl, listEl) {
     if (listEl !== el) return;
-    emit('sortableMove', [listEl]);
+    emit('sortableMove', [listItemEl, listEl]);
   }
 
   useTab(() => el, emit);
