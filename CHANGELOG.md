@@ -2,6 +2,16 @@
 
 # Change Log
 
+# [6.3.10](https://github.com/framework7io/framework7/compare/v6.3.9...v6.3.10) (2021-12-08)
+
+### Bug Fixes
+
+- **vue:** fix `web-types` path ([6fe117a](https://github.com/framework7io/framework7/commit/6fe117abe9f8b0b1d44a0fb9f48d0869bd7613d5))
+
+### Features
+
+- **sortable:** new `sortableMove` event to trigger during sortable item drag ([ae055b2](https://github.com/framework7io/framework7/commit/ae055b20f11218e181771eaa807b1a9beb2e069c))
+
 # [6.3.9](https://github.com/framework7io/framework7/compare/v6.3.8...v6.3.9) (2021-11-18)
 
 ### Bug Fixes
