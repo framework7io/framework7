@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [6.3.11](https://github.com/framework7io/framework7/compare/v6.3.10...v6.3.11) (2021-12-08)
+
+### Bug Fixes
+
+- **sortable:** unify `sortableMove` arguments ([a17bd83](https://github.com/framework7io/framework7/commit/a17bd8346bb6b42012281d5142cdbb8f914366b9))
+
 # [6.3.10](https://github.com/framework7io/framework7/compare/v6.3.9...v6.3.10) (2021-12-08)
 
 ### Bug Fixes
