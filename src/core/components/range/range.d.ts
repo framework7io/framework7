@@ -13,6 +13,8 @@ export namespace Range {
     step?: number;
     /** Enables additional label around range slider knob (default false) */
     label?: boolean;
+    /** Method must return formatted range knob label text. As an argument it receives label value */
+    formatLabel?: (value: number) => string;
     /** Minimum value */
     min?: number;
     /** Maximum value */
@@ -21,11 +23,19 @@ export namespace Range {
     value?: number | number[];
     /** When enabled it is also possible to interact with range slider (change value) on range bar click and swipe (default true) */
     draggableBar?: boolean;
-    /** Enables vertical range slider */
+    /** Enables vertical range slider (default false) */
     vertical?: boolean;
-    /** Makes vertical range slider reversed */
+    /** Makes vertical range slider reversed (default false) */
     verticalReversed?: boolean;
-    /** Limit knob position to the size of range bar */
+    /** Enables range slider scale (default false) */
+    scale?: boolean;
+    /** Number of scale steps (default 5) */
+    scaleSteps?: number;
+    /** Number of scale sub steps (each step will be divided by this value) (default 0) */
+    scaleSubSteps?: number;
+    /** Method must return formatted scale value. As an argument it receives currect scale step value. This method will be called as for each scale step. */
+    formatScaleLabel?: (value: number) => string;
+    /** Limit knob position to the size of range bar. By default enabled from iOS theme */
     limitKnobPosition?: boolean;
     /** Object with events handlers.. */
     on?: {
@@ -55,13 +65,21 @@ export namespace Range {
     max: number;
     /** Range value */
     value: number | number[];
+    /** Boolean property indicating whether scale is enabled or not */
+    scale: boolean;
+    /** Number of scale steps */
+    scaleSteps: number;
+    /** Number of scale sub steps */
+    scaleSubSteps: number;
+    /** Dom7 instance with generated scale HTML element */
+    $scaleEl: Dom7Array;
     /** Array where each element represents HTMLElement of created range knob (2 knobs in case of dual slider) */
     knobs: HTMLElement[];
     /** Array where each element represent HTMLElement of created range knob label (2 labels in case of dual slider) */
     labels: HTMLElement[];
-    /** Boolean property indicating whether it is vertical or not  */
+    /** Boolean property indicating whether it is vertical or not */
     vertical: boolean;
-    /** Boolean property indicating whether it is vertical and reversed or not  */
+    /** Boolean property indicating whether it is vertical and reversed or not */
     verticalReversed: boolean;
     /** Range parameters */
     params: Parameters;
