@@ -2,6 +2,18 @@
 
 # Change Log
 
+# [6.3.12](https://github.com/framework7io/framework7/compare/v6.3.11...v6.3.12) (2021-12-13)
+
+### Bug Fixes
+
+- **calendar:** remove `日` char from calendar days for Chinese locale ([5f595f2](https://github.com/framework7io/framework7/commit/5f595f26d8c2f97fc9fc2a3e84dd99a20377b8a8)), closes [#3960](https://github.com/framework7io/framework7/issues/3960)
+- **popup:** add `pointer-events: none` to `popup-behind` state ([246e737](https://github.com/framework7io/framework7/commit/246e737d188a5d7d0c266cc21ad9a75ad4e78e2b))
+- **range:** add missing type definitions ([#3961](https://github.com/framework7io/framework7/issues/3961)) ([d3bc1b4](https://github.com/framework7io/framework7/commit/d3bc1b4f703c1a236c66620ab54679a164bb4010))
+
+### Features
+
+- **tabbar:** allow tabbar to have highlight in iOS theme with extra `tabbar-highlight` class ([3a141ad](https://github.com/framework7io/framework7/commit/3a141ad8cb1c349623f50680e4c5930d52b3517c))
+
 # [6.3.11](https://github.com/framework7io/framework7/compare/v6.3.10...v6.3.11) (2021-12-08)
 
 ### Bug Fixes
