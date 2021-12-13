@@ -4,9 +4,8 @@ import { nextFrame, bindMethods } from '../../shared/utils';
 const Toolbar = {
   setHighlight(tabbarEl) {
     const app = this;
-    if (app.theme === 'ios') return;
-
     const $tabbarEl = $(tabbarEl);
+    if (app.theme === 'ios' && !$tabbarEl.hasClass('tabbar-highlight')) return;
 
     if (
       $tabbarEl.length === 0 ||

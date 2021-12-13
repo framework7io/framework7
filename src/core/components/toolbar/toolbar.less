@@ -153,6 +153,19 @@
     height: var(--f7-tabbar-icon-size);
     line-height: var(--f7-tabbar-icon-size);
   }
+  .tab-link-highlight {
+    position: absolute;
+    left: 0;
+    height: 2px;
+    background: var(--f7-tabbar-link-active-border-color, var(--f7-theme-color));
+    transition-duration: 300ms;
+    .ltr({
+      left: 0;
+    });
+    .rtl({
+      right: 0;
+    });
+  }
 }
 .tabbar-labels {
   --f7-toolbar-height: var(--f7-tabbar-labels-height);
