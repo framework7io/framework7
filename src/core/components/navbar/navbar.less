@@ -226,7 +226,6 @@
 
 .navbar-large-transparent .navbar-bg,
 .navbar-large.navbar-transparent .navbar-bg {
-  opacity: var(--f7-navbar-large-collapse-progress);
   height: 100%;
   transform: none;
 }
@@ -246,9 +245,7 @@
 .ios .navbar:not(.navbar-large) .navbar-bg {
   --f7-navbar-large-collapse-progress: 1;
 }
-.navbar-large .title {
-  opacity: var(--f7-navbar-large-collapse-progress);
-}
+
 .navbar-large-collapsed {
   --f7-navbar-large-collapse-progress: 1;
   .title-large {
@@ -267,6 +264,7 @@
   overflow: hidden;
   height: var(--f7-navbar-large-title-height);
   z-index: 5;
+  background-color: var(--f7-navbar-bg-color, var(--f7-bars-bg-color));
 }
 .navbar .title-large-text {
   text-overflow: ellipsis;
