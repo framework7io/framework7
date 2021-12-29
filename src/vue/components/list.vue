@@ -91,7 +91,7 @@ export default {
     };
     const onSortableMove = (el, listEl) => {
       if (elRef.value !== listEl) return;
-      emit(props, 'sortable:move', el, listEl);
+      emit('sortable:move', el, listEl);
     };
 
     useTab(elRef, emit);
