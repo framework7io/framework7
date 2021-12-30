@@ -106,10 +106,10 @@ export default {
       emit('texteditor:popoverclose');
     };
     const onInsertLink = (editor, url) => {
-      emit(props, 'texteditor:insertlink', url);
+      emit('texteditor:insertlink', url);
     };
     const onInsertImage = (editor, url) => {
-      emit(props, 'texteditor:insertimage', url);
+      emit('texteditor:insertimage', url);
     };
 
     watch(
