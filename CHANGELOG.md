@@ -2,6 +2,13 @@
 
 # Change Log
 
+# [6.3.14](https://github.com/framework7io/framework7/compare/v6.3.12...v6.3.14) (2021-12-30)
+
+### Bug Fixes
+
+- **vue:** fix `sortableMove` event arguments ([#3965](https://github.com/framework7io/framework7/issues/3965)) ([8e716f7](https://github.com/framework7io/framework7/commit/8e716f7a17dbf884493330224408405bd41f35fc))
+- **vue:** fix textEditor events arguments ([e6a3218](https://github.com/framework7io/framework7/commit/e6a3218c7a71d725e77e0bc92ccc35a086a92c6b))
+
 # [6.3.12](https://github.com/framework7io/framework7/compare/v6.3.11...v6.3.12) (2021-12-13)
 
 ### Bug Fixes
