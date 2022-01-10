@@ -44,6 +44,10 @@
   let el;
   let f7SmartSelect;
 
+  export function smartSelectInstance() {
+    return f7SmartSelect;
+  }
+
   let TabbarContext =
     getReactiveContext('TabbarContext', (newValue) => {
       TabbarContext = newValue;

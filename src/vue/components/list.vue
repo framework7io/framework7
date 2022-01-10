@@ -62,6 +62,7 @@ export default {
     'sortable:enable',
     'sortable:disable',
     'sortable:sort',
+    'sortable:move',
     'virtual:itembeforeinsert',
     'virtual:beforeclear',
     'virtual:itemsbeforeinsert',
@@ -88,6 +89,10 @@ export default {
       if (elRef.value !== listEl) return;
       emit('sortable:sort', sortData);
     };
+    const onSortableMove = (el, listEl) => {
+      if (elRef.value !== listEl) return;
+      emit('sortable:move', el, listEl);
+    };
 
     useTab(elRef, emit);
 
@@ -96,6 +101,7 @@ export default {
         f7.on('sortableEnable', onSortableEnable);
         f7.on('sortableDisable', onSortableDisable);
         f7.on('sortableSort', onSortableSort);
+        f7.on('sortableMove', onSortableMove);
 
         if (!props.virtualList) return;
         const vlParams = props.virtualListParams || {};
@@ -136,6 +142,7 @@ export default {
       f7.off('sortableEnable', onSortableEnable);
       f7.off('sortableDisable', onSortableDisable);
       f7.off('sortableSort', onSortableSort);
+      f7.off('sortableMove', onSortableMove);
 
       if (!(props.virtualList && f7VirtualList)) return;
       if (f7VirtualList.destroy) f7VirtualList.destroy();

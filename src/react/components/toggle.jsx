@@ -46,6 +46,7 @@ const Toggle = forwardRef((props, ref) => {
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
+  const inputElRef = useRef(null);
 
   const onChange = (event) => {
     emit(props, 'change', event);
@@ -91,8 +92,14 @@ const Toggle = forwardRef((props, ref) => {
 
   useIsomorphicLayoutEffect(() => {
     toggleEvents('on');
+    if (inputElRef.current) {
+      inputElRef.current.addEventListener('change', onChange);
+    }
     return () => {
       toggleEvents('off');
+      if (inputElRef.current) {
+        inputElRef.current.removeEventListener('change', onChange);
+      }
     };
   });
 
@@ -111,6 +118,7 @@ const Toggle = forwardRef((props, ref) => {
   );
   const inputEl = (
     <input
+      ref={inputElRef}
       type="checkbox"
       name={name}
       disabled={disabled}
@@ -118,7 +126,7 @@ const Toggle = forwardRef((props, ref) => {
       checked={checked}
       defaultChecked={defaultChecked}
       value={value}
-      onChange={onChange}
+      onChange={() => {}}
     />
   );
 

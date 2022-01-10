@@ -64,6 +64,7 @@ import { VirtualList } from 'framework7/types';
   onSortableEnable? : (...args: any[]) => void
   onSortableDisable? : (...args: any[]) => void
   onSortableSort? : (sortData?: any) => void
+  onSortableMove? : (itemEl?: any) => void
   onTabShow? : (el?: HTMLElement) => void
   onTabHide? : (el?: HTMLElement) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null; f7VirtualList: () => VirtualList.VirtualList}>;
@@ -131,6 +132,11 @@ const List = forwardRef((props, ref) => {
     emit(props, 'sortableSort', sortData);
   };
 
+  const onSortableMove = (el, listEl) => {
+    if (elRef.current !== listEl) return;
+    emit(props, 'sortableMove', el, listEl);
+  };
+
   useImperativeHandle(ref, () => ({
     el: elRef.current,
     f7VirtualList: () => f7VirtualList.current,
@@ -143,6 +149,7 @@ const List = forwardRef((props, ref) => {
       f7.on('sortableEnable', onSortableEnable);
       f7.on('sortableDisable', onSortableDisable);
       f7.on('sortableSort', onSortableSort);
+      f7.on('sortableMove', onSortableMove);
     });
   };
 
@@ -151,6 +158,7 @@ const List = forwardRef((props, ref) => {
     f7.off('sortableEnable', onSortableEnable);
     f7.off('sortableDisable', onSortableDisable);
     f7.off('sortableSort', onSortableSort);
+    f7.off('sortableMove', onSortableMove);
   };
 
   const onMount = () => {

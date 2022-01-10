@@ -131,6 +131,10 @@
     if (listEl !== el) return;
     emit('sortableSort', [sortData]);
   }
+  function onSortableMove(listItemEl, listEl) {
+    if (listEl !== el) return;
+    emit('sortableMove', [listItemEl, listEl]);
+  }
 
   useTab(() => el, emit);
 
@@ -139,6 +143,7 @@
       app.f7.on('sortableEnable', onSortableEnable);
       app.f7.on('sortableDisable', onSortableDisable);
       app.f7.on('sortableSort', onSortableSort);
+      app.f7.on('sortableMove', onSortableMove);
 
       if (!virtualList) return;
       const vlParams = virtualListParams || {};
@@ -178,6 +183,7 @@
     app.f7.off('sortableEnable', onSortableEnable);
     app.f7.off('sortableDisable', onSortableDisable);
     app.f7.off('sortableSort', onSortableSort);
+    app.f7.off('sortableMove', onSortableMove);
 
     if (f7VirtualList && f7VirtualList.destroy) {
       f7VirtualList.destroy();

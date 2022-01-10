@@ -48,14 +48,26 @@ class Calendar extends Framework7Class {
       hasTimePicker:
         calendar.params.timePicker && !calendar.params.rangePicker && !calendar.params.multiple,
     });
-    calendar.dayFormatter = new Intl.DateTimeFormat(calendar.params.locale, { day: 'numeric' });
-    calendar.monthFormatter = new Intl.DateTimeFormat(calendar.params.locale, { month: 'long' });
-    calendar.yearFormatter = new Intl.DateTimeFormat(calendar.params.locale, { year: 'numeric' });
-    calendar.timeSelectorFormatter = new Intl.DateTimeFormat(
-      calendar.params.locale,
-      calendar.params.timePickerFormat,
-    );
-    const timeFormatCheckDate = calendar.timeSelectorFormatter.format(new Date()).toLowerCase();
+    calendar.dayFormatter = (date) => {
+      const formatter = new Intl.DateTimeFormat(calendar.params.locale, { day: 'numeric' });
+      return formatter.format(date).replace(/日/, '');
+    };
+    calendar.monthFormatter = (date) => {
+      const formatter = new Intl.DateTimeFormat(calendar.params.locale, { month: 'long' });
+      return formatter.format(date);
+    };
+    calendar.yearFormatter = (date) => {
+      const formatter = new Intl.DateTimeFormat(calendar.params.locale, { year: 'numeric' });
+      return formatter.format(date);
+    };
+    calendar.timeSelectorFormatter = (date) => {
+      const formatter = new Intl.DateTimeFormat(
+        calendar.params.locale,
+        calendar.params.timePickerFormat,
+      );
+      return formatter.format(date);
+    };
+    const timeFormatCheckDate = calendar.timeSelectorFormatter(new Date()).toLowerCase();
     calendar.is12HoursFormat =
       timeFormatCheckDate.indexOf('pm') >= 0 || timeFormatCheckDate.indexOf('am') >= 0;
 
@@ -456,7 +468,7 @@ class Calendar extends Framework7Class {
     let yearEnded;
     for (let i = 0; i < 24; i += 1) {
       const date = new Date().setMonth(i, 1);
-      const currentYear = calendar.yearFormatter.format(date);
+      const currentYear = calendar.yearFormatter(date);
 
       if (year && currentYear !== year) {
         if (yearStarted) yearEnded = true;
@@ -745,7 +757,7 @@ class Calendar extends Framework7Class {
         .find('.calendar-time-selector a')
         .text(
           value && value.length
-            ? calendar.timeSelectorFormatter.format(value[0])
+            ? calendar.timeSelectorFormatter(value[0])
             : calendar.params.timePickerPlaceholder,
         );
     }
@@ -1196,9 +1208,9 @@ class Calendar extends Framework7Class {
     let date = new Date(d);
     let year = date.getFullYear();
     let month = date.getMonth();
-    let localeMonth = calendar.monthNames.indexOf(calendar.monthFormatter.format(date));
+    let localeMonth = calendar.monthNames.indexOf(calendar.monthFormatter(date));
     if (localeMonth < 0) localeMonth = month;
-    let localeYear = calendar.yearFormatter.format(date);
+    let localeYear = calendar.yearFormatter(date);
 
     if (offset === 'next') {
       if (month === 11) date = new Date(year + 1, 0);
@@ -1211,9 +1223,9 @@ class Calendar extends Framework7Class {
     if (offset === 'next' || offset === 'prev') {
       month = date.getMonth();
       year = date.getFullYear();
-      localeMonth = calendar.monthNames.indexOf(calendar.monthFormatter.format(date));
+      localeMonth = calendar.monthNames.indexOf(calendar.monthFormatter(date));
       if (localeMonth < 0) localeMonth = month;
-      localeYear = calendar.yearFormatter.format(date);
+      localeYear = calendar.yearFormatter(date);
     }
 
     const currentValues = [];
@@ -1361,7 +1373,7 @@ class Calendar extends Framework7Class {
         dayDate = new Date(dayDate);
         const dayYear = dayDate.getFullYear();
         const dayMonth = dayDate.getMonth();
-        const dayNumberDisplay = calendar.dayFormatter.format(dayDate);
+        const dayNumberDisplay = calendar.dayFormatter(dayDate);
         // prettier-ignore
         rowHtml += `
           <div data-year="${dayYear}" data-month="${dayMonth}" data-day="${dayNumber}" class="calendar-day${addClass}" data-date="${dayYear}-${dayMonth}-${dayNumber}">
@@ -1478,7 +1490,7 @@ class Calendar extends Framework7Class {
               year === currentYear ? 'calendar-year-picker-item-current' : ''
             }`}
           >
-            <span>{calendar.yearFormatter.format(new Date().setFullYear(year))}</span>
+            <span>{calendar.yearFormatter(new Date().setFullYear(year))}</span>
           </div>
         ))}
       </div>
@@ -1490,7 +1502,7 @@ class Calendar extends Framework7Class {
     const calendar = this;
     const value = calendar.value && calendar.value[0];
     let timeString;
-    if (value) timeString = calendar.timeSelectorFormatter.format(value);
+    if (value) timeString = calendar.timeSelectorFormatter(value);
     return (
       <div class="calendar-time-selector">
         <a class="link">{timeString || calendar.params.timePickerPlaceholder}</a>

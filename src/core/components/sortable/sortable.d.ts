@@ -12,6 +12,8 @@ export namespace Sortable {
     'sortable:disable': (event: any) => void;
     /** Event will be triggered after user release currently sorting element in new position. event.detail will contain object with from and to properties with from/to index numbers of sorted list item */
     'sortable:sort': (event: any, indexes: SortIndexes) => void;
+    /** Event will be triggered on every list item move during sorting */
+    'sortable:move': (event: any) => void;
   }
   interface AppMethods {
     sortable: {
@@ -37,7 +39,9 @@ export namespace Sortable {
     /** Event will be triggered when sortable mode is disabled */
     sortableDisable: (listEl: HTMLElement) => void;
     /** Event will be triggered after user release currently sorting element in new position. indexes is an object with from and to properties with from/to index numbers of sorted list item */
-    sortableSort: (listEl: HTMLElement, indexes: SortIndexes) => void;
+    sortableSort: (itemEl: HTMLElement, indexes: SortIndexes, listEl: HTMLElement) => void;
+    /** Event will be triggered on every list item move during sorting */
+    sortableMove: (itemEl: HTMLElement, listEl: HTMLElement) => void;
   }
 }
 

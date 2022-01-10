@@ -32,7 +32,7 @@ const Progressbar = {
     }
     $progressbarLine
       .transition(typeof duration !== 'undefined' ? duration : '')
-      .transform(`translate3d(${-100 + progressNormalized}%,0,0)`);
+      .transform(`translate3d(${(-100 + progressNormalized) * (app.rtl ? -1 : 1)}%,0,0)`);
 
     return $progressbarEl[0];
   },
