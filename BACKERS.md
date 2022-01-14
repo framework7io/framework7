@@ -193,7 +193,9 @@ Bart DJ
 
 ### \$25+ Awesome Supporter
 
-[Currently vacant. It could be you!](https://www.patreon.com/join/framework7/checkout?rid=4656325)
+[Get real Instagram comments by Insta4likes](https://insta4likes.com)
+
+[Join here!](https://www.patreon.com/join/framework7/checkout?rid=4656325)
 
 ---
 
