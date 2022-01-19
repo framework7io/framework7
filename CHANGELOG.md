@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [6.3.15](https://github.com/framework7io/framework7/compare/v6.3.14...v6.3.15) (2022-01-19)
+
+### Bug Fixes
+
+- **progressbar:** tweaked styles for RTL ([6f6167c](https://github.com/framework7io/framework7/commit/6f6167cd7ed3c6380189bae82dbe99a235ea888a))
+
 # [6.3.14](https://github.com/framework7io/framework7/compare/v6.3.12...v6.3.14) (2021-12-30)
 
 ### Bug Fixes
