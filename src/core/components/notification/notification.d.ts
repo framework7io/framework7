@@ -13,9 +13,9 @@ export namespace Notification {
     params: Parameters;
 
     /** Open notification */
-    open(): Notification;
+    open(animate?: boolean): Notification;
     /** Close notification */
-    close(): Notification;
+    close(animate?: boolean): Notification;
   }
 
   interface Parameters {
@@ -88,10 +88,10 @@ export namespace Notification {
       get(el: HTMLElement | CSSSelector): Notification;
 
       /** open Notification */
-      open(el: HTMLElement | CSSSelector): Notification;
+      open(el: HTMLElement | CSSSelector, animate?: boolean): Notification;
 
       /** closes Notification */
-      close(el: HTMLElement | CSSSelector): Notification;
+      close(el: HTMLElement | CSSSelector, animate?: boolean): Notification;
     };
   }
   interface AppParams {

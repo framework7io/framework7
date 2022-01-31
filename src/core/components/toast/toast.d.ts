@@ -60,9 +60,9 @@ export namespace Toast {
     params: Parameters;
 
     /** Open toast */
-    open(): Toast;
+    open(animate?: boolean): Toast;
     /** Close toast */
-    close(): Toast;
+    close(animate?: boolean): Toast;
     /** Destroy toast */
     destroy(): void;
   }
