@@ -9,6 +9,7 @@ export default {
     popover: {
       backdrop: true,
       backdropEl: undefined,
+      backdropUnique: false,
       closeByBackdropClick: true,
       closeByOutsideClick: true,
       closeOnEscape: false,

@@ -66,6 +66,9 @@ class Modal extends Framework7Class {
     if (!modal.type || !modal.$el) return;
     modal.$el.removeClass('modal-out');
     modal.$el.hide();
+    if (modal.params.backdrop && modal.params.backdropUnique && modal.$backdropEl) {
+      modal.$backdropEl.remove();
+    }
     modal.$el.trigger(`modal:closed ${modal.type.toLowerCase()}:closed`);
     modal.emit(`local::closed modalClosed ${modal.type}Closed`, modal);
   }
@@ -119,6 +122,10 @@ class Modal extends Framework7Class {
     }
     // Show Modal
     $el.show();
+
+    if (modal.params.backdrop && modal.params.backdropUnique && modal.$backdropEl) {
+      modal.$backdropEl.insertBefore($el);
+    }
 
     /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
     modal._clientLeft = $el[0].clientLeft;

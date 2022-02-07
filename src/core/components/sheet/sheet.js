@@ -10,6 +10,7 @@ export default {
       push: false,
       backdrop: undefined,
       backdropEl: undefined,
+      backdropUnique: false,
       closeByBackdropClick: true,
       closeByOutsideClick: false,
       closeOnEscape: false,

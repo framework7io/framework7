@@ -29,6 +29,8 @@ export namespace Sheet {
     backdrop?: boolean;
     /** Backdrop element to share across instances */
     backdropEl?: HTMLElement | CSSSelector;
+    /** If enabled it creates unique backdrop element exclusively for this modal (default false) */
+    backdropUnique?: boolean;
     /** HTML element or string (with CSS selector) of element. If specified, then sheet will try to scroll page content to this element on open */
     scrollToEl?: HTMLElement | CSSSelector;
     /** When enabled, Sheet Modal will be closed on backdrop click. (default true) */

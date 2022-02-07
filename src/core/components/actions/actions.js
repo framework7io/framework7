@@ -9,6 +9,7 @@ export default {
       forceToPopover: false,
       backdrop: true,
       backdropEl: undefined,
+      backdropUnique: false,
       cssClass: null,
       closeByBackdropClick: true,
       closeOnEscape: false,

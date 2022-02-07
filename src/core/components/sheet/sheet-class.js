@@ -45,7 +45,12 @@ class Sheet extends Modal {
     if (sheet.params.backdrop && sheet.params.backdropEl) {
       $backdropEl = $(sheet.params.backdropEl);
     } else if (sheet.params.backdrop) {
-      $backdropEl = sheet.$containerEl.children('.sheet-backdrop');
+      if (sheet.params.backdropUnique) {
+        $backdropEl = $('<div class="sheet-backdrop sheet-backdrop-unique"></div>');
+        sheet.$containerEl.append($backdropEl);
+      } else {
+        $backdropEl = sheet.$containerEl.children('.sheet-backdrop');
+      }
       if ($backdropEl.length === 0) {
         $backdropEl = $('<div class="sheet-backdrop"></div>');
         sheet.$containerEl.append($backdropEl);

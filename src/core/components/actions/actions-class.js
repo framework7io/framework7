@@ -58,7 +58,12 @@ class Actions extends Modal {
     if (actions.params.backdrop && actions.params.backdropEl) {
       $backdropEl = $(actions.params.backdropEl);
     } else if (actions.params.backdrop) {
-      $backdropEl = actions.$containerEl.children('.actions-backdrop');
+      if (actions.params.backdropUnique) {
+        $backdropEl = $('<div class="popup-backdrop popup-backdrop-unique"></div>');
+        actions.$containerEl.append($backdropEl);
+      } else {
+        $backdropEl = actions.$containerEl.children('.actions-backdrop');
+      }
       if ($backdropEl.length === 0) {
         $backdropEl = $('<div class="actions-backdrop"></div>');
         actions.$containerEl.append($backdropEl);
