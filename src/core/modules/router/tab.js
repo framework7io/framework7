@@ -35,7 +35,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
 
     // Update Browser History
     if (router.params.browserHistory && options.browserHistory && !options.reloadPrevious) {
-      History.replace(
+      History[router.params.browserHistoryTabs](
         router.view.id,
         {
           url: options.route.url,

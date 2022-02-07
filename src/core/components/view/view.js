@@ -91,6 +91,7 @@ export default {
       browserHistoryOnLoad: true,
       browserHistoryInitialMatch: false,
       browserHistoryStoreHistory: true,
+      browserHistoryTabs: 'replace',
       // Animate Pages
       animate: true,
       // iOS Dynamic Navbar

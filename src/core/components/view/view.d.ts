@@ -158,6 +158,8 @@ export namespace View {
     browserHistoryInitialMatch?: boolean;
     /**	When enabled (by default), it will store router history in localStorage and try to restore it on next web app visit */
     browserHistoryStoreHistory?: boolean;
+    /** When "replace" (by default), it will replace state on routable tabs change, otherwise (if "push"), it will add to history every routable tab change, so it will be possible to switch back between tabs with browser back button */
+    browserHistoryTabs?: 'replace' | 'push';
     /** Object with events handlers.. */
     on?: {
       [event in keyof Events]?: Events[event];
