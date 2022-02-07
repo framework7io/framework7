@@ -316,30 +316,7 @@ class Calendar extends Framework7Class {
       }
 
       function onMonthSelectorClick() {
-        $el.append(calendar.renderMonthPicker());
-      }
-      function onMonthSelectorItemClick() {
-        const $clickedEl = $(this);
-        if ($clickedEl.hasClass('calendar-month-picker-item-current')) {
-          $el.find('.calendar-month-picker').remove();
-          return;
-        }
-        $el
-          .find('.calendar-month-picker-item-current')
-          .add($clickedEl)
-          .toggleClass('calendar-month-picker-item-current');
-        const index = $clickedEl.index();
-        const localeMonthIndex = parseInt(
-          calendar.$el.find('.calendar-month-current').attr('data-locale-month'),
-          10,
-        );
-        const monthIndex = calendar.currentMonth;
-        const diff = localeMonthIndex - monthIndex;
-        const diffIndex = index - diff;
-        calendar.setYearMonth(calendar.currentYear, diffIndex, 0);
-        setTimeout(() => {
-          $el.find('.calendar-month-picker').remove();
-        }, 200);
+        calendar.openMonthPicker();
       }
 
       function onYearSelectorClick() {
@@ -361,7 +338,6 @@ class Calendar extends Framework7Class {
       $el.find('.calendar-next-year-button').on('click', onNextYearClick);
       if (calendar.params.monthPicker) {
         $el.find('.current-month-value').on('click', onMonthSelectorClick);
-        $el.on('click', '.calendar-month-picker-item', onMonthSelectorItemClick);
       }
       if (calendar.params.yearPicker) {
         $el.find('.current-year-value').on('click', onYearSelectorClick);
@@ -385,7 +361,6 @@ class Calendar extends Framework7Class {
         $el.find('.calendar-next-year-button').off('click', onNextYearClick);
         if (calendar.params.monthPicker) {
           $el.find('.current-month-value').off('click', onMonthSelectorClick);
-          $el.off('click', '.calendar-month-picker-item', onMonthSelectorItemClick);
         }
         if (calendar.params.yearPicker) {
           $el.find('.current-year-value').off('click', onYearSelectorClick);
@@ -1391,27 +1366,6 @@ class Calendar extends Framework7Class {
     );
   }
 
-  renderMonthPicker() {
-    const calendar = this;
-    const localeMonth = parseInt(
-      calendar.$el.find('.calendar-month-current').attr('data-locale-month'),
-      10,
-    );
-    return (
-      <div class="calendar-month-picker">
-        {calendar.monthNames.map((m, index) => (
-          <div
-            class={`calendar-month-picker-item ${
-              localeMonth === index ? 'calendar-month-picker-item-current' : ''
-            }`}
-          >
-            <span>{m}</span>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
   renderYearSelector() {
     const calendar = this;
     if (calendar.params.renderYearSelector) {
@@ -1588,6 +1542,88 @@ class Calendar extends Framework7Class {
       return calendar.renderCustomModal();
     }
     return calendar.renderInline();
+  }
+
+  openMonthPicker() {
+    const calendar = this;
+    const { $el, app } = calendar;
+    if (!$el || !$el.length) return;
+
+    $el.append(
+      '<div class="popover calendar-popover calendar-month-picker-popover"><div class="popover-inner"><div class="calendar-month-picker"></div></div></div>',
+    );
+
+    if (calendar.modal) {
+      calendar.modal.params.closeByOutsideClick = false;
+    }
+
+    calendar.monthPickerPopover = app.popover.create({
+      el: $el.find('.calendar-month-picker-popover'),
+      targetEl: $el.find('.calendar-month-selector'),
+      backdrop: true,
+      backdropUnique: true,
+      on: {
+        close() {
+          calendar.closeMonthPicker();
+        },
+        closed() {
+          if (calendar.modal) {
+            calendar.modal.params.closeByOutsideClick = true;
+          }
+          if (calendar.monthPickerPopover.$el) calendar.monthPickerPopover.$el.remove();
+          calendar.monthPickerPopover.destroy();
+          if (calendar.monthPickerInstance) {
+            calendar.monthPickerInstance.close();
+            calendar.monthPickerInstance.destroy();
+          }
+          delete calendar.monthPickerInstance;
+          delete calendar.monthPickerPopover;
+        },
+      },
+    });
+    calendar.monthPickerPopover.open();
+
+    const localeMonth = parseInt(
+      calendar.$el.find('.calendar-month-current').attr('data-locale-month'),
+      10,
+    );
+
+    const values = [];
+    const displayValues = [];
+    calendar.monthNames.forEach((m, index) => {
+      values.push(index);
+      displayValues.push(m);
+    });
+
+    calendar.monthPickerInstance = app.picker.create({
+      containerEl: calendar.monthPickerPopover.$el.find('.calendar-month-picker'),
+      value: [localeMonth],
+      toolbar: false,
+      rotateEffect: false,
+      toolbarCloseText: calendar.params.toolbarCloseText,
+      cols: [
+        {
+          values,
+          displayValues,
+        },
+      ],
+    });
+  }
+
+  closeMonthPicker() {
+    const calendar = this;
+    if (calendar.monthPickerPopover && calendar.monthPickerPopover.opened)
+      calendar.monthPickerPopover.close();
+
+    const index = calendar.monthPickerInstance.value[0];
+    const localeMonthIndex = parseInt(
+      calendar.$el.find('.calendar-month-current').attr('data-locale-month'),
+      10,
+    );
+    const monthIndex = calendar.currentMonth;
+    const diff = localeMonthIndex - monthIndex;
+    const diffIndex = index - diff;
+    calendar.setYearMonth(calendar.currentYear, diffIndex, 0);
   }
 
   openYearPicker() {
