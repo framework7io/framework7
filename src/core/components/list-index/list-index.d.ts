@@ -36,7 +36,7 @@ export namespace ListIndex {
     /** Related List View element. HTMLElement or string with CSS selector of List View element. */
     listEl?: HTMLElement | CSSSelector;
     /** Array with indexes. If not passed then it will automatically generate it based on item-divider and list-group-title elements inside of passed List View element in listEl parameter. (default auto) */
-    indexes?: number[] | string; // ??
+    indexes?: string[] | string; // ??
     /** Will automatically scroll related List View to the selected index. (default true) */
     scrollList?: boolean;
     /** Enables label bubble with selected index when you swipe over list index. (default false) */

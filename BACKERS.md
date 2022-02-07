@@ -13,11 +13,6 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://privicy.com/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/privicy.png">
-      </a>
-    </td>
-    <td align="center" valign="middle">
       <a href="https://www.thoriumbuilder.com/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/thorium.png">
       </a>
@@ -27,13 +22,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/appvalley.jpg">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="http://mytommy.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/tommy.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://www.ramotion.com/agency/app-development/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/ramotion.png">
@@ -54,23 +49,13 @@
         <img width="160" src="https://framework7.io/i/sponsors/coupons4printing.jpg">
       </a>
     </td>
-  </tr>
-  <tr>
-    <td align="center" valign="middle">
-      <a href="https://www.collegepaperworld.com/research-paper.html" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/collegeresearchpaper.png">
-      </a>
-    </td>
     <td align="center" valign="middle">
       <a href="https://casinofiables.com/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/casinofiables.png">
       </a>
     </td>
-    <td align="center" valign="middle">
-      <a href="https://www.gunsbet.com" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/gunsbet.png">
-      </a>
-    </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.realtimecommunicationsworld.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/realtime.jpg">
@@ -81,8 +66,6 @@
         <img width="160" src="https://framework7.io/i/sponsors/vpn.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://tutlance.com" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/tutlance.png">
@@ -94,30 +77,21 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://uppsats.eu" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/uppsats.png">
-      </a>
-    </td>
-    <td align="center" valign="middle">
       <a href="https://www.bonus.com.de/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/bonusfinder.png">
       </a>
     </td>
+
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://kqapi.us" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/kqapius.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://writersperhour.com/write-my-paper" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/writersperhour.jpg">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://www.colognewebdesign.de/" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/colognewebdesign.png">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -125,18 +99,6 @@
         <img width="160" src="https://framework7.io/i/sponsors/rise.png">
       </a>
     </td>
-    <td align="center" valign="middle">
-      <a href="https://usave.co.uk/utilities/broadband" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/usave.png">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://bid4papers.com/write-my-essay.html" target="_blank">
-        <img width="160" src="https://framework7.io/i/sponsors/bid4papers.png">
-      </a>
-    </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://kidoverse.app" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/kidoverse.png">
@@ -147,6 +109,8 @@
         <img width="160" src="https://framework7.io/i/sponsors/cyberbrain.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://hicapps.cl/" target="_blank">
         <img width="160" src="https://framework7.io/i/sponsors/hicapps.png">
@@ -162,6 +126,8 @@
         <img width="160" src="https://framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
+    <td></td>
+    <td></td>
   </tr>
 </table>
 
@@ -200,24 +166,17 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ### \$50+ Top Supporter
 
 [CodeFirst](https://www.codefirst.co.uk) - Software Development Company | CodeFirst UK<br>
-[Privicy](https://privicy.com/) - Privacy control for consumers<br>
 [Buy Instagram Likes from Goread](https://goread.io/buy-instagram-likes)<br>
 [Coupons4Printing: Promotion Codes, Coupons, Coupon Codes](https://www.coupons4printing.com)<br>
-[College Papers for Sale | Buy Research Paper Online](https://www.collegepaperworld.com/research-paper.html)<br>
 [Casino En Ligne Canada, Les Meilleurs Casinos Virtuels Canadiens](https://casinofiables.com/)<br>
-[GunsBet Casino](https://www.gunsbet.com)<br>
 [Real Time Communications World](https://www.realtimecommunicationsworld.com)<br>
 [Tutlance.com - Pay For Homework Answers, Assignments and Essay Solutions](https://tutlance.com)<br>
 [EduBirdie - The professional essay writing service for students who can't even](https://edubirdie.com)<br>
 [Findmate - International Dating](https://findmate.app)<br>
-[Tjänst för akademisk skrivning. Beställ din uppsats](https://uppsats.eu)<br>
 [www.bonus.com.de](https://www.bonus.com.de/)<br>
 [Writers Per Hour](https://writersperhour.com/write-my-paper) - Write My Paper For Me<br>
-[Bid4Papers](https://bid4papers.com/write-my-essay.html) - Write My Essay<br>
-[COLOGNE WEBDESIGN](https://www.colognewebdesign.de/)<br>
 [Kqapius, INC.](https://kqapi.us)<br>
 [Rise](https://rise.co) - Creative Web Development Agency<br>
-[usave](https://usave.co.uk/utilities/broadband) - compare broadband deals on usave.co.uk<br>
 [Kidoverse](https://kidoverse.app) - App for kids to learn, play, create and explore<br>
 [CyberBrain IT Services](https://www.cyberbrain.nl/)<br>
 [HICAPPS](https://hicapps.cl/) - Health Informatics Custom APPs<br>
@@ -234,7 +193,9 @@ Bart DJ
 
 ### \$25+ Awesome Supporter
 
-[Currently vacant. It could be you!](https://www.patreon.com/join/framework7/checkout?rid=4656325)
+[Get real Instagram comments by Insta4likes](https://insta4likes.com)
+
+[Join here!](https://www.patreon.com/join/framework7/checkout?rid=4656325)
 
 ---
 
