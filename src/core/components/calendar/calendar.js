@@ -54,6 +54,7 @@ export default {
       yearPickerMin: undefined,
       yearPickerMax: undefined,
       timePicker: false,
+      timePickerLabel: 'Time',
       timePickerFormat: { hour: 'numeric', minute: 'numeric' },
       timePickerPlaceholder: 'Select time',
       weekHeader: true,

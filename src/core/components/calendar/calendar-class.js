@@ -1505,6 +1505,7 @@ class Calendar extends Framework7Class {
     if (value) timeString = calendar.timeSelectorFormatter(value);
     return (
       <div class="calendar-time-selector">
+        <span>{calendar.params.timePickerLabel}</span>
         <a class="link">{timeString || calendar.params.timePickerPlaceholder}</a>
       </div>
     );
@@ -1656,7 +1657,9 @@ class Calendar extends Framework7Class {
     const calendar = this;
     const { $el, app, is12HoursFormat } = calendar;
     if (!$el || !$el.length) return;
-    $el.append('<div class="calendar-time-picker"></div>');
+    $el.append(
+      '<div class="popover calendar-popover calendar-time-picker-popover"><div class="popover-inner"><div class="calendar-time-picker"></div></div></div>',
+    );
     const hoursArr = [];
     const minutesArr = [];
     const hoursMin = is12HoursFormat ? 1 : 0;
@@ -1678,10 +1681,39 @@ class Calendar extends Framework7Class {
       if (value[0] > 12) value[0] -= 12;
       if (value[0] === 0) value[0] = 12;
     }
+    if (calendar.isPopover()) {
+      calendar.modal.params.closeByOutsideClick = false;
+    }
+
+    calendar.timePickerPopover = app.popover.create({
+      el: $el.find('.calendar-time-picker-popover'),
+      targetEl: $el.find('.calendar-time-selector .link'),
+      backdrop: true,
+      backdropUnique: true,
+      on: {
+        close() {
+          calendar.closeTimePicker();
+        },
+        closed() {
+          if (calendar.isPopover()) {
+            calendar.modal.params.closeByOutsideClick = true;
+          }
+          if (calendar.timePickerPopover.$el) calendar.timePickerPopover.$el.remove();
+          calendar.timePickerPopover.destroy();
+          if (calendar.timePickerInstance) {
+            calendar.timePickerInstance.close();
+            calendar.timePickerInstance.destroy();
+          }
+          delete calendar.timePickerInstance;
+          delete calendar.timePickerPopover;
+        },
+      },
+    });
+    calendar.timePickerPopover.open();
     calendar.timePickerInstance = app.picker.create({
-      containerEl: $el.find('.calendar-time-picker'),
+      containerEl: calendar.timePickerPopover.$el.find('.calendar-time-picker'),
       value,
-      toolbar: true,
+      toolbar: false,
       rotateEffect: false,
       toolbarCloseText: calendar.params.toolbarCloseText,
       cols: [
@@ -1705,10 +1737,6 @@ class Calendar extends Framework7Class {
           : []),
       ],
     });
-    calendar.timePickerInstance.$el
-      .find('.toolbar a')
-      .removeClass('sheet-close popover-close')
-      .addClass('calendar-time-picker-close');
   }
 
   closeTimePicker() {
@@ -1736,12 +1764,8 @@ class Calendar extends Framework7Class {
         value.setHours(hours, minutes);
       }
       calendar.setValue([value]);
-      calendar.timePickerInstance.close();
-      calendar.timePickerInstance.destroy();
-      delete calendar.timePickerInstance;
-    }
-    if (calendar.$el && calendar.$el.length) {
-      calendar.$el.find('.calendar-time-picker').remove();
+      if (calendar.timePickerPopover && calendar.timePickerPopover.opened)
+        calendar.timePickerPopover.close();
     }
   }
 
