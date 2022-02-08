@@ -16,6 +16,7 @@ function backward(router, el, backwardOptions) {
   const view = router.view;
 
   const options = extend(
+    false,
     {
       animate: router.params.animate,
       browserHistory: true,
