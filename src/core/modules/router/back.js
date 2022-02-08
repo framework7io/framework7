@@ -734,7 +734,7 @@ function back(...args) {
   }
   let $previousPage = router.$el
     .children('.page-current')
-    .prevAll('.page-previous:not(.page-master)')
+    .prevAll('.page-previous:not(.stacked):not(.page-master)')
     .eq(0);
 
   let skipMaster;
