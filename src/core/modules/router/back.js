@@ -774,8 +774,8 @@ function back(...args) {
       );
       return router;
     }
+    if (navigateOptions.preload && $previousPage.hasClass('stacked')) return router;
     const previousPageRoute = $previousPage[0].f7Page.route;
-
     processRouteQueue.call(
       router,
       previousPageRoute,
