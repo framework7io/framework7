@@ -1553,10 +1553,6 @@ class Calendar extends Framework7Class {
       '<div class="popover calendar-popover calendar-month-picker-popover"><div class="popover-inner"><div class="calendar-month-picker"></div></div></div>',
     );
 
-    if (calendar.modal) {
-      calendar.modal.params.closeByOutsideClick = false;
-    }
-
     calendar.monthPickerPopover = app.popover.create({
       el: $el.find('.calendar-month-picker-popover'),
       targetEl: $el.find('.calendar-month-selector'),
@@ -1567,9 +1563,6 @@ class Calendar extends Framework7Class {
           calendar.closeMonthPicker();
         },
         closed() {
-          if (calendar.modal) {
-            calendar.modal.params.closeByOutsideClick = true;
-          }
           if (calendar.monthPickerPopover.$el) calendar.monthPickerPopover.$el.remove();
           calendar.monthPickerPopover.destroy();
           if (calendar.monthPickerInstance) {
@@ -1635,10 +1628,6 @@ class Calendar extends Framework7Class {
       '<div class="popover calendar-popover calendar-year-picker-popover"><div class="popover-inner"><div class="calendar-year-picker"></div></div></div>',
     );
 
-    if (calendar.modal) {
-      calendar.modal.params.closeByOutsideClick = false;
-    }
-
     calendar.yearPickerPopover = app.popover.create({
       el: $el.find('.calendar-year-picker-popover'),
       targetEl: $el.find('.calendar-year-selector'),
@@ -1649,9 +1638,6 @@ class Calendar extends Framework7Class {
           calendar.closeYearPicker();
         },
         closed() {
-          if (calendar.modal) {
-            calendar.modal.params.closeByOutsideClick = true;
-          }
           if (calendar.yearPickerPopover.$el) calendar.yearPickerPopover.$el.remove();
           calendar.yearPickerPopover.destroy();
           if (calendar.yearPickerInstance) {
@@ -1728,10 +1714,6 @@ class Calendar extends Framework7Class {
       if (value[0] > 12) value[0] -= 12;
       if (value[0] === 0) value[0] = 12;
     }
-    if (calendar.modal) {
-      calendar.modal.params.closeByOutsideClick = false;
-    }
-
     calendar.timePickerPopover = app.popover.create({
       el: $el.find('.calendar-time-picker-popover'),
       targetEl: $el.find('.calendar-time-selector .link'),
@@ -1742,9 +1724,6 @@ class Calendar extends Framework7Class {
           calendar.closeTimePicker();
         },
         closed() {
-          if (calendar.modal) {
-            calendar.modal.params.closeByOutsideClick = true;
-          }
           if (calendar.timePickerPopover.$el) calendar.timePickerPopover.$el.remove();
           calendar.timePickerPopover.destroy();
           if (calendar.timePickerInstance) {

@@ -66,7 +66,11 @@ class Modal extends Framework7Class {
     if (!modal.type || !modal.$el) return;
     modal.$el.removeClass('modal-out');
     modal.$el.hide();
-    if (modal.params.backdrop && modal.params.backdropUnique && modal.$backdropEl) {
+    if (
+      modal.params.backdrop &&
+      (modal.params.backdropUnique || modal.forceBackdropUnique) &&
+      modal.$backdropEl
+    ) {
       modal.$backdropEl.remove();
     }
     modal.$el.trigger(`modal:closed ${modal.type.toLowerCase()}:closed`);
@@ -123,7 +127,11 @@ class Modal extends Framework7Class {
     // Show Modal
     $el.show();
 
-    if (modal.params.backdrop && modal.params.backdropUnique && modal.$backdropEl) {
+    if (
+      modal.params.backdrop &&
+      (modal.params.backdropUnique || modal.forceBackdropUnique) &&
+      modal.$backdropEl
+    ) {
       modal.$backdropEl.insertBefore($el);
     }
 

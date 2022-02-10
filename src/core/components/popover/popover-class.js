@@ -42,11 +42,16 @@ class Popover extends Modal {
 
     // Backdrop
     let $backdropEl;
+    const forceBackdropUnique =
+      popover.params.backdrop &&
+      app.$el.find('.popover.modal-in').filter((anotherPopoverEl) => anotherPopoverEl !== $el[0])
+        .length > 0;
     if (popover.params.backdrop && popover.params.backdropEl) {
       $backdropEl = $(popover.params.backdropEl);
     } else if (popover.params.backdrop) {
-      if (popover.params.backdropUnique) {
+      if (popover.params.backdropUnique || forceBackdropUnique) {
         $backdropEl = $('<div class="popover-backdrop popover-backdrop-unique"></div>');
+        $backdropEl[0].f7PopoverRef = popover;
         popover.$containerEl.append($backdropEl);
       } else {
         $backdropEl = popover.$containerEl.children('.popover-backdrop');
@@ -80,6 +85,7 @@ class Popover extends Modal {
       $backdropEl,
       backdropEl: $backdropEl && $backdropEl[0],
       type: 'popover',
+      forceBackdropUnique,
       open(...args) {
         let [targetEl, animate] = args;
         if (typeof args[0] === 'boolean') [animate, targetEl] = args;
@@ -130,7 +136,14 @@ class Popover extends Modal {
         ) {
           popover.close();
         } else if (popover.params.closeByOutsideClick && touchStartTarget === target) {
-          popover.close();
+          const isAnotherPopoverBackdrop =
+            ($target.hasClass('popover-backdrop-unique') && target.f7PopoverRef !== popover) ||
+            ($target.hasClass('popover-backdrop') && target !== popover.backdropEl);
+          const isAnotherPopoverTarget =
+            target.closest('.popover') && target.closest('.popover') !== popover.$el[0];
+          if (!isAnotherPopoverBackdrop && !isAnotherPopoverTarget) {
+            popover.close();
+          }
         }
       }
     }
