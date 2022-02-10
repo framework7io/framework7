@@ -2,6 +2,16 @@
 
 # Change Log
 
+# [6.3.16](https://github.com/framework7io/framework7/compare/v6.3.15...v6.3.16) (2022-02-10)
+
+### Bug Fixes
+
+- **list-index:** fix types for `indexes` param ([e94bb2b](https://github.com/framework7io/framework7/commit/e94bb2b07159d5add03577ec2b02b58c9617b81d)), closes [#3970](https://github.com/framework7io/framework7/issues/3970)
+- **popup:** types for `containerEl` prop ([a06e3aa](https://github.com/framework7io/framework7/commit/a06e3aa03d7d9ea90d97ccf462b3c6d3f3517516))
+- **router:** don't call enter/leave for stacked page preload ([56765e5](https://github.com/framework7io/framework7/commit/56765e55d38ba9996ec16fd0df162514bddd3747))
+- **router:** don't call enter/leave for stacked page preload ([d9416ef](https://github.com/framework7io/framework7/commit/d9416eff32aca27377c39a25d87d612e8fc5d2f7)), closes [#3975](https://github.com/framework7io/framework7/issues/3975)
+- **types:** add missing params to notification and toast open/close methods ([50b1504](https://github.com/framework7io/framework7/commit/50b150458d9260cfe99424f8a90d1b5203ad1784))
+
 # [6.3.15](https://github.com/framework7io/framework7/compare/v6.3.14...v6.3.15) (2022-01-19)
 
 ### Bug Fixes

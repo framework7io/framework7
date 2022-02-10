@@ -1,6 +1,6 @@
 {
   "name": "framework7-react",
-  "version": "6.3.15",
+  "version": "6.3.16",
   "description": "Build full featured iOS & Android apps using Framework7 & React",
   "main": "cjs/framework7-react.js",
   "module": "esm/framework7-react.js",
