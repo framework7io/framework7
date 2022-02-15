@@ -103,6 +103,9 @@ export default ({ f7router }) => {
         <ListItem reloadDetail link="/badge/" title="Badge">
           <Icon slot="media" icon="icon-f7" />
         </ListItem>
+        <ListItem reloadDetail link="/breadcrumbs/" title="Breadcrumbs">
+          <Icon slot="media" icon="icon-f7" />
+        </ListItem>
         <ListItem reloadDetail link="/buttons/" title="Buttons">
           <Icon slot="media" icon="icon-f7" />
         </ListItem>

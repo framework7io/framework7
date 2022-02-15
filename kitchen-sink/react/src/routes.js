@@ -8,6 +8,7 @@ import Appbar from './pages/appbar.jsx';
 import AreaChart from './pages/area-chart.jsx';
 import Autocomplete from './pages/autocomplete.jsx';
 import Badge from './pages/badge.jsx';
+import Breadcrumbs from './pages/breadcrumbs.jsx';
 import Buttons from './pages/buttons.jsx';
 import Calendar from './pages/calendar.jsx';
 import CalendarPage from './pages/calendar-page.jsx';
@@ -217,6 +218,10 @@ export default [
   {
     path: '/badge/',
     component: Badge,
+  },
+  {
+    path: '/breadcrumbs/',
+    component: Breadcrumbs,
   },
   {
     path: '/buttons/',
