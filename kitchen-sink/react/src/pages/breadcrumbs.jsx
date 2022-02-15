@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React from 'react';
 import {
   Navbar,
   Page,
@@ -13,7 +13,6 @@ import {
   List,
   ListItem,
   Link,
-  f7,
 } from 'framework7-react';
 
 export default () => {
@@ -120,7 +119,6 @@ export default () => {
           <BreadcrumbsSeparator />
           <BreadcrumbsItem>
             <Link iconF7="logo_apple" text="Apple" />
-            <Link></Link>
           </BreadcrumbsItem>
           <BreadcrumbsSeparator />
           <BreadcrumbsItem active>iPhone 12</BreadcrumbsItem>
