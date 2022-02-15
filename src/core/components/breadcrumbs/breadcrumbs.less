@@ -1,0 +1,100 @@
+/* === Breadcrumbs === */
+@import './breadcrumbs-vars.less';
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: var(--f7-breadcrumbs-font-size);
+  overflow: auto;
+  white-space: nowrap;
+  padding: var(--f7-breadcrumbs-padding);
+  &::-webkit-scrollbar {
+    display: none;
+    opacity: 0;
+  }
+}
+.breadcrumbs-separator,
+.breadcrumbs-item,
+.breadcrumbs-collapsed {
+  flex-shrink: 0;
+  --f7-touch-ripple-color: transparent !important;
+  & + & {
+    margin-left: var(--f7-breadcrumbs-spacing);
+  }
+}
+.breadcrumbs-item {
+  color: var(--f7-breadcrumbs-item-color);
+  font-weight: var(--f7-breadcrumbs-item-font-weight);
+  padding: var(--f7-breadcrumbs-item-padding);
+  background-color: var(--f7-breadcrumbs-item-bg-color);
+  display: flex;
+  align-items: center;
+  .icon {
+    font-size: var(--f7-breadcrumbs-icon-size);
+    width: var(--f7-breadcrumbs-icon-size);
+    height: var(--f7-breadcrumbs-icon-size);
+  }
+  a {
+    color: inherit;
+    --f7-touch-ripple-color: transparent !important;
+  }
+  &-active {
+    color: var(--f7-breadcrumbs-item-active-color, var(--f7-breadcrumbs-item-color));
+    font-weight: var(--f7-breadcrumbs-item-active-font-weight);
+  }
+}
+.breadcrumbs-separator {
+  color: var(--f7-breadcrumbs-separator-color);
+  height: 24px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  &::after {
+    .core-icons-font();
+    content: var(--f7-breadcrumbs-separator-icon);
+    width: 12px;
+  }
+  .ios &::after {
+    font-size: 12px;
+    height: 11px;
+  }
+  .md &::after {
+    font-size: 18px;
+    height: 18px;
+  }
+  .aurora &::after {
+    font-size: 12px;
+    height: 11px;
+  }
+}
+.breadcrumbs-collapsed {
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+  background: var(--f7-breadcrumbs-collapsed-bg-color);
+  height: 1em;
+  border-radius: 4px;
+  cursor: pointer;
+  &::before,
+  &::after,
+  span {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: var(--f7-breadcrumbs-collapsed-color);
+    border-radius: 50%;
+  }
+  span {
+    margin: 0 3px;
+  }
+}
+.if-ios-theme({
+  @import './breadcrumbs-ios.less';
+});
+.if-md-theme({
+  @import './breadcrumbs-md.less';
+});
+.if-aurora-theme({
+  @import './breadcrumbs-aurora.less';
+});
