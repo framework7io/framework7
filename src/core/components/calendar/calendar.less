@@ -316,12 +316,9 @@
 .calendar-month-picker,
 .calendar-year-picker,
 .calendar-time-picker {
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 100%;
-  left: 0px;
-  top: 0px;
-  z-index: 1000;
   user-select: none;
   background: transparent;
 }
@@ -429,6 +426,9 @@
 .calendar-month-picker-popover {
   height: 240px;
   width: 240px;
+  .popover-inner {
+    height: 100%;
+  }
 }
 .calendar-time-picker {
   --f7-picker-popover-height: 100%;
