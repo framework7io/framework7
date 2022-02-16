@@ -105,6 +105,8 @@ class Calendar extends Framework7Class {
       if (calendar.isPopover()) return;
       if (!calendar.opened || calendar.closing) return;
       if ($targetEl.closest('[class*="backdrop"]').length) return;
+      if (calendar.monthPickerPopover || calendar.yearPickerPopover || calendar.timePickerPopover)
+        return;
       if ($inputEl && $inputEl.length > 0) {
         if (
           $targetEl[0] !== $inputEl[0] &&
