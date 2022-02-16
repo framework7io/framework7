@@ -152,7 +152,7 @@ class Picker extends Framework7Class {
     for (let i = 0; i < picker.cols.length; i += 1) {
       if (!picker.cols[i].divider) {
         picker.cols[i].calcSize();
-        picker.cols[i].setValue(picker.cols[i].value, 0, false);
+        picker.cols[i].setValue(picker.cols[i].value, false);
       }
     }
   }
@@ -188,7 +188,7 @@ class Picker extends Framework7Class {
     return value.join(' ');
   }
 
-  setValue(values, transition) {
+  setValue(values) {
     const picker = this;
     let valueIndex = 0;
     if (picker.cols.length === 0) {
@@ -198,7 +198,7 @@ class Picker extends Framework7Class {
     }
     for (let i = 0; i < picker.cols.length; i += 1) {
       if (picker.cols[i] && !picker.cols[i].divider) {
-        picker.cols[i].setValue(values[valueIndex], transition);
+        picker.cols[i].setValue(values[valueIndex]);
         valueIndex += 1;
       }
     }
@@ -395,12 +395,12 @@ class Picker extends Framework7Class {
 
     // Set value
     if (!initialized) {
-      if (value) picker.setValue(value, 0);
+      if (value) picker.setValue(value);
       else if (params.value) {
-        picker.setValue(params.value, 0);
+        picker.setValue(params.value);
       }
     } else if (value) {
-      picker.setValue(value, 0);
+      picker.setValue(value);
     }
 
     // Extra focus
