@@ -71,7 +71,7 @@
     "path-to-regexp": "^6.2.0",
     "skeleton-elements": "^4.0.0",
     "ssr-window": "^4.0.2",
-    "swiper": "^8.0.3"
+    "swiper": "^8.0.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.16",

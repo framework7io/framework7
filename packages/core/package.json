@@ -1,6 +1,6 @@
 {
   "name": "framework7",
-  "version": "7.0.0-beta.10",
+  "version": "7.0.0-beta.11",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "type": "module",
   "exports": {
@@ -235,7 +235,11 @@
     "./components/typography": "./components/typography/typography.js",
     "./components/typography/less": "./components/typography/typography.less",
     "./components/typography/css": "./components/typography/typography.css",
-    "./components/typography/css/rtl": "./components/typography/typography-rtl.css"
+    "./components/typography/css/rtl": "./components/typography/typography-rtl.css",
+    "./components/breadcrumbs": "./components/breadcrumbs/breadcrumbs.js",
+    "./components/breadcrumbs/less": "./components/breadcrumbs/breadcrumbs.less",
+    "./components/breadcrumbs/css": "./components/breadcrumbs/breadcrumbs.css",
+    "./components/breadcrumbs/css/rtl": "./components/breadcrumbs/breadcrumbs-rtl.css"
   },
   "typings": "framework7.d.ts",
   "typesVersions": {
@@ -296,6 +300,6 @@
     "path-to-regexp": "^6.2.0",
     "skeleton-elements": "^4.0.0",
     "ssr-window": "^4.0.2",
-    "swiper": "^8.0.3"
+    "swiper": "^8.0.6"
   }
 }

@@ -1,6 +1,34 @@
+
+
 <a href="https://www.patreon.com/framework7"><img src="https://framework7.io/i/support-badge.png" height="20"></a>
 
 # Change Log
+
+# [7.0.0-beta.11](https://github.com/framework7io/framework7/compare/v7.0.0-beta.10...v7.0.0-beta.11) (2022-02-17)
+
+
+### Bug Fixes
+
+* **calendar:** don't close sheet calendar on picker popover click ([f562972](https://github.com/framework7io/framework7/commit/f562972720e7e7eac6f1bcbece6dd6e6ee955379))
+* **calendar:** fix invisible calendar popover on iOS ([f10e7e5](https://github.com/framework7io/framework7/commit/f10e7e51401e1fe4cc2cc4d1b1a10ee024bde398))
+
+
+### Features
+
+* **calendar:** month picker as popover ([c1cb89f](https://github.com/framework7io/framework7/commit/c1cb89ff9b51b40de2c9ad2b360c2db7c779e8ee))
+* **calendar:** tweak design + time picker as popover ([d2cf190](https://github.com/framework7io/framework7/commit/d2cf190b74cda1acc588a695732f730f1f0ef445))
+* **calendar:** year picker as popover ([1e90d9a](https://github.com/framework7io/framework7/commit/1e90d9ada9055815678dc8f2d3f331dff58fecdc))
+* **core:** new breadcrumbs component ([acf187c](https://github.com/framework7io/framework7/commit/acf187ce4926092161df96c31b8394f1ab10b3df))
+* **modals:** support unique backdrop for Popup, Sheet, Actions and Popover ([df514dc](https://github.com/framework7io/framework7/commit/df514dc9ae227693732341c41c3a3a494fad559c))
+* **picker:** reworked with native CSS Scroll Snap API ([b6c4691](https://github.com/framework7io/framework7/commit/b6c46919a950f33328870a0094870e949a12212c))
+* **popover:** allow popovers to be stacked ([3485834](https://github.com/framework7io/framework7/commit/348583415088649c39e7e9ceb7600e65d4c071d8)), closes [#3959](https://github.com/framework7io/framework7/issues/3959)
+* **react:** new breadcrumbs component ([49e8f35](https://github.com/framework7io/framework7/commit/49e8f3530a173a297313c4daca6350bcd0e975a5))
+* **router:** `browserHistoryTabs` parameter to define how to handle routable tabs in history (push or replace) ([e957101](https://github.com/framework7io/framework7/commit/e957101b8027b354d640ca089e726050dae1c916))
+* **svelte:** new breadcrumbs component ([aa74c25](https://github.com/framework7io/framework7/commit/aa74c2550772c97bd1c5ed1aa88a28aff50410b3))
+* **vue:** new breadcrumbs component ([b63676d](https://github.com/framework7io/framework7/commit/b63676d1be23981e363254752dc32cd21315f4d1))
+* update Swiper to latest v8 ([1ae7f90](https://github.com/framework7io/framework7/commit/1ae7f90e0ce96b57858cf1e711c5c66bfae8b29e))
+
+
 
 # [7.0.0-beta.10](https://github.com/framework7io/framework7/compare/v7.0.0-beta.8...v7.0.0-beta.10) (2021-10-28)
 
