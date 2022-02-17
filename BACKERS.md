@@ -193,8 +193,6 @@ Bart DJ
 
 ### \$25+ Awesome Supporter
 
-[Get real Instagram comments by Insta4likes](https://insta4likes.com)
-
 [Join here!](https://www.patreon.com/join/framework7/checkout?rid=4656325)
 
 ---
@@ -233,6 +231,7 @@ Timo Ernst
 
 ### \$5+ Thank You
 
+[Get real Instagram comments by Insta4likes](https://insta4likes.com)<br>
 Luis Mendoza<br>
 Ivan Ivanco<br>
 T Konink<br>
