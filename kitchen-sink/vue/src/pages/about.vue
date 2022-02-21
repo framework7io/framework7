@@ -26,8 +26,8 @@
         (Material) to bring the best experience and simplicity.
       </p>
       <p>
-        Framework7 is definitely for you if you decide to build iOS and Android hybrid app
-        (PhoneGap) or web app that looks like and feels as great native iOS or Android (Material)
+        Framework7 is definitely for you if you decide to build iOS and Android hybrid app (Cordova
+        or Capacitor) or web app that looks like and feels as great native iOS or Android (Material)
         apps.
       </p>
     </f7-block>

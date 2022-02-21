@@ -48,7 +48,7 @@ export default () => (
             </p>
             <p>
               Framework7 is definitely for you if you decide to build iOS and Android hybrid app
-              (Cordova or PhoneGap) or web app that looks like and feels as great native iOS or
+              (Cordova or Capacitor) or web app that looks like and feels as great native iOS or
               Android (Material) apps.
             </p>
             <p>
@@ -95,7 +95,7 @@ export default () => (
             </p>
             <p>
               Framework7 is definitely for you if you decide to build iOS and Android hybrid app
-              (Cordova or PhoneGap) or web app that looks like and feels as great native iOS or
+              (Cordova or Capacitor) or web app that looks like and feels as great native iOS or
               Android (Material) apps.
             </p>
             <p>

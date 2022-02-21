@@ -18,8 +18,8 @@
     <p>
       In addition to usual
       <a href="/cards/">Cards</a>
-      there are also Expandable Cards that allow to store more information and illustrations about
-      particular subject.
+      there are also Expandable Cards that allow to store more information and illustrations about particular
+      subject.
     </p>
   </Block>
 
@@ -37,7 +37,8 @@
             color="white"
             class="card-opened-fade-in"
             style="position: absolute; right: 15px; top: 15px"
-            iconF7="xmark_circle_fill" />
+            iconF7="xmark_circle_fill"
+          />
         </div>
         <div class="card-content-padding">
           <p>
@@ -58,7 +59,7 @@
           </p>
           <p>
             Framework7 is definitely for you if you decide to build iOS and Android hybrid app
-            (Cordova or PhoneGap) or web app that looks like and feels as great native iOS or
+            (Cordova or Capacitor) or web app that looks like and feels as great native iOS or
             Android (Material) apps.
           </p>
           <p>
@@ -81,7 +82,8 @@
             color="black"
             class="card-opened-fade-in"
             style="position: absolute; right: 15px; top: 15px"
-            iconF7="xmark_circle_fill" />
+            iconF7="xmark_circle_fill"
+          />
         </div>
         <div class="card-content-padding">
           <p>
@@ -102,7 +104,7 @@
           </p>
           <p>
             Framework7 is definitely for you if you decide to build iOS and Android hybrid app
-            (Cordova or PhoneGap) or web app that looks like and feels as great native iOS or
+            (Cordova or Capacitor) or web app that looks like and feels as great native iOS or
             Android (Material) apps.
           </p>
           <p>
@@ -115,13 +117,15 @@
     <Card expandable>
       <CardContent padding={false}>
         <div
-          style="background: url(./img/beach.jpg) no-repeat center bottom; background-size: cover; height: 240px" />
+          style="background: url(./img/beach.jpg) no-repeat center bottom; background-size: cover; height: 240px"
+        />
         <Link
           cardClose
           color="white"
           class="card-opened-fade-in"
           style="position: absolute; right: 15px; top: 15px"
-          iconF7="xmark_circle_fill" />
+          iconF7="xmark_circle_fill"
+        />
         <CardHeader style={{ height: '60px' }}>Beach, Goa</CardHeader>
         <div class="card-content-padding">
           <p>
@@ -159,14 +163,16 @@
     <Card expandable>
       <CardContent padding={false}>
         <div
-          style="background: url(./img/monkey.jpg) no-repeat center top; background-size: cover; height: 400px">
+          style="background: url(./img/monkey.jpg) no-repeat center top; background-size: cover; height: 400px"
+        >
           <CardHeader textColor="white">Monkeys</CardHeader>
           <Link
             cardClose
             color="white"
             class="card-opened-fade-in"
             style="position: absolute; right: 15px; top: 15px"
-            iconF7="xmark_circle_fill" />
+            iconF7="xmark_circle_fill"
+          />
         </div>
         <div class="card-content-padding">
           <p>
