@@ -31,8 +31,6 @@ export interface Device {
   electron: boolean;
   /** true when app is running under NW.js environment */
   nwjs: boolean;
-  /** true when app running in cordova environment */
-  phonegap: boolean;
   /** true if app runs in web view - webapp installed to home screen */
   webView: boolean;
   /** true if app runs in web view - webapp installed to home screen */

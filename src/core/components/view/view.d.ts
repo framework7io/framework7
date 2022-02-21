@@ -142,7 +142,7 @@ export namespace View {
     auroraSwipeBackAnimateShadow?: boolean;
     /**	Enable/disable opacity animation during swipe back action. You can disable it to improve performance. For Aurora theme */
     auroraSwipeBackAnimateOpacity?: boolean;
-    /**	If you develop web app (not PhoneGap or Home Screen web app) it is useful to enable hash navigation (browser url will look like "http://my-webapp.com/#!/about.html"). User as well will be able to navigate through app's history by using browser's default back and forward buttons. */
+    /**	If you develop web app (not Cordova/Capacitor or Home Screen web app) it is useful to enable hash navigation (browser url will look like "http://my-webapp.com/#!/about.html"). User as well will be able to navigate through app's history by using browser's default back and forward buttons. */
     browserHistory?: boolean;
     /**	Browser history root URL, for example "http://my-app.com/". It is useful only in case when you use empty ("") browserHistorySeparator */
     browserHistoryRoot?: string;

@@ -36,7 +36,7 @@ export default {
           classNames.push(`device-${device.os}`);
         }
       }
-      if (device.cordova || device.phonegap) {
+      if (device.cordova) {
         classNames.push('device-cordova');
       }
       if (device.capacitor) {
