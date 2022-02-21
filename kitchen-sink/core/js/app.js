@@ -1,3 +1,12 @@
+// Demo
+if (window.parent) {
+  const html = document.documentElement;
+  if (html) {
+    html.style.setProperty('--f7-safe-area-top', '44px');
+    html.style.setProperty('--f7-safe-area-bottom', '34px');
+  }
+}
+
 // Dom7
 var $ = Dom7;
 
