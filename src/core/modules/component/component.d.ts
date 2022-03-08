@@ -46,9 +46,9 @@ export interface ComponentContext {
   /** Render function */
   $render: ComponentRender;
   /** Attach event handler to component root DOM element */
-  $on: (eventName, handler: () => void) => void;
+  $on: (eventName: string, handler: () => void) => void;
   /** Attach event handler to component root DOM element that will be executed only once */
-  $once: (eventName, handler: () => void) => void;
+  $once: (eventName: string, handler: () => void) => void;
   /** Hook called right before component will be added to DOM */
   $onBeforeMount: (callback: () => void) => void;
   /** Hook called right after component has been added to DOM */
