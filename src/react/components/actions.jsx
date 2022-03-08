@@ -30,7 +30,7 @@ import { Actions } from 'framework7/types';
   onActionsClose? : (instance?: Actions.Actions) => void
   onActionsClosed? : (instance?: Actions.Actions) => void
   containerEl? : string | object
-  ref?: React.MutableRefObject<{el: HTMLElement | null; f7Actions: () => Actions}>;
+  ref?: React.MutableRefObject<{el: HTMLElement | null; f7Actions: () => Actions.Actions}>;
   COLOR_PROPS
 */
 

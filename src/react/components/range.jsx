@@ -36,7 +36,7 @@ import { Range } from 'framework7/types';
   COLOR_PROPS
   onRangeChange? : (val?: any) => void
   onRangeChanged? : (val?: any) => void
-  ref?: React.MutableRefObject<{el: HTMLElement | null; f7Range: () => Range.Rage}>;
+  ref?: React.MutableRefObject<{el: HTMLElement | null; f7Range: () => Range.Range}>;
 */
 
 const Range = forwardRef((props, ref) => {
