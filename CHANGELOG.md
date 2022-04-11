@@ -17,6 +17,7 @@
 ### Features
 
 - **virtual-list:** support virtual items auto height ([c62d15d](https://github.com/framework7io/framework7/commit/c62d15dbde371227802a2be20ad989853438ba0a))
+- **view:** new `initRouterOnTabShow` parameter to load view router only on tab show ([0a67569](https://github.com/framework7io/framework7/commit/0a6756956ec39f138b7629013a99f65a152806cb))
 
 - **calendar:** month picker as popover ([c1cb89f](https://github.com/framework7io/framework7/commit/c1cb89ff9b51b40de2c9ad2b360c2db7c779e8ee))
 - **calendar:** tweak design + time picker as popover ([d2cf190](https://github.com/framework7io/framework7/commit/d2cf190b74cda1acc588a695732f730f1f0ef445))
