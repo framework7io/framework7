@@ -15,6 +15,7 @@ import { RouterContext } from '../shared/router-context.js';
   id?: string | number;
   className?: string;
   style?: React.CSSProperties;
+  initRouterOnTabShow?: boolean
   tab? : boolean
   tabActive? : boolean
   name? : string
@@ -97,11 +98,14 @@ const View = forwardRef((props, ref) => {
     tab,
     tabActive,
     url,
+    initRouterOnTabShow,
     browserHistoryInitialMatch = true,
   } = props;
   const childrenArray = React.Children.toArray(children);
   const initialPageComponent = childrenArray.filter((c) => c.props && c.props.initialPage)[0];
   const restChildren = childrenArray.filter((c) => !c.props || !c.props.initialPage);
+
+  const shouldInitRouter = !(initRouterOnTabShow && tab && !tabActive);
 
   const extraAttrs = getExtraAttrs(props);
 
@@ -136,7 +140,7 @@ const View = forwardRef((props, ref) => {
       instance: f7View.current,
     };
     f7routers.views.push(routerData.current);
-    if (f7View.current && f7View.current.router && (url || main)) {
+    if (shouldInitRouter && f7View.current && f7View.current.router && (url || main)) {
       const initialData = getRouterInitialComponent(f7View.current.router, initialPageComponent);
       initialPage = initialData.initialPage;
       initialRoute = initialData.initialRoute;

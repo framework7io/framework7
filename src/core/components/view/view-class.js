@@ -214,7 +214,18 @@ class View extends Framework7Class {
       if (view.params.masterDetailBreakpoint > 0) {
         view.initMasterDetail();
       }
-      view.router.init();
+      if (
+        view.params.initRouterOnTabShow &&
+        view.$el.hasClass('tab') &&
+        !view.$el.hasClass('tab-active')
+      ) {
+        view.$el.once('tab:show', () => {
+          view.router.init();
+        });
+      } else {
+        view.router.init();
+      }
+
       view.$el.trigger('view:init');
       view.emit('local::init viewInit', view);
     }

@@ -26,6 +26,8 @@ export namespace View {
     destroy(): void;
   }
   interface Parameters {
+    /** If enabled and View is tab, it won't initialize router and load initial page until View tab becomes visible */
+    initRouterOnTabShow?: boolean;
     /**	View name. If view was created with name, then it may be accessed via app.views.[name] */
     name?: string;
     /**	Specify whether this is View is main or not. If not passed then will be determined based on whether its element has view-main class or not */

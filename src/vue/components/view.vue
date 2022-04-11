@@ -13,6 +13,10 @@ export default {
     tabActive: Boolean,
 
     name: String,
+    initRouterOnTabShow: {
+      type: Boolean,
+      default: undefined,
+    },
     router: {
       type: Boolean,
       default: true,
@@ -201,6 +205,7 @@ export default {
     // const initialPageComponent = childrenArray.filter((c) => c.props && c.props.initialPage)[0];
     // const restChildren = childrenArray.filter((c) => !c.props || !c.props.initialPage);
     const initialPageComponent = null;
+    const shouldInitRouter = !(props.initRouterOnTabShow && props.tab && !props.tabActive);
 
     let f7View = null;
     const elRef = ref(null);
@@ -238,7 +243,7 @@ export default {
         instance: f7View,
       };
       f7routers.views.push(routerData);
-      if (f7View && f7View.router && (props.url || props.main)) {
+      if (shouldInitRouter && f7View && f7View.router && (props.url || props.main)) {
         const initialData = getRouterInitialComponent(f7View.router, initialPageComponent);
         initialPage = initialData.initialPage;
         initialRoute = initialData.initialRoute;

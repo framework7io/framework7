@@ -42,6 +42,7 @@ export default {
   params: {
     view: {
       init: true,
+      initRouterOnTabShow: false,
       name: undefined,
       main: false,
       router: true,

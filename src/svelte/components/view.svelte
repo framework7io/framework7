@@ -18,7 +18,9 @@
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
-  const { main, tab, tabActive, browserHistoryInitialMatch = true } = $$props;
+  const { main, tab, tabActive, browserHistoryInitialMatch = true, initRouterOnTabShow } = $$props;
+
+  const shouldInitRouter = !(initRouterOnTabShow && tab && !tabActive);
 
   let initialPage;
   let initialRoute;
@@ -54,7 +56,7 @@
       instance: f7View,
     };
     app.f7routers.views.push(routerData);
-    if (f7View && f7View.router && (url || main)) {
+    if (shouldInitRouter && f7View && f7View.router && (url || main)) {
       const initialData = getRouterInitialComponent(f7View.router);
       initialPage = initialData.initialPage;
       initialRoute = initialData.initialRoute;
