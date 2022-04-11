@@ -2,6 +2,14 @@
 
 # Change Log
 
+# [6.3.17](https://github.com/framework7io/framework7/compare/v6.3.16...v6.3.17) (2022-04-11)
+
+### Bug Fixes
+
+- **core:** fix component types ([249f54c](https://github.com/framework7io/framework7/commit/249f54c8f790a699b51c18c674821e52161f47d4)), closes [#3997](https://github.com/framework7io/framework7/issues/3997)
+- **preloaded:** set initial position to 0 for iOS preloader ([#4002](https://github.com/framework7io/framework7/issues/4002)) ([76e8ef0](https://github.com/framework7io/framework7/commit/76e8ef0b9ae69aa5623bff18fac1d6045b89b34a))
+- **react:** fix Actions and Range types ([5c3087c](https://github.com/framework7io/framework7/commit/5c3087c366acaaa3cf5775df8946c79c3b414392)), closes [#3997](https://github.com/framework7io/framework7/issues/3997)
+
 # [6.3.16](https://github.com/framework7io/framework7/compare/v6.3.15...v6.3.16) (2022-02-10)
 
 ### Bug Fixes
