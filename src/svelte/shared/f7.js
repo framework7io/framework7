@@ -1,27 +1,29 @@
 /* eslint-disable import/no-mutable-exports */
 // eslint-disable-next-line
-import Framework7 from 'framework7/lite';
 import { extend, unsetRouterIds } from './utils.js';
 
 let f7;
 const theme = {};
 
-// eslint-disable-next-line
-if (!Framework7.__app__) {
-  // eslint-disable-next-line
-  Framework7.__app__ = {
-    f7: undefined,
-    f7events: undefined,
-    theme: {},
-    f7routers: {
-      views: [],
-      tabs: [],
-      modals: null,
-    },
-  };
+/* eslint-disable no-restricted-globals */
+const app =
+  typeof window !== 'undefined' && window.Framework7ComponentsApp
+    ? window.Framework7ComponentsApp
+    : {
+        Framework7: undefined,
+        f7: undefined,
+        f7events: undefined,
+        theme: {},
+        f7routers: {
+          views: [],
+          tabs: [],
+          modals: null,
+        },
+      };
+if (typeof window !== 'undefined') {
+  window.Framework7ComponentsApp = app;
 }
-
-const { __app__: app } = Framework7;
+/* eslint-enable no-restricted-globals */
 
 app.setInstance = (instance) => {
   f7 = instance;
@@ -51,7 +53,7 @@ const cleanup = () => {
 };
 
 const f7initEvents = () => {
-  app.f7events = new Framework7.Events();
+  app.f7events = new app.Framework7.Events();
 };
 
 const f7init = (rootEl, params = {}, init = true) => {
@@ -63,7 +65,7 @@ const f7init = (rootEl, params = {}, init = true) => {
   if (!f7Params.routes) f7Params.routes = [];
 
   if (f7Params.userAgent && (f7Params.theme === 'auto' || !f7Params.theme)) {
-    const device = Framework7.getDevice({ userAgent: f7Params.userAgent }, true);
+    const device = app.Framework7.getDevice({ userAgent: f7Params.userAgent }, true);
     app.theme.ios = !!device.ios;
     app.theme.aurora = device.desktop && device.electron;
     app.theme.md = !app.theme.ios && !app.theme.aurora;
@@ -74,7 +76,7 @@ const f7init = (rootEl, params = {}, init = true) => {
   // eslint-disable-next-line
   if (typeof window === 'undefined') cleanup();
 
-  const instance = new Framework7(f7Params);
+  const instance = new app.Framework7(f7Params);
   app.f7 = instance;
   f7 = instance;
   app.setInstance(instance);
