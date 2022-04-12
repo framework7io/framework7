@@ -6,6 +6,7 @@
 
 ### Bug Fixes
 
+- **svelte:** reuse original Framework7 instance ([feda228](https://github.com/framework7io/framework7/commit/feda228523ba672cac2df49b1d6c6ce7d45e91fd)), closes [#3993](https://github.com/framework7io/framework7/issues/3993) [#3992](https://github.com/framework7io/framework7/issues/3992)
 - **core:** fix component types ([249f54c](https://github.com/framework7io/framework7/commit/249f54c8f790a699b51c18c674821e52161f47d4)), closes [#3997](https://github.com/framework7io/framework7/issues/3997)
 - **preloaded:** set initial position to 0 for iOS preloader ([#4002](https://github.com/framework7io/framework7/issues/4002)) ([76e8ef0](https://github.com/framework7io/framework7/commit/76e8ef0b9ae69aa5623bff18fac1d6045b89b34a))
 - **react:** fix Actions and Range types ([5c3087c](https://github.com/framework7io/framework7/commit/5c3087c366acaaa3cf5775df8946c79c3b414392)), closes [#3997](https://github.com/framework7io/framework7/issues/3997)
