@@ -10,7 +10,7 @@ import './css/app.css';
 
 // Demo
 /* eslint-disable */
-if (window.parent) {
+if (window.parent && window.parent !== window) {
   const html = document.documentElement;
   if (html) {
     html.style.setProperty('--f7-safe-area-top', '44px');
