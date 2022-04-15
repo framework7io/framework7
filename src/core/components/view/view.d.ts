@@ -26,6 +26,8 @@ export namespace View {
     destroy(): void;
   }
   interface Parameters {
+    /** If enabled and View is tab, it won't initialize router and load initial page until View tab becomes visible */
+    initRouterOnTabShow?: boolean;
     /**	View name. If view was created with name, then it may be accessed via app.views.[name] */
     name?: string;
     /**	Specify whether this is View is main or not. If not passed then will be determined based on whether its element has view-main class or not */
@@ -142,7 +144,7 @@ export namespace View {
     auroraSwipeBackAnimateShadow?: boolean;
     /**	Enable/disable opacity animation during swipe back action. You can disable it to improve performance. For Aurora theme */
     auroraSwipeBackAnimateOpacity?: boolean;
-    /**	If you develop web app (not PhoneGap or Home Screen web app) it is useful to enable hash navigation (browser url will look like "http://my-webapp.com/#!/about.html"). User as well will be able to navigate through app's history by using browser's default back and forward buttons. */
+    /**	If you develop web app (not Cordova/Capacitor or Home Screen web app) it is useful to enable hash navigation (browser url will look like "http://my-webapp.com/#!/about.html"). User as well will be able to navigate through app's history by using browser's default back and forward buttons. */
     browserHistory?: boolean;
     /**	Browser history root URL, for example "http://my-app.com/". It is useful only in case when you use empty ("") browserHistorySeparator */
     browserHistoryRoot?: string;
@@ -158,6 +160,8 @@ export namespace View {
     browserHistoryInitialMatch?: boolean;
     /**	When enabled (by default), it will store router history in localStorage and try to restore it on next web app visit */
     browserHistoryStoreHistory?: boolean;
+    /** When "replace" (by default), it will replace state on routable tabs change, otherwise (if "push"), it will add to history every routable tab change, so it will be possible to switch back between tabs with browser back button */
+    browserHistoryTabs?: 'replace' | 'push';
     /** Object with events handlers.. */
     on?: {
       [event in keyof Events]?: Events[event];

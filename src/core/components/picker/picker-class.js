@@ -1,13 +1,13 @@
 import { getWindow } from 'ssr-window';
-import $ from '../../shared/dom7';
-import { extend, nextTick, deleteProps } from '../../shared/utils';
-import Framework7Class from '../../shared/class';
-import { getDevice } from '../../shared/get-device';
+import $ from '../../shared/dom7.js';
+import { extend, nextTick, deleteProps } from '../../shared/utils.js';
+import Framework7Class from '../../shared/class.js';
+import { getDevice } from '../../shared/get-device.js';
 
-import pickerColumn from './picker-column';
+import pickerColumn from './picker-column.js';
 
 /** @jsx $jsx */
-import $jsx from '../../shared/$jsx';
+import $jsx from '../../shared/$jsx.js';
 
 class Picker extends Framework7Class {
   constructor(app, params = {}) {
@@ -152,7 +152,7 @@ class Picker extends Framework7Class {
     for (let i = 0; i < picker.cols.length; i += 1) {
       if (!picker.cols[i].divider) {
         picker.cols[i].calcSize();
-        picker.cols[i].setValue(picker.cols[i].value, 0, false);
+        picker.cols[i].setValue(picker.cols[i].value, false);
       }
     }
   }
@@ -188,7 +188,7 @@ class Picker extends Framework7Class {
     return value.join(' ');
   }
 
-  setValue(values, transition) {
+  setValue(values) {
     const picker = this;
     let valueIndex = 0;
     if (picker.cols.length === 0) {
@@ -198,7 +198,7 @@ class Picker extends Framework7Class {
     }
     for (let i = 0; i < picker.cols.length; i += 1) {
       if (picker.cols[i] && !picker.cols[i].divider) {
-        picker.cols[i].setValue(values[valueIndex], transition);
+        picker.cols[i].setValue(values[valueIndex]);
         valueIndex += 1;
       }
     }
@@ -395,12 +395,12 @@ class Picker extends Framework7Class {
 
     // Set value
     if (!initialized) {
-      if (value) picker.setValue(value, 0);
+      if (value) picker.setValue(value);
       else if (params.value) {
-        picker.setValue(params.value, 0);
+        picker.setValue(params.value);
       }
     } else if (value) {
-      picker.setValue(value, 0);
+      picker.setValue(value);
     }
 
     // Extra focus

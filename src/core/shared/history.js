@@ -1,6 +1,6 @@
 import { getWindow, getDocument } from 'ssr-window';
-import $ from './dom7';
-import { extend } from './utils';
+import $ from './dom7.js';
+import { extend } from './utils.js';
 
 const History = {
   queue: [],

@@ -1,5 +1,5 @@
 const path = require('path');
-const fs = require('./utils/fs-extra');
+const fs = require('./utils/fs-extra.js');
 
 function buildKs(cb) {
   const env = process.env.NODE_ENV || 'development';

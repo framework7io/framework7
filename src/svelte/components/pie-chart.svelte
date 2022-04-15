@@ -1,8 +1,8 @@
 <script>
   import { createEventDispatcher, onDestroy } from 'svelte';
-  import { classNames, createEmitter } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
-  import { app } from '../shared/f7';
+  import { classNames, createEmitter } from '../shared/utils.js';
+  import { restProps } from '../shared/rest-props.js';
+  import { app } from '../shared/f7.js';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 

@@ -6,10 +6,10 @@
     routerClasses,
     actionsAttrs,
     actionsClasses,
-  } from '../shared/mixins';
-  import { classNames, extend, plainText, createEmitter } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
-  import { useRouteProps } from '../shared/use-route-props';
+  } from '../shared/mixins.js';
+  import { classNames, extend, plainText, createEmitter } from '../shared/utils.js';
+  import { restProps } from '../shared/rest-props.js';
+  import { useRouteProps } from '../shared/use-route-props.js';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 

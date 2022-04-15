@@ -1,11 +1,11 @@
 /* eslint indent: ["off"] */
 import { getWindow, getDocument } from 'ssr-window';
-import { getDevice } from '../../shared/get-device';
-import { extend, nextTick } from '../../shared/utils';
-import Modal from '../modal/modal-class';
-import $ from '../../shared/dom7';
+import { getDevice } from '../../shared/get-device.js';
+import { extend, nextTick } from '../../shared/utils.js';
+import Modal from '../modal/modal-class.js';
+import $ from '../../shared/dom7.js';
 /** @jsx $jsx */
-import $jsx from '../../shared/$jsx';
+import $jsx from '../../shared/$jsx.js';
 
 class Actions extends Modal {
   constructor(app, params) {
@@ -58,7 +58,12 @@ class Actions extends Modal {
     if (actions.params.backdrop && actions.params.backdropEl) {
       $backdropEl = $(actions.params.backdropEl);
     } else if (actions.params.backdrop) {
-      $backdropEl = actions.$containerEl.children('.actions-backdrop');
+      if (actions.params.backdropUnique) {
+        $backdropEl = $('<div class="popup-backdrop popup-backdrop-unique"></div>');
+        actions.$containerEl.append($backdropEl);
+      } else {
+        $backdropEl = actions.$containerEl.children('.actions-backdrop');
+      }
       if ($backdropEl.length === 0) {
         $backdropEl = $('<div class="actions-backdrop"></div>');
         actions.$containerEl.append($backdropEl);

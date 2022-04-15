@@ -1,9 +1,9 @@
 <script>
   import { onMount, onDestroy, beforeUpdate, afterUpdate } from 'svelte';
-  import { colorClasses } from '../shared/mixins';
-  import { classNames, noUndefinedProps } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
-  import { app, f7ready } from '../shared/f7';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames, noUndefinedProps } from '../shared/utils.js';
+  import { restProps } from '../shared/rest-props.js';
+  import { app, f7ready } from '../shared/f7.js';
 
   let className = undefined;
   export { className as class };

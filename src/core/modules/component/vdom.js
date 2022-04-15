@@ -1,8 +1,8 @@
 /* eslint no-use-before-define: "off" */
 /* eslint import/no-named-as-default: "off" */
-import h from './snabbdom/h';
-import customComponents from './custom-components';
-import { isObject, eventNameToColonCase } from '../../shared/utils';
+import h from './snabbdom/h.js';
+import customComponents from './custom-components.js';
+import { isObject, eventNameToColonCase } from '../../shared/utils.js';
 
 const SELF_CLOSING =
   'area base br col command embed hr img input keygen link menuitem meta param source track wbr'.split(
@@ -101,9 +101,8 @@ function getHooks(treeNode, data, f7, initial, isRoot) {
   const update = [];
   const postpatch = [];
   let isFakeElement = false;
-  const tagName = getTagName(treeNode);
+  let tagName = getTagName(treeNode);
   if (data && data.attrs && data.attrs.component) {
-    // eslint-disable-next-line
     tagName = data.attrs.component;
     delete data.attrs.component;
     isFakeElement = true;

@@ -6,15 +6,15 @@
     routerClasses,
     actionsAttrs,
     actionsClasses,
-  } from '../shared/mixins';
-  import { classNames, extend, isStringProp, plainText, createEmitter } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
-  import { useTooltip } from '../shared/use-tooltip';
-  import { useRouteProps } from '../shared/use-route-props';
-  import { useIcon } from '../shared/use-icon';
+  } from '../shared/mixins.js';
+  import { classNames, extend, isStringProp, plainText, createEmitter } from '../shared/utils.js';
+  import { restProps } from '../shared/rest-props.js';
+  import { useTooltip } from '../shared/use-tooltip.js';
+  import { useRouteProps } from '../shared/use-route-props.js';
+  import { useIcon } from '../shared/use-icon.js';
 
-  import UseIcon from './use-icon';
-  import Preloader from './preloader';
+  import UseIcon from './use-icon.svelte';
+  import Preloader from './preloader.svelte';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -158,7 +158,6 @@
       {/if}
       <slot />
     {/if}
-
   </button>
 {:else}
   <a

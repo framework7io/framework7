@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle, useState, useEffect } from 'react';
-import { classNames, getExtraAttrs, emit } from '../shared/utils';
-import { f7 } from '../shared/f7';
+import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
+import { f7 } from '../shared/f7.js';
 
 /* dts-props
   id?: string | number;

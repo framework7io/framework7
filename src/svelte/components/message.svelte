@@ -1,9 +1,9 @@
 <script>
   /* eslint-disable no-undef */
   import { createEventDispatcher } from 'svelte';
-  import { colorClasses } from '../shared/mixins';
-  import { classNames, plainText, createEmitter } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames, plainText, createEmitter } from '../shared/utils.js';
+  import { restProps } from '../shared/rest-props.js';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 

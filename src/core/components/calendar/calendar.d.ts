@@ -143,6 +143,8 @@ export namespace Calendar {
     yearPickerMax?: number;
     /** Enables time picker (default false) */
     timePicker?: boolean;
+    /** Time picker label text (default "Time") */
+    timePickerLabel?: string;
     /** Time format displayed in time selector. (default { hour: 'numeric', minute: 'numeric' }) */
     timePickerFormat?: Intl.DateTimeFormatOptions;
     /** Text to display in time selector placeholder. (default "Select time") */

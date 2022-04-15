@@ -1,8 +1,8 @@
 <script>
   import { createEventDispatcher } from 'svelte';
-  import { colorClasses } from '../shared/mixins';
-  import { classNames, createEmitter } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames, createEmitter } from '../shared/utils.js';
+  import { restProps } from '../shared/rest-props.js';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -29,7 +29,7 @@
     <img src={image} />
   {/if}
   {#if deletable}
-    <span on:click={onDeleteClick}  class="messagebar-attachment-delete" />
+    <span on:click={onDeleteClick} class="messagebar-attachment-delete" />
   {/if}
   <slot />
 </div>

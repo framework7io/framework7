@@ -1,12 +1,12 @@
 <script>
   import { onMount, onDestroy, afterUpdate, createEventDispatcher, tick } from 'svelte';
-  import { app, f7ready } from '../shared/f7';
-  import { colorClasses } from '../shared/mixins';
-  import { classNames, noUndefinedProps, createEmitter, getRouterId } from '../shared/utils';
-  import { getRouterInitialComponent } from '../shared/get-router-initial-component';
-  import { useTab } from '../shared/use-tab';
+  import { app, f7ready } from '../shared/f7.js';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames, noUndefinedProps, createEmitter, getRouterId } from '../shared/utils.js';
+  import { getRouterInitialComponent } from '../shared/get-router-initial-component.js';
+  import { useTab } from '../shared/use-tab.js';
 
-  import RouterContextProvider from './router-context-provider';
+  import RouterContextProvider from './router-context-provider.svelte';
 
   export let id = undefined;
   export let style = undefined;
@@ -18,7 +18,9 @@
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
-  const { main, tab, tabActive, browserHistoryInitialMatch = true } = $$props;
+  const { main, tab, tabActive, browserHistoryInitialMatch = true, initRouterOnTabShow } = $$props;
+
+  const shouldInitRouter = !(initRouterOnTabShow && tab && !tabActive);
 
   let initialPage;
   let initialRoute;
@@ -54,7 +56,7 @@
       instance: f7View,
     };
     app.f7routers.views.push(routerData);
-    if (f7View && f7View.router && (url || main)) {
+    if (shouldInitRouter && f7View && f7View.router && (url || main)) {
       const initialData = getRouterInitialComponent(f7View.router);
       initialPage = initialData.initialPage;
       initialRoute = initialData.initialRoute;

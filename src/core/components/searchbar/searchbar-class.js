@@ -1,9 +1,9 @@
 import { getDocument } from 'ssr-window';
-import $ from '../../shared/dom7';
-import { extend, nextTick, deleteProps } from '../../shared/utils';
-import FrameworkClass from '../../shared/class';
-import { getDevice } from '../../shared/get-device';
-import removeDiacritics from './remove-diacritics';
+import $ from '../../shared/dom7.js';
+import { extend, nextTick, deleteProps } from '../../shared/utils.js';
+import FrameworkClass from '../../shared/class.js';
+import { getDevice } from '../../shared/get-device.js';
+import removeDiacritics from './remove-diacritics.js';
 
 class Searchbar extends FrameworkClass {
   constructor(app, params = {}) {

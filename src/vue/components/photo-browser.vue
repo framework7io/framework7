@@ -1,7 +1,7 @@
 <script>
 import { watch, onMounted, onBeforeUnmount } from 'vue';
-import { extend } from '../shared/utils';
-import { f7ready, f7 } from '../shared/f7';
+import { extend } from '../shared/utils.js';
+import { f7ready, f7 } from '../shared/f7.js';
 
 export default {
   name: 'f7-photo-browser',

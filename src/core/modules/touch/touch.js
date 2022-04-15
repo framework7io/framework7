@@ -1,9 +1,9 @@
 /* eslint-disable no-nested-ternary */
 import { getWindow, getDocument } from 'ssr-window';
-import $ from '../../shared/dom7';
-import { getSupport } from '../../shared/get-support';
-import { getDevice } from '../../shared/get-device';
-import { extend } from '../../shared/utils';
+import $ from '../../shared/dom7.js';
+import { getSupport } from '../../shared/get-support.js';
+import { getDevice } from '../../shared/get-device.js';
+import { extend } from '../../shared/utils.js';
 
 function initTouch() {
   const app = this;

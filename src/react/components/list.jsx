@@ -1,10 +1,17 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getExtraAttrs, getSlots, flattenArray, emit, extend } from '../shared/utils';
-import { colorClasses } from '../shared/mixins';
-import { f7, f7ready } from '../shared/f7';
-import { ListContext } from '../shared/list-context';
-import { useTab } from '../shared/use-tab';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
+import {
+  classNames,
+  getExtraAttrs,
+  getSlots,
+  flattenArray,
+  emit,
+  extend,
+} from '../shared/utils.js';
+import { colorClasses } from '../shared/mixins.js';
+import { f7, f7ready } from '../shared/f7.js';
+import { ListContext } from '../shared/list-context.js';
+import { useTab } from '../shared/use-tab.js';
 
 /* dts-imports
 import { VirtualList } from 'framework7/types';

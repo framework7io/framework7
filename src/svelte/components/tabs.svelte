@@ -1,9 +1,9 @@
 <script>
   import { onMount } from 'svelte';
 
-  import { restProps } from '../shared/rest-props';
-  import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
+  import { restProps } from '../shared/rest-props.js';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames } from '../shared/utils.js';
 
   let className = undefined;
   export { className as class };

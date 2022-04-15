@@ -1,10 +1,10 @@
-import { init } from './snabbdom';
-import { attributesModule } from './modules/attributes'; // for setting attributes on DOM elements
-import { classModule } from './modules/class'; // makes it easy to toggle classes
-import { propsModule } from './modules/props'; // for setting properties on DOM elements
-import { styleModule } from './modules/style'; // handles styling on elements with support for animations
-import { eventListenersModule } from './modules/eventlisteners'; // attaches event listeners
-import { h } from './h'; // helper function for creating vnodes
+import { init } from './snabbdom.js';
+import { attributesModule } from './modules/attributes.js'; // for setting attributes on DOM elements
+import { classModule } from './modules/class.js'; // makes it easy to toggle classes
+import { propsModule } from './modules/props.js'; // for setting properties on DOM elements
+import { styleModule } from './modules/style.js'; // handles styling on elements with support for animations
+import { eventListenersModule } from './modules/eventlisteners.js'; // attaches event listeners
+import { h } from './h.js'; // helper function for creating vnodes
 var patch = init([
     attributesModule,
     classModule,

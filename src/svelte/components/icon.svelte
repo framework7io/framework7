@@ -1,9 +1,9 @@
 <script>
-  import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
-  import { useTooltip } from '../shared/use-tooltip';
-  import { useTheme } from '../shared/use-theme';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames } from '../shared/utils.js';
+  import { restProps } from '../shared/rest-props.js';
+  import { useTooltip } from '../shared/use-tooltip.js';
+  import { useTheme } from '../shared/use-theme.js';
 
   export let style = undefined;
 
@@ -92,7 +92,8 @@
   class={iconClasses}
   bind:this={el}
   {...restProps($$restProps)}
-  use:useTooltip={{ tooltip, tooltipTrigger }}>
+  use:useTooltip={{ tooltip, tooltipTrigger }}
+>
   {iconText || ''}
   <slot />
 </i>

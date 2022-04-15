@@ -1,10 +1,10 @@
-import $ from '../../shared/dom7';
+import $ from '../../shared/dom7.js';
 import {
   bindMethods,
   iosPreloaderContent,
   mdPreloaderContent,
   auroraPreloaderContent,
-} from '../../shared/utils';
+} from '../../shared/utils.js';
 
 const Preloader = {
   init(el) {

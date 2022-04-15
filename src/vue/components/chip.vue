@@ -15,11 +15,11 @@
 </template>
 <script>
 import { ref, computed } from 'vue';
-import { classNames } from '../shared/utils';
-import { colorClasses, colorProps, iconProps } from '../shared/mixins';
-import { useTooltip } from '../shared/use-tooltip';
-import { useIcon } from '../shared/use-icon';
-import f7UseIcon from './use-icon';
+import { classNames } from '../shared/utils.js';
+import { colorClasses, colorProps, iconProps } from '../shared/mixins.js';
+import { useTooltip } from '../shared/use-tooltip.js';
+import { useIcon } from '../shared/use-icon.js';
+import f7UseIcon from './use-icon.js';
 
 export default {
   name: 'f7-chip',

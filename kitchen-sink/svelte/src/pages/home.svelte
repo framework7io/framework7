@@ -103,6 +103,9 @@
     <ListItem reloadDetail={theme.aurora} link="/badge/" title="Badge">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
+    <ListItem reloadDetail={theme.aurora} link="/breadcrumbs/" title="Breadcrumbs">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
     <ListItem reloadDetail={theme.aurora} link="/buttons/" title="Buttons">
       <i class="icon icon-f7" slot="media" />
     </ListItem>

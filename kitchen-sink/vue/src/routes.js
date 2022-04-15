@@ -9,6 +9,7 @@ import Appbar from './pages/appbar.vue';
 import AreaChart from './pages/area-chart.vue';
 import Autocomplete from './pages/autocomplete.vue';
 import Badge from './pages/badge.vue';
+import Breadcrumbs from './pages/breadcrumbs.vue';
 import Buttons from './pages/buttons.vue';
 import Calendar from './pages/calendar.vue';
 import CalendarPage from './pages/calendar-page.vue';
@@ -218,6 +219,10 @@ export default [
   {
     path: '/badge/',
     component: Badge,
+  },
+  {
+    path: '/breadcrumbs/',
+    component: Breadcrumbs,
   },
   {
     path: '/buttons/',

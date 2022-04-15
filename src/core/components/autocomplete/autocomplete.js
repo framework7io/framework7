@@ -1,6 +1,6 @@
-import { extend } from '../../shared/utils';
-import Autocomplete from './autocomplete-class';
-import ConstructorMethods from '../../shared/constructor-methods';
+import { extend } from '../../shared/utils.js';
+import Autocomplete from './autocomplete-class.js';
+import ConstructorMethods from '../../shared/constructor-methods.js';
 
 export default {
   name: 'autocomplete',

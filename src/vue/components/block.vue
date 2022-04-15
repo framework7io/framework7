@@ -5,9 +5,9 @@
 </template>
 <script>
 import { ref, computed } from 'vue';
-import { classNames } from '../shared/utils';
-import { colorClasses, colorProps } from '../shared/mixins';
-import { useTab } from '../shared/use-tab';
+import { classNames } from '../shared/utils.js';
+import { colorClasses, colorProps } from '../shared/mixins.js';
+import { useTab } from '../shared/use-tab.js';
 
 export default {
   name: 'f7-block',

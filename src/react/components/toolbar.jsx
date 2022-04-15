@@ -1,10 +1,10 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils';
-import { colorClasses } from '../shared/mixins';
-import { useTheme } from '../shared/use-theme';
-import { f7ready, f7 } from '../shared/f7';
-import { TabbarContext } from '../shared/tabbar-context';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
+import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils.js';
+import { colorClasses } from '../shared/mixins.js';
+import { useTheme } from '../shared/use-theme.js';
+import { f7ready, f7 } from '../shared/f7.js';
+import { TabbarContext } from '../shared/tabbar-context.js';
 
 /* dts-props
   id?: string | number;

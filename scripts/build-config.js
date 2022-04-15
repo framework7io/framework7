@@ -121,6 +121,8 @@ const config = {
     // Area Chart
     'area-chart',
 
+    'breadcrumbs',
+
     // Elevation
     'elevation',
 

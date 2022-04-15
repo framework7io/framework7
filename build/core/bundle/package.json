@@ -1,8 +1,0 @@
-{
-  "name": "framework7/bundle",
-  "private": true,
-  "sideEffects": false,
-  "main": "../cjs/framework7-bundle.js",
-  "module": "../esm/framework7-bundle.js",
-  "typings": "../framework7.d.ts"
-}

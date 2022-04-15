@@ -1,6 +1,6 @@
 import { getDocument } from 'ssr-window';
-import $ from '../../shared/dom7';
-import { extend } from '../../shared/utils';
+import $ from '../../shared/dom7.js';
+import { extend } from '../../shared/utils.js';
 
 function getElMinSize(dimension, $el) {
   let minSize = $el.css(`min-${dimension}`);

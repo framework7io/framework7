@@ -1,10 +1,10 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
-  import { colorClasses } from '../shared/mixins';
-  import { classNames, createEmitter } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
-  import { app, f7ready } from '../shared/f7';
-  import { modalStateClasses } from '../shared/modal-state-classes';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames, createEmitter } from '../shared/utils.js';
+  import { restProps } from '../shared/rest-props.js';
+  import { app, f7ready } from '../shared/f7.js';
+  import { modalStateClasses } from '../shared/modal-state-classes.js';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 

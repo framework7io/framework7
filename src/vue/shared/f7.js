@@ -1,6 +1,6 @@
 /* eslint-disable import/no-mutable-exports */
 import Framework7 from 'framework7/lite';
-import { extend, unsetRouterIds } from './utils';
+import { extend, unsetRouterIds } from './utils.js';
 
 let f7;
 let f7events;

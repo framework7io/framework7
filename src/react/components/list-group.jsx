@@ -1,7 +1,7 @@
 import React, { forwardRef, useRef, useImperativeHandle, useContext } from 'react';
-import { classNames, getExtraAttrs } from '../shared/utils';
-import { colorClasses } from '../shared/mixins';
-import { ListContext } from '../shared/list-context';
+import { classNames, getExtraAttrs } from '../shared/utils.js';
+import { colorClasses } from '../shared/mixins.js';
+import { ListContext } from '../shared/list-context.js';
 
 /* dts-props
   id?: string | number;

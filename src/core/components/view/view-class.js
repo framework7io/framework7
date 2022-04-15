@@ -1,8 +1,8 @@
-import $ from '../../shared/dom7';
-import { extend } from '../../shared/utils';
-import Router from '../../modules/router/router';
-import Framework7Class from '../../shared/class';
-import resizableView from './resizable-view';
+import $ from '../../shared/dom7.js';
+import { extend } from '../../shared/utils.js';
+import Router from '../../modules/router/router.js';
+import Framework7Class from '../../shared/class.js';
+import resizableView from './resizable-view.js';
 
 class View extends Framework7Class {
   constructor(app, el, viewParams = {}) {
@@ -214,7 +214,18 @@ class View extends Framework7Class {
       if (view.params.masterDetailBreakpoint > 0) {
         view.initMasterDetail();
       }
-      view.router.init();
+      if (
+        view.params.initRouterOnTabShow &&
+        view.$el.hasClass('tab') &&
+        !view.$el.hasClass('tab-active')
+      ) {
+        view.$el.once('tab:show', () => {
+          view.router.init();
+        });
+      } else {
+        view.router.init();
+      }
+
       view.$el.trigger('view:init');
       view.emit('local::init viewInit', view);
     }

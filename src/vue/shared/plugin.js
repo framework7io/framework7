@@ -1,6 +1,6 @@
 import Framework7 from 'framework7/lite';
-import componentsRouter from './components-router';
-import { f7, f7ready, theme, f7initEvents, setTheme } from './f7';
+import componentsRouter from './components-router.js';
+import { f7, f7ready, theme, f7initEvents, setTheme } from './f7.js';
 
 const Framework7Vue = {
   name: 'vuePlugin',

@@ -1,8 +1,8 @@
 <script>
-  import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
-  import { useTooltip } from '../shared/use-tooltip';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames } from '../shared/utils.js';
+  import { restProps } from '../shared/rest-props.js';
+  import { useTooltip } from '../shared/use-tooltip.js';
 
   let className = undefined;
   export { className as class };

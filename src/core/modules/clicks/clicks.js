@@ -1,6 +1,6 @@
 import { getWindow } from 'ssr-window';
-import $ from '../../shared/dom7';
-import ViewClass from '../../components/view/view-class';
+import $ from '../../shared/dom7.js';
+import ViewClass from '../../components/view/view-class.js';
 
 function initClicks(app) {
   function handleClicks(e) {

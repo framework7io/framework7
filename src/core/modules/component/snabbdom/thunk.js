@@ -1,4 +1,4 @@
-import { h } from './h';
+import { h } from './h.js';
 function copyToThunk(vnode, thunk) {
     thunk.elm = vnode.elm;
     vnode.data.fn = thunk.data.fn;

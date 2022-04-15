@@ -1,14 +1,14 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy, afterUpdate } from 'svelte';
-  import { colorClasses } from '../shared/mixins';
-  import { classNames, plainText, createEmitter } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
-  import { f7ready, app } from '../shared/f7';
-  import { useTheme } from '../shared/use-theme';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames, plainText, createEmitter } from '../shared/utils.js';
+  import { restProps } from '../shared/rest-props.js';
+  import { f7ready, app } from '../shared/f7.js';
+  import { useTheme } from '../shared/use-theme.js';
 
-  import NavLeft from './nav-left';
-  import NavTitle from './nav-title';
-  import NavRight from './nav-right';
+  import NavLeft from './nav-left.svelte';
+  import NavTitle from './nav-title.svelte';
+  import NavRight from './nav-right.svelte';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 

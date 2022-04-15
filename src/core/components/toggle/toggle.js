@@ -1,6 +1,6 @@
-import $ from '../../shared/dom7';
-import ConstructorMethods from '../../shared/constructor-methods';
-import Toggle from './toggle-class';
+import $ from '../../shared/dom7.js';
+import ConstructorMethods from '../../shared/constructor-methods.js';
+import Toggle from './toggle-class.js';
 
 export default {
   name: 'toggle',

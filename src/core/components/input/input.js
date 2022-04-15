@@ -1,7 +1,7 @@
 import { getWindow, getDocument } from 'ssr-window';
-import $ from '../../shared/dom7';
-import { bindMethods } from '../../shared/utils';
-import { getDevice } from '../../shared/get-device';
+import $ from '../../shared/dom7.js';
+import { bindMethods } from '../../shared/utils.js';
+import { getDevice } from '../../shared/get-device.js';
 
 const Input = {
   ignoreTypes: ['checkbox', 'button', 'submit', 'range', 'radio', 'image'],

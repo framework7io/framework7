@@ -1,9 +1,9 @@
 import { getWindow, getDocument } from 'ssr-window';
-import $ from '../../shared/dom7';
-import { extend, now, nextTick } from '../../shared/utils';
-import { getSupport } from '../../shared/get-support';
-import { getDevice } from '../../shared/get-device';
-import Modal from '../modal/modal-class';
+import $ from '../../shared/dom7.js';
+import { extend, now, nextTick } from '../../shared/utils.js';
+import { getSupport } from '../../shared/get-support.js';
+import { getDevice } from '../../shared/get-device.js';
+import Modal from '../modal/modal-class.js';
 
 class Popup extends Modal {
   constructor(app, params) {
@@ -42,7 +42,12 @@ class Popup extends Modal {
     if (popup.params.backdrop && popup.params.backdropEl) {
       $backdropEl = $(popup.params.backdropEl);
     } else if (popup.params.backdrop) {
-      $backdropEl = popup.$containerEl.children('.popup-backdrop');
+      if (popup.params.backdropUnique) {
+        $backdropEl = $('<div class="popup-backdrop popup-backdrop-unique"></div>');
+        popup.$containerEl.append($backdropEl);
+      } else {
+        $backdropEl = popup.$containerEl.children('.popup-backdrop');
+      }
       if ($backdropEl.length === 0) {
         $backdropEl = $('<div class="popup-backdrop"></div>');
         popup.$containerEl.append($backdropEl);

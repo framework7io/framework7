@@ -1,12 +1,12 @@
 <script>
   import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
-  import { colorClasses } from '../shared/mixins';
-  import { classNames, extend, plainText, createEmitter } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
-  import { app, f7ready } from '../shared/f7';
-  import { getReactiveContext } from '../shared/get-reactive-context';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames, extend, plainText, createEmitter } from '../shared/utils.js';
+  import { restProps } from '../shared/rest-props.js';
+  import { app, f7ready } from '../shared/f7.js';
+  import { getReactiveContext } from '../shared/get-reactive-context.js';
 
-  import TextEditor from './text-editor';
+  import TextEditor from './text-editor.svelte';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 

@@ -8,27 +8,27 @@ import {
   colorHexToRgb,
   nextTick,
   deleteProps,
-} from '../../shared/utils';
-import Framework7Class from '../../shared/class';
-import $ from '../../shared/dom7';
-import { getDevice } from '../../shared/get-device';
+} from '../../shared/utils.js';
+import Framework7Class from '../../shared/class.js';
+import $ from '../../shared/dom7.js';
+import { getDevice } from '../../shared/get-device.js';
 
-import moduleAlphaSlider from './modules/alpha-slider';
-import moduleCurrentColor from './modules/current-color';
-import moduleHex from './modules/hex';
-import moduleHsbSliders from './modules/hsb-sliders';
-import moduleHueSlider from './modules/hue-slider';
-import moduleBrightnessSlider from './modules/brightness-slider';
-import modulePalette from './modules/palette';
-import moduleInitialCurrentColors from './modules/initial-current-colors';
-import moduleRgbBars from './modules/rgb-bars';
-import moduleRgbSliders from './modules/rgb-sliders';
-import moduleSbSpectrum from './modules/sb-spectrum';
-import moduleHsSpectrum from './modules/hs-spectrum';
-import moduleWheel from './modules/wheel';
+import moduleAlphaSlider from './modules/alpha-slider.js';
+import moduleCurrentColor from './modules/current-color.js';
+import moduleHex from './modules/hex.js';
+import moduleHsbSliders from './modules/hsb-sliders.js';
+import moduleHueSlider from './modules/hue-slider.js';
+import moduleBrightnessSlider from './modules/brightness-slider.js';
+import modulePalette from './modules/palette.js';
+import moduleInitialCurrentColors from './modules/initial-current-colors.js';
+import moduleRgbBars from './modules/rgb-bars.js';
+import moduleRgbSliders from './modules/rgb-sliders.js';
+import moduleSbSpectrum from './modules/sb-spectrum.js';
+import moduleHsSpectrum from './modules/hs-spectrum.js';
+import moduleWheel from './modules/wheel.js';
 
 /** @jsx $jsx */
-import $jsx from '../../shared/$jsx';
+import $jsx from '../../shared/$jsx.js';
 
 class ColorPicker extends Framework7Class {
   constructor(app, params = {}) {

@@ -1,6 +1,6 @@
-import { extend } from '../../shared/utils';
-import Toast from './toast-class';
-import ModalMethods from '../../shared/modal-methods';
+import { extend } from '../../shared/utils.js';
+import Toast from './toast-class.js';
+import ModalMethods from '../../shared/modal-methods.js';
 
 export default {
   name: 'toast',

@@ -1,0 +1,174 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Breadcrumbs</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block block-strong">
+        <p>Breadcrumbs allow users to keep track and maintain awareness of their locations within the app or website.
+          They should be used for large sites and apps with hierarchically arranged pages.</p>
+      </div>
+      <div class="block-title">Basic</div>
+      <div class="block block-strong">
+        <div class="breadcrumbs">
+          <div class="breadcrumbs-item">
+            <a href="#" class="link">
+              Home
+            </a>
+          </div>
+          <div class="breadcrumbs-separator"></div>
+          <div class="breadcrumbs-item">
+            <a href="#" class="link">
+              Catalog
+            </a>
+          </div>
+          <div class="breadcrumbs-separator"></div>
+          <div class="breadcrumbs-item breadcrumbs-item-active">
+            Phones
+          </div>
+        </div>
+      </div>
+
+      <div class="block-title">Scrollable</div>
+      <div class="block-header">Breadcrumbs will be scrollable if they don't fit the screen</div>
+      <div class="block block-strong">
+        <div class="breadcrumbs">
+          <div class="breadcrumbs-item">
+            <a href="#" class="link">
+              Home
+            </a>
+          </div>
+          <div class="breadcrumbs-separator"></div>
+          <div class="breadcrumbs-item">
+            <a href="#" class="link">
+              Catalog
+            </a>
+          </div>
+          <div class="breadcrumbs-separator"></div>
+          <div class="breadcrumbs-item">
+            <a href="#" class="link">
+              Phones
+            </a>
+          </div>
+          <div class="breadcrumbs-separator"></div>
+          <div class="breadcrumbs-item">
+            <a href="#" class="link">
+              Apple
+            </a>
+          </div>
+          <div class="breadcrumbs-separator"></div>
+          <div class="breadcrumbs-item breadcrumbs-item-active">
+            iPhone 12
+          </div>
+        </div>
+      </div>
+
+      <div class="block-title">Collapsed</div>
+      <div class="block block-strong">
+        <div class="breadcrumbs">
+          <div class="breadcrumbs-item">
+            <a href="#" class="link">
+              Home
+            </a>
+          </div>
+          <div class="breadcrumbs-separator"></div>
+          <div class="breadcrumbs-collapsed link popover-open" data-popover=".breadcrumbs-popover">
+            <span></span>
+            <div class="popover breadcrumbs-popover" style="width: 120px">
+              <div class="popover-inner">
+                <div class="list">
+                  <ul>
+                    <li>
+                      <a href="#" class="item-link item-content popover-close">
+                        <div class="item-inner">
+                          <div class="item-title">Catalog</div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" class="item-link item-content popover-close">
+                        <div class="item-inner">
+                          <div class="item-title">Phones</div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" class="item-link item-content popover-close">
+                        <div class="item-inner">
+                          <div class="item-title">Apple</div>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="breadcrumbs-separator"></div>
+          <div class="breadcrumbs-item breadcrumbs-item-active">
+            iPhone 12
+          </div>
+        </div>
+      </div>
+
+      <div class="block-title">With Icons</div>
+      <div class="block block-strong">
+        <div class="breadcrumbs">
+          <div class="breadcrumbs-item">
+            <a href="#" class="link">
+              <i class="icon f7-icons if-not-md">house_fill</i>
+              <i class="icon material-icons if-md">home</i>
+              <span>Home</span>
+            </a>
+          </div>
+          <div class="breadcrumbs-separator"></div>
+          <div class="breadcrumbs-item">
+            <a href="#" class="link">
+              <i class="icon f7-icons if-not-md">square_list_fill</i>
+              <i class="icon material-icons if-md">list_alt</i>
+              <span>Catalog</span>
+            </a>
+          </div>
+          <div class="breadcrumbs-separator"></div>
+          <div class="breadcrumbs-item">
+            <a href="#" class="link">
+              <i class="icon f7-icons if-not-md">device_phone_portrait</i>
+              <i class="icon material-icons if-md">smartphone</i>
+              <span>Phones</span>
+            </a>
+          </div>
+          <div class="breadcrumbs-separator"></div>
+          <div class="breadcrumbs-item">
+            <a href="#" class="link">
+              <i class="icon f7-icons if-not-md">logo_apple</i>
+              <i class="icon f7-icons if-md">logo_apple</i>
+              <span>Apple</span>
+            </a>
+          </div>
+
+          <div class="breadcrumbs-separator"></div>
+          <div class="breadcrumbs-item breadcrumbs-item-active">
+            iPhone 12
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  export default (props, ctx) => {
+
+
+    return $render;
+  }
+
+</script>

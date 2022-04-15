@@ -1,11 +1,11 @@
 import { getDocument } from 'ssr-window';
-import $ from '../../shared/dom7';
-import { extend, parseUrlQuery } from '../../shared/utils';
-import History from '../../shared/history';
-import redirect from './redirect';
-import processRouteQueue from './process-route-queue';
-import appRouterCheck from './app-router-check';
-import asyncComponent from './async-component';
+import $ from '../../shared/dom7.js';
+import { extend, parseUrlQuery } from '../../shared/utils.js';
+import History from '../../shared/history.js';
+import redirect from './redirect.js';
+import processRouteQueue from './process-route-queue.js';
+import appRouterCheck from './app-router-check.js';
+import asyncComponent from './async-component.js';
 
 function refreshPage() {
   const router = this;
@@ -804,48 +804,6 @@ function load(router, loadParams = {}, loadOptions = {}, ignorePageChange) {
   return router;
 }
 
-function openIn(router, url, options) {
-  const navigateOptions = {
-    url,
-    route: {
-      path: url,
-      options: {
-        ...options,
-        openIn: undefined,
-      },
-    },
-  };
-  const params = {
-    ...options,
-  };
-  if (options.openIn === 'popup') {
-    params.content = `<div class="popup popup-router-open-in" data-url="${url}"><div class="view view-init" data-links-view="${router.view.selector}" data-url="${url}" data-ignore-open-in="true"></div></div>`;
-    navigateOptions.route.popup = params;
-  }
-  if (options.openIn === 'loginScreen') {
-    params.content = `<div class="login-screen login-screen-router-open-in" data-url="${url}"><div class="view view-init" data-links-view="${router.view.selector}" data-url="${url}" data-ignore-open-in="true"></div></div>`;
-    navigateOptions.route.loginScreen = params;
-  }
-  if (options.openIn === 'sheet') {
-    params.content = `<div class="sheet-modal sheet-modal-router-open-in" data-url="${url}"><div class="sheet-modal-inner"><div class="view view-init" data-links-view="${router.view.selector}" data-url="${url}" data-ignore-open-in="true"></div></div></div>`;
-    navigateOptions.route.sheet = params;
-  }
-  if (options.openIn === 'popover') {
-    params.targetEl = options.clickedEl || options.targetEl;
-    params.content = `<div class="popover popover-router-open-in" data-url="${url}"><div class="popover-inner"><div class="view view-init" data-links-view="${router.view.selector}" data-url="${url}" data-ignore-open-in="true"></div></div></div>`;
-    navigateOptions.route.popover = params;
-  }
-  if (options.openIn.indexOf('panel') >= 0) {
-    const parts = options.openIn.split(':');
-    const side = parts[1] || 'left';
-    const effect = parts[2] || 'cover';
-    params.targetEl = options.clickedEl || options.targetEl;
-    params.content = `<div class="panel panel-router-open-in panel-${side} panel-${effect}" data-url="${url}"><div class="view view-init" data-links-view="${router.view.selector}" data-url="${url}" data-ignore-open-in="true"></div></div>`;
-    navigateOptions.route.panel = params;
-  }
-  return router.navigate(navigateOptions);
-}
-
 function navigate(navigateParams, navigateOptions = {}) {
   const router = this;
 
@@ -926,7 +884,7 @@ function navigate(navigateParams, navigateOptions = {}) {
     options.openIn &&
     (!router.params.ignoreOpenIn || (router.params.ignoreOpenIn && router.history.length > 0))
   ) {
-    return openIn(router, navigateUrl, options);
+    return router.openIn(router, navigateUrl, options);
   }
 
   options.route = route;

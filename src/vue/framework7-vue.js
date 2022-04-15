@@ -1,6 +1,6 @@
-import Framework7Vue from './shared/plugin';
-import { f7, f7ready, theme } from './shared/f7';
-import { useStore } from './shared/use-store';
+import Framework7Vue from './shared/plugin.js';
+import { f7, f7ready, theme } from './shared/f7.js';
+import { useStore } from './shared/use-store.js';
 
 // IMPORT_COMPONENTS
 

@@ -1,6 +1,6 @@
-import $ from '../../shared/dom7';
-import { extend } from '../../shared/utils';
-import Modal from '../modal/modal-class';
+import $ from '../../shared/dom7.js';
+import { extend } from '../../shared/utils.js';
+import Modal from '../modal/modal-class.js';
 
 class LoginScreen extends Modal {
   constructor(app, params) {

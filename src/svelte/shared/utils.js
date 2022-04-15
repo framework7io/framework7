@@ -82,7 +82,10 @@ export function createEmitter(createEventDispatcher, props) {
         const propName = `on${eventName.charAt(0).toUpperCase() + eventName.slice(1)}`;
         dispatch(eventName, argsArray);
 
-        if (typeof props[propName] === 'function') props[propName](...argsArray);
+        if (typeof props[propName] === 'function') {
+          if (!Array.isArray(argsArray)) props[propName](...[argsArray]);
+          else props[propName](...(argsArray || []));
+        }
       });
   };
   return emit;

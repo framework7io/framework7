@@ -10,10 +10,10 @@
 </template>
 <script>
 import { ref, computed } from 'vue';
-import { classNames } from '../shared/utils';
-import { colorClasses, colorProps } from '../shared/mixins';
-import { useTooltip } from '../shared/use-tooltip';
-import { useTheme } from '../shared/use-theme';
+import { classNames } from '../shared/utils.js';
+import { colorClasses, colorProps } from '../shared/mixins.js';
+import { useTooltip } from '../shared/use-tooltip.js';
+import { useTheme } from '../shared/use-theme.js';
 
 export default {
   name: 'f7-icon',

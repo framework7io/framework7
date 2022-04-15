@@ -9,6 +9,7 @@ import Appbar from './pages/appbar.svelte';
 import AreaChart from './pages/area-chart.svelte';
 import Autocomplete from './pages/autocomplete.svelte';
 import Badge from './pages/badge.svelte';
+import Breadcrumbs from './pages/breadcrumbs.svelte';
 import Buttons from './pages/buttons.svelte';
 import Calendar from './pages/calendar.svelte';
 import CalendarPage from './pages/calendar-page.svelte';
@@ -218,6 +219,10 @@ export default [
   {
     path: '/badge/',
     component: Badge,
+  },
+  {
+    path: '/breadcrumbs/',
+    component: Breadcrumbs,
   },
   {
     path: '/buttons/',

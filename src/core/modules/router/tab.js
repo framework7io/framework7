@@ -1,7 +1,7 @@
-import $ from '../../shared/dom7';
-import { extend } from '../../shared/utils';
-import History from '../../shared/history';
-import asyncComponent from './async-component';
+import $ from '../../shared/dom7.js';
+import { extend } from '../../shared/utils.js';
+import History from '../../shared/history.js';
+import asyncComponent from './async-component.js';
 
 function tabLoad(tabRoute, loadOptions = {}) {
   const router = this;
@@ -35,7 +35,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
 
     // Update Browser History
     if (router.params.browserHistory && options.browserHistory && !options.reloadPrevious) {
-      History.replace(
+      History[router.params.browserHistoryTabs](
         router.view.id,
         {
           url: options.route.url,

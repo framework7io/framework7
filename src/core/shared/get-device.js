@@ -1,5 +1,5 @@
 import { getWindow } from 'ssr-window';
-import { getSupport } from './get-support';
+import { getSupport } from './get-support.js';
 
 let deviceCalculated;
 
@@ -22,8 +22,7 @@ function calcDevice({ userAgent } = {}) {
     firefox: false,
     macos: false,
     windows: false,
-    cordova: !!(window.cordova || window.phonegap),
-    phonegap: !!(window.cordova || window.phonegap),
+    cordova: !!window.cordova,
     electron: false,
     capacitor: !!window.Capacitor,
     nwjs: false,

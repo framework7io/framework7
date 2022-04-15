@@ -186,7 +186,6 @@
   box-sizing: border-box;
   padding-left: var(--f7-safe-area-left);
   padding-right: var(--f7-safe-area-right);
-  .hairline(top, var(--f7-calendar-row-border-color));
 }
 .calendar-modal,
 .calendar-popover {
@@ -317,20 +316,17 @@
 .calendar-month-picker,
 .calendar-year-picker,
 .calendar-time-picker {
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 100%;
-  left: 0px;
-  top: 0px;
-  background: var(--f7-calendar-picker-bg-color);
-  z-index: 1000;
   user-select: none;
+  background: transparent;
 }
 .calendar-month-picker,
 .calendar-year-picker {
-  flex-wrap: wrap;
-  font-size: var(--f7-calendar-picker-font-size);
-  display: flex;
+  .picker-columns {
+    text-align: center;
+  }
 }
 .calendar-month-picker-item,
 .calendar-year-picker-item {
@@ -361,8 +357,6 @@
 }
 .calendar-month-picker-item {
   padding: 5px;
-  .hairline(bottom, var(--f7-calendar-row-border-color));
-  .hairline(left, var(--f7-calendar-row-border-color));
 }
 .sheet-modal .calendar-month-picker-item {
   width: 25%;
@@ -397,16 +391,15 @@
   height: 34px;
   line-height: 34px;
   width: 100%;
-  .hairline(bottom, var(--f7-calendar-row-border-color));
 }
 
 .calendar-time-selector {
   flex-shrink: 0;
   font-size: var(--f7-calendar-time-selector-font-size);
   position: relative;
-  .hairline(top, var(--f7-calendar-row-border-color));
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   padding: 12px 16px;
   a {
     overflow: hidden;
@@ -415,15 +408,26 @@
     justify-content: center;
     align-items: center;
     display: flex;
-    min-width: 200px;
     box-sizing: border-box;
     height: var(--f7-calendar-time-selector-height);
     background-color: var(--f7-calendar-time-selector-bg-color);
-    padding: 0 10px;
+    padding: 0 16px;
     border-radius: 8px;
+  }
+  > span {
+    font-weight: 500;
   }
   .segmented {
     margin-left: 8px;
+  }
+}
+.calendar-time-picker-popover,
+.calendar-year-picker-popover,
+.calendar-month-picker-popover {
+  height: 240px;
+  width: 240px;
+  .popover-inner {
+    height: 100%;
   }
 }
 .calendar-time-picker {

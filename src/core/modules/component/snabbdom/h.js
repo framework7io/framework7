@@ -1,5 +1,5 @@
-import { vnode } from './vnode';
-import * as is from './is';
+import { vnode } from './vnode.js';
+import * as is from './is.js';
 function addNS(data, children, sel) {
     data.ns = 'http://www.w3.org/2000/svg';
     if (sel !== 'foreignObject' && children !== undefined) {

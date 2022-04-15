@@ -1,31 +1,31 @@
-import $ from './shared/dom7';
+import $ from './shared/dom7.js';
 
-import Framework7 from './components/app/app-class';
+import Framework7 from './components/app/app-class.js';
 
 //IMPORT_HELPERS
 
-import DeviceModule from './modules/device/device';
-import SupportModule from './modules/support/support';
-import UtilsModule from './modules/utils/utils';
-import ResizeModule from './modules/resize/resize';
-import RequestModule from './modules/request/request';
-import TouchModule from './modules/touch/touch';
-import ClicksModule from './modules/clicks/clicks';
-import RouterModule from './modules/router/router';
-import RouterComponentLoaderModule from './modules/router/component-loader';
-import ComponentModule, { Component, $jsx } from './modules/component/component';
-import HistoryModule from './modules/history/history';
-import ServiceWorkerModule from './modules/service-worker/service-worker';
-import StoreModule, { createStore } from './modules/store/store';
+import DeviceModule from './modules/device/device.js';
+import SupportModule from './modules/support/support.js';
+import UtilsModule from './modules/utils/utils.js';
+import ResizeModule from './modules/resize/resize.js';
+import RequestModule from './modules/request/request.js';
+import TouchModule from './modules/touch/touch.js';
+import ClicksModule from './modules/clicks/clicks.js';
+import RouterModule from './modules/router/router.js';
+import RouterComponentLoaderModule from './modules/router/component-loader.js';
+import ComponentModule, { Component, $jsx } from './modules/component/component.js';
+import HistoryModule from './modules/history/history.js';
+import ServiceWorkerModule from './modules/service-worker/service-worker.js';
+import StoreModule, { createStore } from './modules/store/store.js';
 
-import Statusbar from './components/statusbar/statusbar';
-import View from './components/view/view';
-import Navbar from './components/navbar/navbar';
-import Toolbar from './components/toolbar/toolbar';
-import Subnavbar from './components/subnavbar/subnavbar';
-import TouchRipple from './components/touch-ripple/touch-ripple';
-import Modal from './components/modal/modal';
-import Router from './modules/router/router-class';
+import Statusbar from './components/statusbar/statusbar.js';
+import View from './components/view/view.js';
+import Navbar from './components/navbar/navbar.js';
+import Toolbar from './components/toolbar/toolbar.js';
+import Subnavbar from './components/subnavbar/subnavbar.js';
+import TouchRipple from './components/touch-ripple/touch-ripple.js';
+import Modal from './components/modal/modal.js';
+import Router from './modules/router/router-class.js';
 
 //IMPORT_COMPONENTS
 

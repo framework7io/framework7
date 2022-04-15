@@ -1,10 +1,10 @@
-import { isStringProp } from './utils';
+import { isStringProp } from './utils.js';
 
 export function colorClasses(props) {
-  const { color, colorTheme, textColor, bgColor, borderColor, rippleColor, themeDark } = props;
+  const { color, colorTheme, textColor, bgColor, borderColor, rippleColor, dark } = props;
 
   return {
-    'theme-dark': themeDark,
+    dark,
     [`color-${color}`]: color,
     [`color-theme-${colorTheme}`]: colorTheme,
     [`text-color-${textColor}`]: textColor,

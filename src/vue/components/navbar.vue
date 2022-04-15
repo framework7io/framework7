@@ -34,14 +34,14 @@
 </template>
 <script>
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue';
-import { classNames } from '../shared/utils';
-import { colorClasses, colorProps } from '../shared/mixins';
-import { f7ready, f7 } from '../shared/f7';
-import { useTheme } from '../shared/use-theme';
+import { classNames } from '../shared/utils.js';
+import { colorClasses, colorProps } from '../shared/mixins.js';
+import { f7ready, f7 } from '../shared/f7.js';
+import { useTheme } from '../shared/use-theme.js';
 
-import f7NavLeft from './nav-left';
-import f7NavTitle from './nav-title';
-import f7NavRight from './nav-right';
+import f7NavLeft from './nav-left.js';
+import f7NavTitle from './nav-title.js';
+import f7NavRight from './nav-right.js';
 
 export default {
   name: 'f7-navbar',

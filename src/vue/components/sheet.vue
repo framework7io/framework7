@@ -1,9 +1,9 @@
 <script>
 import { h, computed, ref, watch, onMounted, onBeforeUnmount } from 'vue';
-import { classNames } from '../shared/utils';
-import { colorClasses, colorProps } from '../shared/mixins';
-import { f7ready, f7 } from '../shared/f7';
-import { modalStateClasses } from '../shared/modal-state-classes';
+import { classNames } from '../shared/utils.js';
+import { colorClasses, colorProps } from '../shared/mixins.js';
+import { f7ready, f7 } from '../shared/f7.js';
+import { modalStateClasses } from '../shared/modal-state-classes.js';
 
 export default {
   name: 'f7-sheet',

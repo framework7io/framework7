@@ -1,8 +1,8 @@
 import { forwardRef, useRef, useImperativeHandle } from 'react';
-import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { extend, emit } from '../shared/utils';
-import { watchProp } from '../shared/watch-prop';
-import { f7ready, f7 } from '../shared/f7';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
+import { extend, emit } from '../shared/utils.js';
+import { watchProp } from '../shared/watch-prop.js';
+import { f7ready, f7 } from '../shared/f7.js';
 
 /* dts-imports
 import { PhotoBrowser } from 'framework7/types';

@@ -1,11 +1,11 @@
 <script>
 import { h, computed, ref, onMounted, onBeforeUnmount, watch, onUpdated } from 'vue';
-import { classNames, noUndefinedProps } from '../shared/utils';
-import { colorClasses, colorProps } from '../shared/mixins';
-import { f7ready, f7 } from '../shared/f7';
+import { classNames, noUndefinedProps } from '../shared/utils.js';
+import { colorClasses, colorProps } from '../shared/mixins.js';
+import { f7ready, f7 } from '../shared/f7.js';
 
-import Link from './link';
-import Input from './input';
+import Link from './link.js';
+import Input from './input.js';
 
 export default {
   name: 'f7-messagebar',

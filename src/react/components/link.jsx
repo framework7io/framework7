@@ -1,19 +1,19 @@
 import React, { forwardRef, useRef, useImperativeHandle, useContext } from 'react';
-import { classNames, getExtraAttrs, isStringProp, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, isStringProp, emit } from '../shared/utils.js';
 import {
   colorClasses,
   routerAttrs,
   routerClasses,
   actionsAttrs,
   actionsClasses,
-} from '../shared/mixins';
-import { useIcon } from '../shared/use-icon';
-import { useRouteProps } from '../shared/use-route-props';
-import { useTooltip } from '../shared/use-tooltip';
-import { TabbarContext } from '../shared/tabbar-context';
+} from '../shared/mixins.js';
+import { useIcon } from '../shared/use-icon.js';
+import { useRouteProps } from '../shared/use-route-props.js';
+import { useTooltip } from '../shared/use-tooltip.js';
+import { TabbarContext } from '../shared/tabbar-context.js';
 
-import Badge from './badge';
-import { useSmartSelect } from '../shared/use-smart-select';
+import Badge from './badge.js';
+import { useSmartSelect } from '../shared/use-smart-select.js';
 
 /* dts-imports
 import { SmartSelect } from 'framework7/types';

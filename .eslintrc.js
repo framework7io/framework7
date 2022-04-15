@@ -31,6 +31,7 @@ const rules = {
   'react/prop-types': ['off'],
   'no-restricted-globals': ['error', 'window', 'document'],
   'import/prefer-default-export': 'off',
+  'import/no-unresolved': [2, { ignore: ['ssr-window', 'framework7-svelte', 'swiper/svelte'] }],
 };
 
 module.exports = {
@@ -62,7 +63,10 @@ module.exports = {
       files: ['**/*.jsx', '**/*.js', '**/*.ts'],
       extends: ['plugin:react/recommended', 'airbnb-base', 'plugin:prettier/recommended'],
       plugins: ['react'],
-      rules: { ...rules },
+      rules: {
+        ...rules,
+        'import/extensions': [2, { js: 'always', jsx: 'always', json: 'always' }],
+      },
     },
     {
       files: ['**/*.jsx', 'src/react/shared/*.js'],
@@ -70,8 +74,8 @@ module.exports = {
         ...rules,
         'import/no-unresolved': ['off'],
         'import/no-extraneous-dependencies': ['off'],
-        'import/extensions': ['off'],
         'no-dupe-keys': ['off'],
+        'import/extensions': [2, { js: 'always' }],
       },
     },
     // Core
@@ -83,8 +87,10 @@ module.exports = {
         ...rules,
         'react/no-unknown-property': ['off'],
         'react/jsx-key': ['off'],
+        'import/extensions': [2, { js: 'always' }],
       },
     },
+
     // REACT KITCHEN_SINK
     {
       files: ['kitchen-sink/react/src/**/*.jsx', 'kitchen-sink/react/src/**/*.js'],

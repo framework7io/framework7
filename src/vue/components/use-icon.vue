@@ -4,8 +4,8 @@
   </f7-icon>
 </template>
 <script>
-import f7Icon from './icon';
-import f7Badge from './badge';
+import f7Icon from './icon.js';
+import f7Badge from './badge.js';
 
 export default {
   name: 'f7-use-icon',

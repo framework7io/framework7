@@ -11,10 +11,10 @@
 </template>
 <script>
 import { computed, ref, inject, onMounted, onBeforeUnmount, onUpdated, toRaw } from 'vue';
-import { classNames, getComponentId } from '../shared/utils';
-import { colorClasses, colorProps } from '../shared/mixins';
-import { f7ready, f7routers, f7, f7events } from '../shared/f7';
-import { useTab } from '../shared/use-tab';
+import { classNames, getComponentId } from '../shared/utils.js';
+import { colorClasses, colorProps } from '../shared/mixins.js';
+import { f7ready, f7routers, f7, f7events } from '../shared/f7.js';
+import { useTab } from '../shared/use-tab.js';
 
 export default {
   name: 'f7-tab',

@@ -1,15 +1,15 @@
 /* eslint-disable no-underscore-dangle */
 
 import { getWindow, getDocument } from 'ssr-window';
-import { extend, nextFrame } from '../../shared/utils';
-import { getDevice } from '../../shared/get-device';
-import { getSupport } from '../../shared/get-support';
-import Framework7Class from '../../shared/class';
-import EventsClass from '../../shared/events-class';
-import ConstructorMethods from '../../shared/constructor-methods';
-import ModalMethods from '../../shared/modal-methods';
-import $ from '../../shared/dom7';
-import loadModule from './load-module';
+import { extend, nextFrame } from '../../shared/utils.js';
+import { getDevice } from '../../shared/get-device.js';
+import { getSupport } from '../../shared/get-support.js';
+import Framework7Class from '../../shared/class.js';
+import EventsClass from '../../shared/events-class.js';
+import ConstructorMethods from '../../shared/constructor-methods.js';
+import ModalMethods from '../../shared/modal-methods.js';
+import $ from '../../shared/dom7.js';
+import loadModule from './load-module.js';
 
 class Framework7 extends Framework7Class {
   constructor(params = {}) {
@@ -46,7 +46,7 @@ class Framework7 extends Framework7Class {
       lazyModulesPath: null,
       initOnDeviceReady: true,
       init: true,
-      autoDarkTheme: false,
+      autoDarkMode: false,
       iosTranslucentBars: true,
       iosTranslucentModals: true,
       component: undefined,
@@ -128,7 +128,7 @@ class Framework7 extends Framework7Class {
       app.rtl = $rootEl.css('direction') === 'rtl';
     }
 
-    // Auto Dark Theme
+    // Auto Dark Mode
     const DARK = '(prefers-color-scheme: dark)';
     const LIGHT = '(prefers-color-scheme: light)';
     app.mq = {};
@@ -142,13 +142,13 @@ class Framework7 extends Framework7Class {
       }
       const html = document.querySelector('html');
       if (media === DARK) {
-        html.classList.add('theme-dark');
-        app.darkTheme = true;
-        app.emit('darkThemeChange', true);
+        html.classList.add('dark');
+        app.darkMode = true;
+        app.emit('darkModeChange', true);
       } else if (media === LIGHT) {
-        html.classList.remove('theme-dark');
-        app.darkTheme = false;
-        app.emit('darkThemeChange', false);
+        html.classList.remove('dark');
+        app.darkMode = false;
+        app.emit('darkModeChange', false);
       }
     };
     app.emit('mount');
@@ -163,7 +163,7 @@ class Framework7 extends Framework7Class {
     }
   }
 
-  enableAutoDarkTheme() {
+  enableAutoDarkMode() {
     const window = getWindow();
     const document = getDocument();
     if (!window.matchMedia) return;
@@ -174,17 +174,17 @@ class Framework7 extends Framework7Class {
       app.mq.light.addListener(app.colorSchemeListener);
     }
     if (app.mq.dark && app.mq.dark.matches) {
-      html.classList.add('theme-dark');
-      app.darkTheme = true;
-      app.emit('darkThemeChange', true);
+      html.classList.add('dark');
+      app.darkMode = true;
+      app.emit('darkModeChange', true);
     } else if (app.mq.light && app.mq.light.matches) {
-      html.classList.remove('theme-dark');
-      app.darkTheme = false;
-      app.emit('darkThemeChange', false);
+      html.classList.remove('dark');
+      app.darkMode = false;
+      app.emit('darkModeChange', false);
     }
   }
 
-  disableAutoDarkTheme() {
+  disableAutoDarkMode() {
     const window = getWindow();
     if (!window.matchMedia) return;
     const app = this;
@@ -224,9 +224,9 @@ class Framework7 extends Framework7Class {
         $('html').attr('dir', 'rtl');
       }
 
-      // Auto Dark Theme
-      if (app.params.autoDarkTheme) {
-        app.enableAutoDarkTheme();
+      // Auto Dark Mode
+      if (app.params.autoDarkMode) {
+        app.enableAutoDarkMode();
       }
 
       // Watch for online/offline state

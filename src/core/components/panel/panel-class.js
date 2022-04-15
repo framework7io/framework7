@@ -1,9 +1,9 @@
 import { getDocument } from 'ssr-window';
-import $ from '../../shared/dom7';
-import { extend, deleteProps } from '../../shared/utils';
-import Framework7Class from '../../shared/class';
-import swipePanel from './swipe-panel';
-import resizablePanel from './resizable-panel';
+import $ from '../../shared/dom7.js';
+import { extend, deleteProps } from '../../shared/utils.js';
+import Framework7Class from '../../shared/class.js';
+import swipePanel from './swipe-panel.js';
+import resizablePanel from './resizable-panel.js';
 
 class Panel extends Framework7Class {
   constructor(app, params = {}) {

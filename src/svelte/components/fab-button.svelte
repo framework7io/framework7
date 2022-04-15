@@ -1,9 +1,9 @@
 <script>
   import { createEventDispatcher } from 'svelte';
-  import { colorClasses } from '../shared/mixins';
-  import { classNames, plainText, createEmitter } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
-  import { useTooltip } from '../shared/use-tooltip';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames, plainText, createEmitter } from '../shared/utils.js';
+  import { restProps } from '../shared/rest-props.js';
+  import { useTooltip } from '../shared/use-tooltip.js';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -35,7 +35,7 @@
 <!-- svelte-ignore a11y-missing-attribute -->
 <a
   bind:this={el}
-  target={target}
+  {target}
   class={classes}
   on:click={onClick}
   {...restProps($$restProps)}

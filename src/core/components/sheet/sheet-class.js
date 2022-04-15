@@ -1,9 +1,9 @@
 import { getWindow, getDocument } from 'ssr-window';
-import $ from '../../shared/dom7';
-import { extend, now, getTranslate } from '../../shared/utils';
-import { getSupport } from '../../shared/get-support';
-import { getDevice } from '../../shared/get-device';
-import Modal from '../modal/modal-class';
+import $ from '../../shared/dom7.js';
+import { extend, now, getTranslate } from '../../shared/utils.js';
+import { getSupport } from '../../shared/get-support.js';
+import { getDevice } from '../../shared/get-device.js';
+import Modal from '../modal/modal-class.js';
 
 class Sheet extends Modal {
   constructor(app, params) {
@@ -45,7 +45,12 @@ class Sheet extends Modal {
     if (sheet.params.backdrop && sheet.params.backdropEl) {
       $backdropEl = $(sheet.params.backdropEl);
     } else if (sheet.params.backdrop) {
-      $backdropEl = sheet.$containerEl.children('.sheet-backdrop');
+      if (sheet.params.backdropUnique) {
+        $backdropEl = $('<div class="sheet-backdrop sheet-backdrop-unique"></div>');
+        sheet.$containerEl.append($backdropEl);
+      } else {
+        $backdropEl = sheet.$containerEl.children('.sheet-backdrop');
+      }
       if ($backdropEl.length === 0) {
         $backdropEl = $('<div class="sheet-backdrop"></div>');
         sheet.$containerEl.append($backdropEl);

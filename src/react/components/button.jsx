@@ -1,17 +1,17 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getExtraAttrs, extend, isStringProp, emit } from '../shared/utils';
+import { classNames, getExtraAttrs, extend, isStringProp, emit } from '../shared/utils.js';
 import {
   colorClasses,
   actionsAttrs,
   actionsClasses,
   routerAttrs,
   routerClasses,
-} from '../shared/mixins';
-import { useTooltip } from '../shared/use-tooltip';
-import { useIcon } from '../shared/use-icon';
-import { useRouteProps } from '../shared/use-route-props';
+} from '../shared/mixins.js';
+import { useTooltip } from '../shared/use-tooltip.js';
+import { useIcon } from '../shared/use-icon.js';
+import { useRouteProps } from '../shared/use-route-props.js';
 
-import Preloader from './preloader';
+import Preloader from './preloader.js';
 
 /* dts-props
   id?: string | number;

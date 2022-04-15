@@ -1,13 +1,13 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getExtraAttrs, emit, getSlots } from '../shared/utils';
-import { colorClasses } from '../shared/mixins';
-import { f7ready, f7 } from '../shared/f7';
-import { useTheme } from '../shared/use-theme';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
+import { classNames, getExtraAttrs, emit, getSlots } from '../shared/utils.js';
+import { colorClasses } from '../shared/mixins.js';
+import { f7ready, f7 } from '../shared/f7.js';
+import { useTheme } from '../shared/use-theme.js';
 
-import NavLeft from './nav-left';
-import NavTitle from './nav-title';
-import NavRight from './nav-right';
+import NavLeft from './nav-left.js';
+import NavTitle from './nav-title.js';
+import NavRight from './nav-right.js';
 
 /* dts-props
   id?: string | number;

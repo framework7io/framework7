@@ -1,6 +1,6 @@
-import $ from '../../shared/dom7';
-import { extend } from '../../shared/utils';
-import View from './view-class';
+import $ from '../../shared/dom7.js';
+import { extend } from '../../shared/utils.js';
+import View from './view-class.js';
 
 function getCurrentView(app) {
   const $popoverView = $('.popover.modal-in .view');
@@ -42,6 +42,7 @@ export default {
   params: {
     view: {
       init: true,
+      initRouterOnTabShow: false,
       name: undefined,
       main: false,
       router: true,
@@ -91,6 +92,7 @@ export default {
       browserHistoryOnLoad: true,
       browserHistoryInitialMatch: false,
       browserHistoryStoreHistory: true,
+      browserHistoryTabs: 'replace',
       // Animate Pages
       animate: true,
       // iOS Dynamic Navbar

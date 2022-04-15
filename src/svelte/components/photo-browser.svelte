@@ -1,8 +1,8 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
 
-  import { extend, createEmitter } from '../shared/utils';
-  import { app, f7ready } from '../shared/f7';
+  import { extend, createEmitter } from '../shared/utils.js';
+  import { app, f7ready } from '../shared/f7.js';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 

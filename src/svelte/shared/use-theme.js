@@ -1,4 +1,4 @@
-import { f7ready, app } from './f7';
+import { f7ready, app } from './f7.js';
 
 export const useTheme = (set) => {
   const t = app.f7 ? app.theme : null;

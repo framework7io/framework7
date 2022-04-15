@@ -1,7 +1,7 @@
 import { getDocument } from 'ssr-window';
-import $ from '../../shared/dom7';
-import { nextFrame, bindMethods } from '../../shared/utils';
-import { getSupport } from '../../shared/get-support';
+import $ from '../../shared/dom7.js';
+import { nextFrame, bindMethods } from '../../shared/utils.js';
+import { getSupport } from '../../shared/get-support.js';
 
 const Swipeout = {
   init() {

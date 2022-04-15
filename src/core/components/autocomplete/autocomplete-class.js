@@ -1,5 +1,5 @@
 /* eslint "no-useless-escape": "off" */
-import $ from '../../shared/dom7';
+import $ from '../../shared/dom7.js';
 import {
   extend,
   id,
@@ -8,11 +8,11 @@ import {
   iosPreloaderContent,
   mdPreloaderContent,
   auroraPreloaderContent,
-} from '../../shared/utils';
-import { getDevice } from '../../shared/get-device';
-import Framework7Class from '../../shared/class';
+} from '../../shared/utils.js';
+import { getDevice } from '../../shared/get-device.js';
+import Framework7Class from '../../shared/class.js';
 /** @jsx $jsx */
-import $jsx from '../../shared/$jsx';
+import $jsx from '../../shared/$jsx.js';
 
 class Autocomplete extends Framework7Class {
   constructor(app, params = {}) {

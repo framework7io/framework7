@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { watchProp } from './watch-prop';
-import { f7, f7ready } from './f7';
+import { watchProp } from './watch-prop.js';
+import { f7, f7ready } from './f7.js';
 
 export const useTooltip = (elRef, props) => {
   const f7Tooltip = useRef(null);

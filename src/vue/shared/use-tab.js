@@ -1,5 +1,5 @@
 import { onMounted, onBeforeUnmount } from 'vue';
-import { f7, f7ready } from './f7';
+import { f7, f7ready } from './f7.js';
 
 export const useTab = (elRef, emit) => {
   const onTabShow = (el) => {

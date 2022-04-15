@@ -1,9 +1,9 @@
 /* eslint no-param-reassign: "off" */
 import { getDocument } from 'ssr-window';
-import { bindMethods } from '../../shared/utils';
-import { getSupport } from '../../shared/get-support';
-import { getDevice } from '../../shared/get-device';
-import $ from '../../shared/dom7';
+import { bindMethods } from '../../shared/utils.js';
+import { getSupport } from '../../shared/get-support.js';
+import { getDevice } from '../../shared/get-device.js';
+import $ from '../../shared/dom7.js';
 
 const CardExpandable = {
   open(cardEl = '.card-expandable', animate = true) {

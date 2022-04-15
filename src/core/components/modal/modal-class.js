@@ -1,7 +1,7 @@
 import { getDocument } from 'ssr-window';
-import $ from '../../shared/dom7';
-import { extend, deleteProps } from '../../shared/utils';
-import Framework7Class from '../../shared/class';
+import $ from '../../shared/dom7.js';
+import { extend, deleteProps } from '../../shared/utils.js';
+import Framework7Class from '../../shared/class.js';
 
 const openedModals = [];
 const dialogsQueue = [];
@@ -66,6 +66,13 @@ class Modal extends Framework7Class {
     if (!modal.type || !modal.$el) return;
     modal.$el.removeClass('modal-out');
     modal.$el.hide();
+    if (
+      modal.params.backdrop &&
+      (modal.params.backdropUnique || modal.forceBackdropUnique) &&
+      modal.$backdropEl
+    ) {
+      modal.$backdropEl.remove();
+    }
     modal.$el.trigger(`modal:closed ${modal.type.toLowerCase()}:closed`);
     modal.emit(`local::closed modalClosed ${modal.type}Closed`, modal);
   }
@@ -119,6 +126,14 @@ class Modal extends Framework7Class {
     }
     // Show Modal
     $el.show();
+
+    if (
+      modal.params.backdrop &&
+      (modal.params.backdropUnique || modal.forceBackdropUnique) &&
+      modal.$backdropEl
+    ) {
+      modal.$backdropEl.insertBefore($el);
+    }
 
     /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
     modal._clientLeft = $el[0].clientLeft;

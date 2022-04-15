@@ -1,6 +1,6 @@
-import { colorHsbToHsl } from '../../../shared/utils';
+import { colorHsbToHsl } from '../../../shared/utils.js';
 /** @jsx $jsx */
-import $jsx from '../../../shared/$jsx';
+import $jsx from '../../../shared/$jsx.js';
 
 export default {
   render(self) {

@@ -1,13 +1,13 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
-  import { colorClasses } from '../shared/mixins';
-  import { classNames, plainText, createEmitter } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
-  import { app, f7ready } from '../shared/f7';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames, plainText, createEmitter } from '../shared/utils.js';
+  import { restProps } from '../shared/rest-props.js';
+  import { app, f7ready } from '../shared/f7.js';
 
-  import CardHeader from './card-header';
-  import CardContent from './card-content';
-  import CardFooter from './card-footer';
+  import CardHeader from './card-header.svelte';
+  import CardContent from './card-content.svelte';
+  import CardFooter from './card-footer.svelte';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 

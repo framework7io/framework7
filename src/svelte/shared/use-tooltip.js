@@ -1,4 +1,4 @@
-import { app, f7ready } from './f7';
+import { app, f7ready } from './f7.js';
 
 export const useTooltip = (el, props) => {
   let f7Tooltip = null;

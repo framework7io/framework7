@@ -1,10 +1,10 @@
 <script>
   import { onMount } from 'svelte';
-  import { app, f7init } from '../shared/f7';
-  import { colorClasses } from '../shared/mixins';
-  import { classNames, noUndefinedProps } from '../shared/utils';
+  import { app, f7init } from '../shared/f7.js';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames, noUndefinedProps } from '../shared/utils.js';
 
-  import RoutableModals from './routable-modals';
+  import RoutableModals from './routable-modals.svelte';
 
   let className = undefined;
   export { className as class };

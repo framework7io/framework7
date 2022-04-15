@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { f7 } from './f7';
+import { f7 } from './f7.js';
 
 export const useStore = (...args) => {
   const assignedGetters = useRef({});

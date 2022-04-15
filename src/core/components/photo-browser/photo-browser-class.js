@@ -1,10 +1,10 @@
 /* eslint indent: ["off"] */
 import { getWindow } from 'ssr-window';
-import $ from '../../shared/dom7';
-import { extend, now, nextTick, deleteProps } from '../../shared/utils';
-import Framework7Class from '../../shared/class';
+import $ from '../../shared/dom7.js';
+import { extend, now, nextTick, deleteProps } from '../../shared/utils.js';
+import Framework7Class from '../../shared/class.js';
 /** @jsx $jsx */
-import $jsx from '../../shared/$jsx';
+import $jsx from '../../shared/$jsx.js';
 
 class PhotoBrowser extends Framework7Class {
   constructor(app, params = {}) {
@@ -334,7 +334,7 @@ class PhotoBrowser extends Framework7Class {
                 return '';
               })}
             </div>
-            <div class="photo-browser-swiper-container swiper-container">
+            <div class="photo-browser-swiper-container swiper">
               <div class="photo-browser-swiper-wrapper swiper-wrapper">
                 {!pb.params.virtualSlides &&
                   pb.params.photos.map((photo, index) => {
@@ -409,10 +409,13 @@ class PhotoBrowser extends Framework7Class {
 
     const swiperParams = extend({}, pb.params.swiper, {
       initialSlide: pb.activeIndex,
+      cssMode:
+        typeof pb.params.swiper.cssMode === 'undefined' && (app.device.ios || app.device.android)
+          ? true
+          : pb.params.swiper.cssMode,
       on: {
         click(e) {
           clearTimeout(clickTimeout);
-
           if (pb.params.exposition) {
             clickTimeout = setTimeout(() => {
               pb.expositionToggle();

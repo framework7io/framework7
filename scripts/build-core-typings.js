@@ -6,7 +6,7 @@
 const path = require('path');
 const glob = require('glob');
 const getOutput = require('./get-output.js');
-const fs = require('./utils/fs-extra');
+const fs = require('./utils/fs-extra.js');
 
 function capitalize(name) {
   return name
@@ -25,7 +25,7 @@ function capitalize(name) {
 }
 
 function copyTypings() {
-  const output = `${getOutput()}/core/types`;
+  const output = `${getOutput()}/core`;
   ['modules', 'components', 'shared'].forEach((folderName) => {
     glob('**/*.*', { cwd: path.resolve(__dirname, `../src/core/${folderName}`) }, (err, files) => {
       const filesToProcess = files.filter((file) => {
@@ -42,25 +42,25 @@ function copyTypings() {
 }
 
 function generateTypings(content, modules, components) {
-  const f7Base = `import Framework7 from './types/components/app/app-class'`;
+  const f7Base = `import Framework7 from './components/app/app-class'`;
 
   const helpers = ['request', 'utils', 'support', 'device'];
 
   const importHelpers = helpers.map((helper) => {
     const capitalized = capitalize(helper);
-    return `import ${capitalized} from './types/shared/${helper}';`;
+    return `import ${capitalized} from './shared/${helper}';`;
   });
 
   const exportHelpers = helpers.map(capitalize).join(', ');
 
   const importModules = modules.map((f7Module) => {
     const capitalized = capitalize(f7Module);
-    return `import { ${capitalized} as ${capitalized}Module } from './types/modules/${f7Module}/${f7Module}';`;
+    return `import { ${capitalized} as ${capitalized}Module } from './modules/${f7Module}/${f7Module}';`;
   });
 
   const importComponents = components.map((component) => {
     const capitalized = capitalize(component);
-    return `import { ${capitalized} } from './types/components/${component}/${component}';`;
+    return `import { ${capitalized} } from './components/${component}/${component}';`;
   });
 
   const installModules = modules
@@ -118,7 +118,9 @@ function buildTypings(cb) {
   });
 
   const mainContent = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.d.ts'));
-  const typesContent = fs.readFileSync(path.resolve(__dirname, '../src/core/types.d.ts'));
+  const typesContent = fs.readFileSync(
+    path.resolve(__dirname, '../src/core/framework7-types.d.ts'),
+  );
 
   const mainTypings = generateTypings(mainContent, modules, components);
   const typesTypings = generateTypings(typesContent, modules, components).replace(
@@ -127,7 +129,7 @@ function buildTypings(cb) {
   );
 
   fs.writeFileSync(`${output}/framework7.d.ts`, mainTypings);
-  fs.writeFileSync(`${output}/types/types.d.ts`, typesTypings);
+  fs.writeFileSync(`${output}/framework7-types.d.ts`, typesTypings);
 
   cb();
 }

@@ -1,9 +1,9 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getExtraAttrs, noUndefinedProps, emit } from '../shared/utils';
-import { colorClasses } from '../shared/mixins';
-import { f7ready, f7 } from '../shared/f7';
-import { watchProp } from '../shared/watch-prop';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
+import { classNames, getExtraAttrs, noUndefinedProps, emit } from '../shared/utils.js';
+import { colorClasses } from '../shared/mixins.js';
+import { f7ready, f7 } from '../shared/f7.js';
+import { watchProp } from '../shared/watch-prop.js';
 
 /* dts-imports
 import { Range } from 'framework7/types';

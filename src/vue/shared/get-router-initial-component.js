@@ -1,4 +1,4 @@
-import { getComponentId } from './utils';
+import { getComponentId } from './utils.js';
 
 export const getRouterInitialComponent = (router, initialComponent) => {
   let initialComponentData;

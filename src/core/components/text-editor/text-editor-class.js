@@ -1,8 +1,8 @@
 import { getWindow, getDocument } from 'ssr-window';
-import $ from '../../shared/dom7';
-import { extend, deleteProps } from '../../shared/utils';
-import Framework7Class from '../../shared/class';
-import { getDevice } from '../../shared/get-device';
+import $ from '../../shared/dom7.js';
+import { extend, deleteProps } from '../../shared/utils.js';
+import Framework7Class from '../../shared/class.js';
+import { getDevice } from '../../shared/get-device.js';
 
 const textEditorButtonsMap = {
   // f7-icon, material-icon, command
@@ -479,7 +479,7 @@ class TextEditor extends Framework7Class {
     const self = this;
     self.popover = self.app.popover.create({
       content: `
-        <div class="popover theme-dark text-editor-popover">
+        <div class="popover dark text-editor-popover">
           <div class="popover-inner">${self.renderButtons()}</div>
         </div>
       `,

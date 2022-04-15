@@ -1,5 +1,5 @@
-import { extend, now } from './utils';
-import EventsClass from './events-class';
+import { extend, now } from './utils.js';
+import EventsClass from './events-class.js';
 
 class Framework7Class extends EventsClass {
   constructor(params = {}, parents = []) {

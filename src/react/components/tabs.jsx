@@ -1,7 +1,7 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getExtraAttrs } from '../shared/utils';
-import { colorClasses } from '../shared/mixins';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
+import { classNames, getExtraAttrs } from '../shared/utils.js';
+import { colorClasses } from '../shared/mixins.js';
 
 /* dts-imports
 import { SwiperOptions } from 'swiper';

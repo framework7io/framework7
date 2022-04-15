@@ -1,9 +1,9 @@
 <script>
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
-  import { restProps } from '../shared/rest-props';
-  import { colorClasses } from '../shared/mixins';
-  import { classNames, noUndefinedProps, createEmitter } from '../shared/utils';
-  import { app, f7ready } from '../shared/f7';
+  import { restProps } from '../shared/rest-props.js';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames, noUndefinedProps, createEmitter } from '../shared/utils.js';
+  import { app, f7ready } from '../shared/f7.js';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -12,6 +12,7 @@
 
   export let side = undefined;
   export let effect = undefined;
+  // svelte-ignore unused-export-let
   export let cover = false;
   export let reveal = false;
   export let push = false;

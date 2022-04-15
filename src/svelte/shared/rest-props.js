@@ -5,7 +5,7 @@ const ignoreProps = [
   'bgColor',
   'borderColor',
   'rippleColor',
-  'themeDark',
+  'dark',
   'force',
   'reloadCurrent',
   'reloadPrevious',

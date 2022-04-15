@@ -1,5 +1,5 @@
-import Modal from './modal-class';
-import CustomModal from './custom-modal-class';
+import Modal from './modal-class.js';
+import CustomModal from './custom-modal-class.js';
 
 export default {
   name: 'modal',

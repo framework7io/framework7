@@ -1,10 +1,10 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getExtraAttrs, emit } from '../shared/utils';
-import { colorClasses } from '../shared/mixins';
-import { f7, f7ready } from '../shared/f7';
-import { watchProp } from '../shared/watch-prop';
-import { modalStateClasses } from '../shared/modal-state-classes';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
+import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
+import { colorClasses } from '../shared/mixins.js';
+import { f7, f7ready } from '../shared/f7.js';
+import { watchProp } from '../shared/watch-prop.js';
+import { modalStateClasses } from '../shared/modal-state-classes.js';
 
 /* dts-imports
 import { Actions } from 'framework7/types';

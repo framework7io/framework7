@@ -1,6 +1,6 @@
 <script>
 import { computed, ref, h, onMounted, onBeforeUnmount, watch, inject } from 'vue';
-import { classNames, isStringProp } from '../shared/utils';
+import { classNames, isStringProp } from '../shared/utils.js';
 import {
   colorClasses,
   colorProps,
@@ -10,14 +10,14 @@ import {
   routerProps,
   routerAttrs,
   routerClasses,
-} from '../shared/mixins';
+} from '../shared/mixins.js';
 
-import { useRouteProps } from '../shared/use-route-props';
-import { useSmartSelect } from '../shared/use-smart-select';
-import { useTooltip } from '../shared/use-tooltip';
-import { f7ready, f7 } from '../shared/f7';
+import { useRouteProps } from '../shared/use-route-props.js';
+import { useSmartSelect } from '../shared/use-smart-select.js';
+import { useTooltip } from '../shared/use-tooltip.js';
+import { f7ready, f7 } from '../shared/f7.js';
 
-import f7Badge from './badge';
+import f7Badge from './badge.js';
 
 const ListItemContent = ({
   props,

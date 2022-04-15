@@ -92,6 +92,10 @@ var routes = [
     url: './pages/badge.html',
   },
   {
+    path: '/breadcrumbs/',
+    componentUrl: './pages/breadcrumbs.html',
+  },
+  {
     path: '/buttons/',
     componentUrl: './pages/buttons.html',
   },

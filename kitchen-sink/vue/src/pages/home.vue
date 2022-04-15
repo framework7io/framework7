@@ -69,6 +69,11 @@
           <f7-icon icon="icon-f7" />
         </template>
       </f7-list-item>
+      <f7-list-item reload-detail link="/breadcrumbs/" title="Breadcrumbs">
+        <template #media>
+          <f7-icon icon="icon-f7" />
+        </template>
+      </f7-list-item>
       <f7-list-item reload-detail link="/buttons/" title="Buttons">
         <template #media>
           <f7-icon icon="icon-f7" />

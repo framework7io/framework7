@@ -1,6 +1,6 @@
 <script>
-  import Icon from './icon';
-  import Badge from './badge';
+  import Icon from './icon.svelte';
+  import Badge from './badge.svelte';
 
   export let icon = undefined;
 </script>

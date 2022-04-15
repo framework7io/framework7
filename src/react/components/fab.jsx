@@ -1,7 +1,7 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils';
-import { colorClasses } from '../shared/mixins';
-import { useTooltip } from '../shared/use-tooltip';
+import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils.js';
+import { colorClasses } from '../shared/mixins.js';
+import { useTooltip } from '../shared/use-tooltip.js';
 
 /* dts-props
   id?: string | number;

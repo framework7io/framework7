@@ -1,6 +1,6 @@
 <script>
-  import { classNames } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
+  import { classNames } from '../shared/utils.js';
+  import { restProps } from '../shared/rest-props.js';
 
   let className = undefined;
   export { className as class };

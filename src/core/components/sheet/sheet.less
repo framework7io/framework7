@@ -2,6 +2,9 @@
 @import './sheet-vars.less';
 .sheet-backdrop {
   z-index: 11000;
+  &-unique {
+    z-index: 12500;
+  }
 }
 .sheet-modal {
   position: absolute;
@@ -112,14 +115,14 @@ html.with-modal-sheet-push-closing {
     }
   }
   .if-dark-theme({
-    &.theme-dark .framework7-root > .views,
-    &.theme-dark .framework7-root > .view,
-    .theme-dark .framework7-root > .views,
-    .theme-dark .framework7-root > .view,
-    .theme-dark.framework7-root > .views,
-    .theme-dark.framework7-root > .view,
-    .framework7-root > .views.theme-dark,
-    .framework7-root > .view.theme-dark {
+    &.dark .framework7-root > .views,
+    &.dark .framework7-root > .view,
+    .dark .framework7-root > .views,
+    .dark .framework7-root > .view,
+    .dark.framework7-root > .views,
+    .dark.framework7-root > .view,
+    .framework7-root > .views.dark,
+    .framework7-root > .view.dark {
       &:after {
         content: '';
         position: absolute;
@@ -149,14 +152,14 @@ html.with-modal-sheet-push {
 
 .if-dark-theme({
   html.with-modal-sheet-push-closing {
-    &.theme-dark .framework7-root > .views,
-    &.theme-dark .framework7-root > .view,
-    .theme-dark .framework7-root > .views,
-    .theme-dark .framework7-root > .view,
-    .theme-dark.framework7-root > .views,
-    .theme-dark.framework7-root > .view,
-    .framework7-root > .views.theme-dark,
-    .framework7-root > .view.theme-dark {
+    &.dark .framework7-root > .views,
+    &.dark .framework7-root > .view,
+    .dark .framework7-root > .views,
+    .dark .framework7-root > .view,
+    .dark.framework7-root > .views,
+    .dark.framework7-root > .view,
+    .framework7-root > .views.dark,
+    .framework7-root > .view.dark {
       &:after {
         animation: sheet-dark-push-overlay-fade-out var(--f7-sheet-transition-duration) forwards;
       }

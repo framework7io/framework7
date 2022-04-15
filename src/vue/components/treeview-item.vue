@@ -27,7 +27,7 @@
 </template>
 <script>
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue';
-import { classNames } from '../shared/utils';
+import { classNames } from '../shared/utils.js';
 import {
   colorClasses,
   colorProps,
@@ -38,11 +38,11 @@ import {
   routerProps,
   routerClasses,
   iconProps,
-} from '../shared/mixins';
-import { useIcon } from '../shared/use-icon';
-import { f7ready, f7 } from '../shared/f7';
+} from '../shared/mixins.js';
+import { useIcon } from '../shared/use-icon.js';
+import { f7ready, f7 } from '../shared/f7.js';
 
-import f7UseIcon from './use-icon';
+import f7UseIcon from './use-icon.js';
 
 export default {
   name: 'f7-treeview-item',

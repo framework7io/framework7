@@ -6,11 +6,11 @@
 </template>
 <script>
 import { ref, onMounted, computed, toRaw } from 'vue';
-import { classNames, noUndefinedProps } from '../shared/utils';
-import { colorClasses, colorProps } from '../shared/mixins';
+import { classNames, noUndefinedProps } from '../shared/utils.js';
+import { colorClasses, colorProps } from '../shared/mixins.js';
 
-import RoutableModals from './routable-modals';
-import { f7init, f7 } from '../shared/f7';
+import RoutableModals from './routable-modals.js';
+import { f7init, f7 } from '../shared/f7.js';
 
 export default {
   name: 'f7-app',
@@ -26,7 +26,7 @@ export default {
     language: { type: String, default: undefined },
     routes: { type: Array, default: () => [] },
     store: Object,
-    autoDarkTheme: { type: Boolean, default: undefined },
+    autoDarkMode: { type: Boolean, default: undefined },
     lazyModulesPath: { type: String, default: undefined },
     initOnDeviceReady: { type: Boolean, default: undefined },
     iosTranslucentBars: { type: Boolean, default: undefined },

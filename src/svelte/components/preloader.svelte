@@ -1,8 +1,8 @@
 <script>
-  import { restProps } from '../shared/rest-props';
-  import { colorClasses } from '../shared/mixins';
-  import { classNames } from '../shared/utils';
-  import { useTheme } from '../shared/use-theme';
+  import { restProps } from '../shared/rest-props.js';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames } from '../shared/utils.js';
+  import { useTheme } from '../shared/use-theme.js';
 
   export let style = undefined;
 

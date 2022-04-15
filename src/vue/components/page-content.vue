@@ -27,12 +27,12 @@
 </template>
 <script>
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue';
-import { classNames } from '../shared/utils';
-import { colorClasses, colorProps } from '../shared/mixins';
+import { classNames } from '../shared/utils.js';
+import { colorClasses, colorProps } from '../shared/mixins.js';
 
-import f7Preloader from './preloader';
-import { useTab } from '../shared/use-tab';
-import { f7ready, f7 } from '../shared/f7';
+import f7Preloader from './preloader.js';
+import { useTab } from '../shared/use-tab.js';
+import { f7ready, f7 } from '../shared/f7.js';
 
 export default {
   name: 'f7-page-content',

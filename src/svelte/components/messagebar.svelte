@@ -1,12 +1,12 @@
 <script>
   import { createEventDispatcher, onMount, onDestroy, afterUpdate } from 'svelte';
-  import { colorClasses } from '../shared/mixins';
-  import { classNames, noUndefinedProps, createEmitter } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
-  import { app, f7ready } from '../shared/f7';
+  import { colorClasses } from '../shared/mixins.js';
+  import { classNames, noUndefinedProps, createEmitter } from '../shared/utils.js';
+  import { restProps } from '../shared/rest-props.js';
+  import { app, f7ready } from '../shared/f7.js';
 
-  import Link from './link';
-  import Input from './input';
+  import Link from './link.svelte';
+  import Input from './input.svelte';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 

@@ -1,6 +1,6 @@
-import $ from '../../shared/dom7';
-import { extend } from '../../shared/utils';
-import Modal from './modal-class';
+import $ from '../../shared/dom7.js';
+import { extend } from '../../shared/utils.js';
+import Modal from './modal-class.js';
 
 class CustomModal extends Modal {
   constructor(app, params) {

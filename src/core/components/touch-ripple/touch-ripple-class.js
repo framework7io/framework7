@@ -1,4 +1,4 @@
-import $ from '../../shared/dom7';
+import $ from '../../shared/dom7.js';
 
 export default class TouchRipple {
   constructor(app, $el, x, y) {

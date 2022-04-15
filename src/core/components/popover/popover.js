@@ -1,7 +1,7 @@
-import $ from '../../shared/dom7';
-import { extend } from '../../shared/utils';
-import Popover from './popover-class';
-import ModalMethods from '../../shared/modal-methods';
+import $ from '../../shared/dom7.js';
+import { extend } from '../../shared/utils.js';
+import Popover from './popover-class.js';
+import ModalMethods from '../../shared/modal-methods.js';
 
 export default {
   name: 'popover',
@@ -9,6 +9,7 @@ export default {
     popover: {
       backdrop: true,
       backdropEl: undefined,
+      backdropUnique: false,
       closeByBackdropClick: true,
       closeByOutsideClick: true,
       closeOnEscape: false,

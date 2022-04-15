@@ -3,7 +3,7 @@ const gulp = require('gulp');
 const connect = require('gulp-connect');
 const opn = require('opn');
 
-const buildClean = require('./build-clean');
+const buildClean = require('./build-clean.js');
 
 const buildKsCore = require('./build-ks-core.js');
 
@@ -49,11 +49,11 @@ gulp.task(
   'build-core',
   gulp.series([
     'core-clean',
+    ...(env === 'development' ? [] : ['core-lazy-components']),
     'core-components',
     'core-js',
     'core-typings',
     'core-styles',
-    ...(env === 'development' ? [] : ['core-lazy-components']),
   ]),
 );
 gulp.task('build-react', gulp.series(['react-clean', 'react', 'react-typings']));

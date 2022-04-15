@@ -1,6 +1,6 @@
 <script>
 import { ref, onMounted, onBeforeUnmount, onUpdated, toRaw, h } from 'vue';
-import { f7events, f7routers, f7 } from '../shared/f7';
+import { f7events, f7routers, f7 } from '../shared/f7.js';
 
 export default {
   name: 'f7-routable-modals',

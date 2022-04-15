@@ -1,5 +1,5 @@
-import $ from '../../shared/dom7';
-import { bindMethods, getTranslate, nextFrame } from '../../shared/utils';
+import $ from '../../shared/dom7.js';
+import { bindMethods, getTranslate, nextFrame } from '../../shared/utils.js';
 
 const Fab = {
   morphOpen(fabEl, targetEl) {

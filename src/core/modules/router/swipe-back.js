@@ -1,8 +1,8 @@
-import $ from '../../shared/dom7';
-import History from '../../shared/history';
-import { getSupport } from '../../shared/get-support';
-import { getDevice } from '../../shared/get-device';
-import { now } from '../../shared/utils';
+import $ from '../../shared/dom7.js';
+import History from '../../shared/history.js';
+import { getSupport } from '../../shared/get-support.js';
+import { getDevice } from '../../shared/get-device.js';
+import { now } from '../../shared/utils.js';
 
 function SwipeBack(r) {
   const router = r;

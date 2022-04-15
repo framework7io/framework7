@@ -23,6 +23,8 @@ export namespace Popover {
     backdrop?: boolean;
     /** Backdrop element to share across instances */
     backdropEl?: HTMLElement | CSSSelector;
+    /** If enabled it creates unique backdrop element exclusively for this modal (default false) */
+    backdropUnique?: boolean;
     /** When enabled, popover will be closed on backdrop click. (default true) */
     closeByBackdropClick?: boolean;
     /** When enabled, popover will be closed on when click outside of it (default true) */

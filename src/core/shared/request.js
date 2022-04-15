@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import { getWindow, getDocument } from 'ssr-window';
-import { extend, serializeObject } from './utils';
+import { extend, serializeObject } from './utils.js';
 
 const globals = {};
 let jsonpRequests = 0;

@@ -6,15 +6,15 @@
     routerClasses,
     actionsAttrs,
     actionsClasses,
-  } from '../shared/mixins';
-  import { classNames, extend, plainText, createEmitter } from '../shared/utils';
-  import { restProps } from '../shared/rest-props';
-  import { app, f7ready } from '../shared/f7';
-  import { useTooltip } from '../shared/use-tooltip';
-  import { useRouteProps } from '../shared/use-route-props';
-  import { useIcon } from '../shared/use-icon';
+  } from '../shared/mixins.js';
+  import { classNames, extend, plainText, createEmitter } from '../shared/utils.js';
+  import { restProps } from '../shared/rest-props.js';
+  import { app, f7ready } from '../shared/f7.js';
+  import { useTooltip } from '../shared/use-tooltip.js';
+  import { useRouteProps } from '../shared/use-route-props.js';
+  import { useIcon } from '../shared/use-icon.js';
 
-  import UseIcon from './use-icon';
+  import UseIcon from './use-icon.svelte';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 

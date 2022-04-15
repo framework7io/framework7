@@ -9,7 +9,7 @@
 </template>
 <script>
 import { computed, ref } from 'vue';
-import { classNames, isStringProp } from '../shared/utils';
+import { classNames, isStringProp } from '../shared/utils.js';
 import {
   colorClasses,
   colorProps,
@@ -19,9 +19,9 @@ import {
   routerAttrs,
   routerClasses,
   routerProps,
-} from '../shared/mixins';
-import { useTooltip } from '../shared/use-tooltip';
-import { useRouteProps } from '../shared/use-route-props';
+} from '../shared/mixins.js';
+import { useTooltip } from '../shared/use-tooltip.js';
+import { useRouteProps } from '../shared/use-route-props.js';
 
 export default {
   name: 'f7-list-button',

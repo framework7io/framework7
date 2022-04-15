@@ -1,13 +1,13 @@
 /* eslint-disable no-nested-ternary */
 import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
-import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect';
-import { classNames, getExtraAttrs, noUndefinedProps, emit, getRouterId } from '../shared/utils';
-import { colorClasses } from '../shared/mixins';
-import { f7ready, f7routers, f7, f7events } from '../shared/f7';
-import { useTab } from '../shared/use-tab';
-import { useAsyncComponent } from '../shared/use-async-component';
-import { getRouterInitialComponent } from '../shared/get-router-initial-component';
-import { RouterContext } from '../shared/router-context';
+import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
+import { classNames, getExtraAttrs, noUndefinedProps, emit, getRouterId } from '../shared/utils.js';
+import { colorClasses } from '../shared/mixins.js';
+import { f7ready, f7routers, f7, f7events } from '../shared/f7.js';
+import { useTab } from '../shared/use-tab.js';
+import { useAsyncComponent } from '../shared/use-async-component.js';
+import { getRouterInitialComponent } from '../shared/get-router-initial-component.js';
+import { RouterContext } from '../shared/router-context.js';
 /* dts-imports
   import { View, Router } from 'framework7/types';
 */
@@ -15,6 +15,7 @@ import { RouterContext } from '../shared/router-context';
   id?: string | number;
   className?: string;
   style?: React.CSSProperties;
+  initRouterOnTabShow?: boolean
   tab? : boolean
   tabActive? : boolean
   name? : string
@@ -97,11 +98,14 @@ const View = forwardRef((props, ref) => {
     tab,
     tabActive,
     url,
+    initRouterOnTabShow,
     browserHistoryInitialMatch = true,
   } = props;
   const childrenArray = React.Children.toArray(children);
   const initialPageComponent = childrenArray.filter((c) => c.props && c.props.initialPage)[0];
   const restChildren = childrenArray.filter((c) => !c.props || !c.props.initialPage);
+
+  const shouldInitRouter = !(initRouterOnTabShow && tab && !tabActive);
 
   const extraAttrs = getExtraAttrs(props);
 
@@ -136,7 +140,7 @@ const View = forwardRef((props, ref) => {
       instance: f7View.current,
     };
     f7routers.views.push(routerData.current);
-    if (f7View.current && f7View.current.router && (url || main)) {
+    if (shouldInitRouter && f7View.current && f7View.current.router && (url || main)) {
       const initialData = getRouterInitialComponent(f7View.current.router, initialPageComponent);
       initialPage = initialData.initialPage;
       initialRoute = initialData.initialRoute;

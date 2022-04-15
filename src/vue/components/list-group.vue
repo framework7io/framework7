@@ -12,8 +12,8 @@
 </template>
 <script>
 import { computed, provide, inject } from 'vue';
-import { classNames } from '../shared/utils';
-import { colorClasses, colorProps } from '../shared/mixins';
+import { classNames } from '../shared/utils.js';
+import { colorClasses, colorProps } from '../shared/mixins.js';
 
 export default {
   name: 'f7-list-group',

@@ -78,8 +78,8 @@
       styles += `
 /* Invert navigation bars to fill style */
 :root,
-:root.theme-dark,
-:root .theme-dark {
+:root.dark,
+:root .dark {
   --f7-bars-bg-color: var(--f7-theme-color);
   --f7-bars-bg-color-rgb: var(--f7-theme-color-rgb);
   --f7-bars-translucent-opacity: 0.9;
@@ -117,7 +117,7 @@
     calc(var(--b) + (255 - var(--b)) * var(--progress))
   );
 }
-.theme-dark .navbar-large-transparent {
+.dark .navbar-large-transparent {
   --f7-navbar-large-title-text-color: #fff;
 }
       `;
@@ -145,7 +145,7 @@
   function setLayoutTheme(newTheme) {
     const htmlEl = f7.$('html');
     globalTheme = newTheme;
-    htmlEl.removeClass('theme-dark theme-light').addClass(`theme-${globalTheme}`);
+    htmlEl.removeClass('dark light').addClass(`${globalTheme}`);
     theme = globalTheme;
   }
 
