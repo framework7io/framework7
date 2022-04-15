@@ -16,6 +16,7 @@
     "./css/bundle": "./framework7-bundle.css",
     "./css/bundle/rtl": "./framework7-bundle-rtl.css",
     "./types": "./framework7-types.d.ts",
+    "./shared/*": "./shared/*",
     "./components/appbar": "./components/appbar/appbar.js",
     "./components/appbar/less": "./components/appbar/appbar.less",
     "./components/appbar/css": "./components/appbar/appbar.css",
