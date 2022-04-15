@@ -1,5 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+// eslint-disable-next-line
+import { createRoot } from 'react-dom/client';
+
 import Framework7 from 'framework7/lite/bundle';
 import Framework7React from 'framework7-react';
 import App from './app.jsx';
@@ -18,5 +20,5 @@ if (window.parent && window.parent !== window) {
 
 Framework7.use(Framework7React);
 
-// Mount React App
-ReactDOM.render(React.createElement(App), document.getElementById('app'));
+const root = createRoot(document.getElementById('app'));
+root.render(React.createElement(App));
