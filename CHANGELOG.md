@@ -2,6 +2,16 @@
 
 # Change Log
 
+# [7.0.1](https://github.com/framework7io/framework7/compare/v7.0.0...v7.0.1) (2022-04-15)
+
+### Bug Fixes
+
+- **calendar:** fix scrolling on mobiles in calendar pickers ([ede596d](https://github.com/framework7io/framework7/commit/ede596d97b7e42b28d73b98b2369663886c1b881))
+
+### Features
+
+- **swiper:** update Swiper to latest fixes Photo Browser ([65f5085](https://github.com/framework7io/framework7/commit/65f5085afffedb0e534c1207eca8dafa3dd4804d))
+
 # [7.0.0] (2022-04-15)
 
 ### Bug Fixes
