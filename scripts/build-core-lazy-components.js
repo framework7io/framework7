@@ -235,12 +235,18 @@ function buildLazyComponentsJs(components, cb) {
             .replace('var getDevice = Framework7.getDevice;', '')
             .replace('var getSupport = Framework7.getSupport;', '');
         }
-        fileContent = fileContent.replace(/export default ([a-zA-Z_]*);/, (line, name) => {
-          // eslint-disable-line
-          return install.replace(/COMPONENT/g, name);
-        });
+        fileContent = fileContent
+          .replace(/export default ([a-zA-Z_]*);/, (line, name) => {
+            // eslint-disable-line
+            return install.replace(/COMPONENT/g, name);
+          })
+          .replace(/export { ([a-zA-Z_]*) as default };/, (line, name) => {
+            // eslint-disable-line
+            return install.replace(/COMPONENT/g, name);
+          });
 
         fileContent = (await minify(fileContent)).code;
+
         fileContent = `(${fileContent}(Framework7, typeof Framework7AutoInstallComponent === 'undefined' ? undefined : Framework7AutoInstallComponent))`;
 
         fs.writeFileSync(

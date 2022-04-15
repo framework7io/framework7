@@ -114,13 +114,7 @@
       <f7-row>
         <f7-col>
           <div
-            class="
-              elevation-demo
-              elevation-6
-              elevation-hover-24
-              elevation-pressed-12
-              elevation-transition
-            "
+            class="elevation-demo elevation-6 elevation-hover-24 elevation-pressed-12 elevation-transition"
           >
             6 + hover-24 + pressed-12
           </div>
