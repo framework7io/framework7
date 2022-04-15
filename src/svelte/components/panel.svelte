@@ -12,6 +12,7 @@
 
   export let side = undefined;
   export let effect = undefined;
+  // svelte-ignore unused-export-let
   export let cover = false;
   export let reveal = false;
   export let push = false;
