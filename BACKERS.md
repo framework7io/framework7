@@ -1,5 +1,6 @@
 # Backers
 
+<!-- SPONSORS_TABLE_WRAP -->
 <table>
   <tr>
     <td align="center" valign="middle">
@@ -130,6 +131,7 @@
     <td></td>
   </tr>
 </table>
+<!-- SPONSORS_TABLE_WRAP -->
 
 Support Framework7 development by [pledging on Patreon](https://www.patreon.com/framework7)!
 
@@ -155,15 +157,21 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 
 ### \$100 Silver Sponsor
 
+<!-- SILVER_SPONSOR -->
+
 [Ramotion](https://www.ramotion.com/agency/app-development/) - App Development Agency<br>
 [Thorium Builder](https://www.thoriumbuilder.com/) - Full visual Framework7 app builder<br>
 Mason Fok ([tommy](http://mytommy.com))<br>
+
+<!-- SILVER_SPONSOR -->
 
 [Join here!](https://www.patreon.com/bePatron?patAmt=100.0&exp=1&u=4109762&rid=830841)
 
 ---
 
 ### \$50+ Top Supporter
+
+<!-- TOP_SUPPORTER -->
 
 [CodeFirst](https://www.codefirst.co.uk) - Software Development Company | CodeFirst UK<br>
 [Buy Instagram Likes from Goread](https://goread.io/buy-instagram-likes)<br>
@@ -186,6 +194,8 @@ Marcelo Lopetegui L.<br>
 Bearr Dayss<br>
 Kris Reddy<br>
 Bart DJ
+
+<!-- TOP_SUPPORTER -->
 
 [Join here!](https://www.patreon.com/bePatron?exp=1&rid=830842&u=4109762&patAmt=50.0)
 

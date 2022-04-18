@@ -16,6 +16,7 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
 
 <h3 align="center">Sponsors</h3>
 
+<!-- SPONSORS_TABLE_WRAP -->
 <table>
   <tr>
     <td align="center" valign="middle">
@@ -146,6 +147,7 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
     <td></td>
   </tr>
 </table>
+<!-- SPONSORS_TABLE_WRAP -->
 
 ## Getting Started
 
