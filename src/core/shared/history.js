@@ -87,10 +87,18 @@ const History = {
   },
   push(viewId, viewState, url) {
     const window = getWindow();
+    const document = getDocument();
+    /* eslint-disable no-param-reassign */
     if (url.substr(-3) === '#!/') {
-      // eslint-disable-next-line
       url = url.replace('#!/', '');
+      if (url === '') {
+        url = document.location.href;
+        if (url.includes('#!/')) {
+          url = document.location.href.split('#!/')[0];
+        }
+      }
     }
+    /* eslint-enable no-param-reassign */
     if (!History.allowChange) {
       History.queue.push(() => {
         History.push(viewId, viewState, url);
