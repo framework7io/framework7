@@ -41,6 +41,7 @@
     "validate": "npm-run-all --parallel check-format lint",
     "test": "npm run validate && npm run build:dev",
     "release": "npm run validate && node ./scripts/release",
+    "build-sponsors": "node ./scripts/build-sponsors",
     "postinstall": "echo \"\u001b[35m\u001b[1mLove Framework7? Support project by donating or pledging on patreon:\u001b[22m\u001b[39m\n > \u001b[32mhttps://patreon.com/framework7\u001b[0m\n\"",
     "changelog": "npx conventional-changelog -p angular -i CHANGELOG.md -u -s"
   },

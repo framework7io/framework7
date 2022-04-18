@@ -5,7 +5,10 @@ const https = require('https');
 const getSponsors = () => {
   let sponsorsLocal;
   try {
-    const localPath = path.resolve(__dirname, '../../framework7-website/src/pug/sponsors.json');
+    const localPath = path.resolve(
+      __dirname,
+      '../../framework7-website/src/pug/sponsors/sponsors.json',
+    );
     if (fs.existsSync(localPath)) {
       // eslint-disable-next-line
       sponsorsLocal = require(localPath);
@@ -131,18 +134,18 @@ const buildSponsorsList = async (sponsors) => {
 
 const buildSponsors = async () => {
   const entries = await getSponsors();
-  const sponsors = {};
 
   if (entries) {
     Object.keys(entries).forEach((plan) => {
-      entries[plan] = entries[plan].sort((a, b) => {
-        return new Date(a.createdAt) > new Date(b.createdAt) ? -1 : 1;
-      });
+      entries[plan] = [
+        ...entries[plan].sort((a, b) => {
+          return new Date(a.createdAt) > new Date(b.createdAt) ? -1 : 1;
+        }),
+      ];
     });
   }
-
-  buildTables(sponsors);
-  buildSponsorsList(sponsors);
+  buildTables(entries);
+  buildSponsorsList(entries);
 };
 
 buildSponsors();
