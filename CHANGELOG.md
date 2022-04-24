@@ -2,6 +2,14 @@
 
 # Change Log
 
+# [7.0.2](https://github.com/framework7io/framework7/compare/v7.0.1...v7.0.2) (2022-04-24)
+
+### Bug Fixes
+
+- **data-table:** fix missing Aurora theme styles ([d81eddb](https://github.com/framework7io/framework7/commit/d81eddbf2e4f4f147a954525dabbd9c92732e7b4))
+- **router:** fix not resetting root url to '/' ([1dee4e8](https://github.com/framework7io/framework7/commit/1dee4e8f04575dc3836664ab6388be0327b25b23)), closes [#4004](https://github.com/framework7io/framework7/issues/4004)
+- **types:** remove reference to `types` folder ([197b163](https://github.com/framework7io/framework7/commit/197b163790a06c3ae915d6b5b546b0c91118cc8d))
+
 # [7.0.1](https://github.com/framework7io/framework7/compare/v7.0.0...v7.0.1) (2022-04-15)
 
 ### Bug Fixes
