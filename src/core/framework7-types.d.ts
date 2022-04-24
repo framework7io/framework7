@@ -6,19 +6,19 @@ import request, {
   RequestResponse,
   RequestParameters,
   RequestXHR,
-} from './types/shared/request';
-import { getSupport, Support } from './types/shared/get-support';
-import { getDevice, Device } from './types/shared/get-device';
-import { Utils } from './types/shared/utils';
-import { Framework7Parameters, Framework7Plugin } from './types/components/app/app-class';
+} from './shared/request';
+import { getSupport, Support } from './shared/get-support';
+import { getDevice, Device } from './shared/get-device';
+import { Utils } from './shared/utils';
+import { Framework7Parameters, Framework7Plugin } from './components/app/app-class';
 
 // IMPORT_MODULES
-import { ComponentFunction as Component } from './types/modules/component/component';
-import { StoreObject as Store, StoreParameters, createStore } from './types/modules/store/store';
+import { ComponentFunction as Component } from './modules/component/component';
+import { StoreObject as Store, StoreParameters, createStore } from './modules/store/store';
 
 // IMPORT_COMPONENTS
 
-declare module './types/components/app/app-class' {
+declare module './components/app/app-class' {
   // INSTALL
 }
 
