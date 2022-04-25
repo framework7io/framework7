@@ -50,7 +50,7 @@ export interface RequestParameters {
   /** An object of fieldName-fieldValue pairs to set on the native XHR object */
   xhrFields?: { [key: string]: any };
   /** A username to be used with XMLHttpRequest in response to an HTTP access authentication request */
-  username?: string;
+  user?: string;
   /** A password to be used with XMLHttpRequest in response to an HTTP access authentication request */
   password?: string;
   /** Set a timeout (in milliseconds) for the request */
