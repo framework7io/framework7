@@ -35,7 +35,7 @@ const request = (requestOptions) =>
         data: false,
         async: true,
         cache: true,
-        user: '',
+        username: '',
         password: '',
         headers: {},
         xhrFields: {},
@@ -210,7 +210,7 @@ const request = (requestOptions) =>
     }
 
     // Open XHR
-    xhr.open(method, options.url, options.async, options.user, options.password);
+    xhr.open(method, options.url, options.async, options.username, options.password);
 
     // Create POST Data
     let postData = null;
