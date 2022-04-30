@@ -5,7 +5,7 @@ textColor?: string;
 bgColor?: string;
 borderColor?: string;
 rippleColor?: string;
-themeDark?: boolean;
+dark?: boolean;
 `;
 
 module.exports.ICON_PROPS = `
