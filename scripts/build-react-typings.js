@@ -51,7 +51,7 @@ function generateComponentTypings(componentName, fileContent) {
 import * as React from 'react';
 // IMPORTS
 
-interface ${componentName}Props${propsExtends ? ` extends ${propsExtends.trim()}` : ''} {
+export interface ${componentName}Props${propsExtends ? ` extends ${propsExtends.trim()}` : ''} {
   slot?: string;
   // PROPS
 }
