@@ -6,7 +6,8 @@
   "exports": {
     ".": "./framework7-vue.js",
     "./bundle": "./framework7-vue-bundle.js",
-    "./components/*": "./components/*"
+    "./components/*": "./components/*",
+    "./shared/*": "./shared/*"
   },
   "typings": "framework7-vue.d.ts",
   "web-types": "framework7-vue-web-types.json",

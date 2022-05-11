@@ -6,7 +6,8 @@
   "svelte": "./framework7-svelte.js",
   "exports": {
     ".": "./framework7-svelte.js",
-    "./components/*": "./components/*"
+    "./components/*": "./components/*",
+    "./shared/*": "./shared/*"
   },
   "typings": "framework7-svelte.d.ts",
   "repository": {
