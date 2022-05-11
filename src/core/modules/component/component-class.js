@@ -5,6 +5,7 @@ import $h from './$h.js';
 import { id as generateId, merge, eventNameToColonCase, deleteProps } from '../../shared/utils.js';
 import vdom from './vdom.js';
 import patch from './patch.js';
+import $jsx from './$jsx.js';
 
 class Component {
   constructor(app, component, props = {}, { el, context, children } = {}) {
@@ -337,5 +338,7 @@ class Component {
     });
   }
 }
+
+Component.$jsx = $jsx;
 
 export default Component;
