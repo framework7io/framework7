@@ -82,9 +82,9 @@ export namespace Calendar {
   interface Parameters {
     /** Array with initial selected dates. Each array item represents selected date. */
     value?: Date[];
-    /** Additonal disabled dates. Parameter accepts so called Date Range (look below for details). */
+    /** Additional disabled dates. Parameter accepts so called Date Range (look below for details). */
     disabled?: DateRange;
-    /** Dates with events. Will be marked with additonal "dot" on calendar day. Parameter accepts so called Date Range (look below for details).. */
+    /** Dates with events. Will be marked with additional "dot" on calendar day. Parameter accepts so called Date Range (look below for details).. */
     events?: DateRange | (Extract<DateRange, {}> & { color: string });
     /** Date ranges you want to add custom CSS class for additional styling. Look below for accepted format. */
     rangesClasses?: RangeClass[];

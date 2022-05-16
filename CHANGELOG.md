@@ -2745,7 +2745,7 @@
   - Chips
     - New outline style + tweaked iOS chips styles
   - FAB
-    - New FAB-Extended style with addtional text label support inside of FAB
+    - New FAB-Extended style with additional text label support inside of FAB
     - Support for FAB actions label
   - Typography
     - New Elevation styles, can be configured with `elevation-1`, `elevation-2`, ..., `elevation-24` classes
