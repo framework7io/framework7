@@ -2,6 +2,14 @@
 
 # Change Log
 
+# [7.0.3](https://github.com/framework7io/framework7/compare/v7.0.2...v7.0.3) (2022-05-16)
+
+### Features
+
+- add `shared/` exports to vue/react/svelte packages ([2bab4a1](https://github.com/framework7io/framework7/commit/2bab4a1736c5c53fe0e40cc026858ee5968629fc)), closes [#4017](https://github.com/framework7io/framework7/issues/4017)
+- **core:** expose access to $jsx as Framework7.Component.$jsx ([f1b4474](https://github.com/framework7io/framework7/commit/f1b447417ec9adb7c39b24d4d48b9f45e19930d3))
+- **react:** add export for props interface ([#4023](https://github.com/framework7io/framework7/issues/4023)) ([565ec60](https://github.com/framework7io/framework7/commit/565ec6006a688918708bf63ecfeb2f90c16a7ab9))
+
 # [7.0.2](https://github.com/framework7io/framework7/compare/v7.0.1...v7.0.2) (2022-04-24)
 
 ### Bug Fixes
