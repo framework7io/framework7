@@ -3161,7 +3161,7 @@
   - Cancels swipe back page in case of swipe left
 - Input
   - Added `scrollIntoViewOnFocus` parameter, that is by default enabled for Android
-  - Added `scrollIntoViewCentered` paramter to scroll input into center of view
+  - Added `scrollIntoViewCentered` parameter to scroll input into center of view
 - Minor fixes
 
 # [v2.0.0-beta.16](https://github.com/framework7io/framework7/compare/v2.0.0-beta.15...v2.0.0-beta.16) - November 8, 2017
