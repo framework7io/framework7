@@ -23,6 +23,7 @@ import { Popover } from 'framework7/types';
   closeByOutsideClick? : boolean
   closeOnEscape? : boolean
   containerEl? : string | object
+  verticalPosition?: string
   COLOR_PROPS
   onPopoverOpen? : (instance?: Popover.Popover) => void
   onPopoverOpened? : (instance?: Popover.Popover) => void
@@ -47,6 +48,7 @@ const Popover = forwardRef((props, ref) => {
     closeByOutsideClick,
     closeOnEscape,
     containerEl,
+    verticalPosition,
   } = props;
 
   const extraAttrs = getExtraAttrs(props);
@@ -109,6 +111,7 @@ const Popover = forwardRef((props, ref) => {
     if ('backdropEl' in props) popoverParams.backdropEl = backdropEl;
     if ('animate' in props) popoverParams.animate = animate;
     if ('containerEl' in props) popoverParams.containerEl = containerEl;
+    if ('verticalPosition' in props) popoverParams.verticalPosition = verticalPosition;
 
     f7ready(() => {
       f7Popover.current = f7.popover.create(popoverParams);

@@ -45,6 +45,8 @@ export namespace Popover {
     targetHeight?: number;
     /** Element to mount modal to. (default app.el) */
     containerEl?: HTMLElement | CSSSelector;
+    /** Force popover vertical position, can be 'auto', 'top' or 'bottom' (default 'auto')  */
+    verticalPosition?: string;
     /** Object with events handlers.. */
     on?: {
       [event in keyof Events]?: Events[event];

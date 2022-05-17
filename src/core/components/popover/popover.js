@@ -7,6 +7,7 @@ export default {
   name: 'popover',
   params: {
     popover: {
+      verticalPosition: 'auto',
       backdrop: true,
       backdropEl: undefined,
       backdropUnique: false,
