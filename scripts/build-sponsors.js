@@ -134,18 +134,23 @@ const buildSponsorsList = async (sponsors) => {
 
 const buildSponsors = async () => {
   const entries = await getSponsors();
+  const result = {};
 
   if (entries) {
-    Object.keys(entries).forEach((plan) => {
-      entries[plan] = [
-        ...entries[plan].sort((a, b) => {
-          return new Date(a.createdAt) > new Date(b.createdAt) ? -1 : 1;
-        }),
-      ];
+    entries.forEach((item) => {
+      if (!result[item.plan]) result[item.plan] = [];
+      result[item.plan].push(item);
     });
   }
-  buildTables(entries);
-  buildSponsorsList(entries);
+  Object.keys(result).forEach((plan) => {
+    result[plan] = [
+      ...result[plan].sort((a, b) => {
+        return new Date(a.createdAt) > new Date(b.createdAt) ? -1 : 1;
+      }),
+    ];
+  });
+  buildTables(result);
+  buildSponsorsList(result);
 };
 
 buildSponsors();
