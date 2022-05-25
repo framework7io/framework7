@@ -2,6 +2,16 @@
 
 # Change Log
 
+# [7.0.4](https://github.com/framework7io/framework7/compare/v7.0.3...v7.0.4) (2022-05-25)
+
+### Bug Fixes
+
+- **smart-select:** use removeDiacrotics in virtual list search ([2e2305f](https://github.com/framework7io/framework7/commit/2e2305f8e347f6948e9c6c950ab2c98b94ffe884))
+
+### Features
+
+- **popover:** new `verticalPosition` parameter to force popover vertical positioning ([27774e2](https://github.com/framework7io/framework7/commit/27774e2d2a2eee41b6f7cfa8e7d4831120ea097b))
+
 # [7.0.3](https://github.com/framework7io/framework7/compare/v7.0.2...v7.0.3) (2022-05-16)
 
 ### Features
