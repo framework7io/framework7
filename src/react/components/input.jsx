@@ -134,7 +134,7 @@ const Input = forwardRef((props, ref) => {
 
     // Datepicker
     calendarParams,
-    // Colorpciker
+    // Colorpicker
     colorPickerParams,
     // Text editor
     textEditorParams,
