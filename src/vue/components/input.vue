@@ -72,7 +72,7 @@ export default {
 
     // Datepicker
     calendarParams: Object,
-    // Colorpciker
+    // Colorpicker
     colorPickerParams: Object,
     // Text editor
     textEditorParams: Object,
