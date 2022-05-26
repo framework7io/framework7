@@ -64,7 +64,7 @@
 
   // Datepicker
   export let calendarParams = undefined;
-  // Colorpciker
+  // Colorpicker
   export let colorPickerParams = undefined;
   // Text editor
   export let textEditorParams = undefined;
