@@ -44,6 +44,7 @@ import { SmartSelect } from 'framework7/types';
   ROUTER_PROPS
   onClick? : (event?: any) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null; f7SmartSelect: () => SmartSelect.SmartSelect}>;
+  children?: React.ReactNode;
 */
 
 const Link = forwardRef((props, ref) => {

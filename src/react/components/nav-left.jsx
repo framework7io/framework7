@@ -18,6 +18,7 @@ import Link from './link.js';
   onBackClick? : (event?: any) => void;
   onClickBack? : (event?: any) => void;
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
 */
 
 const NavLeft = forwardRef((props, ref) => {

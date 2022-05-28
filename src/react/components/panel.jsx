@@ -44,6 +44,7 @@ import { Panel } from 'framework7/types';
   onPanelCollapsedBreakpoint? : (event?: any) => void
   onPanelResize? : (...args: any[]) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null; f7Panel: () => Panel.Panel}>;
+  children?: React.ReactNode;
 */
 
 const Panel = forwardRef((props, ref) => {

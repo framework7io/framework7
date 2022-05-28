@@ -16,6 +16,7 @@ import { SwiperOptions } from 'swiper';
   swiperParams? : SwiperOptions
   COLOR_PROPS
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
 */
 
 const Tabs = forwardRef((props, ref) => {

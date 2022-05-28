@@ -53,6 +53,7 @@ import { Searchbar } from 'framework7/types';
   onClickClear? : (event?: any) => void
   onClickDisable? : (event?: any) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null; f7Searchbar: () => Searchbar.Searchbar;}>;
+  children?: React.ReactNode;
 */
 
 const Searchbar = forwardRef((props, ref) => {

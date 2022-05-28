@@ -12,6 +12,7 @@ import { colorClasses } from '../shared/mixins.js';
   onAttachmentClick? : (event?: any) => void
   onAttachmentDelete? : (event?: any) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
 */
 
 const MessagebarAttachment = forwardRef((props, ref) => {

@@ -39,6 +39,7 @@ import { watchProp } from '../shared/watch-prop.js';
   onCardClose? : (el?: HTMLElement) => void
   onCardClosed? : (el?: HTMLElement, pageEl?: HTMLElement) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null; open: () => void; close: () => void}>;
+  children?: React.ReactNode;
   COLOR_PROPS
 */
 

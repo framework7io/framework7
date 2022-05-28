@@ -21,6 +21,7 @@ import { LoginScreen } from 'framework7/types';
   onLoginScreenClose? : (instance: LoginScreen.LoginScreen) => void
   onLoginScreenClosed? : (instance: LoginScreen.LoginScreen) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null; f7LoginScreen: () => LoginScreen.LoginScreen}>;
+  children?: React.ReactNode;
   COLOR_PROPS
 */
 

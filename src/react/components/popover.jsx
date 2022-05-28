@@ -30,6 +30,7 @@ import { Popover } from 'framework7/types';
   onPopoverClose? : (instance?: Popover.Popover) => void
   onPopoverClosed? : (instance?: Popover.Popover) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null; f7Popover: () => Popover.Popover}>;
+  children?: React.ReactNode;
 */
 
 const Popover = forwardRef((props, ref) => {

@@ -16,6 +16,7 @@ import { f7ready, f7 } from '../shared/f7.js';
   onClick? : (event?: any) => void
   onGridResize? : (...args: any[]) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
   COLOR_PROPS
 */
 

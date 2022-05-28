@@ -26,6 +26,7 @@ import { useTab } from '../shared/use-tab.js';
   onTabShow?: (el?: HTMLElement) => void
   onTabHide?: (el?: HTMLElement) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
   COLOR_PROPS
 */
 

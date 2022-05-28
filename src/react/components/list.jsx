@@ -68,6 +68,7 @@ import { VirtualList } from 'framework7/types';
   onTabShow? : (el?: HTMLElement) => void
   onTabHide? : (el?: HTMLElement) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null; f7VirtualList: () => VirtualList.VirtualList}>;
+  children?: React.ReactNode;
 */
 
 const List = forwardRef((props, ref) => {

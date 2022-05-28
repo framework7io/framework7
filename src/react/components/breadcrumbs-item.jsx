@@ -8,6 +8,7 @@ import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
   onClick? : (event?: any) => void;
   active?: boolean;
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
 */
 
 const BreadcrumbsItem = forwardRef((props, ref) => {

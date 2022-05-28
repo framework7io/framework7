@@ -54,6 +54,7 @@ import PageContent from './page-content.js';
   onPageTabShow? : (...args: any[]) => void
   onPageTabHide? : (...args: any[]) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
 */
 
 const Page = forwardRef((props, ref) => {

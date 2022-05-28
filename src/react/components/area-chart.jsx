@@ -24,6 +24,7 @@ import { f7 } from '../shared/f7.js';
   formatTooltipDataset?: (label: any, value: number, color: string) => string;
   onSelect? : (index: number | null) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
 */
 
 const AreaChart = forwardRef((props, ref) => {

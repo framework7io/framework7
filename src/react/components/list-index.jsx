@@ -20,6 +20,7 @@ import { watchProp } from '../shared/watch-prop.js';
   COLOR_PROPS
   onListIndexSelect? : (itemContent?: any, itemIndex?: any) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
 */
 
 const ListIndex = forwardRef((props, ref) => {

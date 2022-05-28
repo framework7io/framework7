@@ -37,6 +37,7 @@ import { f7ready, f7 } from '../shared/f7.js';
   onTabShow? : (el?: HTMLElement) => void
   onTabHide? : (el?: HTMLElement) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
 */
 
 const PageContent = forwardRef((props, ref) => {
