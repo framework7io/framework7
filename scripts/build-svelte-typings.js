@@ -23,6 +23,7 @@ class {{componentName}} extends SvelteComponentTyped<
   { {{SLOTS}} }
 > {}
 
+export { {{componentName}}Props };
 export default {{componentName}};
 `;
 
