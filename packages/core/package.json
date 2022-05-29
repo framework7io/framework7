@@ -11,6 +11,7 @@
     "./lite/bundle": "./framework7-lite-bundle.esm.js",
     "./lite-bundle": "./framework7-lite-bundle.esm.js",
     "./less": "./framework7.less",
+    "./less/bundle": "./framework7-bundle.less",
     "./css": "./framework7.css",
     "./css/rtl": "./framework7-rtl.css",
     "./css/bundle": "./framework7-bundle.css",
