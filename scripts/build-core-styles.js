@@ -45,7 +45,7 @@ function copyLess(config, components, cb) {
   const lessBundleContent = lessContent.replace(
     '//IMPORT_COMPONENTS',
     components
-      .map((component) => `@import url('./components/${component}/${component}.less');`)
+      .map((component) => `@import './components/${component}/${component}.less';`)
       .join('\n'),
   );
   fs.writeFileSync(`${output}/framework7-bundle.less`, lessBundleContent);
