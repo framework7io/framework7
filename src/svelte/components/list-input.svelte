@@ -267,7 +267,7 @@
 
     if (type === 'texteditor') {
       emit('textEditorChange', [args[0]]);
-      value = args[1];
+      value = args[0];
     }
   }
 
