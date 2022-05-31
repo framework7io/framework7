@@ -28,6 +28,7 @@ import { useRouteProps } from '../shared/use-route-props.js';
   ACTIONS_PROPS
   onClick? : (event?: any) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
 */
 
 const ListButton = forwardRef((props, ref) => {

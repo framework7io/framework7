@@ -39,6 +39,7 @@ import NavRight from './nav-right.js';
   onBackClick? : (event?: any) => void
   onClickBack? : (event?: any) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
 */
 
 const Navbar = forwardRef((props, ref) => {

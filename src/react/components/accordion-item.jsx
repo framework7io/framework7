@@ -16,6 +16,7 @@ import { f7, f7ready } from '../shared/f7.js';
   onAccordionClose? : (...args: any[]) => void
   onAccordionClosed? : (...args: any[]) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
   COLOR_PROPS
 */
 

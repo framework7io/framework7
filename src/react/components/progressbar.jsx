@@ -10,6 +10,7 @@ import { f7 } from '../shared/f7.js';
   progress? : number;
   infinite? : boolean;
   ref?: React.MutableRefObject<{el: HTMLElement | null; set: (progress: number, duration: number) => void}>;
+  children?: React.ReactNode;
   COLOR_PROPS
 */
 

@@ -22,6 +22,7 @@ import { classNames, getExtraAttrs } from '../shared/utils.js';
   labelFontSize? : number | string
   labelFontWeight? : number | string
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
 */
 
 const Gauge = forwardRef((props, ref) => {

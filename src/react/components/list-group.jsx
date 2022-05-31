@@ -13,6 +13,7 @@ import { ListContext } from '../shared/list-context.js';
   sortableTapHold? : boolean
   sortableMoveElements? : boolean
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
   COLOR_PROPS
 */
 

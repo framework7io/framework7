@@ -13,6 +13,7 @@ import { colorClasses } from '../shared/mixins.js';
   onUnchecked? : (event?: any) => void
   onChange? : (event?: any) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
 */
 
 const MessagebarSheetImage = forwardRef((props, ref) => {

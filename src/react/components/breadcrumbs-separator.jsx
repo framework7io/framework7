@@ -6,6 +6,7 @@ import { classNames, getExtraAttrs } from '../shared/utils.js';
   className?: string;
   style?: React.CSSProperties;
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
 */
 
 const BreadcrumbsSeparator = forwardRef((props, ref) => {

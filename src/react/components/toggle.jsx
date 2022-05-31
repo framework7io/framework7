@@ -26,6 +26,7 @@ import { Toggle } from 'framework7/types';
   onToggleChange? : (...args: any[]) => void
   onChange? : (event?: any) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null; f7Toggle: () => Toggle.Toggle;}>;
+  children?: React.ReactNode;
 */
 
 const Toggle = forwardRef((props, ref) => {

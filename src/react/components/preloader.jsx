@@ -9,6 +9,7 @@ import { useTheme } from '../shared/use-theme.js';
   style?: React.CSSProperties;
   size? : number | string;
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
   COLOR_PROPS
 */
 

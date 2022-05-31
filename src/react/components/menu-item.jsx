@@ -33,6 +33,7 @@ import { useTooltip } from '../shared/use-tooltip.js';
   onMenuOpened? : (el?: HTMLElement) => void;
   onMenuClosed? : (el?: HTMLElement) => void;
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
 */
 
 const MenuItem = forwardRef((props, ref) => {

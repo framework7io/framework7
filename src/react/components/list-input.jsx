@@ -78,6 +78,7 @@ import { Calendar, ColorPicker, TextEditor } from 'framework7/types';
   onChange? : (...args: any[]) => void
   onTextEditorChange? : (...args: any[]) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
 */
 
 const ListInput = forwardRef((props, ref) => {

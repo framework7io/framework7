@@ -7,6 +7,7 @@ import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
   style?: React.CSSProperties;
   onClick? : (event?: any) => void;
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
 */
 
 const BreadcrumbsCollapsed = forwardRef((props, ref) => {

@@ -45,6 +45,7 @@ import { PhotoBrowser } from 'framework7/types';
   onPhotoBrowserClosed? : (...args: any[]) => void
   onPhotoBrowserSwipeToClose? : (...args: any[]) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null; f7PhotoBrowser: () => PhotoBrowser.PhotoBrowser; open: () => void; close: () => void;}>;
+  children?: React.ReactNode;
 */
 
 const PhotoBrowser = forwardRef((props, ref) => {

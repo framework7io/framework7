@@ -37,6 +37,7 @@ import { Range } from 'framework7/types';
   onRangeChange? : (val?: any) => void
   onRangeChanged? : (val?: any) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null; f7Range: () => Range.Range}>;
+  children?: React.ReactNode;
 */
 
 const Range = forwardRef((props, ref) => {

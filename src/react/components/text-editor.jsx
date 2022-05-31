@@ -35,6 +35,7 @@ import { TextEditor } from 'framework7/types';
   onTextEditorInsertLink?: (...args: any[]) => void
   onTextEditorInsertImage?: (...args: any[]) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null; f7TextEditor: () => TextEditor.TextEditor;}>;
+  children?: React.ReactNode;
 */
 
 const TextEditor = forwardRef((props, ref) => {

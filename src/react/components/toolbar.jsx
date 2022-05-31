@@ -31,6 +31,7 @@ import { TabbarContext } from '../shared/tabbar-context.js';
   onToolbarHide? : (...args: any[]) => void
   onToolbarShow? : (...args: any[]) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null; hide: () => void; show: () => void;}>;
+  children?: React.ReactNode;
 */
 
 const Toolbar = forwardRef((props, ref) => {

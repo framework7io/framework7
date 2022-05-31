@@ -30,6 +30,7 @@ import { Messages } from 'framework7/types';
   renderMessage? : Function
   init? : boolean
   ref?: React.MutableRefObject<{el: HTMLElement | null; f7Messages: () => Messages.Messages}>;
+  children?: React.ReactNode;
   COLOR_PROPS
 */
 

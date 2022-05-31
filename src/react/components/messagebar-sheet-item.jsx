@@ -8,6 +8,7 @@ import { colorClasses } from '../shared/mixins.js';
   style?: React.CSSProperties;
   COLOR_PROPS
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
 */
 
 const MessagebarSheetItem = forwardRef((props, ref) => {

@@ -85,6 +85,7 @@ import { RouterContext } from '../shared/router-context.js';
   onTabShow? : (el?: HTMLElement) => void
   onTabHide? : (el?: HTMLElement) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null; f7View: () => View.View}>;
+  children?: React.ReactNode;
 */
 
 const View = forwardRef((props, ref) => {

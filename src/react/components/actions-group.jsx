@@ -7,6 +7,7 @@ import { colorClasses } from '../shared/mixins.js';
   className: string;
   style: React.CSSProperties;
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
   COLOR_PROPS
 */
 

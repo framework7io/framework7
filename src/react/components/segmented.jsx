@@ -20,6 +20,7 @@ import { colorClasses } from '../shared/mixins.js';
   strongAurora? : boolean
   tag? : string
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
+  children?: React.ReactNode;
   COLOR_PROPS
 */
 
