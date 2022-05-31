@@ -2,6 +2,15 @@
 
 # Change Log
 
+# [7.0.5](https://github.com/framework7io/framework7/compare/v7.0.4...v7.0.5) (2022-05-31)
+
+### Bug Fixes
+
+- **core:** fix and export framework7-bundle.less ([#4041](https://github.com/framework7io/framework7/issues/4041)) ([7b7ab14](https://github.com/framework7io/framework7/commit/7b7ab14e6e18dd0283190a5f2925309eace6319d))
+- **react:** make children prop explicit for react 18 support ([#4040](https://github.com/framework7io/framework7/issues/4040)) ([3a87831](https://github.com/framework7io/framework7/commit/3a8783176df2ff3049d612c70c7ba90f91f1f359))
+- **svelte:** add export props interface svelte fixes [#4023](https://github.com/framework7io/framework7/issues/4023) ([#4042](https://github.com/framework7io/framework7/issues/4042)) ([c27ddbd](https://github.com/framework7io/framework7/commit/c27ddbd9b1579d3ace114c31eb8c7cb627ee4619))
+- **svelte:** fix ListInput as TextEditor value handling ([03c3644](https://github.com/framework7io/framework7/commit/03c364498f1db471b0a492248f1bc29ab3bb1177))
+
 # [7.0.4](https://github.com/framework7io/framework7/compare/v7.0.3...v7.0.4) (2022-05-25)
 
 ### Bug Fixes
