@@ -14,6 +14,9 @@
   export let noHairline = false;
   export let form = true;
   export let placeholder = 'Search';
+  export let autocomplete = undefined;
+  export let autocorrect = undefined;
+  export let autocapitalize = undefined;
   export let spellcheck = undefined;
   export let disableButton = true;
   export let disableButtonText = 'Cancel';
@@ -186,6 +189,9 @@
         <input
           value={typeof value === 'undefined' ? '' : value}
           {placeholder}
+          {autocomplete}
+          {autocorrect}
+          {autocapitalize}
           {spellcheck}
           type="search"
           on:input={onInput}
@@ -217,6 +223,9 @@
         <input
           value={typeof value === 'undefined' ? '' : value}
           {placeholder}
+          {autocomplete}
+          {autocorrect}
+          {autocapitalize}
           {spellcheck}
           type="search"
           on:input={onInput}
