@@ -1189,7 +1189,7 @@
     - Now it falls back to not "routable" modal when there is no View passed or it can't be found.
   - Picker
     - Now it falls back to not "routable" modal when there is no View passed or it can't be found.
-    - New `scrollToEl` parameter to specify cutom elements to scroll to on open
+    - New `scrollToEl` parameter to specify custom elements to scroll to on open
   - Smart Select
     - Now it falls back to not "routable" modal when there is no View passed or it can't be found.
 - React/Vue
