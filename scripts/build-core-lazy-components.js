@@ -227,7 +227,9 @@ function buildLazyComponentsJs(components, cb) {
           .join('\n');
         fileContent = fileContent
           .replace(/var window = getWindow\(\);/g, '')
-          .replace(/var document = getDocument\(\);/g, '');
+          .replace(/var document = getDocument\(\);/g, '')
+          .replace(/getDocument\(\);/g, 'document')
+          .replace(/getWindow\(\);/g, 'window');
 
         fileContent = `${fileIntro}\n  ${fileContent.trim()}${outro}`;
         if (fileName.indexOf('swiper') >= 0) {
