@@ -246,7 +246,7 @@
   "typings": "framework7.d.ts",
   "typesVersions": {
     "*": {
-      ".": [
+      "*": [
         "./framework7.d.ts"
       ],
       "types": [
