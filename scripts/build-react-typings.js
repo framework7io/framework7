@@ -77,7 +77,7 @@ function buildTypings(cb) {
       .map((word) => word[0].toUpperCase() + word.substr(1))
       .join('');
     const fileBase = fileName.replace('.jsx', '');
-    componentImports.push(`import ${componentName} from './components/${fileBase}';`);
+    componentImports.push(`import ${componentName} from './components/${fileBase}.js';`);
     componentExports.push(componentName);
 
     const typingsContent = generateComponentTypings(
