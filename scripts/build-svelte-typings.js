@@ -112,7 +112,7 @@ function buildTypings(cb) {
       .map((word) => word[0].toUpperCase() + word.substr(1))
       .join('');
     const fileBase = fileName.replace('.svelte', '').replace('.js', '');
-    componentImports.push(`import ${componentName} from './components/${fileBase}';`);
+    componentImports.push(`import ${componentName} from './components/${fileBase}.js';`);
     componentExports.push(componentName);
 
     let reactContent;
