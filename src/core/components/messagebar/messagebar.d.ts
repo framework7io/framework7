@@ -1,5 +1,5 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
 
 export namespace Messagebar {
   interface Messagebar extends Framework7EventsClass<Events> {
@@ -17,39 +17,39 @@ export namespace Messagebar {
     attachments: string[];
 
     /** Get messagebar textarea value */
-    getValue(): string;
+    getValue (): string;
     /** Set messagebar textarea value/text */
-    setValue(value: string): Messagebar;
+    setValue (value: string): Messagebar;
     /** Clear textarea and update/reset its size */
-    clear(): Messagebar;
+    clear (): Messagebar;
     /** Focus messagebar textarea */
-    focus(): Messagebar;
+    focus (): Messagebar;
     /** Remove focus from messagebar textarea */
-    blur(): Messagebar;
+    blur (): Messagebar;
     /** Set/change messagebar placeholder text */
-    setPlaceholder(placeholder: string): Messagebar;
+    setPlaceholder (placeholder: string): Messagebar;
     /** Force Messagebar to resize messages page depending on messagebar height/size */
-    resizePage(): Messagebar;
+    resizePage (): Messagebar;
     /** Dynamically create attachments block HTML element */
-    attachmentsCreate(): Messagebar;
+    attachmentsCreate (): Messagebar;
     /** Show attachments block */
-    attachmentsShow(): Messagebar;
+    attachmentsShow (): Messagebar;
     /** Hide attachments block */
-    attachmentsHide(): Messagebar;
+    attachmentsHide (): Messagebar;
     /** Toggle attachments block */
-    attachmentsToggle(): Messagebar;
+    attachmentsToggle (): Messagebar;
     /** Render attachments block based on attachments data */
-    renderAttachments(): Messagebar;
+    renderAttachments (): Messagebar;
     /** Dynamically create messagebar sheet block HTML element */
-    sheetCreate(): Messagebar;
+    sheetCreate (): Messagebar;
     /** Show messagebar sheet */
-    sheetShow(): Messagebar;
+    sheetShow (): Messagebar;
     /** Hide messagebar sheet */
-    sheetHide(): Messagebar;
+    sheetHide (): Messagebar;
     /** Toggle messagebar sheet */
-    sheetToggle(): Messagebar;
+    sheetToggle (): Messagebar;
     /** Destroy messagebar instance */
-    destroy(): void;
+    destroy (): void;
   }
 
   interface Parameters {
@@ -76,27 +76,27 @@ export namespace Messagebar {
 
   interface Events {
     /** Event will be triggered after messagebar textarea value changed. As an argument event handler receives messagebar instance */
-    change(messagebar: Messagebar): void;
+    change (messagebar: Messagebar): void;
     /** Event will be triggered when messagebar textarea gets focus. As an argument event handler receives messagebar instance */
-    focus(messagebar: Messagebar): void;
+    focus (messagebar: Messagebar): void;
     /** Event will be triggered when messagebar textarea loses focus. As an argument event handler receives messagebar instance */
-    blur(messagebar: Messagebar): void;
+    blur (messagebar: Messagebar): void;
     /** Event will be triggered when messagebar resizes messages page. As an argument event handler receives messagebar instance */
-    resizePage(messagebar: Messagebar): void;
+    resizePage (messagebar: Messagebar): void;
     /** Event will be triggered after click on messagebar attachment delete button. As an argument event handler receives messagebar instance, clicked attachment HTML element and attachment index number */
-    attachmentDelete(
+    attachmentDelete (
       messagebar: Messagebar,
       attachmentEl: HTMLElement,
       attachmentIndex: number,
     ): void;
     /** Event will be triggered on messagebar attachment click. As an argument event handler receives messagebar instance, clicked attachment HTML element and attachment index number */
-    attachmentClick(
+    attachmentClick (
       messagebar: Messagebar,
       attachmentEl: HTMLElement,
       attachmentIndex: number,
     ): void;
     /** Event will be triggered right before Messagebar instance will be destroyed */
-    beforeDestroy(messagebar: Messagebar): void;
+    beforeDestroy (messagebar: Messagebar): void;
   }
 
   interface DomEvents {
@@ -118,13 +118,13 @@ export namespace Messagebar {
   interface AppMethods {
     messagebar: {
       /** create Messagebar instance */
-      create(parameters: Parameters): Messagebar;
+      create (parameters: Parameters): Messagebar;
 
       /** destroy Messagebar instance */
-      destroy(el: HTMLElement | CSSSelector | Messagebar): void;
+      destroy (el: HTMLElement | CSSSelector | Messagebar): void;
 
       /** get Messagebar instance by HTML element */
-      get(el: HTMLElement | CSSSelector): Messagebar;
+      get (el: HTMLElement | CSSSelector): Messagebar;
     };
   }
   interface AppParams {
@@ -132,27 +132,27 @@ export namespace Messagebar {
   }
   interface AppEvents {
     /** Event will be triggered after messagebar textarea value changed. As an argument event handler receives messagebar instance */
-    messagebarChange(messagebar: Messagebar): void;
+    messagebarChange (messagebar: Messagebar): void;
     /** Event will be triggered when messagebar textarea gets focus. As an argument event handler receives messagebar instance */
-    messagebarFocus(messagebar: Messagebar): void;
+    messagebarFocus (messagebar: Messagebar): void;
     /** Event will be triggered when messagebar textarea loses focus. As an argument event handler receives messagebar instance */
-    messagebarBlur(messagebar: Messagebar): void;
+    messagebarBlur (messagebar: Messagebar): void;
     /** Event will be triggered when messagebar resizes messages page. As an argument event handler receives messagebar instance */
-    messagebarResizePage(messagebar: Messagebar): void;
+    messagebarResizePage (messagebar: Messagebar): void;
     /** Event will be triggered after click on messagebar attachment delete button. As an argument event handler receives messagebar instance, clicked attachment HTML element and attachment index number */
-    messagebarAttachmentDelete(
+    messagebarAttachmentDelete (
       messagebar: Messagebar,
       attachmentEl: HTMLElement,
       attachmentIndex: number,
     ): void;
     /** Event will be triggered on messagebar attachment click. As an argument event handler receives messagebar instance, clicked attachment HTML element and attachment index number */
-    messagebarAttachmentClick(
+    messagebarAttachmentClick (
       messagebar: Messagebar,
       attachmentEl: HTMLElement,
       attachmentIndex: number,
     ): void;
     /** Event will be triggered right before Messagebar instance will be destroyed */
-    messagebarBeforeDestroy(messagebar: Messagebar): void;
+    messagebarBeforeDestroy (messagebar: Messagebar): void;
   }
 }
 

@@ -1,4 +1,4 @@
-import { Framework7Plugin } from '../../components/app/app-class';
+import { Framework7Plugin } from '../../components/app/app-class.js';
 
 interface StoreGetterValue {
   value: any;
@@ -33,7 +33,7 @@ export namespace Store {
     /** Store */
     store?: StoreParameters | StoreObject;
   }
-  interface AppEvents {}
+  interface AppEvents { }
 }
 declare const StoreModule: Framework7Plugin;
 

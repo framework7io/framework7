@@ -1,6 +1,6 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
-import { View } from '../view/view';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import { View } from '../view/view.js';
 
 export namespace PhotoBrowser {
   interface Photo {
@@ -95,17 +95,17 @@ export namespace PhotoBrowser {
     params: Parameters;
 
     /** Open Photo Browser on photo with index number equal to "index" parameter. If "index" parameter is not specified, it will be opened on last closed photo */
-    open(index?: number): PhotoBrowser;
+    open (index?: number): PhotoBrowser;
     /** Close Photo Browser */
-    close(): PhotoBrowser;
+    close (): PhotoBrowser;
     /** Toggle exposition mode */
-    expositionToggle(): PhotoBrowser;
+    expositionToggle (): PhotoBrowser;
     /** Enable exposition mode */
-    expositionEnable(): PhotoBrowser;
+    expositionEnable (): PhotoBrowser;
     /** Disable exposition mode */
-    expositionDisable(): PhotoBrowser;
+    expositionDisable (): PhotoBrowser;
     /** Destroy Photo Browser */
-    destroy(): void;
+    destroy (): void;
   }
   interface Events {
     /** Event will be fired when user close photo browser with swipe up/down */
@@ -165,11 +165,11 @@ export namespace PhotoBrowser {
   interface AppMethods {
     photoBrowser: {
       /** create Photo Browser instance */
-      create(parameters: Parameters): PhotoBrowser;
+      create (parameters: Parameters): PhotoBrowser;
       /** destroy Photo Browser instance */
-      destroy(el: HTMLElement | CSSSelector | PhotoBrowser): void;
+      destroy (el: HTMLElement | CSSSelector | PhotoBrowser): void;
       /** get Photo Browser instance by HTML element */
-      get(el: HTMLElement | CSSSelector): PhotoBrowser;
+      get (el: HTMLElement | CSSSelector): PhotoBrowser;
     };
   }
   interface AppParams {

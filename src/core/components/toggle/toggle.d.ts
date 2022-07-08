@@ -1,5 +1,5 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
 
 export namespace Toggle {
   interface Parameters {
@@ -26,9 +26,9 @@ export namespace Toggle {
     /** Toggle parameters */
     params: Parameters;
     /** Toggle input state */
-    toggle(): number;
+    toggle (): number;
     /** Destroy Toggle */
-    destroy(): void;
+    destroy (): void;
   }
   interface Events {
     /** Event will be triggered when toggle state has been changed. As an argument event handler receives toggle instance */
@@ -46,11 +46,11 @@ export namespace Toggle {
   interface AppMethods {
     toggle: {
       /** create Toggle instance */
-      create(parameters: Parameters): Toggle;
+      create (parameters: Parameters): Toggle;
       /** get Toggle instance by HTML element */
-      get(el: HTMLElement | CSSSelector | Toggle): Toggle;
+      get (el: HTMLElement | CSSSelector | Toggle): Toggle;
       /** destroy Toggle instance */
-      destroy(el: HTMLElement | CSSSelector | Toggle): void;
+      destroy (el: HTMLElement | CSSSelector | Toggle): void;
     };
   }
   interface AppParams {

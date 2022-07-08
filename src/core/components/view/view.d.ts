@@ -1,6 +1,6 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
-import { Router } from '../../modules/router/router';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import { Router } from '../../modules/router/router.js';
 
 export namespace View {
   interface View extends Framework7EventsClass<Events> {
@@ -23,7 +23,7 @@ export namespace View {
     /** View's initialized router instance */
     router: Router.Router;
     /** Destroy view instance */
-    destroy(): void;
+    destroy (): void;
   }
   interface Parameters {
     /** If enabled and View is tab, it won't initialize router and load initial page until View tab becomes visible */
@@ -167,7 +167,7 @@ export namespace View {
       [event in keyof Events]?: Events[event];
     };
   }
-  interface View extends Router.AppMethods {}
+  interface View extends Router.AppMethods { }
   interface Events extends Router.Events {
     /** Event will be fired on View init */
     init: (view: View) => void;
@@ -184,14 +184,14 @@ export namespace View {
     view: {
       current: View;
       main: View;
-      create(viewEl: HTMLElement | CSSSelector, parameters?: Parameters): View;
-      get(viewEl: HTMLElement | CSSSelector): View;
+      create (viewEl: HTMLElement | CSSSelector, parameters?: Parameters): View;
+      get (viewEl: HTMLElement | CSSSelector): View;
     };
     views: {
       current: View;
       main: View;
-      create(viewEl: HTMLElement | CSSSelector, parameters?: Parameters): View;
-      get(viewEl: HTMLElement | CSSSelector): View;
+      create (viewEl: HTMLElement | CSSSelector, parameters?: Parameters): View;
+      get (viewEl: HTMLElement | CSSSelector): View;
     };
   }
   interface AppParams {

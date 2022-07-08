@@ -1,41 +1,41 @@
 import { Dom7, Dom7Array } from 'dom7';
-import { Router } from '../../modules/router/router';
-import { DeviceParams, Device } from '../../shared/get-device';
-import { Support } from '../../shared/get-support';
-import { Request } from '../../shared/request';
-import { Utils } from '../../shared/utils';
-import { ComponentClass, ComponentFunction as Component } from '../../modules/component/component';
-import { StoreObject, StoreParameters } from '../../modules/store/store';
+import { Router } from '../../modules/router/router.js';
+import { DeviceParams, Device } from '../../shared/get-device.js';
+import { Support } from '../../shared/get-support.js';
+import { Request } from '../../shared/request.js';
+import { Utils } from '../../shared/utils.js';
+import { ComponentClass, ComponentFunction as Component } from '../../modules/component/component.js';
+import { StoreObject, StoreParameters } from '../../modules/store/store.js';
 
 // Css Selector string is an option on many F7 methods
 // Giving this alias makes the typename show in the intellisense
 // instead of just `string`.
-export interface CSSSelector extends String {}
+export interface CSSSelector extends String { }
 
 export interface Framework7Class<Events> {
   /** Add event handler */
-  on<E extends keyof Events>(event: E, handler: Events[E]): void;
+  on<E extends keyof Events> (event: E, handler: Events[E]): void;
   /** Add event handler that will be removed after it was fired */
-  once<E extends keyof Events>(event: E, handler: Events[E]): void;
+  once<E extends keyof Events> (event: E, handler: Events[E]): void;
   /** Remove event handler */
-  off<E extends keyof Events>(event: E, handler: Events[E]): void;
+  off<E extends keyof Events> (event: E, handler: Events[E]): void;
   /** Remove all handlers for specified event */
-  off<E extends keyof Events>(event: E): void;
+  off<E extends keyof Events> (event: E): void;
   /** Fire event on instance */
-  emit<E extends keyof Events>(event: E, ...args: any[]): void;
+  emit<E extends keyof Events> (event: E, ...args: any[]): void;
 }
 
 export interface Framework7EventsClass<Events> {
   /** Add event handler */
-  on<E extends keyof Events>(event: E, handler: Events[E]): void;
+  on<E extends keyof Events> (event: E, handler: Events[E]): void;
   /** Add event handler that will be removed after it was fired */
-  once<E extends keyof Events>(event: E, handler: Events[E]): void;
+  once<E extends keyof Events> (event: E, handler: Events[E]): void;
   /** Remove event handler */
-  off<E extends keyof Events>(event: E, handler: Events[E]): void;
+  off<E extends keyof Events> (event: E, handler: Events[E]): void;
   /** Remove all handlers for specified event */
-  off<E extends keyof Events>(event: E): void;
+  off<E extends keyof Events> (event: E): void;
   /** Fire event on instance */
-  emit<E extends keyof Events>(event: E, ...args: any[]): void;
+  emit<E extends keyof Events> (event: E, ...args: any[]): void;
 }
 
 export interface Framework7Parameters {
@@ -84,7 +84,7 @@ export interface Framework7Plugin {
   install: () => void;
   /** Create callback
   It will be executed in the very beginning of class initilization (when we create new instance of the class) */
-  create(instance: Framework7): () => void;
+  create (instance: Framework7): () => void;
   /** Object with default class/plugin parameters */
   params?: {
     [plugin_name: string]: {
@@ -160,23 +160,23 @@ interface Framework7 extends Framework7Class<Framework7Events> {
   /** App parameters */
   params: Framework7Parameters;
   /** Enables auto dark mode detection */
-  enableAutoDarkMode(): void;
+  enableAutoDarkMode (): void;
   /** Disables auto dark mode detection */
-  disableAutoDarkMode(): void;
+  disableAutoDarkMode (): void;
   /** Initialize app. In case you disabled auto initialization with init: false parameter */
-  init(): void;
+  init (): void;
   /** Load module */
-  loadModule(module: string | Function | Framework7Plugin): Promise<any>;
+  loadModule (module: string | Function | Framework7Plugin): Promise<any>;
   /** Load modules */
-  loadModules(modules: any[]): Promise<any>;
+  loadModules (modules: any[]): Promise<any>;
 }
-interface Events extends Framework7EventsClass<Framework7Events> {}
+interface Events extends Framework7EventsClass<Framework7Events> { }
 
 declare class Framework7 implements Framework7 {
   constructor(parameters?: Framework7Parameters);
 
-  static use(plugin: Framework7Plugin): void;
-  static use(plugins: Framework7Plugin[]): void;
+  static use (plugin: Framework7Plugin): void;
+  static use (plugins: Framework7Plugin[]): void;
   static getDevice: (overrides?: DeviceParams) => Device;
   static getSupport: () => Support;
   static device: Device;
@@ -186,9 +186,9 @@ declare class Framework7 implements Framework7 {
   static Events: Events;
   static Component: ComponentClass;
   /** Register custom component */
-  static registerComponent(tagName: string, component: Component): void;
+  static registerComponent (tagName: string, component: Component): void;
   /** Unregister custom component */
-  static unregisterComponent(tagName: string): void;
+  static unregisterComponent (tagName: string): void;
   /** Create new store */
   createStore: (storeParameters: StoreParameters) => StoreObject;
 }

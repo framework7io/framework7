@@ -1,5 +1,5 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
 
 export namespace Dialog {
   interface Dialog extends Framework7EventsClass<Events> {
@@ -19,22 +19,22 @@ export namespace Dialog {
     opened: boolean;
 
     /** Open dialog */
-    open(animate?: boolean): void;
+    open (animate?: boolean): void;
     /** Close dialog. */
-    close(animate?: boolean): void;
+    close (animate?: boolean): void;
     /** Sets dialog progress when Dialog Progress shortcut in use */
-    setProgress(
+    setProgress (
       /** progressbar progress (from 0 to 100) */
       progress: number,
       /** (in ms) - progressbar progress change duration */
       duration?: number,
     ): void;
     /** Sets dialog's title */
-    setTitle(title: string): void;
+    setTitle (title: string): void;
     /** Sets dialog's text */
-    setText(text: string): void;
+    setText (text: string): void;
     /** Destroy dialog */
-    destroy(): void;
+    destroy (): void;
   }
 
   interface DialogButton {
@@ -114,33 +114,33 @@ export namespace Dialog {
   interface AppMethods {
     dialog: {
       /** create Dialog instance */
-      create(parameters: Parameters): Dialog;
+      create (parameters: Parameters): Dialog;
       /** destroy Dialog instance */
-      destroy(el: HTMLElement | CSSSelector | Dialog): void;
+      destroy (el: HTMLElement | CSSSelector | Dialog): void;
       /** get Dialog instance by HTML element */
-      get(el?: HTMLElement | CSSSelector): Dialog;
+      get (el?: HTMLElement | CSSSelector): Dialog;
       /** opens Dialog */
-      open(el?: HTMLElement | CSSSelector, animate?: boolean): Dialog;
+      open (el?: HTMLElement | CSSSelector, animate?: boolean): Dialog;
       /** closes Dialog */
-      close(el?: HTMLElement | CSSSelector, animate?: boolean): Dialog;
+      close (el?: HTMLElement | CSSSelector, animate?: boolean): Dialog;
 
       /** create Alert Dialog and open it */
-      alert(text: string, title: string, callback?: () => void): Dialog;
+      alert (text: string, title: string, callback?: () => void): Dialog;
       /** create Alert Dialog with default title and open it */
-      alert(text: string, callback?: () => void): Dialog;
+      alert (text: string, callback?: () => void): Dialog;
 
       /** create Confirm Dialog and open it */
-      confirm(
+      confirm (
         text: string,
         title: string,
         callbackOk?: () => void,
         callbackCancel?: () => void,
       ): Dialog;
       /** create Confirm Dialog with default title and open it */
-      confirm(text: string, callbackOk?: () => void, callbackCancel?: () => void): Dialog;
+      confirm (text: string, callbackOk?: () => void, callbackCancel?: () => void): Dialog;
 
       /** create Prompt Dialog and open it */
-      prompt(
+      prompt (
         text: string,
         title: string,
         callbackOk?: (value: string) => void,
@@ -148,7 +148,7 @@ export namespace Dialog {
         defaultValue?: string,
       ): Dialog;
       /** create Prompt Dialog with default title and open it */
-      prompt(
+      prompt (
         text: string,
         callbackOk?: (value: string) => void,
         callbackCancel?: (value: string) => void,
@@ -156,38 +156,38 @@ export namespace Dialog {
       ): Dialog;
 
       /** create Login Dialog and open it */
-      login(
+      login (
         text: string,
         title: string,
         callbackOk?: (username: string, password: string) => void,
         callbackCancel?: (username: string, password: string) => void,
       ): Dialog;
       /** create Login Dialog with default title and open it */
-      login(
+      login (
         text: string,
         callbackOk?: (username: string, password: string) => void,
         callbackCancel?: (username: string, password: string) => void,
       ): Dialog;
 
       /** create Password Dialog and open it */
-      password(
+      password (
         text: string,
         title: string,
         callbackOk?: (password: string) => void,
         callbackCancel?: (password: string) => void,
       ): Dialog;
       /** create Password Dialog with default title and open it */
-      password(
+      password (
         text: string,
         callbackOk?: (password: string) => void,
         callbackCancel?: (password: string) => void,
       ): Dialog;
 
       /** create Preloader Dialog and open it */
-      preloader(title?: string, color?: string): Dialog;
+      preloader (title?: string, color?: string): Dialog;
 
       /** create Progress Dialog and open it */
-      progress(
+      progress (
         title?: string,
         /** Optional. Progressbar progress (from 0 to 100). If no number passed then it will have infinite progressbar. */
         progress?: number,
@@ -197,31 +197,31 @@ export namespace Dialog {
   }
   interface AppParams {
     dialog?:
-      | {
-          /** Default dialogs shortcuts title. If not specified, will be equal to app.name. */
-          title?: string;
-          /** Default "OK" button text. (default OK) */
-          buttonOk?: string;
-          /** Default "Cancel" button text. (default Cancel) */
-          buttonCancel?: string;
-          /** Default username field placeholder in Login dialog. (default Username) */
-          usernamePlaceholder?: string;
-          /** Default password field placeholder in Login & Password dialogs. (default Password) */
-          passwordPlaceholder?: string;
-          /** Default title for Preloader dialog. (default Loading...) */
-          preloaderTitle?: string;
-          /** Default title for Progress dialog. (default Loading...) */
-          progressTitle?: string;
-          /** Will automatically destroy all predefined dialogs (Alert, Confirm, Prompt, etc.) on close. (default true) */
-          destroyPredefinedDialogs?: boolean;
-          /** Enables keyboard shortcuts (Enter and Esc) keys for predefined dialogs (Alert, Confirm, Prompt, Login, Password) "Ok" and "Cancel" buttons. (default true) */
-          keyboardActions?: boolean;
-          /** When enabled, dialog will be closed on backdrop click. (default true) */
-          closeByBackdropClick?: boolean;
-          /** When enabled it will auto focus input in predefined dialogs (like .prompt(), .login() and .password()) */
-          autoFocus?: boolean;
-        }
-      | undefined;
+    | {
+      /** Default dialogs shortcuts title. If not specified, will be equal to app.name. */
+      title?: string;
+      /** Default "OK" button text. (default OK) */
+      buttonOk?: string;
+      /** Default "Cancel" button text. (default Cancel) */
+      buttonCancel?: string;
+      /** Default username field placeholder in Login dialog. (default Username) */
+      usernamePlaceholder?: string;
+      /** Default password field placeholder in Login & Password dialogs. (default Password) */
+      passwordPlaceholder?: string;
+      /** Default title for Preloader dialog. (default Loading...) */
+      preloaderTitle?: string;
+      /** Default title for Progress dialog. (default Loading...) */
+      progressTitle?: string;
+      /** Will automatically destroy all predefined dialogs (Alert, Confirm, Prompt, etc.) on close. (default true) */
+      destroyPredefinedDialogs?: boolean;
+      /** Enables keyboard shortcuts (Enter and Esc) keys for predefined dialogs (Alert, Confirm, Prompt, Login, Password) "Ok" and "Cancel" buttons. (default true) */
+      keyboardActions?: boolean;
+      /** When enabled, dialog will be closed on backdrop click. (default true) */
+      closeByBackdropClick?: boolean;
+      /** When enabled it will auto focus input in predefined dialogs (like .prompt(), .login() and .password()) */
+      autoFocus?: boolean;
+    }
+    | undefined;
   }
   interface AppEvents {
     /** Event will be triggered when Dialog starts its opening animation. As an argument event handler receives dialog instance */

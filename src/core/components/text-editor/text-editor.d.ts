@@ -1,5 +1,5 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
 
 export namespace TextEditor {
   interface Parameters {
@@ -45,17 +45,17 @@ export namespace TextEditor {
     /** Editor parameters */
     params: Parameters;
     /** Returns editor value */
-    getValue(): number;
+    getValue (): number;
     /** Set new editor value */
-    setValue(value: string): TextEditor;
+    setValue (value: string): TextEditor;
     /** Clear editor value */
-    clearValue(): TextEditor;
+    clearValue (): TextEditor;
     /** Returns current selection Range */
-    getSelectionRange(): Range;
+    getSelectionRange (): Range;
     /** Set selection based on passed Range */
-    setSelectionRange(range: Range): void;
+    setSelectionRange (range: Range): void;
     /** Destroy text editor */
-    destroy(): void;
+    destroy (): void;
   }
   interface Events {
     /** Event will be triggered when editor value has been changed. As an argument event handler receives editor instance and value */
@@ -117,11 +117,11 @@ export namespace TextEditor {
   interface AppMethods {
     textEditor: {
       /** create Text Editor instance */
-      create(parameters: Parameters): TextEditor;
+      create (parameters: Parameters): TextEditor;
       /** get Text Editor instance by HTML element */
-      get(el: HTMLElement | CSSSelector | TextEditor): TextEditor;
+      get (el: HTMLElement | CSSSelector | TextEditor): TextEditor;
       /** destroy Text Editor instance */
-      destroy(el: HTMLElement | CSSSelector | TextEditor): void;
+      destroy (el: HTMLElement | CSSSelector | TextEditor): void;
     };
   }
   interface AppParams {

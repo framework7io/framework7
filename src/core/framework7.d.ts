@@ -1,18 +1,18 @@
 import Dom7 from 'dom7';
 // IMPORT_BASE
 
-import request from './shared/request';
-import { getSupport } from './shared/get-support';
-import { getDevice } from './shared/get-device';
-import { Utils } from './shared/utils';
+import request from './shared/request.js';
+import { getSupport } from './shared/get-support.js';
+import { getDevice } from './shared/get-device.js';
+import { Utils } from './shared/utils.js';
 
 // IMPORT_MODULES
-import { ComponentFunction as Component } from './modules/component/component';
-import { StoreObject as Store, StoreParameters, createStore } from './modules/store/store';
+import { ComponentFunction as Component } from './modules/component/component.js';
+import { StoreObject as Store, StoreParameters, createStore } from './modules/store/store.js';
 
 // IMPORT_COMPONENTS
 
-declare module './components/app/app-class' {
+declare module './components/app/app-class.js' {
   // INSTALL
 }
 

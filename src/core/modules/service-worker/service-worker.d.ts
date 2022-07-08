@@ -1,4 +1,4 @@
-import Framework7, { Framework7Plugin } from '../../components/app/app-class';
+import Framework7, { Framework7Plugin } from '../../components/app/app-class.js';
 
 export namespace ServiceWorker {
   interface AppMethods {
@@ -8,9 +8,9 @@ export namespace ServiceWorker {
       /** Array with service workers registrations */
       registrations: ServiceWorkerRegistration[];
       /** Register service worker */
-      register(path: string, scope?: string): Promise<any>;
+      register (path: string, scope?: string): Promise<any>;
       /** Unregister service worker */
-      unregister(registration?: ServiceWorkerRegistration): Promise<any>;
+      unregister (registration?: ServiceWorkerRegistration): Promise<any>;
     };
   }
   interface AppParams {

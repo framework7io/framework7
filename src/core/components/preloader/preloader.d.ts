@@ -1,20 +1,20 @@
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
 
 export namespace Preloader {
   interface AppMethods {
     preloader: {
       /** Show Preloader overlay */
-      show(color?: string | 'white'): void;
+      show (color?: string | 'white'): void;
       /** Show Preloader overlay in specified element */
-      showIn(el: HTMLElement | CSSSelector, color?: string): void;
+      showIn (el: HTMLElement | CSSSelector, color?: string): void;
       /** Hide Preloader overlay */
-      hide(): void;
+      hide (): void;
       /** Hide Preloader overlay in specified element */
-      hideIn(el: HTMLElement | CSSSelector): void;
+      hideIn (el: HTMLElement | CSSSelector): void;
     };
   }
-  interface AppParams {}
-  interface AppEvents {}
+  interface AppParams { }
+  interface AppEvents { }
 }
 
 declare const PreloaderComponent: Framework7Plugin;

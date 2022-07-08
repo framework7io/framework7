@@ -1,6 +1,6 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
-import { View } from '../view/view';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import { View } from '../view/view.js';
 
 export namespace Calendar {
   interface Calendar extends Framework7EventsClass<Events> {
@@ -40,29 +40,29 @@ export namespace Calendar {
     allowTouchMove: boolean;
 
     /** Set new selected dates. values is array where each item represents selected date */
-    setValue(values: Date[]): void;
+    setValue (values: Date[]): void;
     /** Returns current calendar value */
-    getValue(): Date[];
+    getValue (): Date[];
     /** Adds value to the values array. Useful in case if multiple selection is enabled (with multiple: true parameter) */
-    addValue(value: Date): void;
+    addValue (value: Date): void;
     /** Rerenders calendar. Useful in case you added/changed values dynamically and need to update calendar layout */
-    update(): void;
+    update (): void;
     /** Calendar transition to next month for specified duration in ms */
-    nextMonth(duration: number): void;
+    nextMonth (duration: number): void;
     /** Calendar transition to previous month for specified duration in ms */
-    prevMonth(duration: number): void;
+    prevMonth (duration: number): void;
     /** Calendar transition to next year */
-    nextYear(): void;
+    nextYear (): void;
     /** Calendar transition to previous year */
-    prevYear(): void;
+    prevYear (): void;
     /** Calendar transition to specified year, month for specified duration in ms */
-    setYearMonth(year: number, month: number, duration: number): void;
+    setYearMonth (year: number, month: number, duration: number): void;
     /** Open Calendar */
-    open(): void;
+    open (): void;
     /** Close Calendar */
-    close(): void;
+    close (): void;
     /** Destroy Calendar instance and remove all events */
-    destroy(): void;
+    destroy (): void;
   }
 
   type DateRangeItem =
@@ -254,16 +254,16 @@ export namespace Calendar {
   interface AppMethods {
     calendar: {
       /** create Calendar instance */
-      create(parameters: Parameters): Calendar;
+      create (parameters: Parameters): Calendar;
 
       /** destroy Calendar instance */
-      destroy(el: HTMLElement | CSSSelector | Calendar): void;
+      destroy (el: HTMLElement | CSSSelector | Calendar): void;
 
       /** get Calendar instance by HTML element */
-      get(el: HTMLElement | CSSSelector): Calendar;
+      get (el: HTMLElement | CSSSelector): Calendar;
 
       /** closes Calendar */
-      close(el: HTMLElement | CSSSelector): Calendar;
+      close (el: HTMLElement | CSSSelector): Calendar;
     };
   }
   interface AppParams {

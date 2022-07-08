@@ -4,12 +4,30 @@
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "type": "module",
   "exports": {
-    ".": "./framework7.esm.js",
-    "./core": "./framework7.esm.js",
-    "./bundle": "./framework7-bundle.esm.js",
-    "./lite": "./framework7-lite.esm.js",
-    "./lite/bundle": "./framework7-lite-bundle.esm.js",
-    "./lite-bundle": "./framework7-lite-bundle.esm.js",
+    ".": {
+      "default": "./framework7.esm.js",
+      "types": "./framework7.d.ts"
+    },
+    "./core": {
+      "default": "./framework7.esm.js",
+      "types": "./framework7.d.ts"
+    },
+    "./bundle": {
+      "default": "./framework7-bundle.esm.js",
+      "types": "./framework7.d.ts"
+    },
+    "./lite": {
+      "default": "./framework7-lite.esm.js",
+      "types": "./framework7.d.ts"
+    },
+    "./lite/bundle": {
+      "default": "./framework7-lite-bundle.esm.js",
+      "types": "./framework7.d.ts"
+    },
+    "./lite-bundle": {
+      "default": "./framework7-lite-bundle.esm.js",
+      "types": "./framework7.d.ts"
+    },
     "./less": "./framework7.less",
     "./less/bundle": "./framework7-bundle.less",
     "./css": "./framework7.css",

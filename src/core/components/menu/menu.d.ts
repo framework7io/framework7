@@ -1,4 +1,4 @@
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
 
 export namespace Menu {
   interface DomEvents {
@@ -10,12 +10,12 @@ export namespace Menu {
   interface AppMethods {
     menu: {
       /** open Menu dropdown */
-      open(el?: HTMLElement | CSSSelector): void;
+      open (el?: HTMLElement | CSSSelector): void;
       /** close Menu dropdown */
-      close(el?: HTMLElement | CSSSelector): void;
+      close (el?: HTMLElement | CSSSelector): void;
     };
   }
-  interface AppParams {}
+  interface AppParams { }
   interface AppEvents {
     /** Event will be triggered right after menu dropdown will be opened. As an argument event handler receives menu dropdown item element */
     menuOpened: (el: HTMLElement) => void;

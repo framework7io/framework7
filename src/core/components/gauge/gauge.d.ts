@@ -1,5 +1,5 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
 
 export namespace Gauge {
   interface Gauge extends Framework7EventsClass<Events> {
@@ -17,9 +17,9 @@ export namespace Gauge {
     params: Parameters;
 
     /** Update/rerender gauge SVG element according to passed parameters. It accepts object with same parameters required for gauge initialization. You can pass only parameters that needs to be updated */
-    update(parameters: Omit<Parameters, 'el'>): Gauge;
+    update (parameters: Omit<Parameters, 'el'>): Gauge;
     /** Destroys gauge instance */
-    destroy(): void;
+    destroy (): void;
   }
 
   interface Parameters {
@@ -73,13 +73,13 @@ export namespace Gauge {
   interface AppMethods {
     gauge: {
       /** create Gauge instance */
-      create(parameters: Gauge.Parameters): Gauge;
+      create (parameters: Gauge.Parameters): Gauge;
       /** destroy Gauge instance */
-      destroy(el: HTMLElement | CSSSelector | Gauge): void;
+      destroy (el: HTMLElement | CSSSelector | Gauge): void;
       /** get Gauge instance by HTML element */
-      get(el: HTMLElement | CSSSelector): Gauge;
+      get (el: HTMLElement | CSSSelector): Gauge;
       /** update/rerender Gauge SVG according to passed parameters */
-      update(parameters: Omit<Parameters, 'el'>): Gauge;
+      update (parameters: Omit<Parameters, 'el'>): Gauge;
     };
   }
   interface AppParams {
