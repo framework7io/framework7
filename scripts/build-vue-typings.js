@@ -117,7 +117,7 @@ function generateComponentProps(fileContent) {
     if (typeof type === 'string') {
       return plainType(type);
     }
-    return `PropType<${type.map(plainType).join(' | ')}>`;
+    return type.map(plainType).join(' | ');
   };
 
   const getVueDefault = (prop) => {
@@ -185,7 +185,7 @@ function buildTypings(cb) {
       .map((word) => word[0].toUpperCase() + word.substr(1))
       .join('');
     const fileBase = fileName.replace('.vue', '');
-    componentImports.push(`import f7${componentName} from './components/${fileBase}';`);
+    componentImports.push(`import f7${componentName} from './components/${fileBase}.js';`);
     componentExports.push(`f7${componentName}`);
 
     const typingsContent = generateComponentTypings(
