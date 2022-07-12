@@ -32,6 +32,7 @@ import { Panel } from 'framework7/types';
   swipeActiveArea? : number
   swipeThreshold? : number
   containerEl? : string | object
+  closeByBackdropClick?: boolean;
   COLOR_PROPS
   onPanelOpen? : (event?: any) => void
   onPanelOpened? : (event?: any) => void
@@ -67,6 +68,7 @@ const Panel = forwardRef((props, ref) => {
     backdrop = true,
     backdropEl,
     containerEl,
+    closeByBackdropClick,
     visibleBreakpoint,
     collapsedBreakpoint,
     swipe,
@@ -178,6 +180,7 @@ const Panel = forwardRef((props, ref) => {
         swipeOnlyClose,
         swipeActiveArea,
         swipeThreshold,
+        closeByBackdropClick,
       });
       f7Panel.current = f7.panel.create(params);
       modalEvents('on');

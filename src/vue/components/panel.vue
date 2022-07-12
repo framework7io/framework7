@@ -34,6 +34,10 @@ export default {
       type: String,
       default: undefined,
     },
+    closeByBackdropClick: {
+      type: Boolean,
+      default: undefined,
+    },
     visibleBreakpoint: {
       type: Number,
       default: undefined,
@@ -153,6 +157,7 @@ export default {
           backdrop: props.backdrop,
           backdropEl: props.backdropEl,
           containerEl: props.containerEl,
+          closeByBackdropClick: props.containerEl,
           visibleBreakpoint: props.visibleBreakpoint,
           collapsedBreakpoint: props.collapsedBreakpoint,
           swipe: props.swipe,

@@ -24,6 +24,7 @@
   export let backdrop = true;
   export let backdropEl = undefined;
   export let containerEl = undefined;
+  export let closeByBackdropClick = undefined;
   export let visibleBreakpoint = undefined;
   export let collapsedBreakpoint = undefined;
   export let swipe = false;
@@ -163,6 +164,7 @@
         backdrop,
         backdropEl,
         containerEl,
+        closeByBackdropClick,
         visibleBreakpoint,
         collapsedBreakpoint,
         swipe,

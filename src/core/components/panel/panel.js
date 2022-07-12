@@ -141,6 +141,7 @@ export default {
         instance.emit('backdropClick', instance);
       }
       app.emit('panelBackdropClick', instance || $panelEl[0]);
+      if (instance && instance.params.closeByBackdropClick === false) return;
       if (app.params.panel.closeByBackdropClick) app.panel.close();
     },
   },
