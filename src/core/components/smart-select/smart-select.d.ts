@@ -1,7 +1,7 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
-import { View } from '../view/view';
-import { Searchbar } from '../searchbar/searchbar';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import { View } from '../view/view.js';
+import { Searchbar } from '../searchbar/searchbar.js';
 
 export namespace SmartSelect {
   interface Events {
@@ -134,19 +134,19 @@ export namespace SmartSelect {
     params: Parameters;
 
     /** Scroll smart select content to first selected item */
-    scrollToSelectedItem(): SmartSelect;
+    scrollToSelectedItem (): SmartSelect;
     /** Set new smart select value. In case of select is multiple it must be an array with new values */
-    setValue(value: string | number | any[]): SmartSelect;
+    setValue (value: string | number | any[]): SmartSelect;
     /** Unset smart select value */
-    unsetValue(): SmartSelect;
+    unsetValue (): SmartSelect;
     /** Returns smart select value. In case of select is multiple it returns array with selected values */
-    getValue(): string | number | any[];
+    getValue (): string | number | any[];
     /** Open smart select. */
-    open(): SmartSelect;
+    open (): SmartSelect;
     /** Close smart select. */
-    close(): SmartSelect;
+    close (): SmartSelect;
     /** Destroy smart select */
-    destroy(): void;
+    destroy (): void;
   }
   interface DomEvents {
     /** Event will be triggered before Smart Select open. event.detail.prevent is a function that can be called to prevent Smart Select from opening */
@@ -166,15 +166,15 @@ export namespace SmartSelect {
   interface AppMethods {
     smartSelect: {
       /** create Smart Select instance */
-      create(parameters: Parameters): SmartSelect;
+      create (parameters: Parameters): SmartSelect;
       /** destroy Smart Select instance */
-      destroy(el: HTMLElement | CSSSelector | SmartSelect): void;
+      destroy (el: HTMLElement | CSSSelector | SmartSelect): void;
       /** get Smart Select instance by HTML element */
-      get(el: HTMLElement | CSSSelector): SmartSelect;
+      get (el: HTMLElement | CSSSelector): SmartSelect;
       /** open Smart Select */
-      open(el: HTMLElement | CSSSelector): SmartSelect;
+      open (el: HTMLElement | CSSSelector): SmartSelect;
       /** close Smart Select */
-      close(el: HTMLElement | CSSSelector): SmartSelect;
+      close (el: HTMLElement | CSSSelector): SmartSelect;
     };
   }
   interface AppParams {

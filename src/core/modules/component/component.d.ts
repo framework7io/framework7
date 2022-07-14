@@ -2,12 +2,12 @@ import Framework7, {
   Framework7EventsClass,
   Framework7Plugin,
   CSSSelector,
-} from '../../components/app/app-class';
+} from '../../components/app/app-class.js';
 import { Dom7, Dom7Array } from 'dom7';
-import { Router } from '../../modules/router/router';
-import { StoreObject as Store } from '../../modules/store/store';
+import { Router } from '../../modules/router/router.js';
+import { StoreObject as Store } from '../../modules/store/store.js';
 
-interface ComponentRender extends Function {}
+interface ComponentRender extends Function { }
 
 export interface ComponentContext {
   /** Component ID */
@@ -74,21 +74,21 @@ export namespace Component {
     /** Object with router/view cache data */
     component: {
       /** Create and init component */
-      create(
+      create (
         component: ComponentFunction,
         props?: object,
         context?: object,
       ): Promise<ComponentClass>;
       /** Parse component from single file component-style string */
-      parse(componentString: string): ComponentFunction;
+      parse (componentString: string): ComponentFunction;
       /** Register custom component */
-      registerComponent(tagName: string, component: ComponentFunction): void;
+      registerComponent (tagName: string, component: ComponentFunction): void;
       /** Unregister custom component */
-      unregisterComponent(tagName: string): void;
+      unregisterComponent (tagName: string): void;
     };
   }
-  interface AppParams {}
-  interface AppEvents {}
+  interface AppParams { }
+  interface AppEvents { }
 }
 
 declare const ComponentModule: Framework7Plugin;

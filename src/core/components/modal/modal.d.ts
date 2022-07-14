@@ -1,5 +1,5 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
 
 export namespace Modal {
   interface Modal extends Framework7EventsClass<Events> {
@@ -19,11 +19,11 @@ export namespace Modal {
     opened: boolean;
 
     /** Open modal */
-    open(animate: boolean): Modal;
+    open (animate: boolean): Modal;
     /** Close modal. */
-    close(animate: boolean): Modal;
+    close (animate: boolean): Modal;
     /** Destroy modal */
-    destroy(): void;
+    destroy (): void;
   }
   interface Parameters {
     /** Modal element. Can be useful if you already have Modal element in your HTML and want to create new instance using this element. */
@@ -55,10 +55,10 @@ export namespace Modal {
   interface AppMethods {
     customModal: {
       /** Creates Custom modal */
-      create(parameters: Parameters): Modal;
+      create (parameters: Parameters): Modal;
     };
   }
-  interface AppParams {}
+  interface AppParams { }
   interface AppEvents {
     /** Event will be triggered when Modal starts its opening animation. As an argument event handler receives modal instance */
     customModalOpen: (modal: Modal) => void;

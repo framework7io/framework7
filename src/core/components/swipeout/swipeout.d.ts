@@ -1,4 +1,4 @@
-import { CSSSelector, Framework7Plugin } from '../app/app-class';
+import { CSSSelector, Framework7Plugin } from '../app/app-class.js';
 
 export namespace Swipeout {
   interface DomEvents {
@@ -22,28 +22,28 @@ export namespace Swipeout {
       /** Currently opened swipeout HTMLElement. Or undefined if there is no opened swipeout element */
       el: HTMLElement | CSSSelector | undefined;
       /** reveal swipeout actions on specified element */
-      open(el: HTMLElement | CSSSelector, side?: 'left' | 'right', callback?: Function): void;
+      open (el: HTMLElement | CSSSelector, side?: 'left' | 'right', callback?: Function): void;
       /** close swipeout actions on specified element */
-      close(el: HTMLElement | CSSSelector, callback?: Function): void;
+      close (el: HTMLElement | CSSSelector, callback?: Function): void;
       /** delete specified swipeout element */
-      delete(el: HTMLElement | CSSSelector, callback?: Function): void;
+      delete (el: HTMLElement | CSSSelector, callback?: Function): void;
     };
   }
   interface AppParams {
     swipeout?:
-      | {
-          /** Fallback option for potentially better performance on old/slow devices. If you enable it, then swipeout item will not follow your finger during touch, it will be automatically opened/closed on swipe left/right. (default false) */
-          noFollow?: boolean;
-          /** When disabled, then framework will not remove swipeout element from DOM on "swipeout-delete" click. Useful to enable if you use another library like Vue or React to manage (remove) swipeout items (default true) */
-          removeElements?: boolean;
-          /** When enabled, then framework will remove swipeout element from DOM on "swipeout-delete" click after specified delay (default false) */
-          removeElementsWithTimeout?: boolean;
-          /** Delay in ms to remove swipeout item if removeElementsWithTimeout is enabled */
-          removeElementsTimeout?: number;
-          /** Defines how much/hard needed to swipe to trigger overswipe (defaults to 1.2) */
-          overswipeRatio?: number;
-        }
-      | undefined;
+    | {
+      /** Fallback option for potentially better performance on old/slow devices. If you enable it, then swipeout item will not follow your finger during touch, it will be automatically opened/closed on swipe left/right. (default false) */
+      noFollow?: boolean;
+      /** When disabled, then framework will not remove swipeout element from DOM on "swipeout-delete" click. Useful to enable if you use another library like Vue or React to manage (remove) swipeout items (default true) */
+      removeElements?: boolean;
+      /** When enabled, then framework will remove swipeout element from DOM on "swipeout-delete" click after specified delay (default false) */
+      removeElementsWithTimeout?: boolean;
+      /** Delay in ms to remove swipeout item if removeElementsWithTimeout is enabled */
+      removeElementsTimeout?: number;
+      /** Defines how much/hard needed to swipe to trigger overswipe (defaults to 1.2) */
+      overswipeRatio?: number;
+    }
+    | undefined;
   }
   interface AppEvents {
     /** Event will be triggered while you move swipeout element */

@@ -1,5 +1,5 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
 
 export namespace VirtualList {
   interface VirtualListRenderData {
@@ -31,39 +31,39 @@ export namespace VirtualList {
     reachEnd: boolean;
 
     /** Filter virtual list by passing array with indexes of items to show */
-    filterItems(indexes: number[]): void;
+    filterItems (indexes: number[]): void;
     /** Disable filter and display all items again */
-    resetFilter(): void;
+    resetFilter (): void;
     /** Append item to virtual list */
-    appendItem(item: any): void;
+    appendItem (item: any): void;
     /** Append array with items to virtual list */
-    appendItems(items: any[]): void;
+    appendItems (items: any[]): void;
     /** Prepend item to virtual list */
-    prependItem(item: any): void;
+    prependItem (item: any): void;
     /** Prepend array with items to virtual list */
-    prependItems(items: any[]): void;
+    prependItems (items: any[]): void;
     /** Replace item at specified index with the new one */
-    replaceItem(index: number, item: any): void;
+    replaceItem (index: number, item: any): void;
     /** Replace all items with arrays of new items */
-    replaceAllItems(items: any[]): void;
+    replaceAllItems (items: any[]): void;
     /** Move virtual item from oldIndex to newIndex */
-    moveItem(oldIndex: number, newIndex: number): void;
+    moveItem (oldIndex: number, newIndex: number): void;
     /** Insert new item before item with specified index */
-    insertItemBefore(index: number, item: any): void;
+    insertItemBefore (index: number, item: any): void;
     /** Delete item at specified index */
-    deleteItem(index: number): void;
+    deleteItem (index: number): void;
     /** Delete items at specified array of indexes */
-    deleteItems(indexes: number[]): void;
+    deleteItems (indexes: number[]): void;
     /** Delete all items */
-    deleteAllItems(): void;
+    deleteAllItems (): void;
     /** Clear virtual list cached DOM elements */
-    clearCache(): void;
+    clearCache (): void;
     /** Destory initialized virtual list and detach all events */
-    destroy(): void;
+    destroy (): void;
     /** Update virtual list, including recalculation of list sizes and re-rendering of virtual list */
-    update(): void;
+    update (): void;
     /** Scroll Virtual List to specified item by its index number */
-    scrollToItem(index: number): void;
+    scrollToItem (index: number): void;
   }
   interface Parameters {
     /** Target List Block element. In case of string - CSS selector of list block element */
@@ -116,11 +116,11 @@ export namespace VirtualList {
   interface AppMethods {
     virtualList: {
       /** initialize virtual list with parameters */
-      create(parameters: Parameters): VirtualList;
+      create (parameters: Parameters): VirtualList;
       /** destroy Virtual List instance */
-      destroy(el: HTMLElement | CSSSelector): void;
+      destroy (el: HTMLElement | CSSSelector): void;
       /** get Virtual List instance by HTML element */
-      get(el: HTMLElement | CSSSelector): VirtualList;
+      get (el: HTMLElement | CSSSelector): VirtualList;
     };
   }
   interface AppParams {

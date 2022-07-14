@@ -1,4 +1,4 @@
-import { CSSSelector, Framework7Plugin } from '../app/app-class';
+import { CSSSelector, Framework7Plugin } from '../app/app-class.js';
 
 export namespace Sortable {
   interface SortIndexes {
@@ -18,20 +18,20 @@ export namespace Sortable {
   interface AppMethods {
     sortable: {
       /** enable sorting mode on sortable list */
-      enable(listEl?: HTMLElement | CSSSelector): void;
+      enable (listEl?: HTMLElement | CSSSelector): void;
       /** disable sorting mode on sortable list */
-      disable(listEl?: HTMLElement | CSSSelector): void;
+      disable (listEl?: HTMLElement | CSSSelector): void;
       /** toggle sorting mode on sortable list */
-      toggle(listEl?: HTMLElement | CSSSelector): void;
+      toggle (listEl?: HTMLElement | CSSSelector): void;
     };
   }
   interface AppParams {
     sortable?:
-      | {
-          /** When enabled then it will move (reorder) HTML elements according to new sortable order. It is useful to disable it if you use other library for DOM manipulation, like React or Vue (default true) */
-          moveElements?: boolean;
-        }
-      | undefined;
+    | {
+      /** When enabled then it will move (reorder) HTML elements according to new sortable order. It is useful to disable it if you use other library for DOM manipulation, like React or Vue (default true) */
+      moveElements?: boolean;
+    }
+    | undefined;
   }
   interface AppEvents {
     /** Event will be triggered when sortable mode is enabled */

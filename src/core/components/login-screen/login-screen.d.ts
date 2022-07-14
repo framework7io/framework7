@@ -1,5 +1,5 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
 
 export namespace LoginScreen {
   interface LoginScreen extends Framework7EventsClass<Events> {
@@ -15,11 +15,11 @@ export namespace LoginScreen {
     opened: boolean;
 
     /** Open login screen. Where */
-    open(animate?: boolean): LoginScreen;
+    open (animate?: boolean): LoginScreen;
     /** Close login screen. Where */
-    close(animate?: boolean): LoginScreen;
+    close (animate?: boolean): LoginScreen;
     /** Destroy login screen */
-    destroy(): void;
+    destroy (): void;
   }
 
   interface Parameters {
@@ -62,15 +62,15 @@ export namespace LoginScreen {
   interface AppMethods {
     loginScreen: {
       /** create LoginScreen instance */
-      create(parameters: Parameters): LoginScreen;
+      create (parameters: Parameters): LoginScreen;
       /** destroy LoginScreen instance */
-      destroy(el: HTMLElement | CSSSelector | LoginScreen): void;
+      destroy (el: HTMLElement | CSSSelector | LoginScreen): void;
       /** get LoginScreen instance by HTML element */
-      get(el?: HTMLElement | CSSSelector): LoginScreen;
+      get (el?: HTMLElement | CSSSelector): LoginScreen;
       /** open LoginScreen */
-      open(el?: HTMLElement | CSSSelector, animate?: boolean): LoginScreen;
+      open (el?: HTMLElement | CSSSelector, animate?: boolean): LoginScreen;
       /** closes LoginScreen */
-      close(el?: HTMLElement | CSSSelector, animate?: boolean): LoginScreen;
+      close (el?: HTMLElement | CSSSelector, animate?: boolean): LoginScreen;
     };
   }
   interface AppParams {

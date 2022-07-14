@@ -1,10 +1,10 @@
-import { CSSSelector, Framework7Plugin } from '../app/app-class';
+import { CSSSelector, Framework7Plugin } from '../app/app-class.js';
 
 export namespace Tabs {
   interface TabShowResult {
     newTabEl: HTMLElement;
     oldTabEl: HTMLElement | undefined;
-    onTabsChanged(callback: Function): void;
+    onTabsChanged (callback: Function): void;
     animated: boolean;
   }
   interface DomEvents {
@@ -16,16 +16,16 @@ export namespace Tabs {
   interface AppMethods {
     tab: {
       /** Show tab */
-      show(tabEl: HTMLElement | CSSSelector, animate?: boolean): TabShowResult;
+      show (tabEl: HTMLElement | CSSSelector, animate?: boolean): TabShowResult;
       /** Show tab */
-      show(
+      show (
         tabEl: HTMLElement | CSSSelector,
         tabLinkEl?: HTMLElement | CSSSelector,
         animate?: boolean,
       ): TabShowResult;
     };
   }
-  interface AppParams {}
+  interface AppParams { }
   interface AppEvents {
     /** Event will be triggered when Tab becomes visible/active */
     tabShow: (tabEl: HTMLElement) => void;

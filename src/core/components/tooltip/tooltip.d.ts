@@ -1,4 +1,4 @@
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
 import { Dom7Array } from 'dom7';
 
 export namespace Tooltip {
@@ -58,30 +58,30 @@ export namespace Tooltip {
     /** Boolean property indicating whether it is opened/visible or not */
     opened: boolean;
     /** Show tooltip around targetEl element. If targetEl is not specified, then it will use targetEl passed in parameters on initialization */
-    show(targetEl: HTMLElement | CSSSelector): Tooltip;
+    show (targetEl: HTMLElement | CSSSelector): Tooltip;
     /** Hide tooltip */
-    hide(): Tooltip;
+    hide (): Tooltip;
     /** Change tooltip text or HTML content to the new one */
-    setText(text: string): Tooltip;
+    setText (text: string): Tooltip;
     /** Change tooltip target HTML element */
-    setTargetEl(targetEl: HTMLElement | CSSSelector): Tooltip;
+    setTargetEl (targetEl: HTMLElement | CSSSelector): Tooltip;
     /** Destroys tooltip instance */
-    destroy(): void;
+    destroy (): void;
   }
   interface AppMethods {
     tooltip: {
       /** create Tooltip instance */
-      create(parameters: Parameters): Tooltip;
+      create (parameters: Parameters): Tooltip;
       /** destroy Tooltip instance */
-      destroy(targetEl: HTMLElement | CSSSelector): void;
+      destroy (targetEl: HTMLElement | CSSSelector): void;
       /** get Tooltip instance by its target HTML element */
-      get(targetEl: HTMLElement | CSSSelector): Tooltip;
+      get (targetEl: HTMLElement | CSSSelector): Tooltip;
       /** show Tooltip */
-      show(targetEl: HTMLElement | CSSSelector): Tooltip;
+      show (targetEl: HTMLElement | CSSSelector): Tooltip;
       /** hide Tooltip */
-      hide(targetEl: HTMLElement | CSSSelector): Tooltip;
+      hide (targetEl: HTMLElement | CSSSelector): Tooltip;
       /** change Tooltip text */
-      setText(targetEl: HTMLElement | CSSSelector, text: string): Tooltip;
+      setText (targetEl: HTMLElement | CSSSelector, text: string): Tooltip;
     };
   }
   interface AppParams {

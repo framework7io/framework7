@@ -42,7 +42,7 @@ function copyTypings() {
 }
 
 function generateTypings(content, modules, components) {
-  const f7Base = `import Framework7 from './components/app/app-class'`;
+  const f7Base = `import Framework7 from './components/app/app-class.js'`;
 
   const helpers = ['request', 'utils', 'support', 'device'];
 
@@ -55,12 +55,12 @@ function generateTypings(content, modules, components) {
 
   const importModules = modules.map((f7Module) => {
     const capitalized = capitalize(f7Module);
-    return `import { ${capitalized} as ${capitalized}Module } from './modules/${f7Module}/${f7Module}';`;
+    return `import { ${capitalized} as ${capitalized}Module } from './modules/${f7Module}/${f7Module}.js';`;
   });
 
   const importComponents = components.map((component) => {
     const capitalized = capitalize(component);
-    return `import { ${capitalized} } from './components/${component}/${component}';`;
+    return `import { ${capitalized} } from './components/${component}/${component}.js';`;
   });
 
   const installModules = modules

@@ -7,18 +7,18 @@ import request, {
   RequestParameters,
   RequestXHR,
 } from './shared/request';
-import { getSupport, Support } from './shared/get-support';
-import { getDevice, Device } from './shared/get-device';
-import { Utils } from './shared/utils';
-import { Framework7Parameters, Framework7Plugin } from './components/app/app-class';
+import { getSupport, Support } from './shared/get-support.js';
+import { getDevice, Device } from './shared/get-device.js';
+import { Utils } from './shared/utils.js';
+import { Framework7Parameters, Framework7Plugin } from './components/app/app-class.js';
 
 // IMPORT_MODULES
-import { ComponentFunction as Component } from './modules/component/component';
-import { StoreObject as Store, StoreParameters, createStore } from './modules/store/store';
+import { ComponentFunction as Component } from './modules/component/component.js';
+import { StoreObject as Store, StoreParameters, createStore } from './modules/store/store.js';
 
 // IMPORT_COMPONENTS
 
-declare module './components/app/app-class' {
+declare module './components/app/app-class.js' {
   // INSTALL
 }
 

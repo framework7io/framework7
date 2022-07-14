@@ -1,5 +1,5 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
 
 export namespace Actions {
   interface Actions extends Framework7EventsClass<Events> {
@@ -19,11 +19,11 @@ export namespace Actions {
     opened: boolean;
 
     /** Open action sheet. Where animate - boolean (by default true) - defines whether it should be opened with animation */
-    open(animate?: boolean): void;
+    open (animate?: boolean): void;
     /** Close action sheet. Where animate - boolean (by default true) - defines whether it should be closed with animation */
-    close(animate?: boolean): void;
+    close (animate?: boolean): void;
     /** Destroy action sheet */
-    destroy(): void;
+    destroy (): void;
   }
 
   interface Button {
@@ -127,15 +127,15 @@ export namespace Actions {
   interface AppMethods {
     actions: {
       /** create Action Sheet instance */
-      create(parameters: Parameters): Actions;
+      create (parameters: Parameters): Actions;
       /** destroy Action Sheet instance */
-      destroy(el: HTMLElement | CSSSelector | Actions): void;
+      destroy (el: HTMLElement | CSSSelector | Actions): void;
       /** get Action Sheet instance by HTML element */
-      get(el?: HTMLElement | CSSSelector): Actions;
+      get (el?: HTMLElement | CSSSelector): Actions;
       /** opens Action Sheet */
-      open(el?: HTMLElement | CSSSelector, animate?: boolean): Actions;
+      open (el?: HTMLElement | CSSSelector, animate?: boolean): Actions;
       /** closes Action Sheet */
-      close(el?: HTMLElement | CSSSelector, animate?: boolean): Actions;
+      close (el?: HTMLElement | CSSSelector, animate?: boolean): Actions;
     };
   }
   interface AppParams {
