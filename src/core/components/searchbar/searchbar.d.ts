@@ -1,5 +1,9 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import Framework7, {
+  CSSSelector,
+  Framework7EventsClass,
+  Framework7Plugin,
+} from '../app/app-class.js';
 
 export namespace Searchbar {
   interface Parameters {
@@ -78,17 +82,17 @@ export namespace Searchbar {
     /** Searchbar parameters */
     params: Parameters;
     /** Force searchbar to search passed query */
-    search (query: string): Searchbar;
+    search(query: string): Searchbar;
     /** Enable/activate searchbar */
-    enable (): Searchbar;
+    enable(): Searchbar;
     /** Disable/deactivate searchbar */
-    disable (): Searchbar;
+    disable(): Searchbar;
     /** Toggle searchbar */
-    toggle (): Searchbar;
+    toggle(): Searchbar;
     /** Clear search query and update results */
-    clear (): Searchbar;
+    clear(): Searchbar;
     /** Destroy searchbar */
-    destroy (): void;
+    destroy(): void;
   }
   interface Events {
     /** Event will be triggered during search (search field change). As an argument event handler receives searchbar instance, current query and previous query */
@@ -118,21 +122,21 @@ export namespace Searchbar {
   interface AppMethods {
     searchbar: {
       /** create Searchbar instance */
-      create (parameters: Parameters): Searchbar;
+      create(parameters: Parameters): Searchbar;
       /** get Searchbar instance by HTML element */
-      get (el: HTMLElement | CSSSelector | Searchbar): Searchbar;
+      get(el: HTMLElement | CSSSelector | Searchbar): Searchbar;
       /** destroy Searchbar instance */
-      destroy (el: HTMLElement | CSSSelector | Searchbar): void;
+      destroy(el: HTMLElement | CSSSelector | Searchbar): void;
       /** Clear search query and update results */
-      clear (el: HTMLElement | CSSSelector | Searchbar): Searchbar;
+      clear(el: HTMLElement | CSSSelector | Searchbar): Searchbar;
       /** Enable/activate searchbar */
-      enable (el: HTMLElement | CSSSelector | Searchbar): Searchbar;
+      enable(el: HTMLElement | CSSSelector | Searchbar): Searchbar;
       /** Disable/deactivate searchbar */
-      disable (el: HTMLElement | CSSSelector | Searchbar): Searchbar;
+      disable(el: HTMLElement | CSSSelector | Searchbar): Searchbar;
       /** Toggle searchbar */
-      toggle (el: HTMLElement | CSSSelector | Searchbar): Searchbar;
+      toggle(el: HTMLElement | CSSSelector | Searchbar): Searchbar;
       /** Force searchbar to search passed query */
-      search (el: HTMLElement | CSSSelector | Searchbar, query: string): Searchbar;
+      search(el: HTMLElement | CSSSelector | Searchbar, query: string): Searchbar;
     };
   }
   interface AppParams {

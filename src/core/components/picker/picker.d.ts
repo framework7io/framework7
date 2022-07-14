@@ -1,5 +1,9 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import Framework7, {
+  CSSSelector,
+  Framework7EventsClass,
+  Framework7Plugin,
+} from '../app/app-class.js';
 import { View } from '../view/view.js';
 
 export namespace Picker {
@@ -33,15 +37,15 @@ export namespace Picker {
     /** Object with initialization parameters */
     params: Parameters;
     /** Set new picker value. values is array where each item represents value for each column. duration - transition duration in ms */
-    setValue (values: unknown[]): void;
+    setValue(values: unknown[]): void;
     /** Returns current picker value */
-    getValue (): unknown;
+    getValue(): unknown;
     /** Open Picker */
-    open (): void;
+    open(): void;
     /** Close Picker */
-    close (): void;
+    close(): void;
     /** Destroy Picker instance and remove all events */
-    destroy (): void;
+    destroy(): void;
   }
 
   interface Column {
@@ -59,9 +63,9 @@ export namespace Picker {
     activeIndex: number;
 
     /** Set new value for current column. value is a new value, duration - transition duration in ms */
-    setValue (value: unknown): void;
+    setValue(value: unknown): void;
     /** Replace column values and displayValues with new ones */
-    replaceValues (values: unknown[], displayValues: unknown[]): void;
+    replaceValues(values: unknown[], displayValues: unknown[]): void;
   }
 
   interface ColumnParameters {
@@ -170,13 +174,13 @@ export namespace Picker {
   interface AppMethods {
     picker: {
       /** create Picker instance */
-      create (parameters: Parameters): Picker;
+      create(parameters: Parameters): Picker;
       /** destroy Picker instance */
-      destroy (el: HTMLElement | CSSSelector | Picker): void;
+      destroy(el: HTMLElement | CSSSelector | Picker): void;
       /** get Picker instance by HTML element */
-      get (el: HTMLElement | CSSSelector): Picker;
+      get(el: HTMLElement | CSSSelector): Picker;
       /** closes Picker */
-      close (el: HTMLElement | CSSSelector): Picker;
+      close(el: HTMLElement | CSSSelector): Picker;
     };
   }
   interface AppParams {

@@ -211,7 +211,7 @@ export namespace Router {
     /** Boolean property indicating is it allowed to change page / navigate or not */
     allowPageChange: boolean;
     /** Generate route url based on a given route name */
-    generateUrl (parameters: {
+    generateUrl(parameters: {
       /** route name */
       name: string;
       /** route params */
@@ -220,17 +220,17 @@ export namespace Router {
       query: any;
     }): string;
     /** Navigate to (load) new page */
-    navigate (url: string, options?: RouteOptions): Router;
+    navigate(url: string, options?: RouteOptions): Router;
     /** Navigate to (load) new page by parameters. This method allows to navigate to route by its name */
-    navigate (parameters: NavigateParameters, options?: RouteOptions): Router;
+    navigate(parameters: NavigateParameters, options?: RouteOptions): Router;
     /** Go back to previous page, going back in View history */
-    back (url?: string, options?: RouteOptions): Router;
+    back(url?: string, options?: RouteOptions): Router;
     /** Refresh/reload current page */
-    refreshPage (): Router;
+    refreshPage(): Router;
     /** Clear router previous pages history and remove all previous pages from DOM */
-    clearPreviousHistory (): Router;
+    clearPreviousHistory(): Router;
     /** Updates current route url, and updates `router.currentRoute` properties (query, params, hash, etc.) based on passed url. This method doesn't load or reload any content. It just changes current route url */
-    updateCurrentUrl (url: string): Router;
+    updateCurrentUrl(url: string): Router;
   }
   interface SwipeBackData {
     percentage: number;
@@ -241,67 +241,67 @@ export namespace Router {
   }
   interface Events {
     /** Event will be fired on current route change */
-    routeChange (newRoute: Route, previousRoute: Route, router: Router): void;
+    routeChange(newRoute: Route, previousRoute: Route, router: Router): void;
     /** Event will be fired on current route change and after page transitions */
-    routeChanged (newRoute: Route, previousRoute: Route, router: Router): void;
+    routeChanged(newRoute: Route, previousRoute: Route, router: Router): void;
     /** Event will be fired when router.updateCurrentUrl method called */
-    routeUrlUpdate (newRoute: Route, router: Router): void;
+    routeUrlUpdate(newRoute: Route, router: Router): void;
 
     /** Event will be fired after router XHR opened and before XHR send. Can be used to modify the XHR object before it is sent. Use this callback to set custom headers, etc. As an arguments receives XHR object and navigating options object */
-    routerAjaxStart (xhr: XMLHttpRequest, options: RouteOptions): void;
+    routerAjaxStart(xhr: XMLHttpRequest, options: RouteOptions): void;
     /** Event will be fired when the request succeeds. As an arguments receives XHR object and navigating options object */
-    routerAjaxSuccess (xhr: XMLHttpRequest, options: RouteOptions): void;
+    routerAjaxSuccess(xhr: XMLHttpRequest, options: RouteOptions): void;
     /** Event will be fired if the request fails. As an arguments receives XHR object and navigating options object */
-    routerAjaxError (xhr: XMLHttpRequest, options: RouteOptions): void;
+    routerAjaxError(xhr: XMLHttpRequest, options: RouteOptions): void;
     /** Event will be fired when the request finishes. As an arguments receives XHR object and navigating options object */
-    routerAjaxComplete (xhr: XMLHttpRequest, options: RouteOptions): void;
+    routerAjaxComplete(xhr: XMLHttpRequest, options: RouteOptions): void;
 
     /** Event will be triggered during swipe back move */
-    swipebackMove (data: SwipeBackData): void;
+    swipebackMove(data: SwipeBackData): void;
     /** Event will be triggered right before swipe back animation to previous page when you release it */
-    swipebackBeforeChange (data: SwipeBackData): void;
+    swipebackBeforeChange(data: SwipeBackData): void;
     /** Event will be triggered after swipe back animation to previous page when you release it */
-    swipebackAfterChange (data: SwipeBackData): void;
+    swipebackAfterChange(data: SwipeBackData): void;
     /** Event will be triggered right before swipe back animation to current page when you release it */
-    swipebackBeforeReset (data: SwipeBackData): void;
+    swipebackBeforeReset(data: SwipeBackData): void;
     /** Event will be triggered after swipe back animation to current page when you release it */
-    swipebackAfterReset (data: SwipeBackData): void;
+    swipebackAfterReset(data: SwipeBackData): void;
 
     /** Event will be triggered when new page just inserted to DOM. As an argument event receives Page Data */
-    pageMounted (page: Page): void;
+    pageMounted(page: Page): void;
     /** Event will be triggered after Router initialize required page's components and navbar. As an argument event receives Page Data */
-    pageInit (page: Page): void;
+    pageInit(page: Page): void;
     /** This event will be triggered in case of navigating to the page that was already initialized. As an argument event receives Page Data */
-    pageReinit (page: Page): void;
+    pageReinit(page: Page): void;
     /** Event will be triggered when everything initialized and page is ready to be transitioned into view (into active/current position). As an argument event receives Page Data */
-    pageBeforeIn (page: Page): void;
+    pageBeforeIn(page: Page): void;
     /** Event will be triggered after page transitioned into view. As an argument event receives Page Data */
-    pageAfterIn (page: Page): void;
+    pageAfterIn(page: Page): void;
     /** Event will be triggered right before page is going to be transitioned out of view. As an argument event receives Page Data */
-    pageBeforeOut (page: Page): void;
+    pageBeforeOut(page: Page): void;
     /** Event will be triggered after page transitioned out of view. As an argument event receives Page Data */
-    pageAfterOut (page: Page): void;
+    pageAfterOut(page: Page): void;
     /** Event will be triggered right before Page will be removed from DOM. This event could be very useful if you need to detach some events / destroy some plugins to free memory. As an argument event receives Page Data */
-    pageBeforeRemove (page: Page): void;
+    pageBeforeRemove(page: Page): void;
 
     /** Event will be triggered on page's parent View-Tab show */
-    pageTabShow (pageEl: HTMLElement): void;
+    pageTabShow(pageEl: HTMLElement): void;
     /** Event will be triggered on page's parent View-Tab hide */
-    pageTabHide (pageEl: HTMLElement): void;
+    pageTabHide(pageEl: HTMLElement): void;
 
     /** Event will be triggered right after routable Tab content will be loaded */
-    tabInit (newTabEl: HTMLElement, tabRoute: Route): void;
+    tabInit(newTabEl: HTMLElement, tabRoute: Route): void;
     /** Event will be triggered right after routable Tab content will be loaded */
-    tabMounted (newTabEl: HTMLElement, tabRoute: Route): void;
+    tabMounted(newTabEl: HTMLElement, tabRoute: Route): void;
     /** Event will be triggered right before routable Tab content will be removed */
-    tabBeforeRemove (oldTabEl: HTMLElement, newTabEl: HTMLElement, tabRoute: Route): void;
+    tabBeforeRemove(oldTabEl: HTMLElement, newTabEl: HTMLElement, tabRoute: Route): void;
 
     /** Event will be triggered right after routable modal content will be loaded and added to DOM */
-    modalInit (modalEl: HTMLElement, modalRoute: Route, modal: any): void;
+    modalInit(modalEl: HTMLElement, modalRoute: Route, modal: any): void;
     /** Event will be triggered right after routable modal content will be loaded and added to DOM */
-    modalMounted (modalEl: HTMLElement, modalRoute: Route, modal: any): void;
+    modalMounted(modalEl: HTMLElement, modalRoute: Route, modal: any): void;
     /** Event will be triggered right before routable modal will be removed from DOM and destroyed */
-    modalBeforeRemove (modalEl: HTMLElement, modalRoute: Route, modal: any): void;
+    modalBeforeRemove(modalEl: HTMLElement, modalRoute: Route, modal: any): void;
   }
   interface DomEvents {
     /** Event will be triggered during swipe back move */
@@ -348,7 +348,7 @@ export namespace Router {
     /** Set to false to disable the router. */
     router?: false;
   }
-  interface AppEvents { }
+  interface AppEvents {}
 }
 
 declare const RouterModule: Framework7Plugin;

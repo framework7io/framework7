@@ -1,5 +1,9 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import Framework7, {
+  CSSSelector,
+  Framework7EventsClass,
+  Framework7Plugin,
+} from '../app/app-class.js';
 
 export namespace ListIndex {
   interface ListIndex extends Framework7EventsClass<Events> {
@@ -23,11 +27,11 @@ export namespace ListIndex {
     params: Parameters;
 
     /** Recalculates indexes, sizes and rerenders list index */
-    update (): ListIndex;
+    update(): ListIndex;
     /** Scrolls related list to specified index content */
-    scrollToList (itemContent: string): ListIndex;
+    scrollToList(itemContent: string): ListIndex;
     /** Destroys list index instance */
-    destroy (): void;
+    destroy(): void;
   }
 
   interface Parameters {
@@ -55,11 +59,11 @@ export namespace ListIndex {
 
   interface Events {
     /** Event will be triggered on index select rather by click or swiping. As an argument event handler receives list index instance and selected index item content */
-    select (listIndex: ListIndex, itemContent: string, itemIndex: number): void;
+    select(listIndex: ListIndex, itemContent: string, itemIndex: number): void;
     /** Event will be triggered on index click. As an argument event handler receives list index instance and clicked index item content */
-    click (listIndex: ListIndex, itemContent: string, itemIndex: number): void;
+    click(listIndex: ListIndex, itemContent: string, itemIndex: number): void;
     /** Event will be triggered right before List Index instance will be destroyed. As an argument event handler receives list index instance */
-    beforeDestroy (listIndex: ListIndex): void;
+    beforeDestroy(listIndex: ListIndex): void;
   }
 
   interface DomEvents {
@@ -74,11 +78,11 @@ export namespace ListIndex {
   interface AppMethods {
     listIndex: {
       /** create ListIndex instance */
-      create (parameters: Parameters): ListIndex;
+      create(parameters: Parameters): ListIndex;
       /** destroy ListIndex instance */
-      destroy (el: HTMLElement | CSSSelector | ListIndex): void;
+      destroy(el: HTMLElement | CSSSelector | ListIndex): void;
       /** get ListIndex instance by HTML element */
-      get (el: HTMLElement | CSSSelector): ListIndex;
+      get(el: HTMLElement | CSSSelector): ListIndex;
     };
   }
   interface AppParams {
@@ -86,11 +90,11 @@ export namespace ListIndex {
   }
   interface AppEvents {
     /** Event will be triggered on index select rather by click or swiping. As an argument event handler receives list index instance and selected index item content */
-    listIndexSelect (listIndex: ListIndex, itemContent: string, itemIndex: number): void;
+    listIndexSelect(listIndex: ListIndex, itemContent: string, itemIndex: number): void;
     /** Event will be triggered on index click. As an argument event handler receives list index instance and clicked index item content */
-    listIndexClick (listIndex: ListIndex, itemContent: string, itemIndex: number): void;
+    listIndexClick(listIndex: ListIndex, itemContent: string, itemIndex: number): void;
     /** Event will be triggered right before List Index instance will be destroyed. As an argument event handler receives list index instance */
-    listIndexBeforeDestroy (listIndex: ListIndex): void;
+    listIndexBeforeDestroy(listIndex: ListIndex): void;
   }
 }
 

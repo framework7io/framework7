@@ -6,8 +6,8 @@ export namespace Utils {
     /** Object with set of helper methods */
     utils: Utils;
   }
-  interface AppParams { }
-  interface AppEvents { }
+  interface AppParams {}
+  interface AppEvents {}
 }
 
 declare const UtilsModule: Framework7Plugin;

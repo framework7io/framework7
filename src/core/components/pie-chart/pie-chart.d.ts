@@ -1,5 +1,9 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import Framework7, {
+  CSSSelector,
+  Framework7EventsClass,
+  Framework7Plugin,
+} from '../app/app-class.js';
 
 export namespace PieChart {
   interface PieChart extends Framework7EventsClass<Events> {
@@ -17,9 +21,9 @@ export namespace PieChart {
     params: Parameters;
 
     /** Update/rerender chart SVG element according to passed parameters. It accepts object with same parameters required for chart initialization. You can pass only parameters that needs to be updated */
-    update (parameters: Parameters): PieChart;
+    update(parameters: Parameters): PieChart;
     /** Destroys chart instance */
-    destroy (): void;
+    destroy(): void;
   }
 
   interface Dataset {
@@ -70,13 +74,13 @@ export namespace PieChart {
   interface AppMethods {
     pieChart: {
       /** create Pie chart instance */
-      create (parameters: Parameters): PieChart;
+      create(parameters: Parameters): PieChart;
       /** destroy Pie chart instance */
-      destroy (el: HTMLElement | CSSSelector | PieChart): void;
+      destroy(el: HTMLElement | CSSSelector | PieChart): void;
       /** get Pie chart instance by HTML element */
-      get (el: HTMLElement | CSSSelector): PieChart;
+      get(el: HTMLElement | CSSSelector): PieChart;
       /** update/rerender Pie chart SVG according to passed parameters */
-      update (parameters: Parameters): PieChart;
+      update(parameters: Parameters): PieChart;
     };
   }
   interface AppParams {

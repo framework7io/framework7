@@ -5,9 +5,9 @@ export namespace Breadcrumbs {
   interface AppMethods {
     breadcrumbs: {};
   }
-  interface AppParams { }
-  interface DomEvents { }
-  interface AppEvents { }
+  interface AppParams {}
+  interface DomEvents {}
+  interface AppEvents {}
 }
 
 declare const BreadcrumbsComponent: Framework7Plugin;

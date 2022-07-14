@@ -6,8 +6,8 @@ export namespace Device {
     /** Object with properties about device */
     device: Device;
   }
-  interface AppParams { }
-  interface AppEvents { }
+  interface AppParams {}
+  interface AppEvents {}
 }
 declare const DeviceModule: Framework7Plugin;
 

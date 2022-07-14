@@ -1,4 +1,8 @@
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import Framework7, {
+  CSSSelector,
+  Framework7EventsClass,
+  Framework7Plugin,
+} from '../app/app-class.js';
 
 export namespace Form {
   interface DomEvents {
@@ -22,20 +26,20 @@ export namespace Form {
   interface AppMethods {
     form: {
       /** convert form fields values to data object */
-      convertToData (form: HTMLElement | CSSSelector): object;
+      convertToData(form: HTMLElement | CSSSelector): object;
 
       /** fill up form according to data object */
-      fillFromData (form: HTMLElement | CSSSelector, data: object): void;
+      fillFromData(form: HTMLElement | CSSSelector, data: object): void;
 
       /** get form data for the form with specified id attribute */
-      getFormData (formId: string): object;
+      getFormData(formId: string): object;
       /** store form data for the form with specified id attribute */
-      storeFormData (formId: string, data: object): void;
+      storeFormData(formId: string, data: object): void;
       /** remove form data for the form with specified id attribute */
-      removeFormData (formId: string): void;
+      removeFormData(formId: string): void;
     };
   }
-  interface AppParams { }
+  interface AppParams {}
   interface AppEvents {
     /** Event will be triggered on form when calling app.form.convertToData */
     formToData: (form: HTMLElement, data: object) => void;

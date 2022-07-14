@@ -11,7 +11,7 @@ export namespace Resize {
     /** App top offset in px */
     top: number;
   }
-  interface AppParams { }
+  interface AppParams {}
   interface AppEvents {
     /** Event will be fired on app resize (window resize). */
     resize: () => void;

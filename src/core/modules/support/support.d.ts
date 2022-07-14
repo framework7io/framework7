@@ -6,8 +6,8 @@ export namespace Support {
     /** Object with properties about supported features */
     support: Support;
   }
-  interface AppParams { }
-  interface AppEvents { }
+  interface AppParams {}
+  interface AppEvents {}
 }
 
 declare const SupportModule: Framework7Plugin;

@@ -1,5 +1,9 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import Framework7, {
+  CSSSelector,
+  Framework7EventsClass,
+  Framework7Plugin,
+} from '../app/app-class.js';
 
 export namespace Notification {
   interface Notification extends Framework7EventsClass<Events> {
@@ -13,9 +17,9 @@ export namespace Notification {
     params: Parameters;
 
     /** Open notification */
-    open (animate?: boolean): Notification;
+    open(animate?: boolean): Notification;
     /** Close notification */
-    close (animate?: boolean): Notification;
+    close(animate?: boolean): Notification;
   }
 
   interface Parameters {
@@ -79,19 +83,19 @@ export namespace Notification {
   interface AppMethods {
     notification: {
       /** create Notification instance */
-      create (parameters: Parameters): Notification;
+      create(parameters: Parameters): Notification;
 
       /** destroy Notification instance */
-      destroy (el: HTMLElement | CSSSelector | Notification): void;
+      destroy(el: HTMLElement | CSSSelector | Notification): void;
 
       /** get Notification instance by HTML element */
-      get (el: HTMLElement | CSSSelector): Notification;
+      get(el: HTMLElement | CSSSelector): Notification;
 
       /** open Notification */
-      open (el: HTMLElement | CSSSelector, animate?: boolean): Notification;
+      open(el: HTMLElement | CSSSelector, animate?: boolean): Notification;
 
       /** closes Notification */
-      close (el: HTMLElement | CSSSelector, animate?: boolean): Notification;
+      close(el: HTMLElement | CSSSelector, animate?: boolean): Notification;
     };
   }
   interface AppParams {

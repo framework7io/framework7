@@ -1,5 +1,9 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import Framework7, {
+  CSSSelector,
+  Framework7EventsClass,
+  Framework7Plugin,
+} from '../app/app-class.js';
 
 export namespace Panel {
   interface Events {
@@ -86,37 +90,37 @@ export namespace Panel {
     $containerEl: Dom7Array;
 
     /** Open panel. */
-    open (animate: boolean): void;
+    open(animate: boolean): void;
     /** Close panel. */
-    close (animate: boolean): void;
+    close(animate: boolean): void;
     /** Toggle panel */
-    toggle (animate: boolean): void;
+    toggle(animate: boolean): void;
     /** Destroy panel instance */
-    destroy (): void;
+    destroy(): void;
 
     /** Enable visible breakpoint */
-    enableVisibleBreakpoint (): void;
+    enableVisibleBreakpoint(): void;
     /** Disable visible breakpoint */
-    disableVisibleBreakpoint (): void;
+    disableVisibleBreakpoint(): void;
     /** Toggle visible breakpoint */
-    toggleVisibleBreakpoint (): void;
+    toggleVisibleBreakpoint(): void;
 
     /** Enable collapsed breakpoint */
-    enableCollapsedBreakpoint (): void;
+    enableCollapsedBreakpoint(): void;
     /** Disable collapsed breakpoint */
-    disableCollapsedBreakpoint (): void;
+    disableCollapsedBreakpoint(): void;
     /** Toggle collapsed breakpoint */
-    toggleCollapsedBreakpoint (): void;
+    toggleCollapsedBreakpoint(): void;
 
     /** Enable resizable panel */
-    enableResizable (): void;
+    enableResizable(): void;
     /** Disable resizable panel */
-    disableResizable (): void;
+    disableResizable(): void;
 
     /** Enable swipeable panel */
-    enableSwipe (): void;
+    enableSwipe(): void;
     /** Disable swipeable panel */
-    disableSwipe (): void;
+    disableSwipe(): void;
   }
 
   interface DomEvents {
@@ -147,17 +151,17 @@ export namespace Panel {
   interface AppMethods {
     panel: {
       /** create new panel instance */
-      create (parameters: Parameters): Panel;
+      create(parameters: Parameters): Panel;
       /** open panel */
-      open (el?: HTMLElement | CSSSelector | Panel | 'left' | 'right', animate?: boolean): boolean;
+      open(el?: HTMLElement | CSSSelector | Panel | 'left' | 'right', animate?: boolean): boolean;
       /** close panel */
-      close (el?: HTMLElement | CSSSelector | Panel | 'left' | 'right', animate?: boolean): boolean;
+      close(el?: HTMLElement | CSSSelector | Panel | 'left' | 'right', animate?: boolean): boolean;
       /** toggle panel */
-      toggle (el?: HTMLElement | CSSSelector | Panel | 'left' | 'right', animate?: boolean): boolean;
+      toggle(el?: HTMLElement | CSSSelector | Panel | 'left' | 'right', animate?: boolean): boolean;
       /** get Panel instance by specified side */
-      get (el?: HTMLElement | CSSSelector | Panel | 'left' | 'right', animate?: boolean): Panel;
+      get(el?: HTMLElement | CSSSelector | Panel | 'left' | 'right', animate?: boolean): Panel;
       /** destroy Panel instance */
-      destroy (el: HTMLElement | CSSSelector | Panel | 'left' | 'right'): void;
+      destroy(el: HTMLElement | CSSSelector | Panel | 'left' | 'right'): void;
     };
   }
   interface AppParams {

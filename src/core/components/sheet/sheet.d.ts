@@ -1,5 +1,9 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import Framework7, {
+  CSSSelector,
+  Framework7EventsClass,
+  Framework7Plugin,
+} from '../app/app-class.js';
 
 export namespace Sheet {
   interface Events {
@@ -74,19 +78,19 @@ export namespace Sheet {
     opened: boolean;
 
     /** Open sheet. */
-    open (animate?: boolean): Sheet;
+    open(animate?: boolean): Sheet;
     /** Close sheet. */
-    close (animate?: boolean): Sheet;
+    close(animate?: boolean): Sheet;
     /** Open/expand sheet swipe step */
-    stepOpen (): void;
+    stepOpen(): void;
     /** Close/collapse sheet swipe step */
-    stepClose (): void;
+    stepClose(): void;
     /** Toggle (open or close) sheet swipe step */
-    stepToggle (): void;
+    stepToggle(): void;
     /** Update step position. Required to call after content of sheet modal has been modified manually when it is opened */
-    setSwipeStep (): void;
+    setSwipeStep(): void;
     /** Destroy sheet */
-    destroy (): void;
+    destroy(): void;
   }
   interface DomEvents {
     /** Event will be triggered when Sheet Modal starts its opening animation */
@@ -108,21 +112,21 @@ export namespace Sheet {
   interface AppMethods {
     sheet: {
       /** create Sheet Modal instance */
-      create (parameters: Parameters): Sheet;
+      create(parameters: Parameters): Sheet;
       /** destroy Sheet Modal instance */
-      destroy (el: HTMLElement | CSSSelector | Sheet): void;
+      destroy(el: HTMLElement | CSSSelector | Sheet): void;
       /** get Sheet Modal instance by HTML element */
-      get (el?: HTMLElement | CSSSelector): Sheet;
+      get(el?: HTMLElement | CSSSelector): Sheet;
       /** open Sheet Modal */
-      open (el?: HTMLElement | CSSSelector, animate?: boolean): Sheet;
+      open(el?: HTMLElement | CSSSelector, animate?: boolean): Sheet;
       /** closes Sheet Modal */
-      close (el?: HTMLElement | CSSSelector, animate?: boolean): Sheet;
+      close(el?: HTMLElement | CSSSelector, animate?: boolean): Sheet;
       /** open/expand Sheet swipe step */
-      stepOpen (el?: HTMLElement | CSSSelector): Sheet;
+      stepOpen(el?: HTMLElement | CSSSelector): Sheet;
       /** close/collapse Sheet swipe step */
-      stepClose (el?: HTMLElement | CSSSelector): Sheet;
+      stepClose(el?: HTMLElement | CSSSelector): Sheet;
       /** toggle (open or close) Sheet swipe step */
-      stepToggle (el?: HTMLElement | CSSSelector): Sheet;
+      stepToggle(el?: HTMLElement | CSSSelector): Sheet;
     };
   }
   interface AppParams {

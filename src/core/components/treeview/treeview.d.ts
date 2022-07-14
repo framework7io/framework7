@@ -1,19 +1,23 @@
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import Framework7, {
+  CSSSelector,
+  Framework7EventsClass,
+  Framework7Plugin,
+} from '../app/app-class.js';
 
 export namespace Treeview {
   interface AppMethods {
     treeview: {
       /** open specified treeview item */
-      open (el: HTMLElement | CSSSelector): void;
+      open(el: HTMLElement | CSSSelector): void;
 
       /** close specified treeview item */
-      close (el: HTMLElement | CSSSelector): void;
+      close(el: HTMLElement | CSSSelector): void;
 
       /** toggle specified treeview item */
-      toggle (el: HTMLElement | CSSSelector): void;
+      toggle(el: HTMLElement | CSSSelector): void;
     };
   }
-  interface AppParams { }
+  interface AppParams {}
   interface DomEvents {
     /** Event will be triggered on Treeview item open */
     'treeview:open': () => void;

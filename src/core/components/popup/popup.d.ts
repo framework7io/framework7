@@ -1,5 +1,9 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import Framework7, {
+  CSSSelector,
+  Framework7EventsClass,
+  Framework7Plugin,
+} from '../app/app-class.js';
 
 export namespace Popup {
   interface Events {
@@ -70,11 +74,11 @@ export namespace Popup {
     opened: boolean;
 
     /** Open popup. */
-    open (animate?: boolean): Popup;
+    open(animate?: boolean): Popup;
     /** Close popup. */
-    close (animate?: boolean): Popup;
+    close(animate?: boolean): Popup;
     /** Destroy popup */
-    destroy (): void;
+    destroy(): void;
   }
   interface DomEvents {
     /** Event will be triggered in the beginning of swipe-to-close interaction (when user just started to drag popup) */
@@ -98,15 +102,15 @@ export namespace Popup {
   interface AppMethods {
     popup: {
       /** create Popup instance */
-      create (parameters: Parameters): Popup;
+      create(parameters: Parameters): Popup;
       /** destroy Popup instance */
-      destroy (el: HTMLElement | CSSSelector | Popup): void;
+      destroy(el: HTMLElement | CSSSelector | Popup): void;
       /** get Popup instance by HTML element */
-      get (el?: HTMLElement | CSSSelector): Popup;
+      get(el?: HTMLElement | CSSSelector): Popup;
       /** open Popup */
-      open (el?: HTMLElement | CSSSelector, animate?: boolean): Popup;
+      open(el?: HTMLElement | CSSSelector, animate?: boolean): Popup;
       /** closes Popup */
-      close (el?: HTMLElement | CSSSelector, animate?: boolean): Popup;
+      close(el?: HTMLElement | CSSSelector, animate?: boolean): Popup;
     };
   }
   interface AppParams {

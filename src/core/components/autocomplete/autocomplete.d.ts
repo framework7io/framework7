@@ -1,5 +1,9 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import Framework7, {
+  CSSSelector,
+  Framework7EventsClass,
+  Framework7Plugin,
+} from '../app/app-class.js';
 import { Searchbar } from '../searchbar/searchbar.js';
 import { View } from '../view/view.js';
 
@@ -35,15 +39,15 @@ export namespace Autocomplete {
     searchbar: Searchbar.Searchbar;
 
     /** Open Autocomplete (Dropdown, Page or Popup) */
-    open (): void;
+    open(): void;
     /** Close Autocomplete */
-    close (): void;
+    close(): void;
     /** Show autocomplete preloader */
-    preloaderShow (): void;
+    preloaderShow(): void;
     /** Hide autocomplete preloader */
-    preloaderHide (): void;
+    preloaderHide(): void;
     /** Destroy Autocomplete instance and remove all events */
-    destroy (): void;
+    destroy(): void;
   }
 
   interface Parameters {
@@ -157,15 +161,15 @@ export namespace Autocomplete {
   interface AppMethods {
     autocomplete: {
       /** create Autocomplete instance */
-      create (parameters: Parameters): Autocomplete;
+      create(parameters: Parameters): Autocomplete;
       /** destroy Autocomplete instance */
-      destroy (el: HTMLElement | CSSSelector): void;
+      destroy(el: HTMLElement | CSSSelector): void;
       /** get Autocomplete instance by HTML element */
-      get (el: HTMLElement | CSSSelector): Autocomplete;
+      get(el: HTMLElement | CSSSelector): Autocomplete;
       /** open Autocomplete */
-      open (el: HTMLElement | CSSSelector): Autocomplete;
+      open(el: HTMLElement | CSSSelector): Autocomplete;
       /** closes Autocomplete */
-      close (el: HTMLElement | CSSSelector): Autocomplete;
+      close(el: HTMLElement | CSSSelector): Autocomplete;
     };
   }
   interface AppParams {

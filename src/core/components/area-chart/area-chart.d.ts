@@ -1,5 +1,9 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import Framework7, {
+  CSSSelector,
+  Framework7EventsClass,
+  Framework7Plugin,
+} from '../app/app-class.js';
 
 export namespace AreaChart {
   interface AreaChart extends Framework7EventsClass<Events> {
@@ -17,9 +21,9 @@ export namespace AreaChart {
     params: Parameters;
 
     /** Update/rerender chart SVG element according to passed parameters. It accepts object with same parameters required for chart initialization. You can pass only parameters that needs to be updated */
-    update (parameters: Parameters): AreaChart;
+    update(parameters: Parameters): AreaChart;
     /** Destroys chart instance */
-    destroy (): void;
+    destroy(): void;
   }
 
   interface Dataset {
@@ -99,13 +103,13 @@ export namespace AreaChart {
   interface AppMethods {
     areaChart: {
       /** create Area chart instance */
-      create (parameters: Parameters): AreaChart;
+      create(parameters: Parameters): AreaChart;
       /** destroy Area chart instance */
-      destroy (el: HTMLElement | CSSSelector | AreaChart): void;
+      destroy(el: HTMLElement | CSSSelector | AreaChart): void;
       /** get Area chart instance by HTML element */
-      get (el: HTMLElement | CSSSelector): AreaChart;
+      get(el: HTMLElement | CSSSelector): AreaChart;
       /** update/rerender Area chart SVG according to passed parameters */
-      update (parameters: Parameters): AreaChart;
+      update(parameters: Parameters): AreaChart;
     };
   }
   interface AppParams {

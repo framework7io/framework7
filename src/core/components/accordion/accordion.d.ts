@@ -5,16 +5,16 @@ export namespace Accordion {
   interface AppMethods {
     accordion: {
       /** open specified accordion item */
-      open (el: HTMLElement | CSSSelector): void;
+      open(el: HTMLElement | CSSSelector): void;
 
       /** close specified accordion item */
-      close (el: HTMLElement | CSSSelector): void;
+      close(el: HTMLElement | CSSSelector): void;
 
       /** toggle specified accordion item */
-      toggle (el: HTMLElement | CSSSelector): void;
+      toggle(el: HTMLElement | CSSSelector): void;
     };
   }
-  interface AppParams { }
+  interface AppParams {}
   interface DomEvents {
     /** Event will be triggered right before accordion content starts its opening animation. event.detail.prevent contains function that will prevent accordion from opening when called */
     'accordion:beforeopen': () => void;

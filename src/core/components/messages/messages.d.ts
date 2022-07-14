@@ -1,5 +1,9 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import Framework7, {
+  CSSSelector,
+  Framework7EventsClass,
+  Framework7Plugin,
+} from '../app/app-class.js';
 
 export namespace Messages {
   interface Messages extends Framework7EventsClass<Events> {
@@ -13,27 +17,27 @@ export namespace Messages {
     messages: Message[];
 
     /** Show typing message indicator */
-    showTyping (message: Message): void;
+    showTyping(message: Message): void;
     /** Hide typing message indicator */
-    hideTyping (): void;
+    hideTyping(): void;
     /** Add new message to the end or to the beginning depending on method parameter */
-    addMessage (message: Message, method: 'append' | 'prepend', animate?: boolean): Messages;
+    addMessage(message: Message, method: 'append' | 'prepend', animate?: boolean): Messages;
     /** Add multiple messages per once. */
-    addMessages (messages: Message[], method: 'append' | 'prepend', animate?: boolean): Messages;
+    addMessages(messages: Message[], method: 'append' | 'prepend', animate?: boolean): Messages;
     /** Remove message */
-    removeMessage (message: Message): Messages;
+    removeMessage(message: Message): Messages;
     /** Remove multiple messages */
-    removeMessages (messages: Message[]): Messages;
+    removeMessages(messages: Message[]): Messages;
     /** Scroll messages to top/bottom depending on newMessagesFirst parameter */
-    scroll (durationMS: number, position: number): Messages;
+    scroll(durationMS: number, position: number): Messages;
     /** Render messages HTML depending on messages array */
-    renderMessages (): Messages;
+    renderMessages(): Messages;
     /** Force messages auto layout */
-    layout (): Messages;
+    layout(): Messages;
     /** Clear/remove all the messages */
-    clear (): Messages;
+    clear(): Messages;
     /** Destroy messages instance */
-    destroy (): void;
+    destroy(): void;
   }
 
   interface Message {
@@ -124,7 +128,7 @@ export namespace Messages {
 
   interface Events {
     /** Event will be triggered right before Messages instance will be destroyed */
-    beforeDestroy (messages: Messages): void;
+    beforeDestroy(messages: Messages): void;
   }
 
   interface DomEvents {
@@ -135,13 +139,13 @@ export namespace Messages {
   interface AppMethods {
     messages: {
       /** create Messages instance */
-      create (parameters: Parameters): Messages;
+      create(parameters: Parameters): Messages;
 
       /** destroy Messages instance */
-      destroy (el: HTMLElement | CSSSelector | Messages): void;
+      destroy(el: HTMLElement | CSSSelector | Messages): void;
 
       /** get Messages instance by HTML element */
-      get (el: HTMLElement | CSSSelector): Messages;
+      get(el: HTMLElement | CSSSelector): Messages;
     };
   }
   interface AppParams {
@@ -149,7 +153,7 @@ export namespace Messages {
   }
   interface AppEvents {
     /** Event will be triggered right before Messages instance will be destroyed */
-    messagesBeforeDestroy (messages: Messages): void;
+    messagesBeforeDestroy(messages: Messages): void;
   }
 }
 

@@ -2,6 +2,18 @@
 
 # Change Log
 
+# [7.0.6](https://github.com/framework7io/framework7/compare/v7.0.5...v7.0.6) (2022-07-14)
+
+### Bug Fixes
+
+- **core:** fix core components types file not found in typescript when import ([#4059](https://github.com/framework7io/framework7/issues/4059)) ([1886a76](https://github.com/framework7io/framework7/commit/1886a76fccbfd885a3125d59041270c5d3178187))
+- **core:** fix getWindow/Document getters in lazy components ([41a7c50](https://github.com/framework7io/framework7/commit/41a7c5083fa0cee734191d8450a19c268d1b1958)), closes [#4052](https://github.com/framework7io/framework7/issues/4052)
+- **panel:** fix closeByBackdropClick ignored on instance ([48e966f](https://github.com/framework7io/framework7/commit/48e966fdccb80efaa5c79eb66126adfbbce3f361))
+
+### Features
+
+- **svelte:** searchbar: add html attributes auto-complete/correct/capitalize fixes ([d5934d6](https://github.com/framework7io/framework7/commit/d5934d612c4ab41f99676efe52258e8ed54c1e10))
+
 # [7.0.5](https://github.com/framework7io/framework7/compare/v7.0.4...v7.0.5) (2022-05-31)
 
 ### Bug Fixes

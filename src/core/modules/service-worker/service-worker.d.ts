@@ -8,9 +8,9 @@ export namespace ServiceWorker {
       /** Array with service workers registrations */
       registrations: ServiceWorkerRegistration[];
       /** Register service worker */
-      register (path: string, scope?: string): Promise<any>;
+      register(path: string, scope?: string): Promise<any>;
       /** Unregister service worker */
-      unregister (registration?: ServiceWorkerRegistration): Promise<any>;
+      unregister(registration?: ServiceWorkerRegistration): Promise<any>;
     };
   }
   interface AppParams {

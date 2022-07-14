@@ -1,5 +1,9 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import Framework7, {
+  CSSSelector,
+  Framework7EventsClass,
+  Framework7Plugin,
+} from '../app/app-class.js';
 import { View } from '../view/view.js';
 
 export namespace ColorPicker {
@@ -47,15 +51,15 @@ export namespace ColorPicker {
     params: Parameters;
 
     /** Set new color. Value is the Color Picker Value object */
-    setValue (value: ColorPickerValue): void;
+    setValue(value: ColorPickerValue): void;
     /** Returns current Color Picker value */
-    getValue (): ColorPickerValue;
+    getValue(): ColorPickerValue;
     /** Open Color Picker */
-    open (): void;
+    open(): void;
     /** Close Color Picker */
-    close (): void;
+    close(): void;
     /** Destroy Color Picker instance and remove all events */
-    destroy (): void;
+    destroy(): void;
   }
 
   interface Parameters {
@@ -193,16 +197,16 @@ export namespace ColorPicker {
   interface AppMethods {
     colorPicker: {
       /** create ColorPicker instance */
-      create (parameters: Parameters): ColorPicker;
+      create(parameters: Parameters): ColorPicker;
 
       /** destroy ColorPicker instance */
-      destroy (el: HTMLElement | CSSSelector | ColorPicker): void;
+      destroy(el: HTMLElement | CSSSelector | ColorPicker): void;
 
       /** get ColorPicker instance by HTML element */
-      get (el: HTMLElement | CSSSelector): ColorPicker;
+      get(el: HTMLElement | CSSSelector): ColorPicker;
 
       /** closes ColorPicker */
-      close (el: HTMLElement | CSSSelector): ColorPicker;
+      close(el: HTMLElement | CSSSelector): ColorPicker;
     };
   }
   interface AppParams {

@@ -33,7 +33,7 @@ export namespace Store {
     /** Store */
     store?: StoreParameters | StoreObject;
   }
-  interface AppEvents { }
+  interface AppEvents {}
 }
 declare const StoreModule: Framework7Plugin;
 

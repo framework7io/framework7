@@ -1,5 +1,9 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import Framework7, {
+  CSSSelector,
+  Framework7EventsClass,
+  Framework7Plugin,
+} from '../app/app-class.js';
 
 export namespace Toast {
   interface Events {
@@ -60,11 +64,11 @@ export namespace Toast {
     params: Parameters;
 
     /** Open toast */
-    open (animate?: boolean): Toast;
+    open(animate?: boolean): Toast;
     /** Close toast */
-    close (animate?: boolean): Toast;
+    close(animate?: boolean): Toast;
     /** Destroy toast */
-    destroy (): void;
+    destroy(): void;
   }
   interface DomEvents {
     /** Event will be triggered when Toast starts its opening animation */
@@ -80,17 +84,17 @@ export namespace Toast {
   interface AppMethods {
     toast: {
       /** create Toast instance */
-      create (parameters: Parameters): Toast;
+      create(parameters: Parameters): Toast;
       /** destroy Toast instance */
-      destroy (el: HTMLElement | CSSSelector | Toast): void;
+      destroy(el: HTMLElement | CSSSelector | Toast): void;
       /** get Toast instance by HTML element */
-      get (el: HTMLElement | CSSSelector): Toast;
+      get(el: HTMLElement | CSSSelector): Toast;
       /** open Toast */
-      open (el: HTMLElement | CSSSelector, animate?: boolean): Toast;
+      open(el: HTMLElement | CSSSelector, animate?: boolean): Toast;
       /** closes Toast */
-      close (el: HTMLElement | CSSSelector, animate?: boolean): Toast;
+      close(el: HTMLElement | CSSSelector, animate?: boolean): Toast;
       /** create Toast instance and show immediately */
-      show (parameters: Parameters): Toast;
+      show(parameters: Parameters): Toast;
     };
   }
   interface AppParams {

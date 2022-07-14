@@ -1,5 +1,9 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import Framework7, {
+  CSSSelector,
+  Framework7EventsClass,
+  Framework7Plugin,
+} from '../app/app-class.js';
 
 export namespace Range {
   interface Parameters {
@@ -84,11 +88,11 @@ export namespace Range {
     /** Range parameters */
     params: Parameters;
     /** Returns range slider value */
-    getValue (): number | number[];
+    getValue(): number | number[];
     /** Set new range slider value */
-    setValue (value: number | number[]): Range;
+    setValue(value: number | number[]): Range;
     /** Destroy range slider */
-    destroy (): void;
+    destroy(): void;
   }
   interface Events {
     /** Event will be triggered when range value has been changed. As an argument event handler receives range instance */
@@ -110,15 +114,15 @@ export namespace Range {
   interface AppMethods {
     range: {
       /** create Range Slider instance */
-      create (parameters: Parameters): Range;
+      create(parameters: Parameters): Range;
       /** get Range Slider instance by HTML element */
-      get (el: HTMLElement | CSSSelector | Range): Range;
+      get(el: HTMLElement | CSSSelector | Range): Range;
       /** get Range Slider value */
-      getValue (el: HTMLElement | CSSSelector | Range): number | number[];
+      getValue(el: HTMLElement | CSSSelector | Range): number | number[];
       /** set new Range Slider value */
-      setValue (el: HTMLElement | CSSSelector | Range, value: number | number[]): void;
+      setValue(el: HTMLElement | CSSSelector | Range, value: number | number[]): void;
       /** destroy Range Slider instance */
-      destroy (el: HTMLElement | CSSSelector | Range): void;
+      destroy(el: HTMLElement | CSSSelector | Range): void;
     };
   }
   interface AppParams {

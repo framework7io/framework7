@@ -1,5 +1,9 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import Framework7, {
+  CSSSelector,
+  Framework7EventsClass,
+  Framework7Plugin,
+} from '../app/app-class.js';
 
 export namespace Popover {
   interface Events {
@@ -73,12 +77,12 @@ export namespace Popover {
     opened: boolean;
 
     /** Open popover. */
-    open (targetEl: HTMLElement | CSSSelector, animate?: boolean): Popover;
-    open (animate?: boolean): Popover;
+    open(targetEl: HTMLElement | CSSSelector, animate?: boolean): Popover;
+    open(animate?: boolean): Popover;
     /** Close popover. */
-    close (animate?: boolean): Popover;
+    close(animate?: boolean): Popover;
     /** Destroy popover */
-    destroy (): void;
+    destroy(): void;
   }
   interface DomEvents {
     /** Event will be triggered when Popover starts its opening animation */
@@ -94,19 +98,19 @@ export namespace Popover {
   interface AppMethods {
     popover: {
       /** create Popover instance */
-      create (parameters: Parameters): Popover;
+      create(parameters: Parameters): Popover;
       /** destroy Popover instance */
-      destroy (el: HTMLElement | CSSSelector | Popover): void;
+      destroy(el: HTMLElement | CSSSelector | Popover): void;
       /** get Popover instance by HTML element */
-      get (el?: HTMLElement | CSSSelector): Popover;
+      get(el?: HTMLElement | CSSSelector): Popover;
       /** open Popover */
-      open (
+      open(
         el?: HTMLElement | CSSSelector,
         targetEl?: HTMLElement | CSSSelector,
         animate?: boolean,
       ): Popover;
       /** closes Popover */
-      close (el?: HTMLElement | CSSSelector, animate?: boolean): Popover;
+      close(el?: HTMLElement | CSSSelector, animate?: boolean): Popover;
     };
   }
   interface AppParams {

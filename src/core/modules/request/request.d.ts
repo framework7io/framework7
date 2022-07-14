@@ -6,8 +6,8 @@ export namespace Request {
     /** Object with properties about supported features */
     request: Request;
   }
-  interface AppParams { }
-  interface AppEvents { }
+  interface AppParams {}
+  interface AppEvents {}
 }
 
 declare const RequestModule: Framework7Plugin;

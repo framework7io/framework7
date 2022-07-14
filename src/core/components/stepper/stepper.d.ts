@@ -1,5 +1,9 @@
 import { Dom7Array } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class.js';
+import Framework7, {
+  CSSSelector,
+  Framework7EventsClass,
+  Framework7Plugin,
+} from '../app/app-class.js';
 
 export namespace Stepper {
   interface Parameters {
@@ -60,19 +64,19 @@ export namespace Stepper {
     /** Stepper parameters */
     params: Parameters;
     /** Returns stepper value */
-    getValue (): number;
+    getValue(): number;
     /** Set new stepper value */
-    setValue (value: number): Stepper;
+    setValue(value: number): Stepper;
     /** Increment stepper value, similar to clicking on its "plus" button */
-    incremenet (): Stepper;
+    incremenet(): Stepper;
     /** Increment stepper value, similar to clicking on its "plus" button */
-    plus (): Stepper;
+    plus(): Stepper;
     /** Decrement stepper value, similar to clicking on its "minus" button */
-    decrement (): Stepper;
+    decrement(): Stepper;
     /** Decrement stepper value, similar to clicking on its "minus" button */
-    minus (): Stepper;
+    minus(): Stepper;
     /** Destroy stepper */
-    destroy (): void;
+    destroy(): void;
   }
   interface Events {
     /** Event will be triggered when stepper value has been changed. As an argument event handler receives stepper instance and stepper value */
@@ -90,15 +94,15 @@ export namespace Stepper {
   interface AppMethods {
     stepper: {
       /** create Stepper instance */
-      create (parameters: Parameters): Stepper;
+      create(parameters: Parameters): Stepper;
       /** get Stepper instance by HTML element */
-      get (el: HTMLElement | CSSSelector | Stepper): Stepper;
+      get(el: HTMLElement | CSSSelector | Stepper): Stepper;
       /** get Stepper value */
-      getValue (el: HTMLElement | CSSSelector | Stepper): number | number[];
+      getValue(el: HTMLElement | CSSSelector | Stepper): number | number[];
       /** set new Stepper value */
-      setValue (el: HTMLElement | CSSSelector | Stepper, value: number | number[]): void;
+      setValue(el: HTMLElement | CSSSelector | Stepper, value: number | number[]): void;
       /** destroy Stepper instance */
-      destroy (el: HTMLElement | CSSSelector | Stepper): void;
+      destroy(el: HTMLElement | CSSSelector | Stepper): void;
     };
   }
   interface AppParams {
