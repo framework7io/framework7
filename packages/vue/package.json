@@ -5,10 +5,7 @@
   "type": "module",
   "exports": {
     ".": "./framework7-vue.js",
-    "./bundle": {
-      "default": "./framework7-vue-bundle.js",
-      "types": "./framework7-vue.d.ts"
-    },
+    "./bundle": "./framework7-vue-bundle.js",
     "./components/*": "./components/*",
     "./shared/*": "./shared/*"
   },
