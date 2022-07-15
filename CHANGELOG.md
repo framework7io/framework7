@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [7.0.7](https://github.com/framework7io/framework7/compare/v7.0.6...v0.0.0) (2022-07-15)
+
+### Bug Fixes
+
+- **core:** fix package.json ([e0d4ebe](https://github.com/framework7io/framework7/commit/e0d4ebe0267bece3782ceae6f4946576bcf36846)), closes [#4061](https://github.com/framework7io/framework7/issues/4061)
+
 # [7.0.6](https://github.com/framework7io/framework7/compare/v7.0.5...v7.0.6) (2022-07-14)
 
 ### Bug Fixes
