@@ -115,7 +115,7 @@
     "rollup": "^2.70.2",
     "rollup-plugin-svelte": "^7.1.0",
     "svelte": "^3.47.0",
-    "terser": "^5.12.1",
+    "terser": "^5.14.2",
     "ttf2woff": "^2.0.2",
     "vite": "^2.9.5",
     "vue": "^3.2.33"
