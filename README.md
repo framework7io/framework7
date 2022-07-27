@@ -574,8 +574,12 @@ $ npm install
 ### Development Builds
 
 The following npm scripts are available to create development builds:
-
-- `build:dev` - build development versions of all packages (Core, Vue, React, Svelte)
+`build:dev`build development versions of all packages (Core, Vue, React, Svelte)
+```console
+$ npm install build-dev -D
+```
+ 
+# others
 - `build-core:dev` - build development version of Core (vanilla JS) Framework7
 - `build-react:dev` - build development version of Framework7 React package
 - `build-vue:dev` - build development version of Framework7 Vue package
