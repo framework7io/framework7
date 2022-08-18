@@ -108,6 +108,11 @@ const buildTables = (sponsors) => {
 };
 
 const buildSponsorsList = async (sponsors) => {
+  const goldSponsorsContent = sponsors.goldSponsor.map((item) =>
+    `
+  - [${item.title}](${item.link})
+  `.trim(),
+  );
   const silverSponsorsContent = sponsors.silverSponsor.map((item) =>
     `
   - [${item.title}](${item.link})
@@ -120,6 +125,10 @@ const buildSponsorsList = async (sponsors) => {
   );
 
   let backersContent = fs.readFileSync(path.resolve(__dirname, '../BACKERS.md'), 'utf-8');
+
+  backersContent = backersContent.split('<!-- GOLD_SPONSOR -->');
+  backersContent[1] = `\n${goldSponsorsContent.join('\n')}\n`;
+  backersContent = backersContent.join('<!-- GOLD_SPONSOR -->');
 
   backersContent = backersContent.split('<!-- SILVER_SPONSOR -->');
   backersContent[1] = `\n${silverSponsorsContent.join('\n')}\n`;

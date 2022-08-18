@@ -20,6 +20,11 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
 <table>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://www.noneedtostudy.com/take-my-online-class/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/noneedtostudy.png" alt="NoNeedToStudy.com - get help with taking online classes and tests from expert tutors" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://www.nettikasinot.org" target="_blank">
         <img src="https://framework7.io/i/sponsors/nettikasinot.png" alt="Nettikasinot | Tässä parhaat nettikasinot - Katso lista" width="160">
       </a>
@@ -54,13 +59,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/poprey-com.png" alt="Buy Instagram comments" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://casinoutankonto.net/casino-utan-svensk-licens/" target="_blank">
         <img src="https://framework7.io/i/sponsors/casinoutankonto-se.png" alt="Casino utan svensk licens - Casinon utan spelpaus med Trustly" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://polskiekasynohex.com" target="_blank">
         <img src="https://framework7.io/i/sponsors/kasynohex.png" alt="Polskie Kasyno HEX" width="160">
@@ -96,13 +101,23 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/appvalley.jpg" alt="AppValley" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="http://mytommy.com" target="_blank">
         <img src="https://framework7.io/i/sponsors/tommy.png" alt="Tommy" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
+    <td align="center" valign="middle">
+      <a href="https://intexsoft.com/ecommerce-development-services/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/intexsoft.png" alt="Custom eCommerce Development Services - IntexSoft" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://rubyroidlabs.com/services/consulting" target="_blank">
+        <img src="https://framework7.io/i/sponsors/rubyroidlabs.png" alt="This Ruby on Rails consulting company can save you up to 60% — Rubyroid Labs" width="160">
+      </a>
+    </td>
     <td align="center" valign="middle">
       <a href="https://www.csgocaptain.com" target="_blank">
         <img src="https://framework7.io/i/sponsors/csgocaptain.jpg" alt="CSGO Captain | Your Guide to Counter-Strike 2022 - CS:GO Captain" width="160">
@@ -128,6 +143,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/chiefcasinos.png" alt="Online Casino in Canada ᐉ Best Canadian Online Casinos 2022" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://4-c.at/online-casinos/echtgeld/" target="_blank">
         <img src="https://framework7.io/i/sponsors/online-casino-osterreich.png" alt="Bestes Online Casino Österreich – Top Spiele 2022 im Test mit 4-c.at" width="160">
@@ -143,8 +160,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/sportonlinebetting.png" alt="Betting Sites Not On Gamstop » List of Best Bookies in UK - June 2022" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.nongamstopodds.com/casinos-not-on-gamstop/" target="_blank">
         <img src="https://framework7.io/i/sponsors/nongamstopodds.png" alt="NonGamStopOdds | Find the best UK casino not on GamStop" width="160">
@@ -170,6 +185,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/rushradar.png" alt="RushRadar: The Best Articles, Reviews, and Referral Codes" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://spelpaus.co/" target="_blank">
         <img src="https://framework7.io/i/sponsors/spelpaus.png" alt="Spela online casino trots spelpaus på casinon utan svensk licens" width="160">
@@ -185,8 +202,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/surebet.png" alt="Casinos Not on GamStop » Most Trusted Non GamStop UK Casinos ⭐️" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://playcasinoscanada.com" target="_blank">
         <img src="https://framework7.io/i/sponsors/play-casinos-canada.png" alt="Discover The Best Reputable Online Casinos in Canada" width="160">
@@ -212,6 +227,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/bonusvedot.png" alt="Parhaat vedonlyöntibonukset & vedonlyöntitarjoukset 2022 - Bonusvedot" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://jetx-apostas.com" target="_blank">
         <img src="https://framework7.io/i/sponsors/jetxjogo.png" alt="JETX APOSTAS - Jogo do foguete JETIX 2022" width="160">
@@ -227,8 +244,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/casinoallianz.png" alt="kostenlose automatenspiele" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://nettikasinotkuninkaat.com/nettikasinot-ilman-rekisteroitymista/" target="_blank">
         <img src="https://framework7.io/i/sponsors/nettikasinot.jpg" alt="Kasinot ilman rekisteröitymistä" width="160">
@@ -254,6 +269,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/mysportsinjury.png" alt="MY Sports Injury Clinic ® Manchester City Centre" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://mrwin.com/new-casino-sites/" target="_blank">
         <img src="https://framework7.io/i/sponsors/mrwin.png" alt="New Casino Sites UK for 2022 - Mr Win" width="160">
@@ -269,8 +286,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/crossfy.png" alt="Crossfy: La App Para Tu Box y Gym" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.casino.xyz/uk/casinos-not-on-gamstop/" target="_blank">
         <img src="https://framework7.io/i/sponsors/casinoxyz-black.png" alt="Casino.xyz | Non-Gamstop Casino Reviews and Ratings" width="160">
@@ -296,6 +311,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/instinctools.png" alt="Software development company" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://activefollowers.uk" target="_blank">
         <img src="https://framework7.io/i/sponsors/activefollowers.png" alt="Buy Instagram Followers UK - Buy 100% Real Instagram Followers" width="160">
@@ -311,8 +328,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/exittimesharereview.png" alt="Timeshare exit company reviews" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://billigzonen.dk" target="_blank">
         <img src="https://framework7.io/i/sponsors/billigzonen.jpg" alt="Sammenlign priser på produkter i Danmark | Billigzonen.dk" width="160">
@@ -338,6 +353,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/fortunegames.png" alt="Fortune Games® | Free Spins No Deposit Slot Games | Online Slots" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://betomania.pl/ranking-bukmacherow/" target="_blank">
         <img src="https://framework7.io/i/sponsors/betomania.png" alt="Ranking bukmacherów - najlepsze legalne oferty w Polsce" width="160">
@@ -353,8 +370,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/betrouwbaar.png" alt="Online Casino's ► Beste Belgische Casino's 🇧🇪" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.thecasinodb.com" target="_blank">
         <img src="https://framework7.io/i/sponsors/thecasinodb.png" alt="UK Online Casinos, Slot Machines, and Bonuses | TheCasinoDB" width="160">
@@ -380,6 +395,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/casinos-hunter.png" alt="Mobile Casinos 2021 Review ᐈ Mobile Online Casinos Canada | CasinosHunter" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://allonlinecasinoslist.com" target="_blank">
         <img src="https://framework7.io/i/sponsors/allonlinecasinoslist.png" alt="Online casinos list & casino bonuses 2021 | Allonlinecasinoslist" width="160">
@@ -395,8 +412,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/onlinecasinosdk.png" alt="Online Casino Danmark til Rigtige Spillere - Onlinecasinosdk.com" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://zamsino.com/ca/free-spins-no-deposit/" target="_blank">
         <img src="https://framework7.io/i/sponsors/zamsino.png" alt="Zamsino" width="160">
@@ -422,6 +437,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/bonukset.png" alt="Parhaat bonukset netin rahapeleihin | Bonukset.fi" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.boosbe.com/buy-reddit-upvotes" target="_blank">
         <img src="https://framework7.io/i/sponsors/boosbe.svg" alt="Buy Reddit Upvotes Cheap - 100% Authenic from Real People - Boosbe" width="160">
@@ -437,8 +454,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/casinoexpo.jpg" alt="CasinoExpo svenska nya casinon online" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://najlepsibukmacherzy.pl/ranking-legalnych-bukmacherow/" target="_blank">
         <img src="https://framework7.io/i/sponsors/netpositive.png" alt="Ranking Bukmacherów Legalnych 2020. Bukmacher nr 1 to..." width="160">
@@ -464,6 +479,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/cryptocurrencycodes.png" alt="Top FREE Crypto Sign Up Bonuses & Referral Codes" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.estepera.com" target="_blank">
         <img src="https://framework7.io/i/sponsors/estepera.png" alt="hair transplant istanbul" width="160">
@@ -479,8 +496,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/codefirst.png" alt="Software Development Company | CodeFirst UK" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://list.casino" target="_blank">
         <img src="https://framework7.io/i/sponsors/listcasino.png" alt="List of All the Best Online Casinos - Ultimate Casino List!" width="160">
@@ -506,6 +521,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/mypaperwriter.svg" alt="Write My Paper For Me - Writing Service | My Paper Writer" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://casinopro.ca" target="_blank">
         <img src="https://framework7.io/i/sponsors/casinopro.jpg" alt="Casinopro | Best Casino Comparison Site in Canada" width="160">
@@ -521,8 +538,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/johnslots.jpg" alt="JohnSlots | Find the Best Online Casinos, Bonuses and Slots 2020" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.discovermagazine.com/sponsored/top-best-dating-sites-of-2020-dating-sites-apps-are-best-way-to-find" target="_blank">
         <img src="https://framework7.io/i/sponsors/discovermagazine.png" alt="Top Best Dating Sites of 2020" width="160">
@@ -548,6 +563,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/coupons4printing.jpg" alt="Coupons4Printing: Promotion Codes, Coupons, Coupon Codes" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://evolution-host.com" target="_blank">
         <img src="https://framework7.io/i/sponsors/evolution-host.png" alt="Evolution Host - A DDoS Protected VPS host that accepts Bitcoin" width="160">
@@ -563,8 +580,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/realtime.jpg" alt="Real Time Communications World" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://papersowl.com/write-my-essay-please" target="_blank">
         <img src="https://framework7.io/i/sponsors/papersowl.png" alt="Write My Essay For Me" width="160">
@@ -590,6 +605,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/tutlance.png" alt="Tutlance.com - Pay For Homework Answers, Assignments and Essay Solutions" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://edubirdie.com" target="_blank">
         <img src="https://framework7.io/i/sponsors/edubirdie.png" alt="EduBirdie - The professional essay writing service for students who can't even" width="160">
@@ -605,8 +622,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/bonusfinder.png" alt="'Spiel mit mehr' dank BonusFinder" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://kqapi.us" target="_blank">
         <img src="https://framework7.io/i/sponsors/kqapius.png" alt="Kqapius, INC." width="160">
@@ -632,6 +647,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/cyberbrain.png" alt="CyberBrain IT Services" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://hicapps.cl" target="_blank">
         <img src="https://framework7.io/i/sponsors/hicapps.png" alt="HICAPPS - Health Informatics Custom APPs" width="160">
@@ -647,6 +664,11 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/wappler.png" alt="Wappler - The Visual Web App Creator" width="160">
       </a>
     </td>
+    <td align="center" valign="middle"></td>
+    <td align="center" valign="middle"></td>
+    <td align="center" valign="middle"></td>
+    <td align="center" valign="middle"></td>
+    <td align="center" valign="middle"></td>
   </tr>
 </table>
 <!-- SPONSORS_TABLE_WRAP -->
