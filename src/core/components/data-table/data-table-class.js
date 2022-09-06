@@ -116,8 +116,8 @@ class DataTable extends Framework7Class {
     table.$el.find('tbody td:not(.checkbox-cell)').each((el) => {
       const $el = $(el);
       const elIndex = $el.index();
-      const collpsibleTitle = $el.attr('data-collapsible-title');
-      if (!collpsibleTitle && collpsibleTitle !== '') {
+      const collapsibleTitle = $el.attr('data-collapsible-title');
+      if (!collapsibleTitle && collapsibleTitle !== '') {
         $el.attr('data-collapsible-title', table.$el.find('thead th').eq(elIndex).text());
       }
     });
