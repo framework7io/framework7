@@ -2,6 +2,18 @@
 
 # Change Log
 
+# [7.0.8](https://github.com/framework7io/framework7/compare/v7.0.7...v7.0.8) (2022-09-14)
+
+### Bug Fixes
+
+- **core:** export internal $jsx helper for lazy components ([c2a2213](https://github.com/framework7io/framework7/commit/c2a2213520374abde4424e1ca8e62c9f788fd23a)), closes [#4072](https://github.com/framework7io/framework7/issues/4072)
+- **panel:** don't process backdrop if disabled ([c01b23c](https://github.com/framework7io/framework7/commit/c01b23cb9fd75df54e95aee2ccbec45ee0ca23d9)), closes [#4069](https://github.com/framework7io/framework7/issues/4069)
+- **swiper:** fix if loaded as lazy component ([32f3be9](https://github.com/framework7io/framework7/commit/32f3be99e0af0a08dac73e94cf6ced76a76bf7fb)), closes [#4073](https://github.com/framework7io/framework7/issues/4073)
+
+### Features
+
+- **core:** expose `Framework7.parseComponent` ([7b0aea0](https://github.com/framework7io/framework7/commit/7b0aea01f21e30c825e3e6d7ceea3716f010f3fc))
+
 # [7.0.7](https://github.com/framework7io/framework7/compare/v7.0.6...v0.0.0) (2022-07-15)
 
 ### Bug Fixes
