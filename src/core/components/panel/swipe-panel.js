@@ -131,7 +131,7 @@ function swipePanel(panel) {
       if (!panel.opened) {
         panel.insertToRoot();
         $el.addClass('panel-in-swipe');
-        $backdropEl.css('visibility', 'visible');
+        if ($backdropEl) $backdropEl.css('visibility', 'visible');
         $el.trigger('panel:swipeopen');
         panel.emit('local::swipeOpen panelSwipeOpen', panel);
       }
@@ -174,7 +174,7 @@ function swipePanel(panel) {
     if (effect === 'reveal') {
       if (!params.swipeNoFollow) {
         $viewEl.transform(`translate3d(${translate}px,0,0)`).transition(0);
-        $backdropEl.transform(`translate3d(${translate}px,0,0)`).transition(0);
+        if ($backdropEl) $backdropEl.transform(`translate3d(${translate}px,0,0)`).transition(0);
       }
 
       $el.trigger('panel:swipe', Math.abs(translate / panelWidth));
@@ -182,14 +182,19 @@ function swipePanel(panel) {
     } else {
       if (side === 'left') translate -= panelWidth;
       if (!params.swipeNoFollow) {
-        $backdropEl.transition(0);
         backdropOpacity = 1 - Math.abs(translate / panelWidth);
-        $backdropEl.css({ opacity: backdropOpacity });
+        if ($backdropEl) {
+          $backdropEl.transition(0);
+          $backdropEl.css({ opacity: backdropOpacity });
+        }
+
         $el.transform(`translate3d(${translate}px,0,0)`).transition(0);
         if (effect === 'push') {
           const viewTranslate = side === 'left' ? translate + panelWidth : translate - panelWidth;
           $viewEl.transform(`translate3d(${viewTranslate}px,0,0)`).transition(0);
-          $backdropEl.transform(`translate3d(${viewTranslate}px,0,0)`).transition(0);
+          if ($backdropEl) {
+            $backdropEl.transform(`translate3d(${viewTranslate}px,0,0)`).transition(0);
+          }
         }
       }
 
@@ -303,7 +308,9 @@ function swipePanel(panel) {
       $el.removeClass('panel-in-swipe');
     }
     $el.transition('').transform('');
-    $backdropEl.transform('').transition('').css({ opacity: '', visibility: '' });
+    if ($backdropEl) {
+      $backdropEl.transform('').transition('').css({ opacity: '', visibility: '' });
+    }
   }
   function handleGestureStart(e) {
     isGestureStarted = true;
