@@ -10,6 +10,7 @@ import ConstructorMethods from '../../shared/constructor-methods.js';
 import ModalMethods from '../../shared/modal-methods.js';
 import $ from '../../shared/dom7.js';
 import loadModule from './load-module.js';
+import $jsx from '../../shared/$jsx.js';
 
 class Framework7 extends Framework7Class {
   constructor(params = {}) {
@@ -321,6 +322,7 @@ class Framework7 extends Framework7Class {
   }
 }
 
+Framework7.$jsx = $jsx;
 Framework7.ModalMethods = ModalMethods;
 Framework7.ConstructorMethods = ConstructorMethods;
 

@@ -32,6 +32,7 @@ function framework7ComponentLoader(Framework7, Framework7AutoInstallComponent) {
   var Modal = Framework7.Modal;
   var ConstructorMethods = Framework7.ConstructorMethods;
   var ModalMethods = Framework7.ModalMethods;
+  var $jsx = Framework7.$jsx;
 `;
 
 const install = `
