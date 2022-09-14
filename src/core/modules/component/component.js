@@ -16,6 +16,7 @@ export default {
   name: 'component',
   static: {
     Component,
+    parseComponent,
     registerComponent,
     unregisterComponent,
   },
