@@ -134,6 +134,10 @@ function buildLazyComponentsJs(components, cb) {
     return fs.existsSync(`./src/core/components/${component}/${component}.js`);
   });
 
+  const swiperContent = fs.readFileSync(
+    path.resolve(__dirname, '../node_modules/swiper/swiper-bundle.js'),
+  );
+
   rollup({
     treeshake: false,
     input: componentsToProcess.map(
@@ -144,6 +148,7 @@ function buildLazyComponentsJs(components, cb) {
         delimiters: ['', ''],
         'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
         'process.env.FORMAT': JSON.stringify(format),
+        [`import Swiper from 'swiper/bundle';`]: swiperContent,
       }),
       nodeResolve({ mainFields: ['module', 'main', 'jsnext'] }),
       babel({ babelHelpers: 'bundled' }),
@@ -229,7 +234,9 @@ function buildLazyComponentsJs(components, cb) {
           .replace(/var window = getWindow\(\);/g, '')
           .replace(/var document = getDocument\(\);/g, '')
           .replace(/getDocument\(\);/g, 'document')
-          .replace(/getWindow\(\);/g, 'window');
+          .replace(/getWindow\(\);/g, 'window')
+          .replace(/(const|var|let) window = window/g, '')
+          .replace(/(const|var|let) document = document/g, '');
 
         fileContent = `${fileIntro}\n  ${fileContent.trim()}${outro}`;
         if (fileName.indexOf('swiper') >= 0) {
