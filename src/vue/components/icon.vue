@@ -22,7 +22,6 @@ export default {
     f7: String,
     icon: String,
     ios: String,
-    aurora: String,
     md: String,
     tooltip: String,
     tooltipTrigger: String,
@@ -36,7 +35,7 @@ export default {
     useTooltip(elRef, props);
 
     const classesComputed = computed(() => {
-      const { ios, md, aurora, f7, material, icon } = props;
+      const { ios, md, f7, material, icon } = props;
       let classes = {
         icon: true,
       };
@@ -44,7 +43,6 @@ export default {
       let themeIcon;
       if (theme.value && theme.value.ios) themeIcon = ios;
       else if (theme.value && theme.value.md) themeIcon = md;
-      else if (theme.value && theme.value.aurora) themeIcon = aurora;
 
       if (themeIcon) {
         const parts = themeIcon.split(':');
@@ -78,7 +76,7 @@ export default {
     });
 
     const iconText = computed(() => {
-      const { ios, md, aurora, f7, material } = props;
+      const { ios, md, f7, material } = props;
       let text = material || f7;
       if (
         md &&
@@ -94,13 +92,6 @@ export default {
         (ios.indexOf('material:') >= 0 || ios.indexOf('f7:') >= 0)
       ) {
         text = ios.split(':')[1];
-      } else if (
-        aurora &&
-        theme.value &&
-        theme.value.aurora &&
-        (aurora.indexOf('material:') >= 0 || aurora.indexOf('f7:') >= 0)
-      ) {
-        text = aurora.split(':')[1];
       }
       return text;
     });

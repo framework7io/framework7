@@ -17,7 +17,6 @@
   export let label = false;
   export let iosItemHeight = 14;
   export let mdItemHeight = 14;
-  export let auroraItemHeight = 14;
 
   export let f7Slot = 'fixed';
 
@@ -62,7 +61,6 @@
         indexes,
         iosItemHeight,
         mdItemHeight,
-        auroraItemHeight,
         scrollList,
         label,
         on: {

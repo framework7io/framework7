@@ -24,10 +24,6 @@ const Framework7Svelte = {
       app.theme.md = true;
       theme.ios = true;
     }
-    if (paramsTheme === 'aurora') {
-      app.theme.md = true;
-      theme.aurora = true;
-    }
 
     // eslint-disable-next-line
     const needThemeCalc = typeof window === 'undefined' ? !!userAgent : true;
@@ -35,9 +31,7 @@ const Framework7Svelte = {
       const device = Framework7.getDevice({ userAgent }, true);
       app.theme.ios = !!device.ios;
       theme.ios = app.theme.ios;
-      app.theme.aurora = device.desktop && device.electron;
-      theme.aurora = app.theme.aurora;
-      app.theme.md = !app.theme.ios && !app.theme.aurora;
+      app.theme.md = !app.theme.ios;
       theme.md = app.theme.md;
     }
     f7ready(() => {

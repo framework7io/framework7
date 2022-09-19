@@ -44,8 +44,6 @@ import { VirtualList } from 'framework7/types';
   noHairlinesBetweenMd? : boolean
   noHairlinesIos? : boolean
   noHairlinesBetweenIos? : boolean
-  noHairlinesAurora? : boolean
-  noHairlinesBetweenAurora? : boolean
   noChevron? : boolean
   chevronCenter? : boolean
   tab? : boolean
@@ -101,8 +99,6 @@ const List = forwardRef((props, ref) => {
     noHairlinesBetweenMd,
     noHairlinesIos,
     noHairlinesBetweenIos,
-    noHairlinesAurora,
-    noHairlinesBetweenAurora,
     noChevron,
     chevronCenter,
     tab,
@@ -277,11 +273,9 @@ const List = forwardRef((props, ref) => {
       'no-hairlines': noHairlines,
       'no-hairlines-md': noHairlinesMd,
       'no-hairlines-ios': noHairlinesIos,
-      'no-hairlines-aurora': noHairlinesAurora,
       'no-hairlines-between': noHairlinesBetween,
       'no-hairlines-between-md': noHairlinesBetweenMd,
       'no-hairlines-between-ios': noHairlinesBetweenIos,
-      'no-hairlines-between-aurora': noHairlinesBetweenAurora,
       'form-store-data': formStoreData,
       'inline-labels': inlineLabels,
       'no-chevron': noChevron,

@@ -20,11 +20,10 @@ export interface ComponentContext {
   $f7router: Router.Router;
   /** Framework7 app instance */
   $f7: Framework7;
-  /** Object with md, ios and aurora boolean properties which indicating current theme.  */
+  /** Object with `md` and `ios` boolean properties which indicating current theme.  */
   $theme: {
     ios: boolean;
     md: boolean;
-    aurora: boolean;
   };
   /** Main app store */
   $store: Store;

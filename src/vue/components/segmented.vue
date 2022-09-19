@@ -1,7 +1,7 @@
 <template>
   <component :is="tag" :class="classes">
     <slot />
-    <span v-if="strong || strongIos || strongMd || strongAurora" class="segmented-highlight" />
+    <span v-if="strong || strongIos || strongMd" class="segmented-highlight" />
   </component>
 </template>
 <script>
@@ -15,15 +15,12 @@ export default {
     raised: Boolean,
     raisedIos: Boolean,
     raisedMd: Boolean,
-    raisedAurora: Boolean,
     round: Boolean,
     roundIos: Boolean,
     roundMd: Boolean,
-    roundAurora: Boolean,
     strong: Boolean,
     strongIos: Boolean,
     strongMd: Boolean,
-    strongAurora: Boolean,
     tag: {
       type: String,
       default: 'div',
@@ -37,16 +34,13 @@ export default {
           segmented: true,
           'segmented-raised': props.raised,
           'segmented-raised-ios': props.raisedIos,
-          'segmented-raised-aurora': props.raisedAurora,
           'segmented-raised-md': props.raisedMd,
           'segmented-round': props.round,
           'segmented-round-ios': props.roundIos,
-          'segmented-round-aurora': props.roundAurora,
           'segmented-round-md': props.roundMd,
           'segmented-strong': props.strong,
           'segmented-strong-ios': props.strongIos,
           'segmented-strong-md': props.strongMd,
-          'segmented-strong-aurora': props.strongAurora,
         },
         colorClasses(props),
       ),

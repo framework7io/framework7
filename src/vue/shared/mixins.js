@@ -30,7 +30,6 @@ export const iconProps = {
   iconF7: String,
   iconIos: String,
   iconMd: String,
-  iconAurora: String,
   iconColor: String,
   iconSize: [String, Number],
   iconBadge: [String, Number],

@@ -1,9 +1,4 @@
-import {
-  extend,
-  iosPreloaderContent,
-  mdPreloaderContent,
-  auroraPreloaderContent,
-} from '../../shared/utils.js';
+import { extend, iosPreloaderContent, mdPreloaderContent } from '../../shared/utils.js';
 import Dialog from './dialog-class.js';
 import ModalMethods from '../../shared/modal-methods.js';
 
@@ -88,7 +83,7 @@ export default {
               {
                 text: app.params.dialog.buttonCancel,
                 keyCodes: keyboardActions ? [27] : null,
-                color: app.theme === 'aurora' ? 'gray' : null,
+                color: null,
               },
               {
                 text: app.params.dialog.buttonOk,
@@ -118,7 +113,7 @@ export default {
                 text: app.params.dialog.buttonCancel,
                 onClick: callbackCancel,
                 keyCodes: keyboardActions ? [27] : null,
-                color: app.theme === 'aurora' ? 'gray' : null,
+                color: null,
               },
               {
                 text: app.params.dialog.buttonOk,
@@ -150,7 +145,7 @@ export default {
               {
                 text: app.params.dialog.buttonCancel,
                 keyCodes: keyboardActions ? [27] : null,
-                color: app.theme === 'aurora' ? 'gray' : null,
+                color: null,
               },
               {
                 text: app.params.dialog.buttonOk,
@@ -185,7 +180,7 @@ export default {
               {
                 text: app.params.dialog.buttonCancel,
                 keyCodes: keyboardActions ? [27] : null,
-                color: app.theme === 'aurora' ? 'gray' : null,
+                color: null,
               },
               {
                 text: app.params.dialog.buttonOk,
@@ -206,7 +201,6 @@ export default {
           const preloaders = {
             iosPreloaderContent,
             mdPreloaderContent,
-            auroraPreloaderContent,
           };
           const preloaderInner = preloaders[`${app.theme}PreloaderContent`] || '';
           return new Dialog(app, {

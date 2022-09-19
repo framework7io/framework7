@@ -22,7 +22,6 @@
   export let noHairlines = false;
   export let noHairlinesMd = false;
   export let noHairlinesIos = false;
-  export let noHairlinesAurora = false;
 
   let className = undefined;
   export { className as class };
@@ -48,7 +47,6 @@
       'no-hairlines': noHairlines,
       'no-hairlines-md': noHairlinesMd,
       'no-hairlines-ios': noHairlinesIos,
-      'no-hairlines-aurora': noHairlinesAurora,
     },
     colorClasses($$props),
   );

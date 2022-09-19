@@ -39,8 +39,6 @@
   export let noHairlinesBetweenMd = false;
   export let noHairlinesIos = false;
   export let noHairlinesBetweenIos = false;
-  export let noHairlinesAurora = false;
-  export let noHairlinesBetweenAurora = false;
 
   // Links Chevron (Arrow) Icon
   export let noChevron = false;
@@ -96,11 +94,9 @@
       'no-hairlines': noHairlines,
       'no-hairlines-md': noHairlinesMd,
       'no-hairlines-ios': noHairlinesIos,
-      'no-hairlines-aurora': noHairlinesAurora,
       'no-hairlines-between': noHairlinesBetween,
       'no-hairlines-between-md': noHairlinesBetweenMd,
       'no-hairlines-between-ios': noHairlinesBetweenIos,
-      'no-hairlines-between-aurora': noHairlinesBetweenAurora,
       'form-store-data': formStoreData,
       'inline-labels': inlineLabels,
       'no-chevron': noChevron,

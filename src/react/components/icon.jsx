@@ -12,7 +12,6 @@ import { useTheme } from '../shared/use-theme.js';
   f7? : string;
   icon? : string;
   ios? : string;
-  aurora? : string;
   md? : string;
   tooltip? : string;
   tooltipTrigger? : string;
@@ -24,7 +23,7 @@ import { useTheme } from '../shared/use-theme.js';
 
 const Icon = forwardRef((props, ref) => {
   const theme = useTheme();
-  const { className, id, style, children, material, f7, icon, md, ios, aurora, size } = props;
+  const { className, id, style, children, material, f7, icon, md, ios, size } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
@@ -43,7 +42,6 @@ const Icon = forwardRef((props, ref) => {
     let themeIcon;
     if (theme && theme.ios) themeIcon = ios;
     else if (theme && theme.md) themeIcon = md;
-    else if (theme && theme.aurora) themeIcon = aurora;
 
     if (themeIcon) {
       const parts = themeIcon.split(':');
@@ -79,13 +77,6 @@ const Icon = forwardRef((props, ref) => {
       (ios.indexOf('material:') >= 0 || ios.indexOf('f7:') >= 0)
     ) {
       text = ios.split(':')[1];
-    } else if (
-      aurora &&
-      theme &&
-      theme.aurora &&
-      (aurora.indexOf('material:') >= 0 || aurora.indexOf('f7:') >= 0)
-    ) {
-      text = aurora.split(':')[1];
     }
     return text;
   };

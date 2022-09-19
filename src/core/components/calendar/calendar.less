@@ -6,10 +6,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  .aurora & {
-    --f7-toolbar-border-color: transparent;
-    --f7-bars-border-color: transparent;
-  }
+
   &.modal-in {
     display: flex;
   }
@@ -347,11 +344,7 @@
     pointer-events: none;
   }
 
-  .device-desktop.aurora &:hover {
-    background-color: var(--f7-calendar-picker-hover-bg-color);
-  }
-  &.active-state,
-  .device-desktop.aurora &.active-state {
+  &.active-state {
     background: var(--f7-calendar-picker-pressed-bg-color);
   }
 }
@@ -449,7 +442,4 @@
 });
 .if-md-theme({
   @import './calendar-md.less';
-});
-.if-aurora-theme({
-  @import './calendar-aurora.less';
 });

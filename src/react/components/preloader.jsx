@@ -58,12 +58,6 @@ const Preloader = forwardRef((props, ref) => {
         <span className="preloader-inner-line" />
       </span>
     );
-  } else if (theme && theme.aurora) {
-    innerEl = (
-      <span className="preloader-inner">
-        <span className="preloader-inner-circle" />
-      </span>
-    );
   } else if (!theme) {
     innerEl = <span className="preloader-inner" />;
   }

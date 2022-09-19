@@ -15,15 +15,13 @@ const Framework7React = {
 
     if (paramsTheme === 'md') theme.md = true;
     if (paramsTheme === 'ios') theme.ios = true;
-    if (paramsTheme === 'aurora') theme.aurora = true;
 
     // eslint-disable-next-line
     const needThemeCalc = typeof window === 'undefined' ? !!userAgent : true;
     if (needThemeCalc && (!paramsTheme || paramsTheme === 'auto')) {
       const device = Framework7.getDevice({ userAgent }, true);
       theme.ios = !!device.ios;
-      theme.aurora = device.desktop && device.electron;
-      theme.md = !theme.ios && !theme.aurora;
+      theme.md = !theme.ios;
     }
     f7ready(() => {
       setTheme();

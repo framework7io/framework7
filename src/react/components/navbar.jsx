@@ -188,9 +188,7 @@ const Navbar = forwardRef((props, ref) => {
   let titleLargeEl;
 
   const addLeftTitleClass = theme && theme.ios && f7 && !f7.params.navbar.iosCenterTitle;
-  const addCenterTitleClass =
-    (theme && theme.md && f7 && f7.params.navbar.mdCenterTitle) ||
-    (theme && theme.aurora && f7 && f7.params.navbar.auroraCenterTitle);
+  const addCenterTitleClass = theme && theme.md && f7 && f7.params.navbar.mdCenterTitle;
 
   const isLarge = large || largeTransparent;
   const isTransparent = transparent || (isLarge && largeTransparent);

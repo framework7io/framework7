@@ -28,7 +28,7 @@ class Searchbar extends FrameworkClass {
       notFoundEl: '.searchbar-not-found',
       hideOnEnableEl: '.searchbar-hide-on-enable',
       hideOnSearchEl: '.searchbar-hide-on-search',
-      backdrop: undefined,
+      backdrop: true,
       removeDiacritics: true,
       customSearch: false,
       hideDividers: true,
@@ -100,8 +100,7 @@ class Searchbar extends FrameworkClass {
     const inline = sb.params.inline || $el.hasClass('searchbar-inline');
 
     if (typeof sb.params.backdrop === 'undefined') {
-      if (!inline) sb.params.backdrop = app.theme !== 'aurora';
-      else sb.params.backdrop = false;
+      sb.params.backdrop = !inline;
     }
 
     let $backdropEl;
@@ -193,13 +192,6 @@ class Searchbar extends FrameworkClass {
     }
     function onInputBlur() {
       sb.$el.removeClass('searchbar-focused');
-      if (
-        app.theme === 'aurora' &&
-        (!$disableButtonEl || !$disableButtonEl.length || !sb.params.disableButton) &&
-        !sb.query
-      ) {
-        sb.disable();
-      }
     }
     function onInputChange() {
       const value = sb.$inputEl.val().trim();

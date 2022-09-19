@@ -49,11 +49,6 @@ import { RouterContext } from '../shared/router-context.js';
   mdSwipeBackAnimateOpacity? : boolean
   mdSwipeBackActiveArea? : number
   mdSwipeBackThreshold? : number
-  auroraSwipeBack? : boolean
-  auroraSwipeBackAnimateShadow? : boolean
-  auroraSwipeBackAnimateOpacity? : boolean
-  auroraSwipeBackActiveArea? : number
-  auroraSwipeBackThreshold? : number
   browserHistory? : boolean
   browserHistoryRoot? : string
   browserHistoryAnimate? : boolean

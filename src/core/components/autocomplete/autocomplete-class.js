@@ -7,7 +7,6 @@ import {
   deleteProps,
   iosPreloaderContent,
   mdPreloaderContent,
-  auroraPreloaderContent,
 } from '../../shared/utils.js';
 import { getDevice } from '../../shared/get-device.js';
 import Framework7Class from '../../shared/class.js';
@@ -29,10 +28,6 @@ class Autocomplete extends Framework7Class {
       },
       app.params.autocomplete,
     );
-
-    if (typeof defaults.searchbarDisableButton === 'undefined') {
-      defaults.searchbarDisableButton = app.theme !== 'aurora';
-    }
 
     // Extend defaults with modules params
     ac.useModulesParams(defaults);
@@ -512,7 +507,6 @@ class Autocomplete extends Framework7Class {
     const preloaders = {
       iosPreloaderContent,
       mdPreloaderContent,
-      auroraPreloaderContent,
     };
 
     return (

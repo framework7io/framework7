@@ -6,10 +6,9 @@ import { Store } from 'framework7/types';
 export interface Framework7Theme {
   ios: boolean;
   md: boolean;
-  aurora: boolean;
 }
 
-/** Object with boolean properties with information about currently used theme (iOS, MD or Aurora) */
+/** Object with boolean properties with information about currently used theme (`ios` or `md`) */
 declare const theme: Framework7Theme;
 
 /** Main Framework7's initialized instance. It allows you to use any of Framework7 APIs */

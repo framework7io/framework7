@@ -37,10 +37,6 @@ export default {
       type: Number,
       default: 14,
     },
-    auroraItemHeight: {
-      type: Number,
-      default: 14,
-    },
     ...colorProps,
   },
   emits: ['listindex:select'],
@@ -75,7 +71,6 @@ export default {
           indexes: props.indexes,
           iosItemHeight: props.iosItemHeight,
           mdItemHeight: props.mdItemHeight,
-          auroraItemHeight: props.auroraItemHeight,
           scrollList: props.scrollList,
           label: props.label,
           on: {

@@ -22,11 +22,9 @@
   export let position = undefined;
   export let topMd = undefined;
   export let topIos = undefined;
-  export let topAurora = undefined;
   export let top = undefined;
   export let bottomMd = undefined;
   export let bottomIos = undefined;
-  export let bottomAurora = undefined;
   export let bottom = undefined;
   export let inner = true;
 
@@ -49,15 +47,10 @@
       'toolbar-bottom':
         (theme && theme.md && bottomMd) ||
         (theme && theme.ios && bottomIos) ||
-        (theme && theme.aurora && bottomAurora) ||
         bottom ||
         position === 'bottom',
       'toolbar-top':
-        (theme && theme.md && topMd) ||
-        (theme && theme.ios && topIos) ||
-        (theme && theme.aurora && topAurora) ||
-        top ||
-        position === 'top',
+        (theme && theme.md && topMd) || (theme && theme.ios && topIos) || top || position === 'top',
       'tabbar-labels': labels,
       'tabbar-scrollable': scrollable,
       'toolbar-hidden': hidden,

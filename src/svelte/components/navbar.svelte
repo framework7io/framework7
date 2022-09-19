@@ -67,9 +67,7 @@
   $: hasTitleLargeSlots = $$slots['title-large'];
 
   $: addLeftTitleClass = theme && theme.ios && app.f7 && !app.f7.params.navbar.iosCenterTitle;
-  $: addCenterTitleClass =
-    (theme && theme.md && app.f7 && app.f7.params.navbar.mdCenterTitle) ||
-    (theme && theme.aurora && app.f7 && app.f7.params.navbar.auroraCenterTitle);
+  $: addCenterTitleClass = theme && theme.md && app.f7 && app.f7.params.navbar.mdCenterTitle;
 
   $: isLarge = large || largeTransparent;
   $: isTransparent = transparent || (isLarge && largeTransparent);

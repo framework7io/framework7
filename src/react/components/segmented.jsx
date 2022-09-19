@@ -9,15 +9,12 @@ import { colorClasses } from '../shared/mixins.js';
   raised? : boolean
   raisedIos? : boolean
   raisedMd? : boolean
-  raisedAurora? : boolean
   round? : boolean
   roundIos? : boolean
   roundMd? : boolean
-  roundAurora? : boolean
   strong? : boolean
   strongIos? : boolean
   strongMd? : boolean
-  strongAurora? : boolean
   tag? : string
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
   children?: React.ReactNode;
@@ -33,15 +30,12 @@ const Segmented = forwardRef((props, ref) => {
     raised,
     raisedIos,
     raisedMd,
-    raisedAurora,
     round,
     roundIos,
     roundMd,
-    roundAurora,
     strong,
     strongIos,
     strongMd,
-    strongAurora,
     tag = 'div',
   } = props;
   const extraAttrs = getExtraAttrs(props);
@@ -57,16 +51,13 @@ const Segmented = forwardRef((props, ref) => {
       segmented: true,
       'segmented-raised': raised,
       'segmented-raised-ios': raisedIos,
-      'segmented-raised-aurora': raisedAurora,
       'segmented-raised-md': raisedMd,
       'segmented-round': round,
       'segmented-round-ios': roundIos,
-      'segmented-round-aurora': roundAurora,
       'segmented-round-md': roundMd,
       'segmented-strong': strong,
       'segmented-strong-ios': strongIos,
       'segmented-strong-md': strongMd,
-      'segmented-strong-aurora': strongAurora,
     },
     colorClasses(props),
   );
@@ -75,9 +66,7 @@ const Segmented = forwardRef((props, ref) => {
   return (
     <SegmentedTag id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       {children}
-      {(strong || strongIos || strongMd || strongAurora) && (
-        <span className="segmented-highlight" />
-      )}
+      {(strong || strongIos || strongMd) && <span className="segmented-highlight" />}
     </SegmentedTag>
   );
 });

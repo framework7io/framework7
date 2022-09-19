@@ -22,7 +22,6 @@ import { useTab } from '../shared/use-tab.js';
   noHairlines?: boolean
   noHairlinesMd?: boolean
   noHairlinesIos?: boolean
-  noHairlinesAurora?: boolean
   onTabShow?: (el?: HTMLElement) => void
   onTabHide?: (el?: HTMLElement) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
@@ -49,7 +48,6 @@ const Block = forwardRef((props, ref) => {
     noHairlines,
     noHairlinesIos,
     noHairlinesMd,
-    noHairlinesAurora,
     id,
     style,
     children,
@@ -82,7 +80,6 @@ const Block = forwardRef((props, ref) => {
       'no-hairlines': noHairlines,
       'no-hairlines-md': noHairlinesMd,
       'no-hairlines-ios': noHairlinesIos,
-      'no-hairlines-aurora': noHairlinesAurora,
     },
     colorClasses(props),
   );

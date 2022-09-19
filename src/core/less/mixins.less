@@ -20,11 +20,6 @@
     @ruleset();
   }
 }
-.if-aurora-theme(@ruleset) {
-  & when (@includeAuroraTheme) {
-    @ruleset();
-  }
-}
 .if-dark-theme(@ruleset) {
   & when(@includeDarkTheme) {
     @ruleset();
@@ -40,13 +35,6 @@
 .md-vars(@ruleset) {
   & when (@includeMdTheme) {
     .md {
-      @ruleset();
-    }
-  }
-}
-.aurora-vars(@ruleset) {
-  & when (@includeAuroraTheme) {
-    .aurora {
       @ruleset();
     }
   }
@@ -107,9 +95,7 @@
   .md &.no-hairlines-md,
   .md &.no-hairlines-md ul,
   .ios &.no-hairlines-ios,
-  .ios &.no-hairlines-ios ul,
-  .aurora &.no-hairlines-aurora,
-  .aurora &.no-hairlines-aurora ul {
+  .ios &.no-hairlines-ios ul {
     .hairline-remove-top-bottom();
   }
   &.no-hairline-top,
@@ -117,9 +103,7 @@
   .md &.no-hairline-top-md,
   .md &.no-hairline-top-md ul,
   .ios &.no-hairline-top-ios,
-  .ios &.no-hairline-top-ios ul,
-  .aurora &.no-hairline-top-aurora,
-  .aurora &.no-hairline-top-aurora ul {
+  .ios &.no-hairline-top-ios ul {
     .hairline-remove(top);
   }
   &.no-hairline-bottom,
@@ -127,17 +111,14 @@
   .md &.no-hairline-bottom-md,
   .md &.no-hairline-bottom-md ul,
   .ios &.no-hairline-bottom-ios,
-  .ios &.no-hairline-bottom-ios ul,
-  .aurora &.no-hairline-bottom-aurora,
-  .aurora &.no-hairline-bottom-aurora ul {
+  .ios &.no-hairline-bottom-ios ul {
     .hairline-remove(bottom);
   }
 }
 .no-hairlines-between() {
   &.no-hairlines-between,
   .md &.no-hairlines-between-md,
-  .ios &.no-hairlines-between-ios,
-  .aurora &.no-hairlines-between-aurora {
+  .ios &.no-hairlines-between-ios {
     .item-inner,
     .list-button,
     .item-divider,

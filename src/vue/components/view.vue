@@ -108,20 +108,6 @@ export default {
     },
     mdSwipeBackActiveArea: Number,
     mdSwipeBackThreshold: Number,
-    auroraSwipeBack: {
-      type: Boolean,
-      default: undefined,
-    },
-    auroraSwipeBackAnimateShadow: {
-      type: Boolean,
-      default: undefined,
-    },
-    auroraSwipeBackAnimateOpacity: {
-      type: Boolean,
-      default: undefined,
-    },
-    auroraSwipeBackActiveArea: Number,
-    auroraSwipeBackThreshold: Number,
     // Push State
     browserHistory: {
       type: Boolean,

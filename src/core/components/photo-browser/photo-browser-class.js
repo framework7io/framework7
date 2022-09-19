@@ -193,9 +193,7 @@ class PhotoBrowser extends Framework7Class {
     if (!pb.params.iconsColor && pb.params.theme === 'dark') iconsColor = 'white';
 
     const pageBackLinkText =
-      (pb.app.theme === 'ios' || pb.app.theme === 'aurora') && pb.params.pageBackLinkText
-        ? pb.params.pageBackLinkText
-        : '';
+      pb.app.theme === 'ios' && pb.params.pageBackLinkText ? pb.params.pageBackLinkText : '';
 
     const renderNavbarCount =
       typeof pb.params.navbarShowCount === 'undefined'

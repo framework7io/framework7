@@ -17,14 +17,12 @@ const setTheme = () => {
   if (!f7) return;
   theme.ios = f7.theme === 'ios';
   theme.md = f7.theme === 'md';
-  theme.aurora = f7.theme === 'aurora';
 };
 
 const cleanup = () => {
   unsetRouterIds();
   delete theme.ios;
   delete theme.md;
-  delete theme.aurora;
   f7routers.views = [];
   f7routers.tabs = [];
   f7routers.modals = null;
@@ -45,8 +43,7 @@ const f7init = (rootEl, params = {}, init = true) => {
   if (f7Params.userAgent && (f7Params.theme === 'auto' || !f7Params.theme)) {
     const device = Framework7.getDevice({ userAgent: f7Params.userAgent }, true);
     theme.ios = !!device.ios;
-    theme.aurora = device.desktop && device.electron;
-    theme.md = !theme.ios && !theme.aurora;
+    theme.md = !theme.ios;
   }
   // eslint-disable-next-line
   if (f7 && typeof window !== 'undefined') return;

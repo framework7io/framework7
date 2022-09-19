@@ -61,7 +61,6 @@ async function buildLazyComponentsLess(components, rtl, cb) {
     .join('\n')}\n}`;
   const includeIosTheme = config.themes.indexOf('ios') >= 0;
   const includeMdTheme = config.themes.indexOf('md') >= 0;
-  const includeAuroraTheme = config.themes.indexOf('aurora') >= 0;
   const includeDarkTheme = config.darkTheme;
   const includeLightTheme = config.lightTheme;
 
@@ -80,7 +79,6 @@ async function buildLazyComponentsLess(components, rtl, cb) {
     )
     .replace('$includeIosTheme', includeIosTheme)
     .replace('$includeMdTheme', includeMdTheme)
-    .replace('$includeAuroraTheme', includeAuroraTheme)
     .replace('$includeDarkTheme', includeDarkTheme)
     .replace('$includeLightTheme', includeLightTheme)
     .replace('$themeColor', config.themeColor)

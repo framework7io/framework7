@@ -23,11 +23,6 @@ export const iosPreloaderContent = `
   </span>
 `.trim();
 
-export const auroraPreloaderContent = `
-  <span class="preloader-inner">
-    <span class="preloader-inner-circle"></span>
-  </span>
-`;
 export function eventNameToColonCase(eventName) {
   let hasColon;
   return eventName

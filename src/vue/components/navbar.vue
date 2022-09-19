@@ -195,9 +195,7 @@ export default {
     );
 
     const addCenterTitleClass = computed(
-      () =>
-        (theme.value && theme.value.md && f7 && f7.params.navbar.mdCenterTitle) ||
-        (theme.value && theme.value.aurora && f7 && f7.params.navbar.auroraCenterTitle),
+      () => theme.value && theme.value.md && f7 && f7.params.navbar.mdCenterTitle,
     );
 
     const isLarge = computed(() => props.large || props.largeTransparent);

@@ -27,7 +27,6 @@ export default {
     noHairlines: Boolean,
     noHairlinesMd: Boolean,
     noHairlinesIos: Boolean,
-    noHairlinesAurora: Boolean,
     ...colorProps,
   },
   emits: ['tab:hide', 'tab:show'],
@@ -53,7 +52,6 @@ export default {
         noHairlines,
         noHairlinesMd,
         noHairlinesIos,
-        noHairlinesAurora,
       } = props;
       return classNames(
         'block',
@@ -73,7 +71,6 @@ export default {
           'no-hairlines': noHairlines,
           'no-hairlines-md': noHairlinesMd,
           'no-hairlines-ios': noHairlinesIos,
-          'no-hairlines-aurora': noHairlinesAurora,
         },
         colorClasses(props),
       );

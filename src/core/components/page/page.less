@@ -105,9 +105,6 @@
 .if-md-theme({
   @import './page-md.less';
 });
-.if-aurora-theme({
-  @import './page-aurora.less';
-});
 
 .view:not(.view-master-detail) {
   .page-master-stacked {
@@ -171,8 +168,7 @@
   }
 }
 .md .router-transition-custom,
-.ios .router-transition-custom,
-.aurora .router-transition-custom {
+.ios .router-transition-custom {
   .page-previous,
   .page-next {
     opacity: 1;

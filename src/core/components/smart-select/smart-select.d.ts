@@ -61,7 +61,7 @@ export namespace SmartSelect {
     searchbarPlaceholder?: string;
     /** Searchbar "cancel" link text. Has effect only in iOS theme (default 'Cancel') */
     searchbarDisableText?: string;
-    /** Enables searchbar disable button. By default, disabled for Aurora theme */
+    /** Enables searchbar disable button. (default true) */
     searchbarDisableButton?: boolean;
     /** Value of "spellcheck" attribute on searchbar input (default false) */
     searchbarSpellcheck?: boolean;
@@ -92,8 +92,6 @@ export namespace SmartSelect {
     optionIconIos?: string;
     /** Same as `optionIcon` but will apply only when MD theme is active */
     optionIconMd?: string;
-    /** Same as `optionIcon` but will apply only when Aurora theme is active */
-    optionIconAurora?: string;
 
     /** Function to render smart select page, must return full page HTML string */
     renderPage?: (items: any[]) => string;

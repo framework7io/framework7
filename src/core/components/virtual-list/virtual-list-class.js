@@ -16,8 +16,6 @@ class VirtualList extends Framework7Class {
       defaultHeight = 48;
     } else if (app.theme === 'ios') {
       defaultHeight = 44;
-    } else if (app.theme === 'aurora') {
-      defaultHeight = 38;
     }
 
     const defaults = {

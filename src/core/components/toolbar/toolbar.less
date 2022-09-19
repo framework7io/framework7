@@ -49,8 +49,7 @@
 }
 .toolbar-top,
 .ios .toolbar-top-ios,
-.md .toolbar-top-md,
-.aurora .toolbar-top-aurora {
+.md .toolbar-top-md {
   top: 0;
   .tab-link-highlight {
     bottom: 0;
@@ -76,8 +75,7 @@
 }
 .toolbar-bottom,
 .ios .toolbar-bottom-ios,
-.md .toolbar-bottom-md,
-.aurora .toolbar-bottom-aurora {
+.md .toolbar-bottom-md {
   bottom: 0;
   height: calc(var(--f7-toolbar-height) + var(--f7-safe-area-bottom));
   .tab-link-highlight {
@@ -222,8 +220,7 @@
 // Relation with page
 .toolbar-bottom,
 .ios .toolbar-bottom-ios,
-.md .toolbar-bottom-md,
-.aurora .toolbar-bottom-aurora {
+.md .toolbar-bottom-md {
   ~ * {
     --f7-page-toolbar-bottom-offset: var(--f7-toolbar-height);
   }
@@ -233,16 +230,14 @@
 }
 .toolbar-bottom,
 .ios .toolbar-bottom-ios,
-.md .toolbar-bottom-md,
-.aurora .toolbar-bottom-aurora {
+.md .toolbar-bottom-md {
   &.toolbar-hidden {
     transform: translate3d(0, 100%, 0);
   }
 }
 .toolbar-top,
 .ios .toolbar-top-ios,
-.md .toolbar-top-md,
-.aurora .toolbar-top-aurora {
+.md .toolbar-top-md {
   ~ * {
     --f7-page-toolbar-top-offset: var(--f7-toolbar-height);
   }
@@ -252,8 +247,7 @@
 }
 .toolbar-top,
 .ios .toolbar-top-ios,
-.md .toolbar-top-md,
-.aurora .toolbar-top-aurora {
+.md .toolbar-top-md {
   &.toolbar-hidden {
     transform: translate3d(0, -100%, 0);
   }
@@ -264,19 +258,16 @@
 .ios .navbar ~ .toolbar-top-ios,
 .ios .navbars ~ .toolbar-top-ios,
 .md .navbar ~ .toolbar-top-md,
-.aurora .navbar ~ .toolbar-top-aurora,
 .navbar ~ * .toolbar-top,
 .navbars ~ * .toolbar-top,
 .ios .navbar ~ * .toolbar-top-ios,
 .ios .navbars ~ * .toolbar-top-ios,
 .md .navbar ~ * .toolbar-top-md,
-.aurora .navbar ~ * .toolbar-top-aurora,
 .navbar ~ .page:not(.no-navbar) .toolbar-top,
 .navbars ~ .page:not(.no-navbar) .toolbar-top,
 .ios .navbar ~ .page:not(.no-navbar) .toolbar-top-ios,
 .ios .navbars ~ .page:not(.no-navbar) .toolbar-top-ios,
-.md .navbar ~ .page:not(.no-navbar) .toolbar-top-md,
-.aurora .navbar ~ .page:not(.no-navbar) .toolbar-top-aurora {
+.md .navbar ~ .page:not(.no-navbar) .toolbar-top-md {
   top: calc(var(--f7-navbar-height) + var(--f7-safe-area-top));
   &.toolbar-hidden {
     transform: translate3d(
@@ -298,11 +289,9 @@
 .navbar-hidden + .toolbar-top:not(.toolbar-hidden),
 .ios .navbar-hidden + .toolbar-top-ios:not(.toolbar-hidden),
 .md .navbar-hidden + .toolbar-top-md:not(.toolbar-hidden),
-.aurora .navbar-hidden + .toolbar-top-aurora:not(.toolbar-hidden),
 .navbar-hidden ~ * .toolbar-top:not(.toolbar-hidden),
 .ios .navbar-hidden ~ * .toolbar-top-ios:not(.toolbar-hidden),
-.md .navbar-hidden ~ * .toolbar-top-md:not(.toolbar-hidden),
-.aurora .navbar-hidden ~ * .toolbar-top-aurora:not(.toolbar-hidden) {
+.md .navbar-hidden ~ * .toolbar-top-md:not(.toolbar-hidden) {
   transform: translate3d(0, calc(0px - var(--f7-navbar-height)), 0);
 }
 .navbar-large-hidden + .toolbar-top:not(.toolbar-hidden),
@@ -310,8 +299,7 @@
 .md .navbar-large-hidden + .toolbar-top-md:not(.toolbar-hidden),
 .navbar-large-hidden ~ * .toolbar-top:not(.toolbar-hidden),
 .ios .navbar-large-hidden ~ * .toolbar-top-ios:not(.toolbar-hidden),
-.md .navbar-large-hidden ~ * .toolbar-top-md:not(.toolbar-hidden),
-.aurora .navbar-large-hidden ~ * .toolbar-top-aurora:not(.toolbar-hidden) {
+.md .navbar-large-hidden ~ * .toolbar-top-md:not(.toolbar-hidden) {
   transform: translate3d(
     0,
     calc(0px - var(--f7-navbar-height) - var(--f7-navbar-large-title-height)),
@@ -324,7 +312,4 @@
 });
 .if-md-theme({
   @import './toolbar-md.less';
-});
-.if-aurora-theme({
-  @import './toolbar-aurora.less';
 });

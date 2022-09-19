@@ -36,8 +36,6 @@ export default {
     noHairlinesBetweenMd: Boolean,
     noHairlinesIos: Boolean,
     noHairlinesBetweenIos: Boolean,
-    noHairlinesAurora: Boolean,
-    noHairlinesBetweenAurora: Boolean,
 
     // Links Chevron (Arrow) Icon
     noChevron: Boolean,
@@ -176,11 +174,9 @@ export default {
           'no-hairlines': props.noHairlines,
           'no-hairlines-md': props.noHairlinesMd,
           'no-hairlines-ios': props.noHairlinesIos,
-          'no-hairlines-aurora': props.noHairlinesAurora,
           'no-hairlines-between': props.noHairlinesBetween,
           'no-hairlines-between-md': props.noHairlinesBetweenMd,
           'no-hairlines-between-ios': props.noHairlinesBetweenIos,
-          'no-hairlines-between-aurora': props.noHairlinesBetweenAurora,
           'form-store-data': props.formStoreData,
           'inline-labels': props.inlineLabels,
           'no-chevron': props.noChevron,

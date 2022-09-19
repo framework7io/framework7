@@ -78,7 +78,6 @@ class Framework7 extends Framework7Class {
       theme: (function getTheme() {
         if (app.params.theme === 'auto') {
           if (device.ios) return 'ios';
-          if (device.desktop && device.electron) return 'aurora';
           return 'md';
         }
         return app.params.theme;
@@ -247,7 +246,7 @@ class Framework7 extends Framework7Class {
       app.$el.addClass('framework7-root');
 
       // Theme class
-      $('html').removeClass('ios md aurora').addClass(app.theme);
+      $('html').removeClass('ios md').addClass(app.theme);
 
       // iOS Translucent
       const device = app.device;

@@ -35,10 +35,6 @@ export default {
       type: Boolean,
       default: undefined,
     },
-    topAurora: {
-      type: Boolean,
-      default: undefined,
-    },
     top: {
       type: Boolean,
       default: undefined,
@@ -48,10 +44,6 @@ export default {
       default: undefined,
     },
     bottomIos: {
-      type: Boolean,
-      default: undefined,
-    },
-    bottomAurora: {
       type: Boolean,
       default: undefined,
     },
@@ -111,12 +103,10 @@ export default {
         tabbar,
         bottomMd,
         bottomIos,
-        bottomAurora,
         bottom,
         position,
         topMd,
         topIos,
-        topAurora,
         top,
         labels,
         scrollable,
@@ -132,13 +122,11 @@ export default {
           'toolbar-bottom':
             (theme.value && theme.value.md && bottomMd) ||
             (theme.value && theme.value.ios && bottomIos) ||
-            (theme.value && theme.value.aurora && bottomAurora) ||
             bottom ||
             position === 'bottom',
           'toolbar-top':
             (theme.value && theme.value.md && topMd) ||
             (theme.value && theme.value.ios && topIos) ||
-            (theme.value && theme.value.aurora && topAurora) ||
             top ||
             position === 'top',
           'tabbar-labels': labels,

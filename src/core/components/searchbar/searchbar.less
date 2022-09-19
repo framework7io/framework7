@@ -253,32 +253,28 @@
 // Toolbar
 .page > .toolbar-top,
 .ios .page > .toolbar-top-ios,
-.md .page > .toolbar-top-md,
-.aurora .page > .toolbar-top-aurora {
+.md .page > .toolbar-top-md {
   ~ .searchbar {
     top: var(--f7-toolbar-height);
   }
 }
 .page > .tabbar-labels.toolbar-top,
 .ios .page > .tabbar-labels.toolbar-top-ios,
-.md .page > .tabbar-labels.toolbar-top-md,
-.aurora .page > .tabbar-labels.toolbar-top-aurora {
+.md .page > .tabbar-labels.toolbar-top-md {
   ~ .searchbar {
     top: var(--f7-tabbar-labels-height);
   }
 }
 .page > .navbar ~ .toolbar-top,
 .ios .page > .navbar ~ .toolbar-top-ios,
-.md .page > .navbar ~ .toolbar-top-md,
-.aurora .page > .navbar ~ .toolbar-top-aurora {
+.md .page > .navbar ~ .toolbar-top-md {
   ~ .searchbar {
     top: calc(var(--f7-navbar-height) + var(--f7-toolbar-height) + var(--f7-safe-area-top));
   }
 }
 .page > .navbar ~ .tabbar-labels.toolbar-top,
 .ios .page > .navbar ~ .tabbar-labels.toolbar-top-ios,
-.md .page > .navbar ~ .tabbar-labels.toolbar-top-md,
-.aurora .page > .navbar ~ .tabbar-labels.toolbar-top-aurora {
+.md .page > .navbar ~ .tabbar-labels.toolbar-top-md {
   ~ .searchbar {
     top: calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height) + var(--f7-safe-area-top));
   }
@@ -326,7 +322,4 @@
 });
 .if-md-theme({
   @import './searchbar-md.less';
-});
-.if-aurora-theme({
-  @import './searchbar-aurora.less';
 });

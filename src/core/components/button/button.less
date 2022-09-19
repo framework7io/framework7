@@ -69,14 +69,12 @@ button {
 
 .button-round,
 .ios .button-round-ios,
-.md .button-round-md,
-.aurora .button-round-aurora {
+.md .button-round-md {
   --f7-button-border-radius: var(--f7-button-height);
 }
 .button-fill,
 .ios .button-fill-ios,
 .md .button-fill-md,
-.aurora .button-fill-aurora,
 .button-active,
 .button.tab-link-active {
   --f7-button-bg-color: var(--f7-button-fill-bg-color, var(--f7-theme-color));
@@ -85,8 +83,7 @@ button {
 }
 .button-fill,
 .ios .button-fill-ios,
-.md .button-fill-md,
-.aurora .button-fill-aurora {
+.md .button-fill-md {
   --f7-button-pressed-bg-color: var(--f7-button-fill-pressed-bg-color);
 }
 .button-active,
@@ -96,16 +93,14 @@ button {
 
 .button-outline,
 .ios .button-outline-ios,
-.md .button-outline-md,
-.aurora .button-outline-aurora {
+.md .button-outline-md {
   --f7-button-border-color: var(--f7-button-outline-border-color, var(--f7-theme-color));
   --f7-button-border-width: var(--f7-button-outline-border-width);
 }
 
 .button-large,
 .ios .button-large-ios,
-.md .button-large-md,
-.aurora .button-large-aurora {
+.md .button-large-md {
   --f7-button-height: var(--f7-button-large-height);
   --f7-button-font-size: var(--f7-button-large-font-size);
   --f7-button-font-weight: var(--f7-button-large-font-weight);
@@ -113,8 +108,7 @@ button {
 }
 .button-small,
 .ios .button-small-ios,
-.md .button-small-md,
-.aurora .button-small-aurora {
+.md .button-small-md {
   --f7-button-outline-border-width: var(--f7-button-small-outline-border-width);
   --f7-button-height: var(--f7-button-small-height);
   --f7-button-font-size: var(--f7-button-small-font-size);
@@ -194,8 +188,7 @@ button {
 
 .segmented-raised,
 .ios .segmented-raised-ios,
-.md .segmented-raised-md,
-.aurora .segmented-raised-aurora {
+.md .segmented-raised-md {
   box-shadow: var(--f7-button-raised-box-shadow);
   .button:not(.button-outline) {
     .ltr({
@@ -210,8 +203,7 @@ button {
 // Raised
 .button-raised,
 .ios .button-raised-ios,
-.md .button-raised-md,
-.aurora .button-raised-aurora {
+.md .button-raised-md {
   --f7-button-box-shadow: var(--f7-button-raised-box-shadow);
   &.active-state {
     --f7-button-box-shadow: var(--f7-button-raised-pressed-box-shadow);
@@ -221,8 +213,7 @@ button {
 // Strong
 .segmented-strong,
 .ios .segmented-strong-ios,
-.md .segmented-strong-md,
-.aurora .segmented-strong-aurora {
+.md .segmented-strong-md {
   --f7-button-bg-color: transparent;
   --f7-button-hover-bg-color: var(--f7-segmented-strong-button-hover-bg-color);
   --f7-button-text-color: var(--f7-segmented-strong-button-text-color);
@@ -362,8 +353,7 @@ button {
 // Round
 .segmented-round,
 .ios .segmented-round-ios,
-.md .segmented-round-md,
-.aurora .segmented-round-aurora {
+.md .segmented-round-md {
   border-radius: var(--f7-button-height);
   .segmented-highlight {
     border-radius: var(--f7-button-height);
@@ -418,7 +408,4 @@ button {
 });
 .if-md-theme({
   @import './button-md.less';
-});
-.if-aurora-theme({
-  @import './button-aurora.less';
 });

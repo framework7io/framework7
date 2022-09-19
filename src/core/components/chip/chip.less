@@ -88,8 +88,7 @@
 }
 .chip-outline,
 .ios .chip-outline-ios,
-.md .chip-outline-md,
-.aurora .chip-outline-aurora {
+.md .chip-outline-md {
   border: 1px solid var(--f7-chip-outline-border-color);
   background: none;
 }
@@ -99,8 +98,7 @@
 }
 .chip-outline[class*='color-'],
 .ios .chip-outline-ios[class*='color-'],
-.md .chip-outline-md[class*='color-'],
-.aurora .chip-outline-aurora[class*='color-'] {
+.md .chip-outline-md[class*='color-'] {
   --f7-chip-outline-border-color: var(--f7-theme-color);
   --f7-chip-text-color: var(--f7-theme-color);
 }
@@ -109,7 +107,4 @@
 });
 .if-md-theme({
   @import './chip-md.less';
-});
-.if-aurora-theme({
-  @import './chip-aurora.less';
 });

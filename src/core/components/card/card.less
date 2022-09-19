@@ -34,8 +34,7 @@
 }
 .card-outline,
 .ios .card-outline-ios,
-.md .card-outline-md,
-.aurora .card-outline-aurora {
+.md .card-outline-md {
   box-shadow: none;
   border: 1px solid var(--f7-card-outline-border-color);
   &.no-border,
@@ -307,7 +306,4 @@
 });
 .if-md-theme({
   @import './card-md.less';
-});
-.if-aurora-theme({
-  @import './card-aurora.less';
 });

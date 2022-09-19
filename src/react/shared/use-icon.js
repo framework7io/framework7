@@ -9,14 +9,13 @@ export const useIcon = (props = {}) => {
     iconF7,
     iconMd,
     iconIos,
-    iconAurora,
     iconColor,
     iconSize,
     iconBadge,
     badgeColor,
     iconBadgeColor,
   } = props;
-  if (icon || iconMaterial || iconF7 || iconMd || iconIos || iconAurora) {
+  if (icon || iconMaterial || iconF7 || iconMd || iconIos) {
     return (
       <Icon
         material={iconMaterial}
@@ -24,7 +23,6 @@ export const useIcon = (props = {}) => {
         icon={icon}
         md={iconMd}
         ios={iconIos}
-        aurora={iconAurora}
         color={iconColor}
         size={iconSize}
       >

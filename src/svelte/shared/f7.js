@@ -35,8 +35,6 @@ const setTheme = () => {
   theme.ios = app.f7.theme === 'ios';
   app.theme.md = app.f7.theme === 'md';
   theme.md = app.f7.theme === 'md';
-  app.theme.aurora = app.f7.theme === 'aurora';
-  theme.aurora = app.f7.theme === 'aurora';
 };
 
 const cleanup = () => {
@@ -45,8 +43,6 @@ const cleanup = () => {
   delete theme.ios;
   delete app.theme.md;
   delete theme.md;
-  delete app.theme.aurora;
-  delete theme.aurora;
   app.f7routers.views = [];
   app.f7routers.tabs = [];
   app.f7routers.modals = null;
@@ -67,8 +63,7 @@ const f7init = (rootEl, params = {}, init = true) => {
   if (f7Params.userAgent && (f7Params.theme === 'auto' || !f7Params.theme)) {
     const device = app.Framework7.getDevice({ userAgent: f7Params.userAgent }, true);
     app.theme.ios = !!device.ios;
-    app.theme.aurora = device.desktop && device.electron;
-    app.theme.md = !app.theme.ios && !app.theme.aurora;
+    app.theme.md = !app.theme.ios;
   }
   // eslint-disable-next-line
   if (app.f7 && typeof window !== 'undefined') return;

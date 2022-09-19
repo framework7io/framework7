@@ -50,7 +50,7 @@ export interface Framework7Parameters {
   name?: string;
   /** App version. Can be used by other components.. (default 1.0.0) */
   version?: string;
-  /** App theme. Can be ios, md, aurora or auto. In case of auto it will use iOS theme for iOS devices, Aurora theme for desktop device running in Electron environment, and MD theme for all other devices.. (default auto) */
+  /** App theme. Can be ios, md or auto. In case of auto it will use iOS theme for iOS devices and MD theme for all other devices.. (default 'auto') */
   theme?: string;
   /** App language. Can be used by other components. By default equal to the current browser/webview language (i.e. navigator.language).. */
   language?: string;
@@ -146,7 +146,7 @@ interface Framework7 extends Framework7Class<Framework7Events> {
   $el: Dom7Array;
   /** Boolean property indicating app is in RTL layout or not */
   rtl: boolean;
-  /** Current app theme. Can be md, ios or aurora */
+  /** Current app theme. Can be 'md' or 'ios' */
   theme: string;
   /** Indicates whether the dark mode active or not. This property has effect only when `autoDarkMode` enabled */
   darkMode: boolean;

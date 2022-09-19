@@ -131,7 +131,7 @@ const config = {
   ],
   darkTheme: true,
   lightTheme: true,
-  themes: ['ios', 'md', 'aurora'],
+  themes: ['ios', 'md'],
   themeColor: '#007aff',
   colors: {
     red: '#ff3b30',

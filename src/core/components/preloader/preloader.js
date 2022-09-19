@@ -1,10 +1,5 @@
 import $ from '../../shared/dom7.js';
-import {
-  bindMethods,
-  iosPreloaderContent,
-  mdPreloaderContent,
-  auroraPreloaderContent,
-} from '../../shared/utils.js';
+import { bindMethods, iosPreloaderContent, mdPreloaderContent } from '../../shared/utils.js';
 
 const Preloader = {
   init(el) {
@@ -12,7 +7,6 @@ const Preloader = {
     const preloaders = {
       iosPreloaderContent,
       mdPreloaderContent,
-      auroraPreloaderContent,
     };
     const $el = $(el);
     if (
@@ -31,7 +25,6 @@ const Preloader = {
     const preloaders = {
       iosPreloaderContent,
       mdPreloaderContent,
-      auroraPreloaderContent,
     };
     const preloaderInner = preloaders[`${app.theme}PreloaderContent`] || '';
     $('html').addClass('with-modal-preloader');
@@ -49,7 +42,6 @@ const Preloader = {
     const preloaders = {
       iosPreloaderContent,
       mdPreloaderContent,
-      auroraPreloaderContent,
     };
     const preloaderInner = preloaders[`${app.theme}PreloaderContent`] || '';
     $(el || 'html').addClass('with-modal-preloader');

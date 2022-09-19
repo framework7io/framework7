@@ -34,23 +34,18 @@ import { Stepper } from 'framework7/types';
   round? : boolean
   roundMd? : boolean
   roundIos? : boolean
-  roundAurora? : boolean
   fill? : boolean
   fillMd? : boolean
   fillIos? : boolean
-  fillAurora? : boolean
   large? : boolean
   largeMd? : boolean
   largeIos? : boolean
-  largeAurora? : boolean
   small? : boolean
   smallMd? : boolean
   smallIos? : boolean
-  smallAurora? : boolean
   raised? : boolean
   raisedMd? : boolean
   raisedIos? : boolean
-  raisedAurora? : boolean
   COLOR_PROPS
   onStepperChange? : (newValue?: any) => void
   onInput? : (event?: any, stepper?: Stepper.Stepper) => void
@@ -89,23 +84,18 @@ const Stepper = forwardRef((props, ref) => {
     round,
     roundMd,
     roundIos,
-    roundAurora,
     fill,
     fillMd,
     fillIos,
-    fillAurora,
     large,
     largeMd,
     largeIos,
-    largeAurora,
     small,
     smallMd,
     smallIos,
-    smallAurora,
     raised,
     raisedMd,
     raisedIos,
-    raisedAurora,
   } = props;
   const extraAttrs = getExtraAttrs(props);
 
@@ -238,23 +228,18 @@ const Stepper = forwardRef((props, ref) => {
       'stepper-round': round,
       'stepper-round-ios': roundIos,
       'stepper-round-md': roundMd,
-      'stepper-round-aurora': roundAurora,
       'stepper-fill': fill,
       'stepper-fill-ios': fillIos,
       'stepper-fill-md': fillMd,
-      'stepper-fill-aurora': fillAurora,
       'stepper-large': large,
       'stepper-large-ios': largeIos,
       'stepper-large-md': largeMd,
-      'stepper-large-aurora': largeAurora,
       'stepper-small': small,
       'stepper-small-ios': smallIos,
       'stepper-small-md': smallMd,
-      'stepper-small-aurora': smallAurora,
       'stepper-raised': raised,
       'stepper-raised-ios': raisedIos,
       'stepper-raised-md': raisedMd,
-      'stepper-raised-aurora': raisedAurora,
     },
     colorClasses(props),
   );

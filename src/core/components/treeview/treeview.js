@@ -1,10 +1,5 @@
 import $ from '../../shared/dom7.js';
-import {
-  bindMethods,
-  iosPreloaderContent,
-  mdPreloaderContent,
-  auroraPreloaderContent,
-} from '../../shared/utils.js';
+import { bindMethods, iosPreloaderContent, mdPreloaderContent } from '../../shared/utils.js';
 
 const Treeview = {
   open(itemEl) {
@@ -27,7 +22,7 @@ const Treeview = {
     }
 
     if ($itemEl.hasClass('treeview-load-children') && !$itemEl[0].f7TreeviewChildrenLoaded) {
-      const preloaders = { iosPreloaderContent, mdPreloaderContent, auroraPreloaderContent };
+      const preloaders = { iosPreloaderContent, mdPreloaderContent };
       $itemEl.trigger('treeview:loadchildren', done);
       app.emit('treeviewLoadChildren', $itemEl[0], done);
       $itemEl.find('.treeview-toggle').addClass('treeview-toggle-hidden');

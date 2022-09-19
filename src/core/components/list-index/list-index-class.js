@@ -14,7 +14,6 @@ class ListIndex extends Framework7Class {
       indexes: 'auto', // or array of indexes
       iosItemHeight: 14,
       mdItemHeight: 14,
-      auroraItemHeight: 14,
       scrollList: true,
       label: false,
       // eslint-disable-next-line

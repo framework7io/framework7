@@ -30,27 +30,21 @@
   export let round = false;
   export let roundMd = false;
   export let roundIos = false;
-  export let roundAurora = false;
   export let fill = false;
   export let fillMd = false;
   export let fillIos = false;
-  export let fillAurora = false;
   export let large = false;
   export let largeMd = false;
   export let largeIos = false;
-  export let largeAurora = false;
   export let small = false;
   export let smallMd = false;
   export let smallIos = false;
-  export let smallAurora = false;
   export let raised = false;
   export let raisedMd = false;
   export let raisedIos = false;
-  export let raisedAurora = false;
   export let outline = false;
   export let outlineMd = false;
   export let outlineIos = false;
-  export let outlineAurora = false;
   export let active = false;
   export let disabled = false;
   export let tooltip = undefined;
@@ -86,28 +80,22 @@
 
       'button-round': round,
       'button-round-ios': roundIos,
-      'button-round-aurora': roundAurora,
       'button-round-md': roundMd,
       'button-fill': fill,
       'button-fill-ios': fillIos,
-      'button-fill-aurora': fillAurora,
       'button-fill-md': fillMd,
       'button-large': large,
       'button-large-ios': largeIos,
-      'button-large-aurora': largeAurora,
       'button-large-md': largeMd,
       'button-small': small,
       'button-small-ios': smallIos,
-      'button-small-aurora': smallAurora,
       'button-small-md': smallMd,
       'button-raised': raised,
       'button-raised-ios': raisedIos,
-      'button-raised-aurora': raisedAurora,
       'button-raised-md': raisedMd,
       'button-active': active,
       'button-outline': outline,
       'button-outline-ios': outlineIos,
-      'button-outline-aurora': outlineAurora,
       'button-outline-md': outlineMd,
       'button-preloader': preloader,
       'button-loading': loading,

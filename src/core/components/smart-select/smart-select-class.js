@@ -18,10 +18,6 @@ class SmartSelect extends Framework7Class {
       app.params.smartSelect,
     );
 
-    if (typeof defaults.searchbarDisableButton === 'undefined') {
-      defaults.searchbarDisableButton = app.theme !== 'aurora';
-    }
-
     // Extend defaults with modules params
     ss.useModulesParams(defaults);
 
@@ -319,10 +315,8 @@ class SmartSelect extends Framework7Class {
       const optionIconIos =
         theme === 'ios' && (optionData.optionIconIos || ss.params.optionIconIos);
       const optionIconMd = theme === 'md' && (optionData.optionIconMd || ss.params.optionIconMd);
-      const optionIconAurora =
-        theme === 'aurora' && (optionData.optionIconAurora || ss.params.optionIconAurora);
-      const optionHasMedia =
-        optionImage || optionIcon || optionIconIos || optionIconMd || optionIconAurora;
+
+      const optionHasMedia = optionImage || optionIcon || optionIconIos || optionIconMd;
       const optionColor = optionData.optionColor;
 
       let optionClassName = optionData.optionClass || '';
@@ -349,7 +343,6 @@ class SmartSelect extends Framework7Class {
         icon: optionIcon,
         iconIos: optionIconIos,
         iconMd: optionIconMd,
-        iconAurora: optionIconAurora,
         color: optionColor,
         className: optionClassName,
         disabled: $optionEl[0].disabled,
@@ -422,10 +415,10 @@ class SmartSelect extends Framework7Class {
         }
       }
 
-      const { icon, iconIos, iconMd, iconAurora } = item;
-      const hasIcon = icon || iconIos || iconMd || iconAurora;
-      const iconContent = getIconContent(icon || iconIos || iconMd || iconAurora || '');
-      const iconClass = getIconClass(icon || iconIos || iconMd || iconAurora || '');
+      const { icon, iconIos, iconMd } = item;
+      const hasIcon = icon || iconIos || iconMd;
+      const iconContent = getIconContent(icon || iconIos || iconMd || '');
+      const iconClass = getIconClass(icon || iconIos || iconMd || '');
 
       itemHtml = (
         <li class={`${item.className || ''}${disabled ? ' disabled' : ''}`}>

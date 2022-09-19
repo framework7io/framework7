@@ -16,7 +16,6 @@ import { watchProp } from '../shared/watch-prop.js';
   label? : boolean
   iosItemHeight? : number
   mdItemHeight? : number
-  auroraItemHeight? : number
   COLOR_PROPS
   onListIndexSelect? : (itemContent?: any, itemIndex?: any) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
@@ -37,7 +36,6 @@ const ListIndex = forwardRef((props, ref) => {
     label = false,
     iosItemHeight = 14,
     mdItemHeight = 14,
-    auroraItemHeight = 14,
   } = props;
   const extraAttrs = getExtraAttrs(props);
 
@@ -74,7 +72,6 @@ const ListIndex = forwardRef((props, ref) => {
         indexes,
         iosItemHeight,
         mdItemHeight,
-        auroraItemHeight,
         scrollList,
         label,
         on: {

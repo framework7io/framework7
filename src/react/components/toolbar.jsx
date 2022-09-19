@@ -20,11 +20,9 @@ import { TabbarContext } from '../shared/tabbar-context.js';
   position? : string
   topMd? : boolean
   topIos? : boolean
-  topAurora? : boolean
   top? : boolean
   bottomMd? : boolean
   bottomIos? : boolean
-  bottomAurora? : boolean
   bottom? : boolean
   inner? : boolean
   COLOR_PROPS
@@ -49,11 +47,9 @@ const Toolbar = forwardRef((props, ref) => {
     position,
     topMd,
     topIos,
-    topAurora,
     top,
     bottomMd,
     bottomIos,
-    bottomAurora,
     bottom,
     inner = true,
   } = props;
@@ -109,15 +105,10 @@ const Toolbar = forwardRef((props, ref) => {
       'toolbar-bottom':
         (theme && theme.md && bottomMd) ||
         (theme && theme.ios && bottomIos) ||
-        (theme && theme.aurora && bottomAurora) ||
         bottom ||
         position === 'bottom',
       'toolbar-top':
-        (theme && theme.md && topMd) ||
-        (theme && theme.ios && topIos) ||
-        (theme && theme.aurora && topAurora) ||
-        top ||
-        position === 'top',
+        (theme && theme.md && topMd) || (theme && theme.ios && topIos) || top || position === 'top',
       'tabbar-labels': labels,
       'tabbar-scrollable': scrollable,
       'toolbar-hidden': hidden,

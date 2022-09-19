@@ -21,7 +21,6 @@ function copyLess(config, components, cb) {
     .join('\n')}\n}`;
   const includeIosTheme = config.themes.indexOf('ios') >= 0;
   const includeMdTheme = config.themes.indexOf('md') >= 0;
-  const includeAuroraTheme = config.themes.indexOf('aurora') >= 0;
   const includeDarkTheme = config.darkTheme;
   const includeLightTheme = config.lightTheme;
   const rtl = config.rtl;
@@ -32,7 +31,6 @@ function copyLess(config, components, cb) {
   lessContent = lessContent
     .replace('$includeIosTheme', includeIosTheme)
     .replace('$includeMdTheme', includeMdTheme)
-    .replace('$includeAuroraTheme', includeAuroraTheme)
     .replace('$includeDarkTheme', includeDarkTheme)
     .replace('$includeLightTheme', includeLightTheme)
     .replace('$colors', colors)
@@ -72,7 +70,6 @@ async function buildBundle(config, components, themes, rtl, cb) {
     .join('\n')}\n}`;
   const includeIosTheme = themes.indexOf('ios') >= 0;
   const includeMdTheme = themes.indexOf('md') >= 0;
-  const includeAuroraTheme = themes.indexOf('aurora') >= 0;
   const includeDarkTheme = config.darkTheme;
   const includeLightTheme = config.lightTheme;
   const outputFileName = `framework7-bundle${rtl ? '-rtl' : ''}`;
@@ -88,7 +85,6 @@ async function buildBundle(config, components, themes, rtl, cb) {
     )
     .replace('$includeIosTheme', includeIosTheme)
     .replace('$includeMdTheme', includeMdTheme)
-    .replace('$includeAuroraTheme', includeAuroraTheme)
     .replace('$includeDarkTheme', includeDarkTheme)
     .replace('$includeLightTheme', includeLightTheme)
     .replace('$colors', colors)
@@ -127,7 +123,6 @@ async function buildCore(themes, rtl, cb) {
   const env = process.env.NODE_ENV || 'development';
   const includeIosTheme = themes.indexOf('ios') >= 0;
   const includeMdTheme = themes.indexOf('md') >= 0;
-  const includeAuroraTheme = themes.indexOf('aurora') >= 0;
   const includeDarkTheme = config.darkTheme;
   const includeLightTheme = config.lightTheme;
   const output = `${getOutput()}/core`;
@@ -140,7 +135,6 @@ async function buildCore(themes, rtl, cb) {
     .replace('//IMPORT_COMPONENTS', '')
     .replace('$includeIosTheme', includeIosTheme)
     .replace('$includeMdTheme', includeMdTheme)
-    .replace('$includeAuroraTheme', includeAuroraTheme)
     .replace('$includeDarkTheme', includeDarkTheme)
     .replace('$includeLightTheme', includeLightTheme)
     .replace('$colors', colors)

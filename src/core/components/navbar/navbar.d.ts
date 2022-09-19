@@ -40,8 +40,6 @@ export namespace Navbar {
           iosCenterTitle?: boolean;
           /** When enabled then it will position title at the center in MD theme. This will have effect only in MD theme. (default false) */
           mdCenterTitle?: boolean;
-          /** When enabled then it will position title at the center in Aurora theme. This will have effect only in Aurora theme. (default true) */
-          auroraCenterTitle?: boolean;
           /** When enabled it will collapse large title on page scroll (default true) */
           collapseLargeTitleOnScroll?: boolean;
           /** When enabled it will snap page scroll to large title (default true) */

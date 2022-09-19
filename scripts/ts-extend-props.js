@@ -14,7 +14,6 @@ iconMaterial?: string;
 iconF7?: string;
 iconIos?: string;
 iconMd?: string;
-iconAurora?: string;
 iconColor?: string;
 iconSize?: string | number;
 `;

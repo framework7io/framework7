@@ -15,25 +15,19 @@ fs.readdirSync('./src/core/components').forEach((component) => {
   const iosDarkVars = {};
   const mdVars = {};
   const mdDarkVars = {};
-  const auroraVars = {};
-  const auroraDarkVars = {};
 
   let iosBegan;
   let mdBegan;
-  let auroraBegan;
   let iosDarkBegan;
   let mdDarkBegan;
-  let auroraDarkBegan;
   content
     .split('\n')
     .map((l) => l.trim())
     .forEach((line) => {
       if (line.indexOf('.ios') >= 0) iosBegan = true;
       if (line.indexOf('.md') >= 0) mdBegan = true;
-      if (line.indexOf('.aurora') >= 0) auroraBegan = true;
       if (line.indexOf('.dark-vars') >= 0) {
-        if (auroraBegan) auroraDarkBegan = true;
-        else if (mdBegan) mdDarkBegan = true;
+        if (mdBegan) mdDarkBegan = true;
         else if (iosBegan) iosDarkBegan = true;
       }
 
@@ -44,10 +38,7 @@ fs.readdirSync('./src/core/components').forEach((component) => {
       let varValue = line.split(`${varName}:`)[1];
       if (!varValue) return;
       varValue = varValue.replace(';', '').trim();
-      if (auroraBegan) {
-        if (auroraDarkBegan) auroraDarkVars[varName] = varValue;
-        else auroraVars[varName] = varValue;
-      } else if (mdBegan) {
+      if (mdBegan) {
         if (mdDarkBegan) mdDarkVars[varName] = varValue;
         else mdVars[varName] = varValue;
       } else if (iosBegan) {
@@ -59,25 +50,20 @@ fs.readdirSync('./src/core/components').forEach((component) => {
   const commonVars = {};
   Object.keys(iosVars).forEach((varName) => {
     const varValue = iosVars[varName];
-    if (mdVars[varName] === iosVars[varName] && auroraVars[varName] === iosVars[varName]) {
+    if (mdVars[varName] === iosVars[varName]) {
       commonVars[varName] = varValue;
       delete iosVars[varName];
       delete mdVars[varName];
-      delete auroraVars[varName];
     }
   });
 
   const commonDarkVars = {};
   Object.keys(iosDarkVars).forEach((varName) => {
     const varValue = iosDarkVars[varName];
-    if (
-      mdDarkVars[varName] === iosDarkVars[varName] &&
-      auroraDarkVars[varName] === iosDarkVars[varName]
-    ) {
+    if (mdDarkVars[varName] === iosDarkVars[varName]) {
       commonDarkVars[varName] = varValue;
       delete iosDarkVars[varName];
       delete mdDarkVars[varName];
-      delete auroraDarkVars[varName];
     }
   });
 

@@ -33,23 +33,18 @@
   export let round = false;
   export let roundMd = false;
   export let roundIos = false;
-  export let roundAurora = false;
   export let fill = false;
   export let fillMd = false;
   export let fillIos = false;
-  export let fillAurora = false;
   export let large = false;
   export let largeMd = false;
   export let largeIos = false;
-  export let largeAurora = false;
   export let small = false;
   export let smallMd = false;
   export let smallIos = false;
-  export let smallAurora = false;
   export let raised = false;
   export let raisedMd = false;
   export let raisedIos = false;
-  export let raisedAurora = false;
 
   let el;
   let f7Stepper;
@@ -66,23 +61,18 @@
       'stepper-round': round,
       'stepper-round-ios': roundIos,
       'stepper-round-md': roundMd,
-      'stepper-round-aurora': roundAurora,
       'stepper-fill': fill,
       'stepper-fill-ios': fillIos,
       'stepper-fill-md': fillMd,
-      'stepper-fill-aurora': fillAurora,
       'stepper-large': large,
       'stepper-large-ios': largeIos,
       'stepper-large-md': largeMd,
-      'stepper-large-aurora': largeAurora,
       'stepper-small': small,
       'stepper-small-ios': smallIos,
       'stepper-small-md': smallMd,
-      'stepper-small-aurora': smallAurora,
       'stepper-raised': raised,
       'stepper-raised-ios': raisedIos,
       'stepper-raised-md': raisedMd,
-      'stepper-raised-aurora': raisedAurora,
     },
     colorClasses($$props),
   );
