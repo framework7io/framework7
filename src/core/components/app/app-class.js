@@ -47,7 +47,7 @@ class Framework7 extends Framework7Class {
       lazyModulesPath: null,
       initOnDeviceReady: true,
       init: true,
-      autoDarkMode: false,
+      darkMode: false,
       iosTranslucentBars: true,
       iosTranslucentModals: true,
       component: undefined,
@@ -105,6 +105,7 @@ class Framework7 extends Framework7Class {
       passedParams,
       online: w.navigator.onLine,
       colors: app.params.colors,
+      darkMode: app.params.darkMode,
     });
 
     if (params.store) app.params.store = params.store;
@@ -292,6 +293,17 @@ class Framework7 extends Framework7Class {
     if (app.mq.light) app.mq.light.removeListener(app.colorSchemeListener);
   }
 
+  setDarkMode(mode) {
+    const app = this;
+    if (mode === 'auto') {
+      app.enableAutoDarkMode();
+    } else {
+      app.disableAutoDarkMode();
+      $('html')[mode ? 'addClass' : 'removeClass']('dark');
+      app.darkMode = mode;
+    }
+  }
+
   initAppComponent(callback) {
     const app = this;
     app.router.componentLoader(
@@ -326,9 +338,7 @@ class Framework7 extends Framework7Class {
       }
 
       // Auto Dark Mode
-      if (app.params.autoDarkMode) {
-        app.enableAutoDarkMode();
-      }
+      app.setDarkMode(app.params.darkMode);
 
       // Watch for online/offline state
       const window = getWindow();
