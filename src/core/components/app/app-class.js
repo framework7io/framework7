@@ -54,6 +54,24 @@ class Framework7 extends Framework7Class {
       componentUrl: undefined,
       userAgent: null,
       url: null,
+      colors: {
+        primary: '#007aff',
+        red: '#ff3b30',
+        green: '#4cd964',
+        blue: '#2196f3',
+        pink: '#ff2d55',
+        yellow: '#ffcc00',
+        orange: '#ff9500',
+        purple: '#9c27b0',
+        deeppurple: '#673ab7',
+        lightblue: '#5ac8fa',
+        teal: '#009688',
+        lime: '#cddc39',
+        deeporange: '#ff6b22',
+        gray: '#8e8e93',
+        white: '#ffffff',
+        black: '#000000',
+      },
     };
 
     // Extend defaults with modules params
@@ -86,6 +104,7 @@ class Framework7 extends Framework7Class {
       // Initially passed parameters
       passedParams,
       online: w.navigator.onLine,
+      colors: app.params.colors,
     });
 
     if (params.store) app.params.store = params.store;
@@ -114,6 +133,87 @@ class Framework7 extends Framework7Class {
 
     // Return app instance
     return app;
+  }
+
+  setColorTheme(color) {
+    if (!color) return;
+    const app = this;
+    app.colors.primary = color;
+    app.setColors();
+  }
+
+  setColors() {
+    const app = this;
+    const document = getDocument();
+    if (!app.colorsStyleEl) {
+      app.colorsStyleEl = document.createElement('style');
+      document.head.appendChild(app.colorsStyleEl);
+    }
+    const colorVars = app.utils.colorThemeCSSProperties(app.colors.primary);
+    let primary = '';
+    // primary
+    Object.keys(colorVars).forEach((key) => {
+      primary += `${key}: ${colorVars[key]};`;
+    });
+    primary = `:root {${primary};--swiper-theme-color:var(--f7-theme-color);}`;
+
+    const restVars = {};
+    Object.keys(app.colors).forEach((colorName) => {
+      const colorValue = app.colors[colorName];
+      restVars[colorName] = app.utils.colorThemeCSSProperties(colorValue);
+    });
+
+    // rest
+    let rest = '';
+
+    rest += ':root{';
+    Object.keys(app.colors).forEach((colorName) => {
+      rest += [
+        `--f7-color-${colorName}: ${restVars[colorName]['--f7-theme-color']};`,
+        `--f7-color-${colorName}-rgb: ${restVars[colorName]['--f7-theme-color-rgb']};`,
+        `--f7-color-${colorName}-shade: ${restVars[colorName]['--f7-theme-color-shade']};`,
+        `--f7-color-${colorName}-tint: ${restVars[colorName]['--f7-theme-color-tint']};`,
+      ].join('');
+    });
+    rest += '}';
+
+    Object.keys(app.colors).forEach((colorName) => {
+      rest += [
+        `.color-theme-${colorName} {`,
+        `--f7-theme-color : ${restVars[colorName]['--f7-theme-color']};`,
+        `--f7-theme-color-rgb : ${restVars[colorName]['--f7-theme-color-rgb']};`,
+        `--f7-theme-color-shade : ${restVars[colorName]['--f7-theme-color-shade']};`,
+        `--f7-theme-color-tint : ${restVars[colorName]['--f7-theme-color-tint']};`,
+        `--swiper-theme-color: ${restVars[colorName]['--f7-theme-color']};`,
+        `}`,
+      ].join('');
+    });
+
+    Object.keys(app.colors).forEach((colorName) => {
+      rest += [
+        `.color-${colorName} {`,
+        `--f7-theme-color : ${restVars[colorName]['--f7-theme-color']};`,
+        `--f7-theme-color-rgb : ${restVars[colorName]['--f7-theme-color-rgb']};`,
+        `--f7-theme-color-shade : ${restVars[colorName]['--f7-theme-color-shade']};`,
+        `--f7-theme-color-tint : ${restVars[colorName]['--f7-theme-color-tint']};`,
+        `--swiper-theme-color: ${restVars[colorName]['--f7-theme-color']};`,
+        `}`,
+        `.text-color-${colorName} {`,
+        `--f7-theme-color-text-color: ${app.colors[colorName]};`,
+        `}`,
+        `.bg-color-${colorName} {`,
+        `--f7-theme-color-bg-color: ${app.colors[colorName]};`,
+        `}`,
+        `.border-color-${colorName} {`,
+        `--f7-theme-color-border-color: ${app.colors[colorName]};`,
+        `}`,
+        `.ripple-color-${colorName}, .ripple-${colorName} {`,
+        `--f7-theme-color-ripple-color: rgba(${restVars[colorName]['--f7-theme-color-rgb']}, 0.3);`,
+        `}`,
+      ].join('');
+    });
+
+    app.colorsStyleEl.textContent = `${primary}${rest}`;
   }
 
   mount(rootEl) {
@@ -212,6 +312,7 @@ class Framework7 extends Framework7Class {
   init(rootEl) {
     const app = this;
 
+    app.setColors();
     app.mount(rootEl);
 
     const init = () => {

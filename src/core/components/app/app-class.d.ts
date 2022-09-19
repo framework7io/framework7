@@ -68,6 +68,8 @@ export interface Framework7Parameters {
   iosTranslucentBars?: boolean;
   /** Enable translucent effect (blur background) on modals (Dialog, Popover, Actions) for iOS theme (on iOS devices) (by default enabled) */
   iosTranslucentModals?: boolean;
+  /** Object with app colors where `primary` color (key) defines main app color theme */
+  colors?: object;
   /** userAgent string. Required for browser/device detection when rendered on server-side */
   userAgent?: string;
   /** Required for current route detection when rendered on server-side */
@@ -162,6 +164,10 @@ interface Framework7 extends Framework7Class<Framework7Events> {
   $: Dom7;
   /** App parameters */
   params: Framework7Parameters;
+  /** Object with colors you have passed in params.colors */
+  colors: any;
+  /** Sets primary color theme */
+  setColorTheme(hexColor: string): void;
   /** Enables auto dark mode detection */
   enableAutoDarkMode(): void;
   /** Disables auto dark mode detection */

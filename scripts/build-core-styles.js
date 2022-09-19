@@ -16,9 +16,6 @@ const fs = require('./utils/fs-extra.js');
 // Copy LESS
 function copyLess(config, components, cb) {
   const output = `${getOutput()}/core`;
-  const colors = `{\n${Object.keys(config.colors)
-    .map((colorName) => `  ${colorName}: ${config.colors[colorName]};`)
-    .join('\n')}\n}`;
   const includeIosTheme = config.themes.indexOf('ios') >= 0;
   const includeMdTheme = config.themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
@@ -33,8 +30,6 @@ function copyLess(config, components, cb) {
     .replace('$includeMdTheme', includeMdTheme)
     .replace('$includeDarkTheme', includeDarkTheme)
     .replace('$includeLightTheme', includeLightTheme)
-    .replace('$colors', colors)
-    .replace('$themeColor', config.themeColor)
     .replace('$rtl', rtl);
 
   fs.writeFileSync(`${output}/framework7.less`, lessContent);
@@ -65,9 +60,6 @@ function copyLess(config, components, cb) {
 // Build CSS Bundle
 async function buildBundle(config, components, themes, rtl, cb) {
   const env = process.env.NODE_ENV || 'development';
-  const colors = `{\n${Object.keys(config.colors)
-    .map((colorName) => `  ${colorName}: ${config.colors[colorName]};`)
-    .join('\n')}\n}`;
   const includeIosTheme = themes.indexOf('ios') >= 0;
   const includeMdTheme = themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
@@ -87,8 +79,6 @@ async function buildBundle(config, components, themes, rtl, cb) {
     .replace('$includeMdTheme', includeMdTheme)
     .replace('$includeDarkTheme', includeDarkTheme)
     .replace('$includeLightTheme', includeLightTheme)
-    .replace('$colors', colors)
-    .replace('$themeColor', config.themeColor)
     .replace('$rtl', rtl);
 
   let cssContent;
@@ -126,9 +116,6 @@ async function buildCore(themes, rtl, cb) {
   const includeDarkTheme = config.darkTheme;
   const includeLightTheme = config.lightTheme;
   const output = `${getOutput()}/core`;
-  const colors = `{\n${Object.keys(config.colors)
-    .map((colorName) => `  ${colorName}: ${config.colors[colorName]};`)
-    .join('\n')}\n}`;
 
   let lessContent = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.less'));
   lessContent = lessContent
@@ -137,8 +124,6 @@ async function buildCore(themes, rtl, cb) {
     .replace('$includeMdTheme', includeMdTheme)
     .replace('$includeDarkTheme', includeDarkTheme)
     .replace('$includeLightTheme', includeLightTheme)
-    .replace('$colors', colors)
-    .replace('$themeColor', config.themeColor)
     .replace('$rtl', rtl);
 
   let cssContent;

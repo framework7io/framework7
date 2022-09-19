@@ -56,9 +56,6 @@ const outro = `
 async function buildLazyComponentsLess(components, rtl, cb) {
   const config = getConfig();
   const output = `${getOutput()}/core`;
-  const colors = `{\n${Object.keys(config.colors)
-    .map((colorName) => `  ${colorName}: ${config.colors[colorName]};`)
-    .join('\n')}\n}`;
   const includeIosTheme = config.themes.indexOf('ios') >= 0;
   const includeMdTheme = config.themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
@@ -81,8 +78,6 @@ async function buildLazyComponentsLess(components, rtl, cb) {
     .replace('$includeMdTheme', includeMdTheme)
     .replace('$includeDarkTheme', includeDarkTheme)
     .replace('$includeLightTheme', includeLightTheme)
-    .replace('$themeColor', config.themeColor)
-    .replace('$colors', colors)
     .replace('$rtl', rtl);
 
   let cbs = 0;

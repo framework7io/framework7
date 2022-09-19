@@ -1,19 +1,5 @@
 /* === Swiper === */
 @import (inline) 'swiper/css/bundle';
 
-:root {
-  --swiper-theme-color: var(--f7-theme-color);
-}
-each(@colors, {
-  .color-theme-@{key} {
-    --swiper-theme-color: @value;
-  }
-});
-each(@colors, {
-  .color-@{key} {
-    --swiper-theme-color: @value;
-  }
-});
-
 .if-ios-theme({@import './swiper-ios.less' ;});
 .if-md-theme({@import './swiper-md.less' ;});

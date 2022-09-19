@@ -2,14 +2,6 @@
   Core
   ==================== */
 :root {
-  @themeColorRed: red(@themeColor);
-  @themeColorGreen: green(@themeColor);
-  @themeColorBlue: blue(@themeColor);
-  --f7-theme-color: @themeColor;
-  --f7-theme-color-rgb: @themeColorRed, @themeColorGreen, @themeColorBlue;
-  --f7-theme-color-shade: darken(@themeColor, 8%);
-  --f7-theme-color-tint: lighten(@themeColor, 8%);
-
   --f7-safe-area-left: 0px;
   --f7-safe-area-right: 0px;
   --f7-safe-area-top: 0px;
@@ -145,48 +137,3 @@
 .ripple-color-primary {
   --f7-theme-color-ripple-color: rgba(var(--f7-theme-color-rgb), 0.3);
 }
-:root {
-  each(@colors, {
-    @themeColorRed: red(@value);
-    @themeColorGreen: green(@value);
-    @themeColorBlue: blue(@value);
-    --f7-color-@{key}: @value;
-    --f7-color-@{key}-rgb: @themeColorRed, @themeColorGreen, @themeColorBlue;
-    --f7-color-@{key}-shade: darken(@value, 8%);
-    --f7-color-@{key}-tint: lighten(@value, 8%);
-  });
-}
-each(@colors, {
-  .color-theme-@{key} {
-    @themeColorRed: red(@value);
-    @themeColorGreen: green(@value);
-    @themeColorBlue: blue(@value);
-    --f7-theme-color: @value;
-    --f7-theme-color-rgb: @themeColorRed, @themeColorGreen, @themeColorBlue;
-    --f7-theme-color-shade: darken(@value, 8%);
-    --f7-theme-color-tint: lighten(@value, 8%);
-  }
-});
-each(@colors, {
-  @themeColorRed: red(@value);
-  @themeColorGreen: green(@value);
-  @themeColorBlue: blue(@value);
-  .color-@{key} {
-    --f7-theme-color: @value;
-    --f7-theme-color-rgb: @themeColorRed, @themeColorGreen, @themeColorBlue;
-    --f7-theme-color-shade: darken(@value, 8%);
-    --f7-theme-color-tint: lighten(@value, 8%);
-  }
-  .text-color-@{key} {
-    --f7-theme-color-text-color: @value;
-  }
-  .bg-color-@{key} {
-    --f7-theme-color-bg-color: @value;
-  }
-  .border-color-@{key} {
-    --f7-theme-color-border-color: @value;
-  }
-  .ripple-color-@{key}, .ripple-@{key} {
-    --f7-theme-color-ripple-color: rgba(@themeColorRed, @themeColorGreen, @themeColorBlue, 0.3);
-  }
-});
