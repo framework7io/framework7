@@ -56,18 +56,6 @@ export default () => {
 
   const generateStylesheet = () => {
     let styles = '';
-    if (customColor) {
-      const colorThemeProperties = f7.utils.colorThemeCSSProperties(customColor);
-      if (Object.keys(colorThemeProperties).length) {
-        styles += `
-/* Custom color theme */
-:root {
-  ${Object.keys(colorThemeProperties)
-    .map((key) => `${key}: ${colorThemeProperties[key]};`)
-    .join('\n  ')}
-}`;
-      }
-    }
     if (barsStyle === 'fill') {
       const colorThemeRgb = f7
         .$('html')
@@ -182,6 +170,7 @@ export default () => {
     globalCustomProperties = generateStylesheet();
     stylesheet.innerHTML = globalCustomProperties;
     setCustomProperties(globalCustomProperties);
+    f7.setColorTheme(customColor);
   }, [barsStyle, customColor]);
   return (
     <Page>

@@ -176,18 +176,6 @@ export default {
     generateStylesheet() {
       const self = this;
       let styles = '';
-      if (self.customColor) {
-        const colorThemeProperties = f7.utils.colorThemeCSSProperties(self.customColor);
-        if (Object.keys(colorThemeProperties).length) {
-          styles += `
-/* Custom color theme */
-:root {
-  ${Object.keys(colorThemeProperties)
-    .map((key) => `${key}: ${colorThemeProperties[key]};`)
-    .join('\n  ')}
-}`;
-        }
-      }
       if (self.barsStyle === 'fill') {
         const colorThemeRgb = $('html')
           .css('--f7-theme-color-rgb')
@@ -295,6 +283,7 @@ export default {
         globalCustomProperties = self.generateStylesheet();
         stylesheet.innerHTML = globalCustomProperties;
         self.customProperties = globalCustomProperties;
+        f7.setColorTheme(color);
       }, 300);
     },
   },

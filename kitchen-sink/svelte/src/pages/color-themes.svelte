@@ -56,18 +56,6 @@
 
   function generateStylesheet() {
     let styles = '';
-    if (customColor) {
-      const colorThemeProperties = f7.utils.colorThemeCSSProperties(customColor);
-      if (Object.keys(colorThemeProperties).length) {
-        styles += `
-/* Custom color theme */
-:root {
-  ${Object.keys(colorThemeProperties)
-    .map((key) => `${key}: ${colorThemeProperties[key]};`)
-    .join('\n  ')}
-}`;
-      }
-    }
     if (barsStyle === 'fill') {
       const colorThemeRgb = f7
         .$('html')
@@ -184,6 +172,7 @@
       globalCustomProperties = generateStylesheet();
       stylesheet.innerHTML = globalCustomProperties;
       customProperties = globalCustomProperties;
+      f7.setColorTheme(color);
     }, 300);
   }
 </script>
