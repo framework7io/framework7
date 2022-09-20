@@ -20,7 +20,6 @@ declare const f7ready: (callback: (f7: Framework7) => void) => void;
 
 declare const Framework7Vue: Framework7Plugin;
 
-declare const registerComponents: (app: any) => void;
 
 interface useStore {
   (store: Store, getter: string): any;
@@ -30,5 +29,5 @@ interface useStore {
 declare const useStore: useStore;
 
 // EXPORT_COMPONENTS
-export { f7, f7ready, theme, registerComponents, useStore };
+export { f7, f7ready, theme, useStore };
 export default Framework7Vue;

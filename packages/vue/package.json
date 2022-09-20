@@ -10,6 +10,11 @@
     "./shared/*": "./shared/*"
   },
   "typings": "framework7-vue.d.ts",
+  "typesVersions": {
+    "*": {
+      "bundle": ["framework7-vue-bundle.d.ts"]
+    }
+  },
   "web-types": "framework7-vue-web-types.json",
   "repository": {
     "type": "git",
