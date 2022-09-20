@@ -150,15 +150,29 @@ class Framework7 extends Framework7Class {
       app.colorsStyleEl = document.createElement('style');
       document.head.appendChild(app.colorsStyleEl);
     }
+
+    const stringifyObject = (obj) => {
+      let res = '';
+      Object.keys(obj).forEach((key) => {
+        res += `${key}:${obj[key]};`;
+      });
+      return res;
+    };
     const colorVars = app.utils.colorThemeCSSProperties(app.colors.primary);
-    let primary = '';
-    // primary
-    Object.keys(colorVars).forEach((key) => {
-      primary += `${key}: ${colorVars[key]};`;
-    });
-    primary = `:root {${primary};--swiper-theme-color:var(--f7-theme-color);}`;
+
+    const primary = [
+      `:root{`,
+      stringifyObject(colorVars.common),
+      stringifyObject(colorVars.light),
+      `--swiper-theme-color:var(--f7-theme-color);`,
+      `}`,
+      `.dark{`,
+      stringifyObject(colorVars.dark),
+      `}`,
+    ].join('');
 
     const restVars = {};
+
     Object.keys(app.colors).forEach((colorName) => {
       const colorValue = app.colors[colorName];
       restVars[colorName] = app.utils.colorThemeCSSProperties(colorValue);
@@ -170,35 +184,41 @@ class Framework7 extends Framework7Class {
     rest += ':root{';
     Object.keys(app.colors).forEach((colorName) => {
       rest += [
-        `--f7-color-${colorName}: ${restVars[colorName]['--f7-theme-color']};`,
-        `--f7-color-${colorName}-rgb: ${restVars[colorName]['--f7-theme-color-rgb']};`,
-        `--f7-color-${colorName}-shade: ${restVars[colorName]['--f7-theme-color-shade']};`,
-        `--f7-color-${colorName}-tint: ${restVars[colorName]['--f7-theme-color-tint']};`,
+        `--f7-color-${colorName}: ${restVars[colorName].common['--f7-theme-color']};`,
+        `--f7-color-${colorName}-rgb: ${restVars[colorName].common['--f7-theme-color-rgb']};`,
+        `--f7-color-${colorName}-shade: ${restVars[colorName].common['--f7-theme-color-shade']};`,
+        `--f7-color-${colorName}-tint: ${restVars[colorName].common['--f7-theme-color-tint']};`,
       ].join('');
     });
     rest += '}';
 
     Object.keys(app.colors).forEach((colorName) => {
+      const { common, light, dark } = restVars[colorName];
+
       rest += [
         `.color-theme-${colorName} {`,
-        `--f7-theme-color : ${restVars[colorName]['--f7-theme-color']};`,
-        `--f7-theme-color-rgb : ${restVars[colorName]['--f7-theme-color-rgb']};`,
-        `--f7-theme-color-shade : ${restVars[colorName]['--f7-theme-color-shade']};`,
-        `--f7-theme-color-tint : ${restVars[colorName]['--f7-theme-color-tint']};`,
-        `--swiper-theme-color: ${restVars[colorName]['--f7-theme-color']};`,
+        stringifyObject(common),
+        stringifyObject(light),
+        `--swiper-theme-color: var(--f7-theme-color);`,
         `}`,
+        `.color-theme-${colorName}.dark, .color-theme-${colorName} .dark, .dark .color-theme-${colorName} {${stringifyObject(
+          dark,
+        )}}`,
       ].join('');
     });
 
     Object.keys(app.colors).forEach((colorName) => {
+      const { common, light, dark } = restVars[colorName];
+
       rest += [
         `.color-${colorName} {`,
-        `--f7-theme-color : ${restVars[colorName]['--f7-theme-color']};`,
-        `--f7-theme-color-rgb : ${restVars[colorName]['--f7-theme-color-rgb']};`,
-        `--f7-theme-color-shade : ${restVars[colorName]['--f7-theme-color-shade']};`,
-        `--f7-theme-color-tint : ${restVars[colorName]['--f7-theme-color-tint']};`,
-        `--swiper-theme-color: ${restVars[colorName]['--f7-theme-color']};`,
+        stringifyObject(common),
+        stringifyObject(light),
+        `--swiper-theme-color: var(--f7-theme-color);`,
         `}`,
+        `.color-${colorName}.dark, .color-${colorName} .dark, .dark .color-${colorName} {${stringifyObject(
+          dark,
+        )}}`,
         `.text-color-${colorName} {`,
         `--f7-theme-color-text-color: ${app.colors[colorName]};`,
         `}`,
@@ -209,7 +229,7 @@ class Framework7 extends Framework7Class {
         `--f7-theme-color-border-color: ${app.colors[colorName]};`,
         `}`,
         `.ripple-color-${colorName}, .ripple-${colorName} {`,
-        `--f7-theme-color-ripple-color: rgba(${restVars[colorName]['--f7-theme-color-rgb']}, 0.3);`,
+        `--f7-theme-color-ripple-color: var(--f7-theme-color-rgb);`,
         `}`,
       ].join('');
     });

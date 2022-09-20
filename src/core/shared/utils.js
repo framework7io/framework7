@@ -1,4 +1,7 @@
 import { getWindow } from 'ssr-window';
+import { materialColors } from './material-colors.js';
+
+export { materialColors } from './material-colors.js';
 
 let uniqueNum = 0;
 export function uniqueNumber() {
@@ -342,11 +345,17 @@ export function colorThemeCSSProperties(...args) {
   const hslTint = [hsl[0], hsl[1], Math.max(0, hsl[2] + 0.08)];
   const shade = colorRgbToHex(...colorHslToRgb(...hslShade));
   const tint = colorRgbToHex(...colorHslToRgb(...hslTint));
+  const { light, dark } = materialColors(hex);
+
   return {
-    '--f7-theme-color': hex,
-    '--f7-theme-color-rgb': rgb.join(', '),
-    '--f7-theme-color-shade': shade,
-    '--f7-theme-color-tint': tint,
+    common: {
+      '--f7-theme-color': hex,
+      '--f7-theme-color-rgb': rgb.join(', '),
+      '--f7-theme-color-shade': shade,
+      '--f7-theme-color-tint': tint,
+    },
+    light,
+    dark,
   };
 }
 

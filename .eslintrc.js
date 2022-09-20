@@ -1,4 +1,5 @@
 const rules = {
+  'no-bitwise': 'off',
   'no-param-reassign': [
     'error',
     {
