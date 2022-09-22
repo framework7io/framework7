@@ -93,9 +93,9 @@ function loadModule(moduleToLoad) {
       }
       fetchedModules.push(modulePath);
       const scriptLoad = new Promise((resolveScript, rejectScript) => {
-        Framework7.request.get(
-          modulePath,
-          (scriptContent) => {
+        fetch(modulePath)
+          .then((res) => res.text())
+          .then((scriptContent) => {
             const callbackId = id();
             const callbackLoadName = `f7_component_loader_callback_${callbackId}`;
 
@@ -126,28 +126,28 @@ function loadModule(moduleToLoad) {
             install(module);
 
             resolveScript();
-          },
-          (xhr, status) => {
-            rejectScript(xhr, status);
-          },
-        );
+          })
+          .catch((err) => {
+            rejectScript(err);
+          });
       });
       const styleLoad = new Promise((resolveStyle) => {
-        Framework7.request.get(
+        fetch(
           modulePath
             .replace('.lazy.js', app.rtl ? '.rtl.css' : '.css')
             .replace('.js', app.rtl ? '.rtl.css' : '.css'),
-          (styleContent) => {
+        )
+          .then((res) => res.text())
+          .then((styleContent) => {
             const styleEl = document.createElement('style');
             styleEl.innerHTML = styleContent;
             $('head').append(styleEl);
 
             resolveStyle();
-          },
-          () => {
+          })
+          .catch(() => {
             resolveStyle();
-          },
-        );
+          });
       });
 
       Promise.all([scriptLoad, styleLoad])

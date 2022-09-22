@@ -13,10 +13,15 @@
   </div>
   <div class="page-content">
     <div class="block">
-      <p>With forms storage it is easy to store and parse form data, especially on Ajax loaded pages. All you need to make it work is to add "form-store-data" class to your &lt;form&gt; and Framework7 will store form data with every input change. And the most awesome part is that when you load this page again Framework7 will parse this data and fill all form fields automatically!</p>
-      <p>Just try to fill the form below and then go to any other page, or even you may close this site, and when you return here form fields will have kept your data.</p>
+      <p>With forms storage it is easy to store and parse form data, especially on Ajax loaded pages. All you need to
+        make it work is to add "form-store-data" class to your &lt;form&gt; and Framework7 will store form data with
+        every input change. And the most awesome part is that when you load this page again Framework7 will parse this
+        data and fill all form fields automatically!</p>
+      <p>Just try to fill the form below and then go to any other page, or even you may close this site, and when you
+        return here form fields will have kept your data.</p>
     </div>
-    <form class="list form-store-data" id="demo-form">
+    <form class="list form-store-data form-ajax-submit-onchange" action="https://google.com" method="POST"
+      enctype="application/json" id="demo-form">
       <ul>
         <li class="item-content item-input">
           <div class="item-inner">

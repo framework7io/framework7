@@ -247,14 +247,12 @@ export namespace Router {
     /** Event will be fired when router.updateCurrentUrl method called */
     routeUrlUpdate(newRoute: Route, router: Router): void;
 
-    /** Event will be fired after router XHR opened and before XHR send. Can be used to modify the XHR object before it is sent. Use this callback to set custom headers, etc. As an arguments receives XHR object and navigating options object */
-    routerAjaxStart(xhr: XMLHttpRequest, options: RouteOptions): void;
     /** Event will be fired when the request succeeds. As an arguments receives XHR object and navigating options object */
-    routerAjaxSuccess(xhr: XMLHttpRequest, options: RouteOptions): void;
+    routerAjaxSuccess(response: Response, options: RouteOptions): void;
     /** Event will be fired if the request fails. As an arguments receives XHR object and navigating options object */
-    routerAjaxError(xhr: XMLHttpRequest, options: RouteOptions): void;
+    routerAjaxError(response: Response, options: RouteOptions): void;
     /** Event will be fired when the request finishes. As an arguments receives XHR object and navigating options object */
-    routerAjaxComplete(xhr: XMLHttpRequest, options: RouteOptions): void;
+    routerAjaxComplete(response: Response, options: RouteOptions): void;
 
     /** Event will be triggered during swipe back move */
     swipebackMove(data: SwipeBackData): void;

@@ -2,7 +2,6 @@ import { Dom7, Dom7Array } from 'dom7';
 import { Router } from '../../modules/router/router.js';
 import { DeviceParams, Device } from '../../shared/get-device.js';
 import { Support } from '../../shared/get-support.js';
-import { Request } from '../../shared/request.js';
 import { Utils } from '../../shared/utils.js';
 import {
   ComponentClass,
@@ -188,7 +187,6 @@ declare class Framework7 implements Framework7 {
   static getSupport: () => Support;
   static device: Device;
   static support: Support;
-  static request: Request;
   static utils: Utils;
   static Events: Events;
   static Component: ComponentClass;

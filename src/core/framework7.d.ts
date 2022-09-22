@@ -1,7 +1,6 @@
 import Dom7 from 'dom7';
 // IMPORT_BASE
 
-import request from './shared/request.js';
 import { getSupport } from './shared/get-support.js';
 import { getDevice } from './shared/get-device.js';
 import { Utils } from './shared/utils.js';
@@ -18,15 +17,5 @@ declare module './components/app/app-class.js' {
 
 declare const utils: Utils;
 
-export {
-  request,
-  getSupport,
-  getDevice,
-  utils,
-  Dom7,
-  Component,
-  Store,
-  StoreParameters,
-  createStore,
-};
+export { getSupport, getDevice, utils, Dom7, Component, Store, StoreParameters, createStore };
 export default Framework7;

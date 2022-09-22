@@ -221,44 +221,52 @@ function initAjaxForm() {
     if (e.type === 'change' && fromData === 'fromdata') return;
 
     const method = ($formEl.attr('method') || 'GET').toUpperCase();
-    const contentType = $formEl.prop('enctype') || $formEl.attr('enctype');
+    const contentType = $formEl.attr('enctype') || $formEl.prop('enctype');
 
-    const url = $formEl.attr('action');
+    let url = $formEl.attr('action');
     if (!url) return;
 
     let data;
     if (method === 'POST') {
-      if (contentType === 'application/x-www-form-urlencoded') {
+      if (
+        contentType === 'application/x-www-form-urlencoded' ||
+        contentType === 'application/json'
+      ) {
         data = app.form.convertToData($formEl[0]);
+        if (contentType === 'application/json') {
+          data = JSON.stringify(data);
+        }
       } else {
         data = new window.FormData($formEl[0]);
       }
     } else {
       data = serializeObject(app.form.convertToData($formEl[0]));
+      if (url.includes('?')) {
+        url += `&${data}`;
+      } else {
+        url += `?${data}`;
+      }
     }
 
-    app.request({
+    $formEl.trigger('formajax:beforesend', { data });
+    app.emit('formAjaxBeforeSend', $formEl[0], data);
+
+    fetch(url, {
       method,
-      url,
-      contentType,
-      data,
-      beforeSend(xhr) {
-        $formEl.trigger('formajax:beforesend', { data, xhr });
-        app.emit('formAjaxBeforeSend', $formEl[0], data, xhr);
-      },
-      error(xhr) {
-        $formEl.trigger('formajax:error', { data, xhr });
-        app.emit('formAjaxError', $formEl[0], data, xhr);
-      },
-      complete(xhr) {
-        $formEl.trigger('formajax:complete', { data, xhr });
-        app.emit('formAjaxComplete', $formEl[0], data, xhr);
-      },
-      success(response, status, xhr) {
-        $formEl.trigger('formajax:success', { data, xhr });
-        app.emit('formAjaxSuccess', $formEl[0], data, xhr);
-      },
-    });
+      headers: { 'Content-Type': contentType || 'application/x-www-form-urlencoded' },
+      ...(method === 'POST' || method === 'PUT' ? { body: data } : {}),
+    })
+      .then((response) => {
+        $formEl.trigger('formajax:complete', { data, response });
+        app.emit('formAjaxComplete', $formEl[0], data, response);
+
+        $formEl.trigger('formajax:success', { data, response });
+        app.emit('formAjaxSuccess', $formEl[0], data, response);
+      })
+      .catch((error) => {
+        $formEl.trigger('formajax:error', { data, error });
+        app.emit('formAjaxError', $formEl[0], data, error);
+      });
   }
   $(document).on(
     'submit change',

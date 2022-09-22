@@ -50,13 +50,13 @@ export namespace Form {
     formStoreData: (form: HTMLElement, data: object) => void;
 
     /** Event will be triggered right after for data saved */
-    formAjaxSuccess: (form: HTMLElement, data: object, xhr: XMLHttpRequest) => void;
+    formAjaxSuccess: (form: HTMLElement, data: object, response: Response) => void;
     /** Event will be triggered right after for data saved */
-    formAjaxComplete: (form: HTMLElement, data: object, xhr: XMLHttpRequest) => void;
+    formAjaxComplete: (form: HTMLElement, data: object, response: Response) => void;
     /** Event will be triggered right after for data saved */
-    formAjaxBeforeSend: (form: HTMLElement, data: object, xhr: XMLHttpRequest) => void;
+    formAjaxBeforeSend: (form: HTMLElement, data: object) => void;
     /** Event will be triggered right after for data saved */
-    formAjaxError: (form: HTMLElement, data: object, xhr: XMLHttpRequest) => void;
+    formAjaxError: (form: HTMLElement, data: object, error: any) => void;
   }
 }
 declare const FormComponent: Framework7Plugin;

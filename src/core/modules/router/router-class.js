@@ -783,40 +783,38 @@ class Router extends Framework7Class {
           }
         }
       }
-      router.xhrAbortController = router.app.request.abortController();
-      router.app.request({
-        abortController: router.xhrAbortController,
-        url,
-        method: 'GET',
-        beforeSend(xhr) {
-          router.emit('routerAjaxStart', xhr, options);
-        },
-        complete(xhr, status) {
-          router.emit('routerAjaxComplete', xhr);
+      router.xhrAbortController = new AbortController();
+      let fetchRes;
+      fetch(url, { signal: router.xhrAbortController.signal, method: 'GET' })
+        .then((res) => {
+          fetchRes = res;
+          return res.text();
+        })
+        .then((responseText) => {
+          const { status } = fetchRes;
+          router.emit('routerAjaxComplete', fetchRes);
           if (
-            (status !== 'error' && status !== 'timeout' && xhr.status >= 200 && xhr.status < 300) ||
-            xhr.status === 0
+            (status !== 'error' && status !== 'timeout' && status >= 200 && status < 300) ||
+            status === 0
           ) {
-            if (params.xhrCache && xhr.responseText !== '') {
+            if (params.xhrCache && responseText !== '') {
               router.removeFromXhrCache(url);
               router.cache.xhr.push({
                 url,
                 time: now(),
-                content: xhr.responseText,
+                content: responseText,
               });
             }
-            router.emit('routerAjaxSuccess', xhr, options);
-            resolve(xhr.responseText);
+            router.emit('routerAjaxSuccess', fetchRes, options);
+            resolve(responseText);
           } else {
-            router.emit('routerAjaxError', xhr, options);
-            reject(xhr);
+            router.emit('routerAjaxError', fetchRes, options);
+            reject(fetchRes);
           }
-        },
-        error(xhr) {
-          router.emit('routerAjaxError', xhr, options);
-          reject(xhr);
-        },
-      });
+        })
+        .catch((err) => {
+          reject(err);
+        });
     });
   }
 

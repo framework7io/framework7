@@ -8,7 +8,6 @@ import DeviceModule from './modules/device/device.js';
 import SupportModule from './modules/support/support.js';
 import UtilsModule from './modules/utils/utils.js';
 import ResizeModule from './modules/resize/resize.js';
-import RequestModule from './modules/request/request.js';
 import TouchModule from './modules/touch/touch.js';
 import ClicksModule from './modules/clicks/clicks.js';
 import RouterModule from './modules/router/router.js';
@@ -43,7 +42,6 @@ Framework7.use([
   SupportModule,
   UtilsModule,
   ResizeModule,
-  RequestModule,
   TouchModule,
   ClicksModule,
   RouterModule,
