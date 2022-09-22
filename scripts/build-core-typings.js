@@ -44,7 +44,7 @@ function copyTypings() {
 function generateTypings(content, modules, components) {
   const f7Base = `import Framework7 from './components/app/app-class.js'`;
 
-  const helpers = ['request', 'utils', 'support', 'device'];
+  const helpers = ['utils', 'support', 'device'];
 
   const importHelpers = helpers.map((helper) => {
     const capitalized = capitalize(helper);

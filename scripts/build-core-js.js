@@ -36,13 +36,13 @@ async function modular({ components }) {
       .replace('//INSTALL_COMPONENTS\n', '')
       .replace(
         '//IMPORT_HELPERS',
-        "import request from './shared/request.js';\nimport * as utils from './shared/utils.js';\nimport { getSupport } from './shared/get-support.js';\nimport { getDevice } from './shared/get-device.js';",
+        "import * as utils from './shared/utils.js';\nimport { getSupport } from './shared/get-support.js';\nimport { getDevice } from './shared/get-device.js';",
       )
       .replace(
         '//NAMED_EXPORT',
         `export { ${
           isLite ? '' : 'Component, $jsx,'
-        } $ as Dom7, request, utils, getDevice, getSupport, createStore };`,
+        } $ as Dom7, utils, getDevice, getSupport, createStore };`,
       );
   };
   const bundleComponents = (content, isLite) => {
@@ -71,13 +71,13 @@ async function modular({ components }) {
       )
       .replace(
         '//IMPORT_HELPERS',
-        "import request from './shared/request.js';\nimport * as utils from './shared/utils.js';\nimport { getSupport } from './shared/get-support.js';\nimport { getDevice } from './shared/get-device.js';",
+        "import * as utils from './shared/utils.js';\nimport { getSupport } from './shared/get-support.js';\nimport { getDevice } from './shared/get-device.js';",
       )
       .replace(
         '//NAMED_EXPORT',
         `export { ${
           isLite ? '' : 'Component, $jsx,'
-        } $ as Dom7, request, utils, getDevice, getSupport, createStore };`,
+        } $ as Dom7, utils, getDevice, getSupport, createStore };`,
       );
   };
 
@@ -165,7 +165,7 @@ async function umdBundle({ components } = {}) {
         '//INSTALL_COMPONENTS': components.map((component) => component.capitalized).join(',\n  '),
         '//IMPORT_HELPERS': '',
         '//NAMED_EXPORT': '',
-        'export { $ as Dom7, request, utils, getDevice, getSupport, createStore, $jsx };': '',
+        'export { $ as Dom7, utils, getDevice, getSupport, createStore, $jsx };': '',
       }),
       nodeResolve({ mainFields: ['module', 'main', 'jsnext'] }),
       babel({ babelHelpers: 'bundled' }),
@@ -232,7 +232,7 @@ async function umdCore() {
         '//INSTALL_COMPONENTS': '',
         '//IMPORT_HELPERS': '',
         '//NAMED_EXPORT': '',
-        'export { $ as Dom7, request, utils, getDevice, getSupport, createStore, $jsx };': '',
+        'export { $ as Dom7, utils, getDevice, getSupport, createStore, $jsx };': '',
       }),
       nodeResolve({ mainFields: ['module', 'main', 'jsnext'] }),
       babel({ babelHelpers: 'bundled' }),
