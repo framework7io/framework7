@@ -6,6 +6,7 @@
       custom styling.
     </p>
 
+    <f7-block-title>Block Title</f7-block-title>
     <f7-block>
       <p>
         Here comes paragraph within content block. Donec et nulla auctor massa pharetra adipiscing
@@ -14,6 +15,7 @@
       </p>
     </f7-block>
 
+    <f7-block-title>Strong Block</f7-block-title>
     <f7-block strong>
       <p>
         Here comes another text block with additional "block-strong" class. Praesent nec imperdiet
@@ -22,24 +24,25 @@
       </p>
     </f7-block>
 
-    <f7-block-title>Block title</f7-block-title>
-    <f7-block>
+    <f7-block-title>Strong Outline Block</f7-block-title>
+    <f7-block strong outline>
       <p>
-        Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit
-        vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates itaque autem qui quaerat
+        vero ducimus praesentium quibusdam veniam error ut alias, numquam iste ea quos maxime
+        consequatur ullam at a.
       </p>
     </f7-block>
 
-    <f7-block-title>Another ultra long content block title</f7-block-title>
-    <f7-block strong>
-      <p>
-        Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit
-        vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis.
-      </p>
-    </f7-block>
-
-    <f7-block-title>Inset</f7-block-title>
+    <f7-block-title>Strong Inset Block</f7-block-title>
     <f7-block strong inset>
+      <p>
+        Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit
+        vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis.
+      </p>
+    </f7-block>
+
+    <f7-block-title>Strong Inset Outline Block</f7-block-title>
+    <f7-block strong outline inset>
       <p>
         Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit
         vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis.

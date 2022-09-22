@@ -14,14 +14,14 @@ import { useTab } from '../shared/use-tab.js';
   largeInset?: boolean
   xlargeInset?: boolean
   strong?: boolean
+  outline?: boolean
+  outlineIos?: boolean
+  outlineMd?: boolean
   tabs?: boolean
   tab?: boolean
   tabActive?: boolean
   accordionList?: boolean
   accordionOpposite?: boolean
-  noHairlines?: boolean
-  noHairlinesMd?: boolean
-  noHairlinesIos?: boolean
   onTabShow?: (el?: HTMLElement) => void
   onTabHide?: (el?: HTMLElement) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
@@ -39,15 +39,15 @@ const Block = forwardRef((props, ref) => {
     largeInset,
     xlargeInset,
     strong,
+    outline,
+    outlineIos,
+    outlineMd,
     accordionList,
     accordionOpposite,
 
     tabs,
     tab,
     tabActive,
-    noHairlines,
-    noHairlinesIos,
-    noHairlinesMd,
     id,
     style,
     children,
@@ -72,14 +72,14 @@ const Block = forwardRef((props, ref) => {
       'large-inset': largeInset,
       'xlarge-inset': xlargeInset,
       'block-strong': strong,
+      'block-outline': outline,
+      'block-outline-ios': outlineIos,
+      'block-outline-md': outlineMd,
       'accordion-list': accordionList,
       'accordion-opposite': accordionOpposite,
       tabs,
       tab,
       'tab-active': tabActive,
-      'no-hairlines': noHairlines,
-      'no-hairlines-md': noHairlinesMd,
-      'no-hairlines-ios': noHairlinesIos,
     },
     colorClasses(props),
   );

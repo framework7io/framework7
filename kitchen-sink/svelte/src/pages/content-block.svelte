@@ -10,43 +10,46 @@
     custom styling.
   </p>
 
+  <BlockTitle>Block Title</BlockTitle>
   <Block>
     <p>
       Here comes paragraph within content block. Donec et nulla auctor massa pharetra adipiscing ut
       sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis,
-      vulputate turpis vel, sagittis felis.
+      vulputate turpis vel, sagittis felis.{' '}
     </p>
   </Block>
 
+  <BlockTitle>Strong Block</BlockTitle>
   <Block strong>
     <p>
       Here comes another text block with additional "block-strong" class. Praesent nec imperdiet
       diam. Maecenas vel lectus porttitor, consectetur magna nec, viverra sem. Aliquam sed risus
-      dolor. Morbi tincidunt ut libero id sodales. Integer blandit varius nisi quis consectetur.
+      dolor. Morbi tincidunt ut libero id sodales. Integer blandit varius nisi quis consectetur.{' '}
     </p>
   </Block>
 
-  <BlockTitle>Block title</BlockTitle>
-  <Block>
+  <BlockTitle>Strong Outline Block</BlockTitle>
+  <Block strong outline>
     <p>
-      Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit
-      vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis.
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates itaque autem qui quaerat
+      vero ducimus praesentium quibusdam veniam error ut alias, numquam iste ea quos maxime
+      consequatur ullam at a.
     </p>
   </Block>
 
-  <BlockTitle>Another ultra long content block title</BlockTitle>
-  <Block strong>
-    <p>
-      Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit
-      vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis.
-    </p>
-  </Block>
-
-  <BlockTitle>Inset</BlockTitle>
+  <BlockTitle>Strong Inset Block</BlockTitle>
   <Block strong inset>
     <p>
       Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit
-      vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis.
+      vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis.{' '}
+    </p>
+  </Block>
+
+  <BlockTitle>Strong Inset Outline Block</BlockTitle>
+  <Block strong outline inset>
+    <p>
+      Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit
+      vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis.{' '}
     </p>
   </Block>
 
@@ -54,7 +57,7 @@
   <Block strong mediumInset>
     <p>
       Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit
-      vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis.
+      vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis.{' '}
     </p>
   </Block>
 
@@ -64,7 +67,7 @@
     <p>
       Here comes paragraph within content block. Donec et nulla auctor massa pharetra adipiscing ut
       sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis,
-      vulputate turpis vel, sagittis felis.
+      vulputate turpis vel, sagittis felis.{' '}
     </p>
     <BlockFooter>Block Footer</BlockFooter>
   </Block>
@@ -74,7 +77,7 @@
     <p>
       Here comes paragraph within content block. Donec et nulla auctor massa pharetra adipiscing ut
       sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis,
-      vulputate turpis vel, sagittis felis.
+      vulputate turpis vel, sagittis felis.{' '}
     </p>
   </Block>
   <BlockFooter>Block Footer</BlockFooter>
@@ -84,7 +87,7 @@
     <p>
       Here comes paragraph within content block. Donec et nulla auctor massa pharetra adipiscing ut
       sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis,
-      vulputate turpis vel, sagittis felis.
+      vulputate turpis vel, sagittis felis.{' '}
     </p>
     <BlockFooter>Block Footer</BlockFooter>
   </Block>
@@ -94,7 +97,7 @@
     <p>
       Here comes paragraph within content block. Donec et nulla auctor massa pharetra adipiscing ut
       sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis,
-      vulputate turpis vel, sagittis felis.
+      vulputate turpis vel, sagittis felis.{' '}
     </p>
   </Block>
   <BlockFooter>Block Footer</BlockFooter>
@@ -103,7 +106,7 @@
   <Block strong>
     <p>
       Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit
-      vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis.
+      vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis.{' '}
     </p>
   </Block>
 
@@ -111,7 +114,7 @@
   <Block strong>
     <p>
       Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit
-      vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis.
+      vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis.{' '}
     </p>
   </Block>
 </Page>

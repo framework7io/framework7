@@ -19,9 +19,9 @@
   export let tabActive = false;
   export let accordionList = false;
   export let accordionOpposite = false;
-  export let noHairlines = false;
-  export let noHairlinesMd = false;
-  export let noHairlinesIos = false;
+  export let outline = false;
+  export let outlineMd = false;
+  export let outlineIos = false;
 
   let className = undefined;
   export { className as class };
@@ -44,9 +44,9 @@
       tabs,
       tab,
       'tab-active': tabActive,
-      'no-hairlines': noHairlines,
-      'no-hairlines-md': noHairlinesMd,
-      'no-hairlines-ios': noHairlinesIos,
+      'block-outline': outline,
+      'block-outline-md': outlineMd,
+      'block-outline-ios': outlineIos,
     },
     colorClasses($$props),
   );
