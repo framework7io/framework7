@@ -50,8 +50,34 @@ export default () => (
       content="Another card. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse feugiat sem est, non tincidunt ligula volutpat sit amet. Mauris aliquet magna justo. "
     />
 
+    <BlockTitle>Outline With Dividers</BlockTitle>
+    <Card
+      outline
+      headerDivider
+      footerDivider
+      title="Card header"
+      content="Card with header and footer. Card headers are used to display card titles and footers for additional information or just for custom actions."
+      footer="Card footer"
+    />
+
+    <BlockTitle>Raised Cards</BlockTitle>
+    <Card
+      raised
+      content="This is a simple card with plain text, but cards can also contain their own header, footer, list view, image, or any other element."
+    />
+    <Card
+      raised
+      title="Card header"
+      content="Card with header and footer. Card headers are used to display card titles and footers for additional information or just for custom actions."
+      footer="Card footer"
+    />
+    <Card
+      raised
+      content="Another card. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse feugiat sem est, non tincidunt ligula volutpat sit amet. Mauris aliquet magna justo. "
+    />
+
     <BlockTitle>Styled Cards</BlockTitle>
-    <Card className="demo-card-header-pic">
+    <Card outlineMd className="demo-card-header-pic">
       <CardHeader
         className="no-border"
         valign="bottom"
@@ -93,52 +119,6 @@ export default () => (
       <CardFooter>
         <Link>Like</Link>
         <Link>Read more</Link>
-      </CardFooter>
-    </Card>
-
-    <BlockTitle>Facebook Cards</BlockTitle>
-    <Card className="demo-facebook-card">
-      <CardHeader className="no-border">
-        <div className="demo-facebook-avatar">
-          <img
-            src="https://cdn.framework7.io/placeholder/people-68x68-1.jpg"
-            width="34"
-            height="34"
-          />
-        </div>
-        <div className="demo-facebook-name">John Doe</div>
-        <div className="demo-facebook-date">Monday at 3:47 PM</div>
-      </CardHeader>
-      <CardContent padding={false}>
-        <img src="https://cdn.framework7.io/placeholder/nature-1000x700-8.jpg" width="100%" />
-      </CardContent>
-      <CardFooter className="no-border">
-        <Link>Like</Link>
-        <Link>Comment</Link>
-        <Link>Share</Link>
-      </CardFooter>
-    </Card>
-    <Card className="demo-facebook-card">
-      <CardHeader className="no-border">
-        <div className="demo-facebook-avatar">
-          <img
-            src="https://cdn.framework7.io/placeholder/people-68x68-1.jpg"
-            width="34"
-            height="34"
-          />
-        </div>
-        <div className="demo-facebook-name">John Doe</div>
-        <div className="demo-facebook-date">Monday at 2:15 PM</div>
-      </CardHeader>
-      <CardContent>
-        <p>What a nice photo i took yesterday!</p>
-        <img src="https://cdn.framework7.io/placeholder/nature-1000x700-8.jpg" width="100%" />
-        <p className="likes">Likes: 112 &nbsp;&nbsp; Comments: 43</p>
-      </CardContent>
-      <CardFooter className="no-border">
-        <Link>Like</Link>
-        <Link>Comment</Link>
-        <Link>Share</Link>
       </CardFooter>
     </Card>
 

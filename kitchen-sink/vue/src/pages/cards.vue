@@ -39,8 +39,34 @@
       content="Another card. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse feugiat sem est, non tincidunt ligula volutpat sit amet. Mauris aliquet magna justo. "
     ></f7-card>
 
+    <f7-block-title>Outline With Dividers</f7-block-title>
+    <f7-card
+      outline
+      header-divider
+      footer-divider
+      title="Card header"
+      content="Card with header and footer. Card headers are used to display card titles and footers for additional information or just for custom actions."
+      footer="Card footer"
+    ></f7-card>
+
+    <f7-block-title>Raised Cards</f7-block-title>
+    <f7-card
+      raised
+      content="This is a simple card with plain text, but cards can also contain their own header, footer, list view, image, or any other element."
+    ></f7-card>
+    <f7-card
+      raised
+      title="Card header"
+      content="Card with header and footer. Card headers are used to display card titles and footers for additional information or just for custom actions."
+      footer="Card footer"
+    ></f7-card>
+    <f7-card
+      raised
+      content="Another card. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse feugiat sem est, non tincidunt ligula volutpat sit amet. Mauris aliquet magna justo. "
+    ></f7-card>
+
     <f7-block-title>Styled Cards</f7-block-title>
-    <f7-card class="demo-card-header-pic">
+    <f7-card outline-md class="demo-card-header-pic">
       <f7-card-header
         class="no-border"
         valign="bottom"
@@ -76,52 +102,6 @@
       <f7-card-footer>
         <f7-link>Like</f7-link>
         <f7-link>Read more</f7-link>
-      </f7-card-footer>
-    </f7-card>
-
-    <f7-block-title>Facebook Cards</f7-block-title>
-    <f7-card class="demo-facebook-card">
-      <f7-card-header class="no-border">
-        <div class="demo-facebook-avatar">
-          <img
-            src="https://cdn.framework7.io/placeholder/people-68x68-1.jpg"
-            width="34"
-            height="34"
-          />
-        </div>
-        <div class="demo-facebook-name">John Doe</div>
-        <div class="demo-facebook-date">Monday at 3:47 PM</div>
-      </f7-card-header>
-      <f7-card-content :padding="false">
-        <img src="https://cdn.framework7.io/placeholder/nature-1000x700-8.jpg" width="100%" />
-      </f7-card-content>
-      <f7-card-footer class="no-border">
-        <f7-link>Like</f7-link>
-        <f7-link>Comment</f7-link>
-        <f7-link>Share</f7-link>
-      </f7-card-footer>
-    </f7-card>
-    <f7-card class="demo-facebook-card">
-      <f7-card-header class="no-border">
-        <div class="demo-facebook-avatar">
-          <img
-            src="https://cdn.framework7.io/placeholder/people-68x68-1.jpg"
-            width="34"
-            height="34"
-          />
-        </div>
-        <div class="demo-facebook-name">John Doe</div>
-        <div class="demo-facebook-date">Monday at 2:15 PM</div>
-      </f7-card-header>
-      <f7-card-content>
-        <p>What a nice photo i took yesterday!</p>
-        <img src="https://cdn.framework7.io/placeholder/nature-1000x700-8.jpg" width="100%" />
-        <p class="likes">Likes: 112 &nbsp;&nbsp; Comments: 43</p>
-      </f7-card-content>
-      <f7-card-footer class="no-border">
-        <f7-link>Like</f7-link>
-        <f7-link>Comment</f7-link>
-        <f7-link>Share</f7-link>
       </f7-card-footer>
     </f7-card>
 

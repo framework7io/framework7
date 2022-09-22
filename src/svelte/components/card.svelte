@@ -17,7 +17,12 @@
   export let title = undefined;
   export let content = undefined;
   export let footer = undefined;
+  export let raised = false;
   export let outline = false;
+  export let outlineIos = false;
+  export let outlineMd = false;
+  export let headerDivider = false;
+  export let footerDivider = false;
   export let expandable = false;
   export let expandableAnimateWidth = false;
   export let expandableOpened = false;
@@ -30,8 +35,6 @@
   export let closeByBackdropClick = undefined;
   export let backdrop = undefined;
   export let backdropEl = undefined;
-  export let noShadow = false;
-  export let noBorder = false;
   export let padding = true;
 
   let el;
@@ -41,10 +44,13 @@
     'card',
     {
       'card-outline': outline,
+      'card-outline-ios': outlineIos,
+      'card-outline-md': outlineMd,
+      'card-raised': raised,
+      'card-header-divider': headerDivider,
+      'card-footer-divider': footerDivider,
       'card-expandable': expandable,
       'card-expandable-animate-width': expandableAnimateWidth,
-      'no-shadow': noShadow,
-      'no-border': noBorder,
     },
     colorClasses($$props),
   );

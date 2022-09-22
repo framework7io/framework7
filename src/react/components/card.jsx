@@ -17,7 +17,12 @@ import { watchProp } from '../shared/watch-prop.js';
   title? : string | number
   content? : string | number
   footer? : string | number
+  raised?: boolean
   outline? : boolean
+  outlineIos? : boolean
+  outlineMd? : boolean
+  headerDivider? : boolean
+  footerDivider? : boolean
   expandable? : boolean
   expandableAnimateWidth? : boolean
   expandableOpened? : boolean
@@ -52,7 +57,12 @@ const Card = forwardRef((props, ref) => {
     content,
     footer,
     padding,
+    raised,
     outline,
+    outlineIos,
+    outlineMd,
+    headerDivider,
+    footerDivider,
     expandable,
     expandableAnimateWidth,
     expandableOpened,
@@ -65,8 +75,6 @@ const Card = forwardRef((props, ref) => {
     closeByBackdropClick,
     backdrop,
     backdropEl,
-    noShadow,
-    noBorder,
   } = props;
   const extraAttrs = getExtraAttrs(props);
 
@@ -160,11 +168,14 @@ const Card = forwardRef((props, ref) => {
     className,
     'card',
     {
+      'card-raised': raised,
+      'card-header-divider': headerDivider,
+      'card-footer-divider': footerDivider,
       'card-outline': outline,
+      'card-outline-ios': outlineIos,
+      'card-outline-md': outlineMd,
       'card-expandable': expandable,
       'card-expandable-animate-width': expandableAnimateWidth,
-      'no-shadow': noShadow,
-      'no-border': noBorder,
     },
     colorClasses(props),
   );
