@@ -347,14 +347,14 @@ const Navbar = {
           navbarTitleLargeHeight = $titleLargeEl[0].offsetHeight;
         } else if (Number.isNaN(navbarTitleLargeHeight)) {
           if (app.theme === 'ios') navbarTitleLargeHeight = 52;
-          else if (app.theme === 'md') navbarTitleLargeHeight = 48;
+          else if (app.theme === 'md') navbarTitleLargeHeight = 88;
         }
       } else if ($titleLargeEl.length) {
         navbarTitleLargeHeight = $titleLargeEl[0].offsetHeight;
       } else {
         // eslint-disable-next-line
         if (app.theme === 'ios') navbarTitleLargeHeight = 52;
-        else if (app.theme === 'md') navbarTitleLargeHeight = 48;
+        else if (app.theme === 'md') navbarTitleLargeHeight = 88;
       }
     }
 
@@ -474,6 +474,7 @@ const Navbar = {
       const inSearchbarExpanded = $navbarEl.hasClass('with-searchbar-expandable-enabled');
       if (inSearchbarExpanded) return;
       navbarCollapsed = $navbarEl.hasClass('navbar-large-collapsed');
+      const $bgEl = $navbarEl.find('.navbar-bg');
       if (collapseProgress === 0 && navbarCollapsed) {
         app.navbar.expandLargeTitle($navbarEl[0]);
       } else if (collapseProgress === 1 && !navbarCollapsed) {
@@ -490,32 +491,31 @@ const Navbar = {
         }
         $navbarEl.find('.title').css('opacity', '');
         $navbarEl.find('.title-large-text, .subnavbar').css('transform', '');
+        $navbarEl.find('.title-large-text').css('opacity', '');
         if (isLargeTransparent) {
-          $navbarEl.find('.navbar-bg').css('opacity', '');
-        } else {
-          $navbarEl.find('.navbar-bg').css('transform', '');
+          $bgEl.css('opacity', '');
         }
+        $bgEl.css('transform', '');
       } else if (collapseProgress > 0 && collapseProgress < 1) {
         if (app.theme === 'md') {
           $navbarEl.find('.navbar-inner').css('overflow', 'visible');
         }
-        $navbarEl.find('.title').css('opacity', collapseProgress);
+        $navbarEl.find('.title').css('opacity', -0.5 + collapseProgress * 1.5);
         $navbarEl
           .find('.title-large-text, .subnavbar')
           .css(
             'transform',
             `translate3d(0px, ${-1 * collapseProgress * navbarTitleLargeHeight}px, 0)`,
           );
+        $navbarEl.find('.title-large-text').css('opacity', 1 - collapseProgress * 2);
+
         if (isLargeTransparent) {
-          $navbarEl.find('.navbar-bg').css('opacity', collapseProgress);
-        } else {
-          $navbarEl
-            .find('.navbar-bg')
-            .css(
-              'transform',
-              `translate3d(0px, ${-1 * collapseProgress * navbarTitleLargeHeight}px, 0)`,
-            );
+          $bgEl.css('opacity', collapseProgress);
         }
+        $bgEl.css(
+          'transform',
+          `translate3d(0px, ${-1 * collapseProgress * navbarTitleLargeHeight}px, 0)`,
+        );
       }
 
       if (snapPageScrollToLargeTitle) {

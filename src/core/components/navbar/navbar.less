@@ -122,7 +122,6 @@
   pointer-events: none;
   z-index: 0;
   background: var(--f7-navbar-bg-color);
-  background-image: var(--f7-navbar-bg-image, var(--f7-bars-bg-image));
   background-color: var(--f7-navbar-bg-color, var(--f7-bars-bg-color));
   transition-property: transform;
   .ios-translucent-bars(var(--f7-navbar-bg-color-rgb, var(--f7-bars-bg-color-rgb)));
@@ -131,14 +130,8 @@
     backface-visibility: hidden;
   }
   .hairline(bottom, var(--f7-navbar-border-color, var(--f7-bars-border-color)));
-  .bar-shadow-bottom(var(--f7-navbar-shadow-image));
   &:after {
     z-index: 1;
-  }
-}
-:root {
-  @media (min-width: 768px) and (min-height: 600px) {
-    --f7-navbar-height: var(--f7-navbar-tablet-height);
   }
 }
 // Transitions
@@ -227,8 +220,6 @@
 .navbar-large-transparent .navbar-bg,
 .navbar-large.navbar-transparent .navbar-bg {
   opacity: var(--f7-navbar-large-collapse-progress);
-  height: 100%;
-  transform: none;
 }
 .ios .router-navbar-transition-to-large .navbar-bg,
 .ios .router-navbar-transition-from-large .navbar-bg,
@@ -262,7 +253,6 @@
   right: 0;
   top: 100%;
   display: flex;
-  align-items: flex-end;
   white-space: nowrap;
   overflow: hidden;
   height: var(--f7-navbar-large-title-height);
