@@ -10,7 +10,6 @@
   position: relative;
   z-index: 200;
   height: var(--f7-searchbar-height);
-  background-image: var(--f7-searchbar-bg-image, var(--f7-bars-bg-image));
   background-color: var(--f7-searchbar-bg-color, var(--f7-bars-bg-color));
   input[type='search']::-webkit-search-decoration {
     display: none;
@@ -36,7 +35,6 @@
 
   .page > &:not(.searchbar-inline) {
     z-index: 600;
-    .bar-shadow-bottom(var(--f7-searchbar-shadow-image));
   }
   input[type='text'],
   input[type='search'] {

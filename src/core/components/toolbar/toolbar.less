@@ -11,7 +11,6 @@
   box-sizing: border-box;
   left: 0;
   height: var(--f7-toolbar-height);
-  background-image: var(--f7-toolbar-bg-image, var(--f7-bars-bg-image));
   background-color: var(--f7-toolbar-bg-color, var(--f7-bars-bg-color));
   color: var(--f7-toolbar-text-color, var(--f7-bars-text-color));
   font-size: var(--f7-toolbar-font-size);
@@ -71,7 +70,6 @@
     backface-visibility: hidden;
   }
   .hairline(bottom, var(--f7-toolbar-border-color, var(--f7-bars-border-color)));
-  .bar-shadow-bottom(var(--f7-toolbar-top-shadow-image));
 }
 .toolbar-bottom,
 .ios .toolbar-bottom-ios,
@@ -100,7 +98,6 @@
   }
 
   .hairline(top, var(--f7-toolbar-border-color, var(--f7-bars-border-color)));
-  .bar-shadow-top(var(--f7-toolbar-bottom-shadow-image));
 }
 .toolbar-inner {
   position: absolute;

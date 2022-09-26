@@ -12,7 +12,6 @@
   margin: 0;
   transform: translate3d(0, 0, 0);
   height: calc(var(--f7-appbar-height) + var(--f7-safe-area-top));
-  background-image: var(--f7-appbar-bg-image, var(--f7-bars-bg-image));
   background-color: var(--f7-appbar-bg-color, var(--f7-bars-bg-color));
   color: var(--f7-appbar-text-color, var(--f7-bars-text-color));
   font-size: var(--f7-appbar-font-size);
@@ -55,7 +54,6 @@
     backface-visibility: hidden;
   }
   .hairline(bottom, var(--f7-appbar-border-color, var(--f7-bars-border-color)));
-  .bar-shadow-bottom(var(--f7-appbar-shadow-image));
   &:after {
     z-index: 1;
   }
