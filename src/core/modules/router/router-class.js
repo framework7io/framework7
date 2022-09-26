@@ -362,7 +362,8 @@ class Router extends Framework7Class {
       if (callback) callback();
     }
 
-    (direction === 'forward' ? $newPageEl : $oldPageEl).animationEnd(() => {
+    // eslint-disable-next-line
+    (direction === 'forward' ? $newPageEl : ios ? $oldPageEl : $newPageEl).animationEnd(() => {
       onDone();
     });
 
