@@ -88,7 +88,12 @@ select {
 a {
   cursor: pointer;
   text-decoration: none;
-  color: var(--f7-theme-color);
+  .ios & {
+    color: var(--f7-theme-color);
+  }
+  .md & {
+    color: var(--f7-md-primary);
+  }
 }
 .link,
 .item-link {
