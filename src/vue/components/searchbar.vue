@@ -88,7 +88,7 @@ export default {
     },
     searchGroupTitle: {
       type: String,
-      default: '.item-divider, .list-group-title',
+      default: '.list-group-title',
     },
     foundEl: {
       type: [String, Object],

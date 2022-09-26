@@ -23,7 +23,7 @@ export namespace Searchbar {
     searchItem?: CSSSelector;
     /** CSS selector of group element. Used when hideGroups enabled to hide groups. If we do a search in List View, then it usually a list group (default "list-group") */
     searchGroup?: CSSSelector;
-    /** CSS selector of group titles and dividers. Used when hideDividers enabled to hide group titles and dividers. If we do a search in List View, then it usually a list group title or list item divider (default ".item-divider, .list-group-title") */
+    /** CSS selector of group titles and dividers. Used when hideDividers enabled to hide group titles and dividers. If we do a search in List View, then it usually a list group title or list item divider (default ".list-group-title") */
     searchGroupTitle?: CSSSelector;
     /** CSS selector or HTMLElement of searchbar "found" element to make it hidden when there is no search results (default ".searchbar-found") */
     foundEl?: HTMLElement | CSSSelector;

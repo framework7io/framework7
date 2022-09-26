@@ -71,7 +71,7 @@
   <List>
     <ListItem link="#" title="Ivan Petrov" />
     <ListItem link="#" title="John Doe" />
-    <ListItem divider title="Divider Here" />
+    <ListItem groupTitle title="Divider Here" />
     <ListItem link="#" title="Ivan Petrov" />
     <ListItem link="#" title="Jenna Smith" />
   </List>

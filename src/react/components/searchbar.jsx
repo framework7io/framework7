@@ -80,7 +80,7 @@ const Searchbar = forwardRef((props, ref) => {
     searchIn = '.item-title',
     searchItem = 'li',
     searchGroup = '.list-group',
-    searchGroupTitle = '.item-divider, .list-group-title',
+    searchGroupTitle = '.list-group-title',
     foundEl = '.searchbar-found',
     notFoundEl = '.searchbar-not-found',
     backdrop,

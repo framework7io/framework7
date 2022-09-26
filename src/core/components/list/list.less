@@ -524,9 +524,9 @@ li.media-item .item-link .item-title-row {
     .hairline-remove(top);
   }
 }
-li.item-divider,
-.item-divider,
-li.list-group-title {
+li.list-group-title,
+.list-group-title {
+  margin-top: -1px;
   white-space: nowrap;
   position: relative;
   max-width: 100%;
@@ -541,36 +541,26 @@ li.list-group-title {
   display: flex;
   align-items: center;
   align-content: center;
-  .hairline-remove(bottom);
-}
-li.item-divider,
-.item-divider {
-  margin-top: -1px;
-  height: var(--f7-list-item-divider-height);
-  color: var(--f7-list-item-divider-text-color);
-  font-size: var(--f7-list-item-divider-font-size);
-  font-weight: var(--f7-list-item-divider-font-weight);
-  background-color: var(--f7-list-item-divider-bg-color);
-  line-height: var(--f7-list-item-divider-line-height);
-  .hairline(top, var(--f7-list-item-divider-border-color));
-}
-li.list-group-title,
-.list li.list-group-title {
-  position: relative;
-  position: sticky;
-  top: 0;
-  margin-top: 0;
-  z-index: 20;
   height: var(--f7-list-group-title-height);
   color: var(--f7-list-group-title-text-color);
   font-size: var(--f7-list-group-title-font-size);
   font-weight: var(--f7-list-group-title-font-weight);
   background-color: var(--f7-list-group-title-bg-color);
   line-height: var(--f7-list-group-title-line-height);
+  .hairline(top, var(--f7-list-group-title-border-color));
+  .hairline-remove(bottom);
+}
+.list-group > .list-group-title,
+.list-group > ul > .list-group-title {
+  top: 0;
+  margin-top: 0;
+  position: sticky;
+  z-index: 20;
   .page-with-navbar-large & {
     top: calc(-1 * var(--f7-navbar-large-title-height));
   }
 }
+
 .list.inset {
   margin-left: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-left));
   margin-right: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-right));
@@ -665,7 +655,7 @@ each(@breakpoints, {
     transition-duration: 300ms;
   }
 
-  li:not(.item-divider):not(.list-group-title) {
+  li:not(.list-group-title) {
     padding-top: calc(var(--f7-menu-list-offset) / 2);
     padding-bottom: calc(var(--f7-menu-list-offset) / 2);
     &:first-child {

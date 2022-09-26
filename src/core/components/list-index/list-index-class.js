@@ -225,7 +225,7 @@ class ListIndex extends Framework7Class {
     if (!$listEl || !$pageContentEl || $pageContentEl.length === 0) return index;
 
     let $scrollToEl;
-    $listEl.find('.list-group-title, .item-divider').each((el) => {
+    $listEl.find('.list-group-title').each((el) => {
       if ($scrollToEl) return;
       const $el = $(el);
       if ($el.text() === itemContent) {
@@ -314,7 +314,7 @@ class ListIndex extends Framework7Class {
     if (index.params.indexes === 'auto') {
       index.indexes = [];
 
-      index.$listEl.find('.list-group-title, .item-divider').each((el) => {
+      index.$listEl.find('.list-group-title').each((el) => {
         const elContent = $(el).text();
         if (index.indexes.indexOf(elContent) < 0) {
           index.indexes.push(elContent);

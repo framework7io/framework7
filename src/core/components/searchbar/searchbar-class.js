@@ -22,7 +22,7 @@ class Searchbar extends FrameworkClass {
       searchItem: 'li', // single item selector, CSS selector
       searchIn: undefined, // where to search in item, CSS selector
       searchGroup: '.list-group',
-      searchGroupTitle: '.item-divider, .list-group-title',
+      searchGroupTitle: '.list-group-title',
       ignore: '.searchbar-ignore',
       foundEl: '.searchbar-found',
       notFoundEl: '.searchbar-not-found',

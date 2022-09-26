@@ -144,7 +144,6 @@ const ListItem = forwardRef((props, ref) => {
     selected,
     mediaItem,
     mediaList,
-    divider,
     groupTitle,
     swipeout,
     swipeoutOpened,
@@ -380,7 +379,6 @@ const ListItem = forwardRef((props, ref) => {
   const liClasses = classNames(
     className,
     {
-      'item-divider': divider,
       'list-group-title': groupTitle,
       'media-item': isMediaComputed,
       swipeout,

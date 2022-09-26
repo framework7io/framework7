@@ -47,7 +47,6 @@
 
   export let mediaItem = false;
   export let mediaList = false;
-  export let divider = false;
   export let groupTitle = false;
   export let swipeout = false;
   export let swipeoutOpened = false;
@@ -103,7 +102,6 @@
   $: liClasses = classNames(
     className,
     {
-      'item-divider': divider,
       'list-group-title': groupTitle,
       'media-item': isMedia,
       swipeout,

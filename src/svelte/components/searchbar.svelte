@@ -32,7 +32,7 @@
   export let searchIn = '.item-title';
   export let searchItem = 'li';
   export let searchGroup = '.list-group';
-  export let searchGroupTitle = '.item-divider, .list-group-title';
+  export let searchGroupTitle = '.list-group-title';
   export let foundEl = '.searchbar-found';
   export let notFoundEl = '.searchbar-not-found';
   export let backdrop = undefined;

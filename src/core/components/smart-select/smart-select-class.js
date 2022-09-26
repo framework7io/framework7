@@ -403,7 +403,7 @@ class SmartSelect extends Framework7Class {
 
     let itemHtml;
     if (item.isLabel) {
-      itemHtml = `<li class="item-divider">${item.groupLabel}</li>`;
+      itemHtml = `<li class="list-group-title">${item.groupLabel}</li>`;
     } else {
       let selected = item.selected;
       let disabled;

@@ -210,7 +210,6 @@ export default {
 
     mediaItem: Boolean,
     mediaList: Boolean,
-    divider: Boolean,
     groupTitle: Boolean,
     swipeout: Boolean,
     swipeoutOpened: Boolean,
@@ -489,7 +488,6 @@ export default {
     const liClasses = computed(() =>
       classNames(
         {
-          'item-divider': props.divider,
           'list-group-title': props.groupTitle,
           'media-item': isMediaComputed.value,
           swipeout: props.swipeout,
@@ -534,7 +532,7 @@ export default {
         }
       }
 
-      if (props.divider || props.groupTitle) {
+      if (props.groupTitle) {
         return h(
           'li',
           {

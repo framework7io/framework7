@@ -83,7 +83,7 @@
     <f7-list>
       <f7-list-item link="#" title="Ivan Petrov" />
       <f7-list-item link="#" title="John Doe" />
-      <f7-list-item divider title="Divider Here" />
+      <f7-list-item group-title title="Divider Here" />
       <f7-list-item link="#" title="Ivan Petrov" />
       <f7-list-item link="#" title="Jenna Smith" />
     </f7-list>
