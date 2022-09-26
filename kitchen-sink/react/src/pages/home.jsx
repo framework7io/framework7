@@ -81,9 +81,7 @@ export default ({ f7router }) => {
         </ListItem>
       </List>
 
-      <BlockTitle medium className="searchbar-found">
-        Components
-      </BlockTitle>
+      <BlockTitle className="searchbar-found">Components</BlockTitle>
       <List className="components-list searchbar-found">
         <ListItem reloadDetail link="/accordion/" title="Accordion">
           <Icon slot="media" icon="icon-f7" />
@@ -287,18 +285,14 @@ export default ({ f7router }) => {
       <List className="searchbar-not-found">
         <ListItem title="Nothing found" />
       </List>
-      <BlockTitle medium className="searchbar-hide-on-search">
-        Themes
-      </BlockTitle>
+      <BlockTitle className="searchbar-hide-on-search">Themes</BlockTitle>
       <List className="searchbar-hide-on-search">
         <ListItem title="iOS Theme" external link="./index.html?theme=ios" />
         <ListItem title="Material (MD) Theme" external link="./index.html?theme=md" />
         <ListItem title="Aurora Desktop Theme" external link="./index.html?theme=aurora" />
         <ListItem title="Color Themes" reloadDetail link="/color-themes/" />
       </List>
-      <BlockTitle medium className="searchbar-hide-on-search">
-        Page Loaders & Router
-      </BlockTitle>
+      <BlockTitle className="searchbar-hide-on-search">Page Loaders & Router</BlockTitle>
       <List className="searchbar-hide-on-search">
         <ListItem title="Page Transitions" reloadDetail link="/page-transitions/" />
         <ListItem title="Routable Modals" reloadDetail link="/routable-modals/" />

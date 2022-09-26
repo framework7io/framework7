@@ -37,7 +37,7 @@
       </f7-list-item>
     </f7-list>
 
-    <f7-block-title medium class="searchbar-found">Components</f7-block-title>
+    <f7-block-title class="searchbar-found">Components</f7-block-title>
     <f7-list class="components-list searchbar-found">
       <f7-list-item reload-detail link="/accordion/" title="Accordion">
         <template #media>
@@ -373,7 +373,7 @@
     <f7-list class="searchbar-not-found">
       <f7-list-item title="Nothing found" />
     </f7-list>
-    <f7-block-title medium class="searchbar-hide-on-search">Themes</f7-block-title>
+    <f7-block-title class="searchbar-hide-on-search">Themes</f7-block-title>
     <f7-list class="searchbar-hide-on-search">
       <f7-list-item title="iOS Theme" external link="./index.html?theme=ios" />
       <f7-list-item title="Material (MD) Theme" external link="./index.html?theme=md" />
@@ -381,7 +381,7 @@
       <f7-list-item title="Color Themes" reload-detail link="/color-themes/" />
     </f7-list>
 
-    <f7-block-title medium class="searchbar-hide-on-search">Page Loaders & Router</f7-block-title>
+    <f7-block-title class="searchbar-hide-on-search">Page Loaders & Router</f7-block-title>
     <f7-list class="searchbar-hide-on-search">
       <f7-list-item title="Page Transitions" reload-detail link="/page-transitions/" />
       <f7-list-item title="Routable Modals" reload-detail link="/routable-modals/" />

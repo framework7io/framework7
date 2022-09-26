@@ -32,14 +32,16 @@
   background-color: var(--f7-block-strong-bg-color);
 }
 .block-outline:not(.inset),
-.ios .block-outline-ios:not(.inset),
-.md .block-outline-md:not(.inset) {
+.ios .block-outline-ios:not(.inset):not(.inset-ios),
+.md .block-outline-md:not(.inset):not(.inset-md) {
   .hairline(top, var(--f7-block-outline-border-color));
   .hairline(bottom, var(--f7-block-outline-border-color));
 }
 .block-outline.inset,
 .ios .block-outline-ios.inset,
-.md .block-outline-md.inset {
+.ios .block-outline-ios.inset-ios,
+.md .block-outline-md.inset,
+.md .block-outline-md.inset-md {
   border: 1px solid var(--f7-block-outline-border-color);
 }
 
@@ -156,20 +158,26 @@
   }
 }
 // Inset
-.block.inset {
+.block.inset,
+.ios .block.inset-ios,
+.md .block.inset-md {
   border-radius: var(--f7-block-inset-border-radius);
   margin-left: calc(var(--f7-block-inset-side-margin) + var(--f7-safe-area-outer-left));
   margin-right: calc(var(--f7-block-inset-side-margin) + var(--f7-safe-area-outer-right));
   --f7-safe-area-left: 0px;
   --f7-safe-area-right: 0px;
 }
-.block-strong.inset {
+.block-strong.inset,
+.ios .block-strong.inset-ios,
+.md .block-strong.inset-md {
   .hairline-remove-top-bottom();
 }
 
 each(@breakpoints, {
   @media (min-width:@value) {
-    .block.@{key}-inset {
+    .block.@{key}-inset,
+    .ios .block.@{key}-inset-ios,
+    .md .block.@{key}-inset-md {
       border-radius: var(--f7-block-inset-border-radius);
       margin-left: calc(var(--f7-block-inset-side-margin) + var(--f7-safe-area-outer-left));
       margin-right: calc(var(--f7-block-inset-side-margin) + var(--f7-safe-area-outer-right));
