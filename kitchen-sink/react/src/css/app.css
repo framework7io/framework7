@@ -66,13 +66,6 @@
   text-align: center;
 }
 
-.md:not([class*='color-theme']) {
-  --f7-theme-color: #6200ee;
-  --f7-theme-color-rgb: 98, 0, 238;
-  --f7-theme-color-shade: #5100c5;
-  --f7-theme-color-tint: #7718ff;
-}
-
 .demo-list-icon,
 .icon-f7 {
   background: #ccc;
@@ -213,8 +206,10 @@ div.demo-lazy {
   color: #fff;
 }
 .md .demo-card-header-pic .card-header {
-  margin: 16px 16px 0;
+  margin: 0 16px 16px;
   border-radius: 16px;
+  position: relative;
+  top: 16px;
 }
 .demo-card-header-pic .card-content-padding .date {
   color: #8e8e93;
