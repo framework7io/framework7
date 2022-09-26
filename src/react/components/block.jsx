@@ -26,6 +26,8 @@ import { useTab } from '../shared/use-tab.js';
   xlargeInsetIos?: boolean
   xlargeInsetMd?: boolean
   strong?: boolean
+  strongIos?: boolean
+  strongMd?: boolean
   outline?: boolean
   outlineIos?: boolean
   outlineMd?: boolean
@@ -63,6 +65,8 @@ const Block = forwardRef((props, ref) => {
     xlargeInsetIos,
     xlargeInsetMd,
     strong,
+    strongIos,
+    strongMd,
     outline,
     outlineIos,
     outlineMd,
@@ -108,6 +112,8 @@ const Block = forwardRef((props, ref) => {
       'xlarge-inset-ios': xlargeInsetIos,
       'xlarge-inset-md': xlargeInsetMd,
       'block-strong': strong,
+      'block-strong-ios': strongIos,
+      'block-strong-md': strongMd,
       'block-outline': outline,
       'block-outline-ios': outlineIos,
       'block-outline-md': outlineMd,

@@ -26,6 +26,8 @@
   export let xlargeInsetIos = false;
   export let xlargeInsetMd = false;
   export let strong = false;
+  export let strongIos = false;
+  export let strongMd = false;
   export let tabs = false;
   export let tab = false;
   export let tabActive = false;
@@ -63,6 +65,8 @@
       'xlarge-inset-ios': xlargeInsetIos,
       'xlarge-inset-md': xlargeInsetMd,
       'block-strong': strong,
+      'block-strong-ios': strongIos,
+      'block-strong-md': strongMd,
       'accordion-list': accordionList,
       'accordion-opposite': accordionOpposite,
       tabs,
