@@ -347,19 +347,16 @@
       }
     }
   }
-  --f7-navbar-large-transparent-bg-center: translateX(0);
   --f7-navbar-large-bg-center-top: translateX(0)
     translateY(calc(-1 * var(--f7-navbar-large-title-height)));
   --f7-navbar-large-bg-center-bottom: translateX(0) translateY(0);
   .ltr({
-    --f7-navbar-large-transparent-bg-left: translateX(-100%);
     --f7-navbar-large-bg-left-top: translateX(-100%) translateY(calc(-1 * var(--f7-navbar-large-title-height)));
     --f7-navbar-large-bg-left-bottom: translateX(-100%) translateY(0);
     --f7-navbar-large-bg-right-top: translateX(100%) translateY(calc(-1 * var(--f7-navbar-large-title-height)));
     --f7-navbar-large-bg-right-bottom: translateX(100%) translateY(0);
   });
   .rtl({
-    --f7-navbar-large-transparent-bg-left: translateX(100%);
     --f7-navbar-large-bg-left-top: translateX(100%) translateY(calc(-1 * var(--f7-navbar-large-title-height)));
     --f7-navbar-large-bg-left-bottom: translateX(100%) translateY(0);
     --f7-navbar-large-bg-right-top: translateX(-100%) translateY(calc(-1 * var(--f7-navbar-large-title-height)));
@@ -382,12 +379,6 @@
       }
       &.navbar-large-collapsed:not(.router-navbar-transition-to-large) .navbar-bg {
         animation-name: ios-navbar-bg-from-ct-to-lt;
-      }
-      &.navbar-large-collapsed.navbar-large-transparent:not(.router-navbar-transition-to-large)
-        .navbar-bg,
-      &.navbar-large-collapsed.navbar-large.navbar-transparent:not(.router-navbar-transition-to-large)
-        .navbar-bg {
-        animation-name: ios-navbar-transparent-bg-from-c-to-l;
       }
     }
     .navbar-next {
@@ -419,10 +410,6 @@
       &.navbar-large-collapsed .navbar-bg {
         animation-name: ios-navbar-bg-from-ct-to-rt;
       }
-      &.navbar-large-collapsed.navbar-large-transparent .navbar-bg,
-      &.navbar-large-collapsed.navbar-large.navbar-transparent .navbar-bg {
-        animation-name: ios-navbar-bg-from-cb-to-rb;
-      }
       &.navbar-large-collapsed.router-navbar-transition-to-large .navbar-bg {
         animation-name: ios-navbar-bg-from-ct-to-rb;
       }
@@ -439,16 +426,6 @@
       }
       &.navbar-large-collapsed .navbar-bg {
         animation-name: ios-navbar-bg-from-lt-to-ct;
-      }
-      &.navbar-large-collapsed.navbar-large-transparent .navbar-bg,
-      &.navbar-large-collapsed.navbar-large.navbar-transparent .navbar-bg {
-        animation-name: ios-navbar-transparent-bg-from-l-to-c;
-      }
-      &.navbar-large-collapsed.navbar-large-transparent.router-navbar-transition-from-large
-        .navbar-bg,
-      &.navbar-large-collapsed.navbar-large.navbar-transparent.router-navbar-transition-from-large
-        .navbar-bg {
-        animation-name: ios-navbar-bg-from-lb-to-ct;
       }
     }
   }
@@ -774,21 +751,5 @@
   }
   to {
     transform: var(--f7-navbar-large-bg-center-top);
-  }
-}
-@keyframes ios-navbar-transparent-bg-from-l-to-c {
-  from {
-    transform: var(--f7-navbar-large-transparent-bg-left);
-  }
-  to {
-    transform: var(--f7-navbar-large-transparent-bg-center);
-  }
-}
-@keyframes ios-navbar-transparent-bg-from-c-to-l {
-  from {
-    transform: var(--f7-navbar-large-transparent-bg-center);
-  }
-  to {
-    transform: var(--f7-navbar-large-transparent-bg-left);
   }
 }
