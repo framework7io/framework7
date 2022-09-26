@@ -22,14 +22,32 @@
     box-sizing: border-box;
   }
 
+  &-strong ul,
+  .ios &-strong-ios ul,
+  .md &-strong-md ul {
+    background: var(--f7-list-strong-bg-color);
+  }
+  &-outline ul,
+  .ios &-outline-ios ul,
+  .md &-outline-md ul {
+    .hairline(top, var(--f7-list-outline-border-color));
+    .hairline(bottom, var(--f7-list-outline-border-color));
+  }
+
+  &-outline.inset,
+  .ios &-outline-ios.inset,
+  .ios &-outline-ios.inset-ios,
+  .md &-outline-md.inset,
+  .md &-outline-md.inset-md {
+    border: 1px solid var(--f7-list-outline-inset-border-color);
+  }
+
   ul {
     list-style: none;
     margin: 0;
     padding: 0;
     position: relative;
-    background: var(--f7-list-bg-color);
-    .hairline(top, var(--f7-list-border-color));
-    .hairline(bottom, var(--f7-list-border-color));
+
     ul {
       .ltr({
         padding-left: calc(var(--f7-list-item-padding-horizontal) + var(--f7-list-in-list-padding-left));
@@ -582,7 +600,9 @@ li.list-group-title,
 }
 each(@breakpoints, {
   @media (min-width:@value) {
-    .list.@{key}-inset {
+    .list.@{key}-inset,
+    .ios .list.@{key}-inset-ios,
+    .md .list.@{key}-inset-md {
       margin-left: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-left));
       margin-right: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-right));
       border-radius: var(--f7-list-inset-border-radius);
@@ -605,6 +625,17 @@ each(@breakpoints, {
       li:first-child:last-child > a {
         border-radius: var(--f7-list-inset-border-radius);
       }
+    }
+
+    .list.@{key}-inset.list-outline,
+    .ios .list.@{key}-inset-ios.list-outline,
+    .ios .list.@{key}-inset-ios.list-outline-ios,
+    .md .list.@{key}-inset-md.list-outline,
+    .md .list.@{key}-inset-md.list-outline-md {
+      ul {
+        border: 1px solid var(--f7-list-outline-inset-border-color);
+      }
+
     }
   }
 });

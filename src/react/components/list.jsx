@@ -21,11 +21,29 @@ import { VirtualList } from 'framework7/types';
   className?: string;
   style?: React.CSSProperties;
   inset? : boolean
+  insetIos? : boolean
+  insetMd? : boolean
   xsmallInset? : boolean
+  xsmallInsetIos? : boolean
+  xsmallInsetMd? : boolean
   smallInset? : boolean
+  smallInsetIos? : boolean
+  smallInsetMd? : boolean
   mediumInset? : boolean
+  mediumInsetIos? : boolean
+  mediumInsetMd? : boolean
   largeInset? : boolean
+  largeInsetIos? : boolean
+  largeInsetMd? : boolean
   xlargeInset? : boolean
+  xlargeInsetIos? : boolean
+  xlargeInsetMd? : boolean
+  strong?: boolean
+  strongIos?: boolean
+  strongMd?: boolean
+  outline?: boolean
+  outlineIos?: boolean
+  outlineMd?: boolean
   mediaList? : boolean
   sortable? : boolean
   sortableTapHold? : boolean
@@ -38,11 +56,8 @@ import { VirtualList } from 'framework7/types';
   simpleList? : boolean
   linksList? : boolean
   menuList? : boolean
-  noHairlines? : boolean
   noHairlinesBetween? : boolean
-  noHairlinesMd? : boolean
   noHairlinesBetweenMd? : boolean
-  noHairlinesIos? : boolean
   noHairlinesBetweenIos? : boolean
   noChevron? : boolean
   chevronCenter? : boolean
@@ -76,11 +91,29 @@ const List = forwardRef((props, ref) => {
     id,
     style,
     inset,
+    insetIos,
+    insetMd,
     xsmallInset,
+    xsmallInsetIos,
+    xsmallInsetMd,
     smallInset,
+    smallInsetIos,
+    smallInsetMd,
     mediumInset,
+    mediumInsetIos,
+    mediumInsetMd,
     largeInset,
+    largeInsetIos,
+    largeInsetMd,
     xlargeInset,
+    xlargeInsetIos,
+    xlargeInsetMd,
+    strong,
+    strongIos,
+    strongMd,
+    outline,
+    outlineIos,
+    outlineMd,
     mediaList,
     sortable,
     sortableTapHold,
@@ -93,11 +126,8 @@ const List = forwardRef((props, ref) => {
     simpleList,
     linksList,
     menuList,
-    noHairlines,
     noHairlinesBetween,
-    noHairlinesMd,
     noHairlinesBetweenMd,
-    noHairlinesIos,
     noHairlinesBetweenIos,
     noChevron,
     chevronCenter,
@@ -251,11 +281,29 @@ const List = forwardRef((props, ref) => {
     'list',
     {
       inset,
+      'inset-ios': insetIos,
+      'inset-md': insetMd,
       'xsmall-inset': xsmallInset,
+      'xsmall-inset-ios': xsmallInsetIos,
+      'xsmall-inset-md': xsmallInsetMd,
       'small-inset': smallInset,
+      'small-inset-ios': smallInsetIos,
+      'small-inset-md': smallInsetMd,
       'medium-inset': mediumInset,
+      'medium-inset-ios': mediumInsetIos,
+      'medium-inset-md': mediumInsetMd,
       'large-inset': largeInset,
+      'large-inset-ios': largeInsetIos,
+      'large-inset-md': largeInsetMd,
       'xlarge-inset': xlargeInset,
+      'xlarge-inset-ios': xlargeInsetIos,
+      'xlarge-inset-md': xlargeInsetMd,
+      'list-strong': strong,
+      'list-strong-ios': strongIos,
+      'list-strong-md': strongMd,
+      'list-outline': outline,
+      'list-outline-ios': outlineIos,
+      'list-outline-md': outlineMd,
       'media-list': mediaList,
       'simple-list': simpleList,
       'links-list': linksList,
@@ -270,9 +318,6 @@ const List = forwardRef((props, ref) => {
       'virtual-list': virtualList,
       tab,
       'tab-active': tabActive,
-      'no-hairlines': noHairlines,
-      'no-hairlines-md': noHairlinesMd,
-      'no-hairlines-ios': noHairlinesIos,
       'no-hairlines-between': noHairlinesBetween,
       'no-hairlines-between-md': noHairlinesBetweenMd,
       'no-hairlines-between-ios': noHairlinesBetweenIos,
