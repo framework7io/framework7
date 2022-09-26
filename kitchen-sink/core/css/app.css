@@ -630,14 +630,8 @@ code {
   background: #666;
 }
 
-.page-home,
-.page-about {
-  --f7-list-border-color: transparent;
-  --f7-block-strong-border-color: transparent;
-  --f7-block-font-size: 16px;
-}
-:root:not(.dark) .page-home,
-:root:not(.dark) .page-about {
+.ios:not(.dark) .page-home,
+.ios:not(.dark) .page-about {
   --f7-page-bg-color: #fff;
 }
 
