@@ -1,6 +1,6 @@
 <template>
   <f7-page class="page-home" @page:afterin="onPageAfterIn">
-    <f7-navbar large transparent :sliding="false">
+    <f7-navbar large transparent :sliding="false" md-center-title>
       <f7-nav-left>
         <f7-link
           panel-open="left"

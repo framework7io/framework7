@@ -52,7 +52,7 @@ export default ({ f7router }) => {
 
   return (
     <Page className="page-home" onPageAfterIn={onPageAfterIn}>
-      <Navbar large transparent sliding={false}>
+      <Navbar large transparent sliding={false} mdCenterTitle>
         <NavLeft>
           <Link panelOpen="left" iconIos="f7:menu" iconAurora="f7:menu" iconMd="material:menu" />
         </NavLeft>
