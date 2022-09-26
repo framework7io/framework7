@@ -1,8 +1,6 @@
 import { getWindow } from 'ssr-window';
 import { materialColors } from './material-colors.js';
 
-export { materialColors } from './material-colors.js';
-
 let uniqueNum = 0;
 export function uniqueNumber() {
   uniqueNum += 1;
@@ -379,4 +377,91 @@ export function flattenArray(...args) {
     else arr.push(arg);
   });
   return arr;
+}
+
+export function colorThemeCSSStyles(colors = {}) {
+  const stringifyObject = (obj) => {
+    let res = '';
+    Object.keys(obj).forEach((key) => {
+      res += `${key}:${obj[key]};`;
+    });
+    return res;
+  };
+  const colorVars = colorThemeCSSProperties(colors.primary);
+
+  const primary = [
+    `:root{`,
+    stringifyObject(colorVars.common),
+    stringifyObject(colorVars.light),
+    `--swiper-theme-color:var(--f7-theme-color);`,
+    `}`,
+    `.dark{`,
+    stringifyObject(colorVars.dark),
+    `}`,
+  ].join('');
+
+  const restVars = {};
+
+  Object.keys(colors).forEach((colorName) => {
+    const colorValue = colors[colorName];
+    restVars[colorName] = colorThemeCSSProperties(colorValue);
+  });
+
+  // rest
+  let rest = '';
+
+  rest += ':root{';
+  Object.keys(colors).forEach((colorName) => {
+    rest += [
+      `--f7-color-${colorName}: ${restVars[colorName].common['--f7-theme-color']};`,
+      `--f7-color-${colorName}-rgb: ${restVars[colorName].common['--f7-theme-color-rgb']};`,
+      `--f7-color-${colorName}-shade: ${restVars[colorName].common['--f7-theme-color-shade']};`,
+      `--f7-color-${colorName}-tint: ${restVars[colorName].common['--f7-theme-color-tint']};`,
+    ].join('');
+  });
+  rest += '}';
+
+  Object.keys(colors).forEach((colorName) => {
+    const { common, light, dark } = restVars[colorName];
+
+    rest += [
+      `.color-theme-${colorName} {`,
+      stringifyObject(common),
+      stringifyObject(light),
+      `--swiper-theme-color: var(--f7-theme-color);`,
+      `}`,
+      `.color-theme-${colorName}.dark, .color-theme-${colorName} .dark, .dark .color-theme-${colorName} {${stringifyObject(
+        dark,
+      )}}`,
+    ].join('');
+  });
+
+  Object.keys(colors).forEach((colorName) => {
+    const { common, light, dark } = restVars[colorName];
+
+    rest += [
+      `.color-${colorName} {`,
+      stringifyObject(common),
+      stringifyObject(light),
+      `--swiper-theme-color: var(--f7-theme-color);`,
+      `}`,
+      `.color-${colorName}.dark, .color-${colorName} .dark, .dark .color-${colorName} {${stringifyObject(
+        dark,
+      )}}`,
+      `.text-color-${colorName} {`,
+      `--f7-theme-color-text-color: ${colors[colorName]};`,
+      `}`,
+      `.bg-color-${colorName} {`,
+      `--f7-theme-color-bg-color: ${colors[colorName]};`,
+      `}`,
+      `.border-color-${colorName} {`,
+      `--f7-theme-color-border-color: ${colors[colorName]};`,
+      `}`,
+      `.ripple-color-${colorName}, .ripple-${colorName} {`,
+      `--f7-theme-color-ripple-color: var(--f7-theme-color-rgb);`,
+      `}`,
+    ].join('');
+  });
+
+  return `${primary}${rest}`;
 }
