@@ -38,6 +38,9 @@
   export let outline = false;
   export let outlineIos = false;
   export let outlineMd = false;
+  export let dividers = false;
+  export let dividersIos = false;
+  export let dividersMd = false;
   export let mediaList = false;
   export let sortable = false;
   export let sortableTapHold = false;
@@ -50,10 +53,6 @@
   export let simpleList = false;
   export let linksList = false;
   export let menuList = false;
-
-  export let noHairlinesBetween = false;
-  export let noHairlinesBetweenMd = false;
-  export let noHairlinesBetweenIos = false;
 
   // Links Chevron (Arrow) Icon
   export let noChevron = false;
@@ -110,6 +109,9 @@
       'list-outline': outline,
       'list-outline-ios': outlineIos,
       'list-outline-md': outlineMd,
+      'list-dividers': outline,
+      'list-dividers-ios': outlineIos,
+      'list-dividers-md': outlineMd,
       'media-list': mediaList,
       'simple-list': simpleList,
       'links-list': linksList,
@@ -124,9 +126,6 @@
       'virtual-list': virtualList,
       tab,
       'tab-active': tabActive,
-      'no-hairlines-between': noHairlinesBetween,
-      'no-hairlines-between-md': noHairlinesBetweenMd,
-      'no-hairlines-between-ios': noHairlinesBetweenIos,
       'form-store-data': formStoreData,
       'inline-labels': inlineLabels,
       'no-chevron': noChevron,

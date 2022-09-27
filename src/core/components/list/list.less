@@ -232,33 +232,6 @@
     }
   }
 
-  .item-row {
-    .item-row();
-  }
-  .item-cell {
-    .item-cell();
-    width: 100%;
-    min-width: 0;
-    .ltr({
-      margin-left: var(--f7-list-item-cell-margin);
-      &:first-child {
-        margin-left: 0;
-      }
-    });
-    .rtl({
-      margin-right: var(--f7-list-item-cell-margin);
-      &:first-child {
-        margin-right: 0;
-      }
-    });
-    flex-shrink: 1;
-  }
-  .ltr({
-    .ripple-wave + .item-cell {
-      margin-left: 0;
-    }
-  });
-
   // Last-childs
   li {
     &:last-child {
@@ -293,9 +266,14 @@
   font-size: var(--f7-list-button-font-size);
   font-weight: var(--f7-list-button-font-weight);
   text-align: var(--f7-list-button-text-align);
-  .hairline(bottom, var(--f7-list-button-border-color));
+
   &.active-state {
     background-color: var(--f7-list-button-pressed-bg-color, rgba(var(--f7-theme-color-rgb), 0.15));
+  }
+  .list-dividers &,
+  .ios .list-dividers-ios &,
+  .md .list-dividers-md & {
+    .hairline(bottom, var(--f7-list-button-border-color));
   }
 }
 .list-button[class*='color-'] {
@@ -388,10 +366,27 @@
     .hairline-remove(bottom);
   }
 }
-.simple-list li,
-.links-list a,
-.list .item-inner {
-  .hairline(bottom, var(--f7-list-item-border-color));
+.list-dividers,
+.ios .list-dividers-ios,
+.md .list-dividers-md {
+  &.simple-list li,
+  &.links-list a,
+  .item-inner {
+    .hairline(bottom, var(--f7-list-item-border-color));
+  }
+}
+
+.md .media-list:not(.inset):not(.inset-md):not(.menu-list) .item-content,
+.md .list:not(.inset):not(.inset-md):not(.menu-list) .media-item .item-content {
+  margin-left: calc(var(--f7-list-item-padding-horizontal) / 2);
+  margin-right: calc(var(--f7-list-item-padding-horizontal) / 2);
+  border-radius: 16px;
+  .ltr({
+    padding-left: calc(var(--f7-list-item-padding-horizontal) / 2 + var(--f7-safe-area-left) - var(--menu-list-offset));
+  });
+  .rtl({
+    padding-right: calc(var(--f7-list-item-padding-horizontal) / 2 + var(--f7-safe-area-right) - var(--menu-list-offset));
+  });
 }
 
 .media-list,
@@ -409,7 +404,6 @@ li.media-item {
     align-self: stretch;
   }
   .item-media {
-    align-self: flex-start;
     img {
       display: block;
     }

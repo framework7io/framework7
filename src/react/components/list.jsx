@@ -44,6 +44,9 @@ import { VirtualList } from 'framework7/types';
   outline?: boolean
   outlineIos?: boolean
   outlineMd?: boolean
+  dividers?: boolean
+  dividersIos?: boolean
+  dividersMd?: boolean
   mediaList? : boolean
   sortable? : boolean
   sortableTapHold? : boolean
@@ -56,9 +59,6 @@ import { VirtualList } from 'framework7/types';
   simpleList? : boolean
   linksList? : boolean
   menuList? : boolean
-  noHairlinesBetween? : boolean
-  noHairlinesBetweenMd? : boolean
-  noHairlinesBetweenIos? : boolean
   noChevron? : boolean
   chevronCenter? : boolean
   tab? : boolean
@@ -114,6 +114,9 @@ const List = forwardRef((props, ref) => {
     outline,
     outlineIos,
     outlineMd,
+    dividers,
+    dividersIos,
+    dividersMd,
     mediaList,
     sortable,
     sortableTapHold,
@@ -126,9 +129,6 @@ const List = forwardRef((props, ref) => {
     simpleList,
     linksList,
     menuList,
-    noHairlinesBetween,
-    noHairlinesBetweenMd,
-    noHairlinesBetweenIos,
     noChevron,
     chevronCenter,
     tab,
@@ -304,6 +304,9 @@ const List = forwardRef((props, ref) => {
       'list-outline': outline,
       'list-outline-ios': outlineIos,
       'list-outline-md': outlineMd,
+      'list-dividers': dividers,
+      'list-dividers-ios': dividersIos,
+      'list-dividers-md': dividersMd,
       'media-list': mediaList,
       'simple-list': simpleList,
       'links-list': linksList,
@@ -318,9 +321,6 @@ const List = forwardRef((props, ref) => {
       'virtual-list': virtualList,
       tab,
       'tab-active': tabActive,
-      'no-hairlines-between': noHairlinesBetween,
-      'no-hairlines-between-md': noHairlinesBetweenMd,
-      'no-hairlines-between-ios': noHairlinesBetweenIos,
       'form-store-data': formStoreData,
       'inline-labels': inlineLabels,
       'no-chevron': noChevron,
