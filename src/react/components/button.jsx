@@ -29,6 +29,9 @@ import Preloader from './preloader.js';
   fill? : boolean
   fillMd? : boolean
   fillIos? : boolean
+  tonal? : boolean
+  tonalMd? : boolean
+  tonalIos? : boolean
   large? : boolean
   largeMd? : boolean
   largeIos? : boolean
@@ -76,6 +79,9 @@ const Button = forwardRef((props, ref) => {
     fill,
     fillIos,
     fillMd,
+    tonal,
+    tonalIos,
+    tonalMd,
     large,
     largeIos,
     largeMd,
@@ -126,6 +132,9 @@ const Button = forwardRef((props, ref) => {
         'button-fill': fill,
         'button-fill-ios': fillIos,
         'button-fill-md': fillMd,
+        'button-tonal': tonal,
+        'button-tonal-ios': tonalIos,
+        'button-tonal-md': tonalMd,
         'button-large': large,
         'button-large-ios': largeIos,
         'button-large-md': largeMd,

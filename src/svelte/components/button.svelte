@@ -33,6 +33,9 @@
   export let fill = false;
   export let fillMd = false;
   export let fillIos = false;
+  export let tonal = false;
+  export let tonalMd = false;
+  export let tonalIos = false;
   export let large = false;
   export let largeMd = false;
   export let largeIos = false;
@@ -84,6 +87,9 @@
       'button-fill': fill,
       'button-fill-ios': fillIos,
       'button-fill-md': fillMd,
+      'button-tonal': tonal,
+      'button-tonal-ios': tonalIos,
+      'button-tonal-md': tonalMd,
       'button-large': large,
       'button-large-ios': largeIos,
       'button-large-md': largeMd,
