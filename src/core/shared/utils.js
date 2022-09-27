@@ -327,6 +327,15 @@ export function colorHslToHsb(h, s, l) {
 
   return [HSB.h, HSB.s, HSB.b];
 }
+
+const getShadeTintColors = (rgb) => {
+  const hsl = colorRgbToHsl(...rgb);
+  const hslShade = [hsl[0], hsl[1], Math.max(0, hsl[2] - 0.08)];
+  const hslTint = [hsl[0], hsl[1], Math.max(0, hsl[2] + 0.08)];
+  const shade = colorRgbToHex(...colorHslToRgb(...hslShade));
+  const tint = colorRgbToHex(...colorHslToRgb(...hslTint));
+  return { shade, tint };
+};
 export function colorThemeCSSProperties(...args) {
   let hex;
   let rgb;
@@ -338,22 +347,39 @@ export function colorThemeCSSProperties(...args) {
     hex = colorRgbToHex(...rgb);
   }
   if (!rgb) return {};
-  const hsl = colorRgbToHsl(...rgb);
-  const hslShade = [hsl[0], hsl[1], Math.max(0, hsl[2] - 0.08)];
-  const hslTint = [hsl[0], hsl[1], Math.max(0, hsl[2] + 0.08)];
-  const shade = colorRgbToHex(...colorHslToRgb(...hslShade));
-  const tint = colorRgbToHex(...colorHslToRgb(...hslTint));
   const { light, dark } = materialColors(hex);
-
+  const shadeTintIos = getShadeTintColors(rgb);
+  const shadeTintMdLight = getShadeTintColors(colorHexToRgb(light['--f7-md-primary']));
+  const shadeTintMdDark = getShadeTintColors(colorHexToRgb(dark['--f7-md-primary']));
   return {
-    common: {
-      '--f7-theme-color': hex,
-      '--f7-theme-color-rgb': rgb.join(', '),
-      '--f7-theme-color-shade': shade,
-      '--f7-theme-color-tint': tint,
+    ios: {
+      '--f7-theme-color': 'var(--f7-ios-primary)',
+      '--f7-theme-color-rgb': 'var(--f7-ios-primary-rgb)',
+      '--f7-theme-color-shade': 'var(--f7-ios-primary-shade)',
+      '--f7-theme-color-tint': 'var(--f7-ios-primary-tint)',
     },
-    light,
-    dark,
+    md: {
+      '--f7-theme-color': 'var(--f7-md-primary)',
+      '--f7-theme-color-rgb': 'var(--f7-md-primary-rgb)',
+      '--f7-theme-color-shade': 'var(--f7-md-primary-shade)',
+      '--f7-theme-color-tint': 'var(--f7-md-primary-tint)',
+    },
+    light: {
+      '--f7-ios-primary': hex,
+      '--f7-ios-primary-shade': shadeTintIos.shade,
+      '--f7-ios-primary-tint': shadeTintIos.tint,
+      '--f7-ios-primary-rgb': rgb.join(', '),
+      '--f7-md-primary-shade': shadeTintMdLight.shade,
+      '--f7-md-primary-tint': shadeTintMdLight.tint,
+      '--f7-md-primary-rgb': colorHexToRgb(light['--f7-md-primary']).join(', '),
+      ...light,
+    },
+    dark: {
+      '--f7-md-primary-shade': shadeTintMdDark.shade,
+      '--f7-md-primary-tint': shadeTintMdDark.tint,
+      '--f7-md-primary-rgb': colorHexToRgb(dark['--f7-md-primary']).join(', '),
+      ...dark,
+    },
   };
 }
 
@@ -391,13 +417,18 @@ export function colorThemeCSSStyles(colors = {}) {
 
   const primary = [
     `:root{`,
-    stringifyObject(colorVars.common),
     stringifyObject(colorVars.light),
     `--swiper-theme-color:var(--f7-theme-color);`,
     `}`,
     `.dark{`,
     stringifyObject(colorVars.dark),
     `}`,
+    `.ios{`,
+    stringifyObject(colorVars.ios),
+    '}',
+    `.md{`,
+    stringifyObject(colorVars.md),
+    '}',
   ].join('');
 
   const restVars = {};
@@ -410,55 +441,44 @@ export function colorThemeCSSStyles(colors = {}) {
   // rest
   let rest = '';
 
-  rest += ':root{';
   Object.keys(colors).forEach((colorName) => {
-    rest += [
-      `--f7-color-${colorName}: ${restVars[colorName].common['--f7-theme-color']};`,
-      `--f7-color-${colorName}-rgb: ${restVars[colorName].common['--f7-theme-color-rgb']};`,
-      `--f7-color-${colorName}-shade: ${restVars[colorName].common['--f7-theme-color-shade']};`,
-      `--f7-color-${colorName}-tint: ${restVars[colorName].common['--f7-theme-color-tint']};`,
-    ].join('');
-  });
-  rest += '}';
-
-  Object.keys(colors).forEach((colorName) => {
-    const { common, light, dark } = restVars[colorName];
+    const { light, dark, ios, md } = restVars[colorName];
 
     rest += [
-      `.color-theme-${colorName} {`,
-      stringifyObject(common),
+      `.color-${colorName}, .color-theme-${colorName} {`,
       stringifyObject(light),
       `--swiper-theme-color: var(--f7-theme-color);`,
       `}`,
-      `.color-theme-${colorName}.dark, .color-theme-${colorName} .dark, .dark .color-theme-${colorName} {${stringifyObject(
+      `.color-${colorName}.dark, .color-${colorName} .dark, .dark .color-${colorName}, .color-theme-${colorName}.dark, .color-theme-${colorName} .dark, .dark .color-theme-${colorName} {${stringifyObject(
         dark,
       )}}`,
-    ].join('');
-  });
-
-  Object.keys(colors).forEach((colorName) => {
-    const { common, light, dark } = restVars[colorName];
-
-    rest += [
-      `.color-${colorName} {`,
-      stringifyObject(common),
-      stringifyObject(light),
       `--swiper-theme-color: var(--f7-theme-color);`,
       `}`,
-      `.color-${colorName}.dark, .color-${colorName} .dark, .dark .color-${colorName} {${stringifyObject(
-        dark,
-      )}}`,
+      `.ios .color-${colorName}, .ios .color-theme-${colorName}, .ios.color-${colorName}, .ios.color-theme-${colorName} {`,
+      stringifyObject(ios),
+      `}`,
+      `.md .color-${colorName}, .md .color-theme-${colorName}, .md.color-${colorName}, .md.color-theme-${colorName} {`,
+      stringifyObject(md),
+      `}`,
+
+      // text color
       `.text-color-${colorName} {`,
       `--f7-theme-color-text-color: ${colors[colorName]};`,
       `}`,
+
+      // bg color
       `.bg-color-${colorName} {`,
       `--f7-theme-color-bg-color: ${colors[colorName]};`,
       `}`,
+
+      // border color
       `.border-color-${colorName} {`,
       `--f7-theme-color-border-color: ${colors[colorName]};`,
       `}`,
-      `.ripple-color-${colorName}, .ripple-${colorName} {`,
-      `--f7-theme-color-ripple-color: var(--f7-theme-color-rgb);`,
+
+      // ripple color
+      `.ripple-color-${colorName} {`,
+      `--f7-theme-color-ripple-color: rgba(${light['--f7-ios-primary-rgb']}, 0.3);`,
       `}`,
     ].join('');
   });
