@@ -328,53 +328,6 @@
         </template>
       </f7-list-item>
     </f7-list>
-    <f7-block-title>Custom Table-like Layout</f7-block-title>
-    <f7-list>
-      <li>
-        <a href="#" class="item-link item-content">
-          <div class="item-inner item-cell">
-            <div class="item-row">
-              <div class="item-cell">Cell 1-1</div>
-              <div class="item-cell">Cell 1-2</div>
-              <div class="item-cell">Cell 1-3</div>
-            </div>
-            <div class="item-row">
-              <div class="item-cell">Cell 2-1</div>
-              <div class="item-cell">Cell 2-2</div>
-            </div>
-            <div class="item-row">
-              <div class="item-cell">Cell 3-1</div>
-              <div class="item-cell">
-                <div class="item-row">Cell 3-2</div>
-                <div class="item-row">Cell 3-3</div>
-              </div>
-            </div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="#" class="item-link item-content">
-          <div class="item-inner item-cell">
-            <div class="item-row">
-              <div class="item-cell">Cell 1-1</div>
-              <div class="item-cell">Cell 1-2</div>
-              <div class="item-cell">Cell 1-3</div>
-            </div>
-            <div class="item-row">
-              <div class="item-cell">Cell 2-1</div>
-              <div class="item-cell">Cell 2-2</div>
-            </div>
-            <div class="item-row">
-              <div class="item-cell">Cell 3-1</div>
-              <div class="item-cell">
-                <div class="item-row">Cell 3-2</div>
-                <div class="item-row">Cell 3-3</div>
-              </div>
-            </div>
-          </div>
-        </a>
-      </li>
-    </f7-list>
   </f7-page>
 </template>
 <script>

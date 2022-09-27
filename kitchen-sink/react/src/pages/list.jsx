@@ -7,8 +7,6 @@ import {
   List,
   ListItem,
   ListGroup,
-  ListItemCell,
-  ListItemRow,
   BlockFooter,
   Icon,
   Toggle,
@@ -305,53 +303,6 @@ export default () => (
           width="44"
         />
       </ListItem>
-    </List>
-    <BlockTitle>Custom Table-like Layout</BlockTitle>
-    <List>
-      <li>
-        <a href="#" className="item-link item-content">
-          <div className="item-inner item-cell">
-            <ListItemRow>
-              <ListItemCell>Cell 1-1</ListItemCell>
-              <ListItemCell>Cell 1-2</ListItemCell>
-              <ListItemCell>Cell 1-3</ListItemCell>
-            </ListItemRow>
-            <ListItemRow>
-              <ListItemCell>Cell 2-1</ListItemCell>
-              <ListItemCell>Cell 2-2</ListItemCell>
-            </ListItemRow>
-            <ListItemRow>
-              <ListItemCell>Cell 3-1</ListItemCell>
-              <ListItemCell>
-                <ListItemRow>Cell 3-2</ListItemRow>
-                <ListItemRow>Cell 3-3</ListItemRow>
-              </ListItemCell>
-            </ListItemRow>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="#" className="item-link item-content">
-          <div className="item-inner item-cell">
-            <ListItemRow>
-              <ListItemCell>Cell 1-1</ListItemCell>
-              <ListItemCell>Cell 1-2</ListItemCell>
-              <ListItemCell>Cell 1-3</ListItemCell>
-            </ListItemRow>
-            <ListItemRow>
-              <ListItemCell>Cell 2-1</ListItemCell>
-              <ListItemCell>Cell 2-2</ListItemCell>
-            </ListItemRow>
-            <ListItemRow>
-              <ListItemCell>Cell 3-1</ListItemCell>
-              <ListItemCell>
-                <ListItemRow>Cell 3-2</ListItemRow>
-                <ListItemRow>Cell 3-3</ListItemRow>
-              </ListItemCell>
-            </ListItemRow>
-          </div>
-        </a>
-      </li>
     </List>
   </Page>
 );
