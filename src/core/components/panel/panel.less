@@ -82,24 +82,6 @@
   &.panel-cover,
   &.panel-push {
     transform: translate3d(calc(-1 * var(--f7-panel-left-width, var(--f7-panel-width))), 0, 0);
-    &:after {
-      left: 100%;
-      background: linear-gradient(to right, var(--f7-panel-shadow));
-      .with-panel-left-cover & {
-        opacity: 1;
-      }
-    }
-  }
-  &.panel-reveal {
-    &:after {
-      right: 0;
-      transform: translate3d(calc(-1 * var(--f7-panel-left-width, var(--f7-panel-width))), 0, 0);
-      background: linear-gradient(to left, var(--f7-panel-shadow));
-      .with-panel-left-reveal & {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-      }
-    }
   }
 }
 .panel-right {
@@ -108,24 +90,6 @@
   &.panel-cover,
   &.panel-push {
     transform: translate3d(var(--f7-panel-right-width, var(--f7-panel-width)), 0, 0);
-    &:after {
-      right: 100%;
-      background: linear-gradient(to left, var(--f7-panel-shadow));
-      .with-panel-right-cover & {
-        opacity: 1;
-      }
-    }
-  }
-  &.panel-reveal {
-    &:after {
-      left: 0;
-      background: linear-gradient(to right, var(--f7-panel-shadow));
-      transform: translate3d(var(--f7-panel-right-width, var(--f7-panel-width)), 0, 0);
-      .with-panel-right-reveal & {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-      }
-    }
   }
 }
 .panel-in-breakpoint {
@@ -148,6 +112,7 @@ html {
     .framework7-root > .view {
       transition-duration: var(--f7-panel-transition-duration);
       transition-property: transform;
+      transition-timing-function: cubic-bezier(0, 0.8, 0.34, 1);
     }
   }
   &.with-panel {
@@ -193,6 +158,7 @@ html {
     > .tabs {
       transition-duration: var(--f7-panel-transition-duration);
       transition-property: transform;
+      transition-timing-function: cubic-bezier(0, 0.8, 0.34, 1);
     }
   }
   &.with-panel-left-reveal,
@@ -210,8 +176,6 @@ html {
     }
   }
 }
-.with-panel-left-reveal,
-.with-panel-right-reveal,
 .with-panel-closing {
   .panel-backdrop-in {
     visibility: visible;
@@ -219,6 +183,8 @@ html {
     opacity: 0;
   }
 }
+.with-panel-left-reveal,
+.with-panel-right-reveal,
 .with-panel-left-cover,
 .with-panel-right-cover,
 .with-panel-left-push,
@@ -229,6 +195,7 @@ html {
     opacity: 1;
   }
 }
+
 .with-panel-left-reveal,
 .with-panel-left-push {
   .panel-backdrop-in {
