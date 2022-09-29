@@ -91,7 +91,7 @@
   width: var(--f7-fab-size);
   height: var(--f7-fab-size);
   box-shadow: var(--f7-fab-box-shadow);
-  border-radius: calc(var(--f7-fab-size) / 2);
+  border-radius: var(--f7-fab-border-radius);
   position: relative;
   transition-duration: 300ms;
   display: flex;
@@ -121,7 +121,7 @@
 
 .fab-buttons {
   a {
-    border-radius: calc(var(--f7-fab-button-size) / 2);
+    border-radius: var(--f7-fab-border-radius);
     width: var(--f7-fab-button-size);
     height: var(--f7-fab-button-size);
   }
@@ -275,7 +275,7 @@
 }
 // Morph
 .fab-morph {
-  border-radius: calc(var(--f7-fab-size) / 2);
+  border-radius: var(--f7-fab-border-radius);
   background: var(--f7-fab-bg-color, var(--f7-theme-color));
   box-shadow: var(--f7-fab-box-shadow);
   > a {
@@ -321,7 +321,7 @@
   padding: var(--f7-fab-extended-text-padding);
   font-weight: var(--f7-fab-extended-text-font-weight);
   letter-spacing: var(--f7-fab-extended-text-letter-spacing);
-  text-transform: uppercase;
+  text-transform: var(--f7-fab-extended-text-transform);
 }
 // Labels
 .fab-label-button {
