@@ -17,6 +17,7 @@ import { Popover } from 'framework7/types';
   opened? : boolean
   animate? : boolean
   targetEl? : string | object
+  angle? : boolean
   backdrop? : boolean
   backdropEl? : string | object
   closeByBackdropClick? : boolean
@@ -43,6 +44,7 @@ const Popover = forwardRef((props, ref) => {
     opened,
     animate,
     targetEl,
+    angle,
     backdrop,
     backdropEl,
     closeByBackdropClick,
@@ -108,6 +110,7 @@ const Popover = forwardRef((props, ref) => {
     if ('closeByBackdropClick' in props) popoverParams.closeByBackdropClick = closeByBackdropClick;
     if ('closeByOutsideClick' in props) popoverParams.closeByOutsideClick = closeByOutsideClick;
     if ('closeOnEscape' in props) popoverParams.closeOnEscape = closeOnEscape;
+    if ('angle' in props) popoverParams.angle = angle;
     if ('backdrop' in props) popoverParams.backdrop = backdrop;
     if ('backdropEl' in props) popoverParams.backdropEl = backdropEl;
     if ('animate' in props) popoverParams.animate = animate;

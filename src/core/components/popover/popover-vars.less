@@ -3,8 +3,8 @@
 }
 .ios-vars({
   --f7-popover-border-radius: 13px;
-  --f7-popover-box-shadow: none;
   --f7-popover-actions-icon-size: 28px;
+  --f7-popover-transition-timing-function: initial;
   .light-vars({
     --f7-popover-bg-color: rgba(255,255,255,0.95);
     --f7-popover-actions-label-text-color: rgba(0,0,0,0.45);
@@ -15,15 +15,9 @@
   });
 });
 .md-vars({
-  --f7-popover-border-radius: 4px;
-  --f7-popover-box-shadow: var(--f7-elevation-8);
+  --f7-popover-transition-timing-function: cubic-bezier(0, 0.8, 0.34, 1);
+  --f7-popover-border-radius: 28px;
   --f7-popover-actions-icon-size: 24px;
-  .light-vars({
-    --f7-popover-bg-color: #fff;
-    --f7-popover-actions-label-text-color: rgba(0,0,0,0.54);
-  });
-  .dark-vars({
-    --f7-popover-bg-color: #1c1c1d;
-    --f7-popover-actions-label-text-color: rgba(255,255,255,0.54);
-  });
+  --f7-popover-bg-color: var(--f7-md-surface-3);
+  --f7-popover-actions-label-text-color: var(--f7-md-on-surface-variant);
 });

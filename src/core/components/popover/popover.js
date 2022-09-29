@@ -8,6 +8,7 @@ export default {
   params: {
     popover: {
       verticalPosition: 'auto',
+      angle: true,
       backdrop: true,
       backdropEl: undefined,
       backdropUnique: false,

@@ -14,6 +14,7 @@
   export let opened = undefined;
   export let animate = undefined;
   export let targetEl = undefined;
+  export let angle = undefined;
   export let backdrop = undefined;
   export let backdropEl = undefined;
   export let closeByBackdropClick = undefined;
@@ -93,6 +94,7 @@
     if (typeof closeByOutsideClick !== 'undefined')
       params.closeByOutsideClick = closeByOutsideClick;
     if (typeof closeOnEscape !== 'undefined') params.closeOnEscape = closeOnEscape;
+    if (typeof angle !== 'undefined') params.angle = angle;
     if (typeof backdrop !== 'undefined') params.backdrop = backdrop;
     if (typeof backdropEl !== 'undefined') params.backdropEl = backdropEl;
     if (typeof containerEl !== 'undefined') params.containerEl = containerEl;
