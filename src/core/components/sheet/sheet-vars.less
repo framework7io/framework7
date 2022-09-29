@@ -1,16 +1,25 @@
 :root {
   --f7-sheet-height: 260px;
-  --f7-sheet-border-color: transparent;
-  --f7-sheet-transition-duration: 300ms;
-  --f7-sheet-push-border-radius: 10px;
   --f7-sheet-push-offset: var(--f7-safe-area-top);
+}
+.ios-vars({
+  --f7-sheet-border-radius: 0px;
+  --f7-sheet-border-color: var(--f7-bars-border-color);
+  --f7-sheet-transition-timing-function: initial;
+  --f7-sheet-push-border-radius: 10px;
+  --f7-sheet-transition-duration: 300ms;
   .light-vars({
     --f7-sheet-bg-color: #fff;
   });
   .dark-vars({
     --f7-sheet-bg-color: #202020;
   });
-}
-.ios-vars({
-  --f7-sheet-border-color: var(--f7-bars-border-color);
+});
+.md-vars({
+  --f7-sheet-border-radius: 16px;
+  --f7-sheet-push-border-radius: 16px;
+  --f7-sheet-border-color: transparent;
+  --f7-sheet-transition-timing-function: cubic-bezier(0, 0.8, 0.34, 1);
+  --f7-sheet-bg-color: var(--f7-md-surface);
+  --f7-sheet-transition-duration: 400ms;
 });
