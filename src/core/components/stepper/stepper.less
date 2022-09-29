@@ -18,7 +18,7 @@
   background-color: var(--f7-stepper-button-bg-color);
   width: 40px;
   border-radius: var(--f7-stepper-border-radius);
-  border: var(--f7-stepper-border-width) solid var(--f7-theme-color);
+  border: var(--f7-stepper-border-width) solid var(--f7-stepper-border-color);
   color: var(--f7-stepper-button-text-color, var(--f7-theme-color));
   line-height: calc(var(--f7-stepper-height) - var(--f7-stepper-border-width, 0px));
   text-align: center;
@@ -90,8 +90,8 @@
 .stepper-value {
   flex-shrink: 1;
   text-align: center;
-  border-top: var(--f7-stepper-border-width) solid var(--f7-theme-color);
-  border-bottom: var(--f7-stepper-border-width) solid var(--f7-theme-color);
+  border-top: var(--f7-stepper-border-width) solid var(--f7-stepper-border-color);
+  border-bottom: var(--f7-stepper-border-width) solid var(--f7-stepper-border-color);
 }
 .stepper .stepper-input-wrap input,
 .stepper-value {
@@ -112,6 +112,7 @@
 .stepper-fill,
 .ios .stepper-fill-ios,
 .md .stepper-fill-md {
+  --f7-stepper-border-color: var(--f7-stepper-fill-button-bg-color, var(--f7-theme-color));
   --f7-stepper-button-bg-color: var(--f7-stepper-fill-button-bg-color, var(--f7-theme-color));
   --f7-stepper-button-text-color: var(--f7-stepper-fill-button-text-color);
   --f7-touch-ripple-color: var(--f7-touch-ripple-white);
