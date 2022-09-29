@@ -12,10 +12,11 @@
   transition-property: transform;
   transform: translate3d(0, 100vh, 0);
   background: var(--f7-login-screen-bg-color);
+  transition-timing-function: var(--f7-login-screen-transition-timing-function);
   z-index: 11000;
   &.modal-in,
   &.modal-out {
-    transition-duration: 400ms;
+    transition-duration: var(--f7-login-screen-transition-duration);
   }
   &.not-animated {
     transition-duration: 0ms;
@@ -35,10 +36,6 @@
 }
 .login-screen-content,
 .login-screen-page {
-  .list-button {
-    text-align: center;
-    color: var(--f7-login-screen-list-button-text-color, var(--f7-theme-color));
-  }
   .login-screen-title,
   .list,
   .block {
