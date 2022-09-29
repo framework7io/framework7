@@ -2,7 +2,6 @@
   --f7-popup-border-radius: 0px;
   --f7-popup-tablet-width: 630px;
   --f7-popup-tablet-height: 630px;
-  --f7-popup-transition-duration: 400ms;
   --f7-popup-push-border-radius: 10px;
   --f7-popup-push-offset: var(--f7-safe-area-top);
   /*
@@ -11,9 +10,11 @@
 }
 .ios-vars({
   --f7-popup-tablet-border-radius: 5px;
-  --f7-popup-box-shadow: none;
+  --f7-popup-transition-duration: 400ms;
+  --f7-popup-transition-timing-function: initial;
 });
 .md-vars({
-  --f7-popup-tablet-border-radius: 4px;
-  --f7-popup-box-shadow: 0px 20px 44px rgba(0,0,0,0.5);
+  --f7-popup-tablet-border-radius: 28px;
+  --f7-popup-transition-duration: 600ms;
+  --f7-popup-transition-timing-function: cubic-bezier(0, 1, 0.2, 1);
 });

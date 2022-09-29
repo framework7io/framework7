@@ -16,6 +16,7 @@
   display: none;
   box-sizing: border-box;
   transition-property: transform;
+  transition-timing-function: var(--f7-popup-transition-timing-function);
   transform: translate3d(0, 100vh, 0);
   background: #fff;
   z-index: 11000;
@@ -56,7 +57,6 @@
     margin-left: calc(-1 * var(--f7-popup-tablet-width) / 2);
     margin-top: calc(-1 * var(--f7-popup-tablet-height) / 2);
     transform: translate3d(0, 100vh, 0);
-    box-shadow: var(--f7-popup-box-shadow);
     border-radius: var(--f7-popup-tablet-border-radius, var(--f7-popup-border-radius));
     &.modal-in {
       transform: translate3d(0, 0, 0);
@@ -105,6 +105,7 @@ html.with-modal-popup-push-closing {
     > .views,
     > .view {
       transition-duration: var(--f7-popup-transition-duration);
+      transition-timing-function: var(--f7-popup-transition-timing-function);
     }
   }
 
@@ -155,6 +156,7 @@ html.with-modal-popup-push {
     background: rgba(0, 0, 0, 0.4);
     z-index: 13000;
     transition-duration: var(--f7-popup-transition-duration);
+    transition-timing-function: var(--f7-popup-transition-timing-function);
     border-radius: var(--f7-popup-push-border-radius) var(--f7-popup-push-border-radius) 0 0;
     opacity: 0;
   }
@@ -201,6 +203,7 @@ html.with-modal-popup-push {
     .framework7-root > .view.dark {
       &:after {
         animation: popup-dark-push-overlay-fade-out var(--f7-popup-transition-duration) forwards;
+        animation-timing-function: var(--f7-popup-transition-timing-function);
       }
     }
   }
