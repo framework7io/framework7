@@ -15,7 +15,6 @@
   transition-property: transform, opacity;
   display: none;
   transition-duration: 400ms;
-  box-shadow: var(--f7-dialog-box-shadow);
   width: var(--f7-dialog-width);
   margin-left: calc(-1 * var(--f7-dialog-width) / 2);
   border-radius: var(--f7-dialog-border-radius);
@@ -77,6 +76,14 @@
   cursor: pointer;
   &.active-state {
     background-color: var(--f7-dialog-button-pressed-bg-color);
+  }
+}
+.dialog-button-strong {
+  background-color: var(--f7-dialog-button-strong-bg-color);
+  color: var(--f7-dialog-button-strong-text-color);
+  font-weight: var(--f7-dialog-button-strong-font-weight);
+  &.active-state {
+    background-color: var(--f7-dialog-button-strong-pressed-bg-color);
   }
 }
 .dialog-no-buttons {

@@ -40,6 +40,7 @@ export default {
           },
         }
       : {};
+    const isIosTheme = app.theme === 'ios';
 
     app.dialog = extend(
       ModalMethods({
@@ -60,7 +61,7 @@ export default {
             buttons: [
               {
                 text: app.params.dialog.buttonOk,
-                bold: true,
+                strong: isIosTheme,
                 onClick: callbackOk,
                 keyCodes: keyboardActions ? [13, 27] : null,
               },
@@ -87,7 +88,7 @@ export default {
               },
               {
                 text: app.params.dialog.buttonOk,
-                bold: true,
+                strong: isIosTheme,
                 keyCodes: keyboardActions ? [13] : null,
               },
             ],
@@ -117,7 +118,7 @@ export default {
               },
               {
                 text: app.params.dialog.buttonOk,
-                bold: true,
+                strong: isIosTheme,
                 onClick: callbackOk,
                 keyCodes: keyboardActions ? [13] : null,
               },
@@ -149,7 +150,7 @@ export default {
               },
               {
                 text: app.params.dialog.buttonOk,
-                bold: true,
+                strong: isIosTheme,
                 keyCodes: keyboardActions ? [13] : null,
               },
             ],
@@ -184,7 +185,7 @@ export default {
               },
               {
                 text: app.params.dialog.buttonOk,
-                bold: true,
+                strong: isIosTheme,
                 keyCodes: keyboardActions ? [13] : null,
               },
             ],

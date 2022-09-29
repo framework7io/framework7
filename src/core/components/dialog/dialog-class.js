@@ -56,7 +56,7 @@ class Dialog extends Modal {
           <div class="dialog-buttons">
             {buttons.map((button) => (
               <span
-                class={`dialog-button${button.bold ? ' dialog-button-bold' : ''}${
+                class={`dialog-button${button.strong ? ' dialog-button-strong' : ''}${
                   button.color ? ` color-${button.color}` : ''
                 }${button.cssClass ? ` ${button.cssClass}` : ''}`}
               >
