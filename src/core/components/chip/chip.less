@@ -15,7 +15,7 @@
   color: var(--f7-chip-text-color);
   height: var(--f7-chip-height);
   line-height: var(--f7-chip-height);
-  border-radius: var(--f7-chip-height);
+  border-radius: var(--f7-chip-border-radius);
   position: relative;
 }
 .chip-media {
@@ -25,18 +25,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: var(--f7-chip-height);
-  width: var(--f7-chip-height);
-  border-radius: var(--f7-chip-height);
+  height: var(--f7-chip-media-size);
+  width: var(--f7-chip-media-size);
+  border-radius: var(--f7-chip-media-size);
   text-align: center;
-  line-height: var(--f7-chip-height);
+  line-height: var(--f7-chip-media-size);
   box-sizing: border-box;
   color: #fff;
   font-size: var(--f7-chip-media-font-size);
   vertical-align: middle;
   i.icon {
-    font-size: calc(var(--f7-chip-height) - 8px);
-    height: calc(var(--f7-chip-height) - 8px);
+    font-size: calc(var(--f7-chip-media-size) - 8px);
+    height: calc(var(--f7-chip-media-size) - 8px);
   }
   img {
     max-width: 100%;
@@ -47,13 +47,13 @@
     display: block;
   }
   .ltr({
-    margin-left: calc(-1 * var(--f7-chip-padding-horizontal));
+    margin-left: calc(-1 * var(--f7-chip-padding-horizontal) + 4px);
     + .chip-label {
       margin-left: 4px;
     }
   });
   .rtl({
-    margin-right: calc(-1 * var(--f7-chip-padding-horizontal));
+    margin-right: calc(-1 * var(--f7-chip-padding-horizontal) + 4px);
     + .chip-label {
       margin-right: 4px;
     }
@@ -90,18 +90,25 @@
 .ios .chip-outline-ios,
 .md .chip-outline-md {
   border: 1px solid var(--f7-chip-outline-border-color);
+  color: var(--f7-chip-outline-text-color);
   background: none;
 }
-.chip[class*='color-'] {
+.ios .chip[class*='color-'] {
   --f7-chip-bg-color: var(--f7-theme-color);
   --f7-chip-text-color: #fff;
 }
-.chip-outline[class*='color-'],
-.ios .chip-outline-ios[class*='color-'],
-.md .chip-outline-md[class*='color-'] {
-  --f7-chip-outline-border-color: var(--f7-theme-color);
-  --f7-chip-text-color: var(--f7-theme-color);
+.md .chip[class*='color-'] {
+  --f7-chip-bg-color: var(--f7-md-secondary-container);
+  --f7-chip-text-color: var(--f7-md-on-secondary-container);
+  --f7-chip-outline-text-color: var(--f7-md-on-surface);
+  --f7-chip-outline-border-color: var(--f7-md-outline);
 }
+.ios .chip-outline[class*='color-'],
+.ios .chip-outline-ios[class*='color-'] {
+  --f7-chip-outline-border-color: var(--f7-theme-color);
+  --f7-chip-outline-text-color: var(--f7-theme-color);
+}
+
 .if-ios-theme({
   @import './chip-ios.less';
 });
