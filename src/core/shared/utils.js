@@ -449,9 +449,8 @@ export function colorThemeCSSStyles(colors = {}) {
       stringifyObject(light),
       `--swiper-theme-color: var(--f7-theme-color);`,
       `}`,
-      `.color-${colorName}.dark, .color-${colorName} .dark, .dark .color-${colorName}, .color-theme-${colorName}.dark, .color-theme-${colorName} .dark, .dark .color-theme-${colorName} {${stringifyObject(
-        dark,
-      )}}`,
+      `.color-${colorName}.dark, .color-${colorName} .dark, .dark .color-${colorName}, .color-theme-${colorName}.dark, .color-theme-${colorName} .dark, .dark .color-theme-${colorName} {`,
+      stringifyObject(dark),
       `--swiper-theme-color: var(--f7-theme-color);`,
       `}`,
       `.ios .color-${colorName}, .ios .color-theme-${colorName}, .ios.color-${colorName}, .ios.color-theme-${colorName} {`,
