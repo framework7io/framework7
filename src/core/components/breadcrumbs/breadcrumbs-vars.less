@@ -1,32 +1,50 @@
 :root {
   --f7-breadcrumbs-spacing: 12px;
   --f7-breadcrumbs-padding: 2px 0;
-  --f7-breadcrumbs-item-padding: 0px;
-  --f7-breadcrumbs-item-bg-color: 0px;
-  --f7-breadcrumbs-item-font-weight: normal;
-  --f7-breadcrumbs-item-active-font-weight: 600;
   --f7-breadcrumbs-icon-size: 24px;
 
   .light-vars({
-    --f7-breadcrumbs-item-color: rgba(0,0,0,0.55);
     --f7-breadcrumbs-separator-color: rgba(0,0,0,0.35);
-    --f7-breadcrumbs-item-active-color: #000;
-    --f7-breadcrumbs-collapsed-color: rgba(0,0,0,0.75);
-    --f7-breadcrumbs-collapsed-bg-color: rgba(0, 0, 0, 0.15);
   });
   .dark-vars({
-    --f7-breadcrumbs-item-color: rgba(255,255,255,0.75);
     --f7-breadcrumbs-separator-color: rgba(255,255,255,0.35);
-    --f7-breadcrumbs-item-active-color: #fff;
-    --f7-breadcrumbs-collapsed-color: rgba(255,255,255,0.75);
-    --f7-breadcrumbs-collapsed-bg-color: rgba(255, 255, 255, 0.15);
   });
 }
 .ios-vars({
+  --f7-breadcrumbs-item-bg-color: transparent;
+  --f7-breadcrumbs-collapsed-border-radius: 4px;
+  --f7-breadcrumbs-collapsed-padding: 0px 6px;
   --f7-breadcrumbs-separator-icon: 'chevron_right_ios';
   --f7-breadcrumbs-font-size: 17px;
+  --f7-breadcrumbs-item-border-radius: 0px;
+  --f7-breadcrumbs-item-padding: 0px;
+  --f7-breadcrumbs-item-font-weight: normal;
+  --f7-breadcrumbs-item-active-font-weight: 600;
+  .light-vars({
+    --f7-breadcrumbs-item-color: rgba(0,0,0,0.55);
+    --f7-breadcrumbs-item-active-color: #000;
+    --f7-breadcrumbs-collapsed-bg-color: rgba(0, 0, 0, 0.15);
+    --f7-breadcrumbs-collapsed-color: rgba(0,0,0,0.75);
+  });
+  .dark-vars({
+    --f7-breadcrumbs-item-color: rgba(255,255,255,0.75);
+    --f7-breadcrumbs-item-active-color: #fff;
+    --f7-breadcrumbs-collapsed-bg-color: rgba(255, 255, 255, 0.15);
+    --f7-breadcrumbs-collapsed-color: rgba(255,255,255,0.75);
+  });
 });
 .md-vars({
+  --f7-breadcrumbs-item-color: var(--f7-theme-color);
+  --f7-breadcrumbs-item-bg-color: var(--f7-md-secondary-container);
+  --f7-breadcrumbs-item-active-color: var(--f7-md-on-secondary-container);
+  --f7-breadcrumbs-collapsed-color: var(--f7-theme-color);
+  --f7-breadcrumbs-collapsed-bg-color: var(--f7-md-secondary-container);
+  --f7-breadcrumbs-collapsed-border-radius: 8px;
+  --f7-breadcrumbs-collapsed-padding: 12px 8px;
   --f7-breadcrumbs-separator-icon: 'chevron_right_md';
-  --f7-breadcrumbs-font-size: 16px;
+  --f7-breadcrumbs-font-size: 14px;
+  --f7-breadcrumbs-item-border-radius: 8px;
+  --f7-breadcrumbs-item-padding: 4px 8px;
+  --f7-breadcrumbs-item-font-weight: 500;
+  --f7-breadcrumbs-item-active-font-weight: 500;
 });

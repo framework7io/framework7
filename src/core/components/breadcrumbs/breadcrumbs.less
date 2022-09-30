@@ -30,6 +30,7 @@
   background-color: var(--f7-breadcrumbs-item-bg-color);
   display: flex;
   align-items: center;
+  border-radius: var(--f7-breadcrumbs-item-border-radius);
   .icon {
     font-size: var(--f7-breadcrumbs-icon-size);
     width: var(--f7-breadcrumbs-icon-size);
@@ -67,10 +68,10 @@
 .breadcrumbs-collapsed {
   display: flex;
   align-items: center;
-  padding: 0 6px;
+  padding: var(--f7-breadcrumbs-collapsed-padding);
   background: var(--f7-breadcrumbs-collapsed-bg-color);
-  height: 1em;
-  border-radius: 4px;
+  min-height: 1em;
+  border-radius: var(--f7-breadcrumbs-collapsed-border-radius);
   cursor: pointer;
   &::before,
   &::after,
