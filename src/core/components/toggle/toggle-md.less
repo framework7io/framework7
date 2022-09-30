@@ -1,28 +1,44 @@
 .md {
   .toggle {
     input[type='checkbox']:checked + .toggle-icon {
-      background: var(--f7-toggle-active-color, rgba(var(--f7-theme-color-rgb), 0.5));
+      background: var(--f7-toggle-active-bg-color, var(--f7-theme-color));
+      border-color: var(--f7-toggle-active-border-color, var(--f7-theme-color));
       &:after {
         .ltr({
-          transform: translateX(calc(var(--f7-toggle-width) - var(--f7-toggle-height) - 6px));
+          transform: translateX(calc(var(--f7-toggle-width) - var(--f7-toggle-height))) scale(1);
         });
         .rtl({
-          transform: translateX(calc(-1 * (var(--f7-toggle-width) - var(--f7-toggle-height) - 6px)));
+          transform: translateX(calc(-1 * (var(--f7-toggle-width) - var(--f7-toggle-height)))) scale(1);
         });
-        background: var(--f7-toggle-active-color, var(--f7-theme-color));
+        background: var(--f7-toggle-active-knob-bg-color, #fff);
+      }
+    }
+    &.active-state input[type='checkbox']:checked + .toggle-icon {
+      &:after {
+        .ltr({
+          transform: translateX(calc(var(--f7-toggle-width) - var(--f7-toggle-height))) scale(1.1);
+        });
+        .rtl({
+          transform: translateX(calc(-1 * (var(--f7-toggle-width) - var(--f7-toggle-height)))) scale(1.1);
+        });
       }
     }
   }
   .toggle-icon {
-    background: var(--f7-toggle-inactive-color);
+    background: var(--f7-toggle-inactive-bg-color, var(--f7-md-surface-variant));
+    border: 2px solid var(--f7-toggle-inactive-border-color, var(--f7-md-outline));
     &:after {
-      height: calc(var(--f7-toggle-height) + 6px);
-      width: calc(var(--f7-toggle-height) + 6px);
-      top: -3px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+      background: var(--f7-toggle-inactive-knob-bg-color, var(--f7-md-outline));
+      height: calc(var(--f7-toggle-height) - 8px);
+      width: calc(var(--f7-toggle-height) - 8px);
+      top: 2px;
       border-radius: var(--f7-toggle-height);
-      .ltr({ left: 0; });
-      .rtl({ right: 0; });
+      transform: scale(0.666);
+      .ltr({ left: 2px; });
+      .rtl({ right: 2px; });
+    }
+    &.active-state:after {
+      transform: scale(1.1);
     }
   }
 }

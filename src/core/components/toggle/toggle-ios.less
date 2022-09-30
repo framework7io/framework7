@@ -1,11 +1,14 @@
 .ios {
   .toggle {
+    background: var(--f7-toggle-inactive-border-color);
     input[type='checkbox']:checked + .toggle-icon {
       background: var(--f7-toggle-active-color, var(--f7-theme-color));
       &:before {
+        background: var(--f7-toggle-active-bg-color, var(--f7-theme-color));
         transform: scale(0);
       }
       &:after {
+        background: var(--f7-toggle-active-knob-bg-color, var(--f7-md-outline));
         .ltr({
           transform: translateX(calc(var(--f7-toggle-width) - var(--f7-toggle-height)));
         });
@@ -26,12 +29,13 @@
       height: calc(var(--f7-toggle-height) - 4px);
       border-radius: var(--f7-toggle-height);
       box-sizing: border-box;
-      background: var(--f7-toggle-inactive-color);
+      background: var(--f7-toggle-inactive-bg-color);
       z-index: 1;
       transition-duration: 300ms;
       transform: scale(1);
     }
     &:after {
+      background: var(--f7-toggle-inactive-knob-bg-color, var(--f7-md-outline));
       height: calc(var(--f7-toggle-height) - 4px);
       width: calc(var(--f7-toggle-height) - 4px);
       top: 2px;
