@@ -6,7 +6,6 @@
 }
 
 .list {
-  --menu-list-offset: 0px;
   position: relative;
   z-index: 1;
   font-size: var(--f7-list-font-size);
@@ -109,12 +108,12 @@
     align-self: stretch;
     padding-top: var(--f7-list-item-padding-vertical);
     padding-bottom: var(--f7-list-item-padding-vertical);
-    min-height: calc(var(--f7-list-item-min-height) - var(--menu-list-offset));
+    min-height: calc(var(--f7-list-item-min-height));
     .ltr({
-      padding-right: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-right) - var(--menu-list-offset));
+      padding-right: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-right));
     });
     .rtl({
-      padding-left: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-left) - var(--menu-list-offset));
+      padding-left: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-left));
     });
   }
   .item-title {
@@ -177,10 +176,10 @@
     }
     .item-inner {
       .ltr({
-        padding-right: calc(var(--f7-list-chevron-icon-area) + var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-right) - var(--menu-list-offset));
+        padding-right: calc(var(--f7-list-chevron-icon-area) + var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-right));
       });
       .rtl({
-        padding-left: calc(var(--f7-list-chevron-icon-area) + var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-left) - var(--menu-list-offset));
+        padding-left: calc(var(--f7-list-chevron-icon-area) + var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-left));
       });
     }
   }
@@ -189,12 +188,12 @@
     .item-row();
     box-sizing: border-box;
     align-items: center;
-    min-height: calc(var(--f7-list-item-min-height) - var(--menu-list-offset));
+    min-height: calc(var(--f7-list-item-min-height));
     .ltr({
-      padding-left: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-left) - var(--menu-list-offset));
+      padding-left: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-left));
     });
     .rtl({
-      padding-right: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-right) - var(--menu-list-offset));
+      padding-right: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-right));
     });
   }
 
@@ -382,10 +381,10 @@
   margin-right: calc(var(--f7-list-item-padding-horizontal) / 2);
   border-radius: 16px;
   .ltr({
-    padding-left: calc(var(--f7-list-item-padding-horizontal) / 2 + var(--f7-safe-area-left) - var(--menu-list-offset));
+    padding-left: calc(var(--f7-list-item-padding-horizontal) / 2 + var(--f7-safe-area-left));
   });
   .rtl({
-    padding-right: calc(var(--f7-list-item-padding-horizontal) / 2 + var(--f7-safe-area-right) - var(--menu-list-offset));
+    padding-right: calc(var(--f7-list-item-padding-horizontal) / 2 + var(--f7-safe-area-right));
   });
 }
 
@@ -410,7 +409,7 @@ li.media-item {
   }
   .ltr({
     .item-link .item-inner {
-      padding-right: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-right) - var(--menu-list-offset));
+      padding-right: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-right));
     }
     .item-link .item-title-row {
       padding-right: calc(var(--f7-list-chevron-icon-area));
@@ -418,7 +417,7 @@ li.media-item {
   });
   .rtl({
     .item-link .item-inner {
-      padding-left: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-left) - var(--menu-list-offset));
+      padding-left: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-left));
     }
     .item-link .item-title-row {
       padding-left: calc(var(--f7-list-chevron-icon-area));
@@ -432,10 +431,10 @@ li.media-item.chevron-center .item-link .item-inner,
 li.media-item .item-link.chevron-center .item-inner,
 li.media-item .chevron-center .item-link .item-inner {
   .ltr({
-    padding-right: calc(var(--f7-list-chevron-icon-area) + var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-right) - var(--menu-list-offset));
+    padding-right: calc(var(--f7-list-chevron-icon-area) + var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-right));
   });
   .rtl({
-    padding-left: calc(var(--f7-list-chevron-icon-area) + var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-left) - var(--menu-list-offset));
+    padding-left: calc(var(--f7-list-chevron-icon-area) + var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-left));
   });
 }
 .media-list.chevron-center .item-title-row,
@@ -632,13 +631,13 @@ each(@breakpoints, {
 }
 
 .menu-list {
-  --menu-list-offset: var(--f7-menu-list-offset);
   --f7-list-font-size: var(--f7-menu-list-font-size);
   --f7-list-item-title-font-size: var(--f7-menu-list-item-title-font-size);
   --f7-list-item-title-font-weight: var(--f7-menu-list-item-title-font-weight);
   --f7-list-item-subtitle-font-size: var(--f7-menu-list-item-subtitle-font-size);
   --f7-list-item-text-font-size: var(--f7-menu-list-item-text-font-size);
   --f7-list-item-after-font-size: var(--f7-menu-list-item-after-font-size);
+  --f7-list-item-min-height: var(--f7-menu-list-item-min-height);
 
   .item-header,
   .item-footer,
@@ -650,19 +649,21 @@ each(@breakpoints, {
   }
 
   li:not(.list-group-title) {
-    padding-top: calc(var(--f7-menu-list-offset) / 2);
-    padding-bottom: calc(var(--f7-menu-list-offset) / 2);
+    padding-top: 4px;
+    padding-bottom: 4px;
     &:first-child {
-      padding-top: var(--f7-menu-list-offset);
+      padding-top: 4px;
     }
     &:last-child {
-      padding-bottom: var(--f7-menu-list-offset);
+      padding-bottom: 4px;
     }
   }
   .item-link {
     margin-left: var(--f7-menu-list-offset);
     margin-right: var(--f7-menu-list-offset);
     border-radius: var(--f7-menu-list-border-radius) !important;
+    color: var(--f7-menu-list-item-text-color);
+    background-color: var(--f7-menu-list-item-bg-color);
   }
 
   .item-inner:after {
@@ -672,8 +673,8 @@ each(@breakpoints, {
   .item-selected.item-link,
   .tab-link-active .item-link,
   .tab-link-active.item-link {
-    color: var(--f7-menu-list-selected-text-color);
-    background-color: var(--f7-menu-list-selected-bg-color);
+    color: var(--f7-menu-list-item-selected-text-color);
+    background-color: var(--f7-menu-list-item-selected-bg-color);
   }
   .item-selected {
     .item-header,
@@ -682,7 +683,7 @@ each(@breakpoints, {
     .item-after,
     .item-text,
     .item-subtitle {
-      color: var(--f7-menu-list-selected-text-color);
+      color: var(--f7-menu-list-item-selected-text-color);
     }
   }
 }
