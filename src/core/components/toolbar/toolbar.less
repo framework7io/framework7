@@ -30,6 +30,7 @@
     display: flex;
     line-height: var(--f7-toolbar-link-line-height, var(--f7-toolbar-height));
     height: var(--f7-toolbar-link-height, var(--f7-toolbar-height));
+    font-weight: var(--f7-toolbar-link-font-weight);
   }
   i.icon {
     display: block;
@@ -59,7 +60,6 @@
       display: none !important;
     }
   }
-  &.no-shadow,
   &.toolbar-hidden {
     &:before {
       display: none !important;
@@ -90,7 +90,6 @@
       display: none !important;
     }
   }
-  &.no-shadow,
   &.toolbar-hidden {
     &:after {
       display: none !important;
@@ -115,7 +114,7 @@
     calc(var(--f7-toolbar-inner-padding-left) + var(--f7-safe-area-left));
 }
 .tabbar,
-.tabbar-labels {
+.tabbar-icons {
   .views > & {
     z-index: 5001;
   }
@@ -148,7 +147,10 @@
     height: var(--f7-tabbar-icon-size);
     line-height: var(--f7-tabbar-icon-size);
   }
-  .tab-link-highlight {
+  .md &.tabbar-icons .tab-link-highlight {
+    display: none;
+  }
+  .md &:not(.tabbar-icons) .tab-link-highlight {
     position: absolute;
     left: 0;
     height: 2px;
@@ -162,12 +164,12 @@
     });
   }
 }
-.tabbar-labels {
-  --f7-toolbar-height: var(--f7-tabbar-labels-height);
+.tabbar-icons {
+  --f7-toolbar-height: var(--f7-tabbar-icons-height);
   .tab-link,
   .link {
     height: 100%;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
   }
   .tabbar-label {
@@ -185,7 +187,7 @@
 }
 @media (min-width: 768px) and (min-height: 600px) {
   :root {
-    --f7-tabbar-labels-height: var(--f7-tabbar-labels-tablet-height);
+    --f7-tabbar-icons-height: var(--f7-tabbar-icons-tablet-height);
     --f7-tabbar-label-font-size: var(--f7-tabbar-label-tablet-font-size);
   }
 }
@@ -221,8 +223,8 @@
   ~ * {
     --f7-page-toolbar-bottom-offset: var(--f7-toolbar-height);
   }
-  &.tabbar-labels ~ * {
-    --f7-page-toolbar-bottom-offset: var(--f7-tabbar-labels-height);
+  &.tabbar-icons ~ * {
+    --f7-page-toolbar-bottom-offset: var(--f7-tabbar-icons-height);
   }
 }
 .toolbar-bottom,
@@ -238,8 +240,8 @@
   ~ * {
     --f7-page-toolbar-top-offset: var(--f7-toolbar-height);
   }
-  &.tabbar-labels ~ * {
-    --f7-page-toolbar-top-offset: var(--f7-tabbar-labels-height);
+  &.tabbar-icons ~ * {
+    --f7-page-toolbar-top-offset: var(--f7-tabbar-icons-height);
   }
 }
 .toolbar-top,
@@ -272,11 +274,11 @@
       calc(-1 * (var(--f7-navbar-height) + var(--f7-toolbar-height) + var(--f7-safe-area-top))),
       0
     );
-    &.tabbar-labels {
+    &.tabbar-icons {
       transform: translate3d(
         0,
         calc(
-          -1 * (var(--f7-navbar-height) + var(--f7-tabbar-labels-height) + var(--f7-safe-area-top))
+          -1 * (var(--f7-navbar-height) + var(--f7-tabbar-icons-height) + var(--f7-safe-area-top))
         ),
         0
       );

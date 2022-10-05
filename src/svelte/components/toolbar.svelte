@@ -13,7 +13,7 @@
   export { className as class };
 
   export let tabbar = false;
-  export let labels = false;
+  export let icons = false;
   export let scrollable = false;
   export let hidden = false;
   export let noShadow = false;
@@ -36,7 +36,7 @@
   });
 
   setReactiveContext('TabbarContext', () => ({
-    tabbarHasLabels: labels,
+    tabbarHasIcons: icons,
   }));
 
   $: classes = classNames(
@@ -51,7 +51,7 @@
         position === 'bottom',
       'toolbar-top':
         (theme && theme.md && topMd) || (theme && theme.ios && topIos) || top || position === 'top',
-      'tabbar-labels': labels,
+      'tabbar-icons': icons,
       'tabbar-scrollable': scrollable,
       'toolbar-hidden': hidden,
       'no-shadow': noShadow,

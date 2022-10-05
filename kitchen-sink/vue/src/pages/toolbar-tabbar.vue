@@ -7,7 +7,7 @@
     </f7-toolbar>
     <f7-list>
       <f7-list-item link="./tabbar/" title="Tabbar" />
-      <f7-list-item link="./tabbar-labels/" title="Tabbar With Labels" />
+      <f7-list-item link="./tabbar-icons/" title="Tabbar With Icons" />
       <f7-list-item link="./tabbar-scrollable/" title="Tabbar Scrollable" />
       <f7-list-item link="./toolbar-hide-scroll/" title="Hide Toolbar On Scroll" />
     </f7-list>

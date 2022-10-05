@@ -44,7 +44,6 @@ import { SmartSelect } from 'framework7/types';
   badgeColor? : string
   mediaItem? : boolean
   mediaList? : boolean
-  divider? : boolean
   groupTitle? : boolean
   swipeout? : boolean
   swipeoutOpened? : boolean
@@ -392,7 +391,7 @@ const ListItem = forwardRef((props, ref) => {
     colorClasses(props),
   );
 
-  if (divider || groupTitle) {
+  if (groupTitle) {
     return (
       <li
         ref={elRef}

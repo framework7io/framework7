@@ -4,7 +4,7 @@ import { Navbar, Page, BlockTitle, Block, Fab, Link, Toolbar, Icon } from 'frame
 export default () => (
   <Page>
     <Navbar title="Floating Action Button Morph" backLink="Back"></Navbar>
-    <Toolbar tabbar labels bottom className="fab-morph-target">
+    <Toolbar tabbar icons bottom className="fab-morph-target">
       <Link
         tabLink
         tabLinkActive

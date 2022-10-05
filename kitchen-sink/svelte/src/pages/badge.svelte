@@ -22,7 +22,7 @@
       </Link>
     </NavRight>
   </Navbar>
-  <Toolbar bottom tabbar labels>
+  <Toolbar bottom tabbar icons>
     <Link tabLink="#tab-1" tabLinkActive>
       <Icon ios="f7:envelope_fill" aurora="f7:envelope_fill" md="material:email">
         <Badge color="green">5</Badge>

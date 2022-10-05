@@ -71,7 +71,7 @@ const Link = forwardRef((props, ref) => {
 
   const tabbarContext = useContext(TabbarContext);
 
-  const isTabbarLabel = tabbarLabel || tabbarContext.tabbarHasLabels;
+  const isTabbarIcons = tabbarLabel || tabbarContext.tabbarHasIcons;
 
   const extraAttrs = getExtraAttrs(props);
 
@@ -100,7 +100,7 @@ const Link = forwardRef((props, ref) => {
   if (text) {
     if (badge) badgeEl = <Badge color={badgeColor}>{badge}</Badge>;
     textEl = (
-      <span className={isTabbarLabel ? 'tabbar-label' : ''}>
+      <span className={isTabbarIcons ? 'tabbar-label' : ''}>
         {text}
         {badgeEl}
       </span>
@@ -117,7 +117,7 @@ const Link = forwardRef((props, ref) => {
   const classes = classNames(
     className,
     {
-      link: !(noLinkClass || isTabbarLabel),
+      link: !(noLinkClass || isTabbarIcons),
       'icon-only': iconOnlyComputed,
       'tab-link': tabLink || tabLink === '',
       'tab-link-active': tabLinkActive,

@@ -92,7 +92,7 @@ import Toast from './pages/toast.vue';
 import Toggle from './pages/toggle.vue';
 import ToolbarTabbar from './pages/toolbar-tabbar.vue';
 import Tabbar from './pages/tabbar.vue';
-import TabbarLabels from './pages/tabbar-labels.vue';
+import TabbarIcons from './pages/tabbar-icons.vue';
 import TabbarScrollable from './pages/tabbar-scrollable.vue';
 import ToolbarHideScroll from './pages/toolbar-hide-scroll.vue';
 import Tooltip from './pages/tooltip.vue';
@@ -593,8 +593,8 @@ export default [
         component: Tabbar,
       },
       {
-        path: 'tabbar-labels/',
-        component: TabbarLabels,
+        path: 'tabbar-icons/',
+        component: TabbarIcons,
       },
       {
         path: 'tabbar-scrollable/',

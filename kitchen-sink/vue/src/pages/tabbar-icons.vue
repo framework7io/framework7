@@ -1,6 +1,6 @@
 <template>
   <f7-page :page-content="false">
-    <f7-navbar title="Tabbar Labels" back-link="Back">
+    <f7-navbar title="Tabbar Icons" back-link="Back">
       <f7-nav-right>
         <f7-link
           icon-md="material:compare_arrows"
@@ -10,7 +10,7 @@
         />
       </f7-nav-right>
     </f7-navbar>
-    <f7-toolbar :position="toolbarPosition" tabbar labels>
+    <f7-toolbar :position="toolbarPosition" tabbar icons>
       <f7-link
         tab-link="#tab-1"
         tab-link-active

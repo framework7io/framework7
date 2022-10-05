@@ -11,7 +11,7 @@ import { TabbarContext } from '../shared/tabbar-context.js';
   className?: string;
   style?: React.CSSProperties;
   tabbar? : boolean
-  labels? : boolean
+  icons? : boolean
   scrollable? : boolean
   hidden? : boolean
   noShadow? : boolean
@@ -38,7 +38,7 @@ const Toolbar = forwardRef((props, ref) => {
     id,
     style,
     tabbar,
-    labels,
+    icons,
     scrollable,
     hidden,
     noShadow,
@@ -109,7 +109,7 @@ const Toolbar = forwardRef((props, ref) => {
         position === 'bottom',
       'toolbar-top':
         (theme && theme.md && topMd) || (theme && theme.ios && topIos) || top || position === 'top',
-      'tabbar-labels': labels,
+      'tabbar-icons': icons,
       'tabbar-scrollable': scrollable,
       'toolbar-hidden': hidden,
       'no-shadow': noShadow,
@@ -124,7 +124,7 @@ const Toolbar = forwardRef((props, ref) => {
     <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
       <TabbarContext.Provider
         value={{
-          tabbarHasLabels: labels,
+          tabbarHasIcons: icons,
         }}
       >
         {slots['before-inner']}

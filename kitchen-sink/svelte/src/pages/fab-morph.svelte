@@ -5,7 +5,7 @@
 <!-- svelte-ignore a11y-invalid-attribute -->
 <Page>
   <Navbar title="Floating Action Button Morph" backLink="Back" />
-  <Toolbar tabbar labels bottom class="fab-morph-target">
+  <Toolbar tabbar icons bottom class="fab-morph-target">
     <Link
       tabLink
       tabLinkActive

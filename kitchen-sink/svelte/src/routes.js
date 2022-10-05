@@ -92,7 +92,7 @@ import Toast from './pages/toast.svelte';
 import Toggle from './pages/toggle.svelte';
 import ToolbarTabbar from './pages/toolbar-tabbar.svelte';
 import Tabbar from './pages/tabbar.svelte';
-import TabbarLabels from './pages/tabbar-labels.svelte';
+import TabbarIcons from './pages/tabbar-icons.svelte';
 import TabbarScrollable from './pages/tabbar-scrollable.svelte';
 import ToolbarHideScroll from './pages/toolbar-hide-scroll.svelte';
 import Tooltip from './pages/tooltip.svelte';
@@ -593,8 +593,8 @@ export default [
         component: Tabbar,
       },
       {
-        path: 'tabbar-labels/',
-        component: TabbarLabels,
+        path: 'tabbar-icons/',
+        component: TabbarIcons,
       },
       {
         path: 'tabbar-scrollable/',

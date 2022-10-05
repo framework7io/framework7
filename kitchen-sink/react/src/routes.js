@@ -91,7 +91,7 @@ import Toast from './pages/toast.jsx';
 import Toggle from './pages/toggle.jsx';
 import ToolbarTabbar from './pages/toolbar-tabbar.jsx';
 import Tabbar from './pages/tabbar.jsx';
-import TabbarLabels from './pages/tabbar-labels.jsx';
+import TabbarIcons from './pages/tabbar-icons.jsx';
 import TabbarScrollable from './pages/tabbar-scrollable.jsx';
 import ToolbarHideScroll from './pages/toolbar-hide-scroll.jsx';
 import Tooltip from './pages/tooltip.jsx';
@@ -592,8 +592,8 @@ export default [
         component: Tabbar,
       },
       {
-        path: 'tabbar-labels/',
-        component: TabbarLabels,
+        path: 'tabbar-icons/',
+        component: TabbarIcons,
       },
       {
         path: 'tabbar-scrollable/',

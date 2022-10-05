@@ -1,7 +1,7 @@
 import React from 'react';
 
 const TabbarContext = React.createContext({
-  tabbarHasLabels: false,
+  tabbarHasIcons: false,
 });
 
 export { TabbarContext };

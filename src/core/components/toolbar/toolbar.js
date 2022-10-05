@@ -9,7 +9,7 @@ const Toolbar = {
 
     if (
       $tabbarEl.length === 0 ||
-      !($tabbarEl.hasClass('tabbar') || $tabbarEl.hasClass('tabbar-labels'))
+      !($tabbarEl.hasClass('tabbar') || $tabbarEl.hasClass('tabbar-icons'))
     )
       return;
 
@@ -82,7 +82,7 @@ const Toolbar = {
       $toolbarEl = $pageEl.find('.toolbar');
     }
     if ($toolbarEl.length === 0) {
-      $toolbarEl = $pageEl.parents('.views').children('.tabbar, .tabbar-labels');
+      $toolbarEl = $pageEl.parents('.views').children('.tabbar, .tabbar-icons');
     }
     if ($toolbarEl.length === 0) {
       return;
@@ -164,7 +164,7 @@ export default {
       const app = this;
       let $toolbarEl = page.$el.parents('.view').children('.toolbar');
       if ($toolbarEl.length === 0) {
-        $toolbarEl = page.$el.parents('.views').children('.tabbar, .tabbar-labels');
+        $toolbarEl = page.$el.parents('.views').children('.tabbar, .tabbar-icons');
       }
       if ($toolbarEl.length === 0) {
         $toolbarEl = page.$el.find('.toolbar');
@@ -180,7 +180,7 @@ export default {
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.tabbar, .tabbar-labels').each((tabbarEl) => {
+      page.$el.find('.tabbar, .tabbar-icons').each((tabbarEl) => {
         app.toolbar.init(tabbarEl);
       });
       if (
@@ -203,7 +203,7 @@ export default {
     },
     init() {
       const app = this;
-      app.$el.find('.tabbar, .tabbar-labels').each((tabbarEl) => {
+      app.$el.find('.tabbar, .tabbar-icons').each((tabbarEl) => {
         app.toolbar.init(tabbarEl);
       });
     },

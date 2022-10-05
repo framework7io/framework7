@@ -12,7 +12,7 @@
     }
   }
   .tabbar,
-  .tabbar-labels {
+  .tabbar-icons {
     .tab-link,
     .link {
       padding-left: 0;
@@ -26,13 +26,37 @@
       overflow: hidden;
       position: relative;
     }
+    i.icon {
+      position: relative;
+      &::before {
+        content: '';
+        width: 64px;
+        height: 32px;
+        border-radius: 32px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%) scaleX(0.5);
+        background: var(--f7-md-secondary-container);
+        opacity: 0;
+        transition-duration: 200ms;
+        z-index: -1;
+      }
+      + .tabbar-label {
+        margin-top: 8px;
+      }
+    }
+    .tab-link-active i.icon::before {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-50%) scaleX(1);
+    }
   }
 
-  .tabbar-labels {
+  .tabbar-icons {
     .tab-link,
     .link {
-      padding-top: 7px;
-      padding-bottom: 7px;
+      padding-top: 8px;
+      padding-bottom: 8px;
     }
   }
   .tabbar-label {

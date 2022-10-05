@@ -1,7 +1,7 @@
 <template>
   <a ref="elRef" :class="classes" v-bind="attrs">
     <f7-use-icon v-if="icon" :icon="icon" />
-    <span v-if="text" :class="isTabbarLabel ? 'tabbar-label' : ''">
+    <span v-if="text" :class="isTabbarIcons ? 'tabbar-label' : ''">
       {{ text }}
       <f7-badge v-if="badge" :color="badgeColor">{{ badge }}</f7-badge>
     </span>
@@ -79,7 +79,7 @@ export default {
 
     const TabbarContext = inject('TabbarContext', { value: {} });
 
-    const isTabbarLabel = computed(() => props.tabbarLabel || TabbarContext.value.tabbarHasLabels);
+    const isTabbarIcons = computed(() => props.tabbarLabel || TabbarContext.value.tabbarHasIcons);
 
     const attrs = computed(() => {
       const { href, tabLink, target } = props;
@@ -106,7 +106,7 @@ export default {
       }
       return classNames(
         {
-          link: !(noLinkClass || isTabbarLabel.value),
+          link: !(noLinkClass || isTabbarIcons.value),
           'icon-only': iconOnlyComputed,
           'tab-link': tabLink || tabLink === '',
           'tab-link-active': tabLinkActive,
@@ -123,7 +123,7 @@ export default {
     return {
       elRef,
       icon,
-      isTabbarLabel,
+      isTabbarIcons,
       attrs,
       classes,
       f7SmartSelect,

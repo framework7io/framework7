@@ -10,7 +10,7 @@ export default () => {
 
   return (
     <Page pageContent={false}>
-      <Navbar title="Tabbar Labels" backLink="Back">
+      <Navbar title="Tabbar Icons" backLink="Back">
         <NavRight>
           <Link
             iconMd="material:compare_arrows"
@@ -22,7 +22,7 @@ export default () => {
           />
         </NavRight>
       </Navbar>
-      <Toolbar tabbar labels position={toolbarPosition}>
+      <Toolbar tabbar icons position={toolbarPosition}>
         <Link
           tabLink="#tab-1"
           tabLinkActive

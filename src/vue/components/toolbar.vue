@@ -17,7 +17,7 @@ export default {
   name: 'f7-toolbar',
   props: {
     tabbar: Boolean,
-    labels: Boolean,
+    icons: Boolean,
     scrollable: Boolean,
     hidden: Boolean,
     noShadow: Boolean,
@@ -93,7 +93,7 @@ export default {
     });
 
     const TabbarContext = computed(() => ({
-      tabbarHasLabels: props.labels,
+      tabbarHasIcons: props.icons,
     }));
 
     provide('TabbarContext', TabbarContext);
@@ -108,7 +108,7 @@ export default {
         topMd,
         topIos,
         top,
-        labels,
+        icons,
         scrollable,
         hidden,
         noShadow,
@@ -129,7 +129,7 @@ export default {
             (theme.value && theme.value.ios && topIos) ||
             top ||
             position === 'top',
-          'tabbar-labels': labels,
+          'tabbar-icons': icons,
           'tabbar-scrollable': scrollable,
           'toolbar-hidden': hidden,
           'no-shadow': noShadow,

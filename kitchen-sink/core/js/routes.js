@@ -464,8 +464,8 @@ var routes = [
         componentUrl: './pages/tabbar.html',
       },
       {
-        path: 'tabbar-labels/',
-        componentUrl: './pages/tabbar-labels.html',
+        path: 'tabbar-icons/',
+        componentUrl: './pages/tabbar-icons.html',
       },
       {
         path: 'tabbar-scrollable/',

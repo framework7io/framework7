@@ -53,7 +53,7 @@
       TabbarContext = newValue;
     }) || {};
 
-  $: isTabbarLabel = tabbarLabel || TabbarContext.tabbarHasLabels;
+  $: isTabbarIcons = tabbarLabel || TabbarContext.tabbarHasIcons;
 
   $: hrefComputed = href === true ? '#' : href || undefined;
 
@@ -76,7 +76,7 @@
   $: classes = classNames(
     className,
     {
-      link: !(noLinkClass || isTabbarLabel),
+      link: !(noLinkClass || isTabbarIcons),
       'icon-only': iconOnlyComputed,
       'tab-link': tabLink || tabLink === '',
       'tab-link-active': tabLinkActive,
@@ -116,7 +116,7 @@
   {/if}
   <slot />
   {#if typeof text !== 'undefined' || typeof badge !== 'undefined'}
-    <span class:tabbar-label={isTabbarLabel}>
+    <span class:tabbar-label={isTabbarIcons}>
       {plainText(text)}
       {#if typeof badge !== 'undefined'}<Badge color={badgeColor}>{plainText(badge)}</Badge>{/if}
     </span>

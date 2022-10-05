@@ -26,7 +26,7 @@
   </Toolbar>
   <List>
     <ListItem link="./tabbar/" title="Tabbar" />
-    <ListItem link="./tabbar-labels/" title="Tabbar With Labels" />
+    <ListItem link="./tabbar-icons/" title="Tabbar With Icons" />
     <ListItem link="./tabbar-scrollable/" title="Tabbar Scrollable" />
     <ListItem link="./toolbar-hide-scroll/" title="Hide Toolbar On Scroll" />
   </List>

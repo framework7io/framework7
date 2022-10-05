@@ -26,11 +26,7 @@
       display: none !important;
     }
   }
-  &.no-shadow {
-    &:before {
-      display: none !important;
-    }
-  }
+
   .hairline(bottom, var(--f7-searchbar-border-color, var(--f7-bars-border-color)));
 
   .page > &:not(.searchbar-inline) {
@@ -119,8 +115,8 @@
 .subnavbar .searchbar.searchbar-expandable {
   --f7-searchbar-expandable-size: var(--f7-subnavbar-height);
 }
-.tabbar-labels .searchbar.searchbar-expandable {
-  --f7-searchbar-expandable-size: var(--f7-tabbar-labels-height);
+.tabbar-icons .searchbar.searchbar-expandable {
+  --f7-searchbar-expandable-size: var(--f7-tabbar-icons-height);
 }
 .searchbar-inner {
   position: absolute;
@@ -256,11 +252,11 @@
     top: var(--f7-toolbar-height);
   }
 }
-.page > .tabbar-labels.toolbar-top,
-.ios .page > .tabbar-labels.toolbar-top-ios,
-.md .page > .tabbar-labels.toolbar-top-md {
+.page > .tabbar-icons.toolbar-top,
+.ios .page > .tabbar-icons.toolbar-top-ios,
+.md .page > .tabbar-icons.toolbar-top-md {
   ~ .searchbar {
-    top: var(--f7-tabbar-labels-height);
+    top: var(--f7-tabbar-icons-height);
   }
 }
 .page > .navbar ~ .toolbar-top,
@@ -270,11 +266,11 @@
     top: calc(var(--f7-navbar-height) + var(--f7-toolbar-height) + var(--f7-safe-area-top));
   }
 }
-.page > .navbar ~ .tabbar-labels.toolbar-top,
-.ios .page > .navbar ~ .tabbar-labels.toolbar-top-ios,
-.md .page > .navbar ~ .tabbar-labels.toolbar-top-md {
+.page > .navbar ~ .tabbar-icons.toolbar-top,
+.ios .page > .navbar ~ .tabbar-icons.toolbar-top-ios,
+.md .page > .navbar ~ .tabbar-icons.toolbar-top-md {
   ~ .searchbar {
-    top: calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height) + var(--f7-safe-area-top));
+    top: calc(var(--f7-navbar-height) + var(--f7-tabbar-icons-height) + var(--f7-safe-area-top));
   }
 }
 

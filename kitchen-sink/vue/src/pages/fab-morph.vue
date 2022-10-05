@@ -1,7 +1,7 @@
 <template>
   <f7-page>
     <f7-navbar title="Floating Action Button Morph" back-link="Back"></f7-navbar>
-    <f7-toolbar tabbar labels bottom class="fab-morph-target">
+    <f7-toolbar tabbar icons bottom class="fab-morph-target">
       <f7-link
         tab-link
         tab-link-active
