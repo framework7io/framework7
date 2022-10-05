@@ -204,7 +204,7 @@ class Notification extends Modal {
     const { icon, title, titleRightText, subtitle, text, closeButton, cssClass } =
       notification.params;
     return (
-      <div class={`notification ${cssClass || ''}`}>
+      <div class={`notification ${icon ? 'notification-with-icon' : ''} ${cssClass || ''}`}>
         <div class="notification-header">
           {icon && <div class="notification-icon">{icon}</div>}
           {title && <div class="notification-title">{title}</div>}

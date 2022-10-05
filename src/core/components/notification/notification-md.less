@@ -2,9 +2,9 @@
   .notification {
     transform: translate3d(0, -150%, 0);
     &.modal-in {
-      transition-duration: 0ms;
-      animation: notification-md-in 400ms ease-out;
+      transition-duration: 200ms;
       transform: translate3d(0, 0%, 0);
+      transition-timing-function: cubic-bezier(0, 0.8, 0.34, 1);
       &.notification-transitioning {
         transition-duration: 200ms;
       }
@@ -16,17 +16,28 @@
       transform: translate3d(0, -150%, 0);
     }
   }
+  .notification-with-icon {
+    .notification-icon {
+      position: absolute;
+      left: var(--f7-notification-padding);
+      top: var(--f7-notification-padding);
+    }
+    .notification-content,
+    .notification-header {
+      margin-left: calc(var(--f7-notification-icon-size) + 16px);
+    }
+  }
 
   .notification-icon {
     margin-right: 8px;
   }
   .notification-subtitle {
     + .notification-text {
-      margin-top: 2px;
+      margin-top: 4px;
     }
   }
   .notification-header + .notification-content {
-    margin-top: 6px;
+    margin-top: 4px;
   }
   .notification-title-right-text {
     margin-left: 4px;
@@ -45,7 +56,6 @@
     width: 16px;
     height: 16px;
     transition-duration: 300ms;
-    .link-highlight();
 
     &:before,
     &:after {

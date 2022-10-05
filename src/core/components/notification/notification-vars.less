@@ -4,9 +4,6 @@
   --f7-notification-subtitle-line-height: 1.35;
   --f7-notification-text-text-transform: none;
   --f7-notification-text-font-weight: 400;
-  .dark-vars({
-    --f7-notification-subtitle-color: #fff;
-  });
 }
 .ios-vars({
   --f7-notification-margin: 8px;
@@ -41,21 +38,22 @@
     --f7-notification-bg-color-rgb: 30, 30, 30;
     --f7-notification-title-color: #fff;
     --f7-notification-text-color: #fff;
+    --f7-notification-subtitle-color: #fff;
     --f7-notification-title-right-color: rgba(255,255,255,0.55);
   });
 });
 .md-vars({
-  --f7-notification-margin: 0px;
+  --f7-notification-margin: 16px;
   --f7-notification-padding: 16px;
-  --f7-notification-border-radius: 0px;
-  --f7-notification-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.22), 0 1px 2px rgba(0, 0, 0, 0.24);
-  --f7-notification-icon-size: 16px;
+  --f7-notification-border-radius: 16px;
+  --f7-notification-box-shadow: none;
+  --f7-notification-icon-size: 24px;
 
-  --f7-notification-title-color: var(--f7-theme-color);
-  --f7-notification-title-font-size: 12px;
+  --f7-notification-title-color: var(--f7-md-on-surface);
+  --f7-notification-title-font-size: 16px;
   --f7-notification-title-text-transform: none;
-  --f7-notification-title-line-height: 1;
-  --f7-notification-title-font-weight: 400;
+  --f7-notification-title-line-height: 1.35;
+  --f7-notification-title-font-weight: 500;
 
   --f7-notification-title-right-font-size: 12px;
 
@@ -64,15 +62,9 @@
 
   --f7-notification-text-font-size: 14px;
   --f7-notification-text-line-height: 1.35;
-  .light-vars({
-    --f7-notification-bg-color: #fff;
-    --f7-notification-title-right-color: rgba(0,0,0,0.54);
-    --f7-notification-subtitle-color: #212121;
-    --f7-notification-text-color: rgba(0,0,0,0.54);
-  });
-  .dark-vars({
-    --f7-notification-bg-color: #242424;
-    --f7-notification-title-right-color: rgba(255,255,255,0.54);
-    --f7-notification-text-color: rgba(255,255,255,0.54);
-  });
+
+  --f7-notification-bg-color: var(--f7-md-surface-5);
+  --f7-notification-text-color: var(--f7-md-on-surface-variant);
+  --f7-notification-title-right-color: var(--f7-md-on-surface-variant);
+  --f7-notification-subtitle-color: var(--f7-md-on-surface);
 });
