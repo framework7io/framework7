@@ -313,7 +313,7 @@
 </script>
 
 <!-- svelte-ignore a11y-missing-attribute -->
-{#if divider || groupTitle}
+{#if groupTitle}
   <li
     on:click={onClick}
     bind:this={el}
