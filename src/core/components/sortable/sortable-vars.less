@@ -1,4 +1,8 @@
 :root {
+}
+.ios-vars({
+  --f7-sortable-handler-width: 36px;
+  --f7-sortable-sorting-item-box-shadow: 0px 2px 8px rgba(0,0,0,0.6);
   .light-vars({
     --f7-sortable-handler-color: rgba(0,0,0,0.22);
     --f7-sortable-sorting-item-bg-color: rgba(255,255,255,0.8);
@@ -7,12 +11,10 @@
     --f7-sortable-sorting-item-bg-color: rgba(50, 50, 50, 0.8);
     --f7-sortable-handler-color: rgba(255,255,255,0.55);
   });
-}
-.ios-vars({
-  --f7-sortable-handler-width: 36px;
-  --f7-sortable-sorting-item-box-shadow: 0px 2px 8px rgba(0,0,0,0.6);
 });
 .md-vars({
   --f7-sortable-handler-width: 42px;
-  --f7-sortable-sorting-item-box-shadow: var(--f7-elevation-2);
+  --f7-sortable-sorting-item-box-shadow: none;
+  --f7-sortable-handler-color: var(--f7-md-on-surface-variant);
+  --f7-sortable-sorting-item-bg-color: var(--f7-md-surface-3);
 });
