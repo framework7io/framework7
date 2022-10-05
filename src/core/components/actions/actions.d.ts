@@ -35,8 +35,8 @@ export namespace Actions {
     text: string;
     /** HTML string of icon */
     icon?: string;
-    /** Enables bold button text */
-    bold?: boolean;
+    /** Enables strong button text */
+    strong?: boolean;
     /** Button color, one of default colors */
     color?: string;
     /** Button background color, one of default colors */

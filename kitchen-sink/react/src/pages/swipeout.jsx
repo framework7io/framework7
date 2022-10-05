@@ -50,7 +50,7 @@ export default () => {
         [
           {
             text: 'Cancel',
-            bold: true,
+            strong: true,
           },
         ],
       ],

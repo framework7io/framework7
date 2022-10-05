@@ -40,11 +40,14 @@
     --f7-actions-button-height: var(--f7-actions-button-height-landscape);
   }
 }
+.actions-backdrop,
+.actions-modal {
+  transition-timing-function: var(--f7-actions-transition-timing-function);
+}
 .actions-group {
   overflow: hidden;
   position: relative;
   margin: var(--f7-actions-group-margin);
-  border-radius: var(--f7-actions-border-radius);
   .hairline(bottom, var(--f7-actions-group-border-color));
   transform: translate3d(0, 0, 0);
   &:last-child {
@@ -61,27 +64,11 @@
   position: relative;
   overflow: hidden;
   text-align: var(--f7-actions-button-text-align);
-  background: var(--f7-actions-bg-color);
-  .ios-translucent-modals(var(--f7-actions-bg-color-rgb));
   .hairline(bottom, var(--f7-actions-button-border-color));
-  &:first-child {
-    border-radius: var(--f7-actions-border-radius) var(--f7-actions-border-radius) 0 0;
-  }
-  &:last-child {
-    .hairline-remove(bottom);
-    border-radius: 0 0 var(--f7-actions-border-radius) var(--f7-actions-border-radius);
-  }
-  &:first-child:last-child {
-    border-radius: var(--f7-actions-border-radius);
-  }
   a {
     text-decoration: none;
     color: inherit;
     display: block;
-  }
-  b,
-  &.actions-button-bold {
-    font-weight: 600;
   }
 }
 .actions-button {
@@ -132,6 +119,7 @@
   display: flex;
   align-items: center;
   font-size: var(--f7-actions-label-font-size);
+  font-weight: var(--f7-actions-label-font-weight);
   color: var(--f7-actions-label-text-color);
   padding: var(--f7-actions-label-padding);
   justify-content: var(--f7-actions-label-justify-content);
@@ -145,25 +133,13 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    border-radius: 0;
-    background: var(--f7-actions-bg-color);
     margin-top: 0;
-    &:first-child {
-      border-radius: var(--f7-actions-border-radius) var(--f7-actions-border-radius) 0 0;
-    }
-    &:last-child {
-      border-radius: 0 0 var(--f7-actions-border-radius) var(--f7-actions-border-radius);
-    }
-    &:first-child:last-child {
-      border-radius: var(--f7-actions-border-radius);
-    }
     &:not(:last-child) {
       margin-bottom: 0;
     }
   }
   .actions-button,
   .actions-label {
-    border-radius: 0 !important;
     background: none;
   }
   .actions-button {
@@ -194,9 +170,6 @@
     height: 1.33em;
     font-size: var(--f7-actions-grid-button-font-size);
   }
-}
-.actions-grid .actions-group {
-  .ios-translucent-modals(var(--f7-actions-bg-color-rgb));
 }
 .if-ios-theme({
   @import './actions-ios.less';

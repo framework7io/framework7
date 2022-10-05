@@ -7,7 +7,7 @@ import { f7 } from '../shared/f7.js';
   id: string | number;
   className: string;
   style: React.CSSProperties;
-  bold: boolean;
+  strong: boolean;
   close: boolean;
   onClick? : (event?: any) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
@@ -16,7 +16,7 @@ import { f7 } from '../shared/f7.js';
 */
 
 const ComponentName = forwardRef((props, ref) => {
-  const { className, id, style, bold, close = true } = props;
+  const { className, id, style, strong, close = true } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
@@ -28,7 +28,7 @@ const ComponentName = forwardRef((props, ref) => {
     className,
     {
       'actions-button': true,
-      'actions-button-bold': bold,
+      'actions-button-strong': strong,
     },
     colorClasses(props),
   );

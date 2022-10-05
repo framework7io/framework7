@@ -272,10 +272,10 @@ class Actions extends Modal {
           <div class="actions-group">
             {group.map((button) => {
               const buttonClasses = [`actions-${button.label ? 'label' : 'button'}`];
-              const { color, bg, bold, disabled, label, text, icon } = button;
+              const { color, bg, strong, disabled, label, text, icon } = button;
               if (color) buttonClasses.push(`color-${color}`);
               if (bg) buttonClasses.push(`bg-color-${bg}`);
-              if (bold) buttonClasses.push('actions-button-bold');
+              if (strong) buttonClasses.push('actions-button-strong');
               if (disabled) buttonClasses.push('disabled');
               if (label) {
                 return <div class={buttonClasses.join(' ')}>{text}</div>;
@@ -306,10 +306,10 @@ class Actions extends Modal {
               <ul>
                 {group.map((button) => {
                   const itemClasses = [];
-                  const { color, bg, bold, disabled, label, text, icon } = button;
+                  const { color, bg, strong, disabled, label, text, icon } = button;
                   if (color) itemClasses.push(`color-${color}`);
                   if (bg) itemClasses.push(`bg-color-${bg}`);
-                  if (bold) itemClasses.push('popover-from-actions-bold');
+                  if (strong) itemClasses.push('popover-from-actions-strong');
                   if (disabled) itemClasses.push('disabled');
                   if (label) {
                     itemClasses.push('popover-from-actions-label');

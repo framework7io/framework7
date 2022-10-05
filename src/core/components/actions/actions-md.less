@@ -1,7 +1,19 @@
 .md {
+  .actions-modal {
+    background-color: var(--f7-actions-bg-color);
+    border-radius: var(--f7-actions-border-radius) var(--f7-actions-border-radius) 0 0;
+  }
   .actions-button {
     transition-duration: 300ms;
   }
+  .actions-button,
+  .actions-label {
+    b,
+    &.actions-button-strong {
+      font-weight: 500;
+    }
+  }
+
   .actions-button-media {
     min-width: 40px;
     + .actions-button-text {

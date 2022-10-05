@@ -36,7 +36,7 @@ export default () => {
           },
           {
             text: 'Button 1',
-            bold: true,
+            strong: true,
           },
           {
             text: 'Button 2',
@@ -99,7 +99,7 @@ export default () => {
       >
         <ActionsGroup>
           <ActionsLabel>Do something</ActionsLabel>
-          <ActionsButton bold>Button 1</ActionsButton>
+          <ActionsButton strong>Button 1</ActionsButton>
           <ActionsButton>Button 2</ActionsButton>
           <ActionsButton color="red">Cancel</ActionsButton>
         </ActionsGroup>
@@ -109,7 +109,7 @@ export default () => {
       <Actions id="actions-two-groups">
         <ActionsGroup>
           <ActionsLabel>Do something</ActionsLabel>
-          <ActionsButton bold>Button 1</ActionsButton>
+          <ActionsButton strong>Button 1</ActionsButton>
           <ActionsButton>Button 2</ActionsButton>
         </ActionsGroup>
         <ActionsGroup>

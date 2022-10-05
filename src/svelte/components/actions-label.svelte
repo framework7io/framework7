@@ -10,13 +10,13 @@
   let className = undefined;
   export { className as class };
 
-  export let bold = false;
+  export let strong = false;
 
   $: classes = classNames(
     className,
     'actions-label',
     {
-      'actions-button-bold': bold,
+      'actions-button-strong': strong,
     },
     colorClasses($$props),
   );

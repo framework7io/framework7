@@ -11,7 +11,7 @@ import { colorClasses, colorProps } from '../shared/mixins.js';
 export default {
   name: 'f7-actions-label',
   props: {
-    bold: Boolean,
+    strong: Boolean,
     ...colorProps,
   },
   emits: ['click'],
@@ -23,7 +23,7 @@ export default {
       classNames(
         'actions-label',
         {
-          'actions-button-bold': props.bold,
+          'actions-button-strong': props.strong,
         },
         colorClasses(props),
       ),

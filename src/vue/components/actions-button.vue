@@ -17,7 +17,7 @@ import { f7 } from '../shared/f7.js';
 export default {
   name: 'f7-actions-button',
   props: {
-    bold: Boolean,
+    strong: Boolean,
     close: {
       type: Boolean,
       default: true,
@@ -41,7 +41,7 @@ export default {
       classNames(
         {
           'actions-button': true,
-          'actions-button-bold': props.bold,
+          'actions-button-strong': props.strong,
         },
         colorClasses(props),
       ),

@@ -26,7 +26,7 @@ const ActionsLabel = forwardRef((props, ref) => {
     className,
     'actions-label',
     {
-      'actions-button-bold': bold,
+      'actions-button-strong': strong,
     },
     colorClasses(props),
   );

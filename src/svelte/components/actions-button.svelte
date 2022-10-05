@@ -11,7 +11,7 @@
   let className = undefined;
   export { className as class };
 
-  export let bold = false;
+  export let strong = false;
   export let close = true;
 
   let el;
@@ -23,7 +23,7 @@
     className,
     {
       'actions-button': true,
-      'actions-button-bold': bold,
+      'actions-button-strong': strong,
     },
     colorClasses($$props),
   );

@@ -29,7 +29,7 @@
           },
           {
             text: 'Button 1',
-            bold: true,
+            strong: true,
           },
           {
             text: 'Button 2',
@@ -66,7 +66,8 @@
         fill
         onClick={() => {
           actionsOneGroupOpened = true;
-        }}>
+        }}
+      >
         One group
       </Button>
       <!--  Two groups, open by "actionsOpen" attribute -->
@@ -78,7 +79,8 @@
         fill
         onClick={() => {
           actionGridOpened = true;
-        }}>
+        }}
+      >
         Action Grid
       </Button>
     </p>
@@ -99,7 +101,7 @@
   <Actions bind:opened={actionsOneGroupOpened}>
     <ActionsGroup>
       <ActionsLabel>Do something</ActionsLabel>
-      <ActionsButton bold>Button 1</ActionsButton>
+      <ActionsButton strong>Button 1</ActionsButton>
       <ActionsButton>Button 2</ActionsButton>
       <ActionsButton color="red">Cancel</ActionsButton>
     </ActionsGroup>
@@ -109,7 +111,7 @@
   <Actions id="actions-two-groups">
     <ActionsGroup>
       <ActionsLabel>Do something</ActionsLabel>
-      <ActionsButton bold>Button 1</ActionsButton>
+      <ActionsButton strong>Button 1</ActionsButton>
       <ActionsButton>Button 2</ActionsButton>
     </ActionsGroup>
     <ActionsGroup>
@@ -125,7 +127,8 @@
           slot="media"
           src="https://cdn.framework7.io/placeholder/people-96x96-1.jpg"
           width="48"
-          style="max-width: 100%" />
+          style="max-width: 100%"
+        />
         <span>Button 1</span>
       </ActionsButton>
       <ActionsButton>
@@ -133,7 +136,8 @@
           slot="media"
           src="https://cdn.framework7.io/placeholder/people-96x96-2.jpg"
           width="48"
-          style="max-width: 100%" />
+          style="max-width: 100%"
+        />
         <span>Button 2</span>
       </ActionsButton>
       <ActionsButton>
@@ -141,7 +145,8 @@
           slot="media"
           src="https://cdn.framework7.io/placeholder/people-96x96-3.jpg"
           width="48"
-          style="max-width: 100%" />
+          style="max-width: 100%"
+        />
         <span>Button 3</span>
       </ActionsButton>
     </ActionsGroup>
@@ -151,7 +156,8 @@
           slot="media"
           src="https://cdn.framework7.io/placeholder/fashion-96x96-4.jpg"
           width="48"
-          style="max-width: 100%" />
+          style="max-width: 100%"
+        />
         <span>Button 4</span>
       </ActionsButton>
       <ActionsButton>
@@ -159,7 +165,8 @@
           slot="media"
           src="https://cdn.framework7.io/placeholder/fashion-96x96-5.jpg"
           width="48"
-          style="max-width: 100%" />
+          style="max-width: 100%"
+        />
         <span>Button 5</span>
       </ActionsButton>
       <ActionsButton>
@@ -167,7 +174,8 @@
           slot="media"
           src="https://cdn.framework7.io/placeholder/fashion-96x96-6.jpg"
           width="48"
-          style="max-width: 100%" />
+          style="max-width: 100%"
+        />
         <span>Button 6</span>
       </ActionsButton>
     </ActionsGroup>

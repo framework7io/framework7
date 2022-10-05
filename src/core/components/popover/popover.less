@@ -83,8 +83,11 @@
     font-size: var(--f7-popover-actions-icon-size);
   }
 }
-.popover-from-actions-bold {
+.ios .popover-from-actions-strong {
   font-weight: 600;
+}
+.md .popover-from-actions-strong {
+  font-weight: 500;
 }
 .popover-from-actions-label {
   line-height: 1.3;
@@ -98,6 +101,9 @@
   .hairline(bottom, var(--f7-list-item-border-color));
   &:last-child {
     .hairline-remove(bottom);
+  }
+  .md & {
+    justify-content: center;
   }
 }
 .popover-angle {
