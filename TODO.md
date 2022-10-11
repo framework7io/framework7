@@ -1,6 +1,6 @@
+- Inputs
 - Searchbar
 - Messages
-- Inputs
 - Timeline
 - Appbar
 - Calendar

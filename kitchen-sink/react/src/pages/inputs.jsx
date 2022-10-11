@@ -6,7 +6,7 @@ export default () => (
     <Navbar title="Form Inputs" backLink="Back" />
 
     <BlockTitle>Full Layout / Stacked Labels</BlockTitle>
-    <List noHairlinesMd>
+    <List>
       <ListInput label="Name" type="text" placeholder="Your name" clearButton>
         <Icon icon="demo-list-icon" slot="media" />
       </ListInput>
@@ -61,7 +61,7 @@ export default () => (
     </List>
 
     <BlockTitle>Floating Labels</BlockTitle>
-    <List noHairlinesMd>
+    <List>
       <ListInput label="Name" floatingLabel type="text" placeholder="Your name" clearButton>
         <Icon icon="demo-list-icon" slot="media" />
       </ListInput>
@@ -94,7 +94,7 @@ export default () => (
     </List>
 
     <BlockTitle>Floating Labels + Outline Inputs</BlockTitle>
-    <List noHairlinesMd>
+    <List>
       <ListInput outline label="Name" floatingLabel type="text" placeholder="Your name" clearButton>
         <Icon icon="demo-list-icon" slot="media" />
       </ListInput>
@@ -145,7 +145,7 @@ export default () => (
     </List>
 
     <BlockTitle>Validation + Additional Info</BlockTitle>
-    <List noHairlinesMd>
+    <List>
       <ListInput
         label="Name"
         type="text"
@@ -213,7 +213,7 @@ export default () => (
     </List>
 
     <BlockTitle>Icon + Input</BlockTitle>
-    <List noHairlinesMd>
+    <List>
       <ListInput type="text" placeholder="Your name" clearButton>
         <Icon icon="demo-list-icon" slot="media" />
       </ListInput>
@@ -232,7 +232,7 @@ export default () => (
     </List>
 
     <BlockTitle>Label + Input</BlockTitle>
-    <List noHairlinesMd>
+    <List>
       <ListInput label="Name" type="text" placeholder="Your name" clearButton />
 
       <ListInput label="Password" type="password" placeholder="Your password" clearButton />
@@ -243,7 +243,7 @@ export default () => (
     </List>
 
     <BlockTitle>Only Inputs</BlockTitle>
-    <List noHairlinesMd>
+    <List>
       <ListInput type="text" placeholder="Your name" clearButton />
 
       <ListInput type="password" placeholder="Your password" clearButton />
@@ -254,7 +254,7 @@ export default () => (
     </List>
 
     <BlockTitle>Inputs + Additional Info</BlockTitle>
-    <List noHairlinesMd>
+    <List>
       <ListInput type="text" placeholder="Your name" info="Full name please" clearButton />
 
       <ListInput
@@ -272,17 +272,6 @@ export default () => (
       />
 
       <ListInput type="url" placeholder="URL" info="Your website URL" clearButton />
-    </List>
-
-    <BlockTitle>Only Inputs Inset</BlockTitle>
-    <List inset>
-      <ListInput type="text" placeholder="Your name" clearButton />
-
-      <ListInput type="password" placeholder="Your password" clearButton />
-
-      <ListInput type="email" placeholder="Your e-mail" clearButton />
-
-      <ListInput type="url" placeholder="URL" clearButton />
     </List>
   </Page>
 );
