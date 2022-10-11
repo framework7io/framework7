@@ -68,7 +68,6 @@
 
   // Label
   export let label = undefined;
-  export let inlineLabel = undefined;
   export let floatingLabel = undefined;
 
   // Datepicker
@@ -200,7 +199,6 @@
     !wrap && { disabled },
     !wrap && colorClasses($$props),
     {
-      'inline-label': inlineLabel,
       'item-input-outline': outline,
       'item-input-focused': inputFocused,
       'item-input-with-info': !!info || hasInfoSlots,

@@ -81,7 +81,6 @@ export default {
 
     // Label
     label: [String, Number],
-    inlineLabel: Boolean,
     floatingLabel: Boolean,
 
     // Datepicker
@@ -454,7 +453,6 @@ export default {
             !props.wrap && { disabled: props.disabled },
             !props.wrap && colorClasses(props),
             {
-              'inline-label': props.inlineLabel,
               'item-input-outline': props.outline,
               'item-input-focused': inputFocused.value,
               'item-input-with-info': !!props.info || slots.info,

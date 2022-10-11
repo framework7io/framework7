@@ -65,7 +65,6 @@ import { VirtualList } from 'framework7/types';
   tabActive? : boolean
   form? : boolean
   formStoreData? : boolean
-  inlineLabels? : boolean
   virtualList? : boolean
   virtualListParams? : Object
   COLOR_PROPS
@@ -135,7 +134,6 @@ const List = forwardRef((props, ref) => {
     tabActive,
     form,
     formStoreData,
-    inlineLabels,
     virtualList,
     virtualListParams,
   } = props;
@@ -322,7 +320,6 @@ const List = forwardRef((props, ref) => {
       tab,
       'tab-active': tabActive,
       'form-store-data': formStoreData,
-      'inline-labels': inlineLabels,
       'no-chevron': noChevron,
       'chevron-center': chevronCenter,
     },

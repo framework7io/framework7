@@ -419,20 +419,13 @@ export default () => {
       </Block>
       <List noHairlinesMd>
         <BlockHeader>Simple Dropdown Autocomplete</BlockHeader>
-        <ListInput
-          label="Fruit"
-          inlineLabel
-          type="text"
-          placeholder="Fruit"
-          inputId="autocomplete-dropdown"
-        />
+        <ListInput label="Fruit" type="text" placeholder="Fruit" inputId="autocomplete-dropdown" />
       </List>
 
       <List noHairlinesMd>
         <BlockHeader>Dropdown With Input Expand</BlockHeader>
         <ListInput
           label="Fruit"
-          inlineLabel
           type="text"
           placeholder="Fruit"
           inputId="autocomplete-dropdown-expand"

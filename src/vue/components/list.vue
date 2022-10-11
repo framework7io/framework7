@@ -62,7 +62,6 @@ export default {
     // Form
     form: Boolean,
     formStoreData: Boolean,
-    inlineLabels: Boolean,
 
     // Virtual List
     virtualList: Boolean,
@@ -207,7 +206,6 @@ export default {
           tab: props.tab,
           'tab-active': props.tabActive,
           'form-store-data': props.formStoreData,
-          'inline-labels': props.inlineLabels,
           'no-chevron': props.noChevron,
           'chevron-center': props.chevronCenter,
         },

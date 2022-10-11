@@ -187,30 +187,7 @@ textarea {
     display: none;
   }
 }
-.inline-labels,
-.inline-label {
-  .item-inner {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-  }
-  .item-label,
-  .item-floating-label {
-    padding-top: var(--f7-inline-label-padding-top);
-    align-self: flex-start;
-    width: 35%;
-    font-size: var(--f7-inline-label-font-size);
-    line-height: var(--f7-inline-label-line-height);
-    + .item-input-wrap {
-      .ltr({
-        margin-left: 8px;
-      });
-      .rtl({
-        margin-right: 8px;
-      });
-    }
-  }
-}
+
 .input {
   position: relative;
   input,
@@ -380,17 +357,7 @@ textarea {
       right: var(--f7-input-outline-padding-horizontal);
     });
   }
-  .inline-labels & .item-label,
-  .inline-label & .item-label,
-  .inline-label .item-label,
-  .inline-label.item-label {
-    .ltr({
-      left: 0;
-    });
-    .rtl({
-      right: 0;
-    });
-  }
+
   .item-floating-label {
     .ltr({
       left: calc(var(--f7-input-outline-padding-horizontal) - 4px);

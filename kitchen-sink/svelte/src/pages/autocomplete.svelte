@@ -420,22 +420,17 @@
   </Block>
   <List noHairlinesMd>
     <div class="block-header" slot="before-list">Simple Dropdown Autocomplete</div>
-    <ListInput
-      label="Fruit"
-      inlineLabel
-      type="text"
-      placeholder="Fruit"
-      inputId="autocomplete-dropdown" />
+    <ListInput label="Fruit" type="text" placeholder="Fruit" inputId="autocomplete-dropdown" />
   </List>
 
   <List noHairlinesMd>
     <div class="block-header" slot="before-list">Dropdown With Input Expand</div>
     <ListInput
       label="Fruit"
-      inlineLabel
       type="text"
       placeholder="Fruit"
-      inputId="autocomplete-dropdown-expand" />
+      inputId="autocomplete-dropdown-expand"
+    />
   </List>
   <List noHairlinesMd>
     <div class="block-header" slot="before-list">Dropdown With All Values</div>
@@ -447,7 +442,8 @@
       label="Fruit"
       type="text"
       placeholder="Fruit"
-      inputId="autocomplete-dropdown-placeholder" />
+      inputId="autocomplete-dropdown-placeholder"
+    />
   </List>
   <List noHairlinesMd>
     <div class="block-header" slot="before-list">Dropdown With Typeahead</div>
@@ -455,7 +451,8 @@
       label="Fruit"
       type="text"
       placeholder="Fruit"
-      inputId="autocomplete-dropdown-typeahead" />
+      inputId="autocomplete-dropdown-typeahead"
+    />
   </List>
   <List noHairlinesMd>
     <div class="block-header" slot="before-list">Dropdown With Ajax-Data</div>
@@ -463,7 +460,8 @@
       label="Language"
       type="text"
       placeholder="Language"
-      inputId="autocomplete-dropdown-ajax" />
+      inputId="autocomplete-dropdown-ajax"
+    />
   </List>
   <List noHairlinesMd>
     <div class="block-header" slot="before-list">Dropdown With Ajax-Data + Typeahead</div>
@@ -471,7 +469,8 @@
       label="Language"
       type="text"
       placeholder="Language"
-      inputId="autocomplete-dropdown-ajax-typeahead" />
+      inputId="autocomplete-dropdown-ajax-typeahead"
+    />
   </List>
   <BlockTitle>Standalone Autocomplete</BlockTitle>
   <Block>

@@ -65,7 +65,6 @@
   // Form
   export let form = false;
   export let formStoreData = false;
-  export let inlineLabels = false;
 
   // Virtual List
   export let virtualList = false;
@@ -127,7 +126,6 @@
       tab,
       'tab-active': tabActive,
       'form-store-data': formStoreData,
-      'inline-labels': inlineLabels,
       'no-chevron': noChevron,
       'chevron-center': chevronCenter,
     },

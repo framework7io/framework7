@@ -60,7 +60,6 @@ import { Calendar, ColorPicker, TextEditor } from 'framework7/types';
   info? : string
   outline? : boolean
   label? : string | number
-  inlineLabel? : boolean
   floatingLabel? : boolean
   calendarParams? : Calendar.Parameters;
   colorPickerParams? : ColorPicker.Parameters;
@@ -141,7 +140,6 @@ const ListInput = forwardRef((props, ref) => {
 
     // Label
     label,
-    inlineLabel,
     floatingLabel,
 
     // Datepicker
@@ -475,7 +473,6 @@ const ListInput = forwardRef((props, ref) => {
         !wrap && { disabled },
         !wrap && colorClasses(props),
         {
-          'inline-label': inlineLabel,
           'item-input-outline': outline,
           'item-input-focused': inputFocused,
           'item-input-with-info': !!info || (slots.info && slots.info.length),

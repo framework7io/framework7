@@ -25,7 +25,7 @@
     <div class="list no-hairlines-md">
       <div class="block-header">Simple Dropdown Autocomplete</div>
       <ul>
-        <li class="item-content item-input inline-label">
+        <li class="item-content item-input">
           <div class="item-inner">
             <div class="item-title item-label">Fruit</div>
             <div class="item-input-wrap">
@@ -38,7 +38,7 @@
     <div class="list no-hairlines-md">
       <div class="block-header">Dropdown With Input Expand</div>
       <ul>
-        <li class="item-content item-input inline-label">
+        <li class="item-content item-input">
           <div class="item-inner">
             <div class="item-title item-label">Fruit</div>
             <div class="item-input-wrap">
