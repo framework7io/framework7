@@ -21,6 +21,7 @@
   - fix colors
 - Remove
   - Grid module
+  - Typography
   - Lazy???
   - Menu???
 - Push modal
