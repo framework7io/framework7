@@ -1,0 +1,31 @@
+- Searchbar
+- Messages
+- Inputs
+- Timeline
+- Appbar
+- Calendar
+- Picker
+- Color Picker
+
+- Autocomplete
+- Menu???
+- PhotoBrowser
+- Preloader
+  - Colors?
+- PTR
+- Smart Select
+- Treeview
+- VL
+
+- Badge
+  - fix colors
+- Remove
+  - Grid module
+  - Lazy???
+  - Menu???
+- Push modal
+  - should always work
+- New Delete Button icons in MD theme
+- Unify colors
+- Update demos
+  - List!
