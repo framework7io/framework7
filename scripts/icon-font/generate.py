@@ -11,7 +11,7 @@ def main():
   generate_font_files()
 
 def generate_font_files():
-  print "Generate Fonts"
+  print("Generate Fonts")
   cmd = "fontforge -script %s/generate_font.py" % (BUILDER_PATH)
   call(cmd, shell=True)
 

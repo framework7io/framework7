@@ -1,4 +1,3 @@
-- Inputs
 - Searchbar
 - Messages
 - Timeline
@@ -8,6 +7,7 @@
 - Color Picker
 
 - Autocomplete
+  - Remove input expand
 - Menu???
 - PhotoBrowser
 - Preloader
@@ -26,7 +26,6 @@
   - Menu???
 - Push modal
   - should always work
-- New Delete Button icons in MD theme
 - Unify colors
 - Update demos
   - List!

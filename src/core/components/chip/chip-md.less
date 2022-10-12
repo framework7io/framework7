@@ -8,14 +8,15 @@
     });
   }
   .chip-delete {
+    &::after {
+      content: 'delete_round_md';
+      font-size: 16px;
+    }
     .ltr({
       margin-right: calc(-1 * var(--f7-chip-padding-horizontal) + 4px);
     });
     .rtl({
       margin-left: calc(-1 * var(--f7-chip-padding-horizontal) + 4px);
     });
-    &:after {
-      font-size: 12px;
-    }
   }
 }

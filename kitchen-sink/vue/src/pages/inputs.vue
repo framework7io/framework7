@@ -3,7 +3,7 @@
     <f7-navbar title="Form Inputs" back-link="Back"></f7-navbar>
 
     <f7-block-title>Full Layout / Stacked Labels</f7-block-title>
-    <f7-list>
+    <f7-list strong-ios dividers-ios inset-ios>
       <f7-list-input label="Name" type="text" placeholder="Your name" clear-button>
         <template #media>
           <f7-icon icon="demo-list-icon" />
@@ -77,7 +77,7 @@
     </f7-list>
 
     <f7-block-title>Floating Labels</f7-block-title>
-    <f7-list>
+    <f7-list strong-ios dividers-ios inset-ios>
       <f7-list-input label="Name" floating-label type="text" placeholder="Your name" clear-button>
         <template #media>
           <f7-icon icon="demo-list-icon" />
@@ -134,7 +134,7 @@
     </f7-list>
 
     <f7-block-title>Floating Labels + Outline Inputs</f7-block-title>
-    <f7-list>
+    <f7-list strong-ios dividers-ios inset-ios>
       <f7-list-input
         outline
         label="Name"
@@ -204,7 +204,7 @@
     </f7-list>
 
     <f7-block-title>Validation + Additional Info</f7-block-title>
-    <f7-list>
+    <f7-list strong-ios dividers-ios inset-ios>
       <f7-list-input
         label="Name"
         type="text"
@@ -282,7 +282,7 @@
     </f7-list>
 
     <f7-block-title>Icon + Input</f7-block-title>
-    <f7-list>
+    <f7-list strong-ios dividers-ios inset-ios>
       <f7-list-input type="text" placeholder="Your name" clear-button>
         <template #media>
           <f7-icon icon="demo-list-icon" />
@@ -309,7 +309,7 @@
     </f7-list>
 
     <f7-block-title>Label + Input</f7-block-title>
-    <f7-list>
+    <f7-list strong-ios dividers-ios inset-ios>
       <f7-list-input label="Name" type="text" placeholder="Your name" clear-button></f7-list-input>
 
       <f7-list-input
@@ -330,7 +330,7 @@
     </f7-list>
 
     <f7-block-title>Only Inputs</f7-block-title>
-    <f7-list>
+    <f7-list strong-ios dividers-ios inset-ios>
       <f7-list-input type="text" placeholder="Your name" clear-button></f7-list-input>
 
       <f7-list-input type="password" placeholder="Your password" clear-button></f7-list-input>
@@ -341,7 +341,7 @@
     </f7-list>
 
     <f7-block-title>Inputs + Additional Info</f7-block-title>
-    <f7-list>
+    <f7-list strong-ios dividers-ios inset-ios>
       <f7-list-input
         type="text"
         placeholder="Your name"

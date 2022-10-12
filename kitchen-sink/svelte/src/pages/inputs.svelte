@@ -6,7 +6,7 @@
   <Navbar title="Form Inputs" backLink="Back" />
 
   <BlockTitle>Full Layout / Stacked Labels</BlockTitle>
-  <List>
+  <List strongIos dividersIos insetIos>
     <ListInput label="Name" type="text" placeholder="Your name" clearButton>
       <i class="icon demo-list-icon" slot="media" />
     </ListInput>
@@ -58,7 +58,7 @@
   </List>
 
   <BlockTitle>Floating Labels</BlockTitle>
-  <List>
+  <List strongIos dividersIos insetIos>
     <ListInput label="Name" floatingLabel type="text" placeholder="Your name" clearButton>
       <i class="icon demo-list-icon" slot="media" />
     </ListInput>
@@ -91,7 +91,7 @@
   </List>
 
   <BlockTitle>Floating Labels + Outline Inputs</BlockTitle>
-  <List>
+  <List strongIos dividersIos insetIos>
     <ListInput outline label="Name" floatingLabel type="text" placeholder="Your name" clearButton>
       <i class="icon demo-list-icon" slot="media" />
     </ListInput>
@@ -142,7 +142,7 @@
   </List>
 
   <BlockTitle>Validation + Additional Info</BlockTitle>
-  <List>
+  <List strongIos dividersIos insetIos>
     <ListInput
       label="Name"
       type="text"
@@ -208,7 +208,7 @@
   </List>
 
   <BlockTitle>Icon + Input</BlockTitle>
-  <List>
+  <List strongIos dividersIos insetIos>
     <ListInput type="text" placeholder="Your name" clearButton>
       <i class="icon demo-list-icon" slot="media" />
     </ListInput>
@@ -227,7 +227,7 @@
   </List>
 
   <BlockTitle>Label + Input</BlockTitle>
-  <List>
+  <List strongIos dividersIos insetIos>
     <ListInput label="Name" type="text" placeholder="Your name" clearButton />
 
     <ListInput label="Password" type="password" placeholder="Your password" clearButton />
@@ -238,7 +238,7 @@
   </List>
 
   <BlockTitle>Only Inputs</BlockTitle>
-  <List>
+  <List strongIos dividersIos insetIos>
     <ListInput type="text" placeholder="Your name" clearButton />
 
     <ListInput type="password" placeholder="Your password" clearButton />
@@ -249,7 +249,7 @@
   </List>
 
   <BlockTitle>Inputs + Additional Info</BlockTitle>
-  <List>
+  <List strongIos dividersIos insetIos>
     <ListInput type="text" placeholder="Your name" info="Full name please" clearButton />
 
     <ListInput

@@ -2,7 +2,7 @@ var routes = [
   // Index page
   {
     path: '/',
-    url: './pages/inputs.html',
+    componentUrl: './pages/home.html',
     name: 'home',
     master(f7) {
       return f7.theme === 'aurora';
