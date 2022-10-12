@@ -6,8 +6,6 @@
 - Picker
 - Color Picker
 
-- Autocomplete
-  - Remove input expand
 - Menu???
 - PhotoBrowser
 - Preloader

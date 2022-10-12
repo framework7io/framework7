@@ -395,7 +395,7 @@ class Autocomplete extends Framework7Class {
 
     const paddingProp = app.rtl ? 'padding-right' : 'padding-left';
     let paddingValue;
-    if ($listEl.length && !ac.params.expandInput) {
+    if ($listEl.length) {
       paddingValue =
         (app.rtl ? $listEl[0].offsetWidth - inputOffsetLeft - inputOffsetWidth : inputOffsetLeft) -
         (app.theme === 'md' ? 16 : 15);
@@ -408,7 +408,7 @@ class Autocomplete extends Framework7Class {
     });
     $dropdownEl.children('.autocomplete-dropdown-inner').css({
       maxHeight: `${maxHeight}px`,
-      [paddingProp]: $listEl.length > 0 && !ac.params.expandInput ? `${paddingValue}px` : '',
+      [paddingProp]: $listEl.length > 0 ? `${paddingValue}px` : '',
     });
   }
 
@@ -650,7 +650,7 @@ class Autocomplete extends Framework7Class {
     return (
       <div class="autocomplete-dropdown">
         <div class="autocomplete-dropdown-inner">
-          <div class={`list ${!ac.params.expandInput ? 'no-safe-areas' : ''}`}>
+          <div class={`list no-safe-areas`}>
             <ul></ul>
           </div>
         </div>
@@ -781,9 +781,6 @@ class Autocomplete extends Framework7Class {
     if (ac.params.openIn === 'dropdown') {
       ac.detachDropdownEvents();
       ac.$dropdownEl.removeClass('autocomplete-dropdown-in').remove();
-      ac.$inputEl
-        .parents('.item-content-dropdown-expanded')
-        .removeClass('item-content-dropdown-expanded');
     } else {
       ac.detachPageEvents();
     }
@@ -879,14 +876,6 @@ class Autocomplete extends Framework7Class {
 
     if (!ac.$dropdownEl) {
       ac.$dropdownEl = $(ac.renderDropdown());
-    }
-    const $listEl = ac.$inputEl.parents('.list');
-    if (
-      $listEl.length &&
-      ac.$inputEl.parents('.item-content').length > 0 &&
-      ac.params.expandInput
-    ) {
-      ac.$inputEl.parents('.item-content').addClass('item-content-dropdown-expanded');
     }
 
     const $pageContentEl = ac.$inputEl.parents('.page-content');

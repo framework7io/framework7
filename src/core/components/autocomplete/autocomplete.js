@@ -15,7 +15,6 @@ export default {
       dropdownPlaceholderText: undefined,
       typeahead: false,
       highlightMatches: true,
-      expandInput: false,
       updateInputValueOnSelect: true,
       inputEvents: 'input',
 

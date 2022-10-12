@@ -16,7 +16,6 @@
   const fruits = 'Apple Apricot Avocado Banana Melon Orange Peach Pear Pineapple'.split(' ');
 
   let autocompleteDropdownSimple;
-  let autocompleteDropdownExpand;
   let autocompleteDropdownAll;
   let autocompleteDropdownPlaceholder;
   let autocompleteDropdownTypeahead;
@@ -33,7 +32,6 @@
   function onPageBeforeRemove() {
     // Destroy all autocompletes
     autocompleteDropdownSimple.destroy();
-    autocompleteDropdownExpand.destroy();
     autocompleteDropdownAll.destroy();
     autocompleteDropdownPlaceholder.destroy();
     autocompleteDropdownTypeahead.destroy();
@@ -53,26 +51,6 @@
     autocompleteDropdownSimple = f7.autocomplete.create({
       inputEl: '#autocomplete-dropdown',
       openIn: 'dropdown',
-      source(query, render) {
-        const results = [];
-        if (query.length === 0) {
-          render(results);
-          return;
-        }
-        // Find matched items
-        for (let i = 0; i < fruits.length; i += 1) {
-          if (fruits[i].toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(fruits[i]);
-        }
-        // Render items by passing array with result items
-        render(results);
-      },
-    });
-
-    // Dropdown with input expand
-    autocompleteDropdownExpand = f7.autocomplete.create({
-      inputEl: '#autocomplete-dropdown-expand',
-      openIn: 'dropdown',
-      expandInput: true, // expand input
       source(query, render) {
         const results = [];
         if (query.length === 0) {
@@ -165,15 +143,9 @@
         autocomplete.preloaderShow();
 
         // Do Ajax request to Autocomplete data
-        f7.request({
-          url: './autocomplete-languages.json',
-          method: 'GET',
-          dataType: 'json',
-          // send "query" to server. Useful in case you generate response dynamically
-          data: {
-            query,
-          },
-          success(data) {
+        fetch(`./js/autocomplete-languages.json?query=${query}`)
+          .then((res) => res.json())
+          .then((data) => {
             // Find matched items
             for (let i = 0; i < data.length; i += 1) {
               if (data[i].name.toLowerCase().indexOf(query.toLowerCase()) >= 0)
@@ -183,8 +155,7 @@
             autocomplete.preloaderHide();
             // Render items by passing array with result items
             render(results);
-          },
-        });
+          });
       },
     });
 
@@ -210,26 +181,19 @@
         autocomplete.preloaderShow();
 
         // Do Ajax request to Autocomplete data
-        f7.request({
-          url: './autocomplete-languages.json',
-          method: 'GET',
-          dataType: 'json',
-          // send "query" to server. Useful in case you generate response dynamically
-          data: {
-            query,
-          },
-          success(data) {
+        fetch(`./js/autocomplete-languages.json?query=${query}`)
+          .then((res) => res.json())
+          .then((data) => {
             // Find matched items
             for (let i = 0; i < data.length; i += 1) {
-              if (data[i].name.toLowerCase().indexOf(query.toLowerCase()) === 0)
+              if (data[i].name.toLowerCase().indexOf(query.toLowerCase()) >= 0)
                 results.push(data[i]);
             }
             // Hide Preoloader
             autocomplete.preloaderHide();
             // Render items by passing array with result items
             render(results);
-          },
-        });
+          });
       },
     });
 
@@ -336,15 +300,9 @@
         // Show Preloader
         autocomplete.preloaderShow();
         // Do Ajax request to Autocomplete data
-        f7.request({
-          url: './autocomplete-languages.json',
-          method: 'GET',
-          dataType: 'json',
-          // send "query" to server. Useful in case you generate response dynamically
-          data: {
-            query,
-          },
-          success(data) {
+        fetch(`./js/autocomplete-languages.json?query=${query}`)
+          .then((res) => res.json())
+          .then((data) => {
             // Find matched items
             for (let i = 0; i < data.length; i += 1) {
               if (data[i].name.toLowerCase().indexOf(query.toLowerCase()) >= 0)
@@ -354,8 +312,7 @@
             autocomplete.preloaderHide();
             // Render items by passing array with result items
             render(results);
-          },
-        });
+          });
       },
       on: {
         change(value) {
@@ -423,15 +380,6 @@
     <ListInput label="Fruit" type="text" placeholder="Fruit" inputId="autocomplete-dropdown" />
   </List>
 
-  <List noHairlinesMd>
-    <div class="block-header" slot="before-list">Dropdown With Input Expand</div>
-    <ListInput
-      label="Fruit"
-      type="text"
-      placeholder="Fruit"
-      inputId="autocomplete-dropdown-expand"
-    />
-  </List>
   <List noHairlinesMd>
     <div class="block-header" slot="before-list">Dropdown With All Values</div>
     <ListInput label="Fruit" type="text" placeholder="Fruit" inputId="autocomplete-dropdown-all" />
