@@ -102,19 +102,18 @@ textarea {
 
   .item-label,
   .item-floating-label {
-    width: 100%;
+    width: auto;
     vertical-align: top;
     flex-shrink: 0;
     font-size: var(--f7-label-font-size);
     font-weight: var(--f7-label-font-weight);
-    line-height: var(--f7-label-line-height);
+    line-height: var(--f7-label-height);
     color: var(--f7-label-text-color);
     transition-duration: 200ms;
     transition-property: transform, color;
   }
   .item-floating-label {
     color: var(--f7-input-placeholder-color);
-    width: auto;
     max-width: calc(100% / var(--f7-floating-label-scale));
     pointer-events: none;
     .ltr({
@@ -276,13 +275,52 @@ textarea {
   }
 }
 
+.item-input-outline .item-content,
+.item-input-outline.item-content,
+.input-outline {
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 8px;
+    bottom: 8px;
+    border: 1px solid var(--f7-input-outline-border-color);
+    border-radius: var(--f7-input-outline-border-radius);
+    pointer-events: none;
+    box-sizing: border-box;
+    transition-duration: 200ms;
+  }
+  .item-label,
+  .item-floating-label {
+    pointer-events: none;
+    background: var(--f7-page-bg-color);
+    z-index: 1;
+    padding: 4px;
+  }
+  &.item-input-focused,
+  &.input-focused {
+    &::after {
+      border-width: 2px;
+      border-color: var(--f7-input-outline-invalid-border-color, var(--f7-theme-color));
+    }
+  }
+  &.item-input-invalid,
+  &.input-invalid {
+    &::after {
+      border-width: 2px;
+      border-color: var(--f7-input-outline-invalid-border-color, var(--f7-input-error-text-color));
+    }
+  }
+}
+
 .block-strong .item-input-outline .item-label,
 .block-strong .item-input-outline .item-floating-label,
 .ios .block-strong-ios .item-input-outline .item-label,
 .ios .block-strong-ios .item-input-outline .item-floating-label,
 .md .block-strong-md .item-input-outline .item-label,
 .md .block-strong-md .item-input-outline .item-floating-label {
-  background: var(--f7-block-strong-bg-color);
+  background: var(--f7-block-strong-bg-color) !important;
 }
 .list-strong .item-input-outline .item-floating-label,
 .list-strong .item-input-outline .item-label,
@@ -290,7 +328,7 @@ textarea {
 .ios .list-strong-ios .item-input-outline .item-label,
 .md .list-strong-md .item-input-outline .item-floating-label,
 .md .list-strong-md .item-input-outline .item-label {
-  background: var(--f7-list-strong-bg-color);
+  background: var(--f7-list-strong-bg-color) !important;
 }
 
 .if-dark-theme({

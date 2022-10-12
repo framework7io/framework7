@@ -6,8 +6,7 @@
     }
   }
   .item-floating-label {
-    transform: scale(var(--f7-floating-label-scale))
-      translateY(calc((var(--f7-input-height) / 2 - 25%) / var(--f7-floating-label-scale)));
+    transform: scale(var(--f7-floating-label-scale)) translateY(calc(var(--f7-label-height) + 25%));
   }
   .item-input-focused .item-floating-label {
     color: var(--f7-label-text-color);
@@ -79,150 +78,49 @@
     }
   }
 
-  .input-outline:after,
-  .item-input-outline .item-input-wrap:after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    border: 1px solid var(--f7-input-outline-border-color);
-    border-radius: var(--f7-input-outline-border-radius);
-    transition-duration: 200ms;
-    pointer-events: none;
+  .item-input-outline .item-content,
+  .item-input-outline.item-content {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-left: 16px;
+    margin-right: 16px;
   }
-  .input-outline.input-focused:after,
-  .item-input-outline.item-input-focused .item-input-wrap:after {
-    border-width: 2px;
-    border-color: var(--f7-input-outline-focused-border-color, var(--f7-theme-color));
-  }
-  .input-outline.input-invalid:after,
-  .item-input-outline.item-input-invalid .item-input-wrap:after {
-    border-width: 2px;
-    border-color: var(--f7-input-outline-invalid-border-color, var(--f7-input-error-text-color));
-  }
-  .input-outline,
-  .item-input-outline,
-  .list .item-input-outline {
-    input,
-    textarea,
-    select {
-      border-radius: var(--f7-input-outline-border-radius);
-      padding-left: var(--f7-input-outline-padding-horizontal);
-      padding-right: var(--f7-input-outline-padding-horizontal);
+  li.item-input-outline:first-child,
+  li:first-child > .item-input-outline {
+    padding-top: 16px;
+    &::after {
+      top: 16px;
     }
   }
-  .input-outline.input-dropdown,
-  .item-input-outline .input-dropdown-wrap {
-    &:before {
-      .ltr({
-      right: 8px;
-    });
-      .rtl({
-      left: 8px;
-    });
-    }
-    input,
-    textarea,
-    select {
-      .ltr({
-      padding-right: 20px;
-    });
-      .rtl({
-      padding-left: 20px;
-    });
-    }
-  }
-  .input-outline,
-  .item-input-outline {
-    .input-clear-button {
-      .ltr({
-      right: 8px;
-    });
-      .rtl({
-      left: 8px;
-    });
+  li.item-input-outline:last-child,
+  li:last-child > .item-input-outline {
+    padding-bottom: 16px;
+    &::after {
+      bottom: 16px;
     }
   }
 
-  .item-input-outline {
-    --f7-input-height: var(--f7-input-outline-height);
-    .item-inner:after {
-      display: none !important;
+  .item-input-outline .item-content,
+  .item-input-outline.item-content,
+  .input-outline {
+    .item-inner {
+      display: block;
+      padding-top: 0px;
+      padding-bottom: 0px;
     }
-    .item-label {
-      .ltr({
-      left: var(--f7-input-outline-padding-horizontal);
-    });
-      .rtl({
-      right: var(--f7-input-outline-padding-horizontal);
-    });
+    .item-input-wrap {
+      margin-top: -22px;
+    }
+
+    .item-label,
+    .item-floating-label {
+      display: inline-flex;
+      margin: -8px -4px -4px;
+      top: -4px;
     }
 
     .item-floating-label {
-      .ltr({
-      left: calc(var(--f7-input-outline-padding-horizontal) - 4px);
-    });
-      .rtl({
-      right: calc(var(--f7-input-outline-padding-horizontal) - 4px);
-    });
-      padding-left: 4px;
-      padding-right: 4px;
-      background: var(--f7-page-bg-color);
-      z-index: 10;
-      margin-top: calc(-0.5 * (var(--f7-label-line-height)));
-    }
-    &.item-input-with-value .item-floating-label,
-    &.item-input-focused .item-floating-label {
-      transform: scale(1) translateY(50%);
-    }
-    .item-input-info,
-    .item-input-error-message {
-      .ltr({
-      padding-left: var(--f7-input-outline-padding-horizontal);
-    });
-      .rtl({
-      padding-right: var(--f7-input-outline-padding-horizontal);
-    });
-    }
-  }
-
-  .item-input-outline,
-  .input-outline {
-    .item-input-wrap {
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-    .item-input-error-message,
-    .item-input-info,
-    .input-error-message,
-    .input-info {
-      margin-top: 0;
-      white-space: normal;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .item-input-info,
-    .input-info {
-      margin-bottom: calc(-1 * var(--f7-input-info-font-size) * var(--f7-input-info-line-height));
-    }
-    .item-input-error-message,
-    .input-error-message {
-      margin-bottom: calc(-1 * var(--f7-input-error-font-size) * var(--f7-input-error-line-height));
-    }
-    &.item-input-with-info,
-    &.input-with-info {
-      .item-input-wrap {
-        margin-bottom: calc(var(--f7-input-info-font-size) * var(--f7-input-info-line-height));
-      }
-    }
-    &.item-input-with-error-message,
-    &.input-with-error-message {
-      .item-input-wrap {
-        margin-bottom: calc(var(--f7-input-error-font-size) * var(--f7-input-error-line-height));
-      }
+      transform: scale(var(--f7-floating-label-scale)) translateY(calc(var(--f7-label-height)));
     }
   }
 }
