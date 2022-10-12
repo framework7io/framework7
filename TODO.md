@@ -1,6 +1,5 @@
 - Searchbar
 - Messages
-- Timeline
 - Appbar
 - Calendar
 - Picker
