@@ -89,7 +89,7 @@ export const materialColors = (hexColor = '') => {
   };
 
   const shouldSkip = (prop) => {
-    const skip = ['tertiary', 'inverse', 'shadow', 'scrim', 'error', 'background'];
+    const skip = ['tertiary', 'shadow', 'scrim', 'error', 'background'];
     return skip.filter((v) => prop.toLowerCase().includes(v)).length > 0;
   };
 

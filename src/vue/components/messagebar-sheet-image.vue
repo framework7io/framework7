@@ -1,7 +1,8 @@
 <template>
-  <label :class="classes" :style="styles">
+  <label :class="classes">
     <input type="checkbox" :checked="checked" @change="onChange" />
     <i class="icon icon-checkbox" />
+    <img v-if="image" :src="image" />
     <slot />
   </label>
 </template>
@@ -28,10 +29,7 @@ export default {
     const classes = computed(() =>
       classNames('messagebar-sheet-image', 'checkbox', colorClasses(props)),
     );
-    const styles = computed(() => ({
-      backgroundImage: props.image && `url(${props.image})`,
-    }));
-    return { classes, styles, onChange };
+    return { classes, onChange };
   },
 };
 </script>

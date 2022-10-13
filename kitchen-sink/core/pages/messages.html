@@ -28,10 +28,10 @@
       </div>
       <div class="messagebar-sheet">
         ${images.map((image) => $h`
-        <label class="checkbox messagebar-sheet-image" style="background-image:url(${image})"
-          @change=${handleAttachment}>
+        <label class="checkbox messagebar-sheet-image" @change=${handleAttachment}>
           <input type="checkbox" />
           <i class="icon icon-checkbox"></i>
+          <img src=${image} />
         </label>
         `)}
       </div>

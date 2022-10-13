@@ -97,14 +97,6 @@
     height: 100%;
     border-radius: var(--f7-messagebar-attachment-border-radius);
   }
-  + .messagebar-attachment {
-    .ltr({
-      margin-left: 8px;
-    });
-    .rtl({
-      margin-right: 8px;
-    });
-  }
 }
 .messagebar-sheet {
   .scrollable();
@@ -114,42 +106,26 @@
   align-content: flex-start;
   height: var(--f7-messagebar-sheet-height);
   background-color: var(--f7-messagebar-sheet-bg-color);
+  border-top: 1px solid var(--f7-messagebar-sheet-border-color);
   padding-left: var(--f7-safe-area-left);
   padding-right: var(--f7-safe-area-right);
   @media (orientation: landscape) {
     height: var(--f7-messagebar-sheet-landscape-height);
   }
 }
-.messagebar-sheet-image,
-.messagebar-sheet-item {
-  box-sizing: border-box;
-  flex-shrink: 0;
-  margin-top: 1px;
-  position: relative;
-  overflow: hidden;
-  height: calc((var(--f7-messagebar-sheet-height) - 2px) / 2);
-  width: calc((var(--f7-messagebar-sheet-height) - 2px) / 2);
-  .ltr({
-    margin-left: 1px;
-  });
-  .rtl({
-    margin-right: 1px;
-  });
-  @media (orientation: landscape) {
-    width: calc((var(--f7-messagebar-sheet-landscape-height) - 2px) / 2);
-    height: calc((var(--f7-messagebar-sheet-landscape-height) - 2px) / 2);
-  }
-  .icon-checkbox,
-  .icon-radio {
-    position: absolute;
-    right: 8px;
-    bottom: 8px;
-  }
-}
+
 .messagebar-sheet-image {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: inherit;
+    transition-duration: 200ms;
+  }
 }
 .messagebar-attachment-delete {
   display: block;
@@ -157,7 +133,6 @@
   border-radius: 50%;
   box-sizing: border-box;
   cursor: pointer;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
   &:after,
   &:before {
     position: absolute;

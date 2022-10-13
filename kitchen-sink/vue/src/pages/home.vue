@@ -29,7 +29,7 @@
       ></f7-searchbar>
     </f7-navbar>
 
-    <f7-list class="searchbar-hide-on-search">
+    <f7-list strong inset dividers-ios class="searchbar-hide-on-search">
       <f7-list-item title="About Framework7" reload-detail link="/about/">
         <template #media>
           <f7-icon icon="icon-f7" />
@@ -38,7 +38,7 @@
     </f7-list>
 
     <f7-block-title class="searchbar-found">Components</f7-block-title>
-    <f7-list class="components-list searchbar-found">
+    <f7-list strong inset dividers-ios class="components-list searchbar-found">
       <f7-list-item reload-detail link="/accordion/" title="Accordion">
         <template #media>
           <f7-icon icon="icon-f7" />
@@ -370,11 +370,11 @@
         </template>
       </f7-list-item>
     </f7-list>
-    <f7-list class="searchbar-not-found">
+    <f7-list strong inset dividers-ios class="searchbar-not-found">
       <f7-list-item title="Nothing found" />
     </f7-list>
     <f7-block-title class="searchbar-hide-on-search">Themes</f7-block-title>
-    <f7-list class="searchbar-hide-on-search">
+    <f7-list strong inset dividers-ios class="searchbar-hide-on-search">
       <f7-list-item title="iOS Theme" external link="./index.html?theme=ios" />
       <f7-list-item title="Material (MD) Theme" external link="./index.html?theme=md" />
       <f7-list-item title="Aurora Desktop Theme" external link="./index.html?theme=aurora" />
@@ -382,7 +382,7 @@
     </f7-list>
 
     <f7-block-title class="searchbar-hide-on-search">Page Loaders & Router</f7-block-title>
-    <f7-list class="searchbar-hide-on-search">
+    <f7-list strong inset dividers-ios class="searchbar-hide-on-search">
       <f7-list-item title="Page Transitions" reload-detail link="/page-transitions/" />
       <f7-list-item title="Routable Modals" reload-detail link="/routable-modals/" />
       <f7-list-item

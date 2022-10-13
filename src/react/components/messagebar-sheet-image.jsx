@@ -34,7 +34,6 @@ const MessagebarSheetImage = forwardRef((props, ref) => {
 
   const classes = classNames(className, 'messagebar-sheet-image', 'checkbox', colorClasses(props));
   const styles = {
-    backgroundImage: image && `url(${image})`,
     ...(style || {}),
   };
 
@@ -42,6 +41,7 @@ const MessagebarSheetImage = forwardRef((props, ref) => {
     <label id={id} className={classes} style={styles} ref={elRef} {...extraAttrs}>
       <input type="checkbox" checked={checked} onChange={onChange} />
       <i className="icon icon-checkbox" />
+      {image && <img src={image} />}
       {children}
     </label>
   );

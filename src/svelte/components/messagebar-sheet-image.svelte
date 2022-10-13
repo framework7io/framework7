@@ -16,7 +16,7 @@
 
   $: classes = classNames(className, 'messagebar-sheet-image', 'checkbox', colorClasses($$props));
 
-  $: styles = `${image ? `background-image: url(${image});` : ''}${style || ''}`;
+  $: styles = `${style || ''}`;
 
   function onChange(event) {
     if (event.target.checked) emit('checked', [event]);
@@ -29,5 +29,8 @@
 <label class={classes} style={styles} {...restProps($$restProps)}>
   <input type="checkbox" {checked} on:change={onChange} />
   <i class="icon icon-checkbox" />
+  {#if image}
+    <img src={image} />
+  {/if}
   <slot />
 </label>

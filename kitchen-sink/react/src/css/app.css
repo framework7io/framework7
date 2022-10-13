@@ -667,11 +667,6 @@ code {
   background: #666;
 }
 
-.ios:not(.dark) .page-home,
-.ios:not(.dark) .page-about {
-  --f7-page-bg-color: #fff;
-}
-
 .area-chart {
   max-width: 768px;
   margin: 0 auto;

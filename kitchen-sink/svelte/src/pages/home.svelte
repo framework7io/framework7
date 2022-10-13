@@ -77,14 +77,14 @@
     />
   </Navbar>
 
-  <List class="searchbar-hide-on-search">
+  <List strong inset dividersIos class="searchbar-hide-on-search">
     <ListItem title="About Framework7" reloadDetail={theme.aurora} link="/about/">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
   </List>
 
   <BlockTitle class="searchbar-found">Components</BlockTitle>
-  <List class="components-list searchbar-found">
+  <List strong inset dividersIos class="components-list searchbar-found">
     <ListItem reloadDetail={theme.aurora} link="/accordion/" title="Accordion">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
@@ -288,18 +288,18 @@
       <i class="icon icon-f7" slot="media" />
     </ListItem>
   </List>
-  <List class="searchbar-not-found">
+  <List strong inset dividersIos class="searchbar-not-found">
     <ListItem title="Nothing found" />
   </List>
   <BlockTitle class="searchbar-hide-on-search">Themes</BlockTitle>
-  <List class="searchbar-hide-on-search">
+  <List strong inset dividersIos class="searchbar-hide-on-search">
     <ListItem title="iOS Theme" external link="./index.html?theme=ios" />
     <ListItem title="Material (MD) Theme" external link="./index.html?theme=md" />
     <ListItem title="Aurora Desktop Theme" external link="./index.html?theme=aurora" />
     <ListItem title="Color Themes" reloadDetail={theme.aurora} link="/color-themes/" />
   </List>
   <BlockTitle class="searchbar-hide-on-search">Page Loaders & Router</BlockTitle>
-  <List class="searchbar-hide-on-search">
+  <List strong inset dividersIos class="searchbar-hide-on-search">
     <ListItem title="Page Transitions" reloadDetail={theme.aurora} link="/page-transitions/" />
     <ListItem title="Routable Modals" reloadDetail={theme.aurora} link="/routable-modals/" />
     <ListItem

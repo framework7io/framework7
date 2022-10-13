@@ -20,50 +20,85 @@
   .message-text-footer {
     margin-top: 4px;
   }
-  .message-received,
-  .message-sent {
-    &.message-tail .message-bubble {
-      &:before {
-        position: absolute;
-        content: '';
-        bottom: 0;
-        width: 0;
-        height: 0;
-      }
+
+  .message-image {
+    margin: calc(-1 * var(--f7-message-bubble-padding-vertical))
+      calc(-1 * var(--f7-message-bubble-padding-horizontal));
+    &,
+    img {
+      border-radius: var(--f7-message-bubble-border-radius);
     }
   }
   .message-received {
     margin-left: calc(8px + var(--f7-safe-area-left));
-    .message-avatar + .message-content {
-      margin-left: var(--f7-message-bubble-padding-horizontal);
+    .message-name,
+    .message-header,
+    .message-footer {
+      margin-left: 16px;
     }
-    &.message-tail .message-bubble {
-      &:before {
-        border-left: 8px solid transparent;
-        border-right: 0 solid transparent;
-        border-bottom: 8px solid var(--f7-message-received-bg-color);
-        right: 100%;
+    &.message-first:not(.message-last) {
+      .message-bubble,
+      .message-image,
+      .message-image img {
+        border-bottom-left-radius: 4px;
       }
+    }
+    &.message-last:not(.message-first) {
+      .message-bubble,
+      .message-image,
+      .message-image img {
+        border-top-left-radius: 4px;
+      }
+    }
+    &:not(.message-last):not(.message-first) {
+      .message-bubble,
+      .message-image,
+      .message-image img {
+        border-bottom-left-radius: 4px;
+        border-top-left-radius: 4px;
+      }
+    }
+    .message-avatar + .message-content {
+      margin-left: 8px;
     }
   }
   .message-sent {
     margin-right: calc(8px + var(--f7-safe-area-right));
+    .message-name,
+    .message-header,
+    .message-footer {
+      margin-right: 16px;
+    }
+    &.message-first:not(.message-last) {
+      .message-bubble,
+      .message-image,
+      .message-image img {
+        border-bottom-right-radius: 4px;
+      }
+    }
+    &.message-last:not(.message-first) {
+      .message-bubble,
+      .message-image,
+      .message-image img {
+        border-top-right-radius: 4px;
+      }
+    }
+    &:not(.message-last):not(.message-first) {
+      .message-bubble,
+      .message-image,
+      .message-image img {
+        border-bottom-right-radius: 4px;
+        border-top-right-radius: 4px;
+      }
+    }
     .message-avatar + .message-content {
       margin-right: var(--f7-message-bubble-padding-horizontal);
-    }
-    &.message-tail .message-bubble {
-      &:before {
-        border-left: 0 solid transparent;
-        border-right: 8px solid transparent;
-        border-bottom: 8px solid var(--f7-message-sent-bg-color, var(--f7-theme-color));
-        left: 100%;
-      }
     }
   }
 
   // Rules
   .message + .message:not(.message-first) {
-    margin-top: 8px;
+    margin-top: 2px;
   }
 
   // Typing

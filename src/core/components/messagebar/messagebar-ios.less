@@ -32,6 +32,14 @@
   }
   .messagebar-attachment {
     font-size: 14px;
+    + .messagebar-attachment {
+      .ltr({
+        margin-left: 8px;
+      });
+      .rtl({
+        margin-right: 8px;
+      });
+    }
   }
   .messagebar-attachment-delete {
     right: 5px;
@@ -40,6 +48,7 @@
     height: 20px;
     background: #7d7e80;
     border: 2px solid #fff;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
     &:after,
     &:before {
       width: 10px;
@@ -47,6 +56,33 @@
       background: #fff;
       margin-left: -5px;
       margin-top: -1px;
+    }
+  }
+  .messagebar-sheet-image,
+  .messagebar-sheet-item {
+    box-sizing: border-box;
+    flex-shrink: 0;
+    margin-top: 1px;
+    position: relative;
+    overflow: hidden;
+    height: calc((var(--f7-messagebar-sheet-height) - 2px) / 2);
+    width: calc((var(--f7-messagebar-sheet-height) - 2px) / 2);
+    .ltr({
+    margin-left: 1px;
+  });
+    .rtl({
+    margin-right: 1px;
+  });
+    @media (orientation: landscape) {
+      width: calc((var(--f7-messagebar-sheet-landscape-height) - 2px) / 2);
+      height: calc((var(--f7-messagebar-sheet-landscape-height) - 2px) / 2);
+    }
+    .icon-checkbox,
+    .icon-radio {
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      z-index: 1;
     }
   }
 }
