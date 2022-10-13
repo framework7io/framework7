@@ -5,14 +5,6 @@
   */
   --f7-searchbar-input-border-width: 0px;
   --f7-searchbar-input-border-color: transparent;
-  .light-vars({
-    --f7-searchbar-input-text-color: #000;
-    --f7-searchbar-placeholder-color: rgba(0, 0, 0, 0.4);
-  });
-  .dark-vars({
-    --f7-searchbar-input-text-color: #fff;
-    --f7-searchbar-placeholder-color: rgba(255, 255, 255, 0.4);
-  });
 }
 .ios-vars({
   /*
@@ -44,40 +36,41 @@
   --f7-searchbar-in-page-content-border-radius: 0;
   --f7-searchbar-in-page-content-input-border-radius: 0;
   .light-vars({
+    --f7-searchbar-placeholder-color: rgba(0, 0, 0, 0.4);
+    --f7-searchbar-input-text-color: #000;
     --f7-searchbar-search-icon-color: rgba(0, 0, 0, 0.4);
     --f7-searchbar-input-bg-color: #e4e4e4;
   });
   .dark-vars({
+    --f7-searchbar-input-text-color: #fff;
     --f7-searchbar-search-icon-color: rgba(255, 255, 255, 0.4);
     --f7-searchbar-input-bg-color: #2a2a2a;
+    --f7-searchbar-placeholder-color: rgba(255, 255, 255, 0.4);
   });
 });
 .md-vars({
   --f7-searchbar-border-color: transparent;
   --f7-searchbar-height: 48px;
-  --f7-searchbar-inner-padding-left: 0px;
-  --f7-searchbar-inner-padding-right: 0px;
-  --f7-searchbar-link-color: #737373;
-  --f7-searchbar-search-icon-color: #737373;
-  --f7-searchbar-input-font-size: 20px;
-  --f7-searchbar-input-border-radius: 0px;
+  --f7-searchbar-inner-padding-left: 8px;
+  --f7-searchbar-inner-padding-right: 8px;
+  --f7-searchbar-link-color: var(--f7-md-on-surface);
+  --f7-searchbar-search-icon-color: var(--f7-md-on-surface);
+  --f7-searchbar-input-font-size: 16px;
+  --f7-searchbar-input-border-radius: 24px;
   --f7-searchbar-input-height: 100%;
-  --f7-searchbar-inline-input-height: 32px;
-  --f7-searchbar-inline-input-border-radius: 4px;
-  --f7-searchbar-input-padding-horizontal: 48px;
-  --f7-searchbar-inline-input-padding-horizontal: 24px;
-  --f7-searchbar-input-clear-button-color: var(--f7-md-on-surface-variant);
+  --f7-searchbar-inline-input-height: 48px;
+  --f7-searchbar-inline-input-border-radius: 24px;
+  --f7-searchbar-input-padding-horizontal: 16px;
+  --f7-searchbar-inline-input-padding-horizontal: 16px;
+  --f7-searchbar-input-clear-button-color: var(--f7-md-on-surface);
+  --f7-searchbar-placeholder-color: var(--f7-md-on-surface-variant);
   --f7-searchbar-backdrop-bg-color: rgba(0,0,0,0.25);
-  --f7-searchbar-in-page-content-margin: 8px;
-  --f7-searchbar-in-page-content-box-shadow: var(--f7-elevation-1);
-  --f7-searchbar-in-page-content-border-radius: 4px;
-  --f7-searchbar-in-page-content-input-border-radius: 4px;
-  .light-vars({
-    --f7-searchbar-bg-color: #fff;
-    --f7-searchbar-input-bg-color: #fff;
-  });
-  .dark-vars({
-    --f7-searchbar-bg-color: #202020;
-    --f7-searchbar-input-bg-color: #202020;
-  });
+  --f7-searchbar-in-page-content-margin: 16px 0;
+  --f7-searchbar-in-page-content-box-shadow: none;
+  --f7-searchbar-in-page-content-border-radius: 24px;
+  --f7-searchbar-in-page-content-input-border-radius: 24px;
+  --f7-searchbar-bg-color: transparent;
+  --f7-searchbar-input-bg-color: var(--f7-md-secondary-container);
+  --f7-searchbar-input-text-color: var(--f7-md-on-surface);
+
 });

@@ -2,24 +2,30 @@
   .searchbar-icon,
   .searchbar-disable-button {
     position: absolute;
-    .ltr({
-      left: calc(-4px + var(--f7-safe-area-left));
-    });
-    .rtl({
-      right: calc(-4px + var(--f7-safe-area-right));
-    });
+
     top: 50%;
     transition-duration: 300ms;
   }
   .searchbar-icon {
-    width: 24px;
-    height: 24px;
-    margin-left: 12px;
-    margin-top: -12px;
+    width: 48px;
+    height: 48px;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     &:after {
+      width: auto;
+      height: auto;
       content: 'search_md';
       line-height: 1.2;
     }
+    .ltr({
+      left: var(--f7-safe-area-left);
+    });
+    .rtl({
+      right: var(--f7-safe-area-right);
+    });
   }
   .searchbar-disable-button {
     width: 48px;
@@ -29,6 +35,13 @@
     display: block;
     margin-top: -24px;
     color: var(--f7-searchbar-link-color, var(--f7-bars-link-color, var(--f7-theme-color)));
+    .ltr({
+      left: calc(var(--f7-searchbar-inner-padding-left) + var(--f7-safe-area-left));
+    });
+    .rtl({
+      right: calc(var(--f7-searchbar-inner-padding-right) + var(--f7-safe-area-right));
+    });
+
     .link-highlight();
 
     &:after {
@@ -54,7 +67,7 @@
     }
   }
   .searchbar {
-    --f7-searchbar-input-extra-padding-left: 16px;
+    --f7-searchbar-input-extra-padding-left: 34px;
     .input-clear-button {
       width: 48px;
       height: 48px;
@@ -74,22 +87,34 @@
       }
     }
   }
+  .searchbar-inline {
+    --f7-searchbar-input-extra-padding-left: 32px;
+  }
 
   .page > .searchbar,
   .subnavbar .searchbar,
   .searchbar-expandable {
-    --f7-searchbar-input-extra-padding-left: 24px;
-    .searchbar-icon,
+    --f7-searchbar-input-extra-padding-left: 34px;
     .searchbar-disable-button {
       .ltr({
-        left: calc(-4px + 8px + var(--f7-safe-area-left));
+        left: calc(var(--f7-searchbar-inner-padding-left) + var(--f7-safe-area-left));
       });
       .rtl({
-        right: calc(-4px + 8px + var(--f7-safe-area-right));
+        right: calc(var(--f7-searchbar-inner-padding-right) + var(--f7-safe-area-right));
+      });
+    }
+    .searchbar-icon {
+      .ltr({
+        left: var(--f7-safe-area-left);
+      });
+      .rtl({
+        right: var(--f7-safe-area-right);
       });
     }
   }
   .searchbar-expandable {
+    --f7-searchbar-inner-padding-left: 4px;
+    --f7-searchbar-inner-padding-right: 4px;
     height: var(--f7-searchbar-expandable-size);
     opacity: 0;
     bottom: 0;
