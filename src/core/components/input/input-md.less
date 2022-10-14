@@ -22,6 +22,24 @@
       padding-bottom: 8px;
     }
   }
+  .input {
+    .hairline(bottom, var(--f7-input-border-color));
+    &::after {
+      transform: scaleY(1) !important;
+      transition-duration: 200ms;
+      bottom: 0px;
+    }
+    &.input-focused::after {
+      transform: scaleY(2) !important;
+      background: var(--f7-input-focused-border-color, var(--f7-theme-color));
+    }
+    &.input-invalid {
+      &::after {
+        transform: scaleY(2) !important;
+        background: var(--f7-input-invalid-border-color, var(--f7-input-error-text-color));
+      }
+    }
+  }
   .item-input:not(.item-input-outline) {
     .item-content,
     &.item-content {

@@ -28,6 +28,15 @@ textarea {
   resize: none;
   font-size: inherit;
   color: inherit;
+  &:-internal-autofill-selected {
+    background-color: transparent !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+  }
+  &:autofill,
+  &:-webkit-autofill-and-obscured {
+    background-color: transparent !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+  }
 }
 .textarea-resizable-shadow {
   opacity: 0;
