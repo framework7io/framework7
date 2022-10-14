@@ -351,6 +351,16 @@ export function colorThemeCSSProperties(...args) {
   const shadeTintIos = getShadeTintColors(rgb);
   const shadeTintMdLight = getShadeTintColors(colorHexToRgb(light['--f7-md-primary']));
   const shadeTintMdDark = getShadeTintColors(colorHexToRgb(dark['--f7-md-primary']));
+  Object.keys(light).forEach((key) => {
+    if (key.includes('surface-')) {
+      light[`${key}-rgb`] = colorHexToRgb(light[key]);
+    }
+  });
+  Object.keys(dark).forEach((key) => {
+    if (key.includes('surface-')) {
+      dark[`${key}-rgb`] = colorHexToRgb(dark[key]);
+    }
+  });
   return {
     ios: {
       '--f7-theme-color': 'var(--f7-ios-primary)',

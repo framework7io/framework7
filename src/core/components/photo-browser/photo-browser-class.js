@@ -189,8 +189,7 @@ class PhotoBrowser extends Framework7Class {
     const pb = this;
     if (pb.params.renderNavbar) return pb.params.renderNavbar.call(pb);
 
-    let iconsColor = pb.params.iconsColor;
-    if (!pb.params.iconsColor && pb.params.theme === 'dark') iconsColor = 'white';
+    const iconsColor = pb.params.iconsColor;
 
     const pageBackLinkText =
       pb.app.theme === 'ios' && pb.params.pageBackLinkText ? pb.params.pageBackLinkText : '';
@@ -240,8 +239,7 @@ class PhotoBrowser extends Framework7Class {
     const pb = this;
     if (pb.params.renderToolbar) return pb.params.renderToolbar.call(pb);
 
-    let iconsColor = pb.params.iconsColor;
-    if (!pb.params.iconsColor && pb.params.theme === 'dark') iconsColor = 'white';
+    const iconsColor = pb.params.iconsColor;
 
     return (
       <div class="toolbar toolbar-bottom tabbar">
