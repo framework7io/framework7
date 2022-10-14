@@ -1,19 +1,15 @@
-- Autocomplete
-  - With Searchbar fix
-- Appbar
-- Calendar
-- Picker
-- Color Picker
+- Inputs
+  - usual inputs border
+- Data Table
+
+  - usual inputs border
 
 - Menu???
-- PhotoBrowser
 - Preloader
-  - Colors?
-- PTR
-- Smart Select
-- Treeview
-- VL
 
+  - Colors?
+
+- Bars links colors
 - Badge
   - fix colors
 - Remove
