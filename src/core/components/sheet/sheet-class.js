@@ -466,18 +466,18 @@ class Sheet extends Modal {
       if (sheet.push) {
         pushOffset = parseInt($el.css('--f7-sheet-push-offset'), 10);
         if (Number.isNaN(pushOffset)) pushOffset = 0;
-        if (pushOffset) {
-          $el.addClass('sheet-modal-push');
-          sheet.$htmlEl.addClass('with-modal-sheet-push');
-          if (!sheet.params.swipeToStep) {
-            sheet.$htmlEl[0].style.setProperty('--f7-sheet-push-scale', pushViewScale(pushOffset));
-          } else {
-            $pushViewEl = app.$el.children('.view, .views');
-            pushBorderRadius = parseFloat(
-              $el.css(`border-${isTopSheetModal ? 'bottom' : 'top'}-left-radius`),
-            );
-            $pushViewEl.css('border-radius', '0px');
-          }
+        if (!pushOffset) pushOffset = app.theme === 'ios' ? 44 : 48;
+        sheet.$htmlEl[0].style.setProperty('--f7-sheet-push-offset', `${pushOffset}px`);
+        $el.addClass('sheet-modal-push');
+        sheet.$htmlEl.addClass('with-modal-sheet-push');
+        if (!sheet.params.swipeToStep) {
+          sheet.$htmlEl[0].style.setProperty('--f7-sheet-push-scale', pushViewScale(pushOffset));
+        } else {
+          $pushViewEl = app.$el.children('.view, .views');
+          pushBorderRadius = parseFloat(
+            $el.css(`border-${isTopSheetModal ? 'bottom' : 'top'}-left-radius`),
+          );
+          $pushViewEl.css('border-radius', '0px');
         }
       }
     });
@@ -532,6 +532,7 @@ class Sheet extends Modal {
       sheet.emit('local::_swipeStep', true);
       if (sheet.push) {
         sheet.$htmlEl[0].style.removeProperty('--f7-sheet-push-scale');
+        sheet.$htmlEl[0].style.removeProperty('--f7-sheet-push-offset');
       }
     };
     sheet.stepToggle = function stepToggle() {
