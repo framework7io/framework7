@@ -1,15 +1,9 @@
-- Inputs
-  - usual inputs border
-- Data Table
-
-  - usual inputs border
-
 - Menu???
 - Preloader
 
   - Colors?
 
-- Bars links colors
+- Bars links colors & text color
 - Badge
   - fix colors
 - Remove
@@ -17,8 +11,5 @@
   - Typography
   - Lazy???
   - Menu???
-- Push modal
-  - should always work
 - Unify colors
 - Update demos
-  - List!
