@@ -42,6 +42,11 @@
   width: var(--f7-color-picker-popover-width);
   max-width: 90vw;
   max-height: 80vh;
+  .md & {
+    .popover-inner {
+      padding: 8px;
+    }
+  }
   .color-picker {
     max-height: 80vh;
   }
@@ -97,8 +102,16 @@
   }
   .color-picker-sb-spectrum,
   .color-picker-hs-spectrum {
-    border-radius: 4px;
     height: var(--f7-color-picker-sb-spectrum-height);
+    .ios & {
+      border-radius: 4px;
+    }
+    .md & {
+      border-radius: 12px;
+      &::after {
+        border-radius: inherit;
+      }
+    }
   }
 }
 .color-picker-sb-spectrum {
@@ -484,11 +497,11 @@
   .color-picker-module-brightness-slider,
   .color-picker-module-hex {
     background: var(--f7-color-picker-group-bg-color);
-    padding: 5px;
-    border-radius: 4px;
+    padding: 8px;
+    border-radius: 8px;
     margin-top: 16px;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 8px;
+    margin-right: 8px;
     &:last-child {
       margin-bottom: 16px;
     }
