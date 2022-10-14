@@ -213,7 +213,7 @@ class TextEditor extends Framework7Class {
     }
     const currentRange = self.getSelectionRange();
     if (!currentRange) return self;
-    const dialog = self.app.dialog.prompt(self.params.linkUrlText, '', (link) => {
+    const dialog = self.app.dialog.prompt('', self.params.linkUrlText, (link) => {
       if (link && link.trim().length) {
         self.setSelectionRange(currentRange);
         document.execCommand('createLink', false, link.trim());
@@ -230,7 +230,7 @@ class TextEditor extends Framework7Class {
     const document = getDocument();
     const currentRange = self.getSelectionRange();
     if (!currentRange) return self;
-    const dialog = self.app.dialog.prompt(self.params.imageUrlText, '', (imageUrl) => {
+    const dialog = self.app.dialog.prompt('', self.params.imageUrlText, (imageUrl) => {
       if (imageUrl && imageUrl.trim().length) {
         self.setSelectionRange(currentRange);
         document.execCommand('insertImage', false, imageUrl.trim());
