@@ -1423,7 +1423,7 @@ class Calendar extends Framework7Class {
       <div class="calendar-footer">
         <a
           class={`${
-            app.theme === 'md' ? 'button' : 'link'
+            app.theme === 'md' ? 'button button-round' : 'link'
           } calendar-close sheet-close popover-close`}
         >
           {calendar.params.toolbarCloseText}
@@ -1590,9 +1590,9 @@ class Calendar extends Framework7Class {
     calendar.monthPickerInstance = app.picker.create({
       containerEl: calendar.monthPickerPopover.$el.find('.calendar-month-picker'),
       value: [localeMonth],
-      toolbar: false,
+      toolbar: calendar.params.monthPickerToolbar,
       rotateEffect: false,
-      toolbarCloseText: calendar.params.toolbarCloseText,
+      toolbarCloseText: calendar.params.monthPickerCloseText,
       cols: [
         {
           values,
@@ -1667,9 +1667,9 @@ class Calendar extends Framework7Class {
     calendar.yearPickerInstance = app.picker.create({
       containerEl: calendar.yearPickerPopover.$el.find('.calendar-year-picker'),
       value: [currentYear],
-      toolbar: false,
+      toolbar: calendar.params.yearPickerToolbar,
       rotateEffect: false,
-      toolbarCloseText: calendar.params.toolbarCloseText,
+      toolbarCloseText: calendar.params.yearPickerCloseText,
       cols: [
         {
           values: years,
@@ -1738,9 +1738,9 @@ class Calendar extends Framework7Class {
     calendar.timePickerInstance = app.picker.create({
       containerEl: calendar.timePickerPopover.$el.find('.calendar-time-picker'),
       value,
-      toolbar: false,
+      toolbar: calendar.params.timePickerToolbar,
       rotateEffect: false,
-      toolbarCloseText: calendar.params.toolbarCloseText,
+      toolbarCloseText: calendar.params.timePickerCloseText,
       cols: [
         {
           values: hoursArr,
@@ -1947,7 +1947,7 @@ class Calendar extends Framework7Class {
       content: modalContent,
       backdrop:
         params.backdrop === true ||
-        (modalType === 'popover' &&
+        ((modalType === 'popover' || modalType === 'customModal') &&
           app.params.popover.backdrop !== false &&
           params.backdrop !== false),
       closeByBackdropClick: params.closeByBackdropClick,

@@ -30,14 +30,11 @@
   */
   --f7-calendar-time-selector-height: 28px;
   .light-vars({
-    --f7-calendar-prev-next-text-color: #c8c8c8;
-    --f7-calendar-day-text-color:  #000;
     --f7-calendar-picker-pressed-bg-color: rgba(0,0,0,0.1);
     --f7-calendar-picker-hover-bg-color: rgba(0,0,0,0.03);
     --f7-calendar-time-selector-bg-color: rgba(0,0,0,0.05);
   });
   .dark-vars({
-    --f7-calendar-prev-next-text-color: #5e5e5e;
     --f7-calendar-picker-pressed-bg-color: rgba(255,255,255,0.08);
     --f7-calendar-picker-hover-bg-color: rgba(255,255,255,0.03);
     --f7-calendar-time-selector-bg-color: rgba(255,255,255,0.1);
@@ -61,14 +58,17 @@
                                   0px 24px 38px 3px rgba(0, 0, 0, 0.14),
                                   0px 9px 46px 8px rgba(0, 0, 0, 0.12);
   .light-vars({
+    --f7-calendar-prev-next-text-color: #c8c8c8;
     --f7-calendar-sheet-border-color: #929499;
     --f7-calendar-sheet-bg-color: #fff;
     --f7-calendar-week-header-text-color: #5e5e5e;
     --f7-calendar-modal-bg-color: #fff;
+    --f7-calendar-day-text-color:  #000;
     --f7-calendar-today-text-color: #000;
     --f7-calendar-today-bg-color: #e3e3e3;
   });
   .dark-vars({
+    --f7-calendar-prev-next-text-color: #5e5e5e;
     --f7-calendar-sheet-border-color: var(--f7-bars-border-color);
     --f7-calendar-sheet-bg-color: #121212;
     --f7-calendar-week-header-text-color: #aaa;
@@ -91,6 +91,8 @@
   --f7-calendar-week-header-height: 24px;
   --f7-calendar-week-header-text-color: var(--f7-md-on-surface-variant);
   --f7-calendar-day-font-size: 14px;
+  --f7-calendar-day-text-color:  var(--f7-md-on-surface);
+  --f7-calendar-prev-next-text-color: rgba(var(--f7-md-on-surface-variant-rgb), 0.55);
   /*
   --f7-calendar-today-text-color: var(--f7-theme-color);
   */
@@ -101,7 +103,5 @@
   --f7-calendar-modal-border-radius: 28px;
   --f7-calendar-modal-bg-color: var(--f7-md-surface-1);
   --f7-calendar-modal-box-shadow: none;
-  .dark-vars({
-    --f7-calendar-day-text-color: rgba(255,255,255,0.87);
-  });
+
 });
