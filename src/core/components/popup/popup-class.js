@@ -340,12 +340,14 @@ class Popup extends Modal {
       }
       if (isPush) {
         pushOffset = parseInt($el.css('--f7-popup-push-offset'), 10);
-        if (Number.isNaN(pushOffset)) pushOffset = 0;
-        if (pushOffset) {
-          $el.addClass('popup-push');
-          popup.$htmlEl.addClass('with-modal-popup-push');
-          popup.$htmlEl[0].style.setProperty('--f7-popup-push-scale', pushViewScale(pushOffset));
+        if (Number.isNaN(pushOffset)) {
+          pushOffset = 0;
         }
+        if (!pushOffset) pushOffset = app.theme === 'ios' ? 44 : 48;
+        popup.$htmlEl[0].style.setProperty('--f7-popup-push-offset', `${pushOffset}px`);
+        $el.addClass('popup-push');
+        popup.$htmlEl.addClass('with-modal-popup-push');
+        popup.$htmlEl[0].style.setProperty('--f7-popup-push-scale', pushViewScale(pushOffset));
       }
       app.on('resize', updatePushOffset);
     };
@@ -384,6 +386,7 @@ class Popup extends Modal {
       if (isPush && pushOffset && !hasPreviousPushPopup) {
         popup.$htmlEl.removeClass('with-modal-popup-push-closing');
         popup.$htmlEl[0].style.removeProperty('--f7-popup-push-scale');
+        popup.$htmlEl[0].style.removeProperty('--f7-popup-push-offset');
       }
     });
 
