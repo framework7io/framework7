@@ -73,6 +73,12 @@
 .searchbar-input-wrap .autocomplete-dropdown {
   background-color: var(--f7-searchbar-input-bg-color, var(--f7-searchbar-bg-color));
   border-radius: var(--f7-searchbar-input-border-radius);
+  margin-top: calc(-1 * var(--f7-searchbar-input-height));
+  top: 100%;
+  z-index: -1;
+  .autocomplete-dropdown-inner {
+    padding-top: var(--f7-searchbar-input-height);
+  }
   .autocomplete-dropdown-placeholder {
     color: var(--f7-searchbar-placeholder-color);
   }
