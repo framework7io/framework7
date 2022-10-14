@@ -511,6 +511,7 @@ class Sheet extends Modal {
       if (sheet.push && pushOffset) {
         sheet.$htmlEl.removeClass('with-modal-sheet-push-closing');
         sheet.$htmlEl[0].style.removeProperty('--f7-sheet-push-scale');
+        sheet.$htmlEl[0].style.removeProperty('--f7-sheet-push-offset');
       }
     });
 
@@ -532,7 +533,6 @@ class Sheet extends Modal {
       sheet.emit('local::_swipeStep', true);
       if (sheet.push) {
         sheet.$htmlEl[0].style.removeProperty('--f7-sheet-push-scale');
-        sheet.$htmlEl[0].style.removeProperty('--f7-sheet-push-offset');
       }
     };
     sheet.stepToggle = function stepToggle() {
