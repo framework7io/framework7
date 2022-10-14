@@ -12,16 +12,20 @@
       <div class="appbar-inner">
         <div class="left">
           <a href="#" class="button button-small panel-toggle display-flex" data-panel="left">
-            <i class="f7-icons">bars</i>
+            <i class="f7-icons if-ios">bars</i>
+            <i class="material-icons if-md">menu</i>
           </a>
-          <a href="#" class="button button-small display-flex margin-left-half">
-            <i class="f7-icons">square_list</i>
+          <a href="#" class="button button-small display-flex">
+            <i class="f7-icons if-ios">square_list</i>
+            <i class="material-icons if-md">list</i>
           </a>
-          <a href="#" class="button button-small display-flex margin-left-half">
-            <i class="f7-icons">arrowshape_turn_up_left_fill</i>
+          <a href="#" class="button button-small display-flex">
+            <i class="f7-icons if-ios">arrowshape_turn_up_left_fill</i>
+            <i class="material-icons if-md">undo</i>
           </a>
-          <a href="#" class="button button-small display-flex margin-left-half">
-            <i class="f7-icons">arrowshape_turn_up_right_fill</i>
+          <a href="#" class="button button-small display-flex">
+            <i class="f7-icons if-ios">arrowshape_turn_up_right_fill</i>
+            <i class="material-icons if-md">redo</i>
           </a>
         </div>
         <div class="right">
