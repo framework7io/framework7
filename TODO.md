@@ -1,4 +1,3 @@
-- Menu???
 - Preloader
 
   - Colors?
@@ -7,9 +6,7 @@
 - Badge
   - fix colors
 - Remove
-  - Grid module
   - Typography
   - Lazy???
-  - Menu???
 - Unify colors
 - Update demos
