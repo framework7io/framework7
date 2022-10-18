@@ -123,9 +123,6 @@ const config = {
 
     'breadcrumbs',
 
-    // Elevation
-    'elevation',
-
     // Typography
     'typography',
   ],
