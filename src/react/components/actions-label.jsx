@@ -14,7 +14,7 @@ import { colorClasses } from '../shared/mixins.js';
 */
 
 const ActionsLabel = forwardRef((props, ref) => {
-  const { className, id, style, children, bold } = props;
+  const { className, id, style, children, strong } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
