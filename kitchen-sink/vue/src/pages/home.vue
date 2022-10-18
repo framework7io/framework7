@@ -42,11 +42,6 @@
           <f7-icon icon="icon-f7" />
         </template>
       </f7-list-item>
-      <f7-list-item reload-detail link="/appbar/" title="Appbar">
-        <template #media>
-          <f7-icon icon="icon-f7" />
-        </template>
-      </f7-list-item>
       <f7-list-item reload-detail link="/area-chart/" title="Area Chart">
         <template #media>
           <f7-icon icon="icon-f7" />

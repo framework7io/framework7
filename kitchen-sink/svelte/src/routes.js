@@ -5,7 +5,6 @@ import About from './pages/about.svelte';
 
 import Accordion from './pages/accordion.svelte';
 import ActionSheet from './pages/action-sheet.svelte';
-import Appbar from './pages/appbar.svelte';
 import AreaChart from './pages/area-chart.svelte';
 import Autocomplete from './pages/autocomplete.svelte';
 import Badge from './pages/badge.svelte';
@@ -199,10 +198,6 @@ export default [
   {
     path: '/action-sheet/',
     component: ActionSheet,
-  },
-  {
-    path: '/appbar/',
-    component: Appbar,
   },
   {
     path: '/area-chart/',

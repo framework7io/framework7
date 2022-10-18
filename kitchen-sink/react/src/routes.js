@@ -4,7 +4,6 @@ import PanelRight from './pages/panel-right.jsx';
 import About from './pages/about.jsx';
 import Accordion from './pages/accordion.jsx';
 import ActionSheet from './pages/action-sheet.jsx';
-import Appbar from './pages/appbar.jsx';
 import AreaChart from './pages/area-chart.jsx';
 import Autocomplete from './pages/autocomplete.jsx';
 import Badge from './pages/badge.jsx';
@@ -197,10 +196,6 @@ export default [
   {
     path: '/action-sheet/',
     component: ActionSheet,
-  },
-  {
-    path: '/appbar/',
-    component: Appbar,
   },
   {
     path: '/area-chart/',

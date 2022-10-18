@@ -73,10 +73,6 @@ var routes = [
     componentUrl: './pages/action-sheet.html',
   },
   {
-    path: '/appbar/',
-    componentUrl: './pages/appbar.html',
-  },
-  {
     path: '/area-chart/',
     componentUrl: './pages/area-chart.html',
   },

@@ -46,9 +46,6 @@
     <ListItem link="/action-sheet/" title="Action Sheet">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem link="/appbar/" title="Appbar">
-      <i class="icon icon-f7" slot="media" />
-    </ListItem>
     <ListItem link="/area-chart/" title="Area Chart">
       <i class="icon icon-f7" slot="media" />
     </ListItem>

@@ -12,7 +12,6 @@ import {
   Link,
   Searchbar,
   Icon,
-  theme,
 } from 'framework7-react';
 
 export default () => {
@@ -51,9 +50,6 @@ export default () => {
           <Icon slot="media" icon="icon-f7" />
         </ListItem>
         <ListItem reloadDetail link="/action-sheet/" title="Action Sheet">
-          <Icon slot="media" icon="icon-f7" />
-        </ListItem>
-        <ListItem reloadDetail link="/appbar/" title="Appbar">
           <Icon slot="media" icon="icon-f7" />
         </ListItem>
         <ListItem reloadDetail link="/area-chart/" title="Area Chart">

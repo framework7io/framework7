@@ -8,9 +8,6 @@
 const config = {
   rtl: false,
   components: [
-    // Appbar
-    'appbar',
-
     // Modals
     'dialog',
     'popup',

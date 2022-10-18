@@ -18,10 +18,6 @@
     "./css/bundle/rtl": "./framework7-bundle-rtl.css",
     "./types": "./framework7-types.d.ts",
     "./shared/*": "./shared/*",
-    "./components/appbar": "./components/appbar/appbar.js",
-    "./components/appbar/less": "./components/appbar/appbar.less",
-    "./components/appbar/css": "./components/appbar/appbar.css",
-    "./components/appbar/css/rtl": "./components/appbar/appbar-rtl.css",
     "./components/dialog": "./components/dialog/dialog.js",
     "./components/dialog/less": "./components/dialog/dialog.less",
     "./components/dialog/css": "./components/dialog/dialog.css",
@@ -244,9 +240,6 @@
     "*": {
       ".": [
         "./framework7.d.ts"
-      ],
-      "components/appbar": [
-        "./components/appbar/appbar.d.ts"
       ],
       "components/dialog": [
         "./components/dialog/dialog.d.ts"
