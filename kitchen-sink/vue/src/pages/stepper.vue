@@ -3,200 +3,200 @@
     <f7-navbar title="Stepper" back-link="Back"></f7-navbar>
     <f7-block-title>Shape and size</f7-block-title>
     <f7-block strong class="text-align-center">
-      <f7-row>
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap">
+        <div>
           <small class="display-block">Default</small>
           <f7-stepper />
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <small class="display-block">Round</small>
           <f7-stepper round />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
 
-      <f7-row class="margin-top">
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap margin-top">
+        <div>
           <small class="display-block">Fill</small>
           <f7-stepper fill />
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <small class="display-block">Round Fill</small>
           <f7-stepper fill round />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
 
-      <f7-row class="margin-top">
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap margin-top">
+        <div>
           <small class="display-block">Small</small>
           <f7-stepper small />
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <small class="display-block">Small Round</small>
           <f7-stepper small round />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
 
-      <f7-row class="margin-top">
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap margin-top">
+        <div>
           <small class="display-block">Small Fill</small>
           <f7-stepper small fill />
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <small class="display-block">Small Round Fill</small>
           <f7-stepper small round fill />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
 
-      <f7-row class="margin-top">
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap margin-top">
+        <div>
           <small class="display-block">Large</small>
           <f7-stepper large />
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <small class="display-block">Large Round</small>
           <f7-stepper large round />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
 
-      <f7-row class="margin-top">
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap margin-top">
+        <div>
           <small class="display-block">Large Fill</small>
           <f7-stepper large fill />
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <small class="display-block">Large Round Fill</small>
           <f7-stepper large round fill />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
     </f7-block>
 
     <f7-block-title>Raised</f7-block-title>
     <f7-block strong class="text-align-center">
-      <f7-row>
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap">
+        <div>
           <small class="display-block">Default</small>
           <f7-stepper raised />
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <small class="display-block">Round</small>
           <f7-stepper raised round />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
 
-      <f7-row class="margin-top">
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap margin-top">
+        <div>
           <small class="display-block">Fill</small>
           <f7-stepper raised fill />
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <small class="display-block">Round Fill</small>
           <f7-stepper raised fill round />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
 
-      <f7-row class="margin-top">
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap margin-top">
+        <div>
           <small class="display-block">Small</small>
           <f7-stepper raised small />
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <small class="display-block">Small Round</small>
           <f7-stepper raised small round />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
 
-      <f7-row class="margin-top">
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap margin-top">
+        <div>
           <small class="display-block">Small Fill</small>
           <f7-stepper raised small fill />
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <small class="display-block">Small Round Fill</small>
           <f7-stepper raised small round fill />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
 
-      <f7-row class="margin-top">
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap margin-top">
+        <div>
           <small class="display-block">Large</small>
           <f7-stepper raised large />
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <small class="display-block">Large Round</small>
           <f7-stepper raised large round />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
 
-      <f7-row class="margin-top">
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap margin-top">
+        <div>
           <small class="display-block">Large Fill</small>
           <f7-stepper raised large fill />
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <small class="display-block">Large Round Fill</small>
           <f7-stepper raised large round fill />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
     </f7-block>
     <f7-block-title>Colors</f7-block-title>
     <f7-block strong class="text-align-center">
-      <f7-row>
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap">
+        <div>
           <f7-stepper fill color="red" />
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <f7-stepper fill round color="green" />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
 
-      <f7-row class="margin-top">
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap margin-top">
+        <div>
           <f7-stepper fill color="blue" />
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <f7-stepper fill round color="pink" />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
 
-      <f7-row class="margin-top">
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap margin-top">
+        <div>
           <f7-stepper fill small color="yellow" />
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <f7-stepper fill small round color="orange" />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
 
-      <f7-row class="margin-top">
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap margin-top">
+        <div>
           <f7-stepper fill small color="gray" />
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <f7-stepper fill small round color="black" />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
     </f7-block>
     <f7-block-title>Without input element</f7-block-title>
     <f7-block strong class="text-align-center">
-      <f7-row>
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap">
+        <div>
           <f7-stepper :input="false" />
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <f7-stepper :input="false" round />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
     </f7-block>
     <f7-block-title>Min, max, step</f7-block-title>
     <f7-block strong class="text-align-center">
-      <f7-row>
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap">
+        <div>
           <f7-stepper fill :value="100" :min="0" :max="1000" :step="100" />
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <f7-stepper fill :input="false" :value="5" :min="0" :max="10" :step="0.5" />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
     </f7-block>
 
     <f7-block-title>Autorepeat (Tap & hold)</f7-block-title>
@@ -206,12 +206,12 @@
       pressing the control.</f7-block-header
     >
     <f7-block strong class="text-align-center">
-      <f7-row>
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap">
+        <div>
           <small class="display-block">Default</small>
           <f7-stepper fill :value="0" :min="0" :max="100" :step="1" :autorepeat="true" />
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <small class="display-block">Dynamic</small>
           <f7-stepper
             fill
@@ -222,8 +222,8 @@
             :autorepeat="true"
             :autorepeat-dynamic="true"
           />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
     </f7-block>
 
     <f7-block-title>Wraps</f7-block-title>
@@ -232,8 +232,8 @@
       decrementing below minimum value sets value to maximum value</f7-block-header
     >
     <f7-block strong class="text-align-center">
-      <f7-row>
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap">
+        <div>
           <f7-stepper
             fill
             :value="0"
@@ -243,8 +243,8 @@
             :autorepeat="true"
             :wraps="true"
           />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
     </f7-block>
 
     <f7-block-title>Custom value element</f7-block-title>
@@ -288,8 +288,8 @@
       mode.</f7-block-header
     >
     <f7-block strong class="text-align-center">
-      <f7-row>
-        <f7-col>
+      <div class="grid grid-cols-2 grid-gap">
+        <div>
           <f7-stepper
             fill
             :value="0"
@@ -301,8 +301,8 @@
             :manual-input-mode="true"
             :decimal-point="2"
           />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
     </f7-block>
   </f7-page>
 </template>
@@ -313,8 +313,6 @@ import {
   f7BlockTitle,
   f7Block,
   f7BlockHeader,
-  f7Row,
-  f7Col,
   f7List,
   f7ListItem,
   f7Stepper,
@@ -327,8 +325,6 @@ export default {
     f7BlockTitle,
     f7Block,
     f7BlockHeader,
-    f7Row,
-    f7Col,
     f7List,
     f7ListItem,
     f7Stepper,

@@ -5,8 +5,6 @@ import {
   BlockTitle,
   Block,
   Tab,
-  Row,
-  Col,
   BlockHeader,
   Segmented,
   Button,
@@ -78,28 +76,28 @@ export default () => (
     </BlockHeader>
     <Block strong className="tabs">
       <Tab id="tab-f7" tabActive>
-        <Row>
+        <div className="grid grid-cols-3 medium-grid-cols-6 grid-gap">
           {f7Icons.map((icon, index) => (
-            <Col key={index} width="33" medium="15" className="demo-icon">
+            <div key={index} className="demo-icon">
               <div className="demo-icon-icon">
                 <Icon f7={icon} />
               </div>
               <div className="demo-icon-name">{icon}</div>
-            </Col>
+            </div>
           ))}
-        </Row>
+        </div>
       </Tab>
       <Tab id="tab-md">
-        <Row>
+        <div className="grid grid-cols-3 medium-grid-cols-6 grid-gap">
           {mdIcons.map((icon, index) => (
-            <Col key={index} width="33" medium="15" className="demo-icon">
+            <div key={index} className="demo-icon">
               <div className="demo-icon-icon">
                 <Icon material={icon} />
               </div>
               <div className="demo-icon-name">{icon}</div>
-            </Col>
+            </div>
           ))}
-        </Row>
+        </div>
       </Tab>
     </Block>
   </Page>

@@ -98,13 +98,6 @@
   height: 24px;
   border-radius: 4px;
 }
-.aurora .demo-list-icon,
-.aurora .icon-f7,
-.aurora .icon-vi {
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
-}
 
 /* Lazy Demo */
 img.demo-lazy {
@@ -177,27 +170,18 @@ div.demo-lazy {
   opacity: 0.5;
 }
 /* Grid demo */
-.grid-demo div[class*='col'] {
+.grid-demo .grid > div {
   background: #fff;
   text-align: center;
   color: #000;
   border: 1px solid #ddd;
   padding: 5px;
   font-size: 12px;
-  margin-bottom: 15px;
 }
-.grid-resizable-demo {
-  --f7-grid-row-gap: 16px;
+.grid-demo .grid {
+  margin-bottom: 16px;
 }
-.grid-resizable-demo div[class*='col'] {
-  margin-bottom: 0;
-}
-.grid-resizable-demo .demo-col-center-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.dark .grid-demo div[class*='col'] {
+.dark .grid-demo .grid > div {
   background-color: #000;
   color: #fff;
   border-color: #444;
@@ -454,18 +438,6 @@ code {
   color: #aaa;
 }
 
-.elevation-demo {
-  height: 100px;
-  margin: 30px 10px;
-  background: #fff;
-  font-size: 18px;
-  text-align: center;
-  line-height: 100px;
-}
-.dark .elevation-demo {
-  background: none;
-}
-
 /* Demo Color Themes */
 .demo-theme-picker {
   cursor: pointer;
@@ -482,7 +454,6 @@ code {
   bottom: 10px;
 }
 .demo-color-picker-button {
-  margin-bottom: 1em;
   text-transform: capitalize;
 }
 .demo-bars-picker {

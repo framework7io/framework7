@@ -27,7 +27,7 @@
               <i class="searchbar-icon"></i>
               <span class="input-clear-button"></span>
             </div>
-            <span class="searchbar-disable-button if-not-aurora">Cancel</span>
+            <span class="searchbar-disable-button">Cancel</span>
           </div>
         </form>
       </div>
@@ -189,14 +189,6 @@
               <div class="item-media"><i class="icon icon-f7"></i></div>
               <div class="item-inner">
                 <div class="item-title">Dialog</div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="item-content item-link" href="/elevation/">
-              <div class="item-media"><i class="icon icon-f7"></i></div>
-              <div class="item-inner">
-                <div class="item-title">Elevation</div>
               </div>
             </a>
           </li>
@@ -601,13 +593,6 @@
             </a>
           </li>
           <li>
-            <a href="./index.html?theme=aurora" class="external item-content item-link">
-              <div class="item-inner">
-                <div class="item-title">Aurora Desktop Theme</div>
-              </div>
-            </a>
-          </li>
-          <li>
             <a href="/color-themes/" class="item-content item-link">
               <div class="item-inner">
                 <div class="item-title">Color Themes</div>
@@ -640,13 +625,6 @@
               </div>
             </a>
           </li>
-          <li class="if-not-aurora">
-            <a class="item-content item-link" href="/master-detail/">
-              <div class="item-inner">
-                <div class="item-title">Master-Detail (Split View)</div>
-              </div>
-            </a>
-          </li>
         </ul>
       </div>
     </div>
@@ -666,30 +644,6 @@
       } else {
         $el.value.find('.list:not(.searchbar-not-found)').removeClass('menu-list');
       }
-    }
-
-    if ($f7.theme === 'aurora') {
-      $onMounted(function () {
-        $el.value.find('.list a[href]:not(.external)').attr('data-reload-detail', 'true');
-        onResize();
-      });
-
-      $on('pageAfterIn', function () {
-        if ($f7.width >= 768) {
-          $f7router.navigate('/about/', { reloadDetail: true });
-        }
-      })
-
-      $f7.on('resize', onResize);
-
-      $f7router.on('routeChange', function (route) {
-        var url = route.url;
-        if (!$el.value) return;
-        var $linkEl = $el.value.find('a[href="' + url + '"]');
-        if (!$linkEl.length) return;
-        $el.value.find('.item-selected').removeClass('item-selected');
-        $linkEl.addClass('item-selected');
-      });
     }
 
     return $render;

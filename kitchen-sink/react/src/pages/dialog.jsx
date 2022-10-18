@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, BlockTitle, Block, Button, Row, f7 } from 'framework7-react';
+import { Navbar, Page, BlockTitle, Block, Button, f7 } from 'framework7-react';
 
 export default () => {
   const openAlert = () => {
@@ -93,25 +93,25 @@ export default () => {
           There are 1:1 replacements of native Alert, Prompt and Confirm modals. They support
           callbacks, have very easy api and can be combined with each other. Check these examples:
         </p>
-        <Row tag="p">
-          <Button fill className="col" onClick={openAlert}>
+        <p className="grid grid-cols-3 grid-gap">
+          <Button fill onClick={openAlert}>
             Alert
           </Button>
-          <Button fill className="col" onClick={openConfirm}>
+          <Button fill onClick={openConfirm}>
             Confirm
           </Button>
-          <Button fill className="col" onClick={openPrompt}>
+          <Button fill onClick={openPrompt}>
             Prompt
           </Button>
-        </Row>
-        <Row tag="p">
-          <Button fill className="col" onClick={openLogin}>
+        </p>
+        <p className="grid grid-cols-3 grid-gap">
+          <Button fill onClick={openLogin}>
             Login
           </Button>
-          <Button fill className="col" onClick={openPassword}>
+          <Button fill onClick={openPassword}>
             Password
           </Button>
-        </Row>
+        </p>
       </Block>
       <BlockTitle>Vertical Buttons</BlockTitle>
       <Block strong>
@@ -123,25 +123,25 @@ export default () => {
       </Block>
       <BlockTitle>Preloader Dialog</BlockTitle>
       <Block strong>
-        <Row tag="p">
-          <Button fill className="col" onClick={openPreloader}>
+        <p className="grid grid-cols-2 grid-gap">
+          <Button fill onClick={openPreloader}>
             Preloader
           </Button>
-          <Button fill className="col" onClick={openCustomPreloader}>
+          <Button fill onClick={openCustomPreloader}>
             Custom Text
           </Button>
-        </Row>
+        </p>
       </Block>
       <BlockTitle>Progress Dialog</BlockTitle>
       <Block strong>
-        <Row tag="p">
-          <Button fill className="col" onClick={openInfiniteProgress}>
+        <p className="grid grid-cols-2 grid-gap">
+          <Button fill onClick={openInfiniteProgress}>
             Infinite
           </Button>
-          <Button fill className="col" onClick={openDeterminedProgress}>
+          <Button fill onClick={openDeterminedProgress}>
             Determined
           </Button>
-        </Row>
+        </p>
       </Block>
       <BlockTitle>Dialogs Stack</BlockTitle>
       <Block strong>

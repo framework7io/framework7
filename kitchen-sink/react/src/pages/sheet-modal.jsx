@@ -9,7 +9,6 @@ import {
   Block,
   Button,
   Link,
-  Row,
   List,
   ListItem,
   f7,
@@ -68,22 +67,21 @@ export default () => {
           Sheet Modals slide up from the bottom of the screen to reveal more content. Such modals
           allow to create custom overlays with custom content.
         </p>
-        <Row tag="p">
-          <Button className="col" fill sheetOpen=".demo-sheet">
+        <p className="grid grid-cols-2 grid-2">
+          <Button fill sheetOpen=".demo-sheet">
             Open Sheet
           </Button>
-          <Button className="col" fill onClick={createSheet}>
+          <Button fill onClick={createSheet}>
             Create Dynamic Sheet
           </Button>
-        </Row>
+        </p>
         <p>
-          <Button className="col" fill sheetOpen=".demo-sheet-top">
+          <Button fill sheetOpen=".demo-sheet-top">
             Top Sheet
           </Button>
         </p>
         <p>
           <Button
-            className="col"
             fill
             onClick={() => {
               setSheetOpened(true);

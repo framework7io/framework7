@@ -42,24 +42,24 @@
     </f7-block-header>
     <f7-block strong class="tabs">
       <f7-tab id="tab-f7" tab-active>
-        <f7-row>
-          <f7-col v-for="icon in f7Icons" :key="icon" width="33" medium="15" class="demo-icon">
+        <div class="grid grid-cols-3 medium-grid-cols-6 grid-gap">
+          <div v-for="icon in f7Icons" :key="icon" class="demo-icon">
             <div class="demo-icon-icon">
               <i class="f7-icons">{{ icon }}</i>
             </div>
             <div class="demo-icon-name">{{ icon }}</div>
-          </f7-col>
-        </f7-row>
+          </div>
+        </div>
       </f7-tab>
       <f7-tab id="tab-md">
-        <f7-row>
-          <f7-col v-for="icon in mdIcons" :key="icon" width="33" medium="15" class="demo-icon">
+        <div class="grid grid-cols-3 medium-grid-cols-6 grid-gap">
+          <div v-for="icon in mdIcons" :key="icon" class="demo-icon">
             <div class="demo-icon-icon">
               <i class="material-icons">{{ icon }}</i>
             </div>
             <div class="demo-icon-name">{{ icon }}</div>
-          </f7-col>
-        </f7-row>
+          </div>
+        </div>
       </f7-tab>
     </f7-block>
   </f7-page>
@@ -71,8 +71,6 @@ import {
   f7BlockTitle,
   f7Block,
   f7Tab,
-  f7Row,
-  f7Col,
   f7BlockHeader,
   f7Segmented,
   f7Button,
@@ -90,8 +88,6 @@ export default {
     f7BlockTitle,
     f7Block,
     f7Tab,
-    f7Row,
-    f7Col,
     f7BlockHeader,
     f7Segmented,
     f7Button,

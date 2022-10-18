@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, Block, Col, Button, Link, Panel, Row } from 'framework7-react';
+import { Navbar, Page, Block, Button, Link, Panel } from 'framework7-react';
 
 export default () => (
   <Page id="panel-page">
@@ -24,25 +24,19 @@ export default () => (
       </p>
     </Block>
     <Block>
-      <Row tag="p">
-        <Col tag="span">
-          <Button raised fill panelOpen="left">
-            Open left panel
-          </Button>
-        </Col>
-        <Col tag="span">
-          <Button raised fill panelOpen="right">
-            Open right panel
-          </Button>
-        </Col>
-      </Row>
-      <Row tag="p">
-        <Col tag="span">
-          <Button raised fill panelOpen="#panel-nested">
-            Open nested panel
-          </Button>
-        </Col>
-      </Row>
+      <p className="grid grid-cols-2 grid-gap">
+        <Button raised fill panelOpen="left">
+          Open left panel
+        </Button>
+        <Button raised fill panelOpen="right">
+          Open right panel
+        </Button>
+      </p>
+      <p>
+        <Button raised fill panelOpen="#panel-nested">
+          Open nested panel
+        </Button>
+      </p>
     </Block>
   </Page>
 );

@@ -39,11 +39,7 @@
 <Page>
   <Navbar title="Virtual List" backLink="Back">
     <Subnavbar inner={false}>
-      <Searchbar
-        searchContainer=".virtual-list"
-        searchItem="li"
-        searchIn=".item-title"
-        disableButton={!theme.aurora} />
+      <Searchbar searchContainer=".virtual-list" searchItem="li" searchIn=".item-title" />
     </Subnavbar>
   </Navbar>
   <Block>

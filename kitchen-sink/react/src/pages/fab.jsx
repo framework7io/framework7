@@ -6,8 +6,8 @@ export default () => (
     <Navbar title="Floating Action Button" backLink="Back"></Navbar>
 
     <Fab position="right-top" slot="fixed">
-      <Icon ios="f7:plus" aurora="f7:plus" md="material:add" />
-      <Icon ios="f7:xmark" aurora="f7:xmark" md="material:close" />
+      <Icon ios="f7:plus" md="material:add" />
+      <Icon ios="f7:xmark" md="material:close" />
       <FabButtons position="left">
         <FabButton>1</FabButton>
         <FabButton>2</FabButton>
@@ -16,8 +16,8 @@ export default () => (
     </Fab>
 
     <Fab position="right-bottom" slot="fixed">
-      <Icon ios="f7:plus" aurora="f7:plus" md="material:add" />
-      <Icon ios="f7:xmark" aurora="f7:xmark" md="material:close" />
+      <Icon ios="f7:plus" md="material:add" />
+      <Icon ios="f7:xmark" md="material:close" />
       <FabButtons position="top">
         <FabButton label="Action 1">1</FabButton>
         <FabButton label="Action 2">2</FabButton>
@@ -26,8 +26,8 @@ export default () => (
     </Fab>
 
     <Fab position="left-bottom" slot="fixed">
-      <Icon ios="f7:plus" aurora="f7:plus" md="material:add" />
-      <Icon ios="f7:xmark" aurora="f7:xmark" md="material:close" />
+      <Icon ios="f7:plus" md="material:add" />
+      <Icon ios="f7:xmark" md="material:close" />
       <FabButtons position="top">
         <FabButton>1</FabButton>
         <FabButton>2</FabButton>
@@ -36,8 +36,8 @@ export default () => (
     </Fab>
 
     <Fab position="left-top" slot="fixed">
-      <Icon ios="f7:plus" aurora="f7:plus" md="material:add" />
-      <Icon ios="f7:xmark" aurora="f7:xmark" md="material:close" />
+      <Icon ios="f7:plus" md="material:add" />
+      <Icon ios="f7:xmark" md="material:close" />
       <FabButtons position="bottom">
         <FabButton>1</FabButton>
         <FabButton>2</FabButton>
@@ -46,8 +46,8 @@ export default () => (
     </Fab>
 
     <Fab position="center-center" slot="fixed">
-      <Icon ios="f7:plus" aurora="f7:plus" md="material:add" />
-      <Icon ios="f7:xmark" aurora="f7:xmark" md="material:close" />
+      <Icon ios="f7:plus" md="material:add" />
+      <Icon ios="f7:xmark" md="material:close" />
       <FabButtons position="center">
         <FabButton>1</FabButton>
         <FabButton>2</FabButton>
@@ -57,7 +57,7 @@ export default () => (
     </Fab>
 
     <Fab position="center-bottom" slot="fixed" text="Create">
-      <Icon ios="f7:plus" aurora="f7:plus" md="material:add" />
+      <Icon ios="f7:plus" md="material:add" />
     </Fab>
 
     <Block>

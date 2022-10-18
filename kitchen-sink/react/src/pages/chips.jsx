@@ -31,18 +31,13 @@ export default () => {
       <BlockTitle>Icon Chips</BlockTitle>
       <Block strong>
         <Chip text="Add Contact" mediaBgColor="blue">
-          <Icon
-            slot="media"
-            ios="f7:plus_circle"
-            aurora="f7:plus_circle"
-            md="material:add_circle"
-          />
+          <Icon slot="media" ios="f7:plus_circle" md="material:add_circle" />
         </Chip>
         <Chip text="London" mediaBgColor="green">
-          <Icon slot="media" ios="f7:compass" aurora="f7:compass" md="material:location_on" />
+          <Icon slot="media" ios="f7:compass" md="material:location_on" />
         </Chip>
         <Chip text="John Doe" mediaBgColor="red">
-          <Icon slot="media" ios="f7:person" aurora="f7:person" md="material:person" />
+          <Icon slot="media" ios="f7:person" md="material:person" />
         </Chip>
       </Block>
       <BlockTitle>Contact Chips</BlockTitle>

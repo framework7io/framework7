@@ -21,17 +21,17 @@
     <f7-block strong>
       <f7-chip text="Add Contact" media-bg-color="blue">
         <template #media>
-          <f7-icon ios="f7:plus_circle" aurora="f7:plus_circle" md="material:add_circle" />
+          <f7-icon ios="f7:plus_circle" md="material:add_circle" />
         </template>
       </f7-chip>
       <f7-chip text="London" media-bg-color="green">
         <template #media>
-          <f7-icon ios="f7:compass" aurora="f7:compass" md="material:location_on" />
+          <f7-icon ios="f7:compass" md="material:location_on" />
         </template>
       </f7-chip>
       <f7-chip text="John Doe" media-bg-color="red">
         <template #media>
-          <f7-icon ios="f7:person" aurora="f7:person" md="material:person" />
+          <f7-icon ios="f7:person" md="material:person" />
         </template>
       </f7-chip>
     </f7-block>

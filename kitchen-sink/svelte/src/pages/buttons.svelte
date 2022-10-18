@@ -1,5 +1,5 @@
 <script>
-  import { Page, Navbar, BlockTitle, Block, Row, Col, Segmented, Button } from 'framework7-svelte';
+  import { Page, Navbar, BlockTitle, Block, Segmented, Button } from 'framework7-svelte';
 
   let activeStrongButton = 0;
   let isLoading1 = false;
@@ -28,73 +28,49 @@
 
   <BlockTitle>Usual Buttons</BlockTitle>
   <Block strong>
-    <Row>
-      <Col>
-        <Button>Button</Button>
-      </Col>
-      <Col>
-        <Button>Button</Button>
-      </Col>
-      <Col>
-        <Button round>Round</Button>
-      </Col>
-    </Row>
+    <div class="grid grid-cols-3 grid-gap">
+      <Button>Button</Button>
+
+      <Button>Button</Button>
+
+      <Button round>Round</Button>
+    </div>
   </Block>
 
   <BlockTitle>Fill Buttons</BlockTitle>
   <Block strong>
-    <Row>
-      <Col>
-        <Button fill>Button</Button>
-      </Col>
-      <Col>
-        <Button fill>Button</Button>
-      </Col>
-      <Col>
-        <Button fill round>Round</Button>
-      </Col>
-    </Row>
+    <div class="grid grid-cols-3 grid-gap">
+      <Button fill>Button</Button>
+
+      <Button fill>Button</Button>
+
+      <Button fill round>Round</Button>
+    </div>
   </Block>
 
   <BlockTitle>Outline Buttons</BlockTitle>
   <Block strong>
-    <Row>
-      <Col>
-        <Button outline>Button</Button>
-      </Col>
-      <Col>
-        <Button outline>Button</Button>
-      </Col>
-      <Col>
-        <Button outline round>Round</Button>
-      </Col>
-    </Row>
+    <div class="grid grid-cols-3 grid-gap">
+      <Button outline>Button</Button>
+
+      <Button outline>Button</Button>
+
+      <Button outline round>Round</Button>
+    </div>
   </Block>
 
   <BlockTitle>Raised Buttons</BlockTitle>
   <Block strong>
-    <Row tag="p">
-      <Col tag="span">
-        <Button raised>Button</Button>
-      </Col>
-      <Col tag="span">
-        <Button raised fill>Fill</Button>
-      </Col>
-      <Col tag="span">
-        <Button raised outline>Outline</Button>
-      </Col>
-    </Row>
-    <Row tag="p">
-      <Col tag="span">
-        <Button raised round>Round</Button>
-      </Col>
-      <Col tag="span">
-        <Button raised fill round>Fill</Button>
-      </Col>
-      <Col tag="span">
-        <Button raised outline round>Outline</Button>
-      </Col>
-    </Row>
+    <p class="grid grid-cols-3 grid-gap">
+      <Button raised>Button</Button>
+      <Button raised fill>Fill</Button>
+      <Button raised outline>Outline</Button>
+    </p>
+    <p class="grid grid-cols-3 grid-gap">
+      <Button raised round>Round</Button>
+      <Button raised fill round>Fill</Button>
+      <Button raised outline round>Outline</Button>
+    </p>
   </Block>
 
   <BlockTitle>Segmented</BlockTitle>
@@ -105,9 +81,15 @@
       <Button active>Active</Button>
     </Segmented>
     <Segmented strong tag="p">
-      <Button active={ activeStrongButton === 0 } onClick={() => activeStrongButton = 0}>Button</Button>
-      <Button active={ activeStrongButton === 1 } onClick={() => activeStrongButton = 1}>Button</Button>
-      <Button active={ activeStrongButton === 2 } onClick={() => activeStrongButton = 2}>Button</Button>
+      <Button active={activeStrongButton === 0} onClick={() => (activeStrongButton = 0)}
+        >Button</Button
+      >
+      <Button active={activeStrongButton === 1} onClick={() => (activeStrongButton = 1)}
+        >Button</Button
+      >
+      <Button active={activeStrongButton === 2} onClick={() => (activeStrongButton = 2)}
+        >Button</Button
+      >
     </Segmented>
     <Segmented raised tag="p">
       <Button>Button</Button>
@@ -133,140 +115,86 @@
 
   <BlockTitle>Large Buttons</BlockTitle>
   <Block strong>
-    <Row tag="p">
-      <Col tag="span">
-        <Button large>Button</Button>
-      </Col>
-      <Col tag="span">
-        <Button large fill>Fill</Button>
-      </Col>
-    </Row>
-    <Row tag="p">
-      <Col tag="span">
-        <Button large raised>Raised</Button>
-      </Col>
-      <Col tag="span">
-        <Button large raised fill>Raised Fill</Button>
-      </Col>
-    </Row>
-    <Row tag="p">
-      <Col tag="span">
-        <Button large round>Round</Button>
-      </Col>
-      <Col tag="span">
-        <Button large round fill>Round Fill</Button>
-      </Col>
-    </Row>
+    <p class="grid grid-cols-2 grid-gap">
+      <Button large>Button</Button>
+      <Button large fill>Fill</Button>
+    </p>
+    <p class="grid grid-cols-2 grid-gap">
+      <Button large raised>Raised</Button>
+      <Button large raised fill>Raised Fill</Button>
+    </p>
+    <p class="grid grid-cols-2 grid-gap">
+      <Button large round>Round</Button>
+      <Button large round fill>Round Fill</Button>
+    </p>
   </Block>
 
   <BlockTitle>Small Buttons</BlockTitle>
   <Block strong>
-    <Row tag="p">
-      <Col tag="span">
-        <Button small>Button</Button>
-      </Col>
-      <Col tag="span">
-        <Button small outline>Outline</Button>
-      </Col>
-      <Col tag="span">
-        <Button small fill>Fill</Button>
-      </Col>
-    </Row>
-    <Row tag="p">
-      <Col tag="span">
-        <Button small round>Button</Button>
-      </Col>
-      <Col tag="span">
-        <Button small outline round>Outline</Button>
-      </Col>
-      <Col tag="span">
-        <Button small fill round>Fill</Button>
-      </Col>
-    </Row>
+    <p class="grid grid-cols-3 grid-gap">
+      <Button small>Button</Button>
+      <Button small outline>Outline</Button>
+      <Button small fill>Fill</Button>
+    </p>
+    <p class="grid grid-cols-3 grid-gap">
+      <Button small round>Button</Button>
+      <Button small outline round>Outline</Button>
+      <Button small fill round>Fill</Button>
+    </p>
   </Block>
 
   <BlockTitle>Preloader Buttons</BlockTitle>
   <Block strong>
-    <Row tag="p">
-      <Col tag="span">
-        <Button preloader loading={isLoading1} onClick={load1} large>
-          Load
-        </Button>
-      </Col>
-      <Col tag="span">
-        <Button preloader loading={isLoading2} onClick={load2} large fill>
-          Load
-        </Button>
-      </Col>
-    </Row>
+    <p class="grid grid-cols-3 grid-gap">
+      <Button preloader loading={isLoading1} onClick={load1} large>Load</Button>
+      <Button preloader loading={isLoading2} onClick={load2} large fill>Load</Button>
+    </p>
   </Block>
 
   <BlockTitle>Color Buttons</BlockTitle>
   <Block strong>
-    <Row tag="p">
-      <Col>
-        <Button color="red">Red</Button>
-      </Col>
-      <Col>
-        <Button color="green">Green</Button>
-      </Col>
-      <Col>
-        <Button color="blue">Blue</Button>
-      </Col>
-    </Row>
-    <Row tag="p">
-      <Col>
-        <Button color="pink">Pink</Button>
-      </Col>
-      <Col>
-        <Button color="yellow">Yellow</Button>
-      </Col>
-      <Col>
-        <Button color="orange">Orange</Button>
-      </Col>
-    </Row>
-    <Row tag="p">
-      <Col>
-        <Button color="gray">Gray</Button>
-      </Col>
-      <Col>
-        <Button color="black">Black</Button>
-      </Col>
-    </Row>
+    <p class="grid grid-cols-3 grid-gap">
+      <Button color="red">Red</Button>
+
+      <Button color="green">Green</Button>
+
+      <Button color="blue">Blue</Button>
+    </p>
+    <p class="grid grid-cols-3 grid-gap">
+      <Button color="pink">Pink</Button>
+
+      <Button color="yellow">Yellow</Button>
+
+      <Button color="orange">Orange</Button>
+    </p>
+    <p class="grid grid-cols-3 grid-gap">
+      <Button color="gray">Gray</Button>
+
+      <Button color="black">Black</Button>
+    </p>
   </Block>
 
   <BlockTitle>Color Fill Buttons</BlockTitle>
   <Block strong>
-    <Row tag="p">
-      <Col>
-        <Button fill color="red">Red</Button>
-      </Col>
-      <Col>
-        <Button fill color="green">Green</Button>
-      </Col>
-      <Col>
-        <Button fill color="blue">Blue</Button>
-      </Col>
-    </Row>
-    <Row tag="p">
-      <Col>
-        <Button fill color="pink">Pink</Button>
-      </Col>
-      <Col>
-        <Button fill color="yellow">Yellow</Button>
-      </Col>
-      <Col>
-        <Button fill color="orange">Orange</Button>
-      </Col>
-    </Row>
-    <Row tag="p">
-      <Col>
-        <Button fill color="gray">Gray</Button>
-      </Col>
-      <Col>
-        <Button fill color="black">Black</Button>
-      </Col>
-    </Row>
+    <p class="grid grid-cols-3 grid-gap">
+      <Button fill color="red">Red</Button>
+
+      <Button fill color="green">Green</Button>
+
+      <Button fill color="blue">Blue</Button>
+    </p>
+    <p class="grid grid-cols-3 grid-gap">
+      <Button fill color="pink">Pink</Button>
+
+      <Button fill color="yellow">Yellow</Button>
+
+      <Button fill color="orange">Orange</Button>
+    </p>
+    <p class="grid grid-cols-3 grid-gap">
+      <Button fill color="gray">Gray</Button>
+
+      <Button fill color="black">Black</Button>
+    </p>
   </Block>
 
   <BlockTitle>List-Block Buttons</BlockTitle>

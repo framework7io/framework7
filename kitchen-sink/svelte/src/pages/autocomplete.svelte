@@ -364,7 +364,7 @@
 <Page {onPageInit} {onPageBeforeRemove}>
   <Navbar title="Autocomplete" backLink="Back">
     <Subnavbar inner={false}>
-      <Searchbar init={false} id="searchbar-autocomplete" disableButton={!theme.aurora} />
+      <Searchbar init={false} id="searchbar-autocomplete" />
     </Subnavbar>
   </Navbar>
 

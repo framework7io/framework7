@@ -1,5 +1,5 @@
 <script>
-  import { Navbar, Page, PhotoBrowser, Block, Row, Col, Button } from 'framework7-svelte';
+  import { Navbar, Page, PhotoBrowser, Block, Button } from 'framework7-svelte';
 
   let standalone;
   let popup;
@@ -46,44 +46,45 @@
       Photo Browser could be opened in a three ways - as a Standalone component (Popup
       modification), in Popup, and as separate Page:
     </p>
-    <Row>
-      <Col>
+    <div class="grid grid-cols-3 grid-gap">
+      <div>
         <PhotoBrowser {photos} bind:this={standalone} />
         <Button fill onClick={() => standalone.open()}>Standalone</Button>
-      </Col>
-      <Col>
+      </div>
+      <div>
         <PhotoBrowser {photos} type="popup" bind:this={popup} />
         <Button fill onClick={() => popup.open()}>Popup</Button>
-      </Col>
-      <Col>
+      </div>
+      <div>
         <PhotoBrowser {photos} type="page" pageBackLinkText="Back" bind:this={page} />
         <Button fill onClick={() => page.open()}>Page</Button>
-      </Col>
-    </Row>
+      </div>
+    </div>
   </Block>
   <Block strong>
     <p>
       Photo Browser supports 2 default themes - default Light (like in previous examples) and Dark
       theme. Here is a Dark theme examples:
     </p>
-    <Row>
-      <Col>
+    <div class="grid grid-cols-3 grid-gap">
+      <div>
         <PhotoBrowser {photos} theme="dark" bind:this={standaloneDark} />
         <Button fill onClick={() => standaloneDark.open()}>Standalone</Button>
-      </Col>
-      <Col>
+      </div>
+      <div>
         <PhotoBrowser {photos} theme="dark" type="popup" bind:this={popupDark} />
         <Button fill onClick={() => popupDark.open()}>Popup</Button>
-      </Col>
-      <Col>
+      </div>
+      <div>
         <PhotoBrowser
           {photos}
           theme="dark"
           type="page"
           pageBackLinkText="Back"
-          bind:this={pageDark} />
+          bind:this={pageDark}
+        />
         <Button fill onClick={() => pageDark.open()}>Page</Button>
-      </Col>
-    </Row>
+      </div>
+    </div>
   </Block>
 </Page>

@@ -198,12 +198,7 @@ export default () => (
             <th className="numeric-cell">Carbs</th>
             <th className="numeric-cell">Protein (g)</th>
             <th className="medium-only">
-              <Icon
-                ios="f7:chat_bubble_text_fill"
-                aurora="f7:chat_bubble_text_fill"
-                md="material:message"
-              />{' '}
-              Comments
+              <Icon ios="f7:chat_bubble_text_fill" md="material:message" /> Comments
             </th>
           </tr>
         </thead>
@@ -327,16 +322,8 @@ export default () => (
       <CardHeader>
         <div className="data-table-title">Nutrition</div>
         <div className="data-table-actions">
-          <Link
-            iconIos="f7:line_horizontal_3_decrease"
-            iconAurora="f7:line_horizontal_3_decrease"
-            iconMd="material:sort"
-          />
-          <Link
-            iconIos="f7:ellipsis_vertical_circle"
-            iconAurora="f7:ellipsis_vertical_circle"
-            iconMd="material:more_vert"
-          />
+          <Link iconIos="f7:line_horizontal_3_decrease" iconMd="material:sort" />
+          <Link iconIos="f7:ellipsis_vertical_circle" iconMd="material:more_vert" />
         </div>
       </CardHeader>
       <CardContent padding={false}>
@@ -352,12 +339,7 @@ export default () => (
               <th className="numeric-cell">Carbs</th>
               <th className="numeric-cell">Protein (g)</th>
               <th className="medium-only">
-                <Icon
-                  ios="f7:chat_bubble_text_fill"
-                  aurora="f7:chat_bubble_text_fill"
-                  md="material:message"
-                />{' '}
-                Comments
+                <Icon ios="f7:chat_bubble_text_fill" md="material:message" /> Comments
               </th>
             </tr>
           </thead>
@@ -416,16 +398,8 @@ export default () => (
       <CardHeader>
         <div className="data-table-title">Nutrition</div>
         <div className="data-table-actions">
-          <Link
-            iconIos="f7:line_horizontal_3_decrease"
-            iconAurora="f7:line_horizontal_3_decrease"
-            iconMd="material:sort"
-          />
-          <Link
-            iconIos="f7:ellipsis_vertical_circle"
-            iconAurora="f7:ellipsis_vertical_circle"
-            iconMd="material:more_vert"
-          />
+          <Link iconIos="f7:line_horizontal_3_decrease" iconMd="material:sort" />
+          <Link iconIos="f7:ellipsis_vertical_circle" iconMd="material:more_vert" />
         </div>
       </CardHeader>
       <CardContent padding={false}>
@@ -443,12 +417,7 @@ export default () => (
               <th className="numeric-cell sortable-cell">Carbs</th>
               <th className="numeric-cell sortable-cell">Protein (g)</th>
               <th className="medium-only">
-                <Icon
-                  ios="f7:chat_bubble_text_fill"
-                  aurora="f7:chat_bubble_text_fill"
-                  md="material:message"
-                />{' '}
-                Comments
+                <Icon ios="f7:chat_bubble_text_fill" md="material:message" /> Comments
               </th>
             </tr>
           </thead>
@@ -507,16 +476,8 @@ export default () => (
         <div className="data-table-header">
           <div className="data-table-title">Nutrition</div>
           <div className="data-table-actions">
-            <Link
-              iconIos="f7:line_horizontal_3_decrease"
-              iconAurora="f7:line_horizontal_3_decrease"
-              iconMd="material:sort"
-            />
-            <Link
-              iconIos="f7:ellipsis_vertical_circle"
-              iconAurora="f7:ellipsis_vertical_circle"
-              iconMd="material:more_vert"
-            />
+            <Link iconIos="f7:line_horizontal_3_decrease" iconMd="material:sort" />
+            <Link iconIos="f7:ellipsis_vertical_circle" iconMd="material:more_vert" />
           </div>
         </div>
         <div className="data-table-header-selected">
@@ -524,12 +485,8 @@ export default () => (
             <span className="data-table-selected-count"></span> items selected
           </div>
           <div className="data-table-actions">
-            <Link iconIos="f7:trash" iconAurora="f7:trash" iconMd="material:delete" />
-            <Link
-              iconIos="f7:ellipsis_vertical_circle"
-              iconAurora="f7:ellipsis_vertical_circle"
-              iconMd="material:more_vert"
-            />
+            <Link iconIos="f7:trash" iconMd="material:delete" />
+            <Link iconIos="f7:ellipsis_vertical_circle" iconMd="material:more_vert" />
           </div>
         </div>
       </CardHeader>
@@ -546,12 +503,7 @@ export default () => (
               <th className="numeric-cell">Carbs</th>
               <th className="numeric-cell">Protein (g)</th>
               <th className="medium-only">
-                <Icon
-                  ios="f7:chat_bubble_text_fill"
-                  aurora="f7:chat_bubble_text_fill"
-                  md="material:message"
-                />{' '}
-                Comments
+                <Icon ios="f7:chat_bubble_text_fill" md="material:message" /> Comments
               </th>
             </tr>
           </thead>
@@ -613,16 +565,8 @@ export default () => (
           <a className="button">Remove</a>
         </div>
         <div className="data-table-actions">
-          <Link
-            iconIos="f7:line_horizontal_3_decrease"
-            iconAurora="f7:line_horizontal_3_decrease"
-            iconMd="material:sort"
-          />
-          <Link
-            iconIos="f7:ellipsis_vertical_circle"
-            iconAurora="f7:ellipsis_vertical_circle"
-            iconMd="material:more_vert"
-          />
+          <Link iconIos="f7:line_horizontal_3_decrease" iconMd="material:sort" />
+          <Link iconIos="f7:ellipsis_vertical_circle" iconMd="material:more_vert" />
         </div>
       </CardHeader>
       <CardContent padding={false}>
@@ -638,12 +582,7 @@ export default () => (
               <th className="numeric-cell">Carbs</th>
               <th className="numeric-cell">Protein (g)</th>
               <th className="medium-only">
-                <Icon
-                  ios="f7:chat_bubble_text_fill"
-                  aurora="f7:chat_bubble_text_fill"
-                  md="material:message"
-                />{' '}
-                Comments
+                <Icon ios="f7:chat_bubble_text_fill" md="material:message" /> Comments
               </th>
               <th></th>
             </tr>
@@ -660,12 +599,8 @@ export default () => (
               <td className="numeric-cell">4.0</td>
               <td className="medium-only">I like frozen yogurt</td>
               <td className="actions-cell">
-                <Link
-                  iconIos="f7:square_pencil"
-                  iconAurora="f7:square_pencil"
-                  iconMd="material:edit"
-                />
-                <Link iconIos="f7:trash" iconAurora="f7:trash" iconMd="material:delete" />
+                <Link iconIos="f7:square_pencil" iconMd="material:edit" />
+                <Link iconIos="f7:trash" iconMd="material:delete" />
               </td>
             </tr>
             <tr>
@@ -679,12 +614,8 @@ export default () => (
               <td className="numeric-cell">4.4</td>
               <td className="medium-only">But like ice cream more</td>
               <td className="actions-cell">
-                <Link
-                  iconIos="f7:square_pencil"
-                  iconAurora="f7:square_pencil"
-                  iconMd="material:edit"
-                />
-                <Link iconIos="f7:trash" iconAurora="f7:trash" iconMd="material:delete" />
+                <Link iconIos="f7:square_pencil" iconMd="material:edit" />
+                <Link iconIos="f7:trash" iconMd="material:delete" />
               </td>
             </tr>
             <tr>
@@ -698,12 +629,8 @@ export default () => (
               <td className="numeric-cell">6.0</td>
               <td className="medium-only">Super tasty</td>
               <td className="actions-cell">
-                <Link
-                  iconIos="f7:square_pencil"
-                  iconAurora="f7:square_pencil"
-                  iconMd="material:edit"
-                />
-                <Link iconIos="f7:trash" iconAurora="f7:trash" iconMd="material:delete" />
+                <Link iconIos="f7:square_pencil" iconMd="material:edit" />
+                <Link iconIos="f7:trash" iconMd="material:delete" />
               </td>
             </tr>
             <tr>
@@ -717,12 +644,8 @@ export default () => (
               <td className="numeric-cell">4.3</td>
               <td className="medium-only">Don't like it</td>
               <td className="actions-cell">
-                <Link
-                  iconIos="f7:square_pencil"
-                  iconAurora="f7:square_pencil"
-                  iconMd="material:edit"
-                />
-                <Link iconIos="f7:trash" iconAurora="f7:trash" iconMd="material:delete" />
+                <Link iconIos="f7:square_pencil" iconMd="material:edit" />
+                <Link iconIos="f7:trash" iconMd="material:delete" />
               </td>
             </tr>
           </tbody>
@@ -738,16 +661,8 @@ export default () => (
       <CardHeader>
         <div className="data-table-title">Nutrition</div>
         <div className="data-table-actions">
-          <Link
-            iconIos="f7:line_horizontal_3_decrease"
-            iconAurora="f7:line_horizontal_3_decrease"
-            iconMd="material:sort"
-          />
-          <Link
-            iconIos="f7:ellipsis_vertical_circle"
-            iconAurora="f7:ellipsis_vertical_circle"
-            iconMd="material:more_vert"
-          />
+          <Link iconIos="f7:line_horizontal_3_decrease" iconMd="material:sort" />
+          <Link iconIos="f7:ellipsis_vertical_circle" iconMd="material:more_vert" />
         </div>
       </CardHeader>
       <CardContent padding={false}>

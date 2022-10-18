@@ -8,7 +8,6 @@ import {
   ListItem,
   Card,
   SkeletonBlock,
-  Row,
   Button,
 } from 'framework7-react';
 
@@ -76,17 +75,17 @@ export default () => {
       <BlockTitle>Loading Effects</BlockTitle>
       <Block strong>
         <p>It supports few loading effects:</p>
-        <Row tag="p">
-          <Button fill small round className="col" onClick={() => load('fade')}>
+        <p className="grid grid-cols-3 grid-gap">
+          <Button fill small round onClick={() => load('fade')}>
             Fade
           </Button>
-          <Button fill small round className="col" onClick={() => load('wave')}>
+          <Button fill small round onClick={() => load('wave')}>
             Wave
           </Button>
-          <Button fill small round className="col" onClick={() => load('pulse')}>
+          <Button fill small round onClick={() => load('pulse')}>
             Pulse
           </Button>
-        </Row>
+        </p>
       </Block>
       {loading ? (
         <List mediaList v-if="loading">

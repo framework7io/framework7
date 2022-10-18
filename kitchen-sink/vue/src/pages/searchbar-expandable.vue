@@ -7,7 +7,6 @@
           data-searchbar=".searchbar-demo"
           icon-ios="f7:search"
           icon-md="material:search"
-          icon-aurora="f7:search"
         />
       </f7-nav-right>
       <f7-searchbar
@@ -15,7 +14,6 @@
         expandable
         search-container=".search-list"
         search-in=".item-title"
-        :disable-button="!theme.aurora"
       />
     </f7-navbar>
     <f7-list class="searchbar-not-found">

@@ -10,7 +10,6 @@
     Block,
     Button,
     Link,
-    Row,
     List,
     ListItem,
   } from 'framework7-svelte';
@@ -67,15 +66,15 @@
       Sheet Modals slide up from the bottom of the screen to reveal more content. Such modals allow
       to create custom overlays with custom content.
     </p>
-    <Row tag="p">
-      <Button class="col" fill sheetOpen=".demo-sheet">Open Sheet</Button>
-      <Button class="col" fill onClick={createSheet}>Create Dynamic Sheet</Button>
-    </Row>
-    <p>
-      <Button class="col" fill sheetOpen=".demo-sheet-top">Top Sheet</Button>
+    <p class="grid grid-cols-2 grid-gap">
+      <Button fill sheetOpen=".demo-sheet">Open Sheet</Button>
+      <Button fill onClick={createSheet}>Create Dynamic Sheet</Button>
     </p>
     <p>
-      <Button class="col" fill onClick={() => (sheetOpened = true)}>Open Via Prop Change</Button>
+      <Button fill sheetOpen=".demo-sheet-top">Top Sheet</Button>
+    </p>
+    <p>
+      <Button fill onClick={() => (sheetOpened = true)}>Open Via Prop Change</Button>
     </p>
   </Block>
 

@@ -22,7 +22,6 @@ import ContactsList from './pages/contacts-list.svelte';
 import ContentBlock from './pages/content-block.svelte';
 import DataTable from './pages/data-table.svelte';
 import Dialog from './pages/dialog.svelte';
-import Elevation from './pages/elevation.svelte';
 import Fab from './pages/fab.svelte';
 import FabMorph from './pages/fab-morph.svelte';
 import FormStorage from './pages/form-storage.svelte';
@@ -124,9 +123,6 @@ export default [
   {
     path: '/',
     component: Home,
-    master(f7) {
-      return f7.theme === 'aurora';
-    },
   },
   // About page
   {
@@ -271,10 +267,6 @@ export default [
   {
     path: '/dialog/',
     component: Dialog,
-  },
-  {
-    path: '/elevation/',
-    component: Elevation,
   },
   {
     path: '/fab/',

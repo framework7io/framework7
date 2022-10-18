@@ -6,15 +6,15 @@
         Sheet Modals slide up from the bottom of the screen to reveal more content. Such modals
         allow to create custom overlays with custom content.
       </p>
-      <f7-row tag="p">
-        <f7-button class="col" fill sheet-open=".demo-sheet">Open Sheet</f7-button>
-        <f7-button class="col" fill @click="createSheet">Create Dynamic Sheet</f7-button>
-      </f7-row>
-      <p>
-        <f7-button class="col" fill sheet-open=".demo-sheet-top">Top Sheet</f7-button>
+      <p class="grid grid-cols-2 grid-gap">
+        <f7-button fill sheet-open=".demo-sheet">Open Sheet</f7-button>
+        <f7-button fill @click="createSheet">Create Dynamic Sheet</f7-button>
       </p>
       <p>
-        <f7-button class="col" fill @click="sheetOpened = true">Open Via Prop Change</f7-button>
+        <f7-button fill sheet-open=".demo-sheet-top">Top Sheet</f7-button>
+      </p>
+      <p>
+        <f7-button fill @click="sheetOpened = true">Open Via Prop Change</f7-button>
       </p>
     </f7-block>
 
@@ -232,7 +232,6 @@ import {
   f7Block,
   f7Button,
   f7Link,
-  f7Row,
   f7List,
   f7ListItem,
   f7,
@@ -250,7 +249,6 @@ export default {
     f7Block,
     f7Button,
     f7Link,
-    f7Row,
     f7List,
     f7ListItem,
   },

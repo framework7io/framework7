@@ -5,7 +5,6 @@
         <f7-link
           icon-md="material:compare_arrows"
           icon-ios="f7:arrow_up_arrow_down_circle_fill"
-          icon-aurora="f7:arrow_up_arrow_down_circle_fill"
           @click="toggleToolbarPosition"
         />
       </f7-nav-right>

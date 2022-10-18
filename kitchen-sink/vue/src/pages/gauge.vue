@@ -29,8 +29,8 @@
 
     <f7-block-title>Circle Gauges</f7-block-title>
     <f7-block strong>
-      <f7-row>
-        <f7-col class="text-align-center">
+      <div class="grid grid-cols-2 grid-gap">
+        <div class="text-align-center">
           <f7-gauge
             type="circle"
             :value="0.44"
@@ -38,8 +38,8 @@
             value-text-color="#ff9800"
             border-color="#ff9800"
           />
-        </f7-col>
-        <f7-col class="text-align-center">
+        </div>
+        <div class="text-align-center">
           <f7-gauge
             type="circle"
             :value="0.12"
@@ -50,13 +50,13 @@
             label-text-color="#f44336"
             :label-font-weight="700"
           />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
     </f7-block>
     <f7-block-title>Semicircle Gauges</f7-block-title>
     <f7-block strong>
-      <f7-row>
-        <f7-col class="text-align-center">
+      <div class="grid grid-cols-2 grid-gap">
+        <div class="text-align-center">
           <f7-gauge
             type="semicircle"
             :value="0.3"
@@ -64,8 +64,8 @@
             value-text-color="#f44336"
             border-color="#f44336"
           />
-        </f7-col>
-        <f7-col class="text-align-center">
+        </div>
+        <div class="text-align-center">
           <f7-gauge
             type="semicircle"
             :value="0.5"
@@ -75,13 +75,13 @@
             label-text="of 60kg total"
             label-text-color="#333"
           />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
     </f7-block>
     <f7-block-title>Customization</f7-block-title>
     <f7-block strong>
-      <f7-row>
-        <f7-col class="text-align-center">
+      <div class="grid grid-cols-2 grid-gap">
+        <div class="text-align-center">
           <f7-gauge
             type="circle"
             :value="0.35"
@@ -94,8 +94,8 @@
             border-bg-color="#ffeb3b"
             bg-color="#ffeb3b"
           />
-        </f7-col>
-        <f7-col class="text-align-center">
+        </div>
+        <div class="text-align-center">
           <f7-gauge
             type="circle"
             :value="0.67"
@@ -108,11 +108,11 @@
             :label-font-size="12"
             :border-width="30"
           />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
       <br />
-      <f7-row>
-        <f7-col class="text-align-center">
+      <div class="grid grid-cols-2 grid-gap">
+        <div class="text-align-center">
           <f7-gauge
             type="semicircle"
             :value="0.5"
@@ -124,8 +124,8 @@
             border-color="#ffeb3b"
             border-bg-color="transparent"
           />
-        </f7-col>
-        <f7-col class="text-align-center">
+        </div>
+        <div class="text-align-center">
           <f7-gauge
             type="semicircle"
             :value="0.77"
@@ -136,8 +136,8 @@
             :label-font-size="12"
             :border-width="10"
           />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
     </f7-block>
   </f7-page>
 </template>
@@ -147,8 +147,6 @@ import {
   f7Navbar,
   f7BlockTitle,
   f7Block,
-  f7Row,
-  f7Col,
   f7Segmented,
   f7Button,
   f7Gauge,
@@ -160,8 +158,6 @@ export default {
     f7Navbar,
     f7BlockTitle,
     f7Block,
-    f7Row,
-    f7Col,
     f7Segmented,
     f7Button,
     f7Gauge,

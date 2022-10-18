@@ -35,7 +35,7 @@
   <Navbar title="Tooltip" backLink="Back">
     <NavRight>
       <Link class="navbar-tooltip">
-        <Icon ios="f7:info_circle_fill" aurora="f7:info_circle_fill" md="material:info_outline" />
+        <Icon ios="f7:info_circle_fill" md="material:info_outline" />
       </Link>
     </NavRight>
   </Navbar>
@@ -48,63 +48,33 @@
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia augue urna, in
       tincidunt augue hendrerit ut. In nulla massa, facilisis non consectetur a, tempus semper ex.
       Proin eget volutpat nisl. Integer lacinia maximus nunc molestie viverra.
-      <Icon
-        class="icon-tooltip"
-        ios="f7:info_circle_fill"
-        aurora="f7:info_circle_fill"
-        md="material:info"
-        size={20} />
-      Etiam ullamcorper ultricies ipsum, ut congue tortor rutrum at. Vestibulum rutrum risus a orci
-      dictum, in placerat leo finibus. Sed a congue enim, ut dictum felis. Aliquam erat volutpat.
-      Etiam id nisi in magna egestas malesuada. Sed vitae orci sollicitudin, accumsan nisi a,
-      bibendum felis. Maecenas risus libero, gravida ut tincidunt auctor,
-      <Icon
-        class="icon-tooltip"
-        ios="f7:info_circle_fill"
-        aurora="f7:info_circle_fill"
-        md="material:info"
-        size={20} />
+      <Icon class="icon-tooltip" ios="f7:info_circle_fill" md="material:info" size={20} />
+      Etiam ullamcorper ultricies ipsum, ut congue tortor rutrum at. Vestibulum rutrum risus a orci dictum,
+      in placerat leo finibus. Sed a congue enim, ut dictum felis. Aliquam erat volutpat. Etiam id nisi
+      in magna egestas malesuada. Sed vitae orci sollicitudin, accumsan nisi a, bibendum felis. Maecenas
+      risus libero, gravida ut tincidunt auctor,
+      <Icon class="icon-tooltip" ios="f7:info_circle_fill" md="material:info" size={20} />
       aliquam non lectus. Nam laoreet turpis erat, eget bibendum leo suscipit nec.
     </p>
     <p>
       Vestibulum
-      <Icon
-        class="icon-tooltip"
-        ios="f7:info_circle_fill"
-        aurora="f7:info_circle_fill"
-        md="material:info"
-        size={20} />
-      gravida dui magna, eget pulvinar ligula molestie hendrerit. Mauris vitae facilisis justo. Nam
-      velit mi, pharetra sit amet luctus quis, consectetur a tellus. Maecenas ac magna sit amet eros
-      aliquam rhoncus. Ut dapibus vehicula lectus, ac blandit felis ultricies at. In sollicitudin,
-      lorem eget volutpat viverra, magna
-      <Icon
-        class="icon-tooltip"
-        ios="f7:info_circle_fill"
-        aurora="f7:info_circle_fill"
-        md="material:info"
-        size={20} />
-      felis tempus nisl, porta consectetur nunc neque eget risus. Phasellus vestibulum leo at ante
-      ornare, vel congue justo tincidunt.
+      <Icon class="icon-tooltip" ios="f7:info_circle_fill" md="material:info" size={20} />
+      gravida dui magna, eget pulvinar ligula molestie hendrerit. Mauris vitae facilisis justo. Nam velit
+      mi, pharetra sit amet luctus quis, consectetur a tellus. Maecenas ac magna sit amet eros aliquam
+      rhoncus. Ut dapibus vehicula lectus, ac blandit felis ultricies at. In sollicitudin, lorem eget
+      volutpat viverra, magna
+      <Icon class="icon-tooltip" ios="f7:info_circle_fill" md="material:info" size={20} />
+      felis tempus nisl, porta consectetur nunc neque eget risus. Phasellus vestibulum leo at ante ornare,
+      vel congue justo tincidunt.
     </p>
     <p>
       Praesent tempus enim id lectus porta, at rutrum purus imperdiet. Donec eget sem vulputate,
       scelerisque diam nec, consequat turpis. Ut vel convallis felis. Integer
-      <Icon
-        class="icon-tooltip"
-        ios="f7:info_circle_fill"
-        aurora="f7:info_circle_fill"
-        md="material:info"
-        size={20} />
-      neque ex, sollicitudin vitae magna eget, ultrices volutpat dui. Sed placerat odio hendrerit
-      consequat lobortis. Fusce pulvinar facilisis rhoncus. Sed erat ipsum, consequat molestie
-      suscipit vitae, malesuada a
-      <Icon
-        class="icon-tooltip"
-        ios="f7:info_circle_fill"
-        aurora="f7:info_circle_fill"
-        md="material:info"
-        size={20} />
+      <Icon class="icon-tooltip" ios="f7:info_circle_fill" md="material:info" size={20} />
+      neque ex, sollicitudin vitae magna eget, ultrices volutpat dui. Sed placerat odio hendrerit consequat
+      lobortis. Fusce pulvinar facilisis rhoncus. Sed erat ipsum, consequat molestie suscipit vitae,
+      malesuada a
+      <Icon class="icon-tooltip" ios="f7:info_circle_fill" md="material:info" size={20} />
       massa.
     </p>
   </Block>

@@ -4,8 +4,8 @@
 
     <template #fixed>
       <f7-fab position="right-top">
-        <f7-icon ios="f7:plus" aurora="f7:plus" md="material:add"></f7-icon>
-        <f7-icon ios="f7:xmark" aurora="f7:xmark" md="material:close"></f7-icon>
+        <f7-icon ios="f7:plus" md="material:add"></f7-icon>
+        <f7-icon ios="f7:xmark" md="material:close"></f7-icon>
         <f7-fab-buttons position="left">
           <f7-fab-button>1</f7-fab-button>
           <f7-fab-button>2</f7-fab-button>
@@ -14,8 +14,8 @@
       </f7-fab>
 
       <f7-fab position="right-bottom">
-        <f7-icon ios="f7:plus" aurora="f7:plus" md="material:add"></f7-icon>
-        <f7-icon ios="f7:xmark" aurora="f7:xmark" md="material:close"></f7-icon>
+        <f7-icon ios="f7:plus" md="material:add"></f7-icon>
+        <f7-icon ios="f7:xmark" md="material:close"></f7-icon>
         <f7-fab-buttons position="top">
           <f7-fab-button label="Action 1">1</f7-fab-button>
           <f7-fab-button label="Action 2">2</f7-fab-button>
@@ -24,8 +24,8 @@
       </f7-fab>
 
       <f7-fab position="left-bottom">
-        <f7-icon ios="f7:plus" aurora="f7:plus" md="material:add"></f7-icon>
-        <f7-icon ios="f7:xmark" aurora="f7:xmark" md="material:close"></f7-icon>
+        <f7-icon ios="f7:plus" md="material:add"></f7-icon>
+        <f7-icon ios="f7:xmark" md="material:close"></f7-icon>
         <f7-fab-buttons position="top">
           <f7-fab-button>1</f7-fab-button>
           <f7-fab-button>2</f7-fab-button>
@@ -34,8 +34,8 @@
       </f7-fab>
 
       <f7-fab position="left-top">
-        <f7-icon ios="f7:plus" aurora="f7:plus" md="material:add"></f7-icon>
-        <f7-icon ios="f7:xmark" aurora="f7:xmark" md="material:close"></f7-icon>
+        <f7-icon ios="f7:plus" md="material:add"></f7-icon>
+        <f7-icon ios="f7:xmark" md="material:close"></f7-icon>
         <f7-fab-buttons position="bottom">
           <f7-fab-button>1</f7-fab-button>
           <f7-fab-button>2</f7-fab-button>
@@ -44,8 +44,8 @@
       </f7-fab>
 
       <f7-fab position="center-center">
-        <f7-icon ios="f7:plus" aurora="f7:plus" md="material:add"></f7-icon>
-        <f7-icon ios="f7:xmark" aurora="f7:xmark" md="material:close"></f7-icon>
+        <f7-icon ios="f7:plus" md="material:add"></f7-icon>
+        <f7-icon ios="f7:xmark" md="material:close"></f7-icon>
         <f7-fab-buttons position="center">
           <f7-fab-button>1</f7-fab-button>
           <f7-fab-button>2</f7-fab-button>
@@ -55,7 +55,7 @@
       </f7-fab>
 
       <f7-fab position="center-bottom" text="Create">
-        <f7-icon ios="f7:plus" aurora="f7:plus" md="material:add"></f7-icon>
+        <f7-icon ios="f7:plus" md="material:add"></f7-icon>
       </f7-fab>
     </template>
 

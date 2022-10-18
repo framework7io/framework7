@@ -4,9 +4,6 @@ var routes = [
     path: '/',
     componentUrl: './pages/home.html',
     name: 'home',
-    master(f7) {
-      return f7.theme === 'aurora';
-    },
   },
   // About page
   {
@@ -142,10 +139,6 @@ var routes = [
   {
     path: '/dialog/',
     componentUrl: './pages/dialog.html',
-  },
-  {
-    path: '/elevation/',
-    url: './pages/elevation.html',
   },
   {
     path: '/fab/',

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Page,
   Navbar,
@@ -12,56 +12,21 @@ import {
   Link,
   Searchbar,
   Icon,
-  f7,
   theme,
 } from 'framework7-react';
 
-export default ({ f7router }) => {
-  const onResize = () => {
-    const $el = f7.$('.page-home');
-    if (f7.width >= 768) {
-      $el.find('.list:not(.searchbar-not-found)').addClass('menu-list');
-    } else {
-      $el.find('.list:not(.searchbar-not-found)').removeClass('menu-list');
-    }
-  };
-
-  const onPageAfterIn = () => {
-    if (!theme.aurora) return;
-    if (f7.width >= 768) {
-      f7router.navigate('/about/', { reloadDetail: true });
-    }
-  };
-  useEffect(() => {
-    if (theme.aurora) {
-      const $el = f7.$('.page-home');
-      onResize();
-
-      f7.on('resize', onResize);
-
-      f7router.on('routeChange', (route) => {
-        const url = route.url;
-        if (!$el) return;
-        const $linkEl = $el.find(`a[href="${url}"]`);
-        if (!$linkEl.length) return;
-        $el.find('.item-selected').removeClass('item-selected');
-        $linkEl.addClass('item-selected');
-      });
-    }
-  }, []);
-
+export default () => {
   return (
-    <Page className="page-home" onPageAfterIn={onPageAfterIn}>
+    <Page className="page-home">
       <Navbar large transparent sliding={false} mdCenterTitle>
         <NavLeft>
-          <Link panelOpen="left" iconIos="f7:menu" iconAurora="f7:menu" iconMd="material:menu" />
+          <Link panelOpen="left" iconIos="f7:menu" iconMd="material:menu" />
         </NavLeft>
         <NavTitle sliding>Framework7 React</NavTitle>
         <NavRight>
           <Link
             searchbarEnable=".searchbar-components"
             iconIos="f7:search"
-            iconAurora="f7:search"
             iconMd="material:search"
           />
         </NavRight>
@@ -71,7 +36,6 @@ export default ({ f7router }) => {
           searchContainer=".components-list"
           searchIn="a"
           expandable
-          disableButton={!theme.aurora}
         />
       </Navbar>
 
@@ -135,9 +99,6 @@ export default ({ f7router }) => {
           <Icon slot="media" icon="icon-f7" />
         </ListItem>
         <ListItem reloadDetail link="/dialog/" title="Dialog">
-          <Icon slot="media" icon="icon-f7" />
-        </ListItem>
-        <ListItem reloadDetail link="/elevation/" title="Elevation">
           <Icon slot="media" icon="icon-f7" />
         </ListItem>
         <ListItem reloadDetail link="/fab/" title="FAB">
@@ -289,7 +250,6 @@ export default ({ f7router }) => {
       <List strong inset dividersIos className="searchbar-hide-on-search">
         <ListItem title="iOS Theme" external link="./index.html?theme=ios" />
         <ListItem title="Material (MD) Theme" external link="./index.html?theme=md" />
-        <ListItem title="Aurora Desktop Theme" external link="./index.html?theme=aurora" />
         <ListItem title="Color Themes" reloadDetail link="/color-themes/" />
       </List>
       <BlockTitle className="searchbar-hide-on-search">Page Loaders & Router</BlockTitle>
@@ -301,7 +261,7 @@ export default ({ f7router }) => {
           reloadDetail
           link="/load-something-that-doesnt-exist/"
         />
-        {!theme.aurora && <ListItem title="Master-Detail (Split View)" link="/master-detail/" />}
+        <ListItem title="Master-Detail (Split View)" link="/master-detail/" />
         <ListItem title="Store" reloadDetail link="/store/" />
       </List>
     </Page>

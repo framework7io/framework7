@@ -17,7 +17,7 @@
         @click="() => (selected = 'home')"
       >
         <template #media>
-          <f7-icon md="material:home" aurora="f7:house_fill" ios="f7:house_fill" />
+          <f7-icon md="material:home" ios="f7:house_fill" />
         </template>
       </f7-list-item>
       <f7-list-item
@@ -27,7 +27,7 @@
         @click="() => (selected = 'profile')"
       >
         <template #media>
-          <f7-icon md="material:person" aurora="f7:person_fill" ios="f7:person_fill" />
+          <f7-icon md="material:person" ios="f7:person_fill" />
         </template>
       </f7-list-item>
       <f7-list-item
@@ -37,7 +37,7 @@
         @click="() => (selected = 'settings')"
       >
         <template #media>
-          <f7-icon md="material:settings" aurora="f7:gear_alt_fill" ios="f7:gear_alt_fill" />
+          <f7-icon md="material:settings" ios="f7:gear_alt_fill" />
         </template>
       </f7-list-item>
     </f7-list>
@@ -51,7 +51,7 @@
         @click="() => (selectedMedia = 'home')"
       >
         <template #media>
-          <f7-icon md="material:home" aurora="f7:house_fill" ios="f7:house_fill" />
+          <f7-icon md="material:home" ios="f7:house_fill" />
         </template>
       </f7-list-item>
       <f7-list-item
@@ -62,7 +62,7 @@
         @click="() => (selectedMedia = 'profile')"
       >
         <template #media>
-          <f7-icon md="material:person" aurora="f7:person_fill" ios="f7:person_fill" />
+          <f7-icon md="material:person" ios="f7:person_fill" />
         </template>
       </f7-list-item>
       <f7-list-item
@@ -73,7 +73,7 @@
         @click="() => (selectedMedia = 'settings')"
       >
         <template #media>
-          <f7-icon md="material:settings" aurora="f7:gear_alt_fill" ios="f7:gear_alt_fill" />
+          <f7-icon md="material:settings" ios="f7:gear_alt_fill" />
         </template>
       </f7-list-item>
     </f7-list>

@@ -48,11 +48,11 @@
     <f7-block-title>Loading Effects</f7-block-title>
     <f7-block strong>
       <p>It supports few loading effects:</p>
-      <f7-row tag="p">
-        <f7-button fill small round class="col" @click="load('fade')">Fade</f7-button>
-        <f7-button fill small round class="col" @click="load('wave')">Wave</f7-button>
-        <f7-button fill small round class="col" @click="load('pulse')">Pulse</f7-button>
-      </f7-row>
+      <p class="grid grid-cols-3 grid-gap">
+        <f7-button fill small round @click="load('fade')">Fade</f7-button>
+        <f7-button fill small round @click="load('wave')">Wave</f7-button>
+        <f7-button fill small round @click="load('pulse')">Pulse</f7-button>
+      </p>
     </f7-block>
     <f7-list v-if="loading" media-list>
       <f7-list-item
@@ -117,7 +117,6 @@ import {
   f7List,
   f7ListItem,
   f7Button,
-  f7Row,
   f7SkeletonBlock,
   f7Card,
 } from 'framework7-vue';
@@ -131,7 +130,6 @@ export default {
     f7List,
     f7ListItem,
     f7Button,
-    f7Row,
     f7SkeletonBlock,
     f7Card,
   },

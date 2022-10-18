@@ -4,46 +4,34 @@
     <f7-block-title medium>Layout Themes</f7-block-title>
     <f7-block strong>
       <p>Framework7 comes with 2 main layout themes: Light (default) and Dark:</p>
-      <f7-row>
-        <f7-col
-          width="50"
-          class="bg-color-white demo-theme-picker"
-          @click="setLayoutTheme('light')"
-        >
+      <div class="grid grid-cols-2 grid-gap">
+        <div class="bg-color-white demo-theme-picker" @click="setLayoutTheme('light')">
           <f7-checkbox v-if="theme === 'light'" checked disabled />
-        </f7-col>
-        <f7-col width="50" class="bg-color-black demo-theme-picker" @click="setLayoutTheme('dark')">
+        </div>
+        <div class="bg-color-black demo-theme-picker" @click="setLayoutTheme('dark')">
           <f7-checkbox v-if="theme === 'dark'" checked disabled />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
     </f7-block>
     <f7-block-title medium>Navigation Bars Style</f7-block-title>
     <f7-block strong>
       <p>Switch navigation bars to filled style:</p>
-      <f7-row>
-        <f7-col
-          width="50"
-          class="demo-bars-picker demo-bars-picker-empty"
-          @click="setBarsStyle('empty')"
-        >
+      <div class="grid grid-cols-2 grid-gap">
+        <div class="demo-bars-picker demo-bars-picker-empty" @click="setBarsStyle('empty')">
           <div class="demo-navbar"></div>
           <f7-checkbox v-if="barsStyle === 'empty'" checked disabled />
-        </f7-col>
-        <f7-col
-          width="50"
-          class="demo-bars-picker demo-bars-picker-fill"
-          @click="setBarsStyle('fill')"
-        >
+        </div>
+        <div class="demo-bars-picker demo-bars-picker-fill" @click="setBarsStyle('fill')">
           <div class="demo-navbar"></div>
           <f7-checkbox v-if="barsStyle === 'fill'" checked disabled />
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
     </f7-block>
     <f7-block-title medium>Default Color Themes</f7-block-title>
     <f7-block strong>
       <p>Framework7 comes with {{ colors.length }} color themes set.</p>
-      <f7-row>
-        <f7-col v-for="(color, index) in colors" :key="index" width="33" medium="25" large="20">
+      <div class="grid grid-cols-3 medium-grid-cols-4 large-grid-cols-5 grid-gap">
+        <div v-for="(color, index) in colors" :key="index">
           <f7-button
             fill
             round
@@ -53,11 +41,8 @@
             @click="setColorTheme(color)"
             >{{ color }}</f7-button
           >
-        </f7-col>
-        <f7-col width="33" medium="25" large="20" />
-        <f7-col width="33" medium="25" large="20" />
-        <f7-col width="33" medium="25" large="20" />
-      </f7-row>
+        </div>
+      </div>
     </f7-block>
     <f7-block-title medium>Custom Color Theme</f7-block-title>
     <f7-list>
@@ -102,8 +87,6 @@ import {
   f7Page,
   f7BlockTitle,
   f7Button,
-  f7Row,
-  f7Col,
   f7Block,
   f7List,
   f7ListInput,
@@ -133,8 +116,6 @@ export default {
     f7Page,
     f7BlockTitle,
     f7Button,
-    f7Row,
-    f7Col,
     f7Block,
     f7List,
     f7ListInput,
@@ -255,7 +236,7 @@ export default {
       if (currentColorClass) $html.removeClass(currentColorClass[0]);
       $html.addClass(`color-theme-${color}`);
       self.unsetCustomColor();
-      self.themeColor = $html.css(`--f7-color-${color}`).trim();
+      self.themeColor = $html.css(`--divor-${color}`).trim();
     },
     setBarsStyle(barsStyle) {
       const self = this;

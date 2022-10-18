@@ -1,15 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Navbar,
-  Page,
-  BlockTitle,
-  Block,
-  Segmented,
-  Button,
-  Gauge,
-  Row,
-  Col,
-} from 'framework7-react';
+import { Navbar, Page, BlockTitle, Block, Segmented, Button, Gauge } from 'framework7-react';
 
 export default () => {
   const [gaugeValue, setGaugeValue] = useState(0.5);
@@ -56,8 +46,8 @@ export default () => {
 
       <BlockTitle>Circle Gauges</BlockTitle>
       <Block strong>
-        <Row>
-          <Col className="text-align-center">
+        <div className="grid grid-cols-2 grid-gap">
+          <div className="text-align-center">
             <Gauge
               type="circle"
               value={0.44}
@@ -65,8 +55,8 @@ export default () => {
               valueTextColor="#ff9800"
               borderColor="#ff9800"
             />
-          </Col>
-          <Col className="text-align-center">
+          </div>
+          <div className="text-align-center">
             <Gauge
               type="circle"
               value={0.12}
@@ -77,13 +67,13 @@ export default () => {
               labelTextColor="#f44336"
               labelFontWeight={700}
             />
-          </Col>
-        </Row>
+          </div>
+        </div>
       </Block>
       <BlockTitle>Semicircle Gauges</BlockTitle>
       <Block strong>
-        <Row>
-          <Col className="text-align-center">
+        <div className="grid grid-cols-2 grid-gap">
+          <div className="text-align-center">
             <Gauge
               type="semicircle"
               value={0.3}
@@ -91,8 +81,8 @@ export default () => {
               valueTextColor="#f44336"
               borderColor="#f44336"
             />
-          </Col>
-          <Col className="text-align-center">
+          </div>
+          <div className="text-align-center">
             <Gauge
               type="semicircle"
               value={0.5}
@@ -102,13 +92,13 @@ export default () => {
               labelText="of 60kg total"
               labelTextColor="#333"
             />
-          </Col>
-        </Row>
+          </div>
+        </div>
       </Block>
       <BlockTitle>Customization</BlockTitle>
       <Block strong>
-        <Row>
-          <Col className="text-align-center">
+        <div className="grid grid-cols-2 grid-gap">
+          <div className="text-align-center">
             <Gauge
               type="circle"
               value={0.35}
@@ -121,8 +111,8 @@ export default () => {
               borderBgColor="#ffeb3b"
               bgColor="#ffeb3b"
             />
-          </Col>
-          <Col className="text-align-center">
+          </div>
+          <div className="text-align-center">
             <Gauge
               type="circle"
               value={0.67}
@@ -135,11 +125,11 @@ export default () => {
               labelFontSize={12}
               borderWidth={30}
             />
-          </Col>
-        </Row>
+          </div>
+        </div>
         <br />
-        <Row>
-          <Col className="text-align-center">
+        <div className="grid grid-cols-2 grid-gap">
+          <div className="text-align-center">
             <Gauge
               type="semicircle"
               value={0.5}
@@ -151,8 +141,8 @@ export default () => {
               borderColor="#ffeb3b"
               borderBgColor="transparent"
             />
-          </Col>
-          <Col className="text-align-center">
+          </div>
+          <div className="text-align-center">
             <Gauge
               type="semicircle"
               value={0.77}
@@ -163,8 +153,8 @@ export default () => {
               labelFontSize={12}
               borderWidth={10}
             />
-          </Col>
-        </Row>
+          </div>
+        </div>
       </Block>
     </Page>
   );

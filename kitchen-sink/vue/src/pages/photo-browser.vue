@@ -18,36 +18,36 @@
         Photo Browser could be opened in a three ways - as a Standalone component (Popup
         modification), in Popup, and as separate Page:
       </p>
-      <f7-row>
-        <f7-col>
+      <div class="grid grid-cols-3 grid-gap">
+        <div>
           <f7-photo-browser ref="standalone" :photos="photos" />
           <f7-button fill @click="$refs.standalone.open()">Standalone</f7-button>
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <f7-photo-browser ref="popup" :photos="photos" type="popup" />
           <f7-button fill @click="$refs.popup.open()">Popup</f7-button>
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <f7-photo-browser ref="page" :photos="photos" type="page" page-back-link-text="Back" />
           <f7-button fill @click="$refs.page.open()">Page</f7-button>
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
     </f7-block>
     <f7-block strong>
       <p>
         Photo Browser supports 2 default themes - default Light (like in previous examples) and Dark
         theme. Here is a Dark theme examples:
       </p>
-      <f7-row>
-        <f7-col>
+      <div class="grid grid-cols-3 grid-gap">
+        <div>
           <f7-photo-browser ref="standaloneDark" :photos="photos" theme="dark" />
           <f7-button fill @click="$refs.standaloneDark.open()">Standalone</f7-button>
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <f7-photo-browser ref="popupDark" :photos="photos" theme="dark" type="popup" />
           <f7-button fill @click="$refs.popupDark.open()">Popup</f7-button>
-        </f7-col>
-        <f7-col>
+        </div>
+        <div>
           <f7-photo-browser
             ref="pageDark"
             :photos="photos"
@@ -56,13 +56,13 @@
             page-back-link-text="Back"
           />
           <f7-button fill @click="$refs.pageDark.open()">Page</f7-button>
-        </f7-col>
-      </f7-row>
+        </div>
+      </div>
     </f7-block>
   </f7-page>
 </template>
 <script>
-import { f7Navbar, f7Page, f7PhotoBrowser, f7Block, f7Row, f7Col, f7Button } from 'framework7-vue';
+import { f7Navbar, f7Page, f7PhotoBrowser, f7Block, f7Button } from 'framework7-vue';
 
 export default {
   components: {
@@ -70,8 +70,6 @@ export default {
     f7Page,
     f7PhotoBrowser,
     f7Block,
-    f7Row,
-    f7Col,
     f7Button,
   },
   data() {

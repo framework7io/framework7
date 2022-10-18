@@ -21,35 +21,27 @@
       </p>
     </f7-block>
     <f7-block>
-      <f7-row tag="p">
-        <f7-col tag="span">
-          <f7-button raised fill panel-open="left"> Open left panel </f7-button>
-        </f7-col>
-        <f7-col tag="span">
-          <f7-button raised fill panel-open="right"> Open right panel </f7-button>
-        </f7-col>
-      </f7-row>
-      <f7-row tag="p">
-        <f7-col tag="span">
-          <f7-button raised fill panel-open="#panel-nested"> Open nested panel </f7-button>
-        </f7-col>
-      </f7-row>
+      <p class="grid grid-cols-2 grid-gap">
+        <f7-button raised fill panel-open="left"> Open left panel </f7-button>
+        <f7-button raised fill panel-open="right"> Open right panel </f7-button>
+      </p>
+      <p class="grid grid-cols-2 grid-gap">
+        <f7-button raised fill panel-open="#panel-nested"> Open nested panel </f7-button>
+      </p>
     </f7-block>
   </f7-page>
 </template>
 <script>
-import { f7Navbar, f7Page, f7Block, f7Col, f7Button, f7Link, f7Panel, f7Row } from 'framework7-vue';
+import { f7Navbar, f7Page, f7Block, f7Button, f7Link, f7Panel } from 'framework7-vue';
 
 export default {
   components: {
     f7Navbar,
     f7Page,
     f7Block,
-    f7Col,
     f7Button,
     f7Link,
     f7Panel,
-    f7Row,
   },
 };
 </script>

@@ -11,7 +11,7 @@
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
-  <Navbar title="Chips" backLink="Back"></Navbar>
+  <Navbar title="Chips" backLink="Back" />
   <BlockTitle>Chips With Text</BlockTitle>
   <Block strong>
     <Chip text="Example Chip" />
@@ -30,9 +30,14 @@
   </Block>
   <BlockTitle>Icon Chips</BlockTitle>
   <Block strong>
-    <Chip text="Add Contact" mediaBgColor="blue" iconIos="f7:plus_circle" iconAurora="f7:plus_circle" iconMd="material:add_circle" />
-    <Chip text="London" mediaBgColor="green" iconIos="f7:compass" iconAurora="f7:compass" iconMd="material:location_on" />
-    <Chip text="John Doe" mediaBgColor="red" iconIos="f7:person" iconAurora="f7:person" iconMd="material:person" />
+    <Chip
+      text="Add Contact"
+      mediaBgColor="blue"
+      iconIos="f7:plus_circle"
+      iconMd="material:add_circle"
+    />
+    <Chip text="London" mediaBgColor="green" iconIos="f7:compass" iconMd="material:location_on" />
+    <Chip text="John Doe" mediaBgColor="red" iconIos="f7:person" iconMd="material:person" />
   </Block>
   <BlockTitle>Contact Chips</BlockTitle>
   <Block strong>
@@ -52,14 +57,21 @@
   <BlockTitle>Deletable Chips / Tags</BlockTitle>
   <Block strong>
     <Chip text="Example Chip" deleteable onDelete={deleteChip} />
-    <Chip text="Chris" media="C" mediaBgColor="orange" textColor="black" deleteable onDelete={deleteChip} />
+    <Chip
+      text="Chris"
+      media="C"
+      mediaBgColor="orange"
+      textColor="black"
+      deleteable
+      onDelete={deleteChip}
+    />
     <Chip text="Jane Doe" deleteable onDelete={deleteChip}>
-      <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg"/>
+      <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg" />
     </Chip>
     <Chip text="One More Chip" deleteable onDelete={deleteChip} />
     <Chip text="Jennifer" mediaBgColor="pink" media="J" deleteable onDelete={deleteChip} />
     <Chip text="Adam Smith" deleteable onDelete={deleteChip}>
-      <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg"/>
+      <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg" />
     </Chip>
   </Block>
   <BlockTitle>Color Chips</BlockTitle>

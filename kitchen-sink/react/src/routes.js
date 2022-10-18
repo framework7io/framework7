@@ -21,7 +21,6 @@ import ContactsList from './pages/contacts-list.jsx';
 import ContentBlock from './pages/content-block.jsx';
 import DataTable from './pages/data-table.jsx';
 import Dialog from './pages/dialog.jsx';
-import Elevation from './pages/elevation.jsx';
 import Fab from './pages/fab.jsx';
 import FabMorph from './pages/fab-morph.jsx';
 import FormStorage from './pages/form-storage.jsx';
@@ -123,10 +122,6 @@ export default [
   {
     path: '/',
     component: Home,
-    master(f7) {
-      console.log(f7.theme);
-      return f7.theme === 'aurora';
-    },
   },
   // About page
   {
@@ -270,10 +265,6 @@ export default [
   {
     path: '/dialog/',
     component: Dialog,
-  },
-  {
-    path: '/elevation/',
-    component: Elevation,
   },
   {
     path: '/fab/',

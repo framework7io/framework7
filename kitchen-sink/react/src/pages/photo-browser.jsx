@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Navbar, Page, PhotoBrowser, Block, Row, Col, Button } from 'framework7-react';
+import { Navbar, Page, PhotoBrowser, Block, Button } from 'framework7-react';
 
 export default () => {
   const standalone = useRef(null);
@@ -44,46 +44,46 @@ export default () => {
           Photo Browser could be opened in a three ways - as a Standalone component (Popup
           modification), in Popup, and as separate Page:
         </p>
-        <Row>
-          <Col>
+        <div className="grid grid-cols-3 grid-gap">
+          <div>
             <PhotoBrowser photos={photos} ref={standalone} />
             <Button fill onClick={() => standalone.current.open()}>
               Standalone
             </Button>
-          </Col>
-          <Col>
+          </div>
+          <div>
             <PhotoBrowser photos={photos} type="popup" ref={popup} />
             <Button fill onClick={() => popup.current.open()}>
               Popup
             </Button>
-          </Col>
-          <Col>
+          </div>
+          <div>
             <PhotoBrowser photos={photos} type="page" pageBackLinkText="Back" ref={page} />
             <Button fill onClick={() => page.current.open()}>
               Page
             </Button>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </Block>
       <Block strong>
         <p>
           Photo Browser supports 2 default themes - default Light (like in previous examples) and
           Dark theme. Here is a Dark theme examples:
         </p>
-        <Row>
-          <Col>
+        <div className="grid grid-cols-3 grid-gap">
+          <div>
             <PhotoBrowser photos={photos} theme="dark" ref={standaloneDark} />
             <Button fill onClick={() => standaloneDark.current.open()}>
               Standalone
             </Button>
-          </Col>
-          <Col>
+          </div>
+          <div>
             <PhotoBrowser photos={photos} theme="dark" type="popup" ref={popupDark} />
             <Button fill onClick={() => popupDark.current.open()}>
               Popup
             </Button>
-          </Col>
-          <Col>
+          </div>
+          <div>
             <PhotoBrowser
               photos={photos}
               theme="dark"
@@ -94,8 +94,8 @@ export default () => {
             <Button fill onClick={() => pageDark.current.open()}>
               Page
             </Button>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </Block>
     </Page>
   );

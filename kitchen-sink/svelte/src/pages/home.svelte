@@ -1,7 +1,5 @@
 <script>
   import {
-    f7,
-    theme,
     Page,
     Navbar,
     NavLeft,
@@ -14,58 +12,16 @@
     Link,
     Searchbar,
   } from 'framework7-svelte';
-  import { onMount } from 'svelte';
-
-  export let f7router;
-
-  const onResize = () => {
-    const $el = f7.$('.page-home');
-    if (f7.width >= 768) {
-      $el.find('.list:not(.searchbar-not-found)').addClass('menu-list');
-    } else {
-      $el.find('.list:not(.searchbar-not-found)').removeClass('menu-list');
-    }
-  };
-
-  const onPageAfterIn = () => {
-    if (!theme.aurora) return;
-    if (f7.width >= 768) {
-      f7router.navigate('/about/', { reloadDetail: true });
-    }
-  };
-
-  onMount(() => {
-    if (theme.aurora) {
-      const $el = f7.$('.page-home');
-      onResize();
-
-      f7.on('resize', onResize);
-
-      f7router.on('routeChange', (route) => {
-        const url = route.url;
-        if (!$el) return;
-        const $linkEl = $el.find(`a[href="${url}"]`);
-        if (!$linkEl.length) return;
-        $el.find('.item-selected').removeClass('item-selected');
-        $linkEl.addClass('item-selected');
-      });
-    }
-  });
 </script>
 
-<Page class="page-home" {onPageAfterIn}>
+<Page class="page-home">
   <Navbar large transparent sliding={false} mdCenterTitle>
     <NavLeft>
-      <Link panelOpen="left" iconIos="f7:menu" iconAurora="f7:menu" iconMd="material:menu" />
+      <Link panelOpen="left" iconIos="f7:menu" iconMd="material:menu" />
     </NavLeft>
     <NavTitle sliding>Framework7 Svelte</NavTitle>
     <NavRight>
-      <Link
-        searchbarEnable=".searchbar-components"
-        iconIos="f7:search"
-        iconAurora="f7:search"
-        iconMd="material:search"
-      />
+      <Link searchbarEnable=".searchbar-components" iconIos="f7:search" iconMd="material:search" />
     </NavRight>
     <NavTitleLarge>Framework7 Svelte</NavTitleLarge>
     <Searchbar
@@ -73,218 +29,210 @@
       searchContainer=".components-list"
       searchIn="a"
       expandable
-      disableButton={!theme.aurora}
     />
   </Navbar>
 
   <List strong inset dividersIos class="searchbar-hide-on-search">
-    <ListItem title="About Framework7" reloadDetail={theme.aurora} link="/about/">
+    <ListItem title="About Framework7" link="/about/">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
   </List>
 
   <BlockTitle class="searchbar-found">Components</BlockTitle>
   <List strong inset dividersIos class="components-list searchbar-found">
-    <ListItem reloadDetail={theme.aurora} link="/accordion/" title="Accordion">
+    <ListItem link="/accordion/" title="Accordion">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/action-sheet/" title="Action Sheet">
+    <ListItem link="/action-sheet/" title="Action Sheet">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/appbar/" title="Appbar">
+    <ListItem link="/appbar/" title="Appbar">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/area-chart/" title="Area Chart">
+    <ListItem link="/area-chart/" title="Area Chart">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/autocomplete/" title="Autocomplete">
+    <ListItem link="/autocomplete/" title="Autocomplete">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/badge/" title="Badge">
+    <ListItem link="/badge/" title="Badge">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/breadcrumbs/" title="Breadcrumbs">
+    <ListItem link="/breadcrumbs/" title="Breadcrumbs">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/buttons/" title="Buttons">
+    <ListItem link="/buttons/" title="Buttons">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/calendar/" title="Calendar / Date Picker">
+    <ListItem link="/calendar/" title="Calendar / Date Picker">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/cards/" title="Cards">
+    <ListItem link="/cards/" title="Cards">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/cards-expandable/" title="Cards Expandable">
+    <ListItem link="/cards-expandable/" title="Cards Expandable">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/checkbox/" title="Checkbox">
+    <ListItem link="/checkbox/" title="Checkbox">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/chips/" title="Chips/Tags">
+    <ListItem link="/chips/" title="Chips/Tags">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/color-picker/" title="Color Picker">
+    <ListItem link="/color-picker/" title="Color Picker">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/contacts-list/" title="Contacts List">
+    <ListItem link="/contacts-list/" title="Contacts List">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/content-block/" title="Content Block">
+    <ListItem link="/content-block/" title="Content Block">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/data-table/" title="Data Table">
+    <ListItem link="/data-table/" title="Data Table">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/dialog/" title="Dialog">
+    <ListItem link="/dialog/" title="Dialog">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/elevation/" title="Elevation">
+    <ListItem link="/fab/" title="FAB">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/fab/" title="FAB">
+    <ListItem link="/fab-morph/" title="FAB Morph">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/fab-morph/" title="FAB Morph">
+    <ListItem link="/form-storage/" title="Form Storage">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/form-storage/" title="Form Storage">
+    <ListItem link="/gauge/" title="Gauge">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/gauge/" title="Gauge">
+    <ListItem link="/grid/" title="Grid / Layout Grid">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/grid/" title="Grid / Layout Grid">
+    <ListItem link="/icons/" title="Icons">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/icons/" title="Icons">
+    <ListItem link="/infinite-scroll/" title="Infinite Scroll">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/infinite-scroll/" title="Infinite Scroll">
+    <ListItem link="/inputs/" title="Inputs">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/inputs/" title="Inputs">
+    <ListItem link="/lazy-load/" title="Lazy Load">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/lazy-load/" title="Lazy Load">
+    <ListItem link="/list/" title="List View">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/list/" title="List View">
+    <ListItem link="/list-index/" title="List Index">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/list-index/" title="List Index">
+    <ListItem link="/login-screen/" title="Login Screen">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/login-screen/" title="Login Screen">
+    <ListItem link="/menu/" title="Menu">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/menu/" title="Menu">
+    <ListItem link="/menu-list/" title="Menu List">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/menu-list/" title="Menu List">
+    <ListItem link="/messages/" title="Messages">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/messages/" title="Messages">
+    <ListItem link="/navbar/" title="Navbar">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/navbar/" title="Navbar">
+    <ListItem link="/notifications/" title="Notifications">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/notifications/" title="Notifications">
+    <ListItem link="/panel/" title="Panel / Side Panels">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/panel/" title="Panel / Side Panels">
+    <ListItem link="/photo-browser/" title="Photo Browser">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/photo-browser/" title="Photo Browser">
+    <ListItem link="/picker/" title="Picker">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/picker/" title="Picker">
+    <ListItem link="/pie-chart/" title="Pie Chart">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/pie-chart/" title="Pie Chart">
+    <ListItem link="/popover/" title="Popover">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/popover/" title="Popover">
+    <ListItem link="/popup/" title="Popup">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/popup/" title="Popup">
+    <ListItem link="/preloader/" title="Preloader">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/preloader/" title="Preloader">
+    <ListItem link="/progressbar/" title="Progress Bar">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/progressbar/" title="Progress Bar">
+    <ListItem link="/pull-to-refresh/" title="Pull To Refresh">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/pull-to-refresh/" title="Pull To Refresh">
+    <ListItem link="/radio/" title="Radio">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/radio/" title="Radio">
+    <ListItem link="/range/" title="Range Slider">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/range/" title="Range Slider">
+    <ListItem link="/searchbar/" title="Searchbar">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/searchbar/" title="Searchbar">
+    <ListItem link="/searchbar-expandable/" title="Searchbar Expandable">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem
-      reloadDetail={theme.aurora}
-      link="/searchbar-expandable/"
-      title="Searchbar Expandable"
-    >
+    <ListItem link="/sheet-modal/" title="Sheet Modal">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/sheet-modal/" title="Sheet Modal">
+    <ListItem link="/skeleton/" title="Skeleton (Ghost) Elements">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/skeleton/" title="Skeleton (Ghost) Elements">
+    <ListItem link="/smart-select/" title="Smart Select">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/smart-select/" title="Smart Select">
+    <ListItem link="/sortable/" title="Sortable List">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/sortable/" title="Sortable List">
+    <ListItem link="/stepper/" title="Stepper">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/stepper/" title="Stepper">
+    <ListItem link="/subnavbar/" title="Subnavbar">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/subnavbar/" title="Subnavbar">
+    <ListItem link="/swipeout/" title="Swipeout (Swipe To Delete)">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/swipeout/" title="Swipeout (Swipe To Delete)">
+    <ListItem link="/swiper/" title="Swiper Slider">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/swiper/" title="Swiper Slider">
+    <ListItem link="/tabs/" title="Tabs">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/tabs/" title="Tabs">
+    <ListItem link="/text-editor/" title="Text Editor">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/text-editor/" title="Text Editor">
+    <ListItem link="/timeline/" title="Timeline">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/timeline/" title="Timeline">
+    <ListItem link="/toast/" title="Toast">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/toast/" title="Toast">
+    <ListItem link="/toggle/" title="Toggle">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/toggle/" title="Toggle">
+    <ListItem link="/toolbar-tabbar/" title="Toolbar & Tabbar">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/toolbar-tabbar/" title="Toolbar & Tabbar">
+    <ListItem link="/tooltip/" title="Tooltip">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/tooltip/" title="Tooltip">
+    <ListItem link="/treeview/" title="Treeview">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/treeview/" title="Treeview">
-      <i class="icon icon-f7" slot="media" />
-    </ListItem>
-    <ListItem reloadDetail={theme.aurora} link="/virtual-list/" title="Virtual List">
+    <ListItem link="/virtual-list/" title="Virtual List">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
   </List>
@@ -295,21 +243,14 @@
   <List strong inset dividersIos class="searchbar-hide-on-search">
     <ListItem title="iOS Theme" external link="./index.html?theme=ios" />
     <ListItem title="Material (MD) Theme" external link="./index.html?theme=md" />
-    <ListItem title="Aurora Desktop Theme" external link="./index.html?theme=aurora" />
-    <ListItem title="Color Themes" reloadDetail={theme.aurora} link="/color-themes/" />
+    <ListItem title="Color Themes" link="/color-themes/" />
   </List>
   <BlockTitle class="searchbar-hide-on-search">Page Loaders & Router</BlockTitle>
   <List strong inset dividersIos class="searchbar-hide-on-search">
-    <ListItem title="Page Transitions" reloadDetail={theme.aurora} link="/page-transitions/" />
-    <ListItem title="Routable Modals" reloadDetail={theme.aurora} link="/routable-modals/" />
-    <ListItem
-      title="Default Route (404)"
-      reloadDetail={theme.aurora}
-      link="/load-something-that-doesnt-exist/"
-    />
-    {#if !theme.aurora}
-      <ListItem title="Master-Detail (Split View)" link="/master-detail/" />
-    {/if}
-    <ListItem title="Store" reloadDetail={theme.aurora} link="/store/" />
+    <ListItem title="Page Transitions" link="/page-transitions/" />
+    <ListItem title="Routable Modals" link="/routable-modals/" />
+    <ListItem title="Default Route (404)" link="/load-something-that-doesnt-exist/" />
+    <ListItem title="Master-Detail (Split View)" link="/master-detail/" />
+    <ListItem title="Store" link="/store/" />
   </List>
 </Page>

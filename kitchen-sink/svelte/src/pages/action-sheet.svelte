@@ -62,7 +62,6 @@
     <p class="row">
       <!-- One group, open by direct accessing instance .open() method -->
       <Button
-        class="col"
         fill
         onClick={() => {
           actionsOneGroupOpened = true;
@@ -71,7 +70,7 @@
         One group
       </Button>
       <!--  Two groups, open by "actionsOpen" attribute -->
-      <Button class="col" fill actionsOpen="#actions-two-groups">Two groups</Button>
+      <Button fill actionsOpen="#actions-two-groups">Two groups</Button>
     </p>
     <p>
       <!-- Actions Grid, open by changing actionGridOpened state property -->

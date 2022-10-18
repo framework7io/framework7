@@ -59,13 +59,13 @@ export default () => {
     <Page>
       <Navbar title="Action Sheet" backLink="Back"></Navbar>
       <Block strong>
-        <p className="row">
+        <p className="grid grid-cols-2 grid-gap">
           {/* One group, open by changing actionsOneGroupOpened property */}
-          <Button className="col" fill onClick={() => setActionsOneGroupOpened(true)}>
+          <Button fill onClick={() => setActionsOneGroupOpened(true)}>
             One group
           </Button>
           {/*  Two groups, open by "actionsOpen" attribute */}
-          <Button className="col" fill actionsOpen="#actions-two-groups">
+          <Button fill actionsOpen="#actions-two-groups">
             Two groups
           </Button>
         </p>

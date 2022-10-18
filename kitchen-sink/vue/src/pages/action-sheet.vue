@@ -2,11 +2,11 @@
   <f7-page @page:beforeremove="onPageBeforeRemove">
     <f7-navbar title="Action Sheet" back-link="Back"></f7-navbar>
     <f7-block strong>
-      <p class="row">
+      <p class="grid grid-cols-2 grid-gap">
         <!-- One group, open by direct accessing instance .open() method -->
-        <f7-button class="col" fill actions-open="#actions-one-group">One group</f7-button>
+        <f7-button fill actions-open="#actions-one-group">One group</f7-button>
         <!-- Two groups, open by "actions-open" attribute -->
-        <f7-button class="col" fill actions-open="#actions-two-groups">Two groups</f7-button>
+        <f7-button fill actions-open="#actions-two-groups">Two groups</f7-button>
       </p>
       <p>
         <!-- Actions Grid, open by changing actionGridOpened prop -->

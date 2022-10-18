@@ -14,8 +14,9 @@
       <Link
         iconMd="material:compare_arrows"
         iconIos="f7:arrow_up_arrow_down_circle_fill"
-        iconAurora="f7:arrow_up_arrow_down_circle_fill"
-        onClick={toggleToolbarPosition} />
+        icon="f7:arrow_up_arrow_down_circle_fill"
+        onClick={toggleToolbarPosition}
+      />
     </NavRight>
   </Navbar>
   <Toolbar tabbar position={toolbarPosition}>

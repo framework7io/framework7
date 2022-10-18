@@ -10,7 +10,6 @@ import {
   BlockHeader,
   ListItem,
   ListInput,
-  theme,
   f7,
 } from 'framework7-react';
 
@@ -363,7 +362,7 @@ export default () => {
     <Page onPageInit={onPageInit} onPageBeforeRemove={onPageBeforeRemove}>
       <Navbar title="Autocomplete" backLink="Back">
         <Subnavbar inner={false}>
-          <Searchbar init={false} id="searchbar-autocomplete" disableButton={!theme.aurora} />
+          <Searchbar init={false} id="searchbar-autocomplete" disableButton={true} />
         </Subnavbar>
       </Navbar>
 

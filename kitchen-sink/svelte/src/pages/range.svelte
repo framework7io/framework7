@@ -17,13 +17,13 @@
   <List simpleList>
     <ListItem>
       <div>
-        <Icon ios="f7:speaker_fill" aurora="f7:speaker_fill" md="material:volume_mute" />
+        <Icon ios="f7:speaker_fill" md="material:volume_mute" />
       </div>
       <div style="width: 100%; margin: 0 16px">
         <Range min={0} max={100} step={1} value={10} />
       </div>
       <div>
-        <Icon ios="f7:speaker_3_fill" aurora="f7:speaker_3_fill" md="material:volume_up" />
+        <Icon ios="f7:speaker_3_fill" md="material:volume_up" />
       </div>
     </ListItem>
   </List>
@@ -32,13 +32,13 @@
   <List simpleList>
     <ListItem>
       <div>
-        <Icon ios="f7:sun_min" aurora="f7:sun_min" md="material:brightness_low" />
+        <Icon ios="f7:sun_min" md="material:brightness_low" />
       </div>
       <div style="width: 100%; margin: 0 16px">
         <Range min={0} max={100} step={1} value={50} label={true} color="orange" />
       </div>
       <div>
-        <Icon ios="f7:sun_max_fill" aurora="f7:sun_max_fill" md="material:brightness_high" />
+        <Icon ios="f7:sun_max_fill" md="material:brightness_high" />
       </div>
     </ListItem>
   </List>
@@ -50,11 +50,7 @@
   <List simpleList>
     <ListItem>
       <div>
-        <Icon
-          ios="f7:money_dollar_circle"
-          aurora="f7:money_dollar_circle"
-          md="material:attach_money"
-        />
+        <Icon ios="f7:money_dollar_circle" md="material:attach_money" />
       </div>
       <div style="width: 100%; margin: 0 16px">
         <Range
@@ -69,11 +65,7 @@
         />
       </div>
       <div>
-        <Icon
-          ios="f7:money_dollar_circle_fill"
-          aurora="f7:money_dollar_circle_fill"
-          md="material:monetization_on"
-        />
+        <Icon ios="f7:money_dollar_circle_fill" md="material:monetization_on" />
       </div>
     </ListItem>
   </List>

@@ -4,8 +4,6 @@ import {
   Page,
   BlockTitle,
   Button,
-  Row,
-  Col,
   Block,
   List,
   ListInput,
@@ -178,51 +176,51 @@ export default () => {
       <BlockTitle medium>Layout Themes</BlockTitle>
       <Block strong>
         <p>Framework7 comes with 2 main layout themes: Light (default) and Dark:</p>
-        <Row>
-          <Col
+        <div className="grid grid-cols-2 grid-gap">
+          <div
             width="50"
             className="bg-color-white demo-theme-picker"
             onClick={() => setLayoutTheme('light')}
           >
             {theme === 'light' && <Checkbox checked disabled />}
-          </Col>
-          <Col
+          </div>
+          <div
             width="50"
             className="bg-color-black demo-theme-picker"
             onClick={() => setLayoutTheme('dark')}
           >
             {theme === 'dark' && <Checkbox checked disabled />}
-          </Col>
-        </Row>
+          </div>
+        </div>
       </Block>
       <BlockTitle medium>Navigation Bars Style</BlockTitle>
       <Block strong>
         <p>Switch navigation bars to filled style:</p>
-        <Row>
-          <Col
+        <div className="grid grid-cols-2 grid-gap">
+          <div
             width="50"
             className="demo-bars-picker demo-bars-picker-empty"
             onClick={() => updateBarsStyle('empty')}
           >
             <div className="demo-navbar"></div>
             {barsStyle === 'empty' && <Checkbox checked disabled />}
-          </Col>
-          <Col
+          </div>
+          <div
             width="50"
             className="demo-bars-picker demo-bars-picker-fill"
             onClick={() => updateBarsStyle('fill')}
           >
             <div className="demo-navbar"></div>
             {barsStyle === 'fill' && <Checkbox checked disabled />}
-          </Col>
-        </Row>
+          </div>
+        </div>
       </Block>
       <BlockTitle medium>Default Color Themes</BlockTitle>
       <Block strong>
         <p>Framework7 comes with {colors.length} color themes set.</p>
-        <Row>
+        <div className="grid grid-cols-3 medium-grid-cols-2 large-grid-cols-5 grid-gap">
           {colors.map((color, index) => (
-            <Col width="33" medium="25" large="20" key={index}>
+            <div key={index}>
               <Button
                 fill
                 round
@@ -233,13 +231,9 @@ export default () => {
               >
                 {color}
               </Button>
-            </Col>
+            </div>
           ))}
-
-          <Col width="33" medium="25" large="20" />
-          <Col width="33" medium="25" large="20" />
-          <Col width="33" medium="25" large="20" />
-        </Row>
+        </div>
       </Block>
       <BlockTitle medium>Custom Color Theme</BlockTitle>
       <List>

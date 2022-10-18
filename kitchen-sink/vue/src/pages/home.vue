@@ -1,13 +1,8 @@
 <template>
-  <f7-page class="page-home" @page:afterin="onPageAfterIn">
+  <f7-page class="page-home">
     <f7-navbar large transparent :sliding="false" md-center-title>
       <f7-nav-left>
-        <f7-link
-          panel-open="left"
-          icon-ios="f7:menu"
-          icon-aurora="f7:menu"
-          icon-md="material:menu"
-        ></f7-link>
+        <f7-link panel-open="left" icon-ios="f7:menu" icon-md="material:menu"></f7-link>
       </f7-nav-left>
       <f7-nav-title sliding>Framework7 Vue</f7-nav-title>
       <f7-nav-right>
@@ -15,7 +10,6 @@
           class="searchbar-enable"
           data-searchbar=".searchbar-components"
           icon-ios="f7:search"
-          icon-aurora="f7:search"
           icon-md="material:search"
         ></f7-link>
       </f7-nav-right>
@@ -25,7 +19,6 @@
         search-container=".components-list"
         search-in="a"
         expandable
-        :disable-button="!theme.aurora"
       ></f7-searchbar>
     </f7-navbar>
 
@@ -125,11 +118,6 @@
         </template>
       </f7-list-item>
       <f7-list-item reload-detail link="/dialog/" title="Dialog">
-        <template #media>
-          <f7-icon icon="icon-f7" />
-        </template>
-      </f7-list-item>
-      <f7-list-item reload-detail link="/elevation/" title="Elevation">
         <template #media>
           <f7-icon icon="icon-f7" />
         </template>
@@ -377,7 +365,6 @@
     <f7-list strong inset dividers-ios class="searchbar-hide-on-search">
       <f7-list-item title="iOS Theme" external link="./index.html?theme=ios" />
       <f7-list-item title="Material (MD) Theme" external link="./index.html?theme=md" />
-      <f7-list-item title="Aurora Desktop Theme" external link="./index.html?theme=aurora" />
       <f7-list-item title="Color Themes" reload-detail link="/color-themes/" />
     </f7-list>
 
@@ -390,11 +377,7 @@
         reload-detail
         link="/load-something-that-doesnt-exist/"
       />
-      <f7-list-item
-        v-if="!theme.aurora"
-        title="Master-Detail (Split View)"
-        link="/master-detail/"
-      />
+      <f7-list-item title="Master-Detail (Split View)" link="/master-detail/" />
       <f7-list-item title="Store" reload-detail link="/store/" />
     </f7-list>
   </f7-page>
@@ -414,9 +397,7 @@ import {
   f7Searchbar,
   f7Icon,
   theme,
-  f7,
 } from 'framework7-vue';
-import { onMounted } from 'vue';
 
 export default {
   components: {
@@ -437,42 +418,9 @@ export default {
     f7router: Object,
   },
   // eslint-disable-next-line
-  setup({ f7router }) {
-    const onResize = () => {
-      const $el = f7.$('.page-home');
-      if (f7.width >= 768) {
-        $el.find('.list:not(.searchbar-not-found)').addClass('menu-list');
-      } else {
-        $el.find('.list:not(.searchbar-not-found)').removeClass('menu-list');
-      }
-    };
-
-    const onPageAfterIn = () => {
-      if (!theme.aurora) return;
-      if (f7.width >= 768) {
-        f7router.navigate('/about/', { reloadDetail: true });
-      }
-    };
-    onMounted(() => {
-      if (theme.aurora) {
-        const $el = f7.$('.page-home');
-        onResize();
-
-        f7.on('resize', onResize);
-
-        f7router.on('routeChange', (route) => {
-          const url = route.url;
-          if (!$el) return;
-          const $linkEl = $el.find(`a[href="${url}"]`);
-          if (!$linkEl.length) return;
-          $el.find('.item-selected').removeClass('item-selected');
-          $linkEl.addClass('item-selected');
-        });
-      }
-    });
+  setup() {
     return {
       theme,
-      onPageAfterIn,
     };
   },
 };

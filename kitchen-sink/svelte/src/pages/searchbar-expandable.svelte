@@ -1,31 +1,18 @@
 <script>
-  import {
-    theme,
-    Navbar,
-    Page,
-    Searchbar,
-    List,
-    ListItem,
-    Link,
-    NavRight,
-  } from 'framework7-svelte';
+  import { Navbar, Page, Searchbar, List, ListItem, Link, NavRight } from 'framework7-svelte';
 </script>
 
 <Page>
   <Navbar backLink="Back" title="Searchbar">
     <NavRight>
-      <Link
-        searchbarEnable=".searchbar-demo"
-        iconIos="f7:search"
-        iconMd="material:search"
-        iconAurora="f7:search" />
+      <Link searchbarEnable=".searchbar-demo" iconIos="f7:search" iconMd="material:search" />
     </NavRight>
     <Searchbar
       class="searchbar-demo"
       expandable
       searchContainer=".search-list"
       searchIn=".item-title"
-      disableButton={!theme.aurora} />
+    />
   </Navbar>
   <List class="searchbar-not-found">
     <ListItem title="Nothing found" />

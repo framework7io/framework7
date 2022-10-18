@@ -5,8 +5,6 @@
     BlockTitle,
     Block,
     BlockHeader,
-    Row,
-    Col,
     List,
     ListItem,
     Stepper,
@@ -46,200 +44,200 @@
   <Navbar title="Stepper" backLink="Back" />
   <BlockTitle>Shape and size</BlockTitle>
   <Block strong class="text-align-center">
-    <Row>
-      <Col>
+    <div class="grid grid-cols-2 grid-gap">
+      <div>
         <small class="display-block">Default</small>
         <Stepper />
-      </Col>
-      <Col>
+      </div>
+      <div>
         <small class="display-block">Round</small>
         <Stepper round />
-      </Col>
-    </Row>
+      </div>
+    </div>
 
-    <Row class="margin-top">
-      <Col>
+    <div class="grid grid-cols-2 grid-gap margin-top">
+      <div>
         <small class="display-block">Fill</small>
         <Stepper fill />
-      </Col>
-      <Col>
+      </div>
+      <div>
         <small class="display-block">Round Fill</small>
         <Stepper fill round />
-      </Col>
-    </Row>
+      </div>
+    </div>
 
-    <Row class="margin-top">
-      <Col>
+    <div class="grid grid-cols-2 grid-gap margin-top">
+      <div>
         <small class="display-block">Small</small>
         <Stepper small />
-      </Col>
-      <Col>
+      </div>
+      <div>
         <small class="display-block">Small Round</small>
         <Stepper small round />
-      </Col>
-    </Row>
+      </div>
+    </div>
 
-    <Row class="margin-top">
-      <Col>
+    <div class="grid grid-cols-2 grid-gap margin-top">
+      <div>
         <small class="display-block">Small Fill</small>
         <Stepper small fill />
-      </Col>
-      <Col>
+      </div>
+      <div>
         <small class="display-block">Small Round Fill</small>
         <Stepper small round fill />
-      </Col>
-    </Row>
+      </div>
+    </div>
 
-    <Row class="margin-top">
-      <Col>
+    <div class="grid grid-cols-2 grid-gap margin-top">
+      <div>
         <small class="display-block">Large</small>
         <Stepper large />
-      </Col>
-      <Col>
+      </div>
+      <div>
         <small class="display-block">Large Round</small>
         <Stepper large round />
-      </Col>
-    </Row>
+      </div>
+    </div>
 
-    <Row class="margin-top">
-      <Col>
+    <div class="grid grid-cols-2 grid-gap margin-top">
+      <div>
         <small class="display-block">Large Fill</small>
         <Stepper large fill />
-      </Col>
-      <Col>
+      </div>
+      <div>
         <small class="display-block">Large Round Fill</small>
         <Stepper large round fill />
-      </Col>
-    </Row>
+      </div>
+    </div>
   </Block>
 
   <BlockTitle>Raised</BlockTitle>
   <Block strong class="text-align-center">
-    <Row>
-      <Col>
+    <div class="grid grid-cols-2 grid-gap">
+      <div>
         <small class="display-block">Default</small>
         <Stepper raised />
-      </Col>
-      <Col>
+      </div>
+      <div>
         <small class="display-block">Round</small>
         <Stepper raised round />
-      </Col>
-    </Row>
+      </div>
+    </div>
 
-    <Row class="margin-top">
-      <Col>
+    <div class="grid grid-cols-2 grid-gap margin-top">
+      <div>
         <small class="display-block">Fill</small>
         <Stepper raised fill />
-      </Col>
-      <Col>
+      </div>
+      <div>
         <small class="display-block">Round Fill</small>
         <Stepper raised fill round />
-      </Col>
-    </Row>
+      </div>
+    </div>
 
-    <Row class="margin-top">
-      <Col>
+    <div class="grid grid-cols-2 grid-gap margin-top">
+      <div>
         <small class="display-block">Small</small>
         <Stepper raised small />
-      </Col>
-      <Col>
+      </div>
+      <div>
         <small class="display-block">Small Round</small>
         <Stepper raised small round />
-      </Col>
-    </Row>
+      </div>
+    </div>
 
-    <Row class="margin-top">
-      <Col>
+    <div class="grid grid-cols-2 grid-gap margin-top">
+      <div>
         <small class="display-block">Small Fill</small>
         <Stepper raised small fill />
-      </Col>
-      <Col>
+      </div>
+      <div>
         <small class="display-block">Small Round Fill</small>
         <Stepper raised small round fill />
-      </Col>
-    </Row>
+      </div>
+    </div>
 
-    <Row class="margin-top">
-      <Col>
+    <div class="grid grid-cols-2 grid-gap margin-top">
+      <div>
         <small class="display-block">Large</small>
         <Stepper raised large />
-      </Col>
-      <Col>
+      </div>
+      <div>
         <small class="display-block">Large Round</small>
         <Stepper raised large round />
-      </Col>
-    </Row>
+      </div>
+    </div>
 
-    <Row class="margin-top">
-      <Col>
+    <div class="grid grid-cols-2 grid-gap margin-top">
+      <div>
         <small class="display-block">Large Fill</small>
         <Stepper raised large fill />
-      </Col>
-      <Col>
+      </div>
+      <div>
         <small class="display-block">Large Round Fill</small>
         <Stepper raised large round fill />
-      </Col>
-    </Row>
+      </div>
+    </div>
   </Block>
   <BlockTitle>Colors</BlockTitle>
   <Block strong class="text-align-center">
-    <Row>
-      <Col>
+    <div class="grid grid-cols-2 grid-gap">
+      <div>
         <Stepper fill color="red" />
-      </Col>
-      <Col>
+      </div>
+      <div>
         <Stepper fill round color="green" />
-      </Col>
-    </Row>
+      </div>
+    </div>
 
-    <Row class="margin-top">
-      <Col>
+    <div class="grid grid-cols-2 grid-gap margin-top">
+      <div>
         <Stepper fill color="blue" />
-      </Col>
-      <Col>
+      </div>
+      <div>
         <Stepper fill round color="pink" />
-      </Col>
-    </Row>
+      </div>
+    </div>
 
-    <Row class="margin-top">
-      <Col>
+    <div class="grid grid-cols-2 grid-gap margin-top">
+      <div>
         <Stepper fill small color="yellow" />
-      </Col>
-      <Col>
+      </div>
+      <div>
         <Stepper fill small round color="orange" />
-      </Col>
-    </Row>
+      </div>
+    </div>
 
-    <Row class="margin-top">
-      <Col>
+    <div class="grid grid-cols-2 grid-gap margin-top">
+      <div>
         <Stepper fill small color="gray" />
-      </Col>
-      <Col>
+      </div>
+      <div>
         <Stepper fill small round color="black" />
-      </Col>
-    </Row>
+      </div>
+    </div>
   </Block>
   <BlockTitle>Without input element</BlockTitle>
   <Block strong class="text-align-center">
-    <Row>
-      <Col>
+    <div class="grid grid-cols-2 grid-gap">
+      <div>
         <Stepper input={false} />
-      </Col>
-      <Col>
+      </div>
+      <div>
         <Stepper input={false} round />
-      </Col>
-    </Row>
+      </div>
+    </div>
   </Block>
   <BlockTitle>Min, max, step</BlockTitle>
   <Block strong class="text-align-center">
-    <Row>
-      <Col>
+    <div class="grid grid-cols-2 grid-gap">
+      <div>
         <Stepper fill value={100} min={0} max={1000} step={100} />
-      </Col>
-      <Col>
+      </div>
+      <div>
         <Stepper fill input={false} value={5} min={0} max={10} step={0.5} />
-      </Col>
-    </Row>
+      </div>
+    </div>
   </Block>
 
   <BlockTitle>Autorepeat (Tap & hold)</BlockTitle>
@@ -249,12 +247,12 @@
     control.
   </BlockHeader>
   <Block strong class="text-align-center">
-    <Row>
-      <Col>
+    <div class="grid grid-cols-2 grid-gap">
+      <div>
         <small class="display-block">Default</small>
         <Stepper fill value={0} min={0} max={100} step={1} autorepeat={true} />
-      </Col>
-      <Col>
+      </div>
+      <div>
         <small class="display-block">Dynamic</small>
         <Stepper
           fill
@@ -263,9 +261,10 @@
           max={100}
           step={1}
           autorepeat={true}
-          autorepeatDynamic={true} />
-      </Col>
-    </Row>
+          autorepeatDynamic={true}
+        />
+      </div>
+    </div>
   </Block>
 
   <BlockTitle>Wraps</BlockTitle>
@@ -274,11 +273,11 @@
     decrementing below minimum value sets value to maximum value
   </BlockHeader>
   <Block strong class="text-align-center">
-    <Row>
-      <Col>
+    <div class="grid grid-cols-2 grid-gap">
+      <div>
         <Stepper fill value={0} min={0} max={10} step={1} autorepeat={true} wraps={true} />
-      </Col>
-    </Row>
+      </div>
+    </div>
   </Block>
 
   <BlockTitle>Custom value element</BlockTitle>
@@ -308,7 +307,8 @@
           small
           fill
           raised
-          onStepperChange={setMeetingTime} />
+          onStepperChange={setMeetingTime}
+        />
       </span>
     </ListItem>
   </List>
@@ -320,8 +320,8 @@
     fractional part with defined accurancy. Click outside or enter Return key, ending manual mode.
   </BlockHeader>
   <Block strong class="text-align-center">
-    <Row>
-      <Col>
+    <div class="grid grid-cols-2 grid-gap">
+      <div>
         <Stepper
           fill
           value={0}
@@ -331,8 +331,9 @@
           autorepeat={true}
           wraps={true}
           manualInputMode={true}
-          decimalPoint={2} />
-      </Col>
-    </Row>
+          decimalPoint={2}
+        />
+      </div>
+    </div>
   </Block>
 </Page>

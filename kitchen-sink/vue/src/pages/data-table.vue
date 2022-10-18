@@ -214,11 +214,7 @@
             <th class="numeric-cell">Carbs</th>
             <th class="numeric-cell">Protein (g)</th>
             <th class="medium-only">
-              <f7-icon
-                ios="f7:chat_bubble_text_fill"
-                aurora="f7:chat_bubble_text_fill"
-                md="material:message"
-              />
+              <f7-icon ios="f7:chat_bubble_text_fill" md="material:message" />
               Comments
             </th>
           </tr>
@@ -354,16 +350,8 @@
       <div class="card-header">
         <div class="data-table-title">Nutrition</div>
         <div class="data-table-actions">
-          <f7-link
-            icon-ios="f7:line_horizontal_3_decrease"
-            icon-aurora="f7:line_horizontal_3_decrease"
-            icon-md="material:sort"
-          />
-          <f7-link
-            icon-ios="f7:ellipsis_vertical_circle"
-            icon-aurora="f7:ellipsis_vertical_circle"
-            icon-md="material:more_vert"
-          />
+          <f7-link icon-ios="f7:line_horizontal_3_decrease" icon-md="material:sort" />
+          <f7-link icon-ios="f7:ellipsis_vertical_circle" icon-md="material:more_vert" />
         </div>
       </div>
       <div class="card-content">
@@ -382,11 +370,7 @@
               <th class="numeric-cell">Carbs</th>
               <th class="numeric-cell">Protein (g)</th>
               <th class="medium-only">
-                <f7-icon
-                  ios="f7:chat_bubble_text_fill"
-                  aurora="f7:chat_bubble_text_fill"
-                  md="material:message"
-                />
+                <f7-icon ios="f7:chat_bubble_text_fill" md="material:message" />
                 Comments
               </th>
             </tr>
@@ -457,16 +441,8 @@
       <div class="card-header">
         <div class="data-table-title">Nutrition</div>
         <div class="data-table-actions">
-          <f7-link
-            icon-ios="f7:line_horizontal_3_decrease"
-            icon-aurora="f7:line_horizontal_3_decrease"
-            icon-md="material:sort"
-          />
-          <f7-link
-            icon-ios="f7:ellipsis_vertical_circle"
-            icon-aurora="f7:ellipsis_vertical_circle"
-            icon-md="material:more_vert"
-          />
+          <f7-link icon-ios="f7:line_horizontal_3_decrease" icon-md="material:sort" />
+          <f7-link icon-ios="f7:ellipsis_vertical_circle" icon-md="material:more_vert" />
         </div>
       </div>
       <div class="card-content">
@@ -485,11 +461,7 @@
               <th class="numeric-cell sortable-cell">Carbs</th>
               <th class="numeric-cell sortable-cell">Protein (g)</th>
               <th class="medium-only">
-                <f7-icon
-                  ios="f7:chat_bubble_text_fill"
-                  aurora="f7:chat_bubble_text_fill"
-                  md="material:message"
-                />
+                <f7-icon ios="f7:chat_bubble_text_fill" md="material:message" />
                 Comments
               </th>
             </tr>
@@ -561,16 +533,8 @@
         <div class="data-table-header">
           <div class="data-table-title">Nutrition</div>
           <div class="data-table-actions">
-            <f7-link
-              icon-ios="f7:line_horizontal_3_decrease"
-              icon-aurora="f7:line_horizontal_3_decrease"
-              icon-md="material:sort"
-            />
-            <f7-link
-              icon-ios="f7:ellipsis_vertical_circle"
-              icon-aurora="f7:ellipsis_vertical_circle"
-              icon-md="material:more_vert"
-            />
+            <f7-link icon-ios="f7:line_horizontal_3_decrease" icon-md="material:sort" />
+            <f7-link icon-ios="f7:ellipsis_vertical_circle" icon-md="material:more_vert" />
           </div>
         </div>
         <div class="data-table-header-selected">
@@ -578,12 +542,8 @@
             <span class="data-table-selected-count"></span> items selected
           </div>
           <div class="data-table-actions">
-            <f7-link icon-ios="f7:trash" icon-aurora="f7:trash" icon-md="material:delete" />
-            <f7-link
-              icon-ios="f7:ellipsis_vertical_circle"
-              icon-aurora="f7:ellipsis_vertical_circle"
-              icon-md="material:more_vert"
-            />
+            <f7-link icon-ios="f7:trash" icon-md="material:delete" />
+            <f7-link icon-ios="f7:ellipsis_vertical_circle" icon-md="material:more_vert" />
           </div>
         </div>
       </div>
@@ -603,11 +563,7 @@
               <th class="numeric-cell">Carbs</th>
               <th class="numeric-cell">Protein (g)</th>
               <th class="medium-only">
-                <f7-icon
-                  ios="f7:chat_bubble_text_fill"
-                  aurora="f7:chat_bubble_text_fill"
-                  md="material:message"
-                />
+                <f7-icon ios="f7:chat_bubble_text_fill" md="material:message" />
                 Comments
               </th>
             </tr>
@@ -678,16 +634,8 @@
       <div class="card-header">
         <div class="data-table-links"><a class="button">Add</a><a class="button">Remove</a></div>
         <div class="data-table-actions">
-          <f7-link
-            icon-ios="f7:line_horizontal_3_decrease"
-            icon-aurora="f7:line_horizontal_3_decrease"
-            icon-md="material:sort"
-          />
-          <f7-link
-            icon-ios="f7:ellipsis_vertical_circle"
-            icon-aurora="f7:ellipsis_vertical_circle"
-            icon-md="material:more_vert"
-          />
+          <f7-link icon-ios="f7:line_horizontal_3_decrease" icon-md="material:sort" />
+          <f7-link icon-ios="f7:ellipsis_vertical_circle" icon-md="material:more_vert" />
         </div>
       </div>
       <div class="card-content">
@@ -706,11 +654,7 @@
               <th class="numeric-cell">Carbs</th>
               <th class="numeric-cell">Protein (g)</th>
               <th class="medium-only">
-                <f7-icon
-                  ios="f7:chat_bubble_text_fill"
-                  aurora="f7:chat_bubble_text_fill"
-                  md="material:message"
-                />
+                <f7-icon ios="f7:chat_bubble_text_fill" md="material:message" />
                 Comments
               </th>
               <th></th>
@@ -731,12 +675,8 @@
               <td class="numeric-cell">4.0</td>
               <td class="medium-only">I like frozen yogurt</td>
               <td class="actions-cell">
-                <f7-link
-                  icon-ios="f7:square_pencil"
-                  icon-aurora="f7:square_pencil"
-                  icon-md="material:edit"
-                />
-                <f7-link icon-ios="f7:trash" icon-aurora="f7:trash" icon-md="material:delete" />
+                <f7-link icon-ios="f7:square_pencil" icon-md="material:edit" />
+                <f7-link icon-ios="f7:trash" icon-md="material:delete" />
               </td>
             </tr>
             <tr>
@@ -753,12 +693,8 @@
               <td class="numeric-cell">4.4</td>
               <td class="medium-only">But like ice cream more</td>
               <td class="actions-cell">
-                <f7-link
-                  icon-ios="f7:square_pencil"
-                  icon-aurora="f7:square_pencil"
-                  icon-md="material:edit"
-                />
-                <f7-link icon-ios="f7:trash" icon-aurora="f7:trash" icon-md="material:delete" />
+                <f7-link icon-ios="f7:square_pencil" icon-md="material:edit" />
+                <f7-link icon-ios="f7:trash" icon-md="material:delete" />
               </td>
             </tr>
             <tr>
@@ -775,12 +711,8 @@
               <td class="numeric-cell">6.0</td>
               <td class="medium-only">Super tasty</td>
               <td class="actions-cell">
-                <f7-link
-                  icon-ios="f7:square_pencil"
-                  icon-aurora="f7:square_pencil"
-                  icon-md="material:edit"
-                />
-                <f7-link icon-ios="f7:trash" icon-aurora="f7:trash" icon-md="material:delete" />
+                <f7-link icon-ios="f7:square_pencil" icon-md="material:edit" />
+                <f7-link icon-ios="f7:trash" icon-md="material:delete" />
               </td>
             </tr>
             <tr>
@@ -797,12 +729,8 @@
               <td class="numeric-cell">4.3</td>
               <td class="medium-only">Don't like it</td>
               <td class="actions-cell">
-                <f7-link
-                  icon-ios="f7:square_pencil"
-                  icon-aurora="f7:square_pencil"
-                  icon-md="material:edit"
-                />
-                <f7-link icon-ios="f7:trash" icon-aurora="f7:trash" icon-md="material:delete" />
+                <f7-link icon-ios="f7:square_pencil" icon-md="material:edit" />
+                <f7-link icon-ios="f7:trash" icon-md="material:delete" />
               </td>
             </tr>
           </tbody>
@@ -817,16 +745,8 @@
       <div class="card-header">
         <div class="data-table-title">Nutrition</div>
         <div class="data-table-actions">
-          <f7-link
-            icon-ios="f7:line_horizontal_3_decrease"
-            icon-aurora="f7:line_horizontal_3_decrease"
-            icon-md="material:sort"
-          />
-          <f7-link
-            icon-ios="f7:ellipsis_vertical_circle"
-            icon-aurora="f7:ellipsis_vertical_circle"
-            icon-md="material:more_vert"
-          />
+          <f7-link icon-ios="f7:line_horizontal_3_decrease" icon-md="material:sort" />
+          <f7-link icon-ios="f7:ellipsis_vertical_circle" icon-md="material:more_vert" />
         </div>
       </div>
       <div class="card-content">

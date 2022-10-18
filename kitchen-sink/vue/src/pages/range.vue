@@ -6,13 +6,13 @@
     <f7-list simple-list>
       <f7-list-item>
         <div>
-          <f7-icon ios="f7:speaker_fill" aurora="f7:speaker_fill" md="material:volume_mute" />
+          <f7-icon ios="f7:speaker_fill" md="material:volume_mute" />
         </div>
         <div style="width: 100%; margin: 0 16px">
           <f7-range :min="0" :max="100" :step="1" :value="10" />
         </div>
         <div>
-          <f7-icon ios="f7:speaker_3_fill" aurora="f7:speaker_3_fill" md="material:volume_up" />
+          <f7-icon ios="f7:speaker_3_fill" md="material:volume_up" />
         </div>
       </f7-list-item>
     </f7-list>
@@ -21,13 +21,13 @@
     <f7-list simple-list>
       <f7-list-item>
         <div>
-          <f7-icon ios="f7:sun_min" aurora="f7:sun_min" md="material:brightness_low" />
+          <f7-icon ios="f7:sun_min" md="material:brightness_low" />
         </div>
         <div style="width: 100%; margin: 0 16px">
           <f7-range :min="0" :max="100" :step="1" :value="50" :label="true" color="orange" />
         </div>
         <div>
-          <f7-icon ios="f7:sun_max_fill" aurora="f7:sun_max_fill" md="material:brightness_high" />
+          <f7-icon ios="f7:sun_max_fill" md="material:brightness_high" />
         </div>
       </f7-list-item>
     </f7-list>
@@ -38,11 +38,7 @@
     <f7-list simple-list>
       <f7-list-item>
         <div>
-          <f7-icon
-            ios="f7:money_dollar_circle"
-            aurora="f7:money_dollar_circle"
-            md="material:attach_money"
-          />
+          <f7-icon ios="f7:money_dollar_circle" md="material:attach_money" />
         </div>
         <div style="width: 100%; margin: 0 16px">
           <f7-range
@@ -57,11 +53,7 @@
           />
         </div>
         <div>
-          <f7-icon
-            ios="f7:money_dollar_circle_fill"
-            aurora="f7:money_dollar_circle_fill"
-            md="material:monetization_on"
-          />
+          <f7-icon ios="f7:money_dollar_circle_fill" md="material:monetization_on" />
         </div>
       </f7-list-item>
     </f7-list>

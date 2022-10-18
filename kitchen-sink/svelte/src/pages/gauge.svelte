@@ -1,15 +1,5 @@
 <script>
-  import {
-    Navbar,
-    Page,
-    BlockTitle,
-    Block,
-    Segmented,
-    Button,
-    Gauge,
-    Row,
-    Col,
-  } from 'framework7-svelte';
+  import { Navbar, Page, BlockTitle, Block, Segmented, Button, Gauge } from 'framework7-svelte';
 
   let gaugeValue = 0.5;
 </script>
@@ -31,7 +21,8 @@
       valueText={`${gaugeValue * 100}%`}
       valueFontSize={41}
       valueTextColor="#2196f3"
-      labelText="amount of something" />
+      labelText="amount of something"
+    />
     <Segmented tag="p" raised>
       <Button active={gaugeValue === 0} onClick={() => (gaugeValue = 0)}>0%</Button>
       <Button active={gaugeValue === 0.25} onClick={() => (gaugeValue = 0.25)}>25%</Button>
@@ -43,16 +34,17 @@
 
   <BlockTitle>Circle Gauges</BlockTitle>
   <Block strong>
-    <Row>
-      <Col class="text-align-center">
+    <div class="grid grid-cols-2 grid-gap">
+      <div class="text-align-center">
         <Gauge
           type="circle"
           value={0.44}
           valueText="44%"
           valueTextColor="#ff9800"
-          borderColor="#ff9800" />
-      </Col>
-      <Col class="text-align-center">
+          borderColor="#ff9800"
+        />
+      </div>
+      <div class="text-align-center">
         <Gauge
           type="circle"
           value={0.12}
@@ -61,22 +53,24 @@
           borderColor="#4caf50"
           labelText="of $1000 budget"
           labelTextColor="#f44336"
-          labelFontWeight={700} />
-      </Col>
-    </Row>
+          labelFontWeight={700}
+        />
+      </div>
+    </div>
   </Block>
   <BlockTitle>Semicircle Gauges</BlockTitle>
   <Block strong>
-    <Row>
-      <Col class="text-align-center">
+    <div class="grid grid-cols-2 grid-gap">
+      <div class="text-align-center">
         <Gauge
           type="semicircle"
           value={0.3}
           valueText="30%"
           valueTextColor="#f44336"
-          borderColor="#f44336" />
-      </Col>
-      <Col class="text-align-center">
+          borderColor="#f44336"
+        />
+      </div>
+      <div class="text-align-center">
         <Gauge
           type="semicircle"
           value={0.5}
@@ -84,14 +78,15 @@
           valueTextColor="#e91e63"
           borderColor="#e91e63"
           labelText="of 60kg total"
-          labelTextColor="#333" />
-      </Col>
-    </Row>
+          labelTextColor="#333"
+        />
+      </div>
+    </div>
   </Block>
   <BlockTitle>Customization</BlockTitle>
   <Block strong>
-    <Row>
-      <Col class="text-align-center">
+    <div class="grid grid-cols-2 grid-gap">
+      <div class="text-align-center">
         <Gauge
           type="circle"
           value={0.35}
@@ -102,9 +97,10 @@
           borderWidth={20}
           borderColor="#4caf50"
           borderBgColor="#ffeb3b"
-          bgColor="#ffeb3b" />
-      </Col>
-      <Col class="text-align-center">
+          bgColor="#ffeb3b"
+        />
+      </div>
+      <div class="text-align-center">
         <Gauge
           type="circle"
           value={0.67}
@@ -115,12 +111,13 @@
           labelTextColor="#4caf50"
           labelFontWeight={800}
           labelFontSize={12}
-          borderWidth={30} />
-      </Col>
-    </Row>
+          borderWidth={30}
+        />
+      </div>
+    </div>
     <br />
-    <Row>
-      <Col class="text-align-center">
+    <div class="grid grid-cols-2 grid-gap">
+      <div class="text-align-center">
         <Gauge
           type="semicircle"
           value={0.5}
@@ -130,9 +127,10 @@
           valueFontWeight={700}
           borderWidth={10}
           borderColor="#ffeb3b"
-          borderBgColor="transparent" />
-      </Col>
-      <Col class="text-align-center">
+          borderBgColor="transparent"
+        />
+      </div>
+      <div class="text-align-center">
         <Gauge
           type="semicircle"
           value={0.77}
@@ -141,8 +139,9 @@
           labelTextColor="#ff9800"
           labelFontWeight={800}
           labelFontSize={12}
-          borderWidth={10} />
-      </Col>
-    </Row>
+          borderWidth={10}
+        />
+      </div>
+    </div>
   </Block>
 </Page>

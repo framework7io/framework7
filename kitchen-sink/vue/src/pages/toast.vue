@@ -84,10 +84,9 @@ export default {
       // Create toast
       if (!self.toastIcon) {
         self.toastIcon = f7.toast.create({
-          icon:
-            theme.ios || theme.aurora
-              ? '<i class="f7-icons">star_fill</i>'
-              : '<i class="material-icons">star</i>',
+          icon: theme.ios
+            ? '<i class="f7-icons">star_fill</i>'
+            : '<i class="material-icons">star</i>',
           text: "I'm on center",
           position: 'center',
           closeTimeout: 2000,

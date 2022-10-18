@@ -14,8 +14,6 @@
     Page,
     BlockTitle,
     Button,
-    Row,
-    Col,
     Block,
     List,
     ListInput,
@@ -182,59 +180,43 @@
   <BlockTitle medium>Layout Themes</BlockTitle>
   <Block strong>
     <p>Framework7 comes with 2 main layout themes: Light (default) and Dark:</p>
-    <Row>
-      <Col
-        width="50"
-        class="bg-color-white demo-theme-picker"
-        onClick={() => setLayoutTheme('light')}
-      >
+    <div class="grid grid-cols-2 grid-gap">
+      <div class="bg-color-white demo-theme-picker" onClick={() => setLayoutTheme('light')}>
         {#if theme === 'light'}
           <Checkbox checked disabled />
         {/if}
-      </Col>
-      <Col
-        width="50"
-        class="bg-color-black demo-theme-picker"
-        onClick={() => setLayoutTheme('dark')}
-      >
+      </div>
+      <div class="bg-color-black demo-theme-picker" onClick={() => setLayoutTheme('dark')}>
         {#if theme === 'dark'}
           <Checkbox checked disabled />
         {/if}
-      </Col>
-    </Row>
+      </div>
+    </div>
   </Block>
   <BlockTitle medium>Navigation Bars Style</BlockTitle>
   <Block strong>
     <p>Switch navigation bars to filled style:</p>
-    <Row>
-      <Col
-        width="50"
-        class="demo-bars-picker demo-bars-picker-empty"
-        onClick={() => setBarsStyle('empty')}
-      >
+    <div class="grid grid-cols-2 grid-gap">
+      <div class="demo-bars-picker demo-bars-picker-empty" onClick={() => setBarsStyle('empty')}>
         <div class="demo-navbar" />
         {#if barsStyle === 'empty'}
           <Checkbox checked disabled />
         {/if}
-      </Col>
-      <Col
-        width="50"
-        class="demo-bars-picker demo-bars-picker-fill"
-        onClick={() => setBarsStyle('fill')}
-      >
+      </div>
+      <div class="demo-bars-picker demo-bars-picker-fill" onClick={() => setBarsStyle('fill')}>
         <div class="demo-navbar" />
         {#if barsStyle === 'fill'}
           <Checkbox checked disabled />
         {/if}
-      </Col>
-    </Row>
+      </div>
+    </div>
   </Block>
   <BlockTitle medium>Default Color Themes</BlockTitle>
   <Block strong>
     <p>Framework7 comes with {colors.length} color themes set.</p>
-    <Row>
+    <div class="grid grid-cols-3 medium-grid-cols-4 large-grid-cols-5 grid-gap">
       {#each colors as color, index}
-        <Col width="33" medium="25" large="20" key={index}>
+        <div key={index}>
           <Button
             fill
             round
@@ -245,13 +227,9 @@
           >
             {color}
           </Button>
-        </Col>
+        </div>
       {/each}
-
-      <Col width="33" medium="25" large="20" />
-      <Col width="33" medium="25" large="20" />
-      <Col width="33" medium="25" large="20" />
-    </Row>
+    </div>
   </Block>
   <BlockTitle medium>Custom Color Theme</BlockTitle>
   <List>

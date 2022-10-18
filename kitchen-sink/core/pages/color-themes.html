@@ -19,8 +19,8 @@
       <div class="block-title block-title-medium">Layout Themes</div>
       <div class="block block-strong">
         <p>Framework7 comes with 2 main layout themes: Light (default) and Dark:</p>
-        <div class="row">
-          <div class="col-50 bg-color-white demo-theme-picker" @click=${()=>setLayoutTheme('light')}>
+        <div class="grid grid-cols-2 grid-gap">
+          <div class="bg-color-white demo-theme-picker" @click=${()=>setLayoutTheme('light')}>
             ${theme === 'light' && $h`
             <label class="checkbox">
               <input type="checkbox" checked disabled />
@@ -28,7 +28,7 @@
             </label>
             `}
           </div>
-          <div class="col-50 bg-color-black demo-theme-picker" @click=${()=>setLayoutTheme('dark')}>
+          <div class="bg-color-black demo-theme-picker" @click=${()=>setLayoutTheme('dark')}>
             ${theme === 'dark' && $h`
             <label class="checkbox">
               <input type="checkbox" checked disabled />
@@ -41,8 +41,8 @@
       <div class="block-title block-title-medium">Navigation Bars Style</div>
       <div class="block block-strong">
         <p>Switch navigation bars to filled style:</p>
-        <div class="row">
-          <div class="col-50 demo-bars-picker demo-bars-picker-empty" @click=${()=>setBarsStyle('empty')}>
+        <div class="grid grid-cols-2 grid-gap">
+          <div class="demo-bars-picker demo-bars-picker-empty" @click=${()=>setBarsStyle('empty')}>
             <div class="demo-navbar"></div>
             ${barsStyle === 'empty' && $h`
             <label class="checkbox">
@@ -51,7 +51,7 @@
             </label>
             `}
           </div>
-          <div class="col-50 demo-bars-picker demo-bars-picker-fill" @click=${()=>setBarsStyle('fill')}>
+          <div class="demo-bars-picker demo-bars-picker-fill" @click=${()=>setBarsStyle('fill')}>
             <div class="demo-navbar"></div>
             ${barsStyle === 'fill' && $h`
             <label class="checkbox">
@@ -65,16 +65,13 @@
       <div class="block-title block-title-medium">Default Color Themes</div>
       <div class="block block-strong">
         <p>Framework7 comes with ${colors.length} color themes set.</p>
-        <div class="row">
+        <div class="grid grid-cols-3 medium-grid-cols-4 large-grid-cols-5 grid-gap">
           ${colors.map((color) => $h`
-          <div class="col-33 medium-25 large-20">
+          <div>
             <button class="button button-fill demo-color-picker-button button-round button-small color-${color}"
               @click=${()=>setColorTheme(color)}>${color}</button>
           </div>
           `)}
-          <div class="col-33 medium-25 large-20"></div>
-          <div class="col-33 medium-25 large-20"></div>
-          <div class="col-33 medium-25 large-20"></div>
         </div>
       </div>
       <div class="block-title block-title-medium">Custom Color Theme</div>

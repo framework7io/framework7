@@ -89,30 +89,15 @@
   <Block strong>
     <Breadcrumbs>
       <BreadcrumbsItem>
-        <Link
-          iconIos="f7:house_fill"
-          iconAurora="f7:house_fill"
-          iconMd="material:home"
-          text="Home"
-        />
+        <Link iconIos="f7:house_fill" iconMd="material:home" text="Home" />
       </BreadcrumbsItem>
       <BreadcrumbsSeparator />
       <BreadcrumbsItem>
-        <Link
-          iconIos="f7:square_list_fill"
-          iconAurora="f7:square_list_fill"
-          iconMd="material:list_alt"
-          text="Catalog"
-        />
+        <Link iconIos="f7:square_list_fill" iconMd="material:list_alt" text="Catalog" />
       </BreadcrumbsItem>
       <BreadcrumbsSeparator />
       <BreadcrumbsItem>
-        <Link
-          iconIos="f7:device_phone_portrait"
-          iconAurora="f7:device_phone_portrait"
-          iconMd="material:smartphone"
-          text="Phones"
-        />
+        <Link iconIos="f7:device_phone_portrait" iconMd="material:smartphone" text="Phones" />
       </BreadcrumbsItem>
       <BreadcrumbsSeparator />
       <BreadcrumbsItem>

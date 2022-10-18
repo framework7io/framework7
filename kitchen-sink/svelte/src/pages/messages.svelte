@@ -225,46 +225,38 @@
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
-  <Navbar title="Messages" backLink="Back"></Navbar>
+  <Navbar title="Messages" backLink="Back" />
 
   <Messagebar
-    placeholder={placeholder}
-    attachmentsVisible={attachmentsVisible}
-    sheetVisible={sheetVisible}
+    {placeholder}
+    {attachmentsVisible}
+    {sheetVisible}
     value={messageText}
-    onInput={(e) => messageText = e.target.value}
+    onInput={(e) => (messageText = e.target.value)}
   >
-    <a class="link icon-only" slot="inner-start" on:click={() => sheetVisible = !sheetVisible}>
-      <Icon
-        ios="f7:camera_fill"
-        aurora="f7:camera_fill"
-        md="material:camera_alt"
-      />
+    <a class="link icon-only" slot="inner-start" on:click={() => (sheetVisible = !sheetVisible)}>
+      <Icon ios="f7:camera_fill" md="material:camera_alt" />
     </a>
     <a class="link icon-only" slot="inner-end" on:click={sendMessage}>
-      <Icon
-        ios="f7:arrow_up_circle_fill"
-        aurora="f7:arrow_up_circle_fill"
-        md="material:send"
-      />
+      <Icon ios="f7:arrow_up_circle_fill" md="material:send" />
     </a>
     <MessagebarAttachments>
       {#each attachments as image, index (index)}
         <MessagebarAttachment
           key={index}
-          image={image}
+          {image}
           onAttachmentDelete={() => deleteAttachment(image)}
-        ></MessagebarAttachment>
+        />
       {/each}
     </MessagebarAttachments>
     <MessagebarSheet>
       {#each images as image, index (index)}
         <MessagebarSheetImage
           key={index}
-          image={image}
+          {image}
           checked={attachments.indexOf(image) >= 0}
           onChange={handleAttachment}
-        ></MessagebarSheetImage>
+        />
       {/each}
     </MessagebarSheet>
   </Messagebar>
@@ -292,7 +284,7 @@
         tail={true}
         header={`${typingMessage.name} is typing`}
         avatar={typingMessage.avatar}
-      ></Message>
+      />
     {/if}
   </Messages>
 </Page>

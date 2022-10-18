@@ -1,5 +1,5 @@
 <script>
-  import { Navbar, Page, Block, Row, Col, Button, Panel, Link } from 'framework7-svelte';
+  import { Navbar, Page, Block, Button, Panel, Link } from 'framework7-svelte';
 </script>
 
 <Page id="panel-page">
@@ -22,23 +22,17 @@
       above the content (like left panel here) and
       <b> reveal</b>
       (like right panel). You can put absolutely anything inside: data lists, forms, custom content,
-      and even other isolated app view (like in right panel now) with its own dynamic navbar.
-      Checkout panels:
+      and even other isolated app view (like in right panel now) with its own dynamic navbar. Checkout
+      panels:
     </p>
   </Block>
   <Block>
-    <Row tag="p">
-      <Col tag="span">
-        <Button raised fill panelOpen="left">Open left panel</Button>
-      </Col>
-      <Col tag="span">
-        <Button raised fill panelOpen="right">Open right panel</Button>
-      </Col>
-    </Row>
-    <Row tag="p">
-      <Col tag="span">
-        <Button raised fill panelOpen="#panel-nested">Open nested panel</Button>
-      </Col>
-    </Row>
+    <p class="grid grid-cols-2 grid-gap">
+      <Button raised fill panelOpen="left">Open left panel</Button>
+      <Button raised fill panelOpen="right">Open right panel</Button>
+    </p>
+    <p>
+      <Button raised fill panelOpen="#panel-nested">Open nested panel</Button>
+    </p>
   </Block>
 </Page>
