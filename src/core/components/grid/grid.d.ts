@@ -7,14 +7,8 @@ import Framework7, {
 export namespace Grid {
   interface AppMethods {}
   interface AppParams {}
-  interface DomEvents {
-    /** Event will be triggered on resizable grid column (or row) resize */
-    'grid:resize': () => void;
-  }
-  interface AppEvents {
-    /** Event will be triggered when column or row resized */
-    gridResize: (el: HTMLElement) => void;
-  }
+  interface DomEvents {}
+  interface AppEvents {}
 }
 
 declare const GridComponent: Framework7Plugin;

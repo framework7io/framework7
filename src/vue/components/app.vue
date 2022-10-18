@@ -45,7 +45,6 @@ export default {
     dialog: { type: Object, default: () => undefined },
     form: { type: Object, default: () => undefined },
     gauge: { type: Object, default: () => undefined },
-    grid: { type: Object, default: () => undefined },
     infiniteScroll: { type: Object, default: () => undefined },
     input: { type: Object, default: () => undefined },
     lazy: { type: Object, default: () => undefined },
