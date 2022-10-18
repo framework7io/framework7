@@ -133,9 +133,6 @@ export default () => {
         <ListItem reloadDetail link="/login-screen/" title="Login Screen">
           <Icon slot="media" icon="icon-f7" />
         </ListItem>
-        <ListItem reloadDetail link="/menu/" title="Menu">
-          <Icon slot="media" icon="icon-f7" />
-        </ListItem>
         <ListItem reloadDetail link="/menu-list/" title="Menu List">
           <Icon slot="media" icon="icon-f7" />
         </ListItem>

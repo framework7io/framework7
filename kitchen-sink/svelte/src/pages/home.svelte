@@ -127,9 +127,6 @@
     <ListItem link="/login-screen/" title="Login Screen">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem link="/menu/" title="Menu">
-      <i class="icon icon-f7" slot="media" />
-    </ListItem>
     <ListItem link="/menu-list/" title="Menu List">
       <i class="icon icon-f7" slot="media" />
     </ListItem>

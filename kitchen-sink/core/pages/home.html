@@ -281,14 +281,6 @@
             </a>
           </li>
           <li>
-            <a class="item-content item-link" href="/menu/">
-              <div class="item-media"><i class="icon icon-f7"></i></div>
-              <div class="item-inner">
-                <div class="item-title">Menu</div>
-              </div>
-            </a>
-          </li>
-          <li>
             <a class="item-content item-link" href="/menu-list/">
               <div class="item-media"><i class="icon icon-f7"></i></div>
               <div class="item-inner">
@@ -624,20 +616,6 @@
 </template>
 <script>
   export default function (props, ctx) {
-    var $f7router = ctx.$f7router;
-    var $el = ctx.$el;
-    var $f7 = ctx.$f7;
-    var $onMounted = ctx.$onMounted;
-    var $on = ctx.$on;
-
-    function onResize() {
-      if ($f7.width >= 768) {
-        $el.value.find('.list:not(.searchbar-not-found)').addClass('menu-list');
-      } else {
-        $el.value.find('.list:not(.searchbar-not-found)').removeClass('menu-list');
-      }
-    }
-
     return $render;
   };
 </script>

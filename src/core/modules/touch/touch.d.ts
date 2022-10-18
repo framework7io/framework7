@@ -24,13 +24,13 @@ export namespace Touch {
           tapHoldPreventClicks?: boolean;
           /** When enabled, app will add "active-state" class to currently touched (:active) element.. (default true) */
           activeState?: boolean;
-          /** CSS selector of elements where enabled activeState will add appropriate active class. (default a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus, .card-expandable, .menu-item, .link, .item-link) */
+          /** CSS selector of elements where enabled activeState will add appropriate active class. (default a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus, .card-expandable, .link, .item-link) */
           activeStateElements?: string;
           /** Enables MD-theme specific touch ripple effect. (default true) */
           mdTouchRipple?: boolean;
           /** Enables iOS-theme specific touch ripple effect. (default false) */
           iosTouchRipple?: boolean;
-          /** CSS selector of elements to apply touch ripple effect on click. (default .ripple, .link, .item-link, .list-button, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell:not(.input-cell), .notification-close-button, .stepper-button, .stepper-button-minus, .stepper-button-plus, .menu-item-content) */
+          /** CSS selector of elements to apply touch ripple effect on click. (default .ripple, .link, .item-link, .list-button, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell:not(.input-cell), .notification-close-button, .stepper-button, .stepper-button-minus, .stepper-button-plus) */
           touchRippleElements?: string;
           /** CSS selector of elements to with inset touch ripple effect. (default .ripple-inset, .icon-only, .searchbar-disable-button, .input-clear-button, .notification-close-button, .md .navbar .link.back) */
           touchRippleInsetElements?: string;
