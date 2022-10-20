@@ -1,12 +1,6 @@
-- Preloader
-
-  - Colors?
-
-- Bars links colors & text color
-- Badge
-  - fix colors
 - Remove
   - Typography
   - Lazy???
-- Unify colors
+- Colors
+  - Move to build
 - Update demos

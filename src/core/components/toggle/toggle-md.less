@@ -1,8 +1,8 @@
 .md {
   .toggle {
     input[type='checkbox']:checked + .toggle-icon {
-      background: var(--f7-toggle-active-bg-color, var(--f7-theme-color));
-      border-color: var(--f7-toggle-active-border-color, var(--f7-theme-color));
+      background: var(--f7-toggle-active-bg-color);
+      border-color: var(--f7-toggle-active-border-color);
       &:after {
         .ltr({
           transform: translateX(calc(var(--f7-toggle-width) - var(--f7-toggle-height))) scale(1);
@@ -10,7 +10,7 @@
         .rtl({
           transform: translateX(calc(-1 * (var(--f7-toggle-width) - var(--f7-toggle-height)))) scale(1);
         });
-        background: var(--f7-toggle-active-knob-bg-color, var(--f7-md-on-primary));
+        background: var(--f7-toggle-active-knob-bg-color);
       }
     }
     &.active-state input[type='checkbox']:checked + .toggle-icon {
@@ -25,10 +25,10 @@
     }
   }
   .toggle-icon {
-    background: var(--f7-toggle-inactive-bg-color, var(--f7-md-surface-variant));
-    border: 2px solid var(--f7-toggle-inactive-border-color, var(--f7-md-outline));
+    background: var(--f7-toggle-inactive-bg-color);
+    border: 2px solid var(--f7-toggle-inactive-border-color);
     &:after {
-      background: var(--f7-toggle-inactive-knob-bg-color, var(--f7-md-outline));
+      background: var(--f7-toggle-inactive-knob-bg-color);
       height: calc(var(--f7-toggle-height) - 8px);
       width: calc(var(--f7-toggle-height) - 8px);
       top: 2px;

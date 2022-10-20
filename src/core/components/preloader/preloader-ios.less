@@ -1,4 +1,5 @@
 .ios {
+  color: var(--f7-preloader-color);
   .preloader-inner {
     animation: ios-preloader-spin 1s steps(8, end) infinite;
   }
@@ -7,13 +8,13 @@
     width: 11.6%;
     height: 33.33%;
     border-radius: 100px;
-    background: var(--f7-preloader-color);
+    background: currentColor;
     position: absolute;
     left: 50%;
     top: 50%;
     transform-origin: center 150%;
   }
-  .preloader.color-multi .preloader-inner-line {
+  .preloader-multi-color .preloader-inner-line {
     animation: ios-preloader-multicolor 3s linear infinite;
   }
   @indexes: 0, 1, 2, 3, 4, 5, 6, 7;

@@ -66,29 +66,18 @@
   --f7-dialog-title-font-size: 24px;
   --f7-dialog-title-font-weight: 400;
   --f7-dialog-title-line-height: 1.3;
-
   --f7-dialog-button-font-size: 14px;
   --f7-dialog-button-height: 40px;
   --f7-dialog-button-letter-spacing: normal;
   --f7-dialog-button-font-weight: 500;
   --f7-dialog-button-text-transform: none;
-  --f7-dialog-button-pressed-bg-color: rgba(var(--f7-theme-color-rgb), 0.15);
-
-  --f7-dialog-button-strong-bg-color: var(--f7-theme-color);
-  --f7-dialog-button-strong-text-color: var(--f7-md-on-primary);
   --f7-dialog-button-strong-font-weight: 500;
-  --f7-dialog-button-strong-pressed-bg-color: var(--f7-theme-color-shade);
-
   --f7-dialog-input-border-radius: 0px;
   --f7-dialog-input-font-size: 16px;
   --f7-dialog-input-height: 36px;
   --f7-dialog-input-border-color: transparent;
   --f7-dialog-input-border-width: 0px;
-
   --f7-dialog-preloader-size: 32px;
-  --f7-dialog-bg-color: var(--f7-md-surface-3);
-  --f7-dialog-text-color: var(--f7-md-on-surface-variant);
-  --f7-dialog-title-text-color: var(--f7-md-on-surface);
   --f7-dialog-input-bg-color: transparent;
   .light-vars({
     --f7-dialog-input-placeholder-color: rgba(0,0,0,0.35);
@@ -96,5 +85,14 @@
   .dark-vars({
     --f7-dialog-input-placeholder-color: rgba(255,255,255,0.54);
   });
+});
 
+.md-color-vars({
+  --f7-dialog-button-pressed-bg-color: rgba(var(--f7-theme-color-rgb), 0.15);
+  --f7-dialog-button-strong-bg-color: var(--f7-theme-color);
+  --f7-dialog-button-strong-text-color: var(--f7-md-on-primary);
+  --f7-dialog-button-strong-pressed-bg-color: var(--f7-theme-color-shade);
+  --f7-dialog-bg-color: var(--f7-md-surface-3);
+  --f7-dialog-text-color: var(--f7-md-on-surface-variant);
+  --f7-dialog-title-text-color: var(--f7-md-on-surface);
 });

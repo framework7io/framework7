@@ -79,9 +79,7 @@
   });
 });
 .md-vars({
-  --f7-calendar-sheet-bg-color: var(--f7-md-surface-1);
   --f7-calendar-sheet-border-color: transparent;
-  --f7-calendar-selected-text-color: var(--f7-md-on-primary);
   --f7-calendar-header-height: 64px;
   --f7-calendar-header-font-size: 24px;
   --f7-calendar-header-font-weight: 400;
@@ -89,19 +87,22 @@
   --f7-calendar-footer-height: 56px;
   --f7-calendar-footer-font-size: 14px;
   --f7-calendar-week-header-height: 24px;
-  --f7-calendar-week-header-text-color: var(--f7-md-on-surface-variant);
   --f7-calendar-day-font-size: 14px;
-  --f7-calendar-day-text-color:  var(--f7-md-on-surface);
-  --f7-calendar-prev-next-text-color: rgba(var(--f7-md-on-surface-variant-rgb), 0.55);
-  /*
-  --f7-calendar-today-text-color: var(--f7-theme-color);
-  */
   --f7-calendar-today-bg-color: none;
   --f7-calendar-day-size: 32px;
   --f7-calendar-picker-font-size: 14px;
   --f7-calendar-time-selector-font-size: 14px;
   --f7-calendar-modal-border-radius: 28px;
-  --f7-calendar-modal-bg-color: var(--f7-md-surface-1);
   --f7-calendar-modal-box-shadow: none;
 
+});
+
+.md-color-vars({
+  --f7-calendar-sheet-bg-color: var(--f7-md-surface-1);
+  --f7-calendar-selected-text-color: var(--f7-md-on-primary);
+  --f7-calendar-week-header-text-color: var(--f7-md-on-surface-variant);
+  --f7-calendar-day-text-color:  var(--f7-md-on-surface);
+  --f7-calendar-prev-next-text-color: rgba(var(--f7-md-on-surface-variant-rgb), 0.55);
+  --f7-calendar-today-text-color: var(--f7-theme-color);
+  --f7-calendar-modal-bg-color: var(--f7-md-surface-1);
 });

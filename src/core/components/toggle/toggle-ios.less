@@ -8,7 +8,7 @@
         transform: scale(0);
       }
       &:after {
-        background: var(--f7-toggle-active-knob-bg-color, var(--f7-md-outline));
+        background: var(--f7-toggle-active-knob-bg-color);
         .ltr({
           transform: translateX(calc(var(--f7-toggle-width) - var(--f7-toggle-height)));
         });
@@ -35,7 +35,7 @@
       transform: scale(1);
     }
     &:after {
-      background: var(--f7-toggle-inactive-knob-bg-color, var(--f7-md-outline));
+      background: var(--f7-toggle-inactive-knob-bg-color);
       height: calc(var(--f7-toggle-height) - 4px);
       width: calc(var(--f7-toggle-height) - 4px);
       top: 2px;

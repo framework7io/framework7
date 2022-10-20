@@ -39,6 +39,15 @@
     }
   }
 }
+.md-color-vars(@ruleset) {
+  & when (@includeMdTheme) {
+    .md,
+    .md .dark,
+    .md [class*='color-'] {
+      @ruleset();
+    }
+  }
+}
 .dark-vars(@ruleset) {
   & when (@includeDarkTheme) {
     .dark,

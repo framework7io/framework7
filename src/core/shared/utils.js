@@ -455,18 +455,18 @@ export function colorThemeCSSStyles(colors = {}) {
     const { light, dark, ios, md } = restVars[colorName];
 
     rest += [
-      `.color-${colorName}, .color-theme-${colorName} {`,
+      `.color-${colorName} {`,
       stringifyObject(light),
       `--swiper-theme-color: var(--f7-theme-color);`,
       `}`,
-      `.color-${colorName}.dark, .color-${colorName} .dark, .dark .color-${colorName}, .color-theme-${colorName}.dark, .color-theme-${colorName} .dark, .dark .color-theme-${colorName} {`,
+      `.color-${colorName}.dark, .color-${colorName} .dark, .dark .color-${colorName} {`,
       stringifyObject(dark),
       `--swiper-theme-color: var(--f7-theme-color);`,
       `}`,
-      `.ios .color-${colorName}, .ios .color-theme-${colorName}, .ios.color-${colorName}, .ios.color-theme-${colorName} {`,
+      `.ios .color-${colorName}, .ios.color-${colorName} {`,
       stringifyObject(ios),
       `}`,
-      `.md .color-${colorName}, .md .color-theme-${colorName}, .md.color-${colorName}, .md.color-theme-${colorName} {`,
+      `.md .color-${colorName}, .md.color-${colorName} {`,
       stringifyObject(md),
       `}`,
 

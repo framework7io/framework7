@@ -1,10 +1,13 @@
 .md {
+  .preloader {
+    color: var(--f7-preloader-color);
+  }
   .preloader-inner {
     @speed: 1.4s;
     animation: md-preloader-rotate @speed linear infinite;
     circle {
       fill: none;
-      stroke: var(--f7-preloader-color);
+      stroke: currentColor;
       animation: md-preloader-circle-rotate @speed * 4 ease-in-out infinite;
       stroke-dasharray: 100px;
       stroke-dashoffset: 80px;
@@ -14,7 +17,7 @@
     }
   }
 
-  .preloader.color-multi {
+  .preloader-multi-color {
     @speed: 1.4s;
     circle {
       animation: md-preloader-circle-rotate @speed * 4 ease-in-out infinite,

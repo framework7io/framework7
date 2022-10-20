@@ -9,6 +9,7 @@
   let className = undefined;
   export { className as class };
   export let size = undefined;
+  export let color = undefined;
 
   let theme = useTheme((t) => {
     theme = t;
@@ -24,7 +25,15 @@
       : '')
   ).replace(';;', ';');
 
-  $: classes = classNames(className, 'preloader', colorClasses($$props));
+  $: classes = classNames(
+    className,
+    {
+      preloader: true,
+      [`text-color-${color}`]: color && color !== 'multi',
+      'preloader-multi-color': color === 'multi',
+    },
+    colorClasses($$props),
+  );
 </script>
 
 <span style={preloaderStyle} class={classes} {...restProps($$restProps)}>

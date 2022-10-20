@@ -62,7 +62,15 @@ const Preloader = forwardRef((props, ref) => {
     innerEl = <span className="preloader-inner" />;
   }
 
-  const classes = classNames(className, 'preloader', colorClasses(props));
+  const classes = classNames(
+    className,
+    {
+      preloader: true,
+      [`text-color-${props.color}`]: props.color && props.color !== 'multi',
+      'preloader-multi-color': props.color === 'multi',
+    },
+    colorClasses(props),
+  );
   return (
     <span id={id} style={preloaderStyle} className={classes} ref={elRef} {...extraAttrs}>
       {innerEl}

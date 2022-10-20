@@ -32,7 +32,17 @@ export default {
   },
   setup(props) {
     const theme = useTheme();
-    const classes = computed(() => classNames('preloader', colorClasses(props)));
+    const classes = computed(() =>
+      classNames(
+        'preloader',
+        {
+          preloader: true,
+          [`text-color-${props.color}`]: props.color && props.color !== 'multi',
+          'preloader-multi-color': props.color === 'multi',
+        },
+        colorClasses(props),
+      ),
+    );
     const style = computed(() => {
       const preloaderStyle = {};
       let sizeComputed = props.size;
