@@ -37,8 +37,6 @@ export default {
         'preloader',
         {
           preloader: true,
-          [`text-color-${props.color}`]: props.color && props.color !== 'multi',
-          'preloader-multi-color': props.color === 'multi',
         },
         colorClasses(props),
       ),

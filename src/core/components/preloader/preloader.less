@@ -46,6 +46,12 @@ html.with-modal-preloader .page-content,
 .preloader[class*='color-'] {
   --f7-preloader-color: var(--f7-theme-color);
 }
+.preloader.color-white {
+  --f7-preloader-color: #fff;
+}
+.preloader.color-black {
+  --f7-preloader-color: #000;
+}
 .if-ios-theme({
   @import './preloader-ios.less';
 });

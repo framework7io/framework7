@@ -37,6 +37,14 @@
       right: calc(0px - var(--f7-checkbox-border-width));
     });
   }
+  &.color-white,
+  .color-white & {
+    --f7-theme-color: #fff;
+  }
+  &.color-black,
+  .color-black & {
+    --f7-theme-color: #000;
+  }
 }
 label.item-checkbox input[type='checkbox']:not(:checked) ~ .icon-checkbox,
 label.item-checkbox input[type='checkbox']:not(:checked) ~ * .icon-checkbox,

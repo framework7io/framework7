@@ -66,8 +66,6 @@ const Preloader = forwardRef((props, ref) => {
     className,
     {
       preloader: true,
-      [`text-color-${props.color}`]: props.color && props.color !== 'multi',
-      'preloader-multi-color': props.color === 'multi',
     },
     colorClasses(props),
   );

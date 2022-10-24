@@ -9,7 +9,6 @@
   let className = undefined;
   export { className as class };
   export let size = undefined;
-  export let color = undefined;
 
   let theme = useTheme((t) => {
     theme = t;
@@ -29,8 +28,6 @@
     className,
     {
       preloader: true,
-      [`text-color-${color}`]: color && color !== 'multi',
-      'preloader-multi-color': color === 'multi',
     },
     colorClasses($$props),
   );
