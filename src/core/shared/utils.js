@@ -453,14 +453,103 @@ export function colorThemeCSSStyles(colors = {}) {
 
   Object.keys(colors).forEach((colorName) => {
     const { light, dark, ios, md } = restVars[colorName];
-
+    const whiteColorVars = `
+    --f7-ios-primary: #ffffff;
+    --f7-ios-primary-shade: #ebebeb;
+    --f7-ios-primary-tint: #ffffff;
+    --f7-ios-primary-rgb: 255, 255, 255;
+    --f7-md-primary-shade: #eee;
+    --f7-md-primary-tint: #fff;
+    --f7-md-primary-rgb: 255, 255, 255;
+    --f7-md-primary: #fff;
+    --f7-md-on-primary: #000;
+    --f7-md-primary-container: #fff;
+    --f7-md-on-primary-container: #000;
+    --f7-md-secondary: #fff;
+    --f7-md-on-secondary: #000;
+    --f7-md-secondary-container: #555;
+    --f7-md-on-secondary-container: #fff;
+    --f7-md-surface: #fff;
+    --f7-md-on-surface: #000;
+    --f7-md-surface-variant: #333;
+    --f7-md-on-surface-variant: #fff;
+    --f7-md-outline: #fff;
+    --f7-md-outline-variant: #fff;
+    --f7-md-inverse-surface: #000;
+    --f7-md-inverse-on-surface: #fff;
+    --f7-md-inverse-primary: #000;
+    --f7-md-surface-1: #f8f8f8;
+    --f7-md-surface-2: #f1f1f1;
+    --f7-md-surface-3: #e7e7e7;
+    --f7-md-surface-4: #e1e1e1;
+    --f7-md-surface-5: #d7d7d7;
+    --f7-md-surface-variant-rgb: 51, 51, 51;
+    --f7-md-on-surface-variant-rgb: 255, 255, 255;
+    --f7-md-surface-1-rgb: 248, 248, 248;
+    --f7-md-surface-2-rgb: 241, 241, 241;
+    --f7-md-surface-3-rgb: 231, 231, 231;
+    --f7-md-surface-4-rgb: 225, 225, 225;
+    --f7-md-surface-5-rgb: 215, 215, 215;
+    `;
+    const blackColorVars = `
+    --f7-ios-primary: #000;
+    --f7-ios-primary-shade: #000;
+    --f7-ios-primary-tint: #f1f1f1;
+    --f7-ios-primary-rgb: 0, 0, 0;
+    --f7-md-primary-shade: #000;
+    --f7-md-primary-tint: #f1f1f1;
+    --f7-md-primary-rgb: 0, 0, 0;
+    --f7-md-primary: #000;
+    --f7-md-on-primary: #fff;
+    --f7-md-primary-container: #000;
+    --f7-md-on-primary-container: #fff;
+    --f7-md-secondary: #000;
+    --f7-md-on-secondary: #fff;
+    --f7-md-secondary-container: #aaa;
+    --f7-md-on-secondary-container: #000;
+    --f7-md-surface: #000;
+    --f7-md-on-surface: #fff;
+    --f7-md-surface-variant: #ccc;
+    --f7-md-on-surface-variant: #000;
+    --f7-md-outline: #000;
+    --f7-md-outline-variant: #000;
+    --f7-md-inverse-surface: #fff;
+    --f7-md-inverse-on-surface: #000;
+    --f7-md-inverse-primary: #fff;
+    --f7-md-surface-1: #070707;
+    --f7-md-surface-2: #161616;
+    --f7-md-surface-3: #232323;
+    --f7-md-surface-4: #303030;
+    --f7-md-surface-5: #373737;
+    --f7-md-surface-variant-rgb: 204, 204, 204;
+    --f7-md-on-surface-variant-rgb: 0, 0, 0;
+    --f7-md-surface-1-rgb: 7, 7, 7;
+    --f7-md-surface-2-rgb: 22, 22, 22;
+    --f7-md-surface-3-rgb: 35, 35, 35;
+    --f7-md-surface-4-rgb: 48, 48, 48;
+    --f7-md-surface-5-rgb: 55, 55, 55;
+    `;
+    /* eslint-disable */
+    const lightString =
+      colorName === 'white'
+        ? whiteColorVars
+        : colorName === 'black'
+        ? blackColorVars
+        : stringifyObject(light);
+    const darkString =
+      colorName === 'white'
+        ? whiteColorVars
+        : colorName === 'black'
+        ? blackColorVars
+        : stringifyObject(dark);
+    /* eslint-enable */
     rest += [
       `.color-${colorName} {`,
-      stringifyObject(light),
+      lightString,
       `--swiper-theme-color: var(--f7-theme-color);`,
       `}`,
       `.color-${colorName}.dark, .color-${colorName} .dark, .dark .color-${colorName} {`,
-      stringifyObject(dark),
+      darkString,
       `--swiper-theme-color: var(--f7-theme-color);`,
       `}`,
       `.ios .color-${colorName}, .ios.color-${colorName} {`,
