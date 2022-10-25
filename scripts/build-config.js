@@ -64,7 +64,6 @@ const config = {
     // Page Components
     'infinite-scroll',
     'pull-to-refresh',
-    'lazy',
 
     // Data table
     'data-table',
@@ -99,9 +98,6 @@ const config = {
 
     // Skeleton
     'skeleton',
-
-    // Menu
-    'menu',
 
     // Color Picker
     'color-picker',

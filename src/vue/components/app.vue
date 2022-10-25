@@ -47,7 +47,6 @@ export default {
     gauge: { type: Object, default: () => undefined },
     infiniteScroll: { type: Object, default: () => undefined },
     input: { type: Object, default: () => undefined },
-    lazy: { type: Object, default: () => undefined },
     listIndex: { type: Object, default: () => undefined },
     loginScreen: { type: Object, default: () => undefined },
     messagebar: { type: Object, default: () => undefined },
