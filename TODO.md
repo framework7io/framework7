@@ -1,4 +1,2 @@
-- Remove
-  - Typography
-  - Lazy???
 - Update demos
+- Browser modules
