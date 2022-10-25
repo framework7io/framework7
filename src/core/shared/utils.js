@@ -429,6 +429,7 @@ export function colorThemeCSSStyles(colors = {}) {
     `:root{`,
     stringifyObject(colorVars.light),
     `--swiper-theme-color:var(--f7-theme-color);`,
+    ...Object.keys(colors).map((colorName) => `--f7-color-${colorName}: ${colors[colorName]};`),
     `}`,
     `.dark{`,
     stringifyObject(colorVars.dark),

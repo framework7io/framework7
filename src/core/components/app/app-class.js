@@ -68,7 +68,6 @@ class Framework7 extends Framework7Class {
         teal: '#009688',
         lime: '#cddc39',
         deeporange: '#ff6b22',
-        gray: '#8e8e93',
         white: '#ffffff',
         black: '#000000',
       },
