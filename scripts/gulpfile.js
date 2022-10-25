@@ -7,6 +7,7 @@ const buildClean = require('./build-clean.js');
 
 const buildKsCore = require('./build-ks-core.js');
 
+const buildMaterialColorUtils = require('./build-material-color-utils.js');
 const buildCoreJs = require('./build-core-js.js');
 const buildCoreTypings = require('./build-core-typings.js');
 const buildCoreLess = require('./build-core-styles.js');
@@ -26,6 +27,7 @@ const env = process.env.NODE_ENV || 'development';
 gulp.task('ks-core', buildKsCore);
 
 gulp.task('core-clean', (cb) => buildClean('core', cb));
+gulp.task('core-material-color-utils', buildMaterialColorUtils);
 gulp.task('core-js', buildCoreJs);
 gulp.task('core-typings', buildCoreTypings);
 gulp.task('core-styles', buildCoreLess);
@@ -49,6 +51,7 @@ gulp.task(
   'build-core',
   gulp.series([
     'core-clean',
+    'core-material-color-utils',
     ...(env === 'development' ? [] : ['core-lazy-components']),
     'core-components',
     'core-js',

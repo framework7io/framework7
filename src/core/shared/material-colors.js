@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import { argbFromHex, hexFromArgb, themeFromSourceColor } from '@material/material-color-utilities';
+import { argbFromHex, hexFromArgb, themeFromSourceColor } from './material-color-utils.js';
 
 /* eslint-disable */
 // prettier-ignore

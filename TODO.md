@@ -1,8 +1,4 @@
 - Remove
   - Typography
   - Lazy???
-- Colors
-  - Move to build
-  - White, black colors
-    - make MD vars
 - Update demos
