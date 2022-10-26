@@ -5,7 +5,7 @@ export default () => (
   <Page className="page-about">
     <Navbar large transparent title="About" titleLarge="About" backLink="Framework7"></Navbar>
     <BlockTitle medium>Welcome to Framework7</BlockTitle>
-    <Block strong>
+    <Block strongIos outlineIos>
       <p>
         Framework7 - is a free and open source HTML mobile framework to develop hybrid mobile apps
         or web apps with iOS or Android (Material) native look and feel. It is also an indispensable
