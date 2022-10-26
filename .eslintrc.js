@@ -1,6 +1,7 @@
 const rules = {
   'no-bitwise': 'off',
   'import/no-extraneous-dependencies': 'off',
+  'no-nested-ternary': 'off',
   'no-param-reassign': [
     'error',
     {

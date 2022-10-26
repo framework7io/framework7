@@ -20,10 +20,10 @@ export default () => {
       popover={{ closeOnEscape: true }}
       actions={{ closeOnEscape: true }}
     >
-      <Panel left cover resizable>
+      <Panel left floating resizable>
         <View url="/panel-left/" linksView=".view-main" />
       </Panel>
-      <Panel right reveal resizable>
+      <Panel right floating resizable>
         <View url="/panel-right/" />
       </Panel>
       <View url="/" main className="safe-areas" masterDetailBreakpoint={768} />

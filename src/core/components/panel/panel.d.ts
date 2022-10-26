@@ -37,7 +37,7 @@ export namespace Panel {
     content?: string;
     /** Can be left or right. If not passed then will be determined based on panel-left or panel-right element classes. */
     side?: string;
-    /** Can be "cover", "reveal" or "push". If not passed then will be determined based on panel-cover, panel-reveal or panel-push element classes. */
+    /** Can be "cover", "reveal", "floating" or "push". If not passed then will be determined based on panel-cover, panel-reveal, panel-floating or panel-push element classes. */
     effect?: string;
     /** Enables resizable panel */
     resizable?: string;
@@ -71,7 +71,7 @@ export namespace Panel {
     /** String with panel side: left or right */
     side: 'left' | 'right';
     /** String with panel effect: cover, reveal or push */
-    effect: 'cover' | 'reveal' | 'push';
+    effect: 'cover' | 'reveal' | 'push' | 'floating';
     /** Boolean property indicating whether it is opened or not */
     opened: boolean;
     /** Panel HTML element */
