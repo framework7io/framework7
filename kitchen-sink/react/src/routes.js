@@ -28,7 +28,6 @@ import Grid from './pages/grid.jsx';
 import Icons from './pages/icons.jsx';
 import InfiniteScroll from './pages/infinite-scroll.jsx';
 import Inputs from './pages/inputs.jsx';
-import LazyLoad from './pages/lazy-load.jsx';
 import List from './pages/list.jsx';
 import ListIndex from './pages/list-index.jsx';
 import LoginScreen from './pages/login-screen.jsx';
@@ -291,10 +290,6 @@ export default [
   {
     path: '/inputs/',
     component: Inputs,
-  },
-  {
-    path: '/lazy-load/',
-    component: LazyLoad,
   },
   {
     path: '/list/',

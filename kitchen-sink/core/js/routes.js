@@ -169,10 +169,6 @@ var routes = [
     url: './pages/inputs.html',
   },
   {
-    path: '/lazy-load/',
-    url: './pages/lazy-load.html',
-  },
-  {
     path: '/list/',
     url: './pages/list.html',
   },

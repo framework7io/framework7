@@ -1,12 +1,12 @@
 <template>
   <f7-page>
     <f7-navbar title="Gauge" back-link="Back"></f7-navbar>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <p>
         Framework7 comes with Gauge component. It produces nice looking fully responsive SVG gauges.
       </p>
     </f7-block>
-    <f7-block strong class="text-align-center">
+    <f7-block strong-ios outline-ios class="text-align-center">
       <f7-gauge
         type="circle"
         :value="gaugeValue"
@@ -28,7 +28,7 @@
     </f7-block>
 
     <f7-block-title>Circle Gauges</f7-block-title>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <div class="grid grid-cols-2 grid-gap">
         <div class="text-align-center">
           <f7-gauge
@@ -54,7 +54,7 @@
       </div>
     </f7-block>
     <f7-block-title>Semicircle Gauges</f7-block-title>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <div class="grid grid-cols-2 grid-gap">
         <div class="text-align-center">
           <f7-gauge
@@ -79,7 +79,7 @@
       </div>
     </f7-block>
     <f7-block-title>Customization</f7-block-title>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <div class="grid grid-cols-2 grid-gap">
         <div class="text-align-center">
           <f7-gauge

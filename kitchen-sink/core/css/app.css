@@ -99,20 +99,6 @@
   border-radius: 4px;
 }
 
-/* Lazy Demo */
-img.demo-lazy {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-div.demo-lazy {
-  background: #aaa;
-  -webkit-background-size: cover;
-  background-size: cover;
-  height: 300px;
-  height: 60vw;
-}
-
 /* FAB Morph */
 .demo-fab-sheet {
   position: absolute;

@@ -2,7 +2,6 @@
   import {
     Page,
     Navbar,
-    BlockTitle,
     Block,
     Tab,
     BlockHeader,
@@ -24,9 +23,8 @@
 
 <Page>
   <Navbar title="Icons" backLink="Back" />
-  <BlockTitle>Scroll bottom</BlockTitle>
   <!-- prettier-ignore -->
-  <Block strong>
+  <Block strong inset>
     <p>Framework7 comes with the premium and free <a href="https://framework7.io/icons/" class="external" target="_blank">Framework7 Icons</a> iOS-icons font developed specially to be used with iOS theme of Framework7. As for Material theme we recommend to use great-designed <a href="https://material.io/icons/" class="external" target="_blank">Material Icons</a> font. Both of these fonts use a typographic feature called <a href="http://alistapart.com/article/the-era-of-symbol-fonts" class="external" target="_blank">ligatures</a>. It’s easy to incorporate icons into your app. Here’s a small example:</p>
     <p><code>&lt;i class="f7-icons"&gt;house&lt;/i&gt;</code> - <i class="f7-icons">house</i></p>
     <p><code>&lt;i class="material-icons"&gt;home&lt;/i&gt;</code> - <i class="material-icons">home</i></p>
@@ -38,7 +36,7 @@
       <Button tabLink="#tab-md">Material Icons</Button>
     </Segmented>
   </BlockHeader>
-  <Block strong class="tabs">
+  <Block strong inset class="tabs">
     <Tab id="tab-f7" tabActive>
       <div class="grid grid-cols-3 medium-grid-cols-6 grid-gap">
         {#each f7Icons as icon, index}

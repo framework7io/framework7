@@ -7,7 +7,7 @@
   >
     <f7-navbar title="Infinite Scroll" back-link="Back"></f7-navbar>
     <f7-block-title>Scroll bottom</f7-block-title>
-    <f7-list>
+    <f7-list strong-ios outline-ios dividers-ios>
       <f7-list-item
         v-for="(item, index) in items"
         :key="index"

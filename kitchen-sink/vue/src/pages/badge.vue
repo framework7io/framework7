@@ -30,7 +30,7 @@
       </f7-link>
     </f7-toolbar>
 
-    <f7-list>
+    <f7-list strong-ios outline-ios dividers-ios>
       <f7-list-item title="Foo Bar" badge="0">
         <template #media>
           <f7-icon icon="icon-f7" />

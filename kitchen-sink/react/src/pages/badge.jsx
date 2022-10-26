@@ -43,7 +43,7 @@ export default () => (
       </Link>
     </Toolbar>
 
-    <List>
+    <List strongIos outlineIos dividersIos>
       <ListItem title="Foo Bar" badge="0">
         <Icon slot="media" icon="icon-f7" />
       </ListItem>

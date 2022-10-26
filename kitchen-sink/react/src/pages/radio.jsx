@@ -6,7 +6,7 @@ export default () => (
     <Navbar title="Radio" backLink="Back"></Navbar>
 
     <BlockTitle>Inline</BlockTitle>
-    <Block strong>
+    <Block strongIos outlineIos>
       <p>
         Lorem <Radio name="demo-radio-inline" value="inline-1" /> ipsum dolor sit amet, consectetur
         adipisicing elit. Alias beatae illo nihil aut eius commodi sint eveniet aliquid eligendi{' '}
@@ -16,7 +16,7 @@ export default () => (
     </Block>
 
     <BlockTitle>Radio Group</BlockTitle>
-    <List>
+    <List strongIos outlineIos dividersIos>
       <ListItem
         radio
         radioIcon="start"
@@ -30,7 +30,7 @@ export default () => (
       <ListItem radio radioIcon="start" title="Drinks" value="Drinks" name="demo-radio-start" />
     </List>
 
-    <List>
+    <List strongIos outlineIos dividersIos>
       <ListItem
         radio
         radioIcon="end"
@@ -45,7 +45,7 @@ export default () => (
     </List>
 
     <BlockTitle>With Media Lists</BlockTitle>
-    <List mediaList>
+    <List strongIos outlineIos dividersIos mediaList>
       <ListItem
         radio
         radioIcon="start"

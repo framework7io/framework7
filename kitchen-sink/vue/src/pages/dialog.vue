@@ -1,7 +1,7 @@
 <template>
   <f7-page>
     <f7-navbar title="Dialog" back-link="Back"></f7-navbar>
-    <f7-block strong>
+    <f7-block strong inset-md outline-ios>
       <p>
         There are 1:1 replacements of native Alert, Prompt and Confirm modals. They support
         callbacks, have very easy api and can be combined with each other. Check these examples:
@@ -17,27 +17,27 @@
       </p>
     </f7-block>
     <f7-block-title>Vertical Buttons</f7-block-title>
-    <f7-block strong>
+    <f7-block strong inset-md outline-ios>
       <p>
         <f7-button fill @click="openVerticalButtons">Vertical Buttons</f7-button>
       </p>
     </f7-block>
     <f7-block-title>Preloader Dialog</f7-block-title>
-    <f7-block strong>
+    <f7-block strong inset-md outline-ios>
       <p class="grid grid-cols-2 grid-gap">
         <f7-button fill @click="openPreloader">Preloader</f7-button>
         <f7-button fill @click="openCustomPreloader">Custom Text</f7-button>
       </p>
     </f7-block>
     <f7-block-title>Progress Dialog</f7-block-title>
-    <f7-block strong>
+    <f7-block strong inset-md outline-ios>
       <p class="grid grid-cols-2 grid-gap">
         <f7-button fill @click="openInfiniteProgress">Infinite</f7-button>
         <f7-button fill @click="openDeterminedProgress">Determined</f7-button>
       </p>
     </f7-block>
     <f7-block-title>Dialogs Stack</f7-block-title>
-    <f7-block strong>
+    <f7-block strong inset-md outline-ios>
       <p>
         This feature doesn't allow to open multiple dialogs at the same time, and will automatically
         open next dialog when you close the current one. Such behavior is similar to browser native

@@ -76,12 +76,12 @@ export default () => {
       </Block>
 
       <BlockTitle>Default setup</BlockTitle>
-      <List noHairlinesMd>
+      <List strongIos outlineIos>
         <ListInput type="datepicker" placeholder="Your birth date" readonly />
       </List>
 
       <BlockTitle>Custom date format</BlockTitle>
-      <List noHairlinesMd>
+      <List strongIos outlineIos>
         <ListInput
           type="datepicker"
           placeholder="Select date"
@@ -93,7 +93,7 @@ export default () => {
       </List>
 
       <BlockTitle>Date + Time</BlockTitle>
-      <List noHairlinesMd>
+      <List strongIos outlineIos>
         <ListInput
           type="datepicker"
           placeholder="Select date and time"
@@ -112,7 +112,7 @@ export default () => {
       </List>
 
       <BlockTitle>Multiple Values</BlockTitle>
-      <List noHairlinesMd>
+      <List strongIos outlineIos>
         <ListInput
           type="datepicker"
           placeholder="Select multiple dates"
@@ -122,7 +122,7 @@ export default () => {
       </List>
 
       <BlockTitle>Range Picker</BlockTitle>
-      <List noHairlinesMd>
+      <List strongIos outlineIos>
         <ListInput
           type="datepicker"
           placeholder="Select date range"
@@ -132,7 +132,7 @@ export default () => {
       </List>
 
       <BlockTitle>Open in Modal</BlockTitle>
-      <List noHairlinesMd>
+      <List strongIos outlineIos>
         <ListInput
           type="datepicker"
           placeholder="Select date"
@@ -142,7 +142,7 @@ export default () => {
       </List>
 
       <BlockTitle>Calendar Page</BlockTitle>
-      <List>
+      <List strong outlineIos>
         <ListItem title="Open Calendar Page" link="/calendar-page/" />
       </List>
 

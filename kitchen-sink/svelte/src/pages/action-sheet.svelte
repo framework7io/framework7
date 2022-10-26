@@ -58,7 +58,7 @@
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
   <Navbar title="Action Sheet" backLink="Back" />
-  <Block strong>
+  <Block strong inset>
     <p class="row">
       <!-- One group, open by direct accessing instance .open() method -->
       <Button
@@ -86,7 +86,7 @@
   </Block>
 
   <BlockTitle>Action Sheet To Popover</BlockTitle>
-  <Block strong>
+  <Block strong inset>
     <p bind:this={buttonToPopoverWrapper}>
       Action Sheet can be automatically converted to Popover (for tablets). This button will open
       Popover on tablets and Action Sheet on phones:

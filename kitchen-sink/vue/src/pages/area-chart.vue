@@ -1,7 +1,7 @@
 <template>
   <f7-page>
     <f7-navbar title="Area Chart" back-link="Back" />
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <p>Framework7 comes with simple to use and fully responsive Area Chart component.</p>
       <p>
         Area Chart generates SVG layout which makes it also compatible with SSR (server side
@@ -9,7 +9,7 @@
       </p>
     </f7-block>
     <f7-block-title>Simple Area Chart</f7-block-title>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <f7-area-chart
         :datasets="[
           {
@@ -28,7 +28,7 @@
       />
     </f7-block>
     <f7-block-title>Area Chart With Tooltip</f7-block-title>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <f7-area-chart
         tooltip
         :datasets="[
@@ -51,7 +51,7 @@
       />
     </f7-block>
     <f7-block-title>Area Chart With Axis</f7-block-title>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <f7-area-chart
         tooltip
         axis
@@ -78,7 +78,7 @@
       />
     </f7-block>
     <f7-block-title>Area Chart With Legend</f7-block-title>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <f7-area-chart
         tooltip
         axis
@@ -107,7 +107,7 @@
       />
     </f7-block>
     <f7-block-title>Lines Chart</f7-block-title>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <f7-area-chart
         tooltip
         axis

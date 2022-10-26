@@ -1,7 +1,7 @@
 <template>
   <f7-page @page:beforeremove="onPageBeforeRemove">
     <f7-navbar title="Action Sheet" back-link="Back"></f7-navbar>
-    <f7-block strong>
+    <f7-block strong inset>
       <p class="grid grid-cols-2 grid-gap">
         <!-- One group, open by direct accessing instance .open() method -->
         <f7-button fill actions-open="#actions-one-group">One group</f7-button>
@@ -15,7 +15,7 @@
     </f7-block>
 
     <f7-block-title>Action Sheet To Popover</f7-block-title>
-    <f7-block strong>
+    <f7-block strong inset>
       <p>
         Action Sheet can be automatically converted to Popover (for tablets). This button will open
         Popover on tablets and Action Sheet on phones:

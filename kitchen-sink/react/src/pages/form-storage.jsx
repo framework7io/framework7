@@ -17,7 +17,7 @@ export default () => (
         site, and when you return here form fields will have kept your data.
       </p>
     </Block>
-    <List form formStoreData id="demo-form">
+    <List strongIos outlineIos dividersIos form formStoreData id="demo-form">
       <ListInput label="Name" name="name" type="text" clearButton placeholder="Your name" />
       <ListInput
         label="Password"

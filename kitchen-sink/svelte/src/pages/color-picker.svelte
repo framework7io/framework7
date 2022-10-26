@@ -46,7 +46,7 @@
 <Page>
   <Navbar title="Color Picker" backLink="Back" />
 
-  <Block strong>
+  <Block strongIos outlineIos>
     <p>
       Framework7 comes with ultimate modular Color Picker component that allows to create color
       picker with limitless combinations of color modules.
@@ -55,7 +55,7 @@
 
   <BlockTitle>Color Wheel</BlockTitle>
   <BlockHeader>Minimal example with color wheel in Popover</BlockHeader>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <!-- prettier-ignore -->
     <ListInput
       type="colorpicker"
@@ -77,7 +77,7 @@
 
   <BlockTitle>Saturation-Brightness Spectrum</BlockTitle>
   <BlockHeader>SB Spectrum + Hue Slider in Popover</BlockHeader>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <!-- prettier-ignore -->
     <ListInput
       type="colorpicker"
@@ -100,7 +100,7 @@
 
   <BlockTitle>Hue-Saturation Spectrum</BlockTitle>
   <BlockHeader>HS Spectrum + Brightness Slider in Popover</BlockHeader>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <!-- prettier-ignore -->
     <ListInput
       type="colorpicker"
@@ -123,7 +123,7 @@
 
   <BlockTitle>RGB Sliders</BlockTitle>
   <BlockHeader>RGB sliders with labels and values in Popover</BlockHeader>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <!-- prettier-ignore -->
     <ListInput
       type="colorpicker"
@@ -148,7 +148,7 @@
 
   <BlockTitle>RGBA Sliders</BlockTitle>
   <BlockHeader>RGB sliders + Alpha Slider with labels and values in Popover</BlockHeader>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <!-- prettier-ignore -->
     <ListInput
       type="colorpicker"
@@ -176,7 +176,7 @@
 
   <BlockTitle>HSB Sliders</BlockTitle>
   <BlockHeader>HSB sliders with labels and values in Popover</BlockHeader>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <!-- prettier-ignore -->
     <ListInput
       type="colorpicker"
@@ -206,7 +206,7 @@
   <BlockHeader>
     RGB bars with labels and values in Popover on tablet and in Popup on phone
   </BlockHeader>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <!-- prettier-ignore -->
     <ListInput
       type="colorpicker"
@@ -237,7 +237,7 @@
   <BlockHeader>
     RGB sliders with labels and values in Popover, and previous and current color values blocks
   </BlockHeader>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <!-- prettier-ignore -->
     <ListInput
       type="colorpicker"
@@ -265,7 +265,7 @@
 
   <BlockTitle>Palette</BlockTitle>
   <BlockHeader>Palette opened in Sheet modal on phone and Popover on larger screens</BlockHeader>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <!-- prettier-ignore -->
     <ListInput
       type="colorpicker"
@@ -306,7 +306,7 @@
     Current Color + HSB Sliders + RGB sliders + Alpha Slider + HEX + Palette with labels and
     editable values
   </BlockHeader>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <!-- prettier-ignore -->
     <ListInput
       type="colorpicker"
@@ -349,7 +349,7 @@
 
   <BlockTitle>Inline Color Picker</BlockTitle>
   <BlockHeader>SB Spectrum + HSB Sliders</BlockHeader>
-  <div class="block block-strong no-padding">
+  <div class="block block-strong block-outline no-padding">
     {#if inlinePickerValue.rgb}
       <div class="padding">
         HEX:

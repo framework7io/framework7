@@ -35,7 +35,7 @@ export default () => {
       <Navbar title="Buttons" backLink="Back" />
 
       <BlockTitle>Usual Buttons</BlockTitle>
-      <Block strong>
+      <Block strong outlineIos>
         <div className="grid grid-cols-3 grid-gap">
           <Button>Button</Button>
           <Button>Button</Button>
@@ -44,7 +44,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Fill Buttons</BlockTitle>
-      <Block strong>
+      <Block strong outlineIos>
         <div className="grid grid-cols-3 grid-gap">
           <Button fill>Button</Button>
           <Button fill>Button</Button>
@@ -55,7 +55,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Outline Buttons</BlockTitle>
-      <Block strong>
+      <Block strong outlineIos>
         <div className="grid grid-cols-3 grid-gap">
           <Button outline>Button</Button>
           <Button outline>Button</Button>
@@ -66,7 +66,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Raised Buttons</BlockTitle>
-      <Block strong>
+      <Block strong outlineIos>
         <p className="grid grid-cols-3 grid-gap">
           <Button raised>Button</Button>
           <Button raised fill>
@@ -90,7 +90,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Segmented</BlockTitle>
-      <Block strong>
+      <Block strong outlineIos>
         <Segmented tag="p">
           <Button>Button</Button>
           <Button>Button</Button>
@@ -140,7 +140,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Large Buttons</BlockTitle>
-      <Block strong>
+      <Block strong outlineIos>
         <p className="grid grid-cols-2 grid-gap">
           <Button large>Button</Button>
           <Button large fill>
@@ -158,7 +158,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Small Buttons</BlockTitle>
-      <Block strong>
+      <Block strong outlineIos>
         <p className="grid grid-cols-3 grid-gap">
           <Button small>Button</Button>
           <Button small outline>
@@ -182,7 +182,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Preloader Buttons</BlockTitle>
-      <Block strong>
+      <Block strong outlineIos>
         <p className="grid grid-cols-2 grid-gap">
           <Button preloader loading={isLoading1} onClick={load1} large>
             Load
@@ -194,7 +194,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Color Buttons</BlockTitle>
-      <Block strong>
+      <Block strong outlineIos>
         <div className="grid grid-cols-3 grid-gap">
           <Button color="red">Red</Button>
           <Button color="green">Green</Button>
@@ -203,7 +203,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Color Fill Buttons</BlockTitle>
-      <Block strong>
+      <Block strong outlineIos>
         <div className="grid grid-cols-3 grid-gap">
           <Button fill color="red">
             Red

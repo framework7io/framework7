@@ -16,7 +16,7 @@ export default () => {
   return (
     <Page>
       <Navbar title="Area Chart" backLink="Back" />
-      <Block strong>
+      <Block strongIos outlineIos>
         <p>Framework7 comes with simple to use and fully responsive Area Chart component.</p>
         <p>
           Area Chart generates SVG layout which makes it also compatible with SSR (server side
@@ -24,7 +24,7 @@ export default () => {
         </p>
       </Block>
       <BlockTitle>Simple Area Chart</BlockTitle>
-      <Block strong>
+      <Block strongIos outlineIos>
         <AreaChart
           datasets={[
             {
@@ -43,7 +43,7 @@ export default () => {
         />
       </Block>
       <BlockTitle>Area Chart With Tooltip</BlockTitle>
-      <Block strong>
+      <Block strongIos outlineIos>
         <AreaChart
           tooltip
           datasets={[
@@ -66,7 +66,7 @@ export default () => {
         />
       </Block>
       <BlockTitle>Area Chart With Axis</BlockTitle>
-      <Block strong>
+      <Block strongIos outlineIos>
         <AreaChart
           tooltip
           axis
@@ -93,7 +93,7 @@ export default () => {
         />
       </Block>
       <BlockTitle>Area Chart With Legend</BlockTitle>
-      <Block strong>
+      <Block strongIos outlineIos>
         <AreaChart
           tooltip
           axis
@@ -122,7 +122,7 @@ export default () => {
         />
       </Block>
       <BlockTitle>Lines Chart</BlockTitle>
-      <Block strong>
+      <Block strongIos outlineIos>
         <AreaChart
           tooltip
           axis

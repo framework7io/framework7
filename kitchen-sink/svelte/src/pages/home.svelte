@@ -115,9 +115,6 @@
     <ListItem link="/inputs/" title="Inputs">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
-    <ListItem link="/lazy-load/" title="Lazy Load">
-      <i class="icon icon-f7" slot="media" />
-    </ListItem>
     <ListItem link="/list/" title="List View">
       <i class="icon icon-f7" slot="media" />
     </ListItem>

@@ -1,7 +1,6 @@
 <script>
   import {
     f7,
-    theme,
     Navbar,
     Page,
     BlockTitle,
@@ -375,16 +374,16 @@
       addition to free-type value.
     </p>
   </Block>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <div class="block-header" slot="before-list">Simple Dropdown Autocomplete</div>
     <ListInput label="Fruit" type="text" placeholder="Fruit" inputId="autocomplete-dropdown" />
   </List>
 
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <div class="block-header" slot="before-list">Dropdown With All Values</div>
     <ListInput label="Fruit" type="text" placeholder="Fruit" inputId="autocomplete-dropdown-all" />
   </List>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <div class="block-header" slot="before-list">Dropdown With Placeholder</div>
     <ListInput
       label="Fruit"
@@ -393,7 +392,7 @@
       inputId="autocomplete-dropdown-placeholder"
     />
   </List>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <div class="block-header" slot="before-list">Dropdown With Typeahead</div>
     <ListInput
       label="Fruit"
@@ -402,7 +401,7 @@
       inputId="autocomplete-dropdown-typeahead"
     />
   </List>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <div class="block-header" slot="before-list">Dropdown With Ajax-Data</div>
     <ListInput
       label="Language"
@@ -411,7 +410,7 @@
       inputId="autocomplete-dropdown-ajax"
     />
   </List>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <div class="block-header" slot="before-list">Dropdown With Ajax-Data + Typeahead</div>
     <ListInput
       label="Language"
@@ -427,25 +426,25 @@
       to use when you need to get strict values without allowing free-type values.
     </p>
   </Block>
-  <List>
+  <List strong outlineIos>
     <div class="block-header" slot="before-list">Simple Standalone Autocomplete</div>
     <ListItem link="#" id="autocomplete-standalone" title="Favorite Fruite" after=" ">
       <input type="hidden" />
     </ListItem>
   </List>
-  <List>
+  <List strong outlineIos>
     <div class="block-header" slot="before-list">Popup Autocomplete</div>
     <ListItem link="#" id="autocomplete-standalone-popup" title="Favorite Fruite" after=" ">
       <input type="hidden" />
     </ListItem>
   </List>
-  <List>
+  <List strong outlineIos>
     <div class="block-header" slot="before-list">Multiple Values</div>
     <ListItem link="#" id="autocomplete-standalone-multiple" title="Favorite Fruite" after=" ">
       <input type="hidden" />
     </ListItem>
   </List>
-  <List>
+  <List strong outlineIos>
     <div class="block-header" slot="before-list">With Ajax-Data</div>
     <ListItem link="#" id="autocomplete-standalone-ajax" title="Language" after=" ">
       <input type="hidden" />

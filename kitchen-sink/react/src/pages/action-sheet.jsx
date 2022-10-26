@@ -58,7 +58,7 @@ export default () => {
   return (
     <Page>
       <Navbar title="Action Sheet" backLink="Back"></Navbar>
-      <Block strong>
+      <Block strong inset>
         <p className="grid grid-cols-2 grid-gap">
           {/* One group, open by changing actionsOneGroupOpened property */}
           <Button fill onClick={() => setActionsOneGroupOpened(true)}>
@@ -78,7 +78,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Action Sheet To Popover</BlockTitle>
-      <Block strong>
+      <Block strong inset>
         <p ref={buttonToPopoverWrapper}>
           Action Sheet can be automatically converted to Popover (for tablets). This button will
           open Popover on tablets and Action Sheet on phones:

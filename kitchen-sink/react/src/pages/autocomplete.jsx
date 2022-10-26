@@ -373,12 +373,12 @@ export default () => {
           options in addition to free-type value.
         </p>
       </Block>
-      <List noHairlinesMd>
+      <List strongIos outlineIos>
         <BlockHeader>Simple Dropdown Autocomplete</BlockHeader>
         <ListInput label="Fruit" type="text" placeholder="Fruit" inputId="autocomplete-dropdown" />
       </List>
 
-      <List noHairlinesMd>
+      <List strongIos outlineIos>
         <BlockHeader>Dropdown With All Values</BlockHeader>
         <ListInput
           label="Fruit"
@@ -387,7 +387,7 @@ export default () => {
           inputId="autocomplete-dropdown-all"
         />
       </List>
-      <List noHairlinesMd>
+      <List strongIos outlineIos>
         <BlockHeader>Dropdown With Placeholder</BlockHeader>
         <ListInput
           label="Fruit"
@@ -396,7 +396,7 @@ export default () => {
           inputId="autocomplete-dropdown-placeholder"
         />
       </List>
-      <List noHairlinesMd>
+      <List strongIos outlineIos>
         <BlockHeader>Dropdown With Typeahead</BlockHeader>
         <ListInput
           label="Fruit"
@@ -405,7 +405,7 @@ export default () => {
           inputId="autocomplete-dropdown-typeahead"
         />
       </List>
-      <List noHairlinesMd>
+      <List strongIos outlineIos>
         <BlockHeader>Dropdown With Ajax-Data</BlockHeader>
         <ListInput
           label="Language"
@@ -414,7 +414,7 @@ export default () => {
           inputId="autocomplete-dropdown-ajax"
         />
       </List>
-      <List noHairlinesMd>
+      <List strongIos outlineIos>
         <BlockHeader>Dropdown With Ajax-Data + Typeahead</BlockHeader>
         <ListInput
           label="Language"
@@ -430,25 +430,25 @@ export default () => {
           Good to use when you need to get strict values without allowing free-type values.
         </p>
       </Block>
-      <List>
+      <List strong outlineIos>
         <BlockHeader>Simple Standalone Autocomplete</BlockHeader>
         <ListItem link="#" id="autocomplete-standalone" title="Favorite Fruite" after=" ">
           <input type="hidden" />
         </ListItem>
       </List>
-      <List>
+      <List strong outlineIos>
         <BlockHeader>Popup Autocomplete</BlockHeader>
         <ListItem link="#" id="autocomplete-standalone-popup" title="Favorite Fruite" after=" ">
           <input type="hidden" />
         </ListItem>
       </List>
-      <List>
+      <List strong outlineIos>
         <BlockHeader>Multiple Values</BlockHeader>
         <ListItem link="#" id="autocomplete-standalone-multiple" title="Favorite Fruite" after=" ">
           <input type="hidden" />
         </ListItem>
       </List>
-      <List>
+      <List strong outlineIos>
         <BlockHeader>With Ajax-Data</BlockHeader>
         <ListItem link="#" id="autocomplete-standalone-ajax" title="Language" after=" ">
           <input type="hidden" />

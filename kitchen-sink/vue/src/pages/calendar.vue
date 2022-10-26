@@ -11,12 +11,12 @@
     </f7-block>
 
     <f7-block-title>Default setup</f7-block-title>
-    <f7-list no-hairlines-md>
+    <f7-list strong-ios outline-ios>
       <f7-list-input type="datepicker" placeholder="Your birth date" readonly />
     </f7-list>
 
     <f7-block-title>Custom date format</f7-block-title>
-    <f7-list no-hairlines-md>
+    <f7-list strong-ios outline-ios>
       <f7-list-input
         type="datepicker"
         placeholder="Select date"
@@ -28,7 +28,7 @@
     </f7-list>
 
     <f7-block-title>Date + Time</f7-block-title>
-    <f7-list no-hairlines-md>
+    <f7-list strong-ios outline-ios>
       <f7-list-input
         type="datepicker"
         placeholder="Select date and time"
@@ -47,7 +47,7 @@
     </f7-list>
 
     <f7-block-title>Multiple Values</f7-block-title>
-    <f7-list no-hairlines-md>
+    <f7-list strong-ios outline-ios>
       <f7-list-input
         type="datepicker"
         placeholder="Select multiple dates"
@@ -57,7 +57,7 @@
     </f7-list>
 
     <f7-block-title>Range Picker</f7-block-title>
-    <f7-list no-hairlines-md>
+    <f7-list strong-ios outline-ios>
       <f7-list-input
         type="datepicker"
         placeholder="Select date range"
@@ -67,7 +67,7 @@
     </f7-list>
 
     <f7-block-title>Open in Modal</f7-block-title>
-    <f7-list no-hairlines-md>
+    <f7-list strong-ios outline-ios>
       <f7-list-input
         type="datepicker"
         placeholder="Select date"
@@ -77,7 +77,7 @@
     </f7-list>
 
     <f7-block-title>Calendar Page</f7-block-title>
-    <f7-list>
+    <f7-list strong outline-ios>
       <f7-list-item title="Open Calendar Page" link="/calendar-page/" />
     </f7-list>
 

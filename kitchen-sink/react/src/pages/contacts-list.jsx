@@ -4,7 +4,7 @@ import { Navbar, Page, List, ListGroup, ListItem } from 'framework7-react';
 export default () => (
   <Page>
     <Navbar title="Contacts List" backLink="Back"></Navbar>
-    <List contactsList>
+    <List contactsList strongIos>
       <ListGroup>
         <ListItem title="A" groupTitle />
         <ListItem title="Aaron" />

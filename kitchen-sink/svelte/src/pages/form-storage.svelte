@@ -17,14 +17,15 @@
       site, and when you return here form fields will have kept your data.
     </p>
   </Block>
-  <List form formStoreData id="demo-form">
+  <List strongIos outlineIos dividersIos form formStoreData id="demo-form">
     <ListInput label="Name" name="name" type="text" clearButton placeholder="Your name" />
     <ListInput
       label="Password"
       name="password"
       type="password"
       clearButton
-      placeholder="Your password" />
+      placeholder="Your password"
+    />
     <ListInput label="E-mail" name="email" type="email" clearButton placeholder="Your e-mail" />
     <ListInput label="URL" name="url" type="url" clearButton placeholder="URL" />
     <ListInput label="Phone" name="phone" type="tel" clearButton placeholder="Your phone number" />
@@ -37,7 +38,8 @@
       name="birthday"
       type="date"
       value="2014-04-30"
-      placeholder="Please choose..." />
+      placeholder="Please choose..."
+    />
     <ListInput label="Date time" name="date" type="datetime-local" placeholder="Please choose..." />
     <ListInput label="Range" input={false}>
       <span slot="input">

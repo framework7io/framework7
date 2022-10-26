@@ -2,7 +2,7 @@
   <f7-page>
     <f7-navbar title="Color Picker" back-link="Back"></f7-navbar>
 
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <p>
         Framework7 comes with ultimate modular Color Picker component that allows to create color
         picker with limitless combinations of color modules.
@@ -11,7 +11,7 @@
 
     <f7-block-title>Color Wheel</f7-block-title>
     <f7-block-header>Minimal example with color wheel in Popover</f7-block-header>
-    <f7-list no-hairlines-md>
+    <f7-list strong-ios outline-ios>
       <f7-list-input
         v-model:value="wheePickerValue"
         type="colorpicker"
@@ -32,7 +32,7 @@
 
     <f7-block-title>Saturation-Brightness Spectrum</f7-block-title>
     <f7-block-header>SB Spectrum + Hue Slider in Popover</f7-block-header>
-    <f7-list no-hairlines-md>
+    <f7-list strong-ios outline-ios>
       <f7-list-input
         v-model:value="spectrumPickerValue"
         type="colorpicker"
@@ -54,7 +54,7 @@
 
     <f7-block-title>Hue-Saturation Spectrum</f7-block-title>
     <f7-block-header>HS Spectrum + Brightness Slider in Popover</f7-block-header>
-    <f7-list no-hairlines-md>
+    <f7-list strong-ios outline-ios>
       <f7-list-input
         v-model:value="hsSpectrumPickerValue"
         type="colorpicker"
@@ -76,7 +76,7 @@
 
     <f7-block-title>RGB Sliders</f7-block-title>
     <f7-block-header>RGB sliders with labels and values in Popover</f7-block-header>
-    <f7-list no-hairlines-md>
+    <f7-list strong-ios outline-ios>
       <f7-list-input
         v-model:value="rgbPickerValue"
         type="colorpicker"
@@ -100,7 +100,7 @@
 
     <f7-block-title>RGBA Sliders</f7-block-title>
     <f7-block-header>RGB sliders + Alpha Slider with labels and values in Popover</f7-block-header>
-    <f7-list no-hairlines-md>
+    <f7-list strong-ios outline-ios>
       <f7-list-input
         v-model:value="rgbaPickerValue"
         type="colorpicker"
@@ -131,7 +131,7 @@
 
     <f7-block-title>HSB Sliders</f7-block-title>
     <f7-block-header>HSB sliders with labels and values in Popover</f7-block-header>
-    <f7-list no-hairlines-md>
+    <f7-list strong-ios outline-ios>
       <f7-list-input
         v-model:value="hsbPickerValue"
         type="colorpicker"
@@ -162,7 +162,7 @@
     <f7-block-header
       >RGB bars with labels and values in Popover on tablet and in Popup on phone</f7-block-header
     >
-    <f7-list no-hairlines-md>
+    <f7-list strong-ios outline-ios>
       <f7-list-input
         v-model:value="rgbBarsPickerValue"
         type="colorpicker"
@@ -193,7 +193,7 @@
       >RGB sliders with labels and values in Popover, and previous and current color values
       blocks</f7-block-header
     >
-    <f7-list no-hairlines-md>
+    <f7-list strong-ios outline-ios>
       <f7-list-input
         v-model:value="rgbSlidersColorsPickerValue"
         type="colorpicker"
@@ -222,7 +222,7 @@
     <f7-block-header
       >Palette opened in Sheet modal on phone and Popover on larger screens</f7-block-header
     >
-    <f7-list no-hairlines-md>
+    <f7-list strong-ios outline-ios>
       <f7-list-input
         v-model:value="palettePickerValue"
         type="colorpicker"
@@ -350,7 +350,7 @@
       >Current Color + HSB Sliders + RGB sliders + Alpha Slider + HEX + Palette with labels and
       editable values</f7-block-header
     >
-    <f7-list no-hairlines-md>
+    <f7-list strong-ios outline-ios>
       <f7-list-input
         v-model:value="proPickerValue"
         type="colorpicker"
@@ -490,7 +490,7 @@
 
     <f7-block-title>Inline Color Picker</f7-block-title>
     <f7-block-header>SB Spectrum + HSB Sliders</f7-block-header>
-    <div class="block block-strong no-padding">
+    <div class="block block-strong block-outline no-padding">
       <div v-if="inlinePickerValue.rgb" class="padding">
         HEX: {{ inlinePickerValue.hex }}<br />
         Alpha: {{ inlinePickerValue.alpha }}<br />

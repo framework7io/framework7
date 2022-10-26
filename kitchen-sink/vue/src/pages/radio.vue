@@ -3,7 +3,7 @@
     <f7-navbar title="Radio" back-link="Back"></f7-navbar>
     <f7-block-title>Inline</f7-block-title>
 
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <p>
         Lorem <f7-radio name="demo-radio-inline" /> ipsum dolor sit amet, consectetur adipisicing
         elit. Alias beatae illo nihil aut eius commodi sint eveniet aliquid eligendi
@@ -13,14 +13,14 @@
     </f7-block>
 
     <f7-block-title>Radio Group</f7-block-title>
-    <f7-list>
+    <f7-list strong-ios outline-ios dividers-ios>
       <f7-list-item radio radio-icon="start" title="Books" name="demo-radio-start" checked />
       <f7-list-item radio radio-icon="start" title="Movies" name="demo-radio-start" />
       <f7-list-item radio radio-icon="start" title="Food" name="demo-radio-start" />
       <f7-list-item radio radio-icon="start" title="Drinks" name="demo-radio-start" />
     </f7-list>
 
-    <f7-list>
+    <f7-list strong-ios outline-ios dividers-ios>
       <f7-list-item radio radio-icon="end" title="Books" name="demo-radio-end" checked />
       <f7-list-item radio radio-icon="end" title="Movies" name="demo-radio-end" />
       <f7-list-item radio radio-icon="end" title="Food" name="demo-radio-end" />
@@ -28,7 +28,7 @@
     </f7-list>
 
     <f7-block-title>With Media Lists</f7-block-title>
-    <f7-list media-list>
+    <f7-list media-list strong-ios outline-ios dividers-ios>
       <f7-list-item
         radio
         radio-icon="start"

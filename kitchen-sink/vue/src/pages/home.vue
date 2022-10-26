@@ -157,11 +157,6 @@
           <f7-icon icon="icon-f7" />
         </template>
       </f7-list-item>
-      <f7-list-item link="/lazy-load/" title="Lazy Load">
-        <template #media>
-          <f7-icon icon="icon-f7" />
-        </template>
-      </f7-list-item>
       <f7-list-item link="/list/" title="List View">
         <template #media>
           <f7-icon icon="icon-f7" />

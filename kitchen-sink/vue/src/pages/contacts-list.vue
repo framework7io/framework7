@@ -1,7 +1,7 @@
 <template>
   <f7-page>
     <f7-navbar title="Contacts List" back-link="Back"></f7-navbar>
-    <f7-list contacts-list>
+    <f7-list contacts-list strong-ios>
       <f7-list-group>
         <f7-list-item title="A" group-title />
         <f7-list-item title="Aaron " />

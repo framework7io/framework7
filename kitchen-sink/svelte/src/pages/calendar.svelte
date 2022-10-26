@@ -85,57 +85,73 @@
   </Block>
 
   <BlockTitle>Default setup</BlockTitle>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <ListInput type="datepicker" placeholder="Your birth date" readonly />
   </List>
 
   <BlockTitle>Custom date format</BlockTitle>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <ListInput
       type="datepicker"
       placeholder="Select date"
       readonly
-      calendarParams={{ dateFormat: { weekday: 'long', month: 'long', day: '2-digit', year: 'numeric' } }} />
+      calendarParams={{
+        dateFormat: { weekday: 'long', month: 'long', day: '2-digit', year: 'numeric' },
+      }}
+    />
   </List>
 
   <BlockTitle>Date + Time</BlockTitle>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <ListInput
       type="datepicker"
       placeholder="Select date and time"
       readonly
-      calendarParams={{ timePicker: true, dateFormat: { month: 'numeric', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' } }} />
+      calendarParams={{
+        timePicker: true,
+        dateFormat: {
+          month: 'numeric',
+          day: 'numeric',
+          year: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+        },
+      }}
+    />
   </List>
 
   <BlockTitle>Multiple Values</BlockTitle>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <ListInput
       type="datepicker"
       placeholder="Select multiple dates"
       readonly
-      calendarParams={{ dateFormat: { month: 'short', day: 'numeric' }, multiple: true }} />
+      calendarParams={{ dateFormat: { month: 'short', day: 'numeric' }, multiple: true }}
+    />
   </List>
 
   <BlockTitle>Range Picker</BlockTitle>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <ListInput
       type="datepicker"
       placeholder="Select date range"
       readonly
-      calendarParams={{ rangePicker: true }} />
+      calendarParams={{ rangePicker: true }}
+    />
   </List>
 
   <BlockTitle>Open in Modal</BlockTitle>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <ListInput
       type="datepicker"
       placeholder="Select date"
       readonly
-      calendarParams={{ openIn: 'customModal', header: true, footer: true }} />
+      calendarParams={{ openIn: 'customModal', header: true, footer: true }}
+    />
   </List>
 
   <BlockTitle>Calendar Page</BlockTitle>
-  <List>
+  <List strong outlineIos>
     <ListItem title="Open Calendar Page" link="/calendar-page/" />
   </List>
 

@@ -4,7 +4,7 @@
 
 <Page>
   <Navbar title="Contacts List" backLink="Back" />
-  <List contactsList ul={false}>
+  <List contactsList ul={false} strongIos>
     <ListGroup>
       <ListItem title="A" groupTitle />
       <ListItem title="Aaron " />

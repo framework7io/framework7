@@ -22,7 +22,7 @@
         in addition to free-type value.
       </p>
     </div>
-    <div class="list no-hairlines-md">
+    <div class="list list-strong-ios list-outline-ios">
       <div class="block-header">Simple Dropdown Autocomplete</div>
       <ul>
         <li class="item-content item-input">
@@ -36,7 +36,7 @@
       </ul>
     </div>
 
-    <div class="list no-hairlines-md">
+    <div class="list list-strong-ios list-outline-ios">
       <div class="block-header">Dropdown With All Values</div>
       <ul>
         <li class="item-content item-input">
@@ -49,7 +49,7 @@
         </li>
       </ul>
     </div>
-    <div class="list no-hairlines-md">
+    <div class="list list-strong-ios list-outline-ios">
       <div class="block-header">Dropdown With Placeholder</div>
       <ul>
         <li class="item-content item-input">
@@ -62,7 +62,7 @@
         </li>
       </ul>
     </div>
-    <div class="list no-hairlines-md">
+    <div class="list list-strong-ios list-outline-ios">
       <div class="block-header">Dropdown With Typeahead</div>
       <ul>
         <li class="item-content item-input">
@@ -75,7 +75,7 @@
         </li>
       </ul>
     </div>
-    <div class="list no-hairlines-md">
+    <div class="list list-strong-ios list-outline-ios">
       <div class="block-header">Dropdown With Ajax-Data</div>
       <ul>
         <li class="item-content item-input">
@@ -88,7 +88,7 @@
         </li>
       </ul>
     </div>
-    <div class="list no-hairlines-md">
+    <div class="list list-strong-ios list-outline-ios">
       <div class="block-header">Dropdown With Ajax-Data + Typeahead</div>
       <ul>
         <li class="item-content item-input">
@@ -108,7 +108,7 @@
         to use when you need to get strict values without allowing free-type values.
       </p>
     </div>
-    <div class="list">
+    <div class="list list-strong list-outline-ios">
       <div class="block-header">Simple Standalone Autocomplete</div>
       <ul>
         <li>
@@ -126,7 +126,7 @@
         </li>
       </ul>
     </div>
-    <div class="list">
+    <div class="list list-strong list-outline-ios">
       <div class="block-header">Popup Autocomplete</div>
       <ul>
         <li>
@@ -144,7 +144,7 @@
         </li>
       </ul>
     </div>
-    <div class="list">
+    <div class="list list-strong list-outline-ios">
       <div class="block-header">Multiple Values</div>
       <ul>
         <li>
@@ -162,7 +162,7 @@
         </li>
       </ul>
     </div>
-    <div class="list">
+    <div class="list list-strong list-outline-ios">
       <div class="block-header">With Ajax-Data</div>
       <ul>
         <li>

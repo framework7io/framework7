@@ -19,7 +19,7 @@ export default () => {
   return (
     <Page>
       <Navbar title="Breadcrumbs" backLink="Back"></Navbar>
-      <Block strong>
+      <Block strongIos outlineIos>
         <p>
           Breadcrumbs allow users to keep track and maintain awareness of their locations within the
           app or website. They should be used for large sites and apps with hierarchically arranged
@@ -28,7 +28,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Basic</BlockTitle>
-      <Block strong>
+      <Block strongIos outlineIos>
         <Breadcrumbs>
           <BreadcrumbsItem>
             <Link>Home</Link>
@@ -44,7 +44,7 @@ export default () => {
 
       <BlockTitle>Scrollable</BlockTitle>
       <BlockHeader>Breadcrumbs will be scrollable if they don't fit the screen</BlockHeader>
-      <Block strong>
+      <Block strongIos outlineIos>
         <Breadcrumbs>
           <BreadcrumbsItem>
             <Link>Home</Link>
@@ -67,7 +67,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Collapsed</BlockTitle>
-      <Block strong>
+      <Block strongIos outlineIos>
         <Breadcrumbs>
           <BreadcrumbsItem>
             <Link>Home</Link>
@@ -88,7 +88,7 @@ export default () => {
       </Block>
 
       <BlockTitle>With Icons</BlockTitle>
-      <Block strong>
+      <Block strongIos outlineIos>
         <Breadcrumbs>
           <BreadcrumbsItem>
             <Link iconIos="f7:house_fill" iconMd="material:home" text="Home" />

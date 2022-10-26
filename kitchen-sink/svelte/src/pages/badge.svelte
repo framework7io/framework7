@@ -43,7 +43,7 @@
     </Link>
   </Toolbar>
 
-  <List>
+  <List strongIos outlineIos dividersIos>
     <ListItem title="Foo Bar" badge="0"><i slot="media" class="icon icon-f7" /></ListItem>
     <ListItem title="Ivan Petrov" badge="CEO" badgeColor="blue">
       <i slot="media" class="icon icon-f7" />

@@ -14,7 +14,10 @@
         site, and when you return here form fields will have kept your data.
       </p>
     </div>
-    <form id="demo-form" class="list form-store-data">
+    <form
+      id="demo-form"
+      class="list list-strong-ios list-outline-ios list-dividers-ios form-store-data"
+    >
       <ul>
         <li class="item-content item-input">
           <div class="item-inner">

@@ -7,13 +7,13 @@ export default () => {
   return (
     <Page>
       <Navbar title="Gauge" backLink="Back"></Navbar>
-      <Block strong>
+      <Block strongIos outlineIos>
         <p>
           Framework7 comes with Gauge component. It produces nice looking fully responsive SVG
           gauges.
         </p>
       </Block>
-      <Block strong className="text-align-center">
+      <Block strongIos outlineIos className="text-align-center">
         <Gauge
           type="circle"
           value={gaugeValue}
@@ -45,7 +45,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Circle Gauges</BlockTitle>
-      <Block strong>
+      <Block strongIos outlineIos>
         <div className="grid grid-cols-2 grid-gap">
           <div className="text-align-center">
             <Gauge
@@ -71,7 +71,7 @@ export default () => {
         </div>
       </Block>
       <BlockTitle>Semicircle Gauges</BlockTitle>
-      <Block strong>
+      <Block strongIos outlineIos>
         <div className="grid grid-cols-2 grid-gap">
           <div className="text-align-center">
             <Gauge
@@ -96,7 +96,7 @@ export default () => {
         </div>
       </Block>
       <BlockTitle>Customization</BlockTitle>
-      <Block strong>
+      <Block strongIos outlineIos>
         <div className="grid grid-cols-2 grid-gap">
           <div className="text-align-center">
             <Gauge

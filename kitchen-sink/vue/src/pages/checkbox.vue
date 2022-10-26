@@ -2,7 +2,7 @@
   <f7-page>
     <f7-navbar title="Checkbox" back-link="Back"></f7-navbar>
     <f7-block-title>Inline</f7-block-title>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <p>
         Lorem <f7-checkbox name="checkbox-1"></f7-checkbox> ipsum dolor sit amet, consectetur
         adipisicing elit. Alias beatae illo nihil aut eius commodi sint eveniet aliquid eligendi
@@ -12,7 +12,7 @@
     </f7-block>
 
     <f7-block-title>Checkbox Group</f7-block-title>
-    <f7-list>
+    <f7-list strong-ios outline-ios dividers-ios>
       <f7-list-item checkbox title="Books" name="demo-checkbox" checked></f7-list-item>
       <f7-list-item checkbox title="Movies" name="demo-checkbox"></f7-list-item>
       <f7-list-item checkbox title="Food" name="demo-checkbox"></f7-list-item>
@@ -20,7 +20,7 @@
     </f7-list>
 
     <f7-block-title>Indeterminate State</f7-block-title>
-    <f7-list>
+    <f7-list strong-ios outline-ios dividers-ios>
       <f7-list-item
         checkbox
         title="Movies"
@@ -53,7 +53,7 @@
     </f7-list>
 
     <f7-block-title>With Media Lists</f7-block-title>
-    <f7-list media-list>
+    <f7-list media-list strong-ios outline-ios dividers-ios>
       <f7-list-item
         checkbox
         checked

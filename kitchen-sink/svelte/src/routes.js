@@ -29,7 +29,6 @@ import Grid from './pages/grid.svelte';
 import Icons from './pages/icons.svelte';
 import InfiniteScroll from './pages/infinite-scroll.svelte';
 import Inputs from './pages/inputs.svelte';
-import LazyLoad from './pages/lazy-load.svelte';
 import List from './pages/list.svelte';
 import ListIndex from './pages/list-index.svelte';
 import LoginScreen from './pages/login-screen.svelte';
@@ -293,10 +292,6 @@ export default [
   {
     path: '/inputs/',
     component: Inputs,
-  },
-  {
-    path: '/lazy-load/',
-    component: LazyLoad,
   },
   {
     path: '/list/',

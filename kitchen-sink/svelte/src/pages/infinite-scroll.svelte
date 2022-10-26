@@ -30,7 +30,7 @@
 <Page infinite infiniteDistance={50} infinitePreloader={showPreloader} onInfinite={loadMore}>
   <Navbar title="Infinite Scroll" backLink="Back" />
   <BlockTitle>Scroll bottom</BlockTitle>
-  <List>
+  <List strongIos outlineIos dividersIos>
     {#each items as item, index (index)}
       <ListItem title={`Item ${item}`} />
     {/each}

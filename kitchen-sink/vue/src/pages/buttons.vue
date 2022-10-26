@@ -3,7 +3,7 @@
     <f7-navbar title="Buttons" back-link="Back"></f7-navbar>
 
     <f7-block-title>Usual Buttons</f7-block-title>
-    <f7-block strong>
+    <f7-block strong outline-ios>
       <div class="grid grid-cols-3 grid-gap">
         <f7-button>Button</f7-button>
         <f7-button>Button</f7-button>
@@ -12,7 +12,7 @@
     </f7-block>
 
     <f7-block-title>Fill Buttons</f7-block-title>
-    <f7-block strong>
+    <f7-block strong outline-ios>
       <div class="grid grid-cols-3 grid-gap">
         <f7-button fill>Button</f7-button>
         <f7-button fill>Button</f7-button>
@@ -21,7 +21,7 @@
     </f7-block>
 
     <f7-block-title>Outline Buttons</f7-block-title>
-    <f7-block strong>
+    <f7-block strong outline-ios>
       <div class="grid grid-cols-3 grid-gap">
         <f7-button outline>Button</f7-button>
         <f7-button outline>Button</f7-button>
@@ -31,7 +31,7 @@
     </f7-block>
 
     <f7-block-title>Raised Buttons</f7-block-title>
-    <f7-block strong>
+    <f7-block strong outline-ios>
       <p class="grid grid-cols-3 grid-gap">
         <f7-button raised>Button</f7-button>
 
@@ -49,7 +49,7 @@
     </f7-block>
 
     <f7-block-title>Segmented</f7-block-title>
-    <f7-block strong>
+    <f7-block strong outline-ios>
       <f7-segmented tag="p">
         <f7-button>Button</f7-button>
         <f7-button>Button</f7-button>
@@ -89,7 +89,7 @@
     </f7-block>
 
     <f7-block-title>Large Buttons</f7-block-title>
-    <f7-block strong>
+    <f7-block strong outline-ios>
       <p class="grid grid-cols-2 grid-gap">
         <f7-button large>Button</f7-button>
 
@@ -103,7 +103,7 @@
     </f7-block>
 
     <f7-block-title>Small Buttons</f7-block-title>
-    <f7-block strong>
+    <f7-block strong outline-ios>
       <p class="grid grid-cols-3 grid-gap">
         <f7-button small>Button</f7-button>
 
@@ -121,7 +121,7 @@
     </f7-block>
 
     <f7-block-title>Preloader Buttons</f7-block-title>
-    <f7-block strong>
+    <f7-block strong outline-ios>
       <p class="grid grid-cols-2 grid-gap">
         <f7-button preloader :loading="isLoading1" large @click="load1"> Load </f7-button>
 
@@ -130,7 +130,7 @@
     </f7-block>
 
     <f7-block-title>Color Buttons</f7-block-title>
-    <f7-block strong>
+    <f7-block strong outline-ios>
       <div class="grid grid-cols-3 grid-gap">
         <f7-button color="red">Red</f7-button>
 
@@ -141,7 +141,7 @@
     </f7-block>
 
     <f7-block-title>Color Fill Buttons</f7-block-title>
-    <f7-block strong>
+    <f7-block strong outline-ios>
       <div class="grid grid-cols-3 grid-gap">
         <f7-button fill color="red">Red</f7-button>
 

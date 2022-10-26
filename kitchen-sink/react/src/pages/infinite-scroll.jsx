@@ -32,7 +32,7 @@ export default () => {
     <Page infinite infiniteDistance={50} infinitePreloader={showPreloader} onInfinite={loadMore}>
       <Navbar title="Infinite Scroll" backLink="Back"></Navbar>
       <BlockTitle>Scroll bottom</BlockTitle>
-      <List>
+      <List strongIos outlineIos dividersIos>
         {items.map((item, index) => (
           <ListItem title={`Item ${item}`} key={index}></ListItem>
         ))}
