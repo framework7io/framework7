@@ -76,10 +76,15 @@
 .panel-cover {
   z-index: 6000;
 }
+.panel-floating {
+  overflow: hidden;
+  border-radius: 16px;
+}
 .panel-left {
   left: 0;
   width: var(--f7-panel-left-width, var(--f7-panel-width));
   &.panel-cover,
+  &.panel-floating,
   &.panel-push {
     transform: translate3d(calc(-1 * var(--f7-panel-left-width, var(--f7-panel-width))), 0, 0);
   }
@@ -88,6 +93,7 @@
   right: 0;
   width: var(--f7-panel-right-width, var(--f7-panel-width));
   &.panel-cover,
+  &.panel-floating,
   &.panel-push {
     transform: translate3d(var(--f7-panel-right-width, var(--f7-panel-width)), 0, 0);
   }
@@ -98,7 +104,8 @@
   &:after {
     display: none;
   }
-  &.panel-cover {
+  &.panel-cover,
+  &.panel-floating {
     z-index: 5900;
   }
 }
@@ -191,6 +198,8 @@ html {
 .with-panel-right-reveal,
 .with-panel-left-cover,
 .with-panel-right-cover,
+.with-panel-left-floating,
+.with-panel-right-floating,
 .with-panel-left-push,
 .with-panel-right-push {
   .panel-backdrop-in {
