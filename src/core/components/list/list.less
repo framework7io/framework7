@@ -162,19 +162,27 @@
     line-height: var(--f7-list-item-footer-line-height);
   }
   .item-link,
+  label.item-content,
   .list-button {
     transition-duration: 300ms;
     transition-property: background-color, color;
-    display: block;
     position: relative;
     overflow: hidden;
     z-index: 0;
+    cursor: pointer;
   }
-  .item-link {
+  .item-link,
+  .list-button {
+    display: block;
+  }
+  .item-link,
+  label.item-content {
     color: inherit;
     &.active-state {
       background-color: var(--f7-list-link-pressed-bg-color);
     }
+  }
+  .item-link {
     .item-inner {
       .ltr({
         padding-right: calc(var(--f7-list-chevron-icon-area) + var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-right));

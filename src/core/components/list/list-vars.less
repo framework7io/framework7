@@ -52,7 +52,6 @@
   .dark-vars({
     --f7-list-button-border-color: rgba(255, 255, 255, 0.15);
     --f7-list-outline-border-color: rgba(255, 255, 255, 0.15);
-    --f7-list-item-border-color: rgba(255, 255, 255, 0.15);
     --f7-list-group-title-border-color: rgba(255, 255, 255, 0.15);
     --f7-list-chevron-icon-color: rgba(255, 255, 255, 0.3);
 
@@ -68,7 +67,6 @@
   --f7-list-item-subtitle-text-color: inherit;
 
 
-  --f7-list-item-border-color: rgba(0,0,0,0.22);
   --f7-list-link-pressed-bg-color: rgba(0,0,0,0.15);
 
   --f7-list-item-subtitle-font-size: 15px;
@@ -98,6 +96,7 @@
   --f7-menu-list-item-min-height: 44px;
 
   .light-vars({
+    --f7-list-item-border-color: rgba(0,0,0,0.22);
     --f7-list-outline-inset-border-color: rgba(0,0,0,0.22);
     --f7-list-strong-bg-color: #fff;
     --f7-list-item-after-text-color: rgba(0,0,0,0.45);
@@ -111,6 +110,7 @@
     --f7-menu-list-item-selected-bg-color: rgba(var(--f7-theme-color-rgb), 0.15);
   });
   .dark-vars({
+    --f7-list-item-border-color: rgba(255, 255, 255, 0.15);
     --f7-list-outline-inset-color: rgba(255, 255, 255, 0.15);
     --f7-list-strong-bg-color: #1c1c1d;
     --f7-list-item-after-text-color: rgba(255,255,255,0.55);
@@ -126,12 +126,11 @@
   });
 });
 .md-vars({
-  --f7-list-in-list-padding-left: 40px;
+  --f7-list-in-list-padding-left: 24px;
   --f7-list-inset-border-radius: 16px;
   --f7-list-margin-vertical: 32px;
   --f7-list-font-size: 16px;
   --f7-list-chevron-icon-area: 26px;
-  --f7-list-item-border-color: rgba(0,0,0,0.12);
 
   --f7-list-item-subtitle-font-size: 14px;
 
@@ -168,6 +167,7 @@
 
 .md-color-vars({
   --f7-list-outline-inset-border-color: var(--f7-md-outline);
+  --f7-list-item-border-color: var(--f7-md-outline);
   --f7-list-item-title-text-color: var(--f7-md-on-surface);
   --f7-list-item-subtitle-text-color: var(--f7-md-on-surface);
   --f7-list-group-title-bg-color: var(--f7-md-surface-2);
