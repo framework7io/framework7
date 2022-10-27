@@ -20,12 +20,15 @@
     border-radius: 50%;
     animation: f7-circle-circle-in 400ms forwards;
   }
-  .page-next {
-    opacity: 0 !important;
-    transform: scale(0.9) !important;
-    animation: f7-circle-next-to-current 300ms forwards;
-    animation-delay: 300ms;
-    z-index: 150;
+  .ios &,
+  .md & {
+    .page-next {
+      opacity: 0;
+      transform: scale(0.9);
+      animation: f7-circle-next-to-current 300ms forwards;
+      animation-delay: 300ms;
+      z-index: 150;
+    }
   }
 }
 .router-transition-f7-circle-backward {
@@ -33,9 +36,12 @@
     animation: f7-circle-circle-out 300ms forwards;
     animation-delay: 350ms;
   }
-  .page-current {
-    animation: f7-circle-current-to-next 700ms forwards;
-    z-index: 150;
+  .ios &,
+  .md & {
+    .page-current {
+      animation: f7-circle-current-to-next 700ms forwards;
+      z-index: 150;
+    }
   }
 }
 @keyframes f7-circle-circle-in {

@@ -5,27 +5,32 @@
   perspective: 1200px;
   .page {
     backface-visibility: hidden;
+    overflow: hidden;
   }
 }
 .router-transition-f7-flip-forward {
   .page-next {
+    transform-style: preserve-3d;
     animation: f7-flip-next-to-current var(--f7-page-flip-transition-duration) forwards;
   }
   .page-current {
+    transform-style: preserve-3d;
     animation: f7-flip-current-to-prev var(--f7-page-flip-transition-duration) forwards;
   }
 }
 .router-transition-f7-flip-backward {
   .page-current {
+    transform-style: preserve-3d;
     animation: f7-flip-current-to-next var(--f7-page-flip-transition-duration) forwards;
   }
   .page-previous {
+    transform-style: preserve-3d;
     animation: f7-flip-prev-to-current var(--f7-page-flip-transition-duration) forwards;
   }
 }
 @keyframes f7-flip-next-to-current {
   from {
-    border-radius: 30px;
+    border-radius: 32px;
     .ltr({
       transform: translateZ(-100vmax) rotateY(180deg);
     });
@@ -44,7 +49,7 @@
     transform: translateZ(0px) rotateY(0deg);
   }
   to {
-    border-radius: 30px;
+    border-radius: 32px;
     .ltr({
       transform: translateZ(-100vmax) rotateY(180deg);
     });
@@ -59,7 +64,7 @@
     transform: translateZ(0px) rotateY(0deg);
   }
   to {
-    border-radius: 30px;
+    border-radius: 32px;
     .ltr({
       transform: translateZ(-100vmax) rotateY(-180deg);
     });
@@ -70,7 +75,7 @@
 }
 @keyframes f7-flip-prev-to-current {
   from {
-    border-radius: 30px;
+    border-radius: 32px;
     .ltr({
       transform: translateZ(-100vmax) rotateY(-180deg);
     });
