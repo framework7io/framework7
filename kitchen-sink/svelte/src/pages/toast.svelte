@@ -131,7 +131,7 @@
 
 <Page {onPageBeforeRemove} {onPageBeforeOut}>
   <Navbar title="Toast" backLink="Back" />
-  <Block strong>
+  <Block strongIos outlineIos>
     <p>Toasts provide brief feedback about an operation through a message on the screen.</p>
     <p>
       <Button fill onClick={showToastBottom}>Toast on Bottom</Button>

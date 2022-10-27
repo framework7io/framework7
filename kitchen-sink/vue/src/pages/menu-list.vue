@@ -2,14 +2,14 @@
   <f7-page>
     <f7-navbar title="Menu List" back-link="Back"></f7-navbar>
 
-    <f7-block strong>
+    <f7-block>
       <p>
         Menu list unlike usual links list is designed to indicate currently active screen (or
         section) of your app. Think about it like a Tabbar but in a form of a list.
       </p>
     </f7-block>
 
-    <f7-list menu-list>
+    <f7-list menu-list strong-ios outline-ios>
       <f7-list-item
         link
         title="Home"
@@ -42,7 +42,7 @@
       </f7-list-item>
     </f7-list>
 
-    <f7-list menu-list media-list>
+    <f7-list menu-list media-list strong-ios outline-ios>
       <f7-list-item
         link
         title="Home"

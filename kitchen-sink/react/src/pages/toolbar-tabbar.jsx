@@ -25,7 +25,7 @@ export default () => {
         <Link>Left Link</Link>
         <Link>Right Link</Link>
       </Toolbar>
-      <List>
+      <List insetMd strong dividersIos outlineIos>
         <ListItem link="./tabbar/" title="Tabbar" />
         <ListItem link="./tabbar-icons/" title="Tabbar With Icons" />
         <ListItem link="./tabbar-scrollable/" title="Tabbar Scrollable" />

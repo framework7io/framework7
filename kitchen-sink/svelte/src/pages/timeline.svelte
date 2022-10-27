@@ -4,7 +4,7 @@
 
 <Page>
   <Navbar title="Timeline" backLink="Back" />
-  <List>
+  <List outlineIos dividersIos strongIos>
     <ListItem link="/timeline-vertical/" title="Vertical Timeline" />
     <ListItem link="/timeline-horizontal/" title="Horizontal Timeline" />
     <ListItem link="/timeline-horizontal-calendar/" title="Calendar Timeline" />

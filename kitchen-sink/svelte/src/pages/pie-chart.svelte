@@ -4,7 +4,7 @@
 
 <Page>
   <Navbar title="Pie Chart" backLink="Back" />
-  <Block strong>
+  <Block strongIos outlineIos>
     <p>Framework7 comes with simple to use and fully responsive Pie Chart component.</p>
     <p>
       Pie Chart generates SVG layout which makes it also compatible with SSR (server side
@@ -12,7 +12,7 @@
     </p>
   </Block>
   <BlockTitle>Simple Pie Chart</BlockTitle>
-  <Block strong>
+  <Block strongIos outlineIos>
     <!-- prettier-ignore -->
     <PieChart
       datasets={[
@@ -33,7 +33,7 @@
   </Block>
 
   <BlockTitle>With Tooltip</BlockTitle>
-  <Block strong>
+  <Block strongIos outlineIos>
     <!-- prettier-ignore -->
     <PieChart
       tooltip
@@ -58,7 +58,7 @@
   </Block>
 
   <BlockTitle>Custom Format Tooltip</BlockTitle>
-  <Block strong>
+  <Block strongIos outlineIos>
     <!-- prettier-ignore -->
     <PieChart
       tooltip

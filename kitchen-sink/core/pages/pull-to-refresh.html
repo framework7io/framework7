@@ -17,11 +17,11 @@
         <div class="preloader"></div>
         <div class="ptr-arrow"></div>
       </div>
-      <div class="list media-list">
+      <div class="list list-strong-ios list-dividers-ios list-outline-ios media-list">
         <ul>
           ${items.map((item) => $h`
           <li class="item-content">
-            <div class="item-media"><img src=${item.picURL} width="44" /></div>
+            <div class="item-media"><img src=${item.picURL} style="border-radius: 8px" width="44" /></div>
             <div class="item-inner">
               <div class="item-title-row">
                 <div class="item-title">${item.song}</div>

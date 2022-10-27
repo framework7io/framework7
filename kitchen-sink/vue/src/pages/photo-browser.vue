@@ -1,7 +1,7 @@
 <template>
   <f7-page>
     <f7-navbar title="Photo Browser" back-link="Back"></f7-navbar>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <p>
         Photo Browser is a standalone and highly configurable component that allows to open window
         with photo viewer and navigation elements with the following features:
@@ -13,7 +13,7 @@
         <li>Single click on photo to toggle Exposition mode</li>
       </ul>
     </f7-block>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <p>
         Photo Browser could be opened in a three ways - as a Standalone component (Popup
         modification), in Popup, and as separate Page:
@@ -33,7 +33,7 @@
         </div>
       </div>
     </f7-block>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <p>
         Photo Browser supports 2 default themes - default Light (like in previous examples) and Dark
         theme. Here is a Dark theme examples:

@@ -2,7 +2,7 @@
   <f7-page>
     <f7-navbar title="Toggle" back-link="Back"></f7-navbar>
     <f7-block-title>Super Heroes</f7-block-title>
-    <f7-list simple-list>
+    <f7-list simple-list strong outline-ios dividers-ios>
       <f7-list-item>
         <span>Batman</span>
         <f7-toggle checked></f7-toggle>

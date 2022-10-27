@@ -83,7 +83,7 @@
       >Text editor can be used in list with other inputs. In this example it is enabled with
       "keyboard-toolbar"/"popover" type for "About" field.</f7-block-header
     >
-    <f7-list>
+    <f7-list strong-ios dividers-ios outline-ios>
       <f7-list-input type="text" label="Name" placeholder="Your name" />
       <f7-list-input
         type="texteditor"

@@ -8,14 +8,14 @@
 <Page>
   <Navbar title="Menu List" backLink="Back" />
 
-  <Block strong>
+  <Block>
     <p>
       Menu list unlike usual links list is designed to indicate currently active screen (or section)
       of your app. Think about it like a Tabbar but in a form of a list.
     </p>
   </Block>
 
-  <List menuList>
+  <List outlineIos strongIos menuList>
     <ListItem link title="Home" selected={selected === 'home'} onClick={() => (selected = 'home')}>
       <span slot="media">
         <Icon md="material:home" ios="f7:house_fill" />
@@ -43,7 +43,7 @@
     </ListItem>
   </List>
 
-  <List menuList mediaList>
+  <List outlineIos strongIos menuList mediaList>
     <ListItem
       link
       title="Home"

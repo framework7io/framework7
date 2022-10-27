@@ -9,19 +9,48 @@
       </p>
     </f7-block>
     <f7-block-title>Simple List</f7-block-title>
-    <f7-list simple-list>
+    <f7-list simple-list dividers-ios>
       <f7-list-item title="Item 1" />
       <f7-list-item title="Item 2" />
       <f7-list-item title="Item 3" />
     </f7-list>
+
+    <f7-block-title>Strong List</f7-block-title>
+    <f7-list simple-list dividers-ios strong>
+      <f7-list-item title="Item 1" />
+      <f7-list-item title="Item 2" />
+      <f7-list-item title="Item 3" />
+    </f7-list>
+
+    <f7-block-title>Strong Outline List</f7-block-title>
+    <f7-list simple-list dividers-ios strong outline>
+      <f7-list-item title="Item 1" />
+      <f7-list-item title="Item 2" />
+      <f7-list-item title="Item 3" />
+    </f7-list>
+
+    <f7-block-title>Strong Inset List</f7-block-title>
+    <f7-list simple-list dividers-ios strong inset>
+      <f7-list-item title="Item 1" />
+      <f7-list-item title="Item 2" />
+      <f7-list-item title="Item 3" />
+    </f7-list>
+
+    <f7-block-title>Strong Outline Inset List</f7-block-title>
+    <f7-list simple-list dividers-ios strong outline inset>
+      <f7-list-item title="Item 1" />
+      <f7-list-item title="Item 2" />
+      <f7-list-item title="Item 3" />
+    </f7-list>
+
     <f7-block-title>Simple Links List</f7-block-title>
-    <f7-list>
+    <f7-list dividers-ios strong-ios outline-ios>
       <f7-list-item title="Link 1" link="#" />
       <f7-list-item title="Link 2" link="#" />
       <f7-list-item title="Link 3" link="#" />
     </f7-list>
     <f7-block-title>Data list, with icons</f7-block-title>
-    <f7-list>
+    <f7-list dividers-ios strong-ios outline-ios>
       <f7-list-item title="Ivan Petrov" after="CEO">
         <template #media>
           <f7-icon icon="icon-f7" />
@@ -39,7 +68,7 @@
       </f7-list-item>
     </f7-list>
     <f7-block-title>Links</f7-block-title>
-    <f7-list>
+    <f7-list dividers-ios strong-ios outline-ios>
       <f7-list-item link="#" title="Ivan Petrov" after="CEO">
         <template #media>
           <f7-icon icon="icon-f7" />
@@ -57,7 +86,7 @@
       </f7-list-item>
     </f7-list>
     <f7-block-title>Links, Header, Footer</f7-block-title>
-    <f7-list>
+    <f7-list dividers-ios strong-ios outline-ios>
       <f7-list-item link="#" header="Name" title="John Doe" after="Edit">
         <template #media>
           <f7-icon icon="icon-f7" />
@@ -80,15 +109,16 @@
       </f7-list-item>
     </f7-list>
     <f7-block-title>Links, no icons</f7-block-title>
-    <f7-list>
+    <f7-list dividers-ios strong-ios outline-ios>
       <f7-list-item link="#" title="Ivan Petrov" />
       <f7-list-item link="#" title="John Doe" />
-      <f7-list-item group-title title="Divider Here" />
+      <f7-list-item group-title title="Group Title Here" />
       <f7-list-item link="#" title="Ivan Petrov" />
       <f7-list-item link="#" title="Jenna Smith" />
     </f7-list>
+
     <f7-block-title>Grouped with sticky titles</f7-block-title>
-    <f7-list>
+    <f7-list dividers-ios strong-ios outline-ios>
       <f7-list-group>
         <f7-list-item title="A" group-title />
         <f7-list-item title="Aaron " />
@@ -108,8 +138,9 @@
         <f7-list-item title="Candy" />
       </f7-list-group>
     </f7-list>
+
     <f7-block-title>Mixed and nested</f7-block-title>
-    <f7-list>
+    <f7-list dividers-ios strong-ios outline-ios>
       <f7-list-item link="#" title="Ivan Petrov" after="CEO">
         <template #media>
           <f7-icon icon="icon-f7" />
@@ -165,38 +196,9 @@
         </template>
       </f7-list-item>
     </f7-list>
-    <f7-block-title>Mixed, inset</f7-block-title>
-    <f7-list inset>
-      <f7-list-item link="#" title="Ivan Petrov" after="CEO">
-        <template #media>
-          <f7-icon icon="icon-f7" />
-        </template>
-      </f7-list-item>
-      <f7-list-item link="#" title="Two icons here">
-        <template #media>
-          <f7-icon icon="icon-f7" />
-          <f7-icon icon="icon-f7" />
-        </template>
-      </f7-list-item>
-      <f7-list-item link="#" title="Ultra long text goes here, no, it is really really long">
-        <template #media>
-          <f7-icon icon="icon-f7" />
-        </template>
-      </f7-list-item>
-      <f7-list-item title="With toggle">
-        <template #media>
-          <f7-icon icon="icon-f7" />
-        </template>
-        <template #after>
-          <f7-toggle />
-        </template>
-      </f7-list-item>
-      <f7-block-footer>
-        <p>Here comes some useful information about list above</p>
-      </f7-block-footer>
-    </f7-list>
+
     <f7-block-title>Tablet inset</f7-block-title>
-    <f7-list medium-inset>
+    <f7-list dividers-ios strong-ios outline-ios medium-inset>
       <f7-list-item link="#" title="Ivan Petrov" after="CEO">
         <template #media>
           <f7-icon icon="icon-f7" />
@@ -226,7 +228,7 @@
       </p>
     </f7-block>
     <f7-block-title>Songs</f7-block-title>
-    <f7-list media-list>
+    <f7-list media-list dividers-ios strong-ios outline-ios>
       <f7-list-item
         link="#"
         title="Yellow Submarine"
@@ -235,7 +237,11 @@
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
       >
         <template #media>
-          <img src="https://cdn.framework7.io/placeholder/people-160x160-1.jpg" width="80" />
+          <img
+            style="border-radius: 8px"
+            src="https://cdn.framework7.io/placeholder/people-160x160-1.jpg"
+            width="80"
+          />
         </template>
       </f7-list-item>
       <f7-list-item
@@ -246,7 +252,11 @@
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
       >
         <template #media>
-          <img src="https://cdn.framework7.io/placeholder/people-160x160-2.jpg" width="80" />
+          <img
+            style="border-radius: 8px"
+            src="https://cdn.framework7.io/placeholder/people-160x160-2.jpg"
+            width="80"
+          />
         </template>
       </f7-list-item>
       <f7-list-item
@@ -257,12 +267,16 @@
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
       >
         <template #media>
-          <img src="https://cdn.framework7.io/placeholder/people-160x160-3.jpg" width="80" />
+          <img
+            style="border-radius: 8px"
+            src="https://cdn.framework7.io/placeholder/people-160x160-3.jpg"
+            width="80"
+          />
         </template>
       </f7-list-item>
     </f7-list>
     <f7-block-title>Mail App</f7-block-title>
-    <f7-list media-list>
+    <f7-list media-list dividers-ios strong-ios outline-ios>
       <f7-list-item
         link="#"
         title="Facebook"
@@ -293,38 +307,32 @@
       />
     </f7-list>
     <f7-block-title>Something more simple</f7-block-title>
-    <f7-list media-list>
+    <f7-list media-list dividers-ios strong-ios outline-ios>
       <f7-list-item title="Yellow Submarine" subtitle="Beatles">
         <template #media>
-          <img src="https://cdn.framework7.io/placeholder/fashion-88x88-1.jpg" width="44" />
+          <img
+            style="border-radius: 8px"
+            src="https://cdn.framework7.io/placeholder/fashion-88x88-1.jpg"
+            width="44"
+          />
         </template>
       </f7-list-item>
       <f7-list-item link="#" title="Don't Stop Me Now" subtitle="Queen">
         <template #media>
-          <img src="https://cdn.framework7.io/placeholder/fashion-88x88-2.jpg" width="44" />
+          <img
+            style="border-radius: 8px"
+            src="https://cdn.framework7.io/placeholder/fashion-88x88-2.jpg"
+            width="44"
+          />
         </template>
       </f7-list-item>
       <f7-list-item title="Billie Jean" subtitle="Michael Jackson">
         <template #media>
-          <img src="https://cdn.framework7.io/placeholder/fashion-88x88-3.jpg" width="44" />
-        </template>
-      </f7-list-item>
-    </f7-list>
-    <f7-block-title>Inset</f7-block-title>
-    <f7-list media-list inset>
-      <f7-list-item link="#" title="Yellow Submarine" subtitle="Beatles">
-        <template #media>
-          <img src="https://cdn.framework7.io/placeholder/fashion-88x88-4.jpg" width="44" />
-        </template>
-      </f7-list-item>
-      <f7-list-item link="#" title="Don't Stop Me Now" subtitle="Queen">
-        <template #media>
-          <img src="https://cdn.framework7.io/placeholder/fashion-88x88-5.jpg" width="44" />
-        </template>
-      </f7-list-item>
-      <f7-list-item link="#" title="Billie Jean" subtitle="Michael Jackson">
-        <template #media>
-          <img src="https://cdn.framework7.io/placeholder/fashion-88x88-6.jpg" width="44" />
+          <img
+            style="border-radius: 8px"
+            src="https://cdn.framework7.io/placeholder/fashion-88x88-3.jpg"
+            width="44"
+          />
         </template>
       </f7-list-item>
     </f7-list>

@@ -8,14 +8,14 @@ export default () => {
     <Page>
       <Navbar title="Menu List" backLink="Back"></Navbar>
 
-      <Block strong>
+      <Block>
         <p>
           Menu list unlike usual links list is designed to indicate currently active screen (or
           section) of your app. Think about it like a Tabbar but in a form of a list.
         </p>
       </Block>
 
-      <List menuList>
+      <List menuList outlineIos strongIos>
         <ListItem
           link
           title="Home"
@@ -42,7 +42,7 @@ export default () => {
         </ListItem>
       </List>
 
-      <List menuList mediaList>
+      <List menuList mediaList outlineIos strongIos>
         <ListItem
           link
           title="Home"

@@ -130,7 +130,7 @@ export default () => {
   return (
     <Page onPageBeforeRemove={onPageBeforeRemove} onPageBeforeOut={onPageBeforeOut}>
       <Navbar title="Toast" backLink="Back"></Navbar>
-      <Block strong>
+      <Block strongIos outlineIos>
         <p>Toasts provide brief feedback about an operation through a message on the screen.</p>
         <p>
           <Button fill onClick={showToastBottom}>

@@ -9,35 +9,39 @@
     </f7-block>
 
     <f7-block-title>Default</f7-block-title>
-    <f7-block strong class="row demo-preloaders align-items-stretch text-align-center">
-      <f7-col>
+    <f7-block
+      strong-ios
+      outline-ios
+      class="grid grid-cols-4 grid-gap demo-preloaders align-items-stretch text-align-center"
+    >
+      <div>
         <f7-preloader />
-      </f7-col>
-      <f7-col style="background: #000">
+      </div>
+      <div style="background: #000">
         <f7-preloader color="white" />
-      </f7-col>
-      <f7-col>
+      </div>
+      <div>
         <f7-preloader :size="42" />
-      </f7-col>
-      <f7-col style="background: #000">
+      </div>
+      <div style="background: #000">
         <f7-preloader :size="42" color="white" />
-      </f7-col>
+      </div>
     </f7-block>
 
     <f7-block-title>Color Preloaders</f7-block-title>
-    <f7-block strong class="row text-align-center">
-      <f7-col>
+    <f7-block strong class="grid grid-cols-4 grid-gap text-align-center">
+      <div>
         <f7-preloader color="red" />
-      </f7-col>
-      <f7-col>
+      </div>
+      <div>
         <f7-preloader color="green" />
-      </f7-col>
-      <f7-col>
+      </div>
+      <div>
         <f7-preloader color="orange" />
-      </f7-col>
-      <f7-col>
+      </div>
+      <div>
         <f7-preloader color="blue" />
-      </f7-col>
+      </div>
     </f7-block>
 
     <f7-block-title>Multi-color</f7-block-title>
@@ -66,7 +70,7 @@
   </f7-page>
 </template>
 <script>
-import { f7Navbar, f7Page, f7BlockTitle, f7Block, f7Preloader, f7Col, f7 } from 'framework7-vue';
+import { f7Navbar, f7Page, f7BlockTitle, f7Block, f7Preloader, f7 } from 'framework7-vue';
 
 export default {
   components: {
@@ -75,7 +79,6 @@ export default {
     f7BlockTitle,
     f7Block,
     f7Preloader,
-    f7Col,
   },
   methods: {
     openIndicator() {

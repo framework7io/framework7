@@ -15,7 +15,7 @@
     </p>
     <p>Navbar has 3 main parts: Left, Title and Right. Each part may contain any HTML content.</p>
   </Block>
-  <List>
+  <List strong insetMd outlineIos>
     <ListItem link="/navbar-hide-scroll/" title="Hide Navbar On Scroll" />
   </List>
 </Page>

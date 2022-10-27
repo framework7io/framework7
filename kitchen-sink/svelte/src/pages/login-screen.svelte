@@ -34,7 +34,7 @@
     </p>
   </Block>
 
-  <List>
+  <List strong insetMd outlineIos>
     <ListItem link="/login-screen-page/" title="As Separate Page" />
   </List>
 
@@ -75,7 +75,7 @@
           onInput={(e) => (password = e.target.value)}
         />
       </List>
-      <List>
+      <List inset>
         <ListButton onClick={signIn}>Sign In</ListButton>
       </List>
       <BlockFooter>

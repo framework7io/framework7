@@ -84,7 +84,7 @@ export default () => {
   return (
     <Page onPageBeforeOut={onPageBeforeOut} onPageBeforeRemove={onPageBeforeRemove}>
       <Navbar title="Notifications" backLink="Back"></Navbar>
-      <Block>
+      <Block strongIos outlineIos>
         <p>
           Framework7 comes with simple Notifications component that allows you to show some useful
           messages to user and request basic actions.

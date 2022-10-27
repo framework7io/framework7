@@ -17,10 +17,14 @@
       </p>
       <p>Here is the example of virtual list with 10 000 items:</p>
     </f7-block>
-    <f7-list class="searchbar-not-found">
+    <f7-list strong outline-ios inset-md dividers-ios class="searchbar-not-found">
       <f7-list-item title="Nothing found"></f7-list-item>
     </f7-list>
     <f7-list
+      strong
+      outline-ios
+      inset-md
+      dividers-ios
       class="searchbar-found"
       medial-list
       virtual-list

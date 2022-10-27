@@ -193,7 +193,9 @@
       <div class="timeline-item">
         <div class="timeline-item-date">24 <small>DEC</small></div>
         <div class="timeline-item-divider"></div>
-        <div class="timeline-item-content list links-list inset no-safe-areas">
+        <div
+          class="timeline-item-content list links-list inset list-strong list-dividers-ios no-safe-areas"
+        >
           <ul>
             <li><a href="#">Item 1</a></li>
             <li><a href="#">Item 2</a></li>

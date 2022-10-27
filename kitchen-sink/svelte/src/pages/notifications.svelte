@@ -87,7 +87,7 @@
 
 <Page {onPageBeforeOut} {onPageBeforeRemove}>
   <Navbar title="Notifications" backLink="Back" />
-  <Block>
+  <Block strongIos outlineIos>
     <p>
       Framework7 comes with simple Notifications component that allows you to show some useful
       messages to user and request basic actions.

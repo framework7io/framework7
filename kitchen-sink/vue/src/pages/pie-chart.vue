@@ -1,7 +1,7 @@
 <template>
   <f7-page>
     <f7-navbar title="Pie Chart" back-link="Back" />
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <p>Framework7 comes with simple to use and fully responsive Pie Chart component.</p>
       <p>
         Pie Chart generates SVG layout which makes it also compatible with SSR (server side
@@ -9,7 +9,7 @@
       </p>
     </f7-block>
     <f7-block-title>Simple Pie Chart</f7-block-title>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <f7-pie-chart
         :datasets="[
           {
@@ -29,7 +29,7 @@
     </f7-block>
 
     <f7-block-title>With Tooltip</f7-block-title>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <f7-pie-chart
         tooltip
         :datasets="[
@@ -53,7 +53,7 @@
     </f7-block>
 
     <f7-block-title>Custom Format Tooltip</f7-block-title>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <f7-pie-chart
         tooltip
         :datasets="[

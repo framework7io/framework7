@@ -27,7 +27,7 @@ export default () => {
   return (
     <Page>
       <Navbar title="Photo Browser" backLink="Back"></Navbar>
-      <Block strong>
+      <Block strongIos outlineIos>
         <p>
           Photo Browser is a standalone and highly configurable component that allows to open window
           with photo viewer and navigation elements with the following features:
@@ -39,7 +39,7 @@ export default () => {
           <li>Single click on photo to toggle Exposition mode</li>
         </ul>
       </Block>
-      <Block strong>
+      <Block strongIos outlineIos>
         <p>
           Photo Browser could be opened in a three ways - as a Standalone component (Popup
           modification), in Popup, and as separate Page:
@@ -65,7 +65,7 @@ export default () => {
           </div>
         </div>
       </Block>
-      <Block strong>
+      <Block strongIos outlineIos>
         <p>
           Photo Browser supports 2 default themes - default Light (like in previous examples) and
           Dark theme. Here is a Dark theme examples:

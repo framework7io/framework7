@@ -52,7 +52,7 @@ export default () => {
   return (
     <Page onPageBeforeRemove={onPageBeforeRemove}>
       <Navbar title="Popup" backLink="Back"></Navbar>
-      <Block strong>
+      <Block strongIos outlineIos>
         <p>
           Popup is a modal window with any HTML content that pops up over App's main content. Popup
           as all other overlays is part of so called "Temporary Views".
@@ -75,7 +75,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Swipe To Close</BlockTitle>
-      <Block strong>
+      <Block strongIos outlineIos>
         <p>Popup can be closed with swipe to top or bottom:</p>
         <p>
           <Button fill popupOpen=".demo-popup-swipe">
@@ -93,7 +93,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Push View</BlockTitle>
-      <Block strong>
+      <Block strongIos outlineIos>
         <p>
           Popup can push view behind. By default has effect only when `safe-area-inset-top` is more
           than zero (iOS fullscreen webapp or iOS cordova app)
@@ -214,7 +214,7 @@ export default () => {
         <Page>
           <div slot="fixed" className="swipe-handler"></div>
           <BlockTitle large>Hello!</BlockTitle>
-          <Block strong>
+          <Block strongIos outlineIos>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse faucibus mauris
               leo, eu bibendum neque congue non. Ut leo mauris, eleifend eu commodo a, egestas ac

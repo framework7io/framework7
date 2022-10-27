@@ -15,9 +15,11 @@ export default () => (
     <Navbar title="Subnavbar" backLink="Back">
       <Subnavbar>
         <Segmented strong>
-          <Button active>Link 1</Button>
-          <Button>Link 2</Button>
-          <Button>Link 3</Button>
+          <Button smallMd active>
+            Link 1
+          </Button>
+          <Button smallMd>Link 2</Button>
+          <Button smallMd>Link 3</Button>
         </Segmented>
       </Subnavbar>
     </Navbar>
@@ -27,7 +29,7 @@ export default () => (
         or Search Bar. It also remains visible when Navbar hidden.
       </p>
     </Block>
-    <List>
+    <List strong outlineIos>
       <ListItem link="/subnavbar-title/" title="Subnavbar Title" />
     </List>
   </Page>

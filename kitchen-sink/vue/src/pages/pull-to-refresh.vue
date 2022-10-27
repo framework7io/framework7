@@ -1,7 +1,7 @@
 <template>
   <f7-page ptr :ptr-mousewheel="true" @ptr:refresh="loadMore">
     <f7-navbar title="Pull To Refresh" back-link="Back"></f7-navbar>
-    <f7-list media-list>
+    <f7-list media-list strong-ios dividers-ios outline-ios>
       <f7-list-item
         v-for="(item, index) in items"
         :key="index"
@@ -9,7 +9,7 @@
         :subtitle="item.author"
       >
         <template #media>
-          <img :src="item.cover" width="44" />
+          <img :src="item.cover" width="44" style="border-radius: 8px" />
         </template>
       </f7-list-item>
 

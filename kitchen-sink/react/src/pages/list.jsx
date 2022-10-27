@@ -3,11 +3,11 @@ import {
   Navbar,
   Page,
   BlockTitle,
+  BlockFooter,
   Block,
   List,
   ListItem,
   ListGroup,
-  BlockFooter,
   Icon,
   Toggle,
 } from 'framework7-react';
@@ -23,19 +23,48 @@ export default () => (
       </p>
     </Block>
     <BlockTitle>Simple List</BlockTitle>
-    <List simpleList>
+    <List dividersIos simpleList>
       <ListItem title="Item 1" />
       <ListItem title="Item 2" />
       <ListItem title="Item 3" />
     </List>
+
+    <BlockTitle>Strong List</BlockTitle>
+    <List dividersIos simpleList strong>
+      <ListItem title="Item 1" />
+      <ListItem title="Item 2" />
+      <ListItem title="Item 3" />
+    </List>
+
+    <BlockTitle>Strong Outline List</BlockTitle>
+    <List dividersIos simpleList strong outline>
+      <ListItem title="Item 1" />
+      <ListItem title="Item 2" />
+      <ListItem title="Item 3" />
+    </List>
+
+    <BlockTitle>Strong Inset List</BlockTitle>
+    <List dividersIos simpleList strong inset>
+      <ListItem title="Item 1" />
+      <ListItem title="Item 2" />
+      <ListItem title="Item 3" />
+    </List>
+
+    <BlockTitle>Strong Outline Inset List</BlockTitle>
+    <List dividersIos simpleList strong outline inset>
+      <ListItem title="Item 1" />
+      <ListItem title="Item 2" />
+      <ListItem title="Item 3" />
+    </List>
+
     <BlockTitle>Simple Links List</BlockTitle>
-    <List>
+    <List dividersIos outlineIos strongIos>
       <ListItem title="Link 1" link="#" />
       <ListItem title="Link 2" link="#" />
       <ListItem title="Link 3" link="#" />
     </List>
     <BlockTitle>Data list, with icons</BlockTitle>
-    <List>
+    <List dividersIos outlineIos strongIos>
       <ListItem title="Ivan Petrov" after="CEO">
         <Icon slot="media" icon="icon-f7" />
       </ListItem>
@@ -47,7 +76,7 @@ export default () => (
       </ListItem>
     </List>
     <BlockTitle>Links</BlockTitle>
-    <List>
+    <List dividersIos outlineIos strongIos>
       <ListItem link="#" title="Ivan Petrov" after="CEO">
         <Icon slot="media" icon="icon-f7" />
       </ListItem>
@@ -59,7 +88,7 @@ export default () => (
       </ListItem>
     </List>
     <BlockTitle>Links, Header, Footer</BlockTitle>
-    <List>
+    <List dividersIos outlineIos strongIos>
       <ListItem link="#" header="Name" title="John Doe" after="Edit">
         <Icon slot="media" icon="icon-f7" />
       </ListItem>
@@ -74,15 +103,15 @@ export default () => (
       </ListItem>
     </List>
     <BlockTitle>Links, no icons</BlockTitle>
-    <List>
+    <List dividersIos outlineIos strongIos>
       <ListItem link="#" title="Ivan Petrov" />
       <ListItem link="#" title="John Doe" />
-      <ListItem groupTitle title="Divider Here" />
+      <ListItem groupTitle title="Group Title Here" />
       <ListItem link="#" title="Ivan Petrov" />
       <ListItem link="#" title="Jenna Smith" />
     </List>
     <BlockTitle>Grouped with sticky titles</BlockTitle>
-    <List>
+    <List dividersIos outlineIos strongIos>
       <ListGroup>
         <ListItem title="A" groupTitle />
         <ListItem title="Aaron " />
@@ -103,7 +132,7 @@ export default () => (
       </ListGroup>
     </List>
     <BlockTitle>Mixed and nested</BlockTitle>
-    <List>
+    <List dividersIos outlineIos strongIos>
       <ListItem link="#" title="Ivan Petrov" after="CEO">
         <Icon slot="media" icon="icon-f7" />
       </ListItem>
@@ -139,28 +168,9 @@ export default () => (
         <Toggle slot="after" />
       </ListItem>
     </List>
-    <BlockTitle>Mixed, inset</BlockTitle>
-    <List inset>
-      <ListItem link="#" title="Ivan Petrov" after="CEO">
-        <Icon slot="media" icon="icon-f7" />
-      </ListItem>
-      <ListItem link="#" title="Two icons here">
-        <Icon slot="media" icon="icon-f7" />
-        <Icon slot="media" icon="icon-f7" />
-      </ListItem>
-      <ListItem link="#" title="Ultra long text goes here, no, it is really really long">
-        <Icon slot="media" icon="icon-f7" />
-      </ListItem>
-      <ListItem title="With toggle">
-        <Icon slot="media" icon="icon-f7" />
-        <Toggle slot="after" />
-      </ListItem>
-      <BlockFooter>
-        <p>Here comes some useful information about list above</p>
-      </BlockFooter>
-    </List>
+
     <BlockTitle>Tablet inset</BlockTitle>
-    <List mediumInset>
+    <List dividersIos outlineIos strongIos mediumInset>
       <ListItem link="#" title="Ivan Petrov" after="CEO">
         <Icon slot="media" icon="icon-f7" />
       </ListItem>
@@ -171,7 +181,7 @@ export default () => (
       <ListItem link="#" title="Ultra long text goes here, no, it is really really long">
         <Icon slot="media" icon="icon-f7" />
       </ListItem>
-      <BlockFooter>
+      <BlockFooter slot="after-list">
         <p>This list block will look like "inset" only on tablets (iPad)</p>
       </BlockFooter>
     </List>
@@ -184,7 +194,7 @@ export default () => (
       </p>
     </Block>
     <BlockTitle>Songs</BlockTitle>
-    <List mediaList>
+    <List dividersIos mediaList outlineIos strongIos>
       <ListItem
         link="#"
         title="Yellow Submarine"
@@ -194,6 +204,7 @@ export default () => (
       >
         <img
           slot="media"
+          style={{ borderRadius: '8px' }}
           src="https://cdn.framework7.io/placeholder/people-160x160-1.jpg"
           width="80"
         />
@@ -207,6 +218,7 @@ export default () => (
       >
         <img
           slot="media"
+          style={{ borderRadius: '8px' }}
           src="https://cdn.framework7.io/placeholder/people-160x160-2.jpg"
           width="80"
         />
@@ -220,13 +232,14 @@ export default () => (
       >
         <img
           slot="media"
+          style={{ borderRadius: '8px' }}
           src="https://cdn.framework7.io/placeholder/people-160x160-3.jpg"
           width="80"
         />
       </ListItem>
     </List>
     <BlockTitle>Mail App</BlockTitle>
-    <List mediaList>
+    <List dividersIos mediaList outlineIos strongIos>
       <ListItem
         link="#"
         title="Facebook"
@@ -257,10 +270,11 @@ export default () => (
       />
     </List>
     <BlockTitle>Something more simple</BlockTitle>
-    <List mediaList>
+    <List dividersIos mediaList outlineIos strongIos>
       <ListItem title="Yellow Submarine" subtitle="Beatles">
         <img
           slot="media"
+          style={{ borderRadius: '8px' }}
           src="https://cdn.framework7.io/placeholder/fashion-88x88-1.jpg"
           width="44"
         />
@@ -268,6 +282,7 @@ export default () => (
       <ListItem link="#" title="Don't Stop Me Now" subtitle="Queen">
         <img
           slot="media"
+          style={{ borderRadius: '8px' }}
           src="https://cdn.framework7.io/placeholder/fashion-88x88-2.jpg"
           width="44"
         />
@@ -275,31 +290,8 @@ export default () => (
       <ListItem title="Billie Jean" subtitle="Michael Jackson">
         <img
           slot="media"
+          style={{ borderRadius: '8px' }}
           src="https://cdn.framework7.io/placeholder/fashion-88x88-3.jpg"
-          width="44"
-        />
-      </ListItem>
-    </List>
-    <BlockTitle>Inset</BlockTitle>
-    <List mediaList inset>
-      <ListItem link="#" title="Yellow Submarine" subtitle="Beatles">
-        <img
-          slot="media"
-          src="https://cdn.framework7.io/placeholder/fashion-88x88-4.jpg"
-          width="44"
-        />
-      </ListItem>
-      <ListItem link="#" title="Don't Stop Me Now" subtitle="Queen">
-        <img
-          slot="media"
-          src="https://cdn.framework7.io/placeholder/fashion-88x88-5.jpg"
-          width="44"
-        />
-      </ListItem>
-      <ListItem link="#" title="Billie Jean" subtitle="Michael Jackson">
-        <img
-          slot="media"
-          src="https://cdn.framework7.io/placeholder/fashion-88x88-6.jpg"
           width="44"
         />
       </ListItem>

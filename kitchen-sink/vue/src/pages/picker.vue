@@ -13,7 +13,7 @@
         </p>
       </div>
       <div class="block-title">Picker with single value</div>
-      <div class="list no-hairlines-md">
+      <div class="list list-outline-ios list-strong-ios">
         <ul>
           <li>
             <div class="item-content item-input">
@@ -32,7 +32,7 @@
         </ul>
       </div>
       <div class="block-title">2 values and 3d-rotate effect</div>
-      <div class="list no-hairlines-md">
+      <div class="list list-outline-ios list-strong-ios">
         <ul>
           <li>
             <div class="item-content item-input">
@@ -51,7 +51,7 @@
         </ul>
       </div>
       <div class="block-title">Dependent values</div>
-      <div class="list no-hairlines-md">
+      <div class="list list-outline-ios list-strong-ios">
         <ul>
           <li>
             <div class="item-content item-input">
@@ -70,7 +70,7 @@
         </ul>
       </div>
       <div class="block-title">Custom toolbar</div>
-      <div class="list no-hairlines-md">
+      <div class="list list-outline-ios list-strong-ios">
         <ul>
           <li>
             <div class="item-content item-input">
@@ -107,7 +107,7 @@
           </li>
         </ul>
       </div>
-      <div class="block block-strong no-padding no-margin margin-bottom">
+      <div class="block block-strong block-outline-ios inset-md no-padding no-margin-top">
         <div id="demo-picker-date-container"></div>
       </div>
     </div>

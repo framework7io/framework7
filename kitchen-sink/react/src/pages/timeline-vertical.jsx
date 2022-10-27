@@ -236,7 +236,7 @@ export default () => (
           24 <small>DEC</small>
         </div>
         <div className="timeline-item-divider"></div>
-        <div className="timeline-item-content list links-list inset no-safe-areas">
+        <div className="timeline-item-content list links-list inset list-strong list-dividers-ios no-safe-areas">
           <ul>
             <li>
               <a href="#">Item 1</a>

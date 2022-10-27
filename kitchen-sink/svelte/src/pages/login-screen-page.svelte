@@ -29,15 +29,17 @@
       type="text"
       placeholder="Your username"
       value={username}
-      onInput={(e) => (username = e.target.value)} />
+      onInput={(e) => (username = e.target.value)}
+    />
     <ListInput
       label="Password"
       type="password"
       placeholder="Your password"
       value={password}
-      onInput={(e) => (password = e.target.value)} />
+      onInput={(e) => (password = e.target.value)}
+    />
   </List>
-  <List>
+  <List inset>
     <ListButton onClick={signIn}>Sign In</ListButton>
   </List>
   <BlockFooter>

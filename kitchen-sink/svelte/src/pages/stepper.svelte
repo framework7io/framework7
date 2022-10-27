@@ -43,7 +43,7 @@
 <Page>
   <Navbar title="Stepper" backLink="Back" />
   <BlockTitle>Shape and size</BlockTitle>
-  <Block strong class="text-align-center">
+  <Block strong outlineIos class="text-align-center">
     <div class="grid grid-cols-2 grid-gap">
       <div>
         <small class="display-block">Default</small>
@@ -112,7 +112,7 @@
   </Block>
 
   <BlockTitle>Raised</BlockTitle>
-  <Block strong class="text-align-center">
+  <Block strong outlineIos class="text-align-center">
     <div class="grid grid-cols-2 grid-gap">
       <div>
         <small class="display-block">Default</small>
@@ -180,7 +180,7 @@
     </div>
   </Block>
   <BlockTitle>Colors</BlockTitle>
-  <Block strong class="text-align-center">
+  <Block strong outlineIos class="text-align-center">
     <div class="grid grid-cols-2 grid-gap">
       <div>
         <Stepper fill color="red" />
@@ -218,7 +218,7 @@
     </div>
   </Block>
   <BlockTitle>Without input element</BlockTitle>
-  <Block strong class="text-align-center">
+  <Block strong outlineIos class="text-align-center">
     <div class="grid grid-cols-2 grid-gap">
       <div>
         <Stepper input={false} />
@@ -229,7 +229,7 @@
     </div>
   </Block>
   <BlockTitle>Min, max, step</BlockTitle>
-  <Block strong class="text-align-center">
+  <Block strong outlineIos class="text-align-center">
     <div class="grid grid-cols-2 grid-gap">
       <div>
         <Stepper fill value={100} min={0} max={1000} step={100} />
@@ -246,7 +246,7 @@
     With dynamic autorepeat, the rate of change depends on how long the user continues pressing the
     control.
   </BlockHeader>
-  <Block strong class="text-align-center">
+  <Block strong outlineIos class="text-align-center">
     <div class="grid grid-cols-2 grid-gap">
       <div>
         <small class="display-block">Default</small>
@@ -272,16 +272,12 @@
     In wraps mode incrementing beyond maximum value sets value to minimum value, likewise,
     decrementing below minimum value sets value to maximum value
   </BlockHeader>
-  <Block strong class="text-align-center">
-    <div class="grid grid-cols-2 grid-gap">
-      <div>
-        <Stepper fill value={0} min={0} max={10} step={1} autorepeat={true} wraps={true} />
-      </div>
-    </div>
+  <Block strong outlineIos class="text-align-center">
+    <Stepper fill value={0} min={0} max={10} step={1} autorepeat={true} wraps={true} />
   </Block>
 
   <BlockTitle>Custom value element</BlockTitle>
-  <List>
+  <List strongIos outlineIos dividersIos>
     <ListItem title={`Apples ${applesCount}`}>
       <span slot="after">
         <Stepper buttonsOnly={true} small raised onStepperChange={setApples} />
@@ -295,7 +291,7 @@
   </List>
 
   <BlockTitle>Custom value format</BlockTitle>
-  <List>
+  <List strongIos outlineIos dividersIos>
     <ListItem header="Meeting starts in" title={meetingTimeComputed}>
       <span slot="after">
         <Stepper
@@ -319,21 +315,17 @@
     field, stepper enter into manual input mode, which allow type value from keyboard and check
     fractional part with defined accurancy. Click outside or enter Return key, ending manual mode.
   </BlockHeader>
-  <Block strong class="text-align-center">
-    <div class="grid grid-cols-2 grid-gap">
-      <div>
-        <Stepper
-          fill
-          value={0}
-          min={0}
-          max={1000}
-          step={1}
-          autorepeat={true}
-          wraps={true}
-          manualInputMode={true}
-          decimalPoint={2}
-        />
-      </div>
-    </div>
+  <Block strong outlineIos class="text-align-center">
+    <Stepper
+      fill
+      value={0}
+      min={0}
+      max={1000}
+      step={1}
+      autorepeat={true}
+      wraps={true}
+      manualInputMode={true}
+      decimalPoint={2}
+    />
   </Block>
 </Page>

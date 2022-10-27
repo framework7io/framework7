@@ -9,7 +9,7 @@
     <f7-block>
       <p>Just click "Toggle" button on navigation bar to enable/disable sorting</p>
     </f7-block>
-    <f7-list sortable>
+    <f7-list strong-ios outline-ios dividers-ios sortable>
       <f7-list-item title="1 Jenna Smith" after="CEO">
         <template #media>
           <f7-icon icon="icon-f7" />
@@ -46,7 +46,7 @@
         </template>
       </f7-list-item>
     </f7-list>
-    <f7-list media-list sortable>
+    <f7-list strong-ios outline-ios dividers-ios media-list sortable>
       <f7-list-item
         title="Yellow Submarine"
         after="$15"
@@ -80,7 +80,7 @@
     </f7-list>
 
     <f7-block-title>Opposite Side</f7-block-title>
-    <f7-list sortable sortable-opposite>
+    <f7-list strong-ios outline-ios dividers-ios sortable sortable-opposite>
       <f7-list-item title="1 Jenna Smith" after="CEO">
         <template #media>
           <f7-icon icon="icon-f7" />

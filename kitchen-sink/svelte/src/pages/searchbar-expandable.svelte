@@ -14,10 +14,10 @@
       searchIn=".item-title"
     />
   </Navbar>
-  <List class="searchbar-not-found">
+  <List strongIos outlineIos dividersIos class="searchbar-not-found">
     <ListItem title="Nothing found" />
   </List>
-  <List class="search-list searchbar-found">
+  <List strongIos outlineIos dividersIos class="search-list searchbar-found">
     <ListItem title="Acura" />
     <ListItem title="Audi" />
     <ListItem title="BMW" />

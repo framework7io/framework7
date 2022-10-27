@@ -9,10 +9,10 @@ export default () => {
           <Searchbar searchContainer=".search-list" searchIn=".item-title" />
         </Subnavbar>
       </Navbar>
-      <List className="searchbar-not-found">
+      <List strongIos outlineIos dividersIos className="searchbar-not-found">
         <ListItem title="Nothing found" />
       </List>
-      <List className="search-list searchbar-found">
+      <List strongIos outlineIos dividersIos className="search-list searchbar-found">
         <ListItem title="Acura" />
         <ListItem title="Audi" />
         <ListItem title="BMW" />

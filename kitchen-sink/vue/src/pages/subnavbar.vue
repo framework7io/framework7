@@ -3,9 +3,9 @@
     <f7-navbar title="Subnavbar" back-link="Back">
       <f7-subnavbar>
         <f7-segmented strong>
-          <f7-button active>Link 1</f7-button>
-          <f7-button>Link 2</f7-button>
-          <f7-button>Link 3</f7-button>
+          <f7-button small-md active>Link 1</f7-button>
+          <f7-button small-md>Link 2</f7-button>
+          <f7-button small-md>Link 3</f7-button>
         </f7-segmented>
       </f7-subnavbar>
     </f7-navbar>
@@ -15,7 +15,7 @@
         or Search Bar. It also remains visible when Navbar hidden.
       </p>
     </f7-block>
-    <f7-list>
+    <f7-list strong outline-ios>
       <f7-list-item link="/subnavbar-title/" title="Subnavbar Title"></f7-list-item>
     </f7-list>
   </f7-page>

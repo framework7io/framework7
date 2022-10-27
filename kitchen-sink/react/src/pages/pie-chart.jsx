@@ -5,7 +5,7 @@ export default () => {
   return (
     <Page>
       <Navbar title="Pie Chart" backLink="Back" />
-      <Block strong>
+      <Block strongIos outlineIos>
         <p>Framework7 comes with simple to use and fully responsive Pie Chart component.</p>
         <p>
           Pie Chart generates SVG layout which makes it also compatible with SSR (server side
@@ -13,7 +13,7 @@ export default () => {
         </p>
       </Block>
       <BlockTitle>Simple Pie Chart</BlockTitle>
-      <Block strong>
+      <Block strongIos outlineIos>
         <PieChart
           datasets={[
             {
@@ -33,7 +33,7 @@ export default () => {
       </Block>
 
       <BlockTitle>With Tooltip</BlockTitle>
-      <Block strong>
+      <Block strongIos outlineIos>
         <PieChart
           tooltip
           datasets={[
@@ -57,7 +57,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Custom Format Tooltip</BlockTitle>
-      <Block strong>
+      <Block strongIos outlineIos>
         <PieChart
           tooltip
           datasets={[

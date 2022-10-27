@@ -13,17 +13,17 @@
       </div>
     </div>
     <div class="page-content">
-      <div class="block block-strong">
+      <div class="block block-strong-ios block-outline-ios">
         <p>Component page template is compiled as ES Template. In addition it has lifecycle hooks, events handling, data
           managment and Virtual DOM data bindings.</p>
         <p>It is useful to use Component page when you need page-specific logic.</p>
       </div>
       <div class="block-title">Events Handling</div>
-      <div class="block block-strong">
-        <a href="#" class="button button-raised" @click=${openAlert}>Open Alert</a>
+      <div class="block block-strong-ios block-outline-ios">
+        <a href="#" class="button button-fill" @click=${openAlert}>Open Alert</a>
       </div>
       <div class="block-title">Page Component Data</div>
-      <div class="block block-strong">
+      <div class="block block-strong-ios block-outline-ios">
         <p>Hello! My name is ${name}. I am ${age} years old.</p>
         <p>I like to play:</p>
         <ul>
@@ -33,7 +33,7 @@
         </ul>
       </div>
       <div class="block-title">Extended Context</div>
-      <div class="block block-strong">
+      <div class="block block-strong-ios block-outline-ios">
         <p>Component page context is also extended with some additional variables.</p>
         <h4>$f7route</h4>
         <p>Contains properties of the current route:</p>
@@ -53,23 +53,23 @@
         </ul>
       </div>
       <div class="block-title">Virtual DOM</div>
-      <div class="block block-strong">
+      <div class="block block-strong-ios block-outline-ios">
         <p>Component page is rendered using Virtual DOM. It means it can automatically update page layout depending on
           changed state with minimal efforts and with maximum performance.</p>
       </div>
-      <div class="block block-strong">
+      <div class="block block-strong-ios block-outline-ios">
         <p>Ok, so your name is <b>${name}</b>?</p>
         <div class="input ${$theme.md ? 'margin-bottom' : '' }">
-          <input class="padding-bottom" type="text" @input=${onInput} value=${name} placeholder="Type your name" />
+          <input type="text" @input=${onInput} value=${name} placeholder="Type your name" />
           <div class="input-info">Type new name and it be dynamically changed</div>
         </div>
       </div>
-      <div class="block block-strong">
+      <div class="block block-strong-ios block-outline-ios">
         <p>Button clicked <b>${clickCounter}</b> times (double is ${clickCounter * 2})</p>
         <p><a class="button button-round button-fill" @click=${onButtonClick}>Increase Counter</a></p>
       </div>
       ${listItems && $h`
-      <div class="list simple-list">
+      <div class="list list-strong list-inset list-dividers-ios simple-list">
         <ul>
           ${listItems.map((item) => $h`
           <li>Item ${item}</li>
@@ -78,7 +78,7 @@
       </div>
       `}
       ${!listItems && $h`
-      <div class="block block-strong text-align-center">
+      <div class="block block-strong-ios block-outline-ios text-align-center">
         ${listLoading ? $h`
         <div class="preloader"></div>
         ` : $h`
@@ -88,7 +88,7 @@
       `}
 
       <div class="block-title">Store ($store)</div>
-      <div class="block block-strong">
+      <div class="block block-strong-ios block-outline-ios">
         <p>Store state & methods (actions):</p>
         <ul style="padding-left:25px">
           <li><b>$store.state.firstName</b>: ${$store.state.firstName}</li>
@@ -98,7 +98,7 @@
       </div>
       <div class="block-title">Store reactivity</div>
       ${!users.value && $h`
-      <div class="block block-strong text-align-center">
+      <div class="block block-strong-ios block-outline-ios text-align-center">
         ${usersLoading.value && $h`
         <div class="preloader"></div>
         `}

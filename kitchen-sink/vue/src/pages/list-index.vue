@@ -8,7 +8,7 @@
       :label="true"
       @listindex:select="onIndexSelect"
     ></f7-list-index>
-    <f7-list contacts-list>
+    <f7-list contacts-list strong-ios dividers-ios>
       <f7-list-group>
         <f7-list-item title="A" group-title></f7-list-item>
         <f7-list-item title="Aaron"></f7-list-item>

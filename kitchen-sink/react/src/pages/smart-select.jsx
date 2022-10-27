@@ -7,7 +7,7 @@ export default () => (
     <Block>
       Framework7 allows you to easily convert your usual form selects to dynamic pages with radios:
     </Block>
-    <List>
+    <List strongIos outlineIos dividersIos>
       <ListItem title="Fruit" smartSelect>
         <select name="fruits" defaultValue="apple">
           <option value="apple">Apple</option>

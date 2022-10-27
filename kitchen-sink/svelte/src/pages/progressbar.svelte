@@ -70,7 +70,7 @@
     </p>
   </Block>
   <BlockTitle>Determinate Progress Bar</BlockTitle>
-  <Block strong>
+  <Block strongIos outlineIos>
     <p>
       When progress bar is determinate it indicates how long an operation will take when the
       percentage complete is detectable.
@@ -105,7 +105,7 @@
     </div>
   </Block>
   <BlockTitle>Infinite Progress Bar</BlockTitle>
-  <Block strong>
+  <Block strongIos outlineIos>
     <p>
       When progress bar is infinite/indeterminate it requests that the user wait while something
       finishes when it’s not necessary to indicate how long it will take.
@@ -135,7 +135,7 @@
     </div>
   </Block>
   <BlockTitle>Colors</BlockTitle>
-  <List simpleList>
+  <List strongIos outlineIos dividersIos simpleList>
     <ListItem>
       <Progressbar color="blue" progress={10} />
     </ListItem>

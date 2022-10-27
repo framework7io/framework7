@@ -5,7 +5,7 @@
       <f7-link>Left Link</f7-link>
       <f7-link>Right Link</f7-link>
     </f7-toolbar>
-    <f7-list>
+    <f7-list inset-md strong dividers-ios outline-ios>
       <f7-list-item link="./tabbar/" title="Tabbar" />
       <f7-list-item link="./tabbar-icons/" title="Tabbar With Icons" />
       <f7-list-item link="./tabbar-scrollable/" title="Tabbar Scrollable" />

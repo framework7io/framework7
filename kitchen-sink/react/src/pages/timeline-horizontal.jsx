@@ -62,7 +62,7 @@ export default () => (
           24 <small>DEC</small>
         </div>
         <div className="timeline-item-content">
-          <div className="list links-list inset no-safe-areas">
+          <div className="list links-list inset list-strong list-dividers-ios no-safe-areas">
             <ul>
               <li>
                 <a href="#">Item 1</a>

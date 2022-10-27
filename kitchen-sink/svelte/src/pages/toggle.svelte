@@ -5,7 +5,7 @@
 <Page>
   <Navbar title="Toggle" backLink="Back" />
   <BlockTitle>Super Heroes</BlockTitle>
-  <List simpleList>
+  <List simpleList strong outlineIos dividersIos>
     <ListItem>
       <span>Batman</span>
       <Toggle checked />

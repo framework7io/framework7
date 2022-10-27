@@ -17,7 +17,7 @@
         @input="password = $event.target.value"
       ></f7-list-input>
     </f7-list>
-    <f7-list>
+    <f7-list inset>
       <f7-list-button @click="signIn">Sign In</f7-list-button>
       <f7-block-footer
         >Some text about login information.<br />Lorem ipsum dolor sit amet, consectetur adipiscing

@@ -2,14 +2,14 @@
   <f7-page>
     <f7-navbar title="Page Transitions" back-link="Back"></f7-navbar>
 
-    <f7-block strong>
+    <f7-block>
       <p>
         In addition to default theme-specific page transition it is possible to create custom page
         transition or use one of the additional transition effects:
       </p>
     </f7-block>
 
-    <f7-list>
+    <f7-list inset strong dividers-ios>
       <f7-list-item
         v-for="effect in effects"
         :key="effect"

@@ -16,14 +16,14 @@
 <Page>
   <Navbar title="Page Transitions" backLink="Back" />
 
-  <Block strong>
+  <Block>
     <p>
       In addition to default theme-specific page transition it is possible to create custom page
       transition or use one of the additional transition effects:
     </p>
   </Block>
 
-  <List>
+  <List inset strong dividersIos>
     {#each effects as effect}
       <ListItem link={`/page-transitions/${effect}/`} title={effect} transition={effect} />
     {/each}

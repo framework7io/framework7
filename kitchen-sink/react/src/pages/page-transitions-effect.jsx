@@ -5,7 +5,7 @@ export default (props) => (
   <Page>
     <Navbar title={props.effect} backLink="Back"></Navbar>
 
-    <Block strong className="text-align-center">
+    <Block className="text-align-center">
       <p>
         This page was loaded with <b>{props.effect}</b> transition.
       </p>

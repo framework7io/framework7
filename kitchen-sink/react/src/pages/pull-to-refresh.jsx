@@ -41,10 +41,10 @@ export default () => {
   return (
     <Page ptr ptrMousewheel={true} onPtrRefresh={loadMore}>
       <Navbar title="Pull To Refresh" backLink="Back"></Navbar>
-      <List mediaList>
+      <List mediaList strongIos dividersIos outlineIos>
         {items.map((item, index) => (
           <ListItem key={index} title={item.title} subtitle={item.author}>
-            <img slot="media" src={item.cover} width="44" />
+            <img slot="media" src={item.cover} width="44" style={{ borderRadius: '8px' }} />
           </ListItem>
         ))}
         <BlockFooter>

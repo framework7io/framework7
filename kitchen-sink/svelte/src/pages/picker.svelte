@@ -40,9 +40,10 @@
       cols: [
         {
           textAlign: 'left',
-          values: 'Super Amazing Bat Iron Rocket Lex Beautiful Wonderful Raining Happy Funny Cool Hot'.split(
-            ' ',
-          ),
+          values:
+            'Super Amazing Bat Iron Rocket Lex Beautiful Wonderful Raining Happy Funny Cool Hot'.split(
+              ' ',
+            ),
         },
         {
           values: 'Man Luthor Woman Boy Girl Person Cutie Babe Raccoon'.split(' '),
@@ -103,9 +104,10 @@
         },
         {
           textAlign: 'left',
-          values: 'Super Amazing Bat Iron Rocket Lex Beautiful Wonderful Raining Happy Funny Cool Hot'.split(
-            ' ',
-          ),
+          values:
+            'Super Amazing Bat Iron Rocket Lex Beautiful Wonderful Raining Happy Funny Cool Hot'.split(
+              ' ',
+            ),
         },
         {
           values: 'Man Luthor Woman Boy Girl Person Cutie Babe Raccoon'.split(' '),
@@ -149,45 +151,17 @@
         // Months
         {
           values: '0 1 2 3 4 5 6 7 8 9 10 11'.split(' '),
-          displayValues: 'January February March April May June July August September October November December'.split(
-            ' ',
-          ),
+          displayValues:
+            'January February March April May June July August September October November December'.split(
+              ' ',
+            ),
           textAlign: 'left',
         },
         // Days
         {
           values: [
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10,
-            11,
-            12,
-            13,
-            14,
-            15,
-            16,
-            17,
-            18,
-            19,
-            20,
-            21,
-            22,
-            23,
-            24,
-            25,
-            26,
-            27,
-            28,
-            29,
-            30,
-            31,
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
+            25, 26, 27, 28, 29, 30, 31,
           ],
         },
         // Years
@@ -266,35 +240,37 @@
     </p>
   </Block>
   <BlockTitle>Picker with single value</BlockTitle>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <ListInput type="text" placeholder="Your iOS device" readonly inputId="demo-picker-device" />
   </List>
   <BlockTitle>2 values and 3d-rotate effect</BlockTitle>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <ListInput
       type="text"
       placeholder="Describe yourself"
       readonly
-      inputId="demo-picker-describe" />
+      inputId="demo-picker-describe"
+    />
   </List>
   <BlockTitle>Dependent values</BlockTitle>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <ListInput type="text" placeholder="Your car" readonly inputId="demo-picker-dependent" />
   </List>
 
   <BlockTitle>Custom toolbar</BlockTitle>
-  <List noHairlinesMd>
+  <List strongIos outlineIos>
     <ListInput
       type="text"
       placeholder="Describe yourself"
       readonly
-      inputId="demo-picker-custom-toolbar" />
+      inputId="demo-picker-custom-toolbar"
+    />
   </List>
   <BlockTitle>Inline Picker / Date-time</BlockTitle>
   <List class="no-margin">
     <ListInput type="text" placeholder="Date Time" readonly inputId="demo-picker-date" />
   </List>
-  <Block strong class="no-padding no-margin margin-bottom">
+  <Block strong insetMd outlineIos class="no-padding no-margin-top">
     <div id="demo-picker-date-container" />
   </Block>
 </Page>

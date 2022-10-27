@@ -4,7 +4,7 @@
     <f7-block>
       Framework7 allows you to easily convert your usual form selects to dynamic pages with radios:
     </f7-block>
-    <f7-list>
+    <f7-list strong-ios outline-ios dividers-ios>
       <f7-list-item title="Fruit" smart-select>
         <select name="fruits">
           <option value="apple" selected>Apple</option>

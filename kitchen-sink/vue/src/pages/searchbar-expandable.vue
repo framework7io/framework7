@@ -16,10 +16,10 @@
         search-in=".item-title"
       />
     </f7-navbar>
-    <f7-list class="searchbar-not-found">
+    <f7-list strong-ios outline-ios dividers-ios class="searchbar-not-found">
       <f7-list-item title="Nothing found" />
     </f7-list>
-    <f7-list class="search-list searchbar-found">
+    <f7-list strong-ios outline-ios dividers-ios class="search-list searchbar-found">
       <f7-list-item title="Acura" />
       <f7-list-item title="Audi" />
       <f7-list-item title="BMW" />

@@ -8,7 +8,7 @@
       </p>
     </f7-block>
 
-    <f7-list>
+    <f7-list strong inset-md outline-ios>
       <f7-list-item link="/login-screen-page/" title="As Separate Page"></f7-list-item>
     </f7-list>
 
@@ -41,7 +41,7 @@
             @input="password = $event.target.value"
           ></f7-list-input>
         </f7-list>
-        <f7-list>
+        <f7-list inset>
           <f7-list-button @click="signIn">Sign In</f7-list-button>
           <f7-block-footer
             >Some text about login information.<br />Lorem ipsum dolor sit amet, consectetur

@@ -7,7 +7,7 @@
   <Block>
     Framework7 allows you to easily convert your usual form selects to dynamic pages with radios:
   </Block>
-  <List>
+  <List strongIos outlineIos dividersIos>
     <ListItem title="Fruit" smartSelect>
       <select name="fruits" value="apple">
         <option value="apple">Apple</option>
@@ -22,7 +22,8 @@
     <ListItem
       title="Car"
       smartSelect
-      smartSelectParams={{ openIn: 'popup', searchbar: true, searchbarPlaceholder: 'Search car' }}>
+      smartSelectParams={{ openIn: 'popup', searchbar: true, searchbarPlaceholder: 'Search car' }}
+    >
       <select name="car" multiple value={['honda', 'audi', 'ford']}>
         <optgroup label="Japanese">
           <option value="honda">Honda</option>

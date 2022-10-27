@@ -24,7 +24,7 @@
     <Link>Left Link</Link>
     <Link>Right Link</Link>
   </Toolbar>
-  <List>
+  <List insetMd strong dividersIos outlineIo>
     <ListItem link="./tabbar/" title="Tabbar" />
     <ListItem link="./tabbar-icons/" title="Tabbar With Icons" />
     <ListItem link="./tabbar-scrollable/" title="Tabbar Scrollable" />

@@ -13,8 +13,9 @@
     listEl=".list.contacts-list"
     scrollList={true}
     label={true}
-    onListIndexSelect={onIndexSelect} />
-  <List contactsList ul={false}>
+    onListIndexSelect={onIndexSelect}
+  />
+  <List contactsList ul={false} strongIos dividersIos>
     <ListGroup>
       <ListItem title="A" groupTitle />
       <ListItem title="Aaron" />

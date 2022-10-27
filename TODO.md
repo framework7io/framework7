@@ -1,2 +1,5 @@
 - Update demos
+  - colors demo
+- Remove
+  - DOM cache
 - Browser modules

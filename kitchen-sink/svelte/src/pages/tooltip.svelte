@@ -39,11 +39,11 @@
       </Link>
     </NavRight>
   </Navbar>
-  <Block strong>
+  <Block strong inset>
     <p>Tooltips display informative text when users hover over, or tap an target element..</p>
     <p>Tooltip can be positioned around any element with any HTML content inside.</p>
   </Block>
-  <Block strong>
+  <Block strong inset>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia augue urna, in
       tincidunt augue hendrerit ut. In nulla massa, facilisis non consectetur a, tempus semper ex.
@@ -80,7 +80,7 @@
   </Block>
 
   <BlockTitle>Auto Initialization</BlockTitle>
-  <Block strong>
+  <Block strong inset>
     <p>
       For simple cases when you don't need a lot of control over the Tooltip, it can be set on
       buttons and links automatically with

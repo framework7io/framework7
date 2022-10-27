@@ -88,7 +88,7 @@ export default () => {
   return (
     <Page>
       <Navbar title="Dialog" backLink="Back"></Navbar>
-      <Block strong insetMd outlineIos>
+      <Block strongIos outlineIos>
         <p>
           There are 1:1 replacements of native Alert, Prompt and Confirm modals. They support
           callbacks, have very easy api and can be combined with each other. Check these examples:
@@ -114,7 +114,7 @@ export default () => {
         </p>
       </Block>
       <BlockTitle>Vertical Buttons</BlockTitle>
-      <Block strong insetMd outlineIos>
+      <Block strongIos outlineIos>
         <p>
           <Button fill onClick={openVerticalButtons}>
             Vertical Buttons
@@ -122,7 +122,7 @@ export default () => {
         </p>
       </Block>
       <BlockTitle>Preloader Dialog</BlockTitle>
-      <Block strong insetMd outlineIos>
+      <Block strongIos outlineIos>
         <p className="grid grid-cols-2 grid-gap">
           <Button fill onClick={openPreloader}>
             Preloader
@@ -133,7 +133,7 @@ export default () => {
         </p>
       </Block>
       <BlockTitle>Progress Dialog</BlockTitle>
-      <Block strong insetMd outlineIos>
+      <Block strongIos outlineIos>
         <p className="grid grid-cols-2 grid-gap">
           <Button fill onClick={openInfiniteProgress}>
             Infinite
@@ -144,7 +144,7 @@ export default () => {
         </p>
       </Block>
       <BlockTitle>Dialogs Stack</BlockTitle>
-      <Block strong insetMd outlineIos>
+      <Block strongIos outlineIos>
         <p>
           This feature doesn't allow to open multiple dialogs at the same time, and will
           automatically open next dialog when you close the current one. Such behavior is similar to

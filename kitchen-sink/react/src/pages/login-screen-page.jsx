@@ -40,7 +40,7 @@ export default ({ f7router }) => {
           }}
         />
       </List>
-      <List>
+      <List inset>
         <ListButton onClick={signIn}>Sign In</ListButton>
         <BlockFooter>
           Some text about login information.

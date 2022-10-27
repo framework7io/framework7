@@ -5,7 +5,7 @@
 <Page>
   <Navbar title="Not found" backLink="Back" />
 
-  <Block strong>
+  <Block>
     <p>Sorry</p>
     <p>Requested content not found.</p>
   </Block>

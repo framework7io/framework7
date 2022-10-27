@@ -12,7 +12,7 @@
       </p>
       <p>Navbar has 3 main parts: Left, Title and Right. Each part may contain any HTML content.</p>
     </f7-block>
-    <f7-list>
+    <f7-list strong inset-md outline-ios>
       <f7-list-item link="/navbar-hide-scroll/" title="Hide Navbar On Scroll"></f7-list-item>
     </f7-list>
   </f7-page>

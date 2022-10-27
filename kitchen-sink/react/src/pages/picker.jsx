@@ -235,7 +235,7 @@ export default () => {
         </p>
       </Block>
       <BlockTitle>Picker with single value</BlockTitle>
-      <List noHairlinesMd>
+      <List outlineIos strongIos>
         <ListInput
           type="text"
           placeholder="Your iOS device"
@@ -244,7 +244,7 @@ export default () => {
         />
       </List>
       <BlockTitle>2 values and 3d-rotate effect</BlockTitle>
-      <List noHairlinesMd>
+      <List outlineIos strongIos>
         <ListInput
           type="text"
           placeholder="Describe yourself"
@@ -253,12 +253,12 @@ export default () => {
         />
       </List>
       <BlockTitle>Dependent values</BlockTitle>
-      <List noHairlinesMd>
+      <List outlineIos strongIos>
         <ListInput type="text" placeholder="Your car" readonly inputId="demo-picker-dependent" />
       </List>
 
       <BlockTitle>Custom toolbar</BlockTitle>
-      <List noHairlinesMd>
+      <List outlineIos strongIos>
         <ListInput
           type="text"
           placeholder="Describe yourself"
@@ -270,7 +270,7 @@ export default () => {
       <List className="no-margin">
         <ListInput type="text" placeholder="Date Time" readonly inputId="demo-picker-date" />
       </List>
-      <Block strong className="no-padding no-margin margin-bottom">
+      <Block strong insetMd outlineIos className="no-padding no-margin-top">
         <div id="demo-picker-date-container"></div>
       </Block>
     </Page>

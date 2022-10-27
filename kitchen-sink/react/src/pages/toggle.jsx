@@ -5,7 +5,7 @@ export default () => (
   <Page>
     <Navbar title="Toggle" backLink="Back"></Navbar>
     <BlockTitle>Super Heroes</BlockTitle>
-    <List simpleList>
+    <List simpleList strong outlineIos dividersIos>
       <ListItem>
         <span>Batman</span>
         <Toggle defaultChecked />

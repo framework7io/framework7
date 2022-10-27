@@ -1,7 +1,7 @@
 <template>
   <f7-page @page:beforeremove="onPageBeforeRemove" @page:beforeout="onPageBeforeOut">
     <f7-navbar title="Sheet Modal" back-link="Back"></f7-navbar>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <p>
         Sheet Modals slide up from the bottom of the screen to reveal more content. Such modals
         allow to create custom overlays with custom content.
@@ -19,7 +19,7 @@
     </f7-block>
 
     <f7-block-title>Push View</f7-block-title>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <p>
         Sheet can push view behind on open. By default it has effect only when `safe-area-inset-top`
         is more than zero (iOS fullscreen webapp or iOS cordova app)
@@ -30,7 +30,7 @@
     </f7-block>
 
     <f7-block-title>Swipeable Sheet</f7-block-title>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <p>
         Sheet modal can be closed with swipe to top (for top Sheet) or bottom (for default Bottom
         sheet):

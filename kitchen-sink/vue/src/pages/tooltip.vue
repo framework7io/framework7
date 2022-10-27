@@ -7,11 +7,11 @@
         </f7-link>
       </f7-nav-right>
     </f7-navbar>
-    <f7-block strong>
+    <f7-block strong inset>
       <p>Tooltips display informative text when users hover over, or tap an target element.</p>
       <p>Tooltip can be positioned around any element with any HTML content inside.</p>
     </f7-block>
-    <f7-block strong>
+    <f7-block strong inset>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia augue urna, in
         tincidunt augue hendrerit ut. In nulla massa, facilisis non consectetur a, tempus semper ex.
@@ -47,7 +47,7 @@
       </p>
     </f7-block>
     <f7-block-title>Auto Initialization</f7-block-title>
-    <f7-block strong>
+    <f7-block strong inset>
       <p>
         For simple cases when you don't need a lot of control over the Tooltip, it can be set on
         buttons and links automatically with <code>tooltip</code> prop:

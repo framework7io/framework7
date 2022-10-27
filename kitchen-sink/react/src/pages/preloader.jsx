@@ -32,7 +32,8 @@ export default () => {
 
       <BlockTitle>Default</BlockTitle>
       <Block
-        strong
+        strongIos
+        outlineIos
         className="grid grid-cols-4 grid-gap demo-preloaders align-items-stretch text-align-center"
       >
         <div>
@@ -50,7 +51,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Color Preloaders</BlockTitle>
-      <Block strong className="grid grid-cols-4 grid-gap text-align-center">
+      <Block strongIos outlineIos className="grid grid-cols-4 grid-gap text-align-center">
         <div>
           <Preloader color="red" />
         </div>
@@ -66,12 +67,12 @@ export default () => {
       </Block>
 
       <BlockTitle>Multi-color</BlockTitle>
-      <Block strong className="text-align-center">
+      <Block strongIos outlineIos className="text-align-center">
         <Preloader color="multi" />
       </Block>
 
       <BlockTitle>Preloader Modals</BlockTitle>
-      <Block strong>
+      <Block strongIos outlineIos>
         <p>
           With <b>app.preloader.show()</b> you can show small overlay with preloader indicator.
         </p>

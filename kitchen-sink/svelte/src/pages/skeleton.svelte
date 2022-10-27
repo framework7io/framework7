@@ -27,7 +27,7 @@
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
   <Navbar title="Skeleton Elements" backLink="Back" />
-  <Block strong>
+  <Block strongIos outlineIos>
     <p>
       Skeleton (or Ghost) elements designed to improve perceived performance and make app feels
       faster.
@@ -42,7 +42,7 @@
   </Block>
 
   <BlockTitle>Skeleton List</BlockTitle>
-  <List mediaList class="skeleton-text">
+  <List strongIos outlineIos dividersIos mediaList class="skeleton-text">
     <ListItem
       title="Title"
       subtitle="Subtitle"
@@ -65,6 +65,7 @@
 
   <BlockTitle>Skeleton Card</BlockTitle>
   <Card
+    outline
     class="skeleton-text"
     title="Card Header"
     content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis et massa ac interdum. Cras consequat felis at consequat hendrerit."
@@ -72,7 +73,7 @@
   />
 
   <BlockTitle>Loading Effects</BlockTitle>
-  <Block strong>
+  <Block strongIos outlineIos>
     <p>It supports few loading effects:</p>
     <p class="grid grid-cols-3 grid-gap">
       <Button fill small round onClick={() => load('fade')}>Fade</Button>
@@ -81,7 +82,7 @@
     </p>
   </Block>
   {#if loading}
-    <List mediaList v-if="loading">
+    <List strongIos outlineIos dividersIos mediaList v-if="loading">
       {#each [1, 2, 3] as n}
         <ListItem
           key={n}
@@ -97,7 +98,7 @@
       {/each}
     </List>
   {:else}
-    <List mediaList>
+    <List strongIos outlineIos dividersIos mediaList>
       <ListItem
         title="John Doe"
         subtitle="CEO"

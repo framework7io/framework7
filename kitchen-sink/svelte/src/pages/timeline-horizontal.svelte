@@ -4,7 +4,7 @@
 
 <!-- svelte-ignore a11y-invalid-attribute -->
 <Page>
-  <Navbar noShadow title="Horizontal Timeline" backLink="Back"></Navbar>
+  <Navbar noShadow title="Horizontal Timeline" backLink="Back" />
   <div class="timeline timeline-horizontal col-33 tablet-20">
     <div class="timeline-item">
       <div class="timeline-item-date">21 <small>DEC</small></div>
@@ -13,13 +13,17 @@
           <div class="timeline-item-time">12:56</div>
           <div class="timeline-item-title">Title 1</div>
           <div class="timeline-item-subtitle">Subtitle 1</div>
-          <div class="timeline-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit</div>
+          <div class="timeline-item-text">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit
+          </div>
         </div>
         <div class="timeline-item-inner">
           <div class="timeline-item-time">13:15</div>
           <div class="timeline-item-title">Title 2</div>
           <div class="timeline-item-subtitle">Subtitle 2</div>
-          <div class="timeline-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit</div>
+          <div class="timeline-item-text">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit
+          </div>
         </div>
         <div class="timeline-item-inner">
           <div class="timeline-item-time">14:45</div>
@@ -51,7 +55,7 @@
     <div class="timeline-item">
       <div class="timeline-item-date">24 <small>DEC</small></div>
       <div class="timeline-item-content">
-        <div class="list links-list inset no-safe-areas">
+        <div class="list links-list inset list-strong list-dividers-ios no-safe-areas">
           <ul>
             <li><a href="#">Item 1</a></li>
             <li><a href="#">Item 2</a></li>

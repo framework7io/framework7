@@ -35,7 +35,7 @@ export default () => {
         </p>
       </Block>
 
-      <List>
+      <List strong insetMd outlineIos>
         <ListItem link="/login-screen-page/" title="As Separate Page"></ListItem>
       </List>
 
@@ -87,7 +87,7 @@ export default () => {
               }}
             />
           </List>
-          <List>
+          <List inset>
             <ListButton onClick={signIn}>Sign In</ListButton>
             <BlockFooter>
               Some text about login information.

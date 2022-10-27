@@ -61,7 +61,7 @@
 
 <Page {onPageBeforeOut} {onPageBeforeRemove}>
   <Navbar title="Sheet Modal" backLink="Back" />
-  <Block strong>
+  <Block strongIos outlineIos>
     <p>
       Sheet Modals slide up from the bottom of the screen to reveal more content. Such modals allow
       to create custom overlays with custom content.
@@ -79,7 +79,7 @@
   </Block>
 
   <BlockTitle>Push View</BlockTitle>
-  <Block strong>
+  <Block strongIos outlineIos>
     <p>
       Sheet can push view behind on open. By default it has effect only when `safe-area-inset-top`
       is more than zero (iOS fullscreen webapp or iOS cordova app)
@@ -90,7 +90,7 @@
   </Block>
 
   <BlockTitle>Swipeable Sheet</BlockTitle>
-  <Block strong>
+  <Block strongIos outlineIos>
     <p>
       Sheet modal can be closed with swipe to top (for top Sheet) or bottom (for default Bottom
       sheet):

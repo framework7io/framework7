@@ -23,25 +23,53 @@
     </p>
   </Block>
   <BlockTitle>Simple List</BlockTitle>
-  <List simpleList>
+  <List dividersIos simpleList>
     <ListItem title="Item 1" />
     <ListItem title="Item 2" />
     <ListItem title="Item 3" />
   </List>
+  <BlockTitle>Strong List</BlockTitle>
+  <List dividersIos simpleList strong>
+    <ListItem title="Item 1" />
+    <ListItem title="Item 2" />
+    <ListItem title="Item 3" />
+  </List>
+
+  <BlockTitle>Strong Outline List</BlockTitle>
+  <List dividersIos simpleList strong outline>
+    <ListItem title="Item 1" />
+    <ListItem title="Item 2" />
+    <ListItem title="Item 3" />
+  </List>
+
+  <BlockTitle>Strong Inset List</BlockTitle>
+  <List dividersIos simpleList strong inset>
+    <ListItem title="Item 1" />
+    <ListItem title="Item 2" />
+    <ListItem title="Item 3" />
+  </List>
+
+  <BlockTitle>Strong Outline Inset List</BlockTitle>
+  <List dividersIos simpleList strong outline inset>
+    <ListItem title="Item 1" />
+    <ListItem title="Item 2" />
+    <ListItem title="Item 3" />
+  </List>
+
   <BlockTitle>Simple Links List</BlockTitle>
-  <List>
+  <List dividersIos outlineIos strongIos>
     <ListItem title="Link 1" link="#" />
     <ListItem title="Link 2" link="#" />
     <ListItem title="Link 3" link="#" />
   </List>
   <BlockTitle>Data list, with icons</BlockTitle>
-  <List>
+  <List dividersIos outlineIos strongIos>
     <ListItem title="Ivan Petrov" after="CEO"><i slot="media" class="icon icon-f7" /></ListItem>
     <ListItem title="John Doe" badge="5"><i slot="media" class="icon icon-f7" /></ListItem>
     <ListItem title="Jenna Smith"><i slot="media" class="icon icon-f7" /></ListItem>
   </List>
   <BlockTitle>Links</BlockTitle>
-  <List>
+  <List dividersIos outlineIos strongIos>
     <ListItem link="#" title="Ivan Petrov" after="CEO">
       <i slot="media" class="icon icon-f7" />
     </ListItem>
@@ -51,7 +79,7 @@
     <ListItem link="#" title="Jenna Smith"><i slot="media" class="icon icon-f7" /></ListItem>
   </List>
   <BlockTitle>Links, Header, Footer</BlockTitle>
-  <List>
+  <List dividersIos outlineIos strongIos>
     <ListItem link="#" header="Name" title="John Doe" after="Edit">
       <i slot="media" class="icon icon-f7" />
     </ListItem>
@@ -66,15 +94,15 @@
     </ListItem>
   </List>
   <BlockTitle>Links, no icons</BlockTitle>
-  <List>
+  <List dividersIos outlineIos strongIos>
     <ListItem link="#" title="Ivan Petrov" />
     <ListItem link="#" title="John Doe" />
-    <ListItem groupTitle title="Divider Here" />
+    <ListItem groupTitle title="Group Title Here" />
     <ListItem link="#" title="Ivan Petrov" />
     <ListItem link="#" title="Jenna Smith" />
   </List>
   <BlockTitle>Grouped with sticky titles</BlockTitle>
-  <List ul={false}>
+  <List dividersIos outlineIos strongIos ul={false}>
     <ListGroup>
       <ListItem title="A" groupTitle />
       <ListItem title="Aaron " />
@@ -95,7 +123,7 @@
     </ListGroup>
   </List>
   <BlockTitle>Mixed and nested</BlockTitle>
-  <List>
+  <List dividersIos outlineIos strongIos>
     <ListItem link="#" title="Ivan Petrov" after="CEO">
       <i slot="media" class="icon icon-f7" />
     </ListItem>
@@ -139,32 +167,9 @@
       </span>
     </ListItem>
   </List>
-  <BlockTitle>Mixed, inset</BlockTitle>
-  <List inset>
-    <ListItem link="#" title="Ivan Petrov" after="CEO">
-      <i slot="media" class="icon icon-f7" />
-    </ListItem>
-    <ListItem link="#" title="Two icons here">
-      <svelte:fragment slot="media">
-        <i class="icon icon-f7" />
-        <i class="icon icon-f7" />
-      </svelte:fragment>
-    </ListItem>
-    <ListItem link="#" title="Ultra long text goes here, no, it is really really long">
-      <i slot="media" class="icon icon-f7" />
-    </ListItem>
-    <ListItem title="With toggle">
-      <i slot="media" class="icon icon-f7" />
-      <span slot="after">
-        <Toggle />
-      </span>
-    </ListItem>
-    <div class="block-footer" slot="after-list">
-      <p>Here comes some useful information about list above</p>
-    </div>
-  </List>
+
   <BlockTitle>Tablet inset</BlockTitle>
-  <List mediumInset>
+  <List dividersIos outlineIos strongIos mediumInset>
     <ListItem link="#" title="Ivan Petrov" after="CEO">
       <i slot="media" class="icon icon-f7" />
     </ListItem>
@@ -190,7 +195,7 @@
     </p>
   </Block>
   <BlockTitle>Songs</BlockTitle>
-  <List mediaList>
+  <List dividersIos mediaList outlineIos strongIos>
     <ListItem
       link="#"
       title="Yellow Submarine"
@@ -200,6 +205,7 @@
     >
       <img
         slot="media"
+        style="border-radius: 8px"
         src="https://cdn.framework7.io/placeholder/people-160x160-1.jpg"
         width="80"
       />
@@ -213,6 +219,7 @@
     >
       <img
         slot="media"
+        style="border-radius: 8px"
         src="https://cdn.framework7.io/placeholder/people-160x160-2.jpg"
         width="80"
       />
@@ -226,13 +233,14 @@
     >
       <img
         slot="media"
+        style="border-radius: 8px"
         src="https://cdn.framework7.io/placeholder/people-160x160-3.jpg"
         width="80"
       />
     </ListItem>
   </List>
   <BlockTitle>Mail App</BlockTitle>
-  <List mediaList>
+  <List dividersIos mediaList outlineIos strongIos>
     <ListItem
       link="#"
       title="Facebook"
@@ -263,10 +271,11 @@
     />
   </List>
   <BlockTitle>Something more simple</BlockTitle>
-  <List mediaList>
+  <List dividersIos mediaList outlineIos strongIos>
     <ListItem title="Yellow Submarine" subtitle="Beatles">
       <img
         slot="media"
+        style="border-radius: 8px"
         src="https://cdn.framework7.io/placeholder/fashion-88x88-1.jpg"
         width="44"
       />
@@ -274,6 +283,7 @@
     <ListItem link="#" title="Don't Stop Me Now" subtitle="Queen">
       <img
         slot="media"
+        style="border-radius: 8px"
         src="https://cdn.framework7.io/placeholder/fashion-88x88-2.jpg"
         width="44"
       />
@@ -281,31 +291,8 @@
     <ListItem title="Billie Jean" subtitle="Michael Jackson">
       <img
         slot="media"
+        style="border-radius: 8px"
         src="https://cdn.framework7.io/placeholder/fashion-88x88-3.jpg"
-        width="44"
-      />
-    </ListItem>
-  </List>
-  <BlockTitle>Inset</BlockTitle>
-  <List mediaList inset>
-    <ListItem link="#" title="Yellow Submarine" subtitle="Beatles">
-      <img
-        slot="media"
-        src="https://cdn.framework7.io/placeholder/fashion-88x88-4.jpg"
-        width="44"
-      />
-    </ListItem>
-    <ListItem link="#" title="Don't Stop Me Now" subtitle="Queen">
-      <img
-        slot="media"
-        src="https://cdn.framework7.io/placeholder/fashion-88x88-5.jpg"
-        width="44"
-      />
-    </ListItem>
-    <ListItem link="#" title="Billie Jean" subtitle="Michael Jackson">
-      <img
-        slot="media"
-        src="https://cdn.framework7.io/placeholder/fashion-88x88-6.jpg"
         width="44"
       />
     </ListItem>

@@ -115,7 +115,7 @@ export default () => {
         Text editor can be used in list with other inputs. In this example it is enabled with
         "keyboard-toolbar"/"popover" type for "About" field.
       </BlockHeader>
-      <List>
+      <List strongIos dividersIos outlineIos>
         <ListInput type="text" label="Name" placeholder="Your name" />
         <ListInput
           type="texteditor"

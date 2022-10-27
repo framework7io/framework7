@@ -1,7 +1,7 @@
 <template>
   <f7-page>
     <f7-navbar title="Tabs" back-link="Back"></f7-navbar>
-    <f7-list>
+    <f7-list strong-ios outline-ios dividers-ios>
       <f7-list-item link="/tabs-static/" title="Static Tabs"></f7-list-item>
       <f7-list-item link="/tabs-animated/" title="Animated Tabs"></f7-list-item>
       <f7-list-item link="/tabs-swipeable/" title="Swipeable Tabs"></f7-list-item>

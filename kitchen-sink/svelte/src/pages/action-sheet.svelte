@@ -59,7 +59,7 @@
 <Page>
   <Navbar title="Action Sheet" backLink="Back" />
   <Block strong inset>
-    <p class="row">
+    <p class="grid grid-cols-2 grid-gap">
       <!-- One group, open by direct accessing instance .open() method -->
       <Button
         fill

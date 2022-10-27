@@ -4,7 +4,7 @@
 
 <Page>
   <Navbar title="Tabs" backLink="Back" />
-  <List>
+  <List strongIos outlineIos dividersIos>
     <ListItem link="/tabs-static/" title="Static Tabs" />
     <ListItem link="/tabs-animated/" title="Animated Tabs" />
     <ListItem link="/tabs-swipeable/" title="Swipeable Tabs" />

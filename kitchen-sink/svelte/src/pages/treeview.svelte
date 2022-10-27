@@ -54,7 +54,7 @@
   <Navbar title="Treeview" backLink="Back" />
 
   <BlockTitle>Basic tree view</BlockTitle>
-  <Block strong class="no-padding-horizontal">
+  <Block strong outlineIos class="no-padding-horizontal">
     <Treeview>
       <TreeviewItem label="Item 1">
         <TreeviewItem label="Sub Item 1">
@@ -81,7 +81,7 @@
   </Block>
 
   <BlockTitle>With icons</BlockTitle>
-  <Block strong class="no-padding-horizontal">
+  <Block strong outlineIos class="no-padding-horizontal">
     <Treeview>
       <TreeviewItem label="images" iconF7="folder_fill">
         <TreeviewItem label="avatar.png" iconF7="photo_fill" />
@@ -97,17 +97,21 @@
   </Block>
 
   <BlockTitle>With checkboxes</BlockTitle>
-  <Block strong class="no-padding-horizontal">
+  <Block strong outlineIos class="no-padding-horizontal">
     <Treeview>
       <TreeviewItem label="images" iconF7="folder_fill">
         <span slot="content-start">
           <Checkbox
             checked={Object.values(checkboxes.images).indexOf(false) < 0}
-            indeterminate={Object.values(checkboxes.images).indexOf(false) >= 0 && Object.values(checkboxes.images).indexOf(true) >= 0}
+            indeterminate={Object.values(checkboxes.images).indexOf(false) >= 0 &&
+              Object.values(checkboxes.images).indexOf(true) >= 0}
             onChange={(e) => {
-              Object.keys(checkboxes.images).forEach((k) => (checkboxes.images[k] = e.target.checked));
+              Object.keys(checkboxes.images).forEach(
+                (k) => (checkboxes.images[k] = e.target.checked),
+              );
               checkboxes = checkboxes;
-            }} />
+            }}
+          />
         </span>
         <TreeviewItem label="avatar.png" iconF7="photo_fill" toggle={false}>
           <span slot="content-start">
@@ -116,7 +120,8 @@
               onChange={(e) => {
                 checkboxes.images['avatar.png'] = e.target.checked;
                 checkboxes = checkboxes;
-              }} />
+              }}
+            />
           </span>
         </TreeviewItem>
         <TreeviewItem label="background.jpg" iconF7="photo_fill" toggle={false}>
@@ -126,7 +131,8 @@
               onChange={(e) => {
                 checkboxes.images['background.jpg'] = e.target.checked;
                 checkboxes = checkboxes;
-              }} />
+              }}
+            />
           </span>
         </TreeviewItem>
       </TreeviewItem>
@@ -134,11 +140,15 @@
         <span slot="content-start">
           <Checkbox
             checked={Object.values(checkboxes.documents).indexOf(false) < 0}
-            indeterminate={Object.values(checkboxes.documents).indexOf(false) >= 0 && Object.values(checkboxes.documents).indexOf(true) >= 0}
+            indeterminate={Object.values(checkboxes.documents).indexOf(false) >= 0 &&
+              Object.values(checkboxes.documents).indexOf(true) >= 0}
             onChange={(e) => {
-              Object.keys(checkboxes.documents).forEach((k) => (checkboxes.documents[k] = e.target.checked));
+              Object.keys(checkboxes.documents).forEach(
+                (k) => (checkboxes.documents[k] = e.target.checked),
+              );
               checkboxes = checkboxes;
-            }} />
+            }}
+          />
         </span>
         <TreeviewItem label="cv.docx" iconF7="doc_text_fill" toggle={false}>
           <span slot="content-start">
@@ -147,7 +157,8 @@
               onChange={(e) => {
                 checkboxes.documents['cv.docx'] = e.target.checked;
                 checkboxes = checkboxes;
-              }} />
+              }}
+            />
           </span>
         </TreeviewItem>
         <TreeviewItem label="info.docx" iconF7="doc_text_fill" toggle={false}>
@@ -157,7 +168,8 @@
               onChange={(e) => {
                 checkboxes.documents['info.docx'] = e.target.checked;
                 checkboxes = checkboxes;
-              }} />
+              }}
+            />
           </span>
         </TreeviewItem>
       </TreeviewItem>
@@ -168,7 +180,8 @@
             onChange={(e) => {
               checkboxes['.gitignore'] = e.target.checked;
               checkboxes = checkboxes;
-            }} />
+            }}
+          />
         </span>
       </TreeviewItem>
       <TreeviewItem label="index.html" iconF7="doc_text_fill" toggle={false}>
@@ -178,14 +191,15 @@
             onChange={(e) => {
               checkboxes['index.html'] = e.target.checked;
               checkboxes = checkboxes;
-            }} />
+            }}
+          />
         </span>
       </TreeviewItem>
     </Treeview>
   </Block>
 
   <BlockTitle>Whole item as toggle</BlockTitle>
-  <Block strong class="no-padding-horizontal">
+  <Block strong outlineIos class="no-padding-horizontal">
     <Treeview>
       <TreeviewItem itemToggle label="images" iconF7="folder_fill">
         <TreeviewItem label="avatar.png" iconF7="photo_fill" />
@@ -201,70 +215,79 @@
   </Block>
 
   <BlockTitle>Selectable</BlockTitle>
-  <Block strong class="no-padding-horizontal">
+  <Block strong outlineIos class="no-padding-horizontal">
     <Treeview>
       <TreeviewItem
         selectable
         selected={selectedItem === 'images'}
         label="images"
         iconF7="folder_fill"
-        onClick={(e) => toggleSelectable(e, 'images')}>
+        onClick={(e) => toggleSelectable(e, 'images')}
+      >
         <TreeviewItem
           selectable
           selected={selectedItem === 'avatar.png'}
           label="avatar.png"
           iconF7="photo_fill"
-          onClick={(e) => toggleSelectable(e, 'avatar.png')} />
+          onClick={(e) => toggleSelectable(e, 'avatar.png')}
+        />
         <TreeviewItem
           selectable
           selected={selectedItem === 'background.jpg'}
           label="background.jpg"
           iconF7="photo_fill"
-          onClick={(e) => toggleSelectable(e, 'background.jpg')} />
+          onClick={(e) => toggleSelectable(e, 'background.jpg')}
+        />
       </TreeviewItem>
       <TreeviewItem
         selectable
         selected={selectedItem === 'documents'}
         label="documents"
         iconF7="folder_fill"
-        onClick={(e) => toggleSelectable(e, 'documents')}>
+        onClick={(e) => toggleSelectable(e, 'documents')}
+      >
         <TreeviewItem
           selectable
           selected={selectedItem === 'cv.docx'}
           label="cv.docx"
           iconF7="doc_text_fill"
-          onClick={(e) => toggleSelectable(e, 'cv.docx')} />
+          onClick={(e) => toggleSelectable(e, 'cv.docx')}
+        />
         <TreeviewItem
           selectable
           selected={selectedItem === 'info.docx'}
           label="info.docx"
           iconF7="doc_text_fill"
-          onClick={(e) => toggleSelectable(e, 'info.docx')} />
+          onClick={(e) => toggleSelectable(e, 'info.docx')}
+        />
       </TreeviewItem>
       <TreeviewItem
         selectable
         selected={selectedItem === '.gitignore'}
         label=".gitignore"
         iconF7="logo_github"
-        onClick={(e) => toggleSelectable(e, '.gitignore')} />
+        onClick={(e) => toggleSelectable(e, '.gitignore')}
+      />
       <TreeviewItem
         selectable
         selected={selectedItem === 'index.html'}
         label="index.html"
         iconF7="doc_text_fill"
-        onClick={(e) => toggleSelectable(e, 'index.html')} />
+        onClick={(e) => toggleSelectable(e, 'index.html')}
+      />
     </Treeview>
   </Block>
 
   <BlockTitle>Preload children</BlockTitle>
-  <Block strong class="no-padding-horizontal">
+  <Block strong outlineIos class="no-padding-horizontal">
     <Treeview>
       <TreeviewItem
         toggle
         loadChildren
         iconF7="person_2_fill"
         label="Users"
-        onTreeviewLoadChildren={(el, done) => loadChildren(done)}>
+        onTreeviewLoadChildren={(el, done) => loadChildren(done)}
+      >
         {#each loadedChildren as item, index (index)}
           <TreeviewItem iconF7="person_fill" label={item.name} />
         {/each}
@@ -273,7 +296,7 @@
   </Block>
 
   <BlockTitle>With links</BlockTitle>
-  <Block strong class="no-padding-horizontal">
+  <Block strong outlineIos class="no-padding-horizontal">
     <Treeview>
       <TreeviewItem iconF7="square_grid_2x2_fill" itemToggle label="Modals">
         <TreeviewItem link="/popup/" iconF7="link" label="Popup" />

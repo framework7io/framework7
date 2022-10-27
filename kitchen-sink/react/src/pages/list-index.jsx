@@ -15,7 +15,7 @@ export default () => {
         label={true}
         onListIndexSelect={onIndexSelect}
       />
-      <List contactsList>
+      <List contactsList strongIos dividersIos>
         <ListGroup>
           <ListItem title="A" groupTitle />
           <ListItem title="Aaron" />

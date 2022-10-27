@@ -53,13 +53,18 @@
   <TextEditor
     placeholder="Enter text..."
     value={customValue}
-    onTextEditorChange={(value) => (customValue = value)} />
+    onTextEditorChange={(value) => (customValue = value)}
+  />
 
   <BlockTitle>Specific Buttons</BlockTitle>
   <BlockHeader>It is possible to customize which buttons (commands) to show.</BlockHeader>
   <TextEditor
     placeholder="Enter text..."
-    buttons={[['bold', 'italic', 'underline', 'strikeThrough'], ['orderedList', 'unorderedList']]} />
+    buttons={[
+      ['bold', 'italic', 'underline', 'strikeThrough'],
+      ['orderedList', 'unorderedList'],
+    ]}
+  />
 
   <BlockTitle>Custom Button</BlockTitle>
   <BlockHeader>
@@ -69,14 +74,16 @@
   <TextEditor
     placeholder="Enter text..."
     {customButtons}
-    buttons={[['bold', 'italic', 'underline', 'strikeThrough'], 'hr']} />
+    buttons={[['bold', 'italic', 'underline', 'strikeThrough'], 'hr']}
+  />
 
   <BlockTitle>Resizable</BlockTitle>
   <BlockHeader>Editor will be resized based on its content.</BlockHeader>
   <TextEditor
     placeholder="Enter text..."
     resizable
-    buttons={['bold', 'italic', 'underline', 'strikeThrough']} />
+    buttons={['bold', 'italic', 'underline', 'strikeThrough']}
+  />
 
   <BlockTitle>Popover Mode</BlockTitle>
   <BlockHeader>
@@ -87,7 +94,8 @@
     placeholder="Enter text..."
     mode="popover"
     buttons={['bold', 'italic', 'underline', 'strikeThrough']}
-    style="--f7-text-editor-height: 150px" />
+    style="--f7-text-editor-height: 150px"
+  />
 
   <BlockTitle>Keyboard Toolbar Mode</BlockTitle>
   <BlockHeader>
@@ -98,22 +106,27 @@
   <TextEditor
     placeholder="Enter text..."
     mode="keyboard-toolbar"
-    style="--f7-text-editor-height: 150px" />
+    style="--f7-text-editor-height: 150px"
+  />
 
   <BlockTitle>As List Input</BlockTitle>
   <BlockHeader>
     Text editor can be used in list with other inputs. In this example it is enabled with
     "keyboard-toolbar"/"popover" type for "About" field.
   </BlockHeader>
-  <List>
+  <List strongIos dividersIos outlineIos>
     <ListInput type="text" label="Name" placeholder="Your name" />
     <ListInput
       type="texteditor"
       label="About"
       placeholder="About"
       resizable
-      textEditorParams={{ mode: 'popover', buttons: ['bold', 'italic', 'underline', 'strikeThrough'] }}
+      textEditorParams={{
+        mode: 'popover',
+        buttons: ['bold', 'italic', 'underline', 'strikeThrough'],
+      }}
       value={listEditorValue}
-      onTextEditorChange={(value) => (listEditorValue = value)} />
+      onTextEditorChange={(value) => (listEditorValue = value)}
+    />
   </List>
 </Page>

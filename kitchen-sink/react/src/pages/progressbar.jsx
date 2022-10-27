@@ -67,7 +67,7 @@ export default () => {
         </p>
       </Block>
       <BlockTitle>Determinate Progress Bar</BlockTitle>
-      <Block strong>
+      <Block strongIos outlineIos>
         <p>
           When progress bar is determinate it indicates how long an operation will take when the
           percentage complete is detectable.
@@ -179,7 +179,7 @@ export default () => {
         </div>
       </Block>
       <BlockTitle>Colors</BlockTitle>
-      <List simpleList>
+      <List strongIos outlineIos dividersIos simpleList>
         <ListItem>
           <Progressbar color="blue" progress={10} />
         </ListItem>

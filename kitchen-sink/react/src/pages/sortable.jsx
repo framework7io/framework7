@@ -22,7 +22,7 @@ export default () => (
     <Block>
       <p>Just click "Toggle" button on navigation bar to enable/disable sorting</p>
     </Block>
-    <List sortable>
+    <List strongIos outlineIos dividersIos sortable>
       <ListItem title="1 Jenna Smith" after="CEO">
         <Icon icon="icon-f7" slot="media" />
       </ListItem>
@@ -45,7 +45,7 @@ export default () => (
         <Icon icon="icon-f7" slot="media" />
       </ListItem>
     </List>
-    <List mediaList sortable>
+    <List strongIos outlineIos dividersIos mediaList sortable>
       <ListItem
         title="Yellow Submarine"
         after="$15"
@@ -85,7 +85,7 @@ export default () => (
     </List>
 
     <BlockTitle>Opposite Side</BlockTitle>
-    <List sortable sortableOpposite>
+    <List strongIos outlineIos dividersIos sortable sortableOpposite>
       <ListItem title="1 Jenna Smith" after="CEO">
         <Icon icon="icon-f7" slot="media" />
       </ListItem>

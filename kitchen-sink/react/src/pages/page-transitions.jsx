@@ -15,14 +15,14 @@ export default () => (
   <Page>
     <Navbar title="Page Transitions" backLink="Back"></Navbar>
 
-    <Block strong>
+    <Block>
       <p>
         In addition to default theme-specific page transition it is possible to create custom page
         transition or use one of the additional transition effects:
       </p>
     </Block>
 
-    <List>
+    <List inset strong dividersIos>
       {effects.map((effect) => (
         <ListItem
           key={effect}

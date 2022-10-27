@@ -3,7 +3,7 @@
     <f7-navbar title="Treeview" back-link="Back" />
 
     <f7-block-title>Basic tree view</f7-block-title>
-    <f7-block strong class="no-padding-horizontal">
+    <f7-block strong outline-ios class="no-padding-horizontal">
       <f7-treeview>
         <f7-treeview-item label="Item 1">
           <f7-treeview-item label="Sub Item 1">
@@ -30,7 +30,7 @@
     </f7-block>
 
     <f7-block-title>With icons</f7-block-title>
-    <f7-block strong class="no-padding-horizontal">
+    <f7-block strong outline-ios class="no-padding-horizontal">
       <f7-treeview>
         <f7-treeview-item label="images" icon-f7="folder_fill">
           <f7-treeview-item label="avatar.png" icon-f7="photo_fill" />
@@ -46,7 +46,7 @@
     </f7-block>
 
     <f7-block-title>With checkboxes</f7-block-title>
-    <f7-block strong class="no-padding-horizontal">
+    <f7-block strong outline-ios class="no-padding-horizontal">
       <f7-treeview>
         <f7-treeview-item label="images" icon-f7="folder_fill">
           <template #content-start>
@@ -134,7 +134,7 @@
     </f7-block>
 
     <f7-block-title>Whole item as toggle</f7-block-title>
-    <f7-block strong class="no-padding-horizontal">
+    <f7-block strong outline-ios class="no-padding-horizontal">
       <f7-treeview>
         <f7-treeview-item item-toggle label="images" icon-f7="folder_fill">
           <f7-treeview-item label="avatar.png" icon-f7="photo_fill" />
@@ -150,7 +150,7 @@
     </f7-block>
 
     <f7-block-title>Selectable</f7-block-title>
-    <f7-block strong class="no-padding-horizontal">
+    <f7-block strong outline-ios class="no-padding-horizontal">
       <f7-treeview>
         <f7-treeview-item
           selectable
@@ -214,7 +214,7 @@
     </f7-block>
 
     <f7-block-title>Preload children</f7-block-title>
-    <f7-block strong class="no-padding-horizontal">
+    <f7-block strong outline-ios class="no-padding-horizontal">
       <f7-treeview>
         <f7-treeview-item
           toggle
@@ -234,7 +234,7 @@
     </f7-block>
 
     <f7-block-title>With links</f7-block-title>
-    <f7-block strong class="no-padding-horizontal">
+    <f7-block strong outline-ios class="no-padding-horizontal">
       <f7-treeview>
         <f7-treeview-item icon-f7="square_grid_2x2_fill" item-toggle label="Modals">
           <f7-treeview-item link="/popup/" icon-f7="link" label="Popup" />

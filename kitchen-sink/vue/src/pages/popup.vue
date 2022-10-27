@@ -1,7 +1,7 @@
 <template>
   <f7-page @page:beforeremove="onPageBeforeRemove">
     <f7-navbar title="Popup" back-link="Back"></f7-navbar>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <p>
         Popup is a modal window with any HTML content that pops up over App's main content. Popup as
         all other overlays is part of so called "Temporary Views".
@@ -18,7 +18,7 @@
     </f7-block>
 
     <f7-block-title>Swipe To Close</f7-block-title>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <p>Popup can be closed with swipe to top or bottom:</p>
       <p>
         <f7-button fill popup-open=".demo-popup-swipe">Swipe To Close</f7-button>
@@ -32,7 +32,7 @@
     </f7-block>
 
     <f7-block-title>Push View</f7-block-title>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <p>
         Popup can push view behind. By default has effect only when `safe-area-inset-top` is more
         than zero (iOS fullscreen webapp or iOS cordova app)
@@ -145,7 +145,7 @@
           <div class="swipe-handler"></div>
         </template>
         <f7-block-title large>Hello!</f7-block-title>
-        <f7-block strong>
+        <f7-block strong-ios outline-ios>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse faucibus mauris
             leo, eu bibendum neque congue non. Ut leo mauris, eleifend eu commodo a, egestas ac

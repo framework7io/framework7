@@ -58,7 +58,7 @@ export default () => {
       <Navbar title="Treeview" backLink="Back" />
 
       <BlockTitle>Basic tree view</BlockTitle>
-      <Block strong className="no-padding-horizontal">
+      <Block strong outlineIos className="no-padding-horizontal">
         <Treeview>
           <TreeviewItem label="Item 1">
             <TreeviewItem label="Sub Item 1">
@@ -85,7 +85,7 @@ export default () => {
       </Block>
 
       <BlockTitle>With icons</BlockTitle>
-      <Block strong className="no-padding-horizontal">
+      <Block strong outlineIos className="no-padding-horizontal">
         <Treeview>
           <TreeviewItem label="images" iconF7="folder_fill">
             <TreeviewItem label="avatar.png" iconF7="photo_fill" />
@@ -101,7 +101,7 @@ export default () => {
       </Block>
 
       <BlockTitle>With checkboxes</BlockTitle>
-      <Block strong className="no-padding-horizontal">
+      <Block strong outlineIos className="no-padding-horizontal">
         <Treeview>
           <TreeviewItem label="images" iconF7="folder_fill">
             <Checkbox
@@ -199,7 +199,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Whole item as toggle</BlockTitle>
-      <Block strong className="no-padding-horizontal">
+      <Block strong outlineIos className="no-padding-horizontal">
         <Treeview>
           <TreeviewItem itemToggle label="images" iconF7="folder_fill">
             <TreeviewItem label="avatar.png" iconF7="photo_fill" />
@@ -215,7 +215,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Selectable</BlockTitle>
-      <Block strong className="no-padding-horizontal">
+      <Block strong outlineIos className="no-padding-horizontal">
         <Treeview>
           <TreeviewItem
             selectable
@@ -279,7 +279,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Preload children</BlockTitle>
-      <Block strong className="no-padding-horizontal">
+      <Block strong outlineIos className="no-padding-horizontal">
         <Treeview>
           <TreeviewItem
             toggle
@@ -296,7 +296,7 @@ export default () => {
       </Block>
 
       <BlockTitle>With links</BlockTitle>
-      <Block strong className="no-padding-horizontal">
+      <Block strong outlineIos className="no-padding-horizontal">
         <Treeview>
           <TreeviewItem iconF7="square_grid_2x2_fill" itemToggle label="Modals">
             <TreeviewItem link="/popup/" iconF7="link" label="Popup" />

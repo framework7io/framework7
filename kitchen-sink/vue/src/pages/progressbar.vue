@@ -8,7 +8,7 @@
       </p>
     </f7-block>
     <f7-block-title>Determinate Progress Bar</f7-block-title>
-    <f7-block strong>
+    <f7-block strong-ios outline-ios>
       <p>
         When progress bar is determinate it indicates how long an operation will take when the
         percentage complete is detectable.
@@ -66,7 +66,7 @@
       </div>
     </f7-block>
     <f7-block-title>Colors</f7-block-title>
-    <div class="list simple-list">
+    <div class="list list-strong-ios list-outline-ios list-dividers-ios simple-list">
       <ul>
         <li>
           <f7-progressbar color="blue" :progress="10" />
