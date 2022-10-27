@@ -30,10 +30,17 @@
   <Block strong outlineIos>
     <div class="grid grid-cols-3 grid-gap">
       <Button>Button</Button>
-
       <Button>Button</Button>
-
       <Button round>Round</Button>
+    </div>
+  </Block>
+
+  <BlockTitle>Tonal Buttons</BlockTitle>
+  <Block strong outlineIos>
+    <div class="grid grid-cols-3 grid-gap">
+      <Button tonal>Button</Button>
+      <Button tonal>Button</Button>
+      <Button tonal round>Round</Button>
     </div>
   </Block>
 
@@ -41,9 +48,7 @@
   <Block strong outlineIos>
     <div class="grid grid-cols-3 grid-gap">
       <Button fill>Button</Button>
-
       <Button fill>Button</Button>
-
       <Button fill round>Round</Button>
     </div>
   </Block>
@@ -52,9 +57,7 @@
   <Block strong outlineIos>
     <div class="grid grid-cols-3 grid-gap">
       <Button outline>Button</Button>
-
       <Button outline>Button</Button>
-
       <Button outline round>Round</Button>
     </div>
   </Block>
@@ -153,47 +156,28 @@
 
   <BlockTitle>Color Buttons</BlockTitle>
   <Block strong outlineIos>
-    <p class="grid grid-cols-3 grid-gap">
+    <div class="grid grid-cols-3 grid-gap">
       <Button color="red">Red</Button>
-
       <Button color="green">Green</Button>
-
       <Button color="blue">Blue</Button>
-    </p>
-    <p class="grid grid-cols-3 grid-gap">
-      <Button color="pink">Pink</Button>
-
-      <Button color="yellow">Yellow</Button>
-
-      <Button color="orange">Orange</Button>
-    </p>
-    <p class="grid grid-cols-3 grid-gap">
-      <Button color="gray">Gray</Button>
-
-      <Button color="black">Black</Button>
-    </p>
+    </div>
   </Block>
 
   <BlockTitle>Color Fill Buttons</BlockTitle>
   <Block strong outlineIos>
     <p class="grid grid-cols-3 grid-gap">
-      <Button fill color="red">Red</Button>
-
-      <Button fill color="green">Green</Button>
-
-      <Button fill color="blue">Blue</Button>
+      <Button color="red">Red</Button>
+      <Button color="green">Green</Button>
+      <Button color="blue">Blue</Button>
     </p>
     <p class="grid grid-cols-3 grid-gap">
-      <Button fill color="pink">Pink</Button>
-
-      <Button fill color="yellow">Yellow</Button>
-
-      <Button fill color="orange">Orange</Button>
+      <Button color="pink">Pink</Button>
+      <Button color="yellow">Yellow</Button>
+      <Button color="orange">Orange</Button>
     </p>
     <p class="grid grid-cols-3 grid-gap">
-      <Button fill color="gray">Gray</Button>
-
-      <Button fill color="black">Black</Button>
+      <Button color="black">Black</Button>
+      <Button color="white">White</Button>
     </p>
   </Block>
 

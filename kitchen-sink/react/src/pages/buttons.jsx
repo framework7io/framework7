@@ -43,6 +43,17 @@ export default () => {
         </div>
       </Block>
 
+      <BlockTitle>Tonal Buttons</BlockTitle>
+      <Block strong outlineIos>
+        <div className="grid grid-cols-3 grid-gap">
+          <Button tonal>Button</Button>
+          <Button tonal>Button</Button>
+          <Button tonal round>
+            Round
+          </Button>
+        </div>
+      </Block>
+
       <BlockTitle>Fill Buttons</BlockTitle>
       <Block strong outlineIos>
         <div className="grid grid-cols-3 grid-gap">
@@ -204,17 +215,20 @@ export default () => {
 
       <BlockTitle>Color Fill Buttons</BlockTitle>
       <Block strong outlineIos>
-        <div className="grid grid-cols-3 grid-gap">
-          <Button fill color="red">
-            Red
-          </Button>
-          <Button fill color="green">
-            Green
-          </Button>
-          <Button fill color="blue">
-            Blue
-          </Button>
-        </div>
+        <p className="grid grid-cols-3 grid-gap">
+          <Button color="red">Red</Button>
+          <Button color="green">Green</Button>
+          <Button color="blue">Blue</Button>
+        </p>
+        <p className="grid grid-cols-3 grid-gap">
+          <Button color="pink">Pink</Button>
+          <Button color="yellow">Yellow</Button>
+          <Button color="orange">Orange</Button>
+        </p>
+        <p className="grid grid-cols-3 grid-gap">
+          <Button color="black">Black</Button>
+          <Button color="white">White</Button>
+        </p>
       </Block>
 
       <BlockTitle>List-Block Buttons</BlockTitle>
