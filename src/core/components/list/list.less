@@ -385,10 +385,20 @@
 }
 
 .md .media-list:not(.inset):not(.inset-md):not(.menu-list) .item-content,
-.md .list:not(.inset):not(.inset-md):not(.menu-list) .media-item .item-content {
+.md .media-list:not(.inset):not(.inset-md):not(.menu-list) li > .item-link,
+.md .list:not(.inset):not(.inset-md):not(.menu-list) .media-item .item-content,
+.md .list:not(.inset):not(.inset-md):not(.menu-list) .media-item > .item-link {
   margin-left: calc(var(--f7-list-item-padding-horizontal) / 2);
   margin-right: calc(var(--f7-list-item-padding-horizontal) / 2);
   border-radius: 16px;
+}
+.md .media-list:not(.inset):not(.inset-md):not(.menu-list) li > .item-link > .item-content,
+.md .list:not(.inset):not(.inset-md):not(.menu-list) .media-item > .item-link > .item-content {
+  margin-left: 0;
+  margin-right: 0;
+}
+.md .media-list:not(.inset):not(.inset-md):not(.menu-list) .item-content,
+.md .list:not(.inset):not(.inset-md):not(.menu-list) .media-item .item-content {
   .ltr({
     padding-left: calc(var(--f7-list-item-padding-horizontal) / 2 + var(--f7-safe-area-left));
   });

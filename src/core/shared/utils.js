@@ -495,10 +495,10 @@ export function colorThemeCSSStyles(colors = {}) {
     const blackColorVars = `
     --f7-ios-primary: #000;
     --f7-ios-primary-shade: #000;
-    --f7-ios-primary-tint: #f1f1f1;
+    --f7-ios-primary-tint: #232323;
     --f7-ios-primary-rgb: 0, 0, 0;
     --f7-md-primary-shade: #000;
-    --f7-md-primary-tint: #f1f1f1;
+    --f7-md-primary-tint: #232323;
     --f7-md-primary-rgb: 0, 0, 0;
     --f7-md-primary: #000;
     --f7-md-on-primary: #fff;

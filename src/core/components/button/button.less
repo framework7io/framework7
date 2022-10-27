@@ -78,7 +78,12 @@ button {
   --f7-button-bg-color: var(--f7-button-fill-bg-color, var(--f7-theme-color));
   --f7-button-text-color: var(--f7-button-fill-text-color, #fff);
   --f7-touch-ripple-color: var(--f7-touch-ripple-white);
+  .ios .color-white &,
+  .ios &.color-white {
+    --f7-button-text-color: #000;
+  }
 }
+
 .button-fill,
 .ios .button-fill-ios,
 .md .button-fill-md {
