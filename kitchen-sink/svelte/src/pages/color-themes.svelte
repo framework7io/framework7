@@ -1,13 +1,11 @@
 <script context="module">
-  let stylesheet;
   let globalTheme = 'light';
-  let globalBarsStyle = 'empty';
-  let globalCustomColor = '';
-  let globalCustomProperties = '';
+  let globalThemeColor = document.documentElement.style
+    .getPropertyValue('--f7-color-primary')
+    .trim();
 </script>
 
 <script>
-  import { onMount } from 'svelte';
   import {
     f7,
     Navbar,
@@ -21,156 +19,29 @@
   } from 'framework7-svelte';
 
   let theme = globalTheme;
-  let barsStyle = globalBarsStyle;
-  let customColor = globalCustomColor;
-  let customProperties = globalCustomProperties;
-  const colors = [
-    'red',
-    'green',
-    'blue',
-    'pink',
-    'yellow',
-    'orange',
-    'purple',
-    'deeppurple',
-    'lightblue',
-    'teal',
-    'lime',
-    'deeporange',
-    'gray',
-    'black',
-  ];
-  let themeColor = f7.$('html').css('--f7-theme-color').trim();
-  let timeout;
+  let themeColor = globalThemeColor;
 
-  const setWebThemeColor = (hexColor) => {
-    const metaEl = f7.$('meta[name="theme-color"]');
-    if (!metaEl.length) {
-      f7.$('head').append(`<meta name="theme-color" content="${hexColor}">`);
-      return;
-    }
-    metaEl.attr('content', hexColor);
-  };
-
-  function generateStylesheet() {
-    let styles = '';
-    if (barsStyle === 'fill') {
-      const colorThemeRgb = f7
-        .$('html')
-        .css('--f7-theme-color-rgb')
-        .trim()
-        .split(',')
-        .map((c) => c.trim());
-      styles += `
-/* Invert navigation bars to fill style */
-:root,
-:root.dark,
-:root .dark {
-  --f7-bars-bg-color: var(--f7-theme-color);
-  --f7-bars-bg-color-rgb: var(--f7-theme-color-rgb);
-  --f7-bars-translucent-opacity: 0.9;
-  --f7-bars-text-color: #fff;
-  --f7-bars-link-color: #fff;
-  --f7-navbar-subtitle-text-color: rgba(255,255,255,0.85);
-  --f7-bars-border-color: transparent;
-  --f7-tabbar-link-active-color: #fff;
-  --f7-tabbar-link-inactive-color: rgba(255,255,255,0.54);
-  --f7-sheet-border-color: transparent;
-  --f7-tabbar-link-active-border-color: #fff;
-}
-.navbar,
-.toolbar,
-.subnavbar,
-.calendar-header,
-.calendar-footer {
-  --f7-touch-ripple-color: var(--f7-touch-ripple-white);
-  --f7-link-highlight-color: var(--f7-link-highlight-white);
-  --f7-link-touch-ripple-color: var(--f7-touch-ripple-white);
-  --f7-button-text-color: #fff;
-  --f7-button-pressed-bg-color: rgba(255,255,255,0.1);
-}
-.navbar-large-transparent {
-  --f7-navbar-large-title-text-color: #000;
-
-  --r: ${colorThemeRgb[0]};
-  --g: ${colorThemeRgb[1]};
-  --b: ${colorThemeRgb[2]};
-  --progress: var(--f7-navbar-large-collapse-progress);
-  --f7-bars-link-color: rgb(
-    calc(var(--r) + (255 - var(--r)) * var(--progress)),
-    calc(var(--g) + (255 - var(--g)) * var(--progress)),
-    calc(var(--b) + (255 - var(--b)) * var(--progress))
+  const colors = Object.keys(f7.colors).filter(
+    (c) => c !== 'primary' && c !== 'white' && c !== 'black',
   );
-}
-.dark .navbar-large-transparent {
-  --f7-navbar-large-title-text-color: #fff;
-}
-      `;
-    }
-
-    setTimeout(() => {
-      if (self.barsStyle === 'fill') {
-        setWebThemeColor(self.themeColor);
-      } else if (self.theme === 'light') {
-        setWebThemeColor('#fff');
-      } else if (self.theme === 'dark') {
-        setWebThemeColor('#000');
-      }
-    });
-    return styles.trim();
-  }
-
-  onMount(() => {
-    if (!stylesheet) {
-      stylesheet = document.createElement('style');
-      document.head.appendChild(stylesheet);
-    }
-  });
 
   function setLayoutTheme(newTheme) {
-    const htmlEl = f7.$('html');
+    console.log(newTheme);
+    f7.setDarkMode(newTheme === 'dark');
     globalTheme = newTheme;
-    htmlEl.removeClass('dark light').addClass(`${globalTheme}`);
-    theme = globalTheme;
+    theme = newTheme;
   }
 
-  function setColorTheme(color) {
-    const htmlEl = f7.$('html');
-    const currentColorClass = htmlEl[0].className.match(/color-theme-([a-z]*)/);
-    if (currentColorClass) htmlEl.removeClass(currentColorClass[0]);
-    htmlEl.addClass(`color-theme-${color}`);
-    // eslint-disable-next-line
-    unsetCustomColor();
-    themeColor = htmlEl.css(`--f7-color-${color}`).trim();
+  function setColorTheme(newColor) {
+    themeColor = f7.colors[newColor];
+    globalThemeColor = themeColor;
+    f7.setColorTheme(themeColor);
   }
 
-  function setBarsStyle(newBarsStyle) {
-    globalBarsStyle = newBarsStyle;
-    barsStyle = globalBarsStyle;
-    globalCustomProperties = generateStylesheet();
-    stylesheet.innerHTML = globalCustomProperties;
-    customProperties = globalCustomProperties;
-  }
-
-  function unsetCustomColor() {
-    globalCustomColor = '';
-    customColor = '';
-    globalCustomProperties = generateStylesheet();
-    stylesheet.innerHTML = globalCustomProperties;
-    customProperties = globalCustomProperties;
-  }
-
-  function setCustomColor(color) {
-    if (themeColor === color) return;
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      globalCustomColor = color;
-      customColor = globalCustomColor;
-      globalCustomProperties = generateStylesheet();
-      stylesheet.innerHTML = globalCustomProperties;
-      customProperties = globalCustomProperties;
-      f7.setColorTheme(color);
-    }, 300);
+  function setCustomColor(newColor) {
+    themeColor = newColor;
+    globalThemeColor = newColor;
+    f7.setColorTheme(newColor);
   }
 </script>
 
@@ -180,36 +51,19 @@
   <Block strong>
     <p>Framework7 comes with 2 main layout themes: Light (default) and Dark:</p>
     <div class="grid grid-cols-2 grid-gap">
-      <div class="bg-color-white demo-theme-picker" onClick={() => setLayoutTheme('light')}>
+      <div class="bg-color-white demo-theme-picker" on:click={() => setLayoutTheme('light')}>
         {#if theme === 'light'}
           <Checkbox checked disabled />
         {/if}
       </div>
-      <div class="bg-color-black demo-theme-picker" onClick={() => setLayoutTheme('dark')}>
+      <div class="bg-color-black demo-theme-picker" on:click={() => setLayoutTheme('dark')}>
         {#if theme === 'dark'}
           <Checkbox checked disabled />
         {/if}
       </div>
     </div>
   </Block>
-  <BlockTitle medium>Navigation Bars Style</BlockTitle>
-  <Block strong>
-    <p>Switch navigation bars to filled style:</p>
-    <div class="grid grid-cols-2 grid-gap">
-      <div class="demo-bars-picker demo-bars-picker-empty" onClick={() => setBarsStyle('empty')}>
-        <div class="demo-navbar" />
-        {#if barsStyle === 'empty'}
-          <Checkbox checked disabled />
-        {/if}
-      </div>
-      <div class="demo-bars-picker demo-bars-picker-fill" onClick={() => setBarsStyle('fill')}>
-        <div class="demo-navbar" />
-        {#if barsStyle === 'fill'}
-          <Checkbox checked disabled />
-        {/if}
-      </div>
-    </div>
-  </Block>
+
   <BlockTitle medium>Default Color Themes</BlockTitle>
   <Block strong>
     <p>Framework7 comes with {colors.length} color themes set.</p>
@@ -237,7 +91,7 @@
       label="HEX Color"
       placeholder="e.g. #ff0000"
       readonly
-      value={{ hex: customColor || themeColor }}
+      value={{ hex: themeColor }}
       onColorPickerChange={(value) => setCustomColor(value.hex)}
       colorPickerParams={{ targetEl: '#color-theme-picker-color' }}
     >
@@ -248,15 +102,4 @@
       />
     </ListInput>
   </List>
-
-  <BlockTitle medium>Generated CSS Variables</BlockTitle>
-  <Block strong>
-    {#if customProperties}
-      <p>Add this code block to your custom stylesheet:</p>
-      <pre
-        style="overflow: auto; -webkit-overflow-scrolling: touch; margin: 0; font-size: 12px">{customProperties}</pre>
-    {:else}
-      <p>Change navigation bars styles or specify custom color to see custom CSS variables here</p>
-    {/if}
-  </Block>
 </Page>
