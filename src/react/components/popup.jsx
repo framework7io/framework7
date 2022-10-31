@@ -139,7 +139,7 @@ const Popup = forwardRef((props, ref) => {
       f7Popup.current = f7.popup.create(popupParams);
       modalEvents('on');
       if (opened) {
-        f7Popup.current.open(false);
+        f7Popup.current.open(false, true);
       }
     });
   };

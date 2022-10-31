@@ -77,7 +77,7 @@ class Modal extends Framework7Class {
     modal.emit(`local::closed modalClosed ${modal.type}Closed`, modal);
   }
 
-  open(animateModal) {
+  open(animateModal, force) {
     const modal = this;
     const document = getDocument();
     const app = modal.app;
@@ -94,7 +94,7 @@ class Modal extends Framework7Class {
       if (animateModal === false && $el[0] && type !== 'dialog') {
         $el[0].style.display = 'block';
       }
-      return modal;
+      if (!force) return modal;
     }
 
     if (type === 'dialog' && app.params.modal.queueDialogs) {

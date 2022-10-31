@@ -151,7 +151,7 @@ export default {
       f7ready(() => {
         f7Popup.value = f7.popup.create(popupParams);
         if (props.opened) {
-          f7Popup.value.open(false);
+          f7Popup.value.open(false, true);
         }
       });
     });

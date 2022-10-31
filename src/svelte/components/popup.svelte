@@ -125,7 +125,7 @@
     f7ready(() => {
       f7Popup = app.f7.popup.create(popupParams);
       if (opened) {
-        f7Popup.open(false);
+        f7Popup.open(false, true);
       }
     });
   });
