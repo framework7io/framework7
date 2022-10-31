@@ -23,7 +23,6 @@ import { RouterContext } from '../shared/router-context.js';
   linksView? : Object | string
   url? : string
   main? : boolean
-  stackPages? : boolean
   xhrCache? : boolean
   xhrCacheIgnore? : Array<any>
   xhrCacheIgnoreGetParameters? : boolean

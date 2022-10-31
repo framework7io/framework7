@@ -26,8 +26,6 @@ const Navbar = {
     if (!needCenterTitle && !needLeftTitle) return;
 
     if (
-      $el.hasClass('stacked') ||
-      $el.parents('.stacked').length > 0 ||
       $el.parents('.tab:not(.tab-active)').length > 0 ||
       $el.parents('.popup:not(.modal-in)').length > 0
     ) {
@@ -752,14 +750,14 @@ export default {
     },
     'panelOpen panelSwipeOpen modalOpen': function onPanelModalOpen(instance) {
       const app = this;
-      instance.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((navbarEl) => {
+      instance.$el.find('.navbar:not(.navbar-previous)').each((navbarEl) => {
         app.navbar.size(navbarEl);
       });
     },
     tabShow(tabEl) {
       const app = this;
       $(tabEl)
-        .find('.navbar:not(.navbar-previous):not(.stacked)')
+        .find('.navbar:not(.navbar-previous)')
         .each((navbarEl) => {
           app.navbar.size(navbarEl);
         });
@@ -788,16 +786,14 @@ export default {
         }
         // Through Layout iOS
         if ($pageContentEl.length === 0 && $navbarsEl.length) {
-          if ($navbarsEl.nextAll('.page-current:not(.stacked)').length > 0) {
-            $pageContentEl = $navbarsEl
-              .nextAll('.page-current:not(.stacked)')
-              .find('.page-content');
+          if ($navbarsEl.nextAll('.page-current').length > 0) {
+            $pageContentEl = $navbarsEl.nextAll('.page-current').find('.page-content');
           }
         }
         // Through Layout
         if ($pageContentEl.length === 0) {
-          if ($navbarEl.nextAll('.page-current:not(.stacked)').length > 0) {
-            $pageContentEl = $navbarEl.nextAll('.page-current:not(.stacked)').find('.page-content');
+          if ($navbarEl.nextAll('.page-current').length > 0) {
+            $pageContentEl = $navbarEl.nextAll('.page-current').find('.page-content');
           }
         }
       }

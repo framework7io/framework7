@@ -9,7 +9,6 @@ export default {
   name: 'f7-page',
   props: {
     name: String,
-    stacked: Boolean,
     withSubnavbar: {
       type: Boolean,
       default: undefined,
@@ -82,7 +81,6 @@ export default {
     let hasNavbarLargeCollapsed = false;
     let hasCardExpandableOpened = false;
     let routerPositionClass = '';
-    let routerForceUnstack = false;
     let routerPageRole = null;
     let routerPageRoleDetailRoot = false;
     let routerPageMasterStack = false;
@@ -159,15 +157,7 @@ export default {
       if (elRef.value !== page.el) return;
       emit('page:beforeunmount', page);
     };
-    // Helper events
-    const onPageStack = (pageEl) => {
-      if (elRef.value !== pageEl) return;
-      routerForceUnstack = false;
-    };
-    const onPageUnstack = (pageEl) => {
-      if (elRef.value !== pageEl) return;
-      routerForceUnstack = true;
-    };
+
     const onPagePosition = (pageEl, position) => {
       if (elRef.value !== pageEl) return;
       routerPositionClass = `page-${position}`;
@@ -240,8 +230,6 @@ export default {
         f7.on('pageAfterIn', onPageAfterIn);
         f7.on('pageBeforeRemove', onPageBeforeRemove);
         f7.on('pageBeforeUnmount', onPageBeforeUnmount);
-        f7.on('pageStack', onPageStack);
-        f7.on('pageUnstack', onPageUnstack);
         f7.on('pagePosition', onPagePosition);
         f7.on('pageRole', onPageRole);
         f7.on('pageMasterStack', onPageMasterStack);
@@ -266,8 +254,6 @@ export default {
       f7.off('pageAfterIn', onPageAfterIn);
       f7.off('pageBeforeRemove', onPageBeforeRemove);
       f7.off('pageBeforeUnmount', onPageBeforeUnmount);
-      f7.off('pageStack', onPageStack);
-      f7.off('pageUnstack', onPageUnstack);
       f7.off('pagePosition', onPagePosition);
       f7.off('pageRole', onPageRole);
       f7.off('pageMasterStack', onPageMasterStack);
@@ -285,7 +271,6 @@ export default {
         'page',
         routerPositionClass,
         {
-          stacked: props.stacked && !routerForceUnstack,
           tabs: props.tabs,
           'page-with-subnavbar': props.subnavbar || props.withSubnavbar,
           'page-with-navbar-large': props.navbarLarge || props.withNavbarLarge,

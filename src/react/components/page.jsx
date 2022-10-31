@@ -11,7 +11,6 @@ import PageContent from './page-content.js';
   className?: string;
   style?: React.CSSProperties;
   name? : string
-  stacked? : boolean
   withSubnavbar? : boolean
   subnavbar? : boolean
   withNavbarLarge? : boolean
@@ -63,7 +62,6 @@ const Page = forwardRef((props, ref) => {
     id,
     style,
     name,
-    stacked,
     withSubnavbar,
     subnavbar,
     withNavbarLarge,
@@ -101,7 +99,6 @@ const Page = forwardRef((props, ref) => {
   const hasNavbarLargeCollapsed = useRef(false);
   const hasCardExpandableOpened = useRef(false);
   const routerPositionClass = useRef('');
-  const routerForceUnstack = useRef(false);
   const routerPageRole = useRef(null);
   const routerPageRoleDetailRoot = useRef(false);
   const routerPageMasterStack = useRef(false);
@@ -177,15 +174,6 @@ const Page = forwardRef((props, ref) => {
     if (elRef.current !== page.el) return;
     emit(props, 'pageBeforeUnmount', page);
   };
-  // Helper events
-  const onPageStack = (pageEl) => {
-    if (elRef.current !== pageEl) return;
-    routerForceUnstack.current = false;
-  };
-  const onPageUnstack = (pageEl) => {
-    if (elRef.current !== pageEl) return;
-    routerForceUnstack.current = true;
-  };
   const onPagePosition = (pageEl, position) => {
     if (elRef.current !== pageEl) return;
     routerPositionClass.current = `page-${position}`;
@@ -243,8 +231,6 @@ const Page = forwardRef((props, ref) => {
       f7.on('pageAfterIn', onPageAfterIn);
       f7.on('pageBeforeRemove', onPageBeforeRemove);
       f7.on('pageBeforeUnmount', onPageBeforeUnmount);
-      f7.on('pageStack', onPageStack);
-      f7.on('pageUnstack', onPageUnstack);
       f7.on('pagePosition', onPagePosition);
       f7.on('pageRole', onPageRole);
       f7.on('pageMasterStack', onPageMasterStack);
@@ -269,8 +255,6 @@ const Page = forwardRef((props, ref) => {
     f7.off('pageAfterIn', onPageAfterIn);
     f7.off('pageBeforeRemove', onPageBeforeRemove);
     f7.off('pageBeforeUnmount', onPageBeforeUnmount);
-    f7.off('pageStack', onPageStack);
-    f7.off('pageUnstack', onPageUnstack);
     f7.off('pagePosition', onPagePosition);
     f7.off('pageRole', onPageRole);
     f7.off('pageMasterStack', onPageMasterStack);
@@ -343,7 +327,6 @@ const Page = forwardRef((props, ref) => {
     'page',
     routerPositionClass.current,
     {
-      stacked: stacked && !routerForceUnstack.current,
       tabs,
       'page-with-subnavbar': subnavbar || withSubnavbar || forceSubnavbar,
       'page-with-navbar-large': navbarLarge || withNavbarLarge || forceNavbarLarge,

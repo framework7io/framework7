@@ -132,15 +132,13 @@ function forward(router, el, forwardOptions = {}) {
   }
 
   // Pages In View
-  const $pagesInView = $viewEl
-    .children('.page:not(.stacked)')
-    .filter((pageInView) => pageInView !== $newPage[0]);
+  const $pagesInView = $viewEl.children('.page').filter((pageInView) => pageInView !== $newPage[0]);
 
   // Navbars In View
   let $navbarsInView;
   if (dynamicNavbar) {
     $navbarsInView = $navbarsEl
-      .children('.navbar:not(.stacked)')
+      .children('.navbar')
       .filter((navbarInView) => navbarInView !== $newNavbarEl[0]);
   }
 
@@ -198,7 +196,6 @@ function forward(router, el, forwardOptions = {}) {
         isDetail ? ' page-master-detail' : ''
       }${isDetailRoot ? ' page-master-detail-root' : ''}`,
     )
-    .removeClass('stacked')
     .trigger('page:unstack')
     .trigger('page:position', { position: newPagePosition });
   router.emit('pageUnstack', $newPage[0]);
@@ -219,8 +216,7 @@ function forward(router, el, forwardOptions = {}) {
         `navbar-${newPagePosition}${isMaster ? ' navbar-master' : ''}${
           isDetail ? ' navbar-master-detail' : ''
         }${isDetailRoot ? ' navbar-master-detail-root' : ''}`,
-      )
-      .removeClass('stacked');
+      );
     $newNavbarEl.trigger('navbar:position', { position: newPagePosition });
     router.emit('navbarPosition', $newNavbarEl[0], newPagePosition);
     if (isMaster || isDetail) {
@@ -281,38 +277,30 @@ function forward(router, el, forwardOptions = {}) {
           continue; // eslint-disable-line
         }
         const oldNavbarEl = app.navbar.getElByPage($pagesInView.eq(i));
-        if (router.params.stackPages) {
-          $pagesInView.eq(i).addClass('stacked');
-          $pagesInView.eq(i).trigger('page:stack');
-          router.emit('pageStack', $pagesInView[i]);
-          if (dynamicNavbar) {
-            $(oldNavbarEl).addClass('stacked');
-          }
-        } else {
-          // Page remove event
-          removedPageEls.push($pagesInView[i]);
-          router.pageCallback(
-            'beforeRemove',
-            $pagesInView[i],
-            $navbarsInView && $navbarsInView[i],
-            'previous',
-            undefined,
-            options,
-          );
-          router.removePage($pagesInView[i]);
-          if (dynamicNavbar && oldNavbarEl) {
-            removedNavbarEls.push(oldNavbarEl);
-            router.removeNavbar(oldNavbarEl);
-          }
+
+        // Page remove event
+        removedPageEls.push($pagesInView[i]);
+        router.pageCallback(
+          'beforeRemove',
+          $pagesInView[i],
+          $navbarsInView && $navbarsInView[i],
+          'previous',
+          undefined,
+          options,
+        );
+        router.removePage($pagesInView[i]);
+        if (dynamicNavbar && oldNavbarEl) {
+          removedNavbarEls.push(oldNavbarEl);
+          router.removeNavbar(oldNavbarEl);
         }
       }
     }
     $oldPage = $viewEl
-      .children('.page:not(.stacked)')
+      .children('.page')
       .filter((pageEl) => pageEl !== $newPage[0] && removedPageEls.indexOf(pageEl) < 0);
     if (dynamicNavbar) {
       $oldNavbarEl = $navbarsEl
-        .children('.navbar:not(.stacked)')
+        .children('.navbar')
         .filter(
           (navbarEl) =>
             navbarEl !== $newNavbarEl[0] && removedNavbarEls.indexOf(removedNavbarEls) < 0,
@@ -466,69 +454,43 @@ function forward(router, el, forwardOptions = {}) {
 
   // Remove old page
   if ((options.reloadCurrent || reloadDetail) && $oldPage.length > 0) {
-    if (router.params.stackPages && router.initialPages.indexOf($oldPage[0]) >= 0) {
-      $oldPage.addClass('stacked');
-      $oldPage.trigger('page:stack');
-      router.emit('pageStack', $oldPage[0]);
-      if (dynamicNavbar) {
-        $oldNavbarEl.addClass('stacked');
-      }
-    } else {
-      // Page remove event
-      router.pageCallback('beforeOut', $oldPage, $oldNavbarEl, 'current', undefined, options);
-      router.pageCallback('afterOut', $oldPage, $oldNavbarEl, 'current', undefined, options);
-      router.pageCallback('beforeRemove', $oldPage, $oldNavbarEl, 'current', undefined, options);
-      router.removePage($oldPage);
-      if (dynamicNavbar && $oldNavbarEl && $oldNavbarEl.length) {
-        router.removeNavbar($oldNavbarEl);
-      }
+    // Page remove event
+    router.pageCallback('beforeOut', $oldPage, $oldNavbarEl, 'current', undefined, options);
+    router.pageCallback('afterOut', $oldPage, $oldNavbarEl, 'current', undefined, options);
+    router.pageCallback('beforeRemove', $oldPage, $oldNavbarEl, 'current', undefined, options);
+    router.removePage($oldPage);
+    if (dynamicNavbar && $oldNavbarEl && $oldNavbarEl.length) {
+      router.removeNavbar($oldNavbarEl);
     }
   } else if (options.reloadAll) {
     $oldPage.each((pageEl, index) => {
       const $oldPageEl = $(pageEl);
       const $oldNavbarElEl = $(app.navbar.getElByPage($oldPageEl));
-      if (router.params.stackPages && router.initialPages.indexOf($oldPageEl[0]) >= 0) {
-        $oldPageEl.addClass('stacked');
-        $oldPageEl.trigger('page:stack');
-        router.emit('pageStack', $oldPageEl[0]);
-        if (dynamicNavbar) {
-          $oldNavbarElEl.addClass('stacked');
-        }
-      } else {
-        // Page remove event
-        if ($oldPageEl.hasClass('page-current')) {
-          router.pageCallback('beforeOut', $oldPage, $oldNavbarEl, 'current', undefined, options);
-          router.pageCallback('afterOut', $oldPage, $oldNavbarEl, 'current', undefined, options);
-        }
-        router.pageCallback(
-          'beforeRemove',
-          $oldPageEl,
-          $oldNavbarEl && $oldNavbarEl.eq(index),
-          'previous',
-          undefined,
-          options,
-        );
-        router.removePage($oldPageEl);
-        if (dynamicNavbar && $oldNavbarElEl.length) {
-          router.removeNavbar($oldNavbarElEl);
-        }
+
+      // Page remove event
+      if ($oldPageEl.hasClass('page-current')) {
+        router.pageCallback('beforeOut', $oldPage, $oldNavbarEl, 'current', undefined, options);
+        router.pageCallback('afterOut', $oldPage, $oldNavbarEl, 'current', undefined, options);
+      }
+      router.pageCallback(
+        'beforeRemove',
+        $oldPageEl,
+        $oldNavbarEl && $oldNavbarEl.eq(index),
+        'previous',
+        undefined,
+        options,
+      );
+      router.removePage($oldPageEl);
+      if (dynamicNavbar && $oldNavbarElEl.length) {
+        router.removeNavbar($oldNavbarElEl);
       }
     });
   } else if (options.reloadPrevious) {
-    if (router.params.stackPages && router.initialPages.indexOf($oldPage[0]) >= 0) {
-      $oldPage.addClass('stacked');
-      $oldPage.trigger('page:stack');
-      router.emit('pageStack', $oldPage[0]);
-      if (dynamicNavbar) {
-        $oldNavbarEl.addClass('stacked');
-      }
-    } else {
-      // Page remove event
-      router.pageCallback('beforeRemove', $oldPage, $oldNavbarEl, 'previous', undefined, options);
-      router.removePage($oldPage);
-      if (dynamicNavbar && $oldNavbarEl && $oldNavbarEl.length) {
-        router.removeNavbar($oldNavbarEl);
-      }
+    // Page remove event
+    router.pageCallback('beforeRemove', $oldPage, $oldNavbarEl, 'previous', undefined, options);
+    router.removePage($oldPage);
+    if (dynamicNavbar && $oldNavbarEl && $oldNavbarEl.length) {
+      router.removeNavbar($oldNavbarEl);
     }
   }
 
@@ -611,16 +573,7 @@ function forward(router, el, forwardOptions = {}) {
       }
     }
     if (!keepOldPage) {
-      if (router.params.stackPages) {
-        $oldPage.addClass('stacked');
-        $oldPage.trigger('page:stack');
-        router.emit('pageStack', $oldPage[0]);
-        if (dynamicNavbar) {
-          $oldNavbarEl.addClass('stacked');
-        }
-      } else if (
-        !($newPage.attr('data-name') && $newPage.attr('data-name') === 'smart-select-page')
-      ) {
+      if (!($newPage.attr('data-name') && $newPage.attr('data-name') === 'smart-select-page')) {
         // Remove event
         router.pageCallback('beforeRemove', $oldPage, $oldNavbarEl, 'previous', undefined, options);
         router.removePage($oldPage);

@@ -399,7 +399,7 @@ function SwipeBack(r) {
         target.closest('.no-swipeback, .card-opened').length > 0
       )
         cancel = true;
-      $previousPageEl = $el.find('.page-previous:not(.stacked)');
+      $previousPageEl = $el.find('.page-previous');
       if ($previousPageEl.length > 1) {
         $previousPageEl = $previousPageEl.eq($previousPageEl.length - 1);
       }
@@ -435,8 +435,8 @@ function SwipeBack(r) {
       }
 
       if (dynamicNavbar) {
-        $currentNavbarEl = $navbarsEl.find('.navbar-current:not(.stacked)');
-        $previousNavbarEl = $navbarsEl.find('.navbar-previous:not(.stacked)');
+        $currentNavbarEl = $navbarsEl.find('.navbar-current');
+        $previousNavbarEl = $navbarsEl.find('.navbar-previous');
         if ($previousNavbarEl.length > 1) {
           $previousNavbarEl = $previousNavbarEl.eq($previousNavbarEl.length - 1);
         }
@@ -633,19 +633,13 @@ function SwipeBack(r) {
         });
 
         // Remove Old Page
-        if (params.stackPages && router.initialPages.indexOf($currentPageEl[0]) >= 0) {
-          $currentPageEl.addClass('stacked');
-          if (dynamicNavbar) {
-            $currentNavbarEl.addClass('stacked');
-          }
-        } else {
-          router.pageCallback('beforeRemove', $currentPageEl, $currentNavbarEl, 'next', {
-            swipeBack: true,
-          });
-          router.removePage($currentPageEl);
-          if (dynamicNavbar) {
-            router.removeNavbar($currentNavbarEl);
-          }
+
+        router.pageCallback('beforeRemove', $currentPageEl, $currentNavbarEl, 'next', {
+          swipeBack: true,
+        });
+        router.removePage($currentPageEl);
+        if (dynamicNavbar) {
+          router.removeNavbar($currentNavbarEl);
         }
 
         $el.trigger('swipeback:afterchange', callbackData);

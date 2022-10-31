@@ -105,7 +105,6 @@ class VirtualList extends Framework7Class {
       itemsWrapEl: $itemsWrapEl[0],
       // DOM cached items
       domCache: {},
-      displayDomCache: {},
       // Temporary DOM Element
       tempDomElement: document.createElement('ul'),
       // Last repain position

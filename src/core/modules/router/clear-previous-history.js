@@ -15,18 +15,11 @@ function clearPreviousPages(router) {
   $pagesToRemove.each((pageEl) => {
     const $oldPageEl = $(pageEl);
     const $oldNavbarEl = $(app.navbar.getElByPage($oldPageEl));
-    if (router.params.stackPages && router.initialPages.indexOf($oldPageEl[0]) >= 0) {
-      $oldPageEl.addClass('stacked');
-      if (dynamicNavbar) {
-        $oldNavbarEl.addClass('stacked');
-      }
-    } else {
-      // Page remove event
-      router.pageCallback('beforeRemove', $oldPageEl, $oldNavbarEl, 'previous', undefined, {});
-      router.removePage($oldPageEl);
-      if (dynamicNavbar && $oldNavbarEl.length) {
-        router.removeNavbar($oldNavbarEl);
-      }
+    // Page remove event
+    router.pageCallback('beforeRemove', $oldPageEl, $oldNavbarEl, 'previous', undefined, {});
+    router.removePage($oldPageEl);
+    if (dynamicNavbar && $oldNavbarEl.length) {
+      router.removeNavbar($oldNavbarEl);
     }
   });
 }

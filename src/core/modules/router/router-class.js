@@ -457,7 +457,7 @@ class Router extends Framework7Class {
     return router.findElement('.page', router.tempDom);
   }
 
-  findElement(stringSelector, container, notStacked) {
+  findElement(stringSelector, container) {
     const router = this;
     const view = router.view;
     const app = router.app;
@@ -467,8 +467,7 @@ class Router extends Framework7Class {
       '.popup, .dialog, .popover, .actions-modal, .sheet-modal, .login-screen, .page';
 
     const $container = $(container);
-    let selector = stringSelector;
-    if (notStacked) selector += ':not(.stacked)';
+    const selector = stringSelector;
 
     let found = $container
       .find(selector)
@@ -486,8 +485,7 @@ class Router extends Framework7Class {
     }
     if (found.length === 1) return found;
 
-    // Try to find not stacked
-    if (!notStacked) found = router.findElement(selector, $container, true);
+    found = router.findElement(selector, $container);
     if (found && found.length === 1) return found;
     if (found && found.length > 1) return $(found[0]);
     return undefined;
@@ -1263,21 +1261,7 @@ class Router extends Framework7Class {
       }
     }
 
-    if (router.params.stackPages) {
-      router.$el.children('.page').each((pageEl) => {
-        const $pageEl = $(pageEl);
-        router.initialPages.push($pageEl[0]);
-        if (router.dynamicNavbar && $pageEl.children('.navbar').length > 0) {
-          router.initialNavbars.push($pageEl.children('.navbar')[0]);
-        }
-      });
-    }
-
-    if (
-      router.$el.children('.page:not(.stacked)').length === 0 &&
-      initialUrl &&
-      router.params.loadInitialPage
-    ) {
+    if (router.$el.children('.page').length === 0 && initialUrl && router.params.loadInitialPage) {
       // No pages presented in DOM, reload new page
       router.navigate(initialUrl, {
         initial: true,
@@ -1303,11 +1287,11 @@ class Router extends Framework7Class {
           },
         },
       });
-    } else if (router.$el.children('.page:not(.stacked)').length) {
+    } else if (router.$el.children('.page').length) {
       // Init current DOM page
       let hasTabRoute;
       router.currentRoute = currentRoute;
-      router.$el.children('.page:not(.stacked)').each((pageEl) => {
+      router.$el.children('.page').each((pageEl) => {
         const $pageEl = $(pageEl);
         let $navbarEl;
         router.setPagePosition($pageEl, 'current');

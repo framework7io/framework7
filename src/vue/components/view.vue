@@ -27,10 +27,6 @@ export default {
       type: Boolean,
       default: undefined,
     },
-    stackPages: {
-      type: Boolean,
-      default: undefined,
-    },
     xhrCache: {
       type: Boolean,
       default: undefined,

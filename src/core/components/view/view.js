@@ -47,7 +47,6 @@ export default {
       main: false,
       router: true,
       linksView: null,
-      stackPages: false,
       xhrCache: true,
       xhrCacheIgnore: [],
       xhrCacheIgnoreGetParameters: false,

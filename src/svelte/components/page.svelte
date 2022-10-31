@@ -11,7 +11,6 @@
 
   // Props
   export let name = undefined;
-  export let stacked = undefined;
   export let withSubnavbar = undefined;
   export let subnavbar = undefined;
   export let withNavbarLarge = undefined;
@@ -47,7 +46,6 @@
   let hasNavbarLargeCollapsed = false;
   let hasCardExpandableOpened = false;
   let routerPositionClass = '';
-  let routerForceUnstack = false;
   let routerPageRole = null;
   let routerPageRoleDetailRoot = false;
   let routerPageMasterStack = false;
@@ -65,7 +63,6 @@
     'page',
     routerPositionClass,
     {
-      stacked: stacked && !routerForceUnstack,
       tabs,
       'page-with-subnavbar': subnavbar || withSubnavbar || forceSubnavbar,
       'page-with-navbar-large': navbarLarge || withNavbarLarge || forceNavbarLarge,
@@ -180,15 +177,7 @@
     if (el !== page.el) return;
     emit('pageBeforeUnmount', [page]);
   }
-  // Helper events
-  function onPageStack(pageEl) {
-    if (el !== pageEl) return;
-    routerForceUnstack = false;
-  }
-  function onPageUnstack(pageEl) {
-    if (el !== pageEl) return;
-    routerForceUnstack = true;
-  }
+
   function onPagePosition(pageEl, position) {
     if (el !== pageEl) return;
     routerPositionClass = `page-${position}`;
@@ -243,8 +232,6 @@
     app.f7.on('pageAfterIn', onPageAfterIn);
     app.f7.on('pageBeforeRemove', onPageBeforeRemove);
     app.f7.on('pageBeforeUnmount', onPageBeforeUnmount);
-    app.f7.on('pageStack', onPageStack);
-    app.f7.on('pageUnstack', onPageUnstack);
     app.f7.on('pagePosition', onPagePosition);
     app.f7.on('pageRole', onPageRole);
     app.f7.on('pageMasterStack', onPageMasterStack);
@@ -266,8 +253,6 @@
     app.f7.off('pageAfterIn', onPageAfterIn);
     app.f7.off('pageBeforeRemove', onPageBeforeRemove);
     app.f7.off('pageBeforeUnmount', onPageBeforeUnmount);
-    app.f7.off('pageStack', onPageStack);
-    app.f7.off('pageUnstack', onPageUnstack);
     app.f7.off('pagePosition', onPagePosition);
     app.f7.off('pageRole', onPageRole);
     app.f7.off('pageMasterStack', onPageMasterStack);
