@@ -1,10 +1,10 @@
 <template>
   <f7-page @page:beforeremove="onPageBeforeRemove" @page:init="onPageInit">
-    <f7-navbar back-link="Back" no-shadow>
+    <f7-navbar back-link="Back">
       <f7-nav-title class="navbar-calendar-title"></f7-nav-title>
     </f7-navbar>
-    <div id="calendar" class="block block-strong no-padding no-margin no-hairline-top"></div>
-    <f7-list id="calendar-events" class="no-margin no-hairlines no-safe-area-left">
+    <div id="calendar" class="block block-strong no-padding no-margin"></div>
+    <f7-list id="calendar-events" class="no-margin no-safe-area-left">
       <f7-list-item
         v-for="(item, index) in eventItems"
         :key="index"

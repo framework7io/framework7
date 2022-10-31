@@ -21,8 +21,7 @@ import NavRight from './nav-right.js';
   title? : string
   subtitle? : string
   hidden? : boolean
-  noShadow? : boolean
-  noHairline? : boolean
+  outline? : boolean
   innerClass? : string
   innerClassName? : string
   large? : boolean
@@ -52,8 +51,7 @@ const Navbar = forwardRef((props, ref) => {
     largeTransparent,
     transparent,
     hidden,
-    noShadow,
-    noHairline,
+    outline = true,
     backLink,
     backLinkForce,
     backLinkUrl,
@@ -208,8 +206,7 @@ const Navbar = forwardRef((props, ref) => {
       'navbar-master-detail': routerNavbarRole.current === 'detail',
       'navbar-master-detail-root': routerNavbarRoleDetailRoot.current === true,
       'navbar-master-stacked': routerNavbarMasterStack.current === true,
-      'no-shadow': noShadow,
-      'no-hairline': noHairline,
+      'no-outline': !outline,
     },
     colorClasses(props),
   );

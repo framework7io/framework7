@@ -20,9 +20,7 @@ export default {
     icons: Boolean,
     scrollable: Boolean,
     hidden: Boolean,
-    noShadow: Boolean,
-    noHairline: Boolean,
-    noBorder: Boolean,
+    outline: { type: Boolean, default: true },
     position: {
       type: String,
       default: undefined,
@@ -111,9 +109,7 @@ export default {
         icons,
         scrollable,
         hidden,
-        noShadow,
-        noHairline,
-        noBorder,
+        outline,
       } = props;
       return classNames(
         'toolbar',
@@ -132,8 +128,7 @@ export default {
           'tabbar-icons': icons,
           'tabbar-scrollable': scrollable,
           'toolbar-hidden': hidden,
-          'no-shadow': noShadow,
-          'no-hairline': noHairline || noBorder,
+          'no-outline': !outline,
         },
         colorClasses(props),
       );

@@ -79,7 +79,6 @@ export default () => (
     <BlockTitle>Styled Cards</BlockTitle>
     <Card outlineMd className="demo-card-header-pic">
       <CardHeader
-        className="no-border"
         valign="bottom"
         style={{
           backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-1000x600-3.jpg)',
@@ -101,7 +100,6 @@ export default () => (
     </Card>
     <Card className="demo-card-header-pic">
       <CardHeader
-        className="no-border"
         valign="bottom"
         style={{
           backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-1000x600-6.jpg)',

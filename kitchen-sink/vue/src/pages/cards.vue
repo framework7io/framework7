@@ -68,7 +68,6 @@
     <f7-block-title>Styled Cards</f7-block-title>
     <f7-card outline-md class="demo-card-header-pic">
       <f7-card-header
-        class="no-border"
         valign="bottom"
         style="background-image: url(https://cdn.framework7.io/placeholder/nature-1000x600-3.jpg)"
         >Journey To Mountains</f7-card-header
@@ -87,7 +86,6 @@
     </f7-card>
     <f7-card class="demo-card-header-pic">
       <f7-card-header
-        class="no-border"
         valign="bottom"
         style="background-image: url(https://cdn.framework7.io/placeholder/people-1000x600-6.jpg)"
         >Journey To Mountains</f7-card-header

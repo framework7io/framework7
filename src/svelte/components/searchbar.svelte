@@ -10,8 +10,7 @@
   let className = undefined;
   export { className as class };
 
-  export let noShadow = false;
-  export let noHairline = false;
+  export let outline = true;
   export let form = true;
   export let placeholder = 'Search';
   export let autocomplete = undefined;
@@ -80,8 +79,7 @@
     'searchbar',
     {
       'searchbar-inline': inline,
-      'no-shadow': noShadow,
-      'no-hairline': noHairline,
+      'no-outline': !outline,
       'searchbar-expandable': expandable,
     },
     colorClasses($$props),

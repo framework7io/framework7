@@ -12,8 +12,7 @@ import { Searchbar } from 'framework7/types';
   id?: string | number;
   className?: string;
   style?: React.CSSProperties;
-  noShadow? : boolean
-  noHairline? : boolean
+  outline? : boolean
   form? : boolean
   placeholder? : string
   disableButton? : boolean
@@ -62,8 +61,7 @@ const Searchbar = forwardRef((props, ref) => {
     className,
     id,
     style,
-    noShadow,
-    noHairline,
+    outline = true,
     form = true,
     placeholder = 'Search',
     spellcheck,
@@ -232,8 +230,7 @@ const Searchbar = forwardRef((props, ref) => {
     'searchbar',
     {
       'searchbar-inline': inline,
-      'no-shadow': noShadow,
-      'no-hairline': noHairline,
+      'no-outline': !outline,
       'searchbar-expandable': expandable,
     },
     colorClasses(props),

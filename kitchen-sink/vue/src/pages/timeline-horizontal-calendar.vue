@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar no-shadow title="Horizontal Timeline Calendar" back-link="Back"></f7-navbar>
+    <f7-navbar title="Horizontal Timeline Calendar" back-link="Back"></f7-navbar>
     <div class="timeline timeline-horizontal col-33 tablet-15">
       <div class="timeline-year">
         <div class="timeline-year-title"><span>2016</span></div>

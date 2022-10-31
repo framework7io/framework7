@@ -264,7 +264,7 @@ class Picker extends Framework7Class {
     const picker = this;
     if (picker.params.renderToolbar) return picker.params.renderToolbar.call(picker, picker);
     return (
-      <div class="toolbar toolbar-top no-shadow">
+      <div class="toolbar toolbar-top">
         <div class="toolbar-inner">
           <div class="left"></div>
           <div class="right">

@@ -37,8 +37,7 @@ import { f7ready, f7 } from '../shared/f7.js';
 export default {
   name: 'f7-searchbar',
   props: {
-    noShadow: Boolean,
-    noHairline: Boolean,
+    outline: { type: Boolean, default: true },
     form: {
       type: Boolean,
       default: true,
@@ -258,8 +257,7 @@ export default {
         'searchbar',
         {
           'searchbar-inline': props.inline,
-          'no-shadow': props.noShadow,
-          'no-hairline': props.noHairline,
+          'no-outline': !props.outline,
           'searchbar-expandable': props.expandable,
         },
         colorClasses(props),

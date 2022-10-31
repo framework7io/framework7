@@ -84,7 +84,6 @@
   <BlockTitle>Styled Cards</BlockTitle>
   <Card outlineMd class="demo-card-header-pic">
     <CardHeader
-      class="no-border"
       valign="bottom"
       style="background-image: url(https://cdn.framework7.io/placeholder/nature-1000x600-3.jpg)"
       >Journey To Mountains</CardHeader
@@ -103,7 +102,6 @@
   </Card>
   <Card class="demo-card-header-pic">
     <CardHeader
-      class="no-border"
       valign="bottom"
       style="background-image: url(https://cdn.framework7.io/placeholder/people-1000x600-6.jpg)"
       >Journey To Mountains</CardHeader

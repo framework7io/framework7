@@ -16,9 +16,7 @@
   export let icons = false;
   export let scrollable = false;
   export let hidden = false;
-  export let noShadow = false;
-  export let noHairline = false;
-  export let noBorder = false;
+  export let outline = true;
   export let position = undefined;
   export let topMd = undefined;
   export let topIos = undefined;
@@ -54,8 +52,7 @@
       'tabbar-icons': icons,
       'tabbar-scrollable': scrollable,
       'toolbar-hidden': hidden,
-      'no-shadow': noShadow,
-      'no-hairline': noHairline || noBorder,
+      'no-outline': !outline,
     },
     colorClasses($$props),
   );

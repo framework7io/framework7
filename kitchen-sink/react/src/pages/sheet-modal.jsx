@@ -300,7 +300,7 @@ export default () => {
         <BlockTitle medium className="margin-top">
           Your order:
         </BlockTitle>
-        <List noHairlines>
+        <List>
           <ListItem title="Item 1">
             <b slot="after" className="text-color-black">
               $200

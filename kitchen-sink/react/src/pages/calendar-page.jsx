@@ -120,10 +120,10 @@ export default () => {
 
   return (
     <Page onPageInit={onPageInit} onPageBeforeRemove={onPageBeforeRemove}>
-      <Navbar backLink="Back" noShadow>
+      <Navbar backLink="Back">
         <NavTitle className="navbar-calendar-title"></NavTitle>
       </Navbar>
-      <Block id="calendar" strong className="no-padding no-margin no-hairline-top" />
+      <Block id="calendar" strong className="no-padding no-margin" />
       <List id="calendar-events" noHairlines className="no-margin no-safe-area-left">
         {eventItems.map((item, index) => (
           <ListItem key={index} title={item.title} after={item.time}>

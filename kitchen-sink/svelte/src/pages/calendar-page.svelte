@@ -121,10 +121,10 @@
 </script>
 
 <Page {onPageInit} {onPageBeforeRemove}>
-  <Navbar backLink="Back" noShadow>
+  <Navbar backLink="Back">
     <NavTitle class="navbar-calendar-title" />
   </Navbar>
-  <Block id="calendar" strong class="no-padding no-margin no-hairline-top" />
+  <Block id="calendar" strong class="no-padding no-margin" />
   <List id="calendar-events" noHairlines class="no-margin no-safe-area-left">
     {#each eventItems as item, index (index)}
       <ListItem title={item.title} after={item.time}>

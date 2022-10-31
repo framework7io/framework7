@@ -4,7 +4,7 @@
 
 <!-- svelte-ignore a11y-invalid-attribute -->
 <Page>
-  <Navbar noShadow title="Horizontal Timeline" backLink="Back" />
+  <Navbar title="Horizontal Timeline" backLink="Back" />
   <div class="timeline timeline-horizontal col-33 tablet-20">
     <div class="timeline-item">
       <div class="timeline-item-date">21 <small>DEC</small></div>

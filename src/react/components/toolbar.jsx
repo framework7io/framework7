@@ -14,9 +14,7 @@ import { TabbarContext } from '../shared/tabbar-context.js';
   icons? : boolean
   scrollable? : boolean
   hidden? : boolean
-  noShadow? : boolean
-  noHairline? : boolean
-  noBorder? : boolean
+  outline? : boolean
   position? : string
   topMd? : boolean
   topIos? : boolean
@@ -41,9 +39,7 @@ const Toolbar = forwardRef((props, ref) => {
     icons,
     scrollable,
     hidden,
-    noShadow,
-    noHairline,
-    noBorder,
+    outline = true,
     position,
     topMd,
     topIos,
@@ -112,8 +108,7 @@ const Toolbar = forwardRef((props, ref) => {
       'tabbar-icons': icons,
       'tabbar-scrollable': scrollable,
       'toolbar-hidden': hidden,
-      'no-shadow': noShadow,
-      'no-hairline': noHairline || noBorder,
+      'no-outline': !outline,
     },
     colorClasses(props),
   );

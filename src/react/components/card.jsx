@@ -35,8 +35,6 @@ import { watchProp } from '../shared/watch-prop.js';
   closeByBackdropClick? : boolean
   backdrop? : boolean
   backdropEl? : string
-  noShadow? : boolean
-  noBorder? : boolean
   padding? : boolean
   onCardBeforeOpen? : (el?: HTMLElement, prevent?: any) => void
   onCardOpen? : (el?: HTMLElement) => void

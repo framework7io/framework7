@@ -23,8 +23,7 @@
   export let title = undefined;
   export let subtitle = undefined;
   export let hidden = false;
-  export let noShadow = false;
-  export let noHairline = false;
+  export let outline = true;
   export let innerClass = undefined;
   export let innerClassName = undefined;
   export let large = false;
@@ -87,8 +86,7 @@
       'navbar-master-detail': routerNavbarRole === 'detail',
       'navbar-master-detail-root': routerNavbarRoleDetailRoot === true,
       'navbar-master-stacked': routerNavbarMasterStack === true,
-      'no-shadow': noShadow,
-      'no-hairline': noHairline,
+      'no-outline': !outline,
     },
     colorClasses($$props),
   );

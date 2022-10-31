@@ -453,7 +453,7 @@ class ColorPicker extends Framework7Class {
       return self.params.renderToolbar.call(self, self);
     }
     return (
-      <div class="toolbar toolbar-top no-shadow">
+      <div class="toolbar toolbar-top">
         <div class="toolbar-inner">
           <div class="left"></div>
           <div class="right">

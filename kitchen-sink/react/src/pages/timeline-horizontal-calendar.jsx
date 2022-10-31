@@ -3,7 +3,7 @@ import { Navbar, Page } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar noShadow title="Horizontal Timeline Calendar" backLink="Back"></Navbar>
+    <Navbar title="Horizontal Timeline Calendar" backLink="Back"></Navbar>
     <div className="timeline timeline-horizontal col-33 tablet-15">
       <div className="timeline-year">
         <div className="timeline-year-title">

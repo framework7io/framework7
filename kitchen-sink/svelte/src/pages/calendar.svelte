@@ -36,7 +36,7 @@
       value: [new Date()],
       renderToolbar() {
         return `
-          <div class="toolbar calendar-custom-toolbar no-shadow">
+          <div class="toolbar calendar-custom-toolbar">
             <div class="toolbar-inner">
               <div class="left">
                 <a href="#" class="link icon-only"><i class="icon icon-back"></i></a>

@@ -1439,7 +1439,7 @@ class Calendar extends Framework7Class {
     }
     // prettier-ignore
     return (
-    <div class="toolbar toolbar-top no-shadow">
+    <div class="toolbar toolbar-top">
       <div class="toolbar-inner">
         {calendar.params.monthSelector ? calendar.renderMonthSelector() : ''}
         {calendar.params.yearSelector ? calendar.renderYearSelector() : ''}

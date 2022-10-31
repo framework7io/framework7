@@ -201,7 +201,7 @@
         </div>
       </div>
       <f7-block-title medium class="margin-top">Your order:</f7-block-title>
-      <f7-list no-hairlines>
+      <f7-list>
         <f7-list-item title="Item 1">
           <template #after>
             <b class="text-color-black">$200</b>

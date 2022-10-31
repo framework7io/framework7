@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar noShadow title="Horizontal Timeline Calendar" backLink="Back" />
+  <Navbar title="Horizontal Timeline Calendar" backLink="Back" />
   <div class="timeline timeline-horizontal col-33 tablet-15">
     <div class="timeline-year">
       <div class="timeline-year-title"><span>2016</span></div>
