@@ -19,7 +19,7 @@ let cache;
 async function modular({ components }) {
   const outputDir = path.resolve(`${getOutput()}`, 'core');
   await exec.promise(
-    `MODULES=esm npx babel src/core --out-dir ${outputDir} --ignore "src/core/icons/**/*.*","src/core/less/*.js","src/core/*.js"`,
+    `npx cross-env MODULES=esm npx babel src/core --out-dir ${outputDir} --ignore "src/core/icons/**/*.*","src/core/less/*.js","src/core/*.js"`,
   );
   const removeUMD = (content) => {
     return `${content.split('// UMD_ONLY_START')[0]}${content.split('// UMD_ONLY_END')[1] || ''}`;
@@ -107,7 +107,7 @@ async function modular({ components }) {
   for (let fileName of files) {
     // eslint-disable-next-line
     await exec.promise(
-      `MODULES=esm npx babel ${outputDir}/${fileName} --out-file ${outputDir}/${fileName}`,
+      `npx cross-env MODULES=esm npx babel ${outputDir}/${fileName} --out-file ${outputDir}/${fileName}`,
     );
   }
 

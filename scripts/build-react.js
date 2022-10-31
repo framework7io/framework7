@@ -65,11 +65,11 @@ async function buildReact(cb) {
     .replace('// IMPORT_COMPONENTS', componentImports.join('\n'))
     .replace('// EXPORT_COMPONENTS', `export { ${componentExports.join(', ')} }`);
 
-  fs.writeFileSync(`${buildPath}/react/framework7-react.js`, pluginContent);
-
   await exec.promise(
-    `MODULES=esm npx babel --config-file ./babel-react.config.js src/react --out-dir ${buildPath}/react --ignore "src/react/framework7-react.js","*.ts"`,
+    `npx cross-env MODULES=esm npx babel --config-file ./babel-react.config.js src/react --out-dir ${buildPath}/react --ignore "src/react/framework7-react.js","*.ts"`,
   );
+
+  fs.writeFileSync(`${buildPath}/react/framework7-react.js`, pluginContent);
 
   const esmContent = fs.readFileSync(`${buildPath}/react/framework7-react.js`, 'utf-8');
 
