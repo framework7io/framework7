@@ -1,7 +1,6 @@
 ---
 name: Framework7-Core Issue
 about: Create a report to help us improve
-
 ---
 
 <!--
@@ -15,28 +14,35 @@ Please, don't ask questions on GitHub! Do you want to ask a question? Are you lo
 - If the issue is related to Template7, then please open it in Template7 repository at https://github.com/nolimits4web/Template7
 -->
 
-* Framework7 version: [e.g. 3.0.0]
-* Platform and Target: [e.g. iOS 11 Cordova app, or Android 8 Chrome browser]
-* Live Link or JSFiddle: PREFERABLY _(IF YOU WANT YOUR ISSUE TO BE RESOLVED ASAP)_. You can start from forking the following JSFiddle template: [JSFiddle](https://jsfiddle.net/nolimits4web/o2ejupu1/)
+- Framework7 version: [e.g. 3.0.0]
+- Platform and Target: [e.g. iOS 11 Cordova app, or Android 8 Chrome browser]
+- Live Link or CodeSandbox: PREFERABLY _(IF YOU WANT YOUR ISSUE TO BE RESOLVED ASAP)_. You can start from forking the following CodeSandbox template: [CodeSandbox](https://codesandbox.io/p/sandbox/tender-darwin-m72wt0?file=%2Fsrc%2Fjs%2Fapp.js)
 
 ### Describe the bug
+
 A clear and concise description of what the bug is.
 
 ### To Reproduce
+
 Steps to reproduce the behavior:
+
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
 4. See error
 
 ### Expected behavior
+
 A clear and concise description of what you expected to happen.
 
 ### Actual Behavior
+
 Explain what is actually happening
 
 ### Screenshots
+
 If applicable, add screenshots to help explain your problem.
 
 ### Additional context
+
 Add any other context about the problem here.
