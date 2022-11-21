@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "framework": "vue",
   "name": "framework7-vue",
-  "version": "7.0.8",
+  "version": "0.1.0",
   "contributions": {
     "html": {
       "types-syntax": "typescript",
@@ -63,7 +63,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -120,7 +120,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -184,7 +184,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -261,7 +261,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -418,7 +418,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -507,7 +507,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -569,7 +569,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -633,7 +633,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -702,7 +702,7 @@
               }
             },
             {
-              "name": "autoDarkTheme",
+              "name": "autoDarkMode",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -1094,7 +1094,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -1187,7 +1187,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -1386,7 +1386,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -1555,7 +1555,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -1620,7 +1620,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -1677,7 +1677,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -1748,13 +1748,49 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
               }
             }
           ]
+        },
+        {
+          "name": "F7Breadcrumbs",
+          "source": {
+            "symbol": "F7Breadcrumbs"
+          },
+          "attributes": []
+        },
+        {
+          "name": "F7BreadcrumbsCollapsed",
+          "source": {
+            "symbol": "F7BreadcrumbsCollapsed"
+          },
+          "attributes": []
+        },
+        {
+          "name": "F7BreadcrumbsItem",
+          "source": {
+            "symbol": "F7BreadcrumbsItem"
+          },
+          "attributes": [
+            {
+              "name": "active",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            }
+          ]
+        },
+        {
+          "name": "F7BreadcrumbsSeparator",
+          "source": {
+            "symbol": "F7BreadcrumbsSeparator"
+          },
+          "attributes": []
         },
         {
           "name": "F7Button",
@@ -2157,7 +2193,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -2515,6 +2551,20 @@
           "source": {
             "symbol": "F7Card"
           },
+          "slots": [
+            {
+              "name": "default"
+            },
+            {
+              "name": "content"
+            },
+            {
+              "name": "header"
+            },
+            {
+              "name": "footer"
+            }
+          ],
           "attributes": [
             {
               "name": "title",
@@ -2702,7 +2752,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -2787,7 +2837,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -2844,7 +2894,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -2901,7 +2951,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -3007,7 +3057,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -3028,6 +3078,17 @@
           "source": {
             "symbol": "F7Chip"
           },
+          "slots": [
+            {
+              "name": "text"
+            },
+            {
+              "name": "default"
+            },
+            {
+              "name": "media"
+            }
+          ],
           "attributes": [
             {
               "name": "media",
@@ -3207,7 +3268,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -3367,7 +3428,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -3385,6 +3446,20 @@
           "source": {
             "symbol": "F7Fab"
           },
+          "slots": [
+            {
+              "name": "default"
+            },
+            {
+              "name": "link"
+            },
+            {
+              "name": "root"
+            },
+            {
+              "name": "text"
+            }
+          ],
           "attributes": [
             {
               "name": "morphTo",
@@ -3482,7 +3557,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -3544,7 +3619,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -3636,7 +3711,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -3706,7 +3781,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -3979,7 +4054,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -4396,7 +4471,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -4677,7 +4752,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -5035,6 +5110,17 @@
           "source": {
             "symbol": "F7List"
           },
+          "slots": [
+            {
+              "name": "before-list"
+            },
+            {
+              "name": "after-list"
+            },
+            {
+              "name": "list"
+            }
+          ],
           "attributes": [
             {
               "name": "inset",
@@ -5324,7 +5410,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -5343,6 +5429,9 @@
             },
             {
               "name": "sortable:sort"
+            },
+            {
+              "name": "sortable:move"
             },
             {
               "name": "virtual:itembeforeinsert"
@@ -5491,7 +5580,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -5940,7 +6029,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -6066,7 +6155,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -6084,6 +6173,62 @@
           "source": {
             "symbol": "F7ListInput"
           },
+          "slots": [
+            {
+              "name": "default"
+            },
+            {
+              "name": "info"
+            },
+            {
+              "name": "error-message"
+            },
+            {
+              "name": "label"
+            },
+            {
+              "name": "input"
+            },
+            {
+              "name": "root-start"
+            },
+            {
+              "name": "root"
+            },
+            {
+              "name": "root-end"
+            },
+            {
+              "name": "content-start"
+            },
+            {
+              "name": "content"
+            },
+            {
+              "name": "content-end"
+            },
+            {
+              "name": "inner-start"
+            },
+            {
+              "name": "inner"
+            },
+            {
+              "name": "inner-end"
+            },
+            {
+              "name": "media"
+            },
+            {
+              "name": "todo-not-declared"
+            },
+            {
+              "name": "title"
+            },
+            {
+              "name": "after"
+            }
+          ],
           "attributes": [
             {
               "name": "sortable",
@@ -6528,7 +6673,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -6579,6 +6724,71 @@
           "source": {
             "symbol": "F7ListItem"
           },
+          "slots": [
+            {
+              "name": "root-start"
+            },
+            {
+              "name": "root"
+            },
+            {
+              "name": "root-end"
+            },
+            {
+              "name": "content-start"
+            },
+            {
+              "name": "content"
+            },
+            {
+              "name": "content-end"
+            },
+            {
+              "name": "inner-start"
+            },
+            {
+              "name": "default"
+            },
+            {
+              "name": "inner"
+            },
+            {
+              "name": "inner-end"
+            },
+            {
+              "name": "media"
+            },
+            {
+              "name": "before-title"
+            },
+            {
+              "name": "title"
+            },
+            {
+              "name": "after-title"
+            },
+            {
+              "name": "subtitle"
+            },
+            {
+              "name": "text"
+            },
+            {
+              "name": "header"
+            },
+            {
+              "name": "footer"
+            },
+            {
+              "name": "after-start"
+            },
+            {
+              "name": "after"
+            },
+            {
+              "name": "after-end"
+            }
+          ],
           "attributes": [
             {
               "name": "title",
@@ -6941,7 +7151,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -7399,7 +7609,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -7456,7 +7666,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -7537,7 +7747,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -7611,7 +7821,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -7668,7 +7878,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -7760,7 +7970,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -7852,7 +8062,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -8315,7 +8525,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -8760,6 +8970,50 @@
           "source": {
             "symbol": "F7Message"
           },
+          "slots": [
+            {
+              "name": "default"
+            },
+            {
+              "name": "start"
+            },
+            {
+              "name": "end"
+            },
+            {
+              "name": "content-start"
+            },
+            {
+              "name": "content-end"
+            },
+            {
+              "name": "bubble-start"
+            },
+            {
+              "name": "bubble-end"
+            },
+            {
+              "name": "header"
+            },
+            {
+              "name": "footer"
+            },
+            {
+              "name": "text"
+            },
+            {
+              "name": "name"
+            },
+            {
+              "name": "image"
+            },
+            {
+              "name": "text-header"
+            },
+            {
+              "name": "text-footer"
+            }
+          ],
           "attributes": [
             {
               "name": "text",
@@ -8924,7 +9178,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -8960,6 +9214,32 @@
           "source": {
             "symbol": "F7Messagebar"
           },
+          "slots": [
+            {
+              "name": "default"
+            },
+            {
+              "name": "before-area"
+            },
+            {
+              "name": "after-area"
+            },
+            {
+              "name": "send-link"
+            },
+            {
+              "name": "before-inner"
+            },
+            {
+              "name": "after-inner"
+            },
+            {
+              "name": "inner-start"
+            },
+            {
+              "name": "inner-end"
+            }
+          ],
           "attributes": [
             {
               "name": "sheetVisible",
@@ -9129,7 +9409,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -9236,7 +9516,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -9301,7 +9581,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -9358,7 +9638,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -9429,7 +9709,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -9500,7 +9780,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -9675,7 +9955,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -9732,7 +10012,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -9827,7 +10107,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -9899,7 +10179,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -9977,7 +10257,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -10034,7 +10314,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -10047,6 +10327,29 @@
           "source": {
             "symbol": "F7Navbar"
           },
+          "slots": [
+            {
+              "name": "default"
+            },
+            {
+              "name": "before-inner"
+            },
+            {
+              "name": "after-inner"
+            },
+            {
+              "name": "left"
+            },
+            {
+              "name": "right"
+            },
+            {
+              "name": "title"
+            },
+            {
+              "name": "title-large"
+            }
+          ],
           "attributes": [
             {
               "name": "backLink",
@@ -10207,7 +10510,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -10246,6 +10549,14 @@
           "source": {
             "symbol": "F7Page"
           },
+          "slots": [
+            {
+              "name": "default"
+            },
+            {
+              "name": "fixed"
+            }
+          ],
           "attributes": [
             {
               "name": "name",
@@ -10468,7 +10779,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -10692,7 +11003,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -10833,6 +11144,13 @@
               }
             },
             {
+              "name": "closeByBackdropClick",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
               "name": "visibleBreakpoint",
               "value": {
                 "kind": "expression",
@@ -10926,7 +11244,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -11339,6 +11657,13 @@
               }
             },
             {
+              "name": "verticalPosition",
+              "value": {
+                "kind": "expression",
+                "type": "string"
+              }
+            },
+            {
               "name": "color",
               "value": {
                 "kind": "expression",
@@ -11381,7 +11706,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -11545,7 +11870,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -11641,7 +11966,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -11712,7 +12037,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -11811,7 +12136,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -12042,7 +12367,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -12167,7 +12492,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -12185,6 +12510,29 @@
           "source": {
             "symbol": "F7Searchbar"
           },
+          "slots": [
+            {
+              "name": "default"
+            },
+            {
+              "name": "before-inner"
+            },
+            {
+              "name": "after-inner"
+            },
+            {
+              "name": "inner-start"
+            },
+            {
+              "name": "inner-end"
+            },
+            {
+              "name": "input-wrap-start"
+            },
+            {
+              "name": "input-wrap-end"
+            }
+          ],
           "attributes": [
             {
               "name": "noShadow",
@@ -12474,7 +12822,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -12661,7 +13009,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -12674,6 +13022,17 @@
           "source": {
             "symbol": "F7Sheet"
           },
+          "slots": [
+            {
+              "name": "default"
+            },
+            {
+              "name": "static"
+            },
+            {
+              "name": "fixed"
+            }
+          ],
           "attributes": [
             {
               "name": "opened",
@@ -12832,7 +13191,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -13407,7 +13766,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -13506,7 +13865,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -13584,7 +13943,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -13690,7 +14049,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -13904,6 +14263,13 @@
                   "number",
                   "string"
                 ]
+              }
+            },
+            {
+              "name": "maxBackfaceHiddenSlides",
+              "value": {
+                "kind": "expression",
+                "type": "number"
               }
             },
             {
@@ -14173,6 +14539,14 @@
               }
             },
             {
+              "name": "loopedSlidesLimit",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              },
+              "default": true
+            },
+            {
               "name": "loopFillGroupWithBlank",
               "value": {
                 "kind": "expression",
@@ -14181,6 +14555,13 @@
             },
             {
               "name": "loopPreventsSlide",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "rewind",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -14551,6 +14932,13 @@
                   "object"
                 ]
               }
+            },
+            {
+              "name": "enabled",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
             }
           ],
           "events": [
@@ -14570,6 +14958,9 @@
               "name": "_swiper"
             },
             {
+              "name": "_freeModeNoMomentumRelease"
+            },
+            {
               "name": "activeIndexChange"
             },
             {
@@ -14583,6 +14974,12 @@
             },
             {
               "name": "autoplayStop"
+            },
+            {
+              "name": "autoplayPause"
+            },
+            {
+              "name": "autoplayResume"
             },
             {
               "name": "beforeDestroy"
@@ -14664,6 +15061,12 @@
             },
             {
               "name": "navigationShow"
+            },
+            {
+              "name": "navigationPrev"
+            },
+            {
+              "name": "navigationNext"
             },
             {
               "name": "observerUpdate"
@@ -14795,6 +15198,9 @@
               "name": "update"
             },
             {
+              "name": "virtualUpdate"
+            },
+            {
               "name": "zoomChange"
             }
           ]
@@ -14895,7 +15301,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -14988,7 +15394,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -15116,7 +15522,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -15281,7 +15687,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -15305,6 +15711,17 @@
           "source": {
             "symbol": "F7Toolbar"
           },
+          "slots": [
+            {
+              "name": "default"
+            },
+            {
+              "name": "before-inner"
+            },
+            {
+              "name": "after-inner"
+            }
+          ],
           "attributes": [
             {
               "name": "tabbar",
@@ -15469,7 +15886,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -15534,7 +15951,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -15547,6 +15964,41 @@
           "source": {
             "symbol": "F7TreeviewItem"
           },
+          "slots": [
+            {
+              "name": "root-start"
+            },
+            {
+              "name": "root"
+            },
+            {
+              "name": "root-end"
+            },
+            {
+              "name": "content-start"
+            },
+            {
+              "name": "content"
+            },
+            {
+              "name": "content-end"
+            },
+            {
+              "name": "children-start"
+            },
+            {
+              "name": "default"
+            },
+            {
+              "name": "media"
+            },
+            {
+              "name": "label-start"
+            },
+            {
+              "name": "label"
+            }
+          ],
           "attributes": [
             {
               "name": "toggle",
@@ -15650,7 +16102,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -16136,6 +16588,13 @@
               }
             },
             {
+              "name": "initRouterOnTabShow",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
               "name": "router",
               "value": {
                 "kind": "expression",
@@ -16575,7 +17034,7 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -16668,13 +17127,20 @@
               }
             },
             {
-              "name": "themeDark",
+              "name": "dark",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
               }
             }
           ]
+        },
+        {
+          "name": "F7ready",
+          "source": {
+            "symbol": "F7ready"
+          },
+          "attributes": []
         }
       ]
     }
