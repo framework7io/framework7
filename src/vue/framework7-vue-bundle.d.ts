@@ -1,4 +1,4 @@
-export * from ".";
+export * from '.';
 
 declare const registerComponents: (app: any) => void;
 

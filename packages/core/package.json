@@ -1,6 +1,6 @@
 {
   "name": "framework7",
-  "version": "7.0.8",
+  "version": "7.0.9",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "type": "module",
   "exports": {

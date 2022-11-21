@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "framework": "vue",
   "name": "framework7-vue",
-  "version": "0.1.0",
+  "version": "7.0.9",
   "contributions": {
     "html": {
       "types-syntax": "typescript",

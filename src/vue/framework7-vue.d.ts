@@ -20,7 +20,6 @@ declare const f7ready: (callback: (f7: Framework7) => void) => void;
 
 declare const Framework7Vue: Framework7Plugin;
 
-
 interface useStore {
   (store: Store, getter: string): any;
   (getter: string): any;

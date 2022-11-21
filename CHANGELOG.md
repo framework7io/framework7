@@ -2,6 +2,16 @@
 
 # Change Log
 
+# [7.0.9](https://github.com/framework7io/framework7/compare/v7.0.8...v7.0.9) (2022-11-21)
+
+### Bug Fixes
+
+- **vue:** Improve type definitions for framework7-vue/bundle ([#4075](https://github.com/framework7io/framework7/issues/4075)) ([7d68a65](https://github.com/framework7io/framework7/commit/7d68a657c276eabd22410920573f82c94f852fc8))
+
+### Features
+
+- **vue:** update web types ([53b1663](https://github.com/framework7io/framework7/commit/53b1663aa31e5031efb06058686ca7a6c90c2db7))
+
 # [7.0.8](https://github.com/framework7io/framework7/compare/v7.0.7...v7.0.8) (2022-09-14)
 
 ### Bug Fixes
