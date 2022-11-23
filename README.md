@@ -828,6 +828,7 @@ Appstore apps made with Framework7: https://framework7.io/showcase/
 
 ## Previous Versions
 
+- [v6 branch](https://github.com/framework7io/Framework7/tree/v6)
 - [v5 branch](https://github.com/framework7io/Framework7/tree/v5)
 - [v4 branch](https://github.com/framework7io/Framework7/tree/v4)
 - [v3 branch](https://github.com/framework7io/Framework7/tree/v3)
