@@ -410,9 +410,6 @@
     "*.css",
     "shared/dom7.js"
   ],
-  "scripts": {
-    "postinstall": "node postinstall.js"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/framework7io/framework7.git"

@@ -121,7 +121,7 @@ async function release() {
 
   // Git commit & push
   await exec.promise('git add .');
-  await exec.promise(`git commit -m "${pkgCore.version} release"`);
+  await exec.promise(`git commit -m ${pkgCore.version}`);
   await exec.promise('git push');
   await exec.promise(`git tag v${pkgCore.version}`);
   await exec.promise('git push origin --tags');
