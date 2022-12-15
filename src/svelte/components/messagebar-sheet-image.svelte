@@ -30,7 +30,7 @@
   <input type="checkbox" {checked} on:change={onChange} />
   <i class="icon icon-checkbox" />
   {#if image}
-    <img src={image} />
+    <img src={image} alt="" />
   {/if}
   <slot />
 </label>

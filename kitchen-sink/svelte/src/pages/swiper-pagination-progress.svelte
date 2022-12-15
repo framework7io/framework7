@@ -4,7 +4,8 @@
 
 <Page>
   <Navbar title="Progress Pagination" backLink="Back" />
-  <Swiper class="demo-swiper" pagination={{ type: 'progress' }}>
+
+  <Swiper class="demo-swiper" pagination={{ type: 'progressbar' }}>
     <SwiperSlide>Slide 1</SwiperSlide>
     <SwiperSlide>Slide 2</SwiperSlide>
     <SwiperSlide>Slide 3</SwiperSlide>

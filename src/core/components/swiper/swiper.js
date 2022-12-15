@@ -1,7 +1,11 @@
 // eslint-disable-next-line
 import Swiper from 'swiper/bundle';
+// eslint-disable-next-line
+import { register } from 'swiper/element/bundle';
 import $ from '../../shared/dom7.js';
 import ConstructorMethods from '../../shared/constructor-methods.js';
+
+register();
 
 // UMD_ONLY_START
 /* eslint-disable */
