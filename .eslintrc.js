@@ -23,6 +23,7 @@ const rules = {
       allowSamePrecedence: false,
     },
   ],
+  'no-underscore-dangle': ['off'],
   'prefer-destructuring': ['off'],
   'prefer-object-spread': ['off'],
   'prefer-ob': ['off'],
