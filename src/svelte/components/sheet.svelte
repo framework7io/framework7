@@ -11,6 +11,7 @@
   let className = undefined;
   export { className as class };
 
+  export let style = '';
   export let opened = undefined;
   export let animate = undefined;
   export let top = undefined;
@@ -160,7 +161,7 @@
   });
 </script>
 
-<div class={classes} bind:this={el} {...restProps($$restProps)}>
+<div class={classes} bind:this={el} {style} {...restProps($$restProps)}>
   <slot sheet={f7Sheet} name="fixed" />
   <div class="sheet-modal-inner" bind:this={innerEl}>
     <slot sheet={f7Sheet} />

@@ -11,6 +11,7 @@
   let className = undefined;
   export { className as class };
 
+  export let style;
   export let opened = undefined;
   export let animate = undefined;
   export let targetEl = undefined;
@@ -114,7 +115,7 @@
   });
 </script>
 
-<div class={classes} bind:this={el} {...restProps($$restProps)}>
+<div class={classes} bind:this={el} {style} {...restProps($$restProps)}>
   <div class="popover-angle" />
   <div class="popover-inner">
     <slot popover={f7Popover} />
