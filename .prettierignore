@@ -11,5 +11,6 @@ kitchen-sink/vue/dist
 kitchen-sink/svelte/dist
 kitchen-sink/**/*.json
 src/vue-temp
+src/core/shared/material-color-utils.js
 .nova
 
