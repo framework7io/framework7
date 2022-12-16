@@ -288,6 +288,8 @@ class Panel extends Framework7Class {
 
   onOpen(modifyHtmlClasses = true) {
     const panel = this;
+    // eslint-disable-next-line
+    panel._openTimeStamp = new Date().getTime();
     const app = panel.app;
 
     panel.opened = true;
@@ -472,7 +474,6 @@ class Panel extends Framework7Class {
 
   close(animate = true) {
     const panel = this;
-
     const { effect, $el, $backdropEl, opened, $containerEl } = panel;
     if (!opened || $el.hasClass('panel-in-breakpoint') || !$el.hasClass('panel-in')) return panel;
 
@@ -486,6 +487,12 @@ class Panel extends Framework7Class {
       $viewEl.add($containerEl.children('.page-content, .tabs'));
     }
     const transitionEndTarget = effect === 'reveal' ? $viewEl : $el;
+    // eslint-disable-next-line
+    const openTimeDiff = new Date().getTime() - panel._openTimeStamp;
+    if (openTimeDiff < 16) {
+      // eslint-disable-next-line
+      animate = false;
+    }
 
     function transitionEnd() {
       if ($el.hasClass('panel-out')) {
