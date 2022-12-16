@@ -85,7 +85,8 @@ export namespace SmartSelect {
     url?: string;
     /** Additional CSS class name to be set on Smart Select container (Page, Popup, Popover or Sheet) */
     cssClass?: string;
-
+    /** When enabled, Smart Select modal (Popover, Popup, Sheet) will be closed on backdrop click. (default true) */
+    closeByBackdropClick?: boolean;
     /** Select option icon to be set on all options. If it just a string then will create an icon with this class. If it is in the format of `f7:icon_name` then it will create a F7-Icons icon. If it is in the format of `md:icon_name` then it will create a Material Icons icon. */
     optionIcon?: string;
     /** Same as `optionIcon` but will apply only when iOS theme is active */

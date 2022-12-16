@@ -812,6 +812,7 @@ class SmartSelect extends Framework7Class {
       content: popupHtml,
       push: ss.params.popupPush,
       swipeToClose: ss.params.popupSwipeToClose,
+      closeByBackdropClick: ss.params.closeByBackdropClick,
       on: {
         popupOpen(popup) {
           ss.onOpen('popup', popup.el);
@@ -855,6 +856,7 @@ class SmartSelect extends Framework7Class {
       closeByOutsideClick: true,
       push: ss.params.sheetPush,
       swipeToClose: ss.params.sheetSwipeToClose,
+      closeByBackdropClick: ss.params.closeByBackdropClick,
       on: {
         sheetOpen(sheet) {
           ss.onOpen('sheet', sheet.el);
@@ -893,6 +895,7 @@ class SmartSelect extends Framework7Class {
     const popoverParams = {
       content: popoverHtml,
       targetEl: ss.$el,
+      closeByBackdropClick: ss.params.closeByBackdropClick,
       on: {
         popoverOpen(popover) {
           ss.onOpen('popover', popover.el);
