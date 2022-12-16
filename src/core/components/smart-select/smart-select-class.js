@@ -138,7 +138,7 @@ class SmartSelect extends Framework7Class {
 
       ss.$selectEl.trigger('change');
       if (ss.params.setValueText) {
-        ss.$valueEl.text(ss.formatValueText(optionText));
+        ss.formatValueTextContent(optionText);
       }
       if (ss.params.closeOnSelect && ss.inputType === 'radio') {
         ss.close();
@@ -203,7 +203,7 @@ class SmartSelect extends Framework7Class {
       ss.selectEl.value = newValue;
     }
     if (ss.params.setValueText) {
-      ss.$valueEl.text(ss.formatValueText(optionText));
+      ss.formatValueTextContent(optionText);
     }
     ss.$selectEl.trigger('change');
     return ss;
@@ -212,7 +212,7 @@ class SmartSelect extends Framework7Class {
   unsetValue() {
     const ss = this;
     if (ss.params.setValueText) {
-      ss.$valueEl.text(ss.formatValueText([]));
+      ss.formatValueTextContent([]);
     }
     ss.$selectEl.find('option').each((optionEl) => {
       optionEl.selected = false;
@@ -266,6 +266,16 @@ class SmartSelect extends Framework7Class {
     }
   }
 
+  formatValueTextContent(values) {
+    const ss = this;
+    const valueFormatted = ss.formatValueText(values);
+    if (valueFormatted.includes('<') && valueFormatted.includes('>')) {
+      ss.$valueEl.html(valueFormatted);
+    } else {
+      ss.$valueEl.text(valueFormatted);
+    }
+  }
+
   formatValueText(values) {
     const ss = this;
     let textValue;
@@ -302,7 +312,7 @@ class SmartSelect extends Framework7Class {
       });
     }
     if (ss.params.setValueText) {
-      ss.$valueEl.text(ss.formatValueText(valueArray));
+      ss.formatValueTextContent(valueArray);
     }
   }
 
