@@ -67,11 +67,11 @@
   ],
   "dependencies": {
     "dom7": "^4.0.4",
-    "htm": "^3.1.0",
-    "path-to-regexp": "^6.2.0",
-    "skeleton-elements": "^4.0.0",
+    "htm": "^3.1.1",
+    "path-to-regexp": "^6.2.1",
+    "skeleton-elements": "^4.0.1",
     "ssr-window": "^4.0.2",
-    "swiper": "^8.1.4"
+    "swiper": "^8.4.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.6",
@@ -87,6 +87,7 @@
     "autoprefixer": "^10.4.4",
     "clean-css": "^5.3.0",
     "concurrently": "^7.1.0",
+    "conventional-changelog-cli": "^2.2.2",
     "cross-env": "^7.0.3",
     "eslint": "^7.26.0",
     "eslint-config-airbnb-base": "^14.2.1",
