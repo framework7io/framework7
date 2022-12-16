@@ -24,6 +24,7 @@ export default {
       url: 'photos/',
       routableModals: false,
       virtualSlides: true,
+      lazy: true,
 
       renderNavbar: undefined,
       renderToolbar: undefined,
@@ -40,7 +41,6 @@ export default {
         spaceBetween: 20,
         speed: 300,
         loop: false,
-        preloadImages: true,
         keyboard: {
           enabled: true,
         },
@@ -52,9 +52,6 @@ export default {
           enabled: true,
           maxRatio: 3,
           minRatio: 1,
-        },
-        lazy: {
-          enabled: true,
         },
       },
     },

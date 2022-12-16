@@ -68,11 +68,11 @@ class PhotoBrowser extends Framework7Class {
     }
 
     const $activeSlideEl = pb.params.virtualSlides
-      ? swiper.$wrapperEl.find(`.swiper-slide[data-swiper-slide-index="${swiper.activeIndex}"]`)
-      : swiper.slides.eq(swiper.activeIndex);
+      ? $(swiper.wrapperEl).find(`.swiper-slide[data-swiper-slide-index="${swiper.activeIndex}"]`)
+      : $(swiper.slides).eq(swiper.activeIndex);
     const $previousSlideEl = pb.params.virtualSlides
-      ? swiper.$wrapperEl.find(`.swiper-slide[data-swiper-slide-index="${swiper.previousIndex}"]`)
-      : swiper.slides.eq(swiper.previousIndex);
+      ? $(swiper.wrapperEl).find(`.swiper-slide[data-swiper-slide-index="${swiper.previousIndex}"]`)
+      : $(swiper.slides).eq(swiper.previousIndex);
 
     let $currentEl = pb.$el.find('.photo-browser-current');
     let $totalEl = pb.$el.find('.photo-browser-total');
@@ -134,9 +134,9 @@ class PhotoBrowser extends Framework7Class {
       swipeToClose.started = true;
       swipeToClose.start = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
       if (pb.params.virtualSlides) {
-        swipeToClose.activeSlide = pb.swiper.$wrapperEl.children('.swiper-slide-active');
+        swipeToClose.activeSlide = $(pb.swiper.wrapperEl).children('.swiper-slide-active');
       } else {
-        swipeToClose.activeSlide = pb.swiper.slides.eq(pb.swiper.activeIndex);
+        swipeToClose.activeSlide = $(pb.swiper.slides).eq(pb.swiper.activeIndex);
       }
       swipeToClose.timeStart = now();
     }
@@ -288,7 +288,7 @@ class PhotoBrowser extends Framework7Class {
       >
         <div class="swiper-lazy-preloader"></div>
         <span class="swiper-zoom-container">
-          <img data-src={photo.url ? photo.url : photo} class="swiper-lazy" />
+          <img loading="lazy" src={photo.url ? photo.url : photo} />
         </span>
       </div>
     );
@@ -342,10 +342,7 @@ class PhotoBrowser extends Framework7Class {
                     ) {
                       return pb.renderObject(photo, index);
                     }
-                    if (
-                      pb.params.swiper.lazy === true ||
-                      (pb.params.swiper.lazy && pb.params.swiper.lazy.enabled)
-                    ) {
+                    if (pb.params.lazy === true) {
                       return pb.renderLazyPhoto(photo, index);
                     }
                     return pb.renderPhoto(photo, index);
@@ -405,10 +402,10 @@ class PhotoBrowser extends Framework7Class {
 
     const swiperParams = extend({}, pb.params.swiper, {
       initialSlide: pb.activeIndex,
-      cssMode:
-        typeof pb.params.swiper.cssMode === 'undefined' && (app.device.ios || app.device.android)
-          ? true
-          : pb.params.swiper.cssMode,
+      // cssMode:
+      //   typeof pb.params.swiper.cssMode === 'undefined' && (app.device.ios || app.device.android)
+      //     ? true
+      //     : pb.params.swiper.cssMode,
       on: {
         click(e) {
           clearTimeout(clickTimeout);
@@ -444,14 +441,6 @@ class PhotoBrowser extends Framework7Class {
         slideChangeTransitionEnd(...args) {
           pb.emit('local::slideChangeTransitionEnd', ...args);
         },
-        lazyImageLoad(...args) {
-          pb.emit('local::lazyImageLoad', ...args);
-        },
-        lazyImageReady(...args) {
-          const slideEl = args[0];
-          $(slideEl).removeClass('photo-browser-slide-lazy');
-          pb.emit('local::lazyImageReady', ...args);
-        },
       },
     });
     if (pb.params.swipeToClose && pb.params.type !== 'page') {
@@ -483,10 +472,7 @@ class PhotoBrowser extends Framework7Class {
             ) {
               return pb.renderObject(photo, index);
             }
-            if (
-              pb.params.swiper.lazy === true ||
-              (pb.params.swiper.lazy && pb.params.swiper.lazy.enabled)
-            ) {
+            if (pb.params.lazy === true) {
               return pb.renderLazyPhoto(photo, index);
             }
             return pb.renderPhoto(photo, index);
@@ -496,10 +482,10 @@ class PhotoBrowser extends Framework7Class {
     }
     const window = getWindow();
     pb.swiper = app.swiper
-      ? app.swiper.create(pb.$swiperContainerEl, swiperParams)
-      : new window.Swiper(pb.$swiperContainerEl, swiperParams);
+      ? app.swiper.create(pb.$swiperContainerEl[0], swiperParams)
+      : new window.Swiper(pb.$swiperContainerEl[0], swiperParams);
 
-    if (pb.activeIndex === 0) {
+    if (pb.activeIndex === 0 || pb.params.virtualSlides) {
       pb.onSlideChange(pb.swiper);
     }
     if (pb.$el) {
