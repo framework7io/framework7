@@ -7,12 +7,13 @@ import processRouteQueue from './process-route-queue.js';
 import appRouterCheck from './app-router-check.js';
 import asyncComponent from './async-component.js';
 
-function refreshPage() {
+function refreshPage(props = {}) {
   const router = this;
   appRouterCheck(router, 'refreshPage');
   return router.navigate(router.currentRoute.url, {
     ignoreCache: true,
     reloadCurrent: true,
+    props,
   });
 }
 
