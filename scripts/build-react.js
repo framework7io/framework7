@@ -68,7 +68,7 @@ async function buildReact(cb) {
   fs.writeFileSync(`${buildPath}/react/framework7-react.js`, pluginContent);
 
   await exec.promise(
-    `MODULES=esm npx babel --config-file ./babel-react.config.js src/react --out-dir ${buildPath}/react --ignore "src/react/framework7-react.js","*.ts"`,
+    `npx cross-env MODULES=esm npx babel --config-file ./babel-react.config.js src/react --out-dir ${buildPath}/react --ignore "src/react/framework7-react.js","*.ts"`,
   );
 
   const esmContent = fs.readFileSync(`${buildPath}/react/framework7-react.js`, 'utf-8');

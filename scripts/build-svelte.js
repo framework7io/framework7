@@ -40,7 +40,7 @@ async function buildSvelte(cb) {
   fs.writeFileSync(`${buildPath}/svelte/framework7-svelte.js`, pluginContent);
 
   await exec.promise(
-    `MODULES=esm npx babel --config-file ./babel-svelte.config.js src/svelte --out-dir ${buildPath}/svelte --ignore "src/svelte/framework7-svelte.js","*.svelte"`,
+    `npx cross-env MODULES=esm npx babel --config-file ./babel-svelte.config.js src/svelte --out-dir ${buildPath}/svelte --ignore "src/svelte/framework7-svelte.js","*.svelte"`,
   );
 
   // Copy svelte components

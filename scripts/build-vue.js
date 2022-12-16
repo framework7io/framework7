@@ -43,11 +43,11 @@ async function buildVue(cb) {
   fs.writeFileSync(`${buildPath}/vue/framework7-vue.js`, pluginContent);
 
   await exec.promise(
-    `MODULES=esm npx babel --config-file ./babel-vue.config.js src/vue --out-dir ${buildPath}/vue --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx --extensions .js`,
+    `npx cross-env esm npx babel --config-file ./babel-vue.config.js src/vue --out-dir ${buildPath}/vue --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx --extensions .js`,
   );
 
   await exec.promise(
-    `MODULES=esm npx babel --config-file ./babel-vue.config.js src/vue-temp --out-dir ${buildPath}/vue/components --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx`,
+    `npx cross-env MODULES=esm npx babel --config-file ./babel-vue.config.js src/vue-temp --out-dir ${buildPath}/vue/components --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx`,
   );
 
   const esmContent = fs.readFileSync(`${buildPath}/vue/framework7-vue.js`, 'utf-8');
