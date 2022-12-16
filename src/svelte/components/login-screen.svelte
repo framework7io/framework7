@@ -11,6 +11,7 @@
   let className = undefined;
   export { className as class };
 
+  export let style = '';
   export let opened = undefined;
   export let animate = undefined;
   export let containerEl = undefined;
@@ -99,6 +100,6 @@
   });
 </script>
 
-<div class={classes} bind:this={el} {...restProps($$restProps)}>
+<div class={classes} bind:this={el} {style} {...restProps($$restProps)}>
   <slot loginScreen={f7LoginScreen} />
 </div>
