@@ -24,6 +24,7 @@ export default {
       url: 'photos/',
       routableModals: false,
       virtualSlides: true,
+      closeByBackdropClick: true,
 
       renderNavbar: undefined,
       renderToolbar: undefined,

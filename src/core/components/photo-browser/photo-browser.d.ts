@@ -56,6 +56,8 @@ export namespace PhotoBrowser {
     swiper?: object;
     /** When enabled then Swiper will use Virtual Slides (default true) */
     virtualSlides?: boolean;
+    /** When enabled, Photo Browser popup will be closed on backdrop click. (default true) */
+    closeByBackdropClick?: boolean;
 
     /** Function to render navbar, must return navbar HTML string */
     renderNavbar?: () => string;
