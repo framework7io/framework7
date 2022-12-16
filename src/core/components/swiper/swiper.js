@@ -55,7 +55,6 @@ function initSwiper(swiperEl) {
   if (typeof params.initialSlide === 'undefined' && typeof initialSlide !== 'undefined') {
     params.initialSlide = initialSlide;
   }
-
   const swiper = app.swiper.create($swiperEl[0], params);
   function updateSwiper() {
     swiper.update();
@@ -89,7 +88,7 @@ function initSwiper(swiperEl) {
         let view = app.views.get($swiperEl.parents('.view'));
         if (!view) view = app.views.main;
         const router = view.router;
-        const tabRouteUrl = router.findTabRouteUrl(swiper.slides.eq(swiper.activeIndex)[0]);
+        const tabRouteUrl = router.findTabRouteUrl($(swiper.slides).eq(swiper.activeIndex)[0]);
         if (tabRouteUrl) {
           setTimeout(() => {
             router.navigate(tabRouteUrl);
@@ -97,7 +96,7 @@ function initSwiper(swiperEl) {
         }
       } else {
         app.tab.show({
-          tabEl: swiper.slides.eq(swiper.activeIndex),
+          tabEl: $(swiper.slides).eq(swiper.activeIndex),
         });
       }
     });
