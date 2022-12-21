@@ -371,7 +371,11 @@ export default {
       const { component: pageComponent, props: pageProps } = page;
       let keys = [];
       const passProps = {};
-      if (pageComponent && pageComponent.props) keys = Object.keys(pageComponent.props);
+      if (pageComponent && pageComponent.props) {
+        if (Array.isArray(pageComponent.props))
+          keys = pageComponent.props.filter((prop) => typeof prop === 'string');
+        else keys = Object.keys(pageComponent.props);
+      }
       keys.forEach((key) => {
         if (key in pageProps) passProps[key] = pageProps[key];
       });
