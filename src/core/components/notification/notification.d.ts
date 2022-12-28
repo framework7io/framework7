@@ -48,7 +48,7 @@ export namespace Notification {
     /** Element to mount notifications to. (default app.el) */
     containerEl?: HTMLElement | CSSSelector;
     /** Custom function to render Notification. Must return notification html. */
-    render?: () => string;
+    render?: (notification: Notification) => string;
     /** Object with events handlers.. */
     on?: {
       [event in keyof Events]?: Events[event];
