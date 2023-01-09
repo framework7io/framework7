@@ -313,8 +313,7 @@ class Router extends Framework7Class {
         if (navEl.isSliding) {
           if (navEl.isSubnavbar && oldIsLarge) {
             $el.transform(
-              `translate3d(${
-                offset * progress
+              `translate3d(${offset * progress
               }px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)`,
             );
           } else {
@@ -1180,11 +1179,15 @@ class Router extends Framework7Class {
       }
     } else {
       if (browserHistoryRoot && documentUrl.indexOf(browserHistoryRoot) >= 0) {
-        documentUrl = documentUrl.split(browserHistoryRoot)[1];
+        documentUrl = documentUrl.substring(
+          documentUrl.indexOf(browserHistoryRoot) + browserHistoryRoot.length,
+        );
         if (documentUrl === '') documentUrl = '/';
       }
       if (browserHistorySeparator.length > 0 && documentUrl.indexOf(browserHistorySeparator) >= 0) {
-        initialUrl = documentUrl.split(browserHistorySeparator)[1];
+        initialUrl = documentUrl.substring(
+          documentUrl.indexOf(browserHistorySeparator) + browserHistorySeparator.length,
+        );
       } else {
         initialUrl = documentUrl;
       }
