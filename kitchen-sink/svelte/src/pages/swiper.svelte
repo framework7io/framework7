@@ -24,7 +24,6 @@
     <ListItem link="swiper-fade/" title="Fade Effect" />
     <ListItem link="swiper-scrollbar/" title="With Scrollbar" />
     <ListItem link="swiper-gallery/" title="Thumbs Gallery" />
-    <ListItem link="swiper-custom-controls/" title="Custom Controls" />
     <ListItem link="swiper-parallax/" title="Parallax" />
     <ListItem link="swiper-lazy/" title="Lazy Loading" />
     <ListItem link="swiper-pagination-progress/" title="Progress Pagination" />

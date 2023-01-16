@@ -71,7 +71,6 @@ import Swiper3dFlip from './pages/swiper-3d-flip.vue';
 import SwiperFade from './pages/swiper-fade.vue';
 import SwiperScrollbar from './pages/swiper-scrollbar.vue';
 import SwiperGallery from './pages/swiper-gallery.vue';
-import SwiperCustomControls from './pages/swiper-custom-controls.vue';
 import SwiperParallax from './pages/swiper-parallax.vue';
 import SwiperLazy from './pages/swiper-lazy.vue';
 import SwiperPaginationProgress from './pages/swiper-pagination-progress.vue';
@@ -460,10 +459,6 @@ export default [
       {
         path: 'swiper-gallery/',
         component: SwiperGallery,
-      },
-      {
-        path: 'swiper-custom-controls/',
-        component: SwiperCustomControls,
       },
       {
         path: 'swiper-parallax/',

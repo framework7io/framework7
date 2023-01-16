@@ -4,12 +4,13 @@
 
 <Page>
   <Navbar title="Parallax" backLink="Back" />
-  <Swiper class="demo-swiper-parallax color-theme-white" pagination navigation parallax speed={600}>
+  <Swiper class="demo-swiper-parallax color-white" pagination navigation parallax speed={600}>
     <div
       slot="container-start"
       data-swiper-parallax="-23%"
       style="background-image: url(https://cdn.framework7.io/placeholder/nightlife-1024x1024-2.jpg)"
-      class="swiper-parallax-bg" />
+      class="swiper-parallax-bg"
+    />
     <SwiperSlide>
       <div data-swiper-parallax="-300" class="swiper-slide-title">Slide 1</div>
       <div data-swiper-parallax="-200" class="swiper-slide-subtitle">Subtitle</div>

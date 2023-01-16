@@ -47,9 +47,6 @@
           <a href="swiper-gallery/">Thumbs Gallery</a>
         </li>
         <li>
-          <a href="swiper-custom-controls/">Custom Controls</a>
-        </li>
-        <li>
           <a href="swiper-parallax/">Parallax</a>
         </li>
         <li>

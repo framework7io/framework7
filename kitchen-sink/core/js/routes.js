@@ -337,10 +337,6 @@ var routes = [
         componentUrl: './pages/swiper-gallery.html',
       },
       {
-        path: 'swiper-custom-controls/',
-        url: './pages/swiper-custom-controls.html',
-      },
-      {
         path: 'swiper-parallax/',
         url: './pages/swiper-parallax.html',
       },

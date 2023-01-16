@@ -70,7 +70,6 @@ import Swiper3dFlip from './pages/swiper-3d-flip.jsx';
 import SwiperFade from './pages/swiper-fade.jsx';
 import SwiperScrollbar from './pages/swiper-scrollbar.jsx';
 import SwiperGallery from './pages/swiper-gallery.jsx';
-import SwiperCustomControls from './pages/swiper-custom-controls.jsx';
 import SwiperParallax from './pages/swiper-parallax.jsx';
 import SwiperLazy from './pages/swiper-lazy.jsx';
 import SwiperPaginationProgress from './pages/swiper-pagination-progress.jsx';
@@ -458,10 +457,6 @@ export default [
       {
         path: 'swiper-gallery/',
         component: SwiperGallery,
-      },
-      {
-        path: 'swiper-custom-controls/',
-        component: SwiperCustomControls,
       },
       {
         path: 'swiper-parallax/',

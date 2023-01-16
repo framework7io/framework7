@@ -71,7 +71,6 @@ import Swiper3dFlip from './pages/swiper-3d-flip.svelte';
 import SwiperFade from './pages/swiper-fade.svelte';
 import SwiperScrollbar from './pages/swiper-scrollbar.svelte';
 import SwiperGallery from './pages/swiper-gallery.svelte';
-import SwiperCustomControls from './pages/swiper-custom-controls.svelte';
 import SwiperParallax from './pages/swiper-parallax.svelte';
 import SwiperLazy from './pages/swiper-lazy.svelte';
 import SwiperPaginationProgress from './pages/swiper-pagination-progress.svelte';
@@ -460,10 +459,6 @@ export default [
       {
         path: 'swiper-gallery/',
         component: SwiperGallery,
-      },
-      {
-        path: 'swiper-custom-controls/',
-        component: SwiperCustomControls,
       },
       {
         path: 'swiper-parallax/',

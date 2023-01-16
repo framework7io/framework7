@@ -5,7 +5,7 @@
 <Page style="background: #000">
   <Navbar title="Two Way Control Gallery" backLink="Back" />
   <Swiper
-    class="demo-swiper-gallery-top color-theme-white"
+    class="demo-swiper-gallery-top color-white"
     navigation
     spaceBetween={10}
     thumbs={{ swiper: '.demo-swiper-gallery-thumbs' }}
