@@ -1,17 +1,23 @@
 <script>
-  import { Navbar, Page, Swiper, SwiperSlide } from 'framework7-svelte';
+  import { Navbar, Page } from 'framework7-svelte';
 </script>
 
 <Page>
   <Navbar title="Parallax" backLink="Back" />
-  <Swiper class="demo-swiper-parallax color-white" pagination navigation parallax speed={600}>
+  <swiper-container
+    pagination={true}
+    navigation={true}
+    parallax={true}
+    speed={600}
+    class="demo-swiper-parallax color-white"
+  >
     <div
       slot="container-start"
       data-swiper-parallax="-23%"
       style="background-image: url(https://cdn.framework7.io/placeholder/nightlife-1024x1024-2.jpg)"
       class="swiper-parallax-bg"
     />
-    <SwiperSlide>
+    <swiper-slide>
       <div data-swiper-parallax="-300" class="swiper-slide-title">Slide 1</div>
       <div data-swiper-parallax="-200" class="swiper-slide-subtitle">Subtitle</div>
       <div data-swiper-parallax="-100" class="swiper-slide-text">
@@ -24,8 +30,8 @@
           feugiat.
         </p>
       </div>
-    </SwiperSlide>
-    <SwiperSlide>
+    </swiper-slide>
+    <swiper-slide>
       <div data-swiper-parallax="-300" class="swiper-slide-title">Slide 2</div>
       <div data-swiper-parallax="-200" class="swiper-slide-subtitle">Subtitle</div>
       <div data-swiper-parallax="-100" class="swiper-slide-text">
@@ -38,8 +44,8 @@
           feugiat.
         </p>
       </div>
-    </SwiperSlide>
-    <SwiperSlide>
+    </swiper-slide>
+    <swiper-slide>
       <div data-swiper-parallax="-300" class="swiper-slide-title">Slide 3</div>
       <div data-swiper-parallax="-200" class="swiper-slide-subtitle">Subtitle</div>
       <div data-swiper-parallax="-100" class="swiper-slide-text">
@@ -52,6 +58,6 @@
           feugiat.
         </p>
       </div>
-    </SwiperSlide>
-  </Swiper>
+    </swiper-slide>
+  </swiper-container>
 </Page>

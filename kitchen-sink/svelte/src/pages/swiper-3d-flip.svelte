@@ -1,27 +1,51 @@
 <script>
-  import { Navbar, Page, Swiper, SwiperSlide } from 'framework7-svelte';
+  import { Navbar, Page } from 'framework7-svelte';
 </script>
 
 <Page>
   <Navbar title="3D Flip Effect" backLink="Back" />
-  <Swiper class="demo-swiper demo-swiper-cube" effect="flip">
-    <SwiperSlide
-      style="background-image: url(https://cdn.framework7.io/placeholder/people-800x800-1.jpg)" />
-    <SwiperSlide
-      style="background-image: url(https://cdn.framework7.io/placeholder/people-800x800-2.jpg)" />
-    <SwiperSlide
-      style="background-image: url(https://cdn.framework7.io/placeholder/people-800x800-3.jpg)" />
-    <SwiperSlide
-      style="background-image: url(https://cdn.framework7.io/placeholder/people-800x800-4.jpg)" />
-    <SwiperSlide
-      style="background-image: url(https://cdn.framework7.io/placeholder/people-800x800-5.jpg)" />
-    <SwiperSlide
-      style="background-image: url(https://cdn.framework7.io/placeholder/people-800x800-6.jpg)" />
-    <SwiperSlide
-      style="background-image: url(https://cdn.framework7.io/placeholder/people-800x800-7.jpg)" />
-    <SwiperSlide
-      style="background-image: url(https://cdn.framework7.io/placeholder/people-800x800-8.jpg)" />
-    <SwiperSlide
-      style="background-image: url(https://cdn.framework7.io/placeholder/people-800x800-9.jpg)" />
-  </Swiper>
+  <swiper-container
+    effect="flip"
+    pagination={true}
+    slides-per-view="auto"
+    centered-slides={true}
+    class="demo-swiper demo-swiper-cube"
+  >
+    <swiper-slide
+      style="background-image:url(https://cdn.framework7.io/placeholder/people-800x800-1.jpg)"
+      >Slide 1</swiper-slide
+    >
+    <swiper-slide
+      style="background-image:url(https://cdn.framework7.io/placeholder/people-800x800-2.jpg)"
+      >Slide 2</swiper-slide
+    >
+    <swiper-slide
+      style="background-image:url(https://cdn.framework7.io/placeholder/people-800x800-3.jpg)"
+      >Slide 3</swiper-slide
+    >
+    <swiper-slide
+      style="background-image:url(https://cdn.framework7.io/placeholder/people-800x800-4.jpg)"
+      >Slide 4</swiper-slide
+    >
+    <swiper-slide
+      style="background-image:url(https://cdn.framework7.io/placeholder/people-800x800-5.jpg)"
+      >Slide 5</swiper-slide
+    >
+    <swiper-slide
+      style="background-image:url(https://cdn.framework7.io/placeholder/people-800x800-6.jpg)"
+      >Slide 6</swiper-slide
+    >
+    <swiper-slide
+      style="background-image:url(https://cdn.framework7.io/placeholder/people-800x800-7.jpg)"
+      >Slide 7</swiper-slide
+    >
+    <swiper-slide
+      style="background-image:url(https://cdn.framework7.io/placeholder/people-800x800-8.jpg)"
+      >Slide 8</swiper-slide
+    >
+    <swiper-slide
+      style="background-image:url(https://cdn.framework7.io/placeholder/people-800x800-9.jpg)"
+      >Slide 9</swiper-slide
+    >
+  </swiper-container>
 </Page>

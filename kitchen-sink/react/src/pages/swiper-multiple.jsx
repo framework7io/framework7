@@ -1,97 +1,106 @@
 import React from 'react';
-import { Navbar, Page, BlockTitle, Swiper, SwiperSlide } from 'framework7-react';
+import { Navbar, Page, BlockTitle } from 'framework7-react';
 
 export default () => (
   <Page>
     <Navbar title="Multiple Swipers" backLink="Back"></Navbar>
     <BlockTitle>1 Slide Per View, 50px Between</BlockTitle>
-    <Swiper className="demo-swiper-multiple" pagination spaceBetween={50}>
-      <SwiperSlide>Slide 1</SwiperSlide>
-      <SwiperSlide>Slide 2</SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide>
-      <SwiperSlide>Slide 5</SwiperSlide>
-      <SwiperSlide>Slide 6</SwiperSlide>
-      <SwiperSlide>Slide 7</SwiperSlide>
-      <SwiperSlide>Slide 8</SwiperSlide>
-      <SwiperSlide>Slide 9</SwiperSlide>
-      <SwiperSlide>Slide 10</SwiperSlide>
-    </Swiper>
+    <swiper-container pagination class="demo-swiper-multiple" space-between="50">
+      <swiper-slide>Slide 1</swiper-slide>
+      <swiper-slide>Slide 2</swiper-slide>
+      <swiper-slide>Slide 3</swiper-slide>
+      <swiper-slide>Slide 4</swiper-slide>
+      <swiper-slide>Slide 5</swiper-slide>
+      <swiper-slide>Slide 6</swiper-slide>
+      <swiper-slide>Slide 7</swiper-slide>
+      <swiper-slide>Slide 8</swiper-slide>
+      <swiper-slide>Slide 9</swiper-slide>
+      <swiper-slide>Slide 10</swiper-slide>
+    </swiper-container>
 
     <BlockTitle>2 Slides Per View, 20px Between</BlockTitle>
-    <Swiper className="demo-swiper-multiple" pagination spaceBetween={20} slidesPerView={2}>
-      <SwiperSlide>Slide 1</SwiperSlide>
-      <SwiperSlide>Slide 2</SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide>
-      <SwiperSlide>Slide 5</SwiperSlide>
-      <SwiperSlide>Slide 6</SwiperSlide>
-      <SwiperSlide>Slide 7</SwiperSlide>
-      <SwiperSlide>Slide 8</SwiperSlide>
-      <SwiperSlide>Slide 9</SwiperSlide>
-      <SwiperSlide>Slide 10</SwiperSlide>
-    </Swiper>
+    <swiper-container
+      pagination
+      class="demo-swiper-multiple"
+      space-between="20"
+      slides-per-view="2"
+    >
+      <swiper-slide>Slide 1</swiper-slide>
+      <swiper-slide>Slide 2</swiper-slide>
+      <swiper-slide>Slide 3</swiper-slide>
+      <swiper-slide>Slide 4</swiper-slide>
+      <swiper-slide>Slide 5</swiper-slide>
+      <swiper-slide>Slide 6</swiper-slide>
+      <swiper-slide>Slide 7</swiper-slide>
+      <swiper-slide>Slide 8</swiper-slide>
+      <swiper-slide>Slide 9</swiper-slide>
+      <swiper-slide>Slide 10</swiper-slide>
+    </swiper-container>
 
     <BlockTitle>3 Slides Per View, 10px Between</BlockTitle>
-    <Swiper className="demo-swiper-multiple" pagination spaceBetween={10} slidesPerView={3}>
-      <SwiperSlide>Slide 1</SwiperSlide>
-      <SwiperSlide>Slide 2</SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide>
-      <SwiperSlide>Slide 5</SwiperSlide>
-      <SwiperSlide>Slide 6</SwiperSlide>
-      <SwiperSlide>Slide 7</SwiperSlide>
-      <SwiperSlide>Slide 8</SwiperSlide>
-      <SwiperSlide>Slide 9</SwiperSlide>
-      <SwiperSlide>Slide 10</SwiperSlide>
-    </Swiper>
+    <swiper-container
+      pagination
+      class="demo-swiper-multiple"
+      space-between="10"
+      slides-per-view="3"
+    >
+      <swiper-slide>Slide 1</swiper-slide>
+      <swiper-slide>Slide 2</swiper-slide>
+      <swiper-slide>Slide 3</swiper-slide>
+      <swiper-slide>Slide 4</swiper-slide>
+      <swiper-slide>Slide 5</swiper-slide>
+      <swiper-slide>Slide 6</swiper-slide>
+      <swiper-slide>Slide 7</swiper-slide>
+      <swiper-slide>Slide 8</swiper-slide>
+      <swiper-slide>Slide 9</swiper-slide>
+      <swiper-slide>Slide 10</swiper-slide>
+    </swiper-container>
 
     <BlockTitle>Auto Slides Per View + Centered</BlockTitle>
-    <Swiper
-      className="demo-swiper-multiple demo-swiper-multiple-auto"
+    <swiper-container
       pagination
-      spaceBetween={10}
-      centeredSlides={true}
-      slidesPerView={'auto'}
+      class="demo-swiper-multiple demo-swiper-multiple-auto"
+      space-between="10"
+      slides-per-view="auto"
     >
-      <SwiperSlide>Slide 1</SwiperSlide>
-      <SwiperSlide>Slide 2</SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide>
-      <SwiperSlide>Slide 5</SwiperSlide>
-      <SwiperSlide>Slide 6</SwiperSlide>
-      <SwiperSlide>Slide 7</SwiperSlide>
-      <SwiperSlide>Slide 8</SwiperSlide>
-      <SwiperSlide>Slide 9</SwiperSlide>
-      <SwiperSlide>Slide 10</SwiperSlide>
-    </Swiper>
+      <swiper-slide>Slide 1</swiper-slide>
+      <swiper-slide>Slide 2</swiper-slide>
+      <swiper-slide>Slide 3</swiper-slide>
+      <swiper-slide>Slide 4</swiper-slide>
+      <swiper-slide>Slide 5</swiper-slide>
+      <swiper-slide>Slide 6</swiper-slide>
+      <swiper-slide>Slide 7</swiper-slide>
+      <swiper-slide>Slide 8</swiper-slide>
+      <swiper-slide>Slide 9</swiper-slide>
+      <swiper-slide>Slide 10</swiper-slide>
+    </swiper-container>
 
     <BlockTitle>Vertical, 10px Between</BlockTitle>
-    <Swiper className="demo-swiper-multiple" pagination direction={'vertical'} spaceBetween={10}>
-      <SwiperSlide>Slide 1</SwiperSlide>
-      <SwiperSlide>Slide 2</SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide>
-      <SwiperSlide>Slide 5</SwiperSlide>
-      <SwiperSlide>Slide 6</SwiperSlide>
-      <SwiperSlide>Slide 7</SwiperSlide>
-      <SwiperSlide>Slide 8</SwiperSlide>
-      <SwiperSlide>Slide 9</SwiperSlide>
-      <SwiperSlide>Slide 10</SwiperSlide>
-    </Swiper>
+    <swiper-container
+      pagination
+      class="demo-swiper-multiple"
+      space-between="10"
+      direction="vertical"
+    >
+      <swiper-slide>Slide 1</swiper-slide>
+      <swiper-slide>Slide 2</swiper-slide>
+      <swiper-slide>Slide 3</swiper-slide>
+      <swiper-slide>Slide 4</swiper-slide>
+      <swiper-slide>Slide 5</swiper-slide>
+    </swiper-container>
 
     <BlockTitle>Slow speed</BlockTitle>
-    <Swiper className="demo-swiper-multiple" pagination speed={900} spaceBetween={50}>
-      <SwiperSlide>Slide 1</SwiperSlide>
-      <SwiperSlide>Slide 2</SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide>
-      <SwiperSlide>Slide 5</SwiperSlide>
-      <SwiperSlide>Slide 6</SwiperSlide>
-      <SwiperSlide>Slide 7</SwiperSlide>
-      <SwiperSlide>Slide 8</SwiperSlide>
-      <SwiperSlide>Slide 9</SwiperSlide>
-      <SwiperSlide>Slide 10</SwiperSlide>
-    </Swiper>
+    <swiper-container pagination class="demo-swiper-multiple" space-between="50" speed="900">
+      <swiper-slide>Slide 1</swiper-slide>
+      <swiper-slide>Slide 2</swiper-slide>
+      <swiper-slide>Slide 3</swiper-slide>
+      <swiper-slide>Slide 4</swiper-slide>
+      <swiper-slide>Slide 5</swiper-slide>
+      <swiper-slide>Slide 6</swiper-slide>
+      <swiper-slide>Slide 7</swiper-slide>
+      <swiper-slide>Slide 8</swiper-slide>
+      <swiper-slide>Slide 9</swiper-slide>
+      <swiper-slide>Slide 10</swiper-slide>
+    </swiper-container>
   </Page>
 );

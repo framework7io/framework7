@@ -1,25 +1,25 @@
 import React from 'react';
-import { Navbar, Page, Swiper, SwiperSlide } from 'framework7-react';
+import { Navbar, Page } from 'framework7-react';
 
 export default () => (
   <Page>
     <Navbar title="Parallax" backLink="Back"></Navbar>
-    <Swiper
-      className="demo-swiper-parallax color-theme-white"
+    <swiper-container
       pagination
       navigation
       parallax
-      speed={600}
+      speed="600"
+      class="demo-swiper-parallax color-white"
     >
       <div
         slot="container-start"
         data-swiper-parallax="-23%"
         style={{
-          backgroundImage: 'url(https://cdn.framework7.io/placeholder/nightlife-1024x1024-2.jpg)',
+          backgroundImage: `url(https://cdn.framework7.io/placeholder/nightlife-1024x1024-2.jpg)`,
         }}
         className="swiper-parallax-bg"
-      />
-      <SwiperSlide>
+      ></div>
+      <swiper-slide>
         <div data-swiper-parallax="-300" className="swiper-slide-title">
           Slide 1
         </div>
@@ -36,8 +36,8 @@ export default () => (
             eros quis feugiat.
           </p>
         </div>
-      </SwiperSlide>
-      <SwiperSlide>
+      </swiper-slide>
+      <swiper-slide>
         <div data-swiper-parallax="-300" className="swiper-slide-title">
           Slide 2
         </div>
@@ -54,8 +54,8 @@ export default () => (
             eros quis feugiat.
           </p>
         </div>
-      </SwiperSlide>
-      <SwiperSlide>
+      </swiper-slide>
+      <swiper-slide>
         <div data-swiper-parallax="-300" className="swiper-slide-title">
           Slide 3
         </div>
@@ -72,7 +72,7 @@ export default () => (
             eros quis feugiat.
           </p>
         </div>
-      </SwiperSlide>
-    </Swiper>
+      </swiper-slide>
+    </swiper-container>
   </Page>
 );

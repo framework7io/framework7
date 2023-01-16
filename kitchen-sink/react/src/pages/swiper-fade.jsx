@@ -1,30 +1,30 @@
 import React from 'react';
-import { Navbar, Page, Swiper, SwiperSlide } from 'framework7-react';
+import { Navbar, Page } from 'framework7-react';
 
 export default () => (
   <Page>
     <Navbar title="Fade Effect" backLink="Back"></Navbar>
-    <Swiper className="demo-swiper demo-swiper-fade" pagination effect="fade">
-      <SwiperSlide
+    <swiper-container effect="fade" pagination class="demo-swiper demo-swiper-fade">
+      <swiper-slide
         style={{
-          backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-1024x1024-1.jpg)',
+          backgroundImage: `url(https://cdn.framework7.io/placeholder/people-800x800-1.jpg)`,
         }}
-      />
-      <SwiperSlide
+      ></swiper-slide>
+      <swiper-slide
         style={{
-          backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-1024x1024-2.jpg)',
+          backgroundImage: `url(https://cdn.framework7.io/placeholder/people-800x800-2.jpg)`,
         }}
-      />
-      <SwiperSlide
+      ></swiper-slide>
+      <swiper-slide
         style={{
-          backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-1024x1024-3.jpg)',
+          backgroundImage: `url(https://cdn.framework7.io/placeholder/people-800x800-3.jpg)`,
         }}
-      />
-      <SwiperSlide
+      ></swiper-slide>
+      <swiper-slide
         style={{
-          backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-1024x1024-4.jpg)',
+          backgroundImage: `url(https://cdn.framework7.io/placeholder/people-800x800-4.jpg)`,
         }}
-      />
-    </Swiper>
+      ></swiper-slide>
+    </swiper-container>
   </Page>
 );

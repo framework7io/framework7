@@ -5,7 +5,9 @@ import path from 'path';
 const buildFolder = process.env.NODE_ENV === 'production' ? 'packages' : 'build';
 
 export default {
-  plugins: [vue()],
+  plugins: [
+    vue({ template: { compilerOptions: { isCustomElement: (tag) => tag.includes('swiper-') } } }),
+  ],
   root: './',
   base: '',
   publicDir: path.resolve(__dirname, 'public'),

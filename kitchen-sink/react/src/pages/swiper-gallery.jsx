@@ -1,106 +1,104 @@
-import React, { useState } from 'react';
-import { Navbar, Page, Swiper, SwiperSlide } from 'framework7-react';
+import React from 'react';
+import { Navbar, Page } from 'framework7-react';
 
 export default () => {
-  const [swiperThumbs, setSwiperThumbs] = useState(null);
   return (
     <Page style={{ background: '#000' }}>
       <Navbar title="Two Way Control Gallery" backLink="Back"></Navbar>
-      <Swiper
-        className="demo-swiper-gallery-top color-theme-white"
+      <swiper-container
         navigation
-        spaceBetween={10}
-        thumbs={{ swiper: swiperThumbs }}
+        space-between="10"
+        thumbs-swiper=".demo-swiper-gallery-thumbs"
+        class="demo-swiper-gallery-top color-white"
       >
-        <SwiperSlide
+        <swiper-slide
           style={{
-            backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-1.jpg)',
+            backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-1.jpg)`,
           }}
-        />
-        <SwiperSlide
+        ></swiper-slide>
+        <swiper-slide
           style={{
-            backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-2.jpg)',
+            backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-2.jpg)`,
           }}
-        />
-        <SwiperSlide
+        ></swiper-slide>
+        <swiper-slide
           style={{
-            backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-3.jpg)',
+            backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-3.jpg)`,
           }}
-        />
-        <SwiperSlide
+        ></swiper-slide>
+        <swiper-slide
           style={{
-            backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-4.jpg)',
+            backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-4.jpg)`,
           }}
-        />
-        <SwiperSlide
+        ></swiper-slide>
+        <swiper-slide
           style={{
-            backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-5.jpg)',
+            backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-5.jpg)`,
           }}
-        />
-        <SwiperSlide
+        ></swiper-slide>
+        <swiper-slide
           style={{
-            backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-6.jpg)',
+            backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-6.jpg)`,
           }}
-        />
-      </Swiper>
-      <Swiper
-        className="demo-swiper-gallery-thumbs"
-        onSwiper={setSwiperThumbs}
-        slidesPerView={4}
-        spaceBetween={10}
-        freeMode={true}
-        watchSlidesProgress={true}
-        watchSlidesVisibility={true}
+        ></swiper-slide>
+      </swiper-container>
+      <swiper-container
+        slides-per-view="4"
+        space-between="10"
+        free-mode
+        watch-slides-progress
+        watch-slides-visibility
+        class="demo-swiper-gallery-thumbs"
       >
-        <SwiperSlide>
+        <swiper-slide>
           <div
             style={{
-              backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-1.jpg)',
+              backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-1.jpg)`,
             }}
             className="swiper-slide-pic"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
+          ></div>
+        </swiper-slide>
+        <swiper-slide>
           <div
             style={{
-              backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-2.jpg)',
+              backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-2.jpg)`,
             }}
             className="swiper-slide-pic"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
+          ></div>
+        </swiper-slide>
+        <swiper-slide>
           <div
             style={{
-              backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-3.jpg)',
+              backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-3.jpg)`,
             }}
             className="swiper-slide-pic"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
+          ></div>
+        </swiper-slide>
+        <swiper-slide>
           <div
             style={{
-              backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-4.jpg)',
+              backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-4.jpg)`,
             }}
             className="swiper-slide-pic"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
+          ></div>
+        </swiper-slide>
+        <swiper-slide>
           <div
             style={{
-              backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-5.jpg)',
+              backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-5.jpg)`,
             }}
             className="swiper-slide-pic"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
+          ></div>
+        </swiper-slide>
+        <swiper-slide>
           <div
             style={{
-              backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-6.jpg)',
+              backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-6.jpg)`,
             }}
             className="swiper-slide-pic"
-          />
-        </SwiperSlide>
-      </Swiper>
+          ></div>
+        </swiper-slide>
+      </swiper-container>
     </Page>
   );
 };

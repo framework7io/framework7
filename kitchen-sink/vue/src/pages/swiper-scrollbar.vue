@@ -1,29 +1,27 @@
 <template>
   <f7-page>
     <f7-navbar title="Scrollbar" back-link="Back"></f7-navbar>
-    <f7-swiper scrollbar class="demo-swiper">
-      <f7-swiper-slide>Slide 1</f7-swiper-slide>
-      <f7-swiper-slide>Slide 2</f7-swiper-slide>
-      <f7-swiper-slide>Slide 3</f7-swiper-slide>
-      <f7-swiper-slide>Slide 4</f7-swiper-slide>
-      <f7-swiper-slide>Slide 5</f7-swiper-slide>
-      <f7-swiper-slide>Slide 6</f7-swiper-slide>
-      <f7-swiper-slide>Slide 7</f7-swiper-slide>
-      <f7-swiper-slide>Slide 8</f7-swiper-slide>
-      <f7-swiper-slide>Slide 9</f7-swiper-slide>
-      <f7-swiper-slide>Slide 10</f7-swiper-slide>
-    </f7-swiper>
+    <swiper-container :scrollbar="true" class="demo-swiper">
+      <swiper-slide>Slide 1</swiper-slide>
+      <swiper-slide>Slide 2</swiper-slide>
+      <swiper-slide>Slide 3</swiper-slide>
+      <swiper-slide>Slide 4</swiper-slide>
+      <swiper-slide>Slide 5</swiper-slide>
+      <swiper-slide>Slide 6</swiper-slide>
+      <swiper-slide>Slide 7</swiper-slide>
+      <swiper-slide>Slide 8</swiper-slide>
+      <swiper-slide>Slide 9</swiper-slide>
+      <swiper-slide>Slide 10</swiper-slide>
+    </swiper-container>
   </f7-page>
 </template>
 <script>
-import { f7Navbar, f7Page, f7Swiper, f7SwiperSlide } from 'framework7-vue';
+import { f7Navbar, f7Page } from 'framework7-vue';
 
 export default {
   components: {
     f7Navbar,
     f7Page,
-    f7Swiper,
-    f7SwiperSlide,
   },
 };
 </script>

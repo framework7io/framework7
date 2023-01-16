@@ -1,24 +1,22 @@
 <template>
   <f7-page>
     <f7-navbar title="Parallax" back-link="Back"></f7-navbar>
-    <f7-swiper
-      pagination
-      navigation
-      parallax
+    <swiper-container
+      :pagination="true"
+      :navigation="true"
+      :parallax="true"
       :speed="600"
-      class="demo-swiper-parallax color-theme-white"
+      class="demo-swiper-parallax color-white"
     >
-      <template #container-start>
-        <div
-          data-swiper-parallax="-23%"
-          style="
-            background-image: url(https://cdn.framework7.io/placeholder/nightlife-1024x1024-2.jpg);
-          "
-          class="swiper-parallax-bg"
-        ></div>
-      </template>
-
-      <f7-swiper-slide>
+      <div
+        slot="container-start"
+        data-swiper-parallax="-23%"
+        style="
+          background-image: url(https://cdn.framework7.io/placeholder/nightlife-1024x1024-2.jpg);
+        "
+        class="swiper-parallax-bg"
+      ></div>
+      <swiper-slide>
         <div data-swiper-parallax="-300" class="swiper-slide-title">Slide 1</div>
         <div data-swiper-parallax="-200" class="swiper-slide-subtitle">Subtitle</div>
         <div data-swiper-parallax="-100" class="swiper-slide-text">
@@ -31,8 +29,8 @@
             eros quis feugiat.
           </p>
         </div>
-      </f7-swiper-slide>
-      <f7-swiper-slide>
+      </swiper-slide>
+      <swiper-slide>
         <div data-swiper-parallax="-300" class="swiper-slide-title">Slide 2</div>
         <div data-swiper-parallax="-200" class="swiper-slide-subtitle">Subtitle</div>
         <div data-swiper-parallax="-100" class="swiper-slide-text">
@@ -45,8 +43,8 @@
             eros quis feugiat.
           </p>
         </div>
-      </f7-swiper-slide>
-      <f7-swiper-slide>
+      </swiper-slide>
+      <swiper-slide>
         <div data-swiper-parallax="-300" class="swiper-slide-title">Slide 3</div>
         <div data-swiper-parallax="-200" class="swiper-slide-subtitle">Subtitle</div>
         <div data-swiper-parallax="-100" class="swiper-slide-text">
@@ -59,19 +57,17 @@
             eros quis feugiat.
           </p>
         </div>
-      </f7-swiper-slide>
-    </f7-swiper>
+      </swiper-slide>
+    </swiper-container>
   </f7-page>
 </template>
 <script>
-import { f7Navbar, f7Page, f7Swiper, f7SwiperSlide } from 'framework7-vue';
+import { f7Navbar, f7Page } from 'framework7-vue';
 
 export default {
   components: {
     f7Navbar,
     f7Page,
-    f7Swiper,
-    f7SwiperSlide,
   },
 };
 </script>

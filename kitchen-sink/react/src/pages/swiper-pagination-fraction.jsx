@@ -1,20 +1,20 @@
 import React from 'react';
-import { Navbar, Page, Swiper, SwiperSlide } from 'framework7-react';
+import { Navbar, Page } from 'framework7-react';
 
 export default () => (
   <Page>
     <Navbar title="Pagination Fraction" backLink="Back"></Navbar>
-    <Swiper className="demo-swiper" pagination={{ type: 'fraction' }}>
-      <SwiperSlide>Slide 1</SwiperSlide>
-      <SwiperSlide>Slide 2</SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide>
-      <SwiperSlide>Slide 5</SwiperSlide>
-      <SwiperSlide>Slide 6</SwiperSlide>
-      <SwiperSlide>Slide 7</SwiperSlide>
-      <SwiperSlide>Slide 8</SwiperSlide>
-      <SwiperSlide>Slide 9</SwiperSlide>
-      <SwiperSlide>Slide 10</SwiperSlide>
-    </Swiper>
+    <swiper-container pagination pagination-type="fraction" class="demo-swiper">
+      <swiper-slide>Slide 1</swiper-slide>
+      <swiper-slide>Slide 2</swiper-slide>
+      <swiper-slide>Slide 3</swiper-slide>
+      <swiper-slide>Slide 4</swiper-slide>
+      <swiper-slide>Slide 5</swiper-slide>
+      <swiper-slide>Slide 6</swiper-slide>
+      <swiper-slide>Slide 7</swiper-slide>
+      <swiper-slide>Slide 8</swiper-slide>
+      <swiper-slide>Slide 9</swiper-slide>
+      <swiper-slide>Slide 10</swiper-slide>
+    </swiper-container>
   </Page>
 );

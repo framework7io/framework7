@@ -1,20 +1,20 @@
 import React from 'react';
-import { Navbar, Page, Swiper, SwiperSlide } from 'framework7-react';
+import { Navbar, Page } from 'framework7-react';
 
 export default () => (
   <Page>
     <Navbar title="Nested Swipers" backLink="Back"></Navbar>
-    <Swiper className="demo-swiper" pagination>
-      <SwiperSlide>Horizontal Slide 1</SwiperSlide>
-      <SwiperSlide>
-        <Swiper className="demo-swiper" pagination direction="vertical">
-          <SwiperSlide>Vertical Slide 1</SwiperSlide>
-          <SwiperSlide>Vertical Slide 2</SwiperSlide>
-          <SwiperSlide>Vertical Slide 3</SwiperSlide>
-        </Swiper>
-      </SwiperSlide>
-      <SwiperSlide>Horizontal Slide 3</SwiperSlide>
-      <SwiperSlide>Horizontal Slide 3</SwiperSlide>
-    </Swiper>
+    <swiper-container pagination class="demo-swiper">
+      <swiper-slide>Horizontal Slide 1</swiper-slide>
+      <swiper-slide>
+        <swiper-container pagination direction="vertical" class="demo-swiper">
+          <swiper-slide>Vertical Slide 1</swiper-slide>
+          <swiper-slide>Vertical Slide 2</swiper-slide>
+          <swiper-slide>Vertical Slide 3</swiper-slide>
+        </swiper-container>
+      </swiper-slide>
+      <swiper-slide>Horizontal Slide 3</swiper-slide>
+      <swiper-slide>Horizontal Slide 4</swiper-slide>
+    </swiper-container>
   </Page>
 );

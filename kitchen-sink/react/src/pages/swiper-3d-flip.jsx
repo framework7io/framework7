@@ -1,55 +1,79 @@
 import React from 'react';
-import { Navbar, Page, Swiper, SwiperSlide } from 'framework7-react';
+import { Navbar, Page } from 'framework7-react';
 
 export default () => (
   <Page>
     <Navbar title="3D Flip Effect" backLink="Back"></Navbar>
-    <Swiper className="demo-swiper demo-swiper-cube" effect="flip">
-      <SwiperSlide
+    <swiper-container
+      effect="flip"
+      pagination
+      slides-per-view="auto"
+      centered-slides
+      class="demo-swiper demo-swiper-cube"
+    >
+      <swiper-slide
         style={{
-          backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-800x800-1.jpg)',
+          backgroundImage: `url(https://cdn.framework7.io/placeholder/people-800x800-1.jpg)`,
         }}
-      />
-      <SwiperSlide
+      >
+        Slide 1
+      </swiper-slide>
+      <swiper-slide
         style={{
-          backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-800x800-2.jpg)',
+          backgroundImage: `url(https://cdn.framework7.io/placeholder/people-800x800-2.jpg)`,
         }}
-      />
-      <SwiperSlide
+      >
+        Slide 2
+      </swiper-slide>
+      <swiper-slide
         style={{
-          backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-800x800-3.jpg)',
+          backgroundImage: `url(https://cdn.framework7.io/placeholder/people-800x800-3.jpg)`,
         }}
-      />
-      <SwiperSlide
+      >
+        Slide 3
+      </swiper-slide>
+      <swiper-slide
         style={{
-          backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-800x800-4.jpg)',
+          backgroundImage: `url(https://cdn.framework7.io/placeholder/people-800x800-4.jpg)`,
         }}
-      />
-      <SwiperSlide
+      >
+        Slide 4
+      </swiper-slide>
+      <swiper-slide
         style={{
-          backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-800x800-5.jpg)',
+          backgroundImage: `url(https://cdn.framework7.io/placeholder/people-800x800-5.jpg)`,
         }}
-      />
-      <SwiperSlide
+      >
+        Slide 5
+      </swiper-slide>
+      <swiper-slide
         style={{
-          backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-800x800-6.jpg)',
+          backgroundImage: `url(https://cdn.framework7.io/placeholder/people-800x800-6.jpg)`,
         }}
-      />
-      <SwiperSlide
+      >
+        Slide 6
+      </swiper-slide>
+      <swiper-slide
         style={{
-          backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-800x800-7.jpg)',
+          backgroundImage: `url(https://cdn.framework7.io/placeholder/people-800x800-7.jpg)`,
         }}
-      />
-      <SwiperSlide
+      >
+        Slide 7
+      </swiper-slide>
+      <swiper-slide
         style={{
-          backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-800x800-8.jpg)',
+          backgroundImage: `url(https://cdn.framework7.io/placeholder/people-800x800-8.jpg)`,
         }}
-      />
-      <SwiperSlide
+      >
+        Slide 8
+      </swiper-slide>
+      <swiper-slide
         style={{
-          backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-800x800-9.jpg)',
+          backgroundImage: `url(https://cdn.framework7.io/placeholder/people-800x800-9.jpg)`,
         }}
-      />
-    </Swiper>
+      >
+        Slide 9
+      </swiper-slide>
+    </swiper-container>
   </Page>
 );

@@ -1,96 +1,85 @@
 <template>
   <f7-page style="background: #000">
     <f7-navbar title="Thumbs Gallery" back-link="Back"></f7-navbar>
-    <f7-swiper
-      class="demo-swiper-gallery-top color-theme-white"
+    <swiper-container
+      :navigation="true"
       :space-between="10"
-      navigation
-      :thumbs="{
-        swiper: swiperThumbs,
-      }"
+      :thumbs="{ swiper: `.demo-swiper-gallery-thumbs` }"
+      class="demo-swiper-gallery-top color-white"
     >
-      <f7-swiper-slide
+      <swiper-slide
         style="background-image: url(https://cdn.framework7.io/placeholder/nature-800x800-1.jpg)"
-      />
-      >
-      <f7-swiper-slide
+      ></swiper-slide>
+      <swiper-slide
         style="background-image: url(https://cdn.framework7.io/placeholder/nature-800x800-2.jpg)"
-      />
-      >
-      <f7-swiper-slide
+      ></swiper-slide>
+      <swiper-slide
         style="background-image: url(https://cdn.framework7.io/placeholder/nature-800x800-3.jpg)"
-      />
-      >
-      <f7-swiper-slide
+      ></swiper-slide>
+      <swiper-slide
         style="background-image: url(https://cdn.framework7.io/placeholder/nature-800x800-4.jpg)"
-      />
-      >
-      <f7-swiper-slide
+      ></swiper-slide>
+      <swiper-slide
         style="background-image: url(https://cdn.framework7.io/placeholder/nature-800x800-5.jpg)"
-      />
-      >
-      <f7-swiper-slide
+      ></swiper-slide>
+      <swiper-slide
         style="background-image: url(https://cdn.framework7.io/placeholder/nature-800x800-6.jpg)"
-      />
-      >
-    </f7-swiper>
-    <f7-swiper
+      ></swiper-slide>
+    </swiper-container>
+    <swiper-container
+      slides-per-view="4"
+      space-between="10"
+      free-mode
+      watch-slides-progress
+      watch-slides-visibility
       class="demo-swiper-gallery-thumbs"
-      :slides-per-view="4"
-      :space-between="10"
-      :free-mode="true"
-      :watch-slides-progress="true"
-      :watch-slides-visibility="true"
-      @swiper="swiperThumbs = $event"
     >
-      <f7-swiper-slide>
+      <swiper-slide>
         <div
           style="background-image: url(https://cdn.framework7.io/placeholder/nature-800x800-1.jpg)"
           class="swiper-slide-pic"
-        />
-      </f7-swiper-slide>
-      <f7-swiper-slide>
+        ></div>
+      </swiper-slide>
+      <swiper-slide>
         <div
           style="background-image: url(https://cdn.framework7.io/placeholder/nature-800x800-2.jpg)"
           class="swiper-slide-pic"
-        />
-      </f7-swiper-slide>
-      <f7-swiper-slide>
+        ></div>
+      </swiper-slide>
+      <swiper-slide>
         <div
           style="background-image: url(https://cdn.framework7.io/placeholder/nature-800x800-3.jpg)"
           class="swiper-slide-pic"
-        />
-      </f7-swiper-slide>
-      <f7-swiper-slide>
+        ></div>
+      </swiper-slide>
+      <swiper-slide>
         <div
           style="background-image: url(https://cdn.framework7.io/placeholder/nature-800x800-4.jpg)"
           class="swiper-slide-pic"
-        />
-      </f7-swiper-slide>
-      <f7-swiper-slide>
+        ></div>
+      </swiper-slide>
+      <swiper-slide>
         <div
           style="background-image: url(https://cdn.framework7.io/placeholder/nature-800x800-5.jpg)"
           class="swiper-slide-pic"
-        />
-      </f7-swiper-slide>
-      <f7-swiper-slide>
+        ></div>
+      </swiper-slide>
+      <swiper-slide>
         <div
           style="background-image: url(https://cdn.framework7.io/placeholder/nature-800x800-6.jpg)"
           class="swiper-slide-pic"
-        />
-      </f7-swiper-slide>
-    </f7-swiper>
+        ></div>
+      </swiper-slide>
+    </swiper-container>
   </f7-page>
 </template>
 <script>
-import { f7Navbar, f7Page, f7Swiper, f7SwiperSlide } from 'framework7-vue';
+import { f7Navbar, f7Page } from 'framework7-vue';
 
 export default {
   components: {
     f7Navbar,
     f7Page,
-    f7Swiper,
-    f7SwiperSlide,
   },
   data() {
     return {
