@@ -119,7 +119,7 @@ export default {
   on: {
     pageBeforeRemove(page) {
       const app = this;
-      page.$el.find('.swiper-init, .tabs-swipeable-wrap').each((swiperEl) => {
+      page.$el.find('.tabs-swipeable-wrap').each((swiperEl) => {
         app.swiper.destroy(swiperEl);
       });
     },
@@ -131,13 +131,13 @@ export default {
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.swiper-init, .tabs-swipeable-wrap').each((swiperEl) => {
+      page.$el.find('.tabs-swipeable-wrap').each((swiperEl) => {
         initSwiper.call(app, swiperEl);
       });
     },
     pageReinit(page) {
       const app = this;
-      page.$el.find('.swiper-init, .tabs-swipeable-wrap').each((swiperEl) => {
+      page.$el.find('.tabs-swipeable-wrap').each((swiperEl) => {
         const swiper = app.swiper.get(swiperEl);
         if (swiper && swiper.update) swiper.update();
       });
@@ -145,7 +145,7 @@ export default {
     tabMounted(tabEl) {
       const app = this;
       $(tabEl)
-        .find('.swiper-init, .tabs-swipeable-wrap')
+        .find('.tabs-swipeable-wrap')
         .each((swiperEl) => {
           initSwiper.call(app, swiperEl);
         });
@@ -153,7 +153,7 @@ export default {
     tabShow(tabEl) {
       const app = this;
       $(tabEl)
-        .find('.swiper-init, .tabs-swipeable-wrap')
+        .find('.tabs-swipeable-wrap')
         .each((swiperEl) => {
           const swiper = app.swiper.get(swiperEl);
           if (swiper && swiper.update) swiper.update();
@@ -162,25 +162,13 @@ export default {
     tabBeforeRemove(tabEl) {
       const app = this;
       $(tabEl)
-        .find('.swiper-init, .tabs-swipeable-wrap')
+        .find('.tabs-swipeable-wrap')
         .each((swiperEl) => {
           app.swiper.destroy(swiperEl);
         });
     },
   },
   vnode: {
-    'swiper-init': {
-      insert(vnode) {
-        const app = this;
-        const swiperEl = vnode.elm;
-        initSwiper.call(app, swiperEl);
-      },
-      destroy(vnode) {
-        const app = this;
-        const swiperEl = vnode.elm;
-        app.swiper.destroy(swiperEl);
-      },
-    },
     'tabs-swipeable-wrap': {
       insert(vnode) {
         const app = this;
