@@ -37,6 +37,7 @@ export default {
       renderStandalone: undefined,
 
       swiper: {
+        cssMode: false,
         initialSlide: 0,
         spaceBetween: 20,
         speed: 300,
