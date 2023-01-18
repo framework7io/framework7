@@ -313,7 +313,8 @@ class Router extends Framework7Class {
         if (navEl.isSliding) {
           if (navEl.isSubnavbar && oldIsLarge) {
             $el.transform(
-              `translate3d(${offset * progress
+              `translate3d(${
+                offset * progress
               }px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)`,
             );
           } else {

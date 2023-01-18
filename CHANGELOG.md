@@ -2,6 +2,19 @@
 
 # Change Log
 
+# [7.1.2](https://github.com/framework7io/framework7/compare/v7.1.1...v7.1.2) (2023-01-18)
+
+### Bug Fixes
+
+- **dialog:** remove margin-left on vertical buttons ([2645067](https://github.com/framework7io/framework7/commit/26450678cfbd37047e65abaaeb28d5a2f5648fc7)), closes [#4118](https://github.com/framework7io/framework7/issues/4118)
+- **picker:** fixed issue with scrolling on chrome ([816898d](https://github.com/framework7io/framework7/commit/816898dd4057cf7226522d897b832af90e7c6a7a))
+- **router:** initial url in somecase ([#4122](https://github.com/framework7io/framework7/issues/4122)) ([fe800cf](https://github.com/framework7io/framework7/commit/fe800cfdff6cf3377c186a3d3a12a6e8be9dcd5a))
+- **types:** add notification `render` method arguments ([#4117](https://github.com/framework7io/framework7/issues/4117)) ([2d17f7a](https://github.com/framework7io/framework7/commit/2d17f7a16217af23966d4f09e7aef6b592d74384))
+
+### Features
+
+- **photo-browser:** disable Swiper's CSS mode by default ([def98a1](https://github.com/framework7io/framework7/commit/def98a131f5000905d8af4d6d3b8eebb0deb5df3))
+
 # [7.1.1](https://github.com/framework7io/framework7/compare/v7.0.9...v7.1.1) (2022-12-16)
 
 ### Bug Fixes
