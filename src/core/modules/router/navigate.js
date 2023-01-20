@@ -372,7 +372,6 @@ function forward(router, el, forwardOptions = {}) {
 
   // Update router history
   const url = options.route.url;
-
   if (options.history) {
     if (
       ((options.reloadCurrent || (reloadDetail && otherDetailPageEl)) && router.history.length) >
@@ -381,14 +380,23 @@ function forward(router, el, forwardOptions = {}) {
     ) {
       if (reloadDetail && detailsInBetweenRemoved > 0) {
         router.history = router.history.slice(0, router.history.length - detailsInBetweenRemoved);
+        router.propsHistory = router.propsHistory.slice(
+          0,
+          router.propsHistory.length - detailsInBetweenRemoved,
+        );
       }
       router.history[router.history.length - (options.reloadPrevious ? 2 : 1)] = url;
+      router.propsHistory[router.propsHistory.length - (options.reloadPrevious ? 2 : 1)] =
+        options.props || {};
     } else if (options.reloadPrevious) {
       router.history[router.history.length - 2] = url;
+      router.propsHistory[router.propsHistory.length - 2] = options.props || {};
     } else if (options.reloadAll) {
       router.history = [url];
+      router.propsHistory = [options.props || {}];
     } else {
       router.history.push(url);
+      router.propsHistory.push(options.props || {});
     }
   }
   router.saveHistory();

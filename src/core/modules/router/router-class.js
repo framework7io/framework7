@@ -46,6 +46,7 @@ class Router extends Framework7Class {
         params: view.params,
         routes: view.routes,
         history: view.history,
+        propsHistory: [],
         scrollHistory: view.scrollHistory,
         cache: app.cache,
         dynamicNavbar: app.theme === 'ios' && view.params.iosDynamicNavbar,
