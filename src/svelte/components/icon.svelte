@@ -47,7 +47,7 @@
     }
 
     if (prop === 'icon') {
-      classes[value] = true;
+      classes = { icon: true, [value]: true };
     }
   } else {
     classes = {
