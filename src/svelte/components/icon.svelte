@@ -38,16 +38,26 @@
   }
 
   $: if (themeIcon) {
+    classes = {
+      icon: true,
+    };
     const parts = themeIcon.split(':');
     const prop = parts[0];
     const value = parts[1];
     if (prop === 'material' || prop === 'f7') {
       classes['material-icons'] = prop === 'material';
       classes['f7-icons'] = prop === 'f7';
-    }
-
-    if (prop === 'icon') {
-      classes[value] = true;
+      if (prop === 'icon') {
+        classes[value] = true;
+      }
+    } else {
+      if (themeIcon.includes(':')) {
+        themeIcon = themeIcon
+          .split(' ')
+          .map((el) => el.replace('icon:', ''))
+          .join(' ');
+      }
+      classes[themeIcon] = true;
     }
   } else {
     classes = {
