@@ -289,7 +289,7 @@ class Panel extends Framework7Class {
   onOpen(modifyHtmlClasses = true) {
     const panel = this;
     // eslint-disable-next-line
-    panel._openTimeStamp = new Date().getTime();
+    panel._openTransitionStarted = false;
     const app = panel.app;
 
     panel.opened = true;
@@ -442,6 +442,13 @@ class Panel extends Framework7Class {
     }
     const transitionEndTarget = effect === 'reveal' ? $viewEl : $el;
 
+    function panelTransitionStart() {
+      transitionEndTarget.transitionStart(() => {
+        // eslint-disable-next-line
+        panel._openTransitionStarted = true;
+      });
+    }
+
     function panelTransitionEnd() {
       transitionEndTarget.transitionEnd((e) => {
         if ($(e.target).is(transitionEndTarget)) {
@@ -457,6 +464,7 @@ class Panel extends Framework7Class {
       if ($backdropEl) {
         $backdropEl.removeClass('not-animated');
       }
+      panelTransitionStart();
       panelTransitionEnd();
       $el.removeClass('panel-out not-animated').addClass('panel-in');
       panel.onOpen();
@@ -488,8 +496,7 @@ class Panel extends Framework7Class {
     }
     const transitionEndTarget = effect === 'reveal' ? $viewEl : $el;
     // eslint-disable-next-line
-    const openTimeDiff = new Date().getTime() - panel._openTimeStamp;
-    if (openTimeDiff < 16) {
+    if (!panel._openTransitionStarted) {
       // eslint-disable-next-line
       animate = false;
     }
