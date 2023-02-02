@@ -2,7 +2,7 @@
 
 # Change Log
 
-# [7.1.3](https://github.com/framework7io/framework7/compare/v7.1.2...v7.1.3) (2023-02-02)
+# [7.1.4](https://github.com/framework7io/framework7/compare/v7.1.2...v7.1.4) (2023-02-02)
 
 ### Bug Fixes
 

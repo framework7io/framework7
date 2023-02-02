@@ -1,6 +1,6 @@
 {
   "name": "framework7-svelte",
-  "version": "7.1.3",
+  "version": "7.1.4",
   "description": "Build full featured iOS & Android apps using Framework7 & Svelte",
   "type": "module",
   "svelte": "./framework7-svelte.js",

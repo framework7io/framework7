@@ -66,7 +66,7 @@
     "Samsung >= 12"
   ],
   "dependencies": {
-    "dom7": "^4.0.4",
+    "dom7": "^4.0.5",
     "htm": "^3.1.1",
     "path-to-regexp": "^6.2.1",
     "skeleton-elements": "^4.0.1",
