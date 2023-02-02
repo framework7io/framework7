@@ -2,6 +2,15 @@
 
 # Change Log
 
+# [7.1.3](https://github.com/framework7io/framework7/compare/v7.1.2...v7.1.3) (2023-02-02)
+
+### Bug Fixes
+
+- **panel:** fix panel close routine if it was closed immediately ([#4127](https://github.com/framework7io/framework7/issues/4127)) ([74aa9d8](https://github.com/framework7io/framework7/commit/74aa9d88c54697b95f8e60985438cf323a228c50)), closes [#4108](https://github.com/framework7io/framework7/issues/4108)
+- **popover:** disable safe areas in popover ([5d5bce6](https://github.com/framework7io/framework7/commit/5d5bce64f3f9c4b90fc473870ace9efc342a1c0c))
+- **router:** keep router props history if page was loaded with passed `props` ([5ad3d8a](https://github.com/framework7io/framework7/commit/5ad3d8a995ab303a76c0f50ceae58af39426c8dd))
+- **svelte:** fix custom icon classes ([06b406c](https://github.com/framework7io/framework7/commit/06b406c7803592892deb7b55b15e34530b6f2269)), closes [#4126](https://github.com/framework7io/framework7/issues/4126)
+
 # [7.1.2](https://github.com/framework7io/framework7/compare/v7.1.1...v7.1.2) (2023-01-18)
 
 ### Bug Fixes
