@@ -65,6 +65,7 @@
 
   // Inputs
   export let checkbox = undefined;
+  export let checkboxIcon = undefined;
   export let radio = undefined;
   export let radioIcon = undefined;
   export let checked = undefined;
@@ -121,6 +122,8 @@
     {
       'item-checkbox': checkbox,
       'item-radio': radio,
+      'item-checkbox-icon-start': checkbox && checkboxIcon === 'start',
+      'item-checkbox-icon-end': checkbox && checkboxIcon === 'end',
       'item-radio-icon-start': radio && radioIcon === 'start',
       'item-radio-icon-end': radio && radioIcon === 'end',
     },

@@ -236,6 +236,7 @@ export default {
     checkbox: Boolean,
     radio: Boolean,
     radioIcon: String,
+    checkboxIcon: String,
     checked: Boolean,
     indeterminate: Boolean,
     name: String,
@@ -478,6 +479,8 @@ export default {
         {
           'item-checkbox': props.checkbox,
           'item-radio': props.radio,
+          'item-checkbox-icon-start': props.checkbox && props.checkboxIcon === 'start',
+          'item-checkbox-icon-end': props.checkbox && props.checkboxIcon === 'end',
           'item-radio-icon-start': props.radio && props.radioIcon === 'start',
           'item-radio-icon-end': props.radio && props.radioIcon === 'end',
         },

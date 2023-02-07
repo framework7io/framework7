@@ -19,6 +19,19 @@
       <f7-list-item checkbox title="Drinks" name="demo-checkbox"></f7-list-item>
     </f7-list>
 
+    <f7-list strong-ios outline-ios dividers-ios>
+      <f7-list-item
+        checkbox
+        checkbox-icon="end"
+        title="Books"
+        name="demo-checkbox"
+        checked
+      ></f7-list-item>
+      <f7-list-item checkbox checkbox-icon="end" title="Movies" name="demo-checkbox"></f7-list-item>
+      <f7-list-item checkbox checkbox-icon="end" title="Food" name="demo-checkbox"></f7-list-item>
+      <f7-list-item checkbox checkbox-icon="end" title="Drinks" name="demo-checkbox"></f7-list-item>
+    </f7-list>
+
     <f7-block-title>Indeterminate State</f7-block-title>
     <f7-list strong-ios outline-ios dividers-ios>
       <f7-list-item

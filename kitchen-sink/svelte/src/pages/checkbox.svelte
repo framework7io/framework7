@@ -43,6 +43,13 @@
     <ListItem checkbox title="Drinks" name="demo-checkbox" />
   </List>
 
+  <List strongIos outlineIos dividersIos>
+    <ListItem checkbox checkboxIcon="end" title="Books" name="demo-checkbox" checked />
+    <ListItem checkbox checkboxIcon="end" title="Movies" name="demo-checkbox" />
+    <ListItem checkbox checkboxIcon="end" title="Food" name="demo-checkbox" />
+    <ListItem checkbox checkboxIcon="end" title="Drinks" name="demo-checkbox" />
+  </List>
+
   <BlockTitle>Indeterminate State</BlockTitle>
   <List strongIos outlineIos dividersIos>
     <ListItem

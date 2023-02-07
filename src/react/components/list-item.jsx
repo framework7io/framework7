@@ -56,6 +56,7 @@ import { SmartSelect } from 'framework7/types';
   noChevron? : boolean
   chevronCenter? : boolean
   checkbox? : boolean
+  checkboxIcon? : boolean
   radio? : boolean
   radioIcon? : string
   checked? : boolean
@@ -121,6 +122,7 @@ const ListItemContent = ({
     after,
     badge,
     badgeColor,
+    checkboxIcon,
     radioIcon,
     swipeout,
     sortable,

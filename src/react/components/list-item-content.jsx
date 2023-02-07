@@ -25,6 +25,7 @@ const ListItemContent = (props) => {
     after,
     badge,
     badgeColor,
+    checkboxIcon,
     radioIcon,
     swipeout,
     sortable,
@@ -193,6 +194,8 @@ const ListItemContent = (props) => {
     {
       'item-checkbox': checkbox,
       'item-radio': radio,
+      'item-checkbox-icon-start': checkbox && checkboxIcon === 'start',
+      'item-checkbox-icon-end': checkbox && checkboxIcon === 'end',
       'item-radio-icon-start': radio && radioIcon === 'start',
       'item-radio-icon-end': radio && radioIcon === 'end',
     },
