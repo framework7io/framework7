@@ -47,7 +47,7 @@ class Framework7 extends Framework7Class {
       lazyModulesPath: null,
       initOnDeviceReady: true,
       init: true,
-      darkMode: false,
+      darkMode: undefined,
       iosTranslucentBars: true,
       iosTranslucentModals: true,
       component: undefined,
@@ -274,7 +274,11 @@ class Framework7 extends Framework7Class {
       }
 
       // Auto Dark Mode
-      app.setDarkMode(app.params.darkMode);
+      if (typeof app.params.darkMode === 'undefined') {
+        app.darkMode = $('html').hasClass('dark');
+      } else {
+        app.setDarkMode(app.params.darkMode);
+      }
 
       // Watch for online/offline state
       const window = getWindow();
