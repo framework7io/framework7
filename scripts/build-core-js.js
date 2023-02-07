@@ -215,76 +215,8 @@ async function umdBundle({ components } = {}) {
     });
 }
 
-async function umdCore() {
-  const config = getConfig();
-  const env = process.env.NODE_ENV || 'development';
-  const format = process.env.FORMAT || config.format || 'umd';
-  const output = path.resolve(`${getOutput()}`, 'core');
-
-  return rollup({
-    input: './src/core/framework7.js',
-    plugins: [
-      replace({
-        delimiters: ['', ''],
-        'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
-        'process.env.FORMAT': JSON.stringify(format),
-        '//IMPORT_COMPONENTS': '',
-        '//INSTALL_COMPONENTS': '',
-        '//IMPORT_HELPERS': '',
-        '//NAMED_EXPORT': '',
-        'export { $ as Dom7, utils, getDevice, getSupport, createStore, $jsx };': '',
-      }),
-      nodeResolve({ mainFields: ['module', 'main', 'jsnext'] }),
-      babel({ babelHelpers: 'bundled' }),
-      commonjs(),
-    ],
-    onwarn(warning, warn) {
-      const ignore = ['EVAL'];
-      if (warning.code && ignore.indexOf(warning.code) >= 0) {
-        return;
-      }
-      warn(warning);
-    },
-  })
-    .then((bundle) => {
-      // eslint-disable-line
-      return bundle.write({
-        strict: true,
-        file: `${output}/framework7.js`,
-        format: 'umd',
-        name: 'Framework7',
-        sourcemap: env === 'production',
-        sourcemapFile: `${output}/framework7.js.map`,
-        banner,
-      });
-    })
-    .then(async (bundle) => {
-      if (env === 'development') {
-        return;
-      }
-      const result = bundle.output[0];
-      const minified = await minify(result.code, {
-        sourceMap: {
-          content: env === 'production' ? result.map : undefined,
-          filename: env === 'production' ? 'framework7.min.js' : undefined,
-          url: `framework7.min.js.map`,
-        },
-        output: {
-          preamble: banner,
-        },
-      });
-
-      fs.writeFileSync(`${output}/framework7.min.js`, minified.code);
-      fs.writeFileSync(`${output}/framework7.min.js.map`, minified.map);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
 async function buildJs(cb) {
   const config = getConfig();
-  const env = process.env.NODE_ENV || 'development';
 
   const components = [];
   config.components.forEach((name) => {
@@ -312,7 +244,6 @@ async function buildJs(cb) {
   }
 
   if (!process.env.CORE_BUILD_ONLY_MODULES) {
-    if (env !== 'development') await umdCore();
     await umdBundle({ components });
   }
 

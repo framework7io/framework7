@@ -446,11 +446,11 @@
     "url": "https://www.patreon.com/framework7"
   },
   "dependencies": {
-    "dom7": "^4.0.4",
+    "dom7": "^4.0.6",
     "htm": "^3.1.1",
     "path-to-regexp": "^6.2.0",
     "skeleton-elements": "^4.0.1",
     "ssr-window": "^4.0.2",
-    "swiper": "^9.0.0-beta.21"
+    "swiper": "^9.0.3"
   }
 }

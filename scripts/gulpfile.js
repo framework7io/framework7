@@ -12,7 +12,6 @@ const buildCoreJs = require('./build-core-js.js');
 const buildCoreTypings = require('./build-core-typings.js');
 const buildCoreLess = require('./build-core-styles.js');
 const buildCoreComponents = require('./build-core-components.js');
-const buildCoreLazyComponents = require('./build-core-lazy-components.js');
 
 const buildVue = require('./build-vue.js');
 const buildVueTypings = require('./build-vue-typings.js');
@@ -32,7 +31,6 @@ gulp.task('core-js', buildCoreJs);
 gulp.task('core-typings', buildCoreTypings);
 gulp.task('core-styles', buildCoreLess);
 gulp.task('core-components', buildCoreComponents);
-gulp.task('core-lazy-components', buildCoreLazyComponents);
 
 gulp.task('react-clean', (cb) => buildClean('react', cb));
 gulp.task('react', buildReact);
@@ -52,7 +50,6 @@ gulp.task(
   gulp.series([
     'core-clean',
     'core-material-color-utils',
-    ...(env === 'development' ? [] : ['core-lazy-components']),
     'core-components',
     'core-js',
     'core-typings',
@@ -71,23 +68,9 @@ const watch = {
     gulp.watch('./src/core/**/*.less', gulp.series('core-styles', 'core-components'));
   },
   core() {
-    gulp.watch(
-      ['./src/core/**/*.js'],
-      gulp.series([
-        'core-js',
-        'core-components',
-        ...(env === 'development' ? [] : ['core-lazy-components']),
-      ]),
-    );
+    gulp.watch(['./src/core/**/*.js'], gulp.series(['core-js', 'core-components']));
     gulp.watch(['./src/core/**/*.d.ts'], gulp.series('core-typings'));
-    gulp.watch(
-      './src/**/**/*.less',
-      gulp.series([
-        'core-styles',
-        'core-components',
-        ...(env === 'development' ? [] : ['core-lazy-components']),
-      ]),
-    );
+    gulp.watch('./src/**/**/*.less', gulp.series(['core-styles', 'core-components']));
   },
   react() {
     gulp.watch(['./src/core/**/*.js'], gulp.series('core-js', 'core-components'));

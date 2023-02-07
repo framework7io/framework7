@@ -4,6 +4,7 @@
 /* eslint no-param-reassign: ["off"] */
 
 const exec = require('exec-sh');
+const path = require('path');
 const bannerVue = require('./banners/vue.js');
 const getOutput = require('./get-output.js');
 const fs = require('./utils/fs-extra.js');
