@@ -93,6 +93,8 @@ export namespace SmartSelect {
     optionIconIos?: string;
     /** Same as `optionIcon` but will apply only when MD theme is active */
     optionIconMd?: string;
+    /** Specify checkbox/radio icon position, can be 'start' or 'end' (default 'start') */
+    inputIconPosition?: string;
 
     /** Function to render smart select page, must return full page HTML string */
     renderPage?: (items: any[]) => string;

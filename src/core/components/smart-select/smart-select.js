@@ -36,6 +36,7 @@ export default {
       navbarColorTheme: undefined,
       routableModals: false,
       url: 'select/',
+      inputIconPosition: 'start',
       cssClass: '',
       /*
         Custom render functions

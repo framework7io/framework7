@@ -325,6 +325,8 @@ class SmartSelect extends Framework7Class {
       const optionIconIos =
         theme === 'ios' && (optionData.optionIconIos || ss.params.optionIconIos);
       const optionIconMd = theme === 'md' && (optionData.optionIconMd || ss.params.optionIconMd);
+      const optionInputIconPosition =
+        optionData.inputIconPosition || ss.params.inputIconPosition || '';
 
       const optionHasMedia = optionImage || optionIcon || optionIconIos || optionIconMd;
       const optionColor = optionData.optionColor;
@@ -353,6 +355,7 @@ class SmartSelect extends Framework7Class {
         icon: optionIcon,
         iconIos: optionIconIos,
         iconMd: optionIconMd,
+        inputIconPosition: optionInputIconPosition,
         color: optionColor,
         className: optionClassName,
         disabled: $optionEl[0].disabled,
@@ -432,7 +435,11 @@ class SmartSelect extends Framework7Class {
 
       itemHtml = (
         <li class={`${item.className || ''}${disabled ? ' disabled' : ''}`}>
-          <label class={`item-${item.inputType} item-content`}>
+          <label
+            class={`item-${item.inputType} ${
+              item.inputIconPosition ? `item-${item.inputType}-icon-${item.inputIconPosition}` : ''
+            } item-content`}
+          >
             <input
               type={item.inputType}
               name={item.inputName}
