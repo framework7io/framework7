@@ -150,10 +150,6 @@
     "./components/pull-to-refresh/less": "./components/pull-to-refresh/pull-to-refresh.less",
     "./components/pull-to-refresh/css": "./components/pull-to-refresh/pull-to-refresh.css",
     "./components/pull-to-refresh/css/rtl": "./components/pull-to-refresh/pull-to-refresh-rtl.css",
-    "./components/lazy": "./components/lazy/lazy.js",
-    "./components/lazy/less": "./components/lazy/lazy.less",
-    "./components/lazy/css": "./components/lazy/lazy.css",
-    "./components/lazy/css/rtl": "./components/lazy/lazy-rtl.css",
     "./components/data-table": "./components/data-table/data-table.js",
     "./components/data-table/less": "./components/data-table/data-table.less",
     "./components/data-table/css": "./components/data-table/data-table.css",
@@ -202,10 +198,6 @@
     "./components/skeleton/less": "./components/skeleton/skeleton.less",
     "./components/skeleton/css": "./components/skeleton/skeleton.css",
     "./components/skeleton/css/rtl": "./components/skeleton/skeleton-rtl.css",
-    "./components/menu": "./components/menu/menu.js",
-    "./components/menu/less": "./components/menu/menu.less",
-    "./components/menu/css": "./components/menu/menu.css",
-    "./components/menu/css/rtl": "./components/menu/menu-rtl.css",
     "./components/color-picker": "./components/color-picker/color-picker.js",
     "./components/color-picker/less": "./components/color-picker/color-picker.less",
     "./components/color-picker/css": "./components/color-picker/color-picker.css",
@@ -340,9 +332,6 @@
       "components/pull-to-refresh": [
         "./components/pull-to-refresh/pull-to-refresh"
       ],
-      "components/lazy": [
-        "./components/lazy/lazy.d.ts"
-      ],
       "components/data-table": [
         "./components/data-table/data-table.d.ts"
       ],
@@ -376,9 +365,6 @@
       "components/skeleton": [
         "./components/skeleton/skeleton.d.ts"
       ],
-      "components/menu": [
-        "./components/menu/menu.d.ts"
-      ],
       "components/color-picker": [
         "./components/color-picker/color-picker.d.ts"
       ],
@@ -387,9 +373,6 @@
       ],
       "components/text-editor": [
         "./components/text-editor/text-editor.d.ts"
-      ],
-      "components/elevation": [
-        "./components/elevation/elevation.d.ts"
       ],
       "components/typography": [
         "./components/typography/typography.d.ts"
