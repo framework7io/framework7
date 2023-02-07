@@ -109,7 +109,7 @@ async function buildLazyComponentsLess(components, rtl, cb) {
       console.log(err);
     }
     fs.writeFileSync(
-      `${output}/components/${component}/${component}${rtl ? '-rtl' : ''}.css`,
+      path.resolve(output, `components/${component}/${component}${rtl ? '-rtl' : ''}.css`),
       cssContent,
     );
 
@@ -121,7 +121,8 @@ async function buildLazyComponentsLess(components, rtl, cb) {
 function buildLazyComponentsJs(components, cb) {
   const env = process.env.NODE_ENV || 'development';
   const format = 'umd';
-  const output = `${getOutput()}/core`;
+  const output = path.resolve(`${getOutput()}`, `core`);
+  const outputComponents = path.resolve(output, 'components');
 
   const componentsToProcess = components.filter((component) => {
     // eslint-disable-line
@@ -160,13 +161,13 @@ function buildLazyComponentsJs(components, cb) {
       // eslint-disable-line
       return bundle.write({
         strict: true,
-        dir: `${output}/components/`,
+        dir: outputComponents,
         format: 'es',
         exports: 'default',
       });
     })
     .then(() => {
-      const files = fs.readdirSync(`${output}/components/`);
+      const files = fs.readdirSync(outputComponents);
       const filesToProcess = files.filter((fileName) => {
         // eslint-disable-line
         return (
@@ -191,7 +192,7 @@ function buildLazyComponentsJs(components, cb) {
       )[0];
       if (babelHelpersFile) {
         babelHelpersContent = fs
-          .readFileSync(`${output}/components/${babelHelpersFile}`, 'utf-8')
+          .readFileSync(path.resolve(outputComponents, `${babelHelpersFile}`), 'utf-8')
           .split('\n')
           .filter((line) => line.indexOf('export {') < 0 && line.trim().length > 0)
           .map((line) => `  ${line}`)
@@ -202,7 +203,7 @@ function buildLazyComponentsJs(components, cb) {
       filesToProcess.forEach(async (fileName) => {
         let fileIntro = intro;
         let fileContent = fs
-          .readFileSync(`${output}/components/${fileName}`)
+          .readFileSync(path.resolve(outputComponents, `${fileName}`))
           .split('\n')
           .filter((line) => {
             if (
@@ -253,7 +254,10 @@ function buildLazyComponentsJs(components, cb) {
         fileContent = `(${fileContent}(Framework7, typeof Framework7AutoInstallComponent === 'undefined' ? undefined : Framework7AutoInstallComponent))`;
 
         fs.writeFileSync(
-          `${output}/components/${fileName.split('.js')[0]}/${fileName.replace('.js', '.lazy.js')}`,
+          path.resolve(
+            outputComponents,
+            `${fileName.split('.js')[0]}/${fileName.replace('.js', '.lazy.js')}`,
+          ),
           `${fileContent}\n`,
         );
 
@@ -262,7 +266,7 @@ function buildLazyComponentsJs(components, cb) {
       });
 
       [...filesToRemove, ...filesToProcess].forEach((fileName) => {
-        fs.unlinkSync(`${output}/components/${fileName}`);
+        fs.unlinkSync(path.resolve(outputComponents, fileName));
       });
     })
     .catch((err) => {

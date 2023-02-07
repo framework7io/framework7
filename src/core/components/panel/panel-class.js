@@ -288,6 +288,8 @@ class Panel extends Framework7Class {
 
   onOpen(modifyHtmlClasses = true) {
     const panel = this;
+    // eslint-disable-next-line
+    panel._openTransitionStarted = false;
     const app = panel.app;
 
     panel.opened = true;
@@ -440,6 +442,13 @@ class Panel extends Framework7Class {
     }
     const transitionEndTarget = effect === 'reveal' ? $viewEl : $el;
 
+    function panelTransitionStart() {
+      transitionEndTarget.transitionStart(() => {
+        // eslint-disable-next-line
+        panel._openTransitionStarted = true;
+      });
+    }
+
     function panelTransitionEnd() {
       transitionEndTarget.transitionEnd((e) => {
         if ($(e.target).is(transitionEndTarget)) {
@@ -455,6 +464,7 @@ class Panel extends Framework7Class {
       if ($backdropEl) {
         $backdropEl.removeClass('not-animated');
       }
+      panelTransitionStart();
       panelTransitionEnd();
       $el.removeClass('panel-out not-animated').addClass('panel-in');
       panel.onOpen();
@@ -472,7 +482,6 @@ class Panel extends Framework7Class {
 
   close(animate = true) {
     const panel = this;
-
     const { effect, $el, $backdropEl, opened, $containerEl } = panel;
     if (!opened || $el.hasClass('panel-in-breakpoint') || !$el.hasClass('panel-in')) return panel;
 
@@ -486,6 +495,11 @@ class Panel extends Framework7Class {
       $viewEl.add($containerEl.children('.page-content, .tabs'));
     }
     const transitionEndTarget = effect === 'reveal' ? $viewEl : $el;
+    // eslint-disable-next-line
+    if (!panel._openTransitionStarted) {
+      // eslint-disable-next-line
+      animate = false;
+    }
 
     function transitionEnd() {
       if ($el.hasClass('panel-out')) {

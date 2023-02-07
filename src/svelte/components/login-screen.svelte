@@ -11,7 +11,7 @@
   let className = undefined;
   export { className as class };
 
-  export let style;
+  export let style = '';
   export let opened = undefined;
   export let animate = undefined;
   export let containerEl = undefined;

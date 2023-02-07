@@ -10,7 +10,8 @@
 
   let className = undefined;
   export { className as class };
-  export let style;
+
+  export let style = '';
   export let tabletFullscreen = undefined;
   export let opened = undefined;
   export let animate = undefined;

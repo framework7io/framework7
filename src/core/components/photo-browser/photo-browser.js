@@ -25,6 +25,7 @@ export default {
       routableModals: false,
       virtualSlides: true,
       lazy: true,
+      closeByBackdropClick: true,
 
       renderNavbar: undefined,
       renderToolbar: undefined,
@@ -37,6 +38,7 @@ export default {
       renderStandalone: undefined,
 
       swiper: {
+        cssMode: false,
         initialSlide: 0,
         spaceBetween: 20,
         speed: 300,

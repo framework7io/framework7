@@ -2,6 +2,56 @@
 
 # Change Log
 
+# [7.1.4](https://github.com/framework7io/framework7/compare/v7.1.2...v7.1.4) (2023-02-02)
+
+### Bug Fixes
+
+- **panel:** fix panel close routine if it was closed immediately ([#4127](https://github.com/framework7io/framework7/issues/4127)) ([74aa9d8](https://github.com/framework7io/framework7/commit/74aa9d88c54697b95f8e60985438cf323a228c50)), closes [#4108](https://github.com/framework7io/framework7/issues/4108)
+- **popover:** disable safe areas in popover ([5d5bce6](https://github.com/framework7io/framework7/commit/5d5bce64f3f9c4b90fc473870ace9efc342a1c0c))
+- **router:** keep router props history if page was loaded with passed `props` ([5ad3d8a](https://github.com/framework7io/framework7/commit/5ad3d8a995ab303a76c0f50ceae58af39426c8dd))
+- **svelte:** fix custom icon classes ([06b406c](https://github.com/framework7io/framework7/commit/06b406c7803592892deb7b55b15e34530b6f2269)), closes [#4126](https://github.com/framework7io/framework7/issues/4126)
+
+# [7.1.2](https://github.com/framework7io/framework7/compare/v7.1.1...v7.1.2) (2023-01-18)
+
+### Bug Fixes
+
+- **dialog:** remove margin-left on vertical buttons ([2645067](https://github.com/framework7io/framework7/commit/26450678cfbd37047e65abaaeb28d5a2f5648fc7)), closes [#4118](https://github.com/framework7io/framework7/issues/4118)
+- **picker:** fixed issue with scrolling on chrome ([816898d](https://github.com/framework7io/framework7/commit/816898dd4057cf7226522d897b832af90e7c6a7a))
+- **router:** initial url in somecase ([#4122](https://github.com/framework7io/framework7/issues/4122)) ([fe800cf](https://github.com/framework7io/framework7/commit/fe800cfdff6cf3377c186a3d3a12a6e8be9dcd5a))
+- **types:** add notification `render` method arguments ([#4117](https://github.com/framework7io/framework7/issues/4117)) ([2d17f7a](https://github.com/framework7io/framework7/commit/2d17f7a16217af23966d4f09e7aef6b592d74384))
+
+### Features
+
+- **photo-browser:** disable Swiper's CSS mode by default ([def98a1](https://github.com/framework7io/framework7/commit/def98a131f5000905d8af4d6d3b8eebb0deb5df3))
+
+# [7.1.1](https://github.com/framework7io/framework7/compare/v7.0.9...v7.1.1) (2022-12-16)
+
+### Bug Fixes
+
+- **core:** reset allowPageChange after duplicated async back navigation ([#4111](https://github.com/framework7io/framework7/issues/4111)) ([#4112](https://github.com/framework7io/framework7/issues/4112)) ([273c94c](https://github.com/framework7io/framework7/commit/273c94ce44daffcec62c24d0315ea6b1774679ac))
+- **panel:** fix panel close routine if it was closed immediately ([1ceaafc](https://github.com/framework7io/framework7/commit/1ceaafc63fd449558b2404c8b1982938534e39ca)), closes [#4108](https://github.com/framework7io/framework7/issues/4108)
+
+### Features
+
+- **photo-browser:** add `closeByBackdropClick` parameter ([8d34259](https://github.com/framework7io/framework7/commit/8d342599c8f6999727ac81689a8b933e19c61478)), closes [#4107](https://github.com/framework7io/framework7/issues/4107)
+- remove postinstall script ([92fd6e5](https://github.com/framework7io/framework7/commit/92fd6e558493de8ec4cd50fa32fedcdc56b8d335))
+- **router:** add `props` support to `refreshPage` method ([e6fc0c0](https://github.com/framework7io/framework7/commit/e6fc0c083d1ba8d64eacbe6651e9de81dd562f94)), closes [#4103](https://github.com/framework7io/framework7/issues/4103)
+- **smart-select:** add `closeByBackdropClick` parameter ([66d899b](https://github.com/framework7io/framework7/commit/66d899b414af86043466410bc5eb4c5a588e3c5c)), closes [#4107](https://github.com/framework7io/framework7/issues/4107)
+- **smart-select:** support return for HTML in `formatValueText` ([90ff029](https://github.com/framework7io/framework7/commit/90ff029f056b11d0ab0c7dcadf2cb5ec45225bb7)), closes [#4094](https://github.com/framework7io/framework7/issues/4094)
+- **svelte:** export `style` prop for modals ([ddf8b36](https://github.com/framework7io/framework7/commit/ddf8b366616a38d384d38b2986c89794355734fc)), closes [#4100](https://github.com/framework7io/framework7/issues/4100)
+
+* update Swiper to latest ([405ea88](https://github.com/framework7io/framework7/commit/405ea88650d7e3e67a59c8461be48e10af074335))
+
+# [7.0.9](https://github.com/framework7io/framework7/compare/v7.0.8...v7.0.9) (2022-11-21)
+
+### Bug Fixes
+
+- **vue:** Improve type definitions for framework7-vue/bundle ([#4075](https://github.com/framework7io/framework7/issues/4075)) ([7d68a65](https://github.com/framework7io/framework7/commit/7d68a657c276eabd22410920573f82c94f852fc8))
+
+### Features
+
+- **vue:** update web types ([53b1663](https://github.com/framework7io/framework7/commit/53b1663aa31e5031efb06058686ca7a6c90c2db7))
+
 # [7.0.8](https://github.com/framework7io/framework7/compare/v7.0.7...v7.0.8) (2022-09-14)
 
 ### Bug Fixes

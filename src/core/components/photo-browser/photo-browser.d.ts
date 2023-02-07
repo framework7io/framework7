@@ -58,6 +58,8 @@ export namespace PhotoBrowser {
     virtualSlides?: boolean;
     /** Enables lazy loading images (default true) */
     lazy?: boolean;
+    /** When enabled, Photo Browser popup will be closed on backdrop click. (default true) */
+    closeByBackdropClick?: boolean;
 
     /** Function to render navbar, must return navbar HTML string */
     renderNavbar?: () => string;

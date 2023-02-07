@@ -13,7 +13,9 @@ const transformVueComponent = require('./transform-vue-component.js');
 async function buildVue(cb) {
   const buildPath = getOutput();
 
-  const files = fs.readdirSync('src/vue/components').filter((file) => file.indexOf('.vue') > 0);
+  const files = fs
+    .readdirSync(path.resolve(__dirname, '../src/vue/components'))
+    .filter((file) => file.indexOf('.vue') > 0);
   const componentImports = [];
   const componentExports = [];
 
@@ -30,13 +32,13 @@ async function buildVue(cb) {
     componentExports.push(`f7${componentName}`);
     componentsRegistrations.push(`app.component('f7-${fileBase}', f7${componentName})`);
     transformVueComponent(
-      `src/vue/components/${fileName}`,
-      `src/vue-temp/${fileName.replace('.vue', '.js')}`,
+      path.resolve(__dirname, `../src/vue/components/${fileName}`),
+      path.resolve(__dirname, `../src/vue-temp/${fileName.replace('.vue', '.js')}`),
     );
   });
 
   const pluginContent = fs
-    .readFileSync('src/vue/framework7-vue.js', 'utf-8')
+    .readFileSync(path.resolve(__dirname, '../src/vue/framework7-vue.js'), 'utf-8')
     .replace('// IMPORT_COMPONENTS', componentImports.join('\n'))
     .replace('// EXPORT_COMPONENTS', `export { ${componentExports.join(', ')} }`);
 
@@ -47,9 +49,11 @@ async function buildVue(cb) {
   await exec.promise(
     `npx cross-env MODULES=esm npx babel --config-file ./babel-vue.config.js src/vue-temp --out-dir ${buildPath}/vue/components --ignore "src/vue/framework7-vue.js","*.ts","*.jsx",*jsx`,
   );
+  fs.writeFileSync(`${buildPath}/vue/framework7-vue.js`, pluginContent);
 
-  const esmContent = `${bannerVue.trim()}\n${pluginContent}`;
-  fs.writeFileSync(`${buildPath}/vue/framework7-vue.js`, esmContent);
+  const esmContent = fs.readFileSync(`${buildPath}/vue/framework7-vue.js`, 'utf-8');
+
+  fs.writeFileSync(`${buildPath}/vue/framework7-vue.js`, `${bannerVue.trim()}\n${esmContent}`);
 
   // Bundle
   const bundleContent = `

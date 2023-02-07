@@ -167,11 +167,16 @@ function backward(router, el, backwardOptions) {
       if (router.history.indexOf(options.route.url) >= 0) {
         backIndex = router.history.length - router.history.indexOf(options.route.url) - 1;
         router.history = router.history.slice(0, router.history.indexOf(options.route.url) + 2);
+        router.propsHistory = router.propsHistory.slice(
+          0,
+          router.history.indexOf(options.route.url) + 2,
+        );
         view.history = router.history;
       } else if (router.history[[router.history.length - 2]]) {
-        router.history[router.history.length - 2] = options.route.url;
+        router.propsHistory[router.propsHistory.length - 2] = options.props || {};
       } else {
         router.history.unshift(router.url);
+        router.propsHistory.unshift(options.props || {});
       }
 
       const $pageToRemove = $oldPage.prev('.page-previous');
@@ -336,11 +341,14 @@ function backward(router, el, backwardOptions) {
   // Update History
   if (options.replaceState) {
     router.history[router.history.length - 1] = options.route.url;
+    router.propsHistory[router.propsHistory.length - 1] = options.props || {};
   } else {
     if (router.history.length === 1) {
       router.history.unshift(router.url);
+      router.propsHistory.unshift(options.props || {});
     }
     router.history.pop();
+    router.propsHistory.pop();
   }
   router.saveHistory();
 
@@ -431,7 +439,10 @@ function backward(router, el, backwardOptions) {
     const preloadPreviousPage =
       router.params.preloadPreviousPage || router.params[`${app.theme}SwipeBack`];
     if (preloadPreviousPage && router.history[router.history.length - 2] && !isMaster) {
-      router.back(router.history[router.history.length - 2], { preload: true });
+      router.back(router.history[router.history.length - 2], {
+        preload: true,
+        props: router.propsHistory[router.propsHistory.length - 2] || {},
+      });
     }
     if (router.params.browserHistory) {
       History.clearRouterQueue();
@@ -487,6 +498,7 @@ function loadBack(router, backParams, backOptions, ignorePageChange) {
     !(options.reloadCurrent || options.reloadPrevious) &&
     !router.params.allowDuplicateUrls
   ) {
+    router.allowPageChange = true;
     return false;
   }
 
@@ -554,6 +566,7 @@ function back(...args) {
   if (router.swipeBackActive) return router;
   let navigateUrl;
   let navigateOptions;
+  let navigateProps;
   let route;
   if (typeof args[0] === 'object') {
     navigateOptions = args[0] || {};
@@ -644,6 +657,7 @@ function back(...args) {
       }
       router.currentRoute = previousRoute;
       router.history.pop();
+      router.propsHistory.pop();
       router.saveHistory();
 
       if (needHistoryBack && isBrokenBrowserHistory && !currentRouteWithoutBrowserHistory) {
@@ -699,7 +713,10 @@ function back(...args) {
     ) {
       router.back(
         router.history[router.history.length - 2],
-        extend(navigateOptions, { force: true }),
+        extend(navigateOptions, {
+          force: true,
+          props: router.propsHistory[router.propsHistory.length - 2] || {},
+        }),
       );
       return router;
     }
@@ -734,6 +751,7 @@ function back(...args) {
   }
   if (!navigateUrl && router.history.length > 1) {
     navigateUrl = router.history[router.history.length - 2];
+    navigateProps = router.propsHistory[router.propsHistory.length - 2] || {};
   }
   if (skipMaster && !navigateOptions.force && router.history[router.history.length - 3]) {
     return router.back(
@@ -741,6 +759,7 @@ function back(...args) {
       extend({}, navigateOptions || {}, {
         force: true,
         animate: false,
+        props: router.propsHistory[router.propsHistory.length - 3] || {},
       }),
     );
   }
@@ -773,9 +792,9 @@ function back(...args) {
 
   const options = {};
   if (route.route.options) {
-    extend(options, route.route.options, navigateOptions);
+    extend(options, route.route.options, navigateOptions, { props: navigateProps || {} });
   } else {
-    extend(options, navigateOptions);
+    extend(options, navigateOptions, { props: navigateProps || {} });
   }
   options.route = route;
 

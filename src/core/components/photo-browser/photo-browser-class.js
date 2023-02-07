@@ -620,6 +620,7 @@ class PhotoBrowser extends Framework7Class {
     const popupParams = {
       content: popupHtml,
       push: pb.params.popupPush,
+      closeByBackdropClick: pb.params.closeByBackdropClick,
       on: {
         popupOpen(popup) {
           pb.onOpen('popup', popup.el);
