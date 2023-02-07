@@ -8,6 +8,7 @@
       :speed="600"
       class="demo-swiper-parallax color-white"
     >
+      <!-- eslint-disable -->
       <div
         slot="container-start"
         data-swiper-parallax="-23%"
