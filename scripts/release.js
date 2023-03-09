@@ -10,6 +10,14 @@ const pkgReact = require('../packages/react/package.json');
 const pkgVue = require('../packages/vue/package.json');
 const pkgSvelte = require('../packages/svelte/package.json');
 
+const date = new Date();
+const formatter = new Intl.DateTimeFormat('en', {
+  day: 'numeric',
+  year: 'numeric',
+  month: 'long',
+});
+const releaseDate = formatter.format(date);
+
 async function release() {
   const options = await inquirer.prompt([
     {
@@ -54,9 +62,13 @@ async function release() {
 
   // Set version
   pkgCore.version = options.version;
+  pkgCore.releaseDate = releaseDate;
   pkgReact.version = options.version;
+  pkgReact.releaseDate = releaseDate;
   pkgVue.version = options.version;
+  pkgVue.releaseDate = releaseDate;
   pkgSvelte.version = options.version;
+  pkgSvelte.releaseDate = releaseDate;
 
   // Copy dependencies
   pkgCore.dependencies = pkg.dependencies;

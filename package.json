@@ -59,11 +59,10 @@
     "url": "https://www.patreon.com/framework7"
   },
   "browserslist": [
-    "IOS >= 13",
-    "Safari >= 13",
+    "IOS >= 15",
+    "Safari >= 15",
     "last 5 Chrome versions",
-    "last 5 Firefox versions",
-    "Samsung >= 12"
+    "last 5 Firefox versions"
   ],
   "dependencies": {
     "dom7": "^4.0.6",
