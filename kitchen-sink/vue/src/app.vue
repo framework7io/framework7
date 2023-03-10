@@ -11,10 +11,8 @@
       :main="true"
       class="safe-areas"
       :master-detail-breakpoint="768"
-      browser-history
-      :browser-history-root="
-        document.location.host.includes('framework7.io') ? '/kitchen-sink/react/dist/' : ''
-      "
+      :browser-history="needsBrowserHistory"
+      :browser-history-root="needsBrowserHistory ? '/kitchen-sink/react/dist/' : ''"
     ></f7-view>
   </f7-app>
 </template>
@@ -36,7 +34,12 @@ export default {
       theme = document.location.search.split('theme=')[1].split('&')[0];
     }
 
+    const needsBrowserHistory =
+      document.location.host.includes('framework7.io') ||
+      document.location.host.includes('localhost:3001');
+
     return {
+      needsBrowserHistory,
       f7Params: {
         id: 'io.framework7.testapp',
         theme,

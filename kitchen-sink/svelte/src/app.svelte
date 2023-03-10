@@ -9,6 +9,10 @@
     theme = document.location.search.split('theme=')[1].split('&')[0];
   }
 
+  const needsBrowserHistory =
+    document.location.host.includes('framework7.io') ||
+    document.location.host.includes('localhost:3001');
+
   const f7Params = {
     id: 'io.framework7.testapp',
     theme,
@@ -41,9 +45,7 @@
     main={true}
     class="safe-areas"
     masterDetailBreakpoint={768}
-    browserHistory
-    browserHistoryRoot={document.location.host.includes('framework7.io')
-      ? '/kitchen-sink/react/dist/'
-      : ''}
+    browserHistory={needsBrowserHistory}
+    browserHistoryRoot={needsBrowserHistory ? '/kitchen-sink/react/dist/' : ''}
   />
 </App>

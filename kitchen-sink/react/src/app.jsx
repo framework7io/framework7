@@ -8,6 +8,9 @@ export default () => {
   if (document.location.search.indexOf('theme=') >= 0) {
     theme = document.location.search.split('theme=')[1].split('&')[0];
   }
+  const needsBrowserHistory =
+    document.location.host.includes('framework7.io') ||
+    document.location.host.includes('localhost:3001');
 
   return (
     <App
@@ -31,10 +34,8 @@ export default () => {
         main
         className="safe-areas"
         masterDetailBreakpoint={768}
-        browserHistory
-        browserHistoryRoot={
-          document.location.host.includes('framework7.io') ? '/kitchen-sink/react/dist/' : ''
-        }
+        browserHistory={needsBrowserHistory}
+        browserHistoryRoot={needsBrowserHistory ? '/kitchen-sink/react/dist/' : ''}
       />
     </App>
   );
