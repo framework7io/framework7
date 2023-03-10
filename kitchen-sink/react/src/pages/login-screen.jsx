@@ -51,7 +51,7 @@ export default () => {
           large
           fill
           onClick={() => {
-            this.setState({ loginScreenOpened: true });
+            setLoginScreenOpened(true);
           }}
         >
           Open Via Prop Change

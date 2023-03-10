@@ -67,7 +67,7 @@ export default () => {
           Sheet Modals slide up from the bottom of the screen to reveal more content. Such modals
           allow to create custom overlays with custom content.
         </p>
-        <p className="grid grid-cols-2 grid-2">
+        <p className="grid grid-cols-2 grid-gap">
           <Button fill sheetOpen=".demo-sheet">
             Open Sheet
           </Button>
