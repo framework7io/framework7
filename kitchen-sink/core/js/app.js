@@ -1,5 +1,10 @@
 // Demo
-if (window.parent && window !== window.parent) {
+if (
+  window.parent &&
+  window !== window.parent &&
+  (window.document.referrer === 'https://framework7.io' ||
+    window.document.referrer === 'http://localhost:3001')
+) {
   const html = document.documentElement;
   if (html) {
     html.style.setProperty('--f7-safe-area-top', '44px');

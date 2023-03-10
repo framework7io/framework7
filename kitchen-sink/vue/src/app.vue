@@ -6,7 +6,16 @@
     <f7-panel right floating resizable>
       <f7-view url="/panel-right/"></f7-view>
     </f7-panel>
-    <f7-view url="/" :main="true" class="safe-areas" :master-detail-breakpoint="768"></f7-view>
+    <f7-view
+      url="/"
+      :main="true"
+      class="safe-areas"
+      :master-detail-breakpoint="768"
+      browser-history
+      :browser-history-root="
+        document.location.host.includes('framework7.io') ? '/kitchen-sink/react/dist/' : ''
+      "
+    ></f7-view>
   </f7-app>
 </template>
 <script>

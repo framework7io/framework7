@@ -36,5 +36,14 @@
   <Panel right floating resizable>
     <View url="/panel-right/" />
   </Panel>
-  <View url="/" main={true} class="safe-areas" masterDetailBreakpoint={768} />
+  <View
+    url="/"
+    main={true}
+    class="safe-areas"
+    masterDetailBreakpoint={768}
+    browserHistory
+    browserHistoryRoot={document.location.host.includes('framework7.io')
+      ? '/kitchen-sink/react/dist/'
+      : ''}
+  />
 </App>

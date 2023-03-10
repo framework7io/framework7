@@ -232,8 +232,8 @@
   </List>
   <BlockTitle class="searchbar-hide-on-search">Themes</BlockTitle>
   <List strong inset dividersIos class="searchbar-hide-on-search">
-    <ListItem title="iOS Theme" external link="./index.html?theme=ios" />
-    <ListItem title="Material (MD) Theme" external link="./index.html?theme=md" />
+    <ListItem title="iOS Theme" external link="./?theme=ios" />
+    <ListItem title="Material (MD) Theme" external link="./?theme=md" />
     <ListItem title="Color Themes" link="/color-themes/" />
   </List>
   <BlockTitle class="searchbar-hide-on-search">Page Loaders & Router</BlockTitle>

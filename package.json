@@ -15,6 +15,7 @@
     "build-svelte:dev": "cross-env-shell NODE_ENV=development CORE_BUILD_ONLY_MODULES=true \"gulp build-svelte\"",
     "build-svelte:prod": "cross-env-shell NODE_ENV=production \"gulp build-svelte\"",
     "/*============ Build KS ============*/": "============",
+    "build-ks": "npm run build-ks:core && npm run build-ks:react && npm run build-ks:vue && npm run build-ks:svelte",
     "build-ks:core": "cross-env-shell NODE_ENV=production \"gulp ks-core\"",
     "build-ks:react": "cross-env-shell NODE_ENV=production \"vite build kitchen-sink/react\"",
     "build-ks:vue": "cross-env-shell NODE_ENV=production \"vite build kitchen-sink/vue\"",
