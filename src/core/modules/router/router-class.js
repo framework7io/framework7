@@ -1148,6 +1148,7 @@ class Router extends Framework7Class {
 
     let initialUrl = router.params.url;
     let documentUrl = location.href.split(location.origin)[1];
+
     let historyRestored;
     const { browserHistory, browserHistoryOnLoad, browserHistorySeparator } = router.params;
     let { browserHistoryRoot } = router.params;
@@ -1212,7 +1213,6 @@ class Router extends Framework7Class {
 
     router.initialUrl = initialUrl;
     router.historyRestored = historyRestored;
-
     return { initialUrl, historyRestored };
   }
 
