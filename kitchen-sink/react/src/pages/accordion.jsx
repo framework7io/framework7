@@ -7,8 +7,6 @@ import {
   List,
   ListItem,
   AccordionContent,
-  AccordionItem,
-  AccordionToggle,
 } from 'framework7-react';
 
 export default () => (

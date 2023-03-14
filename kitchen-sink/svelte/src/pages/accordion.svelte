@@ -7,8 +7,6 @@
     List,
     ListItem,
     AccordionContent,
-    AccordionItem,
-    AccordionToggle,
   } from 'framework7-svelte';
 </script>
 

@@ -1,6 +1,6 @@
 {
   "name": "framework7",
-  "version": "8.0.0-beta.3",
+  "version": "8.0.0-beta.4",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "type": "module",
   "exports": {
@@ -436,5 +436,5 @@
     "ssr-window": "^4.0.2",
     "swiper": "^9.0.3"
   },
-  "releaseDate": "March 9, 2023"
+  "releaseDate": "March 14, 2023"
 }
