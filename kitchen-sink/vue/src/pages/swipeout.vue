@@ -11,7 +11,7 @@
     </f7-block>
 
     <f7-block-title>Swipe to delete with confirm modal</f7-block-title>
-    <f7-list>
+    <f7-list strong inset-md dividers-ios outline-ios>
       <f7-list-item swipeout title="Swipe left on me please">
         <template #media>
           <f7-icon icon="icon-f7" />
@@ -40,7 +40,7 @@
     </f7-list>
 
     <f7-block-title>Swipe to delete without confirm</f7-block-title>
-    <f7-list>
+    <f7-list strong inset-md dividers-ios outline-ios>
       <f7-list-item swipeout title="Swipe left on me please">
         <template #media>
           <f7-icon icon="icon-f7" />
@@ -65,7 +65,7 @@
     </f7-list>
 
     <f7-block-title>Swipe for actions</f7-block-title>
-    <f7-list>
+    <f7-list strong inset-md dividers-ios outline-ios>
       <f7-list-item swipeout title="Swipe left on me please">
         <template #media>
           <f7-icon icon="icon-f7" />
@@ -95,7 +95,7 @@
     </f7-list>
 
     <f7-block-title>With callback on remove</f7-block-title>
-    <f7-list>
+    <f7-list strong inset-md dividers-ios outline-ios>
       <f7-list-item swipeout title="Swipe left on me please" @swipeout:deleted="onDeleted">
         <template #media>
           <f7-icon icon="icon-f7" />
@@ -120,7 +120,7 @@
     </f7-list>
 
     <f7-block-title>With actions on left side (swipe to right)</f7-block-title>
-    <f7-list>
+    <f7-list strong inset-md dividers-ios outline-ios>
       <f7-list-item swipeout title="Swipe right on me please">
         <template #media>
           <f7-icon icon="icon-f7" />

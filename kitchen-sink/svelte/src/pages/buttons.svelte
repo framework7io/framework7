@@ -1,5 +1,14 @@
 <script>
-  import { Page, Navbar, BlockTitle, Block, Segmented, Button } from 'framework7-svelte';
+  import {
+    Page,
+    Navbar,
+    BlockTitle,
+    Block,
+    Segmented,
+    Button,
+    List,
+    ListButton,
+  } from 'framework7-svelte';
 
   let activeStrongButton = 0;
   let isLoading1 = false;
@@ -182,16 +191,12 @@
   </Block>
 
   <BlockTitle>List-Block Buttons</BlockTitle>
-  <div class="list inset">
-    <ul>
-      <li><a class="list-button">List Button 1</a></li>
-      <li><a class="list-button">List Button 2</a></li>
-      <li><a class="list-button">List Button 2</a></li>
-    </ul>
-  </div>
-  <div class="list inset">
-    <ul>
-      <li><a class="list-button color-red">Large Red Button</a></li>
-    </ul>
-  </div>
+  <List inset strong>
+    <ListButton title="List Button 1" />
+    <ListButton title="List Button 2" />
+    <ListButton title="List Button 3" />
+  </List>
+  <List inset strong>
+    <ListButton title="Large Red Button" color="red" />
+  </List>
 </Page>

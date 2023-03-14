@@ -9,9 +9,7 @@
     theme = document.location.search.split('theme=')[1].split('&')[0];
   }
 
-  const needsBrowserHistory =
-    document.location.host.includes('framework7.io') ||
-    document.location.host.includes('localhost:3001');
+  const needsBrowserHistory = document.location.href.includes('example-preview');
 
   const f7Params = {
     id: 'io.framework7.testapp',

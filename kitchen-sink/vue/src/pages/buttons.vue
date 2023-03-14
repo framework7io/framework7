@@ -154,12 +154,12 @@
     </f7-block>
 
     <f7-block-title>List-Block Buttons</f7-block-title>
-    <f7-list inset>
+    <f7-list inset strong>
       <f7-list-button title="List Button 1"></f7-list-button>
       <f7-list-button title="List Button 2"></f7-list-button>
       <f7-list-button title="List Button 3"></f7-list-button>
     </f7-list>
-    <f7-list inset>
+    <f7-list inset strong>
       <f7-list-button title="Large Red Button" color="red"></f7-list-button>
     </f7-list>
   </f7-page>

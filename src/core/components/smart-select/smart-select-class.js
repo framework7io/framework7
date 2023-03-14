@@ -513,7 +513,7 @@ class SmartSelect extends Framework7Class {
         {ss.params.searchbar && <div class="searchbar-backdrop"></div>}
         <div class="page-content">
           <div
-            class={`list smart-select-list-${ss.id} ${
+            class={`list list-strong-ios list-dividers-ios smart-select-list-${ss.id} ${
               ss.params.virtualList ? ' virtual-list' : ''
             } ${ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''}`}
           >
@@ -567,7 +567,7 @@ class SmartSelect extends Framework7Class {
             {ss.params.searchbar && <div class="searchbar-backdrop"></div>}
             <div class="page-content">
               <div
-                class={`list smart-select-list-${ss.id} ${
+                class={`list list-strong-ios list-dividers-ios smart-select-list-${ss.id} ${
                   ss.params.virtualList ? ' virtual-list' : ''
                 } ${ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''}`}
               >
@@ -597,7 +597,7 @@ class SmartSelect extends Framework7Class {
         </div>
         <div class="sheet-modal-inner">
           <div class="page-content">
-            <div class={`list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''}`}>
+            <div class={`list list-strong-ios list-dividers-ios smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''}`}>
               <ul>{!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
             </div>
           </div>
@@ -614,7 +614,7 @@ class SmartSelect extends Framework7Class {
     return (
       <div class={`popover smart-select-popover ${cssClass}`} data-select-name={ss.selectName}>
         <div class="popover-inner">
-          <div class={`list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''}`}>
+          <div class={`list list-strong-ios list-dividers-ios smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''}`}>
             <ul>{!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
           </div>
         </div>

@@ -232,12 +232,12 @@ export default () => {
       </Block>
 
       <BlockTitle>List-Block Buttons</BlockTitle>
-      <List inset>
+      <List inset strong>
         <ListButton title="List Button 1" />
         <ListButton title="List Button 2" />
         <ListButton title="List Button 3" />
       </List>
-      <List inset>
+      <List inset strong>
         <ListButton title="Large Red Button" color="red" />
       </List>
     </Page>

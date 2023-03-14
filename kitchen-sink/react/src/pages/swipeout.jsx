@@ -69,7 +69,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Swipe to delete with confirm modal</BlockTitle>
-      <List>
+      <List strong insetMd outlineIos dividersIos>
         <ListItem swipeout title="Swipe left on me please">
           <Icon slot="media" icon="icon-f7" />
           <SwipeoutActions right>
@@ -92,7 +92,7 @@ export default () => {
       </List>
 
       <BlockTitle>Swipe to delete without confirm</BlockTitle>
-      <List>
+      <List strong insetMd outlineIos dividersIos>
         <ListItem swipeout title="Swipe left on me please">
           <Icon slot="media" icon="icon-f7" />
           <SwipeoutActions right>
@@ -111,7 +111,7 @@ export default () => {
       </List>
 
       <BlockTitle>Swipe for actions</BlockTitle>
-      <List>
+      <List strong insetMd outlineIos dividersIos>
         <ListItem swipeout title="Swipe left on me please">
           <Icon slot="media" icon="icon-f7" />
           <SwipeoutActions right>
@@ -135,7 +135,7 @@ export default () => {
       </List>
 
       <BlockTitle>With callback on remove</BlockTitle>
-      <List>
+      <List strong insetMd outlineIos dividersIos>
         <ListItem swipeout onSwipeoutDeleted={onDeleted} title="Swipe left on me please">
           <Icon slot="media" icon="icon-f7" />
           <SwipeoutActions right>
@@ -154,7 +154,7 @@ export default () => {
       </List>
 
       <BlockTitle>With actions on left side (swipe to right)</BlockTitle>
-      <List>
+      <List strong insetMd outlineIos dividersIos>
         <ListItem swipeout title="Swipe right on me please">
           <Icon slot="media" icon="icon-f7" />
           <SwipeoutActions left>
