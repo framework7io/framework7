@@ -649,7 +649,7 @@ class Router extends Framework7Class {
       if (matchingRoute) return;
       const keys = [];
 
-      const pathsToMatch = [route.path];
+      const pathsToMatch = [route.path || '/'];
       if (route.alias) {
         if (typeof route.alias === 'string') pathsToMatch.push(route.alias);
         else if (Array.isArray(route.alias)) {
@@ -662,7 +662,7 @@ class Router extends Framework7Class {
       let matched;
       pathsToMatch.forEach((pathToMatch) => {
         if (matched) return;
-        matched = pathToRegexp(pathToMatch, keys).exec(path);
+        matched = pathToRegexp(pathToMatch, keys).exec(path || '/');
       });
 
       if (matched) {
@@ -678,7 +678,7 @@ class Router extends Framework7Class {
 
         let parentPath;
         if (route.parentPath) {
-          parentPath = path
+          parentPath = (path || '/')
             .split('/')
             .slice(0, route.parentPath.split('/').length - 1)
             .join('/');
@@ -689,7 +689,7 @@ class Router extends Framework7Class {
           hash,
           params,
           url,
-          path,
+          path: path || '/',
           parentPath,
           route,
           name: route.name,
