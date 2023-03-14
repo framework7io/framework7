@@ -29,20 +29,20 @@
     <template #fixed>
       <div class="list links-list demo-fab-sheet fab-morph-target">
         <ul>
-          <li><a href="#" class="fab-close">Link 1</a></li>
-          <li><a href="#" class="fab-close">Link 2</a></li>
-          <li><a href="#" class="fab-close">Link 3</a></li>
-          <li><a href="#" class="fab-close">Link 4</a></li>
+          <li><a class="fab-close">Link 1</a></li>
+          <li><a class="fab-close">Link 2</a></li>
+          <li><a class="fab-close">Link 3</a></li>
+          <li><a class="fab-close">Link 4</a></li>
         </ul>
       </div>
       <div class="demo-fab-fullscreen-sheet fab-morph-target">
         <f7-block-title>Choose Something</f7-block-title>
         <div class="list links-list">
           <ul>
-            <li><a href="#" class="fab-close">Link 1</a></li>
-            <li><a href="#" class="fab-close">Link 2</a></li>
-            <li><a href="#" class="fab-close">Link 3</a></li>
-            <li><a href="#" class="fab-close">Link 4</a></li>
+            <li><a class="fab-close">Link 1</a></li>
+            <li><a class="fab-close">Link 2</a></li>
+            <li><a class="fab-close">Link 3</a></li>
+            <li><a class="fab-close">Link 4</a></li>
           </ul>
         </div>
       </div>

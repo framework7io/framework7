@@ -184,14 +184,14 @@
   <BlockTitle>List-Block Buttons</BlockTitle>
   <div class="list inset">
     <ul>
-      <li><a href="#" class="list-button">List Button 1</a></li>
-      <li><a href="#" class="list-button">List Button 2</a></li>
-      <li><a href="#" class="list-button">List Button 2</a></li>
+      <li><a class="list-button">List Button 1</a></li>
+      <li><a class="list-button">List Button 2</a></li>
+      <li><a class="list-button">List Button 2</a></li>
     </ul>
   </div>
   <div class="list inset">
     <ul>
-      <li><a href="#" class="list-button color-red">Large Red Button</a></li>
+      <li><a class="list-button color-red">Large Red Button</a></li>
     </ul>
   </div>
 </Page>

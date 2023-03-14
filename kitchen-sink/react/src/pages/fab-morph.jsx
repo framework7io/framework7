@@ -21,24 +21,16 @@ export default () => (
     <div className="list links-list demo-fab-sheet fab-morph-target" slot="fixed">
       <ul>
         <li>
-          <a href="#" className="fab-close">
-            Link 1
-          </a>
+          <a className="fab-close">Link 1</a>
         </li>
         <li>
-          <a href="#" className="fab-close">
-            Link 2
-          </a>
+          <a className="fab-close">Link 2</a>
         </li>
         <li>
-          <a href="#" className="fab-close">
-            Link 3
-          </a>
+          <a className="fab-close">Link 3</a>
         </li>
         <li>
-          <a href="#" className="fab-close">
-            Link 4
-          </a>
+          <a className="fab-close">Link 4</a>
         </li>
       </ul>
     </div>
@@ -47,24 +39,16 @@ export default () => (
       <div className="list links-list">
         <ul>
           <li>
-            <a href="#" className="fab-close">
-              Link 1
-            </a>
+            <a className="fab-close">Link 1</a>
           </li>
           <li>
-            <a href="#" className="fab-close">
-              Link 2
-            </a>
+            <a className="fab-close">Link 2</a>
           </li>
           <li>
-            <a href="#" className="fab-close">
-              Link 3
-            </a>
+            <a className="fab-close">Link 3</a>
           </li>
           <li>
-            <a href="#" className="fab-close">
-              Link 4
-            </a>
+            <a className="fab-close">Link 4</a>
           </li>
         </ul>
       </div>

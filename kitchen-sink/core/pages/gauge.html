@@ -4,7 +4,7 @@
       <div class="navbar-bg"></div>
       <div class="navbar-inner sliding">
         <div class="left">
-          <a href="#" class="link back">
+          <a class="link back">
             <i class="icon icon-back"></i>
             <span class="if-not-md">Back</span>
           </a>
@@ -19,14 +19,14 @@
       <div class="block block-strong-ios block-outline-ios text-align-center">
         <div class="gauge demo-gauge"></div>
         <p class="segmented segmented-raised">
-          <a href="#" class="button ${gaugeValue === 0 ? 'button-active' : ''}" @click=${()=> setGaugeValue(0)}>0%</a>
-          <a href="#" class="button ${gaugeValue === 25 ? 'button-active' : ''}" @click=${()=>
+          <a class="button ${gaugeValue === 0 ? 'button-active' : ''}" @click=${()=> setGaugeValue(0)}>0%</a>
+          <a class="button ${gaugeValue === 25 ? 'button-active' : ''}" @click=${()=>
             setGaugeValue(25)}>25%</a>
-          <a href="#" class="button ${gaugeValue === 50 ? 'button-active' : ''}" @click=${()=>
+          <a class="button ${gaugeValue === 50 ? 'button-active' : ''}" @click=${()=>
             setGaugeValue(50)}>50%</a>
-          <a href="#" class="button ${gaugeValue === 75 ? 'button-active' : ''}" @click=${()=>
+          <a class="button ${gaugeValue === 75 ? 'button-active' : ''}" @click=${()=>
             setGaugeValue(75)}>75%</a>
-          <a href="#" class="button ${gaugeValue === 100 ? 'button-active' : ''}" @click=${()=>
+          <a class="button ${gaugeValue === 100 ? 'button-active' : ''}" @click=${()=>
             setGaugeValue(100)}>100%</a>
         </p>
       </div>

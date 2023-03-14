@@ -90,14 +90,4 @@
       </AccordionContent>
     </ListItem>
   </List>
-
-  <BlockTitle>Custom Collapsible</BlockTitle>
-  <Block inner accordionList>
-    {#each [0, 1, 2] as n}
-      <AccordionItem>
-        <AccordionToggle><b>Item {n + 1}</b></AccordionToggle>
-        <AccordionContent>Content {n + 1}</AccordionContent>
-      </AccordionItem>
-    {/each}
-  </Block>
 </Page>

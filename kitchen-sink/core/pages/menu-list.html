@@ -4,7 +4,7 @@
       <div class="navbar-bg"></div>
       <div class="navbar-inner sliding">
         <div class="left">
-          <a href="#" class="link back">
+          <a class="link back">
             <i class="icon icon-back"></i>
             <span class="if-not-md">Back</span>
           </a>
@@ -20,7 +20,7 @@
       <div class="list list-strong-ios list-outline-ios menu-list">
         <ul>
           <li>
-            <a href="#" class="item-content item-link ${selected === 'home' ? 'item-selected' : ''}" @click=${()=>
+            <a class="item-content item-link ${selected === 'home' ? 'item-selected' : ''}" @click=${()=>
               setItem('home')}
               >
               <div class="item-media">
@@ -33,7 +33,7 @@
             </a>
           </li>
           <li>
-            <a href="#" class="item-content item-link ${selected === 'profile' ? 'item-selected' : ''}" @click=${()=>
+            <a class="item-content item-link ${selected === 'profile' ? 'item-selected' : ''}" @click=${()=>
               setItem('profile')}
               >
               <div class="item-media">
@@ -46,7 +46,7 @@
             </a>
           </li>
           <li>
-            <a href="#" class="item-content item-link ${selected === 'settings' ? 'item-selected' : ''}" @click=${()=>
+            <a class="item-content item-link ${selected === 'settings' ? 'item-selected' : ''}" @click=${()=>
               setItem('settings')}
               >
               <div class="item-media">
@@ -64,7 +64,7 @@
       <div class="list list-strong-ios list-outline-ios media-list menu-list">
         <ul>
           <li>
-            <a href="#" class="item-content item-link ${selectedMedia === 'home' ? 'item-selected' : ''}" @click=${()=>
+            <a class="item-content item-link ${selectedMedia === 'home' ? 'item-selected' : ''}" @click=${()=>
               setItemMedia('home')}
               >
               <div class="item-media">
@@ -80,8 +80,7 @@
             </a>
           </li>
           <li>
-            <a href="#" class="item-content item-link ${selectedMedia === 'profile' ? 'item-selected' : ''}"
-              @click=${()=>
+            <a class="item-content item-link ${selectedMedia === 'profile' ? 'item-selected' : ''}" @click=${()=>
               setItemMedia('profile')}
               >
               <div class="item-media">
@@ -97,8 +96,7 @@
             </a>
           </li>
           <li>
-            <a href="#" class="item-content item-link ${selectedMedia === 'settings' ? 'item-selected' : ''}"
-              @click=${()=>
+            <a class="item-content item-link ${selectedMedia === 'settings' ? 'item-selected' : ''}" @click=${()=>
               setItemMedia('settings')}
               >
               <div class="item-media">

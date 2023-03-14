@@ -27,7 +27,7 @@ export default () => {
                 <div class="navbar-inner">
                   <div class="navbar-bg"></div>
                   <div class="title">Dynamic Popup</div>
-                  <div class="right"><a href="#" class="link popup-close">Close</a></div>
+                  <div class="right"><a  class="link popup-close">Close</a></div>
                 </div>
               </div>
               <div class="page-content">

@@ -112,11 +112,7 @@
       <div class="block-header">Simple Standalone Autocomplete</div>
       <ul>
         <li>
-          <a
-            id="autocomplete-standalone"
-            href="#"
-            class="item-link item-content autocomplete-opener"
-          >
+          <a id="autocomplete-standalone" class="item-link item-content autocomplete-opener">
             <input type="hidden" />
             <div class="item-inner">
               <div class="item-title">Favorite Fruite</div>
@@ -130,11 +126,7 @@
       <div class="block-header">Popup Autocomplete</div>
       <ul>
         <li>
-          <a
-            id="autocomplete-standalone-popup"
-            href="#"
-            class="item-link item-content autocomplete-opener"
-          >
+          <a id="autocomplete-standalone-popup" class="item-link item-content autocomplete-opener">
             <input type="hidden" />
             <div class="item-inner">
               <div class="item-title">Favorite Fruite</div>
@@ -150,7 +142,6 @@
         <li>
           <a
             id="autocomplete-standalone-multiple"
-            href="#"
             class="item-link item-content autocomplete-opener"
           >
             <input type="hidden" />
@@ -166,11 +157,7 @@
       <div class="block-header">With Ajax-Data</div>
       <ul>
         <li>
-          <a
-            id="autocomplete-standalone-ajax"
-            href="#"
-            class="item-link item-content autocomplete-opener"
-          >
+          <a id="autocomplete-standalone-ajax" class="item-link item-content autocomplete-opener">
             <input type="hidden" />
             <div class="item-inner">
               <div class="item-title">Language</div>

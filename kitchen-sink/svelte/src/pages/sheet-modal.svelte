@@ -29,7 +29,7 @@
           <div class="sheet-modal sheet-modal-bottom">
             <div class="toolbar">
               <div class="toolbar-inner justify-content-flex-end">
-                <a href="#" class="link sheet-close">Close</a>
+                <a  class="link sheet-close">Close</a>
               </div>
             </div>
             <div class="sheet-modal-inner">

@@ -143,7 +143,7 @@ export default [
           <div class="navbar-bg"></div>
           <div class="navbar-inner sliding">
             <div class="left">
-              <a href="#" class="link back">
+              <a  class="link back">
                 <i class="icon icon-back"></i>
                 <span class="if-not-md">Back</span>
               </a>
@@ -168,7 +168,7 @@ export default [
           <div class="navbar-bg"></div>
           <div class="navbar-inner sliding">
             <div class="left">
-              <a href="#" class="link back">
+              <a  class="link back">
                 <i class="icon icon-back"></i>
                 <span class="if-not-md">Back</span>
               </a>

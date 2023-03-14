@@ -39,11 +39,11 @@
           <div class="toolbar calendar-custom-toolbar">
             <div class="toolbar-inner">
               <div class="left">
-                <a href="#" class="link icon-only"><i class="icon icon-back"></i></a>
+                <a  class="link icon-only"><i class="icon icon-back"></i></a>
               </div>
               <div class="center"></div>
               <div class="right">
-                <a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>
+                <a  class="link icon-only"><i class="icon icon-forward"></i></a>
               </div>
             </div>
           </div>

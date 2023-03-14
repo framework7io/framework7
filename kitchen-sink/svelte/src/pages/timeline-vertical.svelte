@@ -201,9 +201,9 @@
         class="timeline-item-content list links-list inset list-strong list-dividers-ios no-safe-areas"
       >
         <ul>
-          <li><a href="#">Item 1</a></li>
-          <li><a href="#">Item 2</a></li>
-          <li><a href="#">Item 3</a></li>
+          <li><a>Item 1</a></li>
+          <li><a>Item 2</a></li>
+          <li><a>Item 3</a></li>
         </ul>
       </div>
     </div>

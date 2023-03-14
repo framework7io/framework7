@@ -89,10 +89,10 @@
           '<div class="toolbar">' +
           '<div class="toolbar-inner">' +
           '<div class="left">' +
-          '<a href="#" class="link toolbar-randomize-link">Randomize</a>' +
+          '<a  class="link toolbar-randomize-link">Randomize</a>' +
           '</div>' +
           '<div class="right">' +
-          '<a href="#" class="link sheet-close popover-close">That\'s me</a>' +
+          '<a  class="link sheet-close popover-close">That\'s me</a>' +
           '</div>' +
           '</div>' +
           '</div>'
