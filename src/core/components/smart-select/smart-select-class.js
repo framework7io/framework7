@@ -513,9 +513,11 @@ class SmartSelect extends Framework7Class {
         {ss.params.searchbar && <div class="searchbar-backdrop"></div>}
         <div class="page-content">
           <div
-            class={`list list-strong-ios list-dividers-ios smart-select-list-${ss.id} ${
-              ss.params.virtualList ? ' virtual-list' : ''
-            } ${ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''}`}
+            class={`list list-outline-ios list-strong-ios list-dividers-ios smart-select-list-${
+              ss.id
+            } ${ss.params.virtualList ? ' virtual-list' : ''} ${
+              ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''
+            }`}
           >
             <ul>{!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
           </div>
@@ -567,9 +569,11 @@ class SmartSelect extends Framework7Class {
             {ss.params.searchbar && <div class="searchbar-backdrop"></div>}
             <div class="page-content">
               <div
-                class={`list list-strong-ios list-dividers-ios smart-select-list-${ss.id} ${
-                  ss.params.virtualList ? ' virtual-list' : ''
-                } ${ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''}`}
+                class={`list list-outline-ios list-strong-ios list-dividers-ios smart-select-list-${
+                  ss.id
+                } ${ss.params.virtualList ? ' virtual-list' : ''} ${
+                  ss.params.formColorTheme ? `color-${ss.params.formColorTheme}` : ''
+                }`}
               >
                 <ul>{!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
               </div>
