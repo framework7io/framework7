@@ -23,7 +23,7 @@ export default () => {
   const [theme, setTheme] = useState(globalTheme);
   const [themeColor, setThemeColor] = useState(globalThemeColor);
 
-  const setLayoutTheme = (newTheme) => {
+  const setScheme = (newTheme) => {
     f7.setDarkMode(newTheme === 'dark');
     globalTheme = newTheme;
     setTheme(newTheme);
@@ -51,14 +51,14 @@ export default () => {
           <div
             width="50"
             className="bg-color-white demo-theme-picker"
-            onClick={() => setLayoutTheme('light')}
+            onClick={() => setScheme('light')}
           >
             {theme === 'light' && <Checkbox checked disabled />}
           </div>
           <div
             width="50"
             className="bg-color-black demo-theme-picker"
-            onClick={() => setLayoutTheme('dark')}
+            onClick={() => setScheme('dark')}
           >
             {theme === 'dark' && <Checkbox checked disabled />}
           </div>
@@ -86,7 +86,7 @@ export default () => {
         </div>
       </Block>
       <BlockTitle medium>Custom Color Theme</BlockTitle>
-      <List>
+      <List strongIos outlineIos>
         <ListInput
           type="colorpicker"
           label="HEX Color"

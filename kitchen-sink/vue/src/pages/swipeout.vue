@@ -142,7 +142,7 @@
     </f7-list>
 
     <f7-block-title>On both sides with overswipes</f7-block-title>
-    <f7-list media-list>
+    <f7-list media-list strong inset-md outline-ios dividers-ios>
       <f7-list-item
         swipeout
         title="Facebook"

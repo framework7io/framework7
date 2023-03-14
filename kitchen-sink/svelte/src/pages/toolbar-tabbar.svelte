@@ -24,12 +24,14 @@
     <Link>Left Link</Link>
     <Link>Right Link</Link>
   </Toolbar>
-  <List insetMd strong dividersIos outlineIo>
+  <!-- example-hidden-start -->
+  <List insetMd strong dividersIos outlineIos class="example-hidden">
     <ListItem link="./tabbar/" title="Tabbar" />
     <ListItem link="./tabbar-icons/" title="Tabbar With Icons" />
     <ListItem link="./tabbar-scrollable/" title="Tabbar Scrollable" />
     <ListItem link="./toolbar-hide-scroll/" title="Hide Toolbar On Scroll" />
   </List>
+  <!-- example-hidden-end -->
   <BlockTitle>Toolbar Position</BlockTitle>
   <Block>
     <p>

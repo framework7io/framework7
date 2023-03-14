@@ -8,7 +8,7 @@
       </p>
       <p class="grid grid-cols-2 grid-gap">
         <f7-button fill sheet-open=".demo-sheet">Open Sheet</f7-button>
-        <f7-button fill @click="createSheet">Create Dynamic Sheet</f7-button>
+        <f7-button fill @click="createSheet">Dynamic Sheet</f7-button>
       </p>
       <p>
         <f7-button fill sheet-open=".demo-sheet-top">Top Sheet</f7-button>

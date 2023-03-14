@@ -20,7 +20,7 @@
       <div class="block block-strong inset">
         <p>Framework7 comes with 2 main layout themes: Light (default) and Dark:</p>
         <div class="grid grid-cols-2 grid-gap">
-          <div class="bg-color-white demo-theme-picker" @click=${()=>setLayoutTheme('light')}>
+          <div class="bg-color-white demo-theme-picker" @click=${()=>setScheme('light')}>
             ${theme === 'light' && $h`
             <label class="checkbox">
               <input type="checkbox" checked disabled />
@@ -28,7 +28,7 @@
             </label>
             `}
           </div>
-          <div class="bg-color-black demo-theme-picker" @click=${()=>setLayoutTheme('dark')}>
+          <div class="bg-color-black demo-theme-picker" @click=${()=>setScheme('dark')}>
             ${theme === 'dark' && $h`
             <label class="checkbox">
               <input type="checkbox" checked disabled />
@@ -52,7 +52,7 @@
         </div>
       </div>
       <div class="block-title block-title-medium">Custom Color Theme</div>
-      <div class="list list-strong-ios">
+      <div class="list list-strong-ios list-outline-ios">
         <ul>
           <li class="item-content item-input">
             <div class="item-media align-self-flex-end">
@@ -81,7 +81,7 @@
 
     let colorPicker;
 
-    const setLayoutTheme = (newTheme) => {
+    const setScheme = (newTheme) => {
       $f7.setDarkMode(newTheme === 'dark');
       theme = newTheme;
       $update();

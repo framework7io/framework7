@@ -51,9 +51,9 @@
         :last="isLastMessage(message, index)"
         :tail="isTailMessage(message, index)"
       >
-        <template #text>
+        <template v-if="message.text" #text>
           <!-- eslint-disable-next-line -->
-          <span v-if="message.text" v-html="message.text"></span>
+          <span v-html="message.text"></span>
         </template>
       </f7-message>
       <f7-message

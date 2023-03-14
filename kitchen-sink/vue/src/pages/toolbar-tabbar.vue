@@ -5,12 +5,14 @@
       <f7-link>Left Link</f7-link>
       <f7-link>Right Link</f7-link>
     </f7-toolbar>
-    <f7-list inset-md strong dividers-ios outline-ios>
+    <!-- example-hidden-start -->
+    <f7-list inset-md strong dividers-ios outline-ios class="example-hidden">
       <f7-list-item link="./tabbar/" title="Tabbar" />
       <f7-list-item link="./tabbar-icons/" title="Tabbar With Icons" />
       <f7-list-item link="./tabbar-scrollable/" title="Tabbar Scrollable" />
       <f7-list-item link="./toolbar-hide-scroll/" title="Hide Toolbar On Scroll" />
     </f7-list>
+    <!-- example-hidden-end -->
     <f7-block-title>Toolbar Position</f7-block-title>
     <f7-block>
       <p>

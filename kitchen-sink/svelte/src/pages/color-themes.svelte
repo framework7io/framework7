@@ -25,7 +25,7 @@
     (c) => c !== 'primary' && c !== 'white' && c !== 'black',
   );
 
-  function setLayoutTheme(newTheme) {
+  function setScheme(newTheme) {
     console.log(newTheme);
     f7.setDarkMode(newTheme === 'dark');
     globalTheme = newTheme;
@@ -51,12 +51,12 @@
   <Block strong>
     <p>Framework7 comes with 2 main layout themes: Light (default) and Dark:</p>
     <div class="grid grid-cols-2 grid-gap">
-      <div class="bg-color-white demo-theme-picker" on:click={() => setLayoutTheme('light')}>
+      <div class="bg-color-white demo-theme-picker" on:click={() => setScheme('light')}>
         {#if theme === 'light'}
           <Checkbox checked disabled />
         {/if}
       </div>
-      <div class="bg-color-black demo-theme-picker" on:click={() => setLayoutTheme('dark')}>
+      <div class="bg-color-black demo-theme-picker" on:click={() => setScheme('dark')}>
         {#if theme === 'dark'}
           <Checkbox checked disabled />
         {/if}
@@ -85,7 +85,7 @@
     </div>
   </Block>
   <BlockTitle medium>Custom Color Theme</BlockTitle>
-  <List>
+  <List strongIos outlineIos>
     <ListInput
       type="colorpicker"
       label="HEX Color"

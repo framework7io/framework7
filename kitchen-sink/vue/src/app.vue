@@ -13,6 +13,8 @@
       :master-detail-breakpoint="768"
       :browser-history="needsBrowserHistory"
       :browser-history-root="needsBrowserHistory ? '/kitchen-sink/react/dist/' : ''"
+      :preload-previous-page="!needsBrowserHistory"
+      :ios-swipe-back="!needsBrowserHistory"
     ></f7-view>
   </f7-app>
 </template>

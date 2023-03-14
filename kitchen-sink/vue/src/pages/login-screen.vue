@@ -8,9 +8,11 @@
       </p>
     </f7-block>
 
+    <!-- example-hidden-start -->
     <f7-list strong inset-md outline-ios>
       <f7-list-item link="/login-screen-page/" title="As Separate Page"></f7-list-item>
     </f7-list>
+    <!-- example-hidden-end -->
 
     <f7-block>
       <f7-button raised large fill login-screen-open=".demo-login-screen">As Overlay</f7-button>

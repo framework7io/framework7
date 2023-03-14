@@ -650,10 +650,14 @@ code {
 .pie-chart svg {
   max-width: 320px;
 }
-.example-preview .navbar .link.back {
+.example-preview .view-main .navbar:first-child .link.back {
   min-width: 0 !important;
   width: 0 !important;
   padding: 0 !important;
   opacity: 0 !important;
   margin-right: 8px !important;
+  pointer-events: none;
+}
+.example-preview .example-hidden {
+  display: none !important;
 }

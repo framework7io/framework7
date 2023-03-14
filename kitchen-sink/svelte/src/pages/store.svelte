@@ -28,9 +28,9 @@
     </p>
   </Block>
   {#if !users}
-    <Block strong class="text-align-center">
+    <Block class="text-align-center">
       {#if !loading}
-        <Button on:click={load}>Load Users</Button>
+        <Button on:click={load} fill round>Load Users</Button>
       {/if}
       {#if loading}
         <Preloader />
@@ -39,7 +39,7 @@
   {/if}
 
   {#if users}
-    <List simpleList>
+    <List strong outlineIos dividersIos insetMd>
       {#each users as user}
         <ListItem title={user} />
       {/each}

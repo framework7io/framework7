@@ -68,7 +68,7 @@
     </p>
     <p class="grid grid-cols-2 grid-gap">
       <Button fill sheetOpen=".demo-sheet">Open Sheet</Button>
-      <Button fill onClick={createSheet}>Create Dynamic Sheet</Button>
+      <Button fill onClick={createSheet}>Dynamic Sheet</Button>
     </p>
     <p>
       <Button fill sheetOpen=".demo-sheet-top">Top Sheet</Button>

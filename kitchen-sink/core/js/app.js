@@ -12,6 +12,8 @@ if (document.location.href.includes('safe-areas')) {
 if (document.location.href.includes('example-preview')) {
   $('.view-main').attr('data-browser-history', 'true');
   $('.view-main').attr('data-browser-history-root', '/kitchen-sink/core/');
+  $('.view-main').attr('data-preload-previous-page', 'false');
+  $('.view-main').attr('data-ios-swipe-back', 'false');
   document.documentElement.classList.add('example-preview');
 }
 

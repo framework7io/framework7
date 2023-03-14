@@ -23,7 +23,7 @@
         <f7-button raised fill panel-open="left"> Open left panel </f7-button>
         <f7-button raised fill panel-open="right"> Open right panel </f7-button>
       </p>
-      <p class="grid grid-cols-2 grid-gap">
+      <p>
         <f7-button raised fill panel-open="#panel-nested"> Open nested panel </f7-button>
       </p>
     </f7-block>

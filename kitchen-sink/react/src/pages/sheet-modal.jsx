@@ -72,7 +72,7 @@ export default () => {
             Open Sheet
           </Button>
           <Button fill onClick={createSheet}>
-            Create Dynamic Sheet
+            Dynamic Sheet
           </Button>
         </p>
         <p>

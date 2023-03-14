@@ -166,7 +166,7 @@
   </List>
 
   <BlockTitle>On both sides with overswipes</BlockTitle>
-  <List mediaList>
+  <List mediaList strong insetMd outlineIos dividersIos>
     <ListItem
       swipeout
       title="Facebook"

@@ -32,7 +32,7 @@
       </div>
     </f7-block>
     <f7-block-title medium>Custom Color Theme</f7-block-title>
-    <f7-list>
+    <f7-list strong-ios outline-ios>
       <f7-list-input
         type="colorpicker"
         label="HEX Color"

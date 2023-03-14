@@ -34,6 +34,8 @@ export default () => {
         masterDetailBreakpoint={768}
         browserHistory={needsBrowserHistory}
         browserHistoryRoot={needsBrowserHistory ? '/kitchen-sink/react/dist/' : ''}
+        preloadPreviousPage={!needsBrowserHistory}
+        iosSwipeBack={!needsBrowserHistory}
       />
     </App>
   );

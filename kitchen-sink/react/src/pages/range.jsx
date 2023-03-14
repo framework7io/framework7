@@ -3,7 +3,7 @@ import { Navbar, Page, BlockTitle, Range, List, ListItem, Icon, Block } from 'fr
 
 export default () => {
   const [priceMin, setPriceMin] = useState(200);
-  const [priceMax, setPriceMax] = useState(200);
+  const [priceMax, setPriceMax] = useState(400);
 
   const onPriceChange = (values) => {
     setPriceMin(values[0]);
