@@ -253,7 +253,7 @@ each(@breakpoints, {
 
   .timeline-item-content {
     padding: var(--f7-timeline-horizontal-item-padding);
-    height: calc(100% - var(--f7-timeline-horizontal-item-padding));
+    height: calc(100vw - var(--f7-timeline-horizontal-item-padding));
     .scrollable();
     margin: 0;
   }
@@ -264,21 +264,45 @@ each(@breakpoints, {
   .timeline-month:last-child .timeline-item:last-child {
     .hairline-remove(right);
   }
-
-  @cols: 5, 10, 15, 20, 25, 30, 100/3, 35, 40, 45, 50, 55, 60, 65, 100 * (2/3), 70, 75, 80, 85, 90,
-    95, 100;
+  @cols: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20;
   each(@cols, {
     @className: floor((@value));
-    &.col-@{className} .timeline-item {
-      width: ~"@{value}vw";
+    &.timeline-cols-@{className} .timeline-item {
+      width: ~"calc(100vw / @{value})";
     }
   });
-
-  @media (min-width: 768px) {
+  @media (min-width: @breakpoints[xsmall]) {
     each(@cols, {
-      @className: floor((@value));
-      &.tablet-@{className} .timeline-item {
-        width: ~"@{value}vw";
+      &.xsmall-timeline-cols-@{value} .timeline-item {
+         width: ~"calc(100vw / @{value})";
+      }
+    });
+  }
+  @media (min-width: @breakpoints[small]) {
+    each(@cols, {
+      &.small-timeline-cols-@{value} .timeline-item {
+         width: ~"calc(100vw / @{value})";
+      }
+    });
+  }
+  @media (min-width: @breakpoints[medium]) {
+    each(@cols, {
+      &.medium-timeline-cols-@{value} .timeline-item {
+         width: ~"calc(100vw / @{value})";
+      }
+    });
+  }
+  @media (min-width: @breakpoints[large]) {
+    each(@cols, {
+      &.large-timeline-cols-@{value} .timeline-item {
+         width: ~"calc(100vw / @{value})";
+      }
+    });
+  }
+  @media (min-width: @breakpoints[xlarge]) {
+    each(@cols, {
+      &.xlarge-timeline-cols-@{value} .timeline-item {
+         width: ~"calc(100vw / @{value})";
       }
     });
   }
