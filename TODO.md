@@ -1,1 +1,1 @@
-- Browser modules
+- check hairline classes (replace with outline where applicable)
