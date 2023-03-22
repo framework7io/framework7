@@ -19,11 +19,8 @@ export default {
   },
   inheritAttrs: false,
   props: {
-    id: { type: String, default: undefined },
     name: { type: String, default: undefined },
-    version: { type: String, default: undefined },
     theme: { type: String, default: undefined },
-    language: { type: String, default: undefined },
     routes: { type: Array, default: () => [] },
     store: Object,
     darkMode: { type: [Boolean, String], default: false },
