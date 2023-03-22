@@ -23,7 +23,7 @@ export namespace Searchbar {
     searchItem?: CSSSelector;
     /** CSS selector of group element. Used when hideGroups enabled to hide groups. If we do a search in List View, then it usually a list group (default "list-group") */
     searchGroup?: CSSSelector;
-    /** CSS selector of group titles and dividers. Used when hideDividers enabled to hide group titles and dividers. If we do a search in List View, then it usually a list group title or list item divider (default ".list-group-title") */
+    /** CSS selector of group titles. Used when hideGroupTitles enabled to hide group titles. If we do a search in List View, then it usually a list group title (default ".list-group-title") */
     searchGroupTitle?: CSSSelector;
     /** CSS selector or HTMLElement of searchbar "found" element to make it hidden when there is no search results (default ".searchbar-found") */
     foundEl?: HTMLElement | CSSSelector;
@@ -44,7 +44,7 @@ export namespace Searchbar {
     /** Enable to remove/replace diacritics (á, í, ó, etc.) during search (default false) */
     removeDiacritics?: boolean;
     /** If enabled, then search will consider item dividers and group titles and hide them if there are no found items right after them (default true) */
-    hideDividers?: boolean;
+    hideGroupTitles?: boolean;
     /** If enabled, then search will consider list view groups hide them if there are no found items inside of these groups (default true) */
     hideGroups?: boolean;
     /** Disable searchbar on backdrop click */

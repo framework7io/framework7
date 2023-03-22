@@ -122,7 +122,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    hideDividers: {
+    hideGroupTitles: {
       type: Boolean,
       default: true,
     },
@@ -219,7 +219,7 @@ export default {
           ignore: props.ignore,
           customSearch: props.customSearch,
           removeDiacritics: props.removeDiacritics,
-          hideDividers: props.hideDividers,
+          hideGroupTitles: props.hideGroupTitles,
           hideGroups: props.hideGroups,
           expandable: props.expandable,
           inline: props.inline,

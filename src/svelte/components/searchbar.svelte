@@ -41,7 +41,7 @@
   export let ignore = '.searchbar-ignore';
   export let customSearch = false;
   export let removeDiacritics = false;
-  export let hideDividers = true;
+  export let hideGroupTitles = true;
   export let hideGroups = true;
   export let init = true;
 
@@ -135,7 +135,7 @@
         ignore,
         customSearch,
         removeDiacritics,
-        hideDividers,
+        hideGroupTitles,
         hideGroups,
         expandable,
         inline,

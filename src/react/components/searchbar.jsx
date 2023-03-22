@@ -36,7 +36,7 @@ import { Searchbar } from 'framework7/types';
   ignore? : string
   customSearch? : boolean
   removeDiacritics? : boolean
-  hideDividers? : boolean
+  hideGroupTitles? : boolean
   hideGroups? : boolean
   init? : boolean
   COLOR_PROPS
@@ -88,7 +88,7 @@ const Searchbar = forwardRef((props, ref) => {
     ignore = '.searchbar-ignore',
     customSearch = false,
     removeDiacritics = false,
-    hideDividers = true,
+    hideGroupTitles = true,
     hideGroups = true,
     init = true,
   } = props;
@@ -171,7 +171,7 @@ const Searchbar = forwardRef((props, ref) => {
         ignore,
         customSearch,
         removeDiacritics,
-        hideDividers,
+        hideGroupTitles,
         hideGroups,
         expandable,
         inline,
