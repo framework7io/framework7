@@ -6,6 +6,7 @@ import { f7ready, f7routers, f7, f7events } from '../shared/f7.js';
 import { useTab } from '../shared/use-tab.js';
 import { RouterContext } from '../shared/router-context.js';
 import { useAsyncComponent } from '../shared/use-async-component.js';
+import { TabsSwipeableContext } from '../shared/tabs-swipeable-context.js';
 
 /* dts-props
   id?: string | number;
@@ -28,6 +29,7 @@ const Tab = forwardRef((props, ref) => {
   const routerData = useRef(null);
 
   const routerContext = useContext(RouterContext);
+  const tabsSwipeableContext = useContext(TabsSwipeableContext);
 
   let initialTabContent = null;
 
@@ -124,10 +126,14 @@ const Tab = forwardRef((props, ref) => {
     return <TabContent key={tabContent.id} {...tabContent.props} />;
   };
 
+  const Component = tabsSwipeableContext ? 'swiper-slide' : 'div';
+
+  const classAttrs = tabsSwipeableContext ? { class: classes } : { className: classes };
+
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <Component id={id} style={style} ref={elRef} {...extraAttrs} {...classAttrs}>
       {renderChildren()}
-    </div>
+    </Component>
   );
 });
 

@@ -4,6 +4,7 @@
   import { restProps } from '../shared/rest-props.js';
   import { colorClasses } from '../shared/mixins.js';
   import { classNames } from '../shared/utils.js';
+  import { setReactiveContext } from '../shared/set-reactive-context.js';
 
   let className = undefined;
   export { className as class };
@@ -15,28 +16,41 @@
   let wrapEl;
 
   $: classes = classNames(className, colorClasses($$props));
-  $: wrapClasses = classNames({
-    'tabs-animated-wrap': animated,
-    'tabs-swipeable-wrap': swipeable,
-  });
+
   $: tabsClasses = classNames({
     tabs: true,
     'tabs-routable': routable,
   });
 
+  setReactiveContext('TabsSwipeableContext', () => true);
+
   onMount(() => {
     if (swipeable && swiperParams && wrapEl) {
-      wrapEl.f7SwiperParams = swiperParams;
+      Object.assign(wrapEl, swiperParams);
+      wrapEl.initialize();
     }
   });
 </script>
 
-{#if animated || swipeable}
-  <div class={classNames(wrapClasses, classes)} bind:this={wrapEl} {...restProps($$restProps)}>
+{#if animated}
+  <div
+    class={classNames('tabs-animated-wrap', classes)}
+    bind:this={wrapEl}
+    {...restProps($$restProps)}
+  >
     <div class={tabsClasses}>
       <slot />
     </div>
   </div>
+{:else if swipeable}
+  <swiper-container
+    bind:this={wrapEl}
+    class={classNames(tabsClasses, classes)}
+    {...restProps($$restProps)}
+    init={swiperParams ? 'false' : 'true'}
+  >
+    <slot />
+  </swiper-container>
 {:else}
   <div class={classNames(tabsClasses, classes)} {...restProps($$restProps)}>
     <slot />

@@ -1,5 +1,14 @@
 <template>
-  <div ref="elRef" :class="classes">
+  <swiper-slide v-if="isSwiper" ref="elRef" :class="classes">
+    <component
+      :is="getComponent(tabContent)"
+      v-if="tabContent"
+      :key="tabContent.id"
+      v-bind="getProps(tabContent)"
+    />
+    <slot v-else />
+  </swiper-slide>
+  <div v-else ref="elRef" :class="classes">
     <component
       :is="getComponent(tabContent)"
       v-if="tabContent"
@@ -28,6 +37,7 @@ export default {
     const routerData = ref(null);
     const route = inject('f7route', null);
     const router = inject('f7route', null);
+    const isSwiper = inject('TabsSwipeableContext', false);
 
     let initialTabContent = null;
 
@@ -127,6 +137,7 @@ export default {
       tabContent,
       getComponent,
       getProps,
+      isSwiper,
     };
   },
 };

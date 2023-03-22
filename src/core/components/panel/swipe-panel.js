@@ -47,7 +47,7 @@ function swipePanel(panel) {
       return;
     if (
       $(e.target).closest(
-        '.range-slider, .tabs-swipeable-wrap, .calendar-months, .no-swipe-panel, .card-opened',
+        '.range-slider, swiper-container.tabs, .calendar-months, .no-swipe-panel, .card-opened',
       ).length > 0
     )
       return;

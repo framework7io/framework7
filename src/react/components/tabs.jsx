@@ -2,6 +2,7 @@ import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
+import { TabsSwipeableContext } from '../shared/tabs-swipeable-context.js';
 
 /* dts-imports
 import { SwiperOptions } from 'swiper';
@@ -32,30 +33,41 @@ const Tabs = forwardRef((props, ref) => {
   useIsomorphicLayoutEffect(() => {
     if (!swipeable || !swiperParams) return;
     if (!elRef.current) return;
-    elRef.current.f7SwiperParams = swiperParams;
+    Object.assign(elRef.current, swiperParams);
+    elRef.current.initialize();
   }, []);
 
   const classes = classNames(className, colorClasses(props));
-  const wrapClasses = classNames({
-    'tabs-animated-wrap': animated,
-    'tabs-swipeable-wrap': swipeable,
-  });
   const tabsClasses = classNames({
     tabs: true,
     'tabs-routable': routable,
   });
 
-  if (animated || swipeable) {
+  if (animated) {
     return (
       <div
         id={id}
         style={style}
-        className={classNames(wrapClasses, classes)}
+        className={classNames('tabs-animated-wrap', classes)}
         ref={elRef}
         {...extraAttrs}
       >
         <div className={tabsClasses}>{children}</div>
       </div>
+    );
+  }
+  if (swipeable) {
+    return (
+      <swiper-container
+        id={id}
+        style={style}
+        class={classNames(tabsClasses, classes)}
+        ref={elRef}
+        init={swiperParams ? 'false' : 'true'}
+        {...extraAttrs}
+      >
+        <TabsSwipeableContext.Provider value={true}>{children}</TabsSwipeableContext.Provider>
+      </swiper-container>
     );
   }
 

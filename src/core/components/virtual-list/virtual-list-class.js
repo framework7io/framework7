@@ -139,7 +139,7 @@ class VirtualList extends Framework7Class {
         .parents('.tab')
         .filter((tabEl) => {
           return (
-            $(tabEl).parent('.tabs').parent('.tabs-animated-wrap, .tabs-swipeable-wrap').length ===
+            $(tabEl).parent('.tabs').parent('.tabs-animated-wrap, swiper-container.tabs').length ===
             0
           );
         })

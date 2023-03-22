@@ -1,15 +1,23 @@
 <template>
-  <div v-if="animated || swipeable" ref="elRef" :class="classNames(wrapClasses, classes)">
+  <div v-if="animated" ref="elRef" :class="classNames('tabs-animated-wrap', classes)">
     <div :class="tabsClasses">
       <slot />
     </div>
   </div>
+  <swiper-container
+    v-else-if="swipeable"
+    ref="elRef"
+    :class="classNames(tabsClasses, classes)"
+    :init="swiperParams ? 'false' : 'true'"
+  >
+    <slot />
+  </swiper-container>
   <div v-else ref="elRef" :class="classNames(tabsClasses, classes)">
     <slot />
   </div>
 </template>
 <script>
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, onMounted, provide } from 'vue';
 import { classNames } from '../shared/utils.js';
 import { colorClasses, colorProps } from '../shared/mixins.js';
 
@@ -31,16 +39,12 @@ export default {
     onMounted(() => {
       if (!props.swipeable || !props.swiperParams) return;
       if (!elRef.value) return;
-      elRef.value.f7SwiperParams = props.swiperParams;
+      Object.assign(elRef.value, props.swiperParams);
+      elRef.value.initialize();
     });
 
     const classes = computed(() => classNames(colorClasses(props)));
-    const wrapClasses = computed(() =>
-      classNames({
-        'tabs-animated-wrap': props.animated,
-        'tabs-swipeable-wrap': props.swipeable,
-      }),
-    );
+
     const tabsClasses = computed(() =>
       classNames({
         tabs: true,
@@ -48,10 +52,13 @@ export default {
       }),
     );
 
+    const TabsSwipeableContext = computed(() => props.swipeable);
+
+    provide('TabsSwipeableContext', TabsSwipeableContext);
+
     return {
       elRef,
       classes,
-      wrapClasses,
       tabsClasses,
       classNames,
     };

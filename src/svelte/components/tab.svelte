@@ -6,6 +6,7 @@
   import { classNames, createEmitter, getComponentId } from '../shared/utils.js';
   import { f7ready, app } from '../shared/f7.js';
   import { useTab } from '../shared/use-tab.js';
+  import { getReactiveContext } from '../shared/get-reactive-context.js';
 
   const emit = createEmitter(createEventDispatcher, $$props);
 
@@ -16,9 +17,16 @@
 
   const RouterContext = getContext('RouterContext') || {};
 
+  let TabsSwipeableContext =
+    getReactiveContext('TabsSwipeableContext', (newValue) => {
+      TabsSwipeableContext = newValue || false;
+    }) || {};
+
   let el;
   let routerData = null;
   let initialTabContent = null;
+
+  $: isSwiper = TabsSwipeableContext;
 
   if (
     !routerData &&
@@ -83,9 +91,18 @@
   });
 </script>
 
-<div {id} class={classes} bind:this={el} {...restProps($$restProps)}>
-  {#if tabContent}
-    <svelte:component this={tabContent.component} {...tabContent.props} />
-  {/if}
-  <slot />
-</div>
+{#if isSwiper || TabsSwipeableContext}
+  <swiper-slide {id} class={classes} bind:this={el} {...restProps($$restProps)}>
+    {#if tabContent}
+      <svelte:component this={tabContent.component} {...tabContent.props} />
+    {/if}
+    <slot />
+  </swiper-slide>
+{:else}
+  <div {id} class={classes} bind:this={el} {...restProps($$restProps)}>
+    {#if tabContent}
+      <svelte:component this={tabContent.component} {...tabContent.props} />
+    {/if}
+    <slot />
+  </div>
+{/if}

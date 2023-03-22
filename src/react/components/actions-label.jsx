@@ -6,7 +6,7 @@ import { colorClasses } from '../shared/mixins.js';
   id: string | number;
   className: string;
   style: React.CSSProperties;
-  bold: boolean;
+  strong: boolean;
   onClick?: (event?: any) => void
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
   children?: React.ReactNode;
