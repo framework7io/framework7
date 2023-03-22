@@ -37,11 +37,8 @@ class Framework7 extends Framework7Class {
 
     // Default
     const defaults = {
-      version: '1.0.0',
-      id: 'io.framework7.myapp',
       el: 'body',
       theme: 'auto',
-      language: w.navigator.language,
       routes: [],
       name: 'Framework7',
       lazyModulesPath: null,
@@ -80,16 +77,10 @@ class Framework7 extends Framework7Class {
     app.params = extend(defaults, params);
 
     extend(app, {
-      // App Id
-      id: app.params.id,
       // App Name
       name: app.params.name,
-      // App version
-      version: app.params.version,
       // Routes
       routes: app.params.routes,
-      // Lang
-      language: app.params.language,
 
       // Theme
       theme: (function getTheme() {

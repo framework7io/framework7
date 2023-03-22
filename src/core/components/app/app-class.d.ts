@@ -43,16 +43,10 @@ export interface Framework7EventsClass<Events> {
 export interface Framework7Parameters {
   /** App root element. If you main app layout is not a direct child of the <body> then it is required to specify root element here. (default body) */
   el?: string;
-  /** App bundle id.. (default io.framework7.testapp) */
-  id?: string | 'io.framework7.testapp';
   /** App name. Can be used by other components, e.g. as the default title for Dialog component.. (default Framework7) */
   name?: string;
-  /** App version. Can be used by other components.. (default 1.0.0) */
-  version?: string;
   /** App theme. Can be ios, md or auto. In case of auto it will use iOS theme for iOS devices and MD theme for all other devices.. (default 'auto') */
   theme?: string;
-  /** App language. Can be used by other components. By default equal to the current browser/webview language (i.e. navigator.language).. */
-  language?: string;
   /** Array with default routes to all views.. (default []) */
   routes?: Router.RouteParameters[];
   /** Enables dark mode, can be `false` (disabled), `true` (enabled) or `auto` (based on system preferences) */
@@ -131,16 +125,10 @@ export interface Framework7Events {
 }
 
 interface Framework7 extends Framework7Class<Framework7Events> {
-  /** App ID passed in parameters */
-  id: string;
   /** App name passed in parameters */
   name: string;
-  /** App version */
-  version: string;
   /** App routes */
   routes: Router.RouteParameters[];
-  /** App language */
-  language: string;
   /** App root HTML element */
   el: HTMLElement;
   /** Dom7 instance with app root element */
