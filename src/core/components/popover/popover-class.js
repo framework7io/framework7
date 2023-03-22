@@ -62,13 +62,13 @@ class Popover extends Modal {
       }
     }
 
-    // Find Angle
-    let $angleEl;
-    if ($el.find('.popover-angle').length === 0 && popover.params.angle) {
-      $angleEl = $('<div class="popover-angle"></div>');
-      $el.prepend($angleEl);
+    // Find Arrow
+    let $arrowEl;
+    if ($el.find('.popover-arrow').length === 0 && popover.params.arrow) {
+      $arrowEl = $('<div class="popover-arrow"></div>');
+      $el.prepend($arrowEl);
     } else {
-      $angleEl = $el.find('.popover-angle');
+      $arrowEl = $el.find('.popover-arrow');
     }
 
     // Open
@@ -80,8 +80,8 @@ class Popover extends Modal {
       el: $el[0],
       $targetEl,
       targetEl: $targetEl[0],
-      $angleEl,
-      angleEl: $angleEl[0],
+      $arrowEl,
+      arrowEl: $arrowEl[0],
       $backdropEl,
       backdropEl: $backdropEl && $backdropEl[0],
       type: 'popover',
@@ -184,18 +184,18 @@ class Popover extends Modal {
 
   resize() {
     const popover = this;
-    const { app, $el, $targetEl, $angleEl } = popover;
+    const { app, $el, $targetEl, $arrowEl } = popover;
     const { targetX, targetY, verticalPosition } = popover.params;
     $el.css({ left: '', top: '' });
     const [width, height] = [$el.width(), $el.height()];
-    let angleSize = 0;
-    let angleLeft;
-    let angleTop;
-    const hasAngle = $angleEl.length > 0;
-    const angleMin = app.theme === 'ios' ? 13 : 24;
-    if (hasAngle) {
-      $angleEl.removeClass('on-left on-right on-top on-bottom').css({ left: '', top: '' });
-      angleSize = $angleEl.width() / 2;
+    let arrowSize = 0;
+    let arrowLeft;
+    let arrowTop;
+    const hasArrow = $arrowEl.length > 0;
+    const arrowMin = app.theme === 'ios' ? 13 : 24;
+    if (hasArrow) {
+      $arrowEl.removeClass('on-left on-right on-top on-bottom').css({ left: '', top: '' });
+      arrowSize = $arrowEl.width() / 2;
     }
     $el
       .removeClass(
@@ -239,17 +239,17 @@ class Popover extends Modal {
 
     if (
       forcedPosition === 'top' ||
-      (!forcedPosition && height + angleSize < targetOffsetTop - safeAreaTop)
+      (!forcedPosition && height + arrowSize < targetOffsetTop - safeAreaTop)
     ) {
       // On top
-      top = targetOffsetTop - height - angleSize;
+      top = targetOffsetTop - height - arrowSize;
     } else if (
       forcedPosition === 'bottom' ||
-      (!forcedPosition && height + angleSize < app.height - targetOffsetTop - targetHeight)
+      (!forcedPosition && height + arrowSize < app.height - targetOffsetTop - targetHeight)
     ) {
       // On bottom
       position = 'bottom';
-      top = targetOffsetTop + targetHeight + angleSize;
+      top = targetOffsetTop + targetHeight + arrowSize;
     } else {
       // On middle
       position = 'middle';
@@ -272,30 +272,30 @@ class Popover extends Modal {
       }
 
       diff -= left;
-      if (hasAngle) {
+      if (hasArrow) {
         if (position === 'top') {
-          $angleEl.addClass('on-bottom');
+          $arrowEl.addClass('on-bottom');
         }
         if (position === 'bottom') {
-          $angleEl.addClass('on-top');
+          $arrowEl.addClass('on-top');
         }
-        angleLeft = width / 2 - angleSize + diff;
-        angleLeft = Math.max(Math.min(angleLeft, width - angleSize * 2 - angleMin), angleMin);
-        $angleEl.css({ left: `${angleLeft}px` });
+        arrowLeft = width / 2 - arrowSize + diff;
+        arrowLeft = Math.max(Math.min(arrowLeft, width - arrowSize * 2 - arrowMin), arrowMin);
+        $arrowEl.css({ left: `${arrowLeft}px` });
       }
     } else if (position === 'middle') {
-      left = targetOffsetLeft - width - angleSize;
-      if (hasAngle) $angleEl.addClass('on-right');
+      left = targetOffsetLeft - width - arrowSize;
+      if (hasArrow) $arrowEl.addClass('on-right');
       if (left < 5 || left + width + safeAreaRight > app.width || left < safeAreaLeft) {
-        if (left < 5) left = targetOffsetLeft + targetWidth + angleSize;
+        if (left < 5) left = targetOffsetLeft + targetWidth + arrowSize;
         if (left + width + safeAreaRight > app.width) left = app.width - width - 5 - safeAreaRight;
         if (left < safeAreaLeft) left = safeAreaLeft;
-        if (hasAngle) $angleEl.removeClass('on-right').addClass('on-left');
+        if (hasArrow) $arrowEl.removeClass('on-right').addClass('on-left');
       }
-      if (hasAngle) {
-        angleTop = height / 2 - angleSize + diff;
-        angleTop = Math.max(Math.min(angleTop, height - angleSize * 2 - angleMin), angleMin);
-        $angleEl.css({ top: `${angleTop}px` });
+      if (hasArrow) {
+        arrowTop = height / 2 - arrowSize + diff;
+        arrowTop = Math.max(Math.min(arrowTop, height - arrowSize * 2 - arrowMin), arrowMin);
+        $arrowEl.css({ top: `${arrowTop}px` });
       }
     }
 

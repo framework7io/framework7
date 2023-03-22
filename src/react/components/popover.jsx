@@ -17,7 +17,7 @@ import { Popover } from 'framework7/types';
   opened? : boolean
   animate? : boolean
   targetEl? : string | object
-  angle? : boolean
+  arrow? : boolean
   backdrop? : boolean
   backdropEl? : string | object
   closeByBackdropClick? : boolean
@@ -44,7 +44,7 @@ const Popover = forwardRef((props, ref) => {
     opened,
     animate,
     targetEl,
-    angle,
+    arrow,
     backdrop,
     backdropEl,
     closeByBackdropClick,
@@ -110,7 +110,7 @@ const Popover = forwardRef((props, ref) => {
     if ('closeByBackdropClick' in props) popoverParams.closeByBackdropClick = closeByBackdropClick;
     if ('closeByOutsideClick' in props) popoverParams.closeByOutsideClick = closeByOutsideClick;
     if ('closeOnEscape' in props) popoverParams.closeOnEscape = closeOnEscape;
-    if ('angle' in props) popoverParams.angle = angle;
+    if ('arrow' in props) popoverParams.arrow = arrow;
     if ('backdrop' in props) popoverParams.backdrop = backdrop;
     if ('backdropEl' in props) popoverParams.backdropEl = backdropEl;
     if ('animate' in props) popoverParams.animate = animate;
@@ -155,7 +155,7 @@ const Popover = forwardRef((props, ref) => {
 
   return (
     <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
-      <div className="popover-angle" />
+      <div className="popover-arrow" />
       <div className="popover-inner">{children}</div>
     </div>
   );
