@@ -26,7 +26,7 @@ function initSwiper(swiperEl) {
   let isTabs;
   let isRoutableTabs;
   if ($swiperEl.hasClass('tabs')) {
-    initialSlide = $swiperEl.children('.tab-active').index();
+    initialSlide = $swiperEl.children('swiper-slide').indexOf($swiperEl.children('.tab-active')[0]);
     isTabs = true;
     isRoutableTabs = $swiperEl.find('.tabs-routable').length > 0;
   }

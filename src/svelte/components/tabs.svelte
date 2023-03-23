@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onMount, tick } from 'svelte';
 
   import { restProps } from '../shared/rest-props.js';
   import { colorClasses } from '../shared/mixins.js';
@@ -29,6 +29,11 @@
       Object.assign(wrapEl, swiperParams);
       wrapEl.initialize();
     }
+    tick().then(() => {
+      if (swipeable && wrapEl.swiper) {
+        wrapEl.swiper.update();
+      }
+    });
   });
 </script>
 
