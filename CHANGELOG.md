@@ -4,6 +4,38 @@
 
 # [8.0.0] WIP
 
+### Core
+
+- All new Material Theme with Material You design
+- All new color theming options and parameters
+- Removed Aurora theme
+- Removed Elevation, Lazy, Menu, Appbar, Request components and modules
+- Removed browser lazy components from package
+
+### Swiper
+
+- updated to all new Swiper v9 with Swiper Element which is now used in Swipeable Tabs
+- removed Swiper components from Framework7 React, Vue, Svelte - use Swiper Element instead
+
+### Grid
+
+- New simplified grid layout and sizes
+- Resizable grid functionality has been removed
+
+### Inputs
+
+- Removed inline labels styles
+- Removed expandInput functionality in Autocomplete
+
+### List
+
+- Removed list item cell & row components and elements
+- List styling now has addition `outline`, `strong`, `dividers` classes / props
+
+### Router
+
+- Removed `stackPages` functionality
+
 ### Bug Fixes
 
 - **svelte:** fix swipeable tabs ([9476c6a](https://github.com/framework7io/framework7/commit/9476c6a35bc64a78fdbf5126505044dc52e452b8))
