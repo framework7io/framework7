@@ -16,6 +16,8 @@
     List,
     ListInput,
     Checkbox,
+    Link,
+    Toolbar,
   } from 'framework7-svelte';
 
   let theme = globalTheme;
@@ -46,7 +48,25 @@
 </script>
 
 <Page>
-  <Navbar large title="Color Themes" backLink="Back" />
+  <Navbar large title="Color Themes" backLink="Back">
+    <Link slot="right">Link</Link>
+  </Navbar>
+  <Toolbar tabbar icons bottom>
+    <Link
+      tabLink="#tab-1"
+      tabLinkActive
+      text="Tab 1"
+      iconIos="f7:envelope_fill"
+      iconMd="material:email"
+    />
+    <Link tabLink="#tab-2" text="Tab 2" iconIos="f7:calendar_fill" iconMd="material:today" />
+    <Link
+      tabLink="#tab-3"
+      text="Tab 3"
+      iconIos="f7:cloud_upload_fill"
+      iconMd="material:file_upload"
+    />
+  </Toolbar>
   <BlockTitle medium>Layout Themes</BlockTitle>
   <Block strong>
     <p>Framework7 comes with 2 main layout themes: Light (default) and Dark:</p>

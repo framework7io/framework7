@@ -1,6 +1,31 @@
 <template>
   <f7-page>
-    <f7-navbar large title="Color Themes" back-link="Back"></f7-navbar>
+    <f7-navbar large title="Color Themes" back-link="Back">
+      <template #right>
+        <f7-link>Link</f7-link>
+      </template>
+    </f7-navbar>
+    <f7-toolbar tabbar icons bottom>
+      <f7-link
+        tab-link="#tab-1"
+        tab-link-active
+        text="Tab 1"
+        icon-ios="f7:envelope_fill"
+        icon-md="material:email"
+      />
+      <f7-link
+        tab-link="#tab-2"
+        text="Tab 2"
+        icon-ios="f7:calendar_fill"
+        icon-md="material:today"
+      />
+      <f7-link
+        tab-link="#tab-3"
+        text="Tab 3"
+        icon-ios="f7:cloud_upload_fill"
+        icon-md="material:file_upload"
+      />
+    </f7-toolbar>
     <f7-block-title medium>Layout Themes</f7-block-title>
     <f7-block strong>
       <p>Framework7 comes with 2 main layout themes: Light (default) and Dark:</p>
@@ -69,6 +94,8 @@ import {
   f7List,
   f7ListInput,
   f7Checkbox,
+  f7Link,
+  f7Toolbar,
   f7,
 } from 'framework7-vue';
 import $ from 'dom7';
@@ -86,6 +113,8 @@ export default {
     f7List,
     f7ListInput,
     f7Checkbox,
+    f7Link,
+    f7Toolbar,
   },
   data() {
     const colors = Object.keys(f7.colors).filter(
