@@ -13,6 +13,7 @@ export default {
     },
     params: Object,
     photos: Array,
+    thumbs: Array,
     exposition: {
       type: Boolean,
       default: true,
@@ -47,6 +48,10 @@ export default {
     },
     pageBackLinkText: {
       type: String,
+      default: undefined,
+    },
+    popupCloseLinkIcon: {
+      type: Boolean,
       default: undefined,
     },
     popupCloseLinkText: {
@@ -85,6 +90,7 @@ export default {
     renderPage: Function,
     renderPopup: Function,
     renderStandalone: Function,
+    renderThumb: Function,
   },
   emits: [
     'photobrowser:open',
@@ -119,6 +125,17 @@ export default {
         pb.params.photos = value;
         if (pb.opened && pb.swiper) {
           pb.swiper.update();
+        }
+      },
+    );
+    watch(
+      () => props.thumbs,
+      (value) => {
+        const pb = f7PhotoBrowser;
+        if (!pb) return;
+        pb.params.thumbs = value;
+        if (pb.opened && pb.thumbsSwiper) {
+          pb.thumbsSwiper.update();
         }
       },
     );

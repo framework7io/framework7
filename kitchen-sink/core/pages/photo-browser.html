@@ -62,6 +62,13 @@
         caption: 'Beautiful mountains in Zhangjiajie, China'
       }
     ];
+    const thumbs = [
+      'img/beach.jpg',
+      'http://placekitten.com/1024/1024',
+      'img/lock.jpg',
+      'img/monkey.jpg',
+      'img/mountains.jpg'
+    ]
 
     let standalone;
     let popup;
@@ -92,27 +99,33 @@
       // Create PBs when page init
       standalone = $f7.photoBrowser.create({
         photos: photos,
+        thumbs: thumbs,
       });
       popup = $f7.photoBrowser.create({
         photos: photos,
+        thumbs: thumbs,
         type: 'popup',
       });
       page = $f7.photoBrowser.create({
         photos: photos,
+        thumbs: thumbs,
         type: 'page',
         backLinkText: 'Back',
       });
       standaloneDark = $f7.photoBrowser.create({
         photos: photos,
+        thumbs: thumbs,
         theme: 'dark',
       });
       popupDark = $f7.photoBrowser.create({
         photos: photos,
+        thumbs: thumbs,
         type: 'popup',
         theme: 'dark',
       });
       pageDark = $f7.photoBrowser.create({
         photos: photos,
+        thumbs: thumbs,
         type: 'page',
         backLinkText: 'Back',
         theme: 'dark',

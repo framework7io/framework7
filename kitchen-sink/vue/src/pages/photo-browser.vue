@@ -20,15 +20,21 @@
       </p>
       <div class="grid grid-cols-3 grid-gap">
         <div>
-          <f7-photo-browser ref="standalone" :photos="photos" />
+          <f7-photo-browser ref="standalone" :photos="photos" :thumbs="thumbs" />
           <f7-button fill @click="$refs.standalone.open()">Standalone</f7-button>
         </div>
         <div>
-          <f7-photo-browser ref="popup" :photos="photos" type="popup" />
+          <f7-photo-browser ref="popup" :photos="photos" :thumbs="thumbs" type="popup" />
           <f7-button fill @click="$refs.popup.open()">Popup</f7-button>
         </div>
         <div>
-          <f7-photo-browser ref="page" :photos="photos" type="page" page-back-link-text="Back" />
+          <f7-photo-browser
+            ref="page"
+            :photos="photos"
+            :thumbs="thumbs"
+            type="page"
+            page-back-link-text="Back"
+          />
           <f7-button fill @click="$refs.page.open()">Page</f7-button>
         </div>
       </div>
@@ -40,17 +46,24 @@
       </p>
       <div class="grid grid-cols-3 grid-gap">
         <div>
-          <f7-photo-browser ref="standaloneDark" :photos="photos" theme="dark" />
+          <f7-photo-browser ref="standaloneDark" :photos="photos" :thumbs="thumbs" theme="dark" />
           <f7-button fill @click="$refs.standaloneDark.open()">Standalone</f7-button>
         </div>
         <div>
-          <f7-photo-browser ref="popupDark" :photos="photos" theme="dark" type="popup" />
+          <f7-photo-browser
+            ref="popupDark"
+            :photos="photos"
+            :thumbs="thumbs"
+            theme="dark"
+            type="popup"
+          />
           <f7-button fill @click="$refs.popupDark.open()">Popup</f7-button>
         </div>
         <div>
           <f7-photo-browser
             ref="pageDark"
             :photos="photos"
+            :thumbs="thumbs"
             theme="dark"
             type="page"
             page-back-link-text="Back"
@@ -89,6 +102,13 @@ export default {
           url: 'img/mountains.jpg',
           caption: 'Beautiful mountains in Zhangjiajie, China',
         },
+      ],
+      thumbs: [
+        'img/beach.jpg',
+        'http://placekitten.com/1024/1024',
+        'img/lock.jpg',
+        'img/monkey.jpg',
+        'img/mountains.jpg',
       ],
     };
   },

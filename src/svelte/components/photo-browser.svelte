@@ -9,6 +9,7 @@
   export let init = true;
   export let params = undefined;
   export let photos = undefined;
+  export let thumbs = undefined;
   export let exposition = true;
   export let expositionHideCaptions = false;
   export let type = undefined;
@@ -19,6 +20,7 @@
   export let iconsColor = undefined;
   export let swipeToClose = true;
   export let pageBackLinkText = undefined;
+  export let popupCloseLinkIcon = undefined;
   export let popupCloseLinkText = undefined;
   export let navbarOfText = undefined;
   export let navbarShowCount = undefined;
@@ -36,6 +38,7 @@
   export let renderPage = undefined;
   export let renderPopup = undefined;
   export let renderStandalone = undefined;
+  export let renderThumb = undefined;
 
   let f7PhotoBrowser;
 
@@ -83,6 +86,7 @@
       else {
         pbParams = {
           photos,
+          thumbs,
           exposition,
           expositionHideCaptions,
           type,
@@ -93,6 +97,7 @@
           iconsColor,
           swipeToClose,
           pageBackLinkText,
+          popupCloseLinkIcon,
           popupCloseLinkText,
           navbarOfText,
           navbarShowCount,
@@ -110,6 +115,7 @@
           renderPage,
           renderPopup,
           renderStandalone,
+          renderThumb,
         };
       }
 

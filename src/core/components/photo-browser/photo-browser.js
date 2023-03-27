@@ -6,6 +6,7 @@ export default {
   params: {
     photoBrowser: {
       photos: [],
+      thumbs: [],
       exposition: true,
       expositionHideCaptions: false,
       type: 'standalone',
@@ -17,7 +18,8 @@ export default {
       popupPush: false,
       swipeToClose: true,
       pageBackLinkText: 'Back',
-      popupCloseLinkText: 'Close',
+      popupCloseLinkText: undefined,
+      popupCloseLinkIcon: true,
       navbarOfText: 'of',
       navbarShowCount: undefined,
       view: undefined,
@@ -33,6 +35,7 @@ export default {
       renderObject: undefined,
       renderLazyPhoto: undefined,
       renderPhoto: undefined,
+      renderThumb: undefined,
       renderPage: undefined,
       renderPopup: undefined,
       renderStandalone: undefined,

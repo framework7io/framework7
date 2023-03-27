@@ -12,6 +12,7 @@ import { PhotoBrowser } from 'framework7/types';
   init? : boolean
   params? : Object
   photos? : Array<any>
+  thumbs? : Array<any>
   exposition? : boolean
   expositionHideCaptions? : boolean
   type? : string
@@ -22,6 +23,7 @@ import { PhotoBrowser } from 'framework7/types';
   iconsColor? : string
   swipeToClose? : boolean
   pageBackLinkText? : string
+  popupCloseLinkIcon? : boolean
   popupCloseLinkText? : string
   navbarOfText? : string
   navbarShowCount? : boolean
@@ -39,6 +41,7 @@ import { PhotoBrowser } from 'framework7/types';
   renderPage? : Function
   renderPopup? : Function
   renderStandalone? : Function
+  renderThumb?: Function
   onPhotoBrowserOpen? : (...args: any[]) => void
   onPhotoBrowserClose? : (...args: any[]) => void
   onPhotoBrowserOpened? : (...args: any[]) => void
@@ -54,6 +57,7 @@ const PhotoBrowser = forwardRef((props, ref) => {
     init = true,
     params,
     photos,
+    thumbs,
     exposition = true,
     expositionHideCaptions = false,
     type,
@@ -64,6 +68,7 @@ const PhotoBrowser = forwardRef((props, ref) => {
     iconsColor,
     swipeToClose = true,
     pageBackLinkText,
+    popupCloseLinkIcon,
     popupCloseLinkText,
     navbarOfText,
     navbarShowCount,
@@ -81,6 +86,7 @@ const PhotoBrowser = forwardRef((props, ref) => {
     renderPage,
     renderPopup,
     renderStandalone,
+    renderThumb,
   } = props;
 
   const open = (index) => {
@@ -116,6 +122,14 @@ const PhotoBrowser = forwardRef((props, ref) => {
       pb.swiper.update();
     }
   });
+  watchProp(thumbs, (newValue) => {
+    const pb = f7PhotoBrowser.current;
+    if (!pb) return;
+    pb.params.thumbs = newValue;
+    if (pb.opened && pb.thumbsSwiper) {
+      pb.thumbsSwiper.update();
+    }
+  });
 
   const onMount = () => {
     if (!init) return;
@@ -127,6 +141,7 @@ const PhotoBrowser = forwardRef((props, ref) => {
       } else {
         paramsComputed = {
           photos,
+          thumbs,
           exposition,
           expositionHideCaptions,
           type,
@@ -138,6 +153,7 @@ const PhotoBrowser = forwardRef((props, ref) => {
           swipeToClose,
           pageBackLinkText,
           popupCloseLinkText,
+          popupCloseLinkIcon,
           navbarOfText,
           navbarShowCount,
           swiper,
@@ -154,6 +170,7 @@ const PhotoBrowser = forwardRef((props, ref) => {
           renderPage,
           renderPopup,
           renderStandalone,
+          renderThumb,
         };
       }
 

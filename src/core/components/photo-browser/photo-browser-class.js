@@ -223,10 +223,39 @@ class PhotoBrowser extends Framework7Class {
               <span class="photo-browser-total"></span>
             </div>
           )}
-          {isPopup && (
+          {isPopup && (pb.params.popupCloseLinkText || pb.params.popupCloseLinkIcon) && (
             <div class="right">
               <a class="link popup-close" data-popup=".photo-browser-popup">
-                <span>{pb.params.popupCloseLinkText}</span>
+                {pb.params.popupCloseLinkIcon && pb.app.theme === 'ios' && (
+                  <i>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="56"
+                      height="56"
+                      viewBox="0 0 56 56"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M 10.0234 43.0234 C 9.2266 43.8203 9.2031 45.1797 10.0234 45.9766 C 10.8438 46.7734 12.1797 46.7734 13.0000 45.9766 L 28.0000 30.9766 L 43.0000 45.9766 C 43.7969 46.7734 45.1563 46.7969 45.9766 45.9766 C 46.7734 45.1562 46.7734 43.8203 45.9766 43.0234 L 30.9531 28.0000 L 45.9766 13.0000 C 46.7734 12.2031 46.7969 10.8437 45.9766 10.0469 C 45.1328 9.2266 43.7969 9.2266 43.0000 10.0469 L 28.0000 25.0469 L 13.0000 10.0469 C 12.1797 9.2266 10.8203 9.2031 10.0234 10.0469 C 9.2266 10.8672 9.2266 12.2031 10.0234 13.0000 L 25.0234 28.0000 Z"
+                      />
+                    </svg>
+                  </i>
+                )}
+                {pb.params.popupCloseLinkIcon && pb.app.theme === 'md' && (
+                  <i>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="24px"
+                      viewBox="0 0 24 24"
+                      width="24px"
+                      fill="currentColor"
+                    >
+                      <path d="M0 0h24v24H0V0z" fill="none" />
+                      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
+                    </svg>
+                  </i>
+                )}
+                {pb.params.popupCloseLinkText && <span>{pb.params.popupCloseLinkText}</span>}
               </a>
             </div>
           )}
@@ -250,6 +279,20 @@ class PhotoBrowser extends Framework7Class {
           <a class="link photo-browser-next">
             <i class={`icon icon-forward ${iconsColor ? `color-${iconsColor}` : ''}`}></i>
           </a>
+        </div>
+      </div>
+    );
+  }
+
+  renderThumbs() {
+    const pb = this;
+
+    return (
+      <div class="toolbar toolbar-bottom photo-browser-thumbs">
+        <div class="swiper">
+          <div class="swiper-wrapper">
+            {pb.params.thumbs.map((thumb, index) => pb.renderThumb(thumb, index))}
+          </div>
         </div>
       </div>
     );
@@ -306,6 +349,17 @@ class PhotoBrowser extends Framework7Class {
     );
   }
 
+  renderThumb(thumb, index) {
+    const pb = this;
+    const url = typeof thumb === 'string' ? thumb : thumb.url;
+    if (pb.params.renderThumb) return pb.params.renderThumb.call(pb, thumb, index);
+    return (
+      <div class="photo-browser-thumbs-slide swiper-slide" data-swiper-slide-index={index}>
+        {url && <img src={url} loading="lazy" />}
+      </div>
+    );
+  }
+
   render() {
     const pb = this;
     if (pb.params.render) return pb.params.render.call(pb, pb.params);
@@ -320,6 +374,7 @@ class PhotoBrowser extends Framework7Class {
           >
             {pb.params.navbar && pb.renderNavbar()}
             {pb.params.toolbar && pb.renderToolbar()}
+            {pb.params.thumbs && pb.params.thumbs.length && pb.renderThumbs()}
             <div
               class={`photo-browser-captions photo-browser-captions-${
                 pb.params.captionsTheme || pb.params.theme
@@ -397,11 +452,15 @@ class PhotoBrowser extends Framework7Class {
     pb.$captionsContainerEl = pb.$el.find('.photo-browser-captions');
     pb.captions = pb.$el.find('.photo-browser-caption');
 
+    const hasThumbs = pb.params.thumbs && pb.params.thumbs.length > 0;
+
     // Init Swiper
     let clickTimeout;
-
+    let preventThumbsSlide;
+    let preventMainSlide;
+    const initialSlide = pb.activeIndex;
     const swiperParams = extend({}, pb.params.swiper, {
-      initialSlide: pb.activeIndex,
+      initialSlide,
       // cssMode:
       //   typeof pb.params.swiper.cssMode === 'undefined' && (app.device.ios || app.device.android)
       //     ? true
@@ -424,6 +483,13 @@ class PhotoBrowser extends Framework7Class {
         },
         slideChange(...args) {
           const swiper = this;
+          if (hasThumbs && pb.thumbsSwiper && !preventMainSlide) {
+            preventThumbsSlide = true;
+            pb.thumbsSwiper.slideTo(pb.swiper.activeIndex);
+            setTimeout(() => {
+              preventThumbsSlide = false;
+            });
+          }
           pb.onSlideChange(swiper);
           pb.emit('local::slideChange', ...args);
         },
@@ -488,6 +554,38 @@ class PhotoBrowser extends Framework7Class {
     if (pb.activeIndex === 0 || pb.params.virtualSlides) {
       pb.onSlideChange(pb.swiper);
     }
+    if (hasThumbs) {
+      const thumbsSwiperParams = {
+        el: pb.$el.find('.photo-browser-thumbs .swiper')[0],
+        slidesPerView: 'auto',
+        centeredSlides: true,
+        spaceBetween: 4,
+        watchSlidesProgress: true,
+        initialSlide,
+        on: {
+          touchMove() {
+            preventMainSlide = true;
+          },
+          touchEnd() {
+            preventMainSlide = false;
+          },
+          slideChange(s) {
+            if (preventThumbsSlide) return;
+            pb.swiper.slideTo(s.activeIndex, 0);
+          },
+          click(s) {
+            if (!s.clickedSlide) return;
+            const index = parseInt($(s.clickedSlide).attr('data-swiper-slide-index'), 10);
+            s.slideTo(index, 0);
+          },
+        },
+      };
+
+      pb.thumbsSwiper = app.swiper
+        ? app.swiper.create(thumbsSwiperParams)
+        : new window.Swiper(thumbsSwiperParams);
+    }
+
     if (pb.$el) {
       pb.$el.trigger('photobrowser:open');
     }
@@ -514,6 +612,11 @@ class PhotoBrowser extends Framework7Class {
       pb.swiper.destroy(true, false);
       pb.swiper = null;
       delete pb.swiper;
+    }
+    if (pb.thumbsSwiper && pb.thumbsSwiper.destroy) {
+      pb.thumbsSwiper.destroy(true, false);
+      pb.thumbsSwiper = null;
+      delete pb.thumbsSwiper;
     }
     if (pb.$el) {
       pb.$el.trigger('photobrowser:close');

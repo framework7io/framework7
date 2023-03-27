@@ -25,6 +25,14 @@
       caption: 'Beautiful mountains in Zhangjiajie, China',
     },
   ];
+
+  const thumbs = [
+    'img/beach.jpg',
+    'http://placekitten.com/1024/1024',
+    'img/lock.jpg',
+    'img/monkey.jpg',
+    'img/mountains.jpg',
+  ];
 </script>
 
 <Page>
@@ -48,15 +56,15 @@
     </p>
     <div class="grid grid-cols-3 grid-gap">
       <div>
-        <PhotoBrowser {photos} bind:this={standalone} />
+        <PhotoBrowser {photos} {thumbs} bind:this={standalone} />
         <Button fill onClick={() => standalone.open()}>Standalone</Button>
       </div>
       <div>
-        <PhotoBrowser {photos} type="popup" bind:this={popup} />
+        <PhotoBrowser {photos} {thumbs} type="popup" bind:this={popup} />
         <Button fill onClick={() => popup.open()}>Popup</Button>
       </div>
       <div>
-        <PhotoBrowser {photos} type="page" pageBackLinkText="Back" bind:this={page} />
+        <PhotoBrowser {photos} {thumbs} type="page" pageBackLinkText="Back" bind:this={page} />
         <Button fill onClick={() => page.open()}>Page</Button>
       </div>
     </div>
@@ -68,16 +76,17 @@
     </p>
     <div class="grid grid-cols-3 grid-gap">
       <div>
-        <PhotoBrowser {photos} theme="dark" bind:this={standaloneDark} />
+        <PhotoBrowser {photos} {thumbs} theme="dark" bind:this={standaloneDark} />
         <Button fill onClick={() => standaloneDark.open()}>Standalone</Button>
       </div>
       <div>
-        <PhotoBrowser {photos} theme="dark" type="popup" bind:this={popupDark} />
+        <PhotoBrowser {photos} {thumbs} theme="dark" type="popup" bind:this={popupDark} />
         <Button fill onClick={() => popupDark.open()}>Popup</Button>
       </div>
       <div>
         <PhotoBrowser
           {photos}
+          {thumbs}
           theme="dark"
           type="page"
           pageBackLinkText="Back"

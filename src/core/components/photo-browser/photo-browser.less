@@ -24,7 +24,6 @@
   }
   &.photo-browser-transitioning {
     transition: 400ms;
-    transition-property: transform;
     animation: none !important;
   }
 }
@@ -64,9 +63,28 @@
   bottom: var(--f7-safe-area-bottom);
   z-index: 10;
   opacity: 1;
-  transition: 400ms;
+  transition-duration: 400ms;
   &.photo-browser-captions-exposed {
     opacity: 0;
+  }
+}
+.toolbar ~ .toolbar.photo-browser-thumbs {
+  bottom: calc(var(--f7-toolbar-height) + var(--f7-safe-area-bottom));
+  .page ~ .photo-browser-page:not(.photo-browser-exposed) &,
+  .photo-browser-popup:not(.photo-browser-exposed) &,
+  .photo-browser-standalone:not(.photo-browser-exposed) & {
+    height: var(--f7-toolbar-height);
+  }
+  .photo-browser-exposed & {
+    transform: translate3d(0, calc(var(--f7-toolbar-height) + var(--f7-safe-area-bottom, 0)), 0);
+    .swiper {
+      height: calc(100% - var(--f7-safe-area-bottom, 0));
+    }
+  }
+}
+.navbar + .toolbar.photo-browser-thumbs {
+  .swiper {
+    height: calc(100% - var(--f7-safe-area-bottom, 0));
   }
 }
 .toolbar ~ .photo-browser-captions {
@@ -76,10 +94,45 @@
     transform: translate3d(0, 0px, 0);
   }
 }
-
+.toolbar ~ .toolbar ~ .photo-browser-captions {
+  bottom: calc(var(--f7-toolbar-height) * 2 + var(--f7-safe-area-bottom));
+  &.photo-browser-captions-exposed {
+    transform: translate3d(0, var(--f7-toolbar-height), 0);
+  }
+}
+.photo-browser-thumbs {
+  transition-property: transform, background-color, color;
+  .swiper {
+    width: 100%;
+    height: 100%;
+  }
+  .swiper-slide {
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  img {
+    width: auto;
+    height: 75%;
+    display: block;
+    border-radius: 2px;
+    min-width: 4px;
+  }
+  .swiper-slide img {
+    transform: translateX(-4px);
+    transition-duration: 150ms;
+  }
+  .swiper-slide-active img {
+    transform: scale(1.2);
+  }
+  .swiper-slide-active ~ .swiper-slide img {
+    transform: translateX(4px);
+  }
+}
 .photo-browser-caption {
   box-sizing: border-box;
-  transition: 300ms;
+  transition-duration: 400ms;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -88,6 +141,13 @@
   width: 100%;
   text-align: center;
   font-size: var(--f7-photobrowser-caption-font-size);
+  font-weight: var(--f7-photobrowser-caption-font-weight);
+  .ios-translucent-bars & {
+    @supports (backdrop-filter: blur(20px)) {
+      backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
+    }
+  }
+
   &:empty {
     display: none;
   }
@@ -96,11 +156,10 @@
   }
   .photo-browser-captions-light & {
     color: var(--f7-photobrowser-caption-light-text-color);
-    background: var(--f7-photobrowser-caption-light-bg-color);
   }
-  .photo-browser-captions-dark & {
+  .photo-browser-captions-dark &,
+  .dark & {
     color: var(--f7-photobrowser-caption-dark-text-color);
-    background: var(--f7-photobrowser-caption-dark-bg-color);
   }
 }
 
@@ -114,6 +173,7 @@
   background: var(--f7-photobrowser-bg-color);
   transition: 400ms;
   transition-property: background-color;
+  touch-action: pan-x pan-y;
 }
 
 .photo-browser-prev,
@@ -173,16 +233,26 @@
     top: 50%;
   }
 }
+.navbar-photo-browser .right .link {
+  svg,
+  i {
+    width: 24px;
+    height: 24px;
+    display: block;
+  }
+}
 .photo-browser-page .navbar-bg,
 .navbar-photo-browser .navbar-bg,
-.photo-browser-page .toolbar {
+.photo-browser-page .toolbar,
+.photo-browser-caption {
   background-color: var(--f7-photobrowser-bars-bg-color, rgba(var(--f7-bars-bg-color-rgb), 0.95));
 }
 .photo-browser-page {
+  touch-action: manipulation;
   .navbar,
   .toolbar {
     transform: translate3d(0, 0, 0);
-    transition: 400ms;
+    transition-duration: 400ms;
     color: var(--f7-photobrowser-bars-text-color, var(--f7-bars-text-color));
     a {
       color: var(
@@ -194,20 +264,28 @@
 }
 .photo-browser-exposed {
   .navbar,
-  .toolbar {
+  .toolbar:not(.photo-browser-thumbs) {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
   }
-  .toolbar ~ .photo-browser-captions {
+  .toolbar:not(.photo-browser-thumbs) ~ .photo-browser-captions,
+  .toolbar ~ .toolbar.photo-browser-thumbs ~ .photo-browser-captions {
     transform: translate3d(0, var(--f7-toolbar-height), 0);
   }
   .photo-browser-swiper-container {
     background: var(--f7-photobrowser-exposed-bg-color);
   }
+}
+.photo-browser-exposed,
+.photo-browser-dark {
+  .photo-browser-thumbs,
+  .toolbar {
+    background-color: var(--f7-photobrowser-dark-bars-bg-color);
+  }
   .photo-browser-caption {
     color: var(--f7-photobrowser-caption-dark-text-color);
-    background: var(--f7-photobrowser-caption-dark-bg-color);
+    background-color: var(--f7-photobrowser-dark-bars-bg-color);
   }
 }
 .view.with-photo-browser-page-exposed {
@@ -216,10 +294,11 @@
     pointer-events: none;
   }
 }
-
+.photo-browser-page .toolbar {
+  .hairline-remove-top-bottom();
+}
 .photo-browser-page-dark .navbar-bg,
-.navbar-photo-browser-dark .navbar-bg,
-.photo-browser-page-dark .toolbar {
+.navbar-photo-browser-dark .navbar-bg {
   background: var(--f7-photobrowser-dark-bars-bg-color);
   .hairline-remove-top-bottom();
 }

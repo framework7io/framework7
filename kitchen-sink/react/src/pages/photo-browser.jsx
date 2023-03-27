@@ -24,6 +24,13 @@ export default () => {
       caption: 'Beautiful mountains in Zhangjiajie, China',
     },
   ];
+  const thumbs = [
+    'img/beach.jpg',
+    'http://placekitten.com/1024/1024',
+    'img/lock.jpg',
+    'img/monkey.jpg',
+    'img/mountains.jpg',
+  ];
   return (
     <Page>
       <Navbar title="Photo Browser" backLink="Back"></Navbar>
@@ -46,19 +53,25 @@ export default () => {
         </p>
         <div className="grid grid-cols-3 grid-gap">
           <div>
-            <PhotoBrowser photos={photos} ref={standalone} />
+            <PhotoBrowser photos={photos} thumbs={thumbs} ref={standalone} />
             <Button fill onClick={() => standalone.current.open()}>
               Standalone
             </Button>
           </div>
           <div>
-            <PhotoBrowser photos={photos} type="popup" ref={popup} />
+            <PhotoBrowser photos={photos} thumbs={thumbs} type="popup" ref={popup} />
             <Button fill onClick={() => popup.current.open()}>
               Popup
             </Button>
           </div>
           <div>
-            <PhotoBrowser photos={photos} type="page" pageBackLinkText="Back" ref={page} />
+            <PhotoBrowser
+              photos={photos}
+              thumbs={thumbs}
+              type="page"
+              pageBackLinkText="Back"
+              ref={page}
+            />
             <Button fill onClick={() => page.current.open()}>
               Page
             </Button>
@@ -72,13 +85,19 @@ export default () => {
         </p>
         <div className="grid grid-cols-3 grid-gap">
           <div>
-            <PhotoBrowser photos={photos} theme="dark" ref={standaloneDark} />
+            <PhotoBrowser photos={photos} thumbs={thumbs} theme="dark" ref={standaloneDark} />
             <Button fill onClick={() => standaloneDark.current.open()}>
               Standalone
             </Button>
           </div>
           <div>
-            <PhotoBrowser photos={photos} theme="dark" type="popup" ref={popupDark} />
+            <PhotoBrowser
+              photos={photos}
+              thumbs={thumbs}
+              theme="dark"
+              type="popup"
+              ref={popupDark}
+            />
             <Button fill onClick={() => popupDark.current.open()}>
               Popup
             </Button>
@@ -86,6 +105,7 @@ export default () => {
           <div>
             <PhotoBrowser
               photos={photos}
+              thumbs={thumbs}
               theme="dark"
               type="page"
               pageBackLinkText="Back"
