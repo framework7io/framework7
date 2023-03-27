@@ -257,27 +257,6 @@ class Component {
         types.find((i) => i.type(o)),
       );
   }
-
-  _getUseState() {
-    return (o) =>
-      [o].reduce(
-        (t, _i, _x, _a, i = t.init(_i)) => [
-          i, // state
-          (v) => (t.update(i, v), this.update()), // update
-          (v) => (t.remove(i, v), this.update()), // remove
-          () => (t.clear(i), this.update()), // clear
-          (x, v) => (t.insert(i, x, v), this.update()), // insert
-          (x, v) => (t.replace(i, x, v), this.update()), // replace
-          (v) => (t.append(i, v), this.update()), // append
-          (v) => (t.prepend(i, v), this.update()), // prepend
-          (a, b) => (t.swap(i, a, b), this.update()), // swap
-          (a, b) => (t.fromTo(i, a, b), this.update()), // fromTo
-          (f = () => ({})) => (f(i), this.update()), // method
-          (f = () => Promise.reject(i)) => f(i).then(() => this.update()), // async
-        ],
-        types.find((i) => i.type(o)),
-      );
-  }
   /* eslint-enable no-sequences */
 
   getComponentContext(includeHooks) {
@@ -297,7 +276,6 @@ class Component {
       $ref: this.getComponentRef(),
       $el: {},
       $useState: this.getUseState(),
-      $_useState: this._getUseState(),
     };
     Object.defineProperty(ctx.$el, 'value', {
       get: () => {
