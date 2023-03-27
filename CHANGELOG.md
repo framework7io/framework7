@@ -12,6 +12,10 @@
 - Removed Elevation, Lazy, Menu, Appbar, Request components and modules
 - Removed browser lazy components from package
 
+### Photo Browser
+
+- added new swipeable thumbs functionality
+
 ### Swiper
 
 - updated to all new Swiper v9 with Swiper Element which is now used in Swipeable Tabs
@@ -48,6 +52,7 @@
 
 ### Features
 
+- **photo-browser:** add new swipeable Thumbs ([d3313d6](https://github.com/framework7io/framework7/commit/d3313d6ad5e5dd5f0948e41d2b5bb1a85a5963df))
 - remove `colorTheme` prop in React, Vue, Svelte components ([90ecff6](https://github.com/framework7io/framework7/commit/90ecff6bc3ddeac6fe3462a0fb11c56418d0a907))
 - **app:** remove `id`, `version`, `language` app params and properties ([1b5ffd6](https://github.com/framework7io/framework7/commit/1b5ffd6b6556f8ee4bba05f42ea53aafdaa8cf1d))
 - **app:** remove `id`, `version`, `language` app params and properties ([da6e5ae](https://github.com/framework7io/framework7/commit/da6e5ae10d0ce6b92b79707e830c33ad04d30b5d))
@@ -60,9 +65,7 @@
 - **core:** remove Core JS lazy modules ([25a9c8e](https://github.com/framework7io/framework7/commit/25a9c8ef3a5027eff35320b6788b5b93ac181a76))
 - **smart-select:** allow to specify input icon position ([68a9fbc](https://github.com/framework7io/framework7/commit/68a9fbcb8e99edc8d9779aa1e8b20e235bd7c5cf))
 - **svelte:** export `style` prop for modals ([65ecc23](https://github.com/framework7io/framework7/commit/65ecc23b698e08d259522952b0a8d2985acbcdbb)), closes [#4100](https://github.com/framework7io/framework7/issues/4100)
-
-* **swiper:** remove support for auto init with "swiper-init" in favor of Swiper custom element ([35367f8](https://github.com/framework7io/framework7/commit/35367f8bb180666791029c3ddac66c5f826b1764))
-
+- **swiper:** remove support for auto init with "swiper-init" in favor of Swiper custom element ([35367f8](https://github.com/framework7io/framework7/commit/35367f8bb180666791029c3ddac66c5f826b1764))
 - **swiper:** remove Swiper components export in React, Svelte & Vue in favor of Swiper Custom Element ([344c557](https://github.com/framework7io/framework7/commit/344c557804557a8e667b6b94ebf79d03b7570c75))
 - **actions:** Material You styles, rename `bold` -> `strong` button ([d6a4718](https://github.com/framework7io/framework7/commit/d6a4718fefaebc8c385051ad387b535d5c5d3ab2))
 - **autocomplete:** Material You styles, remove `expandInput` functionality ([7af373d](https://github.com/framework7io/framework7/commit/7af373d1e908426cb1dca2e11025ef76117d4a0b))
