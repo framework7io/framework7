@@ -7,6 +7,85 @@ import vdom from './vdom.js';
 import patch from './patch.js';
 import $jsx from './$jsx.js';
 
+/* eslint-disable no-shadow */
+/* eslint-disable no-return-assign */
+/* eslint-disable no-plusplus */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-sequences */
+const types = [
+  {
+    name: 'array',
+    init: (i) => i,
+    type: (i) => [i].find(Array.isArray),
+    update: (i, o) => [o].filter(Array.isArray).find(() => ((i.length = 0), i.push(...o))),
+    insert: (i, x, o = []) => i.splice(Math.max(x, 0), 0, ...[o].flat()),
+    replace: (i, x, o = []) => i.splice(Math.max(x, 0), Math.min(++x, 1), ...[o].flat()),
+    append: (i, o = []) => i.push(...[o].flat()),
+    prepend: (i, o = []) => i.unshift(...[o].flat()),
+    swap: (i, a, b) => {
+      [i[a], i[b]] = [i[b], i[a]];
+    },
+    fromTo: (i, a, b = a) => i.splice(Math.max(b, 0), 0, ...i.splice(Math.max(a, 0), 1)),
+    remove: (i, o, a = i.map((_, x) => x)) =>
+      [o]
+        .flat()
+        .filter((i) => a.includes(i))
+        .sort((a, b) => b - a)
+        .forEach((x) => i.splice(x, 1)),
+    clear: (i) => (i.length = 0),
+  },
+  {
+    name: 'object',
+    init: (i) => i,
+    type: (i) =>
+      [i]
+        .filter((i) => [i !== null, i !== undefined].every((i) => i))
+        .find((i) => Object.getPrototypeOf(i) === Object.prototype),
+    update: (i, o) => Object.assign(i, o),
+    insert: () => {},
+    replace: () => {},
+    append: () => {},
+    prepend: () => {},
+    swap: () => ({}), // N/A
+    fromTo: () => ({}), // N/A
+    remove: (i, o) => [o].flat().forEach((k) => delete i[k]),
+    clear: (i) => Object.keys(i).forEach((k) => delete i[k]),
+  },
+  {
+    name: 'atoms',
+    type: () => true,
+    init: (i, o = {}) => (
+      Object.defineProperty(o, 'value', {
+        get: () => i,
+        set: (v) => {
+          // eslint-disable-next-line
+          i = v;
+        },
+      }),
+      o
+    ),
+    update: (i, v = i.value) => {
+      i.value = v;
+    },
+    insert: () => ({}), // N/A
+    replace: () => ({}), // N/A
+    append: () => ({}), // N/A
+    prepend: () => ({}), // N/A
+    swap: () => ({}), // N/A
+    fromTo: () => ({}), // N/A
+    remove: () => ({}), // N/A
+    clear: (i) => {
+      i.value = undefined;
+    },
+  },
+];
+
+/* eslint-enable no-shadow */
+/* eslint-enable no-return-assign */
+/* eslint-enable no-plusplus */
+/* eslint-enable no-param-reassign */
+/* eslint-enable no-sequences */
+
 class Component {
   constructor(app, component, props = {}, { el, context, children } = {}) {
     const document = getDocument();
@@ -157,6 +236,50 @@ class Component {
     return $store;
   }
 
+  /* eslint-disable no-sequences */
+  getUseState() {
+    return (o) =>
+      [o].reduce(
+        (t, _i, _x, _a, i = t.init(_i)) => ({
+          state: i,
+          update: (v) => (t.update(i, v), this.update()),
+          remove: (v) => (t.remove(i, v), this.update()),
+          clear: () => (t.clear(i), this.update()),
+          insert: (x, v) => (t.insert(i, x, v), this.update()),
+          replace: (x, v) => (t.replace(i, x, v), this.update()),
+          append: (v) => (t.append(i, v), this.update()),
+          prepend: (v) => (t.prepend(i, v), this.update()),
+          swap: (a, b) => (t.swap(i, a, b), this.update()),
+          fromTo: (a, b) => (t.fromTo(i, a, b), this.update()),
+          method: (f = () => ({})) => (f(i), this.update()),
+          async: (f = () => Promise.reject(i)) => f(i).then(() => this.update()),
+        }),
+        types.find((i) => i.type(o)),
+      );
+  }
+
+  _getUseState() {
+    return (o) =>
+      [o].reduce(
+        (t, _i, _x, _a, i = t.init(_i)) => [
+          i, // state
+          (v) => (t.update(i, v), this.update()), // update
+          (v) => (t.remove(i, v), this.update()), // remove
+          () => (t.clear(i), this.update()), // clear
+          (x, v) => (t.insert(i, x, v), this.update()), // insert
+          (x, v) => (t.replace(i, x, v), this.update()), // replace
+          (v) => (t.append(i, v), this.update()), // append
+          (v) => (t.prepend(i, v), this.update()), // prepend
+          (a, b) => (t.swap(i, a, b), this.update()), // swap
+          (a, b) => (t.fromTo(i, a, b), this.update()), // fromTo
+          (f = () => ({})) => (f(i), this.update()), // method
+          (f = () => Promise.reject(i)) => f(i).then(() => this.update()), // async
+        ],
+        types.find((i) => i.type(o)),
+      );
+  }
+  /* eslint-enable no-sequences */
+
   getComponentContext(includeHooks) {
     const ctx = {
       $f7route: this.context.f7route,
@@ -173,6 +296,8 @@ class Component {
       $store: this.getComponentStore(),
       $ref: this.getComponentRef(),
       $el: {},
+      $useState: this.getUseState(),
+      $_useState: this._getUseState(),
     };
     Object.defineProperty(ctx.$el, 'value', {
       get: () => {
