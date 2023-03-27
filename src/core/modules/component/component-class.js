@@ -238,8 +238,8 @@ class Component {
 
   /* eslint-disable no-sequences */
   getUseState() {
-    return (o) =>
-      [o].reduce(
+    return (o) => {
+      const obj = [o].reduce(
         (t, _i, _x, _a, i = t.init(_i)) => ({
           state: i,
           update: (v) => (t.update(i, v), this.update()),
@@ -256,6 +256,24 @@ class Component {
         }),
         types.find((i) => i.type(o)),
       );
+      obj.length = 12;
+      obj[Symbol.iterator] = function Iterate() {
+        const values = Object.values(this);
+        values.splice(values.indexOf(12), 1);
+        let index = 0;
+        return {
+          next() {
+            if (index < values.length) {
+              const val = values[index];
+              index += 1;
+              return { value: val, done: false };
+            }
+            return { done: true };
+          },
+        };
+      };
+      return obj;
+    };
   }
   /* eslint-enable no-sequences */
 
