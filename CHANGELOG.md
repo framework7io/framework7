@@ -52,6 +52,7 @@
 
 ### Features
 
+- **core:** add new router component `$useState` method ([677af59](https://github.com/framework7io/framework7/commit/677af591ae76e58e62355429e1165897fcf71fa8))
 - **photo-browser:** add new swipeable Thumbs ([d3313d6](https://github.com/framework7io/framework7/commit/d3313d6ad5e5dd5f0948e41d2b5bb1a85a5963df))
 - remove `colorTheme` prop in React, Vue, Svelte components ([90ecff6](https://github.com/framework7io/framework7/commit/90ecff6bc3ddeac6fe3462a0fb11c56418d0a907))
 - **app:** remove `id`, `version`, `language` app params and properties ([1b5ffd6](https://github.com/framework7io/framework7/commit/1b5ffd6b6556f8ee4bba05f42ea53aafdaa8cf1d))
