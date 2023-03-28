@@ -37,6 +37,7 @@ import { RouterContext } from '../shared/router-context.js';
   removeElementsWithTimeout? : boolean
   removeElementsTimeout? : number
   restoreScrollTopOnBack? : boolean
+  unloadTabContent? : boolean
   loadInitialPage? : boolean
   iosSwipeBack? : boolean
   iosSwipeBackAnimateShadow? : boolean

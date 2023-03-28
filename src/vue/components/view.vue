@@ -165,6 +165,8 @@ export default {
     routesBeforeEnter: [Function, Array],
     routesBeforeLeave: [Function, Array],
 
+    unloadTabContent: { type: Boolean, default: undefined },
+
     init: {
       type: Boolean,
       default: true,
