@@ -28,15 +28,31 @@
   margin: 0;
   font-size: 0;
   transform: translate3d(0px, 0px, 0) scale(0);
-  background-color: var(--f7-touch-ripple-color);
+  background-image: radial-gradient(
+    closest-side circle at 50% 50%,
+    var(--f7-touch-ripple-color),
+    rgba(255, 255, 255, 0)
+  );
+  background-color: transparent !important;
   animation: touch-ripple-in 200ms forwards;
+  &::before {
+    content: '';
+    border-radius: 50%;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    animation: touch-ripple-bg-in 200ms forwards;
+    background-image: radial-gradient(
+      closest-side circle at 50% 50%,
+      rgba(255, 255, 255, 0),
+      var(--f7-touch-ripple-color)
+    );
+  }
   &.ripple-wave-out {
     transform: var(--f7-ripple-transform);
-    animation: touch-ripple-out 300ms forwards;
-  }
-  .button-fill &,
-  .picker-calendar-day & {
-    z-index: 1;
+    animation: touch-ripple-out 250ms forwards;
   }
 }
 .checkbox,
@@ -53,10 +69,22 @@
 
 @keyframes touch-ripple-in {
   from {
-    transform: translate3d(0px, 0px, 0) scale(0);
+    transform: translate3d(0px, 0px, 0) scale(0.5);
   }
   to {
     transform: var(--f7-ripple-transform);
+  }
+}
+
+@keyframes touch-ripple-bg-in {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 @keyframes touch-ripple-out {

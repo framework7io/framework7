@@ -45,7 +45,8 @@ export default class TouchRipple {
 
     $el.prepend(ripple.$rippleWaveEl);
 
-    ripple.$rippleWaveEl.animationEnd(() => {
+    ripple.$rippleWaveEl.animationEnd((e) => {
+      if ((e.animationName && e.animationName === 'touch-ripple-bg-in') || e.pseudoElement) return;
       if (!ripple.$rippleWaveEl) return;
       if (ripple.$rippleWaveEl.hasClass('ripple-wave-out')) return;
       ripple.$rippleWaveEl.addClass('ripple-wave-in');
@@ -79,7 +80,8 @@ export default class TouchRipple {
       ripple.destroy();
     }, 300);
 
-    $rippleWaveEl.animationEnd(() => {
+    $rippleWaveEl.animationEnd((e) => {
+      if ((e.animationName && e.animationName === 'touch-ripple-bg-in') || e.pseudoElement) return;
       clearTimeout(ripple.removeTimeout);
       ripple.destroy();
     });
