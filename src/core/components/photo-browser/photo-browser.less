@@ -173,7 +173,7 @@
   background: var(--f7-photobrowser-bg-color);
   transition: 400ms;
   transition-property: background-color;
-  touch-action: pan-x pan-y;
+  touch-action: none;
 }
 
 .photo-browser-prev,
@@ -248,7 +248,7 @@
   background-color: var(--f7-photobrowser-bars-bg-color, rgba(var(--f7-bars-bg-color-rgb), 0.95));
 }
 .photo-browser-page {
-  touch-action: manipulation;
+  touch-action: none;
   .navbar,
   .toolbar {
     transform: translate3d(0, 0, 0);
