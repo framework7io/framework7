@@ -106,7 +106,11 @@
   background: transparent;
 }
 .navbar .searchbar.searchbar-expandable {
-  --f7-searchbar-expandable-size: var(--f7-navbar-height);
+  --f7-searchbar-expandable-size: calc(var(--f7-navbar-height) + var(--f7-safe-area-top));
+  .searchbar-inner {
+    top: var(--f7-safe-area-top);
+    height: calc(100% - var(--f7-safe-area-top));
+  }
 }
 .toolbar .searchbar.searchbar-expandable {
   --f7-searchbar-expandable-size: var(--f7-toolbar-height);
