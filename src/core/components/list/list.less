@@ -273,8 +273,11 @@
   font-weight: var(--f7-list-button-font-weight);
   text-align: var(--f7-list-button-text-align);
 
-  &.active-state {
+  .ios &.active-state {
     background-color: var(--f7-list-button-pressed-bg-color, rgba(var(--f7-theme-color-rgb), 0.15));
+  }
+  .md &.active-state {
+    background-color: var(--f7-list-button-pressed-bg-color, transparent);
   }
   .list-dividers &,
   .ios .list-dividers-ios &,

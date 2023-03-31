@@ -2,6 +2,9 @@
   // Buttons
   .button {
     transition-duration: 100ms;
+    &.active-state {
+      background-color: var(--f7-button-pressed-bg-color, rgba(var(--f7-theme-color-rgb), 0.15));
+    }
   }
   .button-fill,
   .button-fill-ios {

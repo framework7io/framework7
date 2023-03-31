@@ -1,2 +1,11 @@
 .md {
+  .fab > a,
+  .fab-buttons a {
+    &.active-state {
+      background-color: var(
+        --f7-fab-pressed-bg-color,
+        var(--f7-fab-bg-color, var(--f7-theme-color))
+      );
+    }
+  }
 }
