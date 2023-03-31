@@ -24,8 +24,11 @@
   &.not-animated {
     transition-duration: 0ms;
   }
-  &.modal-in {
+  .ios &.modal-in {
     transform: translate3d(0, calc(-1 * var(--f7-safe-area-bottom)), 0);
+  }
+  .md &.modal-in {
+    transform: translate3d(0, 0, 0);
   }
   &.modal-out {
     z-index: 13500 - 1;
