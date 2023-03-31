@@ -41,7 +41,6 @@ export default {
     return {
       needsBrowserHistory,
       f7Params: {
-        id: 'io.framework7.testapp',
         theme,
         routes,
         store,
