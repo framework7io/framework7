@@ -129,7 +129,7 @@ export default () => {
               slot="media"
               src="https://cdn.framework7.io/placeholder/people-96x96-1.jpg"
               width="48"
-              style={{ maxWidth: '100%' }}
+              style={{ maxWidth: '100%', borderRadius: '8px' }}
             />
             <span>Button 1</span>
           </ActionsButton>
@@ -138,7 +138,7 @@ export default () => {
               slot="media"
               src="https://cdn.framework7.io/placeholder/people-96x96-2.jpg"
               width="48"
-              style={{ maxWidth: '100%' }}
+              style={{ maxWidth: '100%', borderRadius: '8px' }}
             />
             <span>Button 2</span>
           </ActionsButton>
@@ -147,7 +147,7 @@ export default () => {
               slot="media"
               src="https://cdn.framework7.io/placeholder/people-96x96-3.jpg"
               width="48"
-              style={{ maxWidth: '100%' }}
+              style={{ maxWidth: '100%', borderRadius: '8px' }}
             />
             <span>Button 3</span>
           </ActionsButton>
@@ -158,7 +158,7 @@ export default () => {
               slot="media"
               src="https://cdn.framework7.io/placeholder/fashion-96x96-4.jpg"
               width="48"
-              style={{ maxWidth: '100%' }}
+              style={{ maxWidth: '100%', borderRadius: '8px' }}
             />
             <span>Button 4</span>
           </ActionsButton>
@@ -167,7 +167,7 @@ export default () => {
               slot="media"
               src="https://cdn.framework7.io/placeholder/fashion-96x96-5.jpg"
               width="48"
-              style={{ maxWidth: '100%' }}
+              style={{ maxWidth: '100%', borderRadius: '8px' }}
             />
             <span>Button 5</span>
           </ActionsButton>
@@ -176,7 +176,7 @@ export default () => {
               slot="media"
               src="https://cdn.framework7.io/placeholder/fashion-96x96-6.jpg"
               width="48"
-              style={{ maxWidth: '100%' }}
+              style={{ maxWidth: '100%', borderRadius: '8px' }}
             />
             <span>Button 6</span>
           </ActionsButton>
