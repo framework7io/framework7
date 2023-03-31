@@ -28,20 +28,43 @@
   margin: 0;
   font-size: 0;
   transform: translate3d(0px, 0px, 0) scale(0);
-  background-image: radial-gradient(
-    closest-side circle at 50% 50%,
-    var(--f7-touch-ripple-color) 50%,
-    rgba(255, 255, 255, 0)
-  );
-  background-color: transparent;
-  animation: touch-ripple-in 250ms forwards;
+
+  background-color: var(--f7-touch-ripple-color);
+  animation: touch-ripple-in 200ms forwards;
+
   &.ripple-wave-inset {
     background-image: none;
     background-color: var(--f7-touch-ripple-color);
   }
   &.ripple-wave-out {
     transform: var(--f7-ripple-transform);
-    animation: touch-ripple-out 250ms forwards;
+    animation: touch-ripple-out 250ms forwards !important;
+  }
+}
+.item-link,
+.list label.item-content,
+.list-button,
+.links-list a,
+.button,
+button,
+.dialog-button,
+.tab-link,
+.item-radio,
+.item-checkbox,
+.actions-button,
+.fab a,
+.stepper-button,
+.stepper-button-minus,
+.stepper-button-plus,
+.list.accordion-list .accordion-item-toggle {
+  .ripple-wave {
+    animation: touch-ripple-in-blurred 250ms forwards;
+    background-image: radial-gradient(
+      closest-side circle at 50% 50%,
+      var(--f7-touch-ripple-color) 50%,
+      rgba(255, 255, 255, 0)
+    );
+    background-color: transparent;
   }
 }
 .checkbox,
@@ -56,9 +79,17 @@
   --f7-touch-ripple-color: var(--f7-theme-color-ripple-color);
 }
 
-@keyframes touch-ripple-in {
+@keyframes touch-ripple-in-blurred {
   from {
     transform: translate3d(0px, 0px, 0) scale(0.5);
+  }
+  to {
+    transform: var(--f7-ripple-transform);
+  }
+}
+@keyframes touch-ripple-in {
+  from {
+    transform: translate3d(0px, 0px, 0) scale(0);
   }
   to {
     transform: var(--f7-ripple-transform);
