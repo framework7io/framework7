@@ -26,7 +26,7 @@ export default class TouchRipple {
       const distanceFromCenter =
         ((center.x - width / 2) ** 2 + (center.y - height / 2) ** 2) ** 0.5;
       const scale = (diameter / 2 + distanceFromCenter) / (diameter / 2);
-      ripple.rippleTransform = `translate3d(0px, 0px, 0) scale(${scale})`;
+      ripple.rippleTransform = `translate3d(0px, 0px, 0) scale(${scale * 2})`;
     } else {
       // prettier-ignore
       ripple.rippleTransform = `translate3d(${-center.x + width / 2}px, ${-center.y + height / 2}px, 0) scale(1)`;
@@ -36,7 +36,9 @@ export default class TouchRipple {
     }
 
     ripple.$rippleWaveEl = $(
-      `<div class="ripple-wave" style="width: ${diameter}px; height: ${diameter}px; margin-top:-${
+      `<div class="ripple-wave${
+        isInset ? ' ripple-wave-inset' : ''
+      }" style="width: ${diameter}px; height: ${diameter}px; margin-top:-${
         diameter / 2
       }px; margin-left:-${diameter / 2}px; left:${center.x}px; top:${
         center.y
@@ -45,8 +47,7 @@ export default class TouchRipple {
 
     $el.prepend(ripple.$rippleWaveEl);
 
-    ripple.$rippleWaveEl.animationEnd((e) => {
-      if ((e.animationName && e.animationName === 'touch-ripple-bg-in') || e.pseudoElement) return;
+    ripple.$rippleWaveEl.animationEnd(() => {
       if (!ripple.$rippleWaveEl) return;
       if (ripple.$rippleWaveEl.hasClass('ripple-wave-out')) return;
       ripple.$rippleWaveEl.addClass('ripple-wave-in');
@@ -80,8 +81,7 @@ export default class TouchRipple {
       ripple.destroy();
     }, 300);
 
-    $rippleWaveEl.animationEnd((e) => {
-      if ((e.animationName && e.animationName === 'touch-ripple-bg-in') || e.pseudoElement) return;
+    $rippleWaveEl.animationEnd(() => {
       clearTimeout(ripple.removeTimeout);
       ripple.destroy();
     });
