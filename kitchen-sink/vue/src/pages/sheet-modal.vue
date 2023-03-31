@@ -204,17 +204,17 @@
       <f7-list>
         <f7-list-item title="Item 1">
           <template #after>
-            <b class="text-color-black">$200</b>
+            <b>$200</b>
           </template>
         </f7-list-item>
         <f7-list-item title="Item 2">
           <template #after>
-            <b class="text-color-black">$180</b>
+            <b>$180</b>
           </template>
         </f7-list-item>
         <f7-list-item title="Delivery">
           <template #after>
-            <b class="text-color-black">$120</b>
+            <b>$120</b>
           </template>
         </f7-list-item>
       </f7-list>

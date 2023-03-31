@@ -302,19 +302,13 @@ export default () => {
         </BlockTitle>
         <List>
           <ListItem title="Item 1">
-            <b slot="after" className="text-color-black">
-              $200
-            </b>
+            <b slot="after">$200</b>
           </ListItem>
           <ListItem title="Item 2">
-            <b slot="after" className="text-color-black">
-              $180
-            </b>
+            <b slot="after">$180</b>
           </ListItem>
           <ListItem title="Delivery">
-            <b slot="after" className="text-color-black">
-              $120
-            </b>
+            <b slot="after">$120</b>
           </ListItem>
         </List>
       </Sheet>
