@@ -40,8 +40,14 @@
 
 - Removed `stackPages` functionality
 
+### Tabs
+
+- Swipeable tabs now use `<swiper-container>`
+
 ### Bug Fixes
 
+- **photo-browser:** fix `touch-action` rules ([5850615](https://github.com/framework7io/framework7/commit/58506158f655453cb35a708ea7c768b218963f3d))
+- **vue:** accept `unloadTabContent` param on View ([24025a5](https://github.com/framework7io/framework7/commit/24025a59356be6a0fd0b6d1ba33fb42f63a592ca)), closes [#4149](https://github.com/framework7io/framework7/issues/4149)
 - **svelte:** fix swipeable tabs ([9476c6a](https://github.com/framework7io/framework7/commit/9476c6a35bc64a78fdbf5126505044dc52e452b8))
 - **vue:** support for component props defined as array ([d5c70e4](https://github.com/framework7io/framework7/commit/d5c70e4631393b30d16479b678b000f3b53a257a))
 - **router:** don't try to find route with empty path ([4e4ccad](https://github.com/framework7io/framework7/commit/4e4ccad0a5230421d004d6835c1b413e0e44da54))
@@ -52,6 +58,11 @@
 
 ### Features
 
+- remove link highlights in MD theme, use only touch ripple ([e96f363](https://github.com/framework7io/framework7/commit/e96f36335b83b834d32f9966c926fb26c3a4d270))
+- **actions:** fix actions position padding in md theme with safe areas ([4d34afd](https://github.com/framework7io/framework7/commit/4d34afd9510e37bf49e278ca1ec85011493c408d))
+- **core:** tweak touch ripple ([4419887](https://github.com/framework7io/framework7/commit/4419887a475f0cb8fe3ec4b674122a1f792aef59))
+- **searchbar:** full height expandable with top safe areas ([87bcf59](https://github.com/framework7io/framework7/commit/87bcf593b541f8f374919d43b9695c5cdc8a8211))
+- **touch-ripple:** tweak touch ripple appearance ([a861e12](https://github.com/framework7io/framework7/commit/a861e12c06fbe6eaa8f6df05ec1806c46f20199f))
 - **core:** add new router component `$useState` method ([677af59](https://github.com/framework7io/framework7/commit/677af591ae76e58e62355429e1165897fcf71fa8))
 - **photo-browser:** add new swipeable Thumbs ([d3313d6](https://github.com/framework7io/framework7/commit/d3313d6ad5e5dd5f0948e41d2b5bb1a85a5963df))
 - remove `colorTheme` prop in React, Vue, Svelte components ([90ecff6](https://github.com/framework7io/framework7/commit/90ecff6bc3ddeac6fe3462a0fb11c56418d0a907))
