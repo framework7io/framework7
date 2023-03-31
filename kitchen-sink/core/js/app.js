@@ -29,7 +29,6 @@ if (document.location.search.indexOf('mode=') >= 0) {
 
 // Init App
 var app = new Framework7({
-  id: 'io.framework7.testapp',
   el: '#app',
   theme,
   // store.js,
