@@ -12,7 +12,7 @@ export default () => (
       </p>
     </Block>
     <BlockTitle>Main View Navigation</BlockTitle>
-    <List>
+    <List strongIos outlineIos dividersIos>
       <ListItem link="/accordion/" title="Accordion" panelClose />
       <ListItem link="/action-sheet/" title="Action Sheet" panelClose />
       <ListItem link="/badge/" title="Badge" panelClose />
