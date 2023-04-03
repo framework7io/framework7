@@ -20,7 +20,7 @@
     <Icon ios="f7:plus" md="material:add" />
   </Fab>
   <svelte:fragment slot="fixed">
-    <div class="list links-list demo-fab-sheet fab-morph-target">
+    <div class="list list-strong-ios list-outline-ios list-dividers-ios links-list demo-fab-sheet fab-morph-target">
       <ul>
         <li><a class="fab-close">Link 1</a></li>
         <li><a class="fab-close">Link 2</a></li>
@@ -30,7 +30,7 @@
     </div>
     <div class="demo-fab-fullscreen-sheet fab-morph-target">
       <BlockTitle>Choose Something</BlockTitle>
-      <div class="list links-list">
+      <div class="list list-strong-ios list-outline-ios list-dividers-ios links-list">
         <ul>
           <li><a class="fab-close">Link 1</a></li>
           <li><a class="fab-close">Link 2</a></li>
