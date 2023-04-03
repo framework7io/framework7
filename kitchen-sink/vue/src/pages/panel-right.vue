@@ -10,7 +10,7 @@
       </p>
     </f7-block>
     <f7-block-title>Panel Navigation</f7-block-title>
-    <f7-list>
+    <f7-list strong-ios outline-ios dividers-ios>
       <f7-list-item link="/panel-right-1/" title="Right panel page 1" />
       <f7-list-item link="/panel-right-2/" title="Right panel page 2" />
     </f7-list>
