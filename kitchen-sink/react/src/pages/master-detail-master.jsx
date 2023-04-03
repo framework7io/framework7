@@ -18,7 +18,7 @@ export default () => (
       <p>Navigation to/from Master-Detail view happens without transition.</p>
     </Block>
 
-    <List>
+    <List strongIos outlineIos dividersIos>
       <ListItem reloadDetail={true} link="/master-detail/1/">
         Detail Page 1
       </ListItem>
