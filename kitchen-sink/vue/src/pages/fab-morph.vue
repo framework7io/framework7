@@ -27,7 +27,7 @@
       <f7-icon ios="f7:plus" md="material:add"></f7-icon>
     </f7-fab>
     <template #fixed>
-      <div class="list links-list demo-fab-sheet fab-morph-target">
+      <div class="list list-strong-ios list-outline-ios list-dividers-ios links-list demo-fab-sheet fab-morph-target">
         <ul>
           <li><a class="fab-close">Link 1</a></li>
           <li><a class="fab-close">Link 2</a></li>
@@ -37,7 +37,7 @@
       </div>
       <div class="demo-fab-fullscreen-sheet fab-morph-target">
         <f7-block-title>Choose Something</f7-block-title>
-        <div class="list links-list">
+        <div class="list list-strong-ios list-outline-ios list-dividers-ios links-list">
           <ul>
             <li><a class="fab-close">Link 1</a></li>
             <li><a class="fab-close">Link 2</a></li>
