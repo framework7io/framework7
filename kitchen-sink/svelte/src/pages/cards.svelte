@@ -122,7 +122,7 @@
   <BlockTitle>Cards With List View</BlockTitle>
   <Card>
     <CardContent padding={false}>
-      <List>
+      <List strongIos outlineIos dividersIos>
         <ListItem link="#">Link 1</ListItem>
         <ListItem link="#">Link 2</ListItem>
         <ListItem link="#">Link 3</ListItem>
