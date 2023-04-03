@@ -106,7 +106,7 @@
     <f7-block-title>Cards With List View</f7-block-title>
     <f7-card>
       <f7-card-content :padding="false">
-        <f7-list>
+        <f7-list strong-ios outline-ios dividers-ios>
           <f7-list-item link="#">Link 1</f7-list-item>
           <f7-list-item link="#">Link 2</f7-list-item>
           <f7-list-item link="#">Link 3</f7-list-item>
