@@ -15,7 +15,7 @@
       <p>Navigation to/from Master-Detail view happens without transition.</p>
     </f7-block>
 
-    <f7-list>
+    <f7-list strong-ios outline-ios dividers-ios>
       <f7-list-item :reload-detail="true" link="/master-detail/1/">Detail Page 1</f7-list-item>
       <f7-list-item :reload-detail="true" link="/master-detail/2/">Detail Page 2</f7-list-item>
       <f7-list-item :reload-detail="true" link="/master-detail/3/">Detail Page 3</f7-list-item>
