@@ -2,6 +2,8 @@ const rules = {
   'no-bitwise': 'off',
   'import/no-extraneous-dependencies': 'off',
   'no-nested-ternary': 'off',
+  'no-constructor-return': 'off',
+  'default-param-last': 'off',
   'no-param-reassign': [
     'error',
     {
@@ -128,6 +130,7 @@ module.exports = {
         'vue/custom-event-name-casing': ['off'],
         'prefer-destructuring': ['off'],
         'no-restricted-globals': ['off'],
+        'vue/multi-word-component-names': 'off',
       },
     },
     {
@@ -138,6 +141,7 @@ module.exports = {
         'import/no-extraneous-dependencies': ['off'],
         'import/extensions': ['off'],
         'no-restricted-globals': ['off'],
+        'vue/multi-word-component-names': 'off',
       },
     },
     // SVELTE KITCHEN_SINK
