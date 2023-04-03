@@ -18,7 +18,7 @@ export default () => (
     <Fab position="center-bottom" morphTo=".demo-fab-fullscreen-sheet.fab-morph-target">
       <Icon ios="f7:plus" md="material:add" />
     </Fab>
-    <div className="list links-list demo-fab-sheet fab-morph-target" slot="fixed">
+    <div className="list list-strong-ios list-outline-ios list-dividers-ios links-list demo-fab-sheet fab-morph-target" slot="fixed">
       <ul>
         <li>
           <a className="fab-close">Link 1</a>
@@ -36,7 +36,7 @@ export default () => (
     </div>
     <div className="demo-fab-fullscreen-sheet fab-morph-target" slot="fixed">
       <BlockTitle>Choose Something</BlockTitle>
-      <div className="list links-list">
+      <div className="list list-strong-ios list-outline-ios list-dividers-ios links-list">
         <ul>
           <li>
             <a className="fab-close">Link 1</a>
