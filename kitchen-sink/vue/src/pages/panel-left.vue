@@ -9,7 +9,7 @@
       </p>
     </f7-block>
     <f7-block-title>Main View Navigation</f7-block-title>
-    <f7-list>
+    <f7-list strong-ios outline-ios dividers-ios>
       <f7-list-item link="/accordion/" title="Accordion" panel-close />
       <f7-list-item link="/action-sheet/" title="Action Sheet" panel-close />
       <f7-list-item link="/badge/" title="Badge" panel-close />
