@@ -2,7 +2,7 @@
 
 # Change Log
 
-# [8.0.0] WIP
+# [8.0.0](https://github.com/framework7io/framework7/compare/v8.0.0...v7.1.5) (2023-04-03)
 
 ### Core
 

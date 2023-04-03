@@ -35,7 +35,9 @@
   overflow: visible;
   transition-property: transform;
   transition-duration: var(--f7-panel-transition-duration);
-  &:not(.panel-in):not(.panel-out):not(.panel-in-breakpoint):not(.panel-in-collapsed):not(.panel-in-swipe) {
+  &:not(.panel-in):not(.panel-out):not(.panel-in-breakpoint):not(.panel-in-collapsed):not(
+      .panel-in-swipe
+    ) {
     display: none;
   }
 
