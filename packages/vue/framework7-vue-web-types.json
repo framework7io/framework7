@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "framework": "vue",
   "name": "framework7-vue",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "contributions": {
     "html": {
       "types-syntax": "typescript",
@@ -450,7 +450,7 @@
           },
           "attributes": [
             {
-              "name": "bold",
+              "name": "strong",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -584,7 +584,7 @@
           },
           "attributes": [
             {
-              "name": "bold",
+              "name": "strong",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -653,13 +653,6 @@
           },
           "attributes": [
             {
-              "name": "id",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
               "name": "name",
               "value": {
                 "kind": "expression",
@@ -667,21 +660,7 @@
               }
             },
             {
-              "name": "version",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
               "name": "theme",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "language",
               "value": {
                 "kind": "expression",
                 "type": "string"
@@ -702,10 +681,21 @@
               }
             },
             {
-              "name": "autoDarkMode",
+              "name": "darkMode",
               "value": {
                 "kind": "expression",
-                "type": "boolean"
+                "type": [
+                  "boolean",
+                  "string"
+                ]
+              },
+              "default": false
+            },
+            {
+              "name": "colors",
+              "value": {
+                "kind": "expression",
+                "type": "object"
               }
             },
             {
@@ -821,13 +811,6 @@
               }
             },
             {
-              "name": "grid",
-              "value": {
-                "kind": "expression",
-                "type": "object"
-              }
-            },
-            {
               "name": "infiniteScroll",
               "value": {
                 "kind": "expression",
@@ -836,13 +819,6 @@
             },
             {
               "name": "input",
-              "value": {
-                "kind": "expression",
-                "type": "object"
-              }
-            },
-            {
-              "name": "lazy",
               "value": {
                 "kind": "expression",
                 "type": "object"
@@ -1049,99 +1025,6 @@
               "value": {
                 "kind": "expression",
                 "type": "object"
-              }
-            },
-            {
-              "name": "color",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "colorTheme",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "textColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "bgColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "borderColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "rippleColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "dark",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            }
-          ]
-        },
-        {
-          "name": "F7Appbar",
-          "source": {
-            "symbol": "F7Appbar"
-          },
-          "attributes": [
-            {
-              "name": "noShadow",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "noHairline",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "inner",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              },
-              "default": true
-            },
-            {
-              "name": "innerClass",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "innerClassName",
-              "value": {
-                "kind": "expression",
-                "type": "string"
               }
             },
             {
@@ -1408,7 +1291,35 @@
               }
             },
             {
+              "name": "insetIos",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "insetMd",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
               "name": "xsmallInset",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "xsmallInsetIos",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "xsmallInsetMd",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -1422,7 +1333,35 @@
               }
             },
             {
+              "name": "smallInsetIos",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "smallInsetMd",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
               "name": "mediumInset",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "mediumInsetIos",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "mediumInsetMd",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -1436,6 +1375,20 @@
               }
             },
             {
+              "name": "largeInsetIos",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "largeInsetMd",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
               "name": "xlargeInset",
               "value": {
                 "kind": "expression",
@@ -1443,7 +1396,56 @@
               }
             },
             {
+              "name": "xlargeInsetIos",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "xlargeInsetMd",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
               "name": "strong",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "strongIos",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "strongMd",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "outline",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "outlineIos",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "outlineMd",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -1479,34 +1481,6 @@
             },
             {
               "name": "accordionOpposite",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "noHairlines",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "noHairlinesMd",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "noHairlinesIos",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "noHairlinesAurora",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -1869,13 +1843,6 @@
               }
             },
             {
-              "name": "roundAurora",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
               "name": "fill",
               "value": {
                 "kind": "expression",
@@ -1897,7 +1864,21 @@
               }
             },
             {
-              "name": "fillAurora",
+              "name": "tonal",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "tonalMd",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "tonalIos",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -1925,13 +1906,6 @@
               }
             },
             {
-              "name": "largeAurora",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
               "name": "small",
               "value": {
                 "kind": "expression",
@@ -1947,13 +1921,6 @@
             },
             {
               "name": "smallIos",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "smallAurora",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -1981,13 +1948,6 @@
               }
             },
             {
-              "name": "raisedAurora",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
               "name": "outline",
               "value": {
                 "kind": "expression",
@@ -2003,13 +1963,6 @@
             },
             {
               "name": "outlineIos",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "outlineAurora",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -2104,13 +2057,6 @@
             },
             {
               "name": "iconMd",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "iconAurora",
               "value": {
                 "kind": "expression",
                 "type": "string"
@@ -2430,16 +2376,6 @@
               }
             },
             {
-              "name": "menuClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
               "name": "back",
               "value": {
                 "kind": "expression",
@@ -2597,7 +2533,42 @@
               }
             },
             {
+              "name": "raised",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
               "name": "outline",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "outlineIos",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "outlineMd",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "headerDivider",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "footerDivider",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -2685,20 +2656,6 @@
               "value": {
                 "kind": "expression",
                 "type": "string"
-              }
-            },
-            {
-              "name": "noShadow",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "noBorder",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
               }
             },
             {
@@ -3185,13 +3142,6 @@
               }
             },
             {
-              "name": "iconAurora",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
               "name": "iconColor",
               "value": {
                 "kind": "expression",
@@ -3278,166 +3228,6 @@
           "events": [
             {
               "name": "delete"
-            }
-          ]
-        },
-        {
-          "name": "F7Col",
-          "source": {
-            "symbol": "F7Col"
-          },
-          "attributes": [
-            {
-              "name": "tag",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              },
-              "default": "div"
-            },
-            {
-              "name": "width",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "number",
-                  "string"
-                ]
-              },
-              "default": "auto"
-            },
-            {
-              "name": "xsmall",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "number",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "small",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "number",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "medium",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "number",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "large",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "number",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "xlarge",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "number",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "resizable",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "resizableFixed",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "resizableAbsolute",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "resizableHandler",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              },
-              "default": true
-            },
-            {
-              "name": "color",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "colorTheme",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "textColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "bgColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "borderColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "rippleColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "dark",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            }
-          ],
-          "events": [
-            {
-              "name": "grid:resize"
             }
           ]
         },
@@ -3968,13 +3758,6 @@
             },
             {
               "name": "ios",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "aurora",
               "value": {
                 "kind": "expression",
                 "type": "string"
@@ -4669,13 +4452,6 @@
               }
             },
             {
-              "name": "iconAurora",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
               "name": "iconColor",
               "value": {
                 "kind": "expression",
@@ -4989,16 +4765,6 @@
               }
             },
             {
-              "name": "menuClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
               "name": "back",
               "value": {
                 "kind": "expression",
@@ -5130,7 +4896,35 @@
               }
             },
             {
+              "name": "insetIos",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "insetMd",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
               "name": "xsmallInset",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "xsmallInsetIos",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "xsmallInsetMd",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -5144,7 +4938,35 @@
               }
             },
             {
+              "name": "smallInsetIos",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "smallInsetMd",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
               "name": "mediumInset",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "mediumInsetIos",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "mediumInsetMd",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -5158,7 +4980,98 @@
               }
             },
             {
+              "name": "largeInsetIos",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "largeInsetMd",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
               "name": "xlargeInset",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "xlargeInsetIos",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "xlargeInsetMd",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "strong",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "strongIos",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "strongMd",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "outline",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "outlineIos",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "outlineMd",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "dividers",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "dividersIos",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "dividersMd",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -5249,62 +5162,6 @@
               }
             },
             {
-              "name": "noHairlines",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "noHairlinesBetween",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "noHairlinesMd",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "noHairlinesBetweenMd",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "noHairlinesIos",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "noHairlinesBetweenIos",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "noHairlinesAurora",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "noHairlinesBetweenAurora",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
               "name": "noChevron",
               "value": {
                 "kind": "expression",
@@ -5341,13 +5198,6 @@
             },
             {
               "name": "formStoreData",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "inlineLabels",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -5817,16 +5667,6 @@
               }
             },
             {
-              "name": "menuClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
               "name": "back",
               "value": {
                 "kind": "expression",
@@ -6105,14 +5945,6 @@
               "default": 14
             },
             {
-              "name": "auroraItemHeight",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              },
-              "default": 14
-            },
-            {
               "name": "color",
               "value": {
                 "kind": "expression",
@@ -6218,15 +6050,6 @@
             },
             {
               "name": "media"
-            },
-            {
-              "name": "todo-not-declared"
-            },
-            {
-              "name": "title"
-            },
-            {
-              "name": "after"
             }
           ],
           "attributes": [
@@ -6596,13 +6419,6 @@
               }
             },
             {
-              "name": "inlineLabel",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
               "name": "floatingLabel",
               "value": {
                 "kind": "expression",
@@ -6944,13 +6760,6 @@
               }
             },
             {
-              "name": "divider",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
               "name": "groupTitle",
               "value": {
                 "kind": "expression",
@@ -7043,6 +6852,13 @@
             },
             {
               "name": "radioIcon",
+              "value": {
+                "kind": "expression",
+                "type": "string"
+              }
+            },
+            {
+              "name": "checkboxIcon",
               "value": {
                 "kind": "expression",
                 "type": "string"
@@ -7388,16 +7204,6 @@
               }
             },
             {
-              "name": "menuClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
               "name": "back",
               "value": {
                 "kind": "expression",
@@ -7561,120 +7367,6 @@
           ]
         },
         {
-          "name": "F7ListItemCell",
-          "source": {
-            "symbol": "F7ListItemCell"
-          },
-          "attributes": [
-            {
-              "name": "color",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "colorTheme",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "textColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "bgColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "borderColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "rippleColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "dark",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            }
-          ]
-        },
-        {
-          "name": "F7ListItemRow",
-          "source": {
-            "symbol": "F7ListItemRow"
-          },
-          "attributes": [
-            {
-              "name": "color",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "colorTheme",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "textColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "bgColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "borderColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "rippleColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "dark",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            }
-          ]
-        },
-        {
           "name": "F7LoginScreen",
           "source": {
             "symbol": "F7LoginScreen"
@@ -7826,1142 +7518,6 @@
                 "kind": "expression",
                 "type": "boolean"
               }
-            }
-          ]
-        },
-        {
-          "name": "F7Menu",
-          "source": {
-            "symbol": "F7Menu"
-          },
-          "attributes": [
-            {
-              "name": "color",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "colorTheme",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "textColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "bgColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "borderColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "rippleColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "dark",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            }
-          ]
-        },
-        {
-          "name": "F7MenuDropdown",
-          "source": {
-            "symbol": "F7MenuDropdown"
-          },
-          "attributes": [
-            {
-              "name": "contentHeight",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "position",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "left",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "center",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "right",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "color",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "colorTheme",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "textColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "bgColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "borderColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "rippleColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "dark",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            }
-          ]
-        },
-        {
-          "name": "F7MenuDropdownItem",
-          "source": {
-            "symbol": "F7MenuDropdownItem"
-          },
-          "attributes": [
-            {
-              "name": "text",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "link",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "href",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "target",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "divider",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "color",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "colorTheme",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "textColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "bgColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "borderColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "rippleColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "dark",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "back",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "external",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "force",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "animate",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "ignoreCache",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "reloadCurrent",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "reloadAll",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "reloadPrevious",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "reloadDetail",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "routeTabId",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "view",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "routeProps",
-              "value": {
-                "kind": "expression",
-                "type": "object"
-              }
-            },
-            {
-              "name": "preventRouter",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "transition",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "openIn",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "searchbarEnable",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "searchbarDisable",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "searchbarClear",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "searchbarToggle",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "panelOpen",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "panelClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "panelToggle",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "popupOpen",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "popupClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "actionsOpen",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "actionsClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "popoverOpen",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "popoverClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "loginScreenOpen",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "loginScreenClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "sheetOpen",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "sheetClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "sortableEnable",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "sortableDisable",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "sortableToggle",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "cardOpen",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "cardPreventOpen",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "cardClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "menuClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            }
-          ],
-          "events": [
-            {
-              "name": "click"
-            }
-          ]
-        },
-        {
-          "name": "F7MenuItem",
-          "source": {
-            "symbol": "F7MenuItem"
-          },
-          "attributes": [
-            {
-              "name": "text",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "iconOnly",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "href",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "link",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "target",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "dropdown",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "tooltip",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "tooltipTrigger",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "color",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "colorTheme",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "textColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "bgColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "borderColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "rippleColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "dark",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "back",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "external",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "force",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "animate",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "ignoreCache",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "reloadCurrent",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "reloadAll",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "reloadPrevious",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "reloadDetail",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "routeTabId",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "view",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "routeProps",
-              "value": {
-                "kind": "expression",
-                "type": "object"
-              }
-            },
-            {
-              "name": "preventRouter",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "transition",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "openIn",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "searchbarEnable",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "searchbarDisable",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "searchbarClear",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "searchbarToggle",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "panelOpen",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "panelClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "panelToggle",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "popupOpen",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "popupClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "actionsOpen",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "actionsClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "popoverOpen",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "popoverClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "loginScreenOpen",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "loginScreenClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "sheetOpen",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "sheetClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "sortableEnable",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "sortableDisable",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "sortableToggle",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "cardOpen",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "cardPreventOpen",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "cardClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "menuClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "icon",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "iconMaterial",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "iconF7",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "iconIos",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "iconMd",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "iconAurora",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "iconColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "iconSize",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "string",
-                  "number"
-                ]
-              }
-            },
-            {
-              "name": "iconBadge",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "string",
-                  "number"
-                ]
-              }
-            },
-            {
-              "name": "iconBadgeColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            }
-          ],
-          "events": [
-            {
-              "name": "click"
-            },
-            {
-              "name": "menu:opened"
-            },
-            {
-              "name": "menu:closed"
             }
           ]
         },
@@ -10412,18 +8968,12 @@
               }
             },
             {
-              "name": "noShadow",
+              "name": "outline",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
-              }
-            },
-            {
-              "name": "noHairline",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
+              },
+              "default": true
             },
             {
               "name": "innerClass",
@@ -10563,13 +9113,6 @@
               "value": {
                 "kind": "expression",
                 "type": "string"
-              }
-            },
-            {
-              "name": "stacked",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
               }
             },
             {
@@ -11094,6 +9637,13 @@
               }
             },
             {
+              "name": "floating",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
               "name": "left",
               "value": {
                 "kind": "expression",
@@ -11319,6 +9869,13 @@
               }
             },
             {
+              "name": "thumbs",
+              "value": {
+                "kind": "expression",
+                "type": "array"
+              }
+            },
+            {
               "name": "exposition",
               "value": {
                 "kind": "expression",
@@ -11391,6 +9948,13 @@
               "value": {
                 "kind": "expression",
                 "type": "string"
+              }
+            },
+            {
+              "name": "popupCloseLinkIcon",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
               }
             },
             {
@@ -11516,6 +10080,13 @@
                 "kind": "expression",
                 "type": "function"
               }
+            },
+            {
+              "name": "renderThumb",
+              "value": {
+                "kind": "expression",
+                "type": "function"
+              }
             }
           ],
           "events": [
@@ -11606,6 +10177,13 @@
                   "string",
                   "object"
                 ]
+              }
+            },
+            {
+              "name": "arrow",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
               }
             },
             {
@@ -12400,112 +10978,6 @@
           "attributes": []
         },
         {
-          "name": "F7Row",
-          "source": {
-            "symbol": "F7Row"
-          },
-          "attributes": [
-            {
-              "name": "noGap",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "tag",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              },
-              "default": "div"
-            },
-            {
-              "name": "resizable",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "resizableFixed",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "resizableAbsolute",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "resizableHandler",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              },
-              "default": true
-            },
-            {
-              "name": "color",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "colorTheme",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "textColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "bgColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "borderColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "rippleColor",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "dark",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            }
-          ],
-          "events": [
-            {
-              "name": "grid:resize"
-            }
-          ]
-        },
-        {
           "name": "F7Searchbar",
           "source": {
             "symbol": "F7Searchbar"
@@ -12535,18 +11007,12 @@
           ],
           "attributes": [
             {
-              "name": "noShadow",
+              "name": "outline",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
-              }
-            },
-            {
-              "name": "noHairline",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
+              },
+              "default": true
             },
             {
               "name": "form",
@@ -12668,7 +11134,7 @@
                 "kind": "expression",
                 "type": "string"
               },
-              "default": ".item-divider, .list-group-title"
+              "default": ".list-group-title"
             },
             {
               "name": "foundEl",
@@ -12756,7 +11222,7 @@
               "default": false
             },
             {
-              "name": "hideDividers",
+              "name": "hideGroupTitles",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -12896,13 +11362,6 @@
               }
             },
             {
-              "name": "raisedAurora",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
               "name": "round",
               "value": {
                 "kind": "expression",
@@ -12924,13 +11383,6 @@
               }
             },
             {
-              "name": "roundAurora",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
               "name": "strong",
               "value": {
                 "kind": "expression",
@@ -12946,13 +11398,6 @@
             },
             {
               "name": "strongMd",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "strongAurora",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -13605,13 +12050,6 @@
               }
             },
             {
-              "name": "roundAurora",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
               "name": "fill",
               "value": {
                 "kind": "expression",
@@ -13627,13 +12065,6 @@
             },
             {
               "name": "fillIos",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "fillAurora",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -13661,13 +12092,6 @@
               }
             },
             {
-              "name": "largeAurora",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
               "name": "small",
               "value": {
                 "kind": "expression",
@@ -13689,13 +12113,6 @@
               }
             },
             {
-              "name": "smallAurora",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
               "name": "raised",
               "value": {
                 "kind": "expression",
@@ -13711,13 +12128,6 @@
             },
             {
               "name": "raisedIos",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "raisedAurora",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -14059,1189 +12469,6 @@
           "events": [
             {
               "name": "click"
-            }
-          ]
-        },
-        {
-          "name": "F7Swiper",
-          "source": {
-            "symbol": "F7Swiper"
-          },
-          "attributes": [
-            {
-              "name": "tag",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              },
-              "default": "div"
-            },
-            {
-              "name": "wrapperTag",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              },
-              "default": "div"
-            },
-            {
-              "name": "modules",
-              "value": {
-                "kind": "expression",
-                "type": "array"
-              }
-            },
-            {
-              "name": "init",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "direction",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "touchEventsTarget",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "initialSlide",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
-              "name": "speed",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
-              "name": "cssMode",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "updateOnWindowResize",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "resizeObserver",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "nested",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "focusableElements",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "width",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
-              "name": "height",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
-              "name": "preventInteractionOnTransition",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "userAgent",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "url",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "edgeSwipeDetection",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "edgeSwipeThreshold",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
-              "name": "autoHeight",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "setWrapperSize",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "virtualTranslate",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "effect",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "breakpoints",
-              "value": {
-                "kind": "expression",
-                "type": "object"
-              }
-            },
-            {
-              "name": "spaceBetween",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
-              "name": "slidesPerView",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "number",
-                  "string"
-                ]
-              }
-            },
-            {
-              "name": "maxBackfaceHiddenSlides",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
-              "name": "slidesPerGroup",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
-              "name": "slidesPerGroupSkip",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
-              "name": "slidesPerGroupAuto",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "centeredSlides",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "centeredSlidesBounds",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "slidesOffsetBefore",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
-              "name": "slidesOffsetAfter",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
-              "name": "normalizeSlideIndex",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "centerInsufficientSlides",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "watchOverflow",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "roundLengths",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "touchRatio",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
-              "name": "touchAngle",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
-              "name": "simulateTouch",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "shortSwipes",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "longSwipes",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "longSwipesRatio",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
-              "name": "longSwipesMs",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
-              "name": "followFinger",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "allowTouchMove",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "threshold",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
-              "name": "touchMoveStopPropagation",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "touchStartPreventDefault",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "touchStartForcePreventDefault",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "touchReleaseOnEdges",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "uniqueNavElements",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "resistance",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "resistanceRatio",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
-              "name": "watchSlidesProgress",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "grabCursor",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "preventClicks",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "preventClicksPropagation",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "slideToClickedSlide",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "preloadImages",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "updateOnImagesReady",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "loop",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "loopAdditionalSlides",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
-              "name": "loopedSlides",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
-              "name": "loopedSlidesLimit",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              },
-              "default": true
-            },
-            {
-              "name": "loopFillGroupWithBlank",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "loopPreventsSlide",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "rewind",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "allowSlidePrev",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "allowSlideNext",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "swipeHandler",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "noSwiping",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "noSwipingClass",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "noSwipingSelector",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "passiveListeners",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "containerModifierClass",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "slideClass",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "slideBlankClass",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "slideActiveClass",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "slideDuplicateActiveClass",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "slideVisibleClass",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "slideDuplicateClass",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "slideNextClass",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "slideDuplicateNextClass",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "slidePrevClass",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "slideDuplicatePrevClass",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "wrapperClass",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "runCallbacksOnInit",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "observer",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "observeParents",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "observeSlideChildren",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "a11y",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "object"
-                ]
-              }
-            },
-            {
-              "name": "autoplay",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "object"
-                ]
-              }
-            },
-            {
-              "name": "controller",
-              "value": {
-                "kind": "expression",
-                "type": "object"
-              }
-            },
-            {
-              "name": "coverflowEffect",
-              "value": {
-                "kind": "expression",
-                "type": "object"
-              }
-            },
-            {
-              "name": "cubeEffect",
-              "value": {
-                "kind": "expression",
-                "type": "object"
-              }
-            },
-            {
-              "name": "fadeEffect",
-              "value": {
-                "kind": "expression",
-                "type": "object"
-              }
-            },
-            {
-              "name": "flipEffect",
-              "value": {
-                "kind": "expression",
-                "type": "object"
-              }
-            },
-            {
-              "name": "creativeEffect",
-              "value": {
-                "kind": "expression",
-                "type": "object"
-              }
-            },
-            {
-              "name": "cardsEffect",
-              "value": {
-                "kind": "expression",
-                "type": "object"
-              }
-            },
-            {
-              "name": "hashNavigation",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "object"
-                ]
-              }
-            },
-            {
-              "name": "history",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "object"
-                ]
-              }
-            },
-            {
-              "name": "keyboard",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "object"
-                ]
-              }
-            },
-            {
-              "name": "lazy",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "object"
-                ]
-              }
-            },
-            {
-              "name": "mousewheel",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "object"
-                ]
-              }
-            },
-            {
-              "name": "navigation",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "object"
-                ]
-              }
-            },
-            {
-              "name": "pagination",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "object"
-                ]
-              }
-            },
-            {
-              "name": "parallax",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "object"
-                ]
-              }
-            },
-            {
-              "name": "scrollbar",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "object"
-                ]
-              }
-            },
-            {
-              "name": "thumbs",
-              "value": {
-                "kind": "expression",
-                "type": "object"
-              }
-            },
-            {
-              "name": "virtual",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "object"
-                ]
-              }
-            },
-            {
-              "name": "zoom",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "object"
-                ]
-              }
-            },
-            {
-              "name": "grid",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "object"
-                ]
-              }
-            },
-            {
-              "name": "freeMode",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "object"
-                ]
-              }
-            },
-            {
-              "name": "enabled",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            }
-          ],
-          "events": [
-            {
-              "name": "_beforeBreakpoint"
-            },
-            {
-              "name": "_containerClasses"
-            },
-            {
-              "name": "_slideClass"
-            },
-            {
-              "name": "_slideClasses"
-            },
-            {
-              "name": "_swiper"
-            },
-            {
-              "name": "_freeModeNoMomentumRelease"
-            },
-            {
-              "name": "activeIndexChange"
-            },
-            {
-              "name": "afterInit"
-            },
-            {
-              "name": "autoplay"
-            },
-            {
-              "name": "autoplayStart"
-            },
-            {
-              "name": "autoplayStop"
-            },
-            {
-              "name": "autoplayPause"
-            },
-            {
-              "name": "autoplayResume"
-            },
-            {
-              "name": "beforeDestroy"
-            },
-            {
-              "name": "beforeInit"
-            },
-            {
-              "name": "beforeLoopFix"
-            },
-            {
-              "name": "beforeResize"
-            },
-            {
-              "name": "beforeSlideChangeStart"
-            },
-            {
-              "name": "beforeTransitionStart"
-            },
-            {
-              "name": "breakpoint"
-            },
-            {
-              "name": "changeDirection"
-            },
-            {
-              "name": "click"
-            },
-            {
-              "name": "disable"
-            },
-            {
-              "name": "doubleTap"
-            },
-            {
-              "name": "doubleClick"
-            },
-            {
-              "name": "destroy"
-            },
-            {
-              "name": "enable"
-            },
-            {
-              "name": "fromEdge"
-            },
-            {
-              "name": "hashChange"
-            },
-            {
-              "name": "hashSet"
-            },
-            {
-              "name": "imagesReady"
-            },
-            {
-              "name": "init"
-            },
-            {
-              "name": "keyPress"
-            },
-            {
-              "name": "lazyImageLoad"
-            },
-            {
-              "name": "lazyImageReady"
-            },
-            {
-              "name": "lock"
-            },
-            {
-              "name": "loopFix"
-            },
-            {
-              "name": "momentumBounce"
-            },
-            {
-              "name": "navigationHide"
-            },
-            {
-              "name": "navigationShow"
-            },
-            {
-              "name": "navigationPrev"
-            },
-            {
-              "name": "navigationNext"
-            },
-            {
-              "name": "observerUpdate"
-            },
-            {
-              "name": "orientationchange"
-            },
-            {
-              "name": "paginationHide"
-            },
-            {
-              "name": "paginationRender"
-            },
-            {
-              "name": "paginationShow"
-            },
-            {
-              "name": "paginationUpdate"
-            },
-            {
-              "name": "progress"
-            },
-            {
-              "name": "reachBeginning"
-            },
-            {
-              "name": "reachEnd"
-            },
-            {
-              "name": "realIndexChange"
-            },
-            {
-              "name": "resize"
-            },
-            {
-              "name": "scroll"
-            },
-            {
-              "name": "scrollbarDragEnd"
-            },
-            {
-              "name": "scrollbarDragMove"
-            },
-            {
-              "name": "scrollbarDragStart"
-            },
-            {
-              "name": "setTransition"
-            },
-            {
-              "name": "setTranslate"
-            },
-            {
-              "name": "slideChange"
-            },
-            {
-              "name": "slideChangeTransitionEnd"
-            },
-            {
-              "name": "slideChangeTransitionStart"
-            },
-            {
-              "name": "slideNextTransitionEnd"
-            },
-            {
-              "name": "slideNextTransitionStart"
-            },
-            {
-              "name": "slidePrevTransitionEnd"
-            },
-            {
-              "name": "slidePrevTransitionStart"
-            },
-            {
-              "name": "slideResetTransitionStart"
-            },
-            {
-              "name": "slideResetTransitionEnd"
-            },
-            {
-              "name": "sliderMove"
-            },
-            {
-              "name": "sliderFirstMove"
-            },
-            {
-              "name": "slidesLengthChange"
-            },
-            {
-              "name": "slidesGridLengthChange"
-            },
-            {
-              "name": "snapGridLengthChange"
-            },
-            {
-              "name": "snapIndexChange"
-            },
-            {
-              "name": "swiper"
-            },
-            {
-              "name": "tap"
-            },
-            {
-              "name": "toEdge"
-            },
-            {
-              "name": "touchEnd"
-            },
-            {
-              "name": "touchMove"
-            },
-            {
-              "name": "touchMoveOpposite"
-            },
-            {
-              "name": "touchStart"
-            },
-            {
-              "name": "transitionEnd"
-            },
-            {
-              "name": "transitionStart"
-            },
-            {
-              "name": "unlock"
-            },
-            {
-              "name": "update"
-            },
-            {
-              "name": "virtualUpdate"
-            },
-            {
-              "name": "zoomChange"
-            }
-          ]
-        },
-        {
-          "name": "F7SwiperSlide",
-          "source": {
-            "symbol": "F7SwiperSlide"
-          },
-          "attributes": [
-            {
-              "name": "tag",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              },
-              "default": "div"
-            },
-            {
-              "name": "swiperRef",
-              "value": {
-                "kind": "expression",
-                "type": "object"
-              }
-            },
-            {
-              "name": "zoom",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "virtualIndex",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "string",
-                  "number"
-                ]
-              }
             }
           ]
         },
@@ -15731,7 +12958,7 @@
               }
             },
             {
-              "name": "labels",
+              "name": "icons",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -15752,25 +12979,12 @@
               }
             },
             {
-              "name": "noShadow",
+              "name": "outline",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
-              }
-            },
-            {
-              "name": "noHairline",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "noBorder",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
+              },
+              "default": true
             },
             {
               "name": "position",
@@ -15794,13 +13008,6 @@
               }
             },
             {
-              "name": "topAurora",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
               "name": "top",
               "value": {
                 "kind": "expression",
@@ -15816,13 +13023,6 @@
             },
             {
               "name": "bottomIos",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "bottomAurora",
               "value": {
                 "kind": "expression",
                 "type": "boolean"
@@ -16339,16 +13539,6 @@
               }
             },
             {
-              "name": "menuClose",
-              "value": {
-                "kind": "expression",
-                "type": [
-                  "boolean",
-                  "string"
-                ]
-              }
-            },
-            {
               "name": "icon",
               "value": {
                 "kind": "expression",
@@ -16378,13 +13568,6 @@
             },
             {
               "name": "iconMd",
-              "value": {
-                "kind": "expression",
-                "type": "string"
-              }
-            },
-            {
-              "name": "iconAurora",
               "value": {
                 "kind": "expression",
                 "type": "string"
@@ -16627,13 +13810,6 @@
               }
             },
             {
-              "name": "stackPages",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
               "name": "xhrCache",
               "value": {
                 "kind": "expression",
@@ -16809,41 +13985,6 @@
               }
             },
             {
-              "name": "auroraSwipeBack",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "auroraSwipeBackAnimateShadow",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "auroraSwipeBackAnimateOpacity",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "auroraSwipeBackActiveArea",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
-              "name": "auroraSwipeBackThreshold",
-              "value": {
-                "kind": "expression",
-                "type": "number"
-              }
-            },
-            {
               "name": "browserHistory",
               "value": {
                 "kind": "expression",
@@ -16981,6 +14122,13 @@
                   "function",
                   "array"
                 ]
+              }
+            },
+            {
+              "name": "unloadTabContent",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
               }
             },
             {
