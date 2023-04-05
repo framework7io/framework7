@@ -12,7 +12,6 @@ export default () => {
 
   return (
     <App
-      id="io.framework7.testapp"
       theme={theme}
       routes={routes}
       store={store}

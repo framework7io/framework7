@@ -12,7 +12,6 @@
   const needsBrowserHistory = document.location.href.includes('example-preview');
 
   const f7Params = {
-    id: 'io.framework7.testapp',
     theme,
     routes,
     store,
