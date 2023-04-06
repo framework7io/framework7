@@ -57,6 +57,7 @@
       }
       classes[themeIcon] = true;
     }
+    if (icon) classes[icon] = true;
   } else {
     classes = {
       icon: true,

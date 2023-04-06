@@ -55,6 +55,7 @@ const Icon = forwardRef((props, ref) => {
       if (prop === 'icon') {
         classes[value] = true;
       }
+      if (icon) classes[icon] = true;
     } else {
       classes = {
         icon: true,
