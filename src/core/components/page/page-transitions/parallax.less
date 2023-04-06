@@ -1,5 +1,8 @@
 // f7-parallax
 .router-transition-f7-parallax-forward {
+  .page {
+    pointer-events: none;
+  }
   .page-next {
     animation: f7-parallax-next-to-current var(--f7-page-parallax-transition-duration) forwards;
   }
@@ -8,6 +11,9 @@
   }
 }
 .router-transition-f7-parallax-backward {
+  .page {
+    pointer-events: none;
+  }
   .page-current {
     animation: f7-parallax-current-to-next var(--f7-page-parallax-transition-duration) forwards;
   }

@@ -1,5 +1,8 @@
 // f7-Push
 .router-transition-f7-push-forward {
+  .page {
+    pointer-events: none;
+  }
   .page-next {
     animation: f7-push-next-to-current var(--f7-page-push-transition-duration) forwards;
   }
@@ -8,6 +11,9 @@
   }
 }
 .router-transition-f7-push-backward {
+  .page {
+    pointer-events: none;
+  }
   .page-current {
     animation: f7-push-current-to-next var(--f7-page-push-transition-duration) forwards;
   }
