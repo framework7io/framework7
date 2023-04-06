@@ -2,6 +2,19 @@
 
 # Change Log
 
+# [8.0.1](https://github.com/framework7io/framework7/compare/v8.0.0...v8.0.1) (2023-04-06)
+
+### Bug Fixes
+
+- **data-table:** detach events on destroy ([396fdac](https://github.com/framework7io/framework7/commit/396fdac747ff223472e722ab77f1c594a953f008))
+
+### Features
+
+- **core:** prevent page scrolling during custom page transitions ([6453249](https://github.com/framework7io/framework7/commit/645324951a76274338ef33a813543de1b7f5ce2e))
+- **icon:** add class to Icon also specified in `icon` prop ([42b56fa](https://github.com/framework7io/framework7/commit/42b56fa4105017113b774017e80f0b2e0837c1a7))
+- **touch-ripple:** use blurred ripple wave on photo browser toolbar ([02b08b6](https://github.com/framework7io/framework7/commit/02b08b68f4b39e56c5baf84032c5448c088dbd1a))
+- update vue web types ([ee8c71d](https://github.com/framework7io/framework7/commit/ee8c71d4f6c16e16aaedbae823a09393ead3397c))
+
 # [8.0.0](https://github.com/framework7io/framework7/compare/v8.0.0...v7.1.5) (2023-04-03)
 
 ### Core
