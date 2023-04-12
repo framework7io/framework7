@@ -2,6 +2,18 @@
 
 # Change Log
 
+# [8.0.2](https://github.com/framework7io/framework7/compare/v8.0.1...v8.0.2) (2023-04-12)
+
+### Features
+
+- **app:** add `overscroll-behavior: none;` to `html` ([caa3e78](https://github.com/framework7io/framework7/commit/caa3e78d6597a4710fceb300572ee1a96fa454a6)), closes [#4048](https://github.com/framework7io/framework7/issues/4048)
+- **dialog:** tweak placeholder colors ([dfadb8d](https://github.com/framework7io/framework7/commit/dfadb8df32254f35e83e1e10871d0cd69f560944))
+- **fab:** tweak FAB md3 styles and colors ([e50a375](https://github.com/framework7io/framework7/commit/e50a37562591e8b2c8edb9354b33b19f0c35656e))
+- **input:** tweak placeholder colors ([50d8fb8](https://github.com/framework7io/framework7/commit/50d8fb86bf76896b8c593b84362674555b1da232))
+- **messagebar:** tweak placeholder colors ([29849ff](https://github.com/framework7io/framework7/commit/29849ff07bc36c098c8f173af78edecbde807993))
+- **searchbar:** tweak placeholder colors ([f8168a0](https://github.com/framework7io/framework7/commit/f8168a0218e957886e980e7b46eb1ca57ca8ab69))
+- **text-editor:** tweak placeholder colors ([490c23a](https://github.com/framework7io/framework7/commit/490c23aa429e1717bd45eca4052772928c9b9d23))
+
 # [8.0.1](https://github.com/framework7io/framework7/compare/v8.0.0...v8.0.1) (2023-04-06)
 
 ### Bug Fixes
