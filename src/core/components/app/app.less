@@ -7,7 +7,9 @@
   font-weight: 400;
   font-style: normal;
 }
-
+html {
+  overscroll-behavior: none;
+}
 .rtl({
   html {
     direction: rtl;
@@ -27,12 +29,28 @@ body {
   width: 100%;
   background: #fff;
   overflow: hidden;
+  overflow-y: scroll;
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   font-family: var(--f7-font-family);
   font-size: var(--f7-font-size);
   line-height: var(--f7-line-height);
   color: var(--f7-text-color);
+  &::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+    position: relative;
+  }
+  &::-webkit-scrollbar-track {
+    box-shadow: none;
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    outline: none;
+    border-radius: 9999px;
+    position: relative;
+  }
 }
 .dark body,
 body.dark {
