@@ -14,7 +14,7 @@ export default () => (
         with super flexible configuration and lot, lot of features. Just check the following demos:
       </p>
     </Block>
-    <List>
+    <List strong insetMd outlineIos dividersIos>
       <ListItem link="swiper-horizontal/" title="Swiper Horizontal" />
       <ListItem link="swiper-vertical/" title="Swiper Vertical" />
       <ListItem link="swiper-space-between/" title="Space Between Slides" />
