@@ -168,7 +168,7 @@ class Calendar extends Framework7Class {
       const { $el, $wrapperEl } = calendar;
 
       function handleTouchStart(e) {
-        if (isMoved || isTouched) return;
+        if (isMoved || isTouched || !e.isTrusted) return;
         isTouched = true;
         touchStartX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchCurrentX = touchStartX;
@@ -181,7 +181,7 @@ class Calendar extends Framework7Class {
         currentTranslate = calendar.monthsTranslate;
       }
       function handleTouchMove(e) {
-        if (!isTouched) return;
+        if (!isTouched || !e.isTrusted) return;
         const { isHorizontal: isH } = calendar;
 
         touchCurrentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
@@ -219,8 +219,8 @@ class Calendar extends Framework7Class {
           `translate3d(${isH ? currentTranslate : 0}%, ${isH ? 0 : currentTranslate}%, 0)`,
         );
       }
-      function handleTouchEnd() {
-        if (!isTouched || !isMoved) {
+      function handleTouchEnd(e) {
+        if (!isTouched || !isMoved || !e.isTrusted) {
           isTouched = false;
           isMoved = false;
           return;

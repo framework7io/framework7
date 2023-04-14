@@ -280,7 +280,7 @@ const CardExpandable = {
     let isH;
     let $cardScrollableEl;
     function onTouchStart(e) {
-      if (!$(e.target).closest($cardEl).length) return;
+      if (!$(e.target).closest($cardEl).length || !e.isTrusted) return;
       if (!$cardEl.hasClass('card-opened')) return;
       $cardScrollableEl = $cardEl.find(cardParams.scrollableEl);
 
@@ -301,7 +301,7 @@ const CardExpandable = {
       isH = false;
     }
     function onTouchMove(e) {
-      if (!isTouched) return;
+      if (!isTouched || !e.isTrusted) return;
       touchEndX = e.targetTouches[0].pageX;
       touchEndY = e.targetTouches[0].pageY;
       if (typeof isScrolling === 'undefined') {
@@ -351,8 +351,8 @@ const CardExpandable = {
         );
       }
     }
-    function onTouchEnd() {
-      if (!isTouched || !isMoved) return;
+    function onTouchEnd(e) {
+      if (!isTouched || !isMoved || !e.isTrusted) return;
       isTouched = false;
       isMoved = false;
       if (device.ios) {
