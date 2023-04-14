@@ -100,20 +100,14 @@
 .demo-fab-sheet {
   position: absolute;
   left: 16px;
-  bottom: 80px;
+  bottom: 16px;
   width: 140px;
-  background: #fff;
   box-shadow: 0px 3px 30px rgba(0, 0, 0, 0.4);
-  border-radius: 5px;
+  border-radius: 8px;
   z-index: 1600;
   margin: 0 !important;
 }
-.ios .demo-fab-sheet {
-  bottom: 15px;
-}
-.md .demo-fab-sheet {
-  bottom: 16px;
-}
+
 .demo-fab-fullscreen-sheet {
   position: absolute;
   left: 10px;
@@ -122,9 +116,17 @@
   bottom: 0;
   background: #fff;
   z-index: 1600;
-  border-radius: 5px 5px 0 0;
+  border-radius: 8px 8px 0 0;
   box-shadow: 0px 3px 30px rgba(0, 0, 0, 0.4);
   overflow: hidden;
+}
+.ios .demo-fab-sheet,
+.ios .demo-fab-fullscreen-sheet {
+  background: var(--f7-page-bg-color);
+}
+.md .demo-fab-sheet,
+.md .demo-fab-fullscreen-sheet {
+  background: var(--f7-popover-bg-color);
 }
 @media (min-width: 768px) {
   .demo-fab-fullscreen-sheet {
@@ -134,9 +136,6 @@
     height: 80%;
     top: auto;
   }
-}
-.demo-fab-fullscreen-sheet .page {
-  background: #fff;
 }
 
 /* Demo Messagebar */
