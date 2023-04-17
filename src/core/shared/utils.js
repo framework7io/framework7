@@ -434,10 +434,10 @@ export function colorThemeCSSStyles(colors = {}) {
     `.dark{`,
     stringifyObject(colorVars.dark),
     `}`,
-    `.ios{`,
+    `.ios, .ios .dark{`,
     stringifyObject(colorVars.ios),
     '}',
-    `.md{`,
+    `.md, .md .dark{`,
     stringifyObject(colorVars.md),
     '}',
   ].join('');
@@ -454,6 +454,7 @@ export function colorThemeCSSStyles(colors = {}) {
 
   Object.keys(colors).forEach((colorName) => {
     const { light, dark, ios, md } = restVars[colorName];
+
     const whiteColorVars = `
     --f7-ios-primary: #ffffff;
     --f7-ios-primary-shade: #ebebeb;
@@ -553,10 +554,10 @@ export function colorThemeCSSStyles(colors = {}) {
       darkString,
       `--swiper-theme-color: var(--f7-theme-color);`,
       `}`,
-      `.ios .color-${colorName}, .ios.color-${colorName} {`,
+      `.ios .color-${colorName}, .ios.color-${colorName}, .ios .dark .color-${colorName}, .ios .dark.color-${colorName} {`,
       stringifyObject(ios),
       `}`,
-      `.md .color-${colorName}, .md.color-${colorName} {`,
+      `.md .color-${colorName}, .md.color-${colorName}, .md .dark .color-${colorName}, .md .dark.color-${colorName} {`,
       stringifyObject(md),
       `}`,
 
