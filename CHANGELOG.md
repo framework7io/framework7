@@ -2,6 +2,14 @@
 
 # Change Log
 
+# [8.0.3](https://github.com/framework7io/framework7/compare/v8.0.2...v8.0.3) (2023-04-17)
+
+### Bug Fixes
+
+- **core:** correct colors inheritance in nested dark mode ([e4f0ddc](https://github.com/framework7io/framework7/commit/e4f0ddc3f409dc7db9c74850d1ffc22e10334ff4)), closes [#4165](https://github.com/framework7io/framework7/issues/4165)
+- **core:** prevent handling of not trusted touch events ([3ea9ac5](https://github.com/framework7io/framework7/commit/3ea9ac5116ade915bc947d245803c22c3f5a3b25)), closes [#4164](https://github.com/framework7io/framework7/issues/4164)
+- **input:** fix datetime-local input width ([6253c6c](https://github.com/framework7io/framework7/commit/6253c6c39e319e4334d938e033d382dd810ba037))
+
 # [8.0.2](https://github.com/framework7io/framework7/compare/v8.0.1...v8.0.2) (2023-04-12)
 
 ### Features
