@@ -46,18 +46,14 @@
     border-radius: 50%;
     display: block;
   }
-  .ltr({
-    margin-left: calc(-1 * var(--f7-chip-padding-horizontal) + 4px);
-    + .chip-label {
+  + .chip-label {
+    .ltr({
       margin-left: 4px;
-    }
-  });
-  .rtl({
-    margin-right: calc(-1 * var(--f7-chip-padding-horizontal) + 4px);
-    + .chip-label {
+    });
+    .rtl({
       margin-right: 4px;
-    }
-  });
+    });
+  }
 }
 .chip-label {
   white-space: nowrap;
