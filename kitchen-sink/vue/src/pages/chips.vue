@@ -63,7 +63,6 @@
         text="Chris"
         media="C"
         media-bg-color="orange"
-        text-color="black"
         deleteable
         @delete="deleteChip"
       ></f7-chip>

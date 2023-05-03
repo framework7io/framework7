@@ -51,7 +51,7 @@
       <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg" />
     </Chip>
     <Chip text="Jennifer" mediaBgColor="pink" media="J" />
-    <Chip text="Chris" mediaBgColor="yellow" mediaTextColor="black" media="C" />
+    <Chip text="Chris" mediaBgColor="yellow" media="C" />
     <Chip text="Kate" mediaBgColor="red" media="K" />
   </Block>
   <BlockTitle>Deletable Chips / Tags</BlockTitle>
