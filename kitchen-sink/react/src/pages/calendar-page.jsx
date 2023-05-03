@@ -96,15 +96,15 @@ export default () => {
       on: {
         init(calendar) {
           $('.navbar-calendar-title').text(
-            `${monthNames[calendarRef.currentMonth]}, ${calendarRef.currentYear}`,
+            `${monthNames[calendar.currentMonth]}, ${calendar.currentYear}`,
           );
           f7.navbar.size(f7.navbar.getElByPage(page.el));
           calendar.$el.addClass('no-safe-area-right');
           renderEvents(calendar);
         },
-        monthYearChangeStart() {
+        monthYearChangeStart(calendar) {
           $('.navbar-calendar-title').text(
-            `${monthNames[calendarRef.currentMonth]}, ${calendarRef.currentYear}`,
+            `${monthNames[calendar.currentMonth]}, ${calendar.currentYear}`,
           );
           f7.navbar.size(f7.navbar.getElByPage(page.el));
         },
