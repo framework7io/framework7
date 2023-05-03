@@ -2,6 +2,14 @@
 
 # Change Log
 
+# [8.0.4](https://github.com/framework7io/framework7/compare/v8.0.3...v8.0.4) (2023-05-03)
+
+### Bug Fixes
+
+- **area-chart:** fix tooltip label color in MD theme ([5d87626](https://github.com/framework7io/framework7/commit/5d87626a99ee950eb0cc6c2a386485e9e042ab1d))
+- **button:** fix iOS outline button color ([59674be](https://github.com/framework7io/framework7/commit/59674be6c64565091afdacb4adda1969eb12fa92)), closes [#4169](https://github.com/framework7io/framework7/issues/4169)
+- **chip:** fix chip media margin in iOS theme ([34f4c28](https://github.com/framework7io/framework7/commit/34f4c28a824ca6a55429d6c1edd864a8bce3b38a))
+
 # [8.0.3](https://github.com/framework7io/framework7/compare/v8.0.2...v8.0.3) (2023-04-17)
 
 ### Bug Fixes
