@@ -660,3 +660,8 @@ code {
 .example-preview .example-hidden {
   display: none !important;
 }
+
+/* Demo Chips */
+.block .chip {
+  margin: 2px 4px 2px 0;
+}
