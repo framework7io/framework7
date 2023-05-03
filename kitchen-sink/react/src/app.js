@@ -7,7 +7,7 @@ import Framework7React from 'framework7-react';
 import App from './app.jsx';
 
 import 'framework7/css/bundle';
-import './css/app.css';
+import '../../core/css/app.css';
 
 // Demo
 if (document.location.href.includes('safe-areas')) {

@@ -6,7 +6,7 @@ import Framework7Vue from 'framework7-vue';
 import App from './app.vue';
 
 import 'framework7/css/bundle';
-import './css/app.css';
+import '../../core/css/app.css';
 
 // Demo
 /* eslint-disable */
