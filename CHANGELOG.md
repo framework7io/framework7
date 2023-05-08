@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [8.0.5](https://github.com/framework7io/framework7/compare/v8.0.4...v8.0.5) (2023-05-08)
+
+### Bug Fixes
+
+- **virtual-list:** fix auto height calcs in filtered items ([1336770](https://github.com/framework7io/framework7/commit/1336770412a0e910b504e18cc929fc66ab9ae996)), closes [#4168](https://github.com/framework7io/framework7/issues/4168)
+
 # [8.0.4](https://github.com/framework7io/framework7/compare/v8.0.3...v8.0.4) (2023-05-03)
 
 ### Bug Fixes
