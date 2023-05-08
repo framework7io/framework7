@@ -191,17 +191,18 @@ class VirtualList extends Framework7Class {
         renderedItems[parseInt(el.getAttribute('data-virtual-list-index'), 10)] = el;
       });
       for (let i = 0; i < items.length; i += 1) {
-        const renderedItem = renderedItems[i];
+        const itemIndex = vl.items.indexOf(items[i]);
+        const renderedItem = renderedItems[itemIndex];
         if (renderedItem) {
-          if (!vl.heightsCalculated.includes(i)) {
-            vl.heights[i] = renderedItem.offsetHeight;
-            vl.heightsCalculated.push(i);
+          if (!vl.heightsCalculated.includes(itemIndex)) {
+            vl.heights[itemIndex] = renderedItem.offsetHeight;
+            vl.heightsCalculated.push(itemIndex);
           }
         }
         if (typeof vl.heights[i] === 'undefined') {
-          vl.heights[i] = 40;
+          vl.heights[itemIndex] = 40;
         }
-        vl.listHeight += vl.heights[i];
+        vl.listHeight += vl.heights[itemIndex];
       }
     } else {
       vl.listHeight = Math.ceil(items.length / vl.params.cols) * vl.params.height;
