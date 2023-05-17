@@ -612,7 +612,8 @@ code {
 .pie-chart svg {
   max-width: 320px;
 }
-.example-preview .view-main .navbar:first-child .link.back {
+.example-preview .view-main .navbars .navbar:first-child .link.back,
+.example-preview .view-main .page:first-child .navbar .link.back {
   min-width: 0 !important;
   width: 0 !important;
   padding: 0 !important;
