@@ -574,6 +574,11 @@ class Router extends Framework7Class {
       }
     }
     const url = router.constructRouteUrl(route, { params, query });
+
+    if (url === '') {
+      return '/'
+    }
+
     if (!url) {
       throw new Error(`Framework7: can't construct URL for route with name "${name}"`);
     }
