@@ -207,6 +207,8 @@ export namespace Calendar {
     renderToolbar?: () => string;
     /** Function to render whole calendar. Must return calendar full HTML string. */
     render?: () => string;
+    /** Enables Calendar backdrop (dark semi transparent layer behind). By default only it is enabled when Calendar opened in Popover. */
+    backdrop?: boolean | undefined;
 
     on?: {
       [event in keyof Events]?: Events[event];
