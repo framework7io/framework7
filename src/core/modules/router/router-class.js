@@ -576,7 +576,7 @@ class Router extends Framework7Class {
     const url = router.constructRouteUrl(route, { params, query });
 
     if (url === '') {
-      return '/'
+      return '/';
     }
 
     if (!url) {
