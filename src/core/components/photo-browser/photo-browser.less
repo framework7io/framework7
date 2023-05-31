@@ -143,7 +143,9 @@
   font-size: var(--f7-photobrowser-caption-font-size);
   font-weight: var(--f7-photobrowser-caption-font-weight);
   .ios-translucent-bars & {
-    @supports (backdrop-filter: blur(20px)) {
+    @supports (-webkit-backdrop-filter: blur(15px)) or (-moz-backdrop-filter: blur(15px)) or (backdrop-filter: blur(20px)) {
+      -webkit-backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
+      -moz-backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
       backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
     }
   }

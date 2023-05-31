@@ -276,9 +276,11 @@
 .card-backdrop-out {
   animation: card-backdrop-fade-out 400ms forwards;
 }
-@supports (backdrop-filter: blur(15px)) {
+@supports (-webkit-backdrop-filter: blur(15px)) or (-moz-backdrop-filter: blur(15px)) or (backdrop-filter: blur(15px)) {
   .card-backdrop {
     background: transparent;
+    -webkit-backdrop-filter: blur(15px);
+    -moz-backdrop-filter: blur(15px);
     backdrop-filter: blur(15px);
   }
 }
