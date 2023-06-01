@@ -29,6 +29,7 @@ import Icons from './pages/icons.jsx';
 import InfiniteScroll from './pages/infinite-scroll.jsx';
 import Inputs from './pages/inputs.jsx';
 import List from './pages/list.jsx';
+import ListButton from './pages/list-button.jsx';
 import ListIndex from './pages/list-index.jsx';
 import LoginScreen from './pages/login-screen.jsx';
 import LoginScreenPage from './pages/login-screen-page.jsx';
@@ -50,6 +51,7 @@ import Radio from './pages/radio.jsx';
 import Range from './pages/range.jsx';
 import Searchbar from './pages/searchbar.jsx';
 import SearchbarExpandable from './pages/searchbar-expandable.jsx';
+import Segmented from './pages/segmented.jsx';
 import SheetModal from './pages/sheet-modal.jsx';
 import Skeleton from './pages/skeleton.jsx';
 import SmartSelect from './pages/smart-select.jsx';
@@ -295,6 +297,10 @@ export default [
     component: List,
   },
   {
+    path: '/list-button/',
+    component: ListButton,
+  },
+  {
     path: '/list-index/',
     component: ListIndex,
   },
@@ -377,6 +383,10 @@ export default [
   {
     path: '/searchbar-expandable/',
     component: SearchbarExpandable,
+  },
+  {
+    path: '/segmented/',
+    component: Segmented,
   },
   {
     path: '/sheet-modal/',
