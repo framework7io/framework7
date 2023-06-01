@@ -29,6 +29,7 @@ import Grid from './pages/grid.svelte';
 import Icons from './pages/icons.svelte';
 import InfiniteScroll from './pages/infinite-scroll.svelte';
 import Inputs from './pages/inputs.svelte';
+import ListButton from './pages/list-button.svelte';
 import List from './pages/list.svelte';
 import ListIndex from './pages/list-index.svelte';
 import LoginScreen from './pages/login-screen.svelte';
@@ -51,6 +52,7 @@ import Radio from './pages/radio.svelte';
 import Range from './pages/range.svelte';
 import Searchbar from './pages/searchbar.svelte';
 import SearchbarExpandable from './pages/searchbar-expandable.svelte';
+import Segmented from './pages/segmented.svelte';
 import SheetModal from './pages/sheet-modal.svelte';
 import Skeleton from './pages/skeleton.svelte';
 import SmartSelect from './pages/smart-select.svelte';
@@ -293,6 +295,10 @@ export default [
     component: Inputs,
   },
   {
+    path: '/list-button/',
+    component: ListButton,
+  },
+  {
     path: '/list/',
     component: List,
   },
@@ -379,6 +385,10 @@ export default [
   {
     path: '/searchbar-expandable/',
     component: SearchbarExpandable,
+  },
+  {
+    path: '/segmented/',
+    component: Segmented,
   },
   {
     path: '/sheet-modal/',

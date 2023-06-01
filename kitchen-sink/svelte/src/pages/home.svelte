@@ -115,6 +115,9 @@
     <ListItem link="/inputs/" title="Inputs">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
+     <ListItem link="/list-button/" title="List Button">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
     <ListItem link="/list/" title="List View">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
@@ -173,6 +176,9 @@
       <i class="icon icon-f7" slot="media" />
     </ListItem>
     <ListItem link="/searchbar-expandable/" title="Searchbar Expandable">
+      <i class="icon icon-f7" slot="media" />
+    </ListItem>
+    <ListItem link="/segmented/" title="Segmented">
       <i class="icon icon-f7" slot="media" />
     </ListItem>
     <ListItem link="/sheet-modal/" title="Sheet Modal">
