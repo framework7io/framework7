@@ -52,46 +52,6 @@
       </p>
     </f7-block>
 
-    <f7-block-title>Segmented</f7-block-title>
-    <f7-block strong outline-ios>
-      <f7-segmented tag="p">
-        <f7-button>Button</f7-button>
-        <f7-button>Button</f7-button>
-        <f7-button active>Active</f7-button>
-      </f7-segmented>
-      <f7-segmented strong tag="p">
-        <f7-button :active="activeStrongButton === 0" @click="activeStrongButton = 0"
-          >Button</f7-button
-        >
-        <f7-button :active="activeStrongButton === 1" @click="activeStrongButton = 1"
-          >Button</f7-button
-        >
-        <f7-button :active="activeStrongButton === 2" @click="activeStrongButton = 2"
-          >Button</f7-button
-        >
-      </f7-segmented>
-      <f7-segmented raised tag="p">
-        <f7-button>Button</f7-button>
-        <f7-button>Button</f7-button>
-        <f7-button active>Active</f7-button>
-      </f7-segmented>
-      <f7-segmented tag="p">
-        <f7-button outline>Outline</f7-button>
-        <f7-button outline>Outline</f7-button>
-        <f7-button outline active>Active</f7-button>
-      </f7-segmented>
-      <f7-segmented raised round tag="p">
-        <f7-button round>Button</f7-button>
-        <f7-button round>Button</f7-button>
-        <f7-button round active>Active</f7-button>
-      </f7-segmented>
-      <f7-segmented round tag="p">
-        <f7-button round outline>Outline</f7-button>
-        <f7-button round outline>Outline</f7-button>
-        <f7-button round outline active>Active</f7-button>
-      </f7-segmented>
-    </f7-block>
-
     <f7-block-title>Large Buttons</f7-block-title>
     <f7-block strong outline-ios>
       <p class="grid grid-cols-2 grid-gap">
@@ -152,30 +112,11 @@
         <f7-button color="white">White</f7-button>
       </p>
     </f7-block>
-
-    <f7-block-title>List-Block Buttons</f7-block-title>
-    <f7-list inset strong>
-      <f7-list-button title="List Button 1"></f7-list-button>
-      <f7-list-button title="List Button 2"></f7-list-button>
-      <f7-list-button title="List Button 3"></f7-list-button>
-    </f7-list>
-    <f7-list inset strong>
-      <f7-list-button title="Large Red Button" color="red"></f7-list-button>
-    </f7-list>
   </f7-page>
 </template>
 <script>
 import { ref } from 'vue';
-import {
-  f7Navbar,
-  f7Page,
-  f7BlockTitle,
-  f7Block,
-  f7List,
-  f7ListButton,
-  f7Button,
-  f7Segmented,
-} from 'framework7-vue';
+import { f7Navbar, f7Page, f7BlockTitle, f7Block, f7Button } from 'framework7-vue';
 
 export default {
   components: {
@@ -183,13 +124,9 @@ export default {
     f7Page,
     f7BlockTitle,
     f7Block,
-    f7List,
-    f7ListButton,
     f7Button,
-    f7Segmented,
   },
   setup() {
-    const activeStrongButton = ref(0);
     const isLoading1 = ref(false);
     const isLoading2 = ref(false);
 
@@ -210,7 +147,6 @@ export default {
     };
 
     return {
-      activeStrongButton,
       isLoading1,
       isLoading2,
       load1,

@@ -29,6 +29,7 @@ import Grid from './pages/grid.vue';
 import Icons from './pages/icons.vue';
 import InfiniteScroll from './pages/infinite-scroll.vue';
 import Inputs from './pages/inputs.vue';
+import ListButton from './pages/list-button.vue';
 import List from './pages/list.vue';
 import ListIndex from './pages/list-index.vue';
 import LoginScreen from './pages/login-screen.vue';
@@ -51,6 +52,7 @@ import Radio from './pages/radio.vue';
 import Range from './pages/range.vue';
 import Searchbar from './pages/searchbar.vue';
 import SearchbarExpandable from './pages/searchbar-expandable.vue';
+import Segmented from './pages/segmented.vue';
 import SheetModal from './pages/sheet-modal.vue';
 import Skeleton from './pages/skeleton.vue';
 import SmartSelect from './pages/smart-select.vue';
@@ -293,6 +295,10 @@ export default [
     component: Inputs,
   },
   {
+    path: '/list-button/',
+    component: ListButton,
+  },
+  {
     path: '/list/',
     component: List,
   },
@@ -379,6 +385,10 @@ export default [
   {
     path: '/searchbar-expandable/',
     component: SearchbarExpandable,
+  },
+  {
+    path: '/segmented/',
+    component: Segmented,
   },
   {
     path: '/sheet-modal/',
