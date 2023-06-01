@@ -137,9 +137,8 @@
     </div>
   </div>
 </template>
-<!-- <script>
+<script>
   export default (props, { $update }) => {
-    let activeStrongButton = 0;
     let isLoading1 = false;
     let isLoading2 = false;
 
@@ -152,7 +151,6 @@
         $update();
       }, 4000);
     };
-
     const load2 = () => {
       if (isLoading2) return;
       isLoading2 = true;
@@ -163,12 +161,7 @@
       }, 4000);
     };
 
-    const setStrongButton = (index) => {
-      activeStrongButton = index;
-      $update();
-    }
-
     return $render;
   }
-</script> -->
+</script>
 
