@@ -157,6 +157,11 @@
           <f7-icon icon="icon-f7" />
         </template>
       </f7-list-item>
+      <f7-list-item link="/list-button/" title="List Button">
+        <template #media>
+          <f7-icon icon="icon-f7" />
+        </template>
+      </f7-list-item>
       <f7-list-item link="/list/" title="List View">
         <template #media>
           <f7-icon icon="icon-f7" />
@@ -253,6 +258,11 @@
         </template>
       </f7-list-item>
       <f7-list-item link="/searchbar-expandable/" title="Searchbar Expandable">
+        <template #media>
+          <f7-icon icon="icon-f7" />
+        </template>
+      </f7-list-item>
+      <f7-list-item link="/segmented/" title="Segmented">
         <template #media>
           <f7-icon icon="icon-f7" />
         </template>
