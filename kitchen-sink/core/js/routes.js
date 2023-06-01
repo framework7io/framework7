@@ -173,6 +173,10 @@ var routes = [
     url: './pages/list.html',
   },
   {
+    path: '/list-button/',
+    componentUrl: './pages/list-button.html',
+  },
+  {
     path: '/list-index/',
     componentUrl: './pages/list-index.html',
   },
@@ -255,6 +259,10 @@ var routes = [
   {
     path: '/searchbar-expandable/',
     url: './pages/searchbar-expandable.html',
+  },
+  {
+    path: '/segmented/',
+    componentUrl: './pages/segmented.html',
   },
   {
     path: '/sheet-modal/',
