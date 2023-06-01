@@ -237,7 +237,7 @@ const Messagebar = forwardRef((props, ref) => {
           {slotsBeforeArea}
           {messagebarAttachmentsEl}
           <Input
-            id={textareaId}
+            inputId={textareaId}
             ref={areaElRef}
             type="textarea"
             wrap={false}

@@ -185,7 +185,7 @@
     <div class="messagebar-area">
       <slot messagebar={f7Messagebar} name="before-area" />
       <Input
-        id={textareaId}
+        inputId={textareaId}
         type="textarea"
         wrap={false}
         {placeholder}

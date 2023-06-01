@@ -223,7 +223,7 @@ export default {
             slotsBeforeArea && slotsBeforeArea(),
             messagebarAttachmentsEl,
             h(Input, {
-              id: props.textareaId,
+              inputId: props.textareaId,
               ref: areaElRef,
               type: 'textarea',
               wrap: false,
