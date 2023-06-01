@@ -25,13 +25,8 @@
     },
     colorClasses($$props),
   );
-
-  $: transformStyle = {
-    transform: progress ? `translate3d(${-100 + progress}%, 0, 0)` : '',
-    WebkitTransform: progress ? `translate3d(${-100 + progress}%, 0, 0)` : '',
-  };
 </script>
 
 <span bind:this={el} class={classes} data-progress={progress} {...restProps($$restProps)}>
-  <span style={transformStyle} />
+  <span style={`transform: ${progress ? `translate3d(${-100 + progress}%, 0, 0)` : ''}`} />
 </span>
