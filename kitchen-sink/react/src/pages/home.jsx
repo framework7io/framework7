@@ -121,6 +121,9 @@ export default () => {
         <ListItem link="/inputs/" title="Inputs">
           <Icon slot="media" icon="icon-f7" />
         </ListItem>
+        <ListItem link="/list-button/" title="List Button">
+          <Icon slot="media" icon="icon-f7" />
+        </ListItem>
         <ListItem link="/list/" title="List View">
           <Icon slot="media" icon="icon-f7" />
         </ListItem>
@@ -179,6 +182,9 @@ export default () => {
           <Icon slot="media" icon="icon-f7" />
         </ListItem>
         <ListItem link="/searchbar-expandable/" title="Searchbar Expandable">
+          <Icon slot="media" icon="icon-f7" />
+        </ListItem>
+        <ListItem link="/segmented/" title="Segmented">
           <Icon slot="media" icon="icon-f7" />
         </ListItem>
         <ListItem link="/sheet-modal/" title="Sheet Modal">
