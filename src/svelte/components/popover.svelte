@@ -116,7 +116,9 @@
 </script>
 
 <div class={classes} bind:this={el} {style} {...restProps($$restProps)}>
-  <div class="popover-arrow" />
+  {#if arrow !== false}
+    <div class="popover-arrow" />
+  {/if}
   <div class="popover-inner">
     <slot popover={f7Popover} />
   </div>

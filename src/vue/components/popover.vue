@@ -1,6 +1,6 @@
 <template>
   <div ref="elRef" :class="classes">
-    <div class="popover-arrow" />
+    <div v-if="arrow !== false" class="popover-arrow" />
     <div class="popover-inner"><slot /></div>
   </div>
 </template>

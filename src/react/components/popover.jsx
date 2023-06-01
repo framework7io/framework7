@@ -155,7 +155,7 @@ const Popover = forwardRef((props, ref) => {
 
   return (
     <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
-      <div className="popover-arrow" />
+      {arrow !== false && <div className="popover-arrow" />}
       <div className="popover-inner">{children}</div>
     </div>
   );
