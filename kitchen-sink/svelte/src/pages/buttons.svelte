@@ -4,13 +4,9 @@
     Navbar,
     BlockTitle,
     Block,
-    Segmented,
     Button,
-    List,
-    ListButton,
   } from 'framework7-svelte';
 
-  let activeStrongButton = 0;
   let isLoading1 = false;
   let isLoading2 = false;
 
@@ -85,46 +81,6 @@
     </p>
   </Block>
 
-  <BlockTitle>Segmented</BlockTitle>
-  <Block strong outlineIos>
-    <Segmented tag="p">
-      <Button>Button</Button>
-      <Button>Button</Button>
-      <Button active>Active</Button>
-    </Segmented>
-    <Segmented strong tag="p">
-      <Button active={activeStrongButton === 0} onClick={() => (activeStrongButton = 0)}
-        >Button</Button
-      >
-      <Button active={activeStrongButton === 1} onClick={() => (activeStrongButton = 1)}
-        >Button</Button
-      >
-      <Button active={activeStrongButton === 2} onClick={() => (activeStrongButton = 2)}
-        >Button</Button
-      >
-    </Segmented>
-    <Segmented raised tag="p">
-      <Button>Button</Button>
-      <Button>Button</Button>
-      <Button active>Active</Button>
-    </Segmented>
-    <Segmented tag="p">
-      <Button outline>Outline</Button>
-      <Button outline>Outline</Button>
-      <Button outline active>Active</Button>
-    </Segmented>
-    <Segmented raised round tag="p">
-      <Button round>Button</Button>
-      <Button round>Button</Button>
-      <Button round active>Active</Button>
-    </Segmented>
-    <Segmented round tag="p">
-      <Button round outline>Outline</Button>
-      <Button round outline>Outline</Button>
-      <Button round outline active>Active</Button>
-    </Segmented>
-  </Block>
-
   <BlockTitle>Large Buttons</BlockTitle>
   <Block strong outlineIos>
     <p class="grid grid-cols-2 grid-gap">
@@ -189,14 +145,4 @@
       <Button color="white">White</Button>
     </p>
   </Block>
-
-  <BlockTitle>List-Block Buttons</BlockTitle>
-  <List inset strong>
-    <ListButton title="List Button 1" />
-    <ListButton title="List Button 2" />
-    <ListButton title="List Button 3" />
-  </List>
-  <List inset strong>
-    <ListButton title="Large Red Button" color="red" />
-  </List>
 </Page>
