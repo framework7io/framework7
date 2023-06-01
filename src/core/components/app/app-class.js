@@ -291,11 +291,10 @@ class Framework7 extends Framework7Class {
       $('html').removeClass('ios md').addClass(app.theme);
 
       // iOS Translucent
-      const device = app.device;
-      if (app.params.iosTranslucentBars && app.theme === 'ios' && device.ios) {
+      if (app.params.iosTranslucentBars && app.theme === 'ios') {
         $('html').addClass('ios-translucent-bars');
       }
-      if (app.params.iosTranslucentModals && app.theme === 'ios' && device.ios) {
+      if (app.params.iosTranslucentModals && app.theme === 'ios') {
         $('html').addClass('ios-translucent-modals');
       }
 
