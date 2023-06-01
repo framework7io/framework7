@@ -59,43 +59,6 @@
           <button class="button button-outline button-round button-raised">Outline</button>
         </p>
       </div>
-      <div class="block-title">Segmented</div>
-      <div class="block block-strong block-outline-ios">
-        <p class="segmented">
-          <button class="button">Button</button>
-          <button class="button">Button</button>
-          <button class="button button-active">Active</button>
-        </p>
-        <p class="segmented segmented-strong">
-          <button class="button ${activeStrongButton===0 ? 'button-active' : '' }" @click=${()=>
-            setStrongButton(0)}>Button</button>
-          <button class="button ${activeStrongButton===1 ? 'button-active' : '' }" @click=${()=>
-            setStrongButton(1)}>Button</button>
-          <button class="button ${activeStrongButton===2 ? 'button-active' : '' }" @click=${()=>
-            setStrongButton(2)}>Button</button>
-          <span class="segmented-highlight"></span>
-        </p>
-        <p class="segmented segmented-raised">
-          <button class="button">Button</button>
-          <button class="button">Button</button>
-          <button class="button button-active">Active</button>
-        </p>
-        <p class="segmented">
-          <button class="button button-outline">Outline</button>
-          <button class="button button-outline">Outline</button>
-          <button class="button button-outline button-active">Active</button>
-        </p>
-        <p class="segmented segmented-raised segmented-round">
-          <button class="button button-round">Button</button>
-          <button class="button button-round">Button</button>
-          <button class="button button-round button-active">Active</button>
-        </p>
-        <p class="segmented segmented-round">
-          <button class="button button-round button-outline">Outline</button>
-          <button class="button button-round button-outline">Outline</button>
-          <button class="button button-round button-outline button-active">Active</button>
-        </p>
-      </div>
 
       <div class="block-title">Large Buttons</div>
       <div class="block block-strong block-outline-ios">
@@ -171,23 +134,10 @@
           <button class="button button-fill color-white">White</button>
         </p>
       </div>
-      <div class="block-title">List-Block Buttons</div>
-      <div class="list inset list-strong">
-        <ul>
-          <li><a class="list-button">List Button 1</a></li>
-          <li><a class="list-button">List Button 2</a></li>
-          <li><a class="list-button">List Button 2</a></li>
-        </ul>
-      </div>
-      <div class="list inset list-strong">
-        <ul>
-          <li><a class="list-button color-red">Large Red Button</a></li>
-        </ul>
-      </div>
     </div>
   </div>
 </template>
-<script>
+<!-- <script>
   export default (props, { $update }) => {
     let activeStrongButton = 0;
     let isLoading1 = false;
@@ -220,4 +170,5 @@
 
     return $render;
   }
-</script>
+</script> -->
+

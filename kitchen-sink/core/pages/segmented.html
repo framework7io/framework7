@@ -1,0 +1,90 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Segmented</div>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <div class="block-title">Segmented</div>
+      <div class="block block-strong block-outline-ios">
+        <p class="segmented">
+          <button class="button">Button</button>
+          <button class="button">Button</button>
+          <button class="button button-active">Active</button>
+        </p>
+        <p class="segmented segmented-strong">
+          <button class="button ${activeStrongButton===0 ? 'button-active' : '' }" @click=${()=>
+            setStrongButton(0)}>Button</button>
+          <button class="button ${activeStrongButton===1 ? 'button-active' : '' }" @click=${()=>
+            setStrongButton(1)}>Button</button>
+          <button class="button ${activeStrongButton===2 ? 'button-active' : '' }" @click=${()=>
+            setStrongButton(2)}>Button</button>
+          <span class="segmented-highlight"></span>
+        </p>
+        <p class="segmented segmented-raised">
+          <button class="button">Button</button>
+          <button class="button">Button</button>
+          <button class="button button-active">Active</button>
+        </p>
+        <p class="segmented">
+          <button class="button button-outline">Outline</button>
+          <button class="button button-outline">Outline</button>
+          <button class="button button-outline button-active">Active</button>
+        </p>
+        <p class="segmented segmented-raised segmented-round">
+          <button class="button button-round">Button</button>
+          <button class="button button-round">Button</button>
+          <button class="button button-round button-active">Active</button>
+        </p>
+        <p class="segmented segmented-round">
+          <button class="button button-round button-outline">Outline</button>
+          <button class="button button-round button-outline">Outline</button>
+          <button class="button button-round button-outline button-active">Active</button>
+        </p>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  export default (props, { $update }) => {
+    let activeStrongButton = 0;
+    let isLoading1 = false;
+    let isLoading2 = false;
+
+    const load1 = () => {
+      if (isLoading1) return;
+      isLoading1 = true;
+      $update();
+      setTimeout(() => {
+        isLoading1 = false;
+        $update();
+      }, 4000);
+    };
+
+    const load2 = () => {
+      if (isLoading2) return;
+      isLoading2 = true;
+      $update();
+      setTimeout(() => {
+        isLoading2 = false;
+        $update();
+      }, 4000);
+    };
+
+    const setStrongButton = (index) => {
+      activeStrongButton = index;
+      $update();
+    }
+
+    return $render;
+  }
+</script>
