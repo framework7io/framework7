@@ -2,7 +2,7 @@
   .notification {
     transform: translate3d(0, -150%, 0);
     &.modal-in {
-      transition-duration: 200ms;
+      transition-duration: 500ms;
       transform: translate3d(0, 0%, 0);
       transition-timing-function: cubic-bezier(0, 0.8, 0.34, 1);
       &.notification-transitioning {
@@ -19,8 +19,8 @@
   .notification-with-icon {
     .notification-icon {
       position: absolute;
-      left: var(--f7-notification-padding);
-      top: var(--f7-notification-padding);
+      left: var(--f7-notification-padding-horizontal);
+      top: var(--f7-notification-padding-vertical);
     }
     .notification-content,
     .notification-header {
@@ -37,7 +37,7 @@
     }
   }
   .notification-header + .notification-content {
-    margin-top: 4px;
+    margin-top: 8px;
   }
   .notification-title-right-text {
     margin-left: 4px;
