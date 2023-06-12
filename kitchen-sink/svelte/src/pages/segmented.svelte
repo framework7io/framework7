@@ -1,12 +1,7 @@
 <script>
-  import {
-    Page,
-    Navbar,
-    Block,
-    Segmented,
-    Button,
-  } from 'framework7-svelte';
-   let activeStrongButton = 0;
+  import { Page, Navbar, Block, Segmented, Button } from 'framework7-svelte';
+
+  let activeStrongButton = 0;
 </script>
 
 <!-- svelte-ignore a11y-invalid-attribute -->

@@ -2,6 +2,28 @@
 
 # Change Log
 
+# [8.1.0](https://github.com/framework7io/framework7/compare/v8.0.5...v8.1.0) (2023-06-12)
+
+### Bug Fixes
+
+- **calendar:** fix range styles if same day selected ([84eaf76](https://github.com/framework7io/framework7/commit/84eaf76b46b20327018bee71f21da84e3ca095dc)), closes [#4191](https://github.com/framework7io/framework7/issues/4191)
+- **core:** hide scrollbar where required in FireFix ([f4c4c7e](https://github.com/framework7io/framework7/commit/f4c4c7e90b1b4eb2a12a587219ba59ff275e9514)), closes [#4189](https://github.com/framework7io/framework7/issues/4189)
+- **core:** translucent now applies in iOS theme not depending on iOS device ([06b8970](https://github.com/framework7io/framework7/commit/06b897020548ca73bea9c19f16a168834a3b7322))
+- **messagebar:** fix `textareaId` to be passed to textarea element ([b3b10b2](https://github.com/framework7io/framework7/commit/b3b10b235421d7c5cde0ca54dfdddc45ac1d8f4c))
+- **panel:** fix panel closed without transition when opened with swipe ([be8492c](https://github.com/framework7io/framework7/commit/be8492cba29bab92fbdaa53bc4aaf81377f180d1))
+- **popover:** fix ignored `arrow` prop in Popover components ([feaa823](https://github.com/framework7io/framework7/commit/feaa8231798f60a72ea8a3049a2b389de178c3b6))
+- **progressbar:** fix wrong style applied in Svelte component ([4604b1f](https://github.com/framework7io/framework7/commit/4604b1f861fdfe8d25b2a15696288b0d3e8f96bf)), closes [#4183](https://github.com/framework7io/framework7/issues/4183)
+- **router:** fix for correct navigate if used route path format like `/:optionalParam(any+[regexp]+)?` ([#4179](https://github.com/framework7io/framework7/issues/4179)) ([6d40482](https://github.com/framework7io/framework7/commit/6d40482d0b526ce1c368b68d83bc7abfa52823df))
+- **router:** fix routable modal destroy if modal route has `async` prop ([1234e78](https://github.com/framework7io/framework7/commit/1234e78967d3c9e9ea3055e7505d33ae4e8eb5db))
+- **searchbar:** remove unused clear button layer ([4e13c36](https://github.com/framework7io/framework7/commit/4e13c36b201140cd41e9a83ca32368bd3dd44430))
+
+### Features
+
+- **list-index:** tweak label colors in MD theme ([b797d9b](https://github.com/framework7io/framework7/commit/b797d9bdc57785ec5358e7b5d003a7df57737236))
+- **notification:** increase notifiaction transition duration and paddings in MD theme ([27f211e](https://github.com/framework7io/framework7/commit/27f211efe0fc4757e5abc39b9ad0c426e3172174))
+- **picker:** full width single column picker scrolling ([04ca371](https://github.com/framework7io/framework7/commit/04ca371f929f25d6fd8f92aeac50ac8b39d6070a))
+- **pull-to-refresh:** tweak md colors ([b014a34](https://github.com/framework7io/framework7/commit/b014a34229cf21528cb7b21b0ed3402e21c33997))
+
 # [8.0.5](https://github.com/framework7io/framework7/compare/v8.0.4...v8.0.5) (2023-05-08)
 
 ### Bug Fixes
