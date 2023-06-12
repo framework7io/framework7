@@ -257,3 +257,25 @@
     }
   }
 }
+
+.no-scrollbar() {
+  scrollbar-width: none;
+  scrollbar-color: transparent;
+  &::-webkit-scrollbar {
+    appearance: none;
+    width: 0px;
+    display: none;
+    opacity: 0;
+    background: transparent;
+  }
+  &::-webkit-scrollbar-track {
+    box-shadow: none;
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    outline: none;
+    border-radius: 9999px;
+    position: relative;
+  }
+}

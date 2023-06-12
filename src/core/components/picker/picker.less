@@ -104,10 +104,7 @@
   height: 100%;
   box-sizing: border-box;
   padding: var(--f7-picker-scroll-padding, 0px) 0px;
-  &::-webkit-scrollbar {
-    display: none;
-    opacity: 0;
-  }
+  .no-scrollbar();
 }
 .picker-item {
   height: var(--f7-picker-item-height);

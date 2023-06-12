@@ -36,21 +36,7 @@ body {
   font-size: var(--f7-font-size);
   line-height: var(--f7-line-height);
   color: var(--f7-text-color);
-  &::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
-    position: relative;
-  }
-  &::-webkit-scrollbar-track {
-    box-shadow: none;
-    background: transparent;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: transparent;
-    outline: none;
-    border-radius: 9999px;
-    position: relative;
-  }
+  .no-scrollbar();
 }
 .dark body,
 body.dark {
