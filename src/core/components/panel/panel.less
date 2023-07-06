@@ -258,6 +258,9 @@ html {
 .with-panel-right-floating .panel-right {
   transform: translate3d(-8px, 0, 0);
 }
+.panel-resizable {
+  max-width: 100%;
+}
 .panel-resize-handler {
   position: absolute;
   top: 0;
@@ -269,14 +272,16 @@ html {
   .panel-resizable & {
     display: block;
   }
-  .panel-left.panel-cover & {
+  .panel-left.panel-cover &,
+  .panel-left.panel-floating & {
     right: -3px;
   }
   .panel-left.panel-reveal,
   .panel-left.panel-push & {
     right: 0;
   }
-  .panel-right.panel-cover & {
+  .panel-right.panel-cover &,
+  .panel-right.panel-floating & {
     left: -3px;
   }
   .panel-right.panel-reveal,
