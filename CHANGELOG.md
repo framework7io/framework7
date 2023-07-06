@@ -2,6 +2,18 @@
 
 # Change Log
 
+# [8.2.0](https://github.com/framework7io/framework7/compare/v8.1.0...v8.2.0) (2023-07-06)
+
+### Bug Fixes
+
+- **inputs:** fixed outline input without label misalignment ([81d2757](https://github.com/framework7io/framework7/commit/81d2757676609a2a79b85aeb586bf14489c0a449))
+- **list-view:** add "list" slot in Vue component ([f4b24bc](https://github.com/framework7io/framework7/commit/f4b24bc489ce0b3f65bcd191407600b1f993b547)), closes [#4201](https://github.com/framework7io/framework7/issues/4201) [#4195](https://github.com/framework7io/framework7/issues/4195)
+
+### Features
+
+- **panel:** limit resizable to max 100% width and support resizable floating panels ([27ae4e1](https://github.com/framework7io/framework7/commit/27ae4e12cf232387390f2a795d365019fb086eba))
+- **swiper:** update to Swiper v10 ([b6cb30a](https://github.com/framework7io/framework7/commit/b6cb30a680a49ebb3dcc9ed931e0789bb41c6d37))
+
 # [8.1.0](https://github.com/framework7io/framework7/compare/v8.0.5...v8.1.0) (2023-06-12)
 
 ### Bug Fixes
