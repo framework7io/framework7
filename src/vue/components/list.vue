@@ -228,7 +228,7 @@ export default {
       const { list: slotsList, default: slotsDefault } = slots;
       const rootChildrenBeforeList = [];
       const rootChildrenAfterList = [];
-      const ulChildren = slotsList || [];
+      const ulChildren = slotsList && typeof slotsList === 'function' ? [slotsList()] : [];
       let wasUlChild = false;
       if (slotsDefault) {
         slotsDefault().forEach((vnode) => {
