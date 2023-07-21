@@ -568,6 +568,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ### \$250 Gold Sponsor
 
 <!-- GOLD_SPONSOR -->
+
 - [NoNeedToStudy.com - get help with taking online classes and tests from expert tutors](https://www.noneedtostudy.com/take-my-online-class/)
 - [Nettikasinot | Tässä parhaat nettikasinot - Katso lista](https://www.nettikasinot.org)
 - [ミセテのご紹介｜ミセテ 多言語対応オフィシャルアプリ制作・カスタマイズサービス｜ランカードコム（LANCARD.COM inc.)](https://www.lancard.com/misete/)
@@ -581,6 +582,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ### \$100 Silver Sponsor
 
 <!-- SILVER_SPONSOR -->
+
 - [Svindel.info | Vi sjekker gambling- og spillsider for svindel](https://www.svindel.info/)
 - [Casino utan Svensk Licens 2023](https://starwarscasinos.com/)
 - [Nettikasinot 2022 | Löydä Luotettava & Turvallinen Nettikasino!](https://www.kasinohai.com/nettikasinot)
@@ -602,6 +604,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ### \$50+ Top Supporter
 
 <!-- TOP_SUPPORTER -->
+
 - [Lucky Jet Game for Real Money | Play Lucky Jet at Online Casinos](https://luckyjetgames.in/)
 - [Jogar Spaceman Pragmatic Play - Jogo Spaceman Apostas](https://brainstormtutoriais.com/)
 - [Casino Zonder Registratie 2023 | CZR's Top No Account Casino's Ranglijst](https://casinozonderregistratie.net/)
@@ -705,6 +708,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 
 ### \$10+ Supporter
 
+[Instagram Stories Viewer](https://opencollective.com/instagram-stories-viewer)<br>
 David Snelling<br>
 Eli Finer<br>
 Franz Gusenbauer<br>
