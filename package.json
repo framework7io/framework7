@@ -71,7 +71,7 @@
     "path-to-regexp": "^6.2.0",
     "skeleton-elements": "^4.0.1",
     "ssr-window": "^4.0.2",
-    "swiper": "^10.0.3"
+    "swiper": "^10.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.19.3",
@@ -103,7 +103,7 @@
     "gulp": "^4.0.2",
     "gulp-connect": "^5.7.0",
     "inquirer": "^8.2.2",
-    "less": "^4.1.3",
+    "less": "^4.2.0",
     "npm-run-all": "^4.1.5",
     "opn": "^6.0.0",
     "postcss": "^8.4.21",

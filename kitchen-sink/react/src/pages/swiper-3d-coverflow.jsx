@@ -11,69 +11,42 @@ export default () => (
       centered-slides
       class="demo-swiper demo-swiper-coverflow"
     >
-      <swiper-slide
-        style={{
-          backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-1.jpg)`,
-        }}
-      >
-        Slide 1
-      </swiper-slide>
-      <swiper-slide
-        style={{
-          backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-2.jpg)`,
-        }}
-      >
-        Slide 2
-      </swiper-slide>
-      <swiper-slide
-        style={{
-          backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-3.jpg)`,
-        }}
-      >
-        Slide 3
-      </swiper-slide>
-      <swiper-slide
-        style={{
-          backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-4.jpg)`,
-        }}
-      >
-        Slide 4
-      </swiper-slide>
-      <swiper-slide
-        style={{
-          backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-5.jpg)`,
-        }}
-      >
-        Slide 5
-      </swiper-slide>
-      <swiper-slide
-        style={{
-          backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-6.jpg)`,
-        }}
-      >
-        Slide 6
-      </swiper-slide>
-      <swiper-slide
-        style={{
-          backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-7.jpg)`,
-        }}
-      >
-        Slide 7
-      </swiper-slide>
-      <swiper-slide
-        style={{
-          backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-8.jpg)`,
-        }}
-      >
-        Slide 8
-      </swiper-slide>
-      <swiper-slide
-        style={{
-          backgroundImage: `url(https://cdn.framework7.io/placeholder/nature-800x800-9.jpg)`,
-        }}
-      >
-        Slide 9
-      </swiper-slide>
+      <div slot="slide-0" className="demo-swiper-slide-content">
+        <img src="https://cdn.framework7.io/placeholder/nature-800x800-1.jpg" />
+        <span>Slide 1</span>
+      </div>
+      <div slot="slide-1" className="demo-swiper-slide-content">
+        <img src="https://cdn.framework7.io/placeholder/nature-800x800-2.jpg" />
+        <span>Slide 2</span>
+      </div>
+      <div slot="slide-2" className="demo-swiper-slide-content">
+        <img src="https://cdn.framework7.io/placeholder/nature-800x800-3.jpg" />
+        <span>Slide 3</span>
+      </div>
+      <div slot="slide-3" className="demo-swiper-slide-content">
+        <img src="https://cdn.framework7.io/placeholder/nature-800x800-4.jpg" />
+        <span>Slide 4</span>
+      </div>
+      <div slot="slide-4" className="demo-swiper-slide-content">
+        <img src="https://cdn.framework7.io/placeholder/nature-800x800-5.jpg" />
+        <span>Slide 5</span>
+      </div>
+      <div slot="slide-5" className="demo-swiper-slide-content">
+        <img src="https://cdn.framework7.io/placeholder/nature-800x800-6.jpg" />
+        <span>Slide 6</span>
+      </div>
+      <div slot="slide-6" className="demo-swiper-slide-content">
+        <img src="https://cdn.framework7.io/placeholder/nature-800x800-7.jpg" />
+        <span>Slide 7</span>
+      </div>
+      <div slot="slide-7" className="demo-swiper-slide-content">
+        <img src="https://cdn.framework7.io/placeholder/nature-800x800-8.jpg" />
+        <span>Slide 8</span>
+      </div>
+      <div slot="slide-8" className="demo-swiper-slide-content">
+        <img src="https://cdn.framework7.io/placeholder/nature-800x800-9.jpg" />
+        <span>Slide 9</span>
+      </div>
     </swiper-container>
   </Page>
 );
