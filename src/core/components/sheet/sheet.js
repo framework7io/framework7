@@ -16,6 +16,8 @@ export default {
       closeOnEscape: false,
       swipeToClose: false,
       swipeToStep: false,
+      breakpoints: [],
+      backdropBreakpoint: null,
       swipeHandler: null,
       containerEl: null,
     },

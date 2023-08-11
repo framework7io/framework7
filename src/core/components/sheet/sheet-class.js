@@ -148,6 +148,7 @@ class Sheet extends Modal {
       return (app.height - offset * 2) / app.height;
     }
 
+    const useBreakpoints = sheet.params.breakpoints && sheet.params.breakpoints.length > 0;
     let isTouched = false;
     let startTouch;
     let currentTouch;
@@ -157,6 +158,7 @@ class Sheet extends Modal {
     let isMoved = false;
     let isTopSheetModal;
     let swipeStepTranslate;
+    let breakpointsTranslate = [];
     let startTranslate;
     let currentTranslate;
     let sheetElOffsetHeight;
@@ -246,7 +248,11 @@ class Sheet extends Modal {
           maxTranslate = 0;
         } else {
           minTranslate = 0;
-          maxTranslate = sheet.params.swipeToClose ? sheetElOffsetHeight : swipeStepTranslate;
+          maxTranslate = sheet.params.swipeToClose
+            ? sheetElOffsetHeight
+            : useBreakpoints
+            ? breakpointsTranslate[0]
+            : swipeStepTranslate;
         }
         isMoved = true;
       }
@@ -418,22 +424,37 @@ class Sheet extends Modal {
 
     sheet.setSwipeStep = function setSwipeStep(byResize = true) {
       const $swipeStepEl = $el.find('.sheet-modal-swipe-step').eq(0);
-      if (!$swipeStepEl.length) return;
-      if ($el.hasClass('sheet-modal-top')) {
-        swipeStepTranslate = -(
-          $swipeStepEl.offset().top -
-          $el.offset().top +
-          $swipeStepEl[0].offsetHeight
-        );
+      if (!useBreakpoints && !$swipeStepEl.length) return;
+      if (useBreakpoints) {
+        const fullSize = $el[0].offsetHeight;
+        breakpointsTranslate = [];
+        sheet.params.breakpoints.forEach((ratio) => {
+          breakpointsTranslate.push(fullSize - fullSize * ratio);
+        });
+        console.log(breakpointsTranslate);
+        $el[0].style.setProperty('--f7-sheet-breakpoint', `${breakpointsTranslate[0]}px`);
+        if (!byResize) {
+          $el.addClass('modal-in-breakpoint');
+          sheet.emit('local::_swipeStep', true);
+        }
       } else {
-        swipeStepTranslate =
-          $el[0].offsetHeight -
-          ($swipeStepEl.offset().top - $el.offset().top + $swipeStepEl[0].offsetHeight);
-      }
-      $el[0].style.setProperty('--f7-sheet-swipe-step', `${swipeStepTranslate}px`);
-      if (!byResize) {
-        $el.addClass('modal-in-swipe-step');
-        sheet.emit('local::_swipeStep', true);
+        // eslint-disable-next-line
+        if ($el.hasClass('sheet-modal-top')) {
+          swipeStepTranslate = -(
+            $swipeStepEl.offset().top -
+            $el.offset().top +
+            $swipeStepEl[0].offsetHeight
+          );
+        } else {
+          swipeStepTranslate =
+            $el[0].offsetHeight -
+            ($swipeStepEl.offset().top - $el.offset().top + $swipeStepEl[0].offsetHeight);
+        }
+        $el[0].style.setProperty('--f7-sheet-swipe-step', `${swipeStepTranslate}px`);
+        if (!byResize) {
+          $el.addClass('modal-in-swipe-step');
+          sheet.emit('local::_swipeStep', true);
+        }
       }
     };
 
@@ -442,7 +463,7 @@ class Sheet extends Modal {
     }
 
     const passive = support.passiveListener ? { passive: true } : false;
-    if (sheet.params.swipeToClose || sheet.params.swipeToStep) {
+    if (sheet.params.swipeToClose || sheet.params.swipeToStep || useBreakpoints) {
       $el.on(app.touchEvents.start, handleTouchStart, passive);
       app.on('touchmove', handleTouchMove);
       app.on('touchend:passive', handleTouchEnd);
@@ -458,7 +479,7 @@ class Sheet extends Modal {
         $(document).on('keydown', onKeyDown);
       }
       $el.prevAll('.popup.modal-in').addClass('popup-behind');
-      if (sheet.params.swipeToStep) {
+      if (sheet.params.swipeToStep || useBreakpoints) {
         sheet.setSwipeStep(false);
         app.on('resize', onResize);
       }
@@ -473,7 +494,7 @@ class Sheet extends Modal {
         sheet.$htmlEl[0].style.setProperty('--f7-sheet-push-offset', `${pushOffset}px`);
         $el.addClass('sheet-modal-push');
         sheet.$htmlEl.addClass('with-modal-sheet-push');
-        if (!sheet.params.swipeToStep) {
+        if (!sheet.params.swipeToStep && !useBreakpoints) {
           sheet.$htmlEl[0].style.setProperty('--f7-sheet-push-scale', pushViewScale(pushOffset));
         } else {
           $pushViewEl = app.$el.children('.view, .views');
@@ -490,8 +511,8 @@ class Sheet extends Modal {
       }
     });
     sheet.on('close', () => {
-      if (sheet.params.swipeToStep) {
-        $el.removeClass('modal-in-swipe-step');
+      if (sheet.params.swipeToStep || useBreakpoints) {
+        $el.removeClass('modal-in-swipe-step modal-in-breakpoint');
         sheet.emit('local::_swipeStep', false);
         app.off('resize', onResize);
       }

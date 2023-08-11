@@ -49,8 +49,13 @@ export namespace Sheet {
     swipeToClose?: boolean;
     /** When enabled it will be possible to split opened sheet into two states: partially opened and fully opened that can be controlled with swipe (default false) */
     swipeToStep?: boolean;
+    /** Use instead of swipeToStep to enable swipe breakpoints. Must be an array of numbers > 0 and < 1, where 0 is fully closed and 1 is fully opened */
+    breakpoints?: number[];
+    /** Define breakpoint point when backdrop becomes visible  */
+    backdropBreakpoint?: number;
     /** When enabled it will be possible to close sheet with swipe only on specified handler element (default null) */
     swipeHandler?: HTMLElement | CSSSelector;
+
     /** When enabled it will push view behind on open. Works only when top safe area is in place. It can also be enabled by adding `sheet-modal-push` class to Sheet element. (default false) */
     push?: boolean;
     /** Element to mount modal to. (default app.el) */
@@ -87,7 +92,7 @@ export namespace Sheet {
     stepClose(): void;
     /** Toggle (open or close) sheet swipe step */
     stepToggle(): void;
-    /** Update step position. Required to call after content of sheet modal has been modified manually when it is opened */
+    /** Update (recalculate) breakpoints positions. Required to call after content of sheet modal has been modified manually when it is opened */
     setSwipeStep(): void;
     /** Destroy sheet */
     destroy(): void;

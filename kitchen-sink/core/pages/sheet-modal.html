@@ -256,7 +256,8 @@
       sheetSwipeToStep = $f7.sheet.create({
         el: '.demo-sheet-swipe-to-step',
         swipeToClose: true,
-        swipeToStep: true,
+        // swipeToStep: true,
+        breakpoints: [0.25, 0.5, 0.75],
         push: true,
         backdrop: true,
       });

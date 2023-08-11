@@ -31,9 +31,10 @@
     display: block;
     transform: translate3d(0, 0, 0);
   }
-  &.modal-in-swipe-step {
+  &.modal-in-swipe-step,
+  &.modal-in-breakpoint {
     display: block;
-    transform: translate3d(0, var(--f7-sheet-swipe-step, 0), 0);
+    transform: translate3d(0, var(--f7-sheet-breakpoint, var(--f7-sheet-swipe-step, 0)), 0);
   }
   &.modal-out {
     transform: translate3d(0, 100%, 0);
