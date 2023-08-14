@@ -53,6 +53,18 @@ export default {
       type: [String, Object],
       default: undefined,
     },
+    breakpoints: {
+      type: Array,
+      default: () => undefined,
+    },
+    backdropBreakpoint: {
+      type: Number,
+      default: undefined,
+    },
+    pushBreakpoint: {
+      type: Number,
+      default: undefined,
+    },
     ...colorProps,
   },
   emits: [
@@ -63,6 +75,7 @@ export default {
     'sheet:opened',
     'sheet:close',
     'sheet:closed',
+    'sheet:breakpoint',
     'update:opened',
   ],
   setup(props, { emit, slots }) {
@@ -72,6 +85,9 @@ export default {
     let isClosing = false;
     const elRef = ref(null);
 
+    const onBreakpoint = (instance, breakpoint) => {
+      emit('sheet:breakpoint', instance, breakpoint);
+    };
     const onStepProgress = (instance, progress) => {
       emit('sheet:stepprogress', instance, progress);
     };
@@ -113,6 +129,7 @@ export default {
           stepOpen: onStepOpen,
           stepClose: onStepClose,
           stepProgress: onStepProgress,
+          breakpoint: onBreakpoint,
         },
       };
       const {
@@ -126,6 +143,9 @@ export default {
         swipeToStep,
         swipeHandler,
         containerEl,
+        breakpoints,
+        backdropBreakpoint,
+        pushBreakpoint,
       } = props;
 
       if (typeof animate !== 'undefined') sheetParams.animate = animate;
@@ -140,6 +160,10 @@ export default {
       if (typeof swipeToStep !== 'undefined') sheetParams.swipeToStep = swipeToStep;
       if (typeof swipeHandler !== 'undefined') sheetParams.swipeHandler = swipeHandler;
       if (typeof containerEl !== 'undefined') sheetParams.containerEl = containerEl;
+      if (typeof breakpoints !== 'undefined') sheetParams.breakpoints = breakpoints;
+      if (typeof backdropBreakpoint !== 'undefined')
+        sheetParams.backdropBreakpoint = backdropBreakpoint;
+      if (typeof pushBreakpoint !== 'undefined') sheetParams.pushBreakpoint = pushBreakpoint;
 
       f7ready(() => {
         f7Sheet = f7.sheet.create(sheetParams);

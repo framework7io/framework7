@@ -13,6 +13,8 @@ export namespace Sheet {
     stepClose: (sheet: Sheet) => void;
     /** Event will be triggered on Sheet swipe step between step opened and closed state. As `progress` it receives step open progress number (from 0 to 1) */
     stepProgress: (sheet: Sheet, progress: number) => void;
+    /** Event will be triggered on Sheet breakpoint change */
+    breakpoint: (sheet: Sheet, breakpoint: number) => void;
     /** Event will be triggered when Sheet Modal starts its opening animation. As an argument event handler receives sheet instance */
     open: (sheet: Sheet) => void;
     /** Event will be triggered when Sheet Modal completes its opening animation. As an argument event handler receives sheet instance */
@@ -49,10 +51,12 @@ export namespace Sheet {
     swipeToClose?: boolean;
     /** When enabled it will be possible to split opened sheet into two states: partially opened and fully opened that can be controlled with swipe (default false) */
     swipeToStep?: boolean;
-    /** Use instead of swipeToStep to enable swipe breakpoints. Must be an array of numbers > 0 and < 1, where 0 is fully closed and 1 is fully opened */
+    /** Use instead of swipeToStep to enable swipe breakpoints. Must be an array of numbers > 0 and < 1, where 0 is fully closed and 1 is fully opened, e.g. [0.33, 0.66], [0.5], etc. */
     breakpoints?: number[];
-    /** Define breakpoint point when backdrop becomes visible  */
+    /** Defines breakpoint when backdrop becomes visible. Number from `0` (ideally from the lowest (first) value of `breakpoints` array) to `1`  */
     backdropBreakpoint?: number;
+    /** Defines breakpoint when to push back the view behind (`push` must be enabled). Number from `0` (ideally from the lowest (first) value of `breakpoints` array) to `1`  */
+    pushBreakpoint?: number;
     /** When enabled it will be possible to close sheet with swipe only on specified handler element (default null) */
     swipeHandler?: HTMLElement | CSSSelector;
 
@@ -94,6 +98,8 @@ export namespace Sheet {
     stepToggle(): void;
     /** Update (recalculate) breakpoints positions. Required to call after content of sheet modal has been modified manually when it is opened */
     setSwipeStep(): void;
+    /** Set/open sheet modal on specific breakpoint (from `breakpoints` array parameter). Also passing `0` will close sheet modal, passing `1` will fully open it */
+    setBreakpoint(breakpoint: number): Sheet;
     /** Destroy sheet */
     destroy(): void;
   }
@@ -132,6 +138,8 @@ export namespace Sheet {
       stepClose(el?: HTMLElement | CSSSelector): Sheet;
       /** toggle (open or close) Sheet swipe step */
       stepToggle(el?: HTMLElement | CSSSelector): Sheet;
+      /** Set/open sheet modal on specific breakpoint (from `breakpoints` array parameter). Also passing `0` will close sheet modal, passing `1` will fully open it */
+      setBreakpoint(el?: HTMLElement | CSSSelector, breakpoint: number): Sheet;
     };
   }
   interface AppParams {
@@ -144,6 +152,8 @@ export namespace Sheet {
     sheetStepClose: (sheet: Sheet) => void;
     /** Event will be triggered on Sheet swipe step between step opened and closed state. As `progress` it receives step open progress number (from 0 to 1) */
     sheetStepProgress: (sheet: Sheet, progress: number) => void;
+    /** Event will be triggered on Sheet breakpoint change */
+    sheetBreakpoint: (sheet: Sheet, breakpoint: number) => void;
     /** Event will be triggered when Sheet Modal starts its opening animation. As an argument event handler receives sheet instance */
     sheetOpen: (sheet: Sheet) => void;
     /** Event will be triggered when Sheet Modal completes its opening animation. As an argument event handler receives sheet instance */

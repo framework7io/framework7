@@ -158,7 +158,6 @@ class Sheet extends Modal {
     let isMoved = false;
     let isTopSheetModal;
     let swipeStepTranslate;
-    let breakpointsTranslate = [];
     let startTranslate;
     let currentTranslate;
     let sheetElOffsetHeight;
@@ -170,6 +169,9 @@ class Sheet extends Modal {
     let sheetPageContentScrollTop;
     let sheetPageContentScrollHeight;
     let sheetPageContentOffsetHeight;
+    let breakpointsTranslate = [];
+    let currentBreakpointIndex;
+    let backdropBreakpointSet = true;
 
     function handleTouchStart(e) {
       if (isTouched || !(sheet.params.swipeToClose || sheet.params.swipeToStep) || !e.isTrusted)
@@ -259,7 +261,18 @@ class Sheet extends Modal {
       currentTranslate = startTranslate - touchesDiff;
       currentTranslate = Math.min(Math.max(currentTranslate, minTranslate), maxTranslate);
       e.preventDefault();
-      if (sheet.push && pushOffset) {
+      if (useBreakpoints) {
+        let progress = isTopSheetModal
+          ? 1 + currentTranslate / sheetElOffsetHeight
+          : 1 - currentTranslate / sheetElOffsetHeight;
+        progress = Math.abs(progress);
+        progress = Math.min(Math.max(progress, 0), 1);
+        // eslint-disable-next-line
+        setBackdropBreakpoint(progress);
+        // eslint-disable-next-line
+        setPushBreakpoint(progress);
+      }
+      if (sheet.push && pushOffset && !useBreakpoints) {
         let progress = (currentTranslate - startTranslate) / sheetElOffsetHeight;
         if (sheet.params.swipeToStep) {
           if (isTopSheetModal) {
@@ -300,8 +313,11 @@ class Sheet extends Modal {
       isMoved = false;
       $el.transform('').transition('');
       if (sheet.push && pushOffset) {
-        $pushViewEl.transition('').transform('');
-        $pushViewEl.css('border-radius', '');
+        $pushViewEl.transition('');
+        if (!useBreakpoints) {
+          $pushViewEl.transform('');
+          $pushViewEl.css('border-radius', '');
+        }
       }
 
       const direction = touchesDiff < 0 ? 'to-bottom' : 'to-top';
@@ -311,7 +327,7 @@ class Sheet extends Modal {
 
       const timeDiff = new Date().getTime() - touchStartTime;
 
-      if (!sheet.params.swipeToStep) {
+      if (!sheet.params.swipeToStep && !useBreakpoints) {
         if (direction !== (isTopSheetModal ? 'to-top' : 'to-bottom')) {
           return;
         }
@@ -325,8 +341,37 @@ class Sheet extends Modal {
       const closeDirection = isTopSheetModal ? 'to-top' : 'to-bottom';
       const absCurrentTranslate = Math.abs(currentTranslate);
       const absSwipeStepTranslate = Math.abs(swipeStepTranslate);
-
-      if (timeDiff < 300 && diff > 10) {
+      if (timeDiff < 300 && diff > 10 && useBreakpoints) {
+        // SHORT SWIPES BREAKPOINTS
+        if (direction === openDirection && typeof currentBreakpointIndex !== 'undefined') {
+          if (currentBreakpointIndex === params.breakpoints.length - 1) {
+            // open
+            sheet.setBreakpoint(1);
+          } else {
+            // move to next breakpoint
+            currentBreakpointIndex = Math.min(
+              breakpointsTranslate.length - 1,
+              currentBreakpointIndex + 1,
+            );
+            sheet.setBreakpoint(params.breakpoints[currentBreakpointIndex]);
+          }
+        }
+        if (direction === closeDirection) {
+          if (currentBreakpointIndex === 0) {
+            // close
+            sheet.close();
+          } else {
+            // move to prev breakpoint
+            if (typeof currentBreakpointIndex === 'undefined') {
+              currentBreakpointIndex = params.breakpoints.length - 1;
+            } else {
+              currentBreakpointIndex = Math.max(0, currentBreakpointIndex - 1);
+            }
+            sheet.setBreakpoint(params.breakpoints[currentBreakpointIndex]);
+          }
+        }
+      } else if (timeDiff < 300 && diff > 10) {
+        // SHORT SWIPES SWIPE STEP
         if (direction === openDirection && absCurrentTranslate < absSwipeStepTranslate) {
           // open step
           $el.removeClass('modal-in-swipe-step');
@@ -373,7 +418,28 @@ class Sheet extends Modal {
         }
         return;
       }
-      if (timeDiff >= 300) {
+      if (timeDiff >= 300 && useBreakpoints) {
+        // LONG SWIPES BREAKPOINTS
+        const allBreakpoints = [sheetElOffsetHeight, ...breakpointsTranslate, 0];
+        const closestTranslate = allBreakpoints.reduce((prev, curr) => {
+          return Math.abs(curr - currentTranslate) < Math.abs(prev - currentTranslate)
+            ? curr
+            : prev;
+        });
+        const closestIndex = allBreakpoints.indexOf(closestTranslate);
+        if (closestTranslate === 0) {
+          // open
+          sheet.setBreakpoint(1);
+        } else if (closestIndex === 0) {
+          // close
+          sheet.close();
+        } else {
+          // set bp
+          currentBreakpointIndex = closestIndex - 1;
+          sheet.setBreakpoint(params.breakpoints[currentBreakpointIndex]);
+        }
+      } else if (timeDiff >= 300) {
+        // LONG SWIPES SWIPE STEP
         const stepOpened = !$el.hasClass('modal-in-swipe-step');
         if (!stepOpened) {
           if (absCurrentTranslate < absSwipeStepTranslate / 2) {
@@ -422,44 +488,168 @@ class Sheet extends Modal {
       }
     }
 
-    sheet.setSwipeStep = function setSwipeStep(byResize = true) {
-      const $swipeStepEl = $el.find('.sheet-modal-swipe-step').eq(0);
-      if (!useBreakpoints && !$swipeStepEl.length) return;
-      if (useBreakpoints) {
-        const fullSize = $el[0].offsetHeight;
-        breakpointsTranslate = [];
-        sheet.params.breakpoints.forEach((ratio) => {
-          breakpointsTranslate.push(fullSize - fullSize * ratio);
-        });
-        console.log(breakpointsTranslate);
-        $el[0].style.setProperty('--f7-sheet-breakpoint', `${breakpointsTranslate[0]}px`);
-        if (!byResize) {
-          $el.addClass('modal-in-breakpoint');
-          sheet.emit('local::_swipeStep', true);
-        }
-      } else {
-        // eslint-disable-next-line
-        if ($el.hasClass('sheet-modal-top')) {
-          swipeStepTranslate = -(
-            $swipeStepEl.offset().top -
-            $el.offset().top +
-            $swipeStepEl[0].offsetHeight
+    const setPushBreakpoint = (breakpoint) => {
+      const { pushBreakpoint } = params;
+      if (
+        pushBreakpoint === null ||
+        typeof pushBreakpoint === 'undefined' ||
+        !sheet.push ||
+        !pushOffset
+      )
+        return;
+      if (breakpoint >= pushBreakpoint) {
+        sheet.$htmlEl
+          .addClass('with-modal-sheet-push')
+          .removeClass('with-modal-sheet-push-closing');
+        $pushViewEl.transition('').forEach((el) => {
+          el.style.setProperty(
+            'transform',
+            `translate3d(0,0,0) scale(${pushViewScale(pushOffset)})`,
+            'important',
           );
+        });
+        $pushViewEl.css('border-radius', `${pushBorderRadius * 1}px`);
+      } else {
+        const pushBreakpoints = [0, ...params.breakpoints, 1];
+        const pushTransparentBreakpoint =
+          pushBreakpoints[pushBreakpoints.indexOf(pushBreakpoint) - 1];
+        if (breakpoint <= pushTransparentBreakpoint) {
+          $pushViewEl.transition('').css('transform', '');
+          $pushViewEl.css('border-radius', '');
+          sheet.$htmlEl.removeClass('with-modal-sheet-push');
+          if (breakpoint === pushTransparentBreakpoint) {
+            sheet.$htmlEl.addClass('with-modal-sheet-push-closing');
+          }
         } else {
-          swipeStepTranslate =
-            $el[0].offsetHeight -
-            ($swipeStepEl.offset().top - $el.offset().top + $swipeStepEl[0].offsetHeight);
+          const progress =
+            (breakpoint - pushTransparentBreakpoint) / (pushBreakpoint - pushTransparentBreakpoint);
+          sheet.$htmlEl
+            .addClass('with-modal-sheet-push')
+            .removeClass('with-modal-sheet-push-closing');
+          $pushViewEl.transition(0).forEach((el) => {
+            el.style.setProperty(
+              'transform',
+              `translate3d(0,0,0) scale(${1 - (1 - pushViewScale(pushOffset)) * progress})`,
+              'important',
+            );
+          });
+          $pushViewEl.css('border-radius', `${pushBorderRadius * progress}px`);
         }
-        $el[0].style.setProperty('--f7-sheet-swipe-step', `${swipeStepTranslate}px`);
-        if (!byResize) {
-          $el.addClass('modal-in-swipe-step');
-          sheet.emit('local::_swipeStep', true);
+      }
+    };
+    const setBackdropBreakpoint = (breakpoint) => {
+      const { backdrop, backdropBreakpoint } = params;
+      if (!backdropBreakpoint || !backdrop || !$backdropEl.length) return;
+
+      if (breakpoint >= backdropBreakpoint) {
+        if (!backdropBreakpointSet) {
+          $backdropEl.transition('').css({ opacity: '', pointerEvents: '' });
+        }
+        backdropBreakpointSet = true;
+      } else {
+        const backdropBreakpoints = [0, ...params.breakpoints, 1];
+        const backdropTransparentBreakpoint =
+          backdropBreakpoints[backdropBreakpoints.indexOf(backdropBreakpoint) - 1];
+        if (breakpoint <= backdropTransparentBreakpoint) {
+          if (backdropBreakpointSet) {
+            $backdropEl.transition('').css({ opacity: 0, pointerEvents: 'none' });
+          }
+          backdropBreakpointSet = false;
+        } else {
+          const progress =
+            (breakpoint - backdropTransparentBreakpoint) /
+            (backdropBreakpoint - backdropTransparentBreakpoint);
+          $backdropEl.transition(0).css({ opacity: progress, pointerEvents: 'auto' });
         }
       }
     };
 
+    sheet.calcBreakpoints = () => {
+      if (!useBreakpoints) {
+        return;
+      }
+      const fullSize = $el[0].offsetHeight;
+      // eslint-disable-next-line
+      const isTopSheetModal = $el.hasClass('sheet-modal-top');
+      breakpointsTranslate = [];
+      sheet.params.breakpoints.forEach((ratio) => {
+        breakpointsTranslate.push((fullSize - fullSize * ratio) * (isTopSheetModal ? -1 : 1));
+      });
+    };
+
+    sheet.setBreakpoint = (value) => {
+      if (!useBreakpoints) {
+        return sheet;
+      }
+      if (value === 1) {
+        // open
+        if (!sheet.opened) {
+          sheet.open();
+        }
+        $el.removeClass('modal-in-breakpoint');
+        currentBreakpointIndex = undefined;
+        setBackdropBreakpoint(value);
+        setPushBreakpoint(value);
+        $el.trigger('sheet:breakpoint', value);
+        sheet.emit('local::breakpoint sheetBreakpoint', sheet, value);
+      } else if (value === 0) {
+        // close
+        $el.trigger('sheet:breakpoint', value);
+        sheet.emit('local::breakpoint sheetBreakpoint', sheet, value);
+        sheet.close();
+      } else {
+        const index = params.breakpoints.indexOf(value);
+        if (index < 0) return sheet;
+        if (!sheet.opened) {
+          sheet.open();
+        }
+        setBackdropBreakpoint(value);
+        setPushBreakpoint(value);
+        $el.trigger('sheet:breakpoint', index);
+        sheet.emit('local::breakpoint sheetBreakpoint', sheet, index);
+        currentBreakpointIndex = index;
+        $el[0].style.setProperty('--f7-sheet-breakpoint', `${breakpointsTranslate[index]}px`);
+        $el.addClass('modal-in-breakpoint');
+      }
+      return sheet;
+    };
+
+    const setBreakpointsOnResize = () => {
+      sheet.calcBreakpoints();
+      if (typeof currentBreakpointIndex !== 'undefined') {
+        sheet.setBreakpoint(params.breakpoints[currentBreakpointIndex]);
+      }
+    };
+
+    sheet.setSwipeStep = function setSwipeStep(byResize = true) {
+      const $swipeStepEl = $el.find('.sheet-modal-swipe-step').eq(0);
+      if (!$swipeStepEl.length) return;
+
+      // eslint-disable-next-line
+      if ($el.hasClass('sheet-modal-top')) {
+        swipeStepTranslate = -(
+          $swipeStepEl.offset().top -
+          $el.offset().top +
+          $swipeStepEl[0].offsetHeight
+        );
+      } else {
+        swipeStepTranslate =
+          $el[0].offsetHeight -
+          ($swipeStepEl.offset().top - $el.offset().top + $swipeStepEl[0].offsetHeight);
+      }
+      $el[0].style.setProperty('--f7-sheet-swipe-step', `${swipeStepTranslate}px`);
+      if (!byResize) {
+        $el.addClass('modal-in-swipe-step');
+        sheet.emit('local::_swipeStep', true);
+      }
+    };
+
     function onResize() {
-      sheet.setSwipeStep(true);
+      if (useBreakpoints) {
+        setBreakpointsOnResize();
+      } else {
+        sheet.setSwipeStep(true);
+      }
     }
 
     const passive = support.passiveListener ? { passive: true } : false;
@@ -479,10 +669,8 @@ class Sheet extends Modal {
         $(document).on('keydown', onKeyDown);
       }
       $el.prevAll('.popup.modal-in').addClass('popup-behind');
-      if (sheet.params.swipeToStep || useBreakpoints) {
-        sheet.setSwipeStep(false);
-        app.on('resize', onResize);
-      }
+
+      app.on('resize', onResize);
       if (sheet.params.scrollToEl) {
         scrollToElementOnOpen();
       }
@@ -493,7 +681,9 @@ class Sheet extends Modal {
         if (!pushOffset) pushOffset = app.theme === 'ios' ? 44 : 48;
         sheet.$htmlEl[0].style.setProperty('--f7-sheet-push-offset', `${pushOffset}px`);
         $el.addClass('sheet-modal-push');
-        sheet.$htmlEl.addClass('with-modal-sheet-push');
+        if (!useBreakpoints) {
+          sheet.$htmlEl.addClass('with-modal-sheet-push');
+        }
         if (!sheet.params.swipeToStep && !useBreakpoints) {
           sheet.$htmlEl[0].style.setProperty('--f7-sheet-push-scale', pushViewScale(pushOffset));
         } else {
@@ -504,6 +694,13 @@ class Sheet extends Modal {
           $pushViewEl.css('border-radius', '0px');
         }
       }
+
+      if (useBreakpoints) {
+        sheet.calcBreakpoints();
+        sheet.setBreakpoint(params.breakpoints[0]);
+      } else if (sheet.params.swipeToStep) {
+        sheet.setSwipeStep(false);
+      }
     });
     sheet.on('opened', () => {
       if (sheet.params.closeByOutsideClick || sheet.params.closeByBackdropClick) {
@@ -511,6 +708,7 @@ class Sheet extends Modal {
       }
     });
     sheet.on('close', () => {
+      currentBreakpointIndex = undefined;
       if (sheet.params.swipeToStep || useBreakpoints) {
         $el.removeClass('modal-in-swipe-step modal-in-breakpoint');
         sheet.emit('local::_swipeStep', false);
@@ -529,6 +727,8 @@ class Sheet extends Modal {
       if (sheet.push && pushOffset) {
         sheet.$htmlEl.removeClass('with-modal-sheet-push');
         sheet.$htmlEl.addClass('with-modal-sheet-push-closing');
+        $pushViewEl.transform('');
+        $pushViewEl.css('border-radius', '');
       }
     });
     sheet.on('closed', () => {

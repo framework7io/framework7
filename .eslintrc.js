@@ -1,4 +1,5 @@
 const rules = {
+  'no-lonely-if': 'off',
   'no-bitwise': 'off',
   'import/no-extraneous-dependencies': 'off',
   'no-nested-ternary': 'off',
