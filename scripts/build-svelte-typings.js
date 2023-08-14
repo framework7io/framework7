@@ -8,17 +8,18 @@ const fs = require('./utils/fs-extra.js');
 const { COLOR_PROPS, ICON_PROPS, ROUTER_PROPS, ACTIONS_PROPS } = require('./ts-extend-props.js');
 
 const TEMPLATE = `
-import { SvelteComponentTyped } from 'svelte';
+import { SvelteComponent } from 'svelte';
+import { HTMLAttributes } from 'svelte/elements';
 {{IMPORTS}}
 
-interface {{componentName}}Props extends svelte.JSX.HTMLAttributes<HTMLElementTagNameMap['div']> {
+interface {{componentName}}Props {
   {{PROPS}}
 }
 
 {{EXTENDS}}
 
-declare class {{componentName}} extends SvelteComponentTyped<
-  {{componentName}}Props,
+declare class {{componentName}} extends SvelteComponent<
+  {{componentName}}Props & Omit<HTMLAttributes<HTMLElementTagNameMap['div']>, keyof {{componentName}}Props>,
   { {{EVENTS}} },
   { {{SLOTS}} }
 > {}
@@ -47,7 +48,7 @@ function generateComponentProps(propsContent) {
       }
       props[propName] = propValue.trim();
     });
-  ['id', 'style', 'className', 'ref', 'slot'].forEach((key) => {
+  ['id', 'style', 'className', 'ref', 'slot', 'children'].forEach((key) => {
     delete props[key];
   });
   const content = Object.keys(props)
