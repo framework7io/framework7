@@ -53,9 +53,9 @@ export namespace Sheet {
     swipeToStep?: boolean;
     /** Use instead of swipeToStep to enable swipe breakpoints. Must be an array of numbers > 0 and < 1, where 0 is fully closed and 1 is fully opened, e.g. [0.33, 0.66], [0.5], etc. */
     breakpoints?: number[];
-    /** Defines breakpoint when backdrop becomes visible. Number from `0` (ideally from the lowest (first) value of `breakpoints` array) to `1`  */
+    /** Defines breakpoint when backdrop becomes visible. Number from `0` (ideally from the lowest (first) value of `breakpoints` array) to `1`  (default 0) */
     backdropBreakpoint?: number;
-    /** Defines breakpoint when to push back the view behind (`push` must be enabled). Number from `0` (ideally from the lowest (first) value of `breakpoints` array) to `1`  */
+    /** Defines breakpoint when to push back the view behind (`push` must be enabled). Number from `0` (ideally from the lowest (first) value of `breakpoints` array) to `1` (default 0)  */
     pushBreakpoint?: number;
     /** When enabled it will be possible to close sheet with swipe only on specified handler element (default null) */
     swipeHandler?: HTMLElement | CSSSelector;

@@ -39,6 +39,7 @@
     isOpened: opened,
     isClosing: false,
     swipeStep: false,
+    breakpoint: false,
   };
 
   export function instance() {
@@ -59,6 +60,7 @@
     {
       'sheet-modal-push': push,
       'modal-in-swipe-step': state.swipeStep,
+      'modal-in-breakpoint': state.breakpoint,
     },
 
     modalStateClasses(state),
@@ -127,7 +129,14 @@
         stepOpen: onStepOpen,
         stepClose: onStepClose,
         stepProgress: onStepProgress,
-        breakpoint: onBreakpoint,
+        breakpoint: (s, value) => {
+          if (value > 0 && value < 1) {
+            state.breakpoint = true;
+          } else {
+            state.breakpoint = false;
+          }
+          onBreakpoint(s, value);
+        },
         // eslint-disable-next-line
         _swipeStep(isSwipeStep) {
           state.swipeStep = isSwipeStep;

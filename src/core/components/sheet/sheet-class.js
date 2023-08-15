@@ -605,8 +605,8 @@ class Sheet extends Modal {
         }
         setBackdropBreakpoint(value);
         setPushBreakpoint(value);
-        $el.trigger('sheet:breakpoint', index);
-        sheet.emit('local::breakpoint sheetBreakpoint', sheet, index);
+        $el.trigger('sheet:breakpoint', value);
+        sheet.emit('local::breakpoint sheetBreakpoint', sheet, value);
         currentBreakpointIndex = index;
         $el[0].style.setProperty('--f7-sheet-breakpoint', `${breakpointsTranslate[index]}px`);
         $el.addClass('modal-in-breakpoint');
@@ -688,9 +688,7 @@ class Sheet extends Modal {
           sheet.$htmlEl[0].style.setProperty('--f7-sheet-push-scale', pushViewScale(pushOffset));
         } else {
           $pushViewEl = app.$el.children('.view, .views');
-          pushBorderRadius = parseFloat(
-            $el.css(`border-${isTopSheetModal ? 'bottom' : 'top'}-left-radius`),
-          );
+          pushBorderRadius = app.theme === 'ios' ? 10 : 16;
           $pushViewEl.css('border-radius', '0px');
         }
       }
@@ -727,8 +725,10 @@ class Sheet extends Modal {
       if (sheet.push && pushOffset) {
         sheet.$htmlEl.removeClass('with-modal-sheet-push');
         sheet.$htmlEl.addClass('with-modal-sheet-push-closing');
-        $pushViewEl.transform('');
-        $pushViewEl.css('border-radius', '');
+        if ($pushViewEl) {
+          $pushViewEl.transform('');
+          $pushViewEl.css('border-radius', '');
+        }
       }
     });
     sheet.on('closed', () => {
