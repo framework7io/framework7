@@ -97,6 +97,11 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
+      <a href="https://igchamp.co.uk/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/buy-instagram-followers-uk.jpg" alt="Buy Instagram Followers UK" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://livecasinomate.com/live-online-casino/" target="_blank">
         <img src="https://framework7.io/i/sponsors/live-casino-mate.png" alt="Best Live Dealer Casino 2023 | Top Online Live Casino Sites With Real Dealers" width="160">
       </a>
@@ -136,13 +141,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/bairesdev.png" alt="BairesDev: Promoting Open Source for a Better Future" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://dobrekasyna.pl/" target="_blank">
         <img src="https://framework7.io/i/sponsors/dobre-kasyna.png" alt="Najlepsze Kasyna Online w Polsce 2023 - Dobre Kasyna" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://gamblechecker.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/martin-woods.png" alt="Gamblechecker.com - Online Pokies Reviews For NZ Players" width="160">
@@ -198,13 +203,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/mobipast.png" alt="mobiplast" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://dr.sc/top-10-najboljih-online-casina-u-hrvatskoj/" target="_blank">
         <img src="https://framework7.io/i/sponsors/doctor-sports-and-casinos-dr-sc.png" alt="Top 10 Najboljih Online Casino u Hrvatskoj u 2023" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://luckyjetgames.in/" target="_blank">
         <img src="https://framework7.io/i/sponsors/lucky-jet-game-india.png" alt="Lucky Jet Game for Real Money | Play Lucky Jet at Online Casinos" width="160">
@@ -260,13 +265,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/casinolandia.png" alt="CasinoLandia | An Exciting Journey in the Land of Online Casinos" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://aviatorgame.net/" target="_blank">
         <img src="https://framework7.io/i/sponsors/aviator-game.png" alt="Aviator Game | Play Aviator Money Game by Spribe" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://pinupaviator.in/" target="_blank">
         <img src="https://framework7.io/i/sponsors/pin-up-aviator-india.png" alt="Pin Up Aviator Game Casino | Aviator Game in India" width="160">
@@ -322,13 +327,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/rose-red.png" alt="Best Real Money Online Casinos in India" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://istar.tips/" target="_blank">
         <img src="https://framework7.io/i/sponsors/istartips.svg" alt="iStarTips - Tips for Software, Apps on Android, iPhone" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://splendor.io/" target="_blank">
         <img src="https://framework7.io/i/sponsors/splendor.jpg" alt="SplendorAgency - Uniquely crafted digital solutions for creative projects" width="160">
@@ -384,13 +389,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/buzzvoice.png" alt="Buy Followers, Likes, Views & Comments | BuzzVoice.com" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://refermate.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/refermate.png" alt="Coupons, Promo Codes, September 2022 — Refermate" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://nongamstopcasinos.net/" target="_blank">
         <img src="https://framework7.io/i/sponsors/nongamstopcasinos.png" alt="NonGamstopCasinos - Professional Service on Selection of Casino and Betting sites for UK Gamblers" width="160">
@@ -446,13 +451,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/mitratogel.png" alt="Togel Online | Togel Hongkong | Togel Singapore Resmi" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.insidecasino.ca" target="_blank">
         <img src="https://framework7.io/i/sponsors/insidecasinoca.png" alt="Online Casinos CA | #1 Casino Guide in 2022 | InsideCasino" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.sure.bet/casinos-not-on-gamstop/" target="_blank">
         <img src="https://framework7.io/i/sponsors/surebet.png" alt="Casinos Not on GamStop » Most Trusted Non GamStop UK Casinos ⭐️" width="160">
@@ -508,13 +513,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/nongamstopwager-com.png" alt="NonGamStopWager.com" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.fortunegames.com" target="_blank">
         <img src="https://framework7.io/i/sponsors/fortunegames.png" alt="Fortune Games® | Free Spins No Deposit Slot Games | Online Slots" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://betrouwbaar-casino.be" target="_blank">
         <img src="https://framework7.io/i/sponsors/betrouwbaar.png" alt="Online Casino's ► Beste Belgische Casino's 🇧🇪" width="160">
@@ -570,13 +575,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/natcasinon.svg" alt="Svenska Nätcasinon 2020🥇 》Topplista med bästa casinon" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.kasiinod.net" target="_blank">
         <img src="https://framework7.io/i/sponsors/kasiinod.svg" alt="Kasiinod - teejuht kasiinouudiste maailma" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://list.casino" target="_blank">
         <img src="https://framework7.io/i/sponsors/listcasino.png" alt="List of All the Best Online Casinos - Ultimate Casino List!" width="160">
@@ -632,13 +637,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/rise.png" alt="Rise — Creative Web Development Agency" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://kidoverse.app/" target="_blank">
         <img src="https://framework7.io/i/sponsors/kidoverse.png" alt="Kidoverse - App for kids to learn, play, create and explore" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.cyberbrain.nl/" target="_blank">
         <img src="https://framework7.io/i/sponsors/cyberbrain.png" alt="CyberBrain IT Services" width="160">
@@ -659,7 +664,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/wappler.png" alt="Wappler - The Visual Web App Creator" width="160">
       </a>
     </td>
-    <td align="center" valign="middle"></td>
     <td align="center" valign="middle"></td>
     <td align="center" valign="middle"></td>
     <td align="center" valign="middle"></td>
