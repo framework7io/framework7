@@ -17,31 +17,60 @@ export default {
       const params = {
         ...options,
       };
+
+      const component = (props, ctx) => {
+        const { $h, $onMounted, $el, $f7 } = ctx;
+        $onMounted(() => {
+          const viewEl = $el.value.find('.view');
+          const view = $f7.view.create(viewEl, {
+            linksView: router.view.selector,
+            ignoreOpenIn: true,
+            loadInitialPage: false,
+          });
+          view.router.navigate(url, { props: options.props, reloadAll: true });
+        });
+        // eslint-disable-next-line
+        return () => {
+          if (options.openIn === 'popup') {
+            return $h`<div class="popup popup-router-open-in" data-url="${url}"><div class="view"></div></div>`;
+          }
+          if (options.openIn === 'loginScreen') {
+            return $h`<div class="login-screen login-screen-router-open-in" data-url="${url}"><div class="view"></div></div>`;
+          }
+          if (options.openIn === 'sheet') {
+            return $h`<div class="sheet-modal sheet-modal-router-open-in" data-url="${url}"><div class="sheet-modal-inner"><div class="view"></div></div></div>`;
+          }
+          if (options.openIn === 'popover') {
+            return $h`<div class="popover popover-router-open-in" data-url="${url}"><div class="popover-inner"><div class="view"></div></div></div>`;
+          }
+          if (options.openIn.indexOf('panel') >= 0) {
+            const parts = options.openIn.split(':');
+            const side = parts[1] || 'left';
+            const effect = parts[2] || 'cover';
+
+            return $h`<div class="panel panel-router-open-in panel-${side} panel-${effect}" data-url="${url}"><div class="view"></div></div>`;
+          }
+        };
+      };
       if (options.openIn === 'popup') {
-        params.content = `<div class="popup popup-router-open-in" data-url="${url}"><div class="view view-init" data-links-view="${router.view.selector}" data-url="${url}" data-ignore-open-in="true"></div></div>`;
         navigateOptions.route.popup = params;
       }
       if (options.openIn === 'loginScreen') {
-        params.content = `<div class="login-screen login-screen-router-open-in" data-url="${url}"><div class="view view-init" data-links-view="${router.view.selector}" data-url="${url}" data-ignore-open-in="true"></div></div>`;
         navigateOptions.route.loginScreen = params;
       }
       if (options.openIn === 'sheet') {
-        params.content = `<div class="sheet-modal sheet-modal-router-open-in" data-url="${url}"><div class="sheet-modal-inner"><div class="view view-init" data-links-view="${router.view.selector}" data-url="${url}" data-ignore-open-in="true"></div></div></div>`;
         navigateOptions.route.sheet = params;
       }
       if (options.openIn === 'popover') {
         params.targetEl = options.clickedEl || options.targetEl;
-        params.content = `<div class="popover popover-router-open-in" data-url="${url}"><div class="popover-inner"><div class="view view-init" data-links-view="${router.view.selector}" data-url="${url}" data-ignore-open-in="true"></div></div></div>`;
         navigateOptions.route.popover = params;
       }
       if (options.openIn.indexOf('panel') >= 0) {
-        const parts = options.openIn.split(':');
-        const side = parts[1] || 'left';
-        const effect = parts[2] || 'cover';
         params.targetEl = options.clickedEl || options.targetEl;
-        params.content = `<div class="panel panel-router-open-in panel-${side} panel-${effect}" data-url="${url}"><div class="view view-init" data-links-view="${router.view.selector}" data-url="${url}" data-ignore-open-in="true"></div></div>`;
         navigateOptions.route.panel = params;
       }
+      params.component = component;
+
       return router.navigate(navigateOptions);
     },
     componentLoader(component, componentUrl, options = {}, resolve, reject) {
