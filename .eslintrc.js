@@ -132,6 +132,7 @@ module.exports = {
         'prefer-destructuring': ['off'],
         'no-restricted-globals': ['off'],
         'vue/multi-word-component-names': 'off',
+        'vue/no-deprecated-slot-attribute': 'off',
       },
     },
     {
@@ -143,6 +144,7 @@ module.exports = {
         'import/extensions': ['off'],
         'no-restricted-globals': ['off'],
         'vue/multi-word-component-names': 'off',
+        'vue/no-deprecated-slot-attribute': 'off',
       },
     },
     // SVELTE KITCHEN_SINK
