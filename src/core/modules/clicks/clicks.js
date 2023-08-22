@@ -80,7 +80,12 @@ function initClicks(app) {
         view = $(clickedLinkData.view)[0].f7View;
       } else {
         view = $clickedEl.parents('.view')[0] && $clickedEl.parents('.view')[0].f7View;
-        if (!$clickedLinkEl.hasClass('back') && view && view.params.linksView) {
+        if (
+          view &&
+          view.params.linksView &&
+          (!$clickedLinkEl.hasClass('back') ||
+            ($clickedLinkEl.hasClass('back') && view.router.history.length === 1))
+        ) {
           if (typeof view.params.linksView === 'string') view = $(view.params.linksView)[0].f7View;
           else if (view.params.linksView instanceof ViewClass) view = view.params.linksView;
         }

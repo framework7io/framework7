@@ -71,7 +71,7 @@
     "path-to-regexp": "^6.2.0",
     "skeleton-elements": "^4.0.1",
     "ssr-window": "^4.0.2",
-    "swiper": "^10.1.0"
+    "swiper": "^10.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.19.3",
@@ -89,6 +89,7 @@
     "autoprefixer": "^10.4.14",
     "clean-css": "^5.3.2",
     "concurrently": "^7.1.0",
+    "conventional-changelog-cli": "^3.0.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.47.0",
     "eslint-config-airbnb-base": "^15.0.0",

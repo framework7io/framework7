@@ -31,9 +31,10 @@
     display: block;
     transform: translate3d(0, 0, 0);
   }
-  &.modal-in-swipe-step {
+  &.modal-in-swipe-step,
+  &.modal-in-breakpoint {
     display: block;
-    transform: translate3d(0, var(--f7-sheet-swipe-step, 0), 0);
+    transform: translate3d(0, var(--f7-sheet-breakpoint, var(--f7-sheet-swipe-step, 0)), 0);
   }
   &.modal-out {
     transform: translate3d(0, 100%, 0);
@@ -141,9 +142,10 @@ html.with-modal-sheet-push-closing {
         height: 100%;
         background: rgba(255,255,255,0.1);
         z-index: 13000;
-        border-radius: var(--f7-sheet-push-border-radius) var(--f7-sheet-push-border-radius) 0 0;
         opacity: 1;
-        animation: sheet-dark-push-overlay-fade-in var(--f7-sheet-transition-duration) forwards;
+        transition-duration: var(--f7-sheet-transition-duration);
+        transition-timing-function: var(--f7-sheet-transition-timing-function);
+        animation: sheet-dark-push-overlay-fade-in var(--f7-sheet-transition-duration);
         animation-timing-function: var(--f7-sheet-transition-timing-function);
       }
     }
@@ -170,8 +172,8 @@ html.with-modal-sheet-push {
     .framework7-root > .views.dark,
     .framework7-root > .view.dark {
       &:after {
-        animation: sheet-dark-push-overlay-fade-out var(--f7-sheet-transition-duration) forwards;
-        animation-timing-function: var(--f7-sheet-transition-timing-function);
+        opacity: 0;
+        animation: none;
       }
     }
   }
@@ -182,14 +184,6 @@ html.with-modal-sheet-push {
     }
     to {
       opacity: 1;
-    }
-  }
-  @keyframes sheet-dark-push-overlay-fade-out {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
     }
   }
 });

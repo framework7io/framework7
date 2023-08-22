@@ -102,6 +102,10 @@
     <p>
       <Button fill sheetOpen=".demo-sheet-swipe-to-step">Swipe To Step</Button>
     </p>
+    <p>In addition to "swipe step" there is a support for position breakpoints (multiple steps):</p>
+    <p>
+      <Button fill sheetOpen=".demo-sheet-breakpoints">Breakpoints</Button>
+    </p>
   </Block>
 
   <Sheet class="demo-sheet" opened={sheetOpened} onSheetClosed={() => (sheetOpened = false)}>
@@ -263,5 +267,27 @@
       <ListItem title="Item 2"><b slot="after">$180</b></ListItem>
       <ListItem title="Delivery"><b slot="after">$120</b></ListItem>
     </List>
+  </Sheet>
+
+  <Sheet
+    class="demo-sheet-breakpoints"
+    style="height: auto"
+    swipeToClose
+    breakpoints={[0.33, 0.66]}
+    backdrop
+    backdropBreakpoint={0.66}
+    push
+    pushBreakpoint={0.66}
+  >
+    <div class="swipe-handler" style="background-color: transparent;" />
+    <div style="display: flex; align-items: center; justify-content: center; height: 20vh;">
+      Section 1
+    </div>
+    <div style="display: flex; align-items: center; justify-content: center; height: 20vh;">
+      Section 2
+    </div>
+    <div style="display: flex; align-items: center; justify-content: center; height: 20vh;">
+      Section 3
+    </div>
   </Sheet>
 </Page>
