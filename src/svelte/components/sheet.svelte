@@ -27,6 +27,9 @@
   export let swipeToStep = undefined;
   export let swipeHandler = undefined;
   export let containerEl = undefined;
+  export let breakpoints = undefined;
+  export let backdropBreakpoint = undefined;
+  export let pushBreakpoint = undefined;
 
   let el;
   let innerEl;
@@ -36,6 +39,7 @@
     isOpened: opened,
     isClosing: false,
     swipeStep: false,
+    breakpoint: false,
   };
 
   export function instance() {
@@ -56,6 +60,7 @@
     {
       'sheet-modal-push': push,
       'modal-in-swipe-step': state.swipeStep,
+      'modal-in-breakpoint': state.breakpoint,
     },
 
     modalStateClasses(state),
@@ -86,6 +91,9 @@
     });
     emit('sheetClosed', [instance]);
     opened = false;
+  }
+  function onBreakpoint(instance, breakpoint) {
+    emit('sheetBreakpoint', [instance, breakpoint]);
   }
   function onStepProgress(instance, progress) {
     emit('sheetStepProgress', [instance, progress]);
@@ -121,6 +129,14 @@
         stepOpen: onStepOpen,
         stepClose: onStepClose,
         stepProgress: onStepProgress,
+        breakpoint: (s, value) => {
+          if (value > 0 && value < 1) {
+            state.breakpoint = true;
+          } else {
+            state.breakpoint = false;
+          }
+          onBreakpoint(s, value);
+        },
         // eslint-disable-next-line
         _swipeStep(isSwipeStep) {
           state.swipeStep = isSwipeStep;
@@ -139,6 +155,9 @@
     if (typeof swipeToStep !== 'undefined') params.swipeToStep = swipeToStep;
     if (typeof swipeHandler !== 'undefined') params.swipeHandler = swipeHandler;
     if (typeof containerEl !== 'undefined') params.containerEl = containerEl;
+    if (typeof breakpoints !== 'undefined') params.breakpoints = breakpoints;
+    if (typeof backdropBreakpoint !== 'undefined') params.backdropBreakpoint = backdropBreakpoint;
+    if (typeof pushBreakpoint !== 'undefined') params.pushBreakpoint = pushBreakpoint;
 
     f7ready(() => {
       if (el && innerEl) {

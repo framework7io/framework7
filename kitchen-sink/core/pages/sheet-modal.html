@@ -45,7 +45,13 @@
         <p>
           <a class="button button-fill sheet-open" data-sheet=".demo-sheet-swipe-to-step">Swipe To Step</a>
         </p>
+
+        <p>In addition to "swipe step" there is a support for position breakpoints (multiple steps):</p>
+        <p>
+          <a class="button button-fill sheet-open" data-sheet=".demo-sheet-breakpoints">Breakpoints</a>
+        </p>
       </div>
+
     </div>
 
 
@@ -163,7 +169,7 @@
 
     <div class="sheet-modal demo-sheet-swipe-to-step" style="height:auto">
       <div class="sheet-modal-inner">
-        <div class="swipe-handler" @click=${toggleSwipeStep}></div>
+        <div class="swipe-handler"></div>
         <div class="sheet-modal-swipe-step">
           <div class="display-flex padding justify-content-space-between align-items-center">
             <div style="font-size: 18px"><b>Total:</b></div>
@@ -200,6 +206,19 @@
 
       </div>
     </div>
+
+    <div class="sheet-modal demo-sheet-breakpoints" style="height:auto">
+      <div class="sheet-modal-inner">
+        <div class="swipe-handler" style="background-color: transparent;"></div>
+        <div style="display: flex; align-items: center; justify-content: center; height: 20vh;">
+          Section 1</div>
+        <div style="display: flex; align-items: center; justify-content: center; height: 20vh;">
+          Section 2</div>
+        <div style="display: flex; align-items: center; justify-content: center; height: 20vh;">
+          Section 3</div>
+
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -208,6 +227,7 @@
     let sheetPush;
     let sheetSwipeToClose;
     let sheetSwipeToStep;
+    let sheetBreakpoints;
 
     const toggleSwipeStep = () => {
       sheetSwipeToStep.stepToggle();
@@ -260,6 +280,15 @@
         push: true,
         backdrop: true,
       });
+      sheetBreakpoints = $f7.sheet.create({
+        el: '.demo-sheet-breakpoints',
+        swipeToClose: true,
+        breakpoints: [0.33, 0.66],
+        backdrop: true,
+        backdropBreakpoint: 0.66,
+        push: true,
+        pushBreakpoint: 0.66,
+      });
     });
     $on('pageBeforeOut', () => {
       // Close opened sheets on page out
@@ -273,6 +302,7 @@
       if (sheetPush) sheetPush.destroy();
       if (sheetSwipeToClose) sheetSwipeToClose.destroy();
       if (sheetSwipeToStep) sheetSwipeToStep.destroy();
+      if (sheetBreakpoints) sheetBreakpoints.destroy();
     });
 
     return $render;

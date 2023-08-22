@@ -89,6 +89,7 @@
     "autoprefixer": "^10.4.14",
     "clean-css": "^5.3.2",
     "concurrently": "^7.1.0",
+    "conventional-changelog-cli": "^3.0.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.47.0",
     "eslint-config-airbnb-base": "^15.0.0",

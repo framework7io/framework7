@@ -2,6 +2,22 @@
 
 # Change Log
 
+# [8.3.0](https://github.com/framework7io/framework7/compare/v8.2.0...v8.3.0) (2023-08-18)
+
+### Bug Fixes
+
+- **popup:** fix wrong popup push position on top of tablet-full-screen push popup ([41def46](https://github.com/framework7io/framework7/commit/41def46c3d5c9aa54bbfe18bb9a18a9ccda8b0ff))
+- **popup:** prevent swiping popup when swiping over enabled sortable ([9673b0b](https://github.com/framework7io/framework7/commit/9673b0b079b04e9a3cc71520efbff39679ee8203))
+- **router:** fix props not passed to `openIn` components ([c609439](https://github.com/framework7io/framework7/commit/c609439a0500998baa18ce5e824aad50136b42bd)), closes [#4215](https://github.com/framework7io/framework7/issues/4215)
+- **sheet:** prevent swiping sheet when swiping over enabled sortable ([c92ad63](https://github.com/framework7io/framework7/commit/c92ad6313fd9acad0b4a971c4b91157c5fd6160b))
+
+### Features
+
+- **sheet:** new feature to configure opened breakpoints ([3ec8cc1](https://github.com/framework7io/framework7/commit/3ec8cc1d81547de37d6f3064e0f705f3d2b2eb5e))
+- **svelte:** types reworked for Svelte 4 ([#4216](https://github.com/framework7io/framework7/issues/4216)) ([31b94b0](https://github.com/framework7io/framework7/commit/31b94b00dec840e5a7095f99626bb3872fa485dc))
+- **swiper:** update swiper to latest 10.2.0 ([957fa87](https://github.com/framework7io/framework7/commit/957fa87367c98a2dc44484abda85beb990a9160a))
+- update to latest Swiper ([b9afba6](https://github.com/framework7io/framework7/commit/b9afba6abe765c9e88114c778a5cfefbbcba0e31))
+
 # [8.2.0](https://github.com/framework7io/framework7/compare/v8.1.0...v8.2.0) (2023-07-06)
 
 ### Bug Fixes

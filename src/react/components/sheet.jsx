@@ -29,6 +29,9 @@ import { Sheet } from 'framework7/types';
   swipeToStep? : boolean
   swipeHandler? : string | object
   containerEl? : string | object
+  breakpoints? : number[]
+  backdropBreakpoint? : number
+  pushBreakpoint? : number
   COLOR_PROPS
   onSheetStepProgress? : (instance?: Sheet.Sheet, progress?: any) => void
   onSheetStepOpen? : (instance?: Sheet.Sheet) => void
@@ -62,6 +65,9 @@ const Sheet = forwardRef((props, ref) => {
     swipeToStep,
     swipeHandler,
     containerEl,
+    breakpoints,
+    backdropBreakpoint,
+    pushBreakpoint,
   } = props;
   const extraAttrs = getExtraAttrs(props);
 
@@ -69,6 +75,9 @@ const Sheet = forwardRef((props, ref) => {
   const isOpened = useRef(opened);
   const isClosing = useRef(false);
 
+  const onBreakpoint = (instance, breakpoint) => {
+    emit(props, 'sheetBreakpoint', instance, breakpoint);
+  };
   const onStepProgress = (instance, progress) => {
     emit(props, 'sheetStepProgress', instance, progress);
   };
@@ -110,12 +119,16 @@ const Sheet = forwardRef((props, ref) => {
     f7Sheet.current[method]('stepOpen', onStepOpen);
     f7Sheet.current[method]('stepClose', onStepClose);
     f7Sheet.current[method]('stepProgress', onStepProgress);
+    f7Sheet.current[method]('breakpoint', onBreakpoint);
   };
 
   const onMount = () => {
     if (!elRef.current) return;
     const sheetParams = {
       el: elRef.current,
+      breakpoints,
+      backdropBreakpoint,
+      pushBreakpoint,
     };
 
     if ('animate' in props && typeof animate !== 'undefined') sheetParams.animate = animate;
@@ -128,6 +141,9 @@ const Sheet = forwardRef((props, ref) => {
     if ('swipeToStep' in props) sheetParams.swipeToStep = swipeToStep;
     if ('swipeHandler' in props) sheetParams.swipeHandler = swipeHandler;
     if ('containerEl' in props) sheetParams.containerEl = containerEl;
+    if ('breakpoints' in props) sheetParams.breakpoints = breakpoints;
+    if ('backdropBreakpoint' in props) sheetParams.backdropBreakpoint = backdropBreakpoint;
+    if ('pushBreakpoint' in props) sheetParams.pushBreakpoint = pushBreakpoint;
 
     f7ready(() => {
       f7Sheet.current = f7.sheet.create(sheetParams);

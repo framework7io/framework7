@@ -16,6 +16,9 @@ export default {
       closeOnEscape: false,
       swipeToClose: false,
       swipeToStep: false,
+      breakpoints: [],
+      backdropBreakpoint: 0,
+      pushBreakpoint: 0,
       swipeHandler: null,
       containerEl: null,
     },
@@ -46,6 +49,12 @@ export default {
         stepToggle(sheet) {
           const sheetInstance = app.sheet.get(sheet);
           if (sheetInstance && sheetInstance.stepToggle) return sheetInstance.stepToggle();
+          return undefined;
+        },
+        setBreakpoint(sheet, breakpoint) {
+          const sheetInstance = app.sheet.get(sheet);
+          if (sheetInstance && sheetInstance.setBreakpoint)
+            return sheetInstance.setBreakpoint(breakpoint);
           return undefined;
         },
       },

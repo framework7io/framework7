@@ -144,6 +144,7 @@ class Popup extends Modal {
       ) {
         return;
       }
+      if ($(e.target).closest('.sortable-handler').length > 0) return;
       isTouched = true;
       isMoved = false;
       startTouch = {

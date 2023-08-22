@@ -122,6 +122,14 @@ export default () => {
             Swipe To Step
           </Button>
         </p>
+        <p>
+          In addition to "swipe step" there is a support for position breakpoints (multiple steps):
+        </p>
+        <p>
+          <Button fill sheetOpen=".demo-sheet-breakpoints">
+            Breakpoints
+          </Button>
+        </p>
       </Block>
 
       <Sheet
@@ -311,6 +319,49 @@ export default () => {
             <b slot="after">$120</b>
           </ListItem>
         </List>
+      </Sheet>
+
+      <Sheet
+        className="demo-sheet-breakpoints"
+        style={{ height: 'auto' }}
+        swipeToClose
+        breakpoints={[0.33, 0.66]}
+        backdrop
+        backdropBreakpoint={0.66}
+        push
+        pushBreakpoint={0.66}
+      >
+        <div className="swipe-handler" style={{ backgroundColor: 'transparent' }}></div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '20vh',
+          }}
+        >
+          Section 1
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '20vh',
+          }}
+        >
+          Section 2
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '20vh',
+          }}
+        >
+          Section 3
+        </div>
       </Sheet>
     </Page>
   );
