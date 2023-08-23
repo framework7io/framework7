@@ -39,7 +39,7 @@
   <Block strong inset class="tabs">
     <Tab id="tab-f7" tabActive>
       <div class="grid grid-cols-3 medium-grid-cols-6 grid-gap">
-        {#each f7Icons as icon, index}
+        {#each f7Icons as icon}
           <div class="demo-icon">
             <div class="demo-icon-icon">
               <Icon f7={icon} />
@@ -51,7 +51,7 @@
     </Tab>
     <Tab id="tab-md">
       <div class="grid grid-cols-3 medium-grid-cols-6 grid-gap">
-        {#each mdIcons as icon, index}
+        {#each mdIcons as icon}
           <div class="demo-icon">
             <div class="demo-icon-icon">
               <Icon material={icon} />

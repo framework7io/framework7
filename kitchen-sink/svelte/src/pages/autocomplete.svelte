@@ -40,6 +40,7 @@
     autocompleteStandalonePopup.destroy();
     autocompleteStandaloneMultiple.destroy();
     autocompleteStandaloneAjax.destroy();
+    autocompleteSearchbar.destroy();
 
     searchbar.destroy();
   }

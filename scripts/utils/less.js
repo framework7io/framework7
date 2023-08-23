@@ -1,6 +1,6 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-const less = require('less');
 const path = require('path');
+const less = require('less');
 
 module.exports = (content, resolvePath = path.resolve(__dirname, '../../src/core')) =>
   new Promise((resolve, reject) => {

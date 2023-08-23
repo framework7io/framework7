@@ -5,6 +5,7 @@
   let pickerDescribe;
   let pickerDependent;
   let pickerCustomToolbar;
+  // eslint-disable-next-line
   let pickerInline;
 
   function onPageInit() {
@@ -224,6 +225,7 @@
     pickerDescribe.destroy();
     pickerDependent.destroy();
     pickerCustomToolbar.destroy();
+    pickerInline.destroy();
   }
 </script>
 

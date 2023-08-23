@@ -30,17 +30,20 @@ export default () => {
     }
     let progress = 0;
     function simulateLoading() {
-      setTimeout(() => {
-        const progressBefore = progress;
-        progress += Math.random() * 20;
-        f7.progressbar.set(progressBarEl, progress);
-        if (progressBefore < 100) {
-          simulateLoading(); // keep "loading"
-        } else {
-          determinateLoading.current = false;
-          f7.progressbar.hide(progressBarEl); // hide
-        }
-      }, Math.random() * 200 + 200);
+      setTimeout(
+        () => {
+          const progressBefore = progress;
+          progress += Math.random() * 20;
+          f7.progressbar.set(progressBarEl, progress);
+          if (progressBefore < 100) {
+            simulateLoading(); // keep "loading"
+          } else {
+            determinateLoading.current = false;
+            f7.progressbar.hide(progressBarEl); // hide
+          }
+        },
+        Math.random() * 200 + 200,
+      );
     }
     simulateLoading();
   };

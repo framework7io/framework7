@@ -3,9 +3,9 @@
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: ["off"] */
 
+const path = require('path');
 const exec = require('exec-sh');
 const glob = require('glob');
-const path = require('path');
 const bannerReact = require('./banners/react.js');
 const getOutput = require('./get-output.js');
 const fs = require('./utils/fs-extra.js');

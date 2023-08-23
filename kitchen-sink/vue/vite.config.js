@@ -1,6 +1,6 @@
+import path from 'path';
 // eslint-disable-next-line
 import vue from '@vitejs/plugin-vue';
-import path from 'path';
 
 const buildFolder = process.env.NODE_ENV === 'production' ? 'packages' : 'build';
 

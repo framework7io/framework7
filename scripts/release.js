@@ -1,8 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const exec = require('exec-sh');
-const inquirer = require('inquirer');
 const fs = require('fs');
 const path = require('path');
+const exec = require('exec-sh');
+const inquirer = require('inquirer');
 const pkg = require('../package.json');
 
 const pkgCore = require('../packages/core/package.json');

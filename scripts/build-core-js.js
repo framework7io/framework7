@@ -2,8 +2,8 @@
 /* eslint no-console: "off" */
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: ["error", { "props": false }] */
-const exec = require('exec-sh');
 const path = require('path');
+const exec = require('exec-sh');
 const { rollup } = require('rollup');
 const replace = require('@rollup/plugin-replace');
 const { default: babel } = require('@rollup/plugin-babel');

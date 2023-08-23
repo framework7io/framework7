@@ -165,6 +165,7 @@
 
   $: inputType = type === 'datepicker' || type === 'colorpicker' ? 'text' : type;
 
+  // eslint-disable-next-line
   $: needsValue = type !== 'file' && type !== 'datepicker' && type !== 'colorpicker';
 
   $: inputValue = (() => {

@@ -10,10 +10,10 @@
   export let right = undefined;
   export let side = undefined;
 
-  $: classes = classNames(className, `swipeout-actions-${sideComputed}`, colorClasses($$props));
-
   // eslint-disable-next-line
   $: sideComputed = side || (left ? 'left' : right ? 'right' : 'left');
+
+  $: classes = classNames(className, `swipeout-actions-${sideComputed}`, colorClasses($$props));
 </script>
 
 <div class={classes} {...restProps($$restProps)}>

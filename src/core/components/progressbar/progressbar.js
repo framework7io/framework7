@@ -83,8 +83,8 @@ const Progressbar = {
       if ($progressbarEl.length === 0) {
         $progressbarEl = $(`
           <span class="progressbar${type === 'infinite' ? '-infinite' : ''}${
-          color ? ` color-${color}` : ''
-        } progressbar-in">
+            color ? ` color-${color}` : ''
+          } progressbar-in">
             ${type === 'infinite' ? '' : '<span></span>'}
           </span>`);
         $el.append($progressbarEl);

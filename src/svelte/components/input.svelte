@@ -129,6 +129,7 @@
 
   $: inputType = type === 'datepicker' || type === 'colorpicker' ? 'text' : type;
 
+  // eslint-disable-next-line
   $: needsValue = type !== 'file' && type !== 'datepicker' && type !== 'colorpicker';
 
   $: inputValue = (() => {
@@ -141,14 +142,6 @@
     if (typeof v === 'undefined' || v === null) return '';
     return v;
   })();
-
-  $: classes = classNames(!wrap && className, {
-    resizable: inputType === 'textarea' && resizable,
-    'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
-    'input-invalid': (errorMessage && errorMessageForce) || inputInvalid,
-    'input-with-value': inputHasValue(),
-    'input-focused': inputFocused,
-  });
 
   $: wrapClasses = classNames(
     className,

@@ -160,10 +160,18 @@ module.exports = {
 
     // SVELTE
     {
-      plugins: ['svelte3'],
+      plugins: [],
       files: ['**/*.svelte'],
-      extends: ['airbnb-base'],
-      processor: 'svelte3/svelte3',
+      extends: ['airbnb-base', 'plugin:svelte/prettier'],
+      // parser: '@babel/eslint-parser',
+      // // Add an `overrides` section to add a parser configuration for svelte.
+      // overrides: [
+      //   {
+      //     files: ['*.svelte'],
+      //     parser: 'svelte-eslint-parser',
+      //   },
+      //   // ...
+      // ],
       rules: {
         ...rules,
         'no-restricted-globals': ['off'],
