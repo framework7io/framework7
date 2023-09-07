@@ -138,7 +138,7 @@ class Framework7 extends Framework7Class {
     const document = getDocument();
     if (!app.colorsStyleEl) {
       app.colorsStyleEl = document.createElement('style');
-      document.head.appendChild(app.colorsStyleEl);
+      document.head.prepend(app.colorsStyleEl);
     }
 
     app.colorsStyleEl.textContent = app.utils.colorThemeCSSStyles(app.colors);
