@@ -14,13 +14,18 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://www.lancard.com/misete/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/lancard.png" alt="ミセテのご紹介｜ミセテ 多言語対応オフィシャルアプリ制作・カスタマイズサービス｜ランカードコム（LANCARD.COM inc.)" width="160">
+      <a href="https://www.wfmbuddy.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/wfmbuddy.png" alt="WFM Buddy - Delighting your Workforce" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://www.wfmbuddy.com/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/wfmbuddy.png" alt="WFM Buddy - Delighting your Workforce" width="160">
+      <a href="https://ytmp3.page/ldy/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/ytmp3.png" alt="YTMP3 | YouTube to MP3 Converter, YT MP3, YT to MP3" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://ircmj.org/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/steven4.png" alt="Togel Hongkong, Togel Singapore, Togel Hari Ini, Data Keluaran SGP HK Prize" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -39,35 +44,13 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://www.pelisivut.com" target="_blank">
-        <img src="https://framework7.io/i/sponsors/pelisivut.png" alt="Rahapelit netissä - Löydä parhaat pelisivut rahapeleihin (2022)" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
       <a href="https://casinoutankonto.net/casino-utan-svensk-licens/" target="_blank">
         <img src="https://framework7.io/i/sponsors/casinoutankonto-se.png" alt="Casino utan svensk licens - Casinon utan spelpaus med Trustly" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://polskiekasynohex.org/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/kasynohex.png" alt="Polskie Kasyno HEX" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
       <a href="https://www.casinot.net" target="_blank">
         <img src="https://framework7.io/i/sponsors/casinotnet.png" alt="Casinot" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://www.paraskasino.fi" target="_blank">
-        <img src="https://framework7.io/i/sponsors/paraskasino.png" alt="ParasKasino" width="160">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" valign="middle">
-      <a href="https://www.kasinot.fi" target="_blank">
-        <img src="https://framework7.io/i/sponsors/kasinotfi.png" alt="Kasinot.fi" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -80,29 +63,73 @@
         <img src="https://framework7.io/i/sponsors/tommy.png" alt="Tommy" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
-      <a href="https://igchamp.co.uk/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/buy-instagram-followers-uk.jpg" alt="Buy Instagram Followers UK" width="160">
+      <a href="https://dopoid.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/dopoid.png" alt="Buy Instagram Follower & Likes | Dopoid" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://livecasinomate.com/live-online-casino/" target="_blank">
+      <a href="https://kasinoplace.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/kasino-place.png" alt="Najlepšie Slovenské Online Kasíno" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://payid-casinos.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/payid-casinos.png" alt="PayID Casinos in Australia: PayID Withdrawal Pokies" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://detectico.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/detectico.png" alt="Detectico Phone Tracker to Find Location by Phone Number" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://casinogap.org/uk/betting-sites-not-on-gamstop/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/casinogaporg.png" alt="UK Betting Sites Not on GamStop » Non GamStop Bookies 2023" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://famousblast.com/product/buyfollowers/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/famousblast.png" alt="Buy Instagram Followers - Cheap IG Followers" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://buytoplikes.com/reels-views/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/buytoplikes.png" alt="Buy Instagram Reel Views" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://www.outlookindia.com/outlook-spotlight/best-online-casinos-cyprus-2023-news-286924" target="_blank">
+        <img src="https://framework7.io/i/sponsors/online-casinos-cyprus.png" alt="Online Casinos Cyprus" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://a-team.global/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/a-team-global.png" alt="Outsourcing Software Development Company » A-Team Global" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://onlinecasinohex.ph/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/casinohex-phillipines.png" alt="Best Online Casino Philippines 2023 🥇 Online Gambling Philippines Guide" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://aviators.com.br/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/aviator-aposta.png" alt="Aviators" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://livecasinomate.com" target="_blank">
         <img src="https://framework7.io/i/sponsors/live-casino-mate.png" alt="Best Live Dealer Casino 2023 | Top Online Live Casino Sites With Real Dealers" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://888starz-polska.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/888starz.png" alt="888Starz Polska: Załóż Konto i Otrzymaj Bonus Powitalny do 1500 EUR!" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://auspokiesguide.com/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/auspokiesguidecom.png" alt="Best Online Casino in Australia 2023, Top Australian Casinos Online" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://buyyoutubviews.com" target="_blank">
-        <img src="https://framework7.io/i/sponsors/buyyoutubviews.webp" alt="Buy YouTube Views" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -125,16 +152,9 @@
         <img src="https://framework7.io/i/sponsors/bairesdev.png" alt="BairesDev: Promoting Open Source for a Better Future" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://dobrekasyna.pl/" target="_blank">
         <img src="https://framework7.io/i/sponsors/dobre-kasyna.png" alt="Najlepsze Kasyna Online w Polsce 2023 - Dobre Kasyna" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://gamblechecker.com/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/martin-woods.png" alt="Gamblechecker.com - Online Pokies Reviews For NZ Players" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -167,41 +187,16 @@
         <img src="https://framework7.io/i/sponsors/bitcoincasinowiz.png" alt="Best Bitcoin Casinos in 2023 ✔️ Top Crypto Casino Sites" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.kiekkotorni.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/kiekkotornicom.png" alt="Nikotiinipussit & Nikotiininuuska - Iso Valikoima ja Edulliset" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://www.newsbtc.com/news/company/real-money-online-casino-best-casinos-that-pay-real-money/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/playrealmoneyslots.png" alt="Real Money Online Casino - Best Casinos That Pay Real Money" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://onlinecasinoprofy.com/en/crypto" target="_blank">
-        <img src="https://framework7.io/i/sponsors/onlinecasinoprofy.png" alt="Online Casino Reviews UK ➡️ Top Online Casino Rating 2023" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://mobipast.net/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/mobipast.png" alt="mobiplast" width="160">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" valign="middle">
       <a href="https://dr.sc/top-10-najboljih-online-casina-u-hrvatskoj/" target="_blank">
         <img src="https://framework7.io/i/sponsors/doctor-sports-and-casinos-dr-sc.png" alt="Top 10 Najboljih Online Casino u Hrvatskoj u 2023" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://luckyjetgames.in/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/lucky-jet-game-india.png" alt="Lucky Jet Game for Real Money | Play Lucky Jet at Online Casinos" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://brainstormtutoriais.com/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/brainstormtutoriais.png" alt="Jogar Spaceman Pragmatic Play - Jogo Spaceman Apostas" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -225,23 +220,8 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://soc-promotion.com/free-instagram-likes" target="_blank">
-        <img src="https://framework7.io/i/sponsors/soc-promotion.png" alt="Get Free Instagram Likes | Soc-Promotion" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://sloto-top.com/casino" target="_blank">
-        <img src="https://framework7.io/i/sponsors/slototop.png" alt="Обзор лицензионных казино в Украине" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
       <a href="https://thesportsgeek.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/thesportsgeek.png" alt="Огляд найкращих казино в Україні" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://onlinecasino.ua/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/onlinecasinoua.png" alt="Огляд найкращих казино в Україні" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -249,8 +229,6 @@
         <img src="https://framework7.io/i/sponsors/casinolandia.png" alt="CasinoLandia | An Exciting Journey in the Land of Online Casinos" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://aviatorgame.net/" target="_blank">
         <img src="https://framework7.io/i/sponsors/aviator-game.png" alt="Aviator Game | Play Aviator Money Game by Spribe" width="160">
@@ -271,6 +249,8 @@
         <img src="https://framework7.io/i/sponsors/crazy-time-italia.png" alt="Gioca Crazy Time Casinò per soldi veri - Crazy Time Casinò Italia" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://jetxgame.com/pt/" target="_blank">
         <img src="https://framework7.io/i/sponsors/jetxgame.png" alt="JetX Apostas | JetiX Aposta - Jogo do Foguete que Ganha Dinheiro" width="160">
@@ -282,37 +262,10 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://nolimit-casinos.de/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/nolimit-casinos.png" alt="Casino Ohne Limit | Finden Sie die besten Casinos ohne limit" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://neabigread.org/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/neabigread.png" alt="먹튀검증 안전한 토토사이트 추천 - 먹튀컷" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://www.realmoneycasinoonline.ca/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/realmoneycasinoonline.png" alt="Real Money Online Casino Canada - January 2023" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
       <a href="https://play-jetx.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/play-jetx.png" alt="jogo do aviãozinho" width="160">
       </a>
     </td>
-    <td align="center" valign="middle">
-      <a href="https://www.newcasinosaustralia.com/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/newcasinosaustralia.png" alt="Best New Online Casinos in Australia 2023" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://www.skymetweather.com/content/lifestyle-and-culture/online-casinos-india/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/rose-red.png" alt="Best Real Money Online Casinos in India" width="160">
-      </a>
-    </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://istar.tips/" target="_blank">
         <img src="https://framework7.io/i/sponsors/istartips.svg" alt="iStarTips - Tips for Software, Apps on Android, iPhone" width="160">
@@ -326,16 +279,6 @@
     <td align="center" valign="middle">
       <a href="https://cryptocasinos360.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/cryptocasinos360.png" alt="crypto casinos" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://jetxplay.com/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/jetxplay.jpg" alt="Jet X - tudo o que você precisa saber - Jetx jogo" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://career-media.net/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/career-media.png" alt="CRYPTO MEDIA（クリプトメディア） | 仮想通貨をシンプルに、わかりやすく。" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -368,36 +311,26 @@
         <img src="https://framework7.io/i/sponsors/correctcasinos.png" alt="Correct Casinos | Reputable Online Casinos, Slots & Bonuses" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://buzzvoice.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/buzzvoice.png" alt="Buy Followers, Likes, Views & Comments | BuzzVoice.com" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://refermate.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/refermate.png" alt="Coupons, Promo Codes, September 2022 — Refermate" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://nongamstopcasinos.net/" target="_blank">
+      <a href="https://nongamstopcasinos.net/gb/" target="_blank">
         <img src="https://framework7.io/i/sponsors/nongamstopcasinos.png" alt="NonGamstopCasinos - Professional Service on Selection of Casino and Betting sites for UK Gamblers" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
       <a href="https://casinocrawlers.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/casinocrawlerscom.png" alt="Best Online Casinos NZ | Online Gambling NZ" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://leafletcasino.com/online-casino/best-payout/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/leafletcasino.png" alt="Look for top paying online casinos Canada at leafletcasino.com" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://aussiebestcasinos.com/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/aussiebestcasinos.png" alt="Play at the best online casinos Australia and get bonuses thanks to reviews on aussiebestcasinos.com" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -408,16 +341,6 @@
     <td align="center" valign="middle">
       <a href="https://vpnwelt.com" target="_blank">
         <img src="https://framework7.io/i/sponsors/vpnwelt.png" alt="VPNwelt: VPN Neuigkeiten, Testberichte und Statistik 2022" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://realspyapps.com/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/realspyapps.png" alt="Real Spy Apps - Reviews, You Can Trust" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://4-c.at/online-casinos/echtgeld/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/online-casino-osterreich.png" alt="Bestes Online Casino Österreich – Top Spiele 2022 im Test mit 4-c.at" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -435,8 +358,6 @@
         <img src="https://framework7.io/i/sponsors/mitratogel.png" alt="Togel Online | Togel Hongkong | Togel Singapore Resmi" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.insidecasino.ca" target="_blank">
         <img src="https://framework7.io/i/sponsors/insidecasinoca.png" alt="Online Casinos CA | #1 Casino Guide in 2022 | InsideCasino" width="160">
@@ -452,19 +373,11 @@
         <img src="https://framework7.io/i/sponsors/play-casinos-canada.png" alt="Discover The Best Reputable Online Casinos in Canada" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://vtxbrasil.com.br/" target="_blank">
         <img src="https://framework7.io/i/sponsors/jetxjogo.png" alt="JETX APOSTAS - Jet jogo do foguete" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://www.betastic.com/in/reviews/betway/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/betastic.png" alt="Best US Online Casino Sites 2022 ᐅ Top 10 USA Online Casinos" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://www.doublethebitcoin.net" target="_blank">
-        <img src="https://framework7.io/i/sponsors/doublethebitcoin.jpg" alt="Best Crypto Casinos (2022) - DoubleTheBitcoin.net" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -475,11 +388,6 @@
     <td align="center" valign="middle">
       <a href="https://poprey.com/buy-instagram-views" target="_blank">
         <img src="https://framework7.io/i/sponsors/poprey-com.png" alt="Buy Instagram views" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://billigzonen.dk" target="_blank">
-        <img src="https://framework7.io/i/sponsors/billigzonen.jpg" alt="Sammenlign priser på produkter i Danmark | Billigzonen.dk" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -497,8 +405,6 @@
         <img src="https://framework7.io/i/sponsors/nongamstopwager-com.png" alt="NonGamStopWager.com" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.fortunegames.com" target="_blank">
         <img src="https://framework7.io/i/sponsors/fortunegames.png" alt="Fortune Games® | Free Spins No Deposit Slot Games | Online Slots" width="160">
@@ -529,6 +435,8 @@
         <img src="https://framework7.io/i/sponsors/casinohex-canada.png" alt="Online Casino HEX - Best Online Casinos in Canada [2021]" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://veepn.com/vpn-apps/vpn-for-firefox/" target="_blank">
         <img src="https://framework7.io/i/sponsors/veepn-new.png" alt="VPN for Firefox to Make the Internet a Better Place" width="160">
@@ -555,23 +463,6 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://www.natcasinon.com" target="_blank">
-        <img src="https://framework7.io/i/sponsors/natcasinon.svg" alt="Svenska Nätcasinon 2020🥇 》Topplista med bästa casinon" width="160">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" valign="middle">
-      <a href="https://www.kasiinod.net" target="_blank">
-        <img src="https://framework7.io/i/sponsors/kasiinod.svg" alt="Kasiinod - teejuht kasiinouudiste maailma" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://list.casino" target="_blank">
-        <img src="https://framework7.io/i/sponsors/listcasino.png" alt="List of All the Best Online Casinos - Ultimate Casino List!" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
       <a href="https://mypaperwriter.com" target="_blank">
         <img src="https://framework7.io/i/sponsors/mypaperwriter.svg" alt="Write My Paper For Me - Writing Service | My Paper Writer" width="160">
       </a>
@@ -584,11 +475,6 @@
     <td align="center" valign="middle">
       <a href="https://toppcasinobonus.com/gratis-spinn" target="_blank">
         <img src="https://framework7.io/i/sponsors/topcasinobonus.svg" alt="700+ Free Spins Uten Innskudd 🥇 Beste Free Spins Casinoer" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://www.simplygram.com" target="_blank">
-        <img src="https://framework7.io/i/sponsors/simplygram.png" alt="Instagram growth service - SimplyGram" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -611,6 +497,8 @@
         <img src="https://framework7.io/i/sponsors/papersowl.png" alt="Write My Essay For Me" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://edubirdie.com" target="_blank">
         <img src="https://framework7.io/i/sponsors/edubirdie.png" alt="EduBirdie - The professional essay writing service for students who can't even" width="160">
@@ -621,8 +509,6 @@
         <img src="https://framework7.io/i/sponsors/rise.png" alt="Rise — Creative Web Development Agency" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://kidoverse.app/" target="_blank">
         <img src="https://framework7.io/i/sponsors/kidoverse.png" alt="Kidoverse - App for kids to learn, play, create and explore" width="160">
@@ -653,8 +539,6 @@
     <td align="center" valign="middle"></td>
     <td align="center" valign="middle"></td>
     <td align="center" valign="middle"></td>
-    <td align="center" valign="middle"></td>
-    <td align="center" valign="middle"></td>
   </tr>
 </table>
 <!-- SPONSORS_TABLE_WRAP -->
@@ -678,7 +562,6 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 <!-- GOLD_SPONSOR -->
 - [NoNeedToStudy.com - get help with taking online classes and tests from expert tutors](https://www.noneedtostudy.com/take-my-online-class/)
 - [Nettikasinot | Tässä parhaat nettikasinot - Katso lista](https://www.nettikasinot.org)
-- [ミセテのご紹介｜ミセテ 多言語対応オフィシャルアプリ制作・カスタマイズサービス｜ランカードコム（LANCARD.COM inc.)](https://www.lancard.com/misete/)
 - [WFM Buddy - Delighting your Workforce](https://www.wfmbuddy.com/)
 <!-- GOLD_SPONSOR -->
 
@@ -689,15 +572,13 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ### \$100 Silver Sponsor
 
 <!-- SILVER_SPONSOR -->
+- [YTMP3 | YouTube to MP3 Converter, YT MP3, YT to MP3](https://ytmp3.page/ldy/)
+- [Togel Hongkong, Togel Singapore, Togel Hari Ini, Data Keluaran SGP HK Prize](https://ircmj.org/)
 - [Svindel.info | Vi sjekker gambling- og spillsider for svindel](https://www.svindel.info/)
 - [Casino utan Svensk Licens 2023](https://starwarscasinos.com/)
 - [Nettikasinot 2022 | Löydä Luotettava & Turvallinen Nettikasino!](https://www.kasinohai.com/nettikasinot)
-- [Rahapelit netissä - Löydä parhaat pelisivut rahapeleihin (2022)](https://www.pelisivut.com)
 - [Casino utan svensk licens - Casinon utan spelpaus med Trustly](https://casinoutankonto.net/casino-utan-svensk-licens/)
-- [Polskie Kasyno HEX](https://polskiekasynohex.org/)
 - [Casinot](https://www.casinot.net)
-- [ParasKasino](https://www.paraskasino.fi)
-- [Kasinot.fi](https://www.kasinot.fi)
 - [Thorium Builder - full visual Framework7 app builder](https://www.thoriumbuilder.com/)
 - [Tommy](http://mytommy.com)
 <!-- SILVER_SPONSOR -->
@@ -709,17 +590,24 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ### \$50+ Top Supporter
 
 <!-- TOP_SUPPORTER -->
-- [Buy Instagram Followers UK](https://igchamp.co.uk/)
-- [Best Live Dealer Casino 2023 | Top Online Live Casino Sites With Real Dealers](https://livecasinomate.com/live-online-casino/)
+- [Buy Instagram Follower & Likes | Dopoid](https://dopoid.com/)
+- [Najlepšie Slovenské Online Kasíno](https://kasinoplace.com/)
+- [PayID Casinos in Australia: PayID Withdrawal Pokies](https://payid-casinos.com/)
+- [Detectico Phone Tracker to Find Location by Phone Number](https://detectico.com/)
+- [UK Betting Sites Not on GamStop » Non GamStop Bookies 2023](https://casinogap.org/uk/betting-sites-not-on-gamstop/)
+- [Buy Instagram Followers - Cheap IG Followers](https://famousblast.com/product/buyfollowers/)
+- [Buy Instagram Reel Views](https://buytoplikes.com/reels-views/)
+- [Online Casinos Cyprus](https://www.outlookindia.com/outlook-spotlight/best-online-casinos-cyprus-2023-news-286924)
+- [Outsourcing Software Development Company » A-Team Global](https://a-team.global/)
+- [Best Online Casino Philippines 2023 🥇 Online Gambling Philippines Guide](https://onlinecasinohex.ph/)
+- [Aviators](https://aviators.com.br/)
+- [Best Live Dealer Casino 2023 | Top Online Live Casino Sites With Real Dealers](https://livecasinomate.com)
 - [888Starz Polska: Załóż Konto i Otrzymaj Bonus Powitalny do 1500 EUR!](https://888starz-polska.com/)
-- [Best Online Casino in Australia 2023, Top Australian Casinos Online](https://auspokiesguide.com/)
-- [Buy YouTube Views](https://buyyoutubviews.com)
 - [The Ultimate Crash Gambling Experience – Crash Game](https://crash-game.org/)
 - [Buy Instagram Comments from Real Users | Powered by AI](https://twicsy.com/buy-instagram-comments)
 - [Buy Instagram Followers | Real, Instant Delivery & Only $2.97](https://twicsy.com/buy-instagram-followers)
 - [BairesDev: Promoting Open Source for a Better Future](https://www.bairesdev.com/sponsoring-open-source-projects/)
 - [Najlepsze Kasyna Online w Polsce 2023 - Dobre Kasyna](https://dobrekasyna.pl/)
-- [Gamblechecker.com - Online Pokies Reviews For NZ Players](https://gamblechecker.com/)
 - [Slots Not on GamStop - New Non-GamStop Casinos UK](https://www.outlookindia.com/outlook-spotlight/slots-not-on-gamstop-new-non-gamstop-casinos-uk-news-284058)
 - [Nettikasinot | Katso parhaat nettikasinot 2023 | Top 10 lista](https://www.nettikasinot.media/)
 - [Nye casino 2023 >> Finn et helt nytt norsk nettcasino nå!](https://www.nyecasino.me/)
@@ -727,20 +615,12 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 - [Buy instagram followers UK](https://boostlikes.uk/buy-instagram-followers-uk)
 - [Best Bitcoin Casinos in 2023 ✔️ Top Crypto Casino Sites](https://bitcoincasinowiz.com/)
 - [Nikotiinipussit & Nikotiininuuska - Iso Valikoima ja Edulliset](https://www.kiekkotorni.com/)
-- [Real Money Online Casino - Best Casinos That Pay Real Money](https://www.newsbtc.com/news/company/real-money-online-casino-best-casinos-that-pay-real-money/)
-- [Online Casino Reviews UK ➡️ Top Online Casino Rating 2023](https://onlinecasinoprofy.com/en/crypto)
-- [mobiplast](https://mobipast.net/)
 - [Top 10 Najboljih Online Casino u Hrvatskoj u 2023](https://dr.sc/top-10-najboljih-online-casina-u-hrvatskoj/)
-- [Lucky Jet Game for Real Money | Play Lucky Jet at Online Casinos](https://luckyjetgames.in/)
-- [Jogar Spaceman Pragmatic Play - Jogo Spaceman Apostas](https://brainstormtutoriais.com/)
 - [Casino Zonder Registratie 2023 | CZR's Top No Account Casino's Ranglijst](https://casinozonderregistratie.net/)
 - [Beoordelen van nieuwe online casino's 2023](https://nieuwe-casinos.net/)
 - [Buy Instagram Likes | Real, Instant Delivery & Only $1.47](https://twicsy.com/buy-instagram-likes)
 - [Onlinecasinosspelen.com site is dé nummer één gids, waardoor je gemakkelijk alle informatie van de top 10 online casino sites.](https://onlinecasinosspelen.com/)
-- [Get Free Instagram Likes | Soc-Promotion](https://soc-promotion.com/free-instagram-likes)
-- [Обзор лицензионных казино в Украине](https://sloto-top.com/casino)
 - [Огляд найкращих казино в Україні](https://thesportsgeek.com/)
-- [Огляд найкращих казино в Україні](https://onlinecasino.ua/)
 - [CasinoLandia | An Exciting Journey in the Land of Online Casinos](https://casinolandia.com/)
 - [Aviator Game | Play Aviator Money Game by Spribe](https://aviatorgame.net/)
 - [Pin Up Aviator Game Casino | Aviator Game in India](https://pinupaviator.in/)
@@ -748,17 +628,10 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 - [Gioca Crazy Time Casinò per soldi veri - Crazy Time Casinò Italia](https://emporioae.com/)
 - [JetX Apostas | JetiX Aposta - Jogo do Foguete que Ganha Dinheiro](https://jetxgame.com/pt/)
 - [neue online casinos deutschland](https://automatenspielex.com/online-casinos/neue)
-- [Casino Ohne Limit | Finden Sie die besten Casinos ohne limit](https://nolimit-casinos.de/)
-- [먹튀검증 안전한 토토사이트 추천 - 먹튀컷](https://neabigread.org/)
-- [Real Money Online Casino Canada - January 2023](https://www.realmoneycasinoonline.ca/)
 - [jogo do aviãozinho](https://play-jetx.com/)
-- [Best New Online Casinos in Australia 2023](https://www.newcasinosaustralia.com/)
-- [Best Real Money Online Casinos in India](https://www.skymetweather.com/content/lifestyle-and-culture/online-casinos-india/)
 - [iStarTips - Tips for Software, Apps on Android, iPhone](https://istar.tips/)
 - [SplendorAgency - Uniquely crafted digital solutions for creative projects](https://splendor.io/)
 - [crypto casinos](https://cryptocasinos360.com/)
-- [Jet X - tudo o que você precisa saber - Jetx jogo](https://jetxplay.com/)
-- [CRYPTO MEDIA（クリプトメディア） | 仮想通貨をシンプルに、わかりやすく。](https://career-media.net/)
 - [online casino ideal nederland](https://idealecasinos.nl/)
 - [online casinoer](https://topcasinoer.net/)
 - [casino uden ROFUS](https://bedstespiludenomrofus.com/)
@@ -767,14 +640,10 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 - [Correct Casinos | Reputable Online Casinos, Slots & Bonuses](https://correctcasinos.com/)
 - [Buy Followers, Likes, Views & Comments | BuzzVoice.com](https://buzzvoice.com/)
 - [Coupons, Promo Codes, September 2022 — Refermate](https://refermate.com/)
-- [NonGamstopCasinos - Professional Service on Selection of Casino and Betting sites for UK Gamblers](https://nongamstopcasinos.net/)
+- [NonGamstopCasinos - Professional Service on Selection of Casino and Betting sites for UK Gamblers](https://nongamstopcasinos.net/gb/)
 - [Best Online Casinos NZ | Online Gambling NZ](https://casinocrawlers.com/)
-- [Look for top paying online casinos Canada at leafletcasino.com](https://leafletcasino.com/online-casino/best-payout/)
-- [Play at the best online casinos Australia and get bonuses thanks to reviews on aussiebestcasinos.com](https://aussiebestcasinos.com/)
 - [CSGO Captain | Your Guide to Counter-Strike 2022 - CS:GO Captain](https://www.csgocaptain.com)
 - [VPNwelt: VPN Neuigkeiten, Testberichte und Statistik 2022](https://vpnwelt.com)
-- [Real Spy Apps - Reviews, You Can Trust](https://realspyapps.com/)
-- [Bestes Online Casino Österreich – Top Spiele 2022 im Test mit 4-c.at](https://4-c.at/online-casinos/echtgeld/)
 - [Online Spielautomaten - Die besten deutschen Slots 2022 online testen](https://deutsche-slots-online.de/)
 - [NonGamStopOdds | Find the best UK casino not on GamStop](https://www.nongamstopodds.com/casinos-not-on-gamstop/)
 - [Togel Online | Togel Hongkong | Togel Singapore Resmi](https://binweevils.com)
@@ -782,11 +651,8 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 - [Casinos Not on GamStop » Most Trusted Non GamStop UK Casinos ⭐️](https://www.sure.bet/casinos-not-on-gamstop/)
 - [Discover The Best Reputable Online Casinos in Canada](https://playcasinoscanada.com)
 - [JETX APOSTAS - Jet jogo do foguete](https://vtxbrasil.com.br/)
-- [Best US Online Casino Sites 2022 ᐅ Top 10 USA Online Casinos](https://www.betastic.com/in/reviews/betway/)
-- [Best Crypto Casinos (2022) - DoubleTheBitcoin.net](https://www.doublethebitcoin.net)
 - [Espionner un téléphone Android et iPhone, Pour Control Parental](https://www.global-gsm-control.com)
 - [Buy Instagram views](https://poprey.com/buy-instagram-views)
-- [Sammenlign priser på produkter i Danmark | Billigzonen.dk](https://billigzonen.dk)
 - [Non-GAMSTOP casinos](https://casino-wise.com/casinos-not-on-gamstop/)
 - [Best Phone Tracker Apps without Permission in 2021【for iOS & Android】](https://celltrackingapps.com)
 - [NonGamStopWager.com](https://www.nongamstopwager.com)
@@ -801,13 +667,9 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 - [Ranking Bukmacherów Legalnych 2020. Bukmacher nr 1 to...](https://najlepsibukmacherzy.pl/ranking-legalnych-bukmacherow/)
 - [Inkedin - Gambling News & Updates. Find Out What's Happening Here!](https://inkedin.com)
 - [オンラインカジノ比較ポータルサイト | ラッキーチカ](https://luckychika.jp)
-- [Svenska Nätcasinon 2020🥇 》Topplista med bästa casinon](https://www.natcasinon.com)
-- [Kasiinod - teejuht kasiinouudiste maailma](https://www.kasiinod.net)
-- [List of All the Best Online Casinos - Ultimate Casino List!](https://list.casino)
 - [Write My Paper For Me - Writing Service | My Paper Writer](https://mypaperwriter.com)
 - [Casinority Australia - Best online casino guide for Australian players](https://casinority.com/au/)
 - [700+ Free Spins Uten Innskudd 🥇 Beste Free Spins Casinoer](https://toppcasinobonus.com/gratis-spinn)
-- [Instagram growth service - SimplyGram](https://www.simplygram.com)
 - [Buy Instagram Likes from Goread](https://goread.io/buy-instagram-likes)
 - [Evolution Host - A DDoS Protected VPS host that accepts Bitcoin](https://evolution-host.com)
 - [Casino En Ligne Canada, Les Meilleurs Casinos Virtuels Canadiens](https://casinofiables.com/)
