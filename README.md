@@ -75,12 +75,42 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://aviator-game.com/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/aviator-game-com.png" alt="Aviator game" width="160">
+      <a href="https://www.stormlikes.net/buy-youtube-views" target="_blank">
+        <img src="https://framework7.io/i/sponsors/buy-cheap-youtube-views.png" alt="buy youtube views from stormlikes" width="160">
       </a>
     </td>
   </tr>
   <tr>
+    <td align="center" valign="middle">
+      <a href="https://legit.casino/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/legitcasino.png" alt="Legit Casino » Your Source of Legitimate Online Casinos" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://www.upgrow.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/upgrow.png" alt="UpGrow: #1 AI-Powered Instagram Growth | Real IG Followers" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://www.doublethebitcoin.net/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/doublethebitcoin.png" alt="Best Bitcoin Casinos" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://www.stormlikes.net/buy-instagram-followers" target="_blank">
+        <img src="https://framework7.io/i/sponsors/stormlikes-net.jpeg" alt="Buy Instagram Followers - 100% Real, Instant" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://usacasinos247.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/usa-casinos-247.jpeg" alt="USA Casinos 247" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://aviator-game.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/aviator-game-com.png" alt="Aviator game" width="160">
+      </a>
+    </td>
     <td align="center" valign="middle">
       <a href="https://lucky-jet.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/lucky-jet.png" alt="Lucky jet" width="160">
@@ -111,6 +141,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/svitua.png" alt="Svitua" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://safehamsters.io/" target="_blank">
         <img src="https://framework7.io/i/sponsors/safehamsters.png" alt="Welcome To SafeHamsters: The Pinnacle of Crypto Sports - SafeHamsters" width="160">
@@ -141,8 +173,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/payid-casinos.png" alt="PayID Casinos in Australia: PayID Withdrawal Pokies" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://detectico.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/detectico.png" alt="Detectico Phone Tracker to Find Location by Phone Number" width="160">
@@ -173,6 +203,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/a-team-global.png" alt="Outsourcing Software Development Company » A-Team Global" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://onlinecasinohex.ph/" target="_blank">
         <img src="https://framework7.io/i/sponsors/casinohex-phillipines.png" alt="Best Online Casino Philippines 2023 🥇 Online Gambling Philippines Guide" width="160">
@@ -203,8 +235,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/buy-instagram-comments-twicsy.png" alt="Buy Instagram Comments from Real Users | Powered by AI" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://twicsy.com/buy-instagram-followers" target="_blank">
         <img src="https://framework7.io/i/sponsors/buy-instagram-followers-twicsy.png" alt="Buy Instagram Followers | Real, Instant Delivery & Only $2.97" width="160">
@@ -235,6 +265,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/nyecasino.png" alt="Nye casino 2023 >> Finn et helt nytt norsk nettcasino nå!" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.nettcasino.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/nettcasino.png" alt="Nettcasino i Norge 2023 » Beste norske online casino på nett" width="160">
@@ -265,8 +297,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/czrnet.png" alt="Casino Zonder Registratie 2023 | CZR's Top No Account Casino's Ranglijst" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://nieuwe-casinos.net/" target="_blank">
         <img src="https://framework7.io/i/sponsors/nieuwecasinos.svg" alt="Beoordelen van nieuwe online casino's 2023" width="160">
@@ -297,6 +327,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/aviator-game.png" alt="Aviator Game | Play Aviator Money Game by Spribe" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://pinupaviator.in/" target="_blank">
         <img src="https://framework7.io/i/sponsors/pin-up-aviator-india.png" alt="Pin Up Aviator Game Casino | Aviator Game in India" width="160">
@@ -327,8 +359,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/play-jetx.png" alt="jogo do aviãozinho" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://istar.tips/" target="_blank">
         <img src="https://framework7.io/i/sponsors/istartips.svg" alt="iStarTips - Tips for Software, Apps on Android, iPhone" width="160">
@@ -359,6 +389,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/bedstespiludenomrofus.png" alt="casino uden ROFUS" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://betting-sider.net/" target="_blank">
         <img src="https://framework7.io/i/sponsors/betting-sider.jpg" alt="betting sider" width="160">
@@ -389,8 +421,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/nongamstopcasinos.png" alt="NonGamstopCasinos - Professional Service on Selection of Casino and Betting sites for UK Gamblers" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://casinocrawlers.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/casinocrawlerscom.png" alt="Best Online Casinos NZ | Online Gambling NZ" width="160">
@@ -421,6 +451,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/mitratogel.png" alt="Togel Online | Togel Hongkong | Togel Singapore Resmi" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.insidecasino.ca" target="_blank">
         <img src="https://framework7.io/i/sponsors/insidecasinoca.png" alt="Online Casinos CA | #1 Casino Guide in 2022 | InsideCasino" width="160">
@@ -451,8 +483,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/poprey-com.png" alt="Buy Instagram views" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://casino-wise.com/casinos-not-on-gamstop/" target="_blank">
         <img src="https://framework7.io/i/sponsors/casino-wise-com.png" alt="Non-GAMSTOP casinos" width="160">
@@ -483,6 +513,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/casinos-hunter.png" alt="Best 1$ deposit casino in Canada" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://zamsino.com/ca/free-spins-no-deposit/" target="_blank">
         <img src="https://framework7.io/i/sponsors/zamsino.png" alt="Zamsino" width="160">
@@ -513,8 +545,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/netpositive.png" alt="Ranking Bukmacherów Legalnych 2020. Bukmacher nr 1 to..." width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://inkedin.com" target="_blank">
         <img src="https://framework7.io/i/sponsors/inkedin.png" alt="Inkedin - Gambling News & Updates. Find Out What's Happening Here!" width="160">
@@ -545,6 +575,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/goread.png" alt="Buy Instagram Likes from Goread" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://evolution-host.com" target="_blank">
         <img src="https://framework7.io/i/sponsors/evolution-host.png" alt="Evolution Host - A DDoS Protected VPS host that accepts Bitcoin" width="160">
@@ -575,8 +607,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/kidoverse.png" alt="Kidoverse - App for kids to learn, play, create and explore" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.cyberbrain.nl/" target="_blank">
         <img src="https://framework7.io/i/sponsors/cyberbrain.png" alt="CyberBrain IT Services" width="160">
@@ -597,12 +627,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/wappler.png" alt="Wappler - The Visual Web App Creator" width="160">
       </a>
     </td>
-    <td align="center" valign="middle"></td>
-    <td align="center" valign="middle"></td>
-    <td align="center" valign="middle"></td>
-    <td align="center" valign="middle"></td>
-    <td align="center" valign="middle"></td>
-    <td align="center" valign="middle"></td>
     <td align="center" valign="middle"></td>
     <td align="center" valign="middle"></td>
   </tr>
