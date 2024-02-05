@@ -198,8 +198,8 @@ class Framework7 extends Framework7Class {
     const app = this;
     const html = document.querySelector('html');
     if (app.mq.dark && app.mq.light) {
-      app.mq.dark.addEventListener("change", app.colorSchemeListener);
-      app.mq.light.addEventListener("change", app.colorSchemeListener);
+      app.mq.dark.addEventListener('change', app.colorSchemeListener);
+      app.mq.light.addEventListener('change', app.colorSchemeListener);
     }
     if (app.mq.dark && app.mq.dark.matches) {
       html.classList.add('dark');
@@ -216,8 +216,8 @@ class Framework7 extends Framework7Class {
     const window = getWindow();
     if (!window.matchMedia) return;
     const app = this;
-    if (app.mq.dark) app.mq.dark.removeEventListener("change", app.colorSchemeListener);
-    if (app.mq.light) app.mq.light.removeEventListener("change", app.colorSchemeListener);
+    if (app.mq.dark) app.mq.dark.removeEventListener('change', app.colorSchemeListener);
+    if (app.mq.light) app.mq.light.removeEventListener('change', app.colorSchemeListener);
   }
 
   setDarkMode(mode) {

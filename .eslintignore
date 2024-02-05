@@ -13,6 +13,7 @@ src/core/framework7.js
 src/core/framework7-lite.js
 src/core/modules/demo-module.js
 src/core/modules/component/snabbdom
+src/core/shared/material-color-utils.js
 woff2
 
 src/vue-temp
