@@ -5,7 +5,10 @@
   "type": "module",
   "svelte": "./framework7-svelte.js",
   "exports": {
-    ".": "./framework7-svelte.js",
+    ".": {
+      "import": "./framework7-svelte.js",
+      "types": "./framework7-svelte.d.ts"
+    },
     "./components/*": "./components/*",
     "./shared/*": "./shared/*"
   },
