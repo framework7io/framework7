@@ -2,17 +2,26 @@
 
 # Change Log
 
-# [8.3.1](https://github.com/framework7io/framework7/compare/v8.3.0...v8.3.1) (2024-02-05)
-
+# [8.3.2](https://github.com/framework7io/framework7/compare/v8.3.1...v8.3.2) (2024-02-27)
 
 ### Bug Fixes
 
-* **calendar:** fix param type of calendar parameter formatValue ([#4235](https://github.com/framework7io/framework7/issues/4235)) ([ac1f205](https://github.com/framework7io/framework7/commit/ac1f2053b504f5a898775cb6fb80f7513f8cc8ff))
-* **core:** insert theme stylesheet first to allow overriding ([#4219](https://github.com/framework7io/framework7/issues/4219)) ([#4220](https://github.com/framework7io/framework7/issues/4220)) ([c02e90d](https://github.com/framework7io/framework7/commit/c02e90da66c284f16eae11bd01284b98e844047e))
-* **core:** replace references to obsolete addListener/removeListener ([#4221](https://github.com/framework7io/framework7/issues/4221)) ([4430722](https://github.com/framework7io/framework7/commit/443072262bcbf0755f4fed293df90d220af12f54))
-* **sortable:** Prevent touchscreen scrolling conflict via touch-action ([#4227](https://github.com/framework7io/framework7/issues/4227)) ([0505835](https://github.com/framework7io/framework7/commit/0505835f00466765c4ed20dfbd0669b1c1c26b10)), closes [#4178](https://github.com/framework7io/framework7/issues/4178)
-* **types:** correct exports for react, vue and svelte ([5b380eb](https://github.com/framework7io/framework7/commit/5b380eb3ee48107f1f3c95ef39203956c564e591))
-* **types:** fix missing types ([#4231](https://github.com/framework7io/framework7/issues/4231)) ([734ab0a](https://github.com/framework7io/framework7/commit/734ab0ab8573c62ff82b782172162849454f137d)), closes [#4181](https://github.com/framework7io/framework7/issues/4181)
+- **sheet:** correctly remove resize handler ([ffb5c8c](https://github.com/framework7io/framework7/commit/ffb5c8c5ba2ccb7921d3d931b66b3ad7546113a9)), closes [#4251](https://github.com/framework7io/framework7/issues/4251)
+
+### Features
+
+- **core:** better error stack trace for router components ([d6c60f8](https://github.com/framework7io/framework7/commit/d6c60f834121e044cc7d1e83db6ae362518bed52)), closes [#4250](https://github.com/framework7io/framework7/issues/4250)
+
+# [8.3.1](https://github.com/framework7io/framework7/compare/v8.3.0...v8.3.1) (2024-02-05)
+
+### Bug Fixes
+
+- **calendar:** fix param type of calendar parameter formatValue ([#4235](https://github.com/framework7io/framework7/issues/4235)) ([ac1f205](https://github.com/framework7io/framework7/commit/ac1f2053b504f5a898775cb6fb80f7513f8cc8ff))
+- **core:** insert theme stylesheet first to allow overriding ([#4219](https://github.com/framework7io/framework7/issues/4219)) ([#4220](https://github.com/framework7io/framework7/issues/4220)) ([c02e90d](https://github.com/framework7io/framework7/commit/c02e90da66c284f16eae11bd01284b98e844047e))
+- **core:** replace references to obsolete addListener/removeListener ([#4221](https://github.com/framework7io/framework7/issues/4221)) ([4430722](https://github.com/framework7io/framework7/commit/443072262bcbf0755f4fed293df90d220af12f54))
+- **sortable:** Prevent touchscreen scrolling conflict via touch-action ([#4227](https://github.com/framework7io/framework7/issues/4227)) ([0505835](https://github.com/framework7io/framework7/commit/0505835f00466765c4ed20dfbd0669b1c1c26b10)), closes [#4178](https://github.com/framework7io/framework7/issues/4178)
+- **types:** correct exports for react, vue and svelte ([5b380eb](https://github.com/framework7io/framework7/commit/5b380eb3ee48107f1f3c95ef39203956c564e591))
+- **types:** fix missing types ([#4231](https://github.com/framework7io/framework7/issues/4231)) ([734ab0a](https://github.com/framework7io/framework7/commit/734ab0ab8573c62ff82b782172162849454f137d)), closes [#4181](https://github.com/framework7io/framework7/issues/4181)
 
 # [8.3.0](https://github.com/framework7io/framework7/compare/v8.2.0...v8.3.0) (2023-08-18)
 

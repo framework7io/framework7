@@ -1,6 +1,6 @@
 {
   "name": "framework7-svelte",
-  "version": "8.3.1",
+  "version": "8.3.2",
   "description": "Build full featured iOS & Android apps using Framework7 & Svelte",
   "type": "module",
   "svelte": "./framework7-svelte.js",
@@ -49,5 +49,5 @@
     "type": "patreon",
     "url": "https://www.patreon.com/framework7"
   },
-  "releaseDate": "February 5, 2024"
+  "releaseDate": "February 27, 2024"
 }

@@ -1,6 +1,6 @@
 {
   "name": "framework7-react",
-  "version": "8.3.1",
+  "version": "8.3.2",
   "description": "Build full featured iOS & Android apps using Framework7 & React",
   "type": "module",
   "exports": {
@@ -50,5 +50,5 @@
     "type": "patreon",
     "url": "https://www.patreon.com/framework7"
   },
-  "releaseDate": "February 5, 2024"
+  "releaseDate": "February 27, 2024"
 }
