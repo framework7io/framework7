@@ -669,7 +669,6 @@ class Sheet extends Modal {
         $(document).on('keydown', onKeyDown);
       }
       $el.prevAll('.popup.modal-in').addClass('popup-behind');
-
       app.on('resize', onResize);
       if (sheet.params.scrollToEl) {
         scrollToElementOnOpen();
@@ -710,8 +709,8 @@ class Sheet extends Modal {
       if (sheet.params.swipeToStep || useBreakpoints) {
         $el.removeClass('modal-in-swipe-step modal-in-breakpoint');
         sheet.emit('local::_swipeStep', false);
-        app.off('resize', onResize);
       }
+      app.off('resize', onResize);
       if (sheet.params.closeOnEscape) {
         $(document).off('keydown', onKeyDown);
       }
