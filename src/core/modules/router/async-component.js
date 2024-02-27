@@ -7,7 +7,7 @@ export default function asyncComponent(router, component, resolve, reject) {
       })
       .catch((err) => {
         reject();
-        throw new Error(err);
+        throw new Error(err, { cause: err });
       });
   }
   if (component instanceof Promise) {

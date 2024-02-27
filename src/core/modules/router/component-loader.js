@@ -117,7 +117,7 @@ export default {
           })
           .catch((err) => {
             reject(err);
-            throw new Error(err);
+            throw new Error(err, { cause: err });
           });
       }
       let cachedComponent;
