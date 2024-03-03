@@ -3,6 +3,15 @@ import { getSupport } from './get-support.js';
 
 let deviceCalculated;
 
+const IS_BROWSER = (() => {
+  try {
+    // eslint-disable-next-line no-restricted-globals
+    return !!document.body.getBoundingClientRect().width;
+  } catch (e) {
+    return false;
+  }
+})();
+
 function calcDevice({ userAgent } = {}) {
   const support = getSupport();
   const window = getWindow();
@@ -154,7 +163,7 @@ function calcDevice({ userAgent } = {}) {
   return device;
 }
 
-function getDevice(overrides = {}, reset) {
+function getDevice(overrides = {}, reset = !IS_BROWSER) {
   if (!deviceCalculated || reset) {
     deviceCalculated = calcDevice(overrides);
   }
