@@ -2,6 +2,15 @@
 
 # Change Log
 
+# [8.3.3](https://github.com/framework7io/framework7/compare/v8.3.2...v8.3.3) (2024-03-25)
+
+### Bug Fixes
+
+- back navigation when no f7Page found ([41f65cd](https://github.com/framework7io/framework7/commit/41f65cdc2789c0e1525757d9e4200f5005afd92c))
+- disable cache for device-info on server ([800b586](https://github.com/framework7io/framework7/commit/800b5864ad8a6c28eb5b11e90ca728b70fbd9506)), closes [#4252](https://github.com/framework7io/framework7/issues/4252)
+- **svelte:** fix issue with React.CSSProperties in types ([74b1565](https://github.com/framework7io/framework7/commit/74b156507199ae0d22846cbb0be22ac71f32d312)), closes [#4255](https://github.com/framework7io/framework7/issues/4255)
+- **svelte:** fix svelte field in package ([60f4641](https://github.com/framework7io/framework7/commit/60f4641b1ccecbe03e81c97261d5b9ba059b4240)), closes [#4259](https://github.com/framework7io/framework7/issues/4259)
+
 # [8.3.2](https://github.com/framework7io/framework7/compare/v8.3.1...v8.3.2) (2024-02-27)
 
 ### Bug Fixes
