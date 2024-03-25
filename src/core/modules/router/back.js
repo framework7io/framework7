@@ -706,10 +706,11 @@ function back(...args) {
   }
 
   if (!navigateOptions.force && $previousPage.length && !skipMaster) {
+    const previousPageObj = $previousPage[0].f7Page;
     if (
       router.params.browserHistory &&
-      $previousPage[0].f7Page &&
-      router.history[router.history.length - 2] !== $previousPage[0].f7Page.route.url
+      previousPageObj &&
+      router.history[router.history.length - 2] !== previousPageObj.route.url
     ) {
       router.back(
         router.history[router.history.length - 2],
@@ -720,26 +721,28 @@ function back(...args) {
       );
       return router;
     }
-    const previousPageRoute = $previousPage[0].f7Page.route;
+    if (previousPageObj) {
+      const previousPageRoute = previousPageObj.route;
 
-    processRouteQueue.call(
-      router,
-      previousPageRoute,
-      router.currentRoute,
-      () => {
-        loadBack(
-          router,
-          { el: $previousPage },
-          extend(navigateOptions, {
-            route: previousPageRoute,
-          }),
-        );
-      },
-      () => {},
-      'backward',
-    );
+      processRouteQueue.call(
+        router,
+        previousPageRoute,
+        router.currentRoute,
+        () => {
+          loadBack(
+            router,
+            { el: $previousPage },
+            extend(navigateOptions, {
+              route: previousPageRoute,
+            }),
+          );
+        },
+        () => {},
+        'backward',
+      );
 
-    return router;
+      return router;
+    }
   }
 
   // Navigate URL
