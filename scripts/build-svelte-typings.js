@@ -37,6 +37,7 @@ function generateComponentProps(propsContent) {
     .replace('ICON_PROPS', ICON_PROPS)
     .replace('ROUTER_PROPS', ROUTER_PROPS)
     .replace('ACTIONS_PROPS', ACTIONS_PROPS)
+    .replace(/React.CSSProperties/g, 'string')
     .split('\n')
     .map((line) => line.trim())
     .filter((line) => !!line)
@@ -48,6 +49,7 @@ function generateComponentProps(propsContent) {
       }
       props[propName] = propValue.trim();
     });
+
   ['id', 'style', 'className', 'ref', 'slot', 'children'].forEach((key) => {
     delete props[key];
   });
