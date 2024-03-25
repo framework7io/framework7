@@ -7,7 +7,8 @@
   "exports": {
     ".": {
       "import": "./framework7-svelte.js",
-      "types": "./framework7-svelte.d.ts"
+      "types": "./framework7-svelte.d.ts",
+      "svelte": "./framework7-svelte.js"
     },
     "./components/*": "./components/*",
     "./shared/*": "./shared/*"
