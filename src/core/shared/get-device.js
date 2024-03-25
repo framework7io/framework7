@@ -1,4 +1,4 @@
-import { getWindow } from 'ssr-window';
+import { getWindow, getDocument } from 'ssr-window';
 import { getSupport } from './get-support.js';
 
 let deviceCalculated;
@@ -154,7 +154,22 @@ function calcDevice({ userAgent } = {}) {
   return device;
 }
 
-function getDevice(overrides = {}, reset) {
+const IS_BROWSER = (() => {
+  const document = getDocument();
+  try {
+    // eslint-disable-next-line no-restricted-globals
+    return Boolean(
+      document &&
+        document.body &&
+        document.body.getBoundingClientRect &&
+        document.body.getBoundingClientRect().width > 0,
+    );
+  } catch (e) {
+    return false;
+  }
+})();
+
+function getDevice(overrides = {}, reset = IS_BROWSER) {
   if (!deviceCalculated || reset) {
     deviceCalculated = calcDevice(overrides);
   }
