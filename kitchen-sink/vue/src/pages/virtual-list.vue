@@ -96,7 +96,7 @@ export default {
         if (items[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '')
           found.push(i);
       }
-      return found; // return array with mathced indexes
+      return found; // return array with matched indexes
     },
     renderExternal(vl, vlData) {
       this.vlData = vlData;
