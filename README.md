@@ -65,6 +65,68 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
+      <a href="https://casinos-without-license.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/minsta-insattning-casino-utan-svensk-licens.png" alt="Сasino Without Swedish License" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://ai2people.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/ai2people.png" alt="Ai2people" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://theredplayground.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/the-red-playground.png" alt="The Red Playground" width="160">
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle">
+      <a href="https://leofame.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/leofame.png" alt="Buy Instagram Followers & Likes" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://betpokies.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/betpokies.png" alt="Expert Australian Online Casino Guide" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://casinorevisor.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/casinorevisorcom.png" alt="CasinoRevisor: Alles über die besten Casinos in Deutschland" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://www.teravisiontech.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/teravisiontech.webp" alt="Accelerating Your Software Products | Teravision Technologies" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://revistacomunicacion.org/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/revistacomunicacion-org.png" alt="revistacomunicacion.org" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://onlinecasinosgr.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/onlinecasinosgr-com.png" alt="Ta καλύτερα διαδικτυακά καζίνο στην Ελλάδα το 2024" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://www.buffzone.com/2024/04/26/best-sites-to-buy-instagram-followers/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/buy-instagram-followers-buffzone.png" alt="Buy Instagram Followers BuffZone" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://hellstar.io/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/hellstarclothes.png" alt="Hellstar" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://www.socialfollowers.uk/buy-tiktok-followers/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/socialfollowersuk.png" alt="Buy Tiktok Followers" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://viralyft.com/buy-youtube-views" target="_blank">
         <img src="https://framework7.io/i/sponsors/viralyft.png" alt="Buy YouTube Views" width="160">
       </a>

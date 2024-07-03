@@ -49,6 +49,68 @@
       </a>
     </td>
     <td align="center" valign="middle">
+      <a href="https://casinos-without-license.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/minsta-insattning-casino-utan-svensk-licens.png" alt="Сasino Without Swedish License" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://ai2people.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/ai2people.png" alt="Ai2people" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://theredplayground.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/the-red-playground.png" alt="The Red Playground" width="160">
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle">
+      <a href="https://leofame.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/leofame.png" alt="Buy Instagram Followers & Likes" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://betpokies.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/betpokies.png" alt="Expert Australian Online Casino Guide" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://casinorevisor.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/casinorevisorcom.png" alt="CasinoRevisor: Alles über die besten Casinos in Deutschland" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://www.teravisiontech.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/teravisiontech.webp" alt="Accelerating Your Software Products | Teravision Technologies" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://revistacomunicacion.org/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/revistacomunicacion-org.png" alt="revistacomunicacion.org" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://onlinecasinosgr.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/onlinecasinosgr-com.png" alt="Ta καλύτερα διαδικτυακά καζίνο στην Ελλάδα το 2024" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://www.buffzone.com/2024/04/26/best-sites-to-buy-instagram-followers/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/buy-instagram-followers-buffzone.png" alt="Buy Instagram Followers BuffZone" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://hellstar.io/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/hellstarclothes.png" alt="Hellstar" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://www.socialfollowers.uk/buy-tiktok-followers/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/socialfollowersuk.png" alt="Buy Tiktok Followers" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://viralyft.com/buy-youtube-views" target="_blank">
         <img src="https://framework7.io/i/sponsors/viralyft.png" alt="Buy YouTube Views" width="160">
       </a>
@@ -629,6 +691,18 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ### \$50+ Top Supporter
 
 <!-- TOP_SUPPORTER -->
+- [Сasino Without Swedish License](https://casinos-without-license.com/)
+- [Ai2people](https://ai2people.com/)
+- [The Red Playground](https://theredplayground.com/)
+- [Buy Instagram Followers & Likes](https://leofame.com/)
+- [Expert Australian Online Casino Guide](https://betpokies.com/)
+- [CasinoRevisor: Alles über die besten Casinos in Deutschland](https://casinorevisor.com/)
+- [Accelerating Your Software Products | Teravision Technologies](https://www.teravisiontech.com/)
+- [revistacomunicacion.org](https://revistacomunicacion.org/)
+- [Ta καλύτερα διαδικτυακά καζίνο στην Ελλάδα το 2024](https://onlinecasinosgr.com/)
+- [Buy Instagram Followers BuffZone](https://www.buffzone.com/2024/04/26/best-sites-to-buy-instagram-followers/)
+- [Hellstar](https://hellstar.io/)
+- [Buy Tiktok Followers](https://www.socialfollowers.uk/buy-tiktok-followers/)
 - [Buy YouTube Views](https://viralyft.com/buy-youtube-views)
 - [Buy Instagram followers](https://insfollowpro.com/)
 - [Bountii](https://bountii.coupons/)
