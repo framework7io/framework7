@@ -249,6 +249,11 @@
         <img src="https://framework7.io/i/sponsors/lucky-jet.png" alt="Lucky jet" width="160">
       </a>
     </td>
+    <td align="center" valign="middle">
+      <a href="https://jetluckys.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/lucky-jet.png" alt="Lucky jet" width="160">
+      </a>
+    </td>
   </tr>
   <tr>
     <td align="center" valign="middle">
