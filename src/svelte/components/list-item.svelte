@@ -143,7 +143,7 @@
   );
 
   $: linkAttrs = {
-    href: link === true ? '' : link || href,
+    href: href === false ? undefined : link === true ? href || '' : link || href,
     target,
     'data-tab': (isStringProp(tabLink) && tabLink) || undefined,
     ...routerAttrs($$props),
