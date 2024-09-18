@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [8.3.4](https://github.com/framework7io/framework7/compare/v8.3.3...v8.3.4) (2024-09-18)
+
+### Bug Fixes
+
+- **link:** don't render href attribute in ListItem if href is false ([11c27e0](https://github.com/framework7io/framework7/commit/11c27e078c3b16d8a67a2fb10f6980c6547464e1)), closes [#4288](https://github.com/framework7io/framework7/issues/4288)
+
 # [8.3.3](https://github.com/framework7io/framework7/compare/v8.3.2...v8.3.3) (2024-03-25)
 
 ### Bug Fixes
