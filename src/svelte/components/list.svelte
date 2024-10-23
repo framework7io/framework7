@@ -84,6 +84,7 @@
     className,
     'list',
     {
+      ul,
       inset,
       'inset-ios': insetIos,
       'inset-md': insetMd,
