@@ -4,7 +4,6 @@
 
 <Page>
   <Navbar title="Right Panel" />
-  <BlockTitle>Left Panel</BlockTitle>
   <Block>
     <p>
       This is a right side panel. You can close it by clicking outsite or on this link:
