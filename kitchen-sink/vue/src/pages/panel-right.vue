@@ -1,7 +1,6 @@
 <template>
   <f7-page>
     <f7-navbar title="Right Panel"></f7-navbar>
-    <f7-block-title>Left Panel</f7-block-title>
     <f7-block>
       <p>
         This is a right side panel. You can close it by clicking outsite or on this link:
