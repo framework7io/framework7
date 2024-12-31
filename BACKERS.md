@@ -49,13 +49,55 @@
       </a>
     </td>
     <td align="center" valign="middle">
+      <a href="https://tokmax.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/tokmax.png" alt="Buy TikTok followers cheap and Instant" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://rsps-servers.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/rsps-list.png" alt="List of top RuneScape private servers" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://graming.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/graming.png" alt="Graming" width="160">
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle">
+      <a href="https://ssmarket.net/buy-youtube-subscribers" target="_blank">
+        <img src="https://framework7.io/i/sponsors/youtube-subscribers-ssmarket.png" alt="Buy Youtube Subscribers" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://skweezer.net/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/skweezer-net.png" alt="buy instagram followers" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://grafortuna.com.ua/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/grafortuna-com-ua.png" alt="ГраФортуна - ваш путівник у світі азартних розваг" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://jabka.skin/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/jabka-skin.png" alt="the only honest premium crash site" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://friendlylikes.com/buy-instagram-likes/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/friendlylikes2.png" alt="Buy Instagram Likes PayPal" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://www.famety.com/buy-instagram-likes" target="_blank">
         <img src="https://framework7.io/i/sponsors/famety-buy-instagram-followers.png" alt="Buy Instagram Likes with Instant Delivery" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://www.mediamister.com/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/media-mister.png" alt="Buy Followers, Likes, Subscribers & Views - Media Mister" width="160">
+      <a href="https://www.mediamister.com/buy-instagram-followers" target="_blank">
+        <img src="https://framework7.io/i/sponsors/media-mister.png" alt="Buy Instagram Followers" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -63,8 +105,6 @@
         <img src="https://framework7.io/i/sponsors/andrii8.png" alt="Καλύτερα Live καζίνο στην Ελλάδα 2024" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://growthoid.com/buy-instagram-followers/" target="_blank">
         <img src="https://framework7.io/i/sponsors/visit-growthoid-to-buy-instagram-followers.png" alt="Buy Instagram Followers Cheap" width="160">
@@ -85,6 +125,8 @@
         <img src="https://framework7.io/i/sponsors/zamamamma.png" alt="Zamsino.com 🎖️ Global Online Gambling Guide" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://aktobe-planeta.kz/" target="_blank">
         <img src="https://framework7.io/i/sponsors/aviatorcasino.png" alt="Aviator Casino" width="160">
@@ -125,8 +167,6 @@
         <img src="https://framework7.io/i/sponsors/chilecasinos.png" alt="Chile Casinos" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://casinoportugal.online" target="_blank">
         <img src="https://framework7.io/i/sponsors/casinoportugalonline.png" alt="casinos legais portugal" width="160">
@@ -147,6 +187,8 @@
         <img src="https://framework7.io/i/sponsors/smfame.png" alt="utländska casino med låg insättning" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://smfame.uk/buy-youtube-subscribers/" target="_blank">
         <img src="https://framework7.io/i/sponsors/smfame.png" alt="Buy YouTube Subscribers" width="160">
@@ -187,8 +229,6 @@
         <img src="https://framework7.io/i/sponsors/visit-youtube-video-downloader.png" alt="YouTube Video Downloader" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://au.casinologin.mobi/10-dollar-minimum-deposit-casinos/" target="_blank">
         <img src="https://framework7.io/i/sponsors/casinologinmobi-10dollar.png" alt="$10 Minimum Deposit Casinos in Australia" width="160">
@@ -209,6 +249,8 @@
         <img src="https://framework7.io/i/sponsors/casino-without-swedish-license1.png" alt="Сasino Without Swedish License" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://casinos-without-license.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/minsta-insattning-casino-utan-svensk-licens.png" alt="Сasino Without Swedish License" width="160">
@@ -249,8 +291,6 @@
         <img src="https://framework7.io/i/sponsors/bountii.png" alt="Bountii" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://buycheapestfollowers.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/buy-instagram-followers-buyche.png" alt="Buy Instagram Followers BuyCheapestFollowers" width="160">
@@ -271,6 +311,8 @@
         <img src="https://framework7.io/i/sponsors/casinos-online-sin-licencia-2024.svg" alt="Casinos Online Sin Licencia 2024" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.slotozilla.com/pl/" target="_blank">
         <img src="https://framework7.io/i/sponsors/slotozilla-poland.png" alt="Slotozilla Poland" width="160">
@@ -311,8 +353,6 @@
         <img src="https://framework7.io/i/sponsors/doublethebitcoin.png" alt="Best Bitcoin Casinos" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://aviator-game.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/aviator-game-com.png" alt="Aviator game" width="160">
@@ -333,6 +373,8 @@
         <img src="https://framework7.io/i/sponsors/bet-consulting.png" alt="Bet Consulting" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://airdroplist.co/" target="_blank">
         <img src="https://framework7.io/i/sponsors/airdroplist.png" alt="AirdropList(エアドロップリスト) | 仮想通貨のエアドロップ最新情報一覧" width="160">
@@ -373,8 +415,6 @@
         <img src="https://framework7.io/i/sponsors/aviator-aposta.png" alt="Aviators" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://888starz-polska.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/888starz.png" alt="888Starz Polska: Załóż Konto i Otrzymaj Bonus Powitalny do 1500 EUR!" width="160">
@@ -395,6 +435,8 @@
         <img src="https://framework7.io/i/sponsors/dobre-kasyna.png" alt="Najlepsze Kasyna Online w Polsce 2023 - Dobre Kasyna" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.nettikasinot.media/" target="_blank">
         <img src="https://framework7.io/i/sponsors/nettikasinot-media.png" alt="Nettikasinot | Katso parhaat nettikasinot 2023 | Top 10 lista" width="160">
@@ -435,8 +477,6 @@
         <img src="https://framework7.io/i/sponsors/aviator-game.png" alt="Aviator Game | Play Aviator Money Game by Spribe" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://pinupaviator.in/" target="_blank">
         <img src="https://framework7.io/i/sponsors/pin-up-aviator-india.png" alt="Pin Up Aviator Game Casino | Aviator Game in India" width="160">
@@ -457,6 +497,8 @@
         <img src="https://framework7.io/i/sponsors/jetxgame.png" alt="JetX Apostas | JetiX Aposta - Jogo do Foguete que Ganha Dinheiro" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://automatenspielex.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/automatenspielex.png" alt="neue online casinos deutschland" width="160">
@@ -497,8 +539,6 @@
         <img src="https://framework7.io/i/sponsors/correctcasinos.png" alt="Correct Casinos | Reputable Online Casinos, Slots & Bonuses" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://nongamstopcasinos.net/gb/" target="_blank">
         <img src="https://framework7.io/i/sponsors/nongamstopcasinos.png" alt="NonGamstopCasinos - Professional Service on Selection of Casino and Betting sites for UK Gamblers" width="160">
@@ -519,6 +559,8 @@
         <img src="https://framework7.io/i/sponsors/mitratogel.png" alt="Togel Online | Togel Hongkong | Togel Singapore Resmi" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.sure.bet/casinos-not-on-gamstop/" target="_blank">
         <img src="https://framework7.io/i/sponsors/surebet.png" alt="Casinos Not on GamStop » Most Trusted Non GamStop UK Casinos ⭐️" width="160">
@@ -559,8 +601,6 @@
         <img src="https://framework7.io/i/sponsors/casinos-hunter.png" alt="Best 1$ deposit casino in Canada" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://casinohex.org/canada/" target="_blank">
         <img src="https://framework7.io/i/sponsors/casinohex-canada.png" alt="Online Casino HEX - Best Online Casinos in Canada" width="160">
@@ -581,6 +621,8 @@
         <img src="https://framework7.io/i/sponsors/netpositive.png" alt="Ranking Bukmacherów Legalnych 2020. Bukmacher nr 1 to..." width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://inkedin.com" target="_blank">
         <img src="https://framework7.io/i/sponsors/inkedin.png" alt="Inkedin - Gambling News & Updates. Find Out What's Happening Here!" width="160">
@@ -621,8 +663,6 @@
         <img src="https://framework7.io/i/sponsors/cyberbrain.png" alt="CyberBrain IT Services" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://hicapps.cl" target="_blank">
         <img src="https://framework7.io/i/sponsors/hicapps.png" alt="HICAPPS - Health Informatics Custom APPs" width="160">
@@ -638,14 +678,6 @@
         <img src="https://framework7.io/i/sponsors/wappler.png" alt="Wappler - The Visual Web App Creator" width="160">
       </a>
     </td>
-    <td align="center" valign="middle"></td>
-    <td align="center" valign="middle"></td>
-    <td align="center" valign="middle"></td>
-    <td align="center" valign="middle"></td>
-    <td align="center" valign="middle"></td>
-    <td align="center" valign="middle"></td>
-    <td align="center" valign="middle"></td>
-    <td align="center" valign="middle"></td>
     <td align="center" valign="middle"></td>
   </tr>
 </table>
@@ -695,8 +727,16 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ### \$50+ Top Supporter
 
 <!-- TOP_SUPPORTER -->
+- [Buy TikTok followers cheap and Instant](https://tokmax.com/)
+- [List of top RuneScape private servers](https://rsps-servers.com/)
+- [Graming](https://graming.com/)
+- [Buy Youtube Subscribers](https://ssmarket.net/buy-youtube-subscribers)
+- [buy instagram followers](https://skweezer.net/)
+- [ГраФортуна - ваш путівник у світі азартних розваг](https://grafortuna.com.ua/)
+- [the only honest premium crash site](https://jabka.skin/)
+- [Buy Instagram Likes PayPal](https://friendlylikes.com/buy-instagram-likes/)
 - [Buy Instagram Likes with Instant Delivery](https://www.famety.com/buy-instagram-likes)
-- [Buy Followers, Likes, Subscribers & Views - Media Mister](https://www.mediamister.com/)
+- [Buy Instagram Followers](https://www.mediamister.com/buy-instagram-followers)
 - [Καλύτερα Live καζίνο στην Ελλάδα 2024](https://livecasinosgreek.com/)
 - [Buy Instagram Followers Cheap](https://growthoid.com/buy-instagram-followers/)
 - [Wordle Hint Today](https://www.wordhint.net/wordle/hint/today/)
