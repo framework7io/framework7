@@ -4,7 +4,6 @@ import { Page, Navbar, BlockTitle, Block, List, ListItem, Link } from 'framework
 export default () => (
   <Page>
     <Navbar title="Right Panel"></Navbar>
-    <BlockTitle>Left Panel</BlockTitle>
     <Block>
       <p>
         This is a right side panel. You can close it by clicking outsite or on this link:
