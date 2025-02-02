@@ -66,18 +66,84 @@
         </select>
       </f7-list-item>
     </f7-list>
+
+    <f7-block-title>Vue Model</f7-block-title>
+    <f7-list strong-ios outline-ios dividers-ios class="no-margin-top">
+      <f7-list-item group-title title="Coin flip guess" />
+      <f7-list-item
+        v-model:smart-selection="predictedCoinFlip"
+        title="Predicted outcome"
+        smart-select
+        :smart-select-params="{ openIn: 'sheet' }"
+      >
+        <select name="coin-flip">
+          <option value="heads">Heads</option>
+          <option value="tails">Tails</option>
+        </select>
+      </f7-list-item>
+      <f7-list-button title="Toggle prediction" @click="toggleCoinGuess" />
+      <f7-list-item group-title title="Purchase" />
+      <f7-list-item title="Total amout">
+        <template #after>
+          $15 + ${{ 15 * (tipPercentage / 100) }} ({{ tipPercentage }}%) tip
+        </template>
+      </f7-list-item>
+      <f7-list-item
+        v-model:smart-selection.number="tipPercentage"
+        title="Tip percentage"
+        smart-select
+        :smart-select-params="{ openIn: 'sheet' }"
+      >
+        <select name="tip-1">
+          <option value="10">10% tip</option>
+          <option value="20">20% tip</option>
+        </select>
+      </f7-list-item>
+      <f7-list-item
+        v-model:smart-selection.number="tipPercentage"
+        title="Tip formula"
+        smart-select
+        :smart-select-params="{ openIn: 'sheet' }"
+      >
+        <select name="tip-2">
+          <option value="10">purchase * 0.10</option>
+          <option value="20">purchase * 0.20</option>
+        </select>
+      </f7-list-item>
+    </f7-list>
   </f7-page>
 </template>
 <script>
-import { f7Navbar, f7Page, f7List, f7Block, f7ListItem } from 'framework7-vue';
+import {
+  f7Navbar,
+  f7Page,
+  f7List,
+  f7ListButton,
+  f7BlockTitle,
+  f7Block,
+  f7ListItem,
+} from 'framework7-vue';
 
 export default {
   components: {
     f7Navbar,
     f7Page,
     f7List,
+    f7ListButton,
     f7Block,
+    f7BlockTitle,
     f7ListItem,
+  },
+  data() {
+    return {
+      predictedCoinFlip: 'tails',
+      tipPercentage: 20,
+    };
+  },
+  methods: {
+    toggleCoinGuess() {
+      this.predictedCoinFlip = this.predictedCoinFlip === 'tails' ? 'heads' : 'tails';
+    },
   },
 };
 </script>
