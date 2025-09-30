@@ -228,13 +228,21 @@ class Range extends Framework7Class {
       rangeOffsetTop = rangeOffset.top;
 
       let progress;
+      const knobSize = range.vertical ? range.knobHeight : range.knobWidth;
+      const progressModify = limitKnobPosition ? knobSize : 0;
       if (range.vertical) {
-        progress = (touchesStart.y - rangeOffsetTop) / range.rangeHeight;
+        progress =
+          (touchesStart.y - rangeOffsetTop - progressModify / 2) /
+          (range.rangeHeight - progressModify);
         if (!range.verticalReversed) progress = 1 - progress;
       } else if (range.app.rtl) {
-        progress = (rangeOffsetLeft + range.rangeWidth - touchesStart.x) / range.rangeWidth;
+        progress =
+          (rangeOffsetLeft + range.rangeWidth + progressModify / 2 - touchesStart.x) /
+          (range.rangeWidth - progressModify);
       } else {
-        progress = (touchesStart.x - rangeOffsetLeft) / range.rangeWidth;
+        progress =
+          (touchesStart.x - rangeOffsetLeft - progressModify / 2) /
+          (range.rangeWidth - progressModify);
       }
 
       let newValue = progress * (range.max - range.min) + range.min;
@@ -287,13 +295,19 @@ class Range extends Framework7Class {
       e.preventDefault();
 
       let progress;
+      const knobSize = range.vertical ? range.knobHeight : range.knobWidth;
+      const progressModify = limitKnobPosition ? knobSize : 0;
       if (range.vertical) {
-        progress = (pageY - rangeOffsetTop) / range.rangeHeight;
+        progress =
+          (pageY - rangeOffsetTop - progressModify / 2) / (range.rangeHeight - progressModify);
         if (!range.verticalReversed) progress = 1 - progress;
       } else if (range.app.rtl) {
-        progress = (rangeOffsetLeft + range.rangeWidth - pageX) / range.rangeWidth;
+        progress =
+          (rangeOffsetLeft + range.rangeWidth + progressModify / 2 - pageX) /
+          (range.rangeWidth - progressModify);
       } else {
-        progress = (pageX - rangeOffsetLeft) / range.rangeWidth;
+        progress =
+          (pageX - rangeOffsetLeft - progressModify / 2) / (range.rangeWidth - progressModify);
       }
 
       let newValue = progress * (range.max - range.min) + range.min;
@@ -456,9 +470,9 @@ class Range extends Framework7Class {
       knobs.forEach(($knobEl, knobIndex) => {
         let startPos = rangeSize * progress[knobIndex];
         if (limitKnobPosition) {
-          const realStartPos = rangeSize * progress[knobIndex] - knobSize / 2;
-          if (realStartPos < 0) startPos = knobSize / 2;
-          if (realStartPos + knobSize > rangeSize) startPos = rangeSize - knobSize / 2;
+          const minPos = knobSize;
+          const maxPos = rangeSize;
+          startPos = (maxPos - minPos) * progress[knobIndex] + knobSize / 2;
         }
         $knobEl.css(positionProperty, `${startPos}px`);
         if (label)
@@ -469,10 +483,11 @@ class Range extends Framework7Class {
       $barActiveEl.css(vertical ? 'height' : 'width', `${progress * 100}%`);
 
       let startPos = rangeSize * progress;
+
       if (limitKnobPosition) {
-        const realStartPos = rangeSize * progress - knobSize / 2;
-        if (realStartPos < 0) startPos = knobSize / 2;
-        if (realStartPos + knobSize > rangeSize) startPos = rangeSize - knobSize / 2;
+        const minPos = knobSize;
+        const maxPos = rangeSize;
+        startPos = (maxPos - minPos) * progress + knobSize / 2;
       }
       knobs[0].css(positionProperty, `${startPos}px`);
       if (label) labels[0].text(range.formatLabel(value, labels[0][0]));

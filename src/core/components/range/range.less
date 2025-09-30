@@ -64,32 +64,34 @@
 .range-knob-wrap {
   z-index: 20;
   position: absolute;
-  height: var(--f7-range-knob-size);
-  width: var(--f7-range-knob-size);
+  height: var(--f7-range-knob-height);
+  width: var(--f7-range-knob-width);
 
   .range-slider-horizontal & {
     top: 50%;
-    margin-top: calc(-1 * var(--f7-range-knob-size) / 2);
+    margin-top: calc(-1 * var(--f7-range-knob-height) / 2);
     .ltr({
-      margin-left: calc(-1 * var(--f7-range-knob-size) / 2);
+      margin-left: calc(-1 * var(--f7-range-knob-width) / 2);
       left: 0;
     });
     .rtl({
-      margin-right: calc(-1 * var(--f7-range-knob-size) / 2);
+      margin-right: calc(-1 * var(--f7-range-knob-width) / 2);
       right: 0;
     });
   }
   .range-slider-vertical & {
     left: 50%;
-    margin-left: calc(-1 * var(--f7-range-knob-size) / 2);
+    height: var(--f7-range-knob-width);
+    width: var(--f7-range-knob-height);
+    margin-left: calc(-1 * var(--f7-range-knob-height) / 2);
     bottom: 0;
-    margin-bottom: calc(-1 * var(--f7-range-knob-size) / 2);
+    margin-bottom: calc(-1 * var(--f7-range-knob-width) / 2);
   }
   .range-slider-vertical-reversed & {
     bottom: auto;
     top: 0;
     margin-bottom: 0;
-    margin-top: calc(-1 * var(--f7-range-knob-size) / 2);
+    margin-top: calc(-1 * var(--f7-range-knob-width) / 2);
   }
 }
 .range-knob {

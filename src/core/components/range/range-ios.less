@@ -1,9 +1,56 @@
 .ios {
+  .range-bar-active {
+    border-radius: inherit;
+  }
+  .range-knob {
+    border-radius: var(--f7-range-knob-height);
+    transition-duration: 300ms;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+    }
+    &::before {
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      transition-duration: 300ms;
+      box-shadow: 0px 0px 40px 15px rgba(var(--f7-theme-color-rgb), 0.75);
+      left: 50%;
+      top: 50%;
+      margin-left: -0.5px;
+      margin-top: -0.5px;
+    }
+    &::after {
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: var(--f7-shadow-glass-thumb);
+      transition-duration: 300ms;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+  }
   .range-knob-label {
     margin-bottom: 6px;
     transform: translateX(-50%) translateY(100%) scale(0);
+    z-index: 2;
   }
   .range-knob-active-state .range-knob-label {
     transform: translateX(-50%) translateY(0%) scale(1);
+  }
+  .range-knob-active-state {
+    .range-knob {
+      background: transparent;
+      transform: scale(1.4);
+      &::before {
+        opacity: 1;
+      }
+      &::after {
+        opacity: 1;
+      }
+    }
   }
 }
