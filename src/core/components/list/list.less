@@ -178,7 +178,7 @@
   .item-link,
   label.item-content {
     color: inherit;
-    &.active-state {
+    &.active-state:not(:has(.toggle-active-state)) {
       background-color: var(--f7-list-link-pressed-bg-color);
     }
   }

@@ -1,69 +1,87 @@
 .ios {
   .toggle {
-    background: var(--f7-toggle-inactive-border-color);
-    input[type='checkbox']:checked + .toggle-icon {
-      background: var(--f7-toggle-active-color, var(--f7-theme-color));
-      &:before {
+    --f7-toggle-knob-tx: 0px;
+    &::before {
+      content: '';
+      border-radius: inherit;
+      inset: 0;
+      position: absolute;
+      background: var(--f7-toggle-inactive-border-color);
+      transition-duration: 300ms;
+      z-index: 0;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      transform: translateX(calc(var(--f7-toggle-width) - var(--f7-toggle-height)));
+
+      top: 0;
+      width: var(--f7-toggle-height);
+      height: var(--f7-toggle-height);
+      border-radius: var(--f7-toggle-height);
+      background: var(--f7-toggle-inactive-border-color);
+      transition-duration: 300ms;
+      z-index: 0;
+    }
+    &:has(input[type='checkbox']:checked) {
+      --f7-toggle-knob-tx: calc(var(--f7-toggle-width) - 38px - 4px);
+      &::before {
         background: var(--f7-toggle-active-bg-color, var(--f7-theme-color));
-        transform: scale(0);
       }
-      &:after {
-        background: var(--f7-toggle-active-knob-bg-color);
-        .ltr({
-          transform: translateX(calc(var(--f7-toggle-width) - var(--f7-toggle-height)));
-        });
-        .rtl({
-          transform: translateX(calc(-1 * (var(--f7-toggle-width) - var(--f7-toggle-height))));
-        });
+      &::after {
+        background: var(--f7-toggle-active-bg-color, var(--f7-theme-color));
+        transform: translateX(0);
       }
     }
   }
   .toggle-icon {
-    background: var(--f7-toggle-border-color);
-    &:before {
+    background: var(--f7-toggle-inactive-knob-bg-color);
+    height: calc(var(--f7-toggle-height) - 4px);
+    width: 38px;
+    top: 2px;
+    .ltr({ left: 2px; });
+    .rtl({ right: 2px; });
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    border-radius: calc(var(--f7-toggle-height) - 4px);
+    transition-duration: 300ms;
+    transform: translateX(var(--f7-toggle-knob-tx)) scale(1);
+    position: relative;
+    z-index: 1;
+    transform-origin: center;
+    &::before {
+      content: '';
       position: absolute;
-      .ltr({ left: 2px; });
-      .rtl({ right: 2px; });
-      top: 2px;
-      width: calc(var(--f7-toggle-width) - 4px);
-      height: calc(var(--f7-toggle-height) - 4px);
-      border-radius: var(--f7-toggle-height);
-      box-sizing: border-box;
-      background: var(--f7-toggle-inactive-bg-color);
-      z-index: 1;
+      left: 50%;
+      top: 50%;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
       transition-duration: 300ms;
-      transform: scale(1);
+      box-shadow: 0px 0px 40px 15px rgba(var(--f7-theme-color-rgb), 0.75);
     }
-    &:after {
-      background: var(--f7-toggle-inactive-knob-bg-color);
-      height: calc(var(--f7-toggle-height) - 4px);
-      width: calc(var(--f7-toggle-height) - 4px);
-      top: 2px;
-      .ltr({ left: 2px; });
-      .rtl({ right: 2px; });
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      border-radius: calc(var(--f7-toggle-height) - 4px);
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: var(--f7-shadow-glass-thumb);
+      transition-duration: 300ms;
+      opacity: 0;
     }
   }
   .toggle-active-state {
-    input[type='checkbox']:not(:checked) + .toggle-icon {
-      &:before {
-        transform: scale(0);
-      }
+    &::before {
+      transform: scale(0.75);
     }
-    input[type='checkbox'] + .toggle-icon {
-      &:after {
-        width: calc(var(--f7-toggle-height) + 4px);
+    .toggle-icon {
+      background: transparent;
+      transform: translateX(var(--f7-toggle-knob-tx)) scale(1.4);
+      &::before {
+        opacity: 1;
       }
-    }
-    input[type='checkbox']:checked + .toggle-icon {
-      &:after {
-        .ltr({
-          transform: translateX(calc(var(--f7-toggle-width) - var(--f7-toggle-height) - 8px));
-        });
-        .rtl({
-          transform: translateX(calc(-1 * (var(--f7-toggle-width) - var(--f7-toggle-height) - 8px)));
-        });
+      &::after {
+        opacity: 1;
       }
     }
   }
