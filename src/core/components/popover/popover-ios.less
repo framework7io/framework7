@@ -1,6 +1,72 @@
 .ios {
+  .popover-on-top {
+    transform-origin: center bottom;
+    --f7-popover-inner-offset: translate3d(0%, 80px, 0);
+  }
+  .popover-on-top.popover-on-right {
+    transform-origin: left bottom;
+    --f7-popover-inner-offset: translate3d(50%, 80px, 0);
+  }
+  .popover-on-top.popover-on-left {
+    transform-origin: right bottom;
+    --f7-popover-inner-offset: translate3d(-50%, 80px, 0);
+  }
+  .popover-on-middle {
+    transform-origin: center center;
+  }
+  .popover-on-middle.popover-on-right {
+    transform-origin: left center;
+    --f7-popover-inner-offset: translate3d(50%, 0px, 0);
+  }
+  .popover-on-middle.popover-on-left {
+    transform-origin: right center;
+    --f7-popover-inner-offset: translate3d(-50%, 0px, 0);
+  }
+  .popover-on-bottom {
+    transform-origin: center top;
+    --f7-popover-inner-offset: translate3d(0%, -80px, 0);
+  }
+  .popover-on-bottom.popover-on-right {
+    transform-origin: left top;
+    --f7-popover-inner-offset: translate3d(50%, -80px, 0);
+  }
+  .popover-on-bottom.popover-on-left {
+    transform-origin: right top;
+    --f7-popover-inner-offset: translate3d(-50%, -80px, 0);
+  }
   .popover {
-    transform: none;
-    transition-property: opacity;
+    transform: translate3d(0, 0, 0) scale(0);
+    transition-property: opacity, transform;
+    background: transparent;
+
+    will-change: auto;
+    backdrop-filter: var(--f7-glass-blur);
+
+    &.modal-in {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+      transition-timing-function: cubic-bezier(0, 1, 0.2, 1.05);
+      transition-duration: 400ms;
+      .popover-inner {
+        transition-duration: 600ms;
+
+        transition-timing-function: cubic-bezier(0, 1, 0.2, 1.05);
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+    }
+    &.modal-out {
+      opacity: 0;
+      transform: translate3d(0, 0, 0) scale(0);
+      transition-duration: 400ms;
+      .popover-inner {
+        transition-duration: 600ms;
+      }
+    }
+  }
+  .popover-inner {
+    background: var(--f7-glass-bg-color);
+    box-shadow: var(--f7-glass-shadow);
+    border-radius: var(--f7-popover-border-radius);
+    transform: var(--f7-popover-inner-offset);
   }
 }

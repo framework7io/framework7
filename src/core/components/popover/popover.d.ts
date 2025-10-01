@@ -23,8 +23,6 @@ export namespace Popover {
     el?: HTMLElement | CSSSelector;
     /** Full Popover HTML layout string. Can be useful if you want to create Popover element dynamically. */
     content?: string;
-    /** Enables Popover arrow/corner. (default true) */
-    arrow?: boolean;
     /** Enables Popover backdrop (dark semi transparent layer behind). (default true) */
     backdrop?: boolean;
     /** Backdrop element to share across instances */
