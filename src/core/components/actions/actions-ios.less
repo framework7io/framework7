@@ -1,11 +1,12 @@
 .ios {
   .actions-group {
     border-radius: var(--f7-actions-border-radius);
+    background: var(--f7-actions-bg-color);
+    box-shadow: var(--f7-glass-shadow);
+    backdrop-filter: var(--f7-glass-blur);
   }
   .actions-button,
   .actions-label {
-    background: var(--f7-actions-bg-color);
-    .ios-translucent-modals(var(--f7-actions-bg-color-rgb));
     &:first-child {
       border-radius: var(--f7-actions-border-radius) var(--f7-actions-border-radius) 0 0;
     }
@@ -22,23 +23,27 @@
     }
   }
   .actions-grid {
-    .actions-group {
-      border-radius: 0;
+    overflow: visible;
+    &::before {
+      content: '';
+      position: absolute;
+      left: var(--f7-actions-group-margin);
+      right: var(--f7-actions-group-margin);
+      bottom: var(--f7-actions-group-margin);
       background: var(--f7-actions-bg-color);
-      .ios-translucent-modals(var(--f7-actions-bg-color-rgb));
-      &:first-child {
-        border-radius: var(--f7-actions-border-radius) var(--f7-actions-border-radius) 0 0;
-      }
-      &:last-child {
-        border-radius: 0 0 var(--f7-actions-border-radius) var(--f7-actions-border-radius);
-      }
-      &:first-child:last-child {
-        border-radius: var(--f7-actions-border-radius);
-      }
+      top: 0;
+      border-radius: var(--f7-actions-border-radius);
+      box-shadow: var(--f7-glass-shadow);
+      backdrop-filter: var(--f7-glass-blur);
+    }
+    .actions-group {
+      background: transparent;
+      box-shadow: none;
+      backdrop-filter: none;
     }
     .actions-button,
     .actions-label {
-      border-radius: 0 !important;
+      border-radius: var(--f7-actions-border-radius);
     }
   }
   .actions-button-media {
