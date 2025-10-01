@@ -1,34 +1,37 @@
 :root {
   --f7-fab-margin: 16px;
   --f7-fab-extended-text-font-size: 14px;
-  --f7-fab-label-padding: 4px 12px;
   --f7-fab-label-font-size: inherit;
   --f7-fab-button-size: 40px;
 }
 .ios-vars({
   /* --f7-fab-pressed-bg-color: var(--f7-theme-color-shade); */
-  /* --f7-fab-bg-color: var(--f7-theme-color)); */
   .light-vars({
-    --f7-glass-shadow-fab:
-      inset -3px -3px 0px -3.5px #fff,
+    --f7-fab-bg-color: var(--f7-theme-color);
+    --f7-glass-shadow-fab: inset -3px -3px 0px -3.5px #fff,
       inset 3px 3px 0px -3.5px #fff,
       inset 0px 0px 0px 0.5px rgba(255, 255, 255, 0.5),
-      inset 3px 3px 10px -2px color-mix(in oklab, var(--color-primary) 100%, black),
-      inset -3px -3px 10px -2px color-mix(in oklab, var(--color-primary) 100%, black),
+      inset 3px 3px 10px -2px color-mix(in oklab, var(--f7-theme-color) 100%, black),
+      inset -3px -3px 10px -2px color-mix(in oklab, var(--f7-theme-color) 100%, black),
       inset 0 0 5px 1px #fff,
       0 0 15px 4px rgba(0, 0, 0, 0.2);
-  });
+  --f7-fab-label-text-color: #000;
+  --f7-fab-label-bg-color: #fff;
+});
   .dark-vars({
-    --f7-glass-shadow-fab:
-      inset 3px 3px 0px -3.5px var(--color-primary),
-      inset -3px -3px 0px -3.5px var(--color-primary),
+    --f7-fab-bg-color: color-mix(in oklab, var(--f7-theme-color-shade) 50%, transparent 0%);
+
+    --f7-glass-shadow-fab: inset 3px 3px 0px -3.5px var(--f7-theme-color),
+      inset -3px -3px 0px -3.5px var(--f7-theme-color),
       inset -0.5px -0.5px 0px rgba(255, 255, 255, 0.5),
       inset 0.5px 0.5px 0px rgba(255, 255, 255, 0.1),
       inset -3px 3px 0px -3.5px rgba(255, 255, 255, 0.25),
-      inset 0px -5px 0px -3.5px color-mix(in oklab, var(--color-primary) 50%, transparent 10%),
-      inset 0px -5px 5px color-mix(in oklab, var(--color-primary) 50%, transparent 10%),
+      inset 0px -5px 0px -3.5px color-mix(in oklab, var(--f7-theme-color) 50%, transparent 10%),
+      inset 0px -5px 5px color-mix(in oklab, var(--f7-theme-color) 50%, transparent 10%),
       0 0 15px 4px rgba(0, 0, 0, 0.2);
-  });
+  --f7-fab-label-text-color: #fff;
+  --f7-fab-label-bg-color: #151515;
+});
   --f7-fab-text-color: #fff;
   --f7-fab-border-radius: 50px;
   --f7-fab-size: 50px;
@@ -38,10 +41,9 @@
   --f7-fab-extended-text-padding: 0 20px;
   --f7-fab-extended-text-font-weight: 600;
   --f7-fab-extended-text-letter-spacing: 0;
-  --f7-fab-label-border-radius: 4px;
-  --f7-fab-label-box-shadow: 0px 1px 2px rgba(0,0,0,0.4);
-  --f7-fab-label-text-color: #333;
-  --f7-fab-label-bg-color: #fff;
+  --f7-fab-label-border-radius: 8px;
+  --f7-fab-label-box-shadow: var(--f7-glass-shadow);
+  --f7-fab-label-padding: 8px 16px;
 });
 .md-vars({
   /*
@@ -58,6 +60,7 @@
   --f7-fab-extended-text-transform: none;
   --f7-fab-label-border-radius: 8px;
   --f7-fab-label-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+  --f7-fab-label-padding: 4px 12px;
 });
 .md-color-vars({
   --f7-fab-bg-color: var(--f7-md-primary-container);
