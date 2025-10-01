@@ -13,30 +13,14 @@
     line-height: 1.5;
   }
   .dialog-buttons {
-    height: 64px;
     padding: 0px 24px 24px;
     overflow: hidden;
     box-sizing: border-box;
     justify-content: flex-end;
+    gap: 8px;
   }
-
   .dialog-button {
-    --f7-touch-ripple-color: rgba(var(--f7-theme-color-rgb), 0.25);
-    border-radius: 99px;
-    min-width: 64px;
-    padding: 0px 16px;
-    border: none;
-    transition-duration: 300ms;
-    transform: translate3d(0, 0, 0);
-    + .dialog-button {
-      margin-left: 8px;
-    }
-    &-strong {
-      --f7-touch-ripple-color: var(--f7-touch-ripple-white);
-    }
-  }
-  .dialog-button[class*='color-'] {
-    --f7-dialog-button-text-color: var(--f7-theme-color);
+    width: auto;
   }
 
   .dialog-buttons-vertical {
@@ -44,10 +28,6 @@
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-    }
-    .dialog-button + .dialog-button {
-      margin-top: 8px;
-      margin-left: 0;
     }
   }
 

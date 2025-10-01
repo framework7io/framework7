@@ -46,6 +46,9 @@
   font-weight: var(--f7-dialog-title-font-weight);
   line-height: var(--f7-dialog-title-line-height);
 }
+.dialog-text {
+  line-height: var(--f7-dialog-text-line-height);
+}
 // Buttons
 .dialog-buttons {
   position: relative;
@@ -54,38 +57,17 @@
     flex-direction: row-reverse;
   });
   .dialog-buttons-vertical & {
-    display: block;
+    flex-direction: column;
     height: auto !important;
   }
 }
 .dialog-button {
-  box-sizing: border-box;
   overflow: hidden;
   position: relative;
   white-space: nowrap;
   text-overflow: ellipsis;
-  color: var(--f7-dialog-button-text-color);
-  font-size: var(--f7-dialog-button-font-size);
-  height: var(--f7-dialog-button-height);
-  line-height: var(--f7-dialog-button-height);
-  letter-spacing: var(--f7-dialog-button-letter-spacing);
-  text-align: var(--f7-dialog-button-text-align);
-  font-weight: var(--f7-dialog-button-font-weight);
-  text-transform: var(--f7-dialog-button-text-transform);
-  display: block;
-  cursor: pointer;
-  &.active-state {
-    background-color: var(--f7-dialog-button-pressed-bg-color);
-  }
 }
-.dialog-button-strong {
-  background-color: var(--f7-dialog-button-strong-bg-color);
-  color: var(--f7-dialog-button-strong-text-color);
-  font-weight: var(--f7-dialog-button-strong-font-weight);
-  &.active-state {
-    background-color: var(--f7-dialog-button-strong-pressed-bg-color);
-  }
-}
+
 .dialog-no-buttons {
   .dialog-buttons {
     display: none;

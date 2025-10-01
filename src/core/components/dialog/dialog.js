@@ -88,7 +88,7 @@ export default {
               },
               {
                 text: app.params.dialog.buttonOk,
-                strong: isIosTheme,
+                strong: true,
                 keyCodes: keyboardActions ? [13] : null,
               },
             ],
@@ -118,7 +118,7 @@ export default {
               },
               {
                 text: app.params.dialog.buttonOk,
-                strong: isIosTheme,
+                strong: true,
                 onClick: callbackOk,
                 keyCodes: keyboardActions ? [13] : null,
               },
@@ -185,7 +185,7 @@ export default {
               },
               {
                 text: app.params.dialog.buttonOk,
-                strong: isIosTheme,
+                strong: true,
                 keyCodes: keyboardActions ? [13] : null,
               },
             ],
