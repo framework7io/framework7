@@ -38,12 +38,10 @@
     transform: translate3d(0, 0, 0) scale(0);
     transition-property: opacity, transform;
     background: transparent;
-
+    opacity: 1;
     will-change: auto;
-    .ios-translucent-glass();
 
     &.modal-in {
-      opacity: 1;
       transform: translate3d(0, 0, 0) scale(1);
       transition-timing-function: cubic-bezier(0, 1, 0.2, 1.05);
       transition-duration: 400ms;
@@ -57,9 +55,9 @@
     &.modal-out {
       opacity: 0;
       transform: translate3d(0, 0, 0) scale(0);
-      transition-duration: 400ms;
+      transition-duration: 300ms;
       .popover-inner {
-        transition-duration: 600ms;
+        transition-duration: 500ms;
       }
     }
   }
@@ -68,5 +66,6 @@
     box-shadow: var(--f7-glass-shadow);
     border-radius: var(--f7-popover-border-radius);
     transform: var(--f7-popover-inner-offset);
+    .ios-translucent-glass();
   }
 }

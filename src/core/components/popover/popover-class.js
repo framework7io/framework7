@@ -188,7 +188,7 @@ class Popover extends Modal {
 
     $el
       .removeClass(
-        'popover-on-left popover-on-right popover-on-top popover-on-bottom popover-on-middle modal-in',
+        'popover-on-left popover-on-right popover-on-top popover-on-bottom popover-on-middle',
       )
       .css({ left: '', top: '' });
 
@@ -273,6 +273,13 @@ class Popover extends Modal {
 
     // Apply Styles
     $el.css({ top: `${top}px`, left: `${left}px` });
+    if (app.theme === 'ios') {
+      $el.css({
+        transformOrigin: `${targetOffsetLeft + targetWidth / 2 - left}px ${
+          targetOffsetTop + targetHeight / 2 - top
+        }px`,
+      });
+    }
   }
 }
 
