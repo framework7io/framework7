@@ -118,9 +118,13 @@ class Toast extends Modal {
           {icon && <div class="toast-icon">{icon}</div>}
           <div class="toast-text">{text}</div>
           {closeButton && !icon && (
-            <a class={`toast-button button ${closeButtonColor ? `color-${closeButtonColor}` : ''}`}>
+            <button
+              class={`toast-button button ${closeButtonColor ? `color-${closeButtonColor}` : ''}${
+                toast.app.theme === 'ios' ? ' button-round' : ''
+              }`}
+            >
               {closeButtonText}
-            </a>
+            </button>
           )}
         </div>
       </div>
