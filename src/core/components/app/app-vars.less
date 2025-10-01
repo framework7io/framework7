@@ -72,8 +72,20 @@
   /*
   --f7-bars-link-color: var(--f7-theme-color);
   */
+  --f7-glass-blur: blur(16px);
+
   .light-vars({
-    --f7-shadow-glass-thumb:
+    --f7-glass-bg-color: rgba(255, 255, 255, 0.75);
+    --f7-glass-shadow:
+      inset -1px -1px 0px -0.5px rgba(255, 255, 255, 1),
+      inset 1px 1px 0px -0.5px rgba(255, 255, 255, 1),
+      inset 3px 3px 10px -3px #ddd,
+      inset -3px -3px 10px -3px #ddd,
+      inset 0 0 5px 1px #fff,
+      inset 0 0 0 0.5px rgba(0, 0, 0, 0.25),
+      inset 0 0 24px 0 rgba(0, 0, 0, 0.1),
+      0 0 25px 0 rgba(0, 0, 0, 0.2);
+    --f7-glass-shadow-thumb:
       inset -3px -3px 0px -3.5px rgba(255, 255, 255, 1),
       inset 3px 3px 0px -3.5px rgba(255, 255, 255, 1),
       inset 0px 0px 0px 0.5px rgba(255, 255, 255, 0.5),
@@ -87,7 +99,18 @@
     --f7-bars-border-color: rgba(0,0,0,0.25);
   });
   .dark-vars({
-    --f7-shadow-glass-thumb:
+    --f7-glass-bg-color: rgba(50, 50, 50, 0.5);
+    --f7-glass-shadow:
+      inset -2px -2px 0.5px -2.5px rgba(255, 255, 255, 0.4),
+      inset 3px 3px 0.5px -3.5px rgba(255, 255, 255, 0.4),
+      inset 2px 2px 0.5px -2px #262626,
+      inset -2px -2px 0.5px -2px #262626,
+      inset 0 0 5px 1px #141414,
+      inset 0 0 0 1px rgba(255, 255, 255, 0.15),
+      inset 0 0 10px 0 rgba(255, 255, 255, 0.075),
+      inset 0 0 24px 0 rgba(255, 255, 255, 0.05),
+      0 0 25px 0 rgba(0, 0, 0, 0.15);
+    --f7-glass-shadow-thumb:
       inset 3px 3px 0px -3.5px rgba(255, 255, 255, 1),
       inset -3px -3px 0px -3.5px rgba(255, 255, 255, 1),
       inset -0.5px -0.5px 0px rgba(255, 255, 255, 0.5),

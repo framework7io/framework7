@@ -8,6 +8,27 @@
 .ios-vars({
   /* --f7-fab-pressed-bg-color: var(--f7-theme-color-shade); */
   /* --f7-fab-bg-color: var(--f7-theme-color)); */
+  .light-vars({
+    --f7-glass-shadow-fab:
+      inset -3px -3px 0px -3.5px #fff,
+      inset 3px 3px 0px -3.5px #fff,
+      inset 0px 0px 0px 0.5px rgba(255, 255, 255, 0.5),
+      inset 3px 3px 10px -2px color-mix(in oklab, var(--color-primary) 100%, black),
+      inset -3px -3px 10px -2px color-mix(in oklab, var(--color-primary) 100%, black),
+      inset 0 0 5px 1px #fff,
+      0 0 15px 4px rgba(0, 0, 0, 0.2);
+  });
+  .dark-vars({
+    --f7-glass-shadow-fab:
+      inset 3px 3px 0px -3.5px var(--color-primary),
+      inset -3px -3px 0px -3.5px var(--color-primary),
+      inset -0.5px -0.5px 0px rgba(255, 255, 255, 0.5),
+      inset 0.5px 0.5px 0px rgba(255, 255, 255, 0.1),
+      inset -3px 3px 0px -3.5px rgba(255, 255, 255, 0.25),
+      inset 0px -5px 0px -3.5px color-mix(in oklab, var(--color-primary) 50%, transparent 10%),
+      inset 0px -5px 5px color-mix(in oklab, var(--color-primary) 50%, transparent 10%),
+      0 0 15px 4px rgba(0, 0, 0, 0.2);
+  });
   --f7-fab-text-color: #fff;
   --f7-fab-border-radius: 50px;
   --f7-fab-size: 50px;
