@@ -205,13 +205,15 @@ class Notification extends Modal {
       notification.params;
     return (
       <div class={`notification ${icon ? 'notification-with-icon' : ''} ${cssClass || ''}`}>
-        <div class="notification-header">
-          {icon && <div class="notification-icon">{icon}</div>}
-          {title && <div class="notification-title">{title}</div>}
-          {titleRightText && <div class="notification-title-right-text">{titleRightText}</div>}
-          {closeButton && <span class="notification-close-button"></span>}
-        </div>
+        {icon && <div class="notification-icon">{icon}</div>}
         <div class="notification-content">
+          {(title || titleRightText || closeButton) && (
+            <div class="notification-header">
+              {title && <div class="notification-title">{title}</div>}
+              {titleRightText && <div class="notification-title-right-text">{titleRightText}</div>}
+              {closeButton && <span class="notification-close-button"></span>}
+            </div>
+          )}
           {subtitle && <div class="notification-subtitle">{subtitle}</div>}
           {text && <div class="notification-text">{text}</div>}
         </div>

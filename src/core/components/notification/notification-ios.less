@@ -2,6 +2,8 @@
   .notification {
     transition-duration: 450ms;
     transform: translate3d(0%, -200%, 0);
+    align-items: center;
+
     &.modal-in {
       transform: translate3d(0%, 0%, 0);
       opacity: 1;
@@ -11,17 +13,10 @@
     }
   }
 
-  .notification-icon {
-    margin-right: 8px;
-  }
-  .notification-header + .notification-content {
-    margin-top: 10px;
-  }
   .notification-title-right-text {
-    margin-right: 6px;
     margin-left: auto;
     + .notification-close-button {
-      margin-left: 10px;
+      margin-left: 12px;
     }
   }
   .notification-close-button {

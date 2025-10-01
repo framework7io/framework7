@@ -20,12 +20,18 @@
   box-shadow: var(--f7-notification-box-shadow);
   background: var(--f7-notification-bg-color);
   margin-top: var(--f7-safe-area-top);
-  .ios-translucent-modals(var(--f7-notification-bg-color-rgb));
+  display: flex;
+  gap: 16px;
+  .ios-translucent-glass();
   @media (min-width: 568px) {
     left: 50%;
     width: var(--f7-notification-max-width);
     margin-left: calc(-1 * var(--f7-notification-max-width) / 2);
   }
+}
+.notification-content {
+  width: 100%;
+  flex-shrink: 10;
 }
 .notification-title {
   color: var(--f7-notification-title-color, var(--f7-theme-color));
@@ -56,6 +62,7 @@
 .notification-icon {
   font-size: 0;
   line-height: var(--f7-notification-icon-size);
+  flex-shrink: 0;
   i,
   & {
     width: var(--f7-notification-icon-size) !important;
