@@ -498,9 +498,8 @@ class Sheet extends Modal {
       )
         return;
       if (breakpoint >= pushBreakpoint) {
-        sheet.$htmlEl
-          .addClass('with-modal-sheet-push')
-          .removeClass('with-modal-sheet-push-closing');
+        $el.addClass('sheet-modal-push-in');
+        $el.removeClass('sheet-modal-push-closing');
         $pushViewEl.transition('').forEach((el) => {
           el.style.setProperty(
             'transform',
@@ -516,16 +515,14 @@ class Sheet extends Modal {
         if (breakpoint <= pushTransparentBreakpoint) {
           $pushViewEl.transition('').css('transform', '');
           $pushViewEl.css('border-radius', '');
-          sheet.$htmlEl.removeClass('with-modal-sheet-push');
+          $el.removeClass('sheet-modal-push-in');
           if (breakpoint === pushTransparentBreakpoint) {
-            sheet.$htmlEl.addClass('with-modal-sheet-push-closing');
+            $el.addClass('sheet-modal-push-closing');
           }
         } else {
           const progress =
             (breakpoint - pushTransparentBreakpoint) / (pushBreakpoint - pushTransparentBreakpoint);
-          sheet.$htmlEl
-            .addClass('with-modal-sheet-push')
-            .removeClass('with-modal-sheet-push-closing');
+          $el.addClass('sheet-modal-push-in').removeClass('sheet-modal-push-closing');
           $pushViewEl.transition(0).forEach((el) => {
             el.style.setProperty(
               'transform',
@@ -681,13 +678,13 @@ class Sheet extends Modal {
         sheet.$htmlEl[0].style.setProperty('--f7-sheet-push-offset', `${pushOffset}px`);
         $el.addClass('sheet-modal-push');
         if (!useBreakpoints) {
-          sheet.$htmlEl.addClass('with-modal-sheet-push');
+          $el.addClass('sheet-modal-push-in');
         }
         if (!sheet.params.swipeToStep && !useBreakpoints) {
           sheet.$htmlEl[0].style.setProperty('--f7-sheet-push-scale', pushViewScale(pushOffset));
         } else {
           $pushViewEl = app.$el.children('.view, .views');
-          pushBorderRadius = app.theme === 'ios' ? 10 : 16;
+          pushBorderRadius = app.theme === 'ios' ? 32 : 16;
           $pushViewEl.css('border-radius', '0px');
         }
       }
@@ -722,8 +719,9 @@ class Sheet extends Modal {
       }
       $el.prevAll('.popup.modal-in').eq(0).removeClass('popup-behind');
       if (sheet.push && pushOffset) {
-        sheet.$htmlEl.removeClass('with-modal-sheet-push');
-        sheet.$htmlEl.addClass('with-modal-sheet-push-closing');
+        $el.removeClass('sheet-modal-push-in');
+        $el.addClass('sheet-modal-push-closing');
+
         if ($pushViewEl) {
           $pushViewEl.transform('');
           $pushViewEl.css('border-radius', '');
@@ -732,7 +730,7 @@ class Sheet extends Modal {
     });
     sheet.on('closed', () => {
       if (sheet.push && pushOffset) {
-        sheet.$htmlEl.removeClass('with-modal-sheet-push-closing');
+        $el.removeClass('sheet-modal-push-closing');
         sheet.$htmlEl[0].style.removeProperty('--f7-sheet-push-scale');
         sheet.$htmlEl[0].style.removeProperty('--f7-sheet-push-offset');
       }

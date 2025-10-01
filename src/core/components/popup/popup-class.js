@@ -328,7 +328,7 @@ class Popup extends Modal {
       } else if (isPush && wasPush) {
         popup.$htmlEl[0].style.setProperty('--f7-popup-push-scale', pushViewScale(pushOffset));
       } else if (!isPush && wasPush) {
-        popup.$htmlEl.removeClass('with-modal-popup-push');
+        $el.removeClass('popup-push-in');
         popup.$htmlEl[0].style.removeProperty('--f7-popup-push-scale');
       }
     };
@@ -348,7 +348,7 @@ class Popup extends Modal {
         if (!pushOffset) pushOffset = app.theme === 'ios' ? 44 : 48;
         popup.$htmlEl[0].style.setProperty('--f7-popup-push-offset', `${pushOffset}px`);
         $el.addClass('popup-push');
-        popup.$htmlEl.addClass('with-modal-popup-push');
+        $el.addClass('popup-push-in');
         popup.$htmlEl[0].style.setProperty('--f7-popup-push-scale', pushViewScale(pushOffset));
       }
       app.on('resize', updatePushOffset);
@@ -378,15 +378,15 @@ class Popup extends Modal {
       }
       $el.prevAll('.popup.modal-in').eq(0).removeClass('popup-behind');
       if (isPush && pushOffset && !hasPreviousPushPopup) {
-        popup.$htmlEl.removeClass('with-modal-popup-push');
-        popup.$htmlEl.addClass('with-modal-popup-push-closing');
+        $el.removeClass('popup-push-in');
+        $el.addClass('popup-push-closing');
       }
       app.off('resize', updatePushOffset);
     });
     popup.on('closed', () => {
       $el.removeClass('popup-behind');
       if (isPush && pushOffset && !hasPreviousPushPopup) {
-        popup.$htmlEl.removeClass('with-modal-popup-push-closing');
+        $el.removeClass('popup-push-closing');
         popup.$htmlEl[0].style.removeProperty('--f7-popup-push-scale');
         popup.$htmlEl[0].style.removeProperty('--f7-popup-push-offset');
       }

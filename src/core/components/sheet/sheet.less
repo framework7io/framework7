@@ -101,8 +101,7 @@
   }
 }
 
-html.with-modal-sheet-push,
-html.with-modal-sheet-push-closing {
+html:has(.sheet-modal-push-in, .sheet-modal-push-closing) {
   .sheet-modal-push {
     --f7-sheet-border-color: transparent;
     border-radius: var(--f7-sheet-push-border-radius) var(--f7-sheet-push-border-radius) 0 0;
@@ -151,7 +150,7 @@ html.with-modal-sheet-push-closing {
     }
   });
 }
-html.with-modal-sheet-push {
+html:has(.sheet-modal-push-in) {
   .framework7-root {
     > .views,
     > .view {
@@ -162,7 +161,7 @@ html.with-modal-sheet-push {
 }
 
 .if-dark-theme({
-  html.with-modal-sheet-push-closing {
+  html:has(.sheet-modal-push-closing) {
     &.dark .framework7-root > .views,
     &.dark .framework7-root > .view,
     .dark .framework7-root > .views,

@@ -334,22 +334,22 @@ html {
   }
 }
 
-html.with-modal-popup-push .framework7-root,
-html.with-modal-popup-push-closing .framework7-root {
+html:has(.popup-push-in) .framework7-root,
+html:has(.popup-push-closing) .framework7-root {
   --f7-panelPushScale: var(--f7-popup-push-scale);
   --f7-panelPushTransitionDuration: var(--f7-popup-transition-duration);
   --f7-panelPushTransitionTimingFunction: var(--f7-popup-transition-timing-function);
   --f7-panelPushBorderRadius: var(--f7-popup-push-border-radius);
 }
-html.with-modal-sheet-push .framework7-root,
-html.with-modal-sheet-push-closing .framework7-root {
+html:has(.sheet-modal-push-in) .framework7-root,
+html:has(.sheet-modal-push-closing) .framework7-root {
   --f7-panelPushScale: var(--f7-sheet-push-scale);
   --f7-panelPushTransitionDuration: var(--f7-sheet-transition-duration);
   --f7-panelPushTransitionTimingFunction: var(--f7-sheet-transition-timing-function);
   --f7-panelPushBorderRadius: var(--f7-sheet-push-border-radius);
 }
-html.with-modal-popup-push .framework7-root,
-html.with-modal-sheet-push .framework7-root {
+html:has(.popup-push-in) .framework7-root,
+html:has(.sheet-modal-push-in) .framework7-root {
   > .panel-in,
   > .panel-out {
     transition-duration: var(--f7-panelPushTransitionDuration);
@@ -381,8 +381,8 @@ html.with-modal-sheet-push .framework7-root {
     }
   }
 }
-html.with-modal-popup-push-closing .framework7-root > .panel-in,
-html.with-modal-sheet-push-closing .framework7-root > .panel-in {
+html:has(.popup-push-closing) .framework7-root > .panel-in,
+html:has(.sheet-modal-push-closing) .framework7-root > .panel-in {
   transition-duration: var(--f7-panelPushTransitionDuration);
   transition-timing-function: var(--f7-panelPushTransitionTimingFunction);
   &.panel-reveal.panel-left,
