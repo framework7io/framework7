@@ -13,25 +13,27 @@
       </div>
     </div>
     <div class="page-content">
-      <div class="block block-strong-ios block-outline-ios">
+      <div class="block block-strong inset">
         <p>Framework7 comes with Gauge component. It produces nice looking fully responsive SVG gauges.</p>
       </div>
-      <div class="block block-strong-ios block-outline-ios text-align-center">
+      <div class="block block-strong inset text-align-center">
         <div class="gauge demo-gauge"></div>
-        <p class="segmented segmented-raised">
-          <a class="button ${gaugeValue === 0 ? 'button-active' : ''}" @click=${()=> setGaugeValue(0)}>0%</a>
-          <a class="button ${gaugeValue === 25 ? 'button-active' : ''}" @click=${()=>
-            setGaugeValue(25)}>25%</a>
-          <a class="button ${gaugeValue === 50 ? 'button-active' : ''}" @click=${()=>
-            setGaugeValue(50)}>50%</a>
-          <a class="button ${gaugeValue === 75 ? 'button-active' : ''}" @click=${()=>
-            setGaugeValue(75)}>75%</a>
-          <a class="button ${gaugeValue === 100 ? 'button-active' : ''}" @click=${()=>
-            setGaugeValue(100)}>100%</a>
+        <p class="segmented segmented-strong segmented-round">
+          <button class="button button-round ${gaugeValue === 0 ? 'button-active' : ''}" @click=${()=>
+            setGaugeValue(0)}>0%</button>
+          <button class="button button-round ${gaugeValue === 25 ? 'button-active' : ''}" @click=${()=>
+            setGaugeValue(25)}>25%</button>
+          <button class="button button-round ${gaugeValue === 50 ? 'button-active' : ''}" @click=${()=>
+            setGaugeValue(50)}>50%</button>
+          <button class="button button-round ${gaugeValue === 75 ? 'button-active' : ''}" @click=${()=>
+            setGaugeValue(75)}>75%</button>
+          <button class="button button-round ${gaugeValue === 100 ? 'button-active' : ''}" @click=${()=>
+            setGaugeValue(100)}>100%</button>
+          <span class="segmented-highlight"></span>
         </p>
       </div>
       <div class="block-title">Circle Gauges</div>
-      <div class="block block-strong-ios block-outline-ios">
+      <div class="block block-strong inset">
         <div class="grid grid-cols-2 grid-gap">
           <div class="text-align-center">
             <div class="gauge gauge-init" data-type="circle" data-value="0.44" data-value-text="44%"
@@ -45,7 +47,7 @@
         </div>
       </div>
       <div class="block-title">Semicircle Gauges</div>
-      <div class="block block-strong-ios block-outline-ios">
+      <div class="block block-strong inset">
         <div class="grid grid-cols-2 grid-gap">
           <div class="text-align-center">
             <div class="gauge gauge-init" data-type="semicircle" data-value="0.3" data-value-text="30%"
@@ -59,7 +61,7 @@
         </div>
       </div>
       <div class="block-title">Customization</div>
-      <div class="block block-strong-ios block-outline-ios">
+      <div class="block block-strong inset">
         <div class="grid grid-cols-2 grid-gap">
           <div class="text-align-center">
             <div class="gauge gauge-init" data-type="circle" data-value="0.35" data-value-text="35%"

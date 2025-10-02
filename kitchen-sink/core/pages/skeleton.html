@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="page-content">
-      <div class="block block-strong-ios block-outline-ios">
+      <div class="block block-strong inset">
         <p>Skeleton (or Ghost) elements designed to improve perceived performance and make app feels faster.</p>
         <p>Framework7 comes with two types of such elements: Skeleton Block and Skeleton Text. Skeleton block is a gray
           box that can be used as placeholder for any element. Skeleton text uses special built-in skeleton font to
@@ -23,7 +23,7 @@
       </div>
 
       <div class="block-title">Skeleton List</div>
-      <div class="list list-strong-ios list-outline-ios list-dividers-ios media-list skeleton-text">
+      <div class="list list-strong inset list-dividers-ios media-list skeleton-text">
         <ul>
           <li class="item-content">
             <div class="item-media">
@@ -67,15 +67,15 @@
       </div>
 
       <div class="block-title">Loading Effects</div>
-      <div class="block block-strong-ios block-outline-ios">
+      <div class="block block-strong inset">
         <p>It supports few loading effects:</p>
         <p class="grid grid-cols-3 grid-gap">
-          <a class="button button-fill button-small button-round" @click=${()=> load('fade')}>Fade</a>
-          <a class="button button-fill button-small button-round" @click=${()=> load('wave')}>Wave</a>
-          <a class="button button-fill button-small button-round" @click=${()=> load('pulse')}>Pulse</a>
+          <a class="button button-fill  button-round" @click=${()=> load('fade')}>Fade</a>
+          <a class="button button-fill  button-round" @click=${()=> load('wave')}>Wave</a>
+          <a class="button button-fill  button-round" @click=${()=> load('pulse')}>Pulse</a>
         </p>
       </div>
-      <div class="list list-strong-ios list-outline-ios list-dividers-ios media-list">
+      <div class="list list-strong inset list-dividers-ios media-list">
         <ul>
           ${loading ? $h`
           <li class="item-content skeleton-text skeleton-effect-${effect}">

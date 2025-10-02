@@ -270,7 +270,7 @@
     font-size: inherit;
     text-align: center;
     display: block;
-    border-radius: 4px;
+    border-radius: inherit;
     &::-webkit-inner-spin-button,
     &::-webkit-outer-spin-button {
       -webkit-appearance: none;
@@ -297,17 +297,9 @@
   --f7-range-bar-active-bg-color: transparent;
   --f7-range-bar-size: var(--f7-color-picker-slider-size);
   --f7-range-bar-border-radius: var(--f7-color-picker-slider-size);
-  --f7-range-knob-size: var(--f7-color-picker-slider-knob-size);
-  --f7-range-knob-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   .range-knob {
     transition-duration: 200ms;
     transition-property: transform;
-    &:after {
-      width: 30px;
-      height: 30px;
-      margin-left: -16px;
-      margin-top: -16px;
-    }
   }
   .range-knob-active-state .range-knob {
     transform: scale(1.5);
@@ -338,22 +330,9 @@
 .color-picker-bar {
   --f7-range-bar-active-bg-color: transparent;
   --f7-range-bar-size: var(--f7-color-picker-bar-size);
-  --f7-range-bar-border-radius: 2px;
-  --f7-range-knob-size: 6px;
-  --f7-range-knob-box-shadow: 0 0px 3px rgba(0, 0, 0, 0.3);
-  --f7-range-knob-color: #fff;
-  .range-knob {
-    transition-duration: 0ms;
-    transition-property: transform;
-    border-radius: 3px;
-  }
   .range-knob-wrap {
-    height: 6px;
-    width: calc(var(--f7-color-picker-bar-size) - 4px);
-    margin-left: calc(-0.5 * (var(--f7-color-picker-bar-size) - 4px));
-  }
-  .range-knob-active-state .range-knob {
-    transform: scale(1);
+    --f7-range-knob-width: 6px;
+    --f7-range-knob-height: calc(var(--f7-color-picker-bar-size) - 4px);
   }
 }
 .md .color-picker-bar.range-slider-min:not(.range-slider-dual) .range-knob {

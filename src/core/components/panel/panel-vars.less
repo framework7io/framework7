@@ -1,5 +1,5 @@
 :root {
-  --f7-panel-width: 260px;
+  --f7-panel-width: 288px;
   --f7-panel-backdrop-bg-color: rgba(0, 0, 0, 0.3);
   /*
   --f7-panel-left-width: var(--f7-panel-width);
@@ -7,18 +7,21 @@
   --f7-panel-left-collapsed-width: var(--f7-panel-collapsed-width);
   --f7-panel-right-collapsed-width: var(--f7-panel-collapsed-width);
   */
+}
+.ios-vars({
+  --f7-panel-floating-border-radius: 32px;
+  --f7-panel-collapsed-width: 58px;
+  --f7-panel-transition-duration: 400ms;
+  --f7-panel-transition-timing-function: initial;
+  --f7-panel-bg-color: var(--f7-glass-bg-color);
+});
+.md-vars({
+  --f7-panel-floating-border-radius: 16px;
+  --f7-panel-collapsed-width: 60px;
+  --f7-panel-transition-duration: 400ms;
+  --f7-panel-transition-timing-function: cubic-bezier(0, 0.8, 0.34, 1);
   --f7-panel-bg-color: #fff;
   .dark-vars({
     --f7-panel-bg-color: #000;
   });
-}
-.ios-vars({
-  --f7-panel-collapsed-width: 58px;
-  --f7-panel-transition-duration: 400ms;
-  --f7-panel-transition-timing-function: initial;
-});
-.md-vars({
-  --f7-panel-collapsed-width: 60px;
-  --f7-panel-transition-duration: 400ms;
-  --f7-panel-transition-timing-function: cubic-bezier(0, 0.8, 0.34, 1);
 });

@@ -13,42 +13,43 @@
       </div>
     </div>
     <div class="page-content">
-      <div class="block block-strong-ios block-outline-ios">
+      <div class="block block-strong inset">
         <p>Sheet Modals slide up from the bottom (or down from the top) of the screen to reveal more content. Such
           modals allow to create custom overlays with custom content.</p>
         <p class="grid grid-cols-2 grid-gap">
-          <a class="button button-fill sheet-open" data-sheet=".demo-sheet">Open Sheet</a>
-          <a class="button button-fill" @click=${createSheet}>Dynamic Sheet</a>
+          <a class="button button-fill button-round sheet-open" data-sheet=".demo-sheet">Open Sheet</a>
+          <a class="button button-fill button-round" @click=${createSheet}>Dynamic Sheet</a>
         </p>
         <p>
-          <a class="button button-fill sheet-open" data-sheet=".demo-sheet-top">Top Sheet</a>
+          <a class="button button-fill button-round sheet-open" data-sheet=".demo-sheet-top">Top Sheet</a>
         </p>
       </div>
 
       <div class="block-title">Push View</div>
-      <div class="block block-strong-ios block-outline-ios">
+      <div class="block block-strong inset">
         <p>Sheet can push view behind on open. By default it has effect only when <code>safe-area-inset-top</code> is
           more than
           zero (iOS fullscreen webapp or iOS cordova app)</p>
         <p>
-          <a class="button button-fill sheet-open" data-sheet=".demo-sheet-push">Sheet Push</a>
+          <a class="button button-fill button-round sheet-open" data-sheet=".demo-sheet-push">Sheet Push</a>
         </p>
       </div>
 
       <div class="block-title">Swipeable Sheet</div>
-      <div class="block block-strong-ios block-outline-ios">
+      <div class="block block-strong inset">
         <p>Sheet modal can be closed with swipe to top (for top Sheet) or bottom (for default Bottom sheet):</p>
         <p>
-          <a class="button button-fill sheet-open" data-sheet=".demo-sheet-swipe-to-close">Swipe To Close</a>
+          <a class="button button-fill button-round sheet-open" data-sheet=".demo-sheet-swipe-to-close">Swipe To
+            Close</a>
         </p>
         <p>Also there is swipe-step that can be set on Sheet modal to expand it with swipe:</p>
         <p>
-          <a class="button button-fill sheet-open" data-sheet=".demo-sheet-swipe-to-step">Swipe To Step</a>
+          <a class="button button-fill button-round sheet-open" data-sheet=".demo-sheet-swipe-to-step">Swipe To Step</a>
         </p>
 
         <p>In addition to "swipe step" there is a support for position breakpoints (multiple steps):</p>
         <p>
-          <a class="button button-fill sheet-open" data-sheet=".demo-sheet-breakpoints">Breakpoints</a>
+          <a class="button button-fill button-round sheet-open" data-sheet=".demo-sheet-breakpoints">Breakpoints</a>
         </p>
       </div>
 
@@ -176,7 +177,7 @@
             <div style="font-size: 22px"><b>$500</b></div>
           </div>
           <div class="padding-horizontal padding-bottom">
-            <a class="button button-large button-fill">Make Payment</a>
+            <a class="button button-large button-fill button-round">Make Payment</a>
             <div class="margin-top text-align-center">Swipe up for more details</div>
           </div>
         </div>

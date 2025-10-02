@@ -2,13 +2,12 @@
   --f7-color-picker-popover-width: 350px;
 
   --f7-color-picker-slider-size: 6px;
-  --f7-color-picker-slider-knob-size: 16px;
   --f7-color-picker-bar-size: 50px;
   --f7-color-picker-bar-min-height: 260px;
   --f7-color-picker-value-width: 64px;
   --f7-color-picker-value-height: 32px;
   --f7-color-picker-value-font-size: 16px;
-  --f7-color-picker-value-border-radius: 4px;
+  --f7-color-picker-value-border-radius: 8px;
   --f7-color-picker-hex-value-width: 84px;
   --f7-color-picker-label-font-size: 14px;
   --f7-color-picker-label-width: 10px;
@@ -21,7 +20,7 @@
   --f7-color-picker-palette-value-height: 36px;
 
   --f7-color-picker-initial-current-color-height: 40px;
-  --f7-color-picker-initial-current-color-border-radius: 4px;
+
   .light-vars({
     --f7-color-picker-sheet-bg-color: #fff;
     --f7-color-picker-popup-bg-color: #fff;
@@ -37,3 +36,10 @@
     --f7-color-picker-group-value-bg-color: rgba(255,255,255,0.12);
   });
 }
+
+.ios-vars({
+  --f7-color-picker-initial-current-color-border-radius: 16px;
+});
+.md-vars({
+  --f7-color-picker-initial-current-color-border-radius: 4px;
+});
