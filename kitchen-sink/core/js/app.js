@@ -35,6 +35,10 @@ var app = new Framework7({
   store: store,
   // routes.js,
   routes: routes,
+  panel: {
+    swipe: true,
+    swipeOnlyClose: true,
+  },
   popup: {
     closeOnEscape: true,
   },
