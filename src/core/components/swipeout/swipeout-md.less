@@ -1,2 +1,58 @@
 .md {
+  .swipeout-actions-left,
+  .swipeout-actions-right {
+    > a,
+    > button,
+    > span,
+    > div {
+      &:after {
+        content: '';
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        width: 600%;
+        height: 100%;
+        background: inherit;
+        z-index: -1;
+        transform: translate3d(0, 0, 0);
+        pointer-events: none;
+      }
+    }
+  }
+  .swipeout-actions-right {
+    right: 0%;
+    transform: translateX(calc(100% + 1px));
+    > a,
+    > button,
+    > span,
+    > div {
+      &:after {
+        left: 100%;
+      }
+      &:last-child {
+        padding-right: calc(
+          var(--f7-swipeout-button-padding-horizontal) + var(--f7-safe-area-right)
+        );
+      }
+    }
+  }
+  .swipeout-actions-left {
+    left: 0%;
+    transform: translateX(calc(-100% - 1px));
+    > a,
+    > button,
+    > span,
+    > div {
+      &:after {
+        right: 100%;
+      }
+      &:first-child {
+        padding-left: calc(var(--f7-swipeout-button-padding-horizontal) + var(--f7-safe-area-left));
+      }
+    }
+  }
+
+  .swipeout-overswipe {
+    transition-property: left;
+  }
 }

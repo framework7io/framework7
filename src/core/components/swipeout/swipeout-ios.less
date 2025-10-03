@@ -1,2 +1,39 @@
 .ios {
+  .swipeout-actions-right {
+    right: 0%;
+  }
+  .swipeout-actions-left {
+    left: 0%;
+  }
+  .swipeout-actions-left,
+  .swipeout-actions-right {
+    padding: 0 10px;
+    gap: 10px;
+    align-items: center;
+    > a,
+    > button,
+    > span,
+    > div {
+      transform: scale(0);
+      padding: var(--f7-swipeout-button-padding-vertical)
+        var(--f7-swipeout-button-padding-horizontal);
+    }
+  }
+  .swipeout-opened,
+  .swipeout-active {
+    .swipeout-content {
+      background-color: var(--f7-swipeout-active-bg-color);
+      border-radius: var(--f7-swipeout-active-border-radius);
+    }
+    .item-content {
+      border-radius: var(--f7-swipeout-active-border-radius);
+    }
+    .swipeout-content .item-inner::after {
+      opacity: 0;
+    }
+  }
+  .swipeout-overswipe {
+    transition-duration: 200ms;
+    transition-property: transform, left, width, margin-left, margin-right;
+  }
 }

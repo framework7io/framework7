@@ -13,11 +13,26 @@
 }
 .swipeout-transitioning {
   .swipeout-content,
+  .swipeout-content .item-inner::after {
+    transition-duration: 300ms;
+    transition-property: transform, left, background-color, border-radius, opacity;
+  }
   .swipeout-actions-right a,
   .swipeout-actions-left a,
   .swipeout-overswipe {
     transition-duration: 300ms;
-    transition-property: transform, left;
+    transition-property: transform, left, width, margin-left, margin-right;
+  }
+  &:not(.swipeout-opened) {
+    .swipeout-content {
+      transition-delay: 0ms, 0ms, 300ms, 300ms, 0ms;
+    }
+  }
+}
+.list li:has(+ li:is(.swipeout-opened, .swipeout-active)) {
+  .item-inner::after {
+    opacity: 0;
+    transition-duration: 300ms;
   }
 }
 .swipeout-content {
@@ -26,7 +41,6 @@
 }
 .swipeout-overswipe {
   transition-duration: 200ms;
-  transition-property: left;
 }
 .swipeout-actions-left,
 .swipeout-actions-right {
@@ -39,6 +53,9 @@
   > button,
   > span,
   > div {
+    box-sizing: border-box;
+    border-radius: var(--f7-swipeout-button-border-radius);
+
     color: var(--f7-swipeout-button-text-color);
     background: var(--f7-swipeout-button-bg-color);
     padding: var(--f7-swipeout-button-padding-vertical) var(--f7-swipeout-button-padding-horizontal);
@@ -48,53 +65,12 @@
     left: 0;
     font-size: var(--f7-swipeout-button-font-size);
     font-weight: var(--f7-swipeout-button-font-weight);
-    &:after {
-      content: '';
-      pointer-events: none;
-      position: absolute;
-      top: 0;
-      width: 600%;
-      height: 100%;
-      background: inherit;
-      z-index: -1;
-      transform: translate3d(0, 0, 0);
-      pointer-events: none;
-    }
   }
   .swipeout-delete {
     background: var(--f7-swipeout-delete-button-bg-color);
   }
 }
-.swipeout-actions-right {
-  right: 0%;
-  transform: translateX(calc(100% + 1px));
-  > a,
-  > button,
-  > span,
-  > div {
-    &:after {
-      left: 100%;
-    }
-    &:last-child {
-      padding-right: calc(var(--f7-swipeout-button-padding-horizontal) + var(--f7-safe-area-right));
-    }
-  }
-}
-.swipeout-actions-left {
-  left: 0%;
-  transform: translateX(calc(-100% - 1px));
-  > a,
-  > button,
-  > span,
-  > div {
-    &:after {
-      right: 100%;
-    }
-    &:first-child {
-      padding-left: calc(var(--f7-swipeout-button-padding-horizontal) + var(--f7-safe-area-left));
-    }
-  }
-}
+
 .swipeout-actions-left,
 .swipeout-actions-right {
   [class*='color-'] {

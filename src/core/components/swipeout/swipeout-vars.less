@@ -1,7 +1,7 @@
 :root {
   --f7-swipeout-delete-button-bg-color: #ff3b30;
   --f7-swipeout-button-text-color: #fff;
-  --f7-swipeout-button-padding-vertical: 0px;
+
   .light-vars({
     --f7-swipeout-button-bg-color: rgba(0,0,0,0.22);
   });
@@ -10,11 +10,22 @@
   });
 }
 .ios-vars({
-  --f7-swipeout-button-padding-horizontal: 30px;
+  --f7-swipeout-button-border-radius: 48px;
+  --f7-swipeout-button-padding-vertical: 10px;
+  --f7-swipeout-button-padding-horizontal: 16px;
   --f7-swipeout-button-font-size: inherit;
   --f7-swipeout-button-font-weight: inherit;
+  --f7-swipeout-active-border-radius: 16px;
+  .light-vars({
+    --f7-swipeout-active-bg-color: #eee;
+  });
+  .dark-vars({
+    --f7-swipeout-active-bg-color: #2c2c2e;
+  });
 });
 .md-vars({
+  --f7-swipeout-button-border-radius: 0px;
+  --f7-swipeout-button-padding-vertical: 0px;
   --f7-swipeout-button-padding-horizontal: 24px;
   --f7-swipeout-button-font-size: 14px;
   --f7-swipeout-button-font-weight: 500;
