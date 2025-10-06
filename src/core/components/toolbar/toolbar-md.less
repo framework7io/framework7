@@ -5,7 +5,7 @@
       padding: 0 12px;
       min-width: 48px;
     }
-    a.icon-only {
+    a:is(.icon-only, :has(i:only-child), :has(svg:only-child)) {
       min-width: 0;
       flex-shrink: 0;
     }
@@ -17,7 +17,7 @@
       padding-left: 0;
       padding-right: 0;
     }
-    a.icon-only {
+    a:is(.icon-only, :has(i:only-child), :has(svg:only-child)) {
       flex-shrink: initial;
     }
     .tab-link {

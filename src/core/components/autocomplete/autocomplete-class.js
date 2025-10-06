@@ -606,23 +606,28 @@ class Autocomplete extends Framework7Class {
 
     // eslint-disable-next-line
     const navbarLeft = inPopup ? (
-      ac.params.preloader && <div class="left">{ac.renderPreloader()}</div>
+      ac.params.preloader && (
+        <div class="left autocomplete-preloader-wrap">{ac.renderPreloader()}</div>
+      )
     ) : (
-      <div class="left sliding">
+      <div class="left">
         <a class="link back">
           <i class="icon icon-back"></i>
-          <span class="if-not-md">{ac.params.pageBackLinkText}</span>
+          {ac.params.pageBackLinkText ? <span>{ac.params.pageBackLinkText}</span> : ''}
         </a>
       </div>
     );
     const navbarRight = inPopup ? (
       <div class="right">
         <a class="link popup-close" data-popup=".autocomplete-popup">
-          {ac.params.popupCloseLinkText}
+          <i class="icon icon-close"></i>
+          {ac.params.popupCloseLinkText ? <span>{ac.params.popupCloseLinkText}</span> : ''}
         </a>
       </div>
     ) : (
-      ac.params.preloader && <div class="right">{ac.renderPreloader()}</div>
+      ac.params.preloader && (
+        <div class="right autocomplete-preloader-wrap">{ac.renderPreloader()}</div>
+      )
     );
     return (
       <div
@@ -635,9 +640,9 @@ class Autocomplete extends Framework7Class {
           }`}
         >
           {navbarLeft}
-          {pageTitle && <div class="title sliding">{pageTitle}</div>}
+          {pageTitle && <div class="title">{pageTitle}</div>}
           {navbarRight}
-          <div class="subnavbar sliding">{ac.renderSearchbar()}</div>
+          <div class="subnavbar">{ac.renderSearchbar()}</div>
         </div>
       </div>
     );

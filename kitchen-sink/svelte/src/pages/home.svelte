@@ -15,11 +15,11 @@
 </script>
 
 <Page class="page-home">
-  <Navbar large transparent sliding={false} mdCenterTitle>
+  <Navbar large transparent mdCenterTitle>
     <NavLeft>
       <Link panelOpen="left" iconIos="f7:menu" iconMd="material:menu" />
     </NavLeft>
-    <NavTitle sliding>Framework7 Svelte</NavTitle>
+    <NavTitle>Framework7 Svelte</NavTitle>
     <NavRight>
       <Link searchbarEnable=".searchbar-components" iconIos="f7:search" iconMd="material:search" />
     </NavRight>

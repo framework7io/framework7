@@ -19,7 +19,6 @@
   export let backLinkUrl = undefined;
   export let backLinkForce = false;
   export let backLinkShowText = undefined;
-  export let sliding = true;
   export let title = undefined;
   export let subtitle = undefined;
   export let hidden = false;
@@ -39,9 +38,6 @@
   });
   let routerPositionClass = '';
   let largeCollapsed = false;
-  let routerNavbarRole = null;
-  let routerNavbarRoleDetailRoot = false;
-  let routerNavbarMasterStack = false;
   let transparentVisible = false;
 
   export function hide(animate) {
@@ -82,17 +78,12 @@
       'navbar-large-collapsed': isLarge && largeCollapsed,
       'navbar-transparent': isTransparent,
       'navbar-transparent-visible': isTransparentVisible,
-      'navbar-master': routerNavbarRole === 'master',
-      'navbar-master-detail': routerNavbarRole === 'detail',
-      'navbar-master-detail-root': routerNavbarRoleDetailRoot === true,
-      'navbar-master-stacked': routerNavbarMasterStack === true,
       'no-outline': !outline,
     },
     colorClasses($$props),
   );
 
   $: innerClasses = classNames('navbar-inner', innerClass, innerClassName, {
-    sliding,
     'navbar-inner-left-title': addLeftTitleClass,
     'navbar-inner-centered-title': addCenterTitleClass,
   });
@@ -129,19 +120,7 @@
     if (el !== navbarEl) return;
     routerPositionClass = position ? `navbar-${position}` : position;
   }
-  function onNavbarRole(navbarEl, rolesData) {
-    if (el !== navbarEl) return;
-    routerNavbarRole = rolesData.role;
-    routerNavbarRoleDetailRoot = rolesData.detailRoot;
-  }
-  function onNavbarMasterStack(navbarEl) {
-    if (el !== navbarEl) return;
-    routerNavbarMasterStack = true;
-  }
-  function onNavbarMasterUnstack(navbarEl) {
-    if (el !== navbarEl) return;
-    routerNavbarMasterStack = false;
-  }
+
   function onBackClick() {
     emit('clickBack');
   }
@@ -152,9 +131,6 @@
     app.f7.on('navbarCollapse', onCollapse);
     app.f7.on('navbarExpand', onExpand);
     app.f7.on('navbarPosition', onNavbarPosition);
-    app.f7.on('navbarRole', onNavbarRole);
-    app.f7.on('navbarMasterStack', onNavbarMasterStack);
-    app.f7.on('navbarMasterUnstack', onNavbarMasterUnstack);
     app.f7.on('navbarTransparentShow', onNavbarTransparentShow);
     app.f7.on('navbarTransparentHide', onNavbarTransparentHide);
   }
@@ -164,9 +140,6 @@
     app.f7.off('navbarCollapse', onCollapse);
     app.f7.off('navbarExpand', onExpand);
     app.f7.off('navbarPosition', onNavbarPosition);
-    app.f7.off('navbarRole', onNavbarRole);
-    app.f7.off('navbarMasterStack', onNavbarMasterStack);
-    app.f7.off('navbarMasterUnstack', onNavbarMasterUnstack);
     app.f7.off('navbarTransparentShow', onNavbarTransparentShow);
     app.f7.off('navbarTransparentHide', onNavbarTransparentHide);
   }

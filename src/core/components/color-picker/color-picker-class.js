@@ -421,16 +421,15 @@ class ColorPicker extends Framework7Class {
     if (self.params.renderNavbar) {
       return self.params.renderNavbar.call(self, self);
     }
-    const { openIn, navbarTitleText, navbarBackLinkText, navbarCloseText } = self.params;
+    const { openIn, navbarTitleText, navbarCloseText } = self.params;
     return (
       <div class="navbar">
         <div class="navbar-bg"></div>
-        <div class="navbar-inner sliding">
+        <div class="navbar-inner">
           {openIn === 'page' && (
             <div class="left">
               <a class="link back">
                 <i class="icon icon-back"></i>
-                <span class="if-not-md">{navbarBackLinkText}</span>
               </a>
             </div>
           )}

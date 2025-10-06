@@ -6,14 +6,7 @@ const Navbar = {
   size(el) {
     const app = this;
 
-    let $el = $(el);
-
-    if ($el.hasClass('navbars')) {
-      $el = $el.children('.navbar').each((navbarEl) => {
-        app.navbar.size(navbarEl);
-      });
-      return;
-    }
+    const $el = $(el);
 
     const $innerEl = $el.children('.navbar-inner');
     if (!$innerEl.length) return;
@@ -39,11 +32,9 @@ const Navbar = {
       $innerEl.addClass('navbar-inner-left-title');
     }
 
-    const $viewEl = $el.parents('.view').eq(0);
     const left = app.rtl ? $innerEl.children('.right') : $innerEl.children('.left');
     const right = app.rtl ? $innerEl.children('.left') : $innerEl.children('.right');
     const title = $innerEl.children('.title');
-    const subnavbar = $innerEl.children('.subnavbar');
     const noLeft = left.length === 0;
     const noRight = right.length === 0;
     const leftWidth = noLeft ? 0 : left.outerWidth(true);
@@ -55,16 +46,6 @@ const Navbar = {
       navbarWidth -
       parseInt(navbarStyles.paddingLeft, 10) -
       parseInt(navbarStyles.paddingRight, 10);
-    const isPrevious = $el.hasClass('navbar-previous');
-    const sliding = $innerEl.hasClass('sliding');
-
-    let router;
-    let dynamicNavbar;
-
-    if ($viewEl.length > 0 && $viewEl[0].f7View) {
-      router = $viewEl[0].f7View.router;
-      dynamicNavbar = router && router.dynamicNavbar;
-    }
 
     let currLeft;
     let diff;
@@ -90,70 +71,6 @@ const Navbar = {
       diff = 0;
     }
 
-    // RTL inverter
-    const inverter = app.rtl ? -1 : 1;
-
-    if (dynamicNavbar && app.theme === 'ios') {
-      if (title.hasClass('sliding') || (title.length > 0 && sliding)) {
-        let titleLeftOffset = -(currLeft + diff) * inverter;
-        const titleRightOffset = (navbarInnerWidth - currLeft - diff - titleWidth) * inverter;
-
-        if (isPrevious) {
-          if (router && router.params.iosAnimateNavbarBackIcon) {
-            const activeNavbarBackLink = $el
-              .parent()
-              .find('.navbar-current')
-              .children('.left.sliding')
-              .find('.back .icon ~ span');
-            if (activeNavbarBackLink.length > 0) {
-              titleLeftOffset += activeNavbarBackLink[0].offsetLeft;
-            }
-          }
-        }
-        title[0].f7NavbarLeftOffset = titleLeftOffset;
-        title[0].f7NavbarRightOffset = titleRightOffset;
-      }
-      if (!noLeft && (left.hasClass('sliding') || sliding)) {
-        if (app.rtl) {
-          left[0].f7NavbarLeftOffset = (-(navbarInnerWidth - left[0].offsetWidth) / 2) * inverter;
-          left[0].f7NavbarRightOffset = leftWidth * inverter;
-        } else {
-          left[0].f7NavbarLeftOffset = -leftWidth;
-          left[0].f7NavbarRightOffset = (navbarInnerWidth - left[0].offsetWidth) / 2;
-          if (
-            router &&
-            router.params.iosAnimateNavbarBackIcon &&
-            left.find('.back .icon').length > 0
-          ) {
-            if (left.find('.back .icon ~ span').length) {
-              const leftOffset = left[0].f7NavbarLeftOffset;
-              const rightOffset = left[0].f7NavbarRightOffset;
-              left[0].f7NavbarLeftOffset = 0;
-              left[0].f7NavbarRightOffset = 0;
-              left.find('.back .icon ~ span')[0].f7NavbarLeftOffset = leftOffset;
-              left.find('.back .icon ~ span')[0].f7NavbarRightOffset =
-                rightOffset - left.find('.back .icon')[0].offsetWidth;
-            }
-          }
-        }
-      }
-      if (!noRight && (right.hasClass('sliding') || sliding)) {
-        if (app.rtl) {
-          right[0].f7NavbarLeftOffset = -rightWidth * inverter;
-          right[0].f7NavbarRightOffset = ((navbarInnerWidth - right[0].offsetWidth) / 2) * inverter;
-        } else {
-          right[0].f7NavbarLeftOffset = -(navbarInnerWidth - right[0].offsetWidth) / 2;
-          right[0].f7NavbarRightOffset = rightWidth;
-        }
-      }
-      if (subnavbar.length && (subnavbar.hasClass('sliding') || sliding)) {
-        subnavbar[0].f7NavbarLeftOffset = app.rtl
-          ? subnavbar[0].offsetWidth
-          : -subnavbar[0].offsetWidth;
-        subnavbar[0].f7NavbarRightOffset = -subnavbar[0].f7NavbarLeftOffset;
-      }
-    }
-
     // Center title
     if (needCenterTitle) {
       let titleLeft = diff;
@@ -161,17 +78,13 @@ const Navbar = {
       title.css({ left: `${titleLeft}px` });
     }
   },
-  hide(el, animate = true, hideStatusbar = false, hideOnlyCurrent = false) {
+  hide(el, animate = true, hideStatusbar = false) {
     const app = this;
-    let $el = $(el);
-    const isDynamic = $el.hasClass('navbar') && $el.parent('.navbars').length && !hideOnlyCurrent;
-    if (isDynamic) $el = $el.parents('.navbars');
+    const $el = $(el);
     if (!$el.length) return;
     if ($el.hasClass('navbar-hidden')) return;
     let className = `navbar-hidden${animate ? ' navbar-transitioning' : ''}`;
-    const currentIsLarge = isDynamic
-      ? $el.find('.navbar-current .title-large').length
-      : $el.find('.title-large').length;
+    const currentIsLarge = $el.find('.title-large').length;
     if (currentIsLarge) {
       className += ' navbar-large-hidden';
     }
@@ -182,21 +95,13 @@ const Navbar = {
       $el.removeClass('navbar-transitioning');
     });
     $el.addClass(className);
-    if (isDynamic) {
-      $el.children('.navbar').each((subEl) => {
-        $(subEl).trigger('navbar:hide');
-        app.emit('navbarHide', subEl);
-      });
-    } else {
-      $el.trigger('navbar:hide');
-      app.emit('navbarHide', $el[0]);
-    }
+
+    $el.trigger('navbar:hide');
+    app.emit('navbarHide', $el[0]);
   },
-  show(el = '.navbar-hidden', animate = true, hideOnlyCurrent = false) {
+  show(el = '.navbar-hidden', animate = true) {
     const app = this;
-    let $el = $(el);
-    const isDynamic = $el.hasClass('navbar') && $el.parent('.navbars').length && !hideOnlyCurrent;
-    if (isDynamic) $el = $el.parents('.navbars');
+    const $el = $(el);
     if (!$el.length) return;
     if (!$el.hasClass('navbar-hidden')) return;
     if (animate) {
@@ -206,15 +111,9 @@ const Navbar = {
       });
     }
     $el.removeClass('navbar-hidden navbar-large-hidden navbar-hidden-statusbar');
-    if (isDynamic) {
-      $el.children('.navbar').each((subEl) => {
-        $(subEl).trigger('navbar:show');
-        app.emit('navbarShow', subEl);
-      });
-    } else {
-      $el.trigger('navbar:show');
-      app.emit('navbarShow', $el[0]);
-    }
+
+    $el.trigger('navbar:show');
+    app.emit('navbarShow', $el[0]);
   },
   getElByPage(page) {
     let $pageEl;
@@ -254,16 +153,8 @@ const Navbar = {
 
   collapseLargeTitle(navbarEl) {
     const app = this;
-    let $navbarEl = $(navbarEl);
-    if ($navbarEl.hasClass('navbars')) {
-      $navbarEl = $navbarEl.find('.navbar');
-      if ($navbarEl.length > 1) {
-        $navbarEl = $(navbarEl).find('.navbar-large.navbar-current');
-      }
-      if ($navbarEl.length > 1 || !$navbarEl.length) {
-        return;
-      }
-    }
+    const $navbarEl = $(navbarEl);
+
     const $pageEl = $(app.navbar.getPageByEl($navbarEl));
     $navbarEl.addClass('navbar-large-collapsed');
     $pageEl.eq(0).addClass('page-with-navbar-large-collapsed').trigger('page:navbarlargecollapsed');
@@ -273,16 +164,8 @@ const Navbar = {
   },
   expandLargeTitle(navbarEl) {
     const app = this;
-    let $navbarEl = $(navbarEl);
-    if ($navbarEl.hasClass('navbars')) {
-      $navbarEl = $navbarEl.find('.navbar-large');
-      if ($navbarEl.length > 1) {
-        $navbarEl = $(navbarEl).find('.navbar-large.navbar-current');
-      }
-      if ($navbarEl.length > 1 || !$navbarEl.length) {
-        return;
-      }
-    }
+    const $navbarEl = $(navbarEl);
+
     const $pageEl = $(app.navbar.getPageByEl($navbarEl));
     $navbarEl.removeClass('navbar-large-collapsed');
     $pageEl
@@ -295,16 +178,8 @@ const Navbar = {
   },
   toggleLargeTitle(navbarEl) {
     const app = this;
-    let $navbarEl = $(navbarEl);
-    if ($navbarEl.hasClass('navbars')) {
-      $navbarEl = $navbarEl.find('.navbar-large');
-      if ($navbarEl.length > 1) {
-        $navbarEl = $(navbarEl).find('.navbar-large.navbar-current');
-      }
-      if ($navbarEl.length > 1 || !$navbarEl.length) {
-        return;
-      }
-    }
+    const $navbarEl = $(navbarEl);
+
     if ($navbarEl.hasClass('navbar-large-collapsed')) {
       app.navbar.expandLargeTitle($navbarEl);
     } else {
@@ -400,9 +275,7 @@ const Navbar = {
     }
 
     function handleNavbarTransparent() {
-      const isHidden =
-        $navbarEl.hasClass('navbar-hidden') ||
-        $navbarEl.parent('.navbars').hasClass('navbar-hidden');
+      const isHidden = $navbarEl.hasClass('navbar-hidden');
       const inSearchbarExpanded = $navbarEl.hasClass('with-searchbar-expandable-enabled');
       if (inSearchbarExpanded || isHidden) return;
       if (!navbarOffsetHeight) {
@@ -454,9 +327,7 @@ const Navbar = {
     let previousCollapseProgress = null;
     let collapseProgress = null;
     function handleLargeNavbarCollapse(pageContentEl) {
-      const isHidden =
-        $navbarEl.hasClass('navbar-hidden') ||
-        $navbarEl.parent('.navbars').hasClass('navbar-hidden');
+      const isHidden = $navbarEl.hasClass('navbar-hidden');
       if (isHidden) return;
       const isLargeTransparent =
         $navbarEl.hasClass('navbar-large-transparent') ||
@@ -490,10 +361,12 @@ const Navbar = {
         $navbarEl.find('.title').css('opacity', '');
         $navbarEl.find('.title-large-text, .subnavbar').css('transform', '');
         $navbarEl.find('.title-large-text').css('opacity', '');
-        if (isLargeTransparent) {
-          $bgEl.css('opacity', '');
+        if (app.theme === 'md') {
+          if (isLargeTransparent) {
+            $bgEl.css('opacity', '');
+          }
+          $bgEl.css('transform', '');
         }
-        $bgEl.css('transform', '');
       } else if (collapseProgress > 0 && collapseProgress < 1) {
         if (app.theme === 'md') {
           $navbarEl.find('.navbar-inner').css('overflow', 'visible');
@@ -507,13 +380,15 @@ const Navbar = {
           );
         $navbarEl.find('.title-large-text').css('opacity', 1 - collapseProgress * 2);
 
-        if (isLargeTransparent) {
-          $bgEl.css('opacity', collapseProgress);
+        if (app.theme === 'md') {
+          if (isLargeTransparent) {
+            $bgEl.css('opacity', collapseProgress);
+          }
+          $bgEl.css(
+            'transform',
+            `translate3d(0px, ${-1 * collapseProgress * navbarTitleLargeHeight}px, 0)`,
+          );
         }
-        $bgEl.css(
-          'transform',
-          `translate3d(0px, ${-1 * collapseProgress * navbarTitleLargeHeight}px, 0)`,
-        );
       }
 
       if (snapPageScrollToLargeTitle) {
@@ -539,9 +414,7 @@ const Navbar = {
       scrollHeight = scrollContent.scrollHeight;
       offsetHeight = scrollContent.offsetHeight;
       reachEnd = currentScrollTop + offsetHeight >= scrollHeight;
-      navbarHidden =
-        $navbarEl.hasClass('navbar-hidden') ||
-        $navbarEl.parent('.navbars').hasClass('navbar-hidden');
+      navbarHidden = $navbarEl.hasClass('navbar-hidden');
       if (reachEnd) {
         if (app.params.navbar.showOnPageScrollEnd) {
           action = 'show';
@@ -669,24 +542,6 @@ export default {
         page.$el[0].f7DetachNavbarScrollHandlers();
       }
     },
-    pageBeforeIn(page) {
-      const app = this;
-      if (app.theme !== 'ios') return;
-      let $navbarsEl;
-      const view = page.$el.parents('.view')[0].f7View;
-      const navbarEl = app.navbar.getElByPage(page);
-      if (!navbarEl) {
-        $navbarsEl = page.$el.parents('.view').children('.navbars');
-      } else {
-        $navbarsEl = $(navbarEl).parents('.navbars');
-      }
-      if (page.$el.hasClass('no-navbar') || (view.router.dynamicNavbar && !navbarEl)) {
-        const animate = !!(page.pageFrom && page.router.history.length > 0);
-        app.navbar.hide($navbarsEl, animate);
-      } else {
-        app.navbar.show($navbarsEl);
-      }
-    },
     pageReinit(page) {
       const app = this;
       const $navbarEl = $(app.navbar.getElByPage(page));
@@ -750,14 +605,14 @@ export default {
     },
     'panelOpen panelSwipeOpen modalOpen': function onPanelModalOpen(instance) {
       const app = this;
-      instance.$el.find('.navbar:not(.navbar-previous)').each((navbarEl) => {
+      instance.$el.find('.navbar').each((navbarEl) => {
         app.navbar.size(navbarEl);
       });
     },
     tabShow(tabEl) {
       const app = this;
       $(tabEl)
-        .find('.navbar:not(.navbar-previous)')
+        .find('.navbar')
         .each((navbarEl) => {
           app.navbar.size(navbarEl);
         });
@@ -774,7 +629,6 @@ export default {
 
       // Find active page
       const $navbarEl = $clickedEl.parents('.navbar');
-      const $navbarsEl = $navbarEl.parents('.navbars');
 
       // Static Layout
       $pageContentEl = $navbarEl.parents('.page-content');
@@ -783,18 +637,6 @@ export default {
         // Fixed Layout
         if ($navbarEl.parents('.page').length > 0) {
           $pageContentEl = $navbarEl.parents('.page').find('.page-content');
-        }
-        // Through Layout iOS
-        if ($pageContentEl.length === 0 && $navbarsEl.length) {
-          if ($navbarsEl.nextAll('.page-current').length > 0) {
-            $pageContentEl = $navbarsEl.nextAll('.page-current').find('.page-content');
-          }
-        }
-        // Through Layout
-        if ($pageContentEl.length === 0) {
-          if ($navbarEl.nextAll('.page-current').length > 0) {
-            $pageContentEl = $navbarEl.nextAll('.page-current').find('.page-content');
-          }
         }
       }
       if ($pageContentEl && $pageContentEl.length > 0) {

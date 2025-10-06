@@ -1,3 +1,4 @@
+// @ts-ignore
 import { Dom7Array } from 'dom7';
 import Framework7, {
   CSSSelector,
@@ -147,8 +148,6 @@ export namespace ColorPicker {
     navbarCloseText: string;
     /** Navbar title text. (default Color) */
     navbarTitleText: string;
-    /** Navbar's back link text (when opened in page). (default Back) */
-    navbarBackLinkText: string;
     /** Will add opened Color Picker to router history which gives ability to close Color Picker by going back in router history and set current route to the Color Picker modal. (default false) */
     routableModals?: boolean;
     /** Color Picker modal URL that will be set as a current route. (default color/) */

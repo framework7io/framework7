@@ -101,7 +101,7 @@
       display: block;
     }
   }
-  a.icon-only {
+  a:is(.icon-only, :has(i:only-child), :has(svg:only-child)) {
     display: flex;
     justify-content: center;
     align-items: center;

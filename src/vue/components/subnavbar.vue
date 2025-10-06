@@ -15,7 +15,6 @@ import { colorClasses, colorProps } from '../shared/mixins.js';
 export default {
   name: 'f7-subnavbar',
   props: {
-    sliding: Boolean,
     title: String,
     inner: {
       type: Boolean,
@@ -24,15 +23,7 @@ export default {
     ...colorProps,
   },
   setup(props) {
-    const classes = computed(() =>
-      classNames(
-        'subnavbar',
-        {
-          sliding: props.sliding,
-        },
-        colorClasses(props),
-      ),
-    );
+    const classes = computed(() => classNames('subnavbar', {}, colorClasses(props)));
     return { classes };
   },
 };

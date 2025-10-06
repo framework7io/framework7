@@ -6,7 +6,7 @@ import { now } from '../../shared/utils.js';
 
 function SwipeBack(r) {
   const router = r;
-  const { $el, $navbarsEl, app, params } = router;
+  const { $el, app, params } = router;
   const support = getSupport();
   const device = getDevice();
   let isTouched = false;
@@ -19,329 +19,13 @@ function SwipeBack(r) {
   let touchesDiff;
   let allowViewTouchMove = true;
   let touchStartTime;
-  let $currentNavbarEl = [];
-  let $previousNavbarEl = [];
-  let dynamicNavbar;
   let $pageShadowEl;
   let $pageOpacityEl;
-
-  let animatableNavEls;
 
   const paramsSwipeBackAnimateShadow = params[`${app.theme}SwipeBackAnimateShadow`];
   const paramsSwipeBackAnimateOpacity = params[`${app.theme}SwipeBackAnimateOpacity`];
   const paramsSwipeBackActiveArea = params[`${app.theme}SwipeBackActiveArea`];
   const paramsSwipeBackThreshold = params[`${app.theme}SwipeBackThreshold`];
-
-  const transformOrigin = app.rtl ? 'right center' : 'left center';
-  const transformOriginTitleLarge = app.rtl
-    ? 'calc(100% - var(--f7-navbar-large-title-padding-left) - var(--f7-safe-area-left)) center'
-    : 'calc(var(--f7-navbar-large-title-padding-left) + var(--f7-safe-area-left)) center';
-
-  function animatableNavElements() {
-    const els = [];
-    const inverter = app.rtl ? -1 : 1;
-    const currentNavIsTransparent =
-      $currentNavbarEl.hasClass('navbar-transparent') &&
-      !$currentNavbarEl.hasClass('navbar-large') &&
-      !$currentNavbarEl.hasClass('navbar-transparent-visible');
-    const currentNavIsLarge = $currentNavbarEl.hasClass('navbar-large');
-    const currentNavIsCollapsed = $currentNavbarEl.hasClass('navbar-large-collapsed');
-    const currentNavIsLargeTransparent =
-      $currentNavbarEl.hasClass('navbar-large-transparent') ||
-      ($currentNavbarEl.hasClass('navbar-large') &&
-        $currentNavbarEl.hasClass('navbar-transparent'));
-    const previousNavIsTransparent =
-      $previousNavbarEl.hasClass('navbar-transparent') &&
-      !$previousNavbarEl.hasClass('navbar-large') &&
-      !$previousNavbarEl.hasClass('navbar-transparent-visible');
-    const previousNavIsLarge = $previousNavbarEl.hasClass('navbar-large');
-    const previousNavIsCollapsed = $previousNavbarEl.hasClass('navbar-large-collapsed');
-    const previousNavIsLargeTransparent =
-      $previousNavbarEl.hasClass('navbar-large-transparent') ||
-      ($previousNavbarEl.hasClass('navbar-large') &&
-        $previousNavbarEl.hasClass('navbar-transparent'));
-    const fromLarge = currentNavIsLarge && !currentNavIsCollapsed;
-    const toLarge = previousNavIsLarge && !previousNavIsCollapsed;
-    const $currentNavElements = $currentNavbarEl.find(
-      '.left, .title, .right, .subnavbar, .fading, .title-large, .navbar-bg',
-    );
-    const $previousNavElements = $previousNavbarEl.find(
-      '.left, .title, .right, .subnavbar, .fading, .title-large, .navbar-bg',
-    );
-    let activeNavBackIconText;
-    let previousNavBackIconText;
-
-    if (params.iosAnimateNavbarBackIcon) {
-      if (
-        $currentNavbarEl.hasClass('sliding') ||
-        $currentNavbarEl.find('.navbar-inner.sliding').length
-      ) {
-        activeNavBackIconText = $currentNavbarEl.find('.left').find('.back .icon + span').eq(0);
-      } else {
-        activeNavBackIconText = $currentNavbarEl
-          .find('.left.sliding')
-          .find('.back .icon + span')
-          .eq(0);
-      }
-      if (
-        $previousNavbarEl.hasClass('sliding') ||
-        $previousNavbarEl.find('.navbar-inner.sliding').length
-      ) {
-        previousNavBackIconText = $previousNavbarEl.find('.left').find('.back .icon + span').eq(0);
-      } else {
-        previousNavBackIconText = $previousNavbarEl
-          .find('.left.sliding')
-          .find('.back .icon + span')
-          .eq(0);
-      }
-      if (activeNavBackIconText.length) {
-        $previousNavElements.each((el) => {
-          if (!$(el).hasClass('title')) return;
-          el.f7NavbarLeftOffset += activeNavBackIconText.prev('.icon')[0].offsetWidth;
-        });
-      }
-    }
-    $currentNavElements.each((navEl) => {
-      const $navEl = $(navEl);
-      const isSubnavbar = $navEl.hasClass('subnavbar');
-      const isLeft = $navEl.hasClass('left');
-      const isTitle = $navEl.hasClass('title');
-      const isBg = $navEl.hasClass('navbar-bg');
-      if ((isTitle || isBg) && currentNavIsTransparent) return;
-      if (!fromLarge && $navEl.hasClass('.title-large')) return;
-      const el = {
-        el: navEl,
-      };
-      if (fromLarge) {
-        if (isTitle) return;
-        if ($navEl.hasClass('title-large')) {
-          if (els.indexOf(el) < 0) els.push(el);
-          el.overflow = 'visible';
-          $navEl.find('.title-large-text').each((subNavEl) => {
-            els.push({
-              el: subNavEl,
-              transform: (progress) => `translateX(${progress * 100 * inverter}%)`,
-            });
-          });
-          return;
-        }
-      }
-      if (toLarge) {
-        if (!fromLarge) {
-          if ($navEl.hasClass('title-large')) {
-            if (els.indexOf(el) < 0) els.push(el);
-            el.opacity = 0;
-          }
-        }
-        if (isLeft) {
-          if (els.indexOf(el) < 0) els.push(el);
-          el.opacity = (progress) => 1 - progress ** 0.33;
-          $navEl.find('.back span').each((subNavEl) => {
-            els.push({
-              el: subNavEl,
-              'transform-origin': transformOrigin,
-              transform: (progress) =>
-                `translateX(calc(${progress} * (var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset)))) translateY(calc(${progress} * (var(--f7-navbar-large-title-height) - var(--f7-navbar-large-title-padding-vertical) / 2))) scale(${
-                  1 + 1 * progress
-                })`,
-            });
-          });
-          return;
-        }
-      }
-      if (isBg) {
-        if (els.indexOf(el) < 0) els.push(el);
-        if (!fromLarge && !toLarge) {
-          if (currentNavIsCollapsed) {
-            if (currentNavIsLargeTransparent) {
-              el.className = 'ios-swipeback-navbar-bg-large';
-            }
-            el.transform = (progress) =>
-              `translateX(${
-                100 * progress * inverter
-              }%) translateY(calc(-1 * var(--f7-navbar-large-title-height)))`;
-          } else {
-            el.transform = (progress) => `translateX(${100 * progress * inverter}%)`;
-          }
-        }
-        if (!fromLarge && toLarge) {
-          el.className = 'ios-swipeback-navbar-bg-large';
-          el.transform = (progress) =>
-            `translateX(${100 * progress * inverter}%) translateY(calc(-1 * ${
-              1 - progress
-            } * var(--f7-navbar-large-title-height)))`;
-        }
-        if (fromLarge && toLarge) {
-          el.transform = (progress) => `translateX(${100 * progress * inverter}%)`;
-        }
-        if (fromLarge && !toLarge) {
-          el.transform = (progress) =>
-            `translateX(${
-              100 * progress * inverter
-            }%) translateY(calc(-${progress} * var(--f7-navbar-large-title-height)))`;
-        }
-        return;
-      }
-      if ($navEl.hasClass('title-large')) return;
-      const isSliding =
-        $navEl.hasClass('sliding') || $navEl.parents('.navbar-inner.sliding').length;
-      if (els.indexOf(el) < 0) els.push(el);
-      if (!isSubnavbar || (isSubnavbar && !isSliding)) {
-        el.opacity = (progress) => 1 - progress ** 0.33;
-      }
-      if (isSliding) {
-        let transformTarget = el;
-        if (isLeft && activeNavBackIconText.length && params.iosAnimateNavbarBackIcon) {
-          const textEl = { el: activeNavBackIconText[0] };
-          transformTarget = textEl;
-          els.push(textEl);
-        }
-        transformTarget.transform = (progress) => {
-          let activeNavTranslate = progress * transformTarget.el.f7NavbarRightOffset;
-          if (device.pixelRatio === 1) activeNavTranslate = Math.round(activeNavTranslate);
-          if (isSubnavbar && currentNavIsLarge) {
-            return `translate3d(${activeNavTranslate}px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)`;
-          }
-          return `translate3d(${activeNavTranslate}px,0,0)`;
-        };
-      }
-    });
-    $previousNavElements.each((navEl) => {
-      const $navEl = $(navEl);
-      const isSubnavbar = $navEl.hasClass('subnavbar');
-      const isLeft = $navEl.hasClass('left');
-      const isTitle = $navEl.hasClass('title');
-      const isBg = $navEl.hasClass('navbar-bg');
-      if ((isTitle || isBg) && previousNavIsTransparent) return;
-      const el = {
-        el: navEl,
-      };
-      if (toLarge) {
-        if (isTitle) return;
-        if (els.indexOf(el) < 0) els.push(el);
-
-        if ($navEl.hasClass('title-large')) {
-          el.opacity = 1;
-          el.overflow = 'visible';
-          $navEl.find('.title-large-text').each((subNavEl) => {
-            els.push({
-              el: subNavEl,
-              'transform-origin': transformOriginTitleLarge,
-              opacity: (progress) => progress ** 3,
-              transform: (progress) =>
-                `translateX(calc(${
-                  1 - progress
-                } * (var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset)))) translateY(calc(${
-                  progress - 1
-                } * var(--f7-navbar-large-title-height) + ${
-                  1 - progress
-                } * var(--f7-navbar-large-title-padding-vertical))) scale(${0.5 + progress * 0.5})`,
-            });
-          });
-          return;
-        }
-      }
-      if (isBg) {
-        if (els.indexOf(el) < 0) els.push(el);
-        if (!fromLarge && !toLarge) {
-          if (previousNavIsCollapsed) {
-            if (previousNavIsLargeTransparent) {
-              el.className = 'ios-swipeback-navbar-bg-large';
-            }
-            el.transform = (progress) =>
-              `translateX(${
-                (-100 + 100 * progress) * inverter
-              }%) translateY(calc(-1 * var(--f7-navbar-large-title-height)))`;
-          } else {
-            el.transform = (progress) => `translateX(${(-100 + 100 * progress) * inverter}%)`;
-          }
-        }
-        if (!fromLarge && toLarge) {
-          el.transform = (progress) =>
-            `translateX(${(-100 + 100 * progress) * inverter}%) translateY(calc(-1 * ${
-              1 - progress
-            } * var(--f7-navbar-large-title-height)))`;
-        }
-        if (fromLarge && !toLarge) {
-          el.className = 'ios-swipeback-navbar-bg-large';
-          el.transform = (progress) =>
-            `translateX(${
-              (-100 + 100 * progress) * inverter
-            }%) translateY(calc(-${progress} * var(--f7-navbar-large-title-height)))`;
-        }
-        if (fromLarge && toLarge) {
-          el.transform = (progress) => `translateX(${(-100 + 100 * progress) * inverter}%)`;
-        }
-
-        return;
-      }
-      if ($navEl.hasClass('title-large')) return;
-      const isSliding =
-        $navEl.hasClass('sliding') || $previousNavbarEl.children('.navbar-inner.sliding').length;
-      if (els.indexOf(el) < 0) els.push(el);
-      if (!isSubnavbar || (isSubnavbar && !isSliding)) {
-        el.opacity = (progress) => progress ** 3;
-      }
-      if (isSliding) {
-        let transformTarget = el;
-        if (isLeft && previousNavBackIconText.length && params.iosAnimateNavbarBackIcon) {
-          const textEl = { el: previousNavBackIconText[0] };
-          transformTarget = textEl;
-          els.push(textEl);
-        }
-        transformTarget.transform = (progress) => {
-          let previousNavTranslate = transformTarget.el.f7NavbarLeftOffset * (1 - progress);
-          if (device.pixelRatio === 1) previousNavTranslate = Math.round(previousNavTranslate);
-          if (isSubnavbar && previousNavIsLarge) {
-            return `translate3d(${previousNavTranslate}px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)`;
-          }
-          return `translate3d(${previousNavTranslate}px,0,0)`;
-        };
-      }
-    });
-    return els;
-  }
-
-  function setAnimatableNavElements({ progress, reset, transition, reflow } = {}) {
-    const styles = ['overflow', 'transform', 'transform-origin', 'opacity'];
-    if (transition === true || transition === false) {
-      for (let i = 0; i < animatableNavEls.length; i += 1) {
-        const el = animatableNavEls[i];
-        if (el && el.el) {
-          if (transition === true) el.el.classList.add('navbar-page-transitioning');
-          if (transition === false) el.el.classList.remove('navbar-page-transitioning');
-        }
-      }
-    }
-    if (reflow && animatableNavEls.length && animatableNavEls[0] && animatableNavEls[0].el) {
-      // eslint-disable-next-line
-      animatableNavEls[0].el._clientLeft = animatableNavEls[0].el.clientLeft;
-    }
-    for (let i = 0; i < animatableNavEls.length; i += 1) {
-      const el = animatableNavEls[i];
-      if (el && el.el) {
-        if (el.className && !el.classNameSet && !reset) {
-          el.el.classList.add(el.className);
-          el.classNameSet = true;
-        }
-        if (el.className && reset) {
-          el.el.classList.remove(el.className);
-        }
-        for (let j = 0; j < styles.length; j += 1) {
-          const styleProp = styles[j];
-          if (el[styleProp]) {
-            if (reset) {
-              el.el.style[styleProp] = '';
-            } else if (typeof el[styleProp] === 'function') {
-              el.el.style[styleProp] = el[styleProp](progress);
-            } else {
-              el.el.style[styleProp] = el[styleProp];
-            }
-          }
-        }
-      }
-    }
-  }
 
   function handleTouchStart(e) {
     if (!e.isTrusted) return;
@@ -367,7 +51,6 @@ function SwipeBack(r) {
     touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
     touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
     touchStartTime = now();
-    dynamicNavbar = router.dynamicNavbar;
   }
   function handleTouchMove(e) {
     if (!e.isTrusted) return;
@@ -436,16 +119,6 @@ function SwipeBack(r) {
         }
       }
 
-      if (dynamicNavbar) {
-        $currentNavbarEl = $navbarsEl.find('.navbar-current');
-        $previousNavbarEl = $navbarsEl.find('.navbar-previous');
-        if ($previousNavbarEl.length > 1) {
-          $previousNavbarEl = $previousNavbarEl.eq($previousNavbarEl.length - 1);
-        }
-
-        animatableNavEls = animatableNavElements($previousNavbarEl, $currentNavbarEl);
-      }
-
       // Close/Hide Any Picker
       if ($('.sheet.modal-in').length > 0 && app.sheet) {
         app.sheet.close($('.sheet.modal-in'));
@@ -470,8 +143,6 @@ function SwipeBack(r) {
       progress: percentage,
       currentPageEl: $currentPageEl[0],
       previousPageEl: $previousPageEl[0],
-      currentNavbarEl: $currentNavbarEl[0],
-      previousNavbarEl: $previousNavbarEl[0],
     };
     $el.trigger('swipeback:move', callbackData);
     router.emit('swipebackMove', callbackData);
@@ -501,11 +172,6 @@ function SwipeBack(r) {
       $previousPageEl.transform(`translate3d(${previousPageTranslate}px,0,0)`);
     }
     if (paramsSwipeBackAnimateOpacity) $pageOpacityEl[0].style.opacity = 1 - 1 * percentage;
-
-    // Dynamic Navbars Animation
-    if (!dynamicNavbar) return;
-
-    setAnimatableNavElements({ progress: percentage });
   }
   function handleTouchEnd(e) {
     if (!e.isTrusted) return;
@@ -524,9 +190,6 @@ function SwipeBack(r) {
       $pages.transform('');
       if ($pageShadowEl && $pageShadowEl.length > 0) $pageShadowEl.remove();
       if ($pageOpacityEl && $pageOpacityEl.length > 0) $pageOpacityEl.remove();
-      if (dynamicNavbar) {
-        setAnimatableNavElements({ reset: true });
-      }
       return;
     }
     const timeDiff = now() - touchStartTime;
@@ -545,10 +208,7 @@ function SwipeBack(r) {
         .removeAttr('aria-hidden');
       if ($pageShadowEl) $pageShadowEl[0].style.opacity = '';
       if ($pageOpacityEl) $pageOpacityEl[0].style.opacity = '';
-      if (dynamicNavbar) {
-        router.setNavbarPosition($currentNavbarEl, 'next');
-        router.setNavbarPosition($previousNavbarEl, 'current', false);
-      }
+
       pageChanged = true;
     }
     // Reset custom styles
@@ -560,13 +220,6 @@ function SwipeBack(r) {
     }
     $pages.transform('');
 
-    if (dynamicNavbar) {
-      setAnimatableNavElements({
-        progress: pageChanged ? 1 : 0,
-        transition: true,
-        reflow: !!device.ios,
-      });
-    }
     allowViewTouchMove = false;
     router.allowPageChange = false;
 
@@ -574,8 +227,6 @@ function SwipeBack(r) {
     const callbackData = {
       currentPageEl: $currentPageEl[0],
       previousPageEl: $previousPageEl[0],
-      currentNavbarEl: $currentNavbarEl[0],
-      previousNavbarEl: $previousNavbarEl[0],
     };
 
     if (pageChanged) {
@@ -584,14 +235,13 @@ function SwipeBack(r) {
       router.currentPage = $previousPageEl[0];
 
       // Page before animation callback
-      router.pageCallback('beforeOut', $currentPageEl, $currentNavbarEl, 'current', 'next', {
+      router.pageCallback('beforeOut', $currentPageEl, 'current', 'next', {
         route: $currentPageEl[0].f7Page.route,
         swipeBack: true,
       });
       router.pageCallback(
         'beforeIn',
         $previousPageEl,
-        $previousNavbarEl,
         'previous',
         'current',
         { route: $previousPageEl[0].f7Page.route, swipeBack: true },
@@ -607,9 +257,7 @@ function SwipeBack(r) {
 
     $currentPageEl.transitionEnd(() => {
       $pages.removeClass('page-transitioning page-transitioning-swipeback');
-      if (dynamicNavbar) {
-        setAnimatableNavElements({ reset: true, transition: false });
-      }
+
       allowViewTouchMove = true;
       router.allowPageChange = true;
       if (pageChanged) {
@@ -626,24 +274,21 @@ function SwipeBack(r) {
         }
 
         // Page after animation callback
-        router.pageCallback('afterOut', $currentPageEl, $currentNavbarEl, 'current', 'next', {
+        router.pageCallback('afterOut', $currentPageEl, 'current', 'next', {
           route: $currentPageEl[0].f7Page.route,
           swipeBack: true,
         });
-        router.pageCallback('afterIn', $previousPageEl, $previousNavbarEl, 'previous', 'current', {
+        router.pageCallback('afterIn', $previousPageEl, 'previous', 'current', {
           route: $previousPageEl[0].f7Page.route,
           swipeBack: true,
         });
 
         // Remove Old Page
 
-        router.pageCallback('beforeRemove', $currentPageEl, $currentNavbarEl, 'next', {
+        router.pageCallback('beforeRemove', $currentPageEl, 'next', {
           swipeBack: true,
         });
         router.removePage($currentPageEl);
-        if (dynamicNavbar) {
-          router.removeNavbar($currentNavbarEl);
-        }
 
         $el.trigger('swipeback:afterchange', callbackData);
         router.emit('swipebackAfterChange', callbackData);

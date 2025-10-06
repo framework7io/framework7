@@ -144,11 +144,10 @@ export default [
       <div class="page">
         <div class="navbar">
           <div class="navbar-bg"></div>
-          <div class="navbar-inner sliding">
+          <div class="navbar-inner">
             <div class="left">
               <a  class="link back">
                 <i class="icon icon-back"></i>
-                <span class="if-not-md">Back</span>
               </a>
             </div>
             <div class="title">Panel Page 1</div>
@@ -169,11 +168,10 @@ export default [
       <div class="page">
         <div class="navbar">
           <div class="navbar-bg"></div>
-          <div class="navbar-inner sliding">
+          <div class="navbar-inner">
             <div class="left">
               <a  class="link back">
                 <i class="icon icon-back"></i>
-                <span class="if-not-md">Back</span>
               </a>
             </div>
             <div class="title">Panel Page 2</div>

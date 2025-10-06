@@ -49,7 +49,7 @@
     line-height: var(--f7-subnavbar-link-line-height, var(--f7-subnavbar-height));
     height: var(--f7-subnavbar-link-height, var(--f7-subnavbar-height));
   }
-  a.icon-only {
+  a:is(.icon-only, :has(i:only-child), :has(svg:only-child)) {
     min-width: var(--f7-subnavbar-height);
   }
   &.no-outline {

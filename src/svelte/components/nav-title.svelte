@@ -8,14 +8,11 @@
 
   export let title = undefined;
   export let subtitle = undefined;
-  export let sliding = undefined;
 
   $: classes = classNames(
     className,
     'title',
-    {
-      sliding,
-    },
+    {},
     colorClasses($$props),
   );
 </script>

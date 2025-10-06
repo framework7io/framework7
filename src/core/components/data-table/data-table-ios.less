@@ -27,7 +27,7 @@
     }
   }
   .data-table-actions {
-    a.link.icon-only {
+    a.link:is(.icon-only, :has(i:only-child), :has(svg:only-child)) {
       width: 44px;
       height: 44px;
     }

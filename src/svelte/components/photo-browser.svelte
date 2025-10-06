@@ -20,8 +20,6 @@
   export let iconsColor = undefined;
   export let swipeToClose = true;
   export let pageBackLinkText = undefined;
-  export let popupCloseLinkIcon = undefined;
-  export let popupCloseLinkText = undefined;
   export let navbarOfText = undefined;
   export let navbarShowCount = undefined;
   export let swiper = undefined;
@@ -97,8 +95,6 @@
           iconsColor,
           swipeToClose,
           pageBackLinkText,
-          popupCloseLinkIcon,
-          popupCloseLinkText,
           navbarOfText,
           navbarShowCount,
           swiper,

@@ -170,7 +170,6 @@ export default {
       navbarPopup: true,
       navbarCloseText: 'Done',
       navbarTitleText: 'Color',
-      navbarBackLinkText: 'Back',
       cssClass: null,
       routableModals: false,
       view: null,

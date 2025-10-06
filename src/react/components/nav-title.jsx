@@ -8,14 +8,13 @@ import { colorClasses } from '../shared/mixins.js';
   style?: React.CSSProperties;
   title? : string;
   subtitle? : string;
-  sliding? : boolean;
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
   children?: React.ReactNode;
   COLOR_PROPS
 */
 
 const NavTitle = forwardRef((props, ref) => {
-  const { className, id, style, children, title, subtitle, sliding } = props;
+  const { className, id, style, children, title, subtitle } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
@@ -29,14 +28,7 @@ const NavTitle = forwardRef((props, ref) => {
     subtitleEl = <span className="subtitle">{subtitle}</span>;
   }
 
-  const classes = classNames(
-    className,
-    'title',
-    {
-      sliding,
-    },
-    colorClasses(props),
-  );
+  const classes = classNames(className, 'title', {}, colorClasses(props));
 
   return (
     <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>

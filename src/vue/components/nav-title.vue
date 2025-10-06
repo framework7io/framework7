@@ -15,19 +15,10 @@ export default {
   props: {
     title: String,
     subtitle: String,
-    sliding: Boolean,
     ...colorProps,
   },
   setup(props) {
-    const classes = computed(() =>
-      classNames(
-        'title',
-        {
-          sliding: props.sliding,
-        },
-        colorClasses(props),
-      ),
-    );
+    const classes = computed(() => classNames('title', {}, colorClasses(props)));
     return { classes };
   },
 };

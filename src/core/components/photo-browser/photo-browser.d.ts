@@ -44,11 +44,9 @@ export namespace PhotoBrowser {
     navbar?: boolean;
     /** Set to false to remove Photo Browser's Toolbar (default true) */
     toolbar?: boolean;
-    /** Text on back link in Photo Browser's navbar (default "Back") */
+    /** Text on back link in Photo Browser's navbar (default "") */
     pageBackLinkText?: string;
-    /** Close icon (x mark) in Photo Browser's navbar when opened in Popup or as Standalone (default true) */
-    popupCloseLinkIcon?: boolean;
-    /** Text on close link in Photo Browser's navbar when opened in Popup or as Standalone (default undefined) */
+    /** Popup close link text (default '') */
     popupCloseLinkText?: string;
     /** Text of "of" in photos counter: "3 of 5" (default "of") */
     navbarOfText?: string;

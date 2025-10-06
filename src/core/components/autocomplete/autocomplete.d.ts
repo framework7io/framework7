@@ -71,9 +71,9 @@ export namespace Autocomplete {
     requestSourceOnOpen?: boolean;
     /** String with CSS selector or HTMLElement of link which will open standalone autocomplete page or popup on click. */
     openerEl?: HTMLElement | CSSSelector;
-    /** Default text for "Close" button when opened as Popup. (default Close) */
+    /** Default text for "Close" button when opened as Popup. (default '') */
     popupCloseLinkText?: string;
-    /** Default text for "Back" link when opened as Page. (default Back) */
+    /** Default text for "Back" link when opened as Page. (default '') */
     pageBackLinkText?: string;
     /** Autocomplete page title. If nothing is specified and passed openerEl is an item of List View, then text value of item-title element will be used. */
     pageTitle?: string;

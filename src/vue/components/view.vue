@@ -137,16 +137,6 @@ export default {
       default: undefined,
     },
     transition: String,
-    // iOS Dynamic Navbar
-    iosDynamicNavbar: {
-      type: Boolean,
-      default: undefined,
-    },
-    // Animate iOS Navbar Back Icon
-    iosAnimateNavbarBackIcon: {
-      type: Boolean,
-      default: undefined,
-    },
     // MD Theme delay
     materialPageLoadDelay: Number,
 

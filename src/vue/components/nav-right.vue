@@ -11,19 +11,10 @@ import { colorClasses, colorProps } from '../shared/mixins.js';
 export default {
   name: 'f7-nav-right',
   props: {
-    sliding: Boolean,
     ...colorProps,
   },
   setup(props) {
-    const classes = computed(() =>
-      classNames(
-        'right',
-        {
-          sliding: props.sliding,
-        },
-        colorClasses(props),
-      ),
-    );
+    const classes = computed(() => classNames('right', {}, colorClasses(props)));
     return { classes };
   },
 };

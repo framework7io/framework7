@@ -47,9 +47,9 @@ export namespace SmartSelect {
     sheetBackdrop?: boolean;
     /** Smart select page title. If not passed then it will be the <div class="item-title"> text */
     pageTitle?: string;
-    /** Smart select Page back link text (default 'Back') */
+    /** Smart select Page back link text (default '') */
     pageBackLinkText?: string;
-    /** Smart select Popup close link text (default 'Close') */
+    /** Smart select Popup close link text (default '') */
     popupCloseLinkText?: string;
     /** Smart select Popup will be opened as full screen popup on tablet */
     popupTabletFullscreen?: boolean;

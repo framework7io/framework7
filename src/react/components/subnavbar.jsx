@@ -6,7 +6,6 @@ import { colorClasses } from '../shared/mixins.js';
   id?: string | number;
   className?: string;
   style?: React.CSSProperties;
-  sliding? : boolean
   title? : string
   inner? : boolean
   ref?: React.MutableRefObject<{el: HTMLElement | null}>;
@@ -15,7 +14,7 @@ import { colorClasses } from '../shared/mixins.js';
 */
 
 const Subnavbar = forwardRef((props, ref) => {
-  const { className, id, style, children, inner = true, title, sliding } = props;
+  const { className, id, style, children, inner = true, title } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
@@ -23,14 +22,7 @@ const Subnavbar = forwardRef((props, ref) => {
     el: elRef.current,
   }));
 
-  const classes = classNames(
-    className,
-    'subnavbar',
-    {
-      sliding,
-    },
-    colorClasses(props),
-  );
+  const classes = classNames(className, 'subnavbar', {}, colorClasses(props));
   return (
     <div className={classes} id={id} style={style} ref={elRef} {...extraAttrs}>
       {inner ? (

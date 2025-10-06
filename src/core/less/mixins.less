@@ -198,7 +198,7 @@
     transition-duration: 300ms;
     transition-property: opacity;
   }
-  &.icon-only:before,
+  &:is(.icon-only, a:has(i:only-child), a:has(svg:only-child)):before,
   &.ripple-inset:before,
   &.searchbar-disable-button:before,
   &.input-clear-button:before,
@@ -243,16 +243,17 @@
 
 .ios-translucent-bars(@color) {
   .ios-translucent-bars & {
-    @supports (backdrop-filter: blur(20px)) {
-      background-color: rgba(@color, var(--f7-bars-translucent-opacity));
-      backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
-    }
+    background-color: rgba(@color, var(--f7-bars-translucent-opacity));
+    backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
   }
 }
 .ios-translucent-glass() {
-  @supports (backdrop-filter: blur(16px)) {
-    backdrop-filter: saturate(180%) blur(16px);
-  }
+  backdrop-filter: saturate(180%) blur(16px);
+}
+.ios-glass() {
+  backdrop-filter: saturate(180%) blur(16px);
+  box-shadow: var(--f7-glass-shadow);
+  background-color: var(--f7-glass-bg-color);
 }
 
 .no-scrollbar() {

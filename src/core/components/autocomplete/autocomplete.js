@@ -27,8 +27,8 @@ export default {
       textProperty: 'text',
 
       openIn: 'page', // or 'popup' or 'dropdown'
-      pageBackLinkText: 'Back',
-      popupCloseLinkText: 'Close',
+      pageBackLinkText: '',
+      popupCloseLinkText: '',
       pageTitle: undefined,
       searchbarPlaceholder: 'Search...',
       searchbarDisableText: 'Cancel',

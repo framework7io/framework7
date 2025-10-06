@@ -89,10 +89,6 @@ export default {
       browserHistoryTabs: 'replace',
       // Animate Pages
       animate: true,
-      // iOS Dynamic Navbar
-      iosDynamicNavbar: true,
-      // Animate iOS Navbar Back Icon
-      iosAnimateNavbarBackIcon: true,
       // Delays
       iosPageLoadDelay: 0,
       mdPageLoadDelay: 0,

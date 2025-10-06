@@ -1,7 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
-import { useTheme } from '../shared/use-theme.js';
 
 import Link from './link.js';
 
@@ -13,7 +12,6 @@ import Link from './link.js';
   backLinkUrl? : string;
   backLinkForce? : boolean;
   backLinkShowText? : boolean;
-  sliding? : boolean;
   COLOR_PROPS
   onBackClick? : (event?: any) => void;
   onClickBack? : (event?: any) => void;
@@ -22,17 +20,8 @@ import Link from './link.js';
 */
 
 const NavLeft = forwardRef((props, ref) => {
-  const {
-    className,
-    id,
-    style,
-    children,
-    backLink,
-    backLinkUrl,
-    backLinkForce,
-    backLinkShowText,
-    sliding,
-  } = props;
+  const { className, id, style, children, backLink, backLinkUrl, backLinkForce, backLinkShowText } =
+    props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
@@ -45,14 +34,10 @@ const NavLeft = forwardRef((props, ref) => {
     el: elRef.current,
   }));
 
-  const theme = useTheme();
-
   let linkEl;
-  let needBackLinkText = backLinkShowText;
-  if (typeof needBackLinkText === 'undefined') needBackLinkText = !theme.md;
 
   if (backLink) {
-    const text = backLink !== true && needBackLinkText ? backLink : undefined;
+    const text = backLink !== true && backLinkShowText ? backLink : undefined;
     linkEl = (
       <Link
         href={backLinkUrl || '#'}
@@ -65,14 +50,7 @@ const NavLeft = forwardRef((props, ref) => {
       />
     );
   }
-  const classes = classNames(
-    className,
-    'left',
-    {
-      sliding,
-    },
-    colorClasses(props),
-  );
+  const classes = classNames(className, 'left', {}, colorClasses(props));
 
   return (
     <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>

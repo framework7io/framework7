@@ -17,7 +17,6 @@ import NavRight from './nav-right.js';
   backLinkUrl? : string
   backLinkForce? : boolean
   backLinkShowText? : boolean
-  sliding? : boolean
   title? : string
   subtitle? : string
   hidden? : boolean
@@ -46,7 +45,6 @@ const Navbar = forwardRef((props, ref) => {
     className,
     id,
     style,
-    sliding = true,
     large,
     largeTransparent,
     transparent,
@@ -64,9 +62,6 @@ const Navbar = forwardRef((props, ref) => {
   } = props;
   const routerPositionClass = useRef('');
   const largeCollapsed = useRef(false);
-  const routerNavbarRole = useRef(null);
-  const routerNavbarRoleDetailRoot = useRef(false);
-  const routerNavbarMasterStack = useRef(false);
   const transparentVisible = useRef(false);
   const extraAttrs = getExtraAttrs(props);
 
@@ -106,19 +101,7 @@ const Navbar = forwardRef((props, ref) => {
     if (elRef.current !== navbarEl) return;
     routerPositionClass.current = position ? `navbar-${position}` : '';
   };
-  const onNavbarRole = (navbarEl, rolesData) => {
-    if (elRef.current !== navbarEl) return;
-    routerNavbarRole.current = rolesData.role;
-    routerNavbarRoleDetailRoot.current = rolesData.detailRoot;
-  };
-  const onNavbarMasterStack = (navbarEl) => {
-    if (elRef.current !== navbarEl) return;
-    routerNavbarMasterStack.current = true;
-  };
-  const onNavbarMasterUnstack = (navbarEl) => {
-    if (elRef.current !== navbarEl) return;
-    routerNavbarMasterStack.current = false;
-  };
+
   const hide = (animate) => {
     if (!f7) return;
     f7.navbar.hide(elRef.current, animate);
@@ -151,9 +134,6 @@ const Navbar = forwardRef((props, ref) => {
       f7.on('navbarCollapse', onCollapse);
       f7.on('navbarExpand', onExpand);
       f7.on('navbarPosition', onNavbarPosition);
-      f7.on('navbarRole', onNavbarRole);
-      f7.on('navbarMasterStack', onNavbarMasterStack);
-      f7.on('navbarMasterUnstack', onNavbarMasterUnstack);
       f7.on('navbarTransparentShow', onNavbarTransparentShow);
       f7.on('navbarTransparentHide', onNavbarTransparentHide);
     });
@@ -166,9 +146,6 @@ const Navbar = forwardRef((props, ref) => {
     f7.off('navbarCollapse', onCollapse);
     f7.off('navbarExpand', onExpand);
     f7.off('navbarPosition', onNavbarPosition);
-    f7.off('navbarRole', onNavbarRole);
-    f7.off('navbarMasterStack', onNavbarMasterStack);
-    f7.off('navbarMasterUnstack', onNavbarMasterUnstack);
     f7.off('navbarTransparentShow', onNavbarTransparentShow);
     f7.off('navbarTransparentHide', onNavbarTransparentHide);
   };
@@ -202,10 +179,6 @@ const Navbar = forwardRef((props, ref) => {
       'navbar-large-collapsed': isLarge && largeCollapsed.current,
       'navbar-transparent': isTransparent,
       'navbar-transparent-visible': isTransparentVisible,
-      'navbar-master': routerNavbarRole.current === 'master',
-      'navbar-master-detail': routerNavbarRole.current === 'detail',
-      'navbar-master-detail-root': routerNavbarRoleDetailRoot.current === true,
-      'navbar-master-stacked': routerNavbarMasterStack.current === true,
       'no-outline': !outline,
     },
     colorClasses(props),
@@ -255,7 +228,6 @@ const Navbar = forwardRef((props, ref) => {
   const innerEl = (
     <div
       className={classNames('navbar-inner', innerClass, innerClassName, {
-        sliding,
         'navbar-inner-left-title': addLeftTitleClass,
         'navbar-inner-centered-title': addCenterTitleClass,
       })}

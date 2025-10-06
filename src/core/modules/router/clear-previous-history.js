@@ -3,8 +3,6 @@ import appRouterCheck from './app-router-check.js';
 
 function clearPreviousPages(router) {
   appRouterCheck(router, 'clearPreviousPages');
-  const app = router.app;
-  const dynamicNavbar = router.dynamicNavbar;
 
   const $pagesToRemove = router.$el.children('.page').filter((pageInView) => {
     if (router.currentRoute && (router.currentRoute.modal || router.currentRoute.panel))
@@ -14,13 +12,9 @@ function clearPreviousPages(router) {
 
   $pagesToRemove.each((pageEl) => {
     const $oldPageEl = $(pageEl);
-    const $oldNavbarEl = $(app.navbar.getElByPage($oldPageEl));
     // Page remove event
-    router.pageCallback('beforeRemove', $oldPageEl, $oldNavbarEl, 'previous', undefined, {});
+    router.pageCallback('beforeRemove', $oldPageEl, 'previous', undefined, {});
     router.removePage($oldPageEl);
-    if (dynamicNavbar && $oldNavbarEl.length) {
-      router.removeNavbar($oldNavbarEl);
-    }
   });
 }
 

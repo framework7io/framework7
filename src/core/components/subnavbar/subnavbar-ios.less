@@ -43,7 +43,7 @@
     a.link {
       justify-content: flex-start;
     }
-    a.icon-only {
+    a:is(.icon-only, :has(i:only-child), :has(svg:only-child)) {
       justify-content: center;
       margin: 0;
     }

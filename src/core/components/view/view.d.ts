@@ -110,10 +110,6 @@ export namespace View {
     componentCache?: boolean;
     /** When enabled, and there is no children pages inside of the View. It will load initial page that matches to initial URL (default true) */
     loadInitialPage?: boolean;
-    /**	Enables dynamic navbar for iOS theme */
-    iosDynamicNavbar?: boolean;
-    /**	This option (when enabled) gives more native look for dynamic navbar left back-link icon animation. Useful only when you use dynamic navbar with default back-link icon on left side set as "sliding". */
-    iosAnimateNavbarBackIcon?: boolean;
     /**	Enable/disable ability to swipe back from left edge of screen to get to the previous page. For iOS theme */
     iosSwipeBack?: boolean;
     /**	Value in px. Swipe back action will start if "touch distance" will be more than this value. For iOS theme */

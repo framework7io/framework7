@@ -1,15 +1,15 @@
 .ios {
   .messagebar {
-    a.link.icon-only:first-child {
+    a.link:is(.icon-only, :has(i:only-child), :has(svg:only-child)):first-child {
       margin-left: -8px;
     }
-    a.link.icon-only:last-child {
+    a.link:is(.icon-only, :has(i:only-child), :has(svg:only-child)):last-child {
       margin-right: -8px;
     }
-    a.link:not(.icon-only) + .messagebar-area {
+    a.link:not(:is(.icon-only, :has(i:only-child), :has(svg:only-child))) + .messagebar-area {
       margin-left: 8px;
     }
-    .messagebar-area + a.link:not(.icon-only) {
+    .messagebar-area + a.link:not(:is(.icon-only, :has(i:only-child), :has(svg:only-child))) {
       margin-left: 8px;
     }
   }

@@ -4,7 +4,6 @@ import $ from '../../shared/dom7.js';
 import Framework7Class from '../../shared/class.js';
 import {
   extend,
-  nextFrame,
   parseUrlQuery,
   serializeObject,
   now,
@@ -49,9 +48,7 @@ class Router extends Framework7Class {
         propsHistory: [],
         scrollHistory: view.scrollHistory,
         cache: app.cache,
-        dynamicNavbar: app.theme === 'ios' && view.params.iosDynamicNavbar,
         initialPages: [],
-        initialNavbars: [],
       });
     }
 
@@ -101,141 +98,27 @@ class Router extends Framework7Class {
       tempDom: document.createElement('div'),
       $el: view.$el,
       el: view.el,
-      $navbarsEl: view.$navbarsEl,
-      navbarsEl: view.navbarsEl,
     });
 
     router.emit('local::mount routerMount', router);
   }
 
-  animatableNavElements($newNavbarEl, $oldNavbarEl, toLarge, fromLarge, direction) {
-    const router = this;
-    const dynamicNavbar = router.dynamicNavbar;
-    const animateIcon = router.params.iosAnimateNavbarBackIcon;
-
-    let newNavEls;
-    let oldNavEls;
-    function animatableNavEl($el, $navbarInner) {
-      const isSliding = $el.hasClass('sliding') || $navbarInner.hasClass('sliding');
-      const isSubnavbar = $el.hasClass('subnavbar');
-      const needsOpacityTransition = isSliding ? !isSubnavbar : true;
-      const $iconEl = $el.find('.back .icon');
-      let isIconLabel;
-      if (
-        isSliding &&
-        animateIcon &&
-        $el.hasClass('left') &&
-        $iconEl.length > 0 &&
-        $iconEl.next('span').length
-      ) {
-        $el = $iconEl.next('span'); // eslint-disable-line
-        isIconLabel = true;
-      }
-      return {
-        $el,
-        isIconLabel,
-        leftOffset: $el[0].f7NavbarLeftOffset,
-        rightOffset: $el[0].f7NavbarRightOffset,
-        isSliding,
-        isSubnavbar,
-        needsOpacityTransition,
-      };
-    }
-    if (dynamicNavbar) {
-      newNavEls = [];
-      oldNavEls = [];
-      $newNavbarEl
-        .children('.navbar-inner')
-        .children('.left, .right, .title, .subnavbar')
-        .each((navEl) => {
-          const $navEl = $(navEl);
-          if ($navEl.hasClass('left') && fromLarge && direction === 'forward') return;
-          if ($navEl.hasClass('title') && toLarge) return;
-          newNavEls.push(animatableNavEl($navEl, $newNavbarEl.children('.navbar-inner')));
-        });
-      if (
-        !(
-          $oldNavbarEl.hasClass('navbar-master') &&
-          router.params.masterDetailBreakpoint > 0 &&
-          router.app.width >= router.params.masterDetailBreakpoint
-        )
-      ) {
-        $oldNavbarEl
-          .children('.navbar-inner')
-          .children('.left, .right, .title, .subnavbar')
-          .each((navEl) => {
-            const $navEl = $(navEl);
-            if ($navEl.hasClass('left') && toLarge && !fromLarge && direction === 'forward') return;
-            if ($navEl.hasClass('left') && toLarge && direction === 'backward') return;
-            if ($navEl.hasClass('title') && fromLarge) {
-              return;
-            }
-            oldNavEls.push(animatableNavEl($navEl, $oldNavbarEl.children('.navbar-inner')));
-          });
-      }
-      [oldNavEls, newNavEls].forEach((navEls) => {
-        navEls.forEach((navEl) => {
-          const n = navEl;
-          const { isSliding, $el } = navEl;
-          const otherEls = navEls === oldNavEls ? newNavEls : oldNavEls;
-          if (!(isSliding && $el.hasClass('title') && otherEls)) return;
-          otherEls.forEach((otherNavEl) => {
-            if (otherNavEl.isIconLabel) {
-              const iconTextEl = otherNavEl.$el[0];
-              n.leftOffset += iconTextEl ? iconTextEl.offsetLeft || 0 : 0;
-            }
-          });
-        });
-      });
-    }
-
-    return { newNavEls, oldNavEls };
-  }
-
-  animate($oldPageEl, $newPageEl, $oldNavbarEl, $newNavbarEl, direction, transition, callback) {
+  animate($oldPageEl, $newPageEl, direction, transition, callback) {
     const router = this;
     if (router.params.animateCustom) {
-      router.params.animateCustom.apply(router, [
-        $oldPageEl,
-        $newPageEl,
-        $oldNavbarEl,
-        $newNavbarEl,
-        direction,
-        callback,
-      ]);
+      router.params.animateCustom.apply(router, [$oldPageEl, $newPageEl, direction, callback]);
       return;
     }
-    const dynamicNavbar = router.dynamicNavbar;
     const ios = router.app.theme === 'ios';
     if (transition) {
       const routerCustomTransitionClass = `router-transition-custom router-transition-${transition}-${direction}`;
       // Animate
       const onCustomTransitionDone = () => {
         router.$el.removeClass(routerCustomTransitionClass);
-        if (dynamicNavbar && router.$navbarsEl.length) {
-          if ($newNavbarEl) {
-            router.$navbarsEl.prepend($newNavbarEl);
-          }
-          if ($oldNavbarEl) {
-            router.$navbarsEl.prepend($oldNavbarEl);
-          }
-        }
         if (callback) callback();
       };
 
       (direction === 'forward' ? $newPageEl : $oldPageEl).animationEnd(onCustomTransitionDone);
-      if (dynamicNavbar) {
-        if ($newNavbarEl && $newPageEl) {
-          router.setNavbarPosition($newNavbarEl, '');
-          $newNavbarEl.removeClass('navbar-next navbar-previous navbar-current');
-          $newPageEl.prepend($newNavbarEl);
-        }
-        if ($oldNavbarEl && $oldPageEl) {
-          router.setNavbarPosition($oldNavbarEl, '');
-          $oldNavbarEl.removeClass('navbar-next navbar-previous navbar-current');
-          $oldPageEl.prepend($oldNavbarEl);
-        }
-      }
 
       router.$el.addClass(routerCustomTransitionClass);
       return;
@@ -244,121 +127,8 @@ class Router extends Framework7Class {
     // Router Animation class
     const routerTransitionClass = `router-transition-${direction} router-transition`;
 
-    let newNavEls;
-    let oldNavEls;
-
-    let fromLarge;
-    let toLarge;
-    let toDifferent;
-
-    let oldIsLarge;
-    let newIsLarge;
-
-    if (ios && dynamicNavbar) {
-      const betweenMasterAndDetail =
-        router.params.masterDetailBreakpoint > 0 &&
-        router.app.width >= router.params.masterDetailBreakpoint &&
-        (($oldNavbarEl.hasClass('navbar-master') &&
-          $newNavbarEl.hasClass('navbar-master-detail')) ||
-          ($oldNavbarEl.hasClass('navbar-master-detail') &&
-            $newNavbarEl.hasClass('navbar-master')));
-      if (!betweenMasterAndDetail) {
-        oldIsLarge = $oldNavbarEl && $oldNavbarEl.hasClass('navbar-large');
-        newIsLarge = $newNavbarEl && $newNavbarEl.hasClass('navbar-large');
-        fromLarge = oldIsLarge && !$oldNavbarEl.hasClass('navbar-large-collapsed');
-        toLarge = newIsLarge && !$newNavbarEl.hasClass('navbar-large-collapsed');
-        toDifferent = (fromLarge && !toLarge) || (toLarge && !fromLarge);
-      }
-      const navEls = router.animatableNavElements(
-        $newNavbarEl,
-        $oldNavbarEl,
-        toLarge,
-        fromLarge,
-        direction,
-      );
-      newNavEls = navEls.newNavEls;
-      oldNavEls = navEls.oldNavEls;
-    }
-
-    function animateNavbars(progress) {
-      if (!(ios && dynamicNavbar)) return;
-      if (progress === 1) {
-        if (toLarge) {
-          $newNavbarEl.addClass('router-navbar-transition-to-large');
-          $oldNavbarEl.addClass('router-navbar-transition-to-large');
-        }
-        if (fromLarge) {
-          $newNavbarEl.addClass('router-navbar-transition-from-large');
-          $oldNavbarEl.addClass('router-navbar-transition-from-large');
-        }
-      }
-      newNavEls.forEach((navEl) => {
-        const $el = navEl.$el;
-        const offset = direction === 'forward' ? navEl.rightOffset : navEl.leftOffset;
-        if (navEl.isSliding) {
-          if (navEl.isSubnavbar && newIsLarge) {
-            // prettier-ignore
-            $el[0].style.setProperty(
-              'transform',
-              `translate3d(${offset * (1 - progress)}px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)`,
-              'important',
-            );
-          } else {
-            $el.transform(`translate3d(${offset * (1 - progress)}px,0,0)`);
-          }
-        }
-      });
-      oldNavEls.forEach((navEl) => {
-        const $el = navEl.$el;
-        const offset = direction === 'forward' ? navEl.leftOffset : navEl.rightOffset;
-        if (navEl.isSliding) {
-          if (navEl.isSubnavbar && oldIsLarge) {
-            $el.transform(
-              `translate3d(${
-                offset * progress
-              }px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)`,
-            );
-          } else {
-            $el.transform(`translate3d(${offset * progress}px,0,0)`);
-          }
-        }
-      });
-    }
-
     // AnimationEnd Callback
     function onDone() {
-      if (router.dynamicNavbar) {
-        if ($newNavbarEl) {
-          $newNavbarEl.removeClass(
-            'router-navbar-transition-to-large router-navbar-transition-from-large',
-          );
-          $newNavbarEl.addClass('navbar-no-title-large-transition');
-          nextFrame(() => {
-            $newNavbarEl.removeClass('navbar-no-title-large-transition');
-          });
-        }
-        if ($oldNavbarEl) {
-          $oldNavbarEl.removeClass(
-            'router-navbar-transition-to-large router-navbar-transition-from-large',
-          );
-        }
-        if (
-          $newNavbarEl.hasClass('sliding') ||
-          $newNavbarEl.children('.navbar-inner.sliding').length
-        ) {
-          $newNavbarEl.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
-        } else {
-          $newNavbarEl.find('.sliding').transform('');
-        }
-        if (
-          $oldNavbarEl.hasClass('sliding') ||
-          $oldNavbarEl.children('.navbar-inner.sliding').length
-        ) {
-          $oldNavbarEl.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
-        } else {
-          $oldNavbarEl.find('.sliding').transform('');
-        }
-      }
       router.$el.removeClass(routerTransitionClass);
       if (callback) callback();
     }
@@ -368,23 +138,8 @@ class Router extends Framework7Class {
       onDone();
     });
 
-    // Animate
-    if (dynamicNavbar) {
-      // Prepare Navbars
-      animateNavbars(0);
-      nextFrame(() => {
-        // Add class, start animation
-        router.$el.addClass(routerTransitionClass);
-        if (toDifferent) {
-          // eslint-disable-next-line
-          router.el._clientLeft = router.el.clientLeft;
-        }
-        animateNavbars(1);
-      });
-    } else {
-      // Add class, start animation
-      router.$el.addClass(routerTransitionClass);
-    }
+    // Add class, start animation
+    router.$el.addClass(routerTransitionClass);
   }
 
   removeModal(modalEl) {
@@ -395,11 +150,6 @@ class Router extends Framework7Class {
   removeTabContent(tabEl) {
     const $tabEl = $(tabEl);
     $tabEl.html('');
-  }
-
-  removeNavbar(el) {
-    const router = this;
-    router.removeEl(el);
   }
 
   removePage(el) {
@@ -823,22 +573,6 @@ class Router extends Framework7Class {
     });
   }
 
-  setNavbarPosition($el, position, ariaHidden) {
-    const router = this;
-    $el.removeClass('navbar-previous navbar-current navbar-next');
-    if (position) {
-      $el.addClass(`navbar-${position}`);
-    }
-
-    if (ariaHidden === false) {
-      $el.removeAttr('aria-hidden');
-    } else if (ariaHidden === true) {
-      $el.attr('aria-hidden', 'true');
-    }
-    $el.trigger('navbar:position', { position });
-    router.emit('navbarPosition', $el[0], position);
-  }
-
   setPagePosition($el, position, ariaHidden) {
     const router = this;
     $el.removeClass('page-previous page-current page-next');
@@ -865,10 +599,9 @@ class Router extends Framework7Class {
     $(el).find(toRemove).remove();
   }
 
-  getPageData(pageEl, navbarEl, from, to, route = {}, pageFromEl) {
+  getPageData(pageEl, from, to, route = {}, pageFromEl) {
     const router = this;
     const $pageEl = $(pageEl).eq(0);
-    const $navbarEl = $(navbarEl).eq(0);
     const currentPage = $pageEl[0].f7Page || {};
     let direction;
     let pageFrom;
@@ -894,8 +627,6 @@ class Router extends Framework7Class {
       el: $pageEl[0],
       $pageEl,
       pageEl: $pageEl[0],
-      $navbarEl,
-      navbarEl: $navbarEl[0],
       name: $pageEl.attr('data-name'),
       position: from,
       from,
@@ -910,12 +641,11 @@ class Router extends Framework7Class {
   }
 
   // Callbacks
-  pageCallback(callback, pageEl, navbarEl, from, to, options = {}, pageFromEl) {
+  pageCallback(callback, pageEl, from, to, options = {}, pageFromEl) {
     if (!pageEl) return;
     const router = this;
     const $pageEl = $(pageEl);
     if (!$pageEl.length) return;
-    const $navbarEl = $(navbarEl);
     const { route } = options;
     const restoreScrollTopOnBack =
       router.params.restoreScrollTopOnBack &&
@@ -941,7 +671,7 @@ class Router extends Framework7Class {
     if (callback === 'beforeRemove' && $pageEl[0].f7Page) {
       page = extend($pageEl[0].f7Page, { from, to, position: from });
     } else {
-      page = router.getPageData($pageEl[0], $navbarEl[0], from, to, route, pageFromEl);
+      page = router.getPageData($pageEl[0], from, to, route, pageFromEl);
     }
     page.swipeBack = !!options.swipeBack;
 
@@ -1053,9 +783,6 @@ class Router extends Framework7Class {
     if (callback === 'beforeRemove' || callback === 'beforeUnmount') {
       detachEvents();
       if (!keepAlive) {
-        if ($pageEl[0].f7Page && $pageEl[0].f7Page.navbarEl) {
-          delete $pageEl[0].f7Page.navbarEl.f7Page;
-        }
         $pageEl[0].f7Page = null;
       }
     }
@@ -1224,7 +951,6 @@ class Router extends Framework7Class {
   init() {
     const router = this;
     const { app, view } = router;
-    const document = getDocument();
 
     router.mount();
 
@@ -1303,27 +1029,7 @@ class Router extends Framework7Class {
       router.currentRoute = currentRoute;
       router.$el.children('.page').each((pageEl) => {
         const $pageEl = $(pageEl);
-        let $navbarEl;
         router.setPagePosition($pageEl, 'current');
-        if (router.dynamicNavbar) {
-          $navbarEl = $pageEl.children('.navbar');
-          if ($navbarEl.length > 0) {
-            if (!router.$navbarsEl.parents(document).length) {
-              router.$el.prepend(router.$navbarsEl);
-            }
-            router.setNavbarPosition($navbarEl, 'current');
-            router.$navbarsEl.append($navbarEl);
-            if ($navbarEl.children('.title-large').length) {
-              $navbarEl.addClass('navbar-large');
-            }
-            $pageEl.children('.navbar').remove();
-          } else {
-            router.$navbarsEl.addClass('navbar-hidden');
-            if ($navbarEl.children('.title-large').length) {
-              router.$navbarsEl.addClass('navbar-hidden navbar-large-hidden');
-            }
-          }
-        }
         if (
           router.currentRoute &&
           router.currentRoute.route &&
@@ -1334,9 +1040,6 @@ class Router extends Framework7Class {
         ) {
           $pageEl.addClass('page-master');
           $pageEl.trigger('page:role', { role: 'master' });
-          if ($navbarEl && $navbarEl.length) {
-            $navbarEl.addClass('navbar-master');
-          }
           view.checkMasterDetailBreakpoint();
         }
         const initOptions = {
@@ -1346,20 +1049,15 @@ class Router extends Framework7Class {
           extend(initOptions, router.currentRoute.route.options);
         }
         router.currentPageEl = $pageEl[0];
-        if (router.dynamicNavbar && $navbarEl.length) {
-          router.currentNavbarEl = $navbarEl[0];
-        }
+
         router.removeThemeElements($pageEl);
-        if (router.dynamicNavbar && $navbarEl.length) {
-          router.removeThemeElements($navbarEl);
-        }
         if (initOptions.route.route.tab) {
           hasTabRoute = true;
           router.tabLoad(initOptions.route.route.tab, extend({}, initOptions));
         }
-        router.pageCallback('init', $pageEl, $navbarEl, 'current', undefined, initOptions);
-        router.pageCallback('beforeIn', $pageEl, $navbarEl, 'current', undefined, initOptions);
-        router.pageCallback('afterIn', $pageEl, $navbarEl, 'current', undefined, initOptions);
+        router.pageCallback('init', $pageEl, 'current', undefined, initOptions);
+        router.pageCallback('beforeIn', $pageEl, 'current', undefined, initOptions);
+        router.pageCallback('afterIn', $pageEl, 'current', undefined, initOptions);
       });
       if (historyRestored) {
         if (browserHistoryInitialMatch) {

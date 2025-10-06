@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar sliding back-link="Back" title="Badge">
+    <f7-navbar back-link="Back" title="Badge">
       <f7-nav-right>
         <f7-link icon-only>
           <f7-icon ios="f7:person_circle_fill" md="material:person">

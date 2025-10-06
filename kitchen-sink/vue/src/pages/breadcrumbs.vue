@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar sliding back-link="Back" title="Breadcrumbs" />
+    <f7-navbar back-link="Back" title="Breadcrumbs" />
     <f7-block strong-ios outline-ios>
       <p>
         Breadcrumbs allow users to keep track and maintain awareness of their locations within the

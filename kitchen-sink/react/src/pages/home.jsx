@@ -17,11 +17,11 @@ import {
 export default () => {
   return (
     <Page className="page-home">
-      <Navbar large transparent sliding={false} mdCenterTitle>
+      <Navbar large transparent mdCenterTitle>
         <NavLeft>
           <Link panelOpen="left" iconIos="f7:menu" iconMd="material:menu" />
         </NavLeft>
-        <NavTitle sliding>Framework7 React</NavTitle>
+        <NavTitle>Framework7 React</NavTitle>
         <NavRight>
           <Link
             searchbarEnable=".searchbar-components"

@@ -9,7 +9,7 @@
             .rtl({ margin-right: 24px; });
           }
         }
-        a.icon-only {
+        a:is(.icon-only, :has(i:only-child), :has(svg:only-child)) {
           width: 24px;
           height: 24px;
           line-height: 24px;
@@ -34,7 +34,9 @@
     }
   }
   .data-table-actions {
-    a.link.icon-only {
+    a.link.icon-only,
+    a.link:has(i:only-child),
+    a.link:has(svg:only-child) {
       width: 24px;
       height: 24px;
       overflow: visible;

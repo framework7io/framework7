@@ -23,7 +23,6 @@ import { PhotoBrowser } from 'framework7/types';
   iconsColor? : string
   swipeToClose? : boolean
   pageBackLinkText? : string
-  popupCloseLinkIcon? : boolean
   popupCloseLinkText? : string
   navbarOfText? : string
   navbarShowCount? : boolean
@@ -68,7 +67,6 @@ const PhotoBrowser = forwardRef((props, ref) => {
     iconsColor,
     swipeToClose = true,
     pageBackLinkText,
-    popupCloseLinkIcon,
     popupCloseLinkText,
     navbarOfText,
     navbarShowCount,
@@ -153,7 +151,6 @@ const PhotoBrowser = forwardRef((props, ref) => {
           swipeToClose,
           pageBackLinkText,
           popupCloseLinkText,
-          popupCloseLinkIcon,
           navbarOfText,
           navbarShowCount,
           swiper,

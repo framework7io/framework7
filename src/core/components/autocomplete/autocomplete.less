@@ -15,7 +15,13 @@
     display: none;
   }
 }
-.autocomplete-preloader:not(.autocomplete-preloader-visible) {
+.autocomplete-preloader-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.autocomplete-preloader:not(.autocomplete-preloader-visible),
+.autocomplete-preloader-wrap:not(:has(.autocomplete-preloader-visible)) {
   visibility: hidden;
   &,
   * {

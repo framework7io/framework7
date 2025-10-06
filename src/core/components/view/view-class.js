@@ -177,21 +177,10 @@ class View extends Framework7Class {
           : '');
     }
 
-    // DynamicNavbar
-    let $navbarsEl;
-    if (app.theme === 'ios' && view.params.iosDynamicNavbar) {
-      $navbarsEl = $el.children('.navbars').eq(0);
-      if ($navbarsEl.length === 0) {
-        $navbarsEl = $('<div class="navbars"></div>');
-      }
-    }
-
     extend(view, {
       $el,
       el: $el[0],
       main: view.main || $el.hasClass('view-main'),
-      $navbarsEl,
-      navbarsEl: $navbarsEl ? $navbarsEl[0] : undefined,
       selector,
     });
 

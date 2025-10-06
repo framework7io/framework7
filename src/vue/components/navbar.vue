@@ -58,10 +58,6 @@ export default {
       type: Boolean,
       default: undefined,
     },
-    sliding: {
-      type: Boolean,
-      default: true,
-    },
     title: String,
     subtitle: String,
     hidden: Boolean,
@@ -87,9 +83,6 @@ export default {
   setup(props, { emit, slots }) {
     let routerPositionClass = '';
     let largeCollapsed = false;
-    let routerNavbarRole = null;
-    let routerNavbarRoleDetailRoot = false;
-    let routerNavbarMasterStack = false;
     let transparentVisible = false;
 
     const elRef = ref(null);
@@ -128,19 +121,6 @@ export default {
       if (elRef.value !== navbarEl) return;
       routerPositionClass = position ? `navbar-${position}` : '';
     };
-    const onNavbarRole = (navbarEl, rolesData) => {
-      if (elRef.value !== navbarEl) return;
-      routerNavbarRole = rolesData.role;
-      routerNavbarRoleDetailRoot = rolesData.detailRoot;
-    };
-    const onNavbarMasterStack = (navbarEl) => {
-      if (elRef.value !== navbarEl) return;
-      routerNavbarMasterStack = true;
-    };
-    const onNavbarMasterUnstack = (navbarEl) => {
-      if (elRef.value !== navbarEl) return;
-      routerNavbarMasterStack = false;
-    };
     const hide = (animate) => {
       if (!f7) return;
       f7.navbar.hide(elRef.value, animate);
@@ -167,9 +147,6 @@ export default {
         f7.on('navbarCollapse', onCollapse);
         f7.on('navbarExpand', onExpand);
         f7.on('navbarPosition', onNavbarPosition);
-        f7.on('navbarRole', onNavbarRole);
-        f7.on('navbarMasterStack', onNavbarMasterStack);
-        f7.on('navbarMasterUnstack', onNavbarMasterUnstack);
         f7.on('navbarTransparentShow', onNavbarTransparentShow);
         f7.on('navbarTransparentHide', onNavbarTransparentHide);
       });
@@ -182,9 +159,6 @@ export default {
       f7.off('navbarCollapse', onCollapse);
       f7.off('navbarExpand', onExpand);
       f7.off('navbarPosition', onNavbarPosition);
-      f7.off('navbarRole', onNavbarRole);
-      f7.off('navbarMasterStack', onNavbarMasterStack);
-      f7.off('navbarMasterUnstack', onNavbarMasterUnstack);
       f7.off('navbarTransparentShow', onNavbarTransparentShow);
       f7.off('navbarTransparentHide', onNavbarTransparentHide);
     });
@@ -213,10 +187,6 @@ export default {
           'navbar-large-collapsed': isLarge.value && largeCollapsed,
           'navbar-transparent': isTransparent.value,
           'navbar-transparent-visible': isTransparentVisible.value,
-          'navbar-master': routerNavbarRole === 'master',
-          'navbar-master-detail': routerNavbarRole === 'detail',
-          'navbar-master-detail-root': routerNavbarRoleDetailRoot === true,
-          'navbar-master-stacked': routerNavbarMasterStack === true,
           'no-outline': !props.outline,
         },
         colorClasses(props),
@@ -247,7 +217,6 @@ export default {
 
     const innerClasses = computed(() => {
       return classNames('navbar-inner', props.innerClass, props.innerClassName, {
-        sliding: props.sliding,
         'navbar-inner-left-title': addLeftTitleClass.value,
         'navbar-inner-centered-title': addCenterTitleClass.value,
       });

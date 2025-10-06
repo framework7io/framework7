@@ -6,7 +6,6 @@
   let className = undefined;
   export { className as class };
 
-  export let sliding = undefined;
   export let title = undefined;
   export let inner = true;
   export let f7Slot = 'fixed';
@@ -14,9 +13,7 @@
   $: classes = classNames(
     className,
     'subnavbar',
-    {
-      sliding,
-    },
+    {},
     colorClasses($$props),
   );
 </script>

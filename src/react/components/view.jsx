@@ -59,8 +59,6 @@ import { RouterContext } from '../shared/router-context.js';
   browserHistoryStoreHistory?: boolean;
   animate? : boolean
   transition? : string
-  iosDynamicNavbar? : boolean
-  iosAnimateNavbarBackIcon? : boolean
   materialPageLoadDelay? : number
   passRouteQueryToRequest? : boolean
   passRouteParamsToRequest? : boolean

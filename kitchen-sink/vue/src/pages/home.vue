@@ -1,10 +1,10 @@
 <template>
   <f7-page class="page-home">
-    <f7-navbar large transparent :sliding="false" md-center-title>
+    <f7-navbar large transparent md-center-title>
       <f7-nav-left>
         <f7-link panel-open="left" icon-ios="f7:menu" icon-md="material:menu"></f7-link>
       </f7-nav-left>
-      <f7-nav-title sliding>Framework7 Vue</f7-nav-title>
+      <f7-nav-title>Framework7 Vue</f7-nav-title>
       <f7-nav-right>
         <f7-link
           class="searchbar-enable"

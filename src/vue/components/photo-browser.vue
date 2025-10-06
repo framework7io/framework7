@@ -50,10 +50,6 @@ export default {
       type: String,
       default: undefined,
     },
-    popupCloseLinkIcon: {
-      type: Boolean,
-      default: undefined,
-    },
     popupCloseLinkText: {
       type: String,
       default: undefined,

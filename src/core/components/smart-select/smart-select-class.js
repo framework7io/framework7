@@ -496,14 +496,14 @@ class SmartSelect extends Framework7Class {
         >
           <div class="navbar-bg"></div>
           <div
-            class={`navbar-inner sliding ${
+            class={`navbar-inner ${
               ss.params.navbarColorTheme ? `color-${ss.params.navbarColorTheme}` : ''
             }`}
           >
             <div class="left">
               <a class="link back">
                 <i class="icon icon-back"></i>
-                <span class="if-not-md">{ss.params.pageBackLinkText}</span>
+                {ss.params.pageBackLinkText && <span>{ss.params.pageBackLinkText}</span>}
               </a>
             </div>
             {pageTitle && <div class="title">{pageTitle}</div>}
@@ -553,14 +553,15 @@ class SmartSelect extends Framework7Class {
               }`}
             >
               <div class="navbar-bg"></div>
-              <div class="navbar-inner sliding">
+              <div class="navbar-inner">
                 {pageTitle && <div class="title">{pageTitle}</div>}
                 <div class="right">
                   <a
                     class="link popup-close"
                     data-popup={`.smart-select-popup[data-select-name='${ss.selectName}']`}
                   >
-                    {ss.params.popupCloseLinkText}
+                    <i class="icon icon-close"></i>
+                    {ss.params.popupCloseLinkText && <span>{ss.params.popupCloseLinkText}</span>}
                   </a>
                 </div>
                 {ss.params.searchbar && <div class="subnavbar">{ss.renderSearchbar()}</div>}
@@ -595,7 +596,10 @@ class SmartSelect extends Framework7Class {
           <div class="toolbar-inner">
             <div class="left"></div>
             <div class="right">
-              <a class="link sheet-close">{ss.params.sheetCloseLinkText}</a>
+              <a class="link sheet-close">
+                <i class="icon icon-close"></i>
+                {ss.params.sheetCloseLinkText && <span>{ss.params.sheetCloseLinkText}</span>}
+                </a>
             </div>
           </div>
         </div>

@@ -13,7 +13,7 @@ import {
 
 export default () => (
   <Page>
-    <Navbar sliding backLink="Back" title="Badge">
+    <Navbar backLink="Back" title="Badge">
       <NavRight>
         <Link iconOnly>
           <Icon ios="f7:person_circle_fill" md="material:person">

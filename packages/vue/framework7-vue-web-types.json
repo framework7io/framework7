@@ -14056,20 +14056,6 @@
               }
             },
             {
-              "name": "iosDynamicNavbar",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "iosAnimateNavbarBackIcon",
-              "value": {
-                "kind": "expression",
-                "type": "boolean"
-              }
-            },
-            {
               "name": "materialPageLoadDelay",
               "value": {
                 "kind": "expression",

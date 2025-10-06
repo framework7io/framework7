@@ -6,14 +6,11 @@
   let className = undefined;
   export { className as class };
 
-  export let sliding = undefined;
 
   $: classes = classNames(
     className,
     'right',
-    {
-      sliding,
-    },
+    {},
     colorClasses($$props),
   );
 </script>

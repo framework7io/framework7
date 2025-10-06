@@ -308,7 +308,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  a.icon-only {
+  a:is(.icon-only, :has(i:only-child), :has(svg:only-child)) {
     min-width: 36px;
   }
 }

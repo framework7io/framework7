@@ -1,6 +1,6 @@
 .ios {
   .toolbar {
-    a.icon-only {
+    a:is(.icon-only, :has(i:only-child), :has(svg:only-child)) {
       min-height: var(--f7-toolbar-height);
       display: flex;
       justify-content: center;

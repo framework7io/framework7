@@ -34,7 +34,6 @@ export default {
       type: Boolean,
       default: undefined,
     },
-    sliding: Boolean,
     ...colorProps,
   },
   emits: ['back:click', 'click:back'],
@@ -43,26 +42,15 @@ export default {
       emit('back:click', event);
       emit('click:back', event);
     };
-    const theme = useTheme();
 
     const text = computed(() => {
-      let needBackLinkText = props.backLinkShowText;
-      if (typeof needBackLinkText === 'undefined') needBackLinkText = !theme.value.md;
       if (props.backLink) {
-        return props.backLink !== true && needBackLinkText ? props.backLink : undefined;
+        return props.backLink !== true && props.backLinkShowText ? props.backLink : undefined;
       }
       return undefined;
     });
 
-    const classes = computed(() =>
-      classNames(
-        'left',
-        {
-          sliding: props.sliding,
-        },
-        colorClasses(props),
-      ),
-    );
+    const classes = computed(() => classNames('left', {}, colorClasses(props)));
     return { classes, onBackClick, text };
   },
 };
