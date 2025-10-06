@@ -1,9 +1,9 @@
 /* === Subnavbar === */
 @import './subnavbar-vars.less';
 .subnavbar {
-  width: 100%;
   position: absolute;
-  left: 0;
+  left: var(--f7-subnavbar-offset-left);
+  right: var(--f7-subnavbar-offset-right);
   top: 0;
   z-index: 600;
   box-sizing: border-box;
@@ -12,7 +12,7 @@
   align-items: center;
   background-color: var(--f7-subnavbar-bg-color, var(--f7-bars-bg-color));
   color: var(--f7-subnavbar-text-color, var(--f7-bars-text-color));
-  .ios-translucent-bars(var(--f7-subnavbar-bg-color-rgb, var(--f7-bars-bg-color-rgb)));
+
   .subnavbar-title {
     position: relative;
     overflow: hidden;
@@ -76,8 +76,7 @@
   box-sizing: border-box;
   justify-content: space-between;
   overflow: hidden;
-  padding: 0 calc(var(--f7-subnavbar-inner-padding-left) + var(--f7-safe-area-right)) 0
-    calc(var(--f7-subnavbar-inner-padding-right) + var(--f7-safe-area-left));
+  padding: 0 var(--f7-subnavbar-inner-padding-left) 0 var(--f7-subnavbar-inner-padding-right);
 }
 .navbar .subnavbar {
   top: 100%;

@@ -14,7 +14,7 @@
   input[type='search']::-webkit-search-decoration {
     display: none;
   }
-  .ios-translucent-bars(var(--f7-searchbar-bg-color-rgb, var(--f7-bars-bg-color-rgb)));
+
   .ios .subnavbar & {
     background-color: transparent;
     backdrop-filter: none;
@@ -74,7 +74,9 @@
   }
   .page > &:not(.searchbar-inline) {
     position: absolute;
-    left: 0;
+    left: 16px;
+    right: 16px;
+    width: auto;
     top: 0;
   }
   .page-content &:not(.searchbar-inline) {
@@ -219,13 +221,11 @@
 
 // Relation with page
 .navbar ~ .page:not(.no-navbar) > .searchbar,
-.navbars ~ .page:not(.no-navbar) > .searchbar,
 .page > .navbar ~ .searchbar {
   top: calc(var(--f7-navbar-height) + var(--f7-safe-area-top));
 }
 
 .navbar ~ .page-with-navbar-large:not(.no-navbar) .searchbar,
-.navbars ~ .page-with-navbar-large:not(.no-navbar) .searchbar,
 .page-with-navbar-large .navbar ~ .searchbar,
 .page-with-navbar-large .navbar ~ * .searchbar {
   top: calc(
@@ -237,7 +237,6 @@
     0
   );
 }
-.navbars ~ .page-with-navbar-large:not(.no-navbar) .page-content .searchbar,
 .page-with-navbar-large .page-content .searchbar {
   top: 0;
   transform: none;

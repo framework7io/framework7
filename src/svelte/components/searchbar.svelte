@@ -18,7 +18,7 @@
   export let autocapitalize = undefined;
   export let spellcheck = undefined;
   export let disableButton = true;
-  export let disableButtonText = 'Cancel';
+  export let disableButtonText = '';
   export let clearButton = true;
   // Input Value
   export let value = undefined;
@@ -203,7 +203,12 @@
       </div>
       {#if disableButton}
         <span on:click={onDisableButtonClick} class="searchbar-disable-button"
-          >{disableButtonText}</span
+          >
+          <i class="icon icon-close" />
+          {#if disableButtonText}
+            <span>{disableButtonText}</span>
+          {/if}
+        </span
         >
       {/if}
       <slot searchbar={f7Searchbar} name="inner-end" />

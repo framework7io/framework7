@@ -66,7 +66,7 @@ const Searchbar = forwardRef((props, ref) => {
     placeholder = 'Search',
     spellcheck,
     disableButton = true,
-    disableButtonText = 'Cancel',
+    disableButtonText = '',
     clearButton = true,
     // Input Value
     value,
@@ -218,7 +218,8 @@ const Searchbar = forwardRef((props, ref) => {
   if (disableButton) {
     disableEl = (
       <span className="searchbar-disable-button" onClick={onDisableButtonClick}>
-        {disableButtonText}
+        <i className="icon icon-close" />
+        {disableButtonText && <span>{disableButtonText}</span>}
       </span>
     );
   }

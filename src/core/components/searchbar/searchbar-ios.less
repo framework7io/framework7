@@ -3,14 +3,16 @@
     input[type='search'],
     input[type='text'] {
       z-index: 30;
+      .ios-translucent-glass();
+      box-shadow: var(--f7-glass-shadow);
     }
     .input-clear-button {
       z-index: 40;
       .ltr({
-        right: 7px;
+        right: 16px;
       });
       .rtl({
-        left: 7px;
+        left: 16px;
       });
     }
   }
@@ -26,10 +28,10 @@
       line-height: 13px;
     }
     .ltr({
-      left: 8px;
+      left: 16px;
     });
     .rtl({
-      right: 8px;
+      right: 16px;
     });
   }
 
@@ -40,6 +42,16 @@
     transition-duration: 300ms;
     color: var(--f7-searchbar-link-color, var(--f7-bars-link-color, var(--f7-theme-color)));
     display: none;
+    height: var(--f7-searchbar-height);
+    padding: 0 12px;
+
+    align-items: center;
+    justify-content: center;
+    border-radius: 44px;
+    background-color: var(--f7-searchbar-input-bg-color);
+    box-shadow: var(--f7-glass-shadow);
+    .ios-translucent-glass();
+    transform: scale(0);
     &.active-state {
       transition-duration: 0ms;
       opacity: 0.3 !important;
@@ -49,8 +61,9 @@
     .searchbar-disable-button {
       pointer-events: auto;
       opacity: 1;
-      .ltr({ margin-left: 8px; });
-      .rtl({ margin-right: 8px; });
+      transform: scale(1);
+      .ltr({ margin-left: 16px; });
+      .rtl({ margin-right: 16px; });
     }
   }
   .searchbar:not(.searchbar-enabled) {
@@ -62,19 +75,25 @@
     .ltr({ left: 0; });
     .rtl({ right: 0; });
     bottom: 0;
-    opacity: 1;
     width: 100%;
-    height: 0%;
+    height: var(--f7-searchbar-expandable-size);
     transform: translate3d(0, 0, 0);
-    overflow: hidden;
+    pointer-events: none;
     .searchbar-disable-button {
-      .ltr({ margin-left: 8px; });
-      .rtl({ margin-right: 8px; });
+      .ltr({ margin-left: 16px; });
+      .rtl({ margin-right: 16px; });
       opacity: 1;
-      display: block;
+      display: flex;
     }
     .searchbar-inner {
+      left: 16px;
+      right: 16px;
+      width: auto;
       height: var(--f7-searchbar-expandable-size);
+    }
+    .searchbar-input-wrap {
+      transform: scale(0);
+      transition-duration: 300ms;
     }
   }
   .navbar.with-searchbar-expandable-enabled,
@@ -100,8 +119,10 @@
   }
 
   .searchbar-expandable.searchbar-enabled {
-    opacity: 1;
     height: var(--f7-searchbar-expandable-size);
     pointer-events: auto;
+    .searchbar-input-wrap {
+      transform: scale(1);
+    }
   }
 }

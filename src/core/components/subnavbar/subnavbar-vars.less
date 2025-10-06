@@ -1,6 +1,6 @@
 :root {
   /*
-  --f7-subnavbar-bg-color: var(--f7-bars-bg-color);
+
   --f7-subnavbar-bg-color-rgb: var(--f7-bars-bg-color-rgb);
   --f7-subnavbar-border-color: var(--f7-bars-border-color);
   --f7-subnavbar-link-color: var(--f7-bars-link-color);
@@ -10,12 +10,15 @@
 }
 .ios-vars({
   --f7-subnavbar-height: 44px;
-  --f7-subnavbar-inner-padding-left: 8px;
-  --f7-subnavbar-inner-padding-right: 8px;
-  --f7-subnavbar-title-font-size: 34px;
+  --f7-subnavbar-offset-left: calc(16px + var(--f7-safe-area-left));
+  --f7-subnavbar-offset-right: calc(16px + var(--f7-safe-area-right));
+  --f7-subnavbar-inner-padding-left: 5px;
+  --f7-subnavbar-inner-padding-right: 5px;
+  --f7-subnavbar-title-font-size: 24px;
   --f7-subnavbar-title-font-weight: 700;
   --f7-subnavbar-title-letter-spacing: -0.03em;
   --f7-subnavbar-title-margin-left: 8px;
+  --f7-subnavbar-bg-color: var(--f7-glass-bg-color);
   /*
   --f7-subnavbar-link-height: var(--f7-subnavbar-height);
   --f7-subnavbar-link-line-height: var(--f7-subnavbar-height);
@@ -23,13 +26,16 @@
 });
 .md-vars({
   --f7-subnavbar-height: 64px;
-  --f7-subnavbar-inner-padding-left: 16px;
-  --f7-subnavbar-inner-padding-right: 16px;
+  --f7-subnavbar-offset-left: 0;
+  --f7-subnavbar-offset-right: 0;
+  --f7-subnavbar-inner-padding-left: calc(16px + var(--f7-safe-area-left));
+  --f7-subnavbar-inner-padding-right: calc(16px + var(--f7-safe-area-right));
   --f7-subnavbar-title-font-size: 22px;
   --f7-subnavbar-title-font-weight: 400;
   --f7-subnavbar-title-letter-spacing: 0;
   --f7-subnavbar-title-margin-left: 0px;
   /*
+  --f7-subnavbar-bg-color: var(--f7-bars-bg-color);
   --f7-subnavbar-link-height: var(--f7-subnavbar-height);
   --f7-subnavbar-link-line-height: var(--f7-subnavbar-height);
   */

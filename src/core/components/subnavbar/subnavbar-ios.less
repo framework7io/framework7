@@ -3,6 +3,21 @@
     height: calc(var(--f7-subnavbar-height) + 1px);
     margin-top: -1px;
     padding-top: 1px;
+    border-radius: var(--f7-subnavbar-height);
+    box-shadow: var(--f7-glass-shadow);
+    .ios-translucent-glass();
+    --f7-segmented-strong-bg-color: transparent;
+
+    &:has(> .searchbar) {
+      background: transparent;
+      backdrop-filter: none;
+      box-shadow: none;
+    }
+
+    .subnavbar-inner {
+      border-radius: inherit;
+    }
+
     .title {
       align-self: flex-start;
       flex-shrink: 10;

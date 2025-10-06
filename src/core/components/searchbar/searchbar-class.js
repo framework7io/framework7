@@ -296,7 +296,8 @@ class Searchbar extends FrameworkClass {
     const sb = this;
     if (sb.expandable) return;
     const app = sb.app;
-    sb.$disableButtonEl.transition(0).show();
+    sb.$disableButtonEl.transition(0);
+    sb.$disableButtonEl.css('display', 'flex');
     sb.$disableButtonEl.css(
       `margin-${app.rtl ? 'left' : 'right'}`,
       `${-sb.disableButtonEl.offsetWidth}px`,

@@ -20,7 +20,8 @@
         <slot name="input-wrap-end" />
       </div>
       <span v-if="disableButton" class="searchbar-disable-button" @click="onDisableButtonClick">
-        {{ disableButtonText }}
+        <i class="icon icon-close" />
+        <span v-if="disableButtonText">{{ disableButtonText }}</span>
       </span>
       <slot name="inner-end" />
       <slot />
