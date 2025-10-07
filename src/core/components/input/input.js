@@ -31,7 +31,7 @@ const Input = {
     }
 
     const styles = window.getComputedStyle($textareaEl[0]);
-    'padding-top padding-bottom padding-left padding-right margin-left margin-right margin-top margin-bottom width font-size font-family font-style font-weight line-height font-variant text-transform letter-spacing border box-sizing display'
+    'padding-top padding-bottom padding-left padding-right margin-left margin-right margin-top margin-bottom width font-size font-family font-style font-weight line-height font-variant text-transform letter-spacing border box-sizing display min-height'
       .split(' ')
       .forEach((style) => {
         let styleValue = styles[style];

@@ -3,14 +3,12 @@
 
 .messagebar {
   transform: translate3d(0, 0, 0);
-  background: var(--f7-messagebar-bg-color);
   height: auto;
   min-height: var(--f7-messagebar-height);
   font-size: var(--f7-messagebar-font-size);
   padding-bottom: var(--f7-safe-area-bottom);
   bottom: 0;
-  .hairline(top, var(--f7-messagebar-border-color));
-  .ios-translucent-bars(var(--f7-messagebar-bg-color-rgb));
+
   &.no-outline {
     &:before {
       display: none !important;
@@ -44,7 +42,7 @@
   .messagebar-area {
     width: 100%;
     flex-shrink: 1;
-    overflow: hidden;
+    min-width: 0;
     position: relative;
   }
   textarea {
@@ -62,7 +60,8 @@
       color: var(--f7-messagebar-textarea-placeholder-color);
     }
   }
-  a.link {
+  a.link,
+  .toolbar-pane {
     align-self: flex-end;
     flex-shrink: 0;
     color: var(--f7-messagebar-link-color, var(--f7-theme-color));

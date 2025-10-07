@@ -54,7 +54,8 @@
         transparent 100%
       );
     }
-    &.toolbar-bottom {
+    &.toolbar-bottom,
+    &.messagebar {
       &::before,
       &::after {
         top: -16px;
@@ -64,7 +65,7 @@
       }
     }
     &.toolbar-top,
-    &:not(.toolbar-bottom, .toolbar-top) {
+    &:not(.toolbar-bottom, .toolbar-top, .messagebar) {
       &::before {
         mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
       }

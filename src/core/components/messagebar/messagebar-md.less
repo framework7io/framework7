@@ -1,6 +1,8 @@
 .md {
   .messagebar {
     --f7-toolbar-link-height: var(--f7-messagebar-height);
+    .hairline(top, var(--f7-messagebar-border-color));
+    background: var(--f7-messagebar-bg-color);
   }
   .messagebar-attachments {
     padding: 16px 16px 0;
@@ -37,6 +39,7 @@
   .messagebar-area {
     margin-top: 8px;
     margin-bottom: 8px;
+    overflow: hidden;
   }
 
   .messagebar-attachment-delete {

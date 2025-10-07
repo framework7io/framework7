@@ -1,21 +1,14 @@
 .ios {
   .messagebar {
-    a.link:is(.icon-only, :has(i:only-child), :has(svg:only-child)):first-child {
-      margin-left: -8px;
+    *:is(a, button):is(.icon-only, :has(i:only-child), :has(svg:only-child)) {
+      min-height: var(--f7-messagebar-textarea-height);
+      min-width: var(--f7-messagebar-textarea-height);
     }
-    a.link:is(.icon-only, :has(i:only-child), :has(svg:only-child)):last-child {
-      margin-right: -8px;
+    textarea {
+      box-shadow: var(--f7-glass-shadow);
+      backdrop-filter: var(--f7-glass-backdrop);
+      min-height: var(--f7-messagebar-textarea-height);
     }
-    a.link:not(:is(.icon-only, :has(i:only-child), :has(svg:only-child))) + .messagebar-area {
-      margin-left: 8px;
-    }
-    .messagebar-area + a.link:not(:is(.icon-only, :has(i:only-child), :has(svg:only-child))) {
-      margin-left: 8px;
-    }
-  }
-  .messagebar-area {
-    margin-top: 5px;
-    margin-bottom: 5px;
   }
   .messagebar-attachments {
     padding: 5px;
@@ -25,7 +18,16 @@
     border-bottom: none;
   }
   .messagebar-attachments-visible {
+    .messagebar-area {
+      background: var(--f7-messagebar-textarea-bg-color);
+      box-shadow: var(--f7-glass-shadow);
+      border-radius: var(--f7-messagebar-textarea-border-radius);
+      .ios-glass-backdrop();
+    }
     .messagebar-attachments + textarea {
+      background: transparent;
+      box-shadow: none;
+      backdrop-filter: none;
       border-radius: 0 0 var(--f7-messagebar-textarea-border-radius)
         var(--f7-messagebar-textarea-border-radius);
     }

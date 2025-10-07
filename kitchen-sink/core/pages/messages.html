@@ -14,17 +14,21 @@
     </div>
     <div class="toolbar messagebar" @messagebar:attachmentdelete=${deleteAttachment}>
       <div class="toolbar-inner">
-        <a class="link icon-only" @click=${sheetToggle}>
-          <i class="icon f7-icons if-not-md">camera_fill</i>
-          <i class="icon material-icons md-only">camera_alt</i>
-        </a>
+        <div class="toolbar-pane">
+          <a class="link icon-only" @click=${sheetToggle}>
+            <i class="icon f7-icons if-not-md">camera_fill</i>
+            <i class="icon material-icons md-only">camera_alt</i>
+          </a>
+        </div>
         <div class="messagebar-area">
           <textarea class="resizable" placeholder="Message"></textarea>
         </div>
-        <a class="link icon-only demo-send-message-link" @click=${sendMessage}>
-          <i class="icon f7-icons if-not-md">arrow_up_circle_fill</i>
-          <i class="icon material-icons md-only">send</i>
-        </a>
+        <div class="toolbar-pane">
+          <a class="link icon-only demo-send-message-link" @click=${sendMessage}>
+            <i class="icon f7-icons if-not-md">arrow_up_circle_fill</i>
+            <i class="icon material-icons md-only">send</i>
+          </a>
+        </div>
       </div>
       <div class="messagebar-sheet">
         ${images.map((image) => $h`
