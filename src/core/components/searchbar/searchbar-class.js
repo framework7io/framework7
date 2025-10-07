@@ -412,10 +412,11 @@ class Searchbar extends FrameworkClass {
     if (sb.expandable) {
       const $navbarEl = sb.$el.parents('.navbar');
       const $pageContentEl = sb.$pageEl && sb.$pageEl.find('.page-content');
+      const $transitionTargetEl = app.them === 'md' ? sb.$el : sb.$el.find('.searchbar-input-wrap');
 
       if ($navbarEl.hasClass('navbar-large') && $pageContentEl.length) {
         const $titleLargeEl = $navbarEl.find('.title-large');
-        sb.$el.transitionEnd(() => {
+        $transitionTargetEl.transitionEnd(() => {
           $pageContentEl.removeClass('with-searchbar-expandable-closing');
         });
         if (
@@ -443,7 +444,7 @@ class Searchbar extends FrameworkClass {
             'with-searchbar-expandable-enabled with-searchbar-expandable-enabled-no-transition',
           )
           .addClass('with-searchbar-expandable-closing');
-        sb.$el.transitionEnd(() => {
+        $transitionTargetEl.transitionEnd(() => {
           $navbarEl.removeClass('with-searchbar-expandable-closing');
         });
       } else {
@@ -452,7 +453,7 @@ class Searchbar extends FrameworkClass {
             'with-searchbar-expandable-enabled with-searchbar-expandable-enabled-no-transition',
           )
           .addClass('with-searchbar-expandable-closing');
-        sb.$el.transitionEnd(() => {
+        $transitionTargetEl.transitionEnd(() => {
           $navbarEl.removeClass('with-searchbar-expandable-closing');
         });
         if (sb.$pageEl) {
