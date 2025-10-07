@@ -57,11 +57,11 @@
 
 
     <div class="sheet-modal demo-sheet">
-      <div class="toolbar">
+      <div class="toolbar toolbar-top">
         <div class="toolbar-inner">
           <div class="left"></div>
           <div class="right">
-            <a class="link sheet-close">Close</a>
+            <a class="link sheet-close"><i class="icon icon-close"></i></a>
           </div>
         </div>
       </div>
@@ -92,7 +92,7 @@
         <div class="toolbar-inner">
           <div class="left"></div>
           <div class="right">
-            <a class="link sheet-close">Close</a>
+            <a class="link sheet-close"><i class="icon icon-close"></i></a>
           </div>
         </div>
       </div>
@@ -120,11 +120,11 @@
     </div>
 
     <div class="sheet-modal demo-sheet-push">
-      <div class="toolbar">
+      <div class="toolbar toolbar-top">
         <div class="toolbar-inner">
           <div class="left"></div>
           <div class="right">
-            <a class="link sheet-close">Close</a>
+            <a class="link sheet-close"><i class="icon icon-close"></i></a>
           </div>
         </div>
       </div>
@@ -239,9 +239,11 @@
         sheet = $f7.sheet.create({
           content: '\
             <div class="sheet-modal">\
-              <div class="toolbar">\
+              <div class="toolbar toolbar-top">\
                 <div class="toolbar-inner justify-content-flex-end">\
-                  <a  class="link sheet-close">Close</a>\
+                  <div class="right">\
+                    <a class="link sheet-close"><i class="icon icon-close"></i></a>\
+                  </div>\
                 </div>\
               </div>\
               <div class="sheet-modal-inner">\

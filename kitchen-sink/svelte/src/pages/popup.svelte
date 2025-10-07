@@ -26,7 +26,7 @@
                 <div class="navbar-inner">
                   <div class="navbar-bg"></div>
                   <div class="title">Dynamic Popup</div>
-                  <div class="right"><a  class="link popup-close">Close</a></div>
+                  <div class="right"><a  class="link popup-close"><i class="icon icon-close"></i></a></div>
                 </div>
               </div>
               <div class="page-content">
@@ -95,7 +95,9 @@
     <Page>
       <Navbar title="Popup Title">
         <NavRight>
-          <Link popupClose>Close</Link>
+          <Link popupClose>
+            <i class="icon icon-close" />
+          </Link>
         </NavRight>
       </Navbar>
       <Block>
@@ -131,7 +133,9 @@
       <Page>
         <Navbar title="Push Popup" large transparent>
           <NavRight>
-            <Link popupClose>Close</Link>
+            <Link popupClose>
+              <i class="icon icon-close" />
+            </Link>
           </NavRight>
         </Navbar>
         <Block>
@@ -173,7 +177,9 @@
     <Page>
       <Navbar title="Swipe To Close">
         <NavRight>
-          <Link popupClose>Close</Link>
+          <Link popupClose>
+            <i class="icon icon-close" />
+          </Link>
         </NavRight>
       </Navbar>
 

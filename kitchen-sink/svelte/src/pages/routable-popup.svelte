@@ -6,7 +6,7 @@
   <Page>
     <Navbar title="Routable Popup">
       <NavRight>
-        <Link popupClose>Close</Link>
+        <Link popupClose><i class="icon icon-close" /></Link>
       </NavRight>
     </Navbar>
     <Block strong>

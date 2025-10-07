@@ -437,7 +437,8 @@ class ColorPicker extends Framework7Class {
           {openIn !== 'page' && (
             <div class="right">
               <a class="link popup-close" data-popup=".color-picker-popup">
-                {navbarCloseText}
+                <i class="icon icon-close"></i>
+                {navbarCloseText && <span>{navbarCloseText}</span>}
               </a>
             </div>
           )}
@@ -461,7 +462,8 @@ class ColorPicker extends Framework7Class {
               data-sheet=".color-picker-sheet-modal"
               data-popover=".color-picker-popover"
             >
-              {self.params.toolbarCloseText}
+              <i class="icon icon-close"></i>
+              {self.params.toolbarCloseText && <span>{self.params.toolbarCloseText}</span>}
             </a>
           </div>
         </div>

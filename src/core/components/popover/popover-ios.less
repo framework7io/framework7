@@ -37,7 +37,6 @@
   .popover {
     transform: translate3d(0, 0, 0) scale(0);
     transition-property: opacity, transform;
-    background: transparent;
     opacity: 1;
     will-change: auto;
 
@@ -66,6 +65,6 @@
     box-shadow: var(--f7-glass-shadow);
     border-radius: var(--f7-popover-border-radius);
     transform: var(--f7-popover-inner-offset);
-    .ios-translucent-glass();
+    .ios-glass-backdrop();
   }
 }

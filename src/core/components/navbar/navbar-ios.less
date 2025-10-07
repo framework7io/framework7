@@ -80,12 +80,18 @@
   }
   .navbar {
     .left,
-    .right {
+    .right,
+    .navbar-pane {
       height: 100%;
       .ios-glass();
       border-radius: 64px;
       min-width: 44px;
     }
+  }
+  .navbar-pane {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .navbar-inner-left-title {
     justify-content: flex-start;

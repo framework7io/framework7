@@ -1,6 +1,12 @@
 .ios {
   .sheet-modal {
     box-shadow: var(--f7-glass-shadow);
-    .ios-translucent-glass();
+    .ios-glass-backdrop();
+    .toolbar {
+      position: absolute;
+    }
+  }
+  &:not(.device-ios) .sheet-modal .toolbar::before {
+    display: none;
   }
 }

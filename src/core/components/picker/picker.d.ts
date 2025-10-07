@@ -128,7 +128,7 @@ export namespace Picker {
     closeByOutsideClick?: boolean;
     /** Enables picker toolbar. (default true) */
     toolbar?: boolean;
-    /** Text for Done/Close toolbar button. (default Done) */
+    /** Text for Done/Close toolbar button. (default '') */
     toolbarCloseText?: string;
     /** Will add opened picker to router history which gives ability to close picker by going back in router history and set current route to the picker modal. (default false) */
     routableModals?: boolean;

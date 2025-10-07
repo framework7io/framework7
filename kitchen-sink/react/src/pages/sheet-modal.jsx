@@ -30,7 +30,7 @@ export default () => {
           <div class="sheet-modal sheet-modal-bottom">
             <div class="toolbar">
               <div class="toolbar-inner justify-content-flex-end">
-                <a  class="link sheet-close">Close</a>
+                <a  class="link sheet-close"><i class="icon icon-close"></i></a>
               </div>
             </div>
             <div class="sheet-modal-inner">
@@ -142,7 +142,9 @@ export default () => {
         <Toolbar>
           <div className="left"></div>
           <div className="right">
-            <Link sheetClose>Close</Link>
+            <Link sheetClose>
+              <i className="icon icon-close" />
+            </Link>
           </div>
         </Toolbar>
         {/*  Scrollable sheet content */}
@@ -181,7 +183,9 @@ export default () => {
         <Toolbar bottom>
           <div className="left"></div>
           <div className="right">
-            <Link sheetClose>Close</Link>
+            <Link sheetClose>
+              <i className="icon icon-close" />
+            </Link>
           </div>
         </Toolbar>
         {/*  Scrollable sheet content */}
@@ -220,7 +224,9 @@ export default () => {
         <Toolbar>
           <div className="left"></div>
           <div className="right">
-            <Link sheetClose>Close</Link>
+            <Link sheetClose>
+              <i className="icon icon-close" />
+            </Link>
           </div>
         </Toolbar>
         <PageContent>

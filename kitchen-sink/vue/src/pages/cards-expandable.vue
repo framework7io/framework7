@@ -49,7 +49,9 @@
               Android (Material) apps.
             </p>
             <p>
-              <f7-button fill round large card-close color="red">Close</f7-button>
+              <f7-button fill round large card-close color="red"
+                ><i class="icon icon-close"
+              /></f7-button>
             </p>
           </div>
         </f7-card-content>
@@ -95,8 +97,8 @@
             </p>
             <p>
               <f7-button fill round large card-close color="yellow" text-color="black"
-                >Close</f7-button
-              >
+                ><i class="icon icon-close"
+              /></f7-button>
             </p>
           </div>
         </f7-card-content>
@@ -147,7 +149,7 @@
               eleifend nisi sit amet molestie.
             </p>
             <p>
-              <f7-button fill round large card-close>Close</f7-button>
+              <f7-button fill round large card-close><i class="icon icon-close" /></f7-button>
             </p>
           </div>
         </f7-card-content>
@@ -199,7 +201,7 @@
               eleifend nisi sit amet molestie.
             </p>
             <p>
-              <f7-button fill round large card-close>Close</f7-button>
+              <f7-button fill round large card-close><i class="icon icon-close" /></f7-button>
             </p>
           </div>
         </f7-card-content>

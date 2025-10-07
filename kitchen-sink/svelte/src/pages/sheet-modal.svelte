@@ -29,7 +29,7 @@
           <div class="sheet-modal sheet-modal-bottom">
             <div class="toolbar">
               <div class="toolbar-inner justify-content-flex-end">
-                <a  class="link sheet-close">Close</a>
+                <a  class="link sheet-close"><i class="icon icon-close"></i></a>
               </div>
             </div>
             <div class="sheet-modal-inner">
@@ -112,7 +112,9 @@
     <Toolbar>
       <div class="left" />
       <div class="right">
-        <Link sheetClose>Close</Link>
+        <Link sheetClose>
+          <i class="icon icon-close" />
+        </Link>
       </div>
     </Toolbar>
     <PageContent>
@@ -150,7 +152,9 @@
     <Toolbar bottom>
       <div class="left" />
       <div class="right">
-        <Link sheetClose>Close</Link>
+        <Link sheetClose>
+          <i class="icon icon-close" />
+        </Link>
       </div>
     </Toolbar>
     <PageContent>
@@ -188,7 +192,9 @@
     <Toolbar>
       <div class="left" />
       <div class="right">
-        <Link sheetClose>Close</Link>
+        <Link sheetClose>
+          <i class="icon icon-close" />
+        </Link>
       </div>
     </Toolbar>
     <PageContent>

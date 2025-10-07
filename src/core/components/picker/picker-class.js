@@ -268,7 +268,10 @@ class Picker extends Framework7Class {
         <div class="toolbar-inner">
           <div class="left"></div>
           <div class="right">
-            <a class="link sheet-close popover-close">{picker.params.toolbarCloseText}</a>
+            <a class="link sheet-close popover-close">
+              <i class="icon icon-close"></i>
+              {picker.params.toolbarCloseText && <span>{picker.params.toolbarCloseText}</span>}
+            </a>
           </div>
         </div>
       </div>

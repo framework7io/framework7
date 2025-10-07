@@ -72,7 +72,6 @@
 .calendar-header {
   width: 100%;
   position: relative;
-  overflow: hidden;
   flex-shrink: 0;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -84,6 +83,9 @@
   line-height: var(--f7-calendar-header-height);
   font-size: var(--f7-calendar-header-font-size);
   font-weight: var(--f7-calendar-header-font-weight);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   a {
     color: var(--f7-calendar-header-link-color, var(--f7-bars-link-color, var(--f7-theme-color)));
   }

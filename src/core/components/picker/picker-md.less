@@ -1,4 +1,13 @@
 .md {
+  .picker-popover {
+    .toolbar {
+      .hairline-remove(top);
+    }
+    .toolbar + .picker-columns {
+      height: calc(100% - var(--f7-toolbar-height));
+    }
+  }
+
   .picker-center-highlight {
     left: 0;
     right: 0;

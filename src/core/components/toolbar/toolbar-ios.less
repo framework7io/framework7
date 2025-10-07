@@ -1,13 +1,99 @@
 .ios {
+  .toolbar-pane,
+  .toolbar .left,
+  .toolbar .right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+    border-radius: 24px;
+    .ios-glass();
+  }
   .toolbar {
+    .left {
+      margin-right: auto;
+    }
+    .right {
+      margin-left: auto;
+    }
+    .left:empty,
+    .right:empty {
+      display: none;
+    }
+
     a:is(.icon-only, :has(i:only-child), :has(svg:only-child)) {
-      min-height: var(--f7-toolbar-height);
       display: flex;
       justify-content: center;
       align-items: center;
       margin: 0;
-      min-width: 44px;
+      min-width: 48px;
+      min-height: 48px;
+      padding: 0;
     }
+    .link {
+      padding: 0 12px;
+      height: 100%;
+    }
+    &::before,
+    &::after {
+      pointer-events: none;
+      content: '';
+      position: absolute;
+      inset: 0;
+    }
+    &::before {
+      backdrop-filter: blur(2px);
+      mask-image: linear-gradient(to top, black 50%, transparent 100%);
+    }
+    &::after {
+      background-image: linear-gradient(
+        to top,
+        var(--f7-toolbar-bg-color, var(--f7-bars-bg-color)) 0%,
+        transparent 100%
+      );
+    }
+    &.toolbar-bottom {
+      &::before,
+      &::after {
+        top: -16px;
+      }
+      .toolbar-inner {
+        padding-bottom: 16px;
+      }
+    }
+    &.toolbar-top,
+    &:not(.toolbar-bottom, .toolbar-top) {
+      &::before {
+        mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+      }
+      &::after {
+        background-image: linear-gradient(
+          to bottom,
+          var(--f7-toolbar-bg-color, var(--f7-bars-bg-color)) 0%,
+          transparent 100%
+        );
+      }
+      &::before,
+      &::after {
+        bottom: -16px;
+      }
+      .toolbar-inner {
+        padding-top: 16px;
+      }
+    }
+    .navbar ~ &.toolbar-top {
+      &::before,
+      &::after {
+        display: none;
+      }
+    }
+  }
+  .toolbar-inner {
+    justify-content: center;
+    overflow: visible;
+    gap: 16px;
   }
   .tabbar-icons {
     .tab-link,
@@ -17,19 +103,6 @@
       i + span {
         margin: 0;
         margin-top: 4px;
-      }
-    }
-  }
-  @media (min-width: 768px) and (min-height: 600px) {
-    .tabbar,
-    .tabbar-icons {
-      .tab-link,
-      .link {
-        justify-content: center;
-        flex-direction: row;
-        i + span {
-          margin-left: 5px;
-        }
       }
     }
   }

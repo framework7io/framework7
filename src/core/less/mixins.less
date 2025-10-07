@@ -247,11 +247,11 @@
     backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
   }
 }
-.ios-translucent-glass() {
+.ios-glass-backdrop() {
   backdrop-filter: saturate(180%) blur(16px);
 }
 .ios-glass() {
-  backdrop-filter: saturate(180%) blur(16px);
+  .ios-glass-backdrop();
   box-shadow: var(--f7-glass-shadow);
   background-color: var(--f7-glass-bg-color);
 }

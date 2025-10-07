@@ -63,7 +63,7 @@
             Android (Material) apps.
           </p>
           <p>
-            <Button fill round large cardClose color="red">Close</Button>
+            <Button fill round large cardClose color="red"><i class="icon icon-close" /></Button>
           </p>
         </div>
       </CardContent>
@@ -108,7 +108,9 @@
             Android (Material) apps.
           </p>
           <p>
-            <Button fill round large cardClose color="yellow" textColor="black">Close</Button>
+            <Button fill round large cardClose color="yellow" textColor="black">
+              <i class="icon icon-close" />
+            </Button>
           </p>
         </div>
       </CardContent>
@@ -154,7 +156,9 @@
             sit amet molestie.
           </p>
           <p>
-            <Button fill round large cardClose>Close</Button>
+            <Button fill round large cardClose>
+              <i class="icon icon-close" />
+            </Button>
           </p>
         </div>
       </CardContent>
@@ -201,7 +205,9 @@
             sit amet molestie.
           </p>
           <p>
-            <Button fill round large cardClose>Close</Button>
+            <Button fill round large cardClose>
+              <i class="icon icon-close" />
+            </Button>
           </p>
         </div>
       </CardContent>

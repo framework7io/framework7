@@ -175,7 +175,7 @@ export namespace Calendar {
     closeByOutsideClick?: boolean;
     /** Enables calendar toolbar. (default true) */
     toolbar?: boolean;
-    /** Text for Done/Close footer button. (default Done) */
+    /** Text for Done/Close footer button. (default '') */
     toolbarCloseText?: string;
     /** Enables footer with Done/Close button */
     footer?: boolean;

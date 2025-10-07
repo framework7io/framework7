@@ -54,7 +54,7 @@
       <f7-toolbar>
         <div class="left"></div>
         <div class="right">
-          <f7-link sheet-close>Close</f7-link>
+          <f7-link sheet-close><i class="icon icon-close"></i></f7-link>
         </div>
       </f7-toolbar>
       <!-- Scrollable sheet content -->
@@ -93,7 +93,7 @@
       <f7-toolbar bottom>
         <div class="left"></div>
         <div class="right">
-          <f7-link sheet-close>Close</f7-link>
+          <f7-link sheet-close><i class="icon icon-close"></i></f7-link>
         </div>
       </f7-toolbar>
       <!-- Scrollable sheet content -->
@@ -132,7 +132,7 @@
       <f7-toolbar>
         <div class="left"></div>
         <div class="right">
-          <f7-link sheet-close>Close</f7-link>
+          <f7-link sheet-close><i class="icon icon-close"></i></f7-link>
         </div>
       </f7-toolbar>
       <!-- Scrollable sheet content -->
@@ -298,7 +298,7 @@ export default {
             <div class="sheet-modal sheet-modal-bottom">
               <div class="toolbar">
                 <div class="toolbar-inner justify-content-flex-end">
-                  <a  class="link sheet-close">Close</a>
+                  <a  class="link sheet-close"><i class="icon icon-close"></i></a>
                 </div>
               </div>
               <div class="sheet-modal-inner">

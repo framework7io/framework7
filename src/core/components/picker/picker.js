@@ -42,7 +42,7 @@ export default {
       scrollToInput: true,
       scrollToEl: undefined,
       toolbar: true,
-      toolbarCloseText: 'Done',
+      toolbarCloseText: '',
       cssClass: null,
       routableModals: false,
       view: null,

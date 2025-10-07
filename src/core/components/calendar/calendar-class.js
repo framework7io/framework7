@@ -1349,7 +1349,7 @@ class Calendar extends Framework7Class {
       return calendar.params.renderMonthSelector.call(calendar);
     }
     return (
-      <div class="calendar-month-selector">
+      <div class="calendar-month-selector toolbar-pane">
         <a class="link icon-only calendar-prev-month-button">
           <i class="icon icon-prev"></i>
         </a>
@@ -1371,7 +1371,7 @@ class Calendar extends Framework7Class {
       return calendar.params.renderYearSelector.call(calendar);
     }
     return (
-      <div class="calendar-year-selector">
+      <div class="calendar-year-selector toolbar-pane">
         <a class="link icon-only calendar-prev-year-button">
           <i class="icon icon-prev"></i>
         </a>
@@ -1409,6 +1409,14 @@ class Calendar extends Framework7Class {
     return (
       <div class="calendar-header">
         <div class="calendar-selected-date">{calendar.params.headerPlaceholder}</div>
+        {calendar.app.theme === 'ios' && calendar.params.footer && (
+          <div class="toolbar-pane">
+            <a class={`link calendar-close sheet-close popover-close`}>
+              <i class="icon icon-close"></i>
+              {calendar.params.toolbarCloseText && <span>{calendar.params.toolbarCloseText}</span>}
+            </a>
+          </div>
+        )}
       </div>
     );
   }
@@ -1416,18 +1424,24 @@ class Calendar extends Framework7Class {
   renderFooter() {
     const calendar = this;
     const app = calendar.app;
+    if (app.theme === 'ios') {
+      return '';
+    }
     if (calendar.params.renderFooter) {
       return calendar.params.renderFooter.call(calendar);
     }
     return (
       <div class="calendar-footer">
-        <a
-          class={`${
-            app.theme === 'md' ? 'button button-round' : 'link'
-          } calendar-close sheet-close popover-close`}
-        >
-          {calendar.params.toolbarCloseText}
-        </a>
+        <div class="toolbar-pane">
+          <a
+            class={`${
+              app.theme === 'md' ? 'button button-round' : 'link'
+            } calendar-close sheet-close popover-close`}
+          >
+            <i class="icon icon-close"></i>
+            {calendar.params.toolbarCloseText && <span>{calendar.params.toolbarCloseText}</span>}
+          </a>
+        </div>
       </div>
     );
   }

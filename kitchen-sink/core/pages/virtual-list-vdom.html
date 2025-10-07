@@ -27,16 +27,15 @@
     </div>
     <div class="searchbar-backdrop"></div>
     <div class="page-content">
-      <div class="block">
+      <div class="block block-strong inset">
         <p>This example shows how to use Virtual List with external renderer, like with built-in Virtual DOM</p>
       </div>
-      <div class="list list-strong list-outline-ios inset-md list-dividers-ios simple-list searchbar-not-found">
+      <div class="list list-strong inset list-dividers-ios simple-list searchbar-not-found">
         <ul>
           <li>Nothing found</li>
         </ul>
       </div>
-      <div
-        class="list list-strong list-outline-ios inset-md list-dividers-ios virtual-list virtual-list-vdom media-list searchbar-found">
+      <div class="list list-strong inset list-dividers-ios virtual-list virtual-list-vdom media-list searchbar-found">
         <ul>
           ${virtualListData.items.map((item) => $h`
           <li key=${item.id} style="top: ${virtualListData.topPosition}px">

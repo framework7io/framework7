@@ -1,2 +1,42 @@
 .ios {
+  .toolbar .calendar-month-selector,
+  .toolbar .calendar-year-selector {
+    justify-content: space-between;
+    .link {
+      padding: 0;
+    }
+    .current-month-value,
+    .current-year-value {
+      flex-shrink: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: block;
+    }
+  }
+
+  .calendar {
+    .toolbar {
+      position: relative;
+      margin-bottom: 16px;
+      overflow: visible;
+      &::before,
+      &::after {
+        display: none;
+      }
+    }
+  }
+  .calendar-modal {
+    .ios-glass-backdrop();
+  }
+  .calendar-header {
+    .toolbar-pane {
+      height: auto;
+    }
+    a.link {
+      width: 48px;
+      height: 48px;
+    }
+  }
 }

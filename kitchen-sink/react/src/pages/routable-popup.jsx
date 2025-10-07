@@ -6,7 +6,9 @@ export default () => (
     <Page>
       <Navbar title="Routable Popup">
         <NavRight>
-          <Link popupClose>Close</Link>
+          <Link popupClose>
+            <i className="icon icon-close" />
+          </Link>
         </NavRight>
       </Navbar>
       <Block strong>
