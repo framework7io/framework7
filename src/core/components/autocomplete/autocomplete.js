@@ -31,7 +31,7 @@ export default {
       popupCloseLinkText: '',
       pageTitle: undefined,
       searchbarPlaceholder: 'Search...',
-      searchbarDisableText: 'Cancel',
+      searchbarDisableText: '',
       searchbarDisableButton: true,
       searchbarSpellcheck: false,
 

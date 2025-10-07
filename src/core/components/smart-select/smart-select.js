@@ -25,7 +25,7 @@ export default {
       sheetCloseLinkText: '',
       searchbar: false,
       searchbarPlaceholder: 'Search',
-      searchbarDisableText: 'Cancel',
+      searchbarDisableText: '',
       searchbarDisableButton: true,
       searchbarSpellcheck: false,
       closeOnSelect: false,

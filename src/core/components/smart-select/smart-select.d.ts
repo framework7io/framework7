@@ -59,7 +59,7 @@ export namespace SmartSelect {
     searchbar?: boolean | Searchbar.Parameters;
     /** Searchbar placeholder text (default 'Search') */
     searchbarPlaceholder?: string;
-    /** Searchbar "cancel" link text. Has effect only in iOS theme (default 'Cancel') */
+    /** Searchbar "cancel" link text. Has effect only in iOS theme (default '') */
     searchbarDisableText?: string;
     /** Enables searchbar disable button. (default true) */
     searchbarDisableButton?: boolean;

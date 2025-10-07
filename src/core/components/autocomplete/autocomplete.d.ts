@@ -79,7 +79,7 @@ export namespace Autocomplete {
     pageTitle?: string;
     /** Searchbar placeholder text. (default Search...) */
     searchbarPlaceholder?: string;
-    /** Searchbar "Cancel" button text. (default Cancel) */
+    /** Searchbar "Cancel" button text. (default '') */
     searchbarDisableText?: string;
     /** Enables searchbar disable button. (default true) */
     searchbarDisableButton?: boolean;
