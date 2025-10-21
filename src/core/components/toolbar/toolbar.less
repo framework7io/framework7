@@ -50,18 +50,12 @@
 .ios .toolbar-top-ios,
 .md .toolbar-top-md {
   top: 0;
-  .tab-link-highlight {
-    bottom: 0;
-  }
 }
 .toolbar-bottom,
 .ios .toolbar-bottom-ios,
 .md .toolbar-bottom-md {
   bottom: 0;
   height: calc(var(--f7-toolbar-height) + var(--f7-safe-area-bottom));
-  .tab-link-highlight {
-    top: 0;
-  }
   .toolbar-inner {
     height: auto;
     top: 0;
@@ -117,22 +111,6 @@
     font-size: var(--f7-tabbar-icon-size);
     height: var(--f7-tabbar-icon-size);
     line-height: var(--f7-tabbar-icon-size);
-  }
-  .md &.tabbar-icons .tab-link-highlight {
-    display: none;
-  }
-  .md &:not(.tabbar-icons) .tab-link-highlight {
-    position: absolute;
-    left: 0;
-    height: 2px;
-    background: var(--f7-tabbar-link-active-border-color, var(--f7-theme-color));
-    transition-duration: 300ms;
-    .ltr({
-      left: 0;
-    });
-    .rtl({
-      right: 0;
-    });
   }
 }
 .tabbar-icons {

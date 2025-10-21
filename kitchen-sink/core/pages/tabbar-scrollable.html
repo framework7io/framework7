@@ -20,9 +20,11 @@
     </div>
     <div class="toolbar tabbar tabbar-scrollable toolbar-${toolbarPosition}">
       <div class="toolbar-inner">
-        ${tabs.map((tab, index) => $h`
-        <a href="#tab-${tab}" class="tab-link ${index === 0 ? 'tab-link-active' : ''}">Tab ${tab}</a>
-        `)}
+        <div class="toolbar-pane">
+          ${tabs.map((tab, index) => $h`
+          <a href="#tab-${tab}" class="tab-link ${index === 0 ? 'tab-link-active' : ''}">Tab ${tab}</a>
+          `)}
+        </div>
       </div>
     </div>
     <div class="tabs">

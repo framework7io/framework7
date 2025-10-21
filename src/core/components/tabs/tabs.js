@@ -204,10 +204,7 @@ const Tab = {
         $tabLinkEl.addClass('tab-link-active');
         // Material Highlight
         const $tabbarEl = $tabLinkEl.parents('.tabbar, .tabbar-icons');
-        const hasHighlight =
-          app.toolbar &&
-          $tabbarEl.length > 0 &&
-          ($tabbarEl.hasClass('tabbar-highlight') || app.theme !== 'ios');
+        const hasHighlight = app.toolbar && $tabbarEl.length > 0;
         if (hasHighlight) {
           app.toolbar.setHighlight($tabbarEl);
         }

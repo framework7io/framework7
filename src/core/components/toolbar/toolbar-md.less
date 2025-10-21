@@ -118,4 +118,34 @@
       padding: 0 12px;
     }
   }
+  .toolbar-top-md,
+  .toolbar-top {
+    .tab-link-highlight {
+      bottom: 0;
+    }
+  }
+  .toolbar-bottom,
+  .toolbar-bottom-md {
+    .tab-link-highlight {
+      top: 0;
+    }
+  }
+  .tabbar,
+  .tabbar-icons {
+    &.tabbar-icons .tab-link-highlight {
+      display: none;
+    }
+    &:not(.tabbar-icons) .tab-link-highlight {
+      position: absolute;
+      height: 2px;
+      background: var(--f7-tabbar-link-active-border-color, var(--f7-theme-color));
+      transition-duration: 300ms;
+      .ltr({
+        left: 0;
+      });
+      .rtl({
+        right: 0;
+      });
+    }
+  }
 }

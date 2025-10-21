@@ -1,4 +1,7 @@
 .ios {
+  .toolbar-pane {
+    user-select: none;
+  }
   .toolbar-pane,
   .toolbar .left,
   .toolbar .right {
@@ -8,7 +11,7 @@
     height: 100%;
     position: relative;
     z-index: 1;
-    border-radius: 24px;
+    border-radius: 32px;
     .ios-glass();
   }
   .toolbar {
@@ -84,17 +87,25 @@
         padding-top: 16px;
       }
     }
-    .navbar ~ &.toolbar-top {
-      &::before,
-      &::after {
-        display: none;
-      }
+  }
+  .navbar ~ .toolbar-top {
+    &::before,
+    &::after {
+      display: none;
     }
   }
   .toolbar-inner {
     justify-content: center;
     overflow: visible;
     gap: 16px;
+  }
+  .tabbar-scrollable .toolbar-pane {
+    .scrollable();
+    .no-scrollbar();
+    justify-content: flex-start;
+  }
+  .tabbar:not(.tabbar-scrollable) {
+    touch-action: none;
   }
   .tabbar-icons {
     .tab-link,
@@ -107,6 +118,18 @@
       }
     }
   }
+  @media (max-width: 767px) {
+    .tabbar .toolbar-pane {
+      width: 100%;
+    }
+  }
+  @media (min-width: 768px) {
+    .tabbar .tab-link {
+      padding-left: 16px;
+      padding-right: 16px;
+      min-width: 96px;
+    }
+  }
 
   // Scrollable
   .tabbar-scrollable {
@@ -116,6 +139,47 @@
     .tab-link,
     .link {
       padding: 0 8px;
+    }
+  }
+  .tab-link-highlight {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    transition-duration: 300ms;
+    border-radius: inherit;
+    .ltr({
+      left: 0;
+    });
+    .rtl({
+      right: 0;
+    });
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border-radius: inherit;
+      transition-duration: 300ms;
+    }
+    &::before {
+      background-color: var(--f7-tabbar-link-highlight-bg-color);
+    }
+    &::after {
+      opacity: 0;
+      box-shadow: var(--f7-glass-shadow-thumb);
+      background-color: var(--f7-tabbar-link-highlight-active-bg-color);
+    }
+  }
+  .tab-link-highlight-pressed {
+    &::before {
+      opacity: 0;
+    }
+    &::after {
+      opacity: 1;
+    }
+    &::before,
+    &::after {
+      scale: 1.4;
     }
   }
 }
