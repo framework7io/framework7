@@ -234,6 +234,10 @@ export default {
         const app = this;
         app.toolbar.init(vnode.elm);
       },
+      destroy(vnode) {
+        const app = this;
+        app.toolbar.destroy(vnode.elm);
+      },
     },
   },
 };
