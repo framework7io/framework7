@@ -1,13 +1,11 @@
 import $ from '../../shared/dom7.js';
 import History from '../../shared/history.js';
-import { getSupport } from '../../shared/get-support.js';
 import { getDevice } from '../../shared/get-device.js';
 import { now } from '../../shared/utils.js';
 
 function SwipeBack(r) {
   const router = r;
   const { $el, app, params } = router;
-  const support = getSupport();
   const device = getDevice();
   let isTouched = false;
   let isMoved = false;
@@ -309,18 +307,14 @@ function SwipeBack(r) {
 
   function attachEvents() {
     const passiveListener =
-      app.touchEvents.start === 'touchstart' && support.passiveListener
-        ? { passive: true, capture: false }
-        : false;
+      app.touchEvents.start === 'touchstart' ? { passive: true, capture: false } : false;
     $el.on(app.touchEvents.start, handleTouchStart, passiveListener);
     app.on('touchmove:active', handleTouchMove);
     app.on('touchend:passive', handleTouchEnd);
   }
   function detachEvents() {
     const passiveListener =
-      app.touchEvents.start === 'touchstart' && support.passiveListener
-        ? { passive: true, capture: false }
-        : false;
+      app.touchEvents.start === 'touchstart' ? { passive: true, capture: false } : false;
     $el.off(app.touchEvents.start, handleTouchStart, passiveListener);
     app.off('touchmove:active', handleTouchMove);
     app.off('touchend:passive', handleTouchEnd);

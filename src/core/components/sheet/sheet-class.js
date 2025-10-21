@@ -1,7 +1,6 @@
 import { getWindow, getDocument } from 'ssr-window';
 import $ from '../../shared/dom7.js';
 import { extend, now, getTranslate } from '../../shared/utils.js';
-import { getSupport } from '../../shared/get-support.js';
 import { getDevice } from '../../shared/get-device.js';
 import Modal from '../modal/modal-class.js';
 
@@ -15,7 +14,6 @@ class Sheet extends Modal {
     const sheet = this;
     const window = getWindow();
     const document = getDocument();
-    const support = getSupport();
     const device = getDevice();
 
     sheet.params = extendedParams;
@@ -649,7 +647,7 @@ class Sheet extends Modal {
       }
     }
 
-    const passive = support.passiveListener ? { passive: true } : false;
+    const passive = { passive: true };
     if (sheet.params.swipeToClose || sheet.params.swipeToStep || useBreakpoints) {
       $el.on(app.touchEvents.start, handleTouchStart, passive);
       app.on('touchmove', handleTouchMove);

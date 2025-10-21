@@ -1,14 +1,12 @@
 import $ from '../../shared/dom7.js';
 import { extend, nextTick, deleteProps } from '../../shared/utils.js';
 import Framework7Class from '../../shared/class.js';
-import { getSupport } from '../../shared/get-support.js';
 
 class Range extends Framework7Class {
   constructor(app, params) {
     super(params, [app]);
 
     const range = this;
-    const support = getSupport();
 
     const defaults = {
       el: null,
@@ -372,8 +370,7 @@ class Range extends Framework7Class {
     let parentPanel;
     let parentPage;
     range.attachEvents = function attachEvents() {
-      const passive = support.passiveListener ? { passive: true } : false;
-      range.$el.on(app.touchEvents.start, handleTouchStart, passive);
+      range.$el.on(app.touchEvents.start, handleTouchStart, { passive: true });
       app.on('touchmove', handleTouchMove);
       app.on('touchend:passive', handleTouchEnd);
       app.on('tabShow', handleResize);
@@ -388,8 +385,7 @@ class Range extends Framework7Class {
       parentPage.on('page:reinit', handleResize);
     };
     range.detachEvents = function detachEvents() {
-      const passive = support.passiveListener ? { passive: true } : false;
-      range.$el.off(app.touchEvents.start, handleTouchStart, passive);
+      range.$el.off(app.touchEvents.start, handleTouchStart, { passive: true });
       app.off('touchmove', handleTouchMove);
       app.off('touchend:passive', handleTouchEnd);
       app.off('tabShow', handleResize);

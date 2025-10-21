@@ -201,11 +201,7 @@ class PhotoBrowser extends Framework7Class {
 
     const isPopup = pb.params.type !== 'page';
     return (
-      <div
-        class={`navbar navbar-photo-browser ${
-          pb.params.theme === 'dark' ? 'navbar-photo-browser-dark' : ''
-        }`}
-      >
+      <div class={`navbar navbar-photo-browser`}>
         <div class="navbar-bg"></div>
         <div class="navbar-inner navbar-inner-centered-title">
           {!isPopup && (

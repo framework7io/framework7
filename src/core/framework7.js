@@ -23,6 +23,7 @@ import Navbar from './components/navbar/navbar.js';
 import Toolbar from './components/toolbar/toolbar.js';
 import Subnavbar from './components/subnavbar/subnavbar.js';
 import TouchRipple from './components/touch-ripple/touch-ripple.js';
+import TouchHighlight from './components/touch-highlight/touch-highlight.js';
 import Modal from './components/modal/modal.js';
 import Router from './modules/router/router-class.js';
 
@@ -56,6 +57,7 @@ Framework7.use([
   Subnavbar,
   TouchRipple,
   Modal,
+  TouchHighlight,
   //INSTALL_COMPONENTS
 ]);
 

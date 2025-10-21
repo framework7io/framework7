@@ -1,7 +1,6 @@
 import { getWindow, getDocument } from 'ssr-window';
 import $ from '../../shared/dom7.js';
 import { extend, now, nextTick } from '../../shared/utils.js';
-import { getSupport } from '../../shared/get-support.js';
 import { getDevice } from '../../shared/get-device.js';
 import Modal from '../modal/modal-class.js';
 
@@ -15,7 +14,6 @@ class Popup extends Modal {
     const popup = this;
     const window = getWindow();
     const document = getDocument();
-    const support = getSupport();
     const device = getDevice();
 
     popup.params = extendedParams;
@@ -301,7 +299,7 @@ class Popup extends Modal {
       $el.transform('');
     }
 
-    const passive = support.passiveListener ? { passive: true } : false;
+    const passive = { passive: true };
     if (popup.params.swipeToClose) {
       $el.on(app.touchEvents.start, handleTouchStart, passive);
       app.on('touchmove', handleTouchMove);

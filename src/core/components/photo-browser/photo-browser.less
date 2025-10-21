@@ -100,8 +100,18 @@
     transform: translate3d(0, var(--f7-toolbar-height), 0);
   }
 }
+.toolbar:has(+ .photo-browser-thumbs) {
+  &::before,
+  &::after {
+    top: calc(-16px - var(--f7-toolbar-height)) !important;
+  }
+}
 .photo-browser-thumbs {
   transition-property: transform, background-color, color;
+  &::before,
+  &::after {
+    display: none;
+  }
   .swiper {
     width: 100%;
     height: 100%;
@@ -116,7 +126,7 @@
     width: auto;
     height: 75%;
     display: block;
-    border-radius: 2px;
+    border-radius: 8px;
     min-width: 4px;
   }
   .swiper-slide img {
@@ -132,6 +142,8 @@
 }
 .photo-browser-caption {
   box-sizing: border-box;
+  color: var(--f7-photobrowser-caption-text-color);
+
   transition-duration: 400ms;
   position: absolute;
   bottom: 0;
@@ -142,24 +154,12 @@
   text-align: center;
   font-size: var(--f7-photobrowser-caption-font-size);
   font-weight: var(--f7-photobrowser-caption-font-weight);
-  .ios-translucent-bars & {
-    @supports (backdrop-filter: blur(20px)) {
-      backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
-    }
-  }
 
   &:empty {
     display: none;
   }
   &.photo-browser-caption-active {
     opacity: 1;
-  }
-  .photo-browser-captions-light & {
-    color: var(--f7-photobrowser-caption-light-text-color);
-  }
-  .photo-browser-captions-dark &,
-  .dark & {
-    color: var(--f7-photobrowser-caption-dark-text-color);
   }
 }
 
@@ -234,19 +234,12 @@
   }
 }
 
-.photo-browser-page .navbar-bg,
-.navbar-photo-browser .navbar-bg,
-.photo-browser-page .toolbar,
-.photo-browser-caption {
-  background-color: var(--f7-photobrowser-bars-bg-color, rgba(var(--f7-bars-bg-color-rgb), 0.95));
-}
 .photo-browser-page {
   touch-action: none;
   .navbar,
   .toolbar {
     transform: translate3d(0, 0, 0);
     transition-duration: 400ms;
-    color: var(--f7-photobrowser-bars-text-color, var(--f7-bars-text-color));
   }
 }
 .photo-browser-exposed {
@@ -264,47 +257,11 @@
     background: var(--f7-photobrowser-exposed-bg-color);
   }
 }
-.photo-browser-exposed,
-.photo-browser-dark {
-  .photo-browser-thumbs,
-  .toolbar {
-    background-color: var(--f7-photobrowser-dark-bars-bg-color);
-  }
-  .photo-browser-caption {
-    color: var(--f7-photobrowser-caption-dark-text-color);
-    background-color: var(--f7-photobrowser-dark-bars-bg-color);
-  }
-}
+
 .view.with-photo-browser-page-exposed {
   .navbar {
     opacity: 0;
     pointer-events: none;
-  }
-}
-.photo-browser-page .toolbar {
-  .hairline-remove-top-bottom();
-}
-.photo-browser-page-dark .navbar-bg,
-.navbar-photo-browser-dark .navbar-bg {
-  background: var(--f7-photobrowser-dark-bars-bg-color);
-  .hairline-remove-top-bottom();
-}
-
-.navbar-photo-browser-dark,
-.photo-browser-dark .navbar,
-.photo-browser-dark .toolbar,
-.photo-browser-page-dark .navbar,
-.photo-browser-page-dark .toolbar {
-  color: var(--f7-photobrowser-dark-bars-text-color);
-  a {
-    color: var(--f7-photobrowser-dark-bars-link-color);
-  }
-}
-
-.photo-browser-dark,
-.photo-browser-page-dark {
-  .photo-browser-swiper-container {
-    background: var(--f7-photobrowser-dark-bg-color);
   }
 }
 

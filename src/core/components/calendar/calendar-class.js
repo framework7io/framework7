@@ -2,7 +2,6 @@ import { extend, nextTick, deleteProps } from '../../shared/utils.js';
 import Framework7Class from '../../shared/class.js';
 import $ from '../../shared/dom7.js';
 import { getDevice } from '../../shared/get-device.js';
-import { getSupport } from '../../shared/get-support.js';
 /** @jsx $jsx */
 import $jsx from '../../shared/$jsx.js';
 
@@ -330,9 +329,7 @@ class Calendar extends Framework7Class {
       }
 
       const passiveListener =
-        app.touchEvents.start === 'touchstart' && getSupport().passiveListener
-          ? { passive: true, capture: false }
-          : false;
+        app.touchEvents.start === 'touchstart' ? { passive: true, capture: false } : false;
       // Selectors clicks
       $el.find('.calendar-prev-month-button').on('click', onPrevMonthClick);
       $el.find('.calendar-next-month-button').on('click', onNextMonthClick);

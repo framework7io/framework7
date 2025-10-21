@@ -32,15 +32,7 @@
           <a class="button button-fill button-round" @click=${openPage}>Page</a>
         </div>
       </div>
-      <div class="block block-strong inset">
-        <p>Photo Browser supports 2 default themes - default Light (like in previous examples) and Dark theme. Here is a
-          Dark theme examples:</p>
-        <div class="grid grid-cols-3 grid-gap">
-          <a class="button button-fill button-round" @click=${openStandaloneDark}>Standalone</a>
-          <a class="button button-fill button-round" @click=${openPopupDark}>Popup</a>
-          <a class="button button-fill button-round" @click=${openPageDark}>Page</a>
-        </div>
-      </div>
+
     </div>
   </div>
 </template>
@@ -73,9 +65,6 @@
     let standalone;
     let popup;
     let page;
-    let standaloneDark;
-    let popupDark;
-    let pageDark;
 
     const openStandalone = () => {
       standalone.open();
@@ -85,15 +74,6 @@
     }
     const openPage = () => {
       page.open();
-    }
-    const openStandaloneDark = () => {
-      standaloneDark.open();
-    }
-    const openPopupDark = () => {
-      popupDark.open();
-    }
-    const openPageDark = () => {
-      pageDark.open();
     }
     $on('pageInit', () => {
       // Create PBs when page init
@@ -112,33 +92,12 @@
         type: 'page',
         backLinkText: 'Back',
       });
-      standaloneDark = $f7.photoBrowser.create({
-        photos: photos,
-        thumbs: thumbs,
-        theme: 'dark',
-      });
-      popupDark = $f7.photoBrowser.create({
-        photos: photos,
-        thumbs: thumbs,
-        type: 'popup',
-        theme: 'dark',
-      });
-      pageDark = $f7.photoBrowser.create({
-        photos: photos,
-        thumbs: thumbs,
-        type: 'page',
-        backLinkText: 'Back',
-        theme: 'dark',
-      });
     });
     $on('pageBeforeRemove', () => {
       // Destroy PBs on page remove
       standalone.destroy();
       popup.destroy();
       page.destroy();
-      standaloneDark.destroy();
-      popupDark.destroy();
-      pageDark.destroy();
     });
 
     return $render;

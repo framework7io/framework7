@@ -1,7 +1,6 @@
 import { getDocument } from 'ssr-window';
 import $ from '../../shared/dom7.js';
 import { bindMethods } from '../../shared/utils.js';
-import { getSupport } from '../../shared/get-support.js';
 
 const Sortable = {
   init() {
@@ -234,9 +233,7 @@ const Sortable = {
       isMoved = false;
     }
 
-    const activeListener = getSupport().passiveListener
-      ? { passive: false, capture: false }
-      : false;
+    const activeListener = { passive: false, capture: false };
 
     $(document).on(
       app.touchEvents.start,

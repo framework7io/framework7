@@ -1,6 +1,5 @@
 import $ from '../../../shared/dom7.js';
 import { colorHsbToHsl } from '../../../shared/utils.js';
-import { getSupport } from '../../../shared/get-support.js';
 /** @jsx $jsx */
 import $jsx from '../../../shared/$jsx.js';
 
@@ -92,9 +91,7 @@ export default {
     }
 
     const passiveListener =
-      app.touchEvents.start === 'touchstart' && getSupport().passiveListener
-        ? { passive: true, capture: false }
-        : false;
+      app.touchEvents.start === 'touchstart' ? { passive: true, capture: false } : false;
 
     self.$el.on(app.touchEvents.start, handleTouchStart, passiveListener);
     app.on('touchmove:active', handleTouchMove);
