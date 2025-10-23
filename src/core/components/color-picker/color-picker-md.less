@@ -1,2 +1,17 @@
 .md {
+  .color-picker-slider,
+  .color-picker-bar {
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+  .color-picker-bar {
+    --f7-range-bar-border-radius: 4px;
+    --f7-range-knob-color: #fff;
+    --f7-range-knob-box-shadow: 0 0px 3px rgba(0, 0, 0, 0.3);
+  }
+  .color-picker-slider {
+    --f7-range-knob-height: 16px;
+  }
 }

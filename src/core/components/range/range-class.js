@@ -25,7 +25,8 @@ class Range extends Framework7Class {
       scaleSteps: 5,
       scaleSubSteps: 0,
       formatScaleLabel: null,
-      limitKnobPosition: app.theme === 'ios',
+      limitKnobPosition: true,
+      limitBarPosition: app.theme === 'md',
     };
 
     // Extend defaults with modules params
@@ -83,6 +84,7 @@ class Range extends Framework7Class {
       scaleSteps,
       scaleSubSteps,
       limitKnobPosition,
+      limitBarPosition,
     } = range.params;
 
     extend(range, {
@@ -104,6 +106,7 @@ class Range extends Framework7Class {
       scaleSteps,
       scaleSubSteps,
       limitKnobPosition,
+      limitBarPosition,
     });
 
     if ($inputEl) {
@@ -446,6 +449,7 @@ class Range extends Framework7Class {
       vertical,
       verticalReversed,
       limitKnobPosition,
+      limitBarPosition,
     } = range;
     const knobSize = vertical ? knobHeight : knobWidth;
     const rangeSize = vertical ? rangeHeight : rangeWidth;
@@ -459,9 +463,13 @@ class Range extends Framework7Class {
       : 'left';
     if (range.dual) {
       const progress = [(value[0] - min) / (max - min), (value[1] - min) / (max - min)];
+      const positionStartProgress = limitBarPosition ? knobSize / rangeSize : 0;
+      const barProgressModify = limitBarPosition ? (rangeSize - knobSize) / rangeSize : 1;
       $barActiveEl.css({
-        [positionProperty]: `${progress[0] * 100}%`,
-        [vertical ? 'height' : 'width']: `${(progress[1] - progress[0]) * 100}%`,
+        [positionProperty]: `${(positionStartProgress + progress[0] * barProgressModify) * 100}%`,
+        [vertical ? 'height' : 'width']: `${
+          (progress[1] - progress[0] - positionStartProgress) * 100 * barProgressModify
+        }%`,
       });
       knobs.forEach(($knobEl, knobIndex) => {
         let startPos = rangeSize * progress[knobIndex];
@@ -476,7 +484,8 @@ class Range extends Framework7Class {
       });
     } else {
       const progress = (value - min) / (max - min);
-      $barActiveEl.css(vertical ? 'height' : 'width', `${progress * 100}%`);
+      const barProgressModify = limitBarPosition ? (rangeSize - knobSize) / rangeSize : 1;
+      $barActiveEl.css(vertical ? 'height' : 'width', `${progress * 100 * barProgressModify}%`);
 
       let startPos = rangeSize * progress;
 

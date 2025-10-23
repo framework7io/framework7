@@ -79,6 +79,8 @@ export default {
       step: 1,
       value: 0,
       vertical: true,
+      limitBarPosition: false,
+      limitKnobPosition: true,
       on: {
         change(range, value) {
           self.setValue({ rgb: [value, self.value.rgb[1], self.value.rgb[2]] });
@@ -92,6 +94,8 @@ export default {
       step: 1,
       value: 0,
       vertical: true,
+      limitBarPosition: false,
+      limitKnobPosition: true,
       on: {
         change(range, value) {
           self.setValue({ rgb: [self.value.rgb[0], value, self.value.rgb[2]] });
@@ -105,6 +109,8 @@ export default {
       step: 1,
       value: 0,
       vertical: true,
+      limitBarPosition: false,
+      limitKnobPosition: true,
       on: {
         change(range, value) {
           self.setValue({ rgb: [self.value.rgb[0], self.value.rgb[1], value] });

@@ -84,6 +84,8 @@ export default {
       max: 255,
       step: 1,
       value: 0,
+      limitBarPosition: false,
+      limitKnobPosition: self.app.theme === 'ios',
       on: {
         change(range, value) {
           self.setValue({ rgb: [value, self.value.rgb[1], self.value.rgb[2]] });
@@ -96,6 +98,8 @@ export default {
       max: 255,
       step: 1,
       value: 0,
+      limitBarPosition: false,
+      limitKnobPosition: self.app.theme === 'ios',
       on: {
         change(range, value) {
           self.setValue({ rgb: [self.value.rgb[0], value, self.value.rgb[2]] });
@@ -108,6 +112,8 @@ export default {
       max: 255,
       step: 1,
       value: 0,
+      limitBarPosition: false,
+      limitKnobPosition: self.app.theme === 'ios',
       on: {
         change(range, value) {
           self.setValue({ rgb: [self.value.rgb[0], self.value.rgb[1], value] });

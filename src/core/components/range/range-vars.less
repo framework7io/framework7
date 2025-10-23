@@ -7,12 +7,6 @@
   --f7-range-scale-step-height: 5px;
   --f7-range-scale-substep-width: 1px;
   --f7-range-scale-substep-height: 4px;
-  .light-vars({
-    --f7-range-bar-bg-color: rgba(0, 0, 0, 0.2);
-  });
-  .dark-vars({
-    --f7-range-bar-bg-color: rgba(255, 255, 255, 0.2);
-  });
 }
 .ios-vars({
   --f7-range-size: 28px;
@@ -36,13 +30,21 @@
   --f7-range-scale-font-size: 12px;
   --f7-range-scale-font-weight: 400;
   --f7-range-scale-label-offset: 4px;
+
+  .light-vars({
+    --f7-range-bar-bg-color: rgba(0, 0, 0, 0.2);
+  });
+  .dark-vars({
+    --f7-range-bar-bg-color: rgba(255, 255, 255, 0.2);
+  });
 });
 .md-vars({
   --f7-range-size: 20px;
-  --f7-range-bar-size: 2px;
-  --f7-range-bar-border-radius: 0px;
-  --f7-range-knob-width: 12px;
-  --f7-range-knob-height: 12px;
+  --f7-range-bar-bg-color: var(--f7-md-secondary-container);
+  --f7-range-bar-size: 16px;
+  --f7-range-bar-border-radius: 16px;
+  --f7-range-knob-width: 16px;
+  --f7-range-knob-height: 44px;
   --f7-range-knob-box-shadow: none;
   --f7-range-label-size: 26px;
   --f7-range-label-font-weight: normal;

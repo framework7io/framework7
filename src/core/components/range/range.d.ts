@@ -39,8 +39,10 @@ export namespace Range {
     scaleSubSteps?: number;
     /** Method must return formatted scale value. As an argument it receives currect scale step value. This method will be called as for each scale step. */
     formatScaleLabel?: (value: number) => string;
-    /** Limit knob position to the size of range bar. By default enabled from iOS theme */
+    /** Limit knob position to the size of range bar. By default enabled */
     limitKnobPosition?: boolean;
+    /** Limit bar position to the size of range knob. By default enabled for MD theme */
+    limitBarPosition?: boolean;
     /** Object with events handlers.. */
     on?: {
       [event in keyof Events]?: Events[event];

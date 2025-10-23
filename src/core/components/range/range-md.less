@@ -1,10 +1,29 @@
 .md {
+  .range-knob-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .range-knob {
     transition-duration: 200ms;
     transition-property: transform, background-color;
+    width: 4px;
+    height: var(--f7-range-knob-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
   }
+
   .range-knob-active-state .range-knob {
-    transform: scale(1.5);
+    transform: scaleX(0.5);
+  }
+  .range-slider-vertical .range-knob {
+    width: var(--f7-range-knob-height);
+    height: 4px;
+  }
+  .range-slider-vertical .range-knob-active-state .range-knob {
+    transform: scaleY(0.5);
   }
   .range-slider-min:not(.range-slider-dual) {
     .range-knob {
@@ -33,9 +52,53 @@
   .range-knob-active-state .range-knob-label {
     transform: translateY(0%) scale(1);
   }
-  .range-slider-label {
-    .range-knob-active-state .range-knob {
-      transform: scale(0);
+  .range-bar-active,
+  .range-bar-inactive {
+    border-radius: 4px;
+  }
+  .range-slider {
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--f7-range-knob-color);
+      top: calc(50% - 2px);
+      z-index: 1;
+      pointer-events: none;
+      transition-duration: 200ms;
+    }
+    &::before {
+      left: calc(var(--f7-range-knob-width) / 2 - 2px);
+    }
+    &::after {
+      right: calc(var(--f7-range-knob-width) / 2 - 2px);
+    }
+    &:not(.range-slider-dual)::before {
+      content: none;
+      display: none;
+    }
+    &:has(.range-knob-active-state) {
+      &::before,
+      &::after {
+        transform: scale(0.5);
+      }
+    }
+    &.range-slider-vertical {
+      &::before,
+      &::after {
+        top: auto;
+        left: calc(50% - 2px);
+        right: auto;
+      }
+      &::before {
+        bottom: calc(var(--f7-range-knob-width) / 2 - 2px);
+      }
+      &::after {
+        top: calc(var(--f7-range-knob-width) / 2 - 2px);
+      }
     }
   }
 }

@@ -85,6 +85,8 @@ export default {
       max: 360,
       step: 0.1,
       value: 0,
+      limitBarPosition: false,
+      limitKnobPosition: self.app.theme === 'ios',
       on: {
         change(range, value) {
           self.setValue({ hue: value });
@@ -97,6 +99,8 @@ export default {
       max: 1,
       step: 0.001,
       value: 0,
+      limitBarPosition: false,
+      limitKnobPosition: self.app.theme === 'ios',
       on: {
         change(range, value) {
           const s = Math.floor(value * 1000) / 1000;
@@ -110,6 +114,8 @@ export default {
       max: 1,
       step: 0.001,
       value: 0,
+      limitBarPosition: false,
+      limitKnobPosition: self.app.theme === 'ios',
       on: {
         change(range, value) {
           const b = Math.floor(value * 1000) / 1000;

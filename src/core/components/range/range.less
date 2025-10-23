@@ -96,25 +96,10 @@
 }
 .range-knob {
   box-sizing: border-box;
-  border-radius: 50%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+
   z-index: 1;
   background: var(--f7-range-knob-color, var(--f7-range-knob-bg-color, var(--f7-theme-color)));
   box-shadow: var(--f7-range-knob-box-shadow);
-  &:after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 44px;
-    height: 44px;
-    margin-left: -22px;
-    margin-top: -22px;
-  }
 }
 .range-knob-label {
   position: absolute;

@@ -29,6 +29,8 @@ export default {
       max: 1,
       step: 0.01,
       value: 1,
+      limitBarPosition: false,
+      limitKnobPosition: self.app.theme === 'ios',
       on: {
         change(range, value) {
           const alpha = Math.floor(value * 100) / 100;
