@@ -3,6 +3,18 @@
   @blue: #2196f3;
   @green: #4caf50;
   @yellow: #ffeb3b;
+  .progressbar:not(.progressbar-infinite) {
+    &::after {
+      content: '';
+      position: absolute;
+      width: var(--f7-progressbar-height);
+      height: var(--f7-progressbar-height);
+      border-radius: var(--f7-progressbar-border-radius);
+      right: 0;
+      top: 0;
+      background: var(--f7-progressbar-progress-color, var(--f7-theme-color));
+    }
+  }
   .progressbar-infinite {
     &:before {
       animation: md-progressbar-infinite-1 2s linear infinite;
