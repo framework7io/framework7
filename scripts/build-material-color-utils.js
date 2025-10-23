@@ -3,20 +3,13 @@ const path = require('path');
 const { rollup } = require('rollup');
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
-const virtual = require('@rollup/plugin-virtual');
 const { minify } = require('terser');
 
 async function build(cb) {
   const outputFile = path.resolve(__dirname, '../src/core/shared/material-color-utils.js');
   await rollup({
-    input: 'entry',
-    plugins: [
-      virtual({
-        entry: `export { argbFromHex, hexFromArgb, themeFromSourceColor } from '@material/material-color-utilities';`,
-      }),
-      nodeResolve({ mainFields: ['module', 'main', 'jsnext'] }),
-      commonjs(),
-    ],
+    input: path.resolve(__dirname, '../src/material-color-utilities/source.js'),
+    plugins: [nodeResolve({ mainFields: ['module', 'main', 'jsnext'] }), commonjs()],
   })
     .then((bundle) => {
       return bundle.write({

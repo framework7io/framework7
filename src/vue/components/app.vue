@@ -25,6 +25,7 @@ export default {
     store: Object,
     darkMode: { type: [Boolean, String], default: false },
     colors: { type: Object, default: () => undefined },
+    mdColorScheme: { type: String, default: undefined },
     lazyModulesPath: { type: String, default: undefined },
     initOnDeviceReady: { type: Boolean, default: undefined },
     iosTranslucentBars: { type: Boolean, default: undefined },

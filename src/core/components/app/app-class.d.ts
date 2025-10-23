@@ -63,6 +63,8 @@ export interface Framework7Parameters {
   iosTranslucentModals?: boolean;
   /** Object with app colors where `primary` color (key) defines main app color theme */
   colors?: object;
+  /** Material color scheme. Can be `default`, `vibrant`, `monochrome` or `monochrome-vibrant` */
+  mdColorScheme?: string;
   /** userAgent string. Required for browser/device detection when rendered on server-side */
   userAgent?: string;
   /** Required for current route detection when rendered on server-side */

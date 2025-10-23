@@ -339,25 +339,35 @@ const getShadeTintColors = (rgb) => {
 export function colorThemeCSSProperties(...args) {
   let hex;
   let rgb;
+  let mdColorScheme;
   if (args.length === 1) {
     hex = args[0];
     rgb = colorHexToRgb(hex);
+  } else if (args.length === 2) {
+    hex = args[0];
+    rgb = colorHexToRgb(hex);
+    mdColorScheme = args[1] || 'default';
   } else if (args.length === 3) {
     rgb = args;
     hex = colorRgbToHex(...rgb);
+  } else if (args.length === 4) {
+    rgb = args.slice(0, 3);
+    hex = colorRgbToHex(...rgb);
+    mdColorScheme = args[3] || 'default';
   }
   if (!rgb) return {};
-  const { light, dark } = materialColors(hex);
+
+  const { light, dark } = materialColors(hex, mdColorScheme);
   const shadeTintIos = getShadeTintColors(rgb);
   const shadeTintMdLight = getShadeTintColors(colorHexToRgb(light['--f7-md-primary']));
   const shadeTintMdDark = getShadeTintColors(colorHexToRgb(dark['--f7-md-primary']));
   Object.keys(light).forEach((key) => {
-    if (key.includes('surface-')) {
+    if (key.includes('surface-') && !key.includes('-rgb')) {
       light[`${key}-rgb`] = colorHexToRgb(light[key]);
     }
   });
   Object.keys(dark).forEach((key) => {
-    if (key.includes('surface-')) {
+    if (key.includes('surface-') && !key.includes('-rgb')) {
       dark[`${key}-rgb`] = colorHexToRgb(dark[key]);
     }
   });
@@ -415,7 +425,7 @@ export function flattenArray(...args) {
   return arr;
 }
 
-export function colorThemeCSSStyles(colors = {}) {
+export function colorThemeCSSStyles(colors = {}, mdColorScheme = 'default') {
   const stringifyObject = (obj) => {
     let res = '';
     Object.keys(obj).forEach((key) => {
@@ -423,7 +433,7 @@ export function colorThemeCSSStyles(colors = {}) {
     });
     return res;
   };
-  const colorVars = colorThemeCSSProperties(colors.primary);
+  const colorVars = colorThemeCSSProperties(colors.primary, mdColorScheme);
 
   const primary = [
     `:root{`,
@@ -446,7 +456,7 @@ export function colorThemeCSSStyles(colors = {}) {
 
   Object.keys(colors).forEach((colorName) => {
     const colorValue = colors[colorName];
-    restVars[colorName] = colorThemeCSSProperties(colorValue);
+    restVars[colorName] = colorThemeCSSProperties(colorValue, mdColorScheme);
   });
 
   // rest

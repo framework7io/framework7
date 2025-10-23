@@ -51,6 +51,7 @@ class Framework7 extends Framework7Class {
       componentUrl: undefined,
       userAgent: null,
       url: null,
+      mdColorScheme: 'default',
       colors: {
         primary: '#007aff',
         red: '#ff3b30',
@@ -95,6 +96,7 @@ class Framework7 extends Framework7Class {
       passedParams,
       online: w.navigator.onLine,
       colors: app.params.colors,
+      mdColorScheme: app.params.mdColorScheme || 'default',
       darkMode: app.params.darkMode,
     });
 
@@ -126,10 +128,17 @@ class Framework7 extends Framework7Class {
     return app;
   }
 
-  setColorTheme(color) {
+  setColorTheme(color, mdColorScheme) {
     if (!color) return;
     const app = this;
     app.colors.primary = color;
+    app.mdColorScheme = mdColorScheme || app.mdColorScheme;
+    app.setColors();
+  }
+
+  setMdColorScheme(mdColorScheme) {
+    const app = this;
+    app.mdColorScheme = mdColorScheme || app.mdColorScheme;
     app.setColors();
   }
 
@@ -141,7 +150,7 @@ class Framework7 extends Framework7Class {
       document.head.prepend(app.colorsStyleEl);
     }
 
-    app.colorsStyleEl.textContent = app.utils.colorThemeCSSStyles(app.colors);
+    app.colorsStyleEl.textContent = app.utils.colorThemeCSSStyles(app.colors, app.mdColorScheme);
   }
 
   mount(rootEl) {

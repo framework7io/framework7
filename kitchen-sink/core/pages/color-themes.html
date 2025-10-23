@@ -75,6 +75,41 @@
           `)}
         </div>
       </div>
+
+      <div class="block-title block-title-medium">Material Color Scheme</div>
+      <div class="list list-strong inset">
+        <ul>
+          <li>
+            <label class="item-content">
+              <div class="item-inner">
+                <div class="item-title">Monochrome</div>
+                <div class="item-after">
+                  <div class="toggle toggle-init">
+                    <input type="checkbox" checked=${monochrome} @change=${(e)=>
+                    setMdColorSchemeMonochrome(e.target.checked)} />
+                    <span class="toggle-icon"></span>
+                  </div>
+                </div>
+              </div>
+            </label>
+          </li>
+          <li>
+            <label class="item-content">
+              <div class="item-inner">
+                <div class="item-title">Vibrant</div>
+                <div class="item-after">
+                  <div class="toggle toggle-init">
+                    <input type="checkbox" checked=${vibrant} @change=${(e)=> setMdColorSchemeVibrant(e.target.checked)}
+                    />
+                    <span class="toggle-icon"></span>
+                  </div>
+                </div>
+              </div>
+            </label>
+          </li>
+        </ul>
+      </div>
+
       <div class="block-title block-title-medium">Custom Color Theme</div>
       <div class="list list-strong-ios list-outline-ios">
         <ul>
@@ -104,6 +139,8 @@
     const colors = Object.keys($f7.colors).filter((c) => c !== 'primary' && c !== 'white' && c !== 'black');
 
     let colorPicker;
+    let monochrome = false;
+    let vibrant = false;
 
     const setScheme = (newTheme) => {
       $f7.setDarkMode(newTheme === 'dark');
@@ -124,6 +161,28 @@
       themeColor = newColor;
       $f7.setColorTheme(newColor);
       $update();
+    }
+
+    const setMdColorScheme = () => {
+      if (!vibrant && !monochrome) {
+        $f7.setMdColorScheme('default');
+      } else if (vibrant && !monochrome) {
+        $f7.setMdColorScheme('vibrant');
+      } else if (!vibrant && monochrome) {
+        $f7.setMdColorScheme('monochrome');
+      } else if (vibrant && monochrome) {
+        $f7.setMdColorScheme('vibrant-monochrome');
+      }
+      $update();
+    }
+
+    const setMdColorSchemeMonochrome = (value) => {
+      monochrome = value;
+      setMdColorScheme();
+    }
+    const setMdColorSchemeVibrant = (value) => {
+      vibrant = value;
+      setMdColorScheme();
     }
 
     $on('pageInit', () => {
