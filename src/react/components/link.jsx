@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useContext } from 'react';
+import React, { useRef, useContext } from 'react';
 import { classNames, getExtraAttrs, isStringProp, emit } from '../shared/utils.js';
 import {
   colorClasses,
@@ -14,6 +14,7 @@ import { TabbarContext } from '../shared/tabbar-context.js';
 
 import Badge from './badge.js';
 import { useSmartSelect } from '../shared/use-smart-select.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-imports
 import { SmartSelect } from 'framework7/types';
@@ -47,7 +48,7 @@ import { SmartSelect } from 'framework7/types';
   children?: React.ReactNode;
 */
 
-const Link = forwardRef((props, ref) => {
+const Link = (props) => {
   const f7SmartSelect = useRef(null);
   const {
     className,
@@ -67,6 +68,7 @@ const Link = forwardRef((props, ref) => {
     // Smart Select
     smartSelect,
     smartSelectParams,
+    ref,
   } = props;
 
   const tabbarContext = useContext(TabbarContext);
@@ -80,11 +82,6 @@ const Link = forwardRef((props, ref) => {
   const onClick = (e) => {
     emit(props, 'click', e);
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    f7SmartSelect: () => f7SmartSelect.current,
-  }));
 
   useTooltip(elRef, props);
 
@@ -141,7 +138,10 @@ const Link = forwardRef((props, ref) => {
 
   return (
     <a
-      ref={elRef}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, { f7SmartSelect: () => f7SmartSelect.current });
+      }}
       id={id}
       style={style}
       className={classes}
@@ -154,7 +154,7 @@ const Link = forwardRef((props, ref) => {
       {children}
     </a>
   );
-});
+};
 
 Link.displayName = 'f7-link';
 

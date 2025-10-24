@@ -1,11 +1,11 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { f7ready, f7 } from '../shared/f7.js';
 import { watchProp } from '../shared/watch-prop.js';
 import { useTooltip } from '../shared/use-tooltip.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-imports
 import { Toggle } from 'framework7/types';
 */
@@ -29,7 +29,7 @@ import { Toggle } from 'framework7/types';
   children?: React.ReactNode;
 */
 
-const Toggle = forwardRef((props, ref) => {
+const Toggle = (props) => {
   const f7Toggle = useRef(null);
   const {
     className,
@@ -42,6 +42,7 @@ const Toggle = forwardRef((props, ref) => {
     readonly,
     name,
     value,
+    ref,
   } = props;
 
   const extraAttrs = getExtraAttrs(props);
@@ -52,11 +53,6 @@ const Toggle = forwardRef((props, ref) => {
   const onChange = (event) => {
     emit(props, 'change', event);
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    f7Toggle: () => f7Toggle.current,
-  }));
 
   useTooltip(elRef, props);
 
@@ -77,9 +73,7 @@ const Toggle = forwardRef((props, ref) => {
   const onMount = () => {
     f7ready(() => {
       if (!init || !elRef.current) return;
-      f7Toggle.current = f7.toggle.create({
-        el: elRef.current,
-      });
+      f7Toggle.current = f7.toggle.create({ el: elRef.current });
       toggleEvents('on');
     });
   };
@@ -109,14 +103,7 @@ const Toggle = forwardRef((props, ref) => {
     return onDestroy;
   }, []);
 
-  const labelClasses = classNames(
-    'toggle',
-    className,
-    {
-      disabled,
-    },
-    colorClasses(props),
-  );
+  const labelClasses = classNames('toggle', className, { disabled }, colorClasses(props));
   const inputEl = (
     <input
       ref={inputElRef}
@@ -132,12 +119,21 @@ const Toggle = forwardRef((props, ref) => {
   );
 
   return (
-    <label id={id} style={style} className={labelClasses} ref={elRef} {...extraAttrs}>
+    <label
+      id={id}
+      style={style}
+      className={labelClasses}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, { f7Toggle: () => f7Toggle.current });
+      }}
+      {...extraAttrs}
+    >
       {inputEl}
       <span className="toggle-icon" />
     </label>
   );
-});
+};
 
 Toggle.displayName = 'f7-toggle';
 

@@ -1,11 +1,11 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, emit, getSlots } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { f7ready, f7 } from '../shared/f7.js';
 import { watchProp } from '../shared/watch-prop.js';
 import { modalStateClasses } from '../shared/modal-state-classes.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-imports
 import { Sheet } from 'framework7/types';
 */
@@ -44,7 +44,7 @@ import { Sheet } from 'framework7/types';
   children?: React.ReactNode;
 */
 
-const Sheet = forwardRef((props, ref) => {
+const Sheet = (props) => {
   const f7Sheet = useRef(null);
   const {
     className,
@@ -68,6 +68,7 @@ const Sheet = forwardRef((props, ref) => {
     breakpoints,
     backdropBreakpoint,
     pushBreakpoint,
+    ref,
   } = props;
   const extraAttrs = getExtraAttrs(props);
 
@@ -105,11 +106,6 @@ const Sheet = forwardRef((props, ref) => {
     emit(props, 'sheetClosed', instance);
   };
 
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    f7Sheet: () => f7Sheet.current,
-  }));
-
   const modalEvents = (method) => {
     if (!f7Sheet.current) return;
     f7Sheet.current[method]('open', onOpen);
@@ -124,12 +120,7 @@ const Sheet = forwardRef((props, ref) => {
 
   const onMount = () => {
     if (!elRef.current) return;
-    const sheetParams = {
-      el: elRef.current,
-      breakpoints,
-      backdropBreakpoint,
-      pushBreakpoint,
-    };
+    const sheetParams = { el: elRef.current, breakpoints, backdropBreakpoint, pushBreakpoint };
 
     if ('animate' in props && typeof animate !== 'undefined') sheetParams.animate = animate;
     if ('backdrop' in props && typeof backdrop !== 'undefined') sheetParams.backdrop = backdrop;
@@ -224,21 +215,28 @@ const Sheet = forwardRef((props, ref) => {
     className,
     'sheet-modal',
     `sheet-modal-${positionComputed}`,
-    {
-      'sheet-modal-push': push,
-    },
+    { 'sheet-modal-push': push },
     modalStateClasses({ isOpened, isClosing }),
     colorClasses(props),
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, { f7Sheet: () => f7Sheet.current });
+      }}
+      {...extraAttrs}
+    >
       {fixedList}
       {slots.fixed}
       {innerEl}
     </div>
   );
-});
+};
 
 Sheet.displayName = 'f7-sheet';
 

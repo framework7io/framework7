@@ -1,10 +1,11 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { f7, f7ready } from '../shared/f7.js';
 import { watchProp } from '../shared/watch-prop.js';
 import { modalStateClasses } from '../shared/modal-state-classes.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-imports
 import { Actions } from 'framework7/types';
@@ -35,8 +36,8 @@ import { Actions } from 'framework7/types';
   COLOR_PROPS
 */
 
-const Actions = forwardRef((props, ref) => {
-  const { className, id, style, children, grid, opened = false, animate } = props;
+const Actions = (props) => {
+  const { className, id, style, children, grid, opened = false, animate, ref } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
@@ -61,11 +62,6 @@ const Actions = forwardRef((props, ref) => {
     isClosing.current = false;
     emit(props, 'actionsClosed', instance);
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    f7Actions: () => f7Actions.current,
-  }));
 
   // watch opened changes
   watchProp(opened, (value) => {
@@ -100,10 +96,7 @@ const Actions = forwardRef((props, ref) => {
       containerEl,
     } = props;
 
-    const params = {
-      el: elRef.current,
-      grid,
-    };
+    const params = { el: elRef.current, grid };
     if (target) params.targetEl = target;
     if ('convertToPopover' in props) params.convertToPopover = convertToPopover;
     if ('forceToPopover' in props) params.forceToPopover = forceToPopover;
@@ -145,19 +138,26 @@ const Actions = forwardRef((props, ref) => {
   const classes = classNames(
     className,
     'actions-modal',
-    {
-      'actions-grid': grid,
-    },
+    { 'actions-grid': grid },
     modalStateClasses({ isOpened, isClosing }),
     colorClasses(props),
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, { f7Actions: () => f7Actions.current });
+      }}
+      {...extraAttrs}
+    >
       {children}
     </div>
   );
-});
+};
 
 Actions.displayName = 'f7-actions';
 

@@ -1,7 +1,7 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-props
   id?: string | number;
   className?: string;
@@ -18,9 +18,19 @@ import { colorClasses } from '../shared/mixins.js';
   children?: React.ReactNode;
 */
 
-const Radio = forwardRef((props, ref) => {
-  const { className, id, style, children, value, disabled, readonly, checked, defaultChecked } =
-    props;
+const Radio = (props) => {
+  const {
+    className,
+    id,
+    style,
+    children,
+    value,
+    disabled,
+    readonly,
+    checked,
+    defaultChecked,
+    ref,
+  } = props;
 
   const extraAttrs = getExtraAttrs(props);
 
@@ -29,10 +39,6 @@ const Radio = forwardRef((props, ref) => {
   const onChange = (event) => {
     emit(props, 'change', event);
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   const inputEl = (
     <input
@@ -49,23 +55,25 @@ const Radio = forwardRef((props, ref) => {
 
   const iconEl = <i className="icon-radio" />;
 
-  const classes = classNames(
-    className,
-    'radio',
-    {
-      disabled,
-    },
-    colorClasses(props),
-  );
+  const classes = classNames(className, 'radio', { disabled }, colorClasses(props));
 
   return (
-    <label id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <label
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+    >
       {inputEl}
       {iconEl}
       {children}
     </label>
   );
-});
+};
 
 Radio.displayName = 'f7-radio';
 

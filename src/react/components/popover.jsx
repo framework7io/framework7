@@ -1,11 +1,11 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { f7ready, f7 } from '../shared/f7.js';
 import { watchProp } from '../shared/watch-prop.js';
 import { modalStateClasses } from '../shared/modal-state-classes.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-imports
 import { Popover } from 'framework7/types';
 */
@@ -33,7 +33,7 @@ import { Popover } from 'framework7/types';
   children?: React.ReactNode;
 */
 
-const Popover = forwardRef((props, ref) => {
+const Popover = (props) => {
   const f7Popover = useRef(null);
   const {
     className,
@@ -50,6 +50,7 @@ const Popover = forwardRef((props, ref) => {
     closeOnEscape,
     containerEl,
     verticalPosition,
+    ref,
   } = props;
 
   const extraAttrs = getExtraAttrs(props);
@@ -76,11 +77,6 @@ const Popover = forwardRef((props, ref) => {
     emit(props, 'popoverClosed', instance);
   };
 
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    f7Popover: () => f7Popover.current,
-  }));
-
   watchProp(opened, (value) => {
     if (!f7Popover.current) return;
     if (value) {
@@ -100,9 +96,7 @@ const Popover = forwardRef((props, ref) => {
 
   const onMount = () => {
     if (!elRef.current) return;
-    const popoverParams = {
-      el: elRef.current,
-    };
+    const popoverParams = { el: elRef.current };
     if (targetEl) popoverParams.targetEl = targetEl;
 
     if ('closeByBackdropClick' in props) popoverParams.closeByBackdropClick = closeByBackdropClick;
@@ -151,11 +145,20 @@ const Popover = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, { f7Popover: () => f7Popover.current });
+      }}
+      {...extraAttrs}
+    >
       <div className="popover-inner">{children}</div>
     </div>
   );
-});
+};
 
 Popover.displayName = 'f7-popover';
 

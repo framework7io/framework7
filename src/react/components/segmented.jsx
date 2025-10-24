@@ -1,7 +1,7 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-props
   id?: string | number;
   className?: string;
@@ -21,7 +21,7 @@ import { colorClasses } from '../shared/mixins.js';
   COLOR_PROPS
 */
 
-const Segmented = forwardRef((props, ref) => {
+const Segmented = (props) => {
   const {
     className,
     id,
@@ -37,14 +37,11 @@ const Segmented = forwardRef((props, ref) => {
     strongIos,
     strongMd,
     tag = 'div',
+    ref,
   } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
-
   const classes = classNames(
     className,
     {
@@ -64,12 +61,21 @@ const Segmented = forwardRef((props, ref) => {
   const SegmentedTag = tag;
 
   return (
-    <SegmentedTag id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <SegmentedTag
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+    >
       {children}
       {(strong || strongIos || strongMd) && <span className="segmented-highlight" />}
     </SegmentedTag>
   );
-});
+};
 
 Segmented.displayName = 'f7-segmented';
 

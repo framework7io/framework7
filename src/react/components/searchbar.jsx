@@ -1,9 +1,9 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, getSlots, noUndefinedProps, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { f7ready, f7 } from '../shared/f7.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-imports
 import { Searchbar } from 'framework7/types';
 */
@@ -55,7 +55,7 @@ import { Searchbar } from 'framework7/types';
   children?: React.ReactNode;
 */
 
-const Searchbar = forwardRef((props, ref) => {
+const Searchbar = (props) => {
   const f7Searchbar = useRef(null);
   const {
     className,
@@ -91,6 +91,7 @@ const Searchbar = forwardRef((props, ref) => {
     hideGroupTitles = true,
     hideGroups = true,
     init = true,
+    ref,
   } = props;
 
   const extraAttrs = getExtraAttrs(props);
@@ -138,16 +139,6 @@ const Searchbar = forwardRef((props, ref) => {
   const onDisableButtonClick = (event) => {
     emit(props, 'click:disable clickDisable', event);
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    f7Searchbar: () => f7Searchbar.current,
-    search,
-    enable,
-    disable,
-    toggle,
-    clear,
-  }));
 
   const onMount = () => {
     if (!init) return;
@@ -229,11 +220,7 @@ const Searchbar = forwardRef((props, ref) => {
   const classes = classNames(
     className,
     'searchbar',
-    {
-      'searchbar-inline': inline,
-      'no-outline': !outline,
-      'searchbar-expandable': expandable,
-    },
+    { 'searchbar-inline': inline, 'no-outline': !outline, 'searchbar-expandable': expandable },
     colorClasses(props),
   );
 
@@ -241,7 +228,17 @@ const Searchbar = forwardRef((props, ref) => {
 
   return (
     <SearchbarTag
-      ref={elRef}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, {
+          f7Searchbar: () => f7Searchbar.current,
+          search,
+          enable,
+          disable,
+          toggle,
+          clear,
+        });
+      }}
       id={id}
       style={style}
       className={classes}
@@ -274,7 +271,7 @@ const Searchbar = forwardRef((props, ref) => {
       {slots['after-inner']}
     </SearchbarTag>
   );
-});
+};
 
 Searchbar.displayName = 'f7-searchbar';
 

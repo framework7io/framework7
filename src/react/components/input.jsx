@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, getSlots, emit, extend } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
@@ -8,6 +8,7 @@ import { watchProp } from '../shared/watch-prop.js';
 import Toggle from './toggle.js';
 import Range from './range.js';
 import TextEditor from './text-editor.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-imports
 import { Calendar, ColorPicker, TextEditor } from 'framework7/types';
@@ -77,7 +78,7 @@ import { Calendar, ColorPicker, TextEditor } from 'framework7/types';
   children?: React.ReactNode;
 */
 
-const Input = forwardRef((props, ref) => {
+const Input = (props) => {
   const {
     className,
     id,
@@ -139,6 +140,7 @@ const Input = forwardRef((props, ref) => {
     colorPickerParams,
     // Text editor
     textEditorParams,
+    ref,
   } = props;
 
   const [inputInvalid, setInputInvalid] = useState(false);
@@ -221,10 +223,6 @@ const Input = forwardRef((props, ref) => {
       emit(props, 'textEditorChange', args[1]);
     }
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   const onMount = () => {
     f7ready(() => {
@@ -494,7 +492,16 @@ const Input = forwardRef((props, ref) => {
       colorClasses(props),
     );
     return (
-      <div id={id} className={wrapClasses} style={style} ref={elRef} {...extraAttrs}>
+      <div
+        id={id}
+        className={wrapClasses}
+        style={style}
+        ref={(el) => {
+          elRef.current = el;
+          setRef(ref, el);
+        }}
+        {...extraAttrs}
+      >
         {inputEl}
         {(errorMessage || (slots['error-message'] && slots['error-message'].length)) &&
           errorMessageForce && (
@@ -514,7 +521,7 @@ const Input = forwardRef((props, ref) => {
     );
   }
   return inputEl;
-});
+};
 
 Input.displayName = 'f7-input';
 

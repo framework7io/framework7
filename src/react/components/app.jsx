@@ -1,10 +1,11 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 
 import RoutableModals from './routable-modals.js';
 import { f7init, f7 } from '../shared/f7.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-imports
   import { Framework7Parameters } from 'framework7/types';
@@ -22,16 +23,12 @@ import { f7init, f7 } from '../shared/f7.js';
   COLOR_PROPS
 */
 
-const App = forwardRef((props, ref) => {
-  const { className, style, children, ...rest } = props;
+const App = (props) => {
+  const { className, style, children, ref, ...rest } = props;
   const extraAttrs = getExtraAttrs(props);
   const params = rest;
 
   const elRef = useRef(null);
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   const classes = classNames(className, 'framework7-root', colorClasses(props));
 
@@ -60,12 +57,21 @@ const App = forwardRef((props, ref) => {
   }, []);
 
   return (
-    <div id="framework7-root" style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div
+      id="framework7-root"
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+    >
       {children}
       <RoutableModals />
     </div>
   );
-});
+};
 
 App.displayName = 'f7-app';
 

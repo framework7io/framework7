@@ -1,10 +1,11 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { f7ready, f7 } from '../shared/f7.js';
 import { watchProp } from '../shared/watch-prop.js';
 import { modalStateClasses } from '../shared/modal-state-classes.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-imports
 import { LoginScreen } from 'framework7/types';
@@ -25,9 +26,9 @@ import { LoginScreen } from 'framework7/types';
   COLOR_PROPS
 */
 
-const LoginScreen = forwardRef((props, ref) => {
+const LoginScreen = (props) => {
   const f7LoginScreen = useRef(null);
-  const { className, id, style, children, opened, animate, containerEl } = props;
+  const { className, id, style, children, opened, animate, containerEl, ref } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const isOpened = useRef(opened);
@@ -52,11 +53,6 @@ const LoginScreen = forwardRef((props, ref) => {
     emit(props, 'loginScreenClosed', instance);
   };
 
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    f7LoginScreen: () => f7LoginScreen.current,
-  }));
-
   // watch opened changes
   watchProp(opened, (value) => {
     if (!f7LoginScreen.current) return;
@@ -78,9 +74,7 @@ const LoginScreen = forwardRef((props, ref) => {
   const onMount = () => {
     if (!elRef.current) return;
     f7ready(() => {
-      const loginScreenParams = {
-        el: elRef.current,
-      };
+      const loginScreenParams = { el: elRef.current };
       if ('animate' in props) loginScreenParams.animate = animate;
       if ('containerEl' in props) loginScreenParams.containerEl = containerEl;
 
@@ -119,11 +113,20 @@ const LoginScreen = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, { f7LoginScreen: () => f7LoginScreen.current });
+      }}
+      {...extraAttrs}
+    >
       {children}
     </div>
   );
-});
+};
 
 LoginScreen.displayName = 'f7-login-screen';
 

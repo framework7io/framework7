@@ -1,7 +1,8 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { useTooltip } from '../shared/use-tooltip.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-imports
 import { Tooltip } from 'framework7/types';
@@ -22,25 +23,31 @@ f7Tooltip: Tooltip.Tooltip
   COLOR_PROPS
 */
 
-const Badge = forwardRef((props, ref) => {
-  const { className, id, style, children } = props;
+const Badge = (props) => {
+  const { className, id, style, children, ref } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   useTooltip(elRef, props);
 
   const classes = classNames(className, 'badge', colorClasses(props));
 
   return (
-    <span id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <span
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+    >
       {children}
     </span>
   );
-});
+};
 
 Badge.displayName = 'f7-badge';
 

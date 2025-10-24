@@ -1,10 +1,10 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, noUndefinedProps, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { f7ready, f7 } from '../shared/f7.js';
 import { watchProp } from '../shared/watch-prop.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-imports
 import { Range } from 'framework7/types';
 */
@@ -40,7 +40,7 @@ import { Range } from 'framework7/types';
   children?: React.ReactNode;
 */
 
-const Range = forwardRef((props, ref) => {
+const Range = (props) => {
   const f7Range = useRef(null);
   const {
     className,
@@ -67,15 +67,11 @@ const Range = forwardRef((props, ref) => {
     input,
     inputId,
     disabled,
+    ref,
   } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    f7Range: () => f7Range.current,
-  }));
 
   watchProp(value, (newValue) => {
     if (!f7Range.current) return;
@@ -160,12 +156,21 @@ const Range = forwardRef((props, ref) => {
   );
 
   return (
-    <div ref={elRef} id={id} style={style} className={classes} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, { f7Range: () => f7Range.current });
+      }}
+      {...extraAttrs}
+    >
       {input && <input type="range" name={name} id={inputId} />}
       {children}
     </div>
   );
-});
+};
 
 Range.displayName = 'f7-range';
 

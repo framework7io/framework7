@@ -1,7 +1,8 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { f7 } from '../shared/f7.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id: string | number;
@@ -15,21 +16,15 @@ import { f7 } from '../shared/f7.js';
   COLOR_PROPS
 */
 
-const ComponentName = forwardRef((props, ref) => {
-  const { className, id, style, strong, close = true } = props;
+const ComponentName = (props) => {
+  const { className, id, style, strong, close = true, ref } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   const classes = classNames(
     className,
-    {
-      'actions-button': true,
-      'actions-button-strong': strong,
-    },
+    { 'actions-button': true, 'actions-button-strong': strong },
     colorClasses(props),
   );
 
@@ -49,12 +44,22 @@ const ComponentName = forwardRef((props, ref) => {
   };
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs} onClick={onClick}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+      onClick={onClick}
+    >
       {mediaEl}
       <div className="actions-button-text">{slots.default}</div>
     </div>
   );
-});
+};
 
 ComponentName.displayName = 'f7-actions-button';
 

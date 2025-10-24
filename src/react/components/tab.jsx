@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useState, useContext } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, getComponentId } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
@@ -7,7 +7,7 @@ import { useTab } from '../shared/use-tab.js';
 import { RouterContext } from '../shared/router-context.js';
 import { useAsyncComponent } from '../shared/use-async-component.js';
 import { TabsSwipeableContext } from '../shared/tabs-swipeable-context.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-props
   id?: string | number;
   className?: string;
@@ -20,8 +20,8 @@ import { TabsSwipeableContext } from '../shared/tabs-swipeable-context.js';
   children?: React.ReactNode;
 */
 
-const Tab = forwardRef((props, ref) => {
-  const { className, id, style, children, tabActive } = props;
+const Tab = (props) => {
+  const { className, id, style, children, tabActive, ref } = props;
 
   const extraAttrs = getExtraAttrs(props);
 
@@ -62,14 +62,8 @@ const Tab = forwardRef((props, ref) => {
 
   const [tabContent, setTabContent] = useState(initialTabContent || null);
 
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
-
   if (f7 && !routerData.current) {
-    routerData.current = {
-      setTabContent,
-    };
+    routerData.current = { setTabContent };
     f7routers.tabs.push(routerData.current);
   }
 
@@ -79,10 +73,7 @@ const Tab = forwardRef((props, ref) => {
     }
     f7ready(() => {
       if (!routerData.current) {
-        routerData.current = {
-          el: elRef.current,
-          setTabContent,
-        };
+        routerData.current = { el: elRef.current, setTabContent };
         f7routers.tabs.push(routerData.current);
       } else {
         routerData.current.el = elRef.current;
@@ -108,14 +99,7 @@ const Tab = forwardRef((props, ref) => {
 
   useTab(elRef, props);
 
-  const classes = classNames(
-    className,
-    'tab',
-    {
-      'tab-active': tabActive,
-    },
-    colorClasses(props),
-  );
+  const classes = classNames(className, 'tab', { 'tab-active': tabActive }, colorClasses(props));
 
   const renderChildren = () => {
     if (!tabContent) return children;
@@ -131,11 +115,20 @@ const Tab = forwardRef((props, ref) => {
   const classAttrs = tabsSwipeableContext ? { class: classes } : { className: classes };
 
   return (
-    <Component id={id} style={style} ref={elRef} {...extraAttrs} {...classAttrs}>
+    <Component
+      id={id}
+      style={style}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+      {...classAttrs}
+    >
       {renderChildren()}
     </Component>
   );
-});
+};
 
 Tab.displayName = 'f7-tab';
 

@@ -1,9 +1,10 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, noUndefinedProps } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { f7ready, f7 } from '../shared/f7.js';
 import { watchProp } from '../shared/watch-prop.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-imports
 import { Messages } from 'framework7/types';
@@ -34,7 +35,7 @@ import { Messages } from 'framework7/types';
   COLOR_PROPS
 */
 
-const Messages = forwardRef((props, ref) => {
+const Messages = (props) => {
   const f7Messages = useRef(null);
   const mounted = useRef(false);
   const {
@@ -58,17 +59,13 @@ const Messages = forwardRef((props, ref) => {
     renderMessage,
     typing = false,
     init = true,
+    ref,
   } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   const childrenBeforeUpdated = useRef(null);
   const reactChildrenBefore = useRef(children ? React.Children.count(children) : 0);
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    f7Messages: () => f7Messages.current,
-  }));
 
   const onMount = () => {
     if (!init) return;
@@ -165,11 +162,20 @@ const Messages = forwardRef((props, ref) => {
   const classes = classNames(className, 'messages', colorClasses(props));
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, { f7Messages: () => f7Messages.current });
+      }}
+      {...extraAttrs}
+    >
       {children}
     </div>
   );
-});
+};
 
 Messages.displayName = 'f7-messages';
 

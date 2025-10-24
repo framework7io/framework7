@@ -1,9 +1,9 @@
-import { forwardRef, useRef, useImperativeHandle } from 'react';
+import { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { extend, emit } from '../shared/utils.js';
 import { watchProp } from '../shared/watch-prop.js';
 import { f7ready, f7 } from '../shared/f7.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-imports
 import { PhotoBrowser } from 'framework7/types';
 */
@@ -50,7 +50,7 @@ import { PhotoBrowser } from 'framework7/types';
   children?: React.ReactNode;
 */
 
-const PhotoBrowser = forwardRef((props, ref) => {
+const PhotoBrowser = (props) => {
   const f7PhotoBrowser = useRef(null);
   const {
     init = true,
@@ -85,6 +85,7 @@ const PhotoBrowser = forwardRef((props, ref) => {
     renderPopup,
     renderStandalone,
     renderThumb,
+    ref,
   } = props;
 
   const open = (index) => {
@@ -102,15 +103,6 @@ const PhotoBrowser = forwardRef((props, ref) => {
   const expositionDisable = () => {
     return f7PhotoBrowser.current.expositionDisable();
   };
-
-  useImperativeHandle(ref, () => ({
-    f7PhotoBrowser: () => f7PhotoBrowser.current,
-    open,
-    close,
-    expositionToggle,
-    expositionEnable,
-    expositionDisable,
-  }));
 
   watchProp(photos, (newValue) => {
     const pb = f7PhotoBrowser.current;
@@ -210,8 +202,17 @@ const PhotoBrowser = forwardRef((props, ref) => {
     return onDestroy;
   }, []);
 
+  setRef(ref, null, {
+    open,
+    close,
+    expositionToggle,
+    expositionEnable,
+    expositionDisable,
+    f7PhotoBrowser: () => f7PhotoBrowser.current,
+  });
+
   return null;
-});
+};
 
 PhotoBrowser.displayName = 'f7-photo-browser';
 

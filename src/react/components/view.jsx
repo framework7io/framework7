@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, noUndefinedProps, emit, getRouterId } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
@@ -8,6 +8,7 @@ import { useTab } from '../shared/use-tab.js';
 import { useAsyncComponent } from '../shared/use-async-component.js';
 import { getRouterInitialComponent } from '../shared/get-router-initial-component.js';
 import { RouterContext } from '../shared/router-context.js';
+import { setRef } from '../shared/set-ref.js';
 /* dts-imports
   import { View, Router } from 'framework7/types';
 */
@@ -81,7 +82,7 @@ import { RouterContext } from '../shared/router-context.js';
   children?: React.ReactNode;
 */
 
-const View = forwardRef((props, ref) => {
+const View = (props) => {
   const {
     className,
     id,
@@ -94,6 +95,7 @@ const View = forwardRef((props, ref) => {
     url,
     initRouterOnTabShow,
     browserHistoryInitialMatch = true,
+    ref,
   } = props;
   const childrenArray = React.Children.toArray(children);
   const initialPageComponent = childrenArray.filter((c) => c.props && c.props.initialPage)[0];
@@ -125,14 +127,9 @@ const View = forwardRef((props, ref) => {
       init: false,
       ...noUndefinedProps(props),
       browserHistoryInitialMatch,
-      on: {
-        init: onViewInit,
-      },
+      on: { init: onViewInit },
     });
-    routerData.current = {
-      routerId,
-      instance: f7View.current,
-    };
+    routerData.current = { routerId, instance: f7View.current };
     f7routers.views.push(routerData.current);
     if (shouldInitRouter && f7View.current && f7View.current.router && (url || main)) {
       const initialData = getRouterInitialComponent(f7View.current.router, initialPageComponent);
@@ -170,11 +167,6 @@ const View = forwardRef((props, ref) => {
     const swipeBackData = data;
     emit(props, 'swipeBackAfterReset', swipeBackData);
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    f7View: () => f7View.current,
-  }));
 
   const onMount = () => {
     f7ready(() => {
@@ -221,9 +213,7 @@ const View = forwardRef((props, ref) => {
           routerId,
           ...noUndefinedProps(props),
           browserHistoryInitialMatch,
-          on: {
-            init: onViewInit,
-          },
+          on: { init: onViewInit },
         });
         f7View.current = routerData.current.instance;
       }
@@ -271,25 +261,27 @@ const View = forwardRef((props, ref) => {
   const classes = classNames(
     className,
     'view',
-    {
-      'view-main': main,
-      'tab-active': tabActive,
-      tab,
-    },
+    { 'view-main': main, 'tab-active': tabActive, tab },
     colorClasses(props),
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, { f7View: () => f7View.current });
+      }}
+      {...extraAttrs}
+    >
       {restChildren}
       {pages.map(
         ({ component: PageComponent, id: pageId, props: pageProps, isAsync, initialComponent }) => (
           <RouterContext.Provider
             key={pageId}
-            value={{
-              router: pageProps.f7router,
-              route: pageProps.f7route,
-            }}
+            value={{ router: pageProps.f7router, route: pageProps.f7route }}
           >
             {initialComponent ? (
               React.cloneElement(initialComponent, { ...pageProps })
@@ -303,7 +295,7 @@ const View = forwardRef((props, ref) => {
       )}
     </div>
   );
-});
+};
 
 View.displayName = 'f7-view';
 

@@ -1,8 +1,9 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { useTooltip } from '../shared/use-tooltip.js';
 import { useIcon } from '../shared/use-icon.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id: string | number;
@@ -24,9 +25,19 @@ import { useIcon } from '../shared/use-icon.js';
   ICON_PROPS
 */
 
-const Chip = forwardRef((props, ref) => {
-  const { className, id, style, media, text, deleteable, mediaTextColor, mediaBgColor, outline } =
-    props;
+const Chip = (props) => {
+  const {
+    className,
+    id,
+    style,
+    media,
+    text,
+    deleteable,
+    mediaTextColor,
+    mediaBgColor,
+    outline,
+    ref,
+  } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const onClick = (event) => {
@@ -38,9 +49,6 @@ const Chip = forwardRef((props, ref) => {
   };
 
   const elRef = useRef(null);
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   useTooltip(elRef, props);
 
@@ -78,23 +86,26 @@ const Chip = forwardRef((props, ref) => {
     deleteEl = <a className="chip-delete" onClick={onDeleteClick} />;
   }
 
-  const classes = classNames(
-    className,
-    'chip',
-    {
-      'chip-outline': outline,
-    },
-    colorClasses(props),
-  );
+  const classes = classNames(className, 'chip', { 'chip-outline': outline }, colorClasses(props));
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs} onClick={onClick}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+      onClick={onClick}
+    >
       {mediaEl}
       {labelEl}
       {deleteEl}
     </div>
   );
-});
+};
 
 Chip.displayName = 'f7-chip';
 

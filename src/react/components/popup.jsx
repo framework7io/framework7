@@ -1,11 +1,11 @@
-import React, { forwardRef, useImperativeHandle, useRef } from 'react';
+import React, { useRef } from 'react';
 import { f7, f7ready } from '../shared/f7.js';
 import { colorClasses } from '../shared/mixins.js';
 import { modalStateClasses } from '../shared/modal-state-classes.js';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, emit, getExtraAttrs } from '../shared/utils.js';
 import { watchProp } from '../shared/watch-prop.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-imports
 import { Popup } from 'framework7/types';
 */
@@ -38,7 +38,7 @@ import { Popup } from 'framework7/types';
   children?: React.ReactNode;
 */
 
-const Popup = forwardRef((props, ref) => {
+const Popup = (props) => {
   const f7Popup = useRef(null);
   const {
     className,
@@ -56,6 +56,7 @@ const Popup = forwardRef((props, ref) => {
     swipeToClose = false,
     swipeHandler,
     containerEl,
+    ref,
   } = props;
 
   const extraAttrs = getExtraAttrs(props);
@@ -94,11 +95,6 @@ const Popup = forwardRef((props, ref) => {
     emit(props, 'popupClosed', instance);
   };
 
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    f7Popup: () => f7Popup.current,
-  }));
-
   watchProp(opened, (value) => {
     if (!f7Popup.current) return;
     if (value) {
@@ -122,9 +118,7 @@ const Popup = forwardRef((props, ref) => {
 
   const onMount = () => {
     if (!elRef.current) return;
-    const popupParams = {
-      el: elRef.current,
-    };
+    const popupParams = { el: elRef.current };
 
     if ('closeByBackdropClick' in props) popupParams.closeByBackdropClick = closeByBackdropClick;
     if ('closeOnEscape' in props) popupParams.closeOnEscape = closeOnEscape;
@@ -166,20 +160,26 @@ const Popup = forwardRef((props, ref) => {
   const classes = classNames(
     className,
     'popup',
-    {
-      'popup-tablet-fullscreen': tabletFullscreen,
-      'popup-push': push,
-    },
+    { 'popup-tablet-fullscreen': tabletFullscreen, 'popup-push': push },
     modalStateClasses({ isOpened, isClosing }),
     colorClasses(props),
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, { f7Popup: () => f7Popup.current });
+      }}
+      {...extraAttrs}
+    >
       {children}
     </div>
   );
-});
+};
 
 Popup.displayName = 'f7-popup';
 

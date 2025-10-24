@@ -1,6 +1,7 @@
-import React, { forwardRef, useImperativeHandle, useRef } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id: string | number;
@@ -12,12 +13,9 @@ import { colorClasses } from '../shared/mixins.js';
   COLOR_PROPS
 */
 
-const Accordion = forwardRef((props, ref) => {
-  const { className, id, style, accordionOpposite, children } = props;
+const Accordion = (props) => {
+  const { className, id, style, accordionOpposite, children, ref } = props;
   const elRef = useRef(null);
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
   const extraAttrs = getExtraAttrs(props);
   const classes = classNames(
     className,
@@ -26,11 +24,20 @@ const Accordion = forwardRef((props, ref) => {
     colorClasses(props),
   );
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+    >
       {children}
     </div>
   );
-});
+};
 Accordion.displayName = 'f7-accordion';
 
 export default Accordion;

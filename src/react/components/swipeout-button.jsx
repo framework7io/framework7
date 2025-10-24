@@ -1,7 +1,7 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-props
   id?: string | number;
   className?: string;
@@ -19,7 +19,7 @@ import { colorClasses } from '../shared/mixins.js';
   children?: React.ReactNode;
 */
 
-const SwipeoutButton = forwardRef((props, ref) => {
+const SwipeoutButton = (props) => {
   const {
     className,
     id,
@@ -32,6 +32,7 @@ const SwipeoutButton = forwardRef((props, ref) => {
     close,
     delete: deleteProp,
     href,
+    ref,
   } = props;
   const extraAttrs = getExtraAttrs(props);
 
@@ -41,23 +42,18 @@ const SwipeoutButton = forwardRef((props, ref) => {
     emit(props, 'click', e);
   };
 
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
-
   const classes = classNames(
     className,
-    {
-      'swipeout-overswipe': overswipe,
-      'swipeout-delete': deleteProp,
-      'swipeout-close': close,
-    },
+    { 'swipeout-overswipe': overswipe, 'swipeout-delete': deleteProp, 'swipeout-close': close },
     colorClasses(props),
   );
 
   return (
     <a
-      ref={elRef}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
       href={href || '#'}
       id={id}
       style={style}
@@ -71,7 +67,7 @@ const SwipeoutButton = forwardRef((props, ref) => {
       {text}
     </a>
   );
-});
+};
 
 SwipeoutButton.displayName = 'f7-swipeout-button';
 

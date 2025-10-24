@@ -1,9 +1,9 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { f7ready, f7 } from '../shared/f7.js';
-
+import { setRef } from '../shared/set-ref.js';
 import PageContent from './page-content.js';
 
 /* dts-props
@@ -56,7 +56,7 @@ import PageContent from './page-content.js';
   children?: React.ReactNode;
 */
 
-const Page = forwardRef((props, ref) => {
+const Page = (props) => {
   const {
     className,
     id,
@@ -85,7 +85,7 @@ const Page = forwardRef((props, ref) => {
     hideToolbarOnScroll,
     messagesContent,
     loginScreen,
-
+    ref,
     onPtrPullStart,
     onPtrPullMove,
     onPtrPullEnd,
@@ -215,10 +215,6 @@ const Page = forwardRef((props, ref) => {
     if (elRef.current !== pageEl) return;
     emit(props, 'pageTabHide');
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   const attachEvents = () => {
     f7ready(() => {
@@ -383,13 +379,23 @@ const Page = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} data-name={name} ref={elRef} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      data-name={name}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+    >
       {fixedList}
       {slotsFixed}
       {pageContentEl}
     </div>
   );
-});
+};
 
 Page.displayName = 'f7-page';
 

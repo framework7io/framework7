@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs, isStringProp, emit } from '../shared/utils.js';
 import {
   colorClasses,
@@ -9,6 +9,7 @@ import {
 } from '../shared/mixins.js';
 import { useTooltip } from '../shared/use-tooltip.js';
 import { useRouteProps } from '../shared/use-route-props.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id?: string | number;
@@ -31,7 +32,7 @@ import { useRouteProps } from '../shared/use-route-props.js';
   children?: React.ReactNode;
 */
 
-const ListButton = forwardRef((props, ref) => {
+const ListButton = (props) => {
   const {
     className,
     id,
@@ -44,6 +45,7 @@ const ListButton = forwardRef((props, ref) => {
     link,
     href,
     target,
+    ref,
   } = props;
   const extraAttrs = getExtraAttrs(props);
 
@@ -53,10 +55,6 @@ const ListButton = forwardRef((props, ref) => {
   const onClick = (e) => {
     emit(props, 'click', e);
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   useTooltip(linkElRef, props);
 
@@ -80,7 +78,16 @@ const ListButton = forwardRef((props, ref) => {
   });
 
   return (
-    <li id={id} style={style} className={className} ref={elRef} {...extraAttrs}>
+    <li
+      id={id}
+      style={style}
+      className={className}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+    >
       <a className={linkClasses} {...linkAttrs} onClick={onClick} ref={linkElRef}>
         {title}
         {text}
@@ -88,7 +95,7 @@ const ListButton = forwardRef((props, ref) => {
       </a>
     </li>
   );
-});
+};
 
 ListButton.displayName = 'f7-list-button';
 

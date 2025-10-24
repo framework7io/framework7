@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useContext } from 'react';
+import React, { useRef, useContext } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 
 import { classNames, getExtraAttrs, getSlots, emit, isStringProp } from '../shared/utils.js';
@@ -17,6 +17,7 @@ import { f7ready, f7 } from '../shared/f7.js';
 
 import ListItemContent from './list-item-content.js';
 import { ListContext } from '../shared/list-context.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-imports
 import { SmartSelect } from 'framework7/types';
@@ -131,7 +132,7 @@ const ListItemContent = ({
 
 };
 */
-const ListItem = forwardRef((props, ref) => {
+const ListItem = (props) => {
   const {
     className,
     id,
@@ -161,6 +162,7 @@ const ListItem = forwardRef((props, ref) => {
     disabled,
     virtualListIndex,
     href,
+    ref,
   } = props;
 
   const listContext = useContext(ListContext);
@@ -246,11 +248,6 @@ const ListItem = forwardRef((props, ref) => {
   const onChange = (event) => {
     emit(props, 'change', event);
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    f7SmartSelect: () => f7SmartSelect.current,
-  }));
 
   useTooltip(elRef, props);
 
@@ -396,7 +393,10 @@ const ListItem = forwardRef((props, ref) => {
   if (groupTitle) {
     return (
       <li
-        ref={elRef}
+        ref={(el) => {
+          elRef.current = el;
+          setRef(ref, el, { f7SmartSelect: () => f7SmartSelect.current });
+        }}
         id={id}
         style={style}
         className={liClasses}
@@ -447,7 +447,7 @@ const ListItem = forwardRef((props, ref) => {
       {slots['root-end']}
     </li>
   );
-});
+};
 
 ListItem.displayName = 'f7-list-item';
 

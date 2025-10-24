@@ -1,10 +1,10 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, getSlots, noUndefinedProps, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { f7ready, f7 } from '../shared/f7.js';
 import { watchProp } from '../shared/watch-prop.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-imports
 import { TextEditor } from 'framework7/types';
 */
@@ -38,7 +38,7 @@ import { TextEditor } from 'framework7/types';
   children?: React.ReactNode;
 */
 
-const TextEditor = forwardRef((props, ref) => {
+const TextEditor = (props) => {
   const f7TextEditor = useRef(null);
   const {
     className,
@@ -54,6 +54,7 @@ const TextEditor = forwardRef((props, ref) => {
     placeholder,
     clearFormattingOnPaste,
     resizable = false,
+    ref,
   } = props;
   const extraAttrs = getExtraAttrs(props);
 
@@ -92,11 +93,6 @@ const TextEditor = forwardRef((props, ref) => {
   const onInsertImage = (editor, url) => {
     emit(props, 'textEditorInsertImage', url);
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    f7TextEditor: () => f7TextEditor.current,
-  }));
 
   watchProp(value, (newValue) => {
     if (f7TextEditor.current) {
@@ -156,7 +152,16 @@ const TextEditor = forwardRef((props, ref) => {
     colorClasses(props),
   );
   return (
-    <div ref={elRef} id={id} style={style} className={classes} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, { f7TextEditor: () => f7TextEditor.current });
+      }}
+      {...extraAttrs}
+    >
       {slots['root-start']}
       <div className="text-editor-content" contentEditable>
         {slots.default}
@@ -165,7 +170,7 @@ const TextEditor = forwardRef((props, ref) => {
       {slots.root}
     </div>
   );
-});
+};
 
 TextEditor.displayName = 'f7-text-editor';
 

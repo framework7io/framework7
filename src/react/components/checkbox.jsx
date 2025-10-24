@@ -1,6 +1,7 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id: string | number;
@@ -19,7 +20,7 @@ import { colorClasses } from '../shared/mixins.js';
   children?: React.ReactNode;
 */
 
-const Checkbox = forwardRef((props, ref) => {
+const Checkbox = (props) => {
   const {
     className,
     id,
@@ -32,15 +33,12 @@ const Checkbox = forwardRef((props, ref) => {
     checked,
     defaultChecked,
     indeterminate,
+    ref,
   } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
   const inputElRef = useRef(null);
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    inputEl: inputElRef.current,
-  }));
 
   const onChange = (event) => {
     emit(props, 'change', event);
@@ -68,23 +66,25 @@ const Checkbox = forwardRef((props, ref) => {
 
   const iconEl = <i className="icon-checkbox" />;
 
-  const classes = classNames(
-    className,
-    {
-      checkbox: true,
-      disabled,
-    },
-    colorClasses(props),
-  );
+  const classes = classNames(className, { checkbox: true, disabled }, colorClasses(props));
 
   return (
-    <label id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <label
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, { inputEl: inputElRef.current });
+      }}
+      {...extraAttrs}
+    >
       {inputEl}
       {iconEl}
       {children}
     </label>
   );
-});
+};
 
 Checkbox.displayName = 'f7-checkbox';
 

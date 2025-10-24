@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React from 'react';
 import { classNames, getExtraAttrs } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 
@@ -11,21 +11,17 @@ import { colorClasses } from '../shared/mixins.js';
   COLOR_PROPS
 */
 
-const AccordionContent = forwardRef((props, ref) => {
-  const { className, id, style, children } = props;
-  const elRef = useRef(null);
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
+const AccordionContent = (props) => {
+  const { className, id, style, ref, children } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const classes = classNames(className, 'accordion-item-content', colorClasses(props));
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div id={id} style={style} className={classes} ref={ref} {...extraAttrs}>
       {children}
     </div>
   );
-});
+};
 
 AccordionContent.displayName = 'f7-accordion-content';
 

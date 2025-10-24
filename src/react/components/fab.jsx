@@ -1,7 +1,8 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { useTooltip } from '../shared/use-tooltip.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id?: string | number;
@@ -20,8 +21,18 @@ import { useTooltip } from '../shared/use-tooltip.js';
   COLOR_PROPS
 */
 
-const Fab = forwardRef((props, ref) => {
-  const { className, id, style, morphTo, href, target, text, position = 'right-bottom' } = props;
+const Fab = (props) => {
+  const {
+    className,
+    id,
+    style,
+    morphTo,
+    href,
+    target,
+    text,
+    position = 'right-bottom',
+    ref,
+  } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
@@ -29,10 +40,6 @@ const Fab = forwardRef((props, ref) => {
   const onClick = (e) => {
     emit(props, 'click', e);
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   useTooltip(elRef, props);
 
@@ -84,10 +91,7 @@ const Fab = forwardRef((props, ref) => {
     className,
     'fab',
     `fab-${position}`,
-    {
-      'fab-morph': morphTo,
-      'fab-extended': typeof textEl !== 'undefined',
-    },
+    { 'fab-morph': morphTo, 'fab-extended': typeof textEl !== 'undefined' },
     colorClasses(props),
   );
 
@@ -97,7 +101,10 @@ const Fab = forwardRef((props, ref) => {
       style={style}
       className={classes}
       data-morph-to={morphTo}
-      ref={elRef}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
       {...extraAttrs}
     >
       {linkEl}
@@ -105,7 +112,7 @@ const Fab = forwardRef((props, ref) => {
       {rootSlots}
     </div>
   );
-});
+};
 
 Fab.displayName = 'f7-fab';
 

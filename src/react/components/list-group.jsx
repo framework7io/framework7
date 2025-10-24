@@ -1,7 +1,8 @@
-import React, { forwardRef, useRef, useImperativeHandle, useContext } from 'react';
+import React, { useRef, useContext } from 'react';
 import { classNames, getExtraAttrs } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { ListContext } from '../shared/list-context.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id?: string | number;
@@ -17,7 +18,7 @@ import { ListContext } from '../shared/list-context.js';
   COLOR_PROPS
 */
 
-const ListGroup = forwardRef((props, ref) => {
+const ListGroup = (props) => {
   const {
     className,
     id,
@@ -29,6 +30,7 @@ const ListGroup = forwardRef((props, ref) => {
     sortableOpposite,
     sortableTapHold,
     sortableMoveElements,
+    ref,
   } = props;
 
   const extraAttrs = getExtraAttrs(props);
@@ -36,9 +38,6 @@ const ListGroup = forwardRef((props, ref) => {
   const listContext = useContext(ListContext);
 
   const elRef = useRef(null);
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   const classes = classNames(
     className,
@@ -60,7 +59,10 @@ const ListGroup = forwardRef((props, ref) => {
       data-sortable-move-elements={
         typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined
       }
-      ref={elRef}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
       {...extraAttrs}
     >
       <ul>
@@ -77,7 +79,7 @@ const ListGroup = forwardRef((props, ref) => {
       </ul>
     </div>
   );
-});
+};
 
 ListGroup.displayName = 'f7-list-group';
 

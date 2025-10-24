@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs, extend, isStringProp, emit } from '../shared/utils.js';
 import {
   colorClasses,
@@ -12,6 +12,7 @@ import { useIcon } from '../shared/use-icon.js';
 import { useRouteProps } from '../shared/use-route-props.js';
 
 import Preloader from './preloader.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id?: string | number;
@@ -61,7 +62,7 @@ import Preloader from './preloader.js';
   ACTIONS_PROPS
 */
 
-const Button = forwardRef((props, ref) => {
+const Button = (props) => {
   const {
     className,
     id,
@@ -100,6 +101,7 @@ const Button = forwardRef((props, ref) => {
     preloaderSize,
     preloaderColor,
     loading,
+    ref,
   } = props;
 
   const extraAttrs = getExtraAttrs(props);
@@ -109,10 +111,6 @@ const Button = forwardRef((props, ref) => {
   const onClick = (e) => {
     emit(props, 'click', e);
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   useTooltip(elRef, props);
 
@@ -186,7 +184,10 @@ const Button = forwardRef((props, ref) => {
   if (preloader) {
     return (
       <ButtonTag
-        ref={elRef}
+        ref={(el) => {
+          elRef.current = el;
+          setRef(ref, el);
+        }}
         id={id}
         style={style}
         className={getClasses()}
@@ -206,7 +207,10 @@ const Button = forwardRef((props, ref) => {
 
   return (
     <ButtonTag
-      ref={elRef}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
       id={id}
       style={style}
       className={getClasses()}
@@ -219,7 +223,7 @@ const Button = forwardRef((props, ref) => {
       {children}
     </ButtonTag>
   );
-});
+};
 
 Button.displayName = 'f7-button';
 

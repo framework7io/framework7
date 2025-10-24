@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
@@ -6,7 +6,7 @@ import { colorClasses } from '../shared/mixins.js';
 import Preloader from './preloader.js';
 import { useTab } from '../shared/use-tab.js';
 import { f7ready, f7 } from '../shared/f7.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-props
   id?: string | number;
   className?: string;
@@ -40,7 +40,7 @@ import { f7ready, f7 } from '../shared/f7.js';
   children?: React.ReactNode;
 */
 
-const PageContent = forwardRef((props, ref) => {
+const PageContent = (props) => {
   const {
     className,
     id,
@@ -62,6 +62,7 @@ const PageContent = forwardRef((props, ref) => {
     hideToolbarOnScroll,
     messagesContent,
     loginScreen,
+    ref,
   } = props;
 
   const extraAttrs = getExtraAttrs(props);
@@ -92,10 +93,6 @@ const PageContent = forwardRef((props, ref) => {
     if (elRef.current !== el) return;
     emit(props, 'infinite');
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   useTab(elRef, props);
 
@@ -171,7 +168,10 @@ const PageContent = forwardRef((props, ref) => {
       data-ptr-distance={ptrDistance || undefined}
       data-ptr-mousewheel={ptrMousewheel || undefined}
       data-infinite-distance={infiniteDistance || undefined}
-      ref={elRef}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
       {...extraAttrs}
     >
       {ptrBottom ? null : ptrEl}
@@ -181,7 +181,7 @@ const PageContent = forwardRef((props, ref) => {
       {ptrBottom ? ptrEl : null}
     </div>
   );
-});
+};
 
 PageContent.displayName = 'f7-page-content';
 

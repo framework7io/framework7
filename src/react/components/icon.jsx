@@ -1,8 +1,9 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs, extend } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { useTooltip } from '../shared/use-tooltip.js';
 import { useTheme } from '../shared/use-theme.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id: string | number;
@@ -21,23 +22,17 @@ import { useTheme } from '../shared/use-theme.js';
   COLOR_PROPS
 */
 
-const Icon = forwardRef((props, ref) => {
+const Icon = (props) => {
   const theme = useTheme();
-  const { className, id, style, children, material, f7, icon, md, ios, size } = props;
+  const { className, id, style, children, material, f7, icon, md, ios, size, ref } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
-
   useTooltip(elRef, props);
 
   const getClasses = () => {
-    let classes = {
-      icon: true,
-    };
+    let classes = { icon: true };
 
     let themeIcon;
     if (theme && theme.ios) themeIcon = ios;
@@ -57,11 +52,7 @@ const Icon = forwardRef((props, ref) => {
       }
       if (icon) classes[icon] = true;
     } else {
-      classes = {
-        icon: true,
-        'material-icons': material,
-        'f7-icons': f7,
-      };
+      classes = { icon: true, 'material-icons': material, 'f7-icons': f7 };
       if (icon) classes[icon] = true;
     }
     return classNames(className, classes, colorClasses(props));
@@ -91,14 +82,17 @@ const Icon = forwardRef((props, ref) => {
       id={id}
       style={extend({ fontSize: sizeComputed, width: sizeComputed, height: sizeComputed }, style)}
       className={getClasses()}
-      ref={elRef}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
       {...extraAttrs}
     >
       {getIconText()}
       {children}
     </i>
   );
-});
+};
 
 Icon.displayName = 'f7-icon';
 

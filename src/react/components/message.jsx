@@ -1,6 +1,7 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id?: string | number;
@@ -35,7 +36,7 @@ import { colorClasses } from '../shared/mixins.js';
   children?: React.ReactNode;
 */
 
-const Message = forwardRef((props, ref) => {
+const Message = (props) => {
   const {
     className,
     id,
@@ -57,6 +58,7 @@ const Message = forwardRef((props, ref) => {
     sameFooter,
     sameAvatar,
     typing,
+    ref,
   } = props;
   const extraAttrs = getExtraAttrs(props);
 
@@ -84,10 +86,6 @@ const Message = forwardRef((props, ref) => {
     emit(props, 'clickBubble', event);
   };
 
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
-
   const slots = getSlots(props);
 
   const classes = classNames(
@@ -109,7 +107,17 @@ const Message = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs} onClick={onClick}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+      onClick={onClick}
+    >
       {slots.start}
       {(avatar || slots.avatar) && (
         <div
@@ -178,7 +186,7 @@ const Message = forwardRef((props, ref) => {
       {slots.end}
     </div>
   );
-});
+};
 
 Message.displayName = 'f7-message';
 

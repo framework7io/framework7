@@ -1,7 +1,7 @@
-import React, { forwardRef, useRef, useImperativeHandle, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
 import { f7 } from '../shared/f7.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-props
   id?: string | number;
   className?: string;
@@ -15,7 +15,7 @@ import { f7 } from '../shared/f7.js';
   children?: React.ReactNode;
 */
 
-const PieChart = forwardRef((props, ref) => {
+const PieChart = (props) => {
   const {
     className,
     id,
@@ -25,6 +25,7 @@ const PieChart = forwardRef((props, ref) => {
     datasets = [],
     formatTooltip,
     children,
+    ref,
   } = props;
 
   const extraAttrs = getExtraAttrs(props);
@@ -33,10 +34,6 @@ const PieChart = forwardRef((props, ref) => {
   const previousIndex = useRef(null);
   const elRef = useRef(null);
   const f7Tooltip = useRef(null);
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   const getSummValue = () => {
     let summ = 0;
@@ -72,11 +69,7 @@ const PieChart = forwardRef((props, ref) => {
         'L 0 0', // Line
       ].join(' ');
 
-      paths.push({
-        points,
-        label,
-        color,
-      });
+      paths.push({ points, label, color });
     });
     return paths;
   };
@@ -92,13 +85,7 @@ const PieChart = forwardRef((props, ref) => {
     };
 
     if (formatTooltip) {
-      return formatTooltip({
-        index: currentIndex,
-        value,
-        label,
-        color,
-        percentage,
-      });
+      return formatTooltip({ index: currentIndex, value, label, color, percentage });
     }
 
     const tooltipText = `${label ? `${label}: ` : ''}${round(value)} (${round(percentage)}%)`;
@@ -158,7 +145,16 @@ const PieChart = forwardRef((props, ref) => {
   const paths = getPaths();
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={size}
@@ -184,7 +180,7 @@ const PieChart = forwardRef((props, ref) => {
       {children}
     </div>
   );
-});
+};
 
 PieChart.displayName = 'f7-pie-chart';
 

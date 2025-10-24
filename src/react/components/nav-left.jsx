@@ -1,6 +1,7 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
+import { setRef } from '../shared/set-ref.js';
 
 import Link from './link.js';
 
@@ -19,9 +20,18 @@ import Link from './link.js';
   children?: React.ReactNode;
 */
 
-const NavLeft = forwardRef((props, ref) => {
-  const { className, id, style, children, backLink, backLinkUrl, backLinkForce, backLinkShowText } =
-    props;
+const NavLeft = (props) => {
+  const {
+    className,
+    id,
+    style,
+    children,
+    backLink,
+    backLinkUrl,
+    backLinkForce,
+    backLinkShowText,
+    ref,
+  } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
@@ -29,10 +39,6 @@ const NavLeft = forwardRef((props, ref) => {
   const onBackClick = (event) => {
     emit(props, 'backClick clickBack', event);
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   let linkEl;
 
@@ -53,12 +59,21 @@ const NavLeft = forwardRef((props, ref) => {
   const classes = classNames(className, 'left', {}, colorClasses(props));
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+    >
       {linkEl}
       {children}
     </div>
   );
-});
+};
 
 NavLeft.displayName = 'f7-nav-left';
 

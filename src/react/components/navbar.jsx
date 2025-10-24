@@ -1,10 +1,10 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, emit, getSlots } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { f7ready, f7 } from '../shared/f7.js';
 import { useTheme } from '../shared/use-theme.js';
-
+import { setRef } from '../shared/set-ref.js';
 import NavLeft from './nav-left.js';
 import NavTitle from './nav-title.js';
 import NavRight from './nav-right.js';
@@ -40,7 +40,7 @@ import NavRight from './nav-right.js';
   children?: React.ReactNode;
 */
 
-const Navbar = forwardRef((props, ref) => {
+const Navbar = (props) => {
   const {
     className,
     id,
@@ -59,6 +59,7 @@ const Navbar = forwardRef((props, ref) => {
     titleLarge,
     innerClass,
     innerClassName,
+    ref,
   } = props;
   const routerPositionClass = useRef('');
   const largeCollapsed = useRef(false);
@@ -117,13 +118,6 @@ const Navbar = forwardRef((props, ref) => {
   const onBackClick = (event) => {
     emit(props, 'backClick clickBack', event);
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    hide,
-    show,
-    size,
-  }));
 
   const attachEvents = () => {
     if (!elRef.current) return;
@@ -241,14 +235,23 @@ const Navbar = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, { hide, show, size });
+      }}
+      {...extraAttrs}
+    >
       <div className="navbar-bg" />
       {slots['before-inner']}
       {innerEl}
       {slots['after-inner']}
     </div>
   );
-});
+};
 
 Navbar.displayName = 'f7-navbar';
 

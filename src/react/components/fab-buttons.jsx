@@ -1,6 +1,7 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id?: string | number;
@@ -12,14 +13,11 @@ import { colorClasses } from '../shared/mixins.js';
   COLOR_PROPS
 */
 
-const FabButtons = forwardRef((props, ref) => {
-  const { className, id, style, children, position } = props;
+const FabButtons = (props) => {
+  const { className, id, style, children, position, ref } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   const classes = classNames(
     className,
@@ -29,11 +27,20 @@ const FabButtons = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+    >
       {children}
     </div>
   );
-});
+};
 
 FabButtons.displayName = 'f7-fab-buttons';
 

@@ -1,7 +1,7 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-props
   id?: string | number;
   className?: string;
@@ -13,18 +13,24 @@ import { colorClasses } from '../shared/mixins.js';
   COLOR_PROPS
 */
 
-const Subnavbar = forwardRef((props, ref) => {
-  const { className, id, style, children, inner = true, title } = props;
+const Subnavbar = (props) => {
+  const { className, id, style, children, inner = true, title, ref } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   const classes = classNames(className, 'subnavbar', {}, colorClasses(props));
   return (
-    <div className={classes} id={id} style={style} ref={elRef} {...extraAttrs}>
+    <div
+      className={classes}
+      id={id}
+      style={style}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+    >
       {inner ? (
         <div className="subnavbar-inner">
           {title && <div className="subnavbar-title">{title}</div>}
@@ -35,7 +41,7 @@ const Subnavbar = forwardRef((props, ref) => {
       )}
     </div>
   );
-});
+};
 
 Subnavbar.displayName = 'f7-subnavbar';
 

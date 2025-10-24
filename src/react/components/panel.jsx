@@ -1,10 +1,10 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, noUndefinedProps, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { f7ready, f7 } from '../shared/f7.js';
 import { watchProp } from '../shared/watch-prop.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-imports
 import { Panel } from 'framework7/types';
 */
@@ -49,7 +49,7 @@ import { Panel } from 'framework7/types';
   children?: React.ReactNode;
 */
 
-const Panel = forwardRef((props, ref) => {
+const Panel = (props) => {
   const f7Panel = useRef(null);
   const {
     className,
@@ -78,6 +78,7 @@ const Panel = forwardRef((props, ref) => {
     swipeOnlyClose,
     swipeActiveArea = 0,
     swipeThreshold = 0,
+    ref,
   } = props;
 
   const extraAttrs = getExtraAttrs(props);
@@ -128,11 +129,6 @@ const Panel = forwardRef((props, ref) => {
   const onResize = (...args) => {
     emit(props, 'panelResize', ...args);
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    f7Panel: () => f7Panel.current,
-  }));
 
   watchProp(resizable, (newValue) => {
     if (!f7Panel.current) return;
@@ -230,12 +226,21 @@ const Panel = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, { f7Panel: () => f7Panel.current });
+      }}
+      {...extraAttrs}
+    >
       {children}
       {resizable && <div className="panel-resize-handler"></div>}
     </div>
   );
-});
+};
 
 Panel.displayName = 'f7-panel';
 

@@ -1,10 +1,10 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, emit, noUndefinedProps } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { f7ready, f7 } from '../shared/f7.js';
 import { watchProp } from '../shared/watch-prop.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-imports
 import { Stepper } from 'framework7/types';
 */
@@ -56,7 +56,7 @@ import { Stepper } from 'framework7/types';
   children?: React.ReactNode;
 */
 
-const Stepper = forwardRef((props, ref) => {
+const Stepper = (props) => {
   const f7Stepper = useRef(null);
   const {
     className,
@@ -96,6 +96,7 @@ const Stepper = forwardRef((props, ref) => {
     raised,
     raisedMd,
     raisedIos,
+    ref,
   } = props;
   const extraAttrs = getExtraAttrs(props);
 
@@ -130,15 +131,6 @@ const Stepper = forwardRef((props, ref) => {
   const onPlusClick = (event) => {
     emit(props, 'stepperPlusClick', event, f7Stepper.current);
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    f7Stepper: () => f7Stepper.current,
-    increment,
-    decrement,
-    setValue,
-    getValue,
-  }));
 
   watchProp(value, (newValue) => {
     if (!f7Stepper.current) return;
@@ -244,14 +236,29 @@ const Stepper = forwardRef((props, ref) => {
     colorClasses(props),
   );
   return (
-    <div ref={elRef} id={id} style={style} className={classes} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, {
+          f7Stepper: () => f7Stepper.current,
+          increment,
+          decrement,
+          setValue,
+          getValue,
+        });
+      }}
+      {...extraAttrs}
+    >
       <div className="stepper-button-minus" onClick={onMinusClick} />
       {inputWrapEl}
       {valueEl}
       <div className="stepper-button-plus" onClick={onPlusClick} />
     </div>
   );
-});
+};
 
 Stepper.displayName = 'f7-stepper';
 

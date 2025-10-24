@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { classNames } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
+import { setRef } from '../shared/set-ref.js';
 
 import Badge from './badge.js';
 
@@ -36,6 +37,7 @@ const ListItemContent = (props) => {
     isSortableComputed,
     isSortableOppositeComputed,
     slots,
+    ref,
   } = props;
   const inputElRef = useRef(null);
 
@@ -202,7 +204,13 @@ const ListItemContent = (props) => {
     colorClasses(props),
   );
   return (
-    <ItemContentTag className={classes} onClick={onClick}>
+    <ItemContentTag
+      className={classes}
+      onClick={onClick}
+      ref={(el) => {
+        setRef(ref, el);
+      }}
+    >
       {isSortableComputed && sortable !== false && isSortableOppositeComputed && (
         <div className="sortable-handler" />
       )}

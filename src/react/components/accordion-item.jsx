@@ -1,8 +1,9 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { f7, f7ready } from '../shared/f7.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id: string | number;
@@ -20,12 +21,9 @@ import { f7, f7ready } from '../shared/f7.js';
   COLOR_PROPS
 */
 
-const AccordionItem = forwardRef((props, ref) => {
-  const { className, id, style, children, opened } = props;
+const AccordionItem = (props) => {
+  const { className, id, style, children, opened, ref } = props;
   const elRef = useRef(null);
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   const onBeforeOpen = (el, prevent) => {
     if (elRef.current !== el) return;
@@ -81,18 +79,25 @@ const AccordionItem = forwardRef((props, ref) => {
   const classes = classNames(
     className,
     'accordion-item',
-    {
-      'accordion-item-opened': opened,
-    },
+    { 'accordion-item-opened': opened },
     colorClasses(props),
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+    >
       {children}
     </div>
   );
-});
+};
 
 AccordionItem.displayName = 'f7-accordion-item';
 

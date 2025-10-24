@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import {
   classNames,
@@ -12,6 +12,7 @@ import { colorClasses } from '../shared/mixins.js';
 import { f7, f7ready } from '../shared/f7.js';
 import { ListContext } from '../shared/list-context.js';
 import { useTab } from '../shared/use-tab.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-imports
 import { VirtualList } from 'framework7/types';
@@ -83,7 +84,7 @@ import { VirtualList } from 'framework7/types';
   children?: React.ReactNode;
 */
 
-const List = forwardRef((props, ref) => {
+const List = (props) => {
   const f7VirtualList = useRef(null);
   const {
     className,
@@ -136,6 +137,7 @@ const List = forwardRef((props, ref) => {
     formStoreData,
     virtualList,
     virtualListParams,
+    ref,
   } = props;
   const extraAttrs = getExtraAttrs(props);
 
@@ -161,11 +163,6 @@ const List = forwardRef((props, ref) => {
     if (elRef.current !== listEl) return;
     emit(props, 'sortableMove', el, listEl);
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    f7VirtualList: () => f7VirtualList.current,
-  }));
 
   useTab(elRef, props);
 
@@ -329,7 +326,10 @@ const List = forwardRef((props, ref) => {
   return (
     <ListTag
       id={id}
-      ref={elRef}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, { f7VirtualList: () => f7VirtualList.current });
+      }}
       style={style}
       className={classes}
       {...extraAttrs}
@@ -356,7 +356,7 @@ const List = forwardRef((props, ref) => {
       </ListContext.Provider>
     </ListTag>
   );
-});
+};
 
 List.displayName = 'f7-list';
 

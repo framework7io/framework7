@@ -1,5 +1,6 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id?: string | number;
@@ -11,16 +12,12 @@ import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
   children?: React.ReactNode;
 */
 
-const BreadcrumbsItem = forwardRef((props, ref) => {
-  const { className, id, style, active, children } = props;
+const BreadcrumbsItem = (props) => {
+  const { className, id, style, active, children, ref } = props;
 
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   const onClick = (e) => {
     emit(props, 'click', e);
@@ -29,7 +26,10 @@ const BreadcrumbsItem = forwardRef((props, ref) => {
   return (
     <div
       className={classNames('breadcrumbs-item', className, active && 'breadcrumbs-item-active')}
-      ref={elRef}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
       id={id}
       style={style}
       onClick={onClick}
@@ -38,7 +38,7 @@ const BreadcrumbsItem = forwardRef((props, ref) => {
       {children}
     </div>
   );
-});
+};
 
 BreadcrumbsItem.displayName = 'f7-breadcrumbs-item';
 

@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, emit, getSlots, noUndefinedProps } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
@@ -6,6 +6,7 @@ import Link from './link.js';
 import Input from './input.js';
 import { f7ready, f7 } from '../shared/f7.js';
 import { watchProp } from '../shared/watch-prop.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-imports
 import { Messagebar } from 'framework7/types';
@@ -45,7 +46,7 @@ import { Messagebar } from 'framework7/types';
   children?: React.ReactNode;
 */
 
-const Messagebar = forwardRef((props, ref) => {
+const Messagebar = (props) => {
   const f7Messagebar = useRef(null);
   const updateSheetVisible = useRef(false);
   const updateAttachmentsVisible = useRef(false);
@@ -69,6 +70,7 @@ const Messagebar = forwardRef((props, ref) => {
     name,
     placeholder = 'Message',
     init = true,
+    ref,
   } = props;
   const extraAttrs = getExtraAttrs(props);
 
@@ -108,11 +110,6 @@ const Messagebar = forwardRef((props, ref) => {
   const onResizePage = (instance) => {
     emit(props, 'messagebarResizePage', instance);
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    f7Messagebar: () => f7Messagebar.current,
-  }));
 
   watchProp(sheetVisible, () => {
     if (!resizable || !f7Messagebar.current) return;
@@ -229,7 +226,16 @@ const Messagebar = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, { f7Messagebar: () => f7Messagebar.current });
+      }}
+      {...extraAttrs}
+    >
       {slotsBeforeInner}
       <div className="toolbar-inner">
         {slotsInnerStart}
@@ -264,7 +270,7 @@ const Messagebar = forwardRef((props, ref) => {
       {messagebarSheetEl}
     </div>
   );
-});
+};
 
 Messagebar.displayName = 'f7-messagebar';
 

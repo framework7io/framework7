@@ -1,7 +1,8 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { useTab } from '../shared/use-tab.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id: string | number;
@@ -43,7 +44,7 @@ import { useTab } from '../shared/use-tab.js';
   COLOR_PROPS
 */
 
-const Block = forwardRef((props, ref) => {
+const Block = (props) => {
   const {
     className,
     inset,
@@ -79,13 +80,11 @@ const Block = forwardRef((props, ref) => {
     id,
     style,
     children,
+    ref,
   } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   useTab(elRef, props);
 
@@ -127,11 +126,20 @@ const Block = forwardRef((props, ref) => {
   );
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+    >
       {children}
     </div>
   );
-});
+};
 
 Block.displayName = 'f7-block';
 

@@ -1,5 +1,6 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id?: string | number;
@@ -10,16 +11,12 @@ import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
   children?: React.ReactNode;
 */
 
-const BreadcrumbsCollapsed = forwardRef((props, ref) => {
-  const { className, id, style, children } = props;
+const BreadcrumbsCollapsed = (props) => {
+  const { className, id, style, children, ref } = props;
 
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   const onClick = (e) => {
     emit(props, 'click', e);
@@ -28,7 +25,10 @@ const BreadcrumbsCollapsed = forwardRef((props, ref) => {
   return (
     <div
       className={classNames('breadcrumbs-collapsed', className)}
-      ref={elRef}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
       id={id}
       style={style}
       onClick={onClick}
@@ -38,7 +38,7 @@ const BreadcrumbsCollapsed = forwardRef((props, ref) => {
       {children}
     </div>
   );
-});
+};
 
 BreadcrumbsCollapsed.displayName = 'f7-breadcrumbs-collapsed';
 

@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle, useState, useContext } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, emit, getSlots, extend } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
@@ -7,6 +7,7 @@ import { f7ready, f7 } from '../shared/f7.js';
 import TextEditor from './text-editor.js';
 import { watchProp } from '../shared/watch-prop.js';
 import { ListContext } from '../shared/list-context.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-imports
 import { Calendar, ColorPicker, TextEditor } from 'framework7/types';
@@ -80,7 +81,7 @@ import { Calendar, ColorPicker, TextEditor } from 'framework7/types';
   children?: React.ReactNode;
 */
 
-const ListInput = forwardRef((props, ref) => {
+const ListInput = (props) => {
   const {
     className,
     id,
@@ -148,6 +149,7 @@ const ListInput = forwardRef((props, ref) => {
     colorPickerParams,
     // Text editor
     textEditorParams,
+    ref,
   } = props;
 
   const [inputInvalid, setInputInvalid] = useState(false);
@@ -238,10 +240,6 @@ const ListInput = forwardRef((props, ref) => {
       emit(props, 'textEditorChange', args[0]);
     }
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   const onMount = () => {
     if (!elRef.current && !itemContentElRef.current) return;
@@ -535,7 +533,10 @@ const ListInput = forwardRef((props, ref) => {
   }
   return (
     <li
-      ref={elRef}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
       id={id}
       style={style}
       className={classNames(className, { disabled }, colorClasses(props))}
@@ -548,7 +549,7 @@ const ListInput = forwardRef((props, ref) => {
       {slots['root-end']}
     </li>
   );
-});
+};
 
 ListInput.displayName = 'f7-list-input';
 

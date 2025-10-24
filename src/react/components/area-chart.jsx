@@ -1,6 +1,7 @@
-import React, { forwardRef, useRef, useImperativeHandle, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
 import { f7 } from '../shared/f7.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id?: string | number;
@@ -27,7 +28,7 @@ import { f7 } from '../shared/f7.js';
   children?: React.ReactNode;
 */
 
-const AreaChart = forwardRef((props, ref) => {
+const AreaChart = (props) => {
   const {
     className,
     id,
@@ -49,6 +50,7 @@ const AreaChart = forwardRef((props, ref) => {
     formatTooltipTotal,
     formatTooltipDataset,
     children,
+    ref,
   } = props;
 
   const [currentIndex, setCurrentIndex] = useState(null);
@@ -61,10 +63,6 @@ const AreaChart = forwardRef((props, ref) => {
   const svgElRef = useRef(null);
   const f7Tooltip = useRef(null);
   const linesOffsets = useRef(null);
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   const getVisibleLegends = () => {
     if (!maxAxisLabels || axisLabels.length <= maxAxisLabels) return axisLabels;
@@ -119,11 +117,7 @@ const AreaChart = forwardRef((props, ref) => {
           points.push(`${width} ${height} 0 ${height}`);
         }
 
-        data.push({
-          label,
-          points: points.join(' '),
-          color,
-        });
+        data.push({ label, points: points.join(' '), color });
       });
     return data.reverse();
   };
@@ -183,11 +177,7 @@ const AreaChart = forwardRef((props, ref) => {
       total += dataset.value;
     });
     if (formatTooltipProp) {
-      return formatTooltipProp({
-        index: currentIndex,
-        total,
-        datasets: currentValues,
-      });
+      return formatTooltipProp({ index: currentIndex, total, datasets: currentValues });
     }
     let labelText = formatTooltipAxisLabel
       ? formatTooltipAxisLabel(axisLabels[currentIndex])
@@ -316,7 +306,16 @@ const AreaChart = forwardRef((props, ref) => {
   const ChartTag = lineChart ? 'path' : 'polygon';
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={width}
@@ -345,9 +344,7 @@ const AreaChart = forwardRef((props, ref) => {
             y1={0}
             x2={line}
             y2={height}
-            className={classNames({
-              'area-chart-current-line': currentIndex === index,
-            })}
+            className={classNames({ 'area-chart-current-line': currentIndex === index })}
           />
         ))}
       </svg>
@@ -381,7 +378,7 @@ const AreaChart = forwardRef((props, ref) => {
       {children}
     </div>
   );
-});
+};
 
 AreaChart.displayName = 'f7-area-chart';
 

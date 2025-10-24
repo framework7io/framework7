@@ -1,19 +1,16 @@
-import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { f7events, f7routers, f7 } from '../shared/f7.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-props
  */
 
-const RoutableModals = forwardRef((props, ref) => {
+const RoutableModals = (props) => {
+  const { ref } = props;
   const [modals, setModals] = useState([]);
 
   const elRef = useRef(null);
   const routerData = useRef(null);
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   const onMount = () => {
     routerData.current = {
@@ -43,13 +40,19 @@ const RoutableModals = forwardRef((props, ref) => {
   });
 
   return (
-    <div ref={elRef} className="framework7-modals">
+    <div
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      className="framework7-modals"
+    >
       {modals.map(({ component: ModalComponent, id: modalId, props: modalProps }) => {
         return <ModalComponent key={modalId} {...modalProps} />;
       })}
     </div>
   );
-});
+};
 
 RoutableModals.displayName = 'f7-routable-modals';
 

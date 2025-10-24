@@ -1,9 +1,9 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { TabsSwipeableContext } from '../shared/tabs-swipeable-context.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-imports
 import { SwiperOptions } from 'swiper';
 */
@@ -20,15 +20,12 @@ import { SwiperOptions } from 'swiper';
   children?: React.ReactNode;
 */
 
-const Tabs = forwardRef((props, ref) => {
-  const { className, id, style, children, animated, swipeable, routable, swiperParams } = props;
+const Tabs = (props) => {
+  const { className, id, style, children, animated, swipeable, routable, swiperParams, ref } =
+    props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   useIsomorphicLayoutEffect(() => {
     if (!swipeable || !swiperParams) return;
@@ -38,10 +35,7 @@ const Tabs = forwardRef((props, ref) => {
   }, []);
 
   const classes = classNames(className, colorClasses(props));
-  const tabsClasses = classNames({
-    tabs: true,
-    'tabs-routable': routable,
-  });
+  const tabsClasses = classNames({ tabs: true, 'tabs-routable': routable });
 
   if (animated) {
     return (
@@ -49,7 +43,10 @@ const Tabs = forwardRef((props, ref) => {
         id={id}
         style={style}
         className={classNames('tabs-animated-wrap', classes)}
-        ref={elRef}
+        ref={(el) => {
+          elRef.current = el;
+          setRef(ref, el);
+        }}
         {...extraAttrs}
       >
         <div className={tabsClasses}>{children}</div>
@@ -62,7 +59,10 @@ const Tabs = forwardRef((props, ref) => {
         id={id}
         style={style}
         class={classNames(tabsClasses, classes)}
-        ref={elRef}
+        ref={(el) => {
+          elRef.current = el;
+          setRef(ref, el);
+        }}
         init={swiperParams ? 'false' : 'true'}
         {...extraAttrs}
       >
@@ -76,13 +76,16 @@ const Tabs = forwardRef((props, ref) => {
       id={id}
       style={style}
       className={classNames(tabsClasses, classes)}
-      ref={elRef}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
       {...extraAttrs}
     >
       {children}
     </div>
   );
-});
+};
 
 Tabs.displayName = 'f7-tabs';
 

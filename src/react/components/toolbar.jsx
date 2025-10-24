@@ -1,11 +1,11 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { useTheme } from '../shared/use-theme.js';
 import { f7ready, f7 } from '../shared/f7.js';
 import { TabbarContext } from '../shared/tabbar-context.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-props
   id?: string | number;
   className?: string;
@@ -30,7 +30,7 @@ import { TabbarContext } from '../shared/tabbar-context.js';
   children?: React.ReactNode;
 */
 
-const Toolbar = forwardRef((props, ref) => {
+const Toolbar = (props) => {
   const {
     className,
     id,
@@ -48,6 +48,7 @@ const Toolbar = forwardRef((props, ref) => {
     bottomIos,
     bottom,
     inner = true,
+    ref,
   } = props;
   const extraAttrs = getExtraAttrs(props);
 
@@ -69,12 +70,6 @@ const Toolbar = forwardRef((props, ref) => {
     if (!f7) return;
     f7.toolbar.show(elRef.current, animate);
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    hide,
-    show,
-  }));
 
   useIsomorphicLayoutEffect(() => {
     f7ready(() => {
@@ -116,19 +111,24 @@ const Toolbar = forwardRef((props, ref) => {
   const slots = getSlots(props);
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
-      <TabbarContext.Provider
-        value={{
-          tabbarHasIcons: icons,
-        }}
-      >
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, { hide, show });
+      }}
+      {...extraAttrs}
+    >
+      <TabbarContext.Provider value={{ tabbarHasIcons: icons }}>
         {slots['before-inner']}
         {inner ? <div className="toolbar-inner">{slots.default}</div> : slots.default}
         {slots['after-inner']}
       </TabbarContext.Provider>
     </div>
   );
-});
+};
 
 Toolbar.displayName = 'f7-toolbar';
 

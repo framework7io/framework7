@@ -1,7 +1,8 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { useTooltip } from '../shared/use-tooltip.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id?: string | number;
@@ -18,8 +19,8 @@ import { useTooltip } from '../shared/use-tooltip.js';
   COLOR_PROPS
 */
 
-const FabButton = forwardRef((props, ref) => {
-  const { className, id, style, children, fabClose, label, target } = props;
+const FabButton = (props) => {
+  const { className, id, style, children, fabClose, label, target, ref } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
@@ -28,18 +29,11 @@ const FabButton = forwardRef((props, ref) => {
     emit(props, 'click', e);
   };
 
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
-
   useTooltip(elRef, props);
 
   const classes = classNames(
     className,
-    {
-      'fab-close': fabClose,
-      'fab-label-button': label,
-    },
+    { 'fab-close': fabClose, 'fab-label-button': label },
     colorClasses(props),
   );
 
@@ -54,7 +48,10 @@ const FabButton = forwardRef((props, ref) => {
       style={style}
       target={target}
       className={classes}
-      ref={elRef}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
       {...extraAttrs}
       onClick={onClick}
     >
@@ -62,7 +59,7 @@ const FabButton = forwardRef((props, ref) => {
       {labelEl}
     </a>
   );
-});
+};
 
 FabButton.displayName = 'f7-fab-button';
 

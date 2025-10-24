@@ -1,8 +1,8 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { f7 } from '../shared/f7.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-props
   id?: string | number;
   className?: string;
@@ -14,8 +14,8 @@ import { f7 } from '../shared/f7.js';
   COLOR_PROPS
 */
 
-const Progressbar = forwardRef((props, ref) => {
-  const { className, id, style, progress, infinite } = props;
+const Progressbar = (props) => {
+  const { className, id, style, progress, infinite, ref } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
@@ -25,11 +25,6 @@ const Progressbar = forwardRef((props, ref) => {
     f7.progressbar.set(elRef.current, newProgress, speed);
   };
 
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    set,
-  }));
-
   const transformStyle = {
     transform: progress ? `translate3d(${-100 + progress}%, 0, 0)` : '',
     WebkitTransform: progress ? `translate3d(${-100 + progress}%, 0, 0)` : '',
@@ -38,15 +33,16 @@ const Progressbar = forwardRef((props, ref) => {
   const classes = classNames(
     className,
     'progressbar',
-    {
-      'progressbar-infinite': infinite,
-    },
+    { 'progressbar-infinite': infinite },
     colorClasses(props),
   );
 
   return (
     <span
-      ref={elRef}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, { set });
+      }}
       id={id}
       style={style}
       className={classes}
@@ -56,7 +52,7 @@ const Progressbar = forwardRef((props, ref) => {
       <span style={transformStyle} />
     </span>
   );
-});
+};
 
 Progressbar.displayName = 'f7-progressbar';
 

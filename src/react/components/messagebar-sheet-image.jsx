@@ -1,6 +1,7 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id?: string | number;
@@ -16,8 +17,8 @@ import { colorClasses } from '../shared/mixins.js';
   children?: React.ReactNode;
 */
 
-const MessagebarSheetImage = forwardRef((props, ref) => {
-  const { className, id, style, children, image, checked } = props;
+const MessagebarSheetImage = (props) => {
+  const { className, id, style, children, image, checked, ref } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
@@ -28,24 +29,27 @@ const MessagebarSheetImage = forwardRef((props, ref) => {
     emit(props, 'change', event);
   };
 
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
-
   const classes = classNames(className, 'messagebar-sheet-image', 'checkbox', colorClasses(props));
-  const styles = {
-    ...(style || {}),
-  };
+  const styles = { ...(style || {}) };
 
   return (
-    <label id={id} className={classes} style={styles} ref={elRef} {...extraAttrs}>
+    <label
+      id={id}
+      className={classes}
+      style={styles}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+    >
       <input type="checkbox" checked={checked} onChange={onChange} />
       <i className="icon icon-checkbox" />
       {image && <img src={image} />}
       {children}
     </label>
   );
-});
+};
 
 MessagebarSheetImage.displayName = 'f7-messagebar-sheet-image';
 

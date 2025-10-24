@@ -1,5 +1,6 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs } from '../shared/utils.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id?: string | number;
@@ -9,27 +10,26 @@ import { classNames, getExtraAttrs } from '../shared/utils.js';
   children?: React.ReactNode;
 */
 
-const BreadcrumbsSeparator = forwardRef((props, ref) => {
-  const { className, id, style } = props;
+const BreadcrumbsSeparator = (props) => {
+  const { className, id, style, ref } = props;
 
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
 
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
-
   return (
     <div
       className={classNames('breadcrumbs-separator', className)}
-      ref={elRef}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
       id={id}
       style={style}
       {...extraAttrs}
     />
   );
-});
+};
 
 BreadcrumbsSeparator.displayName = 'f7-breadcrumbs-separator';
 

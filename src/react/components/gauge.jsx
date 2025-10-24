@@ -1,6 +1,7 @@
 /* eslint no-nested-ternary: off */
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs } from '../shared/utils.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id?: string | number;
@@ -25,7 +26,7 @@ import { classNames, getExtraAttrs } from '../shared/utils.js';
   children?: React.ReactNode;
 */
 
-const Gauge = forwardRef((props, ref) => {
+const Gauge = (props) => {
   const {
     className,
     id,
@@ -45,14 +46,12 @@ const Gauge = forwardRef((props, ref) => {
     labelTextColor = '#888888',
     labelFontSize = 14,
     labelFontWeight = 400,
+    ref,
   } = props;
 
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   const classes = classNames(className, 'gauge');
 
@@ -62,7 +61,16 @@ const Gauge = forwardRef((props, ref) => {
   const progress = Math.max(Math.min(value, 1), 0);
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+    >
       <svg
         className="gauge-svg"
         width={`${size}px`}
@@ -147,7 +155,7 @@ const Gauge = forwardRef((props, ref) => {
       </svg>
     </div>
   );
-});
+};
 
 Gauge.displayName = 'f7-gauge';
 

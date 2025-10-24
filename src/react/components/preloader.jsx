@@ -1,8 +1,8 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { classNames, getExtraAttrs, extend } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { useTheme } from '../shared/use-theme.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-props
   id?: string | number;
   className?: string;
@@ -13,16 +13,12 @@ import { useTheme } from '../shared/use-theme.js';
   COLOR_PROPS
 */
 
-const Preloader = forwardRef((props, ref) => {
+const Preloader = (props) => {
   const theme = useTheme();
-  const { className, id, style, size } = props;
+  const { className, id, style, size, ref } = props;
   const extraAttrs = getExtraAttrs(props);
 
   const elRef = useRef(null);
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   const preloaderStyle = {};
   let sizeComputed = size;
@@ -62,19 +58,22 @@ const Preloader = forwardRef((props, ref) => {
     innerEl = <span className="preloader-inner" />;
   }
 
-  const classes = classNames(
-    className,
-    {
-      preloader: true,
-    },
-    colorClasses(props),
-  );
+  const classes = classNames(className, { preloader: true }, colorClasses(props));
   return (
-    <span id={id} style={preloaderStyle} className={classes} ref={elRef} {...extraAttrs}>
+    <span
+      id={id}
+      style={preloaderStyle}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+    >
       {innerEl}
     </span>
   );
-});
+};
 
 Preloader.displayName = 'f7-preloader';
 

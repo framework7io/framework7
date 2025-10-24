@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils.js';
 import {
@@ -10,7 +10,7 @@ import {
 } from '../shared/mixins.js';
 import { useIcon } from '../shared/use-icon.js';
 import { f7ready, f7 } from '../shared/f7.js';
-
+import { setRef } from '../shared/set-ref.js';
 /* dts-props
   id?: string | number;
   className?: string;
@@ -35,7 +35,7 @@ import { f7ready, f7 } from '../shared/f7.js';
   children?: React.ReactNode;
 */
 
-const TreeviewItem = forwardRef((props, ref) => {
+const TreeviewItem = (props) => {
   const {
     className,
     id,
@@ -48,6 +48,7 @@ const TreeviewItem = forwardRef((props, ref) => {
     label,
     loadChildren,
     link,
+    ref,
   } = props;
 
   const extraAttrs = getExtraAttrs(props);
@@ -69,10 +70,6 @@ const TreeviewItem = forwardRef((props, ref) => {
     if (elRef.current !== el) return;
     emit(props, 'treeviewLoadChildren', el, done);
   };
-
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-  }));
 
   const attachEvents = () => {
     if (!elRef.current) return;
@@ -109,10 +106,7 @@ const TreeviewItem = forwardRef((props, ref) => {
   const classes = classNames(
     className,
     'treeview-item',
-    {
-      'treeview-item-opened': opened,
-      'treeview-load-children': loadChildren,
-    },
+    { 'treeview-item-opened': opened, 'treeview-load-children': loadChildren },
     colorClasses(props),
   );
 
@@ -130,14 +124,19 @@ const TreeviewItem = forwardRef((props, ref) => {
   let href = link;
   if (link === true) href = '#';
   if (link === false) href = undefined; // no href attribute
-  const itemRootAttrs = {
-    href,
-    ...routerAttrs(props),
-    ...actionsAttrs(props),
-  };
+  const itemRootAttrs = { href, ...routerAttrs(props), ...actionsAttrs(props) };
 
   return (
-    <div id={id} style={style} className={classes} ref={elRef} {...extraAttrs}>
+    <div
+      id={id}
+      style={style}
+      className={classes}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el);
+      }}
+      {...extraAttrs}
+    >
       <TreeviewRootTag onClick={onClick} className={itemRootClasses} {...itemRootAttrs}>
         {slots['root-start']}
         {needToggle && <div className="treeview-toggle"></div>}
@@ -165,7 +164,7 @@ const TreeviewItem = forwardRef((props, ref) => {
       )}
     </div>
   );
-});
+};
 
 TreeviewItem.displayName = 'f7-treeview-item';
 

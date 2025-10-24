@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effect.js';
 
 import CardHeader from './card-header.js';
@@ -9,6 +9,7 @@ import { classNames, getExtraAttrs, getSlots, emit } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { f7, f7ready } from '../shared/f7.js';
 import { watchProp } from '../shared/watch-prop.js';
+import { setRef } from '../shared/set-ref.js';
 
 /* dts-props
   id: string | number;
@@ -46,7 +47,7 @@ import { watchProp } from '../shared/watch-prop.js';
   COLOR_PROPS
 */
 
-const Card = forwardRef((props, ref) => {
+const Card = (props) => {
   const {
     className,
     id,
@@ -73,6 +74,7 @@ const Card = forwardRef((props, ref) => {
     closeByBackdropClick,
     backdrop,
     backdropEl,
+    ref,
   } = props;
   const extraAttrs = getExtraAttrs(props);
 
@@ -152,12 +154,6 @@ const Card = forwardRef((props, ref) => {
     }
   });
 
-  useImperativeHandle(ref, () => ({
-    el: elRef.current,
-    open,
-    close,
-  }));
-
   let headerEl;
   let contentEl;
   let footerEl;
@@ -233,7 +229,10 @@ const Card = forwardRef((props, ref) => {
       }
       data-backdrop={typeof backdrop === 'undefined' ? backdrop : backdrop.toString()}
       data-backdrop-el={backdropEl}
-      ref={elRef}
+      ref={(el) => {
+        elRef.current = el;
+        setRef(ref, el, { open, close });
+      }}
       {...extraAttrs}
     >
       {headerEl}
@@ -242,7 +241,7 @@ const Card = forwardRef((props, ref) => {
       {slots.default}
     </div>
   );
-});
+};
 
 Card.displayName = 'f7-card';
 
