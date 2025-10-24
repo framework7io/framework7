@@ -11,7 +11,7 @@
 </script>
 
 <Page>
-  <Navbar title="Range Slider" backLink="Back" />
+  <Navbar title="Range Slider" backLink />
 
   <BlockTitle>Volume</BlockTitle>
   <List simpleList strongIos outlineIos>

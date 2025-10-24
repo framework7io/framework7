@@ -86,7 +86,7 @@
 </script>
 
 <Page {onPageBeforeOut} {onPageBeforeRemove}>
-  <Navbar title="Notifications" backLink="Back" />
+  <Navbar title="Notifications" backLink />
   <Block strongIos outlineIos>
     <p>
       Framework7 comes with simple Notifications component that allows you to show some useful

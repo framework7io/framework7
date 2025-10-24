@@ -4,7 +4,7 @@
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
-  <Navbar title="Zoom" backLink="Back" />
+  <Navbar title="Zoom" backLink />
   <swiper-container pagination={true} zoom={true} navigation={true} class="demo-swiper">
     <swiper-slide>
       <div class="swiper-zoom-container">

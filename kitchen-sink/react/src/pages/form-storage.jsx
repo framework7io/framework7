@@ -3,8 +3,8 @@ import { Navbar, Page, Block, List, Range, ListInput } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar title="Form Storage" backLink="Back"></Navbar>
-    <Block strong>
+    <Navbar title="Form Storage" backLink></Navbar>
+    <Block strong inset>
       <p>
         With forms storage it is easy to store and parse form data, especially on Ajax loaded pages.
         All you need to make it work is to add "form-store-data" class to your &lt;form&gt; and
@@ -17,7 +17,7 @@ export default () => (
         site, and when you return here form fields will have kept your data.
       </p>
     </Block>
-    <List strongIos outlineIos dividersIos form formStoreData id="demo-form">
+    <List strongI inset dividersIos form formStoreData id="demo-form">
       <ListInput label="Name" name="name" type="text" clearButton placeholder="Your name" />
       <ListInput
         label="Password"

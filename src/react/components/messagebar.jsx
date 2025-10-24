@@ -7,6 +7,7 @@ import Input from './input.js';
 import { f7ready, f7 } from '../shared/f7.js';
 import { watchProp } from '../shared/watch-prop.js';
 import { setRef } from '../shared/set-ref.js';
+import ToolbarPane from './toolbar-pane.js';
 
 /* dts-imports
 import { Messagebar } from 'framework7/types';
@@ -238,7 +239,9 @@ const Messagebar = (props) => {
     >
       {slotsBeforeInner}
       <div className="toolbar-inner">
-        {slotsInnerStart}
+        {slotsInnerStart && slotsInnerStart.length > 0 && (
+          <ToolbarPane>{slotsInnerStart}</ToolbarPane>
+        )}
         <div className="messagebar-area">
           {slotsBeforeArea}
           {messagebarAttachmentsEl}
@@ -260,10 +263,17 @@ const Messagebar = (props) => {
           />
           {slotsAfterArea}
         </div>
-        {((sendLink && sendLink.length > 0) || slotsSendLink) && (
-          <Link onClick={onClick}>{slotsSendLink || sendLink}</Link>
+        {((sendLink && sendLink.length > 0) ||
+          slotsSendLink ||
+          (slotsInnerStart && slotsInnerEnd.length > 0)) && (
+          <ToolbarPane>
+            {((sendLink && sendLink.length > 0) || slotsSendLink) && (
+              <Link onClick={onClick}>{slotsSendLink || sendLink}</Link>
+            )}
+            {slotsInnerEnd}
+          </ToolbarPane>
         )}
-        {slotsInnerEnd}
+
         {innerEndEls}
       </div>
       {slotsAfterInner}

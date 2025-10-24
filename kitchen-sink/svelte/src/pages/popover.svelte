@@ -13,7 +13,7 @@
 </script>
 
 <Page>
-  <Navbar title="Popover" backLink="Back" />
+  <Navbar title="Popover" backLink />
   <Toolbar bottom>
     <Link>Dummy Link</Link>
     <Link popoverOpen=".popover-menu">Open Popover</Link>

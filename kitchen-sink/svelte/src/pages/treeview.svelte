@@ -51,7 +51,7 @@
 </script>
 
 <Page>
-  <Navbar title="Treeview" backLink="Back" />
+  <Navbar title="Treeview" backLink />
 
   <BlockTitle>Basic tree view</BlockTitle>
   <Block strong outlineIos class="no-padding-horizontal">

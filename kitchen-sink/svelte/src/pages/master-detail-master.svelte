@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Master Detail" backLink="Back" />
+  <Navbar title="Master Detail" backLink />
   <Block strong>
     <p>
       Master-Detail pattern oftenly used on wide enough screens and tablets, and consists of two

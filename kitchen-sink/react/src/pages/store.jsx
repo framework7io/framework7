@@ -21,15 +21,15 @@ export default () => {
 
   return (
     <Page>
-      <Navbar title="Store" backLink="Back"></Navbar>
-      <Block strong outlineIos insetMd>
+      <Navbar title="Store" backLink></Navbar>
+      <Block strong inset>
         <p>
           Framework7 comes with a built-in lightweight application state management library - Store.
           It serves as a centralized Store for all the components in an application.
         </p>
       </Block>
       {!users && (
-        <Block className="text-align-center">
+        <Block strong inset className="text-align-center">
           {!loading && (
             <Button fill round onClick={load}>
               Load Users
@@ -40,7 +40,7 @@ export default () => {
       )}
 
       {users && (
-        <List strong outlineIos dividersIos insetMd>
+        <List strong inset dividersIos>
           {users.map((user) => (
             <ListItem key={user} title={user} />
           ))}

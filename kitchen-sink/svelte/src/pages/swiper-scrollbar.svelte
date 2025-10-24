@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Scrollbar" backLink="Back" />
+  <Navbar title="Scrollbar" backLink />
   <swiper-container scrollbar={true} class="demo-swiper">
     <swiper-slide>Slide 1</swiper-slide>
     <swiper-slide>Slide 2</swiper-slide>

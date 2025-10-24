@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="3D Flip Effect" backLink="Back" />
+  <Navbar title="3D Flip Effect" backLink />
   <swiper-container
     effect="flip"
     pagination={true}

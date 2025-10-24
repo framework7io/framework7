@@ -10,7 +10,7 @@
 </script>
 
 <Page pageContent={false}>
-  <Navbar title="Tabbar Scrollable" backLink="Back">
+  <Navbar title="Tabbar Scrollable" backLink>
     <NavRight>
       <Link
         iconMd="material:compare_arrows"

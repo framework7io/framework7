@@ -11,10 +11,10 @@ import {
 
 export default () => (
   <Page>
-    <Navbar title="Accordion" backLink="Back" />
+    <Navbar title="Accordion" backLink />
 
     <BlockTitle>List View Accordion</BlockTitle>
-    <List strong outlineIos dividersIos insetMd accordionList>
+    <List strong inset dividersIos accordionList>
       <ListItem accordionItem title="Lorem Ipsum">
         <AccordionContent>
           <Block>
@@ -54,7 +54,7 @@ export default () => (
     </List>
 
     <BlockTitle>Opposite Side</BlockTitle>
-    <List strong outlineIos dividersIos insetMd accordionList accordionOpposite>
+    <List strong inset accordionList accordionOpposite>
       <ListItem accordionItem title="Lorem Ipsum">
         <AccordionContent>
           <Block>

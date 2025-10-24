@@ -3,7 +3,7 @@ import { Navbar, Page } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar title="Nested Swipers" backLink="Back"></Navbar>
+    <Navbar title="Nested Swipers" backLink></Navbar>
     <swiper-container pagination class="demo-swiper">
       <swiper-slide>Horizontal Slide 1</swiper-slide>
       <swiper-slide>

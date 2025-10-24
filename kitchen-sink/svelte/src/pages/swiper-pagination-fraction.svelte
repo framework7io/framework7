@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Pagination Fraction" backLink="Back" />
+  <Navbar title="Pagination Fraction" backLink />
   <swiper-container pagination={{ type: 'fraction' }} class="demo-swiper">
     <swiper-slide>Slide 1</swiper-slide>
     <swiper-slide>Slide 2</swiper-slide>

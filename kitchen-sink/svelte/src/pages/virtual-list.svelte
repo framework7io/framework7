@@ -37,7 +37,7 @@
 </script>
 
 <Page>
-  <Navbar title="Virtual List" backLink="Back">
+  <Navbar title="Virtual List" backLink>
     <Subnavbar inner={false}>
       <Searchbar searchContainer=".virtual-list" searchItem="li" searchIn=".item-title" />
     </Subnavbar>

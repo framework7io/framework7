@@ -20,7 +20,7 @@
 </script>
 
 <Page>
-  <Navbar title="Store" backLink="Back" />
+  <Navbar title="Store" backLink />
   <Block strong>
     <p>
       Framework7 comes with a built-in lightweight application state management library - Store. It

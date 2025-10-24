@@ -30,7 +30,7 @@
 </script>
 
 <Page>
-  <Navbar title="Text Editor" backLink="Back" />
+  <Navbar title="Text Editor" backLink />
 
   <Block>
     <p>

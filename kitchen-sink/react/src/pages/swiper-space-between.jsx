@@ -3,7 +3,7 @@ import { Navbar, Page } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar title="Space Between Slides" backLink="Back"></Navbar>
+    <Navbar title="Space Between Slides" backLink></Navbar>
     <swiper-container pagination pagination-hide-on-click space-between="50" class="demo-swiper">
       <swiper-slide>Slide 1</swiper-slide>
       <swiper-slide>Slide 2</swiper-slide>

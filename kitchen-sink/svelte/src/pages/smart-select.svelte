@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Smart Select" backLink="Back" />
+  <Navbar title="Smart Select" backLink />
   <Block>
     Framework7 allows you to easily convert your usual form selects to dynamic pages with radios:
   </Block>

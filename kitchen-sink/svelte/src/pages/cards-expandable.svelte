@@ -12,7 +12,7 @@
 </script>
 
 <Page>
-  <Navbar title="Cards Expandable" backLink="Back" />
+  <Navbar title="Cards Expandable" backLink />
 
   <Block>
     <p>

@@ -25,8 +25,8 @@ export default () => {
   };
   return (
     <Page>
-      <Navbar title="Skeleton Elements" backLink="Back"></Navbar>
-      <Block strongIos outlineIos>
+      <Navbar title="Skeleton Elements" backLink></Navbar>
+      <Block strong inset>
         <p>
           Skeleton (or Ghost) elements designed to improve perceived performance and make app feels
           faster.
@@ -41,7 +41,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Skeleton List</BlockTitle>
-      <List strongIos outlineIos dividersIos mediaList className="skeleton-text">
+      <List strong inset dividersIos mediaList className="skeleton-text">
         <ListItem
           title="Title"
           subtitle="Subtitle"
@@ -74,7 +74,7 @@ export default () => {
       ></Card>
 
       <BlockTitle>Loading Effects</BlockTitle>
-      <Block strongIos outlineIos>
+      <Block strong inset>
         <p>It supports few loading effects:</p>
         <p className="grid grid-cols-3 grid-gap">
           <Button fill small round onClick={() => load('fade')}>
@@ -89,7 +89,7 @@ export default () => {
         </p>
       </Block>
       {loading ? (
-        <List strongIos outlineIos dividersIos mediaList v-if="loading">
+        <List strong inset dividersIos mediaList v-if="loading">
           {[1, 2, 3].map((n) => (
             <ListItem
               key={n}
@@ -106,7 +106,7 @@ export default () => {
           ))}
         </List>
       ) : (
-        <List strongIos outlineIos dividersIos mediaList>
+        <List strong inset dividersIos mediaList>
           <ListItem
             title="John Doe"
             subtitle="CEO"

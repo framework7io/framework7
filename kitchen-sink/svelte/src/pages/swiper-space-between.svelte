@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Space Between Slides" backLink="Back" />
+  <Navbar title="Space Between Slides" backLink />
   <swiper-container pagination={{ hideOnClick: true }} space-between={50} class="demo-swiper">
     <swiper-slide>Slide 1</swiper-slide>
     <swiper-slide>Slide 2</swiper-slide>

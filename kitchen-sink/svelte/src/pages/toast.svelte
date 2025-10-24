@@ -130,7 +130,7 @@
 </script>
 
 <Page {onPageBeforeRemove} {onPageBeforeOut}>
-  <Navbar title="Toast" backLink="Back" />
+  <Navbar title="Toast" backLink />
   <Block strongIos outlineIos>
     <p>Toasts provide brief feedback about an operation through a message on the screen.</p>
     <p>

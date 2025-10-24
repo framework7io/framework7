@@ -14,7 +14,7 @@ import {
 
 export default () => (
   <Page>
-    <Navbar title="Data Table" backLink="Back"></Navbar>
+    <Navbar title="Data Table" backLink></Navbar>
     <BlockTitle>Plain table</BlockTitle>
     <div className="data-table">
       <table>

@@ -30,21 +30,10 @@ export default () => {
     if (!actionsToPopover.current) {
       actionsToPopover.current = f7.actions.create({
         buttons: [
-          {
-            text: 'Do something',
-            label: true,
-          },
-          {
-            text: 'Button 1',
-            strong: true,
-          },
-          {
-            text: 'Button 2',
-          },
-          {
-            text: 'Cancel',
-            color: 'red',
-          },
+          { text: 'Do something', label: true },
+          { text: 'Button 1', strong: true },
+          { text: 'Button 2' },
+          { text: 'Cancel', color: 'red' },
         ],
         // Need to specify popover target
         targetEl: buttonToPopoverWrapper.current.querySelector('.button-to-popover'),
@@ -57,21 +46,21 @@ export default () => {
 
   return (
     <Page>
-      <Navbar title="Action Sheet" backLink="Back"></Navbar>
+      <Navbar title="Action Sheet" backLink></Navbar>
       <Block strong inset>
         <p className="grid grid-cols-2 grid-gap">
           {/* One group, open by changing actionsOneGroupOpened property */}
-          <Button fill onClick={() => setActionsOneGroupOpened(true)}>
+          <Button fill round onClick={() => setActionsOneGroupOpened(true)}>
             One group
           </Button>
           {/*  Two groups, open by "actionsOpen" attribute */}
-          <Button fill actionsOpen="#actions-two-groups">
+          <Button fill round actionsOpen="#actions-two-groups">
             Two groups
           </Button>
         </p>
         <p>
           {/* Actions Grid, open by changing actionsGridOpened property */}
-          <Button fill onClick={() => setActionsGridOpened(true)}>
+          <Button fill round onClick={() => setActionsGridOpened(true)}>
             Action Grid
           </Button>
         </p>
@@ -84,6 +73,9 @@ export default () => {
           open Popover on tablets and Action Sheet on phones:
           <Button
             style={{ display: 'inline-block' }}
+            round
+            fill
+            small
             className="button-to-popover"
             onClick={openActionsPopover}
           >

@@ -46,9 +46,7 @@ export default () => {
               ' ',
             ),
         },
-        {
-          values: 'Man Luthor Woman Boy Girl Person Cutie Babe Raccoon'.split(' '),
-        },
+        { values: 'Man Luthor Woman Boy Girl Person Cutie Babe Raccoon'.split(' ') },
       ],
     });
 
@@ -74,10 +72,7 @@ export default () => {
             }
           },
         },
-        {
-          values: carVendors.Japanese,
-          width: 160,
-        },
+        { values: carVendors.Japanese, width: 160 },
       ],
     });
 
@@ -100,9 +95,7 @@ export default () => {
         );
       },
       cols: [
-        {
-          values: ['Mr', 'Ms'],
-        },
+        { values: ['Mr', 'Ms'] },
         {
           textAlign: 'left',
           values:
@@ -110,9 +103,7 @@ export default () => {
               ' ',
             ),
         },
-        {
-          values: 'Man Luthor Woman Boy Girl Person Cutie Babe Raccoon'.split(' '),
-        },
+        { values: 'Man Luthor Woman Boy Girl Person Cutie Babe Raccoon'.split(' ') },
       ],
       on: {
         open(picker) {
@@ -175,10 +166,7 @@ export default () => {
           })(),
         },
         // Space divider
-        {
-          divider: true,
-          content: '&nbsp;&nbsp;',
-        },
+        { divider: true, content: '&nbsp;&nbsp;' },
         // Hours
         {
           values: (function createValues() {
@@ -190,10 +178,7 @@ export default () => {
           })(),
         },
         // Divider
-        {
-          divider: true,
-          content: ':',
-        },
+        { divider: true, content: ':' },
         // Minutes
         {
           values: (function createValues() {
@@ -223,8 +208,8 @@ export default () => {
   };
   return (
     <Page onPageInit={onPageInit} onPageBeforeRemove={onPageBeforeRemove}>
-      <Navbar title="Picker" backLink="Back"></Navbar>
-      <Block>
+      <Navbar title="Picker" backLink></Navbar>
+      <Block strong inset>
         <p>
           Picker is a powerful component that allows you to create custom overlay pickers which
           looks like native picker.
@@ -235,7 +220,7 @@ export default () => {
         </p>
       </Block>
       <BlockTitle>Picker with single value</BlockTitle>
-      <List outlineIos strongIos>
+      <List strong inset>
         <ListInput
           type="text"
           placeholder="Your iOS device"
@@ -244,7 +229,7 @@ export default () => {
         />
       </List>
       <BlockTitle>2 values and 3d-rotate effect</BlockTitle>
-      <List outlineIos strongIos>
+      <List strong inset>
         <ListInput
           type="text"
           placeholder="Describe yourself"
@@ -253,12 +238,12 @@ export default () => {
         />
       </List>
       <BlockTitle>Dependent values</BlockTitle>
-      <List outlineIos strongIos>
+      <List strong inset>
         <ListInput type="text" placeholder="Your car" readonly inputId="demo-picker-dependent" />
       </List>
 
       <BlockTitle>Custom toolbar</BlockTitle>
-      <List outlineIos strongIos>
+      <List strong inset>
         <ListInput
           type="text"
           placeholder="Describe yourself"
@@ -267,10 +252,10 @@ export default () => {
         />
       </List>
       <BlockTitle>Inline Picker / Date-time</BlockTitle>
-      <List className="no-margin">
+      <List strong inset>
         <ListInput type="text" placeholder="Date Time" readonly inputId="demo-picker-date" />
       </List>
-      <Block strong insetMd outlineIos className="no-padding no-margin-top">
+      <Block strong inset>
         <div id="demo-picker-date-container"></div>
       </Block>
     </Page>

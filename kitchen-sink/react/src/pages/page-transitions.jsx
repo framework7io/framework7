@@ -13,7 +13,7 @@ const effects = [
 ];
 export default () => (
   <Page>
-    <Navbar title="Page Transitions" backLink="Back"></Navbar>
+    <Navbar title="Page Transitions" backLink></Navbar>
 
     <Block>
       <p>

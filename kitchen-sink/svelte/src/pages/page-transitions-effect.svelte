@@ -5,7 +5,7 @@
 </script>
 
 <Page>
-  <Navbar title={effect} backLink="Back" />
+  <Navbar title={effect} backLink />
 
   <Block class="text-align-center">
     <p>This page was loaded with <b>{effect}</b> transition.</p>

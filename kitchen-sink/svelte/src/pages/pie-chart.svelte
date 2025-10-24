@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Pie Chart" backLink="Back" />
+  <Navbar title="Pie Chart" backLink />
   <Block strongIos outlineIos>
     <p>Framework7 comes with simple to use and fully responsive Pie Chart component.</p>
     <p>

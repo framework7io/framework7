@@ -3,11 +3,11 @@ import { Navbar, Page, List, Block, ListItem } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar title="Smart Select" backLink="Back"></Navbar>
-    <Block>
+    <Navbar title="Smart Select" backLink></Navbar>
+    <Block strong inset>
       Framework7 allows you to easily convert your usual form selects to dynamic pages with radios:
     </Block>
-    <List strongIos outlineIos dividersIos>
+    <List strong inset dividersIos>
       <ListItem title="Fruit" smartSelect>
         <select name="fruits" defaultValue="apple">
           <option value="apple">Apple</option>

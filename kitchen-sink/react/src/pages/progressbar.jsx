@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Navbar,
   Page,
@@ -13,10 +13,12 @@ import {
 } from 'framework7-react';
 
 export default () => {
+  const [inlineProgress, setInlineProgress] = useState(10);
   const determinateLoading = useRef(false);
   const infiniteLoading = useRef(false);
 
-  const setInlineProgress = (value) => {
+  const setProgressbarInlineProgress = (value) => {
+    setInlineProgress(value);
     f7.progressbar.set('#demo-inline-progressbar', value);
   };
   const showDeterminate = (inline) => {
@@ -62,15 +64,15 @@ export default () => {
   };
   return (
     <Page>
-      <Navbar title="Progress Bar" backLink="Back"></Navbar>
-      <Block>
+      <Navbar title="Progress Bar" backLink></Navbar>
+      <Block strong inset>
         <p>
           In addition to <a href="/preloader/">Preloader</a>, Framework7 also comes with fancy
           animated determinate and infinite/indeterminate progress bars to indicate some activity.
         </p>
       </Block>
       <BlockTitle>Determinate Progress Bar</BlockTitle>
-      <Block strongIos outlineIos>
+      <Block strong inset>
         <p>
           When progress bar is determinate it indicates how long an operation will take when the
           percentage complete is detectable.
@@ -80,31 +82,35 @@ export default () => {
           <p>
             <Progressbar progress={10} id="demo-inline-progressbar" />
           </p>
-          <Segmented raised>
+          <Segmented strong round>
             <Button
+              active={inlineProgress === 10}
               onClick={() => {
-                setInlineProgress(10);
+                setProgressbarInlineProgress(10);
               }}
             >
               10%
             </Button>
             <Button
+              active={inlineProgress === 30}
               onClick={() => {
-                setInlineProgress(30);
+                setProgressbarInlineProgress(30);
               }}
             >
               30%
             </Button>
             <Button
+              active={inlineProgress === 50}
               onClick={() => {
-                setInlineProgress(50);
+                setProgressbarInlineProgress(50);
               }}
             >
               50%
             </Button>
             <Button
+              active={inlineProgress === 100}
               onClick={() => {
-                setInlineProgress(100);
+                setProgressbarInlineProgress(100);
               }}
             >
               100%
@@ -117,6 +123,7 @@ export default () => {
           <p>
             <Button
               fill
+              round
               onClick={() => {
                 showDeterminate(true);
               }}
@@ -130,6 +137,7 @@ export default () => {
           <p>
             <Button
               fill
+              round
               onClick={() => {
                 showDeterminate(false);
               }}
@@ -140,7 +148,7 @@ export default () => {
         </div>
       </Block>
       <BlockTitle>Infinite Progress Bar</BlockTitle>
-      <Block strong>
+      <Block strong inset>
         <p>
           When progress bar is infinite/indeterminate it requests that the user wait while something
           finishes when it’s not necessary to indicate how long it will take.
@@ -159,6 +167,7 @@ export default () => {
           <p>
             <Button
               fill
+              round
               onClick={() => {
                 showInfinite(false);
               }}
@@ -172,6 +181,7 @@ export default () => {
           <p>
             <Button
               fill
+              round
               onClick={() => {
                 showInfinite(true);
               }}
@@ -182,7 +192,7 @@ export default () => {
         </div>
       </Block>
       <BlockTitle>Colors</BlockTitle>
-      <List strongIos outlineIos dividersIos simpleList>
+      <List strong inset dividersIos simpleList>
         <ListItem>
           <Progressbar color="blue" progress={10} />
         </ListItem>

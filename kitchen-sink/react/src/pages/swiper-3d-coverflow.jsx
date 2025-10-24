@@ -3,7 +3,7 @@ import { Navbar, Page } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar title="3D Coverflow Effect" backLink="Back"></Navbar>
+    <Navbar title="3D Coverflow Effect" backLink></Navbar>
     <swiper-container
       effect="coverflow"
       pagination

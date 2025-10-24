@@ -12,10 +12,10 @@ export default () => {
 
   return (
     <Page>
-      <Navbar title="Range Slider" backLink="Back"></Navbar>
+      <Navbar title="Range Slider" backLink></Navbar>
 
       <BlockTitle>Volume</BlockTitle>
-      <List simpleList outlineIos strongIos>
+      <List simpleList inset strong>
         <ListItem>
           <div>
             <Icon ios="f7:speaker_fill" md="material:volume_mute" />
@@ -30,7 +30,7 @@ export default () => {
       </List>
 
       <BlockTitle>Brightness</BlockTitle>
-      <List simpleList outlineIos strongIos>
+      <List simpleList inset strong>
         <ListItem>
           <div>
             <Icon ios="f7:sun_min" md="material:brightness_low" />
@@ -50,7 +50,7 @@ export default () => {
           ${priceMin} - ${priceMax}
         </span>
       </BlockTitle>
-      <List simpleList outlineIos strongIos>
+      <List simpleList inset strong>
         <ListItem>
           <div>
             <Icon ios="f7:money_dollar_circle" md="material:attach_money" />
@@ -74,7 +74,7 @@ export default () => {
       </List>
 
       <BlockTitle>With Scale</BlockTitle>
-      <Block strongIos outlineIos>
+      <Block strong inset>
         <Range
           min={0}
           max={100}
@@ -88,7 +88,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Vertical</BlockTitle>
-      <Block strongIos outlineIos className="display-flex justify-content-center">
+      <Block strong inset className="display-flex justify-content-center">
         <Range
           className="margin-right"
           style={{ height: '160px' }}
@@ -133,7 +133,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Vertical Reversed</BlockTitle>
-      <Block strongIos outlineIos className="display-flex justify-content-center">
+      <Block strong inset className="display-flex justify-content-center">
         <Range
           className="margin-right"
           color="red"

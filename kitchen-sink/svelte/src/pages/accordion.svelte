@@ -11,7 +11,7 @@
 </script>
 
 <Page>
-  <Navbar title="Accordion" backLink="Back" />
+  <Navbar title="Accordion" backLink />
 
   <BlockTitle>List View Accordion</BlockTitle>
   <List strong outlineIos dividersIos insetMd accordionList>

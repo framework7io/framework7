@@ -14,7 +14,7 @@
 </script>
 
 <Page>
-  <Navbar title="Page Transitions" backLink="Back" />
+  <Navbar title="Page Transitions" backLink />
 
   <Block>
     <p>

@@ -83,29 +83,29 @@ export default () => {
   };
   return (
     <Page onPageBeforeOut={onPageBeforeOut} onPageBeforeRemove={onPageBeforeRemove}>
-      <Navbar title="Notifications" backLink="Back"></Navbar>
-      <Block strongIos outlineIos>
+      <Navbar title="Notifications" backLink></Navbar>
+      <Block strong inset>
         <p>
           Framework7 comes with simple Notifications component that allows you to show some useful
           messages to user and request basic actions.
         </p>
         <p>
-          <Button fill onClick={showNotificationFull}>
+          <Button round fill onClick={showNotificationFull}>
             Full layout notification
           </Button>
         </p>
         <p>
-          <Button fill onClick={showNotificationWithButton}>
+          <Button round fill onClick={showNotificationWithButton}>
             With close button
           </Button>
         </p>
         <p>
-          <Button fill onClick={showNotificationCloseOnClick}>
+          <Button round fill onClick={showNotificationCloseOnClick}>
             Click to close
           </Button>
         </p>
         <p>
-          <Button fill onClick={showNotificationCallbackOnClose}>
+          <Button round fill onClick={showNotificationCallbackOnClose}>
             Callback on close
           </Button>
         </p>

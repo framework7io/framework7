@@ -9,7 +9,7 @@
 
 <!-- svelte-ignore a11y-invalid-attribute -->
 <Page>
-  <Navbar title="List Button" backLink="Back" />
+  <Navbar title="List Button" backLink />
 
   <List inset strong>
     <ListButton title="List Button 1" />

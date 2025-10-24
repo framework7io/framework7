@@ -1,19 +1,21 @@
 import React from 'react';
-import { Navbar, Page, Block, Tabs, Tab, Link, Toolbar } from 'framework7-react';
+import { Navbar, Page, Block, Tabs, Tab, Link, Toolbar, ToolbarPane } from 'framework7-react';
 
 export default () => (
   <Page pageContent={false}>
-    <Navbar title="Swipeable Tabs" backLink="Back"></Navbar>
+    <Navbar title="Swipeable Tabs" backLink></Navbar>
     <Toolbar bottom tabbar>
-      <Link tabLink="#tab-1" tabLinkActive>
-        Tab 1
-      </Link>
-      <Link tabLink="#tab-2">Tab 2</Link>
-      <Link tabLink="#tab-3">Tab 3</Link>
+      <ToolbarPane>
+        <Link tabLink="#tab-1" tabLinkActive>
+          Tab 1
+        </Link>
+        <Link tabLink="#tab-2">Tab 2</Link>
+        <Link tabLink="#tab-3">Tab 3</Link>
+      </ToolbarPane>
     </Toolbar>
     <Tabs swipeable>
       <Tab id="tab-1" className="page-content" tabActive>
-        <Block>
+        <Block strong inset>
           <p>Tab 1 content</p>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae
@@ -54,7 +56,7 @@ export default () => (
         </Block>
       </Tab>
       <Tab id="tab-2" className="page-content">
-        <Block>
+        <Block strong inset>
           <p>Tab 2 content</p>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae
@@ -95,7 +97,7 @@ export default () => (
         </Block>
       </Tab>
       <Tab id="tab-3" className="page-content">
-        <Block>
+        <Block strong inset>
           <p>Tab 3 content</p>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae

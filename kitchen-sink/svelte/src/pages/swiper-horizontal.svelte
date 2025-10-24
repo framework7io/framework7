@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Swiper Horizontal" backLink="Back" />
+  <Navbar title="Swiper Horizontal" backLink />
   <swiper-container pagination={{ hideOnClick: true }} class="demo-swiper">
     <swiper-slide>Slide 1</swiper-slide>
     <swiper-slide>Slide 2</swiper-slide>

@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
-import { Navbar, Page, Block, Tabs, Tab, Link, Toolbar, NavRight } from 'framework7-react';
+import {
+  Navbar,
+  Page,
+  Block,
+  Tabs,
+  Tab,
+  Link,
+  Toolbar,
+  NavRight,
+  ToolbarPane,
+} from 'framework7-react';
 
 export default () => {
   const [toolbarPosition, setToolbarPosition] = useState('bottom');
@@ -10,7 +20,7 @@ export default () => {
 
   return (
     <Page pageContent={false}>
-      <Navbar title="Tabbar" backLink="Back">
+      <Navbar title="Tabbar" backLink>
         <NavRight>
           <Link
             iconMd="material:compare_arrows"
@@ -22,16 +32,18 @@ export default () => {
         </NavRight>
       </Navbar>
       <Toolbar tabbar position={toolbarPosition}>
-        <Link tabLink="#tab-1" tabLinkActive>
-          Tab 1
-        </Link>
-        <Link tabLink="#tab-2">Tab 2</Link>
-        <Link tabLink="#tab-3">Tab 3</Link>
+        <ToolbarPane>
+          <Link tabLink="#tab-1" tabLinkActive>
+            Tab 1
+          </Link>
+          <Link tabLink="#tab-2">Tab 2</Link>
+          <Link tabLink="#tab-3">Tab 3</Link>
+        </ToolbarPane>
       </Toolbar>
 
       <Tabs>
         <Tab id="tab-1" className="page-content" tabActive>
-          <Block>
+          <Block strong inset>
             <p>Tab 1 content</p>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae
@@ -72,7 +84,7 @@ export default () => {
           </Block>
         </Tab>
         <Tab id="tab-2" className="page-content">
-          <Block>
+          <Block strong inset>
             <p>Tab 2 content</p>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae
@@ -113,7 +125,7 @@ export default () => {
           </Block>
         </Tab>
         <Tab id="tab-3" className="page-content">
-          <Block>
+          <Block strong inset>
             <p>Tab 3 content</p>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae

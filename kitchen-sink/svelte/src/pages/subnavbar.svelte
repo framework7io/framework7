@@ -12,7 +12,7 @@
 </script>
 
 <Page>
-  <Navbar title="Subnavbar" backLink="Back">
+  <Navbar title="Subnavbar" backLink>
     <Subnavbar>
       <Segmented strong>
         <Button smallMd active>Link 1</Button>

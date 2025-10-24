@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Multiple Swipers" backLink="Back" />
+  <Navbar title="Multiple Swipers" backLink />
   <BlockTitle>1 Slide Per View, 50px Between</BlockTitle>
   <swiper-container pagination={true} class="demo-swiper-multiple" space-between={50}>
     <swiper-slide>Slide 1</swiper-slide>

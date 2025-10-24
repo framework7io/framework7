@@ -60,7 +60,7 @@
 </script>
 
 <Page {onPageBeforeOut} {onPageBeforeRemove}>
-  <Navbar title="Sheet Modal" backLink="Back" />
+  <Navbar title="Sheet Modal" backLink />
   <Block strongIos outlineIos>
     <p>
       Sheet Modals slide up from the bottom of the screen to reveal more content. Such modals allow

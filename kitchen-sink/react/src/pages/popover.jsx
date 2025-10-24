@@ -9,19 +9,22 @@ import {
   Block,
   Link,
   Button,
+  ToolbarPane,
 } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar title="Popover" backLink="Back"></Navbar>
+    <Navbar title="Popover" backLink></Navbar>
     <Toolbar bottom>
-      <Link>Dummy Link</Link>
-      <Link popoverOpen=".popover-menu">Open Popover</Link>
+      <ToolbarPane>
+        <Link>Dummy Link</Link>
+        <Link popoverOpen=".popover-menu">Open Popover</Link>
+      </ToolbarPane>
     </Toolbar>
 
-    <Block>
+    <Block strong inset>
       <p>
-        <Button fill popoverOpen=".popover-menu">
+        <Button round fill popoverOpen=".popover-menu">
           Open popover on me
         </Button>
       </p>

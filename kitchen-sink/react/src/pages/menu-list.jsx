@@ -6,7 +6,7 @@ export default () => {
   const [selectedMedia, setSelectedMedia] = useState('home');
   return (
     <Page>
-      <Navbar title="Menu List" backLink="Back"></Navbar>
+      <Navbar title="Menu List" backLink></Navbar>
 
       <Block>
         <p>

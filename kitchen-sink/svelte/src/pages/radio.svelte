@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Radio" backLink="Back" />
+  <Navbar title="Radio" backLink />
 
   <BlockTitle>Inline</BlockTitle>
   <Block strongIos outlineIos>

@@ -66,7 +66,7 @@ export default () => {
 
   return (
     <Page onPageInit={onPageInit} onPageBeforeRemove={onPageBeforeRemove}>
-      <Navbar title="Calendar" backLink="Back"></Navbar>
+      <Navbar title="Calendar" backLink></Navbar>
       <Block>
         <p>Calendar is a touch optimized component that provides an easy way to handle dates.</p>
         <p>
@@ -76,12 +76,12 @@ export default () => {
       </Block>
 
       <BlockTitle>Default setup</BlockTitle>
-      <List strongIos outlineIos>
+      <List strong inset>
         <ListInput type="datepicker" placeholder="Your birth date" readonly />
       </List>
 
       <BlockTitle>Custom date format</BlockTitle>
-      <List strongIos outlineIos>
+      <List strong inset>
         <ListInput
           type="datepicker"
           placeholder="Select date"
@@ -93,7 +93,7 @@ export default () => {
       </List>
 
       <BlockTitle>Date + Time</BlockTitle>
-      <List strongIos outlineIos>
+      <List strong inset>
         <ListInput
           type="datepicker"
           placeholder="Select date and time"
@@ -112,7 +112,7 @@ export default () => {
       </List>
 
       <BlockTitle>Multiple Values</BlockTitle>
-      <List strongIos outlineIos>
+      <List strong inset>
         <ListInput
           type="datepicker"
           placeholder="Select multiple dates"
@@ -122,7 +122,7 @@ export default () => {
       </List>
 
       <BlockTitle>Range Picker</BlockTitle>
-      <List strongIos outlineIos>
+      <List strong inset>
         <ListInput
           type="datepicker"
           placeholder="Select date range"
@@ -132,7 +132,7 @@ export default () => {
       </List>
 
       <BlockTitle>Open in Modal</BlockTitle>
-      <List strongIos outlineIos>
+      <List strong inset>
         <ListInput
           type="datepicker"
           placeholder="Select date"
@@ -142,12 +142,12 @@ export default () => {
       </List>
 
       <BlockTitle>Calendar Page</BlockTitle>
-      <List strong outlineIos>
+      <List strong inset>
         <ListItem title="Open Calendar Page" link="/calendar-page/" />
       </List>
 
       <BlockTitle>Inline with custom toolbar</BlockTitle>
-      <Block strong className="no-padding">
+      <Block strong inset className="no-padding">
         <div id="demo-calendar-inline-container" />
       </Block>
     </Page>

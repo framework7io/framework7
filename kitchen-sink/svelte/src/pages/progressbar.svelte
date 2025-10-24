@@ -61,7 +61,7 @@
 </script>
 
 <Page>
-  <Navbar title="Progress Bar" backLink="Back" />
+  <Navbar title="Progress Bar" backLink />
   <Block>
     <p>
       In addition to

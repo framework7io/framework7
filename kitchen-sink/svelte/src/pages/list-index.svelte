@@ -7,7 +7,7 @@
 </script>
 
 <Page>
-  <Navbar title="List Index" backLink="Back" />
+  <Navbar title="List Index" backLink />
   <ListIndex
     indexes="auto"
     listEl=".list.contacts-list"

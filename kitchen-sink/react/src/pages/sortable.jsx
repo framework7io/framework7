@@ -13,16 +13,16 @@ import {
 
 export default () => (
   <Page>
-    <Navbar title="Sortable List" backLink="Back">
+    <Navbar title="Sortable List" backLink>
       <NavRight>
         <Link sortableToggle=".sortable">Toggle</Link>
       </NavRight>
     </Navbar>
 
-    <Block>
+    <Block strong inset>
       <p>Just click "Toggle" button on navigation bar to enable/disable sorting</p>
     </Block>
-    <List strongIos outlineIos dividersIos sortable>
+    <List strong inset dividersIos sortable>
       <ListItem title="1 Jenna Smith" after="CEO">
         <Icon icon="icon-f7" slot="media" />
       </ListItem>
@@ -45,7 +45,7 @@ export default () => (
         <Icon icon="icon-f7" slot="media" />
       </ListItem>
     </List>
-    <List strongIos outlineIos dividersIos mediaList sortable>
+    <List strong inset dividersIos mediaList sortable>
       <ListItem
         title="Yellow Submarine"
         after="$15"
@@ -85,7 +85,7 @@ export default () => (
     </List>
 
     <BlockTitle>Opposite Side</BlockTitle>
-    <List strongIos outlineIos dividersIos sortable sortableOpposite>
+    <List strong inset dividersIos sortable sortableOpposite>
       <ListItem title="1 Jenna Smith" after="CEO">
         <Icon icon="icon-f7" slot="media" />
       </ListItem>

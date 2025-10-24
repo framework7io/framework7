@@ -6,24 +6,34 @@ import {
   Button,
   Block,
   List,
+  ListItem,
   ListInput,
   Checkbox,
   Link,
   Toolbar,
   f7,
+  ToolbarPane,
+  Toggle,
 } from 'framework7-react';
 import $ from 'dom7';
 
 let globalTheme = 'light';
 let globalThemeColor = $('html').css('--f7-color-primary').trim();
+let globalMonochrome = false;
+let globalVibrant = false;
 
 export default () => {
+  if (!globalThemeColor) {
+    globalThemeColor = $('html').css('--f7-color-primary').trim();
+  }
   const colors = Object.keys(f7.colors).filter(
     (c) => c !== 'primary' && c !== 'white' && c !== 'black',
   );
 
   const [theme, setTheme] = useState(globalTheme);
   const [themeColor, setThemeColor] = useState(globalThemeColor);
+  const [monochrome, setMonochrome] = useState(globalMonochrome);
+  const [vibrant, setVibrant] = useState(globalVibrant);
 
   const setScheme = (newTheme) => {
     f7.setDarkMode(newTheme === 'dark');
@@ -42,30 +52,53 @@ export default () => {
     setThemeColor(globalThemeColor);
     f7.setColorTheme(globalThemeColor);
   };
+  const setMdColorScheme = () => {
+    if (!globalVibrant && !globalMonochrome) {
+      f7.setMdColorScheme('default');
+    } else if (globalVibrant && !globalMonochrome) {
+      f7.setMdColorScheme('vibrant');
+    } else if (!globalVibrant && globalMonochrome) {
+      f7.setMdColorScheme('monochrome');
+    } else if (globalVibrant && globalMonochrome) {
+      f7.setMdColorScheme('monochrome-vibrant');
+    }
+  };
+  const setMdColorSchemeMonochrome = (value) => {
+    globalMonochrome = value;
+    setMonochrome(globalMonochrome);
+    setMdColorScheme();
+  };
+  const setMdColorSchemeVibrant = (value) => {
+    globalVibrant = value;
+    setVibrant(globalVibrant);
+    setMdColorScheme();
+  };
 
   return (
     <Page>
-      <Navbar large title="Color Themes" backLink="Back">
+      <Navbar large title="Color Themes" backLink>
         <Link slot="right">Link</Link>
       </Navbar>
       <Toolbar tabbar icons bottom>
-        <Link
-          tabLink="#tab-1"
-          tabLinkActive
-          text="Tab 1"
-          iconIos="f7:envelope_fill"
-          iconMd="material:email"
-        />
-        <Link tabLink="#tab-2" text="Tab 2" iconIos="f7:calendar_fill" iconMd="material:today" />
-        <Link
-          tabLink="#tab-3"
-          text="Tab 3"
-          iconIos="f7:cloud_upload_fill"
-          iconMd="material:file_upload"
-        />
+        <ToolbarPane>
+          <Link
+            tabLink="#tab-1"
+            tabLinkActive
+            text="Tab 1"
+            iconIos="f7:envelope_fill"
+            iconMd="material:email"
+          />
+          <Link tabLink="#tab-2" text="Tab 2" iconIos="f7:calendar_fill" iconMd="material:today" />
+          <Link
+            tabLink="#tab-3"
+            text="Tab 3"
+            iconIos="f7:cloud_upload_fill"
+            iconMd="material:file_upload"
+          />
+        </ToolbarPane>
       </Toolbar>
       <BlockTitle medium>Layout Themes</BlockTitle>
-      <Block strong>
+      <Block strong inset>
         <p>Framework7 comes with 2 main layout themes: Light (default) and Dark:</p>
         <div className="grid grid-cols-2 grid-gap">
           <div
@@ -86,7 +119,7 @@ export default () => {
       </Block>
 
       <BlockTitle medium>Default Color Themes</BlockTitle>
-      <Block strong>
+      <Block strong inset>
         <p>Framework7 comes with {colors.length} color themes set.</p>
         <div className="grid grid-cols-3 medium-grid-cols-2 large-grid-cols-5 grid-gap">
           {colors.map((color, index) => (
@@ -105,8 +138,32 @@ export default () => {
           ))}
         </div>
       </Block>
+
+      <BlockTitle medium>Material Color Scheme</BlockTitle>
+      <List strong inset dividersIos>
+        <ListItem
+          title="Monochrome"
+          after={
+            <Toggle
+              checked={monochrome}
+              onToggleChange={() => setMdColorSchemeMonochrome(!monochrome)}
+            />
+          }
+        ></ListItem>
+        <ListItem
+          title="Vibrant"
+          after={
+            <Toggle
+              checked={vibrant}
+              onToggleChange={() => setMdColorSchemeVibrant(!vibrant)}
+              color="blue"
+            />
+          }
+        ></ListItem>
+      </List>
+
       <BlockTitle medium>Custom Color Theme</BlockTitle>
-      <List strongIos outlineIos>
+      <List strong inset dividersIos>
         <ListInput
           type="colorpicker"
           label="HEX Color"
@@ -114,9 +171,7 @@ export default () => {
           readonly
           value={{ hex: themeColor }}
           onColorPickerChange={(value) => setCustomColor(value.hex)}
-          colorPickerParams={{
-            targetEl: '#color-theme-picker-color',
-          }}
+          colorPickerParams={{ targetEl: '#color-theme-picker-color' }}
         >
           <div
             slot="media"

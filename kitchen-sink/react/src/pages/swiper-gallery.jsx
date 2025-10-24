@@ -4,7 +4,7 @@ import { Navbar, Page } from 'framework7-react';
 export default () => {
   return (
     <Page style={{ background: '#000' }}>
-      <Navbar title="Two Way Control Gallery" backLink="Back"></Navbar>
+      <Navbar title="Two Way Control Gallery" backLink></Navbar>
       <swiper-container
         navigation
         space-between="10"

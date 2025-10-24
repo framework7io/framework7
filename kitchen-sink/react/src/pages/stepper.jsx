@@ -32,9 +32,9 @@ export default () => {
 
   return (
     <Page>
-      <Navbar title="Stepper" backLink="Back"></Navbar>
+      <Navbar title="Stepper" backLink></Navbar>
       <BlockTitle>Shape and size</BlockTitle>
-      <Block strong outlineIos className="text-align-center">
+      <Block strong inset className="text-align-center">
         <div className="grid grid-cols-2 grid-gap">
           <div>
             <small className="display-block">Default</small>
@@ -103,7 +103,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Raised</BlockTitle>
-      <Block strong outlineIos className="text-align-center">
+      <Block strong inset className="text-align-center">
         <div className="grid grid-cols-2 grid-gap">
           <div>
             <small className="display-block">Default</small>
@@ -171,7 +171,7 @@ export default () => {
         </div>
       </Block>
       <BlockTitle>Colors</BlockTitle>
-      <Block strong outlineIos className="text-align-center">
+      <Block strong inset className="text-align-center">
         <div className="grid grid-cols-2 grid-gap">
           <div>
             <Stepper fill color="red" />
@@ -209,7 +209,7 @@ export default () => {
         </div>
       </Block>
       <BlockTitle>Without input element</BlockTitle>
-      <Block strong outlineIos className="text-align-center">
+      <Block strong inset className="text-align-center">
         <div className="grid grid-cols-2 grid-gap">
           <div>
             <Stepper input={false} />
@@ -220,7 +220,7 @@ export default () => {
         </div>
       </Block>
       <BlockTitle>Min, max, step</BlockTitle>
-      <Block strong outlineIos className="text-align-center">
+      <Block strong inset className="text-align-center">
         <div className="grid grid-cols-2 grid-gap">
           <div>
             <Stepper fill value={100} min={0} max={1000} step={100} />
@@ -237,7 +237,7 @@ export default () => {
         repeatedly. With dynamic autorepeat, the rate of change depends on how long the user
         continues pressing the control.
       </BlockHeader>
-      <Block strong outlineIos className="text-align-center">
+      <Block strong inset className="text-align-center">
         <div className="grid grid-cols-2 grid-gap">
           <div>
             <small className="display-block">Default</small>
@@ -263,7 +263,7 @@ export default () => {
         In wraps mode incrementing beyond maximum value sets value to minimum value, likewise,
         decrementing below minimum value sets value to maximum value
       </BlockHeader>
-      <Block strong outlineIos className="text-align-center">
+      <Block strong inset className="text-align-center">
         <Stepper fill value={0} min={0} max={10} step={1} autorepeat={true} wraps={true} />
       </Block>
 
@@ -302,7 +302,7 @@ export default () => {
         fractional part with defined accurancy. Click outside or enter Return key, ending manual
         mode.
       </BlockHeader>
-      <Block strong outlineIos className="text-align-center">
+      <Block strong inset className="text-align-center">
         <Stepper
           fill
           value={0}

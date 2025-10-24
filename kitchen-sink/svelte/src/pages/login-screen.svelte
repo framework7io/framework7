@@ -26,7 +26,7 @@
 </script>
 
 <Page>
-  <Navbar title="Login Screen" backLink="Back" />
+  <Navbar title="Login Screen" backLink />
   <Block>
     <p>
       Framework7 comes with ready to use Login Screen layout. It could be used inside of page or

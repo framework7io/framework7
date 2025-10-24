@@ -3,7 +3,7 @@ import { Navbar, Page } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar title="Pagination Fraction" backLink="Back"></Navbar>
+    <Navbar title="Pagination Fraction" backLink></Navbar>
     <swiper-container pagination pagination-type="fraction" class="demo-swiper">
       <swiper-slide>Slide 1</swiper-slide>
       <swiper-slide>Slide 2</swiper-slide>

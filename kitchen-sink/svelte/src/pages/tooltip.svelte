@@ -32,7 +32,7 @@
 </script>
 
 <Page {onPageInit} {onPageBeforeRemove}>
-  <Navbar title="Tooltip" backLink="Back">
+  <Navbar title="Tooltip" backLink>
     <NavRight>
       <Link class="navbar-tooltip">
         <Icon ios="f7:info_circle_fill" md="material:info_outline" />

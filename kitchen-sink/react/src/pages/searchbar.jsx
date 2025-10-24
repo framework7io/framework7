@@ -4,15 +4,15 @@ import { Navbar, Page, Searchbar, Subnavbar, List, ListItem } from 'framework7-r
 export default () => {
   return (
     <Page>
-      <Navbar backLink="Back" title="Searchbar">
+      <Navbar backLink title="Searchbar">
         <Subnavbar inner={false}>
           <Searchbar searchContainer=".search-list" searchIn=".item-title" />
         </Subnavbar>
       </Navbar>
-      <List strongIos outlineIos dividersIos className="searchbar-not-found">
+      <List strong inset dividersIos className="searchbar-not-found">
         <ListItem title="Nothing found" />
       </List>
-      <List strongIos outlineIos dividersIos className="search-list searchbar-found">
+      <List strong inset dividersIos className="search-list searchbar-found">
         <ListItem title="Acura" />
         <ListItem title="Audi" />
         <ListItem title="BMW" />

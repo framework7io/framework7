@@ -17,7 +17,7 @@
 </script>
 
 <Page>
-  <Navbar backLink="Back" title="Breadcrumbs" />
+  <Navbar backLink title="Breadcrumbs" />
   <Block strongIos outlineIos>
     <p>
       Breadcrumbs allow users to keep track and maintain awareness of their locations within the app

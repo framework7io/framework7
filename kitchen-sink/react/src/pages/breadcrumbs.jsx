@@ -18,7 +18,7 @@ import {
 export default () => {
   return (
     <Page>
-      <Navbar title="Breadcrumbs" backLink="Back"></Navbar>
+      <Navbar title="Breadcrumbs" backLink></Navbar>
       <Block strongIos outlineIos>
         <p>
           Breadcrumbs allow users to keep track and maintain awareness of their locations within the

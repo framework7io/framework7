@@ -3,7 +3,7 @@
 </script>
 
 <Page style="background: #000">
-  <Navbar title="Two Way Control Gallery" backLink="Back" />
+  <Navbar title="Two Way Control Gallery" backLink />
   <swiper-container
     navigation={true}
     space-between={10}

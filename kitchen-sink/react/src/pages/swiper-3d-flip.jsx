@@ -3,7 +3,7 @@ import { Navbar, Page } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar title="3D Flip Effect" backLink="Back"></Navbar>
+    <Navbar title="3D Flip Effect" backLink></Navbar>
     <swiper-container
       effect="flip"
       pagination

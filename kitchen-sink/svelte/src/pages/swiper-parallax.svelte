@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Parallax" backLink="Back" />
+  <Navbar title="Parallax" backLink />
   <swiper-container
     pagination={true}
     navigation={true}

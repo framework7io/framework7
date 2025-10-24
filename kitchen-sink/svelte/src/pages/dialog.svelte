@@ -87,7 +87,7 @@
 </script>
 
 <Page>
-  <Navbar title="Dialog" backLink="Back" />
+  <Navbar title="Dialog" backLink />
   <Block strongIos outlineIos>
     <p>
       There are 1:1 replacements of native Alert, Prompt and Confirm modals. They support callbacks,

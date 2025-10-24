@@ -12,9 +12,9 @@ import {
 
 export default () => (
   <Page>
-    <Navbar title="Subnavbar" backLink="Back">
+    <Navbar title="Subnavbar" backLink>
       <Subnavbar>
-        <Segmented strong>
+        <Segmented strong round>
           <Button smallMd active>
             Link 1
           </Button>
@@ -29,7 +29,7 @@ export default () => (
         or Search Bar. It also remains visible when Navbar hidden.
       </p>
     </Block>
-    <List strong outlineIos>
+    <List strong inset>
       <ListItem link="/subnavbar-title/" title="Subnavbar Title" />
     </List>
   </Page>

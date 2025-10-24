@@ -3,10 +3,10 @@ import { Navbar, Page, Block, Button, Link, Panel } from 'framework7-react';
 
 export default () => (
   <Page id="panel-page">
-    <Navbar title="Panel / Side panels" backLink="Back"></Navbar>
+    <Navbar title="Panel / Side panels" backLink></Navbar>
     <Panel left cover containerEl="#panel-page" id="panel-nested">
       <Page>
-        <Block strongIos outlineIos>
+        <Block strong inset>
           <p>This is page-nested Panel.</p>
           <p>
             <Link panelClose>Close me</Link>
@@ -14,24 +14,24 @@ export default () => (
         </Block>
       </Page>
     </Panel>
-    <Block strongIos outlineIos>
+    <Block strong inset>
       <p>
         Framework7 comes with 2 panels (on left and on right), both are optional. You can put
         absolutely anything inside: data lists, forms, custom content, and even other isolated app
         view (like in right panel now) with its own dynamic navbar.
       </p>
     </Block>
-    <Block strongIos outlineIos>
+    <Block strong inset>
       <p className="grid grid-cols-2 grid-gap">
-        <Button raised fill panelOpen="left">
+        <Button round fill panelOpen="left">
           Open left panel
         </Button>
-        <Button raised fill panelOpen="right">
+        <Button round fill panelOpen="right">
           Open right panel
         </Button>
       </p>
       <p>
-        <Button raised fill panelOpen="#panel-nested">
+        <Button round fill panelOpen="#panel-nested">
           Open nested panel
         </Button>
       </p>

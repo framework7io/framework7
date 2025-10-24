@@ -9,7 +9,7 @@
 </script>
 
 <Page pageContent={false}>
-  <Navbar title="Tabbar" backLink="Back">
+  <Navbar title="Tabbar" backLink>
     <NavRight>
       <Link
         iconMd="material:compare_arrows"

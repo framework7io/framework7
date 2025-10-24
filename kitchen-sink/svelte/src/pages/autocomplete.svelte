@@ -362,7 +362,7 @@
 </script>
 
 <Page {onPageInit} {onPageBeforeRemove}>
-  <Navbar title="Autocomplete" backLink="Back">
+  <Navbar title="Autocomplete" backLink>
     <Subnavbar inner={false}>
       <Searchbar init={false} id="searchbar-autocomplete" />
     </Subnavbar>

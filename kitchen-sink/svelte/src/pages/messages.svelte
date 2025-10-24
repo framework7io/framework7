@@ -225,7 +225,7 @@
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
-  <Navbar title="Messages" backLink="Back" />
+  <Navbar title="Messages" backLink />
 
   <Messagebar
     {placeholder}

@@ -3,7 +3,7 @@
 </script>
 
 <Page hideToolbarOnScroll>
-  <Navbar title="Hide Toolbar On Scroll" backLink="Back" />
+  <Navbar title="Hide Toolbar On Scroll" backLink />
   <Toolbar bottom>
     <Link>Left Link</Link>
     <Link>Right Link</Link>

@@ -3,7 +3,7 @@ import { Navbar, Page } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar title="Scrollbar" backLink="Back"></Navbar>
+    <Navbar title="Scrollbar" backLink></Navbar>
     <swiper-container scrollbar class="demo-swiper">
       <swiper-slide>Slide 1</swiper-slide>
       <swiper-slide>Slide 2</swiper-slide>

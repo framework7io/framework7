@@ -13,7 +13,7 @@ const mdIcons =
 
 export default () => (
   <Page>
-    <Navbar title="Icons" backLink="Back"></Navbar>
+    <Navbar title="Icons" backLink></Navbar>
     <Block strong inset>
       <p>
         Framework7 comes with the premium and free{' '}

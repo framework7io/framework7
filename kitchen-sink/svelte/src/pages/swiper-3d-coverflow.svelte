@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="3D Coverflow Effect" backLink="Back" />
+  <Navbar title="3D Coverflow Effect" backLink />
   <swiper-container
     effect="coverflow"
     pagination={true}

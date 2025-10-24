@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Not found" backLink="Back" />
+  <Navbar title="Not found" backLink />
 
   <Block>
     <p>Sorry</p>

@@ -1,17 +1,19 @@
 import React from 'react';
-import { Navbar, Page, Toolbar, Link, Block } from 'framework7-react';
+import { Navbar, Page, Toolbar, Link, Block, ToolbarPane } from 'framework7-react';
 
 export default () => (
   <Page hideToolbarOnScroll>
-    <Navbar title="Hide Toolbar On Scroll" backLink="Back"></Navbar>
+    <Navbar title="Hide Toolbar On Scroll" backLink></Navbar>
     <Toolbar bottom>
-      <Link>Left Link</Link>
-      <Link>Right Link</Link>
+      <ToolbarPane>
+        <Link>Left Link</Link>
+        <Link>Right Link</Link>
+      </ToolbarPane>
     </Toolbar>
-    <Block strong>
+    <Block strong inset>
       <p>Toolbar will be hidden if you scroll bottom</p>
     </Block>
-    <Block>
+    <Block strong inset>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos maxime incidunt id ab culpa
         ipsa omnis eos, vel excepturi officiis neque illum perferendis dolorum magnam rerum natus

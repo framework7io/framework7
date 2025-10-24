@@ -3,8 +3,8 @@ import { Page, Navbar, Block, List, ListItem } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar title="Master Detail" backLink="Back"></Navbar>
-    <Block strong>
+    <Navbar title="Master Detail" backLink></Navbar>
+    <Block strong inset>
       <p>
         Master-Detail pattern oftenly used on wide enough screens and tablets, and consists of two
         views. Master - is an area in the UI where you have a list of something. Detail - is the
@@ -18,7 +18,7 @@ export default () => (
       <p>Navigation to/from Master-Detail view happens without transition.</p>
     </Block>
 
-    <List>
+    <List strong inset dividersIos>
       <ListItem reloadDetail={true} link="/master-detail/1/">
         Detail Page 1
       </ListItem>

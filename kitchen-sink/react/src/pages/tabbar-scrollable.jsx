@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
-import { Navbar, Page, Block, Tabs, Tab, Link, Toolbar, NavRight } from 'framework7-react';
+import {
+  Navbar,
+  Page,
+  Block,
+  Tabs,
+  Tab,
+  Link,
+  Toolbar,
+  NavRight,
+  ToolbarPane,
+} from 'framework7-react';
 
 export default () => {
   const [toolbarPosition, setToolbarPosition] = useState('bottom');
@@ -12,7 +22,7 @@ export default () => {
 
   return (
     <Page pageContent={false}>
-      <Navbar title="Tabbar Scrollable" backLink="Back">
+      <Navbar title="Tabbar Scrollable" backLink>
         <NavRight>
           <Link
             iconMd="material:compare_arrows"
@@ -24,16 +34,18 @@ export default () => {
         </NavRight>
       </Navbar>
       <Toolbar tabbar scrollable position={toolbarPosition}>
-        {tabs.map((tab, index) => (
-          <Link key={tab} tabLink={`#tab-${tab}`} tabLinkActive={index === 0}>
-            Tab {tab}
-          </Link>
-        ))}
+        <ToolbarPane>
+          {tabs.map((tab, index) => (
+            <Link key={tab} tabLink={`#tab-${tab}`} tabLinkActive={index === 0}>
+              Tab {tab}
+            </Link>
+          ))}
+        </ToolbarPane>
       </Toolbar>
       <Tabs>
         {tabs.map((tab, index) => (
           <Tab key={tab} id={`tab-${tab}`} className="page-content" tabActive={index === 0}>
-            <Block>
+            <Block strong inset>
               <p>
                 <b>Tab {tab} content</b>
               </p>

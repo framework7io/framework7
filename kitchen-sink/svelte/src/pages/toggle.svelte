@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Toggle" backLink="Back" />
+  <Navbar title="Toggle" backLink />
   <BlockTitle>Super Heroes</BlockTitle>
   <List simpleList strong outlineIos dividersIos>
     <ListItem>

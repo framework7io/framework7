@@ -75,7 +75,7 @@
 </script>
 
 <Page {onPageInit} {onPageBeforeRemove}>
-  <Navbar title="Calendar" backLink="Back" />
+  <Navbar title="Calendar" backLink />
   <Block>
     <p>Calendar is a touch optimized component that provides an easy way to handle dates.</p>
     <p>

@@ -4,7 +4,7 @@ import { Navbar, Page, Searchbar, List, ListItem, Link, NavRight } from 'framewo
 export default () => {
   return (
     <Page>
-      <Navbar backLink="Back" title="Searchbar">
+      <Navbar backLink title="Searchbar">
         <NavRight>
           <Link searchbarEnable=".searchbar-demo" iconIos="f7:search" iconMd="material:search" />
         </NavRight>
@@ -15,10 +15,10 @@ export default () => {
           searchIn=".item-title"
         />
       </Navbar>
-      <List strongIos outlineIos dividersIos className="searchbar-not-found">
+      <List strong inset dividersIos className="searchbar-not-found">
         <ListItem title="Nothing found" />
       </List>
-      <List strongIos outlineIos dividersIos className="search-list searchbar-found">
+      <List strong inset dividersIos className="search-list searchbar-found">
         <ListItem title="Acura" />
         <ListItem title="Audi" />
         <ListItem title="BMW" />

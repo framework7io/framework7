@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar backLink="Back" title="Searchbar">
+  <Navbar backLink title="Searchbar">
     <NavRight>
       <Link searchbarEnable=".searchbar-demo" iconIos="f7:search" iconMd="material:search" />
     </NavRight>

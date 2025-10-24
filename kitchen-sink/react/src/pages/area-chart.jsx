@@ -15,8 +15,8 @@ export default () => {
 
   return (
     <Page>
-      <Navbar title="Area Chart" backLink="Back" />
-      <Block strongIos outlineIos>
+      <Navbar title="Area Chart" backLink />
+      <Block strong inset>
         <p>Framework7 comes with simple to use and fully responsive Area Chart component.</p>
         <p>
           Area Chart generates SVG layout which makes it also compatible with SSR (server side
@@ -24,49 +24,28 @@ export default () => {
         </p>
       </Block>
       <BlockTitle>Simple Area Chart</BlockTitle>
-      <Block strongIos outlineIos>
+      <Block strong inset>
         <AreaChart
           datasets={[
-            {
-              color: '#f00',
-              values: [0, 100, 250, 300, 175, 400],
-            },
-            {
-              color: '#00f',
-              values: [100, 75, 133, 237, 40, 200],
-            },
-            {
-              color: '#ff0',
-              values: [100, 300, 127, 40, 250, 80],
-            },
+            { color: '#f00', values: [0, 100, 250, 300, 175, 400] },
+            { color: '#00f', values: [100, 75, 133, 237, 40, 200] },
+            { color: '#ff0', values: [100, 300, 127, 40, 250, 80] },
           ]}
         />
       </Block>
       <BlockTitle>Area Chart With Tooltip</BlockTitle>
-      <Block strongIos outlineIos>
+      <Block strong inset>
         <AreaChart
           tooltip
           datasets={[
-            {
-              label: 'Red data',
-              color: '#f00',
-              values: [100, 75, 133, 237, 40, 200],
-            },
-            {
-              label: 'Blue data',
-              color: '#00f',
-              values: [100, 300, 127, 40, 250, 80],
-            },
-            {
-              label: 'Yellow data',
-              color: '#ff0',
-              values: [0, 100, 250, 300, 175, 400],
-            },
+            { label: 'Red data', color: '#f00', values: [100, 75, 133, 237, 40, 200] },
+            { label: 'Blue data', color: '#00f', values: [100, 300, 127, 40, 250, 80] },
+            { label: 'Yellow data', color: '#ff0', values: [0, 100, 250, 300, 175, 400] },
           ]}
         />
       </Block>
       <BlockTitle>Area Chart With Axis</BlockTitle>
-      <Block strongIos outlineIos>
+      <Block strong inset>
         <AreaChart
           tooltip
           axis
@@ -74,26 +53,14 @@ export default () => {
           formatAxisLabel={(date) => axisDateFormat.format(date)}
           formatTooltipAxisLabel={(date) => tooltipDateFormat.format(date)}
           datasets={[
-            {
-              label: 'Green data',
-              color: '#0f0',
-              values: [100, 75, 133, 237],
-            },
-            {
-              label: 'Red data',
-              color: '#f00',
-              values: [100, 300, 127, 47],
-            },
-            {
-              label: 'Yellow data',
-              color: '#ff0',
-              values: [0, 100, 250, 307],
-            },
+            { label: 'Green data', color: '#0f0', values: [100, 75, 133, 237] },
+            { label: 'Red data', color: '#f00', values: [100, 300, 127, 47] },
+            { label: 'Yellow data', color: '#ff0', values: [0, 100, 250, 307] },
           ]}
         />
       </Block>
       <BlockTitle>Area Chart With Legend</BlockTitle>
-      <Block strongIos outlineIos>
+      <Block strong inset>
         <AreaChart
           tooltip
           axis
@@ -103,26 +70,14 @@ export default () => {
           formatAxisLabel={(date) => axisDateFormat.format(date)}
           formatTooltipAxisLabel={(date) => tooltipDateFormat.format(date)}
           datasets={[
-            {
-              label: 'Red data',
-              color: '#f00',
-              values: [100, 300, 127, 47],
-            },
-            {
-              label: 'Blue data',
-              color: '#00f',
-              values: [100, 75, 133, 237],
-            },
-            {
-              label: 'Yellow data',
-              color: '#ff0',
-              values: [0, 100, 250, 307],
-            },
+            { label: 'Red data', color: '#f00', values: [100, 300, 127, 47] },
+            { label: 'Blue data', color: '#00f', values: [100, 75, 133, 237] },
+            { label: 'Yellow data', color: '#ff0', values: [0, 100, 250, 307] },
           ]}
         />
       </Block>
       <BlockTitle>Lines Chart</BlockTitle>
-      <Block strongIos outlineIos>
+      <Block strong inset>
         <AreaChart
           tooltip
           axis
@@ -133,21 +88,9 @@ export default () => {
           formatAxisLabel={(date) => axisDateFormat.format(date)}
           formatTooltipAxisLabel={(date) => tooltipDateFormat.format(date)}
           datasets={[
-            {
-              label: 'Red data',
-              color: '#f00',
-              values: [0, 300, 127, 47],
-            },
-            {
-              label: 'Blue data',
-              color: '#00f',
-              values: [0, 75, 133, 237],
-            },
-            {
-              label: 'Green data',
-              color: '#0f0',
-              values: [0, 100, 250, 307],
-            },
+            { label: 'Red data', color: '#f00', values: [0, 300, 127, 47] },
+            { label: 'Blue data', color: '#00f', values: [0, 75, 133, 237] },
+            { label: 'Green data', color: '#0f0', values: [0, 100, 250, 307] },
           ]}
         />
       </Block>

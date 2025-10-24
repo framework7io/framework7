@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Floating Action Button" backLink="Back" />
+  <Navbar title="Floating Action Button" backLink />
 
   <Fab position="right-top">
     <Icon ios="f7:add" md="material:add" />

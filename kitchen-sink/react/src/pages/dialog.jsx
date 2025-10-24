@@ -38,17 +38,7 @@ export default () => {
     f7.dialog
       .create({
         title: 'Vertical Buttons',
-        buttons: [
-          {
-            text: 'Button 1',
-          },
-          {
-            text: 'Button 2',
-          },
-          {
-            text: 'Button 3',
-          },
-        ],
+        buttons: [{ text: 'Button 1' }, { text: 'Button 2' }, { text: 'Button 3' }],
         verticalButtons: true,
       })
       .open();
@@ -87,71 +77,71 @@ export default () => {
   };
   return (
     <Page>
-      <Navbar title="Dialog" backLink="Back"></Navbar>
-      <Block strongIos outlineIos>
+      <Navbar title="Dialog" backLink></Navbar>
+      <Block strong inset>
         <p>
           There are 1:1 replacements of native Alert, Prompt and Confirm modals. They support
           callbacks, have very easy api and can be combined with each other. Check these examples:
         </p>
         <p className="grid grid-cols-3 grid-gap">
-          <Button fill onClick={openAlert}>
+          <Button fill round onClick={openAlert}>
             Alert
           </Button>
-          <Button fill onClick={openConfirm}>
+          <Button fill round onClick={openConfirm}>
             Confirm
           </Button>
-          <Button fill onClick={openPrompt}>
+          <Button fill round onClick={openPrompt}>
             Prompt
           </Button>
         </p>
         <p className="grid grid-cols-3 grid-gap">
-          <Button fill onClick={openLogin}>
+          <Button fill round onClick={openLogin}>
             Login
           </Button>
-          <Button fill onClick={openPassword}>
+          <Button fill round onClick={openPassword}>
             Password
           </Button>
         </p>
       </Block>
       <BlockTitle>Vertical Buttons</BlockTitle>
-      <Block strongIos outlineIos>
+      <Block strong inset>
         <p>
-          <Button fill onClick={openVerticalButtons}>
+          <Button fill round onClick={openVerticalButtons}>
             Vertical Buttons
           </Button>
         </p>
       </Block>
       <BlockTitle>Preloader Dialog</BlockTitle>
-      <Block strongIos outlineIos>
+      <Block strong inset>
         <p className="grid grid-cols-2 grid-gap">
-          <Button fill onClick={openPreloader}>
+          <Button fill round onClick={openPreloader}>
             Preloader
           </Button>
-          <Button fill onClick={openCustomPreloader}>
+          <Button fill round onClick={openCustomPreloader}>
             Custom Text
           </Button>
         </p>
       </Block>
       <BlockTitle>Progress Dialog</BlockTitle>
-      <Block strongIos outlineIos>
+      <Block strong inset>
         <p className="grid grid-cols-2 grid-gap">
-          <Button fill onClick={openInfiniteProgress}>
+          <Button fill round onClick={openInfiniteProgress}>
             Infinite
           </Button>
-          <Button fill onClick={openDeterminedProgress}>
+          <Button fill round onClick={openDeterminedProgress}>
             Determined
           </Button>
         </p>
       </Block>
       <BlockTitle>Dialogs Stack</BlockTitle>
-      <Block strongIos outlineIos>
+      <Block strong inset>
         <p>
           This feature doesn't allow to open multiple dialogs at the same time, and will
           automatically open next dialog when you close the current one. Such behavior is similar to
           browser native dialogs:{' '}
         </p>
         <p>
-          <Button fill onClick={openAlerts}>
+          <Button fill round onClick={openAlerts}>
             Open Multiple Alerts
           </Button>
         </p>

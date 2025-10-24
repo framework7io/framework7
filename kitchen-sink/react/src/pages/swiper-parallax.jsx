@@ -3,7 +3,7 @@ import { Navbar, Page } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar title="Parallax" backLink="Back"></Navbar>
+    <Navbar title="Parallax" backLink></Navbar>
     <swiper-container
       pagination
       navigation

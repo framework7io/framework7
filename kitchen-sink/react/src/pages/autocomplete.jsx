@@ -360,7 +360,7 @@ export default () => {
 
   return (
     <Page onPageInit={onPageInit} onPageBeforeRemove={onPageBeforeRemove}>
-      <Navbar title="Autocomplete" backLink="Back">
+      <Navbar title="Autocomplete" backLink>
         <Subnavbar inner={false}>
           <Searchbar init={false} id="searchbar-autocomplete" disableButton={true} />
         </Subnavbar>

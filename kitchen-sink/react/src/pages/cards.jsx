@@ -15,7 +15,7 @@ import {
 
 export default () => (
   <Page>
-    <Navbar title="Cards" backLink="Back" />
+    <Navbar title="Cards" backLink />
 
     <Block>
       <p>

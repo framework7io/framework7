@@ -230,7 +230,7 @@
 </script>
 
 <Page {onPageInit} {onPageBeforeRemove}>
-  <Navbar title="Picker" backLink="Back" />
+  <Navbar title="Picker" backLink />
   <Block>
     <p>
       Picker is a powerful component that allows you to create custom overlay pickers which looks

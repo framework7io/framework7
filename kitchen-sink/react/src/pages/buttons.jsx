@@ -22,10 +22,10 @@ export default () => {
 
   return (
     <Page>
-      <Navbar title="Buttons" backLink="Back" />
+      <Navbar title="Buttons" backLink />
 
       <BlockTitle>Usual Buttons</BlockTitle>
-      <Block strong outlineIos>
+      <Block strong inset>
         <div className="grid grid-cols-3 grid-gap">
           <Button>Button</Button>
           <Button>Button</Button>
@@ -34,7 +34,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Tonal Buttons</BlockTitle>
-      <Block strong outlineIos>
+      <Block strong inset>
         <div className="grid grid-cols-3 grid-gap">
           <Button tonal>Button</Button>
           <Button tonal>Button</Button>
@@ -45,7 +45,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Fill Buttons</BlockTitle>
-      <Block strong outlineIos>
+      <Block strong inset>
         <div className="grid grid-cols-3 grid-gap">
           <Button fill>Button</Button>
           <Button fill>Button</Button>
@@ -56,7 +56,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Outline Buttons</BlockTitle>
-      <Block strong outlineIos>
+      <Block strong inset>
         <div className="grid grid-cols-3 grid-gap">
           <Button outline>Button</Button>
           <Button outline>Button</Button>
@@ -67,7 +67,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Raised Buttons</BlockTitle>
-      <Block strong outlineIos>
+      <Block strong inset>
         <p className="grid grid-cols-3 grid-gap">
           <Button raised>Button</Button>
           <Button raised fill>
@@ -91,7 +91,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Large Buttons</BlockTitle>
-      <Block strong outlineIos>
+      <Block strong inset>
         <p className="grid grid-cols-2 grid-gap">
           <Button large>Button</Button>
           <Button large fill>
@@ -109,7 +109,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Small Buttons</BlockTitle>
-      <Block strong outlineIos>
+      <Block strong inset>
         <p className="grid grid-cols-3 grid-gap">
           <Button small>Button</Button>
           <Button small outline>
@@ -133,7 +133,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Preloader Buttons</BlockTitle>
-      <Block strong outlineIos>
+      <Block strong inset>
         <p className="grid grid-cols-2 grid-gap">
           <Button preloader loading={isLoading1} onClick={load1} large>
             Load
@@ -145,7 +145,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Color Buttons</BlockTitle>
-      <Block strong outlineIos>
+      <Block strong inset>
         <div className="grid grid-cols-3 grid-gap">
           <Button color="red">Red</Button>
           <Button color="green">Green</Button>
@@ -154,20 +154,36 @@ export default () => {
       </Block>
 
       <BlockTitle>Color Fill Buttons</BlockTitle>
-      <Block strong outlineIos>
+      <Block strong inset>
         <p className="grid grid-cols-3 grid-gap">
-          <Button color="red">Red</Button>
-          <Button color="green">Green</Button>
-          <Button color="blue">Blue</Button>
+          <Button round fill color="red">
+            Red
+          </Button>
+          <Button round fill color="green">
+            Green
+          </Button>
+          <Button round fill color="blue">
+            Blue
+          </Button>
         </p>
         <p className="grid grid-cols-3 grid-gap">
-          <Button color="pink">Pink</Button>
-          <Button color="yellow">Yellow</Button>
-          <Button color="orange">Orange</Button>
+          <Button round fill color="pink">
+            Pink
+          </Button>
+          <Button round fill color="yellow">
+            Yellow
+          </Button>
+          <Button round fill color="orange">
+            Orange
+          </Button>
         </p>
         <p className="grid grid-cols-3 grid-gap">
-          <Button color="black">Black</Button>
-          <Button color="white">White</Button>
+          <Button round fill color="black">
+            Black
+          </Button>
+          <Button round fill color="white">
+            White
+          </Button>
         </p>
       </Block>
     </Page>

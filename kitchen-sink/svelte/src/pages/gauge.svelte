@@ -5,7 +5,7 @@
 </script>
 
 <Page>
-  <Navbar title="Gauge" backLink="Back" />
+  <Navbar title="Gauge" backLink />
   <Block strongIos outlineIos>
     <p>
       Framework7 comes with Gauge component. It produces nice looking fully responsive SVG gauges.

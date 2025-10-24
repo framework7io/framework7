@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Progress Pagination" backLink="Back" />
+  <Navbar title="Progress Pagination" backLink />
 
   <swiper-container pagination={{ type: 'progressbar' }} class="demo-swiper">
     <swiper-slide>Slide 1</swiper-slide>

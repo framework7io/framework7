@@ -36,7 +36,7 @@
 </script>
 
 <Page>
-  <Navbar title="Photo Browser" backLink="Back" />
+  <Navbar title="Photo Browser" backLink />
   <Block strongIos outlineIos>
     <p>
       Photo Browser is a standalone and highly configurable component that allows to open window

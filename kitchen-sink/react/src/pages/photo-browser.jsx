@@ -5,24 +5,13 @@ export default () => {
   const standalone = useRef(null);
   const popup = useRef(null);
   const page = useRef(null);
-  const standaloneDark = useRef(null);
-  const popupDark = useRef(null);
-  const pageDark = useRef(null);
+
   const photos = [
-    {
-      url: 'img/beach.jpg',
-      caption: 'Amazing beach in Goa, India',
-    },
+    { url: 'img/beach.jpg', caption: 'Amazing beach in Goa, India' },
     'http://placekitten.com/1024/1024',
     'img/lock.jpg',
-    {
-      url: 'img/monkey.jpg',
-      caption: 'I met this monkey in Chinese mountains',
-    },
-    {
-      url: 'img/mountains.jpg',
-      caption: 'Beautiful mountains in Zhangjiajie, China',
-    },
+    { url: 'img/monkey.jpg', caption: 'I met this monkey in Chinese mountains' },
+    { url: 'img/mountains.jpg', caption: 'Beautiful mountains in Zhangjiajie, China' },
   ];
   const thumbs = [
     'img/beach.jpg',
@@ -33,8 +22,8 @@ export default () => {
   ];
   return (
     <Page>
-      <Navbar title="Photo Browser" backLink="Back"></Navbar>
-      <Block strongIos outlineIos>
+      <Navbar title="Photo Browser" backLink></Navbar>
+      <Block strong inset>
         <p>
           Photo Browser is a standalone and highly configurable component that allows to open window
           with photo viewer and navigation elements with the following features:
@@ -46,7 +35,7 @@ export default () => {
           <li>Single click on photo to toggle Exposition mode</li>
         </ul>
       </Block>
-      <Block strongIos outlineIos>
+      <Block strong inset>
         <p>
           Photo Browser could be opened in a three ways - as a Standalone component (Popup
           modification), in Popup, and as separate Page:
@@ -54,64 +43,19 @@ export default () => {
         <div className="grid grid-cols-3 grid-gap">
           <div>
             <PhotoBrowser photos={photos} thumbs={thumbs} ref={standalone} />
-            <Button fill onClick={() => standalone.current.open()}>
+            <Button round fill onClick={() => standalone.current.open()}>
               Standalone
             </Button>
           </div>
           <div>
             <PhotoBrowser photos={photos} thumbs={thumbs} type="popup" ref={popup} />
-            <Button fill onClick={() => popup.current.open()}>
+            <Button round fill onClick={() => popup.current.open()}>
               Popup
             </Button>
           </div>
           <div>
-            <PhotoBrowser
-              photos={photos}
-              thumbs={thumbs}
-              type="page"
-              pageBackLinkText="Back"
-              ref={page}
-            />
-            <Button fill onClick={() => page.current.open()}>
-              Page
-            </Button>
-          </div>
-        </div>
-      </Block>
-      <Block strongIos outlineIos>
-        <p>
-          Photo Browser supports 2 default themes - default Light (like in previous examples) and
-          Dark theme. Here is a Dark theme examples:
-        </p>
-        <div className="grid grid-cols-3 grid-gap">
-          <div>
-            <PhotoBrowser photos={photos} thumbs={thumbs} theme="dark" ref={standaloneDark} />
-            <Button fill onClick={() => standaloneDark.current.open()}>
-              Standalone
-            </Button>
-          </div>
-          <div>
-            <PhotoBrowser
-              photos={photos}
-              thumbs={thumbs}
-              theme="dark"
-              type="popup"
-              ref={popupDark}
-            />
-            <Button fill onClick={() => popupDark.current.open()}>
-              Popup
-            </Button>
-          </div>
-          <div>
-            <PhotoBrowser
-              photos={photos}
-              thumbs={thumbs}
-              theme="dark"
-              type="page"
-              pageBackLinkText="Back"
-              ref={pageDark}
-            />
-            <Button fill onClick={() => pageDark.current.open()}>
+            <PhotoBrowser photos={photos} thumbs={thumbs} type="page" ref={page} />
+            <Button round fill onClick={() => page.current.open()}>
               Page
             </Button>
           </div>

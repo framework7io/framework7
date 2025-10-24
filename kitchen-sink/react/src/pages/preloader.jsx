@@ -22,8 +22,8 @@ export default () => {
   };
   return (
     <Page>
-      <Navbar title="Preloader" backLink="Back"></Navbar>
-      <Block>
+      <Navbar title="Preloader" backLink></Navbar>
+      <Block strong inset>
         <p>
           How about an activity indicator? Framework7 has a nice one. The F7 Preloader is made with
           SVG and animated with CSS so it can be easily resized.
@@ -32,8 +32,8 @@ export default () => {
 
       <BlockTitle>Default</BlockTitle>
       <Block
-        strongIos
-        outlineIos
+        strong
+        inset
         className="grid grid-cols-4 grid-gap demo-preloaders align-items-stretch text-align-center"
       >
         <div>
@@ -51,7 +51,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Color Preloaders</BlockTitle>
-      <Block strongIos outlineIos className="grid grid-cols-4 grid-gap text-align-center">
+      <Block strong inset className="grid grid-cols-4 grid-gap text-align-center">
         <div>
           <Preloader color="red" />
         </div>
@@ -67,17 +67,17 @@ export default () => {
       </Block>
 
       <BlockTitle>Multi-color</BlockTitle>
-      <Block strongIos outlineIos className="text-align-center">
+      <Block strong inset className="text-align-center">
         <Preloader color="multi" />
       </Block>
 
       <BlockTitle>Preloader Modals</BlockTitle>
-      <Block strongIos outlineIos>
+      <Block strong inset>
         <p>
           With <b>app.preloader.show()</b> you can show small overlay with preloader indicator.
         </p>
         <p>
-          <a className="button button-fill" onClick={openIndicator}>
+          <a className="button button-fill button-round" onClick={openIndicator}>
             Open Small Indicator
           </a>
         </p>
@@ -85,7 +85,7 @@ export default () => {
           With <b>app.dialog.preloader()</b> you can show dialog modal with preloader indicator.
         </p>
         <p>
-          <a className="button button-fill" onClick={openDialog}>
+          <a className="button button-fill button-round" onClick={openDialog}>
             Open Dialog Preloader
           </a>
         </p>
@@ -94,7 +94,7 @@ export default () => {
           custom title.
         </p>
         <p>
-          <a className="button button-fill" onClick={openCustomDialog}>
+          <a className="button button-fill button-round" onClick={openCustomDialog}>
             Open Dialog Preloader
           </a>
         </p>

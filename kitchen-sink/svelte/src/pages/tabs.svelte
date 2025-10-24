@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Tabs" backLink="Back" />
+  <Navbar title="Tabs" backLink />
   <List strongIos outlineIos dividersIos>
     <ListItem link="/tabs-static/" title="Static Tabs" />
     <ListItem link="/tabs-animated/" title="Animated Tabs" />

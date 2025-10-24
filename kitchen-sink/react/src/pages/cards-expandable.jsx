@@ -3,7 +3,7 @@ import { Navbar, Page, Block, Card, CardHeader, CardContent, Link, Button } from
 
 export default () => (
   <Page>
-    <Navbar title="Cards Expandable" backLink="Back" />
+    <Navbar title="Cards Expandable" backLink />
 
     <Block>
       <p>

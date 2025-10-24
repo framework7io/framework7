@@ -3,7 +3,7 @@ import { Navbar, Page } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar title="Progress Pagination" backLink="Back"></Navbar>
+    <Navbar title="Progress Pagination" backLink></Navbar>
     <swiper-container pagination pagination-type="progressbar" class="demo-swiper">
       <swiper-slide>Slide 1</swiper-slide>
       <swiper-slide>Slide 2</swiper-slide>

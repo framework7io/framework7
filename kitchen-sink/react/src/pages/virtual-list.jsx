@@ -4,14 +4,9 @@ import { Navbar, Page, List, ListItem, Subnavbar, Searchbar, Block, theme } from
 export default () => {
   const items = [];
   for (let i = 1; i <= 10000; i += 1) {
-    items.push({
-      title: `Item ${i}`,
-      subtitle: `Subtitle ${i}`,
-    });
+    items.push({ title: `Item ${i}`, subtitle: `Subtitle ${i}` });
   }
-  const [vlData, setVlData] = useState({
-    items: [],
-  });
+  const [vlData, setVlData] = useState({ items: [] });
 
   const searchAll = (query, searchItems) => {
     const found = [];
@@ -29,12 +24,12 @@ export default () => {
   };
   return (
     <Page>
-      <Navbar title="Virtual List" backLink="Back">
+      <Navbar title="Virtual List" backLink>
         <Subnavbar inner={false}>
           <Searchbar searchContainer=".virtual-list" searchItem="li" searchIn=".item-title" />
         </Subnavbar>
       </Navbar>
-      <Block>
+      <Block strong inset>
         <p>
           Virtual List allows to render lists with huge amount of elements without loss of
           performance. And it is fully compatible with all Framework7 list components such as Search
@@ -42,13 +37,12 @@ export default () => {
         </p>
         <p>Here is the example of virtual list with 10 000 items:</p>
       </Block>
-      <List strong outlineIos insetMd dividersIos className="searchbar-not-found">
+      <List strong inset dividersIos className="searchbar-not-found">
         <ListItem title="Nothing found" />
       </List>
       <List
         strong
-        outlineIos
-        insetMd
+        inset
         dividersIos
         className="searchbar-found"
         medialList

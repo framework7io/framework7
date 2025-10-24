@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Navbar" subtitle="Subtitle" backLink="Back">
+  <Navbar title="Navbar" subtitle="Subtitle" backLink>
     <NavRight>
       <Link>Right</Link>
     </NavRight>

@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Fade Effect" backLink="Back" />
+  <Navbar title="Fade Effect" backLink />
   <swiper-container effect="fade" pagination={true} class="demo-swiper demo-swiper-fade">
     <swiper-slide
       style="background-image:url(https://cdn.framework7.io/placeholder/people-800x800-1.jpg)"

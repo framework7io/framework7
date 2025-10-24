@@ -48,7 +48,7 @@
 </script>
 
 <Page>
-  <Navbar large title="Color Themes" backLink="Back">
+  <Navbar large title="Color Themes" backLink>
     <Link slot="right">Link</Link>
   </Navbar>
   <Toolbar tabbar icons bottom>

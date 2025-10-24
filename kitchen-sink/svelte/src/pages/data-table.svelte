@@ -15,7 +15,7 @@
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
-  <Navbar title="Data Table" backLink="Back" />
+  <Navbar title="Data Table" backLink />
   <BlockTitle>Plain table</BlockTitle>
   <div class="data-table">
     <table>

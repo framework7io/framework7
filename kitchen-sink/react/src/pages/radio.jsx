@@ -3,10 +3,10 @@ import { Navbar, Page, BlockTitle, Block, List, ListItem, Radio } from 'framewor
 
 export default () => (
   <Page>
-    <Navbar title="Radio" backLink="Back"></Navbar>
+    <Navbar title="Radio" backLink></Navbar>
 
     <BlockTitle>Inline</BlockTitle>
-    <Block strongIos outlineIos>
+    <Block strong inset>
       <p>
         Lorem <Radio name="demo-radio-inline" value="inline-1" /> ipsum dolor sit amet, consectetur
         adipisicing elit. Alias beatae illo nihil aut eius commodi sint eveniet aliquid eligendi{' '}
@@ -16,7 +16,7 @@ export default () => (
     </Block>
 
     <BlockTitle>Radio Group</BlockTitle>
-    <List strongIos outlineIos dividersIos>
+    <List strong inset dividersIos>
       <ListItem
         radio
         radioIcon="start"
@@ -30,7 +30,7 @@ export default () => (
       <ListItem radio radioIcon="start" title="Drinks" value="Drinks" name="demo-radio-start" />
     </List>
 
-    <List strongIos outlineIos dividersIos>
+    <List strong inset dividersIos>
       <ListItem
         radio
         radioIcon="end"
@@ -45,7 +45,7 @@ export default () => (
     </List>
 
     <BlockTitle>With Media Lists</BlockTitle>
-    <List strongIos outlineIos dividersIos mediaList>
+    <List strong inset dividersIos mediaList>
       <ListItem
         radio
         radioIcon="start"

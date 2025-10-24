@@ -29,14 +29,8 @@ export default () => {
     'https://cdn.framework7.io/placeholder/cats-300x150-10.jpg',
   ];
   const people = [
-    {
-      name: 'Kate Johnson',
-      avatar: 'https://cdn.framework7.io/placeholder/people-100x100-9.jpg',
-    },
-    {
-      name: 'Blue Ninja',
-      avatar: 'https://cdn.framework7.io/placeholder/people-100x100-7.jpg',
-    },
+    { name: 'Kate Johnson', avatar: 'https://cdn.framework7.io/placeholder/people-100x100-9.jpg' },
+    { name: 'Blue Ninja', avatar: 'https://cdn.framework7.io/placeholder/people-100x100-7.jpg' },
   ];
   const answers = [
     'Yes!',
@@ -57,14 +51,8 @@ export default () => {
   const [typingMessage, setTypingMessage] = useState(null);
   const [messageText, setMessageText] = useState('');
   const [messagesData, setMessagesData] = useState([
-    {
-      type: 'sent',
-      text: 'Hi, Kate',
-    },
-    {
-      type: 'sent',
-      text: 'How are you?',
-    },
+    { type: 'sent', text: 'Hi, Kate' },
+    { type: 'sent', text: 'How are you?' },
     {
       name: 'Kate',
       type: 'received',
@@ -77,18 +65,9 @@ export default () => {
       text: 'Hi there, I am also fine, thanks! And how are you?',
       avatar: 'https://cdn.framework7.io/placeholder/people-100x100-7.jpg',
     },
-    {
-      type: 'sent',
-      text: 'Hey, Blue Ninja! Glad to see you ;)',
-    },
-    {
-      type: 'sent',
-      text: 'Hey, look, cutest kitten ever!',
-    },
-    {
-      type: 'sent',
-      image: 'https://cdn.framework7.io/placeholder/cats-200x260-4.jpg',
-    },
+    { type: 'sent', text: 'Hey, Blue Ninja! Glad to see you ;)' },
+    { type: 'sent', text: 'Hey, look, cutest kitten ever!' },
+    { type: 'sent', image: 'https://cdn.framework7.io/placeholder/cats-200x260-4.jpg' },
     {
       name: 'Kate',
       type: 'received',
@@ -169,14 +148,10 @@ export default () => {
     const text = messageText.replace(/\n/g, '<br>').trim();
     const messagesToSend = [];
     attachments.forEach((attachment) => {
-      messagesToSend.push({
-        image: attachment,
-      });
+      messagesToSend.push({ image: attachment });
     });
     if (text.length) {
-      messagesToSend.push({
-        text,
-      });
+      messagesToSend.push({ text });
     }
     if (messagesToSend.length === 0) {
       return;
@@ -197,21 +172,13 @@ export default () => {
     setTimeout(() => {
       const answer = answers[Math.floor(Math.random() * answers.length)];
       const person = people[Math.floor(Math.random() * people.length)];
-      setTypingMessage({
-        name: person.name,
-        avatar: person.avatar,
-      });
+      setTypingMessage({ name: person.name, avatar: person.avatar });
       setTimeout(() => {
         setTypingMessage(null);
         setMessagesData([
           ...messagesData,
           ...messagesToSend,
-          {
-            text: answer,
-            type: 'received',
-            name: person.name,
-            avatar: person.avatar,
-          },
+          { text: answer, type: 'received', name: person.name, avatar: person.avatar },
         ]);
         responseInProgress.current = false;
       }, 4000);
@@ -220,7 +187,7 @@ export default () => {
 
   return (
     <Page>
-      <Navbar title="Messages" backLink="Back"></Navbar>
+      <Navbar title="Messages" backLink></Navbar>
 
       <Messagebar
         placeholder={placeholder()}

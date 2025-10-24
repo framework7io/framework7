@@ -13,7 +13,7 @@
 </script>
 
 <Page>
-  <Navbar backLink="Back" title="Badge">
+  <Navbar backLink title="Badge">
     <NavRight>
       <Link iconOnly>
         <Icon ios="f7:person_circle_fill" md="material:person">

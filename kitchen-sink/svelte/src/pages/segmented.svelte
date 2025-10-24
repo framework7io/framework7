@@ -6,7 +6,7 @@
 
 <!-- svelte-ignore a11y-invalid-attribute -->
 <Page>
-  <Navbar title="Segmented" backLink="Back" />
+  <Navbar title="Segmented" backLink />
 
   <Block strong outlineIos>
     <Segmented tag="p">

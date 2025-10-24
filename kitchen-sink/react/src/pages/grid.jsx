@@ -3,7 +3,7 @@ import { Navbar, Page, BlockTitle, Block } from 'framework7-react';
 
 export default () => (
   <Page className="grid-demo">
-    <Navbar title="Grid / Layout" backLink="Back"></Navbar>
+    <Navbar title="Grid / Layout" backLink></Navbar>
     <Block>
       <p>
         Columns within a row are automatically set to have equal width. Otherwise you can define

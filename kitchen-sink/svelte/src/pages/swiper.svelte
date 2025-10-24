@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Swiper Slider" backLink="Back" />
+  <Navbar title="Swiper Slider" backLink />
   <Block>
     <p>
       Framework7 comes with powerful and most modern touch slider ever -

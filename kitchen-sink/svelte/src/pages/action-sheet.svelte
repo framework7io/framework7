@@ -57,7 +57,7 @@
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
-  <Navbar title="Action Sheet" backLink="Back" />
+  <Navbar title="Action Sheet" backLink />
   <Block strong inset>
     <p class="grid grid-cols-2 grid-gap">
       <!-- One group, open by direct accessing instance .open() method -->

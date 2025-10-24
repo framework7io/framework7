@@ -3,11 +3,11 @@ import { Navbar, Page, Block } from 'framework7-react';
 
 export default () => (
   <Page hideNavbarOnScroll>
-    <Navbar title="Hide Navbar On Scroll" backLink="Back"></Navbar>
-    <Block strong>
+    <Navbar title="Hide Navbar On Scroll" backLink></Navbar>
+    <Block strong inset>
       <p>Navbar will be hidden if you scroll bottom</p>
     </Block>
-    <Block>
+    <Block strong inset>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos maxime incidunt id ab culpa
         ipsa omnis eos, vel excepturi officiis neque illum perferendis dolorum magnam rerum natus

@@ -6,7 +6,7 @@
 </script>
 
 <Page>
-  <Navbar title="Menu List" backLink="Back" />
+  <Navbar title="Menu List" backLink />
 
   <Block>
     <p>

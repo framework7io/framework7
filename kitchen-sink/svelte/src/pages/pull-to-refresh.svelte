@@ -42,7 +42,7 @@
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page ptr ptrMousewheel={true} onPtrRefresh={loadMore}>
-  <Navbar title="Pull To Refresh" backLink="Back" />
+  <Navbar title="Pull To Refresh" backLink />
   <List mediaList strongIos dividersIos outlineIos>
     {#each items as item, index (index)}
       <ListItem title={item.title} subtitle={item.author}>

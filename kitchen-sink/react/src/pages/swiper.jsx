@@ -3,8 +3,8 @@ import { Navbar, Page, Block, List, ListItem } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar title="Swiper Slider" backLink="Back"></Navbar>
-    <Block>
+    <Navbar title="Swiper Slider" backLink></Navbar>
+    <Block strong inset>
       <p>
         Framework7 comes with powerful and most modern touch slider ever -<span> </span>
         <a href="https://swiperjs.com" className="external" target="_blank">
@@ -14,7 +14,7 @@ export default () => (
         with super flexible configuration and lot, lot of features. Just check the following demos:
       </p>
     </Block>
-    <List strong insetMd outlineIos dividersIos>
+    <List strong inset dividersIos>
       <ListItem link="swiper-horizontal/" title="Swiper Horizontal" />
       <ListItem link="swiper-vertical/" title="Swiper Vertical" />
       <ListItem link="swiper-space-between/" title="Space Between Slides" />

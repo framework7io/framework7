@@ -4,7 +4,7 @@
 
 <!-- svelte-ignore a11y-invalid-attribute -->
 <Page>
-  <Navbar title="Vertical Timeline" backLink="Back" />
+  <Navbar title="Vertical Timeline" backLink />
   <BlockTitle>Default</BlockTitle>
   <div class="timeline">
     <div class="timeline-item">

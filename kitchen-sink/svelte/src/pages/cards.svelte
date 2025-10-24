@@ -16,7 +16,7 @@
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
-  <Navbar title="Cards" backLink="Back" />
+  <Navbar title="Cards" backLink />
 
   <Block>
     <p>

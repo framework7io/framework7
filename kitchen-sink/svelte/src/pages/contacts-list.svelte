@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Contacts List" backLink="Back" />
+  <Navbar title="Contacts List" backLink />
   <List contactsList ul={false} strongIos>
     <ListGroup>
       <ListItem title="A" groupTitle />

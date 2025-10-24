@@ -3,7 +3,7 @@ import { Navbar, Page } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar title="Infinite Loop Mode" backLink="Back"></Navbar>
+    <Navbar title="Infinite Loop Mode" backLink></Navbar>
     <swiper-container pagination loop class="demo-swiper">
       <swiper-slide>Slide 1</swiper-slide>
       <swiper-slide>Slide 2</swiper-slide>

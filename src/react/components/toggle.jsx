@@ -104,19 +104,6 @@ const Toggle = (props) => {
   }, []);
 
   const labelClasses = classNames('toggle', className, { disabled }, colorClasses(props));
-  const inputEl = (
-    <input
-      ref={inputElRef}
-      type="checkbox"
-      name={name}
-      disabled={disabled}
-      readOnly={readonly}
-      checked={checked}
-      defaultChecked={defaultChecked}
-      value={value}
-      onChange={() => {}}
-    />
-  );
 
   return (
     <label
@@ -129,7 +116,17 @@ const Toggle = (props) => {
       }}
       {...extraAttrs}
     >
-      {inputEl}
+      <input
+        ref={inputElRef}
+        type="checkbox"
+        name={name}
+        disabled={disabled}
+        readOnly={readonly}
+        checked={checked}
+        defaultChecked={defaultChecked}
+        value={value}
+        onChange={() => {}}
+      />
       <span className="toggle-icon" />
     </label>
   );

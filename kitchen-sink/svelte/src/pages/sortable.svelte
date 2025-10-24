@@ -13,7 +13,7 @@
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
-  <Navbar title="Sortable List" backLink="Back">
+  <Navbar title="Sortable List" backLink>
     <NavRight>
       <Link sortableToggle=".sortable">Toggle</Link>
     </NavRight>

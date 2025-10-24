@@ -1,13 +1,31 @@
 import React from 'react';
-import { Navbar, Page, BlockTitle, Block, Fab, Link, Toolbar, Icon } from 'framework7-react';
+import {
+  Navbar,
+  Page,
+  BlockTitle,
+  Block,
+  Fab,
+  Link,
+  Toolbar,
+  Icon,
+  ToolbarPane,
+} from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar title="Floating Action Button Morph" backLink="Back"></Navbar>
+    <Navbar title="Floating Action Button Morph" backLink></Navbar>
     <Toolbar tabbar icons bottom className="fab-morph-target">
-      <Link tabLink tabLinkActive iconIos="f7:envelope_fill" iconMd="material:email" text="Inbox" />
-      <Link tabLink iconIos="f7:calendar_fill" iconMd="material:today" text="Calendar" />
-      <Link tabLink iconIos="f7:cloud_upload_fill" iconMd="material:file_upload" text="Upload" />
+      <ToolbarPane>
+        <Link
+          tabLink
+          tabLinkActive
+          iconIos="f7:envelope_fill"
+          iconMd="material:email"
+          text="Inbox"
+        />
+        <Link tabLink iconIos="f7:calendar_fill" iconMd="material:today" text="Calendar" />
+        <Link tabLink iconIos="f7:cloud_upload_fill" iconMd="material:file_upload" text="Upload" />
+      </ToolbarPane>
     </Toolbar>
     <Fab position="right-bottom" morphTo=".toolbar.fab-morph-target">
       <Icon ios="f7:plus" md="material:add" />
@@ -54,7 +72,7 @@ export default () => (
       </div>
     </div>
 
-    <Block>
+    <Block strong inset>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia, quo rem beatae, delectus
         eligendi est saepe molestias perferendis suscipit, commodi labore ipsa non quasi eum magnam
@@ -81,7 +99,7 @@ export default () => (
         obcaecati aspernatur odio assumenda veniam, ipsum alias.
       </p>
     </Block>
-    <Block>
+    <Block strong inset>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa ipsa debitis sed nihil eaque
         dolore cum iste quibusdam, accusamus doloribus, tempora quia quos voluptatibus corporis

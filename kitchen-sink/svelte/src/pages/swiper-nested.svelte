@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Nested Swipers" backLink="Back" />
+  <Navbar title="Nested Swipers" backLink />
   <swiper-container pagination={true} class="demo-swiper">
     <swiper-slide>Horizontal Slide 1</swiper-slide>
     <swiper-slide>

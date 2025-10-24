@@ -51,34 +51,34 @@ export default () => {
   };
   return (
     <Page onPageBeforeRemove={onPageBeforeRemove}>
-      <Navbar title="Popup" backLink="Back"></Navbar>
-      <Block strongIos outlineIos>
+      <Navbar title="Popup" backLink></Navbar>
+      <Block strong inset>
         <p>
           Popup is a modal window with any HTML content that pops up over App's main content. Popup
           as all other overlays is part of so called "Temporary Views".
         </p>
         <p>
-          <Button fill popupOpen=".demo-popup">
+          <Button round fill popupOpen=".demo-popup">
             Open Popup
           </Button>
         </p>
         <p>
-          <Button fill onClick={() => setPopupOpened(true)}>
+          <Button round fill onClick={() => setPopupOpened(true)}>
             Open Via Prop Change
           </Button>
         </p>
         <p>
-          <Button fill onClick={createPopup}>
+          <Button round fill onClick={createPopup}>
             Create Dynamic Popup
           </Button>
         </p>
       </Block>
 
       <BlockTitle>Swipe To Close</BlockTitle>
-      <Block strongIos outlineIos>
+      <Block strong inset>
         <p>Popup can be closed with swipe to top or bottom:</p>
         <p>
-          <Button fill popupOpen=".demo-popup-swipe">
+          <Button round fill popupOpen=".demo-popup-swipe">
             Swipe To Close
           </Button>
         </p>
@@ -86,20 +86,20 @@ export default () => {
           Or it can be closed with swipe on special swipe handler and, for example, only to bottom:
         </p>
         <p>
-          <Button fill popupOpen=".demo-popup-swipe-handler">
+          <Button round fill popupOpen=".demo-popup-swipe-handler">
             With Swipe Handler
           </Button>
         </p>
       </Block>
 
       <BlockTitle>Push View</BlockTitle>
-      <Block strongIos outlineIos>
+      <Block strong inset>
         <p>
           Popup can push view behind. By default has effect only when `safe-area-inset-top` is more
           than zero (iOS fullscreen webapp or iOS cordova app)
         </p>
         <p>
-          <Button fill popupOpen=".demo-popup-push">
+          <Button round fill popupOpen=".demo-popup-push">
             Popup Push
           </Button>
         </p>
@@ -118,7 +118,7 @@ export default () => {
               </Link>
             </NavRight>
           </Navbar>
-          <Block>
+          <Block strong inset>
             <p>
               Here comes popup. You can put here anything, even independent view with its own
               navigation. Also not, that by default popup looks a bit different on iPhone/iPod and
@@ -157,7 +157,7 @@ export default () => {
                 </Link>
               </NavRight>
             </Navbar>
-            <Block>
+            <Block strong inset>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse faucibus mauris
                 leo, eu bibendum neque congue non. Ut leo mauris, eleifend eu commodo a, egestas ac
@@ -220,7 +220,7 @@ export default () => {
         <Page>
           <div slot="fixed" className="swipe-handler"></div>
           <BlockTitle large>Hello!</BlockTitle>
-          <Block strongIos outlineIos>
+          <Block strong inset>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse faucibus mauris
               leo, eu bibendum neque congue non. Ut leo mauris, eleifend eu commodo a, egestas ac

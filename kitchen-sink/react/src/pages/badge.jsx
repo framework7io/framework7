@@ -9,11 +9,12 @@ import {
   List,
   ListItem,
   Icon,
+  ToolbarPane,
 } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar backLink="Back" title="Badge">
+    <Navbar backLink title="Badge">
       <NavRight>
         <Link iconOnly>
           <Icon ios="f7:person_circle_fill" md="material:person">
@@ -23,27 +24,29 @@ export default () => (
       </NavRight>
     </Navbar>
     <Toolbar bottom tabbar icons>
-      <Link tabLink="#tab-1" tabLinkActive>
-        <Icon ios="f7:envelope_fill" md="material:email">
-          <Badge color="green">5</Badge>
-        </Icon>
-        <span className="tabbar-label">Inbox</span>
-      </Link>
-      <Link tabLink="#tab-2">
-        <Icon ios="f7:calendar_fill" md="material:today">
-          <Badge color="red">7</Badge>
-        </Icon>
-        <span className="tabbar-label">Calendar</span>
-      </Link>
-      <Link tabLink="#tab-3">
-        <Icon ios="f7:cloud_upload_fill" md="material:file_upload">
-          <Badge color="red">1</Badge>
-        </Icon>
-        <span className="tabbar-label">Upload</span>
-      </Link>
+      <ToolbarPane>
+        <Link tabLink="#tab-1" tabLinkActive>
+          <Icon ios="f7:envelope_fill" md="material:email">
+            <Badge color="green">5</Badge>
+          </Icon>
+          <span className="tabbar-label">Inbox</span>
+        </Link>
+        <Link tabLink="#tab-2">
+          <Icon ios="f7:calendar_fill" md="material:today">
+            <Badge color="red">7</Badge>
+          </Icon>
+          <span className="tabbar-label">Calendar</span>
+        </Link>
+        <Link tabLink="#tab-3">
+          <Icon ios="f7:cloud_upload_fill" md="material:file_upload">
+            <Badge color="red">1</Badge>
+          </Icon>
+          <span className="tabbar-label">Upload</span>
+        </Link>
+      </ToolbarPane>
     </Toolbar>
 
-    <List strongIos outlineIos dividersIos>
+    <List strong inset dividersIos>
       <ListItem title="Foo Bar" badge="0">
         <Icon slot="media" icon="icon-f7" />
       </ListItem>

@@ -4,8 +4,8 @@ import { Page, Navbar, Block } from 'framework7-react';
 export default ({ f7route }) => {
   return (
     <Page>
-      <Navbar title={`Detail Page ${f7route.params.id}`} backLink="Back"></Navbar>
-      <Block strong>
+      <Navbar title={`Detail Page ${f7route.params.id}`} backLink></Navbar>
+      <Block strong inset>
         <p>
           <b>Detail Page {f7route.params.id}</b>
         </p>

@@ -402,10 +402,7 @@ function initTouch() {
   }
 
   function emitAppTouchEvent(name, e) {
-    app.emit({
-      events: name,
-      data: [e],
-    });
+    app.emit({ events: name, data: [e] });
   }
   function appClick(e) {
     emitAppTouchEvent('click', e);
@@ -511,7 +508,5 @@ export default {
       },
     });
   },
-  on: {
-    init: initTouch,
-  },
+  on: { init: initTouch },
 };

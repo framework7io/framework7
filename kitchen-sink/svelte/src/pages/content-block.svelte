@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Content Block" backLink="Back" />
+  <Navbar title="Content Block" backLink />
 
   <p>
     This paragraph is outside of content block. Not cool, but useful for any custom elements with

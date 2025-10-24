@@ -3,7 +3,7 @@ import { Navbar, Page, BlockTitle } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar title="Vertical Timeline" backLink="Back"></Navbar>
+    <Navbar title="Vertical Timeline" backLink></Navbar>
     <BlockTitle>Default</BlockTitle>
     <div className="timeline">
       <div className="timeline-item">

@@ -5,7 +5,7 @@
 </script>
 
 <Page>
-  <Navbar title={`Detail Page ${f7route.params.id}`} backLink="Back" />
+  <Navbar title={`Detail Page ${f7route.params.id}`} backLink />
   <Block strong>
     <p><b>Detail Page {f7route.params.id}</b></p>
     <p>

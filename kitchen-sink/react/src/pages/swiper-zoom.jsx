@@ -3,7 +3,7 @@ import { Navbar, Page } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar title="Zoom" backLink="Back"></Navbar>
+    <Navbar title="Zoom" backLink></Navbar>
     <swiper-container pagination zoom navigation class="demo-swiper">
       <swiper-slide>
         <div className="swiper-zoom-container">

@@ -16,10 +16,7 @@ export default () => {
   const navbarTooltip = useRef(null);
 
   const onPageInit = () => {
-    iconTooltip.current = f7.tooltip.create({
-      targetEl: '.icon-tooltip',
-      text: 'Tooltip text',
-    });
+    iconTooltip.current = f7.tooltip.create({ targetEl: '.icon-tooltip', text: 'Tooltip text' });
     navbarTooltip.current = f7.tooltip.create({
       targetEl: '.navbar-tooltip',
       text: 'One more tooltip<br>with more text<br><em>and custom formatting</em>',
@@ -31,7 +28,7 @@ export default () => {
   };
   return (
     <Page onPageInit={onPageInit} onPageBeforeRemove={onPageBeforeRemove}>
-      <Navbar title="Tooltip" backLink="Back">
+      <Navbar title="Tooltip" backLink>
         <NavRight>
           <Link className="navbar-tooltip">
             <Icon ios="f7:info_circle_fill" md="material:info_outline" />

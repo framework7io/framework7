@@ -14,7 +14,7 @@ import {
 
 export default () => (
   <Page>
-    <Navbar title="List View" backLink="Back" />
+    <Navbar title="List View" backLink />
     <Block>
       <p>
         Framework7 allows you to be flexible with list views (table views). You can make them as

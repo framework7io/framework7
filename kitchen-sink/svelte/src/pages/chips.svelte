@@ -11,7 +11,7 @@
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
-  <Navbar title="Chips" backLink="Back" />
+  <Navbar title="Chips" backLink />
   <BlockTitle>Chips With Text</BlockTitle>
   <Block strongIos outlineIos>
     <Chip text="Example Chip" />

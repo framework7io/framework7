@@ -41,7 +41,7 @@
 </script>
 
 <Page>
-  <Navbar title="Stepper" backLink="Back" />
+  <Navbar title="Stepper" backLink />
   <BlockTitle>Shape and size</BlockTitle>
   <Block strong outlineIos class="text-align-center">
     <div class="grid grid-cols-2 grid-gap">

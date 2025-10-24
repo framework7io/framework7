@@ -22,7 +22,7 @@
 </script>
 
 <Page>
-  <Navbar title="Checkbox" backLink="Back" />
+  <Navbar title="Checkbox" backLink />
   <BlockTitle>Inline</BlockTitle>
   <Block strongIos outlineIos>
     <p>

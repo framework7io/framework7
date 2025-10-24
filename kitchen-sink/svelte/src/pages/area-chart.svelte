@@ -14,7 +14,7 @@
 </script>
 
 <Page>
-  <Navbar title="Area Chart" backLink="Back" />
+  <Navbar title="Area Chart" backLink />
   <Block strongIos outlineIos>
     <p>Framework7 comes with simple to use and fully responsive Area Chart component.</p>
     <p>

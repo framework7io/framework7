@@ -53,7 +53,7 @@ export namespace SmartSelect {
     popupCloseLinkText?: string;
     /** Smart select Popup will be opened as full screen popup on tablet */
     popupTabletFullscreen?: boolean;
-    /** Smart select Sheet close link text (default 'Done') */
+    /** Smart select Sheet close link text (default '') */
     sheetCloseLinkText?: string;
     /** Enables Searchbar on smart select page. If passed as object then it should be valid Searchbar parameters (default false) */
     searchbar?: boolean | Searchbar.Parameters;
@@ -112,9 +112,7 @@ export namespace SmartSelect {
     renderSearchbar?: () => string;
 
     /** Object with events handlers.. */
-    on?: {
-      [event in keyof Events]?: Events[event];
-    };
+    on?: { [event in keyof Events]?: Events[event] };
   }
   interface SmartSelect extends Framework7EventsClass<Events> {
     /** Link to global app instance */

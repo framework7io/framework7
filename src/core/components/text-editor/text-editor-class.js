@@ -56,13 +56,7 @@ class TextEditor extends Framework7Class {
       $contentEl = $el.children('.text-editor-content');
     }
 
-    extend(self, {
-      app,
-      $el,
-      el: $el[0],
-      $contentEl,
-      contentEl: $contentEl[0],
-    });
+    extend(self, { app, $el, el: $el[0], $contentEl, contentEl: $contentEl[0] });
     if ('value' in params) {
       self.value = self.params.value;
     }
@@ -479,7 +473,7 @@ class TextEditor extends Framework7Class {
     const self = this;
     self.popover = self.app.popover.create({
       content: `
-        <div class="popover dark text-editor-popover">
+        <div class="popover text-editor-popover">
           <div class="popover-inner">${self.renderButtons()}</div>
         </div>
       `,
@@ -507,12 +501,7 @@ class TextEditor extends Framework7Class {
     const self = this;
 
     if (!self.popover) return;
-    Object.assign(self.popover.params, {
-      targetX,
-      targetY,
-      targetWidth,
-      targetHeight,
-    });
+    Object.assign(self.popover.params, { targetX, targetY, targetWidth, targetHeight });
     clearTimeout(self.popoverTimeout);
     self.popoverTimeout = setTimeout(() => {
       if (!self.popover) return;

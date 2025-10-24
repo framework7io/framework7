@@ -9,6 +9,7 @@ import {
   Link,
   BlockTitle,
   Block,
+  ToolbarPane,
 } from 'framework7-react';
 
 export default () => {
@@ -20,13 +21,15 @@ export default () => {
 
   return (
     <Page>
-      <Navbar title="Toolbar & Tabbar" backLink="Back"></Navbar>
+      <Navbar title="Toolbar & Tabbar" backLink></Navbar>
       <Toolbar position={toolbarPosition}>
-        <Link>Left Link</Link>
-        <Link>Right Link</Link>
+        <ToolbarPane>
+          <Link>Left Link</Link>
+          <Link>Right Link</Link>
+        </ToolbarPane>
       </Toolbar>
       {/* example-hidden-start */}
-      <List insetMd strong dividersIos outlineIos className="example-hidden">
+      <List inset strong dividersIos className="example-hidden">
         <ListItem link="./tabbar/" title="Tabbar" />
         <ListItem link="./tabbar-icons/" title="Tabbar With Icons" />
         <ListItem link="./tabbar-scrollable/" title="Tabbar Scrollable" />
@@ -34,7 +37,7 @@ export default () => {
       </List>
       {/* example-hidden-end */}
       <BlockTitle>Toolbar Position</BlockTitle>
-      <Block>
+      <Block strong inset>
         <p>
           Toolbar supports both top and bottom positions. Click the following button to change its
           position.
@@ -42,6 +45,7 @@ export default () => {
         <p>
           <Button
             fill
+            round
             onClick={() => {
               toggleToolbarPosition();
             }}

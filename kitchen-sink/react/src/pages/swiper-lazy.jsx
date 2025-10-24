@@ -3,7 +3,7 @@ import { Navbar, Page } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar title="Slider Lazy Loading" backLink="Back"></Navbar>
+    <Navbar title="Slider Lazy Loading" backLink></Navbar>
     <swiper-container pagination navigation class="demo-swiper-lazy">
       <swiper-slide lazy>
         <img loading="lazy" src="https://cdn.framework7.io/placeholder/nature-1024x1024-1.jpg" />

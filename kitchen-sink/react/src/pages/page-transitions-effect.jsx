@@ -3,7 +3,7 @@ import { Page, Navbar, Block } from 'framework7-react';
 
 export default (props) => (
   <Page>
-    <Navbar title={props.effect} backLink="Back"></Navbar>
+    <Navbar title={props.effect} backLink></Navbar>
 
     <Block className="text-align-center">
       <p>

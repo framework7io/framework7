@@ -117,25 +117,13 @@ import NotFound from './pages/404.jsx';
 // Pages
 export default [
   // Index page
-  {
-    path: '/',
-    component: Home,
-  },
+  { path: '/', component: Home },
   // About page
-  {
-    path: '/about/',
-    component: About,
-  },
+  { path: '/about/', component: About },
   // Left Panel
-  {
-    path: '/panel-left/',
-    component: PanelLeft,
-  },
+  { path: '/panel-left/', component: PanelLeft },
   // Right Panel
-  {
-    path: '/panel-right/',
-    component: PanelRight,
-  },
+  { path: '/panel-right/', component: PanelRight },
   // Right Panel pages
   {
     path: '/panel-right-1/',
@@ -186,328 +174,91 @@ export default [
     `,
   },
   // Components
-  {
-    path: '/accordion/',
-    component: Accordion,
-  },
-  {
-    path: '/action-sheet/',
-    component: ActionSheet,
-  },
-  {
-    path: '/area-chart/',
-    component: AreaChart,
-  },
-  {
-    path: '/autocomplete/',
-    component: Autocomplete,
-  },
-  {
-    path: '/badge/',
-    component: Badge,
-  },
-  {
-    path: '/breadcrumbs/',
-    component: Breadcrumbs,
-  },
-  {
-    path: '/buttons/',
-    component: Buttons,
-  },
-  {
-    path: '/calendar/',
-    component: Calendar,
-  },
-  {
-    path: '/calendar-page/',
-    component: CalendarPage,
-  },
-  {
-    path: '/cards/',
-    component: Cards,
-  },
-  {
-    path: '/cards-expandable/',
-    component: CardsExpandable,
-  },
-  {
-    path: '/checkbox/',
-    component: Checkbox,
-  },
-  {
-    path: '/chips/',
-    component: Chips,
-  },
-  {
-    path: '/color-picker/',
-    component: ColorPicker,
-  },
-  {
-    path: '/contacts-list/',
-    component: ContactsList,
-  },
-  {
-    path: '/content-block/',
-    component: ContentBlock,
-  },
-  {
-    path: '/data-table/',
-    component: DataTable,
-  },
-  {
-    path: '/dialog/',
-    component: Dialog,
-  },
-  {
-    path: '/fab/',
-    component: Fab,
-  },
-  {
-    path: '/fab-morph/',
-    component: FabMorph,
-  },
-  {
-    path: '/form-storage/',
-    component: FormStorage,
-  },
-  {
-    path: '/gauge/',
-    component: Gauge,
-  },
-  {
-    path: '/grid/',
-    component: Grid,
-  },
-  {
-    path: '/icons/',
-    component: Icons,
-  },
-  {
-    path: '/infinite-scroll/',
-    component: InfiniteScroll,
-  },
-  {
-    path: '/inputs/',
-    component: Inputs,
-  },
-  {
-    path: '/list/',
-    component: List,
-  },
-  {
-    path: '/list-button/',
-    component: ListButton,
-  },
-  {
-    path: '/list-index/',
-    component: ListIndex,
-  },
-  {
-    path: '/login-screen/',
-    component: LoginScreen,
-  },
-  {
-    path: '/login-screen-page/',
-    component: LoginScreenPage,
-  },
-  {
-    path: '/menu-list/',
-    component: MenuList,
-  },
-  {
-    path: '/messages/',
-    component: Messages,
-  },
-  {
-    path: '/navbar/',
-    component: Navbar,
-  },
-  {
-    path: '/navbar-hide-scroll/',
-    component: NavbarHideScroll,
-  },
-  {
-    path: '/notifications/',
-    component: Notifications,
-  },
-  {
-    path: '/panel/',
-    component: Panel,
-  },
-  {
-    path: '/photo-browser/',
-    component: PhotoBrowser,
-  },
-  {
-    path: '/picker/',
-    component: Picker,
-  },
-  {
-    path: '/pie-chart/',
-    component: PieChart,
-  },
-  {
-    path: '/popup/',
-    component: Popup,
-  },
-  {
-    path: '/popover/',
-    component: Popover,
-  },
-  {
-    path: '/preloader/',
-    component: Preloader,
-  },
-  {
-    path: '/progressbar/',
-    component: Progressbar,
-  },
-  {
-    path: '/pull-to-refresh/',
-    component: PullToRefresh,
-  },
-  {
-    path: '/radio/',
-    component: Radio,
-  },
-  {
-    path: '/range/',
-    component: Range,
-  },
-  {
-    path: '/searchbar/',
-    component: Searchbar,
-  },
-  {
-    path: '/searchbar-expandable/',
-    component: SearchbarExpandable,
-  },
-  {
-    path: '/segmented/',
-    component: Segmented,
-  },
-  {
-    path: '/sheet-modal/',
-    component: SheetModal,
-  },
-  {
-    path: '/skeleton/',
-    component: Skeleton,
-  },
-  {
-    path: '/smart-select/',
-    component: SmartSelect,
-  },
-  {
-    path: '/sortable/',
-    component: Sortable,
-  },
-  {
-    path: '/stepper/',
-    component: Stepper,
-  },
-  {
-    path: '/subnavbar/',
-    component: Subnavbar,
-  },
-  {
-    path: '/subnavbar-title/',
-    component: SubnavbarTitle,
-  },
+  { path: '/accordion/', component: Accordion },
+  { path: '/action-sheet/', component: ActionSheet },
+  { path: '/area-chart/', component: AreaChart },
+  { path: '/autocomplete/', component: Autocomplete },
+  { path: '/badge/', component: Badge },
+  { path: '/breadcrumbs/', component: Breadcrumbs },
+  { path: '/buttons/', component: Buttons },
+  { path: '/calendar/', component: Calendar },
+  { path: '/calendar-page/', component: CalendarPage },
+  { path: '/cards/', component: Cards },
+  { path: '/cards-expandable/', component: CardsExpandable },
+  { path: '/checkbox/', component: Checkbox },
+  { path: '/chips/', component: Chips },
+  { path: '/color-picker/', component: ColorPicker },
+  { path: '/contacts-list/', component: ContactsList },
+  { path: '/content-block/', component: ContentBlock },
+  { path: '/data-table/', component: DataTable },
+  { path: '/dialog/', component: Dialog },
+  { path: '/fab/', component: Fab },
+  { path: '/fab-morph/', component: FabMorph },
+  { path: '/form-storage/', component: FormStorage },
+  { path: '/gauge/', component: Gauge },
+  { path: '/grid/', component: Grid },
+  { path: '/icons/', component: Icons },
+  { path: '/infinite-scroll/', component: InfiniteScroll },
+  { path: '/inputs/', component: Inputs },
+  { path: '/list/', component: List },
+  { path: '/list-button/', component: ListButton },
+  { path: '/list-index/', component: ListIndex },
+  { path: '/login-screen/', component: LoginScreen },
+  { path: '/login-screen-page/', component: LoginScreenPage },
+  { path: '/menu-list/', component: MenuList },
+  { path: '/messages/', component: Messages },
+  { path: '/navbar/', component: Navbar },
+  { path: '/navbar-hide-scroll/', component: NavbarHideScroll },
+  { path: '/notifications/', component: Notifications },
+  { path: '/panel/', component: Panel },
+  { path: '/photo-browser/', component: PhotoBrowser },
+  { path: '/picker/', component: Picker },
+  { path: '/pie-chart/', component: PieChart },
+  { path: '/popup/', component: Popup },
+  { path: '/popover/', component: Popover },
+  { path: '/preloader/', component: Preloader },
+  { path: '/progressbar/', component: Progressbar },
+  { path: '/pull-to-refresh/', component: PullToRefresh },
+  { path: '/radio/', component: Radio },
+  { path: '/range/', component: Range },
+  { path: '/searchbar/', component: Searchbar },
+  { path: '/searchbar-expandable/', component: SearchbarExpandable },
+  { path: '/segmented/', component: Segmented },
+  { path: '/sheet-modal/', component: SheetModal },
+  { path: '/skeleton/', component: Skeleton },
+  { path: '/smart-select/', component: SmartSelect },
+  { path: '/sortable/', component: Sortable },
+  { path: '/stepper/', component: Stepper },
+  { path: '/subnavbar/', component: Subnavbar },
+  { path: '/subnavbar-title/', component: SubnavbarTitle },
   {
     path: '/swiper/',
     component: Swiper,
     routes: [
-      {
-        path: 'swiper-horizontal/',
-        component: SwiperHorizontal,
-      },
-      {
-        path: 'swiper-vertical/',
-        component: SwiperVertical,
-      },
-      {
-        path: 'swiper-space-between/',
-        component: SwiperSpaceBetween,
-      },
-      {
-        path: 'swiper-multiple/',
-        component: SwiperMultiple,
-      },
-      {
-        path: 'swiper-nested/',
-        component: SwiperNested,
-      },
-      {
-        path: 'swiper-loop/',
-        component: SwiperLoop,
-      },
-      {
-        path: 'swiper-3d-cube/',
-        component: Swiper3dCube,
-      },
-      {
-        path: 'swiper-3d-coverflow/',
-        component: Swiper3dCoverflow,
-      },
-      {
-        path: 'swiper-3d-flip/',
-        component: Swiper3dFlip,
-      },
-      {
-        path: 'swiper-fade/',
-        component: SwiperFade,
-      },
-      {
-        path: 'swiper-scrollbar/',
-        component: SwiperScrollbar,
-      },
-      {
-        path: 'swiper-gallery/',
-        component: SwiperGallery,
-      },
-      {
-        path: 'swiper-parallax/',
-        component: SwiperParallax,
-      },
-      {
-        path: 'swiper-lazy/',
-        component: SwiperLazy,
-      },
-      {
-        path: 'swiper-pagination-progress/',
-        component: SwiperPaginationProgress,
-      },
-      {
-        path: 'swiper-pagination-fraction/',
-        component: SwiperPaginationFraction,
-      },
-      {
-        path: 'swiper-zoom/',
-        component: SwiperZoom,
-      },
+      { path: 'swiper-horizontal/', component: SwiperHorizontal },
+      { path: 'swiper-vertical/', component: SwiperVertical },
+      { path: 'swiper-space-between/', component: SwiperSpaceBetween },
+      { path: 'swiper-multiple/', component: SwiperMultiple },
+      { path: 'swiper-nested/', component: SwiperNested },
+      { path: 'swiper-loop/', component: SwiperLoop },
+      { path: 'swiper-3d-cube/', component: Swiper3dCube },
+      { path: 'swiper-3d-coverflow/', component: Swiper3dCoverflow },
+      { path: 'swiper-3d-flip/', component: Swiper3dFlip },
+      { path: 'swiper-fade/', component: SwiperFade },
+      { path: 'swiper-scrollbar/', component: SwiperScrollbar },
+      { path: 'swiper-gallery/', component: SwiperGallery },
+      { path: 'swiper-parallax/', component: SwiperParallax },
+      { path: 'swiper-lazy/', component: SwiperLazy },
+      { path: 'swiper-pagination-progress/', component: SwiperPaginationProgress },
+      { path: 'swiper-pagination-fraction/', component: SwiperPaginationFraction },
+      { path: 'swiper-zoom/', component: SwiperZoom },
     ],
   },
-  {
-    path: '/swipeout/',
-    component: Swipeout,
-  },
-  {
-    path: '/tabs/',
-    component: Tabs,
-  },
-  {
-    path: '/tabs-static/',
-    component: TabsStatic,
-  },
-  {
-    path: '/tabs-animated/',
-    component: TabsAnimated,
-  },
-  {
-    path: '/tabs-swipeable/',
-    component: TabsSwipeable,
-  },
+  { path: '/swipeout/', component: Swipeout },
+  { path: '/tabs/', component: Tabs },
+  { path: '/tabs-static/', component: TabsStatic },
+  { path: '/tabs-animated/', component: TabsAnimated },
+  { path: '/tabs-swipeable/', component: TabsSwipeable },
   {
     path: '/tabs-routable/',
     component: TabsRoutable,
@@ -516,7 +267,7 @@ export default [
         path: '/',
         id: 'tab1',
         content: `
-        <div class="block">
+        <div class="block block-strong inset">
           <p>Tab 1 content</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae facilis laudantium voluptates obcaecati officia cum, sit libero commodi. Ratione illo suscipit temporibus sequi iure ad laboriosam accusamus?</p>
           <p>Saepe explicabo voluptas ducimus provident, doloremque quo totam molestias! Suscipit blanditiis eaque exercitationem praesentium reprehenderit, fuga accusamus possimus sed, sint facilis ratione quod, qui dignissimos voluptas! Aliquam rerum consequuntur deleniti.</p>
@@ -528,7 +279,7 @@ export default [
         path: '/tab2/',
         id: 'tab2',
         content: `
-        <div class="block">
+        <div class="block block-strong inset">
           <p>Tab 2 content</p>
           <p>Suscipit, facere quasi atque totam. Repudiandae facilis at optio atque, rem nam, natus ratione cum enim voluptatem suscipit veniam! Repellat, est debitis. Modi nam mollitia explicabo, unde aliquid impedit! Adipisci!</p>
           <p>Deserunt adipisci tempora asperiores, quo, nisi ex delectus vitae consectetur iste fugiat iusto dolorem autem. Itaque, ipsa voluptas, a assumenda rem, dolorum porro accusantium, officiis veniam nostrum cum cumque impedit.</p>
@@ -540,7 +291,7 @@ export default [
         path: '/tab3/',
         id: 'tab3',
         content: `
-        <div class="block">
+        <div class="block block-strong inset">
           <p>Tab 3 content</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae facilis laudantium voluptates obcaecati officia cum, sit libero commodi. Ratione illo suscipit temporibus sequi iure ad laboriosam accusamus?</p>
           <p>Deserunt adipisci tempora asperiores, quo, nisi ex delectus vitae consectetur iste fugiat iusto dolorem autem. Itaque, ipsa voluptas, a assumenda rem, dolorum porro accusantium, officiis veniam nostrum cum cumque impedit.</p>
@@ -550,121 +301,47 @@ export default [
       },
     ],
   },
-  {
-    path: '/text-editor/',
-    component: TextEditor,
-  },
-  {
-    path: '/toast/',
-    component: Toast,
-  },
-  {
-    path: '/toggle/',
-    component: Toggle,
-  },
+  { path: '/text-editor/', component: TextEditor },
+  { path: '/toast/', component: Toast },
+  { path: '/toggle/', component: Toggle },
   {
     path: '/toolbar-tabbar/',
     component: ToolbarTabbar,
     routes: [
-      {
-        path: 'tabbar/',
-        component: Tabbar,
-      },
-      {
-        path: 'tabbar-icons/',
-        component: TabbarIcons,
-      },
-      {
-        path: 'tabbar-scrollable/',
-        component: TabbarScrollable,
-      },
-      {
-        path: 'toolbar-hide-scroll/',
-        component: ToolbarHideScroll,
-      },
+      { path: 'tabbar/', component: Tabbar },
+      { path: 'tabbar-icons/', component: TabbarIcons },
+      { path: 'tabbar-scrollable/', component: TabbarScrollable },
+      { path: 'toolbar-hide-scroll/', component: ToolbarHideScroll },
     ],
   },
-  {
-    path: '/tooltip/',
-    component: Tooltip,
-  },
-  {
-    path: '/timeline/',
-    component: Timeline,
-  },
-  {
-    path: '/timeline-vertical/',
-    component: TimelineVertical,
-  },
-  {
-    path: '/timeline-horizontal/',
-    component: TimelineHorizontal,
-  },
-  {
-    path: '/timeline-horizontal-calendar/',
-    component: TimelineHorizontalCalendar,
-  },
-  {
-    path: '/treeview/',
-    component: Treeview,
-  },
-  {
-    path: '/virtual-list/',
-    component: VirtualList,
-  },
+  { path: '/tooltip/', component: Tooltip },
+  { path: '/timeline/', component: Timeline },
+  { path: '/timeline-vertical/', component: TimelineVertical },
+  { path: '/timeline-horizontal/', component: TimelineHorizontal },
+  { path: '/timeline-horizontal-calendar/', component: TimelineHorizontalCalendar },
+  { path: '/treeview/', component: Treeview },
+  { path: '/virtual-list/', component: VirtualList },
 
   // Color Themes
-  {
-    path: '/color-themes/',
-    component: ColorThemes,
-  },
+  { path: '/color-themes/', component: ColorThemes },
 
   // Page Transitions
-  {
-    path: '/page-transitions/',
-    component: PageTransitions,
-  },
-  {
-    path: '/page-transitions/:effect/',
-    component: PageTransitionsEffect,
-  },
+  { path: '/page-transitions/', component: PageTransitions },
+  { path: '/page-transitions/:effect/', component: PageTransitionsEffect },
 
   // Routable Modals
   {
     path: '/routable-modals/',
     component: RoutableModals,
     routes: [
-      {
-        path: 'popup/',
-        popup: {
-          component: RoutablePopup,
-        },
-      },
-      {
-        path: 'actions/',
-        popup: {
-          component: RoutableActions,
-        },
-      },
+      { path: 'popup/', popup: { component: RoutablePopup } },
+      { path: 'actions/', popup: { component: RoutableActions } },
     ],
   },
-  {
-    path: '/master-detail/',
-    component: MasterDetailMaster,
-    master: true,
-  },
-  {
-    path: '/master-detail/:id/',
-    component: MasterDetailDetail,
-  },
+  { path: '/master-detail/', component: MasterDetailMaster, master: true },
+  { path: '/master-detail/:id/', component: MasterDetailDetail },
 
-  {
-    path: '/store/',
-    component: Store,
-  },
+  { path: '/store/', component: Store },
   // Default route (404 page). MUST BE THE LAST
-  {
-    path: '(.*)',
-    component: NotFound,
-  },
+  { path: '(.*)', component: NotFound },
 ];

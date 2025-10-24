@@ -4,7 +4,7 @@ import { Navbar, Page, List, ListButton } from 'framework7-react';
 export default () => {
   return (
     <Page>
-      <Navbar title="List Button" backLink="Back" />
+      <Navbar title="List Button" backLink />
 
       <List inset strong>
         <ListButton title="List Button 1" />

@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Form Storage" backLink="Back" />
+  <Navbar title="Form Storage" backLink />
   <Block strong>
     <p>
       With forms storage it is easy to store and parse form data, especially on Ajax loaded pages.

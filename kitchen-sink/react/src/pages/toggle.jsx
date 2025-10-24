@@ -3,9 +3,9 @@ import { Navbar, Page, BlockTitle, List, ListItem, Toggle } from 'framework7-rea
 
 export default () => (
   <Page>
-    <Navbar title="Toggle" backLink="Back"></Navbar>
+    <Navbar title="Toggle" backLink></Navbar>
     <BlockTitle>Super Heroes</BlockTitle>
-    <List simpleList strong outlineIos dividersIos>
+    <List simpleList strong inset dividersIos>
       <ListItem>
         <span>Batman</span>
         <Toggle defaultChecked />

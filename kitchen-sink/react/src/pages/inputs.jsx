@@ -3,7 +3,7 @@ import { Navbar, Page, BlockTitle, List, Icon, ListInput, Range } from 'framewor
 
 export default () => (
   <Page>
-    <Navbar title="Form Inputs" backLink="Back" />
+    <Navbar title="Form Inputs" backLink />
 
     <BlockTitle>Full Layout / Stacked Labels</BlockTitle>
     <List strongIos dividersIos insetIos>

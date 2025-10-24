@@ -58,7 +58,7 @@
 </script>
 
 <Page {onPageBeforeRemove} {onPageInit}>
-  <Navbar title="Swipeout" backLink="Back" />
+  <Navbar title="Swipeout" backLink />
 
   <Block>
     <p>

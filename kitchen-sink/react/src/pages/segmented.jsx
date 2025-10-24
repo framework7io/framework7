@@ -6,9 +6,9 @@ export default () => {
 
   return (
     <Page>
-      <Navbar title="Segmented" backLink="Back" />
+      <Navbar title="Segmented" backLink />
 
-      <Block strong outlineIos>
+      <Block strong inset>
         <Segmented tag="p">
           <Button>Button</Button>
           <Button>Button</Button>

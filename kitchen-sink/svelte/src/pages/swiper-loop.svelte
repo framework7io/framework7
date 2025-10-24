@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Infinite Loop Mode" backLink="Back" />
+  <Navbar title="Infinite Loop Mode" backLink />
   <swiper-container pagination={true} loop={true} class="demo-swiper">
     <swiper-slide>Slide 1</swiper-slide>
     <swiper-slide>Slide 2</swiper-slide>

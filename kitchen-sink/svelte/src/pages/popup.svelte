@@ -51,7 +51,7 @@
 </script>
 
 <Page {onPageBeforeRemove}>
-  <Navbar title="Popup" backLink="Back" />
+  <Navbar title="Popup" backLink />
   <Block strongIos outlineIos>
     <p>
       Popup is a modal window with any HTML content that pops up over App's main content. Popup as

@@ -3,7 +3,7 @@ import { Navbar, Page, BlockTitle, Block, BlockHeader, BlockFooter } from 'frame
 
 export default () => (
   <Page>
-    <Navbar title="Content Block" backLink="Back"></Navbar>
+    <Navbar title="Content Block" backLink></Navbar>
     <p>
       This paragraph is outside of content block. Not cool, but useful for any custom elements with
       custom styling.
@@ -23,7 +23,8 @@ export default () => (
       <p>
         Here comes another text block with additional "block-strong" class. Praesent nec imperdiet
         diam. Maecenas vel lectus porttitor, consectetur magna nec, viverra sem. Aliquam sed risus
-        dolor. Morbi tincidunt ut libero id sodales. Integer blandit varius nisi quis consectetur.{' '}
+        dolor. Morbi tincidunt ut libero id sodales. Integer blandit varius nisi quis
+        consectetur.{' '}
       </p>
     </Block>
 

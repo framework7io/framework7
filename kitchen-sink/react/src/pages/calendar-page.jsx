@@ -23,13 +23,7 @@ export default () => {
       title: 'Shopping',
       color: '#4caf50',
     },
-    {
-      date: new Date(year, month, day),
-      hours: 21,
-      minutes: 0,
-      title: 'Gym',
-      color: '#e91e63',
-    },
+    { date: new Date(year, month, day), hours: 21, minutes: 0, title: 'Gym', color: '#e91e63' },
     {
       date: new Date(year, month, day + 2),
       hours: 16,
@@ -37,13 +31,7 @@ export default () => {
       title: 'Pay loan',
       color: '#2196f3',
     },
-    {
-      date: new Date(year, month, day + 2),
-      hours: 21,
-      minutes: 0,
-      title: 'Gym',
-      color: '#ff9800',
-    },
+    { date: new Date(year, month, day + 2), hours: 21, minutes: 0, title: 'Gym', color: '#ff9800' },
   ];
 
   const [eventItems, setEventItems] = useState([]);
@@ -63,11 +51,7 @@ export default () => {
         const hours = event.hours;
         let minutes = event.minutes;
         if (minutes < 10) minutes = `0${minutes}`;
-        newEventItems.push({
-          title: event.title,
-          time: `${hours}:${minutes}`,
-          color: event.color,
-        });
+        newEventItems.push({ title: event.title, time: `${hours}:${minutes}`, color: event.color });
       });
     }
     setEventItems([...newEventItems]);
@@ -120,7 +104,7 @@ export default () => {
 
   return (
     <Page onPageInit={onPageInit} onPageBeforeRemove={onPageBeforeRemove}>
-      <Navbar backLink="Back">
+      <Navbar backLink>
         <NavTitle className="navbar-calendar-title"></NavTitle>
       </Navbar>
       <Block id="calendar" strong className="no-padding no-margin" />

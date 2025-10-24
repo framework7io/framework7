@@ -3,7 +3,7 @@
 </script>
 
 <Page class="grid-demo">
-  <Navbar title="Grid / Layout" backLink="Back" />
+  <Navbar title="Grid / Layout" backLink />
 
   <Block>
     <p>

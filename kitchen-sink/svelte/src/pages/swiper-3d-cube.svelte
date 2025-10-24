@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="3D Cube" backLink="Back" />
+  <Navbar title="3D Cube" backLink />
   <swiper-container effect="cube" class="demo-swiper demo-swiper-cube">
     <div slot="slide-0" class="demo-swiper-slide-content">
       <img src="https://cdn.framework7.io/placeholder/nature-800x800-1.jpg" />

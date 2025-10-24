@@ -3,15 +3,15 @@ import { Navbar, Page, Block, Subnavbar } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar backLink="Back">
+    <Navbar backLink>
       <Subnavbar title="Page Title"></Subnavbar>
     </Navbar>
-    <Block>
+    <Block strong inset>
       <p>
         It also possible to use Subnavbar to display page title and keep navbar only for actions.
       </p>
     </Block>
-    <Block>
+    <Block strong inset>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, consequatur quia amet
         voluptate vero quasi, veniam, quisquam dolorum magni sint enim, harum expedita excepturi

@@ -28,11 +28,7 @@ export default () => {
       }.jpg`;
       const song = songs[Math.floor(Math.random() * songs.length)];
       const author = authors[Math.floor(Math.random() * authors.length)];
-      items.push({
-        title: song,
-        author,
-        cover: picURL,
-      });
+      items.push({ title: song, author, cover: picURL });
       setItems([...items]);
 
       done();
@@ -40,8 +36,8 @@ export default () => {
   };
   return (
     <Page ptr ptrMousewheel={true} onPtrRefresh={loadMore}>
-      <Navbar title="Pull To Refresh" backLink="Back"></Navbar>
-      <List mediaList strongIos dividersIos outlineIos>
+      <Navbar title="Pull To Refresh" backLink></Navbar>
+      <List mediaList strong inset dividersIos>
         {items.map((item, index) => (
           <ListItem key={index} title={item.title} subtitle={item.author}>
             <img slot="media" src={item.cover} width="44" style={{ borderRadius: '8px' }} />

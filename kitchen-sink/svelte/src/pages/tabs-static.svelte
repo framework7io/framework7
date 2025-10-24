@@ -3,7 +3,7 @@
 </script>
 
 <Page pageContent={false}>
-  <Navbar title="Static Tabs" backLink="Back" />
+  <Navbar title="Static Tabs" backLink />
   <Toolbar bottom tabbar>
     <Link tabLink="#tab-1" tabLinkActive>Tab 1</Link>
     <Link tabLink="#tab-2">Tab 2</Link>

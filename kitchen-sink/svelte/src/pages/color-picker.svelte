@@ -44,7 +44,7 @@
 </script>
 
 <Page>
-  <Navbar title="Color Picker" backLink="Back" />
+  <Navbar title="Color Picker" backLink />
 
   <Block strongIos outlineIos>
     <p>

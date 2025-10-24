@@ -7,7 +7,7 @@ export default () => {
   };
   return (
     <Page>
-      <Navbar title="List Index" backLink="Back"></Navbar>
+      <Navbar title="List Index" backLink></Navbar>
       <ListIndex
         indexes="auto"
         listEl=".list.contacts-list"

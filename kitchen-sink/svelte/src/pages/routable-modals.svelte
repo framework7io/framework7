@@ -3,7 +3,7 @@
 </script>
 
 <Page>
-  <Navbar title="Routable Modals" backLink="Back" />
+  <Navbar title="Routable Modals" backLink />
   <Block strong>
     <p>In addition to pages, Framework7 router allows to load modal components:</p>
   </Block>

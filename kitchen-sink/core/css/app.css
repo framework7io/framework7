@@ -562,10 +562,13 @@ code {
   display: none;
 }
 
+.view-master-detail .page-master-detail-root .navbar .left:has(.link.back) {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 /* Demo Popup & Sheet Swipe To Close */
 .demo-popup-swipe-handler {
-  --f7-popup-border-radius: 15px 15px 0 0;
-  --f7-popup-tablet-border-radius: 15px;
   --f7-block-strong-border-color: transparent;
   height: calc(100% - var(--f7-navbar-height) - var(--f7-safe-area-top));
   top: calc(var(--f7-navbar-height) + var(--f7-safe-area-top));
@@ -579,7 +582,6 @@ code {
 .demo-sheet-swipe-to-close,
 .demo-sheet-swipe-to-step {
   --f7-sheet-border-color: transparent;
-  border-radius: 15px 15px 0 0;
   overflow: hidden;
 }
 .demo-sheet-swipe-to-close .swipe-handler,

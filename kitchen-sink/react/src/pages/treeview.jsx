@@ -13,14 +13,8 @@ import {
 export default () => {
   const [state, setState] = useState({
     checkboxes: {
-      images: {
-        'avatar.png': false,
-        'background.jpg': false,
-      },
-      documents: {
-        'cv.docx': false,
-        'info.docx': false,
-      },
+      images: { 'avatar.png': false, 'background.jpg': false },
+      documents: { 'cv.docx': false, 'info.docx': false },
       '.gitignore': false,
       'index.html': false,
     },
@@ -39,15 +33,9 @@ export default () => {
       // call done() to hide preloader
       done();
       state.loadedChildren = [
-        {
-          name: 'John Doe',
-        },
-        {
-          name: 'Jane Doe',
-        },
-        {
-          name: 'Calvin Johnson',
-        },
+        { name: 'John Doe' },
+        { name: 'Jane Doe' },
+        { name: 'Calvin Johnson' },
       ];
       setState({ ...state });
     }, 2000);
@@ -55,10 +43,10 @@ export default () => {
 
   return (
     <Page>
-      <Navbar title="Treeview" backLink="Back" />
+      <Navbar title="Treeview" backLink />
 
       <BlockTitle>Basic tree view</BlockTitle>
-      <Block strong outlineIos className="no-padding-horizontal">
+      <Block strong inset className="no-padding-horizontal">
         <Treeview>
           <TreeviewItem label="Item 1">
             <TreeviewItem label="Sub Item 1">
@@ -85,7 +73,7 @@ export default () => {
       </Block>
 
       <BlockTitle>With icons</BlockTitle>
-      <Block strong outlineIos className="no-padding-horizontal">
+      <Block strong inset className="no-padding-horizontal">
         <Treeview>
           <TreeviewItem label="images" iconF7="folder_fill">
             <TreeviewItem label="avatar.png" iconF7="photo_fill" />
@@ -101,7 +89,7 @@ export default () => {
       </Block>
 
       <BlockTitle>With checkboxes</BlockTitle>
-      <Block strong outlineIos className="no-padding-horizontal">
+      <Block strong inset className="no-padding-horizontal">
         <Treeview>
           <TreeviewItem label="images" iconF7="folder_fill">
             <Checkbox
@@ -199,7 +187,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Whole item as toggle</BlockTitle>
-      <Block strong outlineIos className="no-padding-horizontal">
+      <Block strong inset className="no-padding-horizontal">
         <Treeview>
           <TreeviewItem itemToggle label="images" iconF7="folder_fill">
             <TreeviewItem label="avatar.png" iconF7="photo_fill" />
@@ -215,7 +203,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Selectable</BlockTitle>
-      <Block strong outlineIos className="no-padding-horizontal">
+      <Block strong inset className="no-padding-horizontal">
         <Treeview>
           <TreeviewItem
             selectable
@@ -279,7 +267,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Preload children</BlockTitle>
-      <Block strong outlineIos className="no-padding-horizontal">
+      <Block strong inset className="no-padding-horizontal">
         <Treeview>
           <TreeviewItem
             toggle
@@ -296,7 +284,7 @@ export default () => {
       </Block>
 
       <BlockTitle>With links</BlockTitle>
-      <Block strong outlineIos className="no-padding-horizontal">
+      <Block strong inset className="no-padding-horizontal">
         <Treeview>
           <TreeviewItem iconF7="square_grid_2x2_fill" itemToggle label="Modals">
             <TreeviewItem link="/popup/" iconF7="link" label="Popup" />

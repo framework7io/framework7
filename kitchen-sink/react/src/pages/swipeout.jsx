@@ -40,27 +40,18 @@ export default () => {
             text: 'Here comes some optional description or warning for actions below',
             label: true,
           },
-          {
-            text: 'Action 1',
-          },
-          {
-            text: 'Action 2',
-          },
+          { text: 'Action 1' },
+          { text: 'Action 2' },
         ],
-        [
-          {
-            text: 'Cancel',
-            strong: true,
-          },
-        ],
+        [{ text: 'Cancel', strong: true }],
       ],
     });
   };
   return (
     <Page onPageBeforeRemove={onPageBeforeRemove} onPageInit={onPageInit}>
-      <Navbar title="Swipeout" backLink="Back"></Navbar>
+      <Navbar title="Swipeout" backLink></Navbar>
 
-      <Block>
+      <Block strong inset>
         <p>
           Swipe out actions on list elements is one of the most awesome F7 features. It allows you
           to call hidden menu for each list element where you can put default ready-to use delete
@@ -69,7 +60,7 @@ export default () => {
       </Block>
 
       <BlockTitle>Swipe to delete with confirm modal</BlockTitle>
-      <List strong insetMd outlineIos dividersIos>
+      <List strong inset dividersIos>
         <ListItem swipeout title="Swipe left on me please">
           <Icon slot="media" icon="icon-f7" />
           <SwipeoutActions right>
@@ -92,7 +83,7 @@ export default () => {
       </List>
 
       <BlockTitle>Swipe to delete without confirm</BlockTitle>
-      <List strong insetMd outlineIos dividersIos>
+      <List strong inset dividersIos>
         <ListItem swipeout title="Swipe left on me please">
           <Icon slot="media" icon="icon-f7" />
           <SwipeoutActions right>
@@ -111,7 +102,7 @@ export default () => {
       </List>
 
       <BlockTitle>Swipe for actions</BlockTitle>
-      <List strong insetMd outlineIos dividersIos>
+      <List strong inset dividersIos>
         <ListItem swipeout title="Swipe left on me please">
           <Icon slot="media" icon="icon-f7" />
           <SwipeoutActions right>
@@ -135,7 +126,7 @@ export default () => {
       </List>
 
       <BlockTitle>With callback on remove</BlockTitle>
-      <List strong insetMd outlineIos dividersIos>
+      <List strong inset dividersIos>
         <ListItem swipeout onSwipeoutDeleted={onDeleted} title="Swipe left on me please">
           <Icon slot="media" icon="icon-f7" />
           <SwipeoutActions right>
@@ -154,7 +145,7 @@ export default () => {
       </List>
 
       <BlockTitle>With actions on left side (swipe to right)</BlockTitle>
-      <List strong insetMd outlineIos dividersIos>
+      <List strong inset dividersIos>
         <ListItem swipeout title="Swipe right on me please">
           <Icon slot="media" icon="icon-f7" />
           <SwipeoutActions left>
@@ -180,7 +171,7 @@ export default () => {
       </List>
 
       <BlockTitle>On both sides with overswipes</BlockTitle>
-      <List mediaList strong insetMd outlineIos dividersIos>
+      <List mediaList strong inset dividersIos>
         <ListItem
           swipeout
           title="Facebook"

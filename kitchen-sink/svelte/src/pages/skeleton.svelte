@@ -26,7 +26,7 @@
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
-  <Navbar title="Skeleton Elements" backLink="Back" />
+  <Navbar title="Skeleton Elements" backLink />
   <Block strongIos outlineIos>
     <p>
       Skeleton (or Ghost) elements designed to improve perceived performance and make app feels

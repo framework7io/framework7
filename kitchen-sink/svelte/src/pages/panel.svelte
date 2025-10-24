@@ -3,7 +3,7 @@
 </script>
 
 <Page id="panel-page">
-  <Navbar title="Panel / Side panels" backLink="Back" />
+  <Navbar title="Panel / Side panels" backLink />
   <Panel left cover containerEl="#panel-page" id="panel-nested">
     <Page>
       <Block strongIos outlineIos>

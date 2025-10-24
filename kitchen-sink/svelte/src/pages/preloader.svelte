@@ -23,7 +23,7 @@
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
-  <Navbar title="Preloader" backLink="Back" />
+  <Navbar title="Preloader" backLink />
   <Block>
     <p>
       How about an activity indicator? Framework7 has a nice one. The F7 Preloader is made with SVG

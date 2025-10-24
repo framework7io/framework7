@@ -121,7 +121,7 @@
 </script>
 
 <Page {onPageInit} {onPageBeforeRemove}>
-  <Navbar backLink="Back">
+  <Navbar backLink>
     <NavTitle class="navbar-calendar-title" />
   </Navbar>
   <Block id="calendar" strong class="no-padding no-margin" />

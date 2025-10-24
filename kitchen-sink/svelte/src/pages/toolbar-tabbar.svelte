@@ -19,7 +19,7 @@
 </script>
 
 <Page>
-  <Navbar title="Toolbar & Tabbar" backLink="Back" />
+  <Navbar title="Toolbar & Tabbar" backLink />
   <Toolbar position={toolbarPosition}>
     <Link>Left Link</Link>
     <Link>Right Link</Link>
