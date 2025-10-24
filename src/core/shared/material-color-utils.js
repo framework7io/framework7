@@ -636,7 +636,7 @@ class TemperatureCache {
   get hctsByTemp() {
     if (this.hctsByTempCache.length > 0) return this.hctsByTempCache;
     const hcts = this.hctsByHue.concat([ this.input ]), temperaturesByHct = this.tempsByHct;
-    return hcts.sort(((a, b) => temperaturesByHct.get(a) - temperaturesByHct.get(b))), 
+    return hcts.sort((a, b) => temperaturesByHct.get(a) - temperaturesByHct.get(b)), 
     this.hctsByTempCache = hcts, hcts;
   }
   get warmest() {
@@ -1444,7 +1444,7 @@ class ColorSpecDelegateImpl2025 extends ColorSpecDelegateImpl2021 {
     const color2025 = DynamicColor.fromPalette({
       name: "on_surface",
       palette: s => s.neutralPalette,
-      tone: s => s.variant === Variant.VIBRANT ? tMaxC(s.neutralPalette, 0, 100, 1.1) : DynamicColor.getInitialToneFromBackground((s => "phone" === s.platform ? this.highestSurface(s) : this.surfaceContainerHigh()))(s),
+      tone: s => s.variant === Variant.VIBRANT ? tMaxC(s.neutralPalette, 0, 100, 1.1) : DynamicColor.getInitialToneFromBackground(s => "phone" === s.platform ? this.highestSurface(s) : this.surfaceContainerHigh())(s),
       chromaMultiplier: s => {
         if ("phone" === s.platform) {
           if (s.variant === Variant.NEUTRAL) return 2.2;
@@ -1912,7 +1912,7 @@ class ColorSpecDelegateImpl2025 extends ColorSpecDelegateImpl2021 {
 
 class MaterialDynamicColors {
   constructor() {
-    this.allColors = [ this.background(), this.onBackground(), this.surface(), this.surfaceDim(), this.surfaceBright(), this.surfaceContainerLowest(), this.surfaceContainerLow(), this.surfaceContainer(), this.surfaceContainerHigh(), this.surfaceContainerHighest(), this.onSurface(), this.onSurfaceVariant(), this.outline(), this.outlineVariant(), this.inverseSurface(), this.inverseOnSurface(), this.primary(), this.primaryDim(), this.onPrimary(), this.primaryContainer(), this.onPrimaryContainer(), this.primaryFixed(), this.primaryFixedDim(), this.onPrimaryFixed(), this.onPrimaryFixedVariant(), this.inversePrimary(), this.secondary(), this.secondaryDim(), this.onSecondary(), this.secondaryContainer(), this.onSecondaryContainer(), this.secondaryFixed(), this.secondaryFixedDim(), this.onSecondaryFixed(), this.onSecondaryFixedVariant(), this.tertiary(), this.tertiaryDim(), this.onTertiary(), this.tertiaryContainer(), this.onTertiaryContainer(), this.tertiaryFixed(), this.tertiaryFixedDim(), this.onTertiaryFixed(), this.onTertiaryFixedVariant(), this.error(), this.errorDim(), this.onError(), this.errorContainer(), this.onErrorContainer() ].filter((c => void 0 !== c));
+    this.allColors = [ this.background(), this.onBackground(), this.surface(), this.surfaceDim(), this.surfaceBright(), this.surfaceContainerLowest(), this.surfaceContainerLow(), this.surfaceContainer(), this.surfaceContainerHigh(), this.surfaceContainerHighest(), this.onSurface(), this.onSurfaceVariant(), this.outline(), this.outlineVariant(), this.inverseSurface(), this.inverseOnSurface(), this.primary(), this.primaryDim(), this.onPrimary(), this.primaryContainer(), this.onPrimaryContainer(), this.primaryFixed(), this.primaryFixedDim(), this.onPrimaryFixed(), this.onPrimaryFixedVariant(), this.inversePrimary(), this.secondary(), this.secondaryDim(), this.onSecondary(), this.secondaryContainer(), this.onSecondaryContainer(), this.secondaryFixed(), this.secondaryFixedDim(), this.onSecondaryFixed(), this.onSecondaryFixedVariant(), this.tertiary(), this.tertiaryDim(), this.onTertiary(), this.tertiaryContainer(), this.onTertiaryContainer(), this.tertiaryFixed(), this.tertiaryFixedDim(), this.onTertiaryFixed(), this.onTertiaryFixedVariant(), this.error(), this.errorDim(), this.onError(), this.errorContainer(), this.onErrorContainer() ].filter(c => void 0 !== c);
   }
   highestSurface(s) {
     return MaterialDynamicColors.colorSpec.highestSurface(s);
