@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Login Screen" back-link="Back"></f7-navbar>
+    <f7-navbar title="Login Screen" back-link></f7-navbar>
     <f7-block>
       <p>
         Framework7 comes with ready to use Login Screen layout. It could be used inside of page or
@@ -9,19 +9,17 @@
     </f7-block>
 
     <!-- example-hidden-start -->
-    <f7-list strong inset-md outline-ios>
+    <f7-list strong inset>
       <f7-list-item link="/login-screen-page/" title="As Separate Page"></f7-list-item>
     </f7-list>
     <!-- example-hidden-end -->
 
-    <f7-block>
-      <f7-button raised large fill login-screen-open=".demo-login-screen">As Overlay</f7-button>
+    <f7-block strong inset>
+      <f7-button round large fill login-screen-open=".demo-login-screen">As Overlay</f7-button>
     </f7-block>
 
-    <f7-block>
-      <f7-button raised large fill @click="loginScreenOpened = true"
-        >Open Via Prop Change</f7-button
-      >
+    <f7-block strong inset>
+      <f7-button round large fill @click="loginScreenOpened = true">Open Via Prop Change</f7-button>
     </f7-block>
 
     <f7-login-screen v-model:opened="loginScreenOpened" class="demo-login-screen">
@@ -85,11 +83,7 @@ export default {
     f7ListInput,
   },
   data() {
-    return {
-      loginScreenOpened: false,
-      username: '',
-      password: '',
-    };
+    return { loginScreenOpened: false, username: '', password: '' };
   },
   methods: {
     signIn() {

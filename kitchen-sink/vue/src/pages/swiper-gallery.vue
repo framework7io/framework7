@@ -1,6 +1,6 @@
 <template>
   <f7-page style="background: #000">
-    <f7-navbar title="Thumbs Gallery" back-link="Back"></f7-navbar>
+    <f7-navbar title="Thumbs Gallery" back-link></f7-navbar>
     <swiper-container
       :navigation="true"
       :space-between="10"
@@ -77,14 +77,9 @@
 import { f7Navbar, f7Page } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-  },
+  components: { f7Navbar, f7Page },
   data() {
-    return {
-      swiperThumbs: null,
-    };
+    return { swiperThumbs: null };
   },
 };
 </script>

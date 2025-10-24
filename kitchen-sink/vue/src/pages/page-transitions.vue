@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Page Transitions" back-link="Back"></f7-navbar>
+    <f7-navbar title="Page Transitions" back-link></f7-navbar>
 
     <f7-block>
       <p>
@@ -24,13 +24,7 @@
 import { f7Navbar, f7Page, f7Block, f7List, f7ListItem } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7Block,
-    f7List,
-    f7ListItem,
-  },
+  components: { f7Navbar, f7Page, f7Block, f7List, f7ListItem },
   data() {
     return {
       effects: [

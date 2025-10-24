@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar :title="effect" back-link="Back"></f7-navbar>
+    <f7-navbar :title="effect" back-link></f7-navbar>
 
     <f7-block class="text-align-center">
       <p>
@@ -12,14 +12,5 @@
 <script>
 import { f7Navbar, f7Page, f7Block } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7Block,
-  },
-  props: {
-    effect: String,
-  },
-};
+export default { components: { f7Navbar, f7Page, f7Block }, props: { effect: String } };
 </script>

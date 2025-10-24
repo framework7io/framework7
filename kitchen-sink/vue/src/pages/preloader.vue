@@ -1,7 +1,7 @@
 <template>
   <f7-page>
-    <f7-navbar title="Preloader" back-link="Back"></f7-navbar>
-    <f7-block>
+    <f7-navbar title="Preloader" back-link></f7-navbar>
+    <f7-block strong inset>
       <p>
         How about an activity indicator? Framework7 has a nice one. The F7 Preloader is made with
         SVG and animated with CSS so it can be easily resized.
@@ -10,8 +10,8 @@
 
     <f7-block-title>Default</f7-block-title>
     <f7-block
-      strong-ios
-      outline-ios
+      strong
+      inset
       class="grid grid-cols-4 grid-gap demo-preloaders align-items-stretch text-align-center"
     >
       <div>
@@ -29,7 +29,7 @@
     </f7-block>
 
     <f7-block-title>Color Preloaders</f7-block-title>
-    <f7-block strong class="grid grid-cols-4 grid-gap text-align-center">
+    <f7-block strong inset class="grid grid-cols-4 grid-gap text-align-center">
       <div>
         <f7-preloader color="red" />
       </div>
@@ -45,26 +45,28 @@
     </f7-block>
 
     <f7-block-title>Multi-color</f7-block-title>
-    <f7-block strong class="text-align-center">
+    <f7-block strong inset class="text-align-center">
       <f7-preloader color="multi" />
     </f7-block>
 
     <f7-block-title>Preloader Modals</f7-block-title>
-    <f7-block strong>
+    <f7-block strong inset>
       <p>With <b>app.preloader.show()</b> you can show small overlay with preloader indicator.</p>
       <p>
-        <a class="button button-fill" @click="openIndicator">Open Small Indicator</a>
+        <a class="button button-round button-fill" @click="openIndicator">Open Small Indicator</a>
       </p>
       <p>With <b>app.dialog.preloader()</b> you can show dialog modal with preloader indicator.</p>
       <p>
-        <a class="button button-fill" @click="openDialog">Open Dialog Preloader</a>
+        <a class="button button-round button-fill" @click="openDialog">Open Dialog Preloader</a>
       </p>
       <p>
         With <b>app.dialog.preloader('My text...')</b> you can show dialog preloader modal with
         custom title.
       </p>
       <p>
-        <a class="button button-fill" @click="openCustomDialog">Open Dialog Preloader</a>
+        <a class="button button-round button-fill" @click="openCustomDialog"
+          >Open Dialog Preloader</a
+        >
       </p>
     </f7-block>
   </f7-page>
@@ -73,13 +75,7 @@
 import { f7Navbar, f7Page, f7BlockTitle, f7Block, f7Preloader, f7 } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7BlockTitle,
-    f7Block,
-    f7Preloader,
-  },
+  components: { f7Navbar, f7Page, f7BlockTitle, f7Block, f7Preloader },
   methods: {
     openIndicator() {
       f7.preloader.show();

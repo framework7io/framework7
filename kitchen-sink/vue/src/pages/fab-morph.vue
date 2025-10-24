@@ -1,21 +1,23 @@
 <template>
   <f7-page>
-    <f7-navbar title="Floating Action Button Morph" back-link="Back"></f7-navbar>
+    <f7-navbar title="Floating Action Button Morph" back-link></f7-navbar>
     <f7-toolbar tabbar icons bottom class="fab-morph-target">
-      <f7-link
-        tab-link
-        tab-link-active
-        icon-ios="f7:envelope_fill"
-        icon-md="material:email"
-        text="Inbox"
-      />
-      <f7-link tab-link icon-ios="f7:calendar_fill" icon-md="material:today" text="Calendar" />
-      <f7-link
-        tab-link
-        icon-ios="f7:cloud_upload_fill"
-        icon-md="material:file_upload"
-        text="Upload"
-      />
+      <f7-toolbar-pane>
+        <f7-link
+          tab-link
+          tab-link-active
+          icon-ios="f7:envelope_fill"
+          icon-md="material:email"
+          text="Inbox"
+        />
+        <f7-link tab-link icon-ios="f7:calendar_fill" icon-md="material:today" text="Calendar" />
+        <f7-link
+          tab-link
+          icon-ios="f7:cloud_upload_fill"
+          icon-md="material:file_upload"
+          text="Upload"
+        />
+      </f7-toolbar-pane>
     </f7-toolbar>
     <f7-fab position="right-bottom" morph-to=".toolbar.fab-morph-target">
       <f7-icon ios="f7:plus" md="material:add"></f7-icon>
@@ -47,7 +49,7 @@
         </div>
       </div>
     </template>
-    <f7-block>
+    <f7-block strong inset>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia, quo rem beatae, delectus
         eligendi est saepe molestias perferendis suscipit, commodi labore ipsa non quasi eum magnam
@@ -74,7 +76,7 @@
         obcaecati aspernatur odio assumenda veniam, ipsum alias.
       </p>
     </f7-block>
-    <f7-block>
+    <f7-block strong inset>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa ipsa debitis sed nihil eaque
         dolore cum iste quibusdam, accusamus doloribus, tempora quia quos voluptatibus corporis
@@ -123,6 +125,7 @@ import {
   f7Fab,
   f7Icon,
   f7Link,
+  f7ToolbarPane,
 } from 'framework7-vue';
 
 export default {
@@ -135,6 +138,7 @@ export default {
     f7Fab,
     f7Icon,
     f7Link,
+    f7ToolbarPane,
   },
 };
 </script>

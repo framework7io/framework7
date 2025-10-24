@@ -1,14 +1,14 @@
 <template>
   <f7-page>
-    <f7-navbar title="Swiper Slider" back-link="Back"></f7-navbar>
-    <div class="block">
+    <f7-navbar title="Swiper Slider" back-link></f7-navbar>
+    <div class="block block-strong inset">
       <p>
         Framework7 comes with powerful and most modern touch slider ever -
         <a href="https://swiperjs.com" class="external" target="_blank">Swiper Slider</a>
         with super flexible configuration and lot, lot of features. Just check the following demos:
       </p>
     </div>
-    <f7-list strong inset-md outline-ios dividers-ios>
+    <f7-list strong inset dividers-ios>
       <f7-list-item link="swiper-horizontal/" title="Swiper Horizontal" />
       <f7-list-item link="swiper-vertical/" title="Swiper Vertical" />
       <f7-list-item link="swiper-space-between/" title="Space Between Slides" />
@@ -32,12 +32,5 @@
 <script>
 import { f7Navbar, f7Page, f7List, f7ListItem } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7List,
-    f7ListItem,
-  },
-};
+export default { components: { f7Navbar, f7Page, f7List, f7ListItem } };
 </script>

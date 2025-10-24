@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Zoom" back-link="Back"></f7-navbar>
+    <f7-navbar title="Zoom" back-link></f7-navbar>
     <swiper-container :pagination="true" :zoom="true" :navigation="true" class="demo-swiper">
       <swiper-slide>
         <div class="swiper-zoom-container">
@@ -38,10 +38,5 @@
 <script>
 import { f7Navbar, f7Page } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Navbar,
-    f7Page,
-  },
-};
+export default { components: { f7Navbar, f7Page } };
 </script>

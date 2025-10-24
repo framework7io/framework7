@@ -1,50 +1,50 @@
 <template>
   <f7-page>
-    <f7-navbar title="Dialog" back-link="Back"></f7-navbar>
-    <f7-block strong-ios outline-ios>
+    <f7-navbar title="Dialog" back-link></f7-navbar>
+    <f7-block strong inset>
       <p>
         There are 1:1 replacements of native Alert, Prompt and Confirm modals. They support
         callbacks, have very easy api and can be combined with each other. Check these examples:
       </p>
       <p class="grid grid-cols-3 grid-gap">
-        <f7-button fill @click="openAlert">Alert</f7-button>
-        <f7-button fill @click="openConfirm">Confirm</f7-button>
-        <f7-button fill @click="openPrompt">Prompt</f7-button>
+        <f7-button fill round @click="openAlert">Alert</f7-button>
+        <f7-button fill round @click="openConfirm">Confirm</f7-button>
+        <f7-button fill round @click="openPrompt">Prompt</f7-button>
       </p>
       <p class="grid grid-cols-2 grid-gap">
-        <f7-button fill @click="openLogin">Login</f7-button>
-        <f7-button fill @click="openPassword">Password</f7-button>
+        <f7-button fill round @click="openLogin">Login</f7-button>
+        <f7-button fill round @click="openPassword">Password</f7-button>
       </p>
     </f7-block>
     <f7-block-title>Vertical Buttons</f7-block-title>
-    <f7-block strong-ios outline-ios>
+    <f7-block strong inset>
       <p>
-        <f7-button fill @click="openVerticalButtons">Vertical Buttons</f7-button>
+        <f7-button fill round @click="openVerticalButtons">Vertical Buttons</f7-button>
       </p>
     </f7-block>
     <f7-block-title>Preloader Dialog</f7-block-title>
-    <f7-block strong-ios outline-ios>
+    <f7-block strong inset>
       <p class="grid grid-cols-2 grid-gap">
-        <f7-button fill @click="openPreloader">Preloader</f7-button>
-        <f7-button fill @click="openCustomPreloader">Custom Text</f7-button>
+        <f7-button fill round @click="openPreloader">Preloader</f7-button>
+        <f7-button fill round @click="openCustomPreloader">Custom Text</f7-button>
       </p>
     </f7-block>
     <f7-block-title>Progress Dialog</f7-block-title>
-    <f7-block strong-ios outline-ios>
+    <f7-block strong inset>
       <p class="grid grid-cols-2 grid-gap">
-        <f7-button fill @click="openInfiniteProgress">Infinite</f7-button>
-        <f7-button fill @click="openDeterminedProgress">Determined</f7-button>
+        <f7-button fill round @click="openInfiniteProgress">Infinite</f7-button>
+        <f7-button fill round @click="openDeterminedProgress">Determined</f7-button>
       </p>
     </f7-block>
     <f7-block-title>Dialogs Stack</f7-block-title>
-    <f7-block strong-ios outline-ios>
+    <f7-block strong inset>
       <p>
         This feature doesn't allow to open multiple dialogs at the same time, and will automatically
         open next dialog when you close the current one. Such behavior is similar to browser native
         dialogs:
       </p>
       <p>
-        <f7-button fill @click="openAlerts">Open Multiple Alerts</f7-button>
+        <f7-button fill round @click="openAlerts">Open Multiple Alerts</f7-button>
       </p>
     </f7-block>
   </f7-page>
@@ -53,13 +53,7 @@
 import { f7Navbar, f7Page, f7BlockTitle, f7Block, f7Button, f7 } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7BlockTitle,
-    f7Block,
-    f7Button,
-  },
+  components: { f7Navbar, f7Page, f7BlockTitle, f7Block, f7Button },
   methods: {
     openAlert() {
       f7.dialog.alert('Hello!');
@@ -97,17 +91,7 @@ export default {
       f7.dialog
         .create({
           title: 'Vertical Buttons',
-          buttons: [
-            {
-              text: 'Button 1',
-            },
-            {
-              text: 'Button 2',
-            },
-            {
-              text: 'Button 3',
-            },
-          ],
+          buttons: [{ text: 'Button 1' }, { text: 'Button 2' }, { text: 'Button 3' }],
           verticalButtons: true,
         })
         .open();

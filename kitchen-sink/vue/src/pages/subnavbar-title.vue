@@ -1,14 +1,14 @@
 <template>
   <f7-page>
-    <f7-navbar back-link="Back">
+    <f7-navbar back-link>
       <f7-subnavbar title="Page Title"></f7-subnavbar>
     </f7-navbar>
-    <f7-block>
+    <f7-block strong inset>
       <p>
         It also possible to use Subnavbar to display page title and keep navbar only for actions.
       </p>
     </f7-block>
-    <f7-block>
+    <f7-block strong inset>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, consequatur quia amet
         voluptate vero quasi, veniam, quisquam dolorum magni sint enim, harum expedita excepturi
@@ -40,12 +40,5 @@
 <script>
 import { f7Navbar, f7Page, f7Block, f7Subnavbar } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7Block,
-    f7Subnavbar,
-  },
-};
+export default { components: { f7Navbar, f7Page, f7Block, f7Subnavbar } };
 </script>

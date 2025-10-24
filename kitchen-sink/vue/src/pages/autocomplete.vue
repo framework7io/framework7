@@ -1,6 +1,6 @@
 <template>
   <f7-page @page:beforeremove="onPageBeforeRemove" @page:init="onPageInit">
-    <f7-navbar title="Autocomplete" back-link="Back">
+    <f7-navbar title="Autocomplete" back-link>
       <div class="subnavbar">
         <form id="searchbar-autocomplete" class="searchbar">
           <div class="searchbar-inner">
@@ -22,7 +22,7 @@
         in addition to free-type value.
       </p>
     </div>
-    <div class="list list-strong-ios list-outline-ios">
+    <div class="list list-strong inset">
       <div class="block-header">Simple Dropdown Autocomplete</div>
       <ul>
         <li class="item-content item-input">
@@ -36,7 +36,7 @@
       </ul>
     </div>
 
-    <div class="list list-strong-ios list-outline-ios">
+    <div class="list list-strong inset">
       <div class="block-header">Dropdown With All Values</div>
       <ul>
         <li class="item-content item-input">
@@ -49,7 +49,7 @@
         </li>
       </ul>
     </div>
-    <div class="list list-strong-ios list-outline-ios">
+    <div class="list list-strong inset">
       <div class="block-header">Dropdown With Placeholder</div>
       <ul>
         <li class="item-content item-input">
@@ -62,7 +62,7 @@
         </li>
       </ul>
     </div>
-    <div class="list list-strong-ios list-outline-ios">
+    <div class="list list-strong inset">
       <div class="block-header">Dropdown With Typeahead</div>
       <ul>
         <li class="item-content item-input">
@@ -75,7 +75,7 @@
         </li>
       </ul>
     </div>
-    <div class="list list-strong-ios list-outline-ios">
+    <div class="list list-strong inset">
       <div class="block-header">Dropdown With Ajax-Data</div>
       <ul>
         <li class="item-content item-input">
@@ -88,7 +88,7 @@
         </li>
       </ul>
     </div>
-    <div class="list list-strong-ios list-outline-ios">
+    <div class="list list-strong inset">
       <div class="block-header">Dropdown With Ajax-Data + Typeahead</div>
       <ul>
         <li class="item-content item-input">
@@ -108,7 +108,7 @@
         to use when you need to get strict values without allowing free-type values.
       </p>
     </div>
-    <div class="list list-strong list-outline-ios">
+    <div class="list list-strong inset">
       <div class="block-header">Simple Standalone Autocomplete</div>
       <ul>
         <li>
@@ -122,7 +122,7 @@
         </li>
       </ul>
     </div>
-    <div class="list list-strong list-outline-ios">
+    <div class="list list-strong inset">
       <div class="block-header">Popup Autocomplete</div>
       <ul>
         <li>
@@ -136,7 +136,7 @@
         </li>
       </ul>
     </div>
-    <div class="list list-strong list-outline-ios">
+    <div class="list list-strong inset">
       <div class="block-header">Multiple Values</div>
       <ul>
         <li>
@@ -153,7 +153,7 @@
         </li>
       </ul>
     </div>
-    <div class="list list-strong list-outline-ios">
+    <div class="list list-strong inset">
       <div class="block-header">With Ajax-Data</div>
       <ul>
         <li>
@@ -174,11 +174,7 @@ import { f7Navbar, f7Page, f7BlockTitle, f7, theme } from 'framework7-vue';
 import $ from 'dom7';
 
 export default {
-  components: {
-    f7Page,
-    f7Navbar,
-    f7BlockTitle,
-  },
+  components: { f7Page, f7Navbar, f7BlockTitle },
   data() {
     return {
       theme,

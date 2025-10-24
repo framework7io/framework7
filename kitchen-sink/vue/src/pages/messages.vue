@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Messages" back-link="Back"></f7-navbar>
+    <f7-navbar title="Messages" back-link></f7-navbar>
 
     <f7-messagebar
       ref="messagebar"
@@ -108,14 +108,8 @@ export default {
       typingMessage: null,
       messageText: '',
       messagesData: [
-        {
-          type: 'sent',
-          text: 'Hi, Kate',
-        },
-        {
-          type: 'sent',
-          text: 'How are you?',
-        },
+        { type: 'sent', text: 'Hi, Kate' },
+        { type: 'sent', text: 'How are you?' },
         {
           name: 'Kate',
           type: 'received',
@@ -128,18 +122,9 @@ export default {
           text: 'Hi there, I am also fine, thanks! And how are you?',
           avatar: 'https://cdn.framework7.io/placeholder/people-100x100-7.jpg',
         },
-        {
-          type: 'sent',
-          text: 'Hey, Blue Ninja! Glad to see you ;)',
-        },
-        {
-          type: 'sent',
-          text: 'Hey, look, cutest kitten ever!',
-        },
-        {
-          type: 'sent',
-          image: 'https://cdn.framework7.io/placeholder/cats-200x260-4.jpg',
-        },
+        { type: 'sent', text: 'Hey, Blue Ninja! Glad to see you ;)' },
+        { type: 'sent', text: 'Hey, look, cutest kitten ever!' },
+        { type: 'sent', image: 'https://cdn.framework7.io/placeholder/cats-200x260-4.jpg' },
         {
           name: 'Kate',
           type: 'received',
@@ -265,14 +250,10 @@ export default {
       const text = self.messageText.replace(/\n/g, '<br>').trim();
       const messagesToSend = [];
       self.attachments.forEach((attachment) => {
-        messagesToSend.push({
-          image: attachment,
-        });
+        messagesToSend.push({ image: attachment });
       });
       if (text.length) {
-        messagesToSend.push({
-          text,
-        });
+        messagesToSend.push({ text });
       }
       if (messagesToSend.length === 0) {
         return;
@@ -295,10 +276,7 @@ export default {
       setTimeout(() => {
         const answer = self.answers[Math.floor(Math.random() * self.answers.length)];
         const person = self.people[Math.floor(Math.random() * self.people.length)];
-        self.typingMessage = {
-          name: person.name,
-          avatar: person.avatar,
-        };
+        self.typingMessage = { name: person.name, avatar: person.avatar };
         setTimeout(() => {
           self.messagesData.push({
             text: answer,

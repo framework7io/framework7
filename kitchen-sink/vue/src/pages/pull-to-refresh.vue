@@ -1,7 +1,7 @@
 <template>
   <f7-page ptr :ptr-mousewheel="true" @ptr:refresh="loadMore">
-    <f7-navbar title="Pull To Refresh" back-link="Back"></f7-navbar>
-    <f7-list media-list strong-ios dividers-ios outline-ios>
+    <f7-navbar title="Pull To Refresh" back-link></f7-navbar>
+    <f7-list media-list strong inset dividers-ios>
       <f7-list-item
         v-for="(item, index) in items"
         :key="index"
@@ -26,13 +26,7 @@
 import { f7Navbar, f7Page, f7List, f7ListItem, f7BlockFooter } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7List,
-    f7ListItem,
-    f7BlockFooter,
-  },
+  components: { f7Navbar, f7Page, f7List, f7ListItem, f7BlockFooter },
   data() {
     return {
       items: [
@@ -67,11 +61,7 @@ export default {
         const song = self.songs[Math.floor(Math.random() * self.songs.length)];
         const author = self.authors[Math.floor(Math.random() * self.authors.length)];
 
-        self.items.push({
-          title: song,
-          author,
-          cover: picURL,
-        });
+        self.items.push({ title: song, author, cover: picURL });
 
         done();
       }, 1000);

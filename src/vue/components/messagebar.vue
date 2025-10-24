@@ -6,6 +6,7 @@ import { f7ready, f7 } from '../shared/f7.js';
 
 import Link from './link.js';
 import Input from './input.js';
+import ToolbarPane from './toolbar-pane.js';
 
 export default {
   name: 'f7-messagebar',
@@ -13,37 +14,19 @@ export default {
     sheetVisible: Boolean,
     attachmentsVisible: Boolean,
     top: Boolean,
-    resizable: {
-      type: Boolean,
-      default: true,
-    },
-    bottomOffset: {
-      type: Number,
-      default: 0,
-    },
-    topOffset: {
-      type: Number,
-      default: 0,
-    },
+    resizable: { type: Boolean, default: true },
+    bottomOffset: { type: Number, default: 0 },
+    topOffset: { type: Number, default: 0 },
     maxHeight: Number,
-    resizePage: {
-      type: Boolean,
-      default: true,
-    },
+    resizePage: { type: Boolean, default: true },
     sendLink: String,
     value: [String, Number, Array],
     disabled: Boolean,
     readonly: Boolean,
     textareaId: [Number, String],
     name: String,
-    placeholder: {
-      type: String,
-      default: 'Message',
-    },
-    init: {
-      type: Boolean,
-      default: true,
-    },
+    placeholder: { type: String, default: 'Message' },
+    init: { type: Boolean, default: true },
     ...colorProps,
   },
   emits: [
@@ -215,10 +198,13 @@ export default {
         });
       }
 
+      const hasInnerEnd =
+        (props.sendLink && props.sendLink.length > 0) || slotsSendLink || slotsInnerEnd;
+
       return h('div', { class: classes.value, ref: elRef }, [
         slotsBeforeInner && slotsBeforeInner(),
         h('div', { class: 'toolbar-inner' }, [
-          slotsInnerStart && slotsInnerStart(),
+          slotsInnerStart && h(ToolbarPane, null, slotsInnerStart()),
           h('div', { class: 'messagebar-area' }, [
             slotsBeforeArea && slotsBeforeArea(),
             messagebarAttachmentsEl,
@@ -240,9 +226,12 @@ export default {
             }),
             slotsAfterArea && slotsAfterArea(),
           ]),
-          ((props.sendLink && props.sendLink.length > 0) || slotsSendLink) &&
-            h(Link, { onClick }, [slotsSendLink ? slotsSendLink() : props.sendLink]),
-          slotsInnerEnd && slotsInnerEnd(),
+          hasInnerEnd &&
+            h(ToolbarPane, null, [
+              ((props.sendLink && props.sendLink.length > 0) || slotsSendLink) &&
+                h(Link, { onClick }, [slotsSendLink ? slotsSendLink() : props.sendLink]),
+              slotsInnerEnd && slotsInnerEnd(),
+            ]),
           innerEndEls,
         ]),
         slotsAfterInner && slotsAfterInner(),

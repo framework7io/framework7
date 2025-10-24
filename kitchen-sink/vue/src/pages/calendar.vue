@@ -1,6 +1,6 @@
 <template>
   <f7-page @page:beforeremove="onPageBeforeRemove" @page:init="onPageInit">
-    <f7-navbar title="Calendar" back-link="Back"></f7-navbar>
+    <f7-navbar title="Calendar" back-link></f7-navbar>
 
     <f7-block>
       <p>Calendar is a touch optimized component that provides an easy way to handle dates.</p>
@@ -11,12 +11,12 @@
     </f7-block>
 
     <f7-block-title>Default setup</f7-block-title>
-    <f7-list strong-ios outline-ios>
+    <f7-list strong inset>
       <f7-list-input type="datepicker" placeholder="Your birth date" readonly />
     </f7-list>
 
     <f7-block-title>Custom date format</f7-block-title>
-    <f7-list strong-ios outline-ios>
+    <f7-list strong inset>
       <f7-list-input
         type="datepicker"
         placeholder="Select date"
@@ -28,7 +28,7 @@
     </f7-list>
 
     <f7-block-title>Date + Time</f7-block-title>
-    <f7-list strong-ios outline-ios>
+    <f7-list strong inset>
       <f7-list-input
         type="datepicker"
         placeholder="Select date and time"
@@ -47,7 +47,7 @@
     </f7-list>
 
     <f7-block-title>Multiple Values</f7-block-title>
-    <f7-list strong-ios outline-ios>
+    <f7-list strong inset>
       <f7-list-input
         type="datepicker"
         placeholder="Select multiple dates"
@@ -57,7 +57,7 @@
     </f7-list>
 
     <f7-block-title>Range Picker</f7-block-title>
-    <f7-list strong-ios outline-ios>
+    <f7-list strong inset>
       <f7-list-input
         type="datepicker"
         placeholder="Select date range"
@@ -67,7 +67,7 @@
     </f7-list>
 
     <f7-block-title>Open in Modal</f7-block-title>
-    <f7-list strong-ios outline-ios>
+    <f7-list strong inset>
       <f7-list-input
         type="datepicker"
         placeholder="Select date"
@@ -77,12 +77,12 @@
     </f7-list>
 
     <f7-block-title>Calendar Page</f7-block-title>
-    <f7-list strong outline-ios>
+    <f7-list strong inset>
       <f7-list-item title="Open Calendar Page" link="/calendar-page/" />
     </f7-list>
 
     <f7-block-title>Inline with custom toolbar</f7-block-title>
-    <f7-block strong class="no-padding">
+    <f7-block strong inset class="no-padding">
       <div id="demo-calendar-inline-container"></div>
     </f7-block>
   </f7-page>
@@ -101,15 +101,7 @@ import {
 import $ from 'dom7';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7Block,
-    f7BlockTitle,
-    f7List,
-    f7ListInput,
-    f7ListItem,
-  },
+  components: { f7Navbar, f7Page, f7Block, f7BlockTitle, f7List, f7ListInput, f7ListItem },
   methods: {
     onPageInit() {
       const self = this;

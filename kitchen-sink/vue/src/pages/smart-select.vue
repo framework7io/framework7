@@ -1,10 +1,10 @@
 <template>
   <f7-page>
-    <f7-navbar title="Smart Select" back-link="Back"></f7-navbar>
-    <f7-block>
+    <f7-navbar title="Smart Select" back-link></f7-navbar>
+    <f7-block strong inset>
       Framework7 allows you to easily convert your usual form selects to dynamic pages with radios:
     </f7-block>
-    <f7-list strong-ios outline-ios dividers-ios>
+    <f7-list strong inset dividers-ios>
       <f7-list-item title="Fruit" smart-select>
         <select name="fruits">
           <option value="apple" selected>Apple</option>
@@ -71,13 +71,5 @@
 <script>
 import { f7Navbar, f7Page, f7List, f7Block, f7ListItem } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7List,
-    f7Block,
-    f7ListItem,
-  },
-};
+export default { components: { f7Navbar, f7Page, f7List, f7Block, f7ListItem } };
 </script>

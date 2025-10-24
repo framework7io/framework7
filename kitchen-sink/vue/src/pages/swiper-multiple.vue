@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Multiple Swipers" back-link="Back"></f7-navbar>
+    <f7-navbar title="Multiple Swipers" back-link></f7-navbar>
     <f7-block-title>1 Slide Per View, 50px Between</f7-block-title>
     <swiper-container :pagination="true" class="demo-swiper-multiple" :space-between="50">
       <swiper-slide>Slide 1</swiper-slide>
@@ -104,11 +104,5 @@
 <script>
 import { f7Navbar, f7Page, f7BlockTitle } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7BlockTitle,
-  },
-};
+export default { components: { f7Navbar, f7Page, f7BlockTitle } };
 </script>

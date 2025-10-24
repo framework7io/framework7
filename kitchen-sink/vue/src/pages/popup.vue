@@ -1,44 +1,44 @@
 <template>
   <f7-page @page:beforeremove="onPageBeforeRemove">
-    <f7-navbar title="Popup" back-link="Back"></f7-navbar>
-    <f7-block strong-ios outline-ios>
+    <f7-navbar title="Popup" back-link></f7-navbar>
+    <f7-block strong inset>
       <p>
         Popup is a modal window with any HTML content that pops up over App's main content. Popup as
         all other overlays is part of so called "Temporary Views".
       </p>
       <p>
-        <f7-button fill popup-open=".demo-popup">Open Popup</f7-button>
+        <f7-button round fill popup-open=".demo-popup">Open Popup</f7-button>
       </p>
       <p>
-        <f7-button fill @click="popupOpened = true">Open Via Prop Change</f7-button>
+        <f7-button round fill @click="popupOpened = true">Open Via Prop Change</f7-button>
       </p>
       <p>
-        <f7-button fill @click="createPopup">Create Dynamic Popup</f7-button>
+        <f7-button round fill @click="createPopup">Create Dynamic Popup</f7-button>
       </p>
     </f7-block>
 
     <f7-block-title>Swipe To Close</f7-block-title>
-    <f7-block strong-ios outline-ios>
+    <f7-block strong inset>
       <p>Popup can be closed with swipe to top or bottom:</p>
       <p>
-        <f7-button fill popup-open=".demo-popup-swipe">Swipe To Close</f7-button>
+        <f7-button round fill popup-open=".demo-popup-swipe">Swipe To Close</f7-button>
       </p>
       <p>
         Or it can be closed with swipe on special swipe handler and, for example, only to bottom:
       </p>
       <p>
-        <f7-button fill popup-open=".demo-popup-swipe-handler">With Swipe Handler</f7-button>
+        <f7-button round fill popup-open=".demo-popup-swipe-handler">With Swipe Handler</f7-button>
       </p>
     </f7-block>
 
     <f7-block-title>Push View</f7-block-title>
-    <f7-block strong-ios outline-ios>
+    <f7-block strong inset>
       <p>
         Popup can push view behind. By default has effect only when `safe-area-inset-top` is more
         than zero (iOS fullscreen webapp or iOS cordova app)
       </p>
       <p>
-        <f7-button fill popup-open=".demo-popup-push">Popup Push</f7-button>
+        <f7-button round fill popup-open=".demo-popup-push">Popup Push</f7-button>
       </p>
     </f7-block>
 
@@ -145,7 +145,7 @@
           <div class="swipe-handler"></div>
         </template>
         <f7-block-title large>Hello!</f7-block-title>
-        <f7-block strong-ios outline-ios>
+        <f7-block strong inset>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse faucibus mauris
             leo, eu bibendum neque congue non. Ut leo mauris, eleifend eu commodo a, egestas ac
@@ -216,9 +216,7 @@ export default {
     f7View,
   },
   data() {
-    return {
-      popupOpened: false,
-    };
+    return { popupOpened: false };
   },
   methods: {
     createPopup() {

@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Contacts List" back-link="Back"></f7-navbar>
+    <f7-navbar title="Contacts List" back-link></f7-navbar>
     <f7-list contacts-list strong-ios>
       <f7-list-group>
         <f7-list-item title="A" group-title />
@@ -42,13 +42,5 @@
 <script>
 import { f7Navbar, f7Page, f7List, f7ListGroup, f7ListItem } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7List,
-    f7ListGroup,
-    f7ListItem,
-  },
-};
+export default { components: { f7Navbar, f7Page, f7List, f7ListGroup, f7ListItem } };
 </script>

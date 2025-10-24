@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="List Index" back-link="Back"></f7-navbar>
+    <f7-navbar title="List Index" back-link></f7-navbar>
     <f7-list-index
       indexes="auto"
       list-el=".list.contacts-list"
@@ -176,14 +176,7 @@
 import { f7Page, f7Navbar, f7List, f7ListGroup, f7ListItem, f7ListIndex } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Page,
-    f7Navbar,
-    f7List,
-    f7ListGroup,
-    f7ListItem,
-    f7ListIndex,
-  },
+  components: { f7Page, f7Navbar, f7List, f7ListGroup, f7ListItem, f7ListIndex },
   methods: {
     onIndexSelect(itemContent) {
       // eslint-disable-next-line

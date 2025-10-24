@@ -1,7 +1,7 @@
 <template>
   <f7-page>
-    <f7-navbar title="Master Detail" back-link="Back"></f7-navbar>
-    <f7-block strong>
+    <f7-navbar title="Master Detail" back-link></f7-navbar>
+    <f7-block strong inset>
       <p>
         Master-Detail pattern oftenly used on wide enough screens and tablets, and consists of two
         views. Master - is an area in the UI where you have a list of something. Detail - is the
@@ -15,7 +15,7 @@
       <p>Navigation to/from Master-Detail view happens without transition.</p>
     </f7-block>
 
-    <f7-list>
+    <f7-list strong inset dividers-ios>
       <f7-list-item :reload-detail="true" link="/master-detail/1/">Detail Page 1</f7-list-item>
       <f7-list-item :reload-detail="true" link="/master-detail/2/">Detail Page 2</f7-list-item>
       <f7-list-item :reload-detail="true" link="/master-detail/3/">Detail Page 3</f7-list-item>
@@ -25,13 +25,5 @@
 <script>
 import { f7Page, f7Navbar, f7Block, f7List, f7ListItem } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Page,
-    f7Navbar,
-    f7Block,
-    f7List,
-    f7ListItem,
-  },
-};
+export default { components: { f7Page, f7Navbar, f7Block, f7List, f7ListItem } };
 </script>

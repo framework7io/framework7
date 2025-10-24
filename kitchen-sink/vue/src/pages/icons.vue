@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Icons" back-link="Back"></f7-navbar>
+    <f7-navbar title="Icons" back-link></f7-navbar>
     <f7-block strong inset>
       <p>
         Framework7 comes with the premium and free
@@ -80,20 +80,9 @@ const mdIcons =
   'translate child_friendly movie screen_lock_landscape switch_camera live_tv cast_connected network_wifi access_alarm bubble_chart airline_seat_flat_angled format_align_center speaker_notes brightness_low query_builder edit_location replay_30 mail_outline cloud_queue filter_none brightness_high cloud_download edit collections looks_one airline_seat_recline_normal get_app format_strikethrough hdr_weak camera_front filter_center_focus trending_flat vpn_key call_missed_outgoing remove_shopping_cart tablet_android play_circle_outline directions_railway dashboard network_wifi switch_video ac_unit error pool bluetooth_audio pageview arrow_drop_down_circle kitchen weekend vibration error airport_shuttle date_range zoom_out panorama_wide_angle restore fast_rewind replay_5 attach_money check_box disc_full looks_3 personal_video crop stay_current_portrait cast_connected navigation portrait attach_file crop sentiment_satisfied phonelink_erase drive_eta panorama_fish_eye brightness_6 airline_seat_legroom_reduced bookmark_border live_tv folder_special speaker assignment_return add_shopping_cart directions_transit airplay brightness_auto border_vertical gif layers_clear fast_forward laptop_windows settings_input_component cancel person_pin_circle audiotrack inbox access_alarm crop format_indent_decrease accessible wrap_text';
 
 export default {
-  components: {
-    f7Page,
-    f7Navbar,
-    f7Block,
-    f7Tab,
-    f7BlockHeader,
-    f7Segmented,
-    f7Button,
-  },
+  components: { f7Page, f7Navbar, f7Block, f7Tab, f7BlockHeader, f7Segmented, f7Button },
   data() {
-    return {
-      f7Icons: f7Icons.split(' '),
-      mdIcons: mdIcons.split(' '),
-    };
+    return { f7Icons: f7Icons.split(' '), mdIcons: mdIcons.split(' ') };
   },
 };
 </script>

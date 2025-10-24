@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Content Block" back-link="Back"></f7-navbar>
+    <f7-navbar title="Content Block" back-link></f7-navbar>
     <p>
       This paragraph is outside of content block. Not cool, but useful for any custom elements with
       custom styling.
@@ -126,13 +126,6 @@ import {
 } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7BlockTitle,
-    f7Block,
-    f7BlockHeader,
-    f7BlockFooter,
-  },
+  components: { f7Navbar, f7Page, f7BlockTitle, f7Block, f7BlockHeader, f7BlockFooter },
 };
 </script>

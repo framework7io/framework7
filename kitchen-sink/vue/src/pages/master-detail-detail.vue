@@ -1,7 +1,7 @@
 <template>
   <f7-page>
-    <f7-navbar :title="`Detail Page ${f7route.params.id}`" back-link="Back"></f7-navbar>
-    <f7-block strong>
+    <f7-navbar :title="`Detail Page ${f7route.params.id}`" back-link></f7-navbar>
+    <f7-block strong inset>
       <p>
         <b>Detail Page {{ f7route.params.id }}</b>
       </p>
@@ -20,14 +20,5 @@
 <script>
 import { f7Page, f7Navbar, f7Block } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Page,
-    f7Navbar,
-    f7Block,
-  },
-  props: {
-    f7route: Object,
-  },
-};
+export default { components: { f7Page, f7Navbar, f7Block }, props: { f7route: Object } };
 </script>

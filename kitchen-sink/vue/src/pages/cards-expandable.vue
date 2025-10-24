@@ -1,8 +1,8 @@
 <template>
   <f7-page>
-    <f7-navbar title="Cards Expandable" back-link="Back"></f7-navbar>
+    <f7-navbar title="Cards Expandable" back-link></f7-navbar>
 
-    <f7-block>
+    <f7-block strong inset>
       <p>
         In addition to usual <a href="/cards/">Cards</a> there are also Expandable Cards that allow
         to store more information and illustrations about particular subject.
@@ -222,15 +222,6 @@ import {
 } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7Block,
-    f7Card,
-    f7CardHeader,
-    f7CardContent,
-    f7Link,
-    f7Button,
-  },
+  components: { f7Navbar, f7Page, f7Block, f7Card, f7CardHeader, f7CardContent, f7Link, f7Button },
 };
 </script>

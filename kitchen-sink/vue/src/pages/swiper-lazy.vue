@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Slider Lazy Loading" back-link="Back"></f7-navbar>
+    <f7-navbar title="Slider Lazy Loading" back-link></f7-navbar>
     <swiper-container :pagination="true" :navigation="true" class="demo-swiper-lazy">
       <swiper-slide :lazy="true">
         <img loading="lazy" src="https://cdn.framework7.io/placeholder/nature-1024x1024-1.jpg" />
@@ -26,10 +26,5 @@
 <script>
 import { f7Navbar, f7Page } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Navbar,
-    f7Page,
-  },
-};
+export default { components: { f7Navbar, f7Page } };
 </script>

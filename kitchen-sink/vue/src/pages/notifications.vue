@@ -1,15 +1,19 @@
 <template>
   <f7-page @page:beforeremove="onPageBeforeRemove" @page:beforeout="onPageBeforeOut">
-    <f7-navbar title="Notifications" back-link="Back"></f7-navbar>
-    <f7-block strong-ios outline-ios>
+    <f7-navbar title="Notifications" back-link></f7-navbar>
+    <f7-block strong inset>
       <p>
         Framework7 comes with simple Notifications component that allows you to show some useful
         messages to user and request basic actions.
       </p>
-      <p><f7-button fill @click="showNotificationFull">Full layout notification</f7-button></p>
-      <p><f7-button fill @click="showNotificationWithButton">With close button</f7-button></p>
-      <p><f7-button fill @click="showNotificationCloseOnClick">Click to close</f7-button></p>
-      <p><f7-button fill @click="showNotificationCallbackOnClose">Callback on close</f7-button></p>
+      <p>
+        <f7-button round fill @click="showNotificationFull">Full layout notification</f7-button>
+      </p>
+      <p><f7-button round fill @click="showNotificationWithButton">With close button</f7-button></p>
+      <p><f7-button round fill @click="showNotificationCloseOnClick">Click to close</f7-button></p>
+      <p>
+        <f7-button round fill @click="showNotificationCallbackOnClose">Callback on close</f7-button>
+      </p>
     </f7-block>
   </f7-page>
 </template>
@@ -17,12 +21,7 @@
 import { f7Navbar, f7Page, f7Block, f7Button, f7 } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7Button,
-    f7Block,
-  },
+  components: { f7Navbar, f7Page, f7Button, f7Block },
   methods: {
     showNotificationFull() {
       const self = this;

@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Space Between Slides" back-link="Back"></f7-navbar>
+    <f7-navbar title="Space Between Slides" back-link></f7-navbar>
     <swiper-container :pagination="{ hideOnClick: true }" :space-between="50" class="demo-swiper">
       <swiper-slide>Slide 1</swiper-slide>
       <swiper-slide>Slide 2</swiper-slide>
@@ -18,10 +18,5 @@
 <script>
 import { f7Navbar, f7Page } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Navbar,
-    f7Page,
-  },
-};
+export default { components: { f7Navbar, f7Page } };
 </script>

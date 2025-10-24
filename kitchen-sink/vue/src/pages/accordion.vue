@@ -1,9 +1,9 @@
 <template>
   <f7-page>
-    <f7-navbar title="Accordion" back-link="Back"></f7-navbar>
+    <f7-navbar title="Accordion" back-link></f7-navbar>
 
     <f7-block-title>List View Accordion</f7-block-title>
-    <f7-list strong outline-ios dividers-ios inset-md accordion-list>
+    <f7-list strong dividers-ios inset accordion-list>
       <f7-list-item accordion-item title="Lorem Ipsum">
         <f7-accordion-content>
           <f7-block>
@@ -43,7 +43,7 @@
     </f7-list>
 
     <f7-block-title>Opposite Side</f7-block-title>
-    <f7-list strong outline-ios dividers-ios inset-md accordion-list accordion-opposite>
+    <f7-list strong dividers-ios inset accordion-list accordion-opposite>
       <f7-list-item accordion-item title="Lorem Ipsum">
         <f7-accordion-content>
           <f7-block>
@@ -95,14 +95,6 @@ import {
 } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7BlockTitle,
-    f7Block,
-    f7AccordionContent,
-    f7List,
-    f7ListItem,
-  },
+  components: { f7Navbar, f7Page, f7BlockTitle, f7Block, f7AccordionContent, f7List, f7ListItem },
 };
 </script>

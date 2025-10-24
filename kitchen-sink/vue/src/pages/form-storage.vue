@@ -1,7 +1,7 @@
 <template>
   <f7-page>
-    <f7-navbar title="Form Storage" back-link="Back"></f7-navbar>
-    <div class="block block-strong">
+    <f7-navbar title="Form Storage" back-link></f7-navbar>
+    <f7-block strong inset>
       <p>
         With forms storage it is easy to store and parse form data, especially on Ajax loaded pages.
         All you need to make it work is to add "form-store-data" class to your &lt;form&gt; and
@@ -13,11 +13,8 @@
         Just try to fill the form below and then go to any other page, or even you may close this
         site, and when you return here form fields will have kept your data.
       </p>
-    </div>
-    <form
-      id="demo-form"
-      class="list list-strong-ios list-outline-ios list-dividers-ios form-store-data"
-    >
+    </f7-block>
+    <form id="demo-form" class="list list-strong inset list-dividers-ios form-store-data">
       <ul>
         <li class="item-content item-input">
           <div class="item-inner">
@@ -119,12 +116,7 @@
   </f7-page>
 </template>
 <script>
-import { f7Navbar, f7Page } from 'framework7-vue';
+import { f7Navbar, f7Page, f7Block } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Navbar,
-    f7Page,
-  },
-};
+export default { components: { f7Navbar, f7Page, f7Block } };
 </script>

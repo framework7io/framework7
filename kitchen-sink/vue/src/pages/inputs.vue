@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Form Inputs" back-link="Back"></f7-navbar>
+    <f7-navbar title="Form Inputs" back-link></f7-navbar>
 
     <f7-block-title>Full Layout / Stacked Labels</f7-block-title>
     <f7-list strong-ios dividers-ios inset-ios>
@@ -384,14 +384,6 @@ import {
 } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7BlockTitle,
-    f7List,
-    f7Icon,
-    f7ListInput,
-    f7Range,
-  },
+  components: { f7Navbar, f7Page, f7BlockTitle, f7List, f7Icon, f7ListInput, f7Range },
 };
 </script>

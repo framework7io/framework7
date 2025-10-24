@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Nested Swipers" back-link="Back"></f7-navbar>
+    <f7-navbar title="Nested Swipers" back-link></f7-navbar>
     <swiper-container :pagination="true" class="demo-swiper">
       <swiper-slide>Horizontal Slide 1</swiper-slide>
       <swiper-slide>
@@ -18,10 +18,5 @@
 <script>
 import { f7Navbar, f7Page } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Navbar,
-    f7Page,
-  },
-};
+export default { components: { f7Navbar, f7Page } };
 </script>

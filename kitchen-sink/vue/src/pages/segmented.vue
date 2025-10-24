@@ -1,8 +1,8 @@
 <template>
   <f7-page>
-    <f7-navbar title="Segmented" back-link="Back"></f7-navbar>
+    <f7-navbar title="Segmented" back-link></f7-navbar>
 
-    <f7-block strong outline-ios>
+    <f7-block strong inset>
       <f7-segmented tag="p">
         <f7-button>Button</f7-button>
         <f7-button>Button</f7-button>
@@ -47,19 +47,11 @@ import { ref } from 'vue';
 import { f7Navbar, f7Page, f7Block, f7Button, f7Segmented } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7Block,
-    f7Button,
-    f7Segmented,
-  },
+  components: { f7Navbar, f7Page, f7Block, f7Button, f7Segmented },
   setup() {
     const activeStrongButton = ref(0);
 
-    return {
-      activeStrongButton,
-    };
+    return { activeStrongButton };
   },
 };
 </script>

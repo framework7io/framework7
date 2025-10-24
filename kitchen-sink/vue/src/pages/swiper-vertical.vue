@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Vertical Swiper" back-link="Back"></f7-navbar>
+    <f7-navbar title="Vertical Swiper" back-link></f7-navbar>
     <swiper-container :pagination="{ hideOnClick: true }" class="demo-swiper" direction="vertical">
       <swiper-slide>Slide 1</swiper-slide>
       <swiper-slide>Slide 2</swiper-slide>
@@ -18,10 +18,5 @@
 <script>
 import { f7Navbar, f7Page } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Navbar,
-    f7Page,
-  },
-};
+export default { components: { f7Navbar, f7Page } };
 </script>

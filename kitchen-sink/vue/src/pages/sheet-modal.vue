@@ -1,52 +1,52 @@
 <template>
   <f7-page @page:beforeremove="onPageBeforeRemove" @page:beforeout="onPageBeforeOut">
-    <f7-navbar title="Sheet Modal" back-link="Back"></f7-navbar>
-    <f7-block strong-ios outline-ios>
+    <f7-navbar title="Sheet Modal" back-link></f7-navbar>
+    <f7-block strong inset>
       <p>
         Sheet Modals slide up from the bottom of the screen to reveal more content. Such modals
         allow to create custom overlays with custom content.
       </p>
       <p class="grid grid-cols-2 grid-gap">
-        <f7-button fill sheet-open=".demo-sheet">Open Sheet</f7-button>
-        <f7-button fill @click="createSheet">Dynamic Sheet</f7-button>
+        <f7-button round fill sheet-open=".demo-sheet">Open Sheet</f7-button>
+        <f7-button round fill @click="createSheet">Dynamic Sheet</f7-button>
       </p>
       <p>
-        <f7-button fill sheet-open=".demo-sheet-top">Top Sheet</f7-button>
+        <f7-button round fill sheet-open=".demo-sheet-top">Top Sheet</f7-button>
       </p>
       <p>
-        <f7-button fill @click="sheetOpened = true">Open Via Prop Change</f7-button>
+        <f7-button round fill @click="sheetOpened = true">Open Via Prop Change</f7-button>
       </p>
     </f7-block>
 
     <f7-block-title>Push View</f7-block-title>
-    <f7-block strong-ios outline-ios>
+    <f7-block strong inset>
       <p>
         Sheet can push view behind on open. By default it has effect only when `safe-area-inset-top`
         is more than zero (iOS fullscreen webapp or iOS cordova app)
       </p>
       <p>
-        <f7-button fill sheet-open=".demo-sheet-push">Sheet Push</f7-button>
+        <f7-button round fill sheet-open=".demo-sheet-push">Sheet Push</f7-button>
       </p>
     </f7-block>
 
     <f7-block-title>Swipeable Sheet</f7-block-title>
-    <f7-block strong-ios outline-ios>
+    <f7-block strong inset>
       <p>
         Sheet modal can be closed with swipe to top (for top Sheet) or bottom (for default Bottom
         sheet):
       </p>
       <p>
-        <f7-button fill sheet-open=".demo-sheet-swipe-to-close">Swipe To Close</f7-button>
+        <f7-button round fill sheet-open=".demo-sheet-swipe-to-close">Swipe To Close</f7-button>
       </p>
       <p>Also there is swipe-step that can be set on Sheet modal to expand it with swipe:</p>
       <p>
-        <f7-button fill sheet-open=".demo-sheet-swipe-to-step">Swipe To Step</f7-button>
+        <f7-button round fill sheet-open=".demo-sheet-swipe-to-step">Swipe To Step</f7-button>
       </p>
       <p>
         In addition to "swipe step" there is a support for position breakpoints (multiple steps):
       </p>
       <p>
-        <f7-button fill sheet-open=".demo-sheet-breakpoints">Breakpoints</f7-button>
+        <f7-button round fill sheet-open=".demo-sheet-breakpoints">Breakpoints</f7-button>
       </p>
     </f7-block>
 
@@ -202,7 +202,7 @@
           <div style="font-size: 22px"><b>$500</b></div>
         </div>
         <div class="padding-horizontal padding-bottom">
-          <f7-button large fill>Make Payment</f7-button>
+          <f7-button large round fill>Make Payment</f7-button>
           <div class="margin-top text-align-center">Swipe up for more details</div>
         </div>
       </div>
@@ -281,9 +281,7 @@ export default {
     f7ListItem,
   },
   data() {
-    return {
-      sheetOpened: false,
-    };
+    return { sheetOpened: false };
   },
   methods: {
     toggleSwipeStep() {
@@ -298,7 +296,10 @@ export default {
             <div class="sheet-modal sheet-modal-bottom">
               <div class="toolbar">
                 <div class="toolbar-inner justify-content-flex-end">
-                  <a  class="link sheet-close"><i class="icon icon-close"></i></a>
+                  <div class="left"></div>
+                  <div class="right">
+                    <a  class="link sheet-close"><i class="icon icon-close"></i></a>
+                  </div>
                 </div>
               </div>
               <div class="sheet-modal-inner">

@@ -1,7 +1,7 @@
 <template>
   <f7-page>
-    <f7-navbar title="Text Editor" back-link="Back"></f7-navbar>
-    <f7-block>
+    <f7-navbar title="Text Editor" back-link></f7-navbar>
+    <f7-block strong inset>
       <p>
         Framework7 comes with a touch-friendly Rich Text Editor component. It is based on modern
         "contenteditable" API so it should work everywhere as is.
@@ -83,7 +83,7 @@
       >Text editor can be used in list with other inputs. In this example it is enabled with
       "keyboard-toolbar"/"popover" type for "About" field.</f7-block-header
     >
-    <f7-list strong-ios dividers-ios outline-ios>
+    <f7-list strong inset dividers-ios>
       <f7-list-input type="text" label="Name" placeholder="Your name" />
       <f7-list-input
         type="texteditor"

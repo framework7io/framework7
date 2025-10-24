@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="List Button" back-link="Back"></f7-navbar>
+    <f7-navbar title="List Button" back-link></f7-navbar>
 
     <f7-list inset strong>
       <f7-list-button title="List Button 1"></f7-list-button>
@@ -15,13 +15,5 @@
 <script>
 import { f7Navbar, f7Page, f7List, f7ListButton } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7List,
-    f7ListButton,
-  },
-  setup() {},
-};
+export default { components: { f7Navbar, f7Page, f7List, f7ListButton }, setup() {} };
 </script>

@@ -5,9 +5,9 @@
     :infinite-preloader="showPreloader"
     @infinite="loadMore"
   >
-    <f7-navbar title="Infinite Scroll" back-link="Back"></f7-navbar>
+    <f7-navbar title="Infinite Scroll" back-link></f7-navbar>
     <f7-block-title>Scroll bottom</f7-block-title>
-    <f7-list strong-ios outline-ios dividers-ios>
+    <f7-list strong inset dividers-ios>
       <f7-list-item
         v-for="(item, index) in items"
         :key="index"
@@ -20,13 +20,7 @@
 import { f7Navbar, f7Page, f7BlockTitle, f7List, f7ListItem } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7BlockTitle,
-    f7List,
-    f7ListItem,
-  },
+  components: { f7Navbar, f7Page, f7BlockTitle, f7List, f7ListItem },
   data() {
     return {
       items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],

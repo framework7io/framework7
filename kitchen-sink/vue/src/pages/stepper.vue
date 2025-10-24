@@ -1,8 +1,8 @@
 <template>
   <f7-page>
-    <f7-navbar title="Stepper" back-link="Back"></f7-navbar>
+    <f7-navbar title="Stepper" back-link></f7-navbar>
     <f7-block-title>Shape and size</f7-block-title>
-    <f7-block strong outline-ios class="text-align-center">
+    <f7-block strong inset class="text-align-center">
       <div class="grid grid-cols-2 grid-gap">
         <div>
           <small class="display-block">Default</small>
@@ -71,7 +71,7 @@
     </f7-block>
 
     <f7-block-title>Raised</f7-block-title>
-    <f7-block strong outline-ios class="text-align-center">
+    <f7-block strong inset class="text-align-center">
       <div class="grid grid-cols-2 grid-gap">
         <div>
           <small class="display-block">Default</small>
@@ -139,7 +139,7 @@
       </div>
     </f7-block>
     <f7-block-title>Colors</f7-block-title>
-    <f7-block strong outline-ios class="text-align-center">
+    <f7-block strong inset class="text-align-center">
       <div class="grid grid-cols-2 grid-gap">
         <div>
           <f7-stepper fill color="red" />
@@ -177,7 +177,7 @@
       </div>
     </f7-block>
     <f7-block-title>Without input element</f7-block-title>
-    <f7-block strong outline-ios class="text-align-center">
+    <f7-block strong inset class="text-align-center">
       <div class="grid grid-cols-2 grid-gap">
         <div>
           <f7-stepper :input="false" />
@@ -188,7 +188,7 @@
       </div>
     </f7-block>
     <f7-block-title>Min, max, step</f7-block-title>
-    <f7-block strong outline-ios class="text-align-center">
+    <f7-block strong inset class="text-align-center">
       <div class="grid grid-cols-2 grid-gap">
         <div>
           <f7-stepper fill :value="100" :min="0" :max="1000" :step="100" />
@@ -205,7 +205,7 @@
       repeatedly. With dynamic autorepeat, the rate of change depends on how long the user continues
       pressing the control.</f7-block-header
     >
-    <f7-block strong outline-ios class="text-align-center">
+    <f7-block strong inset class="text-align-center">
       <div class="grid grid-cols-2 grid-gap">
         <div>
           <small class="display-block">Default</small>
@@ -231,12 +231,12 @@
       >In wraps mode incrementing beyond maximum value sets value to minimum value, likewise,
       decrementing below minimum value sets value to maximum value</f7-block-header
     >
-    <f7-block strong outline-ios class="text-align-center">
+    <f7-block strong inset class="text-align-center">
       <f7-stepper fill :value="0" :min="0" :max="10" :step="1" :autorepeat="true" :wraps="true" />
     </f7-block>
 
     <f7-block-title>Custom value element</f7-block-title>
-    <f7-list strong-ios outline-ios dividers-ios>
+    <f7-list strong inset dividers-ios>
       <f7-list-item :title="`Apples ${applesCount}`">
         <template #after>
           <f7-stepper :buttons-only="true" small raised @stepper:change="setApples" />
@@ -250,7 +250,7 @@
     </f7-list>
 
     <f7-block-title>Custom value format</f7-block-title>
-    <f7-list strong-ios outline-ios dividers-ios>
+    <f7-list strong inset dividers-ios>
       <f7-list-item header="Meeting starts in" :title="meetingTimeComputed">
         <template #after>
           <f7-stepper
@@ -275,7 +275,7 @@
       fractional part with defined accurancy. Click outside or enter Return key, ending manual
       mode.</f7-block-header
     >
-    <f7-block strong outline-ios class="text-align-center">
+    <f7-block strong inset class="text-align-center">
       <f7-stepper
         fill
         :value="0"
@@ -314,11 +314,7 @@ export default {
     f7Stepper,
   },
   data() {
-    return {
-      applesCount: 0,
-      orangesCount: 0,
-      meetingTime: 15,
-    };
+    return { applesCount: 0, orangesCount: 0, meetingTime: 15 };
   },
   computed: {
     meetingTimeComputed() {

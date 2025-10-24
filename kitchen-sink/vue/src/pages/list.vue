@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="List View" back-link="Back" />
+    <f7-navbar title="List View" back-link />
     <f7-block>
       <p>
         Framework7 allows you to be flexible with list views (table views). You can make them as

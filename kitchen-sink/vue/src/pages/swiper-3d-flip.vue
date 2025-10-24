@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="3D Flip Effect" back-link="Back"></f7-navbar>
+    <f7-navbar title="3D Flip Effect" back-link></f7-navbar>
     <swiper-container
       effect="flip"
       :pagination="true"
@@ -50,10 +50,5 @@
 <script>
 import { f7Navbar, f7Page } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Navbar,
-    f7Page,
-  },
-};
+export default { components: { f7Navbar, f7Page } };
 </script>

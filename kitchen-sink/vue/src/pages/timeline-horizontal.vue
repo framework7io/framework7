@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Horizontal Timeline" back-link="Back"></f7-navbar>
+    <f7-navbar title="Horizontal Timeline" back-link></f7-navbar>
     <div class="timeline timeline-horizontal timeline-cols-3 medium-timeline-cols-5">
       <div class="timeline-item">
         <div class="timeline-item-date">21 <small>DEC</small></div>
@@ -112,10 +112,5 @@
 <script>
 import { f7Navbar, f7Page } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Navbar,
-    f7Page,
-  },
-};
+export default { components: { f7Navbar, f7Page } };
 </script>

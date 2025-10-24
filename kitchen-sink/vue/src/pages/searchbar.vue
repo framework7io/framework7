@@ -1,14 +1,14 @@
 <template>
   <f7-page>
-    <f7-navbar back-link="Back" title="Searchbar">
+    <f7-navbar back-link title="Searchbar">
       <f7-subnavbar :inner="false">
         <f7-searchbar search-container=".search-list" search-in=".item-title"></f7-searchbar>
       </f7-subnavbar>
     </f7-navbar>
-    <f7-list strong-ios outline-ios dividers-ios class="searchbar-not-found">
+    <f7-list strong inset dividers-ios class="searchbar-not-found">
       <f7-list-item title="Nothing found" />
     </f7-list>
-    <f7-list strong-ios outline-ios dividers-ios class="search-list searchbar-found">
+    <f7-list strong inset dividers-ios class="search-list searchbar-found">
       <f7-list-item title="Acura" />
       <f7-list-item title="Audi" />
       <f7-list-item title="BMW" />
@@ -64,18 +64,9 @@ import {
 } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7Searchbar,
-    f7Subnavbar,
-    f7List,
-    f7ListItem,
-  },
+  components: { f7Navbar, f7Page, f7Searchbar, f7Subnavbar, f7List, f7ListItem },
   data() {
-    return {
-      theme,
-    };
+    return { theme };
   },
 };
 </script>

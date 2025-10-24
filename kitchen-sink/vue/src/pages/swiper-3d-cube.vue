@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="3D Cube" back-link="Back"></f7-navbar>
+    <f7-navbar title="3D Cube" back-link></f7-navbar>
     <swiper-container effect="cube" class="demo-swiper demo-swiper-cube">
       <div slot="slide-0" class="demo-swiper-slide-content">
         <img src="https://cdn.framework7.io/placeholder/nature-800x800-1.jpg" />
@@ -44,10 +44,5 @@
 <script>
 import { f7Navbar, f7Page } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Navbar,
-    f7Page,
-  },
-};
+export default { components: { f7Navbar, f7Page } };
 </script>

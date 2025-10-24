@@ -1,21 +1,21 @@
 <template>
   <f7-page>
-    <f7-navbar title="Subnavbar" back-link="Back">
+    <f7-navbar title="Subnavbar" back-link>
       <f7-subnavbar>
-        <f7-segmented strong>
-          <f7-button small-md active>Link 1</f7-button>
-          <f7-button small-md>Link 2</f7-button>
-          <f7-button small-md>Link 3</f7-button>
+        <f7-segmented strong round small>
+          <f7-button round small active>Link 1</f7-button>
+          <f7-button round small>Link 2</f7-button>
+          <f7-button round small>Link 3</f7-button>
         </f7-segmented>
       </f7-subnavbar>
     </f7-navbar>
-    <f7-block>
+    <f7-block strong inset>
       <p>
         Subnavbar is useful when you need to put any additional elements into Navbar, like Tab Links
         or Search Bar. It also remains visible when Navbar hidden.
       </p>
     </f7-block>
-    <f7-list strong outline-ios>
+    <f7-list strong inset>
       <f7-list-item link="/subnavbar-title/" title="Subnavbar Title"></f7-list-item>
     </f7-list>
   </f7-page>
@@ -33,15 +33,6 @@ import {
 } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7Subnavbar,
-    f7Segmented,
-    f7Button,
-    f7Block,
-    f7List,
-    f7ListItem,
-  },
+  components: { f7Navbar, f7Page, f7Subnavbar, f7Segmented, f7Button, f7Block, f7List, f7ListItem },
 };
 </script>

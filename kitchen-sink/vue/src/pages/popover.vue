@@ -1,13 +1,15 @@
 <template>
   <f7-page>
-    <f7-navbar title="Popover" back-link="Back"></f7-navbar>
+    <f7-navbar title="Popover" back-link></f7-navbar>
     <f7-toolbar bottom>
-      <f7-link>Dummy Link</f7-link>
-      <f7-link popover-open=".popover-menu">Open Popover</f7-link>
+      <f7-toolbar-pane>
+        <f7-link>Dummy Link</f7-link>
+        <f7-link popover-open=".popover-menu">Open Popover</f7-link>
+      </f7-toolbar-pane>
     </f7-toolbar>
 
-    <f7-block>
-      <p><f7-button fill popover-open=".popover-menu">Open popover on me</f7-button></p>
+    <f7-block strong inset>
+      <p><f7-button round fill popover-open=".popover-menu">Open popover on me</f7-button></p>
       <p>
         Mauris fermentum neque et luctus venenatis. Vivamus a sem rhoncus, ornare tellus eu, euismod
         mauris. In porta turpis at semper convallis. Duis adipiscing leo eu nulla lacinia, quis
@@ -65,6 +67,7 @@ import {
   f7Block,
   f7Link,
   f7Button,
+  f7ToolbarPane,
 } from 'framework7-vue';
 
 export default {
@@ -78,6 +81,7 @@ export default {
     f7Block,
     f7Link,
     f7Button,
+    f7ToolbarPane,
   },
 };
 </script>

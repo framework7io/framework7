@@ -1,8 +1,8 @@
 <template>
   <f7-page @page:beforeremove="onPageBeforeRemove" @page:init="onPageInit">
-    <f7-navbar title="Swipeout" back-link="Back"></f7-navbar>
+    <f7-navbar title="Swipeout" back-link></f7-navbar>
 
-    <f7-block>
+    <f7-block strong inset>
       <p>
         Swipe out actions on list elements is one of the most awesome F7 features. It allows you to
         call hidden menu for each list element where you can put default ready-to use delete button
@@ -11,7 +11,7 @@
     </f7-block>
 
     <f7-block-title>Swipe to delete with confirm modal</f7-block-title>
-    <f7-list strong inset-md dividers-ios outline-ios>
+    <f7-list strong inset dividers-ios>
       <f7-list-item swipeout title="Swipe left on me please">
         <template #media>
           <f7-icon icon="icon-f7" />
@@ -40,7 +40,7 @@
     </f7-list>
 
     <f7-block-title>Swipe to delete without confirm</f7-block-title>
-    <f7-list strong inset-md dividers-ios outline-ios>
+    <f7-list strong inset dividers-ios>
       <f7-list-item swipeout title="Swipe left on me please">
         <template #media>
           <f7-icon icon="icon-f7" />
@@ -65,7 +65,7 @@
     </f7-list>
 
     <f7-block-title>Swipe for actions</f7-block-title>
-    <f7-list strong inset-md dividers-ios outline-ios>
+    <f7-list strong inset dividers-ios>
       <f7-list-item swipeout title="Swipe left on me please">
         <template #media>
           <f7-icon icon="icon-f7" />
@@ -95,7 +95,7 @@
     </f7-list>
 
     <f7-block-title>With callback on remove</f7-block-title>
-    <f7-list strong inset-md dividers-ios outline-ios>
+    <f7-list strong inset dividers-ios>
       <f7-list-item swipeout title="Swipe left on me please" @swipeout:deleted="onDeleted">
         <template #media>
           <f7-icon icon="icon-f7" />
@@ -120,7 +120,7 @@
     </f7-list>
 
     <f7-block-title>With actions on left side (swipe to right)</f7-block-title>
-    <f7-list strong inset-md dividers-ios outline-ios>
+    <f7-list strong inset dividers-ios>
       <f7-list-item swipeout title="Swipe right on me please">
         <template #media>
           <f7-icon icon="icon-f7" />
@@ -142,7 +142,7 @@
     </f7-list>
 
     <f7-block-title>On both sides with overswipes</f7-block-title>
-    <f7-list media-list strong inset-md outline-ios dividers-ios>
+    <f7-list media-list strong inset dividers-ios>
       <f7-list-item
         swipeout
         title="Facebook"
@@ -290,19 +290,10 @@ export default {
               text: 'Here comes some optional description or warning for actions below',
               label: true,
             },
-            {
-              text: 'Action 1',
-            },
-            {
-              text: 'Action 2',
-            },
+            { text: 'Action 1' },
+            { text: 'Action 2' },
           ],
-          [
-            {
-              text: 'Cancel',
-              strong: true,
-            },
-          ],
+          [{ text: 'Cancel', strong: true }],
         ],
       });
     },

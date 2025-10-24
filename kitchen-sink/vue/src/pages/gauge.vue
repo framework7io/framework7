@@ -1,12 +1,12 @@
 <template>
   <f7-page>
-    <f7-navbar title="Gauge" back-link="Back"></f7-navbar>
-    <f7-block strong-ios outline-ios>
+    <f7-navbar title="Gauge" back-link></f7-navbar>
+    <f7-block strong inset>
       <p>
         Framework7 comes with Gauge component. It produces nice looking fully responsive SVG gauges.
       </p>
     </f7-block>
-    <f7-block strong-ios outline-ios class="text-align-center">
+    <f7-block strong inset class="text-align-center">
       <f7-gauge
         type="circle"
         :value="gaugeValue"
@@ -18,7 +18,7 @@
         value-text-color="#2196f3"
         label-text="amount of something"
       />
-      <f7-segmented tag="p" raised>
+      <f7-segmented strong round tag="p">
         <f7-button :active="gaugeValue === 0" @click="() => (gaugeValue = 0)">0%</f7-button>
         <f7-button :active="gaugeValue === 0.25" @click="() => (gaugeValue = 0.25)">25%</f7-button>
         <f7-button :active="gaugeValue === 0.5" @click="() => (gaugeValue = 0.5)">50%</f7-button>
@@ -28,7 +28,7 @@
     </f7-block>
 
     <f7-block-title>Circle Gauges</f7-block-title>
-    <f7-block strong-ios outline-ios>
+    <f7-block strong inset>
       <div class="grid grid-cols-2 grid-gap">
         <div class="text-align-center">
           <f7-gauge
@@ -54,7 +54,7 @@
       </div>
     </f7-block>
     <f7-block-title>Semicircle Gauges</f7-block-title>
-    <f7-block strong-ios outline-ios>
+    <f7-block strong inset>
       <div class="grid grid-cols-2 grid-gap">
         <div class="text-align-center">
           <f7-gauge
@@ -79,7 +79,7 @@
       </div>
     </f7-block>
     <f7-block-title>Customization</f7-block-title>
-    <f7-block strong-ios outline-ios>
+    <f7-block strong inset>
       <div class="grid grid-cols-2 grid-gap">
         <div class="text-align-center">
           <f7-gauge
@@ -153,19 +153,9 @@ import {
 } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Page,
-    f7Navbar,
-    f7BlockTitle,
-    f7Block,
-    f7Segmented,
-    f7Button,
-    f7Gauge,
-  },
+  components: { f7Page, f7Navbar, f7BlockTitle, f7Block, f7Segmented, f7Button, f7Gauge },
   data() {
-    return {
-      gaugeValue: 0.5,
-    };
+    return { gaugeValue: 0.5 };
   },
 };
 </script>

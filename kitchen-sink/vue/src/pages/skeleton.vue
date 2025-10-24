@@ -1,7 +1,7 @@
 <template>
   <f7-page>
-    <f7-navbar title="Skeleton Elements" back-link="Back"></f7-navbar>
-    <f7-block strong-ios outline-ios>
+    <f7-navbar title="Skeleton Elements" back-link></f7-navbar>
+    <f7-block strong inset>
       <p>
         Skeleton (or Ghost) elements designed to improve perceived performance and make app feels
         faster.
@@ -16,7 +16,7 @@
     </f7-block>
 
     <f7-block-title>Skeleton List</f7-block-title>
-    <f7-list outline-ios strong-ios dividers-ios media-list class="skeleton-text">
+    <f7-list strong inset dividers-ios media-list class="skeleton-text">
       <f7-list-item
         title="Title"
         subtitle="Subtitle"
@@ -47,7 +47,7 @@
     ></f7-card>
 
     <f7-block-title>Loading Effects</f7-block-title>
-    <f7-block strong-ios outline-ios>
+    <f7-block strong inset>
       <p>It supports few loading effects:</p>
       <p class="grid grid-cols-3 grid-gap">
         <f7-button fill small round @click="load('fade')">Fade</f7-button>
@@ -55,7 +55,7 @@
         <f7-button fill small round @click="load('pulse')">Pulse</f7-button>
       </p>
     </f7-block>
-    <f7-list v-if="loading" outline-ios strong-ios dividers-ios media-list>
+    <f7-list v-if="loading" strong inset dividers-ios media-list>
       <f7-list-item
         v-for="n in 3"
         :key="n"
@@ -69,7 +69,7 @@
         </template>
       </f7-list-item>
     </f7-list>
-    <f7-list v-else outline-ios strong-ios dividers-ios media-list>
+    <f7-list v-else strong inset dividers-ios media-list>
       <f7-list-item
         title="John Doe"
         subtitle="CEO"
@@ -135,10 +135,7 @@ export default {
     f7Card,
   },
   data() {
-    return {
-      loading: false,
-      effect: null,
-    };
+    return { loading: false, effect: null };
   },
   methods: {
     load(effect) {

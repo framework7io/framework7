@@ -1,14 +1,14 @@
 <template>
   <f7-page>
-    <f7-navbar title="Progress Bar" back-link="Back"></f7-navbar>
-    <f7-block>
+    <f7-navbar title="Progress Bar" back-link></f7-navbar>
+    <f7-block strong inset>
       <p>
         In addition to <a href="/preloader/">Preloader</a>, Framework7 also comes with fancy
         animated determinate and infinite/indeterminate progress bars to indicate some activity.
       </p>
     </f7-block>
     <f7-block-title>Determinate Progress Bar</f7-block-title>
-    <f7-block strong-ios outline-ios>
+    <f7-block strong inset>
       <p>
         When progress bar is determinate it indicates how long an operation will take when the
         percentage complete is detectable.
@@ -16,7 +16,7 @@
       <p>Inline determinate progress bar:</p>
       <div>
         <p><f7-progressbar id="demo-inline-progressbar" :progress="10" /></p>
-        <f7-segmented raised>
+        <f7-segmented strong round>
           <f7-button @click="setInlineProgress(10)">10%</f7-button>
           <f7-button @click="setInlineProgress(30)">30%</f7-button>
           <f7-button @click="setInlineProgress(50)">50%</f7-button>
@@ -27,18 +27,18 @@
         <p>Inline determinate load & hide:</p>
         <p id="demo-determinate-container"></p>
         <p>
-          <f7-button fill @click="showDeterminate(true)">Start Loading</f7-button>
+          <f7-button round fill @click="showDeterminate(true)">Start Loading</f7-button>
         </p>
       </div>
       <div>
         <p>Overlay with determinate progress bar on top of the app:</p>
         <p>
-          <f7-button fill @click="showDeterminate(false)">Start Loading</f7-button>
+          <f7-button round fill @click="showDeterminate(false)">Start Loading</f7-button>
         </p>
       </div>
     </f7-block>
     <f7-block-title>Infinite Progress Bar</f7-block-title>
-    <f7-block strong>
+    <f7-block strong inset>
       <p>
         When progress bar is infinite/indeterminate it requests that the user wait while something
         finishes when it’s not necessary to indicate how long it will take.
@@ -55,18 +55,18 @@
         <p>Overlay with infinite progress bar on top of the app</p>
         <p id="demo-infinite-container"></p>
         <p>
-          <f7-button fill @click="showInfinite(false)">Start Loading</f7-button>
+          <f7-button round fill @click="showInfinite(false)">Start Loading</f7-button>
         </p>
       </div>
       <div>
         <p>Overlay with infinite multi-color progress bar on top of the app</p>
         <p>
-          <f7-button fill @click="showInfinite(true)">Start Loading</f7-button>
+          <f7-button round fill @click="showInfinite(true)">Start Loading</f7-button>
         </p>
       </div>
     </f7-block>
     <f7-block-title>Colors</f7-block-title>
-    <div class="list list-strong-ios list-outline-ios list-dividers-ios simple-list">
+    <div class="list list-strong inset list-dividers-ios simple-list">
       <ul>
         <li>
           <f7-progressbar color="blue" :progress="10" />
@@ -103,15 +103,7 @@ import {
 } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7BlockTitle,
-    f7Block,
-    f7Progressbar,
-    f7Button,
-    f7Segmented,
-  },
+  components: { f7Navbar, f7Page, f7BlockTitle, f7Block, f7Progressbar, f7Button, f7Segmented },
   methods: {
     setInlineProgress(value) {
       f7.progressbar.set('#demo-inline-progressbar', value);

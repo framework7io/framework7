@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Not found" back-link="Back"></f7-navbar>
+    <f7-navbar title="Not found" back-link></f7-navbar>
     <f7-block>
       <p>Sorry</p>
       <p>Requested content not found.</p>
@@ -11,11 +11,5 @@
 <script>
 import { f7Page, f7Navbar, f7Block } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Page,
-    f7Navbar,
-    f7Block,
-  },
-};
+export default { components: { f7Page, f7Navbar, f7Block } };
 </script>

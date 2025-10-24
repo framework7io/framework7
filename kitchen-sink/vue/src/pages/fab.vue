@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Floating Action Button" back-link="Back"></f7-navbar>
+    <f7-navbar title="Floating Action Button" back-link></f7-navbar>
 
     <template #fixed>
       <f7-fab position="right-top">
@@ -59,7 +59,7 @@
       </f7-fab>
     </template>
 
-    <f7-block>
+    <f7-block strong inset>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia, quo rem beatae, delectus
         eligendi est saepe molestias perferendis suscipit, commodi labore ipsa non quasi eum magnam
@@ -86,7 +86,7 @@
         obcaecati aspernatur odio assumenda veniam, ipsum alias.
       </p>
     </f7-block>
-    <f7-block>
+    <f7-block strong inset>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa ipsa debitis sed nihil eaque
         dolore cum iste quibusdam, accusamus doloribus, tempora quia quos voluptatibus corporis
@@ -137,14 +137,6 @@ import {
 } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7Fab,
-    f7FabButtons,
-    f7FabButton,
-    f7Icon,
-    f7Block,
-  },
+  components: { f7Navbar, f7Page, f7Fab, f7FabButtons, f7FabButton, f7Icon, f7Block },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <f7-page :page-content="false">
-    <f7-navbar title="Tabbar Scrollable" back-link="Back">
+    <f7-navbar title="Tabbar Scrollable" back-link>
       <f7-nav-right>
         <f7-link
           icon-md="material:compare_arrows"
@@ -10,13 +10,15 @@
       </f7-nav-right>
     </f7-navbar>
     <f7-toolbar :position="toolbarPosition" tabbar scrollable>
-      <f7-link
-        v-for="(tab, index) in tabs"
-        :key="tab"
-        :tab-link="`#tab-${tab}`"
-        :tab-link-active="index === 0"
-        >Tab {{ tab }}</f7-link
-      >
+      <f7-toolbar-pane>
+        <f7-link
+          v-for="(tab, index) in tabs"
+          :key="tab"
+          :tab-link="`#tab-${tab}`"
+          :tab-link-active="index === 0"
+          >Tab {{ tab }}</f7-link
+        >
+      </f7-toolbar-pane>
     </f7-toolbar>
     <f7-tabs>
       <f7-tab
@@ -26,7 +28,7 @@
         class="page-content"
         :tab-active="index === 0"
       >
-        <f7-block>
+        <f7-block strong inset>
           <p>
             <b>Tab {{ tab }} content</b>
           </p>
@@ -70,6 +72,7 @@ import {
   f7Link,
   f7Toolbar,
   f7NavRight,
+  f7ToolbarPane,
 } from 'framework7-vue';
 
 export default {
@@ -82,12 +85,10 @@ export default {
     f7Link,
     f7Toolbar,
     f7NavRight,
+    f7ToolbarPane,
   },
   data() {
-    return {
-      tabs: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      toolbarPosition: 'bottom',
-    };
+    return { tabs: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], toolbarPosition: 'bottom' };
   },
   methods: {
     toggleToolbarPosition() {

@@ -1,8 +1,8 @@
 <template>
   <f7-page>
-    <f7-navbar title="Chips" back-link="Back"></f7-navbar>
+    <f7-navbar title="Chips" back-link></f7-navbar>
     <f7-block-title>Chips With Text</f7-block-title>
-    <f7-block strong-ios outline-ios>
+    <f7-block strong inset>
       <f7-chip text="Example Chip"></f7-chip>
       <f7-chip text="Another Chip"></f7-chip>
       <f7-chip text="One More Chip"></f7-chip>
@@ -10,7 +10,7 @@
       <f7-chip text="Last One"></f7-chip>
     </f7-block>
     <f7-block-title>Outline Chips</f7-block-title>
-    <f7-block strong-ios outline-ios>
+    <f7-block strong inset>
       <f7-chip outline text="Example Chip"></f7-chip>
       <f7-chip outline text="Another Chip"></f7-chip>
       <f7-chip outline text="One More Chip"></f7-chip>
@@ -18,7 +18,7 @@
       <f7-chip outline text="Last One"></f7-chip>
     </f7-block>
     <f7-block-title>Icon Chips</f7-block-title>
-    <f7-block strong-ios outline-ios>
+    <f7-block strong inset>
       <f7-chip text="Add Contact" media-bg-color="blue">
         <template #media>
           <f7-icon ios="f7:plus_circle" md="material:add_circle" />
@@ -36,7 +36,7 @@
       </f7-chip>
     </f7-block>
     <f7-block-title>Contact Chips</f7-block-title>
-    <f7-block strong-ios outline-ios>
+    <f7-block strong inset>
       <f7-chip text="Jane Doe">
         <template #media>
           <img src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg" />
@@ -57,7 +57,7 @@
       <f7-chip text="Kate" media-bg-color="red" media="K"></f7-chip>
     </f7-block>
     <f7-block-title>Deletable Chips / Tags</f7-block-title>
-    <f7-block strong-ios outline-ios>
+    <f7-block strong inset>
       <f7-chip text="Example Chip" deleteable @delete="deleteChip"></f7-chip>
       <f7-chip
         text="Chris"
@@ -86,7 +86,7 @@
       </f7-chip>
     </f7-block>
     <f7-block-title>Color Chips</f7-block-title>
-    <f7-block strong-ios outline-ios>
+    <f7-block strong inset>
       <f7-chip text="Red Chip" color="red"></f7-chip>
       <f7-chip text="Green Chip" color="green"></f7-chip>
       <f7-chip text="Blue Chip" color="blue"></f7-chip>
@@ -105,14 +105,7 @@ import { f7Navbar, f7Page, f7BlockTitle, f7Chip, f7Block, f7Icon, f7 } from 'fra
 import $ from 'dom7';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7BlockTitle,
-    f7Chip,
-    f7Block,
-    f7Icon,
-  },
+  components: { f7Navbar, f7Page, f7BlockTitle, f7Chip, f7Block, f7Icon },
   methods: {
     deleteChip(e) {
       const target = e.target;

@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Virtual List" back-link="Back">
+    <f7-navbar title="Virtual List" back-link>
       <f7-subnavbar :inner="false">
         <f7-searchbar
           search-container=".virtual-list"
@@ -9,7 +9,7 @@
         ></f7-searchbar>
       </f7-subnavbar>
     </f7-navbar>
-    <f7-block>
+    <f7-block strong inset>
       <p>
         Virtual List allows to render lists with huge amount of elements without loss of
         performance. And it is fully compatible with all Framework7 list components such as Search
@@ -17,13 +17,12 @@
       </p>
       <p>Here is the example of virtual list with 10 000 items:</p>
     </f7-block>
-    <f7-list strong outline-ios inset-md dividers-ios class="searchbar-not-found">
+    <f7-list strong inset dividers-ios class="searchbar-not-found">
       <f7-list-item title="Nothing found"></f7-list-item>
     </f7-list>
     <f7-list
       strong
-      outline-ios
-      inset-md
+      inset
       dividers-ios
       class="searchbar-found"
       medial-list
@@ -63,31 +62,13 @@ import {
 } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7List,
-    f7ListItem,
-    f7Subnavbar,
-    f7Searchbar,
-    f7Block,
-  },
+  components: { f7Navbar, f7Page, f7List, f7ListItem, f7Subnavbar, f7Searchbar, f7Block },
   data() {
     const items = [];
     for (let i = 1; i <= 10000; i += 1) {
-      items.push({
-        title: `Item ${i}`,
-        subtitle: `Subtitle ${i}`,
-        index: i,
-      });
+      items.push({ title: `Item ${i}`, subtitle: `Subtitle ${i}`, index: i });
     }
-    return {
-      theme,
-      items,
-      vlData: {
-        items: [],
-      },
-    };
+    return { theme, items, vlData: { items: [] } };
   },
   methods: {
     searchAll(query, items) {

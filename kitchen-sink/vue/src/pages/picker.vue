@@ -1,6 +1,6 @@
 <template>
   <f7-page :page-content="false" @page:beforeremove="onPageBeforeRemove" @page:init="onPageInit">
-    <f7-navbar title="Picker" back-link="Back"></f7-navbar>
+    <f7-navbar title="Picker" back-link></f7-navbar>
     <div class="page-content">
       <div class="block">
         <p>
@@ -13,7 +13,7 @@
         </p>
       </div>
       <div class="block-title">Picker with single value</div>
-      <div class="list list-outline-ios list-strong-ios">
+      <div class="list list-strong inset">
         <ul>
           <li>
             <div class="item-content item-input">
@@ -32,7 +32,7 @@
         </ul>
       </div>
       <div class="block-title">2 values and 3d-rotate effect</div>
-      <div class="list list-outline-ios list-strong-ios">
+      <div class="list list-strong inset">
         <ul>
           <li>
             <div class="item-content item-input">
@@ -51,7 +51,7 @@
         </ul>
       </div>
       <div class="block-title">Dependent values</div>
-      <div class="list list-outline-ios list-strong-ios">
+      <div class="list list-strong inset">
         <ul>
           <li>
             <div class="item-content item-input">
@@ -70,7 +70,7 @@
         </ul>
       </div>
       <div class="block-title">Custom toolbar</div>
-      <div class="list list-outline-ios list-strong-ios">
+      <div class="list list-strong inset">
         <ul>
           <li>
             <div class="item-content item-input">
@@ -107,7 +107,7 @@
           </li>
         </ul>
       </div>
-      <div class="block block-strong block-outline-ios inset-md no-padding no-margin-top">
+      <div class="block block-strong inset no-margin-top">
         <div id="demo-picker-date-container"></div>
       </div>
     </div>
@@ -117,10 +117,7 @@
 import { f7Navbar, f7Page, f7 } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-  },
+  components: { f7Navbar, f7Page },
   methods: {
     onPageInit() {
       const self = this;
@@ -161,9 +158,7 @@ export default {
                 ' ',
               ),
           },
-          {
-            values: 'Man Luthor Woman Boy Girl Person Cutie Babe Raccoon'.split(' '),
-          },
+          { values: 'Man Luthor Woman Boy Girl Person Cutie Babe Raccoon'.split(' ') },
         ],
       });
 
@@ -189,10 +184,7 @@ export default {
               }
             },
           },
-          {
-            values: carVendors.Japanese,
-            width: 160,
-          },
+          { values: carVendors.Japanese, width: 160 },
         ],
       });
 
@@ -215,9 +207,7 @@ export default {
           );
         },
         cols: [
-          {
-            values: ['Mr', 'Ms'],
-          },
+          { values: ['Mr', 'Ms'] },
           {
             textAlign: 'left',
             values:
@@ -225,9 +215,7 @@ export default {
                 ' ',
               ),
           },
-          {
-            values: 'Man Luthor Woman Boy Girl Person Cutie Babe Raccoon'.split(' '),
-          },
+          { values: 'Man Luthor Woman Boy Girl Person Cutie Babe Raccoon'.split(' ') },
         ],
         on: {
           open(picker) {
@@ -290,10 +278,7 @@ export default {
             })(),
           },
           // Space divider
-          {
-            divider: true,
-            content: '&nbsp;&nbsp;',
-          },
+          { divider: true, content: '&nbsp;&nbsp;' },
           // Hours
           {
             values: (function createValues() {
@@ -305,10 +290,7 @@ export default {
             })(),
           },
           // Divider
-          {
-            divider: true,
-            content: ':',
-          },
+          { divider: true, content: ':' },
           // Minutes
           {
             values: (function createValues() {

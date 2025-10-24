@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Menu List" back-link="Back"></f7-navbar>
+    <f7-navbar title="Menu List" back-link></f7-navbar>
 
     <f7-block>
       <p>
@@ -84,21 +84,11 @@ import { ref } from 'vue';
 import { f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7Icon } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7Block,
-    f7List,
-    f7ListItem,
-    f7Icon,
-  },
+  components: { f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7Icon },
   setup() {
     const selected = ref('home');
     const selectedMedia = ref('home');
-    return {
-      selected,
-      selectedMedia,
-    };
+    return { selected, selectedMedia };
   },
 };
 </script>

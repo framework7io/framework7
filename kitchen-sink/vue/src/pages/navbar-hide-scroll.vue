@@ -1,10 +1,10 @@
 <template>
   <f7-page hide-navbar-on-scroll>
-    <f7-navbar title="Hide Navbar On Scroll" back-link="Back"></f7-navbar>
-    <f7-block strong>
+    <f7-navbar title="Hide Navbar On Scroll" back-link></f7-navbar>
+    <f7-block strong inset>
       <p>Navbar will be hidden if you scroll bottom</p>
     </f7-block>
-    <f7-block>
+    <f7-block strong inset>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos maxime incidunt id ab culpa
         ipsa omnis eos, vel excepturi officiis neque illum perferendis dolorum magnam rerum natus
@@ -161,11 +161,5 @@
 <script>
 import { f7Navbar, f7Page, f7Block } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7Block,
-  },
-};
+export default { components: { f7Navbar, f7Page, f7Block } };
 </script>

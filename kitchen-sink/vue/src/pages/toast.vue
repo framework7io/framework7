@@ -1,31 +1,35 @@
 <template>
   <f7-page @page:beforeremove="onPageBeforeRemove" @page:beforeout="onPageBeforeOut">
-    <f7-navbar title="Toast" back-link="Back"></f7-navbar>
-    <f7-block strong-ios outline-ios>
+    <f7-navbar title="Toast" back-link></f7-navbar>
+    <f7-block strong inset>
       <p>Toasts provide brief feedback about an operation through a message on the screen.</p>
       <p>
-        <f7-button fill @click="showToastBottom">Toast on Bottom</f7-button>
+        <f7-button fill round @click="showToastBottom">Toast on Bottom</f7-button>
       </p>
       <p>
-        <f7-button fill @click="showToastTop">Toast on Top</f7-button>
+        <f7-button fill round @click="showToastTop">Toast on Top</f7-button>
       </p>
       <p>
-        <f7-button fill @click="showToastCenter">Toast on Center</f7-button>
+        <f7-button fill round @click="showToastCenter">Toast on Center</f7-button>
       </p>
       <p>
-        <f7-button fill @click="showToastIcon">Toast with icon</f7-button>
+        <f7-button fill round @click="showToastIcon">Toast with icon</f7-button>
       </p>
       <p>
-        <f7-button fill @click="showToastLargeMessage">Toast with large message</f7-button>
+        <f7-button fill round @click="showToastLargeMessage">Toast with large message</f7-button>
       </p>
       <p>
-        <f7-button fill @click="showToastWithButton">Toast with close button</f7-button>
+        <f7-button fill round @click="showToastWithButton">Toast with close button</f7-button>
       </p>
       <p>
-        <f7-button fill @click="showToastWithCustomButton">Toast with custom button</f7-button>
+        <f7-button fill round @click="showToastWithCustomButton"
+          >Toast with custom button</f7-button
+        >
       </p>
       <p>
-        <f7-button fill @click="showToastWithCallback">Toast with callback on close</f7-button>
+        <f7-button fill round @click="showToastWithCallback"
+          >Toast with callback on close</f7-button
+        >
       </p>
     </f7-block>
   </f7-page>
@@ -34,12 +38,7 @@
 import { f7Navbar, f7Page, f7Block, f7Button, f7, theme } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7Block,
-    f7Button,
-  },
+  components: { f7Navbar, f7Page, f7Block, f7Button },
   methods: {
     showToastBottom() {
       const self = this;

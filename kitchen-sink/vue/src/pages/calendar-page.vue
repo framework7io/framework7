@@ -1,6 +1,6 @@
 <template>
   <f7-page @page:beforeremove="onPageBeforeRemove" @page:init="onPageInit">
-    <f7-navbar back-link="Back">
+    <f7-navbar back-link>
       <f7-nav-title class="navbar-calendar-title"></f7-nav-title>
     </f7-navbar>
     <div id="calendar" class="block block-strong no-padding no-margin"></div>
@@ -28,13 +28,7 @@ import { f7Navbar, f7Page, f7NavTitle, f7List, f7ListItem, f7 } from 'framework7
 import $ from 'dom7';
 
 export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7NavTitle,
-    f7List,
-    f7ListItem,
-  },
+  components: { f7Navbar, f7Page, f7NavTitle, f7List, f7ListItem },
   data() {
     const date = new Date();
     const year = date.getFullYear();
@@ -57,13 +51,7 @@ export default {
           title: 'Shopping',
           color: '#4caf50',
         },
-        {
-          date: new Date(year, month, day),
-          hours: 21,
-          minutes: 0,
-          title: 'Gym',
-          color: '#e91e63',
-        },
+        { date: new Date(year, month, day), hours: 21, minutes: 0, title: 'Gym', color: '#e91e63' },
         {
           date: new Date(year, month, day + 2),
           hours: 16,
@@ -98,11 +86,7 @@ export default {
           const hours = event.hours;
           let minutes = event.minutes;
           if (minutes < 10) minutes = `0${minutes}`;
-          eventItems.push({
-            title: event.title,
-            time: `${hours}:${minutes}`,
-            color: event.color,
-          });
+          eventItems.push({ title: event.title, time: `${hours}:${minutes}`, color: event.color });
         });
       }
       self.eventItems = eventItems;

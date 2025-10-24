@@ -1,6 +1,6 @@
 <template>
   <f7-page class="grid-demo">
-    <f7-navbar title="Grid / Layout" back-link="Back"></f7-navbar>
+    <f7-navbar title="Grid / Layout" back-link></f7-navbar>
     <f7-block>
       <p>
         Columns within a row are automatically set to have equal width. Otherwise you can define
@@ -77,12 +77,5 @@
 <script>
 import { f7Navbar, f7Page, f7BlockTitle, f7Block } from 'framework7-vue';
 
-export default {
-  components: {
-    f7Navbar,
-    f7Page,
-    f7BlockTitle,
-    f7Block,
-  },
-};
+export default { components: { f7Navbar, f7Page, f7BlockTitle, f7Block } };
 </script>

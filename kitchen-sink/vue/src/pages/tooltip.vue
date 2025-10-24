@@ -1,6 +1,6 @@
 <template>
   <f7-page @page:init="onPageInit" @page:beforeremove="onPageBeforeRemove">
-    <f7-navbar title="Tooltip" back-link="Back">
+    <f7-navbar title="Tooltip" back-link>
       <f7-nav-right>
         <f7-link class="navbar-tooltip">
           <f7-icon ios="f7:info_circle_fill" md="material:info_outline" />
@@ -72,23 +72,11 @@ import {
 } from 'framework7-vue';
 
 export default {
-  components: {
-    f7Page,
-    f7Navbar,
-    f7NavRight,
-    f7Link,
-    f7Icon,
-    f7Block,
-    f7BlockTitle,
-    f7Button,
-  },
+  components: { f7Page, f7Navbar, f7NavRight, f7Link, f7Icon, f7Block, f7BlockTitle, f7Button },
   methods: {
     onPageInit() {
       const self = this;
-      self.iconTooltip = f7.tooltip.create({
-        targetEl: '.icon-tooltip',
-        text: 'Tooltip text',
-      });
+      self.iconTooltip = f7.tooltip.create({ targetEl: '.icon-tooltip', text: 'Tooltip text' });
       self.navbarTooltip = f7.tooltip.create({
         targetEl: '.navbar-tooltip',
         text: 'One more tooltip<br>with more text<br><em>and custom formatting</em>',

@@ -1,12 +1,14 @@
 <template>
   <f7-page>
-    <f7-navbar title="Toolbar & Tabbar" back-link="Back"></f7-navbar>
+    <f7-navbar title="Toolbar & Tabbar" back-link></f7-navbar>
     <f7-toolbar :position="toolbarPosition">
-      <f7-link>Left Link</f7-link>
-      <f7-link>Right Link</f7-link>
+      <f7-toolbar-pane>
+        <f7-link>Left Link</f7-link>
+        <f7-link>Right Link</f7-link>
+      </f7-toolbar-pane>
     </f7-toolbar>
     <!-- example-hidden-start -->
-    <f7-list inset-md strong dividers-ios outline-ios class="example-hidden">
+    <f7-list strong inset dividers-ios class="example-hidden">
       <f7-list-item link="./tabbar/" title="Tabbar" />
       <f7-list-item link="./tabbar-icons/" title="Tabbar With Icons" />
       <f7-list-item link="./tabbar-scrollable/" title="Tabbar Scrollable" />
@@ -14,13 +16,13 @@
     </f7-list>
     <!-- example-hidden-end -->
     <f7-block-title>Toolbar Position</f7-block-title>
-    <f7-block>
+    <f7-block strong inset>
       <p>
         Toolbar supports both top and bottom positions. Click the following button to change its
         position.
       </p>
       <p>
-        <f7-button fill @click="toggleToolbarPosition">Toggle Toolbar Position</f7-button>
+        <f7-button fill round @click="toggleToolbarPosition">Toggle Toolbar Position</f7-button>
       </p>
     </f7-block>
   </f7-page>
@@ -36,6 +38,7 @@ import {
   f7Link,
   f7BlockTitle,
   f7Block,
+  f7ToolbarPane,
 } from 'framework7-vue';
 
 export default {
@@ -49,11 +52,10 @@ export default {
     f7Link,
     f7BlockTitle,
     f7Block,
+    f7ToolbarPane,
   },
   data() {
-    return {
-      toolbarPosition: 'bottom',
-    };
+    return { toolbarPosition: 'bottom' };
   },
   methods: {
     toggleToolbarPosition() {
