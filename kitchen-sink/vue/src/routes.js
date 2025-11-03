@@ -94,9 +94,6 @@ import TabbarScrollable from './pages/tabbar-scrollable.vue';
 import ToolbarHideScroll from './pages/toolbar-hide-scroll.vue';
 import Tooltip from './pages/tooltip.vue';
 import Timeline from './pages/timeline.vue';
-import TimelineVertical from './pages/timeline-vertical.vue';
-import TimelineHorizontal from './pages/timeline-horizontal.vue';
-import TimelineHorizontalCalendar from './pages/timeline-horizontal-calendar.vue';
 import Treeview from './pages/treeview.vue';
 import VirtualList from './pages/virtual-list.vue';
 import ColorThemes from './pages/color-themes.vue';
@@ -318,9 +315,6 @@ export default [
   },
   { path: '/tooltip/', component: Tooltip },
   { path: '/timeline/', component: Timeline },
-  { path: '/timeline-vertical/', component: TimelineVertical },
-  { path: '/timeline-horizontal/', component: TimelineHorizontal },
-  { path: '/timeline-horizontal-calendar/', component: TimelineHorizontalCalendar },
   { path: '/treeview/', component: Treeview },
   { path: '/virtual-list/', component: VirtualList },
 

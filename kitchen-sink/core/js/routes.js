@@ -475,18 +475,6 @@ var routes = [
     url: './pages/timeline.html',
   },
   {
-    path: '/timeline-vertical/',
-    url: './pages/timeline-vertical.html',
-  },
-  {
-    path: '/timeline-horizontal/',
-    url: './pages/timeline-horizontal.html',
-  },
-  {
-    path: '/timeline-horizontal-calendar/',
-    url: './pages/timeline-horizontal-calendar.html',
-  },
-  {
     path: '/virtual-list/',
     componentUrl: './pages/virtual-list.html',
   },

@@ -93,9 +93,6 @@ import TabbarScrollable from './pages/tabbar-scrollable.jsx';
 import ToolbarHideScroll from './pages/toolbar-hide-scroll.jsx';
 import Tooltip from './pages/tooltip.jsx';
 import Timeline from './pages/timeline.jsx';
-import TimelineVertical from './pages/timeline-vertical.jsx';
-import TimelineHorizontal from './pages/timeline-horizontal.jsx';
-import TimelineHorizontalCalendar from './pages/timeline-horizontal-calendar.jsx';
 import Treeview from './pages/treeview.jsx';
 import VirtualList from './pages/virtual-list.jsx';
 import ColorThemes from './pages/color-themes.jsx';
@@ -316,9 +313,6 @@ export default [
   },
   { path: '/tooltip/', component: Tooltip },
   { path: '/timeline/', component: Timeline },
-  { path: '/timeline-vertical/', component: TimelineVertical },
-  { path: '/timeline-horizontal/', component: TimelineHorizontal },
-  { path: '/timeline-horizontal-calendar/', component: TimelineHorizontalCalendar },
   { path: '/treeview/', component: Treeview },
   { path: '/virtual-list/', component: VirtualList },
 

@@ -94,9 +94,6 @@ import TabbarScrollable from './pages/tabbar-scrollable.svelte';
 import ToolbarHideScroll from './pages/toolbar-hide-scroll.svelte';
 import Tooltip from './pages/tooltip.svelte';
 import Timeline from './pages/timeline.svelte';
-import TimelineVertical from './pages/timeline-vertical.svelte';
-import TimelineHorizontal from './pages/timeline-horizontal.svelte';
-import TimelineHorizontalCalendar from './pages/timeline-horizontal-calendar.svelte';
 import Treeview from './pages/treeview.svelte';
 import VirtualList from './pages/virtual-list.svelte';
 import ColorThemes from './pages/color-themes.svelte';
@@ -593,18 +590,6 @@ export default [
   {
     path: '/timeline/',
     component: Timeline,
-  },
-  {
-    path: '/timeline-vertical/',
-    component: TimelineVertical,
-  },
-  {
-    path: '/timeline-horizontal/',
-    component: TimelineHorizontal,
-  },
-  {
-    path: '/timeline-horizontal-calendar/',
-    component: TimelineHorizontalCalendar,
   },
   {
     path: '/treeview/',
