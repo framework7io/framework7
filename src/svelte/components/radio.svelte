@@ -1,48 +1,44 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames } from '../shared/utils.js';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    checked = undefined,
+    name = undefined,
+    value = undefined,
+    disabled = undefined,
+    readonly = undefined,
+    children,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
 
-  export let checked = undefined;
-  export let name = undefined;
-  export let value = undefined;
-  export let disabled = undefined;
-  export let readonly = undefined;
-
-  let inputEl;
-
-  $: classes = classNames(
+  const classes = $derived(classNames(
     className,
     'radio',
     {
       disabled,
     },
-    colorClasses($$props),
-  );
+    colorClasses(restProps),
+  ));
 
   function onChange(event) {
-    emit('change', [event]);
     checked = event.target.checked;
+    restProps.onchange?.(event);
   }
 </script>
 
-<label class={classes} {...restProps($$restProps)}>
+<label class={classes} {...restProps}>
   <input
-    bind:this={inputEl}
     type="radio"
     {name}
     value={typeof value === 'undefined' ? '' : value}
     {disabled}
     {readonly}
     {checked}
-    on:change={onChange}
+    onchange={onChange}
   />
-  <i class="icon-radio" />
-  <slot />
+  <i class="icon-radio"></i>
+  {@render children?.()}
 </label>

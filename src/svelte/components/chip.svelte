@@ -1,60 +1,47 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
-
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, plainText, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames } from '../shared/utils.js';
   import { useTooltip } from '../shared/use-tooltip.js';
   import { useIcon } from '../shared/use-icon.js';
 
   import UseIcon from './use-icon.svelte';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
 
-  let className = undefined;
-  export { className as class };
-
-  export let media = undefined;
-  export let text = undefined;
-  export let deleteable = undefined;
-  export let mediaBgColor = undefined;
-  export let mediaTextColor = undefined;
-  export let outline = undefined;
-
-  export let tooltip = undefined;
-  export let tooltipTrigger = undefined;
+  let {
+    class: className,
+    media = undefined,
+    text = undefined,
+    deleteable = undefined,
+    mediaBgColor = undefined,
+    mediaTextColor = undefined,
+    outline = undefined,
+    tooltip = undefined,
+    tooltipTrigger = undefined,
+    children,
+    ...restProps
+  } = $props();
 
   let el;
 
-  $: classes = classNames(
+  const classes = $derived(classNames(
     className,
     'chip',
     {
       'chip-outline': outline,
     },
-    colorClasses($$props),
-  );
+    colorClasses(restProps),
+  ));
 
-  $: mediaClasses = classNames(
+  const mediaClasses = $derived(classNames(
     'chip-media',
     mediaTextColor && `text-color-${mediaTextColor}`,
     mediaBgColor && `bg-color-${mediaBgColor}`,
-  );
+  ));
 
-  // eslint-disable-next-line
-  $: hasMediaSlots = $$slots.media;
-  // eslint-disable-next-line
-  $: hasTextSlots = $$slots.text;
-  // eslint-disable-next-line
-  $: hasDefaultSlots = $$slots.default;
+  const icon = $derived(useIcon(restProps));
 
-  $: icon = useIcon($$props);
-
-  function onClick(e) {
-    emit('click', [e]);
-  }
   function onDeleteClick(e) {
-    emit('delete', [e]);
+    restProps.deleteClick?.(e);
   }
 </script>
 
@@ -63,25 +50,33 @@
 <div
   bind:this={el}
   class={classes}
-  on:click={onClick}
-  {...restProps($$restProps)}
+  {...restProps}
   use:useTooltip={{ tooltip, tooltipTrigger }}
 >
-  {#if media || hasMediaSlots || icon}
+  {#if media || icon}
     <div class={mediaClasses}>
       {#if icon}
         <UseIcon {icon} />
       {/if}
-      {plainText(media)}
-      <slot name="media" />
+      {#if media}
+        {#if typeof media === 'function'}
+          {@render media?.()}
+        {:else}
+          {media}
+        {/if}
+      {/if}
     </div>
   {/if}
-  {#if text || hasTextSlots || hasDefaultSlots}
-    <div class="chip-label">
-      {plainText(text)}
-      <slot name="text" />
-      <slot />
-    </div>
-  {/if}
-  {#if deleteable}<a class="chip-delete" on:click={onDeleteClick} />{/if}
+  <div class="chip-label">
+    {#if text}
+      {#if typeof text === 'function'}
+        {@render text?.()}
+      {:else}
+        {text}
+      {/if}
+    {/if}
+
+    {@render children?.()}
+  </div>
+  {#if deleteable}<a class="chip-delete" onclick={onDeleteClick} />{/if}
 </div>

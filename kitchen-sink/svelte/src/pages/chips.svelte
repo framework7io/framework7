@@ -42,13 +42,19 @@
   <BlockTitle>Contact Chips</BlockTitle>
   <Block strongIos outlineIos>
     <Chip text="Jane Doe">
-      <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg" />
+      {#snippet media()}
+        <img src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg" />
+      {/snippet}
     </Chip>
     <Chip text="John Doe">
-      <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-3.jpg" />
+      {#snippet media()}
+        <img src="https://cdn.framework7.io/placeholder/people-100x100-3.jpg" />
+      {/snippet}
     </Chip>
     <Chip text="Adam Smith">
-      <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg" />
+      {#snippet media()}
+        <img src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg" />
+      {/snippet}
     </Chip>
     <Chip text="Jennifer" mediaBgColor="pink" media="J" />
     <Chip text="Chris" mediaBgColor="yellow" media="C" />
@@ -56,22 +62,26 @@
   </Block>
   <BlockTitle>Deletable Chips / Tags</BlockTitle>
   <Block strongIos outlineIos>
-    <Chip text="Example Chip" deleteable onDelete={deleteChip} />
+    <Chip text="Example Chip" deleteable deleteClick={deleteChip} />
     <Chip
       text="Chris"
       media="C"
       mediaBgColor="orange"
       textColor="black"
       deleteable
-      onDelete={deleteChip}
+      deleteClick={deleteChip}
     />
-    <Chip text="Jane Doe" deleteable onDelete={deleteChip}>
-      <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg" />
+    <Chip text="Jane Doe" deleteable deleteClick={deleteChip}>
+      {#snippet media()}
+        <img src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg" />
+      {/snippet}
     </Chip>
-    <Chip text="One More Chip" deleteable onDelete={deleteChip} />
-    <Chip text="Jennifer" mediaBgColor="pink" media="J" deleteable onDelete={deleteChip} />
-    <Chip text="Adam Smith" deleteable onDelete={deleteChip}>
-      <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg" />
+    <Chip text="One More Chip" deleteable deleteClick={deleteChip} />
+    <Chip text="Jennifer" mediaBgColor="pink" media="J" deleteable deleteClick={deleteChip} />
+    <Chip text="Adam Smith" deleteable deleteClick={deleteChip}>
+      {#snippet media()}
+        <img src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg" />
+      {/snippet}
     </Chip>
   </Block>
   <BlockTitle>Color Chips</BlockTitle>

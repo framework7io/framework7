@@ -1,35 +1,36 @@
 <script>
-  import { createEventDispatcher, onMount, afterUpdate } from 'svelte';
+  import { onMount } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames } from '../shared/utils.js';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    checked = undefined,
+    indeterminate = undefined,
+    name = undefined,
+    value = undefined,
+    disabled = undefined,
+    readonly = undefined,
+    children,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
 
-  export let checked = undefined;
-  export let indeterminate = undefined;
-  export let name = undefined;
-  export let value = undefined;
-  export let disabled = undefined;
-  export let readonly = undefined;
 
   let inputEl;
 
-  $: classes = classNames(
+  const classes = $derived(classNames(
     className,
     {
       checkbox: true,
       disabled,
     },
-    colorClasses($$props),
-  );
+    colorClasses(restProps),
+  ));
 
   function onChange(event) {
-    emit('change', [event]);
     checked = event.target.checked;
+    restProps.onchange?.(event);
   }
 
   onMount(() => {
@@ -38,14 +39,15 @@
     }
   });
 
-  afterUpdate(() => {
+  $effect(() => {
     if (inputEl) {
       inputEl.indeterminate = indeterminate;
     }
-  });
+  })
+
 </script>
 
-<label class={classes} {...restProps($$restProps)}>
+<label class={classes} {...restProps}>
   <input
     bind:this={inputEl}
     type="checkbox"
@@ -54,8 +56,8 @@
     {disabled}
     {readonly}
     {checked}
-    on:change={onChange}
+    onchange={onChange}
   />
   <i class="icon-checkbox" />
-  <slot />
+  {@render children?.()}
 </label>
