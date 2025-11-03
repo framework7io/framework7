@@ -1,6 +1,6 @@
 import path from 'path';
 // eslint-disable-next-line
-import svelte from 'rollup-plugin-svelte';
+import { svelte } from '@sveltejs/vite-plugin-svelte';
 
 const buildFolder = process.env.NODE_ENV === 'production' ? 'packages' : 'build';
 

@@ -251,8 +251,8 @@ class Sheet extends Modal {
           maxTranslate = sheet.params.swipeToClose
             ? sheetElOffsetHeight
             : useBreakpoints
-            ? breakpointsTranslate[0]
-            : swipeStepTranslate;
+              ? breakpointsTranslate[0]
+              : swipeStepTranslate;
         }
         isMoved = true;
       }

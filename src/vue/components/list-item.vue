@@ -456,8 +456,8 @@ export default {
         props.href === false
           ? undefined
           : props.link === true
-          ? props.href || ''
-          : props.link || props.href,
+            ? props.href || ''
+            : props.link || props.href,
       target: props.target,
       'data-tab': (isStringProp(props.tabLink) && props.tabLink) || undefined,
       ...routerAttrs(props),

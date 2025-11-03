@@ -133,9 +133,8 @@ async function modular({ components }) {
       targetPkg.exports[`./components/${c.name}/less`] = `./components/${c.name}/${c.name}.less`;
       targetPkg.exports[`./components/${c.name}/css`] = `./components/${c.name}/${c.name}.css`;
       // eslint-disable-next-line
-      targetPkg.exports[
-        `./components/${c.name}/css/rtl`
-      ] = `./components/${c.name}/${c.name}-rtl.css`;
+      targetPkg.exports[`./components/${c.name}/css/rtl`] =
+        `./components/${c.name}/${c.name}-rtl.css`;
     });
     fs.writeFileSync(`${outputDir}/package.json`, `${JSON.stringify(targetPkg, '', 2)}\n`);
   }

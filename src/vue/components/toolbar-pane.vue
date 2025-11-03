@@ -10,7 +10,7 @@ import { classNames } from '../shared/utils.js';
 export default {
   name: 'f7-toolbar-pane',
   props: {},
-  setup(props) {
+  setup() {
     const classes = computed(() => {
       return classNames('toolbar-pane');
     });

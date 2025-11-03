@@ -41,10 +41,10 @@ class Panel extends Framework7Class {
       effect = $el.hasClass('panel-cover')
         ? 'cover'
         : $el.hasClass('panel-push')
-        ? 'push'
-        : $el.hasClass('panel-floating')
-        ? 'floating'
-        : 'reveal';
+          ? 'push'
+          : $el.hasClass('panel-floating')
+            ? 'floating'
+            : 'reveal';
     if (typeof resizable === 'undefined') resizable = $el.hasClass('panel-resizable');
 
     let $backdropEl;

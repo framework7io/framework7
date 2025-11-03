@@ -459,8 +459,8 @@ class Range extends Framework7Class {
         ? 'top'
         : 'bottom'
       : app.rtl
-      ? 'right'
-      : 'left';
+        ? 'right'
+        : 'left';
     if (range.dual) {
       const progress = [(value[0] - min) / (max - min), (value[1] - min) / (max - min)];
       const positionStartProgress = limitBarPosition ? knobSize / rangeSize : 0;
@@ -588,8 +588,8 @@ class Range extends Framework7Class {
         ? 'top'
         : 'bottom'
       : app.rtl
-      ? 'right'
-      : 'left';
+        ? 'right'
+        : 'left';
 
     let html = '';
     Array.from({ length: range.scaleSteps + 1 }).forEach((scaleEl, index) => {

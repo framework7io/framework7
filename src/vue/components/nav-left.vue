@@ -17,7 +17,6 @@
 import { computed } from 'vue';
 import { classNames } from '../shared/utils.js';
 import { colorClasses, colorProps } from '../shared/mixins.js';
-import { useTheme } from '../shared/use-theme.js';
 
 import f7Link from './link.js';
 

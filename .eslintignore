@@ -5,6 +5,7 @@ custom
 packages
 node_modules
 *.ts
+*.svelte
 kitchen-sink/core
 kitchen-sink/svelte/dist
 kitchen-sink/react/dist

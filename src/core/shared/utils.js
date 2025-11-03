@@ -546,14 +546,14 @@ export function colorThemeCSSStyles(colors = {}, mdColorScheme = 'default') {
       colorName === 'white'
         ? whiteColorVars
         : colorName === 'black'
-        ? blackColorVars
-        : stringifyObject(light);
+          ? blackColorVars
+          : stringifyObject(light);
     const darkString =
       colorName === 'white'
         ? whiteColorVars
         : colorName === 'black'
-        ? blackColorVars
-        : stringifyObject(dark);
+          ? blackColorVars
+          : stringifyObject(dark);
     /* eslint-enable */
     rest += [
       `.color-${colorName} {`,

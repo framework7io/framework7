@@ -157,53 +157,5 @@ module.exports = {
         'import/no-extraneous-dependencies': ['off'],
       },
     },
-
-    // SVELTE
-    {
-      plugins: [],
-      files: ['**/*.svelte'],
-      extends: ['airbnb-base', 'plugin:svelte/prettier'],
-      // parser: '@babel/eslint-parser',
-      // // Add an `overrides` section to add a parser configuration for svelte.
-      // overrides: [
-      //   {
-      //     files: ['*.svelte'],
-      //     parser: 'svelte-eslint-parser',
-      //   },
-      //   // ...
-      // ],
-      rules: {
-        ...rules,
-        'no-restricted-globals': ['off'],
-        'object-curly-newline': ['off'],
-        curly: ['off'],
-        indent: ['off'],
-        'operator-linebreak': ['off'],
-        'nonblock-statement-body-position': ['off'],
-        'import/no-mutable-exports': ['off'],
-        'import/first': ['off'],
-        'import/no-unresolved': ['off'],
-        'import/no-extraneous-dependencies': ['off'],
-        'import/prefer-default-export': ['off'],
-        'import/extensions': ['off'],
-        'no-multiple-empty-lines': ['off'],
-        'no-undef-init': ['off'],
-        'no-shadow': ['off'],
-        'no-nested-ternary': ['off'],
-        'a11y-invalid-attribute': ['off'],
-        'a11y-missing-attribute': ['off'],
-        'max-len': ['off'],
-      },
-    },
-    {
-      files: ['kitchen-sink/svelte/src/**/*.svelte'],
-      rules: {
-        ...rules,
-        'no-console': ['off'],
-        'no-return-assign': ['off'],
-        'implicit-arrow-linebreak': ['off'],
-        'no-restricted-globals': ['off'],
-      },
-    },
   ],
 };

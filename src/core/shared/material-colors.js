@@ -170,8 +170,8 @@ export const materialColors = (hexColor = '', colorScheme = 'default') => {
       colorScheme === 'default'
         ? [...foreground, ...background]
         : colorScheme === 'vibrant'
-        ? [...foreground, ...background]
-        : background;
+          ? [...foreground, ...background]
+          : background;
     return keep.includes(prop);
   };
 
