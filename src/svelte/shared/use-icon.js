@@ -1,4 +1,4 @@
-export const useIcon = (props = {}) => {
+export const useIcon = (restProps = {}) => {
   const {
     icon,
     iconMaterial,
@@ -10,7 +10,7 @@ export const useIcon = (props = {}) => {
     iconBadge,
     badgeColor,
     iconBadgeColor,
-  } = props;
+  } = restProps;
   if (icon || iconMaterial || iconF7 || iconMd || iconIos) {
     return {
       props: {

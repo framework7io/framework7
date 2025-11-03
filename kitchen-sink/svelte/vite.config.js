@@ -5,7 +5,7 @@ import { svelte } from '@sveltejs/vite-plugin-svelte';
 const buildFolder = process.env.NODE_ENV === 'production' ? 'packages' : 'build';
 
 export default {
-  plugins: [svelte({ onwarn() {} })],
+  plugins: [svelte({ extensions: ['.svelte'], onwarn() {} })],
   root: './',
   base: '',
   publicDir: path.resolve(__dirname, 'public'),
@@ -28,7 +28,10 @@ export default {
         __dirname,
         `../../${buildFolder}/core/framework7-lite.esm.js`,
       ),
-      'framework7-svelte': path.resolve(__dirname, `../../${buildFolder}/svelte`),
+      'framework7-svelte': path.resolve(
+        __dirname,
+        `../../${buildFolder}/svelte/framework7-svelte.js`,
+      ),
     },
   },
 };

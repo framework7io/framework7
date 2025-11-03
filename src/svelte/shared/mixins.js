@@ -1,6 +1,6 @@
 import { isStringProp } from './utils.js';
 
-export function colorClasses(props) {
+export function colorClasses(props = {}) {
   const { color, textColor, bgColor, borderColor, rippleColor, dark } = props;
 
   return {
@@ -13,7 +13,7 @@ export function colorClasses(props) {
   };
 }
 
-export function routerAttrs(props) {
+export function routerAttrs(props = {}) {
   const {
     force,
     reloadCurrent,
@@ -52,7 +52,7 @@ export function routerAttrs(props) {
     'data-open-in': isStringProp(openIn) ? openIn : undefined,
   };
 }
-export function routerClasses(props) {
+export function routerClasses(props = {}) {
   const { back, linkBack, external, preventRouter } = props;
 
   return {
@@ -62,7 +62,7 @@ export function routerClasses(props) {
   };
 }
 
-export function actionsAttrs(props) {
+export function actionsAttrs(props = {}) {
   const {
     searchbarEnable,
     searchbarDisable,
@@ -129,7 +129,7 @@ export function actionsAttrs(props) {
       (isStringProp(cardOpen) && cardOpen) || (isStringProp(cardClose) && cardClose) || undefined,
   };
 }
-export function actionsClasses(props) {
+export function actionsClasses(props = {}) {
   const {
     searchbarEnable,
     searchbarDisable,

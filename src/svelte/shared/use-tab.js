@@ -2,14 +2,14 @@
 import { onMount, onDestroy } from 'svelte';
 import { f7, f7ready } from './f7.js';
 
-export const useTab = (getEl, emit) => {
+export const useTab = (getEl, restProps = {}) => {
   const onTabShow = (el) => {
     if (getEl() !== el) return;
-    emit('tabShow', [el]);
+    restProps.tabShow?.(el);
   };
   const onTabHide = (el) => {
     if (getEl() !== el) return;
-    emit('tabHide', [el]);
+    restProps.tabHide?.(el);
   };
   const attachEvents = () => {
     if (!getEl()) return;
