@@ -1,51 +1,51 @@
 <script>
-  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames } from '../shared/utils.js';
   import { app, f7ready } from '../shared/f7.js';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
 
-  let className = undefined;
-  export { className as class };
-
-  export let opened = undefined;
+  let {
+    class: className,
+    opened = false,
+    children,
+    ...restProps
+  } = $props();
 
   let el;
 
-  $: classes = classNames(
+  const classes = $derived(classNames(
     className,
     'accordion-item',
     {
       'accordion-item-opened': opened,
     },
-    colorClasses($$props),
-  );
+    colorClasses(restProps),
+  ));
 
   function onBeforeOpen(accEl, prevent) {
     if (accEl !== el) return;
-    emit('accordionBeforeOpen', [prevent]);
+    restProps.accordionBeforeOpen?.(prevent);
   }
   function onOpen(accEl) {
     if (accEl !== el) return;
-    emit('accordionOpen');
+    restProps.accordionOpen?.();
   }
   function onOpened(accEl) {
     if (accEl !== el) return;
-    emit('accordionOpened');
+    restProps.accordionOpened?.();
   }
   function onBeforeClose(accEl, prevent) {
     if (accEl !== el) return;
-    emit('accordionBeforeClose', [prevent]);
+    restProps.accordionBeforeClose?.(prevent);
   }
   function onClose(accEl) {
     if (accEl !== el) return;
-    emit('accordionClose');
+    restProps.accordionClose?.();
   }
   function onClosed(accEl) {
     if (accEl !== el) return;
-    emit('accordionClosed');
+    restProps.accordionClosed?.();
   }
 
   onMount(() => {
@@ -70,6 +70,6 @@
   });
 </script>
 
-<div bind:this={el} class={classes} {...restProps($$restProps)}>
-  <slot />
+<div bind:this={el} class={classes} {...restProps}>
+  {@render children?.()}
 </div>
