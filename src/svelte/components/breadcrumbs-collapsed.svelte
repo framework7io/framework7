@@ -1,21 +1,16 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
-  import { classNames, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames } from '../shared/utils.js';
 
-  let className = undefined;
-  export { className as class };
+  let {
+    class: className,
+    children,
+    ...restProps
+  } = $props();
 
-  $: classes = classNames(className, 'breadcrumbs-collapsed');
-
-  const emit = createEmitter(createEventDispatcher, $$props);
-
-  function onClick() {
-    emit('click');
-  }
+  const classes = $derived(classNames(className, 'breadcrumbs-collapsed'));
 </script>
 
-<div class={classes} {...restProps($$restProps)} on:click={onClick}>
-  <span />
-  <slot />
+<div class={classes} {...restProps}>
+  <span></span>
+  {@render children?.()}
 </div>
