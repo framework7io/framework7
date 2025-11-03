@@ -24,7 +24,7 @@
 <Page>
   <Navbar title="Checkbox" backLink />
   <BlockTitle>Inline</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <p>
       Lorem
       <Checkbox name="checkbox-1" />
@@ -36,14 +36,14 @@
   </Block>
 
   <BlockTitle>Checkbox Group</BlockTitle>
-  <List strongIos outlineIos dividersIos>
+  <List strong inset dividersIos>
     <ListItem checkbox title="Books" name="demo-checkbox" checked />
     <ListItem checkbox title="Movies" name="demo-checkbox" />
     <ListItem checkbox title="Food" name="demo-checkbox" />
     <ListItem checkbox title="Drinks" name="demo-checkbox" />
   </List>
 
-  <List strongIos outlineIos dividersIos>
+  <List strong inset dividersIos>
     <ListItem checkbox checkboxIcon="end" title="Books" name="demo-checkbox" checked />
     <ListItem checkbox checkboxIcon="end" title="Movies" name="demo-checkbox" />
     <ListItem checkbox checkboxIcon="end" title="Food" name="demo-checkbox" />
@@ -51,7 +51,7 @@
   </List>
 
   <BlockTitle>Indeterminate State</BlockTitle>
-  <List strongIos outlineIos dividersIos>
+  <List strong inset dividersIos>
     <ListItem
       checkbox
       title="Movies"
@@ -60,29 +60,31 @@
       indeterminate={movies.length === 1}
       onChange={onMoviesChange}
     >
-      <ul slot="root">
-        <ListItem
-          checkbox
-          title="Movie 1"
-          name="demo-checkbox"
-          value="Movie 1"
-          checked={movies.indexOf('Movie 1') >= 0}
-          onChange={onMovieChange}
-        />
-        <ListItem
-          checkbox
-          title="Movie 2"
-          name="demo-checkbox"
-          value="Movie 2"
-          checked={movies.indexOf('Movie 2') >= 0}
-          onChange={onMovieChange}
-        />
-      </ul>
+      {#snippet root()}
+        <ul>
+          <ListItem
+            checkbox
+            title="Movie 1"
+            name="demo-checkbox"
+            value="Movie 1"
+            checked={movies.indexOf('Movie 1') >= 0}
+            onChange={onMovieChange}
+          />
+          <ListItem
+            checkbox
+            title="Movie 2"
+            name="demo-checkbox"
+            value="Movie 2"
+            checked={movies.indexOf('Movie 2') >= 0}
+            onChange={onMovieChange}
+          />
+        </ul>
+      {/snippet}
     </ListItem>
   </List>
 
   <BlockTitle>With Media Lists</BlockTitle>
-  <List mediaList strongIos outlineIos dividersIos>
+  <List mediaList strong inset dividersIos>
     <ListItem
       checkbox
       checked

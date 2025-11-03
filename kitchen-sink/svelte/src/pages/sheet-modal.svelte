@@ -61,50 +61,50 @@
 
 <Page {onPageBeforeOut} {onPageBeforeRemove}>
   <Navbar title="Sheet Modal" backLink />
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <p>
       Sheet Modals slide up from the bottom of the screen to reveal more content. Such modals allow
       to create custom overlays with custom content.
     </p>
     <p class="grid grid-cols-2 grid-gap">
-      <Button fill sheetOpen=".demo-sheet">Open Sheet</Button>
-      <Button fill onClick={createSheet}>Dynamic Sheet</Button>
+      <Button fill round sheetOpen=".demo-sheet">Open Sheet</Button>
+      <Button fill round onClick={createSheet}>Dynamic Sheet</Button>
     </p>
     <p>
-      <Button fill sheetOpen=".demo-sheet-top">Top Sheet</Button>
+      <Button fill round sheetOpen=".demo-sheet-top">Top Sheet</Button>
     </p>
     <p>
-      <Button fill onClick={() => (sheetOpened = true)}>Open Via Prop Change</Button>
+      <Button fill round onClick={() => (sheetOpened = true)}>Open Via Prop Change</Button>
     </p>
   </Block>
 
   <BlockTitle>Push View</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <p>
       Sheet can push view behind on open. By default it has effect only when `safe-area-inset-top`
       is more than zero (iOS fullscreen webapp or iOS cordova app)
     </p>
     <p>
-      <Button fill sheetOpen=".demo-sheet-push">Sheet Push</Button>
+      <Button fill round sheetOpen=".demo-sheet-push">Sheet Push</Button>
     </p>
   </Block>
 
   <BlockTitle>Swipeable Sheet</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <p>
       Sheet modal can be closed with swipe to top (for top Sheet) or bottom (for default Bottom
       sheet):
     </p>
     <p>
-      <Button fill sheetOpen=".demo-sheet-swipe-to-close">Swipe To Close</Button>
+      <Button fill round sheetOpen=".demo-sheet-swipe-to-close">Swipe To Close</Button>
     </p>
     <p>Also there is swipe-step that can be set on Sheet modal to expand it with swipe:</p>
     <p>
-      <Button fill sheetOpen=".demo-sheet-swipe-to-step">Swipe To Step</Button>
+      <Button fill round sheetOpen=".demo-sheet-swipe-to-step">Swipe To Step</Button>
     </p>
     <p>In addition to "swipe step" there is a support for position breakpoints (multiple steps):</p>
     <p>
-      <Button fill sheetOpen=".demo-sheet-breakpoints">Breakpoints</Button>
+      <Button fill round sheetOpen=".demo-sheet-breakpoints">Breakpoints</Button>
     </p>
   </Block>
 

@@ -242,11 +242,11 @@
     </p>
   </Block>
   <BlockTitle>Picker with single value</BlockTitle>
-  <List strongIos outlineIos>
+  <List strong inset>
     <ListInput type="text" placeholder="Your iOS device" readonly inputId="demo-picker-device" />
   </List>
   <BlockTitle>2 values and 3d-rotate effect</BlockTitle>
-  <List strongIos outlineIos>
+  <List strong inset>
     <ListInput
       type="text"
       placeholder="Describe yourself"
@@ -255,12 +255,12 @@
     />
   </List>
   <BlockTitle>Dependent values</BlockTitle>
-  <List strongIos outlineIos>
+  <List strong inset>
     <ListInput type="text" placeholder="Your car" readonly inputId="demo-picker-dependent" />
   </List>
 
   <BlockTitle>Custom toolbar</BlockTitle>
-  <List strongIos outlineIos>
+  <List strong inset>
     <ListInput
       type="text"
       placeholder="Describe yourself"
@@ -272,7 +272,7 @@
   <List class="no-margin">
     <ListInput type="text" placeholder="Date Time" readonly inputId="demo-picker-date" />
   </List>
-  <Block strong insetMd outlineIos class="no-padding no-margin-top">
+  <Block strong inset class="no-margin-top">
     <div id="demo-picker-date-container" />
   </Block>
 </Page>

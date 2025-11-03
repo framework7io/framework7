@@ -52,42 +52,42 @@
 
 <Page {onPageBeforeRemove}>
   <Navbar title="Popup" backLink />
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <p>
       Popup is a modal window with any HTML content that pops up over App's main content. Popup as
       all other overlays is part of so called "Temporary Views".
     </p>
     <p>
-      <Button fill popupOpen=".demo-popup">Open Popup</Button>
+      <Button fill round popupOpen=".demo-popup">Open Popup</Button>
     </p>
     <p>
-      <Button fill onClick={() => (popupOpened = true)}>Open Via Prop Change</Button>
+      <Button fill round onClick={() => (popupOpened = true)}>Open Via Prop Change</Button>
     </p>
     <p>
-      <Button fill onClick={createPopup}>Create Dynamic Popup</Button>
+      <Button fill round onClick={createPopup}>Create Dynamic Popup</Button>
     </p>
   </Block>
 
   <BlockTitle>Swipe To Close</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <p>Popup can be closed with swipe to top or bottom:</p>
     <p>
-      <Button fill popupOpen=".demo-popup-swipe">Swipe To Close</Button>
+      <Button fill round popupOpen=".demo-popup-swipe">Swipe To Close</Button>
     </p>
     <p>Or it can be closed with swipe on special swipe handler and, for example, only to bottom:</p>
     <p>
-      <Button fill popupOpen=".demo-popup-swipe-handler">With Swipe Handler</Button>
+      <Button fill round popupOpen=".demo-popup-swipe-handler">With Swipe Handler</Button>
     </p>
   </Block>
 
   <BlockTitle>Push View</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <p>
       Popup can push view behind. By default has effect only when `safe-area-inset-top` is more than
       zero (iOS fullscreen webapp or iOS cordova app)
     </p>
     <p>
-      <Button fill popupOpen=".demo-popup-push">Popup Push</Button>
+      <Button fill round popupOpen=".demo-popup-push">Popup Push</Button>
     </p>
   </Block>
 
@@ -100,7 +100,7 @@
           </Link>
         </NavRight>
       </Navbar>
-      <Block>
+      <Block strong inset>
         <p>
           Here comes popup. You can put here anything, even independent view with its own
           navigation. Also not, that by default popup looks a bit different on iPhone/iPod and iPad,
@@ -138,7 +138,7 @@
             </Link>
           </NavRight>
         </Navbar>
-        <Block>
+        <Block strong inset>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse faucibus mauris
             leo, eu bibendum neque congue non. Ut leo mauris, eleifend eu commodo a, egestas ac
@@ -193,7 +193,7 @@
     <Page>
       <div slot="fixed" class="swipe-handler" />
       <BlockTitle large>Hello!</BlockTitle>
-      <Block strongIos outlineIos>
+      <Block strong inset>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse faucibus mauris leo,
           eu bibendum neque congue non. Ut leo mauris, eleifend eu commodo a, egestas ac urna.

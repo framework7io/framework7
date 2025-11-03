@@ -97,8 +97,8 @@
     restProps.onptrpullend?.();
   }
   function onPtrRefresh(done) {
-    restProps.onPtrRefresh?.();
-    restProps.onptrrefresh?.();
+    restProps.onPtrRefresh?.(done);
+    restProps.onptrrefresh?.(done);
   }
   function onPtrDone() {
     restProps.onPtrDone?.();

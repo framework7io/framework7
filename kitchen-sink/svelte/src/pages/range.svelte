@@ -14,7 +14,7 @@
   <Navbar title="Range Slider" backLink />
 
   <BlockTitle>Volume</BlockTitle>
-  <List simpleList strongIos outlineIos>
+  <List simpleList strong inset>
     <ListItem>
       <div>
         <Icon ios="f7:speaker_fill" md="material:volume_mute" />
@@ -29,7 +29,7 @@
   </List>
 
   <BlockTitle>Brightness</BlockTitle>
-  <List simpleList strongIos outlineIos>
+  <List simpleList strong inset>
     <ListItem>
       <div>
         <Icon ios="f7:sun_min" md="material:brightness_low" />
@@ -47,7 +47,7 @@
     Price Filter
     <span>${priceMin} - ${priceMax}</span>
   </BlockTitle>
-  <List simpleList strongIos outlineIos>
+  <List simpleList strong inset>
     <ListItem>
       <div>
         <Icon ios="f7:money_dollar_circle" md="material:attach_money" />
@@ -71,7 +71,7 @@
   </List>
 
   <BlockTitle>With Scale</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <Range
       min={0}
       max={100}
@@ -85,7 +85,7 @@
   </Block>
 
   <BlockTitle>Vertical</BlockTitle>
-  <Block strongIos outlineIos class="display-flex justify-content-center">
+  <Block strong inset class="display-flex justify-content-center">
     <Range
       class="margin-right"
       style="height: 160px"
@@ -130,7 +130,7 @@
   </Block>
 
   <BlockTitle>Vertical Reversed</BlockTitle>
-  <Block strongIos outlineIos class="display-flex justify-content-center">
+  <Block strong inset class="display-flex justify-content-center">
     <Range
       class="margin-right"
       color="red"

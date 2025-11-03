@@ -54,7 +54,7 @@
   <Navbar title="Treeview" backLink />
 
   <BlockTitle>Basic tree view</BlockTitle>
-  <Block strong outlineIos class="no-padding-horizontal">
+  <Block strong inset class="no-padding-horizontal">
     <Treeview>
       <TreeviewItem label="Item 1">
         <TreeviewItem label="Sub Item 1">
@@ -81,7 +81,7 @@
   </Block>
 
   <BlockTitle>With icons</BlockTitle>
-  <Block strong outlineIos class="no-padding-horizontal">
+  <Block strong inset class="no-padding-horizontal">
     <Treeview>
       <TreeviewItem label="images" iconF7="folder_fill">
         <TreeviewItem label="avatar.png" iconF7="photo_fill" />
@@ -97,7 +97,7 @@
   </Block>
 
   <BlockTitle>With checkboxes</BlockTitle>
-  <Block strong outlineIos class="no-padding-horizontal">
+  <Block strong inset class="no-padding-horizontal">
     <Treeview>
       <TreeviewItem label="images" iconF7="folder_fill">
         <span slot="content-start">
@@ -199,7 +199,7 @@
   </Block>
 
   <BlockTitle>Whole item as toggle</BlockTitle>
-  <Block strong outlineIos class="no-padding-horizontal">
+  <Block strong inset class="no-padding-horizontal">
     <Treeview>
       <TreeviewItem itemToggle label="images" iconF7="folder_fill">
         <TreeviewItem label="avatar.png" iconF7="photo_fill" />
@@ -215,7 +215,7 @@
   </Block>
 
   <BlockTitle>Selectable</BlockTitle>
-  <Block strong outlineIos class="no-padding-horizontal">
+  <Block strong inset class="no-padding-horizontal">
     <Treeview>
       <TreeviewItem
         selectable
@@ -279,7 +279,7 @@
   </Block>
 
   <BlockTitle>Preload children</BlockTitle>
-  <Block strong outlineIos class="no-padding-horizontal">
+  <Block strong inset class="no-padding-horizontal">
     <Treeview>
       <TreeviewItem
         toggle
@@ -296,7 +296,7 @@
   </Block>
 
   <BlockTitle>With links</BlockTitle>
-  <Block strong outlineIos class="no-padding-horizontal">
+  <Block strong inset class="no-padding-horizontal">
     <Treeview>
       <TreeviewItem iconF7="square_grid_2x2_fill" itemToggle label="Modals">
         <TreeviewItem link="/popup/" iconF7="link" label="Popup" />

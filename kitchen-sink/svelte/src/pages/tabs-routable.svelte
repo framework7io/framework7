@@ -1,13 +1,15 @@
 <script>
-  import { Navbar, Page, Tabs, Tab, Link, Toolbar } from 'framework7-svelte';
+  import { Navbar, Page, Tabs, Tab, Link, Toolbar, ToolbarPane } from 'framework7-svelte';
 </script>
 
 <Page pageContent={false}>
   <Navbar title="Tabs Routable" backLink />
   <Toolbar bottom tabbar>
-    <Link tabLink href="./" routeTabId="tab1">Tab 1</Link>
-    <Link tabLink href="tab2/" routeTabId="tab2">Tab 2</Link>
-    <Link tabLink href="tab3/" routeTabId="tab3">Tab 3</Link>
+    <ToolbarPane>
+      <Link tabLink href="./" routeTabId="tab1">Tab 1</Link>
+      <Link tabLink href="tab2/" routeTabId="tab2">Tab 2</Link>
+      <Link tabLink href="tab3/" routeTabId="tab3">Tab 3</Link>
+    </ToolbarPane>
   </Toolbar>
   <Tabs routable>
     <Tab class="page-content" id="tab1" />

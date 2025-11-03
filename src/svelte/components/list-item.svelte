@@ -450,7 +450,7 @@
                       <SnippetRender content={text} />
                     </div>
                   {/if}
-                  {@render children?.()}
+
                   <SnippetRender content={inner} />
                   {#if !(swipeout || accordionItem)}
                     <SnippetRender {content} />
@@ -490,7 +490,6 @@
                       <SnippetRender content={afterEnd} />
                     </div>
                   {/if}
-                  {@render children?.()}
                   <SnippetRender content={inner} />
                   {#if !(swipeout || accordionItem)}
                     <SnippetRender {content} />
@@ -498,6 +497,7 @@
                 {/if}
                 <SnippetRender content={innerEnd} />
               </div>
+
               <SnippetRender {content} />
               <SnippetRender content={contentEnd} />
             </div>
@@ -571,7 +571,7 @@
                       <SnippetRender content={text} />
                     </div>
                   {/if}
-                  {@render children?.()}
+
                   <SnippetRender content={inner} />
                   {#if !(swipeout || accordionItem)}
                     <SnippetRender {content} />
@@ -611,7 +611,6 @@
                       <SnippetRender content={afterEnd} />
                     </div>
                   {/if}
-                  {@render children?.()}
                   <SnippetRender content={inner} />
                   {#if !(swipeout || accordionItem)}
                     <SnippetRender {content} />
@@ -619,6 +618,7 @@
                 {/if}
                 <SnippetRender content={innerEnd} />
               </div>
+
               <SnippetRender {content} />
               <SnippetRender content={contentEnd} />
             </label>
@@ -676,7 +676,7 @@
                       <SnippetRender content={text} />
                     </div>
                   {/if}
-                  {@render children?.()}
+
                   <SnippetRender content={inner} />
                   {#if !(swipeout || accordionItem)}
                     <SnippetRender {content} />
@@ -716,7 +716,7 @@
                       <SnippetRender content={afterEnd} />
                     </div>
                   {/if}
-                  {@render children?.()}
+
                   <SnippetRender content={inner} />
                   {#if !(swipeout || accordionItem)}
                     <SnippetRender {content} />
@@ -724,6 +724,7 @@
                 {/if}
                 <SnippetRender content={innerEnd} />
               </div>
+
               <SnippetRender {content} />
               <SnippetRender content={contentEnd} />
             </div>
@@ -793,7 +794,7 @@
                   <SnippetRender content={text} />
                 </div>
               {/if}
-              {@render children?.()}
+
               <SnippetRender content={inner} />
               {#if !(swipeout || accordionItem)}
                 <SnippetRender {content} />
@@ -833,7 +834,7 @@
                   <SnippetRender content={afterEnd} />
                 </div>
               {/if}
-              {@render children?.()}
+
               <SnippetRender content={inner} />
               {#if !(swipeout || accordionItem)}
                 <SnippetRender {content} />
@@ -841,6 +842,7 @@
             {/if}
             <SnippetRender content={innerEnd} />
           </div>
+
           <SnippetRender {content} />
           <SnippetRender content={contentEnd} />
         </div>
@@ -914,7 +916,7 @@
                   <SnippetRender content={text} />
                 </div>
               {/if}
-              {@render children?.()}
+
               <SnippetRender content={inner} />
               {#if !(swipeout || accordionItem)}
                 <SnippetRender {content} />
@@ -954,7 +956,7 @@
                   <SnippetRender content={afterEnd} />
                 </div>
               {/if}
-              {@render children?.()}
+
               <SnippetRender content={inner} />
               {#if !(swipeout || accordionItem)}
                 <SnippetRender {content} />
@@ -962,6 +964,7 @@
             {/if}
             <SnippetRender content={innerEnd} />
           </div>
+
           <SnippetRender {content} />
           <SnippetRender content={contentEnd} />
         </label>
@@ -1019,7 +1022,7 @@
                   <SnippetRender content={text} />
                 </div>
               {/if}
-              {@render children?.()}
+
               <SnippetRender content={inner} />
               {#if !(swipeout || accordionItem)}
                 <SnippetRender {content} />
@@ -1059,7 +1062,7 @@
                   <SnippetRender content={afterEnd} />
                 </div>
               {/if}
-              {@render children?.()}
+
               <SnippetRender content={inner} />
               {#if !(swipeout || accordionItem)}
                 <SnippetRender {content} />
@@ -1067,6 +1070,7 @@
             {/if}
             <SnippetRender content={innerEnd} />
           </div>
+
           <SnippetRender {content} />
           <SnippetRender content={contentEnd} />
         </div>
@@ -1079,6 +1083,7 @@
     {#if swipeout || accordionItem}
       <SnippetRender {content} />
     {/if}
+    {@render children?.()}
     <SnippetRender content={root} />
     <SnippetRender content={rootEnd} />
   </li>

@@ -1,11 +1,5 @@
 <script>
-  import {
-    Page,
-    Navbar,
-    BlockTitle,
-    Block,
-    Button,
-  } from 'framework7-svelte';
+  import { Page, Navbar, BlockTitle, Block, Button } from 'framework7-svelte';
 
   let isLoading1 = false;
   let isLoading2 = false;
@@ -32,7 +26,7 @@
   <Navbar title="Buttons" backLink />
 
   <BlockTitle>Usual Buttons</BlockTitle>
-  <Block strong outlineIos>
+  <Block strong inset>
     <div class="grid grid-cols-3 grid-gap">
       <Button>Button</Button>
       <Button>Button</Button>
@@ -41,7 +35,7 @@
   </Block>
 
   <BlockTitle>Tonal Buttons</BlockTitle>
-  <Block strong outlineIos>
+  <Block strong inset>
     <div class="grid grid-cols-3 grid-gap">
       <Button tonal>Button</Button>
       <Button tonal>Button</Button>
@@ -50,7 +44,7 @@
   </Block>
 
   <BlockTitle>Fill Buttons</BlockTitle>
-  <Block strong outlineIos>
+  <Block strong inset>
     <div class="grid grid-cols-3 grid-gap">
       <Button fill>Button</Button>
       <Button fill>Button</Button>
@@ -59,7 +53,7 @@
   </Block>
 
   <BlockTitle>Outline Buttons</BlockTitle>
-  <Block strong outlineIos>
+  <Block strong inset>
     <div class="grid grid-cols-3 grid-gap">
       <Button outline>Button</Button>
       <Button outline>Button</Button>
@@ -68,7 +62,7 @@
   </Block>
 
   <BlockTitle>Raised Buttons</BlockTitle>
-  <Block strong outlineIos>
+  <Block strong inset>
     <p class="grid grid-cols-3 grid-gap">
       <Button raised>Button</Button>
       <Button raised fill>Fill</Button>
@@ -82,7 +76,7 @@
   </Block>
 
   <BlockTitle>Large Buttons</BlockTitle>
-  <Block strong outlineIos>
+  <Block strong inset>
     <p class="grid grid-cols-2 grid-gap">
       <Button large>Button</Button>
       <Button large fill>Fill</Button>
@@ -98,7 +92,7 @@
   </Block>
 
   <BlockTitle>Small Buttons</BlockTitle>
-  <Block strong outlineIos>
+  <Block strong inset>
     <p class="grid grid-cols-3 grid-gap">
       <Button small>Button</Button>
       <Button small outline>Outline</Button>
@@ -112,7 +106,7 @@
   </Block>
 
   <BlockTitle>Preloader Buttons</BlockTitle>
-  <Block strong outlineIos>
+  <Block strong inset>
     <p class="grid grid-cols-3 grid-gap">
       <Button preloader loading={isLoading1} onClick={load1} large>Load</Button>
       <Button preloader loading={isLoading2} onClick={load2} large fill>Load</Button>
@@ -120,7 +114,7 @@
   </Block>
 
   <BlockTitle>Color Buttons</BlockTitle>
-  <Block strong outlineIos>
+  <Block strong inset>
     <div class="grid grid-cols-3 grid-gap">
       <Button color="red">Red</Button>
       <Button color="green">Green</Button>
@@ -129,7 +123,7 @@
   </Block>
 
   <BlockTitle>Color Fill Buttons</BlockTitle>
-  <Block strong outlineIos>
+  <Block strong inset>
     <p class="grid grid-cols-3 grid-gap">
       <Button color="red">Red</Button>
       <Button color="green">Green</Button>

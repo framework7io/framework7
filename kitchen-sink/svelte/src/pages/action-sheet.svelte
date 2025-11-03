@@ -63,6 +63,7 @@
       <!-- One group, open by direct accessing instance .open() method -->
       <Button
         fill
+        round
         onClick={() => {
           actionsOneGroupOpened = true;
         }}
@@ -70,12 +71,13 @@
         One group
       </Button>
       <!--  Two groups, open by "actionsOpen" attribute -->
-      <Button fill actionsOpen="#actions-two-groups">Two groups</Button>
+      <Button fill round actionsOpen="#actions-two-groups">Two groups</Button>
     </p>
     <p>
       <!-- Actions Grid, open by changing actionGridOpened state property -->
       <Button
         fill
+        round
         onClick={() => {
           actionGridOpened = true;
         }}
@@ -90,7 +92,14 @@
     <p bind:this={buttonToPopoverWrapper}>
       Action Sheet can be automatically converted to Popover (for tablets). This button will open
       Popover on tablets and Action Sheet on phones:
-      <Button style="display: inline-block" class="button-to-popover" onClick={openActionsPopover}>
+      <Button
+        round
+        fill
+        small
+        style="display: inline-block"
+        class="button-to-popover"
+        onClick={openActionsPopover}
+      >
         Actions
       </Button>
     </p>

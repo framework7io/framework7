@@ -64,33 +64,41 @@
   </List>
   <BlockTitle>Data list, with icons</BlockTitle>
   <List dividersIos outlineIos strongIos>
-    <ListItem title="Ivan Petrov" after="CEO"><i slot="media" class="icon icon-f7" /></ListItem>
-    <ListItem title="John Doe" badge="5"><i slot="media" class="icon icon-f7" /></ListItem>
-    <ListItem title="Jenna Smith"><i slot="media" class="icon icon-f7" /></ListItem>
+    <ListItem title="Ivan Petrov" after="CEO">
+      {#snippet media()}<i class="icon icon-f7"></i>{/snippet}</ListItem
+    >
+    <ListItem title="John Doe" badge="5">
+      {#snippet media()}<i class="icon icon-f7"></i>{/snippet}</ListItem
+    >
+    <ListItem title="Jenna Smith">
+      {#snippet media()}<i class="icon icon-f7"></i>{/snippet}</ListItem
+    >
   </List>
   <BlockTitle>Links</BlockTitle>
   <List dividersIos outlineIos strongIos>
     <ListItem link="#" title="Ivan Petrov" after="CEO">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}<i class="icon icon-f7"></i>{/snippet}
     </ListItem>
     <ListItem link="#" title="John Doe" after="Cleaner">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}<i class="icon icon-f7"></i>{/snippet}
     </ListItem>
-    <ListItem link="#" title="Jenna Smith"><i slot="media" class="icon icon-f7" /></ListItem>
+    <ListItem link="#" title="Jenna Smith">
+      {#snippet media()}<i class="icon icon-f7"></i>{/snippet}
+    </ListItem>
   </List>
   <BlockTitle>Links, Header, Footer</BlockTitle>
   <List dividersIos outlineIos strongIos>
     <ListItem link="#" header="Name" title="John Doe" after="Edit">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}<i class="icon icon-f7"></i>{/snippet}
     </ListItem>
     <ListItem link="#" header="Phone" title="+7 90 111-22-3344" after="Edit">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}<i class="icon icon-f7"></i>{/snippet}
     </ListItem>
     <ListItem link="#" header="Email" title="john@doe" footer="Home" after="Edit">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}<i class="icon icon-f7"></i>{/snippet}
     </ListItem>
     <ListItem link="#" header="Email" title="john@framework7" footer="Work" after="Edit">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}<i class="icon icon-f7"></i>{/snippet}
     </ListItem>
   </List>
   <BlockTitle>Links, no icons</BlockTitle>
@@ -125,66 +133,64 @@
   <BlockTitle>Mixed and nested</BlockTitle>
   <List dividersIos outlineIos strongIos>
     <ListItem link="#" title="Ivan Petrov" after="CEO">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}<i class="icon icon-f7"></i>{/snippet}
     </ListItem>
     <ListItem link="#" title="Two icons here">
-      <svelte:fragment slot="media">
-        <i class="icon icon-f7" />
-        <i class="icon icon-f7" />
-      </svelte:fragment>
+      {#snippet media()}
+        <i class="icon icon-f7"></i>
+        <i class="icon icon-f7"></i>
+      {/snippet}
     </ListItem>
     <ListItem title="No icons here" />
     <li>
       <ul>
         <ListItem link="#" title="Ivan Petrov" after="CEO">
-          <i slot="media" class="icon icon-f7" />
+          {#snippet media()}<i class="icon icon-f7"></i>{/snippet}
         </ListItem>
         <ListItem link="#" title="Two icons here">
-          <svelte:fragment slot="media">
-            <i class="icon icon-f7" />
-            <i class="icon icon-f7" />
-          </svelte:fragment>
+          {#snippet media()}
+            <i class="icon icon-f7"></i>
+            <i class="icon icon-f7"></i>
+          {/snippet}
         </ListItem>
         <ListItem title="No icons here" />
         <ListItem link="#" title="Ultra long text goes here, no, it is really really long">
-          <i slot="media" class="icon icon-f7" />
+          {#snippet media()}<i class="icon icon-f7"></i>{/snippet}
         </ListItem>
         <ListItem title="With toggle">
-          <i slot="media" class="icon icon-f7" />
-          <span slot="after">
-            <Toggle />
-          </span>
+          {#snippet media()}<i class="icon icon-f7"></i>{/snippet}
+          {#snippet after()}<Toggle />{/snippet}
         </ListItem>
       </ul>
     </li>
     <ListItem link="#" title="Ultra long text goes here, no, it is really really long">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}<i class="icon icon-f7"></i>{/snippet}
     </ListItem>
     <ListItem title="With toggle">
-      <i slot="media" class="icon icon-f7" />
-      <span slot="after">
-        <Toggle />
-      </span>
+      {#snippet media()}<i class="icon icon-f7"></i>{/snippet}
+      {#snippet after()}<Toggle />{/snippet}
     </ListItem>
   </List>
 
   <BlockTitle>Tablet inset</BlockTitle>
   <List dividersIos outlineIos strongIos mediumInset>
     <ListItem link="#" title="Ivan Petrov" after="CEO">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}<i class="icon icon-f7"></i>{/snippet}
     </ListItem>
     <ListItem link="#" title="Two icons here">
-      <svelte:fragment slot="media">
-        <i class="icon icon-f7" />
-        <i class="icon icon-f7" />
-      </svelte:fragment>
+      {#snippet media()}
+        <i class="icon icon-f7"></i>
+        <i class="icon icon-f7"></i>
+      {/snippet}
     </ListItem>
     <ListItem link="#" title="Ultra long text goes here, no, it is really really long">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}<i class="icon icon-f7"></i>{/snippet}
     </ListItem>
-    <div class="block-footer" slot="after-list">
-      <p>This list block will look like "inset" only on tablets (iPad)</p>
-    </div>
+    {#snippet afterList()}
+      <div class="block-footer">
+        <p>This list block will look like "inset" only on tablets (iPad)</p>
+      </div>
+    {/snippet}
   </List>
 
   <BlockTitle>Media Lists</BlockTitle>
@@ -203,12 +209,13 @@
       subtitle="Beatles"
       text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
     >
-      <img
-        slot="media"
-        style="border-radius: 8px"
-        src="https://cdn.framework7.io/placeholder/people-160x160-1.jpg"
-        width="80"
-      />
+      {#snippet media()}
+        <img
+          style="border-radius: 8px"
+          src="https://cdn.framework7.io/placeholder/people-160x160-1.jpg"
+          width="80"
+        />
+      {/snippet}
     </ListItem>
     <ListItem
       link="#"
@@ -217,12 +224,13 @@
       subtitle="Queen"
       text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
     >
-      <img
-        slot="media"
-        style="border-radius: 8px"
-        src="https://cdn.framework7.io/placeholder/people-160x160-2.jpg"
-        width="80"
-      />
+      {#snippet media()}
+        <img
+          style="border-radius: 8px"
+          src="https://cdn.framework7.io/placeholder/people-160x160-2.jpg"
+          width="80"
+        />
+      {/snippet}
     </ListItem>
     <ListItem
       link="#"
@@ -231,12 +239,13 @@
       subtitle="Michael Jackson"
       text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
     >
-      <img
-        slot="media"
-        style="border-radius: 8px"
-        src="https://cdn.framework7.io/placeholder/people-160x160-3.jpg"
-        width="80"
-      />
+      {#snippet media()}
+        <img
+          style="border-radius: 8px"
+          src="https://cdn.framework7.io/placeholder/people-160x160-3.jpg"
+          width="80"
+        />
+      {/snippet}
     </ListItem>
   </List>
   <BlockTitle>Mail App</BlockTitle>
@@ -273,28 +282,31 @@
   <BlockTitle>Something more simple</BlockTitle>
   <List dividersIos mediaList outlineIos strongIos>
     <ListItem title="Yellow Submarine" subtitle="Beatles">
-      <img
-        slot="media"
-        style="border-radius: 8px"
-        src="https://cdn.framework7.io/placeholder/fashion-88x88-1.jpg"
-        width="44"
-      />
+      {#snippet media()}
+        <img
+          style="border-radius: 8px"
+          src="https://cdn.framework7.io/placeholder/fashion-88x88-1.jpg"
+          width="44"
+        />
+      {/snippet}
     </ListItem>
     <ListItem link="#" title="Don't Stop Me Now" subtitle="Queen">
-      <img
-        slot="media"
-        style="border-radius: 8px"
-        src="https://cdn.framework7.io/placeholder/fashion-88x88-2.jpg"
-        width="44"
-      />
+      {#snippet media()}
+        <img
+          style="border-radius: 8px"
+          src="https://cdn.framework7.io/placeholder/fashion-88x88-2.jpg"
+          width="44"
+        />
+      {/snippet}
     </ListItem>
     <ListItem title="Billie Jean" subtitle="Michael Jackson">
-      <img
-        slot="media"
-        style="border-radius: 8px"
-        src="https://cdn.framework7.io/placeholder/fashion-88x88-3.jpg"
-        width="44"
-      />
+      {#snippet media()}
+        <img
+          style="border-radius: 8px"
+          src="https://cdn.framework7.io/placeholder/fashion-88x88-3.jpg"
+          width="44"
+        />
+      {/snippet}
     </ListItem>
   </List>
 </Page>

@@ -15,7 +15,7 @@
 
 <Page>
   <Navbar title="Area Chart" backLink />
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <p>Framework7 comes with simple to use and fully responsive Area Chart component.</p>
     <p>
       Area Chart generates SVG layout which makes it also compatible with SSR (server side
@@ -23,7 +23,7 @@
     </p>
   </Block>
   <BlockTitle>Simple Area Chart</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <!-- prettier-ignore -->
     <AreaChart
       datasets={[
@@ -43,7 +43,7 @@
     />
   </Block>
   <BlockTitle>Area Chart With Tooltip</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <!-- prettier-ignore -->
     <AreaChart
       tooltip
@@ -67,7 +67,7 @@
     />
   </Block>
   <BlockTitle>Area Chart With Axis</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <!-- prettier-ignore -->
     <AreaChart
       tooltip
@@ -95,7 +95,7 @@
     />
   </Block>
   <BlockTitle>Area Chart With Legend</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <!-- prettier-ignore -->
     <AreaChart
       tooltip
@@ -125,7 +125,7 @@
     />
   </Block>
   <BlockTitle>Lines Chart</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <!-- prettier-ignore -->
     <AreaChart
       tooltip

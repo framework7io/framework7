@@ -8,14 +8,14 @@
       <Link>Right</Link>
     </NavRight>
   </Navbar>
-  <Block>
+  <Block strong inset>
     <p>
       Navbar is a fixed (with Fixed and Through layout types) area at the top of a screen that
       contains Page title and navigation elements.
     </p>
     <p>Navbar has 3 main parts: Left, Title and Right. Each part may contain any HTML content.</p>
   </Block>
-  <List strong insetMd outlineIos>
+  <List strong inset>
     <ListItem link="/navbar-hide-scroll/" title="Hide Navbar On Scroll" />
   </List>
 </Page>

@@ -70,8 +70,8 @@
   }
   function onPtrRefresh(ptrEl, done) {
     if (ptrEl !== pageContentEl) return;
-    restProps.onPtrRefresh?.();
-    restProps.onptrrefresh?.();
+    restProps.onPtrRefresh?.(done);
+    restProps.onptrrefresh?.(done);
   }
   function onPtrDone(ptrEl) {
     if (ptrEl !== pageContentEl) return;

@@ -85,12 +85,12 @@
   </Block>
 
   <BlockTitle>Default setup</BlockTitle>
-  <List strongIos outlineIos>
+  <List strong inset>
     <ListInput type="datepicker" placeholder="Your birth date" readonly />
   </List>
 
   <BlockTitle>Custom date format</BlockTitle>
-  <List strongIos outlineIos>
+  <List strong inset>
     <ListInput
       type="datepicker"
       placeholder="Select date"
@@ -102,7 +102,7 @@
   </List>
 
   <BlockTitle>Date + Time</BlockTitle>
-  <List strongIos outlineIos>
+  <List strong inset>
     <ListInput
       type="datepicker"
       placeholder="Select date and time"
@@ -121,7 +121,7 @@
   </List>
 
   <BlockTitle>Multiple Values</BlockTitle>
-  <List strongIos outlineIos>
+  <List strong inset>
     <ListInput
       type="datepicker"
       placeholder="Select multiple dates"
@@ -131,7 +131,7 @@
   </List>
 
   <BlockTitle>Range Picker</BlockTitle>
-  <List strongIos outlineIos>
+  <List strong inset>
     <ListInput
       type="datepicker"
       placeholder="Select date range"
@@ -141,7 +141,7 @@
   </List>
 
   <BlockTitle>Open in Modal</BlockTitle>
-  <List strongIos outlineIos>
+  <List strong inset>
     <ListInput
       type="datepicker"
       placeholder="Select date"
@@ -151,12 +151,12 @@
   </List>
 
   <BlockTitle>Calendar Page</BlockTitle>
-  <List strong outlineIos>
+  <List strong inset>
     <ListItem title="Open Calendar Page" link="/calendar-page/" />
   </List>
 
   <BlockTitle>Inline with custom toolbar</BlockTitle>
-  <Block strong class="no-padding">
+  <Block strong inset class="no-padding">
     <div id="demo-calendar-inline-container" />
   </Block>
 </Page>

@@ -6,10 +6,10 @@
   <Navbar backLink>
     <Subnavbar title="Page Title" />
   </Navbar>
-  <Block>
+  <Block strong inset>
     <p>It also possible to use Subnavbar to display page title and keep navbar only for actions.</p>
   </Block>
-  <Block>
+  <Block strong inset>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, consequatur quia amet
       voluptate vero quasi, veniam, quisquam dolorum magni sint enim, harum expedita excepturi quas

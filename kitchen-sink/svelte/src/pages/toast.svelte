@@ -131,31 +131,31 @@
 
 <Page {onPageBeforeRemove} {onPageBeforeOut}>
   <Navbar title="Toast" backLink />
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <p>Toasts provide brief feedback about an operation through a message on the screen.</p>
     <p>
-      <Button fill onClick={showToastBottom}>Toast on Bottom</Button>
+      <Button fill round onClick={showToastBottom}>Toast on Bottom</Button>
     </p>
     <p>
-      <Button fill onClick={showToastTop}>Toast on Top</Button>
+      <Button fill round onClick={showToastTop}>Toast on Top</Button>
     </p>
     <p>
-      <Button fill onClick={showToastCenter}>Toast on Center</Button>
+      <Button fill round onClick={showToastCenter}>Toast on Center</Button>
     </p>
     <p>
-      <Button fill onClick={showToastIcon}>Toast with icon</Button>
+      <Button fill round onClick={showToastIcon}>Toast with icon</Button>
     </p>
     <p>
-      <Button fill onClick={showToastLargeMessage}>Toast with large message</Button>
+      <Button fill round onClick={showToastLargeMessage}>Toast with large message</Button>
     </p>
     <p>
-      <Button fill onClick={showToastWithButton}>Toast with close button</Button>
+      <Button fill round onClick={showToastWithButton}>Toast with close button</Button>
     </p>
     <p>
-      <Button fill onClick={showToastWithCustomButton}>Toast with custom button</Button>
+      <Button fill round onClick={showToastWithCustomButton}>Toast with custom button</Button>
     </p>
     <p>
-      <Button fill onClick={showToastWithCallback}>Toast with callback on close</Button>
+      <Button fill round onClick={showToastWithCallback}>Toast with callback on close</Button>
     </p>
   </Block>
 </Page>

@@ -10,11 +10,11 @@
     Stepper,
   } from 'framework7-svelte';
 
-  let applesCount = 0;
-  let orangesCount = 0;
-  let meetingTime = 15;
+  let applesCount = $state(0);
+  let orangesCount = $state(0);
+  let meetingTime = $state(15);
 
-  $: meetingTimeComputed = (() => {
+  const meetingTimeComputed = $derived.by(() => {
     const value = meetingTime;
 
     const hours = Math.floor(value / 60);
@@ -27,7 +27,7 @@
       formatted.push(`${minutes} minutes`);
     }
     return formatted.join(' ');
-  })();
+  });
 
   function setApples(value) {
     applesCount = value;
@@ -43,7 +43,7 @@
 <Page>
   <Navbar title="Stepper" backLink />
   <BlockTitle>Shape and size</BlockTitle>
-  <Block strong outlineIos class="text-align-center">
+  <Block strong inset class="text-align-center">
     <div class="grid grid-cols-2 grid-gap">
       <div>
         <small class="display-block">Default</small>
@@ -112,7 +112,7 @@
   </Block>
 
   <BlockTitle>Raised</BlockTitle>
-  <Block strong outlineIos class="text-align-center">
+  <Block strong inset class="text-align-center">
     <div class="grid grid-cols-2 grid-gap">
       <div>
         <small class="display-block">Default</small>
@@ -180,7 +180,7 @@
     </div>
   </Block>
   <BlockTitle>Colors</BlockTitle>
-  <Block strong outlineIos class="text-align-center">
+  <Block strong inset class="text-align-center">
     <div class="grid grid-cols-2 grid-gap">
       <div>
         <Stepper fill color="red" />
@@ -218,7 +218,7 @@
     </div>
   </Block>
   <BlockTitle>Without input element</BlockTitle>
-  <Block strong outlineIos class="text-align-center">
+  <Block strong inset class="text-align-center">
     <div class="grid grid-cols-2 grid-gap">
       <div>
         <Stepper input={false} />
@@ -229,7 +229,7 @@
     </div>
   </Block>
   <BlockTitle>Min, max, step</BlockTitle>
-  <Block strong outlineIos class="text-align-center">
+  <Block strong inset class="text-align-center">
     <div class="grid grid-cols-2 grid-gap">
       <div>
         <Stepper fill value={100} min={0} max={1000} step={100} />
@@ -246,7 +246,7 @@
     With dynamic autorepeat, the rate of change depends on how long the user continues pressing the
     control.
   </BlockHeader>
-  <Block strong outlineIos class="text-align-center">
+  <Block strong inset class="text-align-center">
     <div class="grid grid-cols-2 grid-gap">
       <div>
         <small class="display-block">Default</small>
@@ -272,28 +272,28 @@
     In wraps mode incrementing beyond maximum value sets value to minimum value, likewise,
     decrementing below minimum value sets value to maximum value
   </BlockHeader>
-  <Block strong outlineIos class="text-align-center">
+  <Block strong inset class="text-align-center">
     <Stepper fill value={0} min={0} max={10} step={1} autorepeat={true} wraps={true} />
   </Block>
 
   <BlockTitle>Custom value element</BlockTitle>
   <List strongIos outlineIos dividersIos>
     <ListItem title={`Apples ${applesCount}`}>
-      <span slot="after">
+      {#snippet after()}
         <Stepper buttonsOnly={true} small raised onStepperChange={setApples} />
-      </span>
+      {/snippet}
     </ListItem>
     <ListItem title={`Oranges ${orangesCount}`}>
-      <span slot="after">
+      {#snippet after()}
         <Stepper buttonsOnly={true} small raised onStepperChange={setOranges} />
-      </span>
+      {/snippet}
     </ListItem>
   </List>
 
   <BlockTitle>Custom value format</BlockTitle>
   <List strongIos outlineIos dividersIos>
     <ListItem header="Meeting starts in" title={meetingTimeComputed}>
-      <span slot="after">
+      {#snippet after()}
         <Stepper
           min={15}
           max={240}
@@ -305,7 +305,7 @@
           raised
           onStepperChange={setMeetingTime}
         />
-      </span>
+      {/snippet}
     </ListItem>
   </List>
 
@@ -315,7 +315,7 @@
     field, stepper enter into manual input mode, which allow type value from keyboard and check
     fractional part with defined accurancy. Click outside or enter Return key, ending manual mode.
   </BlockHeader>
-  <Block strong outlineIos class="text-align-center">
+  <Block strong inset class="text-align-center">
     <Stepper
       fill
       value={0}

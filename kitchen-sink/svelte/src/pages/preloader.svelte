@@ -24,7 +24,7 @@
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page>
   <Navbar title="Preloader" backLink />
-  <Block>
+  <Block strong inset>
     <p>
       How about an activity indicator? Framework7 has a nice one. The F7 Preloader is made with SVG
       and animated with CSS so it can be easily resized.
@@ -33,8 +33,8 @@
 
   <BlockTitle>Default</BlockTitle>
   <Block
-    strongIos
-    outlineIos
+    strong
+    inset
     class="grid grid-cols-4 grid-gap demo-preloaders align-items-stretch text-align-center"
   >
     <div>
@@ -52,7 +52,7 @@
   </Block>
 
   <BlockTitle>Color Preloaders</BlockTitle>
-  <Block strongIos outlineIos class="grid grid-cols-4 grid-gap text-align-center">
+  <Block strong inset class="grid grid-cols-4 grid-gap text-align-center">
     <div>
       <Preloader color="red" />
     </div>
@@ -68,21 +68,29 @@
   </Block>
 
   <BlockTitle>Multi-color</BlockTitle>
-  <Block strongIos outlineIos class="text-align-center">
+  <Block strong inset class="text-align-center">
     <Preloader color="multi" />
   </Block>
 
   <BlockTitle>Preloader Modals</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <p>With <b>app.preloader.show()</b> you can show small overlay with preloader indicator.</p>
-    <p><a class="button button-fill" on:click={openIndicator}>Open Small Indicator</a></p>
+    <p>
+      <a class="button button-fill button-round" on:click={openIndicator}>Open Small Indicator</a>
+    </p>
     <p>With <b>app.dialog.preloader()</b> you can show dialog modal with preloader indicator.</p>
-    <p><a class="button button-fill" on:click={openDialog}>Open Dialog Preloader</a></p>
+    <p>
+      <a class="button button-fill button-round" on:click={openDialog}>Open Dialog Preloader</a>
+    </p>
     <p>
       With
       <b>app.dialog.preloader('My text...')</b>
       you can show dialog preloader modal with custom title.
     </p>
-    <p><a class="button button-fill" on:click={openCustomDialog}>Open Dialog Preloader</a></p>
+    <p>
+      <a class="button button-fill button-round" on:click={openCustomDialog}
+        >Open Dialog Preloader</a
+      >
+    </p>
   </Block>
 </Page>

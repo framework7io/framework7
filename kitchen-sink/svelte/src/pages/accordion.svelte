@@ -14,7 +14,7 @@
   <Navbar title="Accordion" backLink />
 
   <BlockTitle>List View Accordion</BlockTitle>
-  <List strong outlineIos dividersIos insetMd accordionList>
+  <List strong inset dividersIos accordionList>
     <ListItem accordionItem title="Lorem Ipsum">
       <AccordionContent>
         <Block>
@@ -52,7 +52,7 @@
   </List>
 
   <BlockTitle>Opposite Side</BlockTitle>
-  <List strong outlineIos dividersIos insetMd accordionList accordionOpposite>
+  <List strong inset dividersIos accordionList accordionOpposite>
     <ListItem accordionItem title="Lorem Ipsum">
       <AccordionContent>
         <Block>

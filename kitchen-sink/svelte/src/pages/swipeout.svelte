@@ -60,7 +60,7 @@
 <Page {onPageBeforeRemove} {onPageInit}>
   <Navbar title="Swipeout" backLink />
 
-  <Block>
+  <Block strong inset>
     <p>
       Swipe out actions on list elements is one of the most awesome F7 features. It allows you to
       call hidden menu for each list element where you can put default ready-to use delete button or
@@ -69,9 +69,11 @@
   </Block>
 
   <BlockTitle>Swipe to delete with confirm modal</BlockTitle>
-  <List strong insetMd outlineIos dividersIos>
+  <List strong inset dividersIos>
     <ListItem swipeout title="Swipe left on me please">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}
+        <i class="icon icon-f7" />
+      {/snippet}
       <SwipeoutActions right>
         <SwipeoutButton delete confirmText="Are you sure you want to delete this item?">
           Delete
@@ -79,51 +81,71 @@
       </SwipeoutActions>
     </ListItem>
     <ListItem swipeout title="Swipe left on me too">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}
+        <i class="icon icon-f7" />
+      {/snippet}
       <SwipeoutActions right>
         <SwipeoutButton delete confirmText="Are you sure you want to delete this item?">
           Delete
         </SwipeoutButton>
       </SwipeoutActions>
     </ListItem>
-    <ListItem title="I am not removable"><i slot="media" class="icon icon-f7" /></ListItem>
+    <ListItem title="I am not removable">
+      {#snippet media()}
+        <i class="icon icon-f7" />
+      {/snippet}
+    </ListItem>
   </List>
 
   <BlockTitle>Swipe to delete without confirm</BlockTitle>
-  <List strong insetMd outlineIos dividersIos>
+  <List strong inset dividersIos>
     <ListItem swipeout title="Swipe left on me please">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}
+        <i class="icon icon-f7" />
+      {/snippet}
       <SwipeoutActions right>
         <SwipeoutButton delete>Delete</SwipeoutButton>
       </SwipeoutActions>
     </ListItem>
     <ListItem swipeout title="Swipe left on me too">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}
+        <i class="icon icon-f7" />
+      {/snippet}
       <SwipeoutActions right>
         <SwipeoutButton delete>Delete</SwipeoutButton>
       </SwipeoutActions>
     </ListItem>
-    <ListItem title="I am not removable"><i slot="media" class="icon icon-f7" /></ListItem>
+    <ListItem title="I am not removable">
+      {#snippet media()}
+        <i class="icon icon-f7" />
+      {/snippet}
+    </ListItem>
   </List>
 
   <BlockTitle>Swipe for actions</BlockTitle>
-  <List strong insetMd outlineIos dividersIos>
+  <List strong inset dividersIos>
     <ListItem swipeout title="Swipe left on me please">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}
+        <i class="icon icon-f7" />
+      {/snippet}
       <SwipeoutActions right>
         <SwipeoutButton onClick={more}>More</SwipeoutButton>
         <SwipeoutButton delete>Delete</SwipeoutButton>
       </SwipeoutActions>
     </ListItem>
     <ListItem swipeout title="Swipe left on me too">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}
+        <i class="icon icon-f7" />
+      {/snippet}
       <SwipeoutActions right>
         <SwipeoutButton onClick={more}>More</SwipeoutButton>
         <SwipeoutButton delete>Delete</SwipeoutButton>
       </SwipeoutActions>
     </ListItem>
     <ListItem swipeout title="You can't delete me">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}
+        <i class="icon icon-f7" />
+      {/snippet}
       <SwipeoutActions right>
         <SwipeoutButton onClick={more}>More</SwipeoutButton>
       </SwipeoutActions>
@@ -131,33 +153,45 @@
   </List>
 
   <BlockTitle>With callback on remove</BlockTitle>
-  <List strong insetMd outlineIos dividersIos>
+  <List strong inset dividersIos>
     <ListItem swipeout onSwipeoutDeleted={onDeleted} title="Swipe left on me please">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}
+        <i class="icon icon-f7" />
+      {/snippet}
       <SwipeoutActions right>
         <SwipeoutButton delete>Delete</SwipeoutButton>
       </SwipeoutActions>
     </ListItem>
     <ListItem swipeout onSwipeoutDeleted={onDeleted} title="Swipe left on me too">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}
+        <i class="icon icon-f7" />
+      {/snippet}
       <SwipeoutActions right>
         <SwipeoutButton delete>Delete</SwipeoutButton>
       </SwipeoutActions>
     </ListItem>
-    <ListItem title="I am not removable"><i slot="media" class="icon icon-f7" /></ListItem>
+    <ListItem title="I am not removable">
+      {#snippet media()}
+        <i class="icon icon-f7" />
+      {/snippet}
+    </ListItem>
   </List>
 
   <BlockTitle>With actions on left side (swipe to right)</BlockTitle>
-  <List strong insetMd outlineIos dividersIos>
+  <List strong inset dividersIos>
     <ListItem swipeout title="Swipe right on me please">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}
+        <i class="icon icon-f7" />
+      {/snippet}
       <SwipeoutActions left>
         <SwipeoutButton color="green" onClick={reply}>Reply</SwipeoutButton>
         <SwipeoutButton color="blue" onClick={forward}>Forward</SwipeoutButton>
       </SwipeoutActions>
     </ListItem>
     <ListItem swipeout title="Swipe right on me too">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}
+        <i class="icon icon-f7" />
+      {/snippet}
       <SwipeoutActions left>
         <SwipeoutButton color="green" onClick={reply}>Reply</SwipeoutButton>
         <SwipeoutButton color="blue" onClick={forward}>Forward</SwipeoutButton>
@@ -166,7 +200,7 @@
   </List>
 
   <BlockTitle>On both sides with overswipes</BlockTitle>
-  <List mediaList strong insetMd outlineIos dividersIos>
+  <List mediaList strong inset dividersIos>
     <ListItem
       swipeout
       title="Facebook"

@@ -43,10 +43,12 @@
 <!-- svelte-ignore a11y-missing-attribute -->
 <Page ptr ptrMousewheel={true} onPtrRefresh={loadMore}>
   <Navbar title="Pull To Refresh" backLink />
-  <List mediaList strongIos dividersIos outlineIos>
+  <List mediaList strong inset dividersIos>
     {#each items as item, index (index)}
       <ListItem title={item.title} subtitle={item.author}>
-        <img slot="media" src={item.cover} width="44" style="border-radius: 8px" />
+        {#snippet media()}
+          <img src={item.cover} width="44" style="border-radius: 8px" />
+        {/snippet}
       </ListItem>
     {/each}
   </List>

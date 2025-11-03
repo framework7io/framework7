@@ -6,7 +6,7 @@
   <Navbar title="Radio" backLink />
 
   <BlockTitle>Inline</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <p>
       Lorem
       <Radio name="demo-radio-inline" value="inline-1" />
@@ -18,13 +18,13 @@
   </Block>
 
   <BlockTitle>Radio Group</BlockTitle>
-  <List strongIos outlineIos dividersIos>
+  <List strong inset dividersIos>
     <ListItem radio radioIcon="start" title="Books" name="demo-radio-start" value="Books" checked />
     <ListItem radio radioIcon="start" title="Movies" value="Movies" name="demo-radio-start" />
     <ListItem radio radioIcon="start" title="Food" value="Food" name="demo-radio-start" />
     <ListItem radio radioIcon="start" title="Drinks" value="Drinks" name="demo-radio-start" />
   </List>
-  <List strongIos outlineIos dividersIos>
+  <List strong inset dividersIos>
     <ListItem radio radioIcon="end" title="Books" name="demo-radio-end" value="Books" checked />
     <ListItem radio radioIcon="end" title="Movies" value="Movies" name="demo-radio-end" />
     <ListItem radio radioIcon="end" title="Food" value="Food" name="demo-radio-end" />
@@ -32,7 +32,7 @@
   </List>
 
   <BlockTitle>With Media Lists</BlockTitle>
-  <List mediaList strongIos outlineIos dividersIos>
+  <List mediaList strong inset dividersIos>
     <ListItem
       radio
       radioIcon="start"

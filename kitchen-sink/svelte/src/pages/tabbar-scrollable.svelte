@@ -1,7 +1,17 @@
 <script>
-  import { Navbar, Page, Block, Tabs, Tab, Link, Toolbar, NavRight } from 'framework7-svelte';
+  import {
+    Navbar,
+    Page,
+    Block,
+    Tabs,
+    Tab,
+    Link,
+    Toolbar,
+    NavRight,
+    ToolbarPane,
+  } from 'framework7-svelte';
 
-  let toolbarPosition = 'bottom';
+  let toolbarPosition = $state('bottom');
   const tabs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   function toggleToolbarPosition() {
@@ -20,14 +30,16 @@
     </NavRight>
   </Navbar>
   <Toolbar tabbar scrollable position={toolbarPosition}>
-    {#each tabs as tab, index}
-      <Link tabLink={`#tab-${tab}`} tabLinkActive={index === 0}>Tab {tab}</Link>
-    {/each}
+    <ToolbarPane>
+      {#each tabs as tab, index}
+        <Link tabLink={`#tab-${tab}`} tabLinkActive={index === 0}>Tab {tab}</Link>
+      {/each}
+    </ToolbarPane>
   </Toolbar>
   <Tabs>
     {#each tabs as tab, index}
       <Tab id={`tab-${tab}`} class="page-content" tabActive={index === 0}>
-        <Block>
+        <Block strong inset>
           <p><b>Tab {tab} content</b></p>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque corrupti, quos

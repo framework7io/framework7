@@ -41,7 +41,7 @@
     </div>
   </svelte:fragment>
 
-  <Block>
+  <Block strong inset>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia, quo rem beatae, delectus
       eligendi est saepe molestias perferendis suscipit, commodi labore ipsa non quasi eum magnam
@@ -68,7 +68,7 @@
       obcaecati aspernatur odio assumenda veniam, ipsum alias.
     </p>
   </Block>
-  <Block>
+  <Block strong inset>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa ipsa debitis sed nihil eaque
       dolore cum iste quibusdam, accusamus doloribus, tempora quia quos voluptatibus corporis

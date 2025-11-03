@@ -1,5 +1,15 @@
 <script>
-  import { Navbar, Page, Block, Tabs, Tab, Link, Toolbar, NavRight } from 'framework7-svelte';
+  import {
+    Navbar,
+    Page,
+    Block,
+    Tabs,
+    Tab,
+    Link,
+    Toolbar,
+    NavRight,
+    ToolbarPane,
+  } from 'framework7-svelte';
 
   let toolbarPosition = 'bottom';
 
@@ -20,14 +30,16 @@
     </NavRight>
   </Navbar>
   <Toolbar tabbar position={toolbarPosition}>
-    <Link tabLink="#tab-1" tabLinkActive>Tab 1</Link>
-    <Link tabLink="#tab-2">Tab 2</Link>
-    <Link tabLink="#tab-3">Tab 3</Link>
+    <ToolbarPane>
+      <Link tabLink="#tab-1" tabLinkActive>Tab 1</Link>
+      <Link tabLink="#tab-2">Tab 2</Link>
+      <Link tabLink="#tab-3">Tab 3</Link>
+    </ToolbarPane>
   </Toolbar>
 
   <Tabs>
     <Tab id="tab-1" class="page-content" tabActive>
-      <Block>
+      <Block strong inset>
         <p>Tab 1 content</p>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae
@@ -67,7 +79,7 @@
       </Block>
     </Tab>
     <Tab id="tab-2" class="page-content">
-      <Block>
+      <Block strong inset>
         <p>Tab 2 content</p>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae
@@ -107,7 +119,7 @@
       </Block>
     </Tab>
     <Tab id="tab-3" class="page-content">
-      <Block>
+      <Block strong inset>
         <p>Tab 3 content</p>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae

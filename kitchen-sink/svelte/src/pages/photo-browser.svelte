@@ -37,7 +37,7 @@
 
 <Page>
   <Navbar title="Photo Browser" backLink />
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <p>
       Photo Browser is a standalone and highly configurable component that allows to open window
       with photo viewer and navigation elements with the following features:
@@ -49,7 +49,7 @@
       <li>Single click on photo to toggle Exposition mode</li>
     </ul>
   </Block>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <p>
       Photo Browser could be opened in a three ways - as a Standalone component (Popup
       modification), in Popup, and as separate Page:
@@ -57,42 +57,15 @@
     <div class="grid grid-cols-3 grid-gap">
       <div>
         <PhotoBrowser {photos} {thumbs} bind:this={standalone} />
-        <Button fill onClick={() => standalone.open()}>Standalone</Button>
+        <Button round fill onClick={() => standalone.open()}>Standalone</Button>
       </div>
       <div>
         <PhotoBrowser {photos} {thumbs} type="popup" bind:this={popup} />
-        <Button fill onClick={() => popup.open()}>Popup</Button>
+        <Button round fill onClick={() => popup.open()}>Popup</Button>
       </div>
       <div>
         <PhotoBrowser {photos} {thumbs} type="page" pageBackLinkText="Back" bind:this={page} />
-        <Button fill onClick={() => page.open()}>Page</Button>
-      </div>
-    </div>
-  </Block>
-  <Block strongIos outlineIos>
-    <p>
-      Photo Browser supports 2 default themes - default Light (like in previous examples) and Dark
-      theme. Here is a Dark theme examples:
-    </p>
-    <div class="grid grid-cols-3 grid-gap">
-      <div>
-        <PhotoBrowser {photos} {thumbs} theme="dark" bind:this={standaloneDark} />
-        <Button fill onClick={() => standaloneDark.open()}>Standalone</Button>
-      </div>
-      <div>
-        <PhotoBrowser {photos} {thumbs} theme="dark" type="popup" bind:this={popupDark} />
-        <Button fill onClick={() => popupDark.open()}>Popup</Button>
-      </div>
-      <div>
-        <PhotoBrowser
-          {photos}
-          {thumbs}
-          theme="dark"
-          type="page"
-          pageBackLinkText="Back"
-          bind:this={pageDark}
-        />
-        <Button fill onClick={() => pageDark.open()}>Page</Button>
+        <Button round fill onClick={() => page.open()}>Page</Button>
       </div>
     </div>
   </Block>

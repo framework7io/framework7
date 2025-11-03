@@ -6,12 +6,12 @@
 
 <Page>
   <Navbar title="Gauge" backLink />
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <p>
       Framework7 comes with Gauge component. It produces nice looking fully responsive SVG gauges.
     </p>
   </Block>
-  <Block strongIos outlineIos class="text-align-center">
+  <Block strong inset class="text-align-center">
     <Gauge
       type="circle"
       value={gaugeValue}
@@ -23,7 +23,7 @@
       valueTextColor="#2196f3"
       labelText="amount of something"
     />
-    <Segmented tag="p" raised>
+    <Segmented tag="p" strong round>
       <Button active={gaugeValue === 0} onclick={() => (gaugeValue = 0)}>0%</Button>
       <Button active={gaugeValue === 0.25} onclick={() => (gaugeValue = 0.25)}>25%</Button>
       <Button active={gaugeValue === 0.5} onclick={() => (gaugeValue = 0.5)}>50%</Button>
@@ -33,7 +33,7 @@
   </Block>
 
   <BlockTitle>Circle Gauges</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <div class="grid grid-cols-2 grid-gap">
       <div class="text-align-center">
         <Gauge
@@ -59,7 +59,7 @@
     </div>
   </Block>
   <BlockTitle>Semicircle Gauges</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <div class="grid grid-cols-2 grid-gap">
       <div class="text-align-center">
         <Gauge
@@ -84,7 +84,7 @@
     </div>
   </Block>
   <BlockTitle>Customization</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <div class="grid grid-cols-2 grid-gap">
       <div class="text-align-center">
         <Gauge

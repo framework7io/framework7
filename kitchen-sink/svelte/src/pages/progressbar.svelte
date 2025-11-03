@@ -14,8 +14,10 @@
 
   let determinateLoading = false;
   let infiniteLoading = false;
+  let inlineProgress = $state(10);
 
   function setInlineProgress(value) {
+    inlineProgress = value;
     f7.progressbar.set('#demo-inline-progressbar', value);
   }
 
@@ -30,17 +32,20 @@
     }
     let progress = 0;
     function simulateLoading() {
-      setTimeout(() => {
-        const progressBefore = progress;
-        progress += Math.random() * 20;
-        f7.progressbar.set(progressBarEl, progress);
-        if (progressBefore < 100) {
-          simulateLoading(); // keep "loading"
-        } else {
-          determinateLoading = false;
-          f7.progressbar.hide(progressBarEl); // hide
-        }
-      }, Math.random() * 200 + 200);
+      setTimeout(
+        () => {
+          const progressBefore = progress;
+          progress += Math.random() * 20;
+          f7.progressbar.set(progressBarEl, progress);
+          if (progressBefore < 100) {
+            simulateLoading(); // keep "loading"
+          } else {
+            determinateLoading = false;
+            f7.progressbar.hide(progressBarEl); // hide
+          }
+        },
+        Math.random() * 200 + 200,
+      );
     }
     simulateLoading();
   }
@@ -70,7 +75,7 @@
     </p>
   </Block>
   <BlockTitle>Determinate Progress Bar</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <p>
       When progress bar is determinate it indicates how long an operation will take when the
       percentage complete is detectable.
@@ -81,11 +86,11 @@
         <Progressbar progress={10} id="demo-inline-progressbar" />
       </p>
       <!-- prettier-ignore -->
-      <Segmented raised>
-        <Button onClick={() => setInlineProgress(10)}>10%</Button>
-        <Button onClick={() => setInlineProgress(30)}>30%</Button>
-        <Button onClick={() => setInlineProgress(50)}>50%</Button>
-        <Button onClick={() => setInlineProgress(100)}>100%</Button>
+      <Segmented strong round>
+        <Button active={inlineProgress === 10} onClick={() => setInlineProgress(10)}>10%</Button>
+        <Button active={inlineProgress === 30} onClick={() => setInlineProgress(30)}>30%</Button>
+        <Button active={inlineProgress === 50} onClick={() => setInlineProgress(50)}>50%</Button>
+        <Button active={inlineProgress === 100} onClick={() => setInlineProgress(100)}>100%</Button>
       </Segmented>
     </div>
     <!-- prettier-ignore -->
@@ -105,7 +110,7 @@
     </div>
   </Block>
   <BlockTitle>Infinite Progress Bar</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <p>
       When progress bar is infinite/indeterminate it requests that the user wait while something
       finishes when it’s not necessary to indicate how long it will take.
@@ -135,7 +140,7 @@
     </div>
   </Block>
   <BlockTitle>Colors</BlockTitle>
-  <List strongIos outlineIos dividersIos simpleList>
+  <List strong inset dividers simpleList>
     <ListItem>
       <Progressbar color="blue" progress={10} />
     </ListItem>

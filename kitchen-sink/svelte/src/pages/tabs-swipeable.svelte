@@ -1,17 +1,19 @@
 <script>
-  import { Navbar, Page, Block, Tabs, Tab, Link, Toolbar } from 'framework7-svelte';
+  import { Navbar, Page, Block, Tabs, Tab, Link, Toolbar, ToolbarPane } from 'framework7-svelte';
 </script>
 
 <Page pageContent={false}>
   <Navbar title="Swipeable Tabs" backLink />
   <Toolbar bottom tabbar>
-    <Link tabLink="#tab-1" tabLinkActive>Tab 1</Link>
-    <Link tabLink="#tab-2">Tab 2</Link>
-    <Link tabLink="#tab-3">Tab 3</Link>
+    <ToolbarPane>
+      <Link tabLink="#tab-1" tabLinkActive>Tab 1</Link>
+      <Link tabLink="#tab-2">Tab 2</Link>
+      <Link tabLink="#tab-3">Tab 3</Link>
+    </ToolbarPane>
   </Toolbar>
   <Tabs swipeable>
     <Tab id="tab-1" class="page-content" tabActive>
-      <Block>
+      <Block strong inset>
         <p>Tab 1 content</p>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae
@@ -51,7 +53,7 @@
       </Block>
     </Tab>
     <Tab id="tab-2" class="page-content">
-      <Block>
+      <Block strong inset>
         <p>Tab 2 content</p>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae
@@ -91,7 +93,7 @@
       </Block>
     </Tab>
     <Tab id="tab-3" class="page-content">
-      <Block>
+      <Block strong inset>
         <p>Tab 3 content</p>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae

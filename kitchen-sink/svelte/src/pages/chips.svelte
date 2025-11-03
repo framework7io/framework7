@@ -13,7 +13,7 @@
 <Page>
   <Navbar title="Chips" backLink />
   <BlockTitle>Chips With Text</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <Chip text="Example Chip" />
     <Chip text="Another Chip" />
     <Chip text="One More Chip" />
@@ -21,7 +21,7 @@
     <Chip text="Last One" />
   </Block>
   <BlockTitle>Outline Chips</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <Chip outline text="Example Chip" />
     <Chip outline text="Another Chip" />
     <Chip outline text="One More Chip" />
@@ -29,7 +29,7 @@
     <Chip outline text="Last One" />
   </Block>
   <BlockTitle>Icon Chips</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <Chip
       text="Add Contact"
       mediaBgColor="blue"
@@ -40,7 +40,7 @@
     <Chip text="John Doe" mediaBgColor="red" iconIos="f7:person" iconMd="material:person" />
   </Block>
   <BlockTitle>Contact Chips</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <Chip text="Jane Doe">
       {#snippet media()}
         <img src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg" />
@@ -61,7 +61,7 @@
     <Chip text="Kate" mediaBgColor="red" media="K" />
   </Block>
   <BlockTitle>Deletable Chips / Tags</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <Chip text="Example Chip" deleteable onDelete={deleteChip} />
     <Chip
       text="Chris"
@@ -85,7 +85,7 @@
     </Chip>
   </Block>
   <BlockTitle>Color Chips</BlockTitle>
-  <Block strongIos outlineIos>
+  <Block strong inset>
     <Chip text="Red Chip" color="red" />
     <Chip text="Green Chip" color="green" />
     <Chip text="Blue Chip" color="blue" />

@@ -4,10 +4,10 @@
 
 <Page hideNavbarOnScroll>
   <Navbar title="Hide Navbar On Scroll" backLink />
-  <Block strong>
+  <Block strong inset>
     <p>Navbar will be hidden if you scroll bottom</p>
   </Block>
-  <Block>
+  <Block strong inset>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos maxime incidunt id ab culpa
       ipsa omnis eos, vel excepturi officiis neque illum perferendis dolorum magnam rerum natus

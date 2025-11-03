@@ -4,14 +4,14 @@
 
 <Page>
   <Navbar title="Swiper Slider" backLink />
-  <Block>
+  <Block strong inset>
     <p>
       Framework7 comes with powerful and most modern touch slider ever -
       <a href="https://swiperjs.com" class="external" target="_blank">Swiper Slider</a>
       with super flexible configuration and lot, lot of features. Just check the following demos:
     </p>
   </Block>
-  <List strong insetMd outlineIos dividersIos>
+  <List strong inset dividersIos>
     <ListItem link="swiper-horizontal/" title="Swiper Horizontal" />
     <ListItem link="swiper-vertical/" title="Swiper Vertical" />
     <ListItem link="swiper-space-between/" title="Space Between Slides" />

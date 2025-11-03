@@ -9,6 +9,7 @@
     List,
     ListItem,
     Icon,
+    ToolbarPane,
   } from 'framework7-svelte';
 </script>
 
@@ -23,24 +24,26 @@
     </NavRight>
   </Navbar>
   <Toolbar bottom tabbar icons>
-    <Link tabLink="#tab-1" tabLinkActive>
-      <Icon ios="f7:envelope_fill" md="material:email">
-        <Badge color="green">5</Badge>
-      </Icon>
-      <span class="tabbar-label">Inbox</span>
-    </Link>
-    <Link tabLink="#tab-2">
-      <Icon ios="f7:calendar_fill" md="material:today">
-        <Badge color="red">7</Badge>
-      </Icon>
-      <span class="tabbar-label">Calendar</span>
-    </Link>
-    <Link tabLink="#tab-3">
-      <Icon ios="f7:cloud_upload_fill" md="material:file_upload">
-        <Badge color="red">1</Badge>
-      </Icon>
-      <span class="tabbar-label">Upload</span>
-    </Link>
+    <ToolbarPane>
+      <Link tabLink="#tab-1" tabLinkActive>
+        <Icon ios="f7:envelope_fill" md="material:email">
+          <Badge color="green">5</Badge>
+        </Icon>
+        <span class="tabbar-label">Inbox</span>
+      </Link>
+      <Link tabLink="#tab-2">
+        <Icon ios="f7:calendar_fill" md="material:today">
+          <Badge color="red">7</Badge>
+        </Icon>
+        <span class="tabbar-label">Calendar</span>
+      </Link>
+      <Link tabLink="#tab-3">
+        <Icon ios="f7:cloud_upload_fill" md="material:file_upload">
+          <Badge color="red">1</Badge>
+        </Icon>
+        <span class="tabbar-label">Upload</span>
+      </Link>
+    </ToolbarPane>
   </Toolbar>
 
   <List strongIos outlineIos dividersIos>

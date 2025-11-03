@@ -27,7 +27,7 @@
 
 <Page>
   <Navbar title="Login Screen" backLink />
-  <Block>
+  <Block strong inset>
     <p>
       Framework7 comes with ready to use Login Screen layout. It could be used inside of page or
       inside of popup (Embedded) or as a standalone overlay:
@@ -35,17 +35,17 @@
   </Block>
 
   <!-- example-hidden-start -->
-  <List strong insetMd outlineIos>
+  <List strong inset>
     <ListItem link="/login-screen-page/" title="As Separate Page" />
   </List>
   <!-- example-hidden-end -->
 
-  <Block>
-    <Button raised large fill loginScreenOpen=".demo-login-screen">As Overlay</Button>
+  <Block strong inset>
+    <Button round large fill loginScreenOpen=".demo-login-screen">As Overlay</Button>
   </Block>
 
-  <Block>
-    <Button raised large fill onClick={() => (loginScreenOpened = true)}>
+  <Block strong inset>
+    <Button round large fill onClick={() => (loginScreenOpened = true)}>
       Open Via Prop Change
     </Button>
   </Block>
