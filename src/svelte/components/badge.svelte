@@ -1,18 +1,19 @@
 <script>
   import { colorClasses } from '../shared/mixins.js';
   import { classNames } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
   import { useTooltip } from '../shared/use-tooltip.js';
 
-  let className = undefined;
-  export { className as class };
+  let {
+    class: className,
+    tooltip,
+    tooltipTrigger,
+    children,
+    ...restProps
+  } = $props();
 
-  export let tooltip = undefined;
-  export let tooltipTrigger = undefined;
-
-  $: classes = classNames(className, 'badge', colorClasses($$props));
+  const classes = $derived(classNames(className, 'badge', colorClasses(restProps)));
 </script>
 
-<span class={classes} {...restProps($$restProps)} use:useTooltip={{ tooltip, tooltipTrigger }}>
-  <slot />
+<span class={classes} {...restProps} use:useTooltip={{ tooltip, tooltipTrigger }}>
+  {@render children?.()}
 </span>
