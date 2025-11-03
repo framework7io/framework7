@@ -2,7 +2,7 @@
   import Icon from './icon.svelte';
   import Badge from './badge.svelte';
 
-  export let icon = undefined;
+  let { icon } = $props();
 </script>
 
 <Icon {...icon.props}>

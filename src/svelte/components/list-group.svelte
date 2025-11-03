@@ -1,42 +1,46 @@
 <script>
+  import { setContext, getContext } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
   import { classNames } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
-  import { setReactiveContext } from '../shared/set-reactive-context.js';
-  import { getReactiveContext } from '../shared/get-reactive-context.js';
+  let {
+    class: className,
+    mediaList = undefined,
+    sortable = undefined,
+    sortableOpposite = undefined,
+    sortableTapHold = false,
+    sortableMoveElements = undefined,
+    simpleList = undefined,
+    children,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
+  const ListContext =
+    getContext('ListContext') ||
+    (() => ({
+      value: {},
+    }));
 
-  export let mediaList = undefined;
-  export let sortable = undefined;
-  export let sortableOpposite = undefined;
-  export let sortableTapHold = false;
-  export let sortableMoveElements = undefined;
-  export let simpleList = undefined;
-
-  let ListContext =
-    getReactiveContext('ListContext', (value) => {
-      ListContext = value || {};
-    }) || {};
-
-  setReactiveContext('ListContext', () => ({
-    listIsMedia: mediaList || ListContext.listIsMedia,
-    listIsSimple: simpleList || ListContext.listIsSimple,
-    listIsSortable: sortable || ListContext.listIsSortable,
-    listIsSortableOpposite: sortableOpposite || ListContext.listIsSortableOpposite,
+  setContext('ListContext', () => ({
+    value: {
+      listIsMedia: mediaList || ListContext().value.listIsMedia,
+      listIsSimple: simpleList || ListContext().value.listIsSimple,
+      listIsSortable: sortable || ListContext().value.listIsSortable,
+      listIsSortableOpposite: sortableOpposite || ListContext().value.listIsSortableOpposite,
+    },
   }));
 
-  $: classes = classNames(
-    className,
-    'list-group',
-    {
-      'media-list': mediaList,
-      sortable,
-      'sortable-tap-hold': sortableTapHold,
-      'sortable-opposite': sortableOpposite,
-    },
-    colorClasses($$props),
+  const classes = $derived(
+    classNames(
+      className,
+      'list-group',
+      {
+        'media-list': mediaList,
+        sortable,
+        'sortable-tap-hold': sortableTapHold,
+        'sortable-opposite': sortableOpposite,
+      },
+      colorClasses(restProps),
+    ),
   );
 </script>
 
@@ -45,9 +49,9 @@
   data-sortable-move-elements={typeof sortableMoveElements !== 'undefined'
     ? sortableMoveElements.toString()
     : undefined}
-  {...restProps($$restProps)}
+  {...restProps}
 >
   <ul>
-    <slot />
+    {@render children?.()}
   </ul>
 </div>

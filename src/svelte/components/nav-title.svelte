@@ -1,24 +1,32 @@
 <script>
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, plainText } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames } from '../shared/utils.js';
 
-  let className = undefined;
-  export { className as class };
+  let {
+    class: className,
+    title = undefined,
+    subtitle = undefined,
+    children,
+    ...restProps
+  } = $props();
 
-  export let title = undefined;
-  export let subtitle = undefined;
-
-  $: classes = classNames(
-    className,
-    'title',
-    {},
-    colorClasses($$props),
-  );
+  const classes = $derived(classNames(className, 'title', {}, colorClasses(restProps)));
 </script>
 
-<div class={classes} {...restProps($$restProps)}>
-  {#if typeof title !== 'undefined'}{plainText(title)}{/if}
-  {#if typeof subtitle !== 'undefined'}<span class="subtitle">{plainText(subtitle)}</span>{/if}
-  <slot />
+<div class={classes} {...restProps}>
+  {#if typeof title === 'function'}
+    {@render title?.()}
+  {:else}
+    {title}
+  {/if}
+  {#if typeof subtitle !== 'undefined'}
+    <span class="subtitle">
+      {#if typeof subtitle === 'function'}
+        {@render subtitle?.()}
+      {:else}
+        {subtitle}
+      {/if}
+    </span>
+  {/if}
+  {@render children?.()}
 </div>

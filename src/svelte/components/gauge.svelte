@@ -1,35 +1,35 @@
 <script>
   import { classNames } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
 
-  let className = undefined;
-  export { className as class };
+  let {
+    class: className,
+    type = 'circle',
+    value = 0,
+    size = 200,
+    bgColor = 'transparent',
+    borderBgColor = '#eeeeee',
+    borderColor = '#000000',
+    borderWidth = 10,
+    valueText = undefined,
+    valueTextColor = '#000000',
+    valueFontSize = 31,
+    valueFontWeight = 500,
+    labelText = undefined,
+    labelTextColor = '#888888',
+    labelFontSize = 14,
+    labelFontWeight = 400,
+    ...restProps
+  } = $props();
 
-  export let type = 'circle';
-  export let value = 0;
-  export let size = 200;
-  export let bgColor = 'transparent';
-  export let borderBgColor = '#eeeeee';
-  export let borderColor = '#000000';
-  export let borderWidth = 10;
-  export let valueText = undefined;
-  export let valueTextColor = '#000000';
-  export let valueFontSize = 31;
-  export let valueFontWeight = 500;
-  export let labelText = undefined;
-  export let labelTextColor = '#888888';
-  export let labelFontSize = 14;
-  export let labelFontWeight = 400;
+  const classes = $derived(classNames(className, 'gauge'));
 
-  $: classes = classNames(className, 'gauge');
-
-  $: semiCircle = type === 'semicircle';
-  $: radius = size / 2 - borderWidth / 2;
-  $: length = 2 * Math.PI * radius;
-  $: progress = Math.max(Math.min(value, 1), 0);
+  const semiCircle = $derived(type === 'semicircle');
+  const radius = $derived(size / 2 - borderWidth / 2);
+  const length = $derived(2 * Math.PI * radius);
+  const progress = $derived(Math.max(Math.min(value, 1), 0));
 </script>
 
-<div class={classes} {...restProps($$restProps)}>
+<div class={classes} {...restProps}>
   <svg
     class="gauge-svg"
     width={`${size}px`}

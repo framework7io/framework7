@@ -64,7 +64,7 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 2019,
+    ecmaVersion: 2020,
     sourceType: 'module',
   },
   rules: {
@@ -145,6 +145,21 @@ module.exports = {
         'no-restricted-globals': ['off'],
         'vue/multi-word-component-names': 'off',
         'vue/no-deprecated-slot-attribute': 'off',
+      },
+    },
+    // SVELTE
+    {
+      files: ['src/svelte/**/*.js'],
+      extends: ['airbnb-base', 'plugin:prettier/recommended'],
+      parserOptions: {
+        ecmaVersion: 2020,
+        sourceType: 'module',
+      },
+      rules: {
+        ...rules,
+        'import/no-unresolved': ['off'],
+        'import/no-extraneous-dependencies': ['off'],
+        'import/extensions': ['off'],
       },
     },
     // SVELTE KITCHEN_SINK

@@ -274,6 +274,7 @@
   const watchCurrentIndex = () => {
     if (currentIndex === previousIndex) return;
     restProps.onSelect?.(currentIndex);
+    restProps.onselect?.(currentIndex);
     setTooltip();
   };
 

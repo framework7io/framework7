@@ -1,81 +1,80 @@
 <script>
-  import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames } from '../shared/utils.js';
   import { app, f7ready } from '../shared/f7.js';
   import Toggle from './toggle.svelte';
   import Range from './range.svelte';
   import TextEditor from './text-editor.svelte';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    type = undefined,
+    name = undefined,
+    value = undefined,
+    placeholder = undefined,
+    inputId = undefined,
+    size = undefined,
+    accept = undefined,
+    autocomplete = undefined,
+    autocorrect = undefined,
+    autocapitalize = undefined,
+    spellcheck = undefined,
+    autofocus = undefined,
+    autosave = undefined,
+    checked = undefined,
+    disabled = undefined,
+    max = undefined,
+    min = undefined,
+    step = undefined,
+    maxlength = undefined,
+    minlength = undefined,
+    multiple = undefined,
+    readonly = undefined,
+    required = undefined,
+    inputStyle = undefined,
+    pattern = undefined,
+    validate = undefined,
+    validateOnBlur = undefined,
+    onValidate = undefined,
+    tabindex = undefined,
+    resizable = undefined,
+    clearButton = undefined,
 
-  let className = undefined;
-  export { className as class };
+    // Form
+    noFormStoreData = undefined,
+    noStoreData = undefined,
+    ignoreStoreData = undefined,
 
-  export let type = undefined;
-  export let name = undefined;
-  export let value = undefined;
-  export let placeholder = undefined;
-  export let inputId = undefined;
-  export let size = undefined;
-  export let accept = undefined;
-  export let autocomplete = undefined;
-  export let autocorrect = undefined;
-  export let autocapitalize = undefined;
-  export let spellcheck = undefined;
-  export let autofocus = undefined;
-  export let autosave = undefined;
-  export let checked = undefined;
-  export let disabled = undefined;
-  export let max = undefined;
-  export let min = undefined;
-  export let step = undefined;
-  export let maxlength = undefined;
-  export let minlength = undefined;
-  export let multiple = undefined;
-  export let readonly = undefined;
-  export let required = undefined;
-  export let inputStyle = undefined;
-  export let pattern = undefined;
-  export let validate = undefined;
-  export let validateOnBlur = undefined;
-  export let onValidate = undefined;
-  export let tabindex = undefined;
-  export let resizable = undefined;
-  export let clearButton = undefined;
+    // Error, Info
+    errorMessage = undefined,
+    errorMessageForce = undefined,
+    info = undefined,
 
-  // Form
-  export let noFormStoreData = undefined;
-  export let noStoreData = undefined;
-  export let ignoreStoreData = undefined;
+    // Outline
+    outline = undefined,
 
-  // Error, Info
-  export let errorMessage = undefined;
-  export let errorMessageForce = undefined;
-  export let info = undefined;
+    // Components
+    wrap = true,
+    dropdown = 'auto',
 
-  // Outline
-  export let outline = undefined;
+    // Datepicker
+    calendarParams = undefined,
+    // Colorpicker
+    colorPickerParams = undefined,
+    // Text editor
+    textEditorParams = undefined,
 
-  // Components
-  export let wrap = true;
-  export let dropdown = 'auto';
-
-  // Datepicker
-  export let calendarParams = undefined;
-  // Colorpicker
-  export let colorPickerParams = undefined;
-  // Text editor
-  export let textEditorParams = undefined;
+    ...restProps
+  } = $props();
 
   // State
-  let inputEl;
-  let inputFocused = false;
-  let inputInvalid = false;
-  let updateInputOnDidUpdate = false;
-  let f7Calendar;
-  let f7ColorPicker;
+  let inputEl = $state(null);
+  let inputFocused = $state(false);
+  let inputInvalid = $state(false);
+  let updateInputOnDidUpdate = $state(false);
+  let f7Calendar = $state(null);
+  let f7ColorPicker = $state(null);
 
   function domValue() {
     if (!inputEl) return undefined;
@@ -125,14 +124,16 @@
     }
   }
 
-  $: watchValue(value);
+  $effect(() => {
+    watchValue(value);
+  });
 
-  $: inputType = type === 'datepicker' || type === 'colorpicker' ? 'text' : type;
+  const inputType = $derived(type === 'datepicker' || type === 'colorpicker' ? 'text' : type);
 
   // eslint-disable-next-line
-  $: needsValue = type !== 'file' && type !== 'datepicker' && type !== 'colorpicker';
+  const needsValue = $derived(type !== 'file' && type !== 'datepicker' && type !== 'colorpicker');
 
-  $: inputValue = (() => {
+  const inputValue = $derived.by(() => {
     let v;
     if (typeof value !== 'undefined') {
       v = value;
@@ -141,50 +142,50 @@
     }
     if (typeof v === 'undefined' || v === null) return '';
     return v;
-  })();
-
-  $: wrapClasses = classNames(
-    className,
-    'input',
-    {
-      'input-outline': outline,
-      'input-dropdown': dropdown === 'auto' ? type === 'select' : dropdown,
-      'input-invalid': (errorMessage && errorMessageForce) || inputInvalid,
-    },
-    colorClasses($$props),
-  );
-
-  $: inputClassName = classNames(!wrap && className, {
-    resizable: inputType === 'textarea' && resizable,
-    'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
-    'input-invalid': (errorMessage && errorMessageForce) || inputInvalid,
-    'input-with-value': inputHasValue(),
-    'input-focused': inputFocused,
   });
 
-  // eslint-disable-next-line
-  $: hasInfoSlots = $$slots.info;
-  // eslint-disable-next-line
-  $: hasErrorSlots = $$slots['error-message'];
+  const wrapClasses = $derived(
+    classNames(
+      className,
+      'input',
+      {
+        'input-outline': outline,
+        'input-dropdown': dropdown === 'auto' ? type === 'select' : dropdown,
+        'input-invalid': (errorMessage && errorMessageForce) || inputInvalid,
+      },
+      colorClasses(restProps),
+    ),
+  );
+
+  const inputClassName = $derived(
+    classNames(!wrap && className, {
+      resizable: inputType === 'textarea' && resizable,
+      'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
+      'input-invalid': (errorMessage && errorMessageForce) || inputInvalid,
+      'input-with-value': inputHasValue(),
+      'input-focused': inputFocused,
+    }),
+  );
 
   function onTextareaResize(event) {
-    emit('textareaResize', [event]);
+    restProps.onTextareaResize?.(event);
   }
 
   function onInputNotEmpty(event) {
-    emit('inputNotEmpty', [event]);
+    restProps.onInputNotEmpty?.(event);
   }
 
   function onInputEmpty(event) {
-    emit('inputEmpty', [event]);
+    restProps.onInputEmpty?.(event);
   }
 
   function onInputClear(event) {
-    emit('inputClear', [event]);
+    restProps.onInputClear?.(event);
   }
 
   function onInput(...args) {
-    emit('input', [...args]);
+    restProps.onInput?.(...args);
+    restProps.oninput?.(...args);
 
     if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && inputEl) {
       validateInput(inputEl);
@@ -195,13 +196,15 @@
   }
 
   function onFocus(...args) {
-    emit('focus', [...args]);
+    restProps.onFocus?.(...args);
+    restProps.onfocus?.(...args);
 
     inputFocused = true;
   }
 
   function onBlur(...args) {
-    emit('blur', [...args]);
+    restProps.onBlur?.(...args);
+    restProps.onblur?.(...args);
 
     if ((validate || validate === '' || validateOnBlur || validateOnBlur === '') && inputEl) {
       validateInput();
@@ -210,10 +213,11 @@
   }
 
   function onChange(...args) {
-    emit('change', [...args]);
+    restProps.onChange?.(...args);
+    restProps.onchange?.(...args);
 
     if (type === 'texteditor') {
-      emit('textEditorChange', [args[1]]);
+      restProps.onTextEditorChange?.(args[1]);
       value = args[1];
     }
   }
@@ -238,7 +242,7 @@
           value,
           on: {
             change(calendar, calendarValue) {
-              emit('calendarChange', [calendarValue]);
+              restProps.onCalendarChange?.(calendarValue);
               value = calendarValue;
             },
           },
@@ -251,7 +255,8 @@
           value,
           on: {
             change(colorPicker, colorPickerValue) {
-              emit('colorpickerChange', [colorPickerValue]);
+              restProps.onColorPickerChange?.(colorPickerValue);
+              restProps.onColorpickerChange?.(colorPickerValue);
               value = colorPickerValue;
             },
           },
@@ -277,7 +282,7 @@
     });
   });
 
-  afterUpdate(() => {
+  $effect(() => {
     if (!app.f7) return;
     if (updateInputOnDidUpdate) {
       if (!inputEl) return;
@@ -317,7 +322,7 @@
 
 <!-- svelte-ignore a11y-autofocus -->
 {#if wrap}
-  <div class={wrapClasses} {...restProps($$restProps)}>
+  <div class={wrapClasses} {...restProps}>
     {#if type === 'select'}
       <select
         bind:this={inputEl}
@@ -355,13 +360,13 @@
         {tabindex}
         data-error-message={errorMessageForce ? undefined : errorMessage}
         class={inputClassName}
-        on:focus={onFocus}
-        on:blur={onBlur}
-        on:input={onInput}
-        on:change={onChange}
+        onfocus={onFocus}
+        onblur={onBlur}
+        oninput={onInput}
+        onchange={onChange}
         value={inputValue}
       >
-        <slot />
+        {@render children?.()}
       </select>
     {:else if type === 'textarea'}
       <textarea
@@ -400,14 +405,14 @@
         {tabindex}
         data-error-message={errorMessageForce ? undefined : errorMessage}
         class={inputClassName}
-        on:focus={onFocus}
-        on:blur={onBlur}
-        on:input={onInput}
-        on:change={onChange}
+        onfocus={onFocus}
+        onblur={onBlur}
+        oninput={onInput}
+        onchange={onChange}
         value={inputValue}
-      />
+      ></textarea>
     {:else if type === 'toggle'}
-      <Toggle {checked} {readonly} {name} {value} {disabled} id={inputId} on:change={onChange} />
+      <Toggle {checked} {readonly} {name} {value} {disabled} id={inputId} onchange={onChange} />
     {:else if type === 'range'}
       <Range
         {value}
@@ -418,7 +423,7 @@
         {name}
         id={inputId}
         input={true}
-        on:rangeChange={onChange}
+        onRangeChange={onChange}
       />
     {:else if type === 'texteditor'}
       <TextEditor
@@ -469,24 +474,30 @@
         tabIndex={tabindex}
         data-error-message={errorMessageForce ? undefined : errorMessage}
         class={inputClassName}
-        on:focus={onFocus}
-        on:blur={onBlur}
-        on:input={onInput}
-        on:change={onChange}
+        onfocus={onFocus}
+        onblur={onBlur}
+        oninput={onInput}
+        onchange={onChange}
         value={type === 'datepicker' || type === 'colorpicker' || type === 'file' ? '' : inputValue}
       />
     {/if}
-    {#if (errorMessage || hasErrorSlots) && errorMessageForce}
+    {#if errorMessage && errorMessageForce}
       <div class="input-error-message">
-        {errorMessage}
-        <slot name="error-message" />
+        {#if typeof errorMessage === 'function'}
+          {@render errorMessage?.()}
+        {:else}
+          {errorMessage}
+        {/if}
       </div>
     {/if}
-    {#if clearButton}<span class="input-clear-button" />{/if}
-    {#if info || hasInfoSlots}
+    {#if clearButton}<span class="input-clear-button"></span>{/if}
+    {#if info}
       <div class="input-info">
-        {info}
-        <slot name="info" />
+        {#if typeof info === 'function'}
+          {@render info?.()}
+        {:else}
+          {info}
+        {/if}
       </div>
     {/if}
   </div>
@@ -527,14 +538,14 @@
     {tabindex}
     data-error-message={errorMessageForce ? undefined : errorMessage}
     class={inputClassName}
-    on:focus={onFocus}
-    on:blur={onBlur}
-    on:input={onInput}
-    on:change={onChange}
+    onfocus={onFocus}
+    onblur={onBlur}
+    oninput={onInput}
+    onchange={onChange}
     value={inputValue}
-    {...restProps($$restProps)}
+    {...restProps}
   >
-    <slot />
+    {@render children?.()}
   </select>
 {:else if type === 'textarea'}
   <textarea
@@ -573,13 +584,13 @@
     {tabindex}
     data-error-message={errorMessageForce ? undefined : errorMessage}
     class={inputClassName}
-    on:focus={onFocus}
-    on:blur={onBlur}
-    on:input={onInput}
-    on:change={onChange}
+    onfocus={onFocus}
+    onblur={onBlur}
+    oninput={onInput}
+    onchange={onChange}
     value={inputValue}
-    {...restProps($$restProps)}
-  />
+    {...restProps}
+  ></textarea>
 {:else if type === 'toggle'}
   <Toggle
     {checked}
@@ -588,8 +599,8 @@
     {value}
     {disabled}
     id={inputId}
-    on:change={onChange}
-    {...restProps($$restProps)}
+    onchange={onChange}
+    {...restProps}
   />
 {:else if type === 'range'}
   <Range
@@ -601,8 +612,8 @@
     {name}
     id={inputId}
     input={true}
-    on:rangeChange={onChange}
-    {...restProps($$restProps)}
+    onRangeChange={onChange}
+    {...restProps}
   />
 {:else if type === 'texteditor'}
   <TextEditor
@@ -614,7 +625,7 @@
     onTextEditorInput={onInput}
     onTextEditorChange={onChange}
     {...textEditorParams}
-    {...restProps($$restProps)}
+    {...restProps}
   />
 {:else}
   <input
@@ -654,11 +665,11 @@
     tabIndex={tabindex}
     data-error-message={errorMessageForce ? undefined : errorMessage}
     class={inputClassName}
-    on:focus={onFocus}
-    on:blur={onBlur}
-    on:input={onInput}
-    on:change={onChange}
+    onfocus={onFocus}
+    onblur={onBlur}
+    oninput={onInput}
+    onchange={onChange}
     value={type === 'datepicker' || type === 'colorpicker' || type === 'file' ? '' : inputValue}
-    {...restProps($$restProps)}
+    {...restProps}
   />
 {/if}

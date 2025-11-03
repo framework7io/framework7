@@ -1,24 +1,23 @@
 <script>
-  import { createEventDispatcher, onDestroy } from 'svelte';
-  import { classNames, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { onDestroy } from 'svelte';
+  import { classNames } from '../shared/utils.js';
   import { app } from '../shared/f7.js';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    size = 320,
+    tooltip = false,
+    datasets = [],
+    formatTooltip = undefined,
+    children,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
-
-  export let size = 320;
-  export let tooltip = false;
-  export let datasets = [];
-  export let formatTooltip = undefined;
-
-  let el;
-  let currentIndex = null;
-  let previousIndex = null;
+  let el = $state(null);
+  let currentIndex = $state(null);
+  let previousIndex = $state(null);
   let f7Tooltip = null;
-  let timeout = null;
+  let timeout = $state(null);
 
   const setCurrentIndex = (index) => {
     if (index === null) {
@@ -132,14 +131,15 @@
 
   const watchCurrentIndex = () => {
     if (currentIndex === previousIndex) return;
-    emit('select', [currentIndex, datasets[currentIndex]]);
+    restProps.onSelect?.(currentIndex, datasets[currentIndex]);
+    restProps.onselect?.(currentIndex, datasets[currentIndex]);
     setTooltip();
   };
 
-  $: classes = classNames('pie-chart', className);
-  $: paths = getPaths(datasets);
+  const classes = $derived(classNames('pie-chart', className));
+  const paths = $derived(getPaths(datasets));
 
-  $: watchCurrentIndex(currentIndex);
+  $effect(() => watchCurrentIndex(currentIndex));
 
   onDestroy(() => {
     if (f7Tooltip && f7Tooltip.destroy) {
@@ -149,7 +149,7 @@
   });
 </script>
 
-<div bind:this={el} class={classes} {...restProps($$restProps)}>
+<div bind:this={el} class={classes} {...restProps}>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -158,16 +158,18 @@
     style="transform: rotate(-90deg)"
   >
     {#each paths as path, index (index)}
+      <!-- svelte-ignore a11y_click_events_have_key_events -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <path
         d={path.points}
         fill={path.color}
         data-index={index}
         class={classNames({ 'pie-chart-hidden': currentIndex !== null && currentIndex !== index })}
-        on:click={() => setCurrentIndex(index)}
-        on:mouseenter={() => setCurrentIndex(index)}
-        on:mouseleave={() => setCurrentIndex(null)}
-      />
+        onclick={() => setCurrentIndex(index)}
+        onmouseenter={() => setCurrentIndex(index)}
+        onmouseleave={() => setCurrentIndex(null)}
+      ></path>
     {/each}
   </svg>
-  <slot />
+  {@render children?.()}
 </div>

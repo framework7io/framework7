@@ -1,23 +1,20 @@
 <script>
-  import { restProps } from '../shared/rest-props.js';
   import { colorClasses } from '../shared/mixins.js';
   import { classNames } from '../shared/utils.js';
+  let { class: className, tabs = false, children, ...restProps } = $props();
 
-  export let tabs = false;
-
-  let className = undefined;
-  export { className as class };
-
-  $: classes = classNames(
-    className,
-    'views',
-    {
-      tabs,
-    },
-    colorClasses($$props),
+  const classes = $derived(
+    classNames(
+      className,
+      'views',
+      {
+        tabs,
+      },
+      colorClasses(restProps),
+    ),
   );
 </script>
 
-<div class={classes} {...restProps($$restProps)}>
-  <slot />
+<div class={classes} {...restProps}>
+  {@render children?.()}
 </div>

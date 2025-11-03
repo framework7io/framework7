@@ -1,21 +1,22 @@
 <script>
   import { colorClasses } from '../shared/mixins.js';
   import { classNames } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  let {
+    class: className,
+    left = false,
+    right = false,
+    side = undefined,
+    children,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
+  const sideComputed = $derived(side || (left ? 'left' : right ? 'right' : 'left'));
 
-  export let left = undefined;
-  export let right = undefined;
-  export let side = undefined;
-
-  // eslint-disable-next-line
-  $: sideComputed = side || (left ? 'left' : right ? 'right' : 'left');
-
-  $: classes = classNames(className, `swipeout-actions-${sideComputed}`, colorClasses($$props));
+  const classes = $derived(
+    classNames(className, `swipeout-actions-${sideComputed}`, colorClasses(restProps)),
+  );
 </script>
 
-<div class={classes} {...restProps($$restProps)}>
-  <slot />
+<div class={classes} {...restProps}>
+  {@render children?.()}
 </div>

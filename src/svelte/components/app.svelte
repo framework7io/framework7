@@ -6,15 +6,14 @@
 
   import RoutableModals from './routable-modals.svelte';
 
-  let className = undefined;
-  export { className as class };
+  let { class: className, children, ...restProps } = $props();
 
-  let el;
+  let el = $state(null);
 
-  $: classes = classNames(className, 'framework7-root', colorClasses($$props));
+  const classes = $derived(classNames(className, 'framework7-root', colorClasses(restProps)));
 
   if (!app.f7 || typeof window === 'undefined') {
-    f7init(el, noUndefinedProps($$props), false);
+    f7init(el, noUndefinedProps(restProps), false);
   }
 
   onMount(() => {
@@ -26,11 +25,11 @@
       app.f7.init(el);
       return;
     }
-    f7init(el, noUndefinedProps($$props), true);
+    f7init(el, noUndefinedProps(restProps), true);
   });
 </script>
 
 <div bind:this={el} class={classes}>
-  <slot />
+  {@render children?.()}
   <RoutableModals />
 </div>

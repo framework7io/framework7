@@ -1,10 +1,10 @@
 <script>
-  import { onMount, onDestroy, afterUpdate, tick } from 'svelte'; // eslint-disable-line
+  import { onMount, onDestroy, tick } from 'svelte'; // eslint-disable-line
   import { app } from '../shared/f7.js';
 
-  let modals = [];
-  let el;
-  let routerData;
+  let modals = $state([]);
+  let el = $state(null);
+  let routerData = $state(null);
 
   onMount(() => {
     routerData = {
@@ -12,15 +12,16 @@
       modals,
       setModals(m) {
         tick().then(() => {
-          modals = m;
+          modals = [...m];
         });
       },
     };
     app.f7routers.modals = routerData;
   });
-  afterUpdate(() => {
+  $effect(() => {
     if (!routerData) return;
     app.f7events.emit('modalsRouterDidUpdate', routerData);
+    return modals;
   });
   onDestroy(() => {
     if (!routerData) return;
@@ -30,7 +31,7 @@
 </script>
 
 <div class="framework7-modals" bind:this={el}>
-  {#each modals as modal (modal.id)}
-    <svelte:component this={modal.component} {...modal.props} />
+  {#each modals as Modal (Modal.id)}
+    <Modal.component {...Modal.props} />
   {/each}
 </div>

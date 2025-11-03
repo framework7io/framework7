@@ -20,6 +20,7 @@
     closeByOutsideClick = undefined,
     closeOnEscape = undefined,
     containerEl = undefined,
+    children,
     ...restProps
   } = $props();
 

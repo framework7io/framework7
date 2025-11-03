@@ -1,108 +1,116 @@
 <script>
-  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames } from '../shared/utils.js';
   import { app, f7ready } from '../shared/f7.js';
   import { modalStateClasses } from '../shared/modal-state-classes.js';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    style = '',
+    opened = undefined,
+    animate = undefined,
+    top = undefined,
+    bottom = undefined,
+    position = undefined,
+    backdrop = undefined,
+    backdropEl = undefined,
+    closeByBackdropClick = undefined,
+    closeByOutsideClick = undefined,
+    closeOnEscape = undefined,
+    push = undefined,
+    swipeToClose = undefined,
+    swipeToStep = undefined,
+    swipeHandler = undefined,
+    containerEl = undefined,
+    breakpoints = undefined,
+    backdropBreakpoint = undefined,
+    pushBreakpoint = undefined,
+    children,
+    fixedContent,
+    staticContent,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
-
-  export let style = '';
-  export let opened = undefined;
-  export let animate = undefined;
-  export let top = undefined;
-  export let bottom = undefined;
-  export let position = undefined;
-  export let backdrop = undefined;
-  export let backdropEl = undefined;
-  export let closeByBackdropClick = undefined;
-  export let closeByOutsideClick = undefined;
-  export let closeOnEscape = undefined;
-  export let push = undefined;
-  export let swipeToClose = undefined;
-  export let swipeToStep = undefined;
-  export let swipeHandler = undefined;
-  export let containerEl = undefined;
-  export let breakpoints = undefined;
-  export let backdropBreakpoint = undefined;
-  export let pushBreakpoint = undefined;
-
-  let el;
-  let innerEl;
+  let el = $state(null);
+  let innerEl = $state(null);
   let f7Sheet;
 
-  const state = {
-    isOpened: opened,
-    isClosing: false,
-    swipeStep: false,
-    breakpoint: false,
-  };
+  let isOpened = $state(false);
+  let isClosing = $state(false);
+  let swipeStep = $state(false);
+  let breakpoint = $state(false);
 
   export function instance() {
     return f7Sheet;
   }
 
-  $: positionComputed = (() => {
+  const positionComputed = $derived.by(() => {
     if (position) return position;
     if (top) return 'top';
     if (bottom) return 'bottom';
     return 'bottom';
-  })();
+  });
 
-  $: classes = classNames(
-    className,
-    'sheet-modal',
-    `sheet-modal-${positionComputed}`,
-    {
-      'sheet-modal-push': push,
-      'modal-in-swipe-step': state.swipeStep,
-      'modal-in-breakpoint': state.breakpoint,
-    },
+  const classes = $derived(
+    classNames(
+      className,
+      'sheet-modal',
+      `sheet-modal-${positionComputed}`,
+      {
+        'sheet-modal-push': push,
+        'modal-in-swipe-step': swipeStep,
+        'modal-in-breakpoint': breakpoint,
+      },
 
-    modalStateClasses(state),
-    colorClasses($$props),
+      modalStateClasses({
+        isOpened,
+        isClosing,
+        swipeStep,
+        breakpoint,
+      }),
+      colorClasses(restProps),
+    ),
   );
 
   function onOpen(instance) {
-    Object.assign(state, {
-      isOpened: true,
-      isClosing: false,
-    });
-    emit('sheetOpen', [instance]);
+    isOpened = true;
+    isClosing = false;
+    restProps.onSheetOpen?.(instance);
+    restProps.onsheetopen?.(instance);
     opened = true;
   }
   function onOpened(instance) {
-    emit('sheetOpened', [instance]);
+    restProps.onSheetOpened?.(instance);
+    restProps.onsheetopened?.(instance);
   }
   function onClose(instance) {
-    Object.assign(state, {
-      isOpened: false,
-      isClosing: true,
-    });
-    emit('sheetClose', [instance]);
+    isOpened = false;
+    isClosing = true;
+    restProps.onSheetClose?.(instance);
+    restProps.onsheetclose?.(instance);
   }
   function onClosed(instance) {
-    Object.assign(state, {
-      isClosing: false,
-    });
-    emit('sheetClosed', [instance]);
+    isClosing = false;
+    restProps.onSheetClosed?.(instance);
+    restProps.onsheetclosed?.(instance);
     opened = false;
   }
   function onBreakpoint(instance, breakpoint) {
-    emit('sheetBreakpoint', [instance, breakpoint]);
+    restProps.onSheetBreakpoint?.(instance, breakpoint);
+    restProps.onsheetbreakpoint?.(instance, breakpoint);
   }
   function onStepProgress(instance, progress) {
-    emit('sheetStepProgress', [instance, progress]);
+    restProps.onSheetStepProgress?.(instance, progress);
+    restProps.onsheetstepprogress?.(instance, progress);
   }
   function onStepOpen(instance) {
-    emit('sheetStepOpen', [instance]);
+    restProps.onSheetStepOpen?.(instance);
+    restProps.onsheetstepopen?.(instance);
   }
   function onStepClose(instance) {
-    emit('sheetStepClose', [instance]);
+    restProps.onSheetStepClose?.(instance);
+    restProps.onsheetstepclose?.(instance);
   }
 
   let initialWatched = false;
@@ -116,7 +124,7 @@
     else f7Sheet.close();
   }
 
-  $: watchOpened(opened);
+  $effect(() => watchOpened(opened));
 
   onMount(() => {
     const params = {
@@ -131,15 +139,15 @@
         stepProgress: onStepProgress,
         breakpoint: (s, value) => {
           if (value > 0 && value < 1) {
-            state.breakpoint = true;
+            breakpoint = true;
           } else {
-            state.breakpoint = false;
+            breakpoint = false;
           }
           onBreakpoint(s, value);
         },
         // eslint-disable-next-line
         _swipeStep(isSwipeStep) {
-          state.swipeStep = isSwipeStep;
+          swipeStep = isSwipeStep;
         },
       },
     };
@@ -180,10 +188,10 @@
   });
 </script>
 
-<div class={classes} bind:this={el} {style} {...restProps($$restProps)}>
-  <slot sheet={f7Sheet} name="fixed" />
+<div class={classes} bind:this={el} {style} {...restProps}>
+  {@render fixedContent?.(f7Sheet)}
   <div class="sheet-modal-inner" bind:this={innerEl}>
-    <slot sheet={f7Sheet} />
-    <slot sheet={f7Sheet} name="static" />
+    {@render children?.(f7Sheet)}
+    {@render staticContent?.(f7Sheet)}
   </div>
 </div>

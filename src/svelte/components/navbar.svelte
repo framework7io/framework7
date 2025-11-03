@@ -1,8 +1,7 @@
 <script>
-  import { createEventDispatcher, onMount, onDestroy, afterUpdate } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, plainText, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames } from '../shared/utils.js';
   import { f7ready, app } from '../shared/f7.js';
   import { useTheme } from '../shared/use-theme.js';
 
@@ -10,35 +9,40 @@
   import NavTitle from './nav-title.svelte';
   import NavRight from './nav-right.svelte';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    backLink = undefined,
+    backLinkUrl = undefined,
+    backLinkForce = false,
+    backLinkShowText = undefined,
+    title = undefined,
+    subtitle = undefined,
+    hidden = false,
+    outline = true,
+    innerClass = undefined,
+    innerClassName = undefined,
+    large = false,
+    largeTransparent = false,
+    transparent = false,
+    titleLarge = undefined,
+    f7Slot = 'fixed',
+    children,
+    navLeft = undefined,
+    left = undefined,
+    navRight = undefined,
+    right = undefined,
+    beforeInner = undefined,
+    afterInner = undefined,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
-
-  export let backLink = undefined;
-  export let backLinkUrl = undefined;
-  export let backLinkForce = false;
-  export let backLinkShowText = undefined;
-  export let title = undefined;
-  export let subtitle = undefined;
-  export let hidden = false;
-  export let outline = true;
-  export let innerClass = undefined;
-  export let innerClassName = undefined;
-  export let large = false;
-  export let largeTransparent = false;
-  export let transparent = false;
-  export let titleLarge = undefined;
-
-  export let f7Slot = 'fixed';
-
-  let el;
+  let el = $state(null);
   let theme = useTheme((t) => {
     theme = t;
   });
-  let routerPositionClass = '';
-  let largeCollapsed = false;
-  let transparentVisible = false;
+  let routerPositionClass = $state('');
+  let largeCollapsed = $state(false);
+  let transparentVisible = $state(false);
 
   export function hide(animate) {
     app.f7.navbar.hide(el, animate);
@@ -50,71 +54,81 @@
     app.f7.navbar.size(el);
   }
 
-  // eslint-disable-next-line
-  $: hasLeftSlots = $$slots['nav-left'] || $$slots['left'];
-  // eslint-disable-next-line
-  $: hasRightSlots = $$slots['nav-right'] || $$slots['right'];
-  // eslint-disable-next-line
-  $: hasTitleSlots = $$slots['title'];
+  const hasLeftSlots = $derived(navLeft || left);
+  const hasRightSlots = $derived(navRight || right);
+  const hasTitleSlots = $derived(title);
 
-  $: largeTitle = titleLarge || (large && title);
-  // eslint-disable-next-line
-  $: hasTitleLargeSlots = $$slots['title-large'];
+  const largeTitle = $derived(titleLarge || (large && title));
+  const hasTitleLargeSlots = $derived(titleLarge);
 
-  $: addLeftTitleClass = theme && theme.ios && app.f7 && !app.f7.params.navbar.iosCenterTitle;
-  $: addCenterTitleClass = theme && theme.md && app.f7 && app.f7.params.navbar.mdCenterTitle;
-
-  $: isLarge = large || largeTransparent;
-  $: isTransparent = transparent || (isLarge && largeTransparent);
-  $: isTransparentVisible = isTransparent && transparentVisible;
-
-  $: classes = classNames(
-    className,
-    'navbar',
-    routerPositionClass,
-    {
-      'navbar-hidden': hidden,
-      'navbar-large': isLarge,
-      'navbar-large-collapsed': isLarge && largeCollapsed,
-      'navbar-transparent': isTransparent,
-      'navbar-transparent-visible': isTransparentVisible,
-      'no-outline': !outline,
-    },
-    colorClasses($$props),
+  const addLeftTitleClass = $derived(
+    theme && theme.ios && app.f7 && !app.f7.params.navbar.iosCenterTitle,
+  );
+  const addCenterTitleClass = $derived(
+    theme && theme.md && app.f7 && app.f7.params.navbar.mdCenterTitle,
   );
 
-  $: innerClasses = classNames('navbar-inner', innerClass, innerClassName, {
-    'navbar-inner-left-title': addLeftTitleClass,
-    'navbar-inner-centered-title': addCenterTitleClass,
-  });
+  const isLarge = $derived(large || largeTransparent);
+  const isTransparent = $derived(transparent || (isLarge && largeTransparent));
+  const isTransparentVisible = $derived(isTransparent && transparentVisible);
+
+  const classes = $derived(
+    classNames(
+      className,
+      'navbar',
+      routerPositionClass,
+      {
+        'navbar-hidden': hidden,
+        'navbar-large': isLarge,
+        'navbar-large-collapsed': isLarge && largeCollapsed,
+        'navbar-transparent': isTransparent,
+        'navbar-transparent-visible': isTransparentVisible,
+        'no-outline': !outline,
+      },
+      colorClasses(restProps),
+    ),
+  );
+
+  const innerClasses = $derived(
+    classNames('navbar-inner', innerClass, innerClassName, {
+      'navbar-inner-left-title': addLeftTitleClass,
+      'navbar-inner-centered-title': addCenterTitleClass,
+    }),
+  );
 
   function onHide(navbarEl) {
     if (el !== navbarEl) return;
-    emit('navbarHide');
+    restProps.onNavbarHide?.();
+    restProps.onnavbarhide?.();
   }
   function onShow(navbarEl) {
     if (el !== navbarEl) return;
-    emit('navbarShow');
+    restProps.onNavbarShow?.();
+    restProps.onnavbarshow?.();
   }
   function onNavbarTransparentShow(navbarEl) {
     if (el !== navbarEl) return;
     transparentVisible = true;
-    emit('navbarTransparentShow');
+    restProps.onNavbarTransparentShow?.();
+    restProps.onnavbartransparentshow?.();
   }
   function onNavbarTransparentHide(navbarEl) {
     if (el !== navbarEl) return;
     transparentVisible = false;
-    emit('navbarTransparentHide');
+    restProps.onNavbarTransparentHide?.();
+    restProps.onnavbartransparenthide?.();
   }
   function onExpand(navbarEl) {
     if (el !== navbarEl) return;
     largeCollapsed = false;
-    emit('navbarExpand');
+    restProps.onNavbarExpand?.();
+    restProps.onnavbarexpand?.();
   }
   function onCollapse(navbarEl) {
     if (el !== navbarEl) return;
     largeCollapsed = true;
-    emit('navbarCollapse');
+    restProps.onNavbarCollapse?.();
+    restProps.onnavbarcollapse?.();
   }
   function onNavbarPosition(navbarEl, position) {
     if (el !== navbarEl) return;
@@ -122,7 +136,8 @@
   }
 
   function onBackClick() {
-    emit('clickBack');
+    restProps.onClickBack?.();
+    restProps.onclickback?.();
   }
 
   function mountNavbar() {
@@ -149,7 +164,7 @@
       mountNavbar();
     });
   });
-  afterUpdate(() => {
+  $effect(() => {
     if (!app.f7) return;
     app.f7.navbar.size(el);
   });
@@ -159,36 +174,37 @@
   });
 </script>
 
-<div class={classes} bind:this={el} data-f7-slot={f7Slot} {...restProps($$restProps)}>
-  <div class="navbar-bg" />
-  <slot name="before-inner" />
+<div class={classes} bind:this={el} data-f7-slot={f7Slot} {...restProps}>
+  <div class="navbar-bg"></div>
+  {@render beforeInner?.()}
   <div class={innerClasses}>
     {#if backLink || hasLeftSlots}
       <NavLeft {backLink} {backLinkUrl} {backLinkForce} {backLinkShowText} {onBackClick}>
-        <slot name="nav-left" />
-        <slot name="left" />
+        {@render navLeft?.()}
+        {@render left?.()}
       </NavLeft>
     {/if}
     {#if title || subtitle || hasTitleSlots}
-      <NavTitle {title} {subtitle}>
-        <slot name="title" />
-      </NavTitle>
+      <NavTitle {title} {subtitle} />
     {/if}
     {#if hasRightSlots}
       <NavRight>
-        <slot name="nav-right" />
-        <slot name="right" />
+        {@render navRight?.()}
+        {@render right?.()}
       </NavRight>
     {/if}
     {#if largeTitle || hasTitleLargeSlots}
       <div class="title-large">
         <div class="title-large-text">
-          {plainText(largeTitle)}
-          <slot name="title-large" />
+          {#if typeof largeTitle === 'function'}
+            {@render largeTitle?.()}
+          {:else}
+            {largeTitle}
+          {/if}
         </div>
       </div>
     {/if}
-    <slot />
+    {@render children?.()}
   </div>
-  <slot name="after-inner" />
+  {@render afterInner?.()}
 </div>

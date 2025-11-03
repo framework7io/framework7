@@ -1,5 +1,4 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
   import {
     colorClasses,
     routerAttrs,
@@ -7,68 +6,81 @@
     actionsAttrs,
     actionsClasses,
   } from '../shared/mixins.js';
-  import { classNames, extend, plainText, isStringProp, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames, extend, isStringProp } from '../shared/utils.js';
   import { useTooltip } from '../shared/use-tooltip.js';
   import { useRouteProps } from '../shared/use-route-props.js';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    title = undefined,
+    text = undefined,
+    tabLink = undefined,
+    tabLinkActive = false,
+    link = undefined,
+    href = undefined,
+    target = undefined,
+    tooltip = undefined,
+    tooltipTrigger = undefined,
+    routeProps = undefined,
+    children,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
+  let el = $state(null);
 
-  export let title = undefined;
-  export let text = undefined;
-  export let tabLink = undefined;
-  export let tabLinkActive = false;
-  export let link = undefined;
-  export let href = undefined;
-  export let target = undefined;
-  export let tooltip = undefined;
-  export let tooltipTrigger = undefined;
-  export let routeProps = undefined;
-
-  let el;
-
-  $: hrefComputed = typeof link === 'boolean' && typeof href === 'boolean' ? '#' : link || href;
-
-  $: attrs = extend(
-    {
-      href: hrefComputed,
-      target,
-      'data-tab': (isStringProp(tabLink) && tabLink) || undefined,
-    },
-    routerAttrs($$props),
-    actionsAttrs($$props),
+  const hrefComputed = $derived(
+    typeof link === 'boolean' && typeof href === 'boolean' ? '#' : link || href,
   );
 
-  $: classes = classNames(
-    {
-      'list-button': true,
-      'tab-link': tabLink || tabLink === '',
-      'tab-link-active': tabLinkActive,
-    },
-    colorClasses($$props),
-    routerClasses($$props),
-    actionsClasses($$props),
+  const attrs = $derived(
+    extend(
+      {
+        href: hrefComputed,
+        target,
+        'data-tab': (isStringProp(tabLink) && tabLink) || undefined,
+      },
+      routerAttrs(restProps),
+      actionsAttrs(restProps),
+    ),
+  );
+
+  const classes = $derived(
+    classNames(
+      {
+        'list-button': true,
+        'tab-link': tabLink || tabLink === '',
+        'tab-link-active': tabLinkActive,
+      },
+      colorClasses(restProps),
+      routerClasses(restProps),
+      actionsClasses(restProps),
+    ),
   );
 
   function onClick() {
-    emit('click');
+    restProps.onClick?.();
+    restProps.onclick?.();
   }
 </script>
 
-<!-- svelte-ignore a11y-missing-attribute -->
 <li
   class={className}
-  {...restProps($$restProps)}
+  {...restProps}
   bind:this={el}
   use:useRouteProps={routeProps}
   use:useTooltip={{ tooltip, tooltipTrigger }}
 >
-  <a class={classes} {...attrs} on:click={onClick}>
-    {plainText(title)}
-    {plainText(text)}
-    <slot />
+  <a class={classes} {...attrs} onclick={onClick}>
+    {#if typeof title === 'function'}
+      {@render title?.()}
+    {:else if typeof title !== 'undefined'}
+      {title}
+    {/if}
+    {#if typeof text === 'function'}
+      {@render text?.()}
+    {:else if typeof text !== 'undefined'}
+      {text}
+    {/if}
+    {@render children?.()}
   </a>
 </li>

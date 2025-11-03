@@ -1,63 +1,60 @@
 <script>
-  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames } from '../shared/utils.js';
   import { app, f7ready } from '../shared/f7.js';
   import { modalStateClasses } from '../shared/modal-state-classes.js';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    style = '',
+    opened = undefined,
+    animate = undefined,
+    containerEl = undefined,
+    children,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
-
-  export let style = '';
-  export let opened = undefined;
-  export let animate = undefined;
-  export let containerEl = undefined;
-
-  let el;
-  let f7LoginScreen;
-
-  const state = {
-    isOpened: opened,
-    isClosing: false,
-  };
+  let el = $state(null);
+  let f7LoginScreen = $state(null);
+  let isOpened = $state(opened);
+  let isClosing = $state(false);
 
   export function instance() {
     return f7LoginScreen;
   }
 
-  $: classes = classNames(
-    className,
-    'login-screen',
-    modalStateClasses(state),
-    colorClasses($$props),
+  const classes = $derived(
+    classNames(
+      className,
+      'login-screen',
+      modalStateClasses({ isOpened, isClosing }),
+      colorClasses(restProps),
+    ),
   );
 
   function onOpen(instance) {
-    Object.assign(state, {
-      isOpened: true,
-      isClosing: false,
-    });
-    emit('loginscreenOpen loginScreenOpen', [instance]);
+    isOpened = true;
+    isClosing = false;
+    restProps.onLoginScreenOpen?.(instance);
+    restProps.onloginscreenopen?.();
     opened = true;
   }
   function onOpened(instance) {
-    emit('loginscreenOpened loginScreenOpened', [instance]);
+    restProps.onLoginScreenOpened?.(instance);
+    restProps.onloginscreenopened?.();
   }
   function onClose(instance) {
-    Object.assign(state, {
-      isOpened: false,
-      isClosing: true,
-    });
-    emit('loginscreenClose loginScreenClose', [instance]);
+    isOpened = false;
+    isClosing = true;
+    restProps.onLoginScreenClose?.(instance);
+    restProps.onloginscreenclose?.();
+    opened = false;
   }
   function onClosed(instance) {
-    Object.assign(state, {
-      isClosing: false,
-    });
-    emit('loginscreenClosed loginScreenClosed', [instance]);
+    isClosing = false;
+    restProps.onLoginScreenClosed?.(instance);
+    restProps.onloginscreenclosed?.();
     opened = false;
   }
 
@@ -72,7 +69,7 @@
     else f7LoginScreen.close();
   }
 
-  $: watchOpened(opened);
+  $effect(() => watchOpened(opened));
 
   onMount(() => {
     const params = {
@@ -100,6 +97,6 @@
   });
 </script>
 
-<div class={classes} bind:this={el} {style} {...restProps($$restProps)}>
-  <slot loginScreen={f7LoginScreen} />
+<div class={classes} bind:this={el} {style} {...restProps}>
+  {@render children?.(f7LoginScreen)}
 </div>

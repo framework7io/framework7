@@ -1,92 +1,93 @@
 <script>
-  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames } from '../shared/utils.js';
   import { app, f7ready } from '../shared/f7.js';
   import { modalStateClasses } from '../shared/modal-state-classes.js';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    style = '',
+    tabletFullscreen = undefined,
+    opened = undefined,
+    animate = undefined,
+    backdrop = undefined,
+    backdropEl = undefined,
+    closeByBackdropClick = undefined,
+    closeOnEscape = undefined,
+    swipeToClose = false,
+    swipeHandler = undefined,
+    push = undefined,
+    containerEl = undefined,
+    children,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
-
-  export let style = '';
-  export let tabletFullscreen = undefined;
-  export let opened = undefined;
-  export let animate = undefined;
-  export let backdrop = undefined;
-  export let backdropEl = undefined;
-  export let closeByBackdropClick = undefined;
-  export let closeOnEscape = undefined;
-  export let swipeToClose = false;
-  export let swipeHandler = undefined;
-  export let push = undefined;
-  export let containerEl = undefined;
-
-  let el;
+  let el = $state(null);
   let f7Popup;
 
-  const state = {
-    isOpened: opened,
-    isClosing: false,
-  };
+  let isOpened = $state(opened);
+  let isClosing = $state(false);
 
   export function instance() {
     return f7Popup;
   }
 
-  $: classes = classNames(
-    className,
-    'popup',
-    {
-      'popup-tablet-fullscreen': tabletFullscreen,
-      'popup-push': push,
-    },
-    modalStateClasses(state),
-    colorClasses($$props),
+  const classes = $derived(
+    classNames(
+      className,
+      'popup',
+      {
+        'popup-tablet-fullscreen': tabletFullscreen,
+        'popup-push': push,
+      },
+      modalStateClasses({ isOpened, isClosing }),
+      colorClasses(restProps),
+    ),
   );
 
   function onSwipeStart(instance) {
-    emit('popupSwipeStart', [instance]);
+    restProps.onPopupSwipeStart?.(instance);
+    restProps.onpopupswipestart?.(instance);
   }
   function onSwipeMove(instance) {
-    emit('popupSwipeMove', [instance]);
+    restProps.onPopupSwipeMove?.(instance);
+    restProps.onpopupswipemove?.(instance);
   }
   function onSwipeEnd(instance) {
-    emit('popupSwipeEnd', [instance]);
+    restProps.onPopupSwipeEnd?.(instance);
+    restProps.onpopupswipeend?.(instance);
   }
   function onSwipeClose(instance) {
-    emit('popupSwipeClose', [instance]);
+    restProps.onPopupSwipeClose?.(instance);
+    restProps.onpopupswipeclose?.(instance);
   }
 
   function onOpen(instance) {
-    Object.assign(state, {
-      isOpened: true,
-      isClosing: false,
-    });
-    emit('popupOpen', [instance]);
+    isOpened = true;
+    isClosing = false;
+    restProps.onPopupOpen?.(instance);
+    restProps.onpopupopen?.(instance);
     opened = true;
   }
   function onOpened(instance) {
-    emit('popupOpened', [instance]);
+    restProps.onPopupOpened?.(instance);
+    restProps.onpopupopened?.(instance);
   }
   function onClose(instance) {
-    Object.assign(state, {
-      isOpened: false,
-      isClosing: true,
-    });
-    emit('popupClose', [instance]);
+    isOpened = false;
+    isClosing = true;
+    restProps.onPopupClose?.(instance);
+    restProps.onpopupclose?.(instance);
   }
   function onClosed(instance) {
-    Object.assign(state, {
-      isClosing: false,
-    });
-    emit('popupClosed', [instance]);
+    isClosing = false;
+    restProps.onPopupClosed?.(instance);
+    restProps.onpopupclosed?.(instance);
     opened = false;
   }
 
-  let initialWatched = false;
+  let initialWatched = $state(false);
   function watchOpened(openedPassed) {
     if (!initialWatched) {
       initialWatched = true;
@@ -97,7 +98,7 @@
     else f7Popup.close();
   }
 
-  $: watchOpened(opened);
+  $effect(() => watchOpened(opened));
 
   onMount(() => {
     const popupParams = {
@@ -136,6 +137,6 @@
   });
 </script>
 
-<div class={classes} bind:this={el} {style} {...restProps($$restProps)}>
-  <slot popup={f7Popup} />
+<div class={classes} bind:this={el} {style} {...restProps}>
+  {@render children?.(f7Popup)}
 </div>

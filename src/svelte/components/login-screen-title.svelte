@@ -1,14 +1,12 @@
 <script>
   import { colorClasses } from '../shared/mixins.js';
   import { classNames } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
 
-  let className = undefined;
-  export { className as class };
+  let { class: className, children, ...restProps } = $props();
 
-  $: classes = classNames(className, 'login-screen-title', colorClasses($$props));
+  const classes = $derived(classNames(className, 'login-screen-title', colorClasses(restProps)));
 </script>
 
-<div class={classes} {...restProps($$restProps)}>
-  <slot />
+<div class={classes} {...restProps}>
+  {@render children?.()}
 </div>

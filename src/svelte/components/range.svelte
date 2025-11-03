@@ -1,53 +1,54 @@
 <script>
-  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, noUndefinedProps, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames, noUndefinedProps } from '../shared/utils.js';
   import { app, f7ready } from '../shared/f7.js';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    init = true,
+    value = 0,
+    min = 0,
+    max = 100,
+    step = 1,
+    label = false,
+    dual = false,
+    vertical = false,
+    verticalReversed = false,
+    draggableBar = true,
+    formatLabel = undefined,
+    scale = false,
+    scaleSteps = 5,
+    scaleSubSteps = 0,
+    formatScaleLabel = undefined,
+    limitKnobPosition = undefined,
+    name = undefined,
+    input = false,
+    inputId = undefined,
+    disabled = false,
+    children,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
-
-  export let init = true;
-  export let value = 0;
-  export let min = 0;
-  export let max = 100;
-  export let step = 1;
-  export let label = false;
-  export let dual = false;
-  export let vertical = false;
-  export let verticalReversed = false;
-  export let draggableBar = true;
-  export let formatLabel = undefined;
-  export let scale = false;
-  export let scaleSteps = 5;
-  export let scaleSubSteps = 0;
-  export let formatScaleLabel = undefined;
-  export let limitKnobPosition = undefined;
-  export let name = undefined;
-  export let input = false;
-  export let inputId = undefined;
-  export let disabled = false;
-
-  let el;
+  let el = $state(null);
   let f7Range;
 
   export function instance() {
     return f7Range;
   }
 
-  $: classes = classNames(
-    className,
-    'range-slider',
-    {
-      'range-slider-horizontal': !vertical,
-      'range-slider-vertical': vertical,
-      'range-slider-vertical-reversed': vertical && verticalReversed,
-      disabled,
-    },
-    colorClasses($$props),
+  const classes = $derived(
+    classNames(
+      className,
+      'range-slider',
+      {
+        'range-slider-horizontal': !vertical,
+        'range-slider-vertical': vertical,
+        'range-slider-vertical-reversed': vertical && verticalReversed,
+        disabled,
+      },
+      colorClasses(restProps),
+    ),
   );
 
   function watchValue(newValue) {
@@ -55,7 +56,7 @@
     f7Range.setValue(newValue);
   }
 
-  $: watchValue(value);
+  $effect(() => watchValue(value));
 
   onMount(() => {
     if (!init) return;
@@ -80,10 +81,12 @@
           limitKnobPosition,
           on: {
             change(range, val) {
-              emit('rangeChange', [val]);
+              restProps.onRangeChange?.(val);
+              restProps.onrangechange?.(val);
             },
             changed(range, val) {
-              emit('rangeChanged', [val]);
+              restProps.onRangeChanged?.(val);
+              restProps.onrangechanged?.(val);
               value = val;
             },
           },
@@ -100,7 +103,7 @@
   });
 </script>
 
-<div bind:this={el} class={classes} {...restProps($$restProps)}>
+<div bind:this={el} class={classes} {...restProps}>
   {#if input}<input type="range" {name} id={inputId} />{/if}
-  <slot range={f7Range} />
+  {@render children?.(f7Range)}
 </div>

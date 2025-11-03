@@ -434,6 +434,7 @@ function loadBack(router, backParams, backOptions, ignorePageChange) {
         options,
         resolve,
         reject,
+        direction: 'backward',
       });
     } catch (err) {
       router.allowPageChange = true;

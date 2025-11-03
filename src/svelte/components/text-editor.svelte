@@ -1,38 +1,42 @@
 <script>
-  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, noUndefinedProps, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames, noUndefinedProps } from '../shared/utils.js';
   import { app, f7ready } from '../shared/f7.js';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    mode = undefined,
+    value = undefined,
+    buttons = undefined,
+    customButtons = undefined,
+    dividers = undefined,
+    imageUrlText = undefined,
+    linkUrlText = undefined,
+    placeholder = undefined,
+    clearFormattingOnPaste = undefined,
+    resizable = false,
+    rootStart,
+    rootEnd,
+    root,
+    children,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
-
-  export let mode = undefined;
-  export let value = undefined;
-  export let buttons = undefined;
-  export let customButtons = undefined;
-  export let dividers = undefined;
-  export let imageUrlText = undefined;
-  export let linkUrlText = undefined;
-  export let placeholder = undefined;
-  export let clearFormattingOnPaste = undefined;
-  export let resizable = false;
-
-  let el;
+  let el = $state(null);
   let f7TextEditor;
 
   export function instance() {
     return f7TextEditor;
   }
 
-  $: classes = classNames(
-    className,
-    'text-editor',
-    resizable && 'text-editor-resizable',
-    colorClasses($$props),
+  const classes = $derived(
+    classNames(
+      className,
+      'text-editor',
+      resizable && 'text-editor-resizable',
+      colorClasses(restProps),
+    ),
   );
 
   function watchValue(newValue) {
@@ -41,40 +45,51 @@
     }
   }
 
-  $: watchValue(value);
+  $effect(() => watchValue(value));
 
   function onChange(editor, editorValue) {
-    emit('textEditorChange', [editorValue]);
+    restProps.onTextEditorChange?.(editorValue);
+    restProps.ontexteditorchange?.(editorValue);
   }
   function onInput(editor, editorValue) {
-    emit('textEditorInput', [editorValue]);
+    restProps.onTextEditorInput?.(editorValue);
+    restProps.ontexteditorinput?.(editorValue);
   }
   function onFocus() {
-    emit('textEditorFocus');
+    restProps.onTextEditorFocus?.();
+    restProps.ontexteditorfocus?.();
   }
   function onBlur() {
-    emit('textEditorBlur');
+    restProps.onTextEditorBlur?.();
+    restProps.ontexteditorblur?.();
   }
   function onButtonClick(editor, button) {
-    emit('textEditorButtonClick', [button]);
+    restProps.onTextEditorButtonClick?.(button);
+    restProps.ontexteditorbuttonclick?.(button);
   }
   function onKeyboardOpen() {
-    emit('textEditorKeyboardOpen');
+    restProps.onTextEditorKeyboardOpen?.();
+    restProps.ontexteditorkeyboardopen?.();
   }
   function onKeyboardClose() {
-    emit('textEditorKeyboardClose');
+    restProps.onTextEditorKeyboardClose?.();
+    restProps.ontexteditorkeyboardclose?.();
   }
   function onPopoverOpen() {
-    emit('textEditorPopoverOpen');
+    restProps.onTextEditorPopoverOpen?.();
+    restProps.ontexteditorpopoveropen?.();
   }
   function onPopoverClose() {
-    emit('textEditorPopoverClose');
+    restProps.onTextEditorPopoverClose?.();
+    restProps.ontexteditorpopoverclose?.();
   }
   const onInsertLink = (editor, url) => {
-    emit('textEditorInsertLink', [url]);
+    restProps.onTextEditorInsertLink?.(url);
+    restProps.ontexteditorinsertlink?.(url);
   };
   const onInsertImage = (editor, url) => {
-    emit('textEditorInsertImage', [url]);
+    restProps.onTextEditorInsertImage?.(url);
+    restProps.ontexteditorinsertimage?.(url);
   };
 
   onMount(() => {
@@ -116,11 +131,11 @@
   });
 </script>
 
-<div bind:this={el} class={classes} {...restProps($$restProps)}>
-  <slot textEditor={f7TextEditor} name="root-start" />
+<div bind:this={el} class={classes} {...restProps}>
+  {@render rootStart?.(f7TextEditor)}
   <div class="text-editor-content" contenteditable>
-    <slot textEditor={f7TextEditor} />
+    {@render children?.(f7TextEditor)}
   </div>
-  <slot textEditor={f7TextEditor} name="root-end" />
-  <slot textEditor={f7TextEditor} name="root" />
+  {@render rootEnd?.(f7TextEditor)}
+  {@render root?.(f7TextEditor)}
 </div>

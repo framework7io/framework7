@@ -1,41 +1,40 @@
 <script>
-  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames } from '../shared/utils.js';
   import { app, f7ready } from '../shared/f7.js';
   import { useTooltip } from '../shared/use-tooltip.js';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    init = true,
+    checked = undefined,
+    disabled = undefined,
+    readonly = undefined,
+    name = undefined,
+    value = undefined,
+    tooltip = undefined,
+    tooltipTrigger = undefined,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
-
-  export let init = true;
-  export let checked = undefined;
-  export let disabled = undefined;
-  export let readonly = undefined;
-  export let name = undefined;
-  export let value = undefined;
-
-  export let tooltip = undefined;
-  export let tooltipTrigger = undefined;
-
-  let el;
-  let inputEl;
+  let el = $state(null);
+  let inputEl = $state(null);
   let f7Toggle;
 
   export function instance() {
     return f7Toggle;
   }
 
-  $: classes = classNames(
-    'toggle',
-    className,
-    {
-      disabled,
-    },
-    colorClasses($$props),
+  const classes = $derived(
+    classNames(
+      'toggle',
+      className,
+      {
+        disabled,
+      },
+      colorClasses(restProps),
+    ),
   );
 
   let initialWatched = false;
@@ -48,10 +47,11 @@
     f7Toggle.checked = isChecked;
   }
 
-  $: watchChecked(checked);
+  $effect(() => watchChecked(checked));
 
   function onChange(event) {
-    emit('change', [event]);
+    restProps.onChange?.(event);
+    restProps.onchange?.(event);
   }
 
   onMount(() => {
@@ -61,7 +61,8 @@
         el,
         on: {
           change(toggle) {
-            emit('toggleChange', [toggle.checked]);
+            restProps.onToggleChange?.(toggle.checked);
+            restProps.ontogglechange?.(toggle.checked);
             checked = toggle.checked;
           },
         },
@@ -77,12 +78,7 @@
   });
 </script>
 
-<label
-  bind:this={el}
-  class={classes}
-  {...restProps($$restProps)}
-  use:useTooltip={{ tooltip, tooltipTrigger }}
->
+<label bind:this={el} class={classes} {...restProps} use:useTooltip={{ tooltip, tooltipTrigger }}>
   <input
     bind:this={inputEl}
     type="checkbox"
@@ -91,7 +87,7 @@
     {readonly}
     {checked}
     value={typeof value === 'undefined' ? '' : value}
-    on:change={onChange}
+    onchange={onChange}
   />
-  <span class="toggle-icon" />
+  <span class="toggle-icon"></span>
 </label>

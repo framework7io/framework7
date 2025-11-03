@@ -1,7 +1,7 @@
 <script>
   import { Navbar, Page, BlockTitle, Block, Segmented, Button, Gauge } from 'framework7-svelte';
 
-  let gaugeValue = 0.5;
+  let gaugeValue = $state(0.5);
 </script>
 
 <Page>
@@ -24,11 +24,11 @@
       labelText="amount of something"
     />
     <Segmented tag="p" raised>
-      <Button active={gaugeValue === 0} onClick={() => (gaugeValue = 0)}>0%</Button>
-      <Button active={gaugeValue === 0.25} onClick={() => (gaugeValue = 0.25)}>25%</Button>
-      <Button active={gaugeValue === 0.5} onClick={() => (gaugeValue = 0.5)}>50%</Button>
-      <Button active={gaugeValue === 0.75} onClick={() => (gaugeValue = 0.75)}>75%</Button>
-      <Button active={gaugeValue === 1} onClick={() => (gaugeValue = 1)}>100%</Button>
+      <Button active={gaugeValue === 0} onclick={() => (gaugeValue = 0)}>0%</Button>
+      <Button active={gaugeValue === 0.25} onclick={() => (gaugeValue = 0.25)}>25%</Button>
+      <Button active={gaugeValue === 0.5} onclick={() => (gaugeValue = 0.5)}>50%</Button>
+      <Button active={gaugeValue === 0.75} onclick={() => (gaugeValue = 0.75)}>75%</Button>
+      <Button active={gaugeValue === 1} onclick={() => (gaugeValue = 1)}>100%</Button>
     </Segmented>
   </Block>
 

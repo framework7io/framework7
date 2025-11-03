@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import { getContext } from 'svelte';
   import {
     colorClasses,
     routerAttrs,
@@ -7,90 +7,88 @@
     actionsAttrs,
     actionsClasses,
   } from '../shared/mixins.js';
-  import { classNames, extend, isStringProp, plainText, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames, extend, isStringProp } from '../shared/utils.js';
   import { useTooltip } from '../shared/use-tooltip.js';
   import { useSmartSelect } from '../shared/use-smart-select.js';
   import { useRouteProps } from '../shared/use-route-props.js';
   import { useIcon } from '../shared/use-icon.js';
-  import { getReactiveContext } from '../shared/get-reactive-context.js';
 
   import UseIcon from './use-icon.svelte';
   import Badge from './badge.svelte';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    noLinkClass = false,
+    text = undefined,
+    tabLink = undefined,
+    tabLinkActive = false,
+    tabbarLabel = false,
+    iconOnly = false,
+    badge = undefined,
+    badgeColor = undefined,
+    href = '#',
+    target = undefined,
+    tooltip = undefined,
+    tooltipTrigger = undefined,
+    routeProps = undefined,
+    smartSelect = false,
+    smartSelectParams = undefined,
+    children,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
-
-  export let noLinkClass = false;
-  export let text = undefined;
-  export let tabLink = undefined;
-  export let tabLinkActive = false;
-  export let tabbarLabel = false;
-  export let iconOnly = false;
-  export let badge = undefined;
-  export let badgeColor = undefined;
-  export let href = '#';
-  export let target = undefined;
-  export let tooltip = undefined;
-  export let tooltipTrigger = undefined;
-  export let routeProps = undefined;
-
-  // Smart Select
-  export let smartSelect = false;
-  export let smartSelectParams = undefined;
-
-  let el;
+  let el = $state(undefined);
   let f7SmartSelect;
 
   export function smartSelectInstance() {
     return f7SmartSelect;
   }
 
-  let TabbarContext =
-    getReactiveContext('TabbarContext', (newValue) => {
-      TabbarContext = newValue;
-    }) || {};
+  const TabbarContext = getContext('TabbarContext') || (() => ({ value: {} }));
 
-  $: isTabbarIcons = tabbarLabel || TabbarContext.tabbarHasIcons;
+  const isTabbarIcons = $derived(tabbarLabel || TabbarContext().value.tabbarHasIcons);
 
-  $: hrefComputed = href === true ? '#' : href || undefined;
+  const hrefComputed = $derived(href === true ? '#' : href || undefined);
 
-  $: attrs = extend(
-    {
-      href: hrefComputed,
-      target,
-      'data-tab': (isStringProp(tabLink) && tabLink) || undefined,
-      ...restProps($$restProps),
-    },
-    routerAttrs($$props),
-    actionsAttrs($$props),
+  const attrs = $derived(
+    extend(
+      {
+        href: hrefComputed,
+        target,
+        'data-tab': (isStringProp(tabLink) && tabLink) || undefined,
+        ...restProps,
+      },
+      routerAttrs(restProps),
+      actionsAttrs(restProps),
+    ),
   );
 
   // eslint-disable-next-line
-  $: hasDefaultSlots = $$slots.default;
+  const hasDefaultSlots = $derived(children);
 
-  $: iconOnlyComputed = iconOnly || (!text && !hasDefaultSlots);
+  const iconOnlyComputed = $derived(iconOnly || (!text && !hasDefaultSlots));
 
-  $: classes = classNames(
-    className,
-    {
-      link: !(noLinkClass || isTabbarIcons),
-      'icon-only': iconOnlyComputed,
-      'tab-link': tabLink || tabLink === '',
-      'tab-link-active': tabLinkActive,
-      'smart-select': smartSelect,
-    },
-    colorClasses($$props),
-    routerClasses($$props),
-    actionsClasses($$props),
+  const classes = $derived(
+    classNames(
+      className,
+      {
+        link: !(noLinkClass || isTabbarIcons),
+        'icon-only': iconOnlyComputed,
+        'tab-link': tabLink || tabLink === '',
+        'tab-link-active': tabLinkActive,
+        'smart-select': smartSelect,
+      },
+      colorClasses(restProps),
+      routerClasses(restProps),
+      actionsClasses(restProps),
+    ),
   );
 
-  $: icon = useIcon($$props);
+  const icon = $derived(useIcon(restProps));
 
   function onClick() {
-    emit('click');
+    restProps.onClick?.();
+    restProps.onclick?.();
   }
 
   useSmartSelect(
@@ -106,7 +104,7 @@
 <a
   bind:this={el}
   class={classes}
-  on:click={onClick}
+  onclick={onClick}
   {...attrs}
   use:useTooltip={{ tooltip, tooltipTrigger }}
   use:useRouteProps={routeProps}
@@ -114,11 +112,15 @@
   {#if icon}
     <UseIcon {icon} />
   {/if}
-  <slot />
+  {@render children?.()}
   {#if typeof text !== 'undefined' || typeof badge !== 'undefined'}
     <span class:tabbar-label={isTabbarIcons}>
-      {plainText(text)}
-      {#if typeof badge !== 'undefined'}<Badge color={badgeColor}>{plainText(badge)}</Badge>{/if}
+      {#if typeof text === 'function'}
+        {@render text?.()}
+      {:else if typeof text !== 'undefined'}
+        {text}
+      {/if}
+      {#if typeof badge !== 'undefined'}<Badge color={badgeColor}>{badge}</Badge>{/if}
     </span>
   {/if}
 </a>

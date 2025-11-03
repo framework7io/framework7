@@ -1,65 +1,67 @@
 <script>
-  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames } from '../shared/utils.js';
   import { app, f7ready } from '../shared/f7.js';
   import { modalStateClasses } from '../shared/modal-state-classes.js';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    style = '',
+    opened = undefined,
+    animate = undefined,
+    targetEl = undefined,
+    backdrop = undefined,
+    backdropEl = undefined,
+    closeByBackdropClick = undefined,
+    closeByOutsideClick = undefined,
+    closeOnEscape = undefined,
+    containerEl = undefined,
+    verticalPosition = undefined,
+    children,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
-
-  export let style = '';
-  export let opened = undefined;
-  export let animate = undefined;
-  export let targetEl = undefined;
-  export let backdrop = undefined;
-  export let backdropEl = undefined;
-  export let closeByBackdropClick = undefined;
-  export let closeByOutsideClick = undefined;
-  export let closeOnEscape = undefined;
-  export let containerEl = undefined;
-  export let verticalPosition = undefined;
-
-  let el;
+  let el = $state(null);
   let f7Popover;
 
-  const state = {
-    isOpened: opened,
-    isClosing: false,
-  };
+  let isOpened = $state(opened);
+  let isClosing = $state(false);
 
   export function instance() {
     return f7Popover;
   }
 
-  $: classes = classNames(className, 'popover', modalStateClasses(state), colorClasses($$props));
+  const classes = $derived(
+    classNames(
+      className,
+      'popover',
+      modalStateClasses({ isOpened, isClosing }),
+      colorClasses(restProps),
+    ),
+  );
 
   function onOpen(instance) {
-    Object.assign(state, {
-      isOpened: true,
-      isClosing: false,
-    });
-    emit('popoverOpen', [instance]);
+    isOpened = true;
+    isClosing = false;
+    restProps.onPopoverOpen?.(instance);
+    restProps.onpopoveropen?.(instance);
     opened = true;
   }
   function onOpened(instance) {
-    emit('popoverOpened', [instance]);
+    restProps.onPopoverOpened?.(instance);
+    restProps.onpopoveropened?.(instance);
   }
   function onClose(instance) {
-    Object.assign(state, {
-      isOpened: false,
-      isClosing: true,
-    });
-    emit('popoverClose', [instance]);
+    isOpened = false;
+    isClosing = true;
+    restProps.onPopoverClose?.(instance);
+    restProps.onpopoverclose?.(instance);
   }
   function onClosed(instance) {
-    Object.assign(state, {
-      isClosing: false,
-    });
-    emit('popoverClosed', [instance]);
+    isClosing = false;
+    restProps.onPopoverClosed?.(instance);
+    restProps.onpopoverclosed?.(instance);
     opened = false;
   }
 
@@ -74,7 +76,7 @@
     else f7Popover.close();
   }
 
-  $: watchOpened(opened);
+  $effect(() => watchOpened(opened));
 
   onMount(() => {
     const params = {
@@ -113,8 +115,8 @@
   });
 </script>
 
-<div class={classes} bind:this={el} {style} {...restProps($$restProps)}>
+<div class={classes} bind:this={el} {style} {...restProps}>
   <div class="popover-inner">
-    <slot popover={f7Popover} />
+    {@render children?.(f7Popover)}
   </div>
 </div>

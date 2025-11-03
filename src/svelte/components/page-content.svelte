@@ -1,79 +1,87 @@
 <script>
-  import { onMount, onDestroy, createEventDispatcher } from 'svelte';
-  import { restProps } from '../shared/rest-props.js';
+  import { onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, createEmitter } from '../shared/utils.js';
+  import { classNames } from '../shared/utils.js';
   import { app, f7ready } from '../shared/f7.js';
   import { useTab } from '../shared/use-tab.js';
 
   import Preloader from './preloader.svelte';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
-  export let tab = false;
-  export let tabActive = false;
-  export let ptr = false;
-  export let ptrDistance = undefined;
-  export let ptrPreloader = true;
-  export let ptrBottom = false;
-  export let ptrMousewheel = false;
-  export let infinite = false;
-  export let infiniteTop = false;
-  export let infiniteDistance = undefined;
-  export let infinitePreloader = true;
-  export let hideBarsOnScroll = false;
-  export let hideNavbarOnScroll = false;
-  export let hideToolbarOnScroll = false;
-  export let messagesContent = false;
-  export let loginScreen = false;
+  let {
+    class: className,
+    tab = false,
+    tabActive = false,
+    ptr = false,
+    ptrDistance = undefined,
+    ptrPreloader = true,
+    ptrBottom = false,
+    ptrMousewheel = false,
+    infinite = false,
+    infiniteTop = false,
+    infiniteDistance = undefined,
+    infinitePreloader = true,
+    hideBarsOnScroll = false,
+    hideNavbarOnScroll = false,
+    hideToolbarOnScroll = false,
+    messagesContent = false,
+    loginScreen = false,
+    children,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
+  let pageContentEl = $state(null);
 
-  let pageContentEl;
-
-  $: pageContentClasses = classNames(
-    className,
-    'page-content',
-    {
-      tab,
-      'tab-active': tabActive,
-      'ptr-content': ptr,
-      'ptr-bottom': ptrBottom,
-      'infinite-scroll-content': infinite,
-      'infinite-scroll-top': infiniteTop,
-      'hide-bars-on-scroll': hideBarsOnScroll,
-      'hide-navbar-on-scroll': hideNavbarOnScroll,
-      'hide-toolbar-on-scroll': hideToolbarOnScroll,
-      'messages-content': messagesContent,
-      'login-screen-content': loginScreen,
-    },
-    colorClasses($$props),
+  const pageContentClasses = $derived(
+    classNames(
+      className,
+      'page-content',
+      {
+        tab,
+        'tab-active': tabActive,
+        'ptr-content': ptr,
+        'ptr-bottom': ptrBottom,
+        'infinite-scroll-content': infinite,
+        'infinite-scroll-top': infiniteTop,
+        'hide-bars-on-scroll': hideBarsOnScroll,
+        'hide-navbar-on-scroll': hideNavbarOnScroll,
+        'hide-toolbar-on-scroll': hideToolbarOnScroll,
+        'messages-content': messagesContent,
+        'login-screen-content': loginScreen,
+      },
+      colorClasses(restProps),
+    ),
   );
 
   // Event handlers
   function onPtrPullStart(ptrEl) {
     if (ptrEl !== pageContentEl) return;
-    emit('ptrPullStart');
+    restProps.onPtrPullStart?.();
+    restProps.onptrpullstart?.();
   }
   function onPtrPullMove(ptrEl) {
     if (ptrEl !== pageContentEl) return;
-    emit('ptrPullMove');
+    restProps.onPtrPullMove?.();
+    restProps.onptrpullmove?.();
   }
   function onPtrPullEnd(ptrEl) {
     if (ptrEl !== pageContentEl) return;
-    emit('ptrPullEnd');
+    restProps.onPtrPullEnd?.();
+    restProps.onptrpullend?.();
   }
   function onPtrRefresh(ptrEl, done) {
     if (ptrEl !== pageContentEl) return;
-    emit('ptrRefresh', [done]);
+    restProps.onPtrRefresh?.();
+    restProps.onptrrefresh?.();
   }
   function onPtrDone(ptrEl) {
     if (ptrEl !== pageContentEl) return;
-    emit('ptrDone');
+    restProps.onPtrDone?.();
+    restProps.onptrdone?.();
   }
   function onInfinite(infEl) {
     if (infEl !== pageContentEl) return;
-    emit('infinite');
+    restProps.onInfinite?.();
+    restProps.oninfinite?.();
   }
 
   function mountPageContent() {
@@ -101,7 +109,7 @@
     }
   }
 
-  useTab(() => pageContentEl, emit);
+  useTab(() => pageContentEl, restProps);
 
   onMount(() => {
     f7ready(() => {
@@ -120,7 +128,7 @@
   data-ptr-distance={ptrDistance}
   data-ptr-mousewheel={ptrMousewheel || undefined}
   data-infinite-distance={infiniteDistance || undefined}
-  {...restProps($$restProps)}
+  {...restProps}
 >
   {#if ptr && ptrPreloader && !ptrBottom}
     <div class="ptr-preloader">
@@ -131,7 +139,7 @@
   {#if infinite && infiniteTop && infinitePreloader}
     <Preloader class="infinite-scroll-preloader" />
   {/if}
-  <slot />
+  {@render children?.()}
   {#if infinite && !infiniteTop && infinitePreloader}
     <Preloader class="infinite-scroll-preloader" />
   {/if}

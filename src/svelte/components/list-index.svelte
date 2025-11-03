@@ -1,33 +1,31 @@
 <script>
-  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames } from '../shared/utils.js';
   import { app, f7ready } from '../shared/f7.js';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    init = true,
+    listEl = undefined,
+    indexes = 'auto',
+    scrollList = true,
+    label = false,
+    iosItemHeight = 14,
+    mdItemHeight = 14,
+    f7Slot = 'fixed',
+    children,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
-
-  export let init = true;
-  export let listEl = undefined;
-  export let indexes = 'auto';
-  export let scrollList = true;
-  export let label = false;
-  export let iosItemHeight = 14;
-  export let mdItemHeight = 14;
-
-  export let f7Slot = 'fixed';
-
-  let el;
-  let f7ListIndex;
+  let el = $state(null);
+  let f7ListIndex = $state(null);
 
   export function instance() {
     return f7ListIndex;
   }
 
-  $: classes = classNames(className, 'list-index', colorClasses($$props));
+  const classes = $derived(classNames(className, 'list-index', colorClasses(restProps)));
 
   export function update() {
     if (!f7ListIndex) return;
@@ -50,7 +48,7 @@
     update();
   }
 
-  $: watchIndexes(indexes);
+  $effect(() => watchIndexes(indexes));
 
   onMount(() => {
     if (!init || !el) return;
@@ -65,7 +63,8 @@
         label,
         on: {
           select(index, itemContent, itemIndex) {
-            emit('listIndexSelect', [itemContent, itemIndex]);
+            restProps.onListIndexSelect?.([itemContent, itemIndex]);
+            restProps.onlistindexselect?.([itemContent, itemIndex]);
           },
         },
       });
@@ -77,6 +76,6 @@
   });
 </script>
 
-<div bind:this={el} class={classes} data-f7-slot={f7Slot} {...restProps($$restProps)}>
-  <slot listIndex={f7ListIndex} />
+<div bind:this={el} class={classes} data-f7-slot={f7Slot} {...restProps}>
+  {@render children?.(f7ListIndex)}
 </div>

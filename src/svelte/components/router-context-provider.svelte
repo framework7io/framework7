@@ -1,8 +1,6 @@
 <script>
   import { setContext } from 'svelte';
-
-  export let route = undefined;
-  export let router = undefined;
+  let { route, router, children } = $props();
 
   setContext('RouterContext', {
     route,
@@ -10,4 +8,4 @@
   });
 </script>
 
-<slot />
+{@render children?.()}

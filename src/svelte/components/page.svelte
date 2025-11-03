@@ -1,43 +1,42 @@
 <script>
-  import { onMount, afterUpdate, onDestroy, createEventDispatcher } from 'svelte';
-  import { restProps } from '../shared/rest-props.js';
+  import { onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, createEmitter } from '../shared/utils.js';
+  import { classNames } from '../shared/utils.js';
   import { app, f7ready } from '../shared/f7.js';
 
   import PageContent from './page-content.svelte';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
-
-  // Props
-  export let name = undefined;
-  export let withSubnavbar = undefined;
-  export let subnavbar = undefined;
-  export let withNavbarLarge = undefined;
-  export let navbarLarge = undefined;
-  export let noNavbar = undefined;
-  export let noToolbar = undefined;
-  export let tabs = undefined;
-  export let pageContent = true;
-  export let noSwipeback = undefined;
-  // Page Content Props
-  export let ptr = undefined;
-  export let ptrDistance = undefined;
-  export let ptrPreloader = true;
-  export let ptrBottom = undefined;
-  export let ptrMousewheel = undefined;
-  export let infinite = undefined;
-  export let infiniteTop = undefined;
-  export let infiniteDistance = undefined;
-  export let infinitePreloader = true;
-  export let hideBarsOnScroll = undefined;
-  export let hideNavbarOnScroll = undefined;
-  export let hideToolbarOnScroll = undefined;
-  export let messagesContent = undefined;
-  export let loginScreen = undefined;
-
-  let className = undefined;
-  export { className as class };
+  let {
+    class: className,
+    name = undefined,
+    withSubnavbar = undefined,
+    subnavbar = undefined,
+    withNavbarLarge = undefined,
+    navbarLarge = undefined,
+    noNavbar = undefined,
+    noToolbar = undefined,
+    tabs = undefined,
+    pageContent = true,
+    noSwipeback = undefined,
+    ptr = undefined,
+    ptrDistance = undefined,
+    ptrPreloader = true,
+    ptrBottom = undefined,
+    ptrMousewheel = undefined,
+    infinite = undefined,
+    infiniteTop = undefined,
+    infiniteDistance = undefined,
+    infinitePreloader = true,
+    hideBarsOnScroll = undefined,
+    hideNavbarOnScroll = undefined,
+    hideToolbarOnScroll = undefined,
+    messagesContent = undefined,
+    loginScreen = undefined,
+    children,
+    fixedContent,
+    staticContent,
+    ...restProps
+  } = $props();
 
   // State
   let el;
@@ -50,59 +49,70 @@
   let routerPageRoleDetailRoot = false;
   let routerPageMasterStack = false;
 
-  $: forceSubnavbar =
-    typeof subnavbar === 'undefined' && typeof withSubnavbar === 'undefined' ? hasSubnavbar : false;
+  const forceSubnavbar = $derived(
+    typeof subnavbar === 'undefined' && typeof withSubnavbar === 'undefined' ? hasSubnavbar : false,
+  );
 
-  $: forceNavbarLarge =
+  const forceNavbarLarge = $derived(
     typeof navbarLarge === 'undefined' && typeof withNavbarLarge === 'undefined'
       ? hasNavbarLarge
-      : false;
+      : false,
+  );
 
-  $: classes = classNames(
-    className,
-    'page',
-    routerPositionClass,
-    {
-      tabs,
-      'page-with-subnavbar': subnavbar || withSubnavbar || forceSubnavbar,
-      'page-with-navbar-large': navbarLarge || withNavbarLarge || forceNavbarLarge,
-      'no-navbar': noNavbar,
-      'no-toolbar': noToolbar,
-      'no-swipeback': noSwipeback,
-      'page-master': routerPageRole === 'master',
-      'page-master-detail': routerPageRole === 'detail',
-      'page-master-detail-root': routerPageRoleDetailRoot === true,
-      'page-master-stacked': routerPageMasterStack === true,
-      'page-with-navbar-large-collapsed': hasNavbarLargeCollapsed === true,
-      'page-with-card-opened': hasCardExpandableOpened === true,
-      'login-screen-page': loginScreen,
-    },
-    colorClasses($$props),
+  const classes = $derived(
+    classNames(
+      className,
+      'page',
+      routerPositionClass,
+      {
+        tabs,
+        'page-with-subnavbar': subnavbar || withSubnavbar || forceSubnavbar,
+        'page-with-navbar-large': navbarLarge || withNavbarLarge || forceNavbarLarge,
+        'no-navbar': noNavbar,
+        'no-toolbar': noToolbar,
+        'no-swipeback': noSwipeback,
+        'page-master': routerPageRole === 'master',
+        'page-master-detail': routerPageRole === 'detail',
+        'page-master-detail-root': routerPageRoleDetailRoot === true,
+        'page-master-stacked': routerPageMasterStack === true,
+        'page-with-navbar-large-collapsed': hasNavbarLargeCollapsed === true,
+        'page-with-card-opened': hasCardExpandableOpened === true,
+        'login-screen-page': loginScreen,
+      },
+      colorClasses(restProps),
+    ),
   );
 
   // Handlers
   function onPtrPullStart() {
-    emit('ptrPullStart');
+    restProps.onPtrPullStart?.();
+    restProps.onptrpullstart?.();
   }
   function onPtrPullMove() {
-    emit('ptrPullMove');
+    restProps.onPtrPullMove?.();
+    restProps.onptrpullmove?.();
   }
   function onPtrPullEnd() {
-    emit('ptrPullEnd');
+    restProps.onPtrPullEnd?.();
+    restProps.onptrpullend?.();
   }
   function onPtrRefresh(done) {
-    emit('ptrRefresh', [done]);
+    restProps.onPtrRefresh?.();
+    restProps.onptrrefresh?.();
   }
   function onPtrDone() {
-    emit('ptrDone');
+    restProps.onPtrDone?.();
+    restProps.onptrdone?.();
   }
   function onInfinite() {
-    emit('infinite');
+    restProps.onInfinite?.();
+    restProps.oninfinite?.();
   }
   // Main Page Events
   function onPageMounted(page) {
     if (el !== page.el) return;
-    emit('pageMounted', [page]);
+    restProps.onPageMounted?.(page);
+    restProps.onpagemounted?.(page);
   }
   function onPageInit(page) {
     if (el !== page.el) return;
@@ -124,11 +134,13 @@
       }
     }
 
-    emit('pageInit', [page]);
+    restProps.onPageInit?.(page);
+    restProps.onpageinit?.(page);
   }
   function onPageReinit(page) {
     if (el !== page.el) return;
-    emit('pageReinit', [page]);
+    restProps.onPageReinit?.(page);
+    restProps.onpagereinit?.(page);
   }
   function onPageBeforeIn(page) {
     if (el !== page.el) return;
@@ -140,11 +152,13 @@
         routerPositionClass = 'page-previous';
       }
     }
-    emit('pageBeforeIn', [page]);
+    restProps.onPageBeforeIn?.(page);
+    restProps.onpagebeforein?.(page);
   }
   function onPageBeforeOut(page) {
     if (el !== page.el) return;
-    emit('pageBeforeOut', [page]);
+    restProps.onPageBeforeOut?.(page);
+    restProps.onpagebeforeout?.(page);
   }
   function onPageAfterOut(page) {
     if (el !== page.el) return;
@@ -154,12 +168,14 @@
     if (page.to === 'previous') {
       routerPositionClass = 'page-previous';
     }
-    emit('pageAfterOut', [page]);
+    restProps.onPageAfterOut?.(page);
+    restProps.onpageafterout?.(page);
   }
   function onPageAfterIn(page) {
     if (el !== page.el) return;
     routerPositionClass = 'page-current';
-    emit('pageAfterIn', [page]);
+    restProps.onPageAfterIn?.(page);
+    restProps.onpageafterin?.(page);
   }
   function onPageBeforeRemove(page) {
     if (el !== page.el) return;
@@ -171,11 +187,13 @@
     ) {
       page.$el.prepend(page.$navbarEl);
     }
-    emit('pageBeforeRemove', [page]);
+    restProps.onPageBeforeRemove?.(page);
+    restProps.onpagebeforeremove?.(page);
   }
   function onPageBeforeUnmount(page) {
     if (el !== page.el) return;
-    emit('pageBeforeUnmount', [page]);
+    restProps.onPageBeforeUnmount?.(page);
+    restProps.onpagebeforeunmount?.(page);
   }
 
   function onPagePosition(pageEl, position) {
@@ -214,11 +232,13 @@
 
   function onPageTabShow(pageEl) {
     if (el !== pageEl) return;
-    emit('pageTabShow');
+    restProps.onPageTabShow?.();
+    restProps.ontabshow?.();
   }
   function onPageTabHide(pageEl) {
     if (el !== pageEl) return;
-    emit('pageTabHide');
+    restProps.onPageTabHide?.();
+    restProps.ontabhide?.();
   }
 
   // Mount/destroy
@@ -279,7 +299,7 @@
       mountPage();
     });
   });
-  afterUpdate(() => {
+  $effect(() => {
     if (el && app.f7) {
       const dom7 = app.f7.$;
       const fixedEls = dom7(el).children('.page-content').children('[data-f7-slot="fixed"]');
@@ -296,8 +316,8 @@
   });
 </script>
 
-<div bind:this={el} class={classes} data-name={name} {...restProps($$restProps)}>
-  <slot name="fixed" />
+<div bind:this={el} class={classes} data-name={name} {...restProps}>
+  {@render fixedContent?.()}
   {#if pageContent}
     <PageContent
       {ptr}
@@ -321,11 +341,11 @@
       {onPtrDone}
       {onInfinite}
     >
-      <slot name="static" />
-      <slot />
+      {@render staticContent?.()}
+      {@render children?.()}
     </PageContent>
   {:else}
-    <slot name="static" />
-    <slot />
+    {@render staticContent?.()}
+    {@render children?.()}
   {/if}
 </div>

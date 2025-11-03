@@ -1,28 +1,33 @@
 <script>
-  import { onMount, tick } from 'svelte';
+  import { onMount, setContext, tick } from 'svelte';
 
-  import { restProps } from '../shared/rest-props.js';
   import { colorClasses } from '../shared/mixins.js';
   import { classNames } from '../shared/utils.js';
-  import { setReactiveContext } from '../shared/set-reactive-context.js';
 
-  let className = undefined;
-  export { className as class };
-  export let animated = false;
-  export let swipeable = false;
-  export let routable = false;
-  export let swiperParams = undefined;
+  let {
+    class: className,
+    animated = false,
+    swipeable = false,
+    routable = false,
+    swiperParams = undefined,
+    children,
+    ...restProps
+  } = $props();
 
-  let wrapEl;
+  let wrapEl = $state(null);
 
-  $: classes = classNames(className, colorClasses($$props));
+  const classes = $derived(classNames(className, colorClasses(restProps)));
 
-  $: tabsClasses = classNames({
-    tabs: true,
-    'tabs-routable': routable,
-  });
+  const tabsClasses = $derived(
+    classNames({
+      tabs: true,
+      'tabs-routable': routable,
+    }),
+  );
 
-  setReactiveContext('TabsSwipeableContext', () => true);
+  setContext('TabsSwipeableContext', () => ({
+    value: true,
+  }));
 
   onMount(() => {
     if (swipeable && swiperParams && wrapEl) {
@@ -38,26 +43,22 @@
 </script>
 
 {#if animated}
-  <div
-    class={classNames('tabs-animated-wrap', classes)}
-    bind:this={wrapEl}
-    {...restProps($$restProps)}
-  >
+  <div class={classNames('tabs-animated-wrap', classes)} bind:this={wrapEl} {...restProps}>
     <div class={tabsClasses}>
-      <slot />
+      {@render children?.()}
     </div>
   </div>
 {:else if swipeable}
   <swiper-container
     bind:this={wrapEl}
     class={classNames(tabsClasses, classes)}
-    {...restProps($$restProps)}
+    {...restProps}
     init={swiperParams ? 'false' : 'true'}
   >
-    <slot />
+    {@render children?.()}
   </swiper-container>
 {:else}
-  <div class={classNames(tabsClasses, classes)} {...restProps($$restProps)}>
-    <slot />
+  <div class={classNames(tabsClasses, classes)} {...restProps}>
+    {@render children?.()}
   </div>
 {/if}

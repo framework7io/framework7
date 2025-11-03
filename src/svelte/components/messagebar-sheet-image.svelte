@@ -1,36 +1,44 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames } from '../shared/utils.js';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    style = undefined,
+    class: className,
+    image = undefined,
+    checked = false,
+    children,
+    ...restProps
+  } = $props();
 
-  export let style = undefined;
+  const classes = $derived(
+    classNames(className, 'messagebar-sheet-image', 'checkbox', colorClasses(restProps)),
+  );
 
-  let className = undefined;
-  export { className as class };
-
-  export let image = undefined;
-  export let checked = false;
-
-  $: classes = classNames(className, 'messagebar-sheet-image', 'checkbox', colorClasses($$props));
-
-  $: styles = `${style || ''}`;
+  const styles = $derived(`${style || ''}`);
 
   function onChange(event) {
-    if (event.target.checked) emit('checked', [event]);
-    else emit('unchecked', [event]);
-    emit('change', [event]);
+    if (event.target.checked) {
+      restProps.onChecked?.(event);
+      restProps.onchecked?.(event);
+    } else {
+      restProps.onUnchecked?.(event);
+      restProps.onunchecked?.(event);
+    }
+    restProps.onChange?.(event);
+    restProps.onchange?.(event);
     checked = event.target.checked;
   }
 </script>
 
-<label class={classes} style={styles} {...restProps($$restProps)}>
-  <input type="checkbox" {checked} on:change={onChange} />
-  <i class="icon icon-checkbox" />
-  {#if image}
+<label class={classes} style={styles} {...restProps}>
+  <input type="checkbox" {checked} onchange={onChange} />
+  <i class="icon icon-checkbox"></i>
+  {#if image && typeof image === 'string'}
     <img src={image} alt="" />
   {/if}
-  <slot />
+  {#if typeof image === 'function'}
+    {@render image?.()}
+  {/if}
+  {@render children?.()}
 </label>

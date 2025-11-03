@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher, onMount, onDestroy, afterUpdate } from 'svelte';
+  import { onMount, onDestroy, getContext } from 'svelte';
   import {
     colorClasses,
     routerClasses,
@@ -7,159 +7,171 @@
     actionsClasses,
     actionsAttrs,
   } from '../shared/mixins.js';
-  import { classNames, plainText, isStringProp, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+
+  import { classNames, isStringProp, plainText } from '../shared/utils.js';
   import { app, f7ready } from '../shared/f7.js';
   import { useTooltip } from '../shared/use-tooltip.js';
   import { useSmartSelect } from '../shared/use-smart-select.js';
   import { useRouteProps } from '../shared/use-route-props.js';
-  import { getReactiveContext } from '../shared/get-reactive-context.js';
 
   import Badge from './badge.svelte';
+  import SnippetRender from './snippet-render.svelte';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    title = undefined,
+    text = undefined,
+    media = undefined,
+    subtitle = undefined,
+    header = undefined,
+    footer = undefined,
+    tooltip = undefined,
+    tooltipTrigger = undefined,
+    link = undefined,
+    tabLink = undefined,
+    tabLinkActive = false,
+    selected = false,
+    href = undefined,
+    target = undefined,
+    after = undefined,
+    badge = undefined,
+    badgeColor = undefined,
+    mediaItem = false,
+    mediaList = false,
+    groupTitle = false,
+    swipeout = false,
+    swipeoutOpened = false,
+    sortable = undefined,
+    sortableOpposite = undefined,
+    accordionItem = false,
+    accordionItemOpened = false,
+    smartSelect = false,
+    smartSelectParams = undefined,
+    noChevron = undefined,
+    chevronCenter = undefined,
+    checkbox = undefined,
+    checkboxIcon = undefined,
+    radio = undefined,
+    radioIcon = undefined,
+    checked = undefined,
+    indeterminate = undefined,
+    name = undefined,
+    value = undefined,
+    readonly = undefined,
+    required = undefined,
+    disabled = undefined,
+    virtualListIndex = undefined,
+    routeProps = undefined,
 
-  let className = undefined;
-  export { className as class };
+    contentStart,
+    content,
+    contentEnd,
+    innerStart,
+    inner,
+    innerEnd,
+    root,
+    rootStart,
+    rootEnd,
+    beforeTitle,
+    afterTitle,
+    afterStart,
+    afterEnd,
+    children,
+    ...restProps
+  } = $props();
 
-  export let title = undefined;
-  export let text = undefined;
-  export let media = undefined;
-  export let subtitle = undefined;
-  export let header = undefined;
-  export let footer = undefined;
-
-  // Tooltip
-  export let tooltip = undefined;
-  export let tooltipTrigger = undefined;
-
-  // Link Props
-  export let link = undefined;
-  export let tabLink = undefined;
-  export let tabLinkActive = false;
-  export let selected = false;
-  export let href = undefined;
-  export let target = undefined;
-
-  export let after = undefined;
-  export let badge = undefined;
-  export let badgeColor = undefined;
-
-  export let mediaItem = false;
-  export let mediaList = false;
-  export let groupTitle = false;
-  export let swipeout = false;
-  export let swipeoutOpened = false;
-  export let sortable = undefined;
-  export let sortableOpposite = undefined;
-  export let accordionItem = false;
-  export let accordionItemOpened = false;
-
-  // Smart Select
-  export let smartSelect = false;
-  export let smartSelectParams = undefined;
-
-  // Links Chevron (Arrow) Icon
-  export let noChevron = undefined;
-  export let chevronCenter = undefined;
-
-  // Inputs
-  export let checkbox = undefined;
-  export let checkboxIcon = undefined;
-  export let radio = undefined;
-  export let radioIcon = undefined;
-  export let checked = undefined;
-  export let indeterminate = undefined;
-  export let name = undefined;
-  export let value = undefined;
-  export let readonly = undefined;
-  export let required = undefined;
-  export let disabled = undefined;
-  export let virtualListIndex = undefined;
-
-  export let routeProps = undefined;
-
-  let el;
-  let linkEl;
-  let innerEl;
+  let el = $state(undefined);
+  let linkEl = $state(undefined);
+  let innerEl = $state(undefined);
   let inputEl;
 
-  let f7SmartSelect;
+  let f7SmartSelect = $state(undefined);
 
   export function smartSelectInstance() {
     return f7SmartSelect;
   }
 
-  let ListContext =
-    getReactiveContext('ListContext', (value) => {
-      ListContext = value || {};
-    }) || {};
+  const ListContext =
+    getContext('ListContext') ||
+    (() => ({
+      value: {},
+    }));
 
-  $: isMedia = mediaList || mediaItem || ListContext.listIsMedia;
-  $: isSortable = sortable === true || sortable === false ? sortable : ListContext.listIsSortable;
-  $: isSortableOpposite = sortableOpposite || ListContext.listIsSortableOpposite;
-  $: isSimple = ListContext.listIsSimple;
+  const isMedia = $derived(mediaList || mediaItem || ListContext().value.listIsMedia);
+  const isSortable = $derived(
+    sortable === true || sortable === false ? sortable : ListContext().value.listIsSortable,
+  );
+  const isSortableOpposite = $derived(
+    sortableOpposite || ListContext().value.listIsSortableOpposite,
+  );
+  const isSimple = $derived(ListContext().value.listIsSimple);
 
-  $: liClasses = classNames(
-    className,
-    {
-      'list-group-title': groupTitle,
-      'media-item': isMedia,
-      swipeout,
-      'accordion-item': accordionItem,
-      'accordion-item-opened': accordionItemOpened,
-      disabled: disabled && !(radio || checkbox),
-      'no-chevron': noChevron,
-      'chevron-center': chevronCenter,
-      'disallow-sorting': sortable === false,
-    },
-    colorClasses($$props),
+  const liClasses = $derived(
+    classNames(
+      className,
+      {
+        'list-group-title': groupTitle,
+        'media-item': isMedia,
+        swipeout,
+        'accordion-item': accordionItem,
+        'accordion-item-opened': accordionItemOpened,
+        disabled: disabled && !(radio || checkbox),
+        'no-chevron': noChevron,
+        'chevron-center': chevronCenter,
+        'disallow-sorting': sortable === false,
+      },
+      colorClasses(restProps),
+    ),
   );
 
-  $: contentClasses = classNames(
-    className,
-    'item-content',
-    {
-      'item-checkbox': checkbox,
-      'item-radio': radio,
-      'item-checkbox-icon-start': checkbox && checkboxIcon === 'start',
-      'item-checkbox-icon-end': checkbox && checkboxIcon === 'end',
-      'item-radio-icon-start': radio && radioIcon === 'start',
-      'item-radio-icon-end': radio && radioIcon === 'end',
-    },
-    colorClasses($$props),
+  const contentClasses = $derived(
+    classNames(
+      className,
+      'item-content',
+      {
+        'item-checkbox': checkbox,
+        'item-radio': radio,
+        'item-checkbox-icon-start': checkbox && checkboxIcon === 'start',
+        'item-checkbox-icon-end': checkbox && checkboxIcon === 'end',
+        'item-radio-icon-start': radio && radioIcon === 'start',
+        'item-radio-icon-end': radio && radioIcon === 'end',
+      },
+      colorClasses(restProps),
+    ),
   );
 
-  $: linkClasses = classNames(
-    {
-      'item-link': true,
-      'smart-select': smartSelect,
-      'tab-link': tabLink || tabLink === '',
-      'tab-link-active': tabLinkActive,
-      'item-selected': selected,
-    },
-    routerClasses($$props),
-    actionsClasses($$props),
+  const linkClasses = $derived(
+    classNames(
+      {
+        'item-link': true,
+        'smart-select': smartSelect,
+        'tab-link': tabLink || tabLink === '',
+        'tab-link-active': tabLinkActive,
+        'item-selected': selected,
+      },
+      routerClasses(restProps),
+      actionsClasses(restProps),
+    ),
   );
 
-  $: linkAttrs = {
+  const linkAttrs = $derived({
     href: href === false ? undefined : link === true ? href || '' : link || href,
     target,
     'data-tab': (isStringProp(tabLink) && tabLink) || undefined,
-    ...routerAttrs($$props),
-    ...actionsAttrs($$props),
-  };
+    ...routerAttrs(restProps),
+    ...actionsAttrs(restProps),
+  });
 
-  $: isLink = link || href || smartSelect || accordionItem;
+  const isLink = $derived(link || href || smartSelect || accordionItem);
 
   /* eslint-disable no-undef */
-  $: hasMedia = typeof media !== 'undefined' || $$slots.media;
-  $: hasTitle = typeof title !== 'undefined' || $$slots.title;
-  $: hasHeader = typeof header !== 'undefined' || $$slots.header;
-  $: hasFooter = typeof footer !== 'undefined' || $$slots.footer;
-  $: hasSubtitle = typeof subtitle !== 'undefined' || $$slots.subtitle;
-  $: hasText = typeof text !== 'undefined' || $$slots.text;
-  $: hasAfter = typeof after !== 'undefined' || typeof badge !== 'undefined' || $$slots.after;
+  const hasMedia = $derived(typeof media !== 'undefined');
+  const hasTitle = $derived(typeof title !== 'undefined');
+  const hasHeader = $derived(typeof header !== 'undefined');
+  const hasFooter = $derived(typeof footer !== 'undefined');
+  const hasSubtitle = $derived(typeof subtitle !== 'undefined');
+  const hasText = $derived(typeof text !== 'undefined');
+  const hasAfter = $derived(typeof after !== 'undefined' || typeof badge !== 'undefined');
   /* eslint-enable no-undef */
 
   let initialWatchedOpened = false;
@@ -175,84 +187,103 @@
       app.f7.swipeout.close(el);
     }
   }
-  $: watchSwipeoutOpened(swipeoutOpened);
+  $effect(() => watchSwipeoutOpened(swipeoutOpened));
 
   function onClick(event) {
     if (event.target.tagName.toLowerCase() !== 'input') {
-      emit('click', event);
+      restProps.onClick?.(event);
+      restProps.onclick?.(event);
     }
   }
   function onSwipeoutOverswipeEnter(eventEl) {
     if (eventEl !== el) return;
-    emit('swipeoutOverswipeEnter');
+    restProps.onSwipeoutOverswipeEnter?.(event);
+    restProps.onswipeoutoverswipeenter?.(event);
   }
   function onSwipeoutOverswipeExit(eventEl) {
     if (eventEl !== el) return;
-    emit('swipeoutOverswipeExit');
+    restProps.onSwipeoutOverswipeExit?.(event);
+    restProps.onswipeoutoverswipeexit?.(event);
   }
   function onSwipeoutDeleted(eventEl) {
     if (eventEl !== el) return;
-    emit('swipeoutDeleted');
+    restProps.onSwipeoutDeleted?.(event);
+    restProps.onswipeoutdeleted?.(event);
   }
   function onSwipeoutDelete(eventEl) {
     if (eventEl !== el) return;
-    emit('swipeoutDelete');
+    restProps.onSwipeoutDelete?.(event);
+    restProps.onswipeoutdelete?.(event);
   }
   function onSwipeoutClose(eventEl) {
     if (eventEl !== el) return;
-    emit('swipeoutClose');
+    restProps.onSwipeoutClose?.(event);
+    restProps.onswipeoutclose?.(event);
   }
   function onSwipeoutClosed(eventEl) {
     if (eventEl !== el) return;
-    emit('swipeoutClosed');
+    restProps.onSwipeoutClosed?.(event);
+    restProps.onswipeoutclosed?.(event);
   }
   function onSwipeoutOpen(eventEl) {
     if (eventEl !== el) return;
-    emit('swipeoutOpen');
+    restProps.onSwipeoutOpen?.(event);
+    restProps.onswipeoutopen?.(event);
   }
   function onSwipeoutOpened(eventEl) {
     if (eventEl !== el) return;
-    emit('swipeoutOpened');
+    restProps.onSwipeoutOpened?.(event);
+    restProps.onswipeoutopened?.(event);
   }
   function onSwipeout(eventEl, progress) {
     if (eventEl !== el) return;
-    emit('swipeout', progress);
+    restProps.onSwipeout?.(progress);
+    restProps.onswipeout?.(progress);
   }
   function onAccBeforeClose(eventEl, prevent) {
     if (eventEl !== el) return;
-    emit('accordionBeforeClose', [prevent]);
+    restProps.onAccordionBeforeClose?.(prevent);
+    restProps.onaccordionbeforeclose?.(prevent);
   }
   function onAccClose(eventEl) {
     if (eventEl !== el) return;
-    emit('accordionClose');
+    restProps.onAccordionClose?.(event);
+    restProps.onaccordionclose?.(event);
   }
   function onAccClosed(eventEl) {
     if (eventEl !== el) return;
-    emit('accordionClosed');
+    restProps.onAccordionClosed?.(event);
+    restProps.onaccordionclosed?.(event);
   }
   function onAccBeforeOpen(eventEl, prevent) {
     if (eventEl !== el) return;
-    emit('accordionBeforeOpen', [prevent]);
+    restProps.onAccordionBeforeOpen?.(prevent);
+    restProps.onaccordionbeforeopen?.(prevent);
   }
   function onAccOpen(eventEl) {
     if (eventEl !== el) return;
-    emit('accordionOpen');
+    restProps.onAccordionOpen?.(event);
+    restProps.onaccordionopen?.(event);
   }
   function onAccOpened(eventEl) {
     if (eventEl !== el) return;
-    emit('accordionOpened');
+    restProps.onAccordionOpened?.(event);
+    restProps.onaccordionopened?.(event);
   }
   function onChange(event) {
-    emit('change', [event]);
+    restProps.onChange?.(event);
+    restProps.onchange?.(event);
     checked = event.target.checked;
   }
 
-  useSmartSelect(
-    { smartSelect, smartSelectParams },
-    (instance) => {
-      f7SmartSelect = instance;
-    },
-    () => linkEl,
+  $effect(() =>
+    useSmartSelect(
+      { smartSelect, smartSelectParams },
+      (instance) => {
+        f7SmartSelect = instance;
+      },
+      () => linkEl,
+    ),
   );
 
   onMount(() => {
@@ -285,7 +316,7 @@
     });
   });
 
-  afterUpdate(() => {
+  $effect(() => {
     if (inputEl) {
       inputEl.indeterminate = indeterminate;
     }
@@ -315,29 +346,35 @@
   });
 </script>
 
-<!-- svelte-ignore a11y-missing-attribute -->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+
 {#if groupTitle}
   <li
-    on:click={onClick}
+    onclick={onClick}
     bind:this={el}
     use:useTooltip={{ tooltip, tooltipTrigger }}
     class={liClasses}
     data-virtual-list-index={virtualListIndex}
-    {...restProps($$restProps)}
+    {...restProps}
   >
-    <span><slot>{plainText(title)}</slot></span>
+    <span>
+      <SnippetRender content={title} />
+      {@render children?.()}
+    </span>
   </li>
 {:else if isSimple}
   <li
-    on:click={onClick}
+    onclick={onClick}
     bind:this={el}
     use:useTooltip={{ tooltip, tooltipTrigger }}
     class={liClasses}
     data-virtual-list-index={virtualListIndex}
-    {...restProps($$restProps)}
+    {...restProps}
   >
-    {plainText(title)}
-    <slot />
+    <SnippetRender content={title} />
+    {@render children?.()}
   </li>
 {:else}
   <li
@@ -345,9 +382,9 @@
     use:useTooltip={{ tooltip, tooltipTrigger }}
     class={liClasses}
     data-virtual-list-index={virtualListIndex}
-    {...restProps($$restProps)}
+    {...restProps}
   >
-    <slot name="root-start" />
+    <SnippetRender content={rootStart} />
     {#if swipeout}
       <div class="swipeout-content">
         {#if isLink}
@@ -356,127 +393,121 @@
             use:useRouteProps={routeProps}
             class={linkClasses}
             {...linkAttrs}
-            on:click={onClick}
+            onclick={onClick}
           >
             <!-- Item content start -->
             <div class={contentClasses}>
-              <slot name="content-start" />
+              <SnippetRender content={contentStart} />
               {#if isSortable && sortable !== false && isSortableOpposite}
                 <div class="sortable-handler" />
               {/if}
               {#if hasMedia}
                 <div class="item-media">
-                  {#if typeof media !== 'undefined'}
+                  {#if typeof media === 'function'}
+                    {@render media?.()}
+                  {:else if typeof media === 'string'}
                     <img src={media} />
                   {/if}
-                  <slot name="media" />
                 </div>
               {/if}
               <div bind:this={innerEl} class="item-inner">
-                <slot name="inner-start" />
+                <SnippetRender content={innerStart} />
                 {#if isMedia}
                   {#if hasHeader}
                     <div class="item-header">
-                      {plainText(header)}
-                      <slot name="header" />
+                      <SnippetRender content={header} />
                     </div>
                   {/if}
                   <div class="item-title-row">
-                    <slot name="before-title" />
+                    <SnippetRender content={beforeTitle} />
+
                     {#if hasTitle}
                       <div class="item-title">
-                        {plainText(title)}
-                        <slot name="title" />
+                        <SnippetRender content={title} />
                       </div>
                     {/if}
-                    <slot name="after-title" />
+                    <SnippetRender content={afterTitle} />
                     {#if hasAfter}
                       <div class="item-after">
-                        <slot name="after-start" />
-                        {#if typeof after !== 'undefined'}
-                          <span>{plainText(after)}</span>
-                        {/if}
+                        <SnippetRender content={afterStart} />
+
+                        <SnippetRender content={after} />
                         {#if typeof badge !== 'undefined'}
                           <Badge color={badgeColor}>{plainText(badge)}</Badge>
                         {/if}
-                        <slot name="after" />
-                        <slot name="after-end" />
+
+                        <SnippetRender content={afterEnd} />
                       </div>
                     {/if}
                   </div>
                   {#if hasSubtitle}
                     <div class="item-subtitle">
-                      {plainText(subtitle)}
-                      <slot name="subtitle" />
+                      <SnippetRender content={subtitle} />
                     </div>
                   {/if}
                   {#if hasText}
                     <div class="item-text">
-                      {plainText(text)}
-                      <slot name="text" />
+                      <SnippetRender content={text} />
                     </div>
                   {/if}
-                  <slot name="inner" />
+                  {@render children?.()}
+                  <SnippetRender content={inner} />
                   {#if !(swipeout || accordionItem)}
-                    <slot />
+                    <SnippetRender {content} />
                   {/if}
                   {#if hasFooter}
                     <div class="item-footer">
-                      {plainText(footer)}
-                      <slot name="footer" />
+                      <SnippetRender content={footer} />
                     </div>
                   {/if}
                 {:else}
-                  <slot name="before-title" />
+                  <SnippetRender content={beforeTitle} />
+
                   {#if hasTitle || hasHeader || hasFooter}
                     <div class="item-title">
                       {#if hasHeader}
                         <div class="item-header">
-                          {plainText(header)}
-                          <slot name="header" />
+                          <SnippetRender content={header} />
                         </div>
                       {/if}
-                      {plainText(title)}
-                      <slot name="title" />
+                      <SnippetRender content={title} />
                       {#if hasFooter}
                         <div class="item-footer">
-                          {plainText(footer)}
-                          <slot name="footer" />
+                          <SnippetRender content={footer} />
                         </div>
                       {/if}
                     </div>
                   {/if}
-                  <slot name="after-title" />
+                  <SnippetRender content={afterTitle} />
                   {#if hasAfter}
                     <div class="item-after">
-                      <slot name="after-start" />
-                      {#if typeof after !== 'undefined'}
-                        <span>{plainText(after)}</span>
-                      {/if}
+                      <SnippetRender content={afterStart} />
+                      <SnippetRender content={after} />
                       {#if typeof badge !== 'undefined'}
                         <Badge color={badgeColor}>{plainText(badge)}</Badge>
                       {/if}
-                      <slot name="after" />
-                      <slot name="after-end" />
+
+                      <SnippetRender content={afterEnd} />
                     </div>
                   {/if}
-                  <slot name="inner" />
+                  {@render children?.()}
+                  <SnippetRender content={inner} />
                   {#if !(swipeout || accordionItem)}
-                    <slot />
+                    <SnippetRender {content} />
                   {/if}
                 {/if}
-                <slot name="inner-end" />
+                <SnippetRender content={innerEnd} />
               </div>
-              <slot name="content" />
-              <slot name="content-end" />
+              <SnippetRender {content} />
+              <SnippetRender content={contentEnd} />
             </div>
             <!-- Item content end -->
           </a>
         {:else}
           <!-- Item content start -->
           {#if checkbox || radio}
-            <label class={contentClasses} on:click={onClick}>
-              <slot name="content-start" />
+            <label class={contentClasses} onclick={onClick}>
+              <SnippetRender content={contentStart} />
               {#if isSortable && sortable !== false && isSortableOpposite}
                 <div class="sortable-handler" />
               {/if}
@@ -489,226 +520,212 @@
                 {disabled}
                 {required}
                 type={radio ? 'radio' : 'checkbox'}
-                on:change={onChange}
+                onchange={onChange}
               />
               <i class={`icon icon-${radio ? 'radio' : 'checkbox'}`} />
               {#if hasMedia}
                 <div class="item-media">
-                  {#if typeof media !== 'undefined'}
+                  {#if typeof media === 'function'}
+                    {@render media?.()}
+                  {:else if typeof media === 'string'}
                     <img src={media} />
                   {/if}
-                  <slot name="media" />
                 </div>
               {/if}
               <div bind:this={innerEl} class="item-inner">
-                <slot name="inner-start" />
+                <SnippetRender content={innerStart} />
                 {#if isMedia}
                   {#if hasHeader}
                     <div class="item-header">
-                      {plainText(header)}
-                      <slot name="header" />
+                      <SnippetRender content={header} />
                     </div>
                   {/if}
                   <div class="item-title-row">
-                    <slot name="before-title" />
+                    <SnippetRender content={beforeTitle} />
+
                     {#if hasTitle}
                       <div class="item-title">
-                        {plainText(title)}
-                        <slot name="title" />
+                        <SnippetRender content={title} />
                       </div>
                     {/if}
-                    <slot name="after-title" />
+                    <SnippetRender content={afterTitle} />
                     {#if hasAfter}
                       <div class="item-after">
-                        <slot name="after-start" />
-                        {#if typeof after !== 'undefined'}
-                          <span>{plainText(after)}</span>
-                        {/if}
+                        <SnippetRender content={afterStart} />
+                        <SnippetRender content={after} />
                         {#if typeof badge !== 'undefined'}
                           <Badge color={badgeColor}>{plainText(badge)}</Badge>
                         {/if}
-                        <slot name="after" />
-                        <slot name="after-end" />
+
+                        <SnippetRender content={afterEnd} />
                       </div>
                     {/if}
                   </div>
                   {#if hasSubtitle}
                     <div class="item-subtitle">
-                      {plainText(subtitle)}
-                      <slot name="subtitle" />
+                      <SnippetRender content={subtitle} />
                     </div>
                   {/if}
                   {#if hasText}
                     <div class="item-text">
-                      {plainText(text)}
-                      <slot name="text" />
+                      <SnippetRender content={text} />
                     </div>
                   {/if}
-                  <slot name="inner" />
+                  {@render children?.()}
+                  <SnippetRender content={inner} />
                   {#if !(swipeout || accordionItem)}
-                    <slot />
+                    <SnippetRender {content} />
                   {/if}
                   {#if hasFooter}
                     <div class="item-footer">
-                      {plainText(footer)}
-                      <slot name="footer" />
+                      <SnippetRender content={footer} />
                     </div>
                   {/if}
                 {:else}
-                  <slot name="before-title" />
+                  <SnippetRender content={beforeTitle} />
+
                   {#if hasTitle || hasHeader || hasFooter}
                     <div class="item-title">
                       {#if hasHeader}
                         <div class="item-header">
-                          {plainText(header)}
-                          <slot name="header" />
+                          <SnippetRender content={header} />
                         </div>
                       {/if}
-                      {plainText(title)}
-                      <slot name="title" />
+                      <SnippetRender content={title} />
                       {#if hasFooter}
                         <div class="item-footer">
-                          {plainText(footer)}
-                          <slot name="footer" />
+                          <SnippetRender content={footer} />
                         </div>
                       {/if}
                     </div>
                   {/if}
-                  <slot name="after-title" />
+                  <SnippetRender content={afterTitle} />
                   {#if hasAfter}
                     <div class="item-after">
-                      <slot name="after-start" />
-                      {#if typeof after !== 'undefined'}
-                        <span>{plainText(after)}</span>
-                      {/if}
+                      <SnippetRender content={afterStart} />
+                      <SnippetRender content={after} />
                       {#if typeof badge !== 'undefined'}
                         <Badge color={badgeColor}>{plainText(badge)}</Badge>
                       {/if}
-                      <slot name="after" />
-                      <slot name="after-end" />
+
+                      <SnippetRender content={afterEnd} />
                     </div>
                   {/if}
-                  <slot name="inner" />
+                  {@render children?.()}
+                  <SnippetRender content={inner} />
                   {#if !(swipeout || accordionItem)}
-                    <slot />
+                    <SnippetRender {content} />
                   {/if}
                 {/if}
-                <slot name="inner-end" />
+                <SnippetRender content={innerEnd} />
               </div>
-              <slot name="content" />
-              <slot name="content-end" />
+              <SnippetRender {content} />
+              <SnippetRender content={contentEnd} />
             </label>
           {:else}
-            <div class={contentClasses} on:click={onClick}>
-              <slot name="content-start" />
+            <div class={contentClasses} onclick={onClick}>
+              <SnippetRender content={contentStart} />
               {#if isSortable && sortable !== false && isSortableOpposite}
                 <div class="sortable-handler" />
               {/if}
               {#if hasMedia}
                 <div class="item-media">
-                  {#if typeof media !== 'undefined'}
+                  {#if typeof media === 'function'}
+                    {@render media?.()}
+                  {:else if typeof media === 'string'}
                     <img src={media} />
                   {/if}
-                  <slot name="media" />
                 </div>
               {/if}
               <div bind:this={innerEl} class="item-inner">
-                <slot name="inner-start" />
+                <SnippetRender content={innerStart} />
                 {#if isMedia}
                   {#if hasHeader}
                     <div class="item-header">
-                      {plainText(header)}
-                      <slot name="header" />
+                      <SnippetRender content={header} />
                     </div>
                   {/if}
                   <div class="item-title-row">
-                    <slot name="before-title" />
+                    <SnippetRender content={beforeTitle} />
+
                     {#if hasTitle}
                       <div class="item-title">
-                        {plainText(title)}
-                        <slot name="title" />
+                        <SnippetRender content={title} />
                       </div>
                     {/if}
-                    <slot name="after-title" />
+                    <SnippetRender content={afterTitle} />
                     {#if hasAfter}
                       <div class="item-after">
-                        <slot name="after-start" />
-                        {#if typeof after !== 'undefined'}
-                          <span>{plainText(after)}</span>
-                        {/if}
+                        <SnippetRender content={afterStart} />
+                        <SnippetRender content={after} />
                         {#if typeof badge !== 'undefined'}
                           <Badge color={badgeColor}>{plainText(badge)}</Badge>
                         {/if}
-                        <slot name="after" />
-                        <slot name="after-end" />
+
+                        <SnippetRender content={afterEnd} />
                       </div>
                     {/if}
                   </div>
                   {#if hasSubtitle}
                     <div class="item-subtitle">
-                      {plainText(subtitle)}
-                      <slot name="subtitle" />
+                      <SnippetRender content={subtitle} />
                     </div>
                   {/if}
                   {#if hasText}
                     <div class="item-text">
-                      {plainText(text)}
-                      <slot name="text" />
+                      <SnippetRender content={text} />
                     </div>
                   {/if}
-                  <slot name="inner" />
+                  {@render children?.()}
+                  <SnippetRender content={inner} />
                   {#if !(swipeout || accordionItem)}
-                    <slot />
+                    <SnippetRender {content} />
                   {/if}
                   {#if hasFooter}
                     <div class="item-footer">
-                      {plainText(footer)}
-                      <slot name="footer" />
+                      <SnippetRender content={footer} />
                     </div>
                   {/if}
                 {:else}
-                  <slot name="before-title" />
+                  <SnippetRender content={beforeTitle} />
+
                   {#if hasTitle || hasHeader || hasFooter}
                     <div class="item-title">
                       {#if hasHeader}
                         <div class="item-header">
-                          {plainText(header)}
-                          <slot name="header" />
+                          <SnippetRender content={header} />
                         </div>
                       {/if}
-                      {plainText(title)}
-                      <slot name="title" />
+                      <SnippetRender content={title} />
                       {#if hasFooter}
                         <div class="item-footer">
-                          {plainText(footer)}
-                          <slot name="footer" />
+                          <SnippetRender content={footer} />
                         </div>
                       {/if}
                     </div>
                   {/if}
-                  <slot name="after-title" />
+                  <SnippetRender content={afterTitle} />
                   {#if hasAfter}
                     <div class="item-after">
-                      <slot name="after-start" />
-                      {#if typeof after !== 'undefined'}
-                        <span>{plainText(after)}</span>
-                      {/if}
+                      <SnippetRender content={afterStart} />
+                      <SnippetRender content={after} />
                       {#if typeof badge !== 'undefined'}
                         <Badge color={badgeColor}>{plainText(badge)}</Badge>
                       {/if}
-                      <slot name="after" />
-                      <slot name="after-end" />
+
+                      <SnippetRender content={afterEnd} />
                     </div>
                   {/if}
-                  <slot name="inner" />
+                  {@render children?.()}
+                  <SnippetRender content={inner} />
                   {#if !(swipeout || accordionItem)}
-                    <slot />
+                    <SnippetRender {content} />
                   {/if}
                 {/if}
-                <slot name="inner-end" />
+                <SnippetRender content={innerEnd} />
               </div>
-              <slot name="content" />
-              <slot name="content-end" />
+              <SnippetRender {content} />
+              <SnippetRender content={contentEnd} />
             </div>
           {/if}
           <!-- Item content end -->
@@ -720,127 +737,120 @@
         use:useRouteProps={routeProps}
         class={linkClasses}
         {...linkAttrs}
-        on:click={onClick}
+        onclick={onClick}
       >
         <!-- Item content start -->
         <div class={contentClasses}>
-          <slot name="content-start" />
+          <SnippetRender content={contentStart} />
           {#if isSortable && sortable !== false && isSortableOpposite}
             <div class="sortable-handler" />
           {/if}
           {#if hasMedia}
             <div class="item-media">
-              {#if typeof media !== 'undefined'}
+              {#if typeof media === 'function'}
+                {@render media?.()}
+              {:else if typeof media === 'string'}
                 <img src={media} />
               {/if}
-              <slot name="media" />
             </div>
           {/if}
           <div bind:this={innerEl} class="item-inner">
-            <slot name="inner-start" />
+            <SnippetRender content={innerStart} />
             {#if isMedia}
               {#if hasHeader}
                 <div class="item-header">
-                  {plainText(header)}
-                  <slot name="header" />
+                  <SnippetRender content={header} />
                 </div>
               {/if}
               <div class="item-title-row">
-                <slot name="before-title" />
+                <SnippetRender content={beforeTitle} />
+
                 {#if hasTitle}
                   <div class="item-title">
-                    {plainText(title)}
-                    <slot name="title" />
+                    <SnippetRender content={title} />
                   </div>
                 {/if}
-                <slot name="after-title" />
+                <SnippetRender content={afterTitle} />
                 {#if hasAfter}
                   <div class="item-after">
-                    <slot name="after-start" />
-                    {#if typeof after !== 'undefined'}
-                      <span>{plainText(after)}</span>
-                    {/if}
+                    <SnippetRender content={afterStart} />
+                    <SnippetRender content={after} />
                     {#if typeof badge !== 'undefined'}
                       <Badge color={badgeColor}>{plainText(badge)}</Badge>
                     {/if}
-                    <slot name="after" />
-                    <slot name="after-end" />
+
+                    <SnippetRender content={afterEnd} />
                   </div>
                 {/if}
               </div>
               {#if hasSubtitle}
                 <div class="item-subtitle">
-                  {plainText(subtitle)}
-                  <slot name="subtitle" />
+                  <SnippetRender content={subtitle} />
                 </div>
               {/if}
               {#if hasText}
                 <div class="item-text">
-                  {plainText(text)}
-                  <slot name="text" />
+                  <SnippetRender content={text} />
                 </div>
               {/if}
-              <slot name="inner" />
+              {@render children?.()}
+              <SnippetRender content={inner} />
               {#if !(swipeout || accordionItem)}
-                <slot />
+                <SnippetRender {content} />
               {/if}
               {#if hasFooter}
                 <div class="item-footer">
-                  {plainText(footer)}
-                  <slot name="footer" />
+                  <SnippetRender content={footer} />
                 </div>
               {/if}
             {:else}
-              <slot name="before-title" />
+              <SnippetRender content={beforeTitle} />
+
               {#if hasTitle || hasHeader || hasFooter}
                 <div class="item-title">
                   {#if hasHeader}
                     <div class="item-header">
-                      {plainText(header)}
-                      <slot name="header" />
+                      <SnippetRender content={header} />
                     </div>
                   {/if}
-                  {plainText(title)}
-                  <slot name="title" />
+                  <SnippetRender content={title} />
                   {#if hasFooter}
                     <div class="item-footer">
-                      {plainText(footer)}
-                      <slot name="footer" />
+                      <SnippetRender content={footer} />
                     </div>
                   {/if}
                 </div>
               {/if}
-              <slot name="after-title" />
+              <SnippetRender content={afterTitle} />
               {#if hasAfter}
                 <div class="item-after">
-                  <slot name="after-start" />
-                  {#if typeof after !== 'undefined'}
-                    <span>{plainText(after)}</span>
-                  {/if}
+                  <SnippetRender content={afterStart} />
+                  <SnippetRender content={after} />
                   {#if typeof badge !== 'undefined'}
                     <Badge color={badgeColor}>{plainText(badge)}</Badge>
                   {/if}
-                  <slot name="after" />
-                  <slot name="after-end" />
+
+                  <SnippetRender content={afterEnd} />
                 </div>
               {/if}
-              <slot name="inner" />
+              {@render children?.()}
+              <SnippetRender content={inner} />
               {#if !(swipeout || accordionItem)}
-                <slot />
+                <SnippetRender {content} />
               {/if}
             {/if}
-            <slot name="inner-end" />
+            <SnippetRender content={innerEnd} />
           </div>
-          <slot name="content" />
-          <slot name="content-end" />
+          <SnippetRender {content} />
+          <SnippetRender content={contentEnd} />
         </div>
         <!-- Item content end -->
       </a>
     {:else}
       <!-- Item content start -->
       {#if checkbox || radio}
-        <label class={contentClasses} on:click={onClick}>
-          <slot name="content-start" />
+        <label class={contentClasses} onclick={onClick}>
+          <SnippetRender content={contentStart} />
           {#if isSortable && sortable !== false && isSortableOpposite}
             <div class="sortable-handler" />
           {/if}
@@ -853,226 +863,212 @@
             {disabled}
             {required}
             type={radio ? 'radio' : 'checkbox'}
-            on:change={onChange}
+            onchange={onChange}
           />
           <i class={`icon icon-${radio ? 'radio' : 'checkbox'}`} />
           {#if hasMedia}
             <div class="item-media">
-              {#if typeof media !== 'undefined'}
+              {#if typeof media === 'function'}
+                {@render media?.()}
+              {:else if typeof media === 'string'}
                 <img src={media} />
               {/if}
-              <slot name="media" />
             </div>
           {/if}
           <div bind:this={innerEl} class="item-inner">
-            <slot name="inner-start" />
+            <SnippetRender content={innerStart} />
             {#if isMedia}
               {#if hasHeader}
                 <div class="item-header">
-                  {plainText(header)}
-                  <slot name="header" />
+                  <SnippetRender content={header} />
                 </div>
               {/if}
               <div class="item-title-row">
-                <slot name="before-title" />
+                <SnippetRender content={beforeTitle} />
+
                 {#if hasTitle}
                   <div class="item-title">
-                    {plainText(title)}
-                    <slot name="title" />
+                    <SnippetRender content={title} />
                   </div>
                 {/if}
-                <slot name="after-title" />
+                <SnippetRender content={afterTitle} />
                 {#if hasAfter}
                   <div class="item-after">
-                    <slot name="after-start" />
-                    {#if typeof after !== 'undefined'}
-                      <span>{plainText(after)}</span>
-                    {/if}
+                    <SnippetRender content={afterStart} />
+                    <SnippetRender content={after} />
                     {#if typeof badge !== 'undefined'}
                       <Badge color={badgeColor}>{plainText(badge)}</Badge>
                     {/if}
-                    <slot name="after" />
-                    <slot name="after-end" />
+
+                    <SnippetRender content={afterEnd} />
                   </div>
                 {/if}
               </div>
               {#if hasSubtitle}
                 <div class="item-subtitle">
-                  {plainText(subtitle)}
-                  <slot name="subtitle" />
+                  <SnippetRender content={subtitle} />
                 </div>
               {/if}
               {#if hasText}
                 <div class="item-text">
-                  {plainText(text)}
-                  <slot name="text" />
+                  <SnippetRender content={text} />
                 </div>
               {/if}
-              <slot name="inner" />
+              {@render children?.()}
+              <SnippetRender content={inner} />
               {#if !(swipeout || accordionItem)}
-                <slot />
+                <SnippetRender {content} />
               {/if}
               {#if hasFooter}
                 <div class="item-footer">
-                  {plainText(footer)}
-                  <slot name="footer" />
+                  <SnippetRender content={footer} />
                 </div>
               {/if}
             {:else}
-              <slot name="before-title" />
+              <SnippetRender content={beforeTitle} />
+
               {#if hasTitle || hasHeader || hasFooter}
                 <div class="item-title">
                   {#if hasHeader}
                     <div class="item-header">
-                      {plainText(header)}
-                      <slot name="header" />
+                      <SnippetRender content={header} />
                     </div>
                   {/if}
-                  {plainText(title)}
-                  <slot name="title" />
+                  <SnippetRender content={title} />
                   {#if hasFooter}
                     <div class="item-footer">
-                      {plainText(footer)}
-                      <slot name="footer" />
+                      <SnippetRender content={footer} />
                     </div>
                   {/if}
                 </div>
               {/if}
-              <slot name="after-title" />
+              <SnippetRender content={afterTitle} />
               {#if hasAfter}
                 <div class="item-after">
-                  <slot name="after-start" />
-                  {#if typeof after !== 'undefined'}
-                    <span>{plainText(after)}</span>
-                  {/if}
+                  <SnippetRender content={afterStart} />
+                  <SnippetRender content={after} />
                   {#if typeof badge !== 'undefined'}
                     <Badge color={badgeColor}>{plainText(badge)}</Badge>
                   {/if}
-                  <slot name="after" />
-                  <slot name="after-end" />
+
+                  <SnippetRender content={afterEnd} />
                 </div>
               {/if}
-              <slot name="inner" />
+              {@render children?.()}
+              <SnippetRender content={inner} />
               {#if !(swipeout || accordionItem)}
-                <slot />
+                <SnippetRender {content} />
               {/if}
             {/if}
-            <slot name="inner-end" />
+            <SnippetRender content={innerEnd} />
           </div>
-          <slot name="content" />
-          <slot name="content-end" />
+          <SnippetRender {content} />
+          <SnippetRender content={contentEnd} />
         </label>
       {:else}
-        <div class={contentClasses} on:click={onClick}>
-          <slot name="content-start" />
+        <div class={contentClasses} onclick={onClick}>
+          <SnippetRender content={contentStart} />
           {#if isSortable && sortable !== false && isSortableOpposite}
             <div class="sortable-handler" />
           {/if}
           {#if hasMedia}
             <div class="item-media">
-              {#if typeof media !== 'undefined'}
+              {#if typeof media === 'function'}
+                {@render media?.()}
+              {:else if typeof media === 'string'}
                 <img src={media} />
               {/if}
-              <slot name="media" />
             </div>
           {/if}
           <div bind:this={innerEl} class="item-inner">
-            <slot name="inner-start" />
+            <SnippetRender content={innerStart} />
             {#if isMedia}
               {#if hasHeader}
                 <div class="item-header">
-                  {plainText(header)}
-                  <slot name="header" />
+                  <SnippetRender content={header} />
                 </div>
               {/if}
               <div class="item-title-row">
-                <slot name="before-title" />
+                <SnippetRender content={beforeTitle} />
+
                 {#if hasTitle}
                   <div class="item-title">
-                    {plainText(title)}
-                    <slot name="title" />
+                    <SnippetRender content={title} />
                   </div>
                 {/if}
-                <slot name="after-title" />
+                <SnippetRender content={afterTitle} />
                 {#if hasAfter}
                   <div class="item-after">
-                    <slot name="after-start" />
-                    {#if typeof after !== 'undefined'}
-                      <span>{plainText(after)}</span>
-                    {/if}
+                    <SnippetRender content={afterStart} />
+                    <SnippetRender content={after} />
                     {#if typeof badge !== 'undefined'}
                       <Badge color={badgeColor}>{plainText(badge)}</Badge>
                     {/if}
-                    <slot name="after" />
-                    <slot name="after-end" />
+
+                    <SnippetRender content={afterEnd} />
                   </div>
                 {/if}
               </div>
               {#if hasSubtitle}
                 <div class="item-subtitle">
-                  {plainText(subtitle)}
-                  <slot name="subtitle" />
+                  <SnippetRender content={subtitle} />
                 </div>
               {/if}
               {#if hasText}
                 <div class="item-text">
-                  {plainText(text)}
-                  <slot name="text" />
+                  <SnippetRender content={text} />
                 </div>
               {/if}
-              <slot name="inner" />
+              {@render children?.()}
+              <SnippetRender content={inner} />
               {#if !(swipeout || accordionItem)}
-                <slot />
+                <SnippetRender {content} />
               {/if}
               {#if hasFooter}
                 <div class="item-footer">
-                  {plainText(footer)}
-                  <slot name="footer" />
+                  <SnippetRender content={footer} />
                 </div>
               {/if}
             {:else}
-              <slot name="before-title" />
+              <SnippetRender content={beforeTitle} />
+
               {#if hasTitle || hasHeader || hasFooter}
                 <div class="item-title">
                   {#if hasHeader}
                     <div class="item-header">
-                      {plainText(header)}
-                      <slot name="header" />
+                      <SnippetRender content={header} />
                     </div>
                   {/if}
-                  {plainText(title)}
-                  <slot name="title" />
+                  <SnippetRender content={title} />
                   {#if hasFooter}
                     <div class="item-footer">
-                      {plainText(footer)}
-                      <slot name="footer" />
+                      <SnippetRender content={footer} />
                     </div>
                   {/if}
                 </div>
               {/if}
-              <slot name="after-title" />
+              <SnippetRender content={afterTitle} />
               {#if hasAfter}
                 <div class="item-after">
-                  <slot name="after-start" />
-                  {#if typeof after !== 'undefined'}
-                    <span>{plainText(after)}</span>
-                  {/if}
+                  <SnippetRender content={afterStart} />
+                  <SnippetRender content={after} />
                   {#if typeof badge !== 'undefined'}
                     <Badge color={badgeColor}>{plainText(badge)}</Badge>
                   {/if}
-                  <slot name="after" />
-                  <slot name="after-end" />
+
+                  <SnippetRender content={afterEnd} />
                 </div>
               {/if}
-              <slot name="inner" />
+              {@render children?.()}
+              <SnippetRender content={inner} />
               {#if !(swipeout || accordionItem)}
-                <slot />
+                <SnippetRender {content} />
               {/if}
             {/if}
-            <slot name="inner-end" />
+            <SnippetRender content={innerEnd} />
           </div>
-          <slot name="content" />
-          <slot name="content-end" />
+          <SnippetRender {content} />
+          <SnippetRender content={contentEnd} />
         </div>
       {/if}
       <!-- Item content end -->
@@ -1081,9 +1077,9 @@
       <div class="sortable-handler" />
     {/if}
     {#if swipeout || accordionItem}
-      <slot />
+      <SnippetRender {content} />
     {/if}
-    <slot name="root" />
-    <slot name="root-end" />
+    <SnippetRender content={root} />
+    <SnippetRender content={rootEnd} />
   </li>
 {/if}

@@ -1,38 +1,32 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames } from '../shared/utils.js';
 
   import Link from './link.svelte';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    children,
+    backLink,
+    backLinkUrl,
+    backLinkForce,
+    backLinkShowText,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
+  const classes = $derived(classNames(className, 'left', {}, colorClasses(restProps)));
 
-  export let backLink = undefined;
-  export let backLinkUrl = undefined;
-  export let backLinkForce = undefined;
-  export let backLinkShowText = undefined;
+  const backLinkText = $derived(backLink !== true && backLinkShowText ? backLink : undefined);
 
-  $: classes = classNames(
-    className,
-    'left',
-    {},
-    colorClasses($$props),
-  );
-
-  $: backLinkText = backLink !== true && backLinkShowText ? backLink : undefined;
-
-
-  function onBackClick() {
-    emit('clickBack');
-    emit('backClick');
+  function onBackClick(event) {
+    restProps.onClickBack?.(event);
+    restProps.onclickback?.(event);
+    restProps.onBackClick?.(event);
+    restProps.onbackclick?.(event);
   }
 </script>
 
-<div class={classes} {...restProps($$restProps)}>
+<div class={classes} {...restProps}>
   {#if backLink}
     <Link
       href={backLinkUrl || '#'}
@@ -41,8 +35,8 @@
       force={backLinkForce || undefined}
       class={!backLinkText ? 'icon-only' : undefined}
       text={backLinkText}
-      onClick={onBackClick}
+      onclick={onBackClick}
     />
   {/if}
-  <slot />
+  {@render children?.()}
 </div>

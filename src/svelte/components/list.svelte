@@ -1,76 +1,67 @@
 <script>
-  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy, setContext } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, extend, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames, extend } from '../shared/utils.js';
   import { app, f7ready } from '../shared/f7.js';
   import { useTab } from '../shared/use-tab.js';
-  import { setReactiveContext } from '../shared/set-reactive-context.js';
+  let {
+    class: className,
+    ul = true,
+    inset = false,
+    insetIos = false,
+    insetMd = false,
+    xsmallInset = false,
+    xsmallInsetIos = false,
+    xsmallInsetMd = false,
+    smallInset = false,
+    smallInsetIos = false,
+    smallInsetMd = false,
+    mediumInset = false,
+    mediumInsetIos = false,
+    mediumInsetMd = false,
+    largeInset = false,
+    largeInsetIos = false,
+    largeInsetMd = false,
+    xlargeInset = false,
+    xlargeInsetIos = false,
+    xlargeInsetMd = false,
+    strong = false,
+    strongIos = false,
+    strongMd = false,
+    outline = false,
+    outlineIos = false,
+    outlineMd = false,
+    dividers = false,
+    dividersIos = false,
+    dividersMd = false,
+    mediaList = false,
+    sortable = false,
+    sortableTapHold = false,
+    sortableEnabled = false,
+    sortableMoveElements = undefined,
+    sortableOpposite = false,
+    accordionList = false,
+    accordionOpposite = false,
+    contactsList = false,
+    simpleList = false,
+    linksList = false,
+    menuList = false,
+    noChevron = false,
+    chevronCenter = false,
+    tab = false,
+    tabActive = false,
+    form = false,
+    formStoreData = false,
+    virtualList = false,
+    virtualListParams = undefined,
+    children,
+    list,
+    beforeList,
+    afterList,
+    ...restProps
+  } = $props();
 
-  const emit = createEmitter(createEventDispatcher, $$props);
-
-  let className = undefined;
-  export { className as class };
-
-  export let ul = true;
-
-  export let inset = false;
-  export let insetIos = false;
-  export let insetMd = false;
-  export let xsmallInset = false;
-  export let xsmallInsetIos = false;
-  export let xsmallInsetMd = false;
-  export let smallInset = false;
-  export let smallInsetIos = false;
-  export let smallInsetMd = false;
-  export let mediumInset = false;
-  export let mediumInsetIos = false;
-  export let mediumInsetMd = false;
-  export let largeInset = false;
-  export let largeInsetIos = false;
-  export let largeInsetMd = false;
-  export let xlargeInset = false;
-  export let xlargeInsetIos = false;
-  export let xlargeInsetMd = false;
-  export let strong = false;
-  export let strongIos = false;
-  export let strongMd = false;
-  export let outline = false;
-  export let outlineIos = false;
-  export let outlineMd = false;
-  export let dividers = false;
-  export let dividersIos = false;
-  export let dividersMd = false;
-  export let mediaList = false;
-  export let sortable = false;
-  export let sortableTapHold = false;
-  export let sortableEnabled = false;
-  export let sortableMoveElements = undefined;
-  export let sortableOpposite = false;
-  export let accordionList = false;
-  export let accordionOpposite = false;
-  export let contactsList = false;
-  export let simpleList = false;
-  export let linksList = false;
-  export let menuList = false;
-
-  // Links Chevron (Arrow) Icon
-  export let noChevron = false;
-  export let chevronCenter = false;
-
-  // Tab
-  export let tab = false;
-  export let tabActive = false;
-
-  // Form
-  export let form = false;
-  export let formStoreData = false;
-
-  // Virtual List
-  export let virtualList = false;
-  export let virtualListParams = undefined;
-
-  let el;
+  let el = $state(null);
   let f7VirtualList;
 
   export function virtualListInstance() {
@@ -78,88 +69,97 @@
   }
 
   // eslint-disable-next-line
-  $: hasUlSlots = $$slots.default || $$slots.list;
+  const hasUlSlots = $derived(children || list);
 
-  $: classes = classNames(
-    className,
-    'list',
-    {
-      inset,
-      'inset-ios': insetIos,
-      'inset-md': insetMd,
-      'xsmall-inset': xsmallInset,
-      'xsmall-inset-ios': xsmallInsetIos,
-      'xsmall-inset-md': xsmallInsetMd,
-      'small-inset': smallInset,
-      'small-inset-ios': smallInsetIos,
-      'small-inset-md': smallInsetMd,
-      'medium-inset': mediumInset,
-      'medium-inset-ios': mediumInsetIos,
-      'medium-inset-md': mediumInsetMd,
-      'large-inset': largeInset,
-      'large-inset-ios': largeInsetIos,
-      'large-inset-md': largeInsetMd,
-      'xlarge-inset': xlargeInset,
-      'xlarge-inset-ios': xlargeInsetIos,
-      'xlarge-inset-md': xlargeInsetMd,
-      'list-strong': strong,
-      'list-strong-ios': strongIos,
-      'list-strong-md': strongMd,
-      'list-outline': outline,
-      'list-outline-ios': outlineIos,
-      'list-outline-md': outlineMd,
-      'list-dividers': dividers,
-      'list-dividers-ios': dividersIos,
-      'list-dividers-md': dividersMd,
-      'media-list': mediaList,
-      'simple-list': simpleList,
-      'links-list': linksList,
-      'menu-list': menuList,
-      sortable,
-      'sortable-tap-hold': sortableTapHold,
-      'sortable-enabled': sortableEnabled,
-      'sortable-opposite': sortableOpposite,
-      'accordion-list': accordionList,
-      'accordion-opposite': accordionOpposite,
-      'contacts-list': contactsList,
-      'virtual-list': virtualList,
-      tab,
-      'tab-active': tabActive,
-      'form-store-data': formStoreData,
-      'no-chevron': noChevron,
-      'chevron-center': chevronCenter,
-    },
-    colorClasses($$props),
+  const classes = $derived(
+    classNames(
+      className,
+      'list',
+      {
+        inset,
+        'inset-ios': insetIos,
+        'inset-md': insetMd,
+        'xsmall-inset': xsmallInset,
+        'xsmall-inset-ios': xsmallInsetIos,
+        'xsmall-inset-md': xsmallInsetMd,
+        'small-inset': smallInset,
+        'small-inset-ios': smallInsetIos,
+        'small-inset-md': smallInsetMd,
+        'medium-inset': mediumInset,
+        'medium-inset-ios': mediumInsetIos,
+        'medium-inset-md': mediumInsetMd,
+        'large-inset': largeInset,
+        'large-inset-ios': largeInsetIos,
+        'large-inset-md': largeInsetMd,
+        'xlarge-inset': xlargeInset,
+        'xlarge-inset-ios': xlargeInsetIos,
+        'xlarge-inset-md': xlargeInsetMd,
+        'list-strong': strong,
+        'list-strong-ios': strongIos,
+        'list-strong-md': strongMd,
+        'list-outline': outline,
+        'list-outline-ios': outlineIos,
+        'list-outline-md': outlineMd,
+        'list-dividers': dividers,
+        'list-dividers-ios': dividersIos,
+        'list-dividers-md': dividersMd,
+        'media-list': mediaList,
+        'simple-list': simpleList,
+        'links-list': linksList,
+        'menu-list': menuList,
+        sortable,
+        'sortable-tap-hold': sortableTapHold,
+        'sortable-enabled': sortableEnabled,
+        'sortable-opposite': sortableOpposite,
+        'accordion-list': accordionList,
+        'accordion-opposite': accordionOpposite,
+        'contacts-list': contactsList,
+        'virtual-list': virtualList,
+        tab,
+        'tab-active': tabActive,
+        'form-store-data': formStoreData,
+        'no-chevron': noChevron,
+        'chevron-center': chevronCenter,
+      },
+      colorClasses(restProps),
+    ),
   );
 
-  setReactiveContext('ListContext', () => ({
-    listIsMedia: mediaList,
-    listIsSimple: simpleList,
-    listIsSortable: sortable,
-    listIsSortableOpposite: sortableOpposite,
+  setContext('ListContext', () => ({
+    value: {
+      listIsMedia: mediaList,
+      listIsSimple: simpleList,
+      listIsSortable: sortable,
+      listIsSortableOpposite: sortableOpposite,
+    },
   }));
 
   function onSubmit(event) {
-    emit('submit', [event]);
+    restProps.onSubmit?.(event);
+    restProps.onSubmit?.(event);
   }
   function onSortableEnable(sortableEl) {
     if (sortableEl !== el) return;
-    emit('sortableEnable');
+    restProps.onSortableEnable?.(sortableEl);
+    restProps.onSortableEnable?.(sortableEl);
   }
   function onSortableDisable(sortableEl) {
     if (sortableEl !== el) return;
-    emit('sortableDisable');
+    restProps.onSortableDisable?.(sortableEl);
+    restProps.onsortabledisable?.(sortableEl);
   }
   function onSortableSort(listItemEl, sortData, listEl) {
     if (listEl !== el) return;
-    emit('sortableSort', [sortData]);
+    restProps.onSortableSort?.(sortData);
+    restProps.onsortablesort?.(sortData);
   }
   function onSortableMove(listItemEl, listEl) {
     if (listEl !== el) return;
-    emit('sortableMove', [listItemEl, listEl]);
+    restProps.onSortableMove?.(listItemEl, listEl);
+    restProps.onsortablemove?.(listItemEl, listEl);
   }
 
-  useTab(() => el, emit);
+  useTab(() => el, restProps);
 
   onMount(() => {
     f7ready(() => {
@@ -179,19 +179,23 @@
             on: {
               itemBeforeInsert(itemEl, item) {
                 const vl = this;
-                emit('virtualItemBeforeInsert', [vl, itemEl, item]);
+                restProps.onVirtualItemBeforeInsert?.(vl, itemEl, item);
+                restProps.onvirtualitembeforeinsert?.(vl, itemEl, item);
               },
               beforeClear(fragment) {
                 const vl = this;
-                emit('virtualBeforeClear', [vl, fragment]);
+                restProps.onVirtualBeforeClear?.(vl, fragment);
+                restProps.onvirtualbeforeclear?.(vl, fragment);
               },
               itemsBeforeInsert(fragment) {
                 const vl = this;
-                emit('virtualItemsBeforeInsert', [vl, fragment]);
+                restProps.onVirtualItemsBeforeInsert?.(vl, fragment);
+                restProps.onvirtualitemsbeforeinsert?.(vl, fragment);
               },
               itemsAfterInsert(fragment) {
                 const vl = this;
-                emit('virtualItemsAfterInsert', [vl, fragment]);
+                restProps.onVirtualItemsAfterInsert?.(vl, fragment);
+                restProps.onvirtualitemsafterinsert?.(vl, fragment);
               },
             },
           },
@@ -223,19 +227,19 @@
     data-sortable-move-elements={typeof sortableMoveElements !== 'undefined'
       ? sortableMoveElements.toString()
       : undefined}
-    on:submit={onSubmit}
-    {...restProps($$restProps)}
+    onsubmit={onSubmit}
+    {...restProps}
   >
-    <slot name="before-list" />
+    {@render beforeList?.()}
     {#if hasUlSlots && ul}
       <ul>
-        <slot name="list" />
-        <slot />
+        {@render list?.()}
+        {@render children?.()}
       </ul>
     {:else}
-      <slot />
+      {@render children?.()}
     {/if}
-    <slot name="after-list" />
+    {@render afterList?.()}
   </form>
 {:else}
   <div
@@ -244,17 +248,17 @@
     data-sortable-move-elements={typeof sortableMoveElements !== 'undefined'
       ? sortableMoveElements.toString()
       : undefined}
-    {...restProps($$restProps)}
+    {...restProps}
   >
-    <slot name="before-list" />
+    {@render beforeList?.()}
     {#if hasUlSlots && ul}
       <ul>
-        <slot name="list" />
-        <slot />
+        {@render list?.()}
+        {@render children?.()}
       </ul>
     {:else}
-      <slot />
+      {@render children?.()}
     {/if}
-    <slot name="after-list" />
+    {@render afterList?.()}
   </div>
 {/if}

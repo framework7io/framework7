@@ -1,42 +1,42 @@
 <script>
-  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
 
-  import { extend, createEmitter } from '../shared/utils.js';
+  import { extend } from '../shared/utils.js';
   import { app, f7ready } from '../shared/f7.js';
-
-  const emit = createEmitter(createEventDispatcher, $$props);
-
-  export let init = true;
-  export let params = undefined;
-  export let photos = undefined;
-  export let thumbs = undefined;
-  export let exposition = true;
-  export let expositionHideCaptions = false;
-  export let type = undefined;
-  export let navbar = true;
-  export let toolbar = true;
-  export let theme = undefined;
-  export let captionsTheme = undefined;
-  export let iconsColor = undefined;
-  export let swipeToClose = true;
-  export let pageBackLinkText = undefined;
-  export let navbarOfText = undefined;
-  export let navbarShowCount = undefined;
-  export let swiper = undefined;
-  export let url = undefined;
-  export let routableModals = false;
-  export let virtualSlides = true;
-  export let view = undefined;
-  export let renderNavbar = undefined;
-  export let renderToolbar = undefined;
-  export let renderCaption = undefined;
-  export let renderObject = undefined;
-  export let renderLazyPhoto = undefined;
-  export let renderPhoto = undefined;
-  export let renderPage = undefined;
-  export let renderPopup = undefined;
-  export let renderStandalone = undefined;
-  export let renderThumb = undefined;
+  let {
+    init = true,
+    params = undefined,
+    photos = undefined,
+    thumbs = undefined,
+    exposition = true,
+    expositionHideCaptions = false,
+    type = undefined,
+    navbar = true,
+    toolbar = true,
+    theme = undefined,
+    captionsTheme = undefined,
+    iconsColor = undefined,
+    swipeToClose = true,
+    pageBackLinkText = undefined,
+    navbarOfText = undefined,
+    navbarShowCount = undefined,
+    swiper = undefined,
+    url = undefined,
+    routableModals = false,
+    virtualSlides = true,
+    view = undefined,
+    renderNavbar = undefined,
+    renderToolbar = undefined,
+    renderCaption = undefined,
+    renderObject = undefined,
+    renderLazyPhoto = undefined,
+    renderPhoto = undefined,
+    renderPage = undefined,
+    renderPopup = undefined,
+    renderStandalone = undefined,
+    renderThumb = undefined,
+    ...restProps
+  } = $props();
 
   let f7PhotoBrowser;
 
@@ -60,7 +60,7 @@
     return f7PhotoBrowser.expositionDisable();
   }
 
-  let initialWatched = false;
+  let initialWatched = $state(false);
   function watchPhotos(newValue) {
     if (!initialWatched) {
       initialWatched = true;
@@ -73,7 +73,7 @@
     }
   }
 
-  $: watchPhotos(photos);
+  $effect(() => watchPhotos(photos));
 
   onMount(() => {
     if (!init) return;
@@ -123,19 +123,24 @@
       pbParams = extend({}, pbParams, {
         on: {
           open() {
-            emit('photoBrowserOpen');
+            restProps.onPhotoBrowserOpen?.();
+            restProps.onphotobrowseropen?.();
           },
           close() {
-            emit('photoBrowserClose');
+            restProps.onPhotoBrowserClose?.();
+            restProps.onphotobrowserclose?.();
           },
           opened() {
-            emit('photoBrowserOpened');
+            restProps.onPhotoBrowserOpened?.();
+            restProps.onphotobrowseropened?.();
           },
           closed() {
-            emit('photoBrowserClosed');
+            restProps.onPhotoBrowserClosed?.();
+            restProps.onphotobrowserclosed?.();
           },
           swipeToClose() {
-            emit('photoBrowserSwipeToClose');
+            restProps.onPhotoBrowserSwipeToClose?.();
+            restProps.onphotobrowserswipetoclose?.();
           },
         },
       });

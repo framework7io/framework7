@@ -13,8 +13,8 @@
     ActionsButton,
   } from 'framework7-svelte';
 
-  let actionsOneGroupOpened = false;
-  let actionGridOpened = false;
+  let actionsOneGroupOpened = $state(false);
+  let actionGridOpened = $state(false);
 
   let actionsToPopover;
   let buttonToPopoverWrapper;

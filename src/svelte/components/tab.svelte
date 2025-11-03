@@ -1,32 +1,22 @@
 <script>
-  import { onMount, onDestroy, afterUpdate, createEventDispatcher, tick, getContext } from 'svelte';
+  import { onMount, onDestroy, tick, getContext } from 'svelte';
 
-  import { restProps } from '../shared/rest-props.js';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, createEmitter, getComponentId } from '../shared/utils.js';
+  import { classNames, getComponentId } from '../shared/utils.js';
   import { f7ready, app } from '../shared/f7.js';
   import { useTab } from '../shared/use-tab.js';
-  import { getReactiveContext } from '../shared/get-reactive-context.js';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
-
-  let className = undefined;
-  export { className as class };
-  export let tabActive = false;
-  export let id = undefined;
+  let { class: className, tabActive = false, id = undefined, children, ...restProps } = $props();
 
   const RouterContext = getContext('RouterContext') || {};
 
-  let TabsSwipeableContext =
-    getReactiveContext('TabsSwipeableContext', (newValue) => {
-      TabsSwipeableContext = newValue || false;
-    }) || {};
+  let TabsSwipeableContext = getContext('TabsSwipeableContext') || (() => ({ value: false }));
 
-  let el;
-  let routerData = null;
-  let initialTabContent = null;
+  let el = $state(null);
+  let routerData = $state(null);
+  let initialTabContent = $state(null);
 
-  $: isSwiper = TabsSwipeableContext;
+  const isSwiper = $derived(TabsSwipeableContext().value);
 
   if (
     !routerData &&
@@ -54,11 +44,13 @@
       };
     }
   }
-  let tabContent = initialTabContent || null;
+  let tabContent = $state(initialTabContent || null);
 
-  $: classes = classNames(className, 'tab', tabActive && 'tab-active', colorClasses($$props));
+  const classes = $derived(
+    classNames(className, 'tab', tabActive && 'tab-active', colorClasses(restProps)),
+  );
 
-  useTab(() => el, emit);
+  useTab(() => el, restProps);
 
   onMount(() => {
     if (el && initialTabContent) {
@@ -80,7 +72,7 @@
       }
     });
   });
-  afterUpdate(() => {
+  $effect(() => {
     if (!routerData) return;
     app.f7events.emit('tabRouterDidUpdate', routerData);
   });
@@ -92,17 +84,17 @@
 </script>
 
 {#if isSwiper || TabsSwipeableContext}
-  <swiper-slide {id} class={classes} bind:this={el} {...restProps($$restProps)}>
+  <swiper-slide {id} class={classes} bind:this={el} {...restProps}>
     {#if tabContent}
-      <svelte:component this={tabContent.component} {...tabContent.props} />
+      <tabContent.component {...tabContent.props} />
     {/if}
-    <slot />
+    {@render children?.()}
   </swiper-slide>
 {:else}
-  <div {id} class={classes} bind:this={el} {...restProps($$restProps)}>
+  <div {id} class={classes} bind:this={el} {...restProps}>
     {#if tabContent}
-      <svelte:component this={tabContent.component} {...tabContent.props} />
+      <tabContent.component {...tabContent.props} />
     {/if}
-    <slot />
+    {@render children?.()}
   </div>
 {/if}

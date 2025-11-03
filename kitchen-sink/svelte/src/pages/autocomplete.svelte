@@ -26,7 +26,7 @@
   let autocompleteStandaloneAjax;
   let autocompleteSearchbar;
 
-  let searchbar;
+  let searchbar = $state(null);
 
   function onPageBeforeRemove() {
     // Destroy all autocompletes
@@ -45,7 +45,7 @@
     searchbar.destroy();
   }
   function onPageInit() {
-    const $ = f7.$;
+    const dom7 = f7.$;
 
     // Simple Dropdown
     autocompleteDropdownSimple = f7.autocomplete.create({
@@ -218,9 +218,9 @@
       on: {
         change(value) {
           // Add item text value to item-after
-          $('#autocomplete-standalone').find('.item-after').text(value[0]);
+          dom7('#autocomplete-standalone').find('.item-after').text(value[0]);
           // Add item value to input value
-          $('#autocomplete-standalone').find('input').val(value[0]);
+          dom7('#autocomplete-standalone').find('input').val(value[0]);
         },
       },
     });
@@ -246,9 +246,9 @@
       on: {
         change(value) {
           // Add item text value to item-after
-          $('#autocomplete-standalone-popup').find('.item-after').text(value[0]);
+          dom7('#autocomplete-standalone-popup').find('.item-after').text(value[0]);
           // Add item value to input value
-          $('#autocomplete-standalone-popup').find('input').val(value[0]);
+          dom7('#autocomplete-standalone-popup').find('input').val(value[0]);
         },
       },
     });
@@ -274,9 +274,9 @@
       on: {
         change(value) {
           // Add item text value to item-after
-          $('#autocomplete-standalone-multiple').find('.item-after').text(value.join(', '));
+          dom7('#autocomplete-standalone-multiple').find('.item-after').text(value.join(', '));
           // Add item value to input value
-          $('#autocomplete-standalone-multiple').find('input').val(value.join(', '));
+          dom7('#autocomplete-standalone-multiple').find('input').val(value.join(', '));
         },
       },
     });
@@ -323,9 +323,9 @@
             inputValue.push(value[i].id);
           }
           // Add item text value to item-after
-          $('#autocomplete-standalone-ajax').find('.item-after').text(itemText.join(', '));
+          dom7('#autocomplete-standalone-ajax').find('.item-after').text(itemText.join(', '));
           // Add item value to input value
-          $('#autocomplete-standalone-ajax').find('input').val(inputValue.join(', '));
+          dom7('#autocomplete-standalone-ajax').find('input').val(inputValue.join(', '));
         },
       },
     });
@@ -376,16 +376,16 @@
     </p>
   </Block>
   <List strongIos outlineIos>
-    <div class="block-header" slot="before-list">Simple Dropdown Autocomplete</div>
+    {#snippet beforeList()}<div class="block-header">Simple Dropdown Autocomplete</div>{/snippet}
     <ListInput label="Fruit" type="text" placeholder="Fruit" inputId="autocomplete-dropdown" />
   </List>
 
   <List strongIos outlineIos>
-    <div class="block-header" slot="before-list">Dropdown With All Values</div>
+    {#snippet beforeList()}<div class="block-header">Dropdown With All Values</div>{/snippet}
     <ListInput label="Fruit" type="text" placeholder="Fruit" inputId="autocomplete-dropdown-all" />
   </List>
   <List strongIos outlineIos>
-    <div class="block-header" slot="before-list">Dropdown With Placeholder</div>
+    {#snippet beforeList()}<div class="block-header">Dropdown With Placeholder</div>{/snippet}
     <ListInput
       label="Fruit"
       type="text"
@@ -394,7 +394,7 @@
     />
   </List>
   <List strongIos outlineIos>
-    <div class="block-header" slot="before-list">Dropdown With Typeahead</div>
+    {#snippet beforeList()}<div class="block-header">Dropdown With Typeahead</div>{/snippet}
     <ListInput
       label="Fruit"
       type="text"
@@ -403,7 +403,7 @@
     />
   </List>
   <List strongIos outlineIos>
-    <div class="block-header" slot="before-list">Dropdown With Ajax-Data</div>
+    {#snippet beforeList()}<div class="block-header">Dropdown With Ajax-Data</div>{/snippet}
     <ListInput
       label="Language"
       type="text"
@@ -412,7 +412,9 @@
     />
   </List>
   <List strongIos outlineIos>
-    <div class="block-header" slot="before-list">Dropdown With Ajax-Data + Typeahead</div>
+    {#snippet beforeList()}<div class="block-header">
+        Dropdown With Ajax-Data + Typeahead
+      </div>{/snippet}
     <ListInput
       label="Language"
       type="text"
@@ -428,25 +430,25 @@
     </p>
   </Block>
   <List strong outlineIos>
-    <div class="block-header" slot="before-list">Simple Standalone Autocomplete</div>
+    {#snippet beforeList()}<div class="block-header">Simple Standalone Autocomplete</div>{/snippet}
     <ListItem link="#" id="autocomplete-standalone" title="Favorite Fruite" after=" ">
       <input type="hidden" />
     </ListItem>
   </List>
   <List strong outlineIos>
-    <div class="block-header" slot="before-list">Popup Autocomplete</div>
+    {#snippet beforeList()}<div class="block-header">Popup Autocomplete</div>{/snippet}
     <ListItem link="#" id="autocomplete-standalone-popup" title="Favorite Fruite" after=" ">
       <input type="hidden" />
     </ListItem>
   </List>
   <List strong outlineIos>
-    <div class="block-header" slot="before-list">Multiple Values</div>
+    {#snippet beforeList()}<div class="block-header">Multiple Values</div>{/snippet}
     <ListItem link="#" id="autocomplete-standalone-multiple" title="Favorite Fruite" after=" ">
       <input type="hidden" />
     </ListItem>
   </List>
   <List strong outlineIos>
-    <div class="block-header" slot="before-list">With Ajax-Data</div>
+    {#snippet beforeList()}<div class="block-header">With Ajax-Data</div>{/snippet}
     <ListItem link="#" id="autocomplete-standalone-ajax" title="Language" after=" ">
       <input type="hidden" />
     </ListItem>

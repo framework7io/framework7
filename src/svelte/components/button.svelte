@@ -1,5 +1,4 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
   import {
     colorClasses,
     routerAttrs,
@@ -7,8 +6,7 @@
     actionsAttrs,
     actionsClasses,
   } from '../shared/mixins.js';
-  import { classNames, extend, isStringProp, plainText, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames, extend, isStringProp, plainText } from '../shared/utils.js';
   import { useTooltip } from '../shared/use-tooltip.js';
   import { useRouteProps } from '../shared/use-route-props.js';
   import { useIcon } from '../shared/use-icon.js';
@@ -16,121 +14,127 @@
   import UseIcon from './use-icon.svelte';
   import Preloader from './preloader.svelte';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    text = undefined,
+    tabLink = undefined,
+    tabLinkActive = false,
+    type = undefined,
+    href = '#',
+    target = undefined,
+    round = false,
+    roundMd = false,
+    roundIos = false,
+    fill = false,
+    fillMd = false,
+    fillIos = false,
+    tonal = false,
+    tonalMd = false,
+    tonalIos = false,
+    large = false,
+    largeMd = false,
+    largeIos = false,
+    small = false,
+    smallMd = false,
+    smallIos = false,
+    raised = false,
+    raisedMd = false,
+    raisedIos = false,
+    outline = false,
+    outlineMd = false,
+    outlineIos = false,
+    active = false,
+    disabled = false,
+    tooltip = undefined,
+    tooltipTrigger = undefined,
+    routeProps = undefined,
+    preloader = false,
+    preloaderSize = undefined,
+    preloaderColor = undefined,
+    loading = false,
+    children,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
+  let el = $state(null);
 
-  export let text = undefined;
-  export let tabLink = undefined;
-  export let tabLinkActive = false;
-  export let type = undefined;
-  export let href = '#';
-  export let target = undefined;
-  export let round = false;
-  export let roundMd = false;
-  export let roundIos = false;
-  export let fill = false;
-  export let fillMd = false;
-  export let fillIos = false;
-  export let tonal = false;
-  export let tonalMd = false;
-  export let tonalIos = false;
-  export let large = false;
-  export let largeMd = false;
-  export let largeIos = false;
-  export let small = false;
-  export let smallMd = false;
-  export let smallIos = false;
-  export let raised = false;
-  export let raisedMd = false;
-  export let raisedIos = false;
-  export let outline = false;
-  export let outlineMd = false;
-  export let outlineIos = false;
-  export let active = false;
-  export let disabled = false;
-  export let tooltip = undefined;
-  export let tooltipTrigger = undefined;
-  export let routeProps = undefined;
-  export let preloader = false;
-  export let preloaderSize = undefined;
-  export let preloaderColor = undefined;
-  export let loading = false;
+  const hrefComputed = $derived(href === true ? '#' : href || undefined);
 
-  let el;
-
-  $: hrefComputed = href === true ? '#' : href || undefined;
-
-  $: attrs = extend(
-    {
-      href: hrefComputed,
-      target,
-      type,
-      'data-tab': (isStringProp(tabLink) && tabLink) || undefined,
-      ...restProps($$restProps),
-    },
-    routerAttrs($$props),
-    actionsAttrs($$props),
+  const attrs = $derived(
+    extend(
+      {
+        href: hrefComputed,
+        target,
+        type,
+        'data-tab': (isStringProp(tabLink) && tabLink) || undefined,
+        ...restProps,
+      },
+      routerAttrs(restProps),
+      actionsAttrs(restProps),
+    ),
   );
 
-  $: classes = classNames(
-    className,
-    'button',
-    {
-      'tab-link': tabLink || tabLink === '',
-      'tab-link-active': tabLinkActive,
+  const classes = $derived(
+    classNames(
+      className,
+      'button',
+      {
+        'tab-link': tabLink || tabLink === '',
+        'tab-link-active': tabLinkActive,
 
-      'button-round': round,
-      'button-round-ios': roundIos,
-      'button-round-md': roundMd,
-      'button-fill': fill,
-      'button-fill-ios': fillIos,
-      'button-fill-md': fillMd,
-      'button-tonal': tonal,
-      'button-tonal-ios': tonalIos,
-      'button-tonal-md': tonalMd,
-      'button-large': large,
-      'button-large-ios': largeIos,
-      'button-large-md': largeMd,
-      'button-small': small,
-      'button-small-ios': smallIos,
-      'button-small-md': smallMd,
-      'button-raised': raised,
-      'button-raised-ios': raisedIos,
-      'button-raised-md': raisedMd,
-      'button-active': active,
-      'button-outline': outline,
-      'button-outline-ios': outlineIos,
-      'button-outline-md': outlineMd,
-      'button-preloader': preloader,
-      'button-loading': loading,
+        'button-round': round,
+        'button-round-ios': roundIos,
+        'button-round-md': roundMd,
+        'button-fill': fill,
+        'button-fill-ios': fillIos,
+        'button-fill-md': fillMd,
+        'button-tonal': tonal,
+        'button-tonal-ios': tonalIos,
+        'button-tonal-md': tonalMd,
+        'button-large': large,
+        'button-large-ios': largeIos,
+        'button-large-md': largeMd,
+        'button-small': small,
+        'button-small-ios': smallIos,
+        'button-small-md': smallMd,
+        'button-raised': raised,
+        'button-raised-ios': raisedIos,
+        'button-raised-md': raisedMd,
+        'button-active': active,
+        'button-outline': outline,
+        'button-outline-ios': outlineIos,
+        'button-outline-md': outlineMd,
+        'button-preloader': preloader,
+        'button-loading': loading,
 
-      disabled,
-    },
-    colorClasses($$props),
-    routerClasses($$props),
-    actionsClasses($$props),
+        disabled,
+      },
+      colorClasses(restProps),
+      routerClasses(restProps),
+      actionsClasses(restProps),
+    ),
   );
 
-  $: tagName = type === 'submit' || type === 'reset' || type === 'button' ? 'button' : 'a';
+  const tagName = $derived(
+    type === 'submit' || type === 'reset' || type === 'button' ? 'button' : 'a',
+  );
 
-  $: icon = useIcon($$props);
-
-  function onClick() {
-    emit('click');
+  const icon = $derived(useIcon(restProps));
+  function onClick(e) {
+    restProps.onClick?.(e);
+    restProps.onclick?.(e);
   }
 </script>
 
-<!-- svelte-ignore a11y-missing-attribute -->
+<!-- svelte-ignore a11y_missing_attribute -->
 {#if tagName === 'button'}
   <button
     bind:this={el}
     use:useRouteProps={routeProps}
     class={classes}
-    on:click={onClick}
     use:useTooltip={{ tooltip, tooltipTrigger }}
     {...attrs}
+    onclick={onClick}
   >
     {#if preloader}
       <Preloader size={preloaderSize} color={preloaderColor} />
@@ -141,7 +145,7 @@
         {#if typeof text !== 'undefined'}
           <span>{plainText(text)}</span>
         {/if}
-        <slot />
+        {@render children?.()}
       </span>
     {:else}
       {#if icon}
@@ -150,7 +154,7 @@
       {#if typeof text !== 'undefined'}
         <span>{plainText(text)}</span>
       {/if}
-      <slot />
+      {@render children?.()}
     {/if}
   </button>
 {:else}
@@ -158,9 +162,9 @@
     bind:this={el}
     use:useRouteProps={routeProps}
     class={classes}
-    on:click={onClick}
     use:useTooltip={{ tooltip, tooltipTrigger }}
     {...attrs}
+    onclick={onClick}
   >
     {#if preloader}
       <Preloader size={preloaderSize} color={preloaderColor} />
@@ -171,7 +175,7 @@
         {#if typeof text !== 'undefined'}
           <span>{plainText(text)}</span>
         {/if}
-        <slot />
+        {@render children?.()}
       </span>
     {:else}
       {#if icon}
@@ -180,7 +184,7 @@
       {#if typeof text !== 'undefined'}
         <span>{plainText(text)}</span>
       {/if}
-      <slot />
+      {@render children?.()}
     {/if}
   </a>
 {/if}

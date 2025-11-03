@@ -22,7 +22,7 @@ export default {
     openIn(router, navigateUrl, options) {
       return routerOpenIn(router, navigateUrl, options);
     },
-    pageComponentLoader({ routerEl, component, options, resolve, reject }) {
+    pageComponentLoader({ routerEl, component, options, resolve, reject, direction }) {
       const router = this;
       const routerId = router.id;
       const el = routerEl;
@@ -60,16 +60,19 @@ export default {
         if (hasSameChildren(childrenBefore, childrenAfter)) return;
         app.f7events.off('viewRouterDidUpdate', onDidUpdate);
 
-        const pageEl = el.children[el.children.length - 1];
+        const pageEl = el.children[direction === 'backward' ? 0 : el.children.length - 1];
         pageData.el = pageEl;
-
         resolve(pageEl);
+        viewRouter.setPages(viewRouter.pages);
         resolved = true;
       }
 
       app.f7events.on('viewRouterDidUpdate', onDidUpdate);
-
-      viewRouter.pages.push(pageData);
+      if (direction === 'backward') {
+        viewRouter.pages.unshift(pageData);
+      } else {
+        viewRouter.pages.push(pageData);
+      }
       viewRouter.setPages(viewRouter.pages);
     },
     removePage($pageEl) {

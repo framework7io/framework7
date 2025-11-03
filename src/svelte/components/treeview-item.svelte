@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import {
     colorClasses,
     routerAttrs,
@@ -7,82 +7,98 @@
     actionsClasses,
     actionsAttrs,
   } from '../shared/mixins.js';
-  import { classNames, extend, plainText, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames, extend } from '../shared/utils.js';
   import { app, f7ready } from '../shared/f7.js';
   import { useIcon } from '../shared/use-icon.js';
 
   import UseIcon from './use-icon.svelte';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    toggle = undefined,
+    itemToggle = false,
+    selectable = false,
+    selected = false,
+    opened = false,
+    label = undefined,
+    loadChildren = false,
+    link = undefined,
+    childrenStart,
+    children,
+    rootStart,
+    root,
+    rootEnd,
+    contentStart,
+    content,
+    contentEnd,
+    labelStart,
+    media,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
+  let el = $state(null);
 
-  export let toggle = undefined;
-  export let itemToggle = false;
-  export let selectable = false;
-  export let selected = false;
-  export let opened = false;
-  export let label = undefined;
-  export let loadChildren = false;
-  export let link = undefined;
-
-  let el;
-
-  $: classes = classNames(
-    className,
-    'treeview-item',
-    {
-      'treeview-item-opened': opened,
-      'treeview-load-children': loadChildren,
-    },
-    colorClasses($$props),
+  const classes = $derived(
+    classNames(
+      className,
+      'treeview-item',
+      {
+        'treeview-item-opened': opened,
+        'treeview-load-children': loadChildren,
+      },
+      colorClasses(restProps),
+    ),
   );
 
-  $: itemRootClasses = classNames(
-    'treeview-item-root',
-    {
-      'treeview-item-selectable': selectable,
-      'treeview-item-selected': selected,
-      'treeview-item-toggle': itemToggle,
-    },
-    routerClasses($$props),
-    actionsClasses($$props),
+  const itemRootClasses = $derived(
+    classNames(
+      'treeview-item-root',
+      {
+        'treeview-item-selectable': selectable,
+        'treeview-item-selected': selected,
+        'treeview-item-toggle': itemToggle,
+      },
+      routerClasses(restProps),
+      actionsClasses(restProps),
+    ),
   );
 
-  $: itemRootAttrs = extend(
-    {
-      href: link === true ? '#' : link || undefined,
-    },
-    routerAttrs($$props),
-    actionsAttrs($$props),
+  const itemRootAttrs = $derived(
+    extend(
+      {
+        href: link === true ? '#' : link || undefined,
+      },
+      routerAttrs(restProps),
+      actionsAttrs(restProps),
+    ),
   );
 
-  /* eslint-disable no-undef */
-  $: hasChildren = $$slots.default || $$slots.children || $$slots['children-start'];
-  /* eslint-enable no-undef */
+  const hasChildren = $derived(children || childrenStart);
 
-  $: needToggle = typeof toggle === 'undefined' ? hasChildren : toggle;
+  const needToggle = $derived(typeof toggle === 'undefined' ? hasChildren : toggle);
 
-  $: icon = useIcon($$props);
+  const icon = $derived(useIcon(restProps));
 
-  $: treeviewRootTag = link || link === '' ? 'a' : 'div';
+  const treeviewRootTag = $derived(link || link === '' ? 'a' : 'div');
 
   function onClick(e) {
-    emit('click', [e]);
+    restProps.onClick?.(e);
+    restProps.onclick?.(e);
   }
   function onOpen(itemEl) {
     if (itemEl !== el) return;
-    emit('treeviewOpen', [el]);
+    restProps.onTreeviewOpen?.(el);
+    restProps.ontreeviewopen?.(el);
   }
   function onClose(itemEl) {
     if (itemEl !== el) return;
-    emit('treeviewClose', [el]);
+    restProps.onTreeviewClose?.(el);
+    restProps.ontreeviewclose?.(el);
   }
   function onLoadChildren(itemEl, done) {
     if (itemEl !== el) return;
-    emit('treeviewLoadChildren', [el, done]);
+    restProps.onTreeviewLoadChildren?.(el, done);
+    restProps.ontreeviewloadchildren?.(el, done);
   }
 
   onMount(() => {
@@ -102,60 +118,64 @@
   });
 </script>
 
-<!-- svelte-ignore a11y-missing-attribute -->
-<div bind:this={el} class={classes} {...restProps($$restProps)}>
+<div bind:this={el} class={classes} {...restProps}>
   {#if treeviewRootTag === 'div'}
-    <div on:click={onClick} class={itemRootClasses} {...itemRootAttrs}>
-      <slot name="root-start" />
+    <div onclick={onClick} class={itemRootClasses} {...itemRootAttrs}>
+      {@render rootStart?.()}
       {#if needToggle}
-        <div class="treeview-toggle" />
+        <div class="treeview-toggle"></div>
       {/if}
       <div class="treeview-item-content">
-        <slot name="content-start" />
+        {@render contentStart?.()}
         {#if icon}
           <UseIcon {icon} />
         {/if}
-        <slot name="media" />
+        {@render media?.()}
         <div class="treeview-item-label">
-          <slot name="label-start" />
-          {plainText(label)}
-          <slot name="label" />
+          {@render labelStart?.()}
+          {#if typeof label === 'function'}
+            {@render label?.()}
+          {:else if typeof label !== 'undefined'}
+            {label}
+          {/if}
         </div>
-        <slot name="content" />
-        <slot name="content-end" />
+        {@render content?.()}
+        {@render contentEnd?.()}
       </div>
-      <slot name="root" />
-      <slot name="root-end" />
+      {@render root?.()}
+      {@render rootEnd?.()}
     </div>
   {:else}
-    <a on:click={onClick} class={itemRootClasses} {...itemRootAttrs}>
-      <slot name="root-start" />
+    <a onclick={onClick} class={itemRootClasses} {...itemRootAttrs}>
+      {@render rootStart?.()}
       {#if needToggle}
-        <div class="treeview-toggle" />
+        <div class="treeview-toggle"></div>
       {/if}
       <div class="treeview-item-content">
-        <slot name="content-start" />
+        {@render contentStart?.()}
         {#if icon}
           <UseIcon {icon} />
         {/if}
-        <slot name="media" />
+        {@render media?.()}
         <div class="treeview-item-label">
-          <slot name="label-start" />
-          {plainText(label)}
-          <slot name="label" />
+          {@render labelStart?.()}
+          {#if typeof label === 'function'}
+            {@render label?.()}
+          {:else if typeof label !== 'undefined'}
+            {label}
+          {/if}
         </div>
-        <slot name="content" />
-        <slot name="content-end" />
+        {@render content?.()}
+        {@render contentEnd?.()}
       </div>
-      <slot name="root" />
-      <slot name="root-end" />
+      {@render root?.()}
+      {@render rootEnd?.()}
     </a>
   {/if}
   {#if hasChildren}
     <div class="treeview-item-children">
-      <slot name="children-start" />
-      <slot />
-      <slot name="children" />
+      {@render childrenStart?.()}
+      {@render children?.()}
     </div>
   {/if}
 </div>

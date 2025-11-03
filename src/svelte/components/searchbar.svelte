@@ -1,54 +1,55 @@
 <script>
-  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, noUndefinedProps, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames, noUndefinedProps } from '../shared/utils.js';
   import { app, f7ready } from '../shared/f7.js';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    outline = true,
+    form = true,
+    placeholder = 'Search',
+    autocomplete = undefined,
+    autocorrect = undefined,
+    autocapitalize = undefined,
+    spellcheck = undefined,
+    disableButton = true,
+    disableButtonText = '',
+    clearButton = true,
+    value = undefined,
+    inputEvents = 'change input compositionend',
+    expandable = false,
+    inline = false,
+    searchContainer = undefined,
+    searchIn = '.item-title',
+    searchItem = 'li',
+    searchGroup = '.list-group',
+    searchGroupTitle = '.list-group-title',
+    foundEl = '.searchbar-found',
+    notFoundEl = '.searchbar-not-found',
+    backdrop = undefined,
+    backdropEl = undefined,
+    hideOnEnableEl = '.searchbar-hide-on-enable',
+    hideOnSearchEl = '.searchbar-hide-on-search',
+    ignore = '.searchbar-ignore',
+    customSearch = false,
+    removeDiacritics = false,
+    hideGroupTitles = true,
+    hideGroups = true,
+    init = true,
+    f7Slot = 'fixed',
+    beforeInner,
+    innerStart,
+    inputWrapStart,
+    inputWrapEnd,
+    innerEnd,
+    afterInner,
+    children,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
-
-  export let outline = true;
-  export let form = true;
-  export let placeholder = 'Search';
-  export let autocomplete = undefined;
-  export let autocorrect = undefined;
-  export let autocapitalize = undefined;
-  export let spellcheck = undefined;
-  export let disableButton = true;
-  export let disableButtonText = '';
-  export let clearButton = true;
-  // Input Value
-  export let value = undefined;
-
-  // SB Params
-  export let inputEvents = 'change input compositionend';
-  export let expandable = false;
-  export let inline = false;
-  export let searchContainer = undefined;
-  export let searchIn = '.item-title';
-  export let searchItem = 'li';
-  export let searchGroup = '.list-group';
-  export let searchGroupTitle = '.list-group-title';
-  export let foundEl = '.searchbar-found';
-  export let notFoundEl = '.searchbar-not-found';
-  export let backdrop = undefined;
-  export let backdropEl = undefined;
-  export let hideOnEnableEl = '.searchbar-hide-on-enable';
-  export let hideOnSearchEl = '.searchbar-hide-on-search';
-  export let ignore = '.searchbar-ignore';
-  export let customSearch = false;
-  export let removeDiacritics = false;
-  export let hideGroupTitles = true;
-  export let hideGroups = true;
-  export let init = true;
-
-  export let f7Slot = 'fixed';
-
-  let el;
-  let f7Searchbar;
+  let el = $state(null);
+  let f7Searchbar = $state(null);
 
   export function instance() {
     return f7Searchbar;
@@ -74,44 +75,53 @@
     return f7Searchbar.clear();
   }
 
-  $: classes = classNames(
-    className,
-    'searchbar',
-    {
-      'searchbar-inline': inline,
-      'no-outline': !outline,
-      'searchbar-expandable': expandable,
-    },
-    colorClasses($$props),
+  const classes = $derived(
+    classNames(
+      className,
+      'searchbar',
+      {
+        'searchbar-inline': inline,
+        'no-outline': !outline,
+        'searchbar-expandable': expandable,
+      },
+      colorClasses(restProps),
+    ),
   );
 
   function onChange(event) {
-    emit('change', [event]);
+    restProps.onChange?.(event);
+    restProps.onchange?.(event);
   }
 
   function onInput(event) {
-    emit('input', [event]);
+    restProps.onInput?.(event);
+    restProps.oninput?.(event);
     value = event.target.value;
   }
 
   function onFocus(event) {
-    emit('focus', [event]);
+    restProps.onFocus?.(event);
+    restProps.onfocus?.(event);
   }
 
   function onBlur(event) {
-    emit('blur', [event]);
+    restProps.onBlur?.(event);
+    restProps.onblur?.(event);
   }
 
   function onSubmit(event) {
-    emit('submit', [event]);
+    restProps.onSubmit?.(event);
+    restProps.onsubmit?.(event);
   }
 
   function onClearButtonClick(event) {
-    emit('click:clear', [event]);
+    restProps.onClickClear?.(event);
+    restProps.onclickclear?.(event);
   }
 
   function onDisableButtonClick(event) {
-    emit('click:disable', [event]);
+    restProps.onClickDisable?.(event);
+    restProps.onclickdisable?.(event);
   }
 
   onMount(() => {
@@ -141,16 +151,20 @@
         inline,
         on: {
           search(searchbar, query, previousQuery) {
-            emit('searchbarSearch', [searchbar, query, previousQuery]);
+            restProps.onSearchbarSearch?.(searchbar, query, previousQuery);
+            restProps.onsearchbarsearch?.(searchbar, query, previousQuery);
           },
           clear(searchbar, previousQuery) {
-            emit('searchbarClear', [searchbar, previousQuery]);
+            restProps.onSearchbarClear?.(searchbar, previousQuery);
+            restProps.onsearchbarclear?.(searchbar, previousQuery);
           },
           enable(searchbar) {
-            emit('searchbarEnable', [searchbar]);
+            restProps.onSearchbarEnable?.(searchbar);
+            restProps.onsearchbarenable?.(searchbar);
           },
           disable(searchbar) {
-            emit('searchbarDisable', [searchbar]);
+            restProps.onSearchbarDisable?.(searchbar);
+            restProps.onsearchbardisable?.(searchbar);
           },
         },
       });
@@ -172,18 +186,12 @@
 </script>
 
 {#if form}
-  <form
-    bind:this={el}
-    class={classes}
-    on:submit={onSubmit}
-    data-f7-slot={f7Slot}
-    {...restProps($$restProps)}
-  >
-    <slot searchbar={f7Searchbar} name="before-inner" />
+  <form bind:this={el} class={classes} onsubmit={onSubmit} data-f7-slot={f7Slot} {...restProps}>
+    {@render restProps.beforeInner?.(f7Searchbar)}
     <div class="searchbar-inner">
-      <slot searchbar={f7Searchbar} name="inner-start" />
+      {@render restProps.innerStart?.(f7Searchbar)}
       <div class="searchbar-input-wrap">
-        <slot searchbar={f7Searchbar} name="input-wrap-start" />
+        {@render restProps.inputWrapStart?.(f7Searchbar)}
         <input
           value={typeof value === 'undefined' ? '' : value}
           {placeholder}
@@ -192,37 +200,35 @@
           {autocapitalize}
           {spellcheck}
           type="search"
-          on:input={onInput}
-          on:change={onChange}
-          on:focus={onFocus}
-          on:blur={onBlur}
+          oninput={onInput}
+          onchange={onChange}
+          onfocus={onFocus}
+          onblur={onBlur}
         />
-        <i class="searchbar-icon" />
-        {#if clearButton}<span on:click={onClearButtonClick} class="input-clear-button" />{/if}
-        <slot searchbar={f7Searchbar} name="input-wrap-end" />
+        <i class="searchbar-icon"></i>
+        {#if clearButton}<span onclick={onClearButtonClick} class="input-clear-button" />{/if}
+        {@render restProps.inputWrapEnd?.(f7Searchbar)}
       </div>
       {#if disableButton}
-        <span on:click={onDisableButtonClick} class="searchbar-disable-button"
-          >
-          <i class="icon icon-close" />
+        <span onclick={onDisableButtonClick} class="searchbar-disable-button">
+          <i class="icon icon-close"></i>
           {#if disableButtonText}
             <span>{disableButtonText}</span>
           {/if}
-        </span
-        >
+        </span>
       {/if}
-      <slot searchbar={f7Searchbar} name="inner-end" />
-      <slot searchbar={f7Searchbar} />
+      {@render restProps.innerEnd?.(f7Searchbar)}
+      {@render restProps.children?.(f7Searchbar)}
     </div>
-    <slot searchbar={f7Searchbar} name="after-inner" />
+    {@render restProps.afterInner?.(f7Searchbar)}
   </form>
 {:else}
-  <div bind:this={el} class={classes} data-f7-slot={f7Slot} {...restProps($$restProps)}>
-    <slot searchbar={f7Searchbar} name="before-inner" />
+  <div bind:this={el} class={classes} data-f7-slot={f7Slot} {...restProps}>
+    {@render restProps.beforeInner?.(f7Searchbar)}
     <div class="searchbar-inner">
-      <slot searchbar={f7Searchbar} name="inner-start" />
+      {@render restProps.innerStart?.(f7Searchbar)}
       <div class="searchbar-input-wrap">
-        <slot searchbar={f7Searchbar} name="input-wrap-start" />
+        {@render restProps.inputWrapStart?.(f7Searchbar)}
         <input
           value={typeof value === 'undefined' ? '' : value}
           {placeholder}
@@ -231,23 +237,23 @@
           {autocapitalize}
           {spellcheck}
           type="search"
-          on:input={onInput}
-          on:change={onChange}
-          on:focus={onFocus}
-          on:blur={onBlur}
+          oninput={onInput}
+          onchange={onChange}
+          onfocus={onFocus}
+          onblur={onBlur}
         />
-        <i class="searchbar-icon" />
-        {#if clearButton}<span on:click={onClearButtonClick} class="input-clear-button" />{/if}
-        <slot searchbar={f7Searchbar} name="input-wrap-end" />
+        <i class="searchbar-icon"></i>
+        {#if clearButton}<span onclick={onClearButtonClick} class="input-clear-button" />{/if}
+        {@render restProps.inputWrapEnd?.(f7Searchbar)}
       </div>
       {#if disableButton}
-        <span on:click={onDisableButtonClick} class="searchbar-disable-button"
+        <span onclick={onDisableButtonClick} class="searchbar-disable-button"
           >{disableButtonText}</span
         >
       {/if}
-      <slot searchbar={f7Searchbar} name="inner-end" />
-      <slot searchbar={f7Searchbar} />
+      {@render restProps.innerEnd?.(f7Searchbar)}
+      {@render restProps.children?.(f7Searchbar)}
     </div>
-    <slot searchbar={f7Searchbar} name="after-inner" />
+    {@render restProps.afterInner?.(f7Searchbar)}
   </div>
 {/if}

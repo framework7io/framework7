@@ -1,40 +1,40 @@
 <script>
-  import { onMount, onDestroy, beforeUpdate, afterUpdate } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
   import { classNames, noUndefinedProps } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
   import { app, f7ready } from '../shared/f7.js';
 
-  let className = undefined;
-  export { className as class };
+  let {
+    class: className,
+    autoLayout = false,
+    messages = [],
+    newMessagesFirst = false,
+    scrollMessages = true,
+    scrollMessagesOnEdge = true,
+    firstMessageRule = undefined,
+    lastMessageRule = undefined,
+    tailMessageRule = undefined,
+    sameNameMessageRule = undefined,
+    sameHeaderMessageRule = undefined,
+    sameFooterMessageRule = undefined,
+    sameAvatarMessageRule = undefined,
+    customClassMessageRule = undefined,
+    renderMessage = undefined,
+    typing = false,
+    init = true,
+    children,
+    ...restProps
+  } = $props();
 
-  export let autoLayout = false;
-  export let messages = [];
-  export let newMessagesFirst = false;
-  export let scrollMessages = true;
-  export let scrollMessagesOnEdge = true;
-  export let firstMessageRule = undefined;
-  export let lastMessageRule = undefined;
-  export let tailMessageRule = undefined;
-  export let sameNameMessageRule = undefined;
-  export let sameHeaderMessageRule = undefined;
-  export let sameFooterMessageRule = undefined;
-  export let sameAvatarMessageRule = undefined;
-  export let customClassMessageRule = undefined;
-  export let renderMessage = undefined;
-  export let typing = false;
-
-  export let init = true;
-
-  let el;
-  let f7Messages;
-  let childrenBeforeUpdated = null;
+  let el = $state(undefined);
+  let f7Messages = $state(undefined);
+  let childrenBeforeUpdated = $state(null);
 
   export function instance() {
     return f7Messages;
   }
 
-  $: classes = classNames(className, 'messages', colorClasses($$props));
+  const classes = $derived(classNames(className, 'messages', colorClasses(restProps)));
 
   onMount(() => {
     if (!init) return;
@@ -62,7 +62,7 @@
     });
   });
 
-  beforeUpdate(() => {
+  $effect.pre(() => {
     if (!init || !el) return;
     const children = el.children;
     if (!children) return;
@@ -73,7 +73,7 @@
     }
   });
 
-  afterUpdate(() => {
+  $effect(() => {
     if (!init) return;
     if (!el) return;
 
@@ -118,9 +118,9 @@
     else f7Messages.hideTyping();
   }
 
-  $: watchTyping(typing);
+  $effect(() => watchTyping(typing));
 </script>
 
-<div bind:this={el} class={classes} {...restProps($$restProps)}>
-  <slot messages={f7Messages} />
+<div bind:this={el} class={classes} {...restProps}>
+  {@render children?.(f7Messages)}
 </div>

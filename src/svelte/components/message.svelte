@@ -1,137 +1,166 @@
 <script>
   /* eslint-disable no-undef */
-  import { createEventDispatcher } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, plainText, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames, plainText } from '../shared/utils.js';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    text = undefined,
+    htmlText = undefined,
+    name = undefined,
+    avatar = undefined,
+    type = 'sent',
+    image = undefined,
+    header = undefined,
+    footer = undefined,
+    textHeader = undefined,
+    textFooter = undefined,
+    first = undefined,
+    last = undefined,
+    tail = undefined,
+    sameName = undefined,
+    sameHeader = undefined,
+    sameFooter = undefined,
+    sameAvatar = undefined,
+    typing = undefined,
+    start = undefined,
+    contentStart = undefined,
+    contentEnd = undefined,
+    end = undefined,
+    bubbleStart = undefined,
+    bubbleEnd = undefined,
+    children,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
-
-  export let text = undefined;
-  export let htmlText = undefined;
-  export let name = undefined;
-  export let avatar = undefined;
-  export let type = 'sent';
-  export let image = undefined;
-  export let header = undefined;
-  export let footer = undefined;
-  export let textHeader = undefined;
-  export let textFooter = undefined;
-  export let first = undefined;
-  export let last = undefined;
-  export let tail = undefined;
-  export let sameName = undefined;
-  export let sameHeader = undefined;
-  export let sameFooter = undefined;
-  export let sameAvatar = undefined;
-  export let typing = undefined;
-
-  $: classes = classNames(
-    className,
-    'message',
-    {
-      'message-sent': type === 'sent' || !type,
-      'message-received': type === 'received',
-      'message-typing': typing,
-      'message-first': first,
-      'message-last': last,
-      'message-tail': tail,
-      'message-same-name': sameName,
-      'message-same-header': sameHeader,
-      'message-same-footer': sameFooter,
-      'message-same-avatar': sameAvatar,
-    },
-    colorClasses($$props),
+  const classes = $derived(
+    classNames(
+      className,
+      'message',
+      {
+        'message-sent': type === 'sent' || !type,
+        'message-received': type === 'received',
+        'message-typing': typing,
+        'message-first': first,
+        'message-last': last,
+        'message-tail': tail,
+        'message-same-name': sameName,
+        'message-same-header': sameHeader,
+        'message-same-footer': sameFooter,
+        'message-same-avatar': sameAvatar,
+      },
+      colorClasses(restProps),
+    ),
   );
 
-  $: hasAvatarSlots = $$slots.avatar;
-  $: hasNameSlots = $$slots.name;
-  $: hasHeaderSlots = $$slots.header;
-  $: hasImageSlots = $$slots.image;
-  $: hasTextHeaderSlots = $$slots['text-header'];
-  $: hasTextFooterSlots = $$slots['text-footer'];
-  $: hasTextSlots = $$slots.text;
-  $: hasFooterSlots = $$slots.footer;
+  const hasAvatarSlots = $derived(avatar);
+  const hasNameSlots = $derived(name);
+  const hasHeaderSlots = $derived(header);
+  const hasImageSlots = $derived(image);
+  const hasTextHeaderSlots = $derived(textHeader);
+  const hasTextFooterSlots = $derived(textFooter);
+  const hasTextSlots = $derived(text);
+  const hasFooterSlots = $derived(footer);
 
   function onClick() {
-    emit('click');
+    restProps.onclick?.();
   }
 
   function onNameClick() {
-    emit('clickName');
+    restProps.onclickname?.();
+    restProps.onClickName?.();
   }
 
   function onTextClick() {
-    emit('clickText');
+    restProps.onclicktext?.();
+    restProps.onClickText?.();
   }
 
   function onAvatarClick() {
-    emit('clickAvatar');
+    restProps.onclickavatar?.();
+    restProps.onClickAvatar?.();
   }
 
   function onHeaderClick() {
-    emit('clickHeader');
+    restProps.onclickheader?.();
+    restProps.onClickHeader?.();
   }
 
   function onFooterClick() {
-    emit('clickFooter');
+    restProps.onclickfooter?.();
+    restProps.onClickFooter?.();
   }
 
   function onBubbleClick() {
-    emit('clickBubble');
+    restProps.onclickbubble?.();
+    restProps.onClickBubble?.();
   }
 </script>
 
-<!-- svelte-ignore a11y-missing-attribute -->
-<div class={classes} on:click={onClick} {...restProps($$restProps)}>
-  <slot name="start" />
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div class={classes} onclick={onClick} {...restProps}>
+  {@render start?.()}
   {#if avatar || hasAvatarSlots}
     <div
-      on:click={onAvatarClick}
+      onclick={onAvatarClick}
       class="message-avatar"
-      style={avatar ? `background-image: url(${avatar})` : undefined}
+      style={avatar && typeof avatar === 'string' ? `background-image: url(${avatar})` : undefined}
     >
-      <slot name="avatar" />
+      {#if typeof avatar === 'function'}
+        {@render avatar?.()}
+      {/if}
     </div>
   {/if}
   <div class="message-content">
-    <slot name="content-start" />
+    {@render contentStart?.()}
     {#if hasNameSlots || name}
-      <div class="message-name" on:click={onNameClick}>
-        {plainText(name)}
-        <slot name="name" />
+      <div class="message-name" onclick={onNameClick}>
+        {#if typeof name === 'function'}
+          {@render name?.()}
+        {:else}
+          {name}
+        {/if}
       </div>
     {/if}
     {#if hasHeaderSlots || header}
-      <div class="message-header" on:click={onHeaderClick}>
-        {plainText(header)}
-        <slot name="header" />
+      <div class="message-header" onclick={onHeaderClick}>
+        {#if typeof header === 'function'}
+          {@render header?.()}
+        {:else}
+          {header}
+        {/if}
       </div>
     {/if}
-    <div class="message-bubble" on:click={onBubbleClick}>
-      <slot name="bubble-start" />
+    <div class="message-bubble" onclick={onBubbleClick}>
+      {@render bubbleStart?.()}
       {#if hasImageSlots || image}
         <div class="message-image">
-          {#if image}
+          {#if typeof image === 'function'}
+            {@render image?.()}
+          {:else if typeof image === 'string' && image}
             <img src={image} />
           {/if}
-          <slot name="image" />
         </div>
       {/if}
       {#if hasTextHeaderSlots || textHeader}
         <div class="message-text-header">
-          {plainText(textHeader)}
-          <slot name="text-header" />
+          {#if typeof textHeader === 'function'}
+            {@render textHeader?.()}
+          {:else}
+            {textHeader}
+          {/if}
         </div>
       {/if}
       {#if hasTextSlots || text || htmlText || typing}
-        <div class="message-text" on:click={onTextClick}>
-          {plainText(text)}
+        <div class="message-text" onclick={onTextClick}>
+          {#if typeof text === 'function'}
+            {@render text?.()}
+          {:else}
+            {text}
+          {/if}
           {#if htmlText}{@html htmlText}{/if}
-          <slot name="text" />
+
           {#if typing}
             <div class="message-typing-indicator">
               <div />
@@ -143,20 +172,26 @@
       {/if}
       {#if hasTextFooterSlots || textFooter}
         <div class="message-text-footer">
-          {plainText(textFooter)}
-          <slot name="text-footer" />
+          {#if typeof textFooter === 'function'}
+            {@render textFooter?.()}
+          {:else}
+            {textFooter}
+          {/if}
         </div>
       {/if}
-      <slot name="bubble-end" />
-      <slot />
+      {@render bubbleEnd?.()}
+      {@render children?.()}
     </div>
     {#if hasFooterSlots || footer}
-      <div class="message-footer" on:click={onFooterClick}>
-        {plainText(footer)}
-        <slot name="footer" />
+      <div class="message-footer" onclick={onFooterClick}>
+        {#if typeof footer === 'function'}
+          {@render footer?.()}
+        {:else}
+          {footer}
+        {/if}
       </div>
     {/if}
-    <slot name="content-end" />
+    {@render contentEnd?.()}
   </div>
-  <slot name="end" />
+  {@render end?.()}
 </div>
