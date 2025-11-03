@@ -1,48 +1,47 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames } from '../shared/utils.js';
   import { useTab } from '../shared/use-tab.js';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    inset = false,
+    insetIos = false,
+    insetMd = false,
+    xsmallInset = false,
+    xsmallInsetIos = false,
+    xsmallInsetMd = false,
+    smallInset = false,
+    smallInsetIos = false,
+    smallInsetMd = false,
+    mediumInset = false,
+    mediumInsetIos = false,
+    mediumInsetMd = false,
+    largeInset = false,
+    largeInsetIos = false,
+    largeInsetMd = false,
+    xlargeInset = false,
+    xlargeInsetIos = false,
+    xlargeInsetMd = false,
+    strong = false,
+    strongIos = false,
+    strongMd = false,
+    tabs = false,
+    tab = false,
+    tabActive = false,
+    accordionList = false,
+    accordionOpposite = false,
+    outline = false,
+    outlineMd = false,
+    outlineIos = false,
+    children,
+    ...restProps
+  } = $props();
 
-  export let inset = false;
-  export let insetIos = false;
-  export let insetMd = false;
-  export let xsmallInset = false;
-  export let xsmallInsetIos = false;
-  export let xsmallInsetMd = false;
-  export let smallInset = false;
-  export let smallInsetIos = false;
-  export let smallInsetMd = false;
-  export let mediumInset = false;
-  export let mediumInsetIos = false;
-  export let mediumInsetMd = false;
-  export let largeInset = false;
-  export let largeInsetIos = false;
-  export let largeInsetMd = false;
-  export let xlargeInset = false;
-  export let xlargeInsetIos = false;
-  export let xlargeInsetMd = false;
-  export let strong = false;
-  export let strongIos = false;
-  export let strongMd = false;
-  export let tabs = false;
-  export let tab = false;
-  export let tabActive = false;
-  export let accordionList = false;
-  export let accordionOpposite = false;
-  export let outline = false;
-  export let outlineMd = false;
-  export let outlineIos = false;
-
-  let className = undefined;
-  export { className as class };
 
   let el;
 
-  $: classes = classNames(
+  const classes = $derived(classNames(
     className,
     'block',
     {
@@ -76,12 +75,12 @@
       'block-outline-md': outlineMd,
       'block-outline-ios': outlineIos,
     },
-    colorClasses($$props),
-  );
+    colorClasses(restProps),
+  ));
 
-  useTab(() => el, emit);
+  useTab(() => el, restProps);
 </script>
 
-<div class={classes} bind:this={el} {...restProps($$restProps)}>
-  <slot />
+<div class={classes} bind:this={el} {...restProps}>
+  {@render children?.()}
 </div>
