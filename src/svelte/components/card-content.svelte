@@ -1,23 +1,24 @@
 <script>
   import { colorClasses } from '../shared/mixins.js';
   import { classNames } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
 
-  let className = undefined;
-  export { className as class };
+  let {
+    class: className,
+    padding = true,
+    children,
+    ...restProps
+  } = $props();
 
-  export let padding = true;
-
-  $: classes = classNames(
+  const classes = $derived(classNames(
     className,
     'card-content',
     {
       'card-content-padding': padding,
     },
-    colorClasses($$props),
-  );
+    colorClasses(restProps),
+  ));
 </script>
 
-<div class={classes} {...restProps($$restProps)}>
-  <slot />
+<div class={classes} {...restProps}>
+  {@render children?.()}
 </div>

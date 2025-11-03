@@ -1,45 +1,49 @@
 <script>
-  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, plainText, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames, plainText } from '../shared/utils.js';
   import { app, f7ready } from '../shared/f7.js';
 
   import CardHeader from './card-header.svelte';
   import CardContent from './card-content.svelte';
   import CardFooter from './card-footer.svelte';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    title = undefined,
+    raised = false,
+    outline = false,
+    outlineIos = false,
+    outlineMd = false,
+    headerDivider = false,
+    footerDivider = false,
+    expandable = false,
+    expandableAnimateWidth = false,
+    expandableOpened = false,
+    animate = undefined,
+    hideNavbarOnOpen = undefined,
+    hideToolbarOnOpen = undefined,
+    hideStatusbarOnOpen = undefined,
+    scrollableEl = undefined,
+    swipeToClose = undefined,
+    closeByBackdropClick = undefined,
+    backdrop = undefined,
+    backdropEl = undefined,
+    padding = true,
+    children,
+    header,
+    content,
+    footer,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
 
-  export let title = undefined;
-  export let content = undefined;
-  export let footer = undefined;
-  export let raised = false;
-  export let outline = false;
-  export let outlineIos = false;
-  export let outlineMd = false;
-  export let headerDivider = false;
-  export let footerDivider = false;
-  export let expandable = false;
-  export let expandableAnimateWidth = false;
-  export let expandableOpened = false;
-  export let animate = undefined;
-  export let hideNavbarOnOpen = undefined;
-  export let hideToolbarOnOpen = undefined;
-  export let hideStatusbarOnOpen = undefined;
-  export let scrollableEl = undefined;
-  export let swipeToClose = undefined;
-  export let closeByBackdropClick = undefined;
-  export let backdrop = undefined;
-  export let backdropEl = undefined;
-  export let padding = true;
+
+
 
   let el;
 
-  $: classes = classNames(
+  const classes = $derived(classNames(
     className,
     'card',
     {
@@ -52,14 +56,8 @@
       'card-expandable': expandable,
       'card-expandable-animate-width': expandableAnimateWidth,
     },
-    colorClasses($$props),
-  );
-
-  /* eslint-disable no-undef */
-  $: hasHeaderSlots = $$slots.header;
-  $: hasContentSlots = $$slots.content;
-  $: hasFooterSlots = $$slots.footer;
-  /* eslint-enable no-undef */
+    colorClasses(restProps),
+  ));
 
   function open() {
     app.f7.card.open(el);
@@ -82,28 +80,28 @@
     }
   }
 
-  $: watchOpened(expandableOpened);
+  $effect(() => watchOpened(expandableOpened));
 
   function onBeforeOpen(cardEl, prevent) {
     if (cardEl !== el) return;
-    emit('cardBeforeOpen', [el, prevent]);
+    restProps.cardBeforeOpen?.(el, prevent);
   }
   function onOpen(cardEl) {
     if (cardEl !== el) return;
-    emit('cardOpen', [el]);
+    restProps.cardOpen?.(el);
     expandableOpened = true;
   }
   function onOpened(cardEl, pageEl) {
     if (cardEl !== el) return;
-    emit('cardOpened', [el, pageEl]);
+    restProps.cardOpened?.(el, pageEl);
   }
   function onClose(cardEl) {
     if (cardEl !== el) return;
-    emit('cardClose', [el]);
+    restProps.cardClose?.(el);
   }
   function onClosed(cardEl, pageEl) {
     if (cardEl !== el) return;
-    emit('cardClosed', [el, pageEl]);
+    restProps.cardClosed?.(el, pageEl);
     expandableOpened = false;
   }
 
@@ -152,25 +150,35 @@
     : closeByBackdropClick.toString()}
   data-backdrop={typeof backdrop === 'undefined' ? backdrop : backdrop.toString()}
   data-backdrop-el={backdropEl}
-  {...restProps($$restProps)}
+  {...restProps}
 >
-  {#if typeof title !== 'undefined' || hasHeaderSlots}
+  {#if typeof title !== 'undefined' || typeof header !== 'undefined'}
     <CardHeader>
       {plainText(title)}
-      <slot name="header" />
+      {#if typeof header === 'function'}
+        {@render header?.()}
+      {:else if (typeof header !== 'undefined')}
+        {header}
+      {/if}
     </CardHeader>
   {/if}
-  {#if typeof content !== 'undefined' || hasContentSlots}
+  {#if typeof content !== 'undefined' || typeof content !== 'undefined'}
     <CardContent {padding}>
-      {plainText(content)}
-      <slot name="content" />
+      {#if typeof content === 'function'}
+        {@render content?.()}
+      {:else if (typeof content !== 'undefined')}
+        {content}
+      {/if}
     </CardContent>
   {/if}
-  {#if typeof footer !== 'undefined' || hasFooterSlots}
+  {#if typeof footer !== 'undefined' || typeof footer !== 'undefined'}
     <CardFooter>
-      {plainText(footer)}
-      <slot name="footer" />
+      {#if typeof footer === 'function'}
+        {@render footer?.()}
+      {:else if (typeof footer !== 'undefined')}
+        {footer}
+      {/if}
     </CardFooter>
   {/if}
-  <slot />
+  {@render children?.()}
 </div>
