@@ -37,27 +37,25 @@
     ...restProps
   } = $props();
 
+  let el = $state(null);
 
-
-
-
-  let el;
-
-  const classes = $derived(classNames(
-    className,
-    'card',
-    {
-      'card-outline': outline,
-      'card-outline-ios': outlineIos,
-      'card-outline-md': outlineMd,
-      'card-raised': raised,
-      'card-header-divider': headerDivider,
-      'card-footer-divider': footerDivider,
-      'card-expandable': expandable,
-      'card-expandable-animate-width': expandableAnimateWidth,
-    },
-    colorClasses(restProps),
-  ));
+  const classes = $derived(
+    classNames(
+      className,
+      'card',
+      {
+        'card-outline': outline,
+        'card-outline-ios': outlineIos,
+        'card-outline-md': outlineMd,
+        'card-raised': raised,
+        'card-header-divider': headerDivider,
+        'card-footer-divider': footerDivider,
+        'card-expandable': expandable,
+        'card-expandable-animate-width': expandableAnimateWidth,
+      },
+      colorClasses(restProps),
+    ),
+  );
 
   function open() {
     app.f7.card.open(el);
@@ -84,24 +82,24 @@
 
   function onBeforeOpen(cardEl, prevent) {
     if (cardEl !== el) return;
-    restProps.cardBeforeOpen?.(el, prevent);
+    restProps.onCardBeforeOpen?.(el, prevent);
   }
   function onOpen(cardEl) {
     if (cardEl !== el) return;
-    restProps.cardOpen?.(el);
+    restProps.onCardOpen?.(el);
     expandableOpened = true;
   }
   function onOpened(cardEl, pageEl) {
     if (cardEl !== el) return;
-    restProps.cardOpened?.(el, pageEl);
+    restProps.onCardOpened?.(el, pageEl);
   }
   function onClose(cardEl) {
     if (cardEl !== el) return;
-    restProps.cardClose?.(el);
+    restProps.onCardClose?.(el);
   }
   function onClosed(cardEl, pageEl) {
     if (cardEl !== el) return;
-    restProps.cardClosed?.(el, pageEl);
+    restProps.onCardClosed?.(el, pageEl);
     expandableOpened = false;
   }
 
@@ -157,7 +155,7 @@
       {plainText(title)}
       {#if typeof header === 'function'}
         {@render header?.()}
-      {:else if (typeof header !== 'undefined')}
+      {:else if typeof header !== 'undefined'}
         {header}
       {/if}
     </CardHeader>
@@ -166,7 +164,7 @@
     <CardContent {padding}>
       {#if typeof content === 'function'}
         {@render content?.()}
-      {:else if (typeof content !== 'undefined')}
+      {:else if typeof content !== 'undefined'}
         {content}
       {/if}
     </CardContent>
@@ -175,7 +173,7 @@
     <CardFooter>
       {#if typeof footer === 'function'}
         {@render footer?.()}
-      {:else if (typeof footer !== 'undefined')}
+      {:else if typeof footer !== 'undefined'}
         {footer}
       {/if}
     </CardFooter>

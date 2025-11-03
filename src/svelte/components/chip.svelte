@@ -6,7 +6,6 @@
 
   import UseIcon from './use-icon.svelte';
 
-
   let {
     class: className,
     media = undefined,
@@ -21,38 +20,37 @@
     ...restProps
   } = $props();
 
-  let el;
+  let el = $state(null);
 
-  const classes = $derived(classNames(
-    className,
-    'chip',
-    {
-      'chip-outline': outline,
-    },
-    colorClasses(restProps),
-  ));
+  const classes = $derived(
+    classNames(
+      className,
+      'chip',
+      {
+        'chip-outline': outline,
+      },
+      colorClasses(restProps),
+    ),
+  );
 
-  const mediaClasses = $derived(classNames(
-    'chip-media',
-    mediaTextColor && `text-color-${mediaTextColor}`,
-    mediaBgColor && `bg-color-${mediaBgColor}`,
-  ));
+  const mediaClasses = $derived(
+    classNames(
+      'chip-media',
+      mediaTextColor && `text-color-${mediaTextColor}`,
+      mediaBgColor && `bg-color-${mediaBgColor}`,
+    ),
+  );
 
   const icon = $derived(useIcon(restProps));
 
   function onDeleteClick(e) {
-    restProps.deleteClick?.(e);
+    restProps.onDelete?.(e);
   }
 </script>
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <!-- svelte-ignore a11y-missing-content -->
-<div
-  bind:this={el}
-  class={classes}
-  {...restProps}
-  use:useTooltip={{ tooltip, tooltipTrigger }}
->
+<div bind:this={el} class={classes} {...restProps} use:useTooltip={{ tooltip, tooltipTrigger }}>
   {#if media || icon}
     <div class={mediaClasses}>
       {#if icon}

@@ -1,49 +1,51 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
 
   import { colorClasses } from '../shared/mixins.js';
-  import { classNames, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { classNames } from '../shared/utils.js';
   import { app } from '../shared/f7.js';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
 
-  let className = undefined;
-  export { className as class };
-
-  export let strong = false;
-  export let close = true;
+  let {
+    class: className,
+    strong = false,
+    close = true,
+    children,
+    media,
+    ...restProps
+  } = $props();
 
   let el;
 
-  // eslint-disable-next-line
-  $: hasMediaSlots = $$slots.media;
 
-  $: classes = classNames(
+  const classes = $derived(classNames(
     className,
     {
       'actions-button': true,
       'actions-button-strong': strong,
     },
-    colorClasses($$props),
-  );
+    colorClasses(restProps),
+  ));
 
   function onClick() {
     if (close && app.f7) {
       const dom7 = app.f7.$;
       app.f7.actions.close(dom7(el).parents('.actions-modal'));
     }
-    emit('click');
+    restProps.onclick?.();
   }
 </script>
 
-<div class={classes} on:click={onClick} bind:this={el} {...restProps($$restProps)}>
-  {#if hasMediaSlots}
+<div class={classes} onclick={onClick} bind:this={el} {...restProps}>
+  {#if typeof media !== 'undefined'}
     <div class="actions-button-media">
-      <slot name="media" />
+      {#if typeof media === 'function'}
+        {@render media?.()}
+      {:else}
+        {media}
+      {/if}
     </div>
   {/if}
   <div class="actions-button-text">
-    <slot />
+    {@render children?.()}
   </div>
 </div>

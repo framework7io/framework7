@@ -15,18 +15,18 @@
     ...restProps
   } = $props();
 
+  let inputEl = $state(null);
 
-
-  let inputEl;
-
-  const classes = $derived(classNames(
-    className,
-    {
-      checkbox: true,
-      disabled,
-    },
-    colorClasses(restProps),
-  ));
+  const classes = $derived(
+    classNames(
+      className,
+      {
+        checkbox: true,
+        disabled,
+      },
+      colorClasses(restProps),
+    ),
+  );
 
   function onChange(event) {
     checked = event.target.checked;
@@ -43,8 +43,7 @@
     if (inputEl) {
       inputEl.indeterminate = indeterminate;
     }
-  })
-
+  });
 </script>
 
 <label class={classes} {...restProps}>

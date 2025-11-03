@@ -62,23 +62,23 @@
   </Block>
   <BlockTitle>Deletable Chips / Tags</BlockTitle>
   <Block strongIos outlineIos>
-    <Chip text="Example Chip" deleteable deleteClick={deleteChip} />
+    <Chip text="Example Chip" deleteable onDelete={deleteChip} />
     <Chip
       text="Chris"
       media="C"
       mediaBgColor="orange"
       textColor="black"
       deleteable
-      deleteClick={deleteChip}
+      onDelete={deleteChip}
     />
-    <Chip text="Jane Doe" deleteable deleteClick={deleteChip}>
+    <Chip text="Jane Doe" deleteable onDelete={deleteChip}>
       {#snippet media()}
         <img src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg" />
       {/snippet}
     </Chip>
-    <Chip text="One More Chip" deleteable deleteClick={deleteChip} />
-    <Chip text="Jennifer" mediaBgColor="pink" media="J" deleteable deleteClick={deleteChip} />
-    <Chip text="Adam Smith" deleteable deleteClick={deleteChip}>
+    <Chip text="One More Chip" deleteable onDelete={deleteChip} />
+    <Chip text="Jennifer" mediaBgColor="pink" media="J" deleteable onDelete={deleteChip} />
+    <Chip text="Adam Smith" deleteable onDelete={deleteChip}>
       {#snippet media()}
         <img src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg" />
       {/snippet}

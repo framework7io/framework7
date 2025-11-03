@@ -38,45 +38,46 @@
     ...restProps
   } = $props();
 
+  let el = $state(null);
 
-  let el;
-
-  const classes = $derived(classNames(
-    className,
-    'block',
-    {
-      inset,
-      'inset-ios': insetIos,
-      'inset-md': insetMd,
-      'xsmall-inset': xsmallInset,
-      'xsmall-inset-ios': xsmallInsetIos,
-      'xsmall-inset-md': xsmallInsetMd,
-      'small-inset': smallInset,
-      'small-inset-ios': smallInsetIos,
-      'small-inset-md': smallInsetMd,
-      'medium-inset': mediumInset,
-      'medium-inset-ios': mediumInsetIos,
-      'medium-inset-md': mediumInsetMd,
-      'large-inset': largeInset,
-      'large-inset-ios': largeInsetIos,
-      'large-inset-md': largeInsetMd,
-      'xlarge-inset': xlargeInset,
-      'xlarge-inset-ios': xlargeInsetIos,
-      'xlarge-inset-md': xlargeInsetMd,
-      'block-strong': strong,
-      'block-strong-ios': strongIos,
-      'block-strong-md': strongMd,
-      'accordion-list': accordionList,
-      'accordion-opposite': accordionOpposite,
-      tabs,
-      tab,
-      'tab-active': tabActive,
-      'block-outline': outline,
-      'block-outline-md': outlineMd,
-      'block-outline-ios': outlineIos,
-    },
-    colorClasses(restProps),
-  ));
+  const classes = $derived(
+    classNames(
+      className,
+      'block',
+      {
+        inset,
+        'inset-ios': insetIos,
+        'inset-md': insetMd,
+        'xsmall-inset': xsmallInset,
+        'xsmall-inset-ios': xsmallInsetIos,
+        'xsmall-inset-md': xsmallInsetMd,
+        'small-inset': smallInset,
+        'small-inset-ios': smallInsetIos,
+        'small-inset-md': smallInsetMd,
+        'medium-inset': mediumInset,
+        'medium-inset-ios': mediumInsetIos,
+        'medium-inset-md': mediumInsetMd,
+        'large-inset': largeInset,
+        'large-inset-ios': largeInsetIos,
+        'large-inset-md': largeInsetMd,
+        'xlarge-inset': xlargeInset,
+        'xlarge-inset-ios': xlargeInsetIos,
+        'xlarge-inset-md': xlargeInsetMd,
+        'block-strong': strong,
+        'block-strong-ios': strongIos,
+        'block-strong-md': strongMd,
+        'accordion-list': accordionList,
+        'accordion-opposite': accordionOpposite,
+        tabs,
+        tab,
+        'tab-active': tabActive,
+        'block-outline': outline,
+        'block-outline-md': outlineMd,
+        'block-outline-ios': outlineIos,
+      },
+      colorClasses(restProps),
+    ),
+  );
 
   useTab(() => el, restProps);
 </script>

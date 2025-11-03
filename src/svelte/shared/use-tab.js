@@ -5,11 +5,11 @@ import { f7, f7ready } from './f7.js';
 export const useTab = (getEl, restProps = {}) => {
   const onTabShow = (el) => {
     if (getEl() !== el) return;
-    restProps.tabShow?.(el);
+    restProps.onTabShow?.(el);
   };
   const onTabHide = (el) => {
     if (getEl() !== el) return;
-    restProps.tabHide?.(el);
+    restProps.onTabHide?.(el);
   };
   const attachEvents = () => {
     if (!getEl()) return;

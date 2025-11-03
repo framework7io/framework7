@@ -4,48 +4,44 @@
   import { classNames } from '../shared/utils.js';
   import { app, f7ready } from '../shared/f7.js';
 
+  let { class: className, opened = false, children, ...restProps } = $props();
 
-  let {
-    class: className,
-    opened = false,
-    children,
-    ...restProps
-  } = $props();
+  let el = $state(null);
 
-  let el;
-
-  const classes = $derived(classNames(
-    className,
-    'accordion-item',
-    {
-      'accordion-item-opened': opened,
-    },
-    colorClasses(restProps),
-  ));
+  const classes = $derived(
+    classNames(
+      className,
+      'accordion-item',
+      {
+        'accordion-item-opened': opened,
+      },
+      colorClasses(restProps),
+    ),
+  );
 
   function onBeforeOpen(accEl, prevent) {
     if (accEl !== el) return;
-    restProps.accordionBeforeOpen?.(prevent);
+    restProps.onAccordionBeforeOpen?.(prevent);
   }
   function onOpen(accEl) {
     if (accEl !== el) return;
-    restProps.accordionOpen?.();
+    restProps.onAccordionOpen?.();
   }
   function onOpened(accEl) {
     if (accEl !== el) return;
-    restProps.accordionOpened?.();
+    restProps.onAccordionOpened?.();
   }
   function onBeforeClose(accEl, prevent) {
     if (accEl !== el) return;
-    restProps.accordionBeforeClose?.(prevent);
+    restProps.onAccordionBeforeClose?.(prevent);
   }
   function onClose(accEl) {
     if (accEl !== el) return;
-    restProps.accordionClose?.();
+    restProps.onAccordionClose?.();
   }
   function onClosed(accEl) {
     if (accEl !== el) return;
-    restProps.accordionClosed?.();
+    restProps.onAccordionClosed?.();
   }
 
   onMount(() => {

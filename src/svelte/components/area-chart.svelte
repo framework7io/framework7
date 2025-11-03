@@ -1,42 +1,37 @@
 <script>
-  import { createEventDispatcher, onDestroy, onMount } from 'svelte';
-  import { classNames, createEmitter } from '../shared/utils.js';
-  import { restProps } from '../shared/rest-props.js';
+  import { onDestroy, onMount } from 'svelte';
+  import { classNames } from '../shared/utils.js';
   import { app } from '../shared/f7.js';
 
-  const emit = createEmitter(createEventDispatcher, $$props);
+  let {
+    class: className,
+    lineChart = false,
+    datasets = [],
+    axis = false,
+    axisLabels = [],
+    tooltip = false,
+    legend = false,
+    toggleDatasets = false,
+    width = 640,
+    height = 320,
+    maxAxisLabels = 8,
+    formatAxisLabel: formatAxisLabelProp,
+    formatLegendLabel: formatLegendLabelProp,
+    formatTooltip: formatTooltipProp,
+    formatTooltipAxisLabel,
+    formatTooltipTotal,
+    formatTooltipDataset,
+    children,
+    ...restProps
+  } = $props();
 
-  let className = undefined;
-  export { className as class };
-
-  export let lineChart = false;
-  export let datasets = [];
-  export let axis = false;
-  export let axisLabels = [];
-  export let tooltip = false;
-  export let legend = false;
-  export let toggleDatasets = false;
-  export let width = 640;
-  export let height = 320;
-  export let maxAxisLabels = 8;
-
-  let formatAxisLabelProp = undefined;
-  export { formatAxisLabelProp as formatAxisLabel };
-  let formatLegendLabelProp = undefined;
-  export { formatLegendLabelProp as formatLegendLabel };
-  let formatTooltipProp = undefined;
-  export { formatTooltipProp as formatTooltip };
-  export let formatTooltipAxisLabel = undefined;
-  export let formatTooltipTotal = undefined;
-  export let formatTooltipDataset = undefined;
-
-  let el;
-  let svgEl = null;
-  let currentIndex = null;
-  let previousIndex = null;
-  let hiddenDatasets = [];
-  let f7Tooltip = null;
-  let linesOffsets = null;
+  let el = $state(null);
+  let svgEl = $state(null);
+  let currentIndex = $state(null);
+  let previousIndex = $state(null);
+  let hiddenDatasets = $state([]);
+  let f7Tooltip = $state(null);
+  let linesOffsets = $state(null);
 
   const setCurrentIndex = (value) => {
     previousIndex = currentIndex;
@@ -278,19 +273,19 @@
 
   const watchCurrentIndex = () => {
     if (currentIndex === previousIndex) return;
-    emit('select', [currentIndex]);
+    restProps.onSelect?.(currentIndex);
     setTooltip();
   };
 
-  $: watchCurrentIndex(currentIndex);
-  $: classes = classNames('area-chart', className);
+  $effect(() => watchCurrentIndex(currentIndex));
+  const classes = $derived(classNames('area-chart', className));
 
-  $: chartData = getChartData(datasets, hiddenDatasets);
-  $: verticalLines = getVerticalLines(datasets);
-  $: visibleLegends = getVisibleLegends(maxAxisLabels, axisLabels);
+  const chartData = $derived(getChartData(datasets, hiddenDatasets));
+  const verticalLines = $derived(getVerticalLines(datasets));
+  const visibleLegends = $derived(getVisibleLegends(maxAxisLabels, axisLabels));
 </script>
 
-<div bind:this={el} class={classes} {...restProps($$restProps)}>
+<div bind:this={el} class={classes} {...restProps}>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {width}
@@ -338,19 +333,19 @@
               'area-chart-legend-button': toggleDatasets,
             })}
             type="button"
-            on:click={() => toggleDataset(index)}
+            onclick={() => toggleDataset(index)}
           >
-            <span style={`background-color: ${dataset.color}`} />
+            <span style={`background-color: ${dataset.color}`}></span>
             {formatLegendLabel(dataset.label)}
           </button>
         {:else}
           <span class="area-chart-legend-item">
-            <span style={`background-color: ${dataset.color}`} />
+            <span style={`background-color: ${dataset.color}`}></span>
             {formatLegendLabel(dataset.label)}
           </span>
         {/if}
       {/each}
     </div>
   {/if}
-  <slot />
+  {@render children?.()}
 </div>
