@@ -6,6 +6,7 @@
 
   import Link from './link.svelte';
   import Input from './input.svelte';
+  import ToolbarPane from './toolbar-pane.svelte';
 
   let {
     class: className,
@@ -57,8 +58,6 @@
       colorClasses(restProps),
     ),
   );
-
-  const hasSendLinkSlots = $derived(sendLink);
 
   let initialWatchedSheet = $state(false);
   function watchSheetVisible() {
@@ -196,7 +195,11 @@
   {@render beforeInner?.(f7Messagebar)}
 
   <div class="toolbar-inner">
-    {@render innerStart?.(f7Messagebar)}
+    {#if innerStart}
+      <ToolbarPane>
+        {@render innerStart?.(f7Messagebar)}
+      </ToolbarPane>
+    {/if}
     <div class="messagebar-area">
       {@render beforeArea?.(f7Messagebar)}
       <Input
@@ -209,20 +212,25 @@
         {readonly}
         {resizable}
         value={typeof value === 'undefined' ? '' : value}
-        on:input={onInput}
-        on:change={onChange}
-        on:focus={onFocus}
-        on:blur={onBlur}
+        oninput={onInput}
+        onchange={onChange}
+        onfocus={onFocus}
+        onblur={onBlur}
       />
       {@render afterArea?.(f7Messagebar)}
     </div>
-    {#if (sendLink && sendLink.length > 0) || hasSendLinkSlots}
-      <Link {onClick}>
-        {@render sendLink?.(f7Messagebar)}
-        {sendLink}
-      </Link>
+    {#if sendLink || innerEnd}
+      <ToolbarPane>
+        {#if sendLink}
+          <Link onclick={onClick}>
+            {@render sendLink?.(f7Messagebar)}
+            {sendLink}
+          </Link>
+        {/if}
+        {@render innerEnd?.(f7Messagebar)}
+      </ToolbarPane>
     {/if}
-    {@render innerEnd?.(f7Messagebar)}
+
     {@render children?.(f7Messagebar)}
   </div>
   {@render afterInner?.(f7Messagebar)}

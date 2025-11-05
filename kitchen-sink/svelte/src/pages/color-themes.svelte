@@ -1,11 +1,12 @@
 <script context="module">
   let globalTheme = 'light';
-  let globalThemeColor = document.documentElement.style
-    .getPropertyValue('--f7-color-primary')
-    .trim();
+  let globalThemeColor = dom7('html').css('--f7-color-primary').trim();
+  let globalMonochrome = false;
+  let globalVibrant = false;
 </script>
 
 <script>
+  import dom7 from 'dom7';
   import {
     f7,
     Navbar,
@@ -15,20 +16,23 @@
     Block,
     List,
     ListInput,
+    ListItem,
+    Toggle,
     Checkbox,
     Link,
     Toolbar,
   } from 'framework7-svelte';
 
-  let theme = globalTheme;
-  let themeColor = globalThemeColor;
+  let theme = $state(globalTheme);
+  let themeColor = $state(globalThemeColor || dom7('html').css('--f7-color-primary').trim());
+  let monochrome = $state(globalMonochrome);
+  let vibrant = $state(globalVibrant);
 
   const colors = Object.keys(f7.colors).filter(
     (c) => c !== 'primary' && c !== 'white' && c !== 'black',
   );
 
   function setScheme(newTheme) {
-    console.log(newTheme);
     f7.setDarkMode(newTheme === 'dark');
     globalTheme = newTheme;
     theme = newTheme;
@@ -45,6 +49,28 @@
     globalThemeColor = newColor;
     f7.setColorTheme(newColor);
   }
+
+  const setMdColorScheme = () => {
+    if (!globalVibrant && !globalMonochrome) {
+      f7.setMdColorScheme('default');
+    } else if (globalVibrant && !globalMonochrome) {
+      f7.setMdColorScheme('vibrant');
+    } else if (!globalVibrant && globalMonochrome) {
+      f7.setMdColorScheme('monochrome');
+    } else if (globalVibrant && globalMonochrome) {
+      f7.setMdColorScheme('monochrome-vibrant');
+    }
+  };
+  const setMdColorSchemeMonochrome = (value) => {
+    globalMonochrome = value;
+    monochrome = globalMonochrome;
+    setMdColorScheme();
+  };
+  const setMdColorSchemeVibrant = (value) => {
+    globalVibrant = value;
+    vibrant = globalVibrant;
+    setMdColorScheme();
+  };
 </script>
 
 <Page>
@@ -73,12 +99,12 @@
   <Block strong>
     <p>Framework7 comes with 2 main layout themes: Light (default) and Dark:</p>
     <div class="grid grid-cols-2 grid-gap">
-      <div class="bg-color-white demo-theme-picker" on:click={() => setScheme('light')}>
+      <div class="bg-color-white demo-theme-picker" onclick={() => setScheme('light')}>
         {#if theme === 'light'}
           <Checkbox checked disabled />
         {/if}
       </div>
-      <div class="bg-color-black demo-theme-picker" on:click={() => setScheme('dark')}>
+      <div class="bg-color-black demo-theme-picker" onclick={() => setScheme('dark')}>
         {#if theme === 'dark'}
           <Checkbox checked disabled />
         {/if}
@@ -106,6 +132,23 @@
       {/each}
     </div>
   </Block>
+  <BlockTitle medium>Material Color Scheme</BlockTitle>
+  <List strong inset dividersIos>
+    <ListItem title="Monochrome">
+      {#snippet after()}
+        <Toggle
+          checked={monochrome}
+          onToggleChange={() => setMdColorSchemeMonochrome(!monochrome)}
+        />
+      {/snippet}
+    </ListItem>
+    <ListItem title="Vibrant">
+      {#snippet after()}
+        <Toggle checked={vibrant} onToggleChange={() => setMdColorSchemeVibrant(!vibrant)} />
+      {/snippet}
+    </ListItem>
+  </List>
+
   <BlockTitle medium>Custom Color Theme</BlockTitle>
   <List strongIos outlineIos>
     <ListInput
@@ -117,11 +160,12 @@
       onColorPickerChange={(value) => setCustomColor(value.hex)}
       colorPickerParams={{ targetEl: '#color-theme-picker-color' }}
     >
-      <div
-        slot="media"
-        id="color-theme-picker-color"
-        style="width: 28px; height: 28px; borderRadius: 4px; background: var(--f7-theme-color)"
-      />
+      {#snippet media()}
+        <div
+          id="color-theme-picker-color"
+          style="width: 28px; height: 28px; borderRadius: 4px; background: var(--f7-theme-color)"
+        ></div>
+      {/snippet}
     </ListInput>
   </List>
 </Page>

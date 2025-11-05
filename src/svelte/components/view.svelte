@@ -52,7 +52,7 @@
     f7View = app.f7.views.create(el, {
       routerId,
       init: false,
-      ...noUndefinedProps(restProps),
+      ...noUndefinedProps({ url, ...restProps }),
       browserHistoryInitialMatch,
       on: {
         init: onViewInit,

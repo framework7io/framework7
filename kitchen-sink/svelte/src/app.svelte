@@ -45,7 +45,7 @@
     class="safe-areas"
     masterDetailBreakpoint={768}
     browserHistory={needsBrowserHistory}
-    browserHistoryRoot={needsBrowserHistory ? '/kitchen-sink/react/dist/' : ''}
+    browserHistoryRoot={needsBrowserHistory ? '/kitchen-sink/svelte/dist/' : ''}
     preloadPreviousPage={!needsBrowserHistory}
     iosSwipeBack={!needsBrowserHistory}
   />

@@ -224,7 +224,7 @@
 </script>
 
 <!-- svelte-ignore a11y-missing-attribute -->
-<Page>
+<Page messagesContent>
   <Navbar title="Messages" backLink />
 
   <Messagebar

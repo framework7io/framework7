@@ -153,11 +153,7 @@ export default () => {
         <ListItem
           title="Vibrant"
           after={
-            <Toggle
-              checked={vibrant}
-              onToggleChange={() => setMdColorSchemeVibrant(!vibrant)}
-              color="blue"
-            />
+            <Toggle checked={vibrant} onToggleChange={() => setMdColorSchemeVibrant(!vibrant)} />
           }
         ></ListItem>
       </List>

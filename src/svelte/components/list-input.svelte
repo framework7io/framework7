@@ -319,6 +319,9 @@
           value,
           on: {
             change(colorPicker, colorPickerValue) {
+              if (JSON.stringify(value) === JSON.stringify(colorPickerValue)) {
+                return;
+              }
               restProps.onColorPickerChange?.(colorPickerValue);
               restProps.oncolorPickerChange?.(colorPickerValue);
               value = colorPickerValue;
