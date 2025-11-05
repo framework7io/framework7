@@ -48,18 +48,18 @@
       subtitle="Subtitle"
       text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis et massa ac interdum."
     >
-      <span slot="media">
+      {#snippet media()}
         <SkeletonBlock style="width: 40px; height: 40px; border-radius: 50%" />
-      </span>
+      {/snippet}
     </ListItem>
     <ListItem
       title="Title"
       subtitle="Subtitle"
       text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis et massa ac interdum."
     >
-      <span slot="media">
+      {#snippet media()}
         <SkeletonBlock style="width: 40px; height: 40px; border-radius: 50%" />
-      </span>
+      {/snippet}
     </ListItem>
   </List>
 
@@ -91,9 +91,9 @@
           subtitle="Position"
           text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis et massa ac interdum. Cras consequat felis at consequat hendrerit. Aliquam vestibulum vitae lorem ac iaculis. Praesent nec pharetra massa, at blandit lectus. Sed tincidunt, lectus eu convallis elementum, nibh nisi aliquet urna, nec imperdiet felis sapien at enim."
         >
-          <span slot="media">
+          {#snippet media()}
             <SkeletonBlock style="width: 40px; height: 40px; border-radius: 50%" />
-          </span>
+          {/snippet}
         </ListItem>
       {/each}
     </List>
@@ -104,33 +104,36 @@
         subtitle="CEO"
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis et massa ac interdum. Cras consequat felis at consequat hendrerit. Aliquam vestibulum vitae lorem ac iaculis. Praesent nec pharetra massa, at blandit lectus. Sed tincidunt, lectus eu convallis elementum, nibh nisi aliquet urna, nec imperdiet felis sapien at enim."
       >
-        <img
-          src="https://placeimg.com/80/80/people/1"
-          style="width: 40px; height: 40px; border-radius: 50%"
-          slot="media"
-        />
+        {#snippet media()}
+          <img
+            src="https://placeimg.com/80/80/people/1"
+            style="width: 40px; height: 40px; border-radius: 50%"
+          />
+        {/snippet}
       </ListItem>
       <ListItem
         title="Jane Doe"
         subtitle="Marketing"
         text="Cras consequat felis at consequat hendrerit. Aliquam vestibulum vitae lorem ac iaculis. Praesent nec pharetra massa, at blandit lectus. Sed tincidunt, lectus eu convallis elementum, nibh nisi aliquet urna, nec imperdiet felis sapien at enim."
       >
-        <img
-          src="https://placeimg.com/80/80/people/2"
-          style="width: 40px; height: 40px; border-radius: 50%"
-          slot="media"
-        />
+        {#snippet media()}
+          <img
+            src="https://placeimg.com/80/80/people/2"
+            style="width: 40px; height: 40px; border-radius: 50%"
+          />
+        {/snippet}
       </ListItem>
       <ListItem
         title="Kate Johnson"
         subtitle="Admin"
         text="Sed tincidunt, lectus eu convallis elementum, nibh nisi aliquet urna, nec imperdiet felis sapien at enim."
       >
-        <img
-          src="https://placeimg.com/80/80/people/3"
-          style="width: 40px; height: 40px; border-radius: 50%"
-          slot="media"
-        />
+        {#snippet media()}
+          <img
+            src="https://placeimg.com/80/80/people/3"
+            style="width: 40px; height: 40px; border-radius: 50%"
+          />
+        {/snippet}
       </ListItem>
     </List>
   {/if}

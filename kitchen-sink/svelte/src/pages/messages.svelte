@@ -234,12 +234,16 @@
     value={messageText}
     onInput={(e) => (messageText = e.target.value)}
   >
-    <a class="link icon-only" slot="inner-start" on:click={() => (sheetVisible = !sheetVisible)}>
-      <Icon ios="f7:camera_fill" md="material:camera_alt" />
-    </a>
-    <a class="link icon-only" slot="inner-end" on:click={sendMessage}>
-      <Icon ios="f7:arrow_up_circle_fill" md="material:send" />
-    </a>
+    {#snippet innerStart()}
+      <a class="link icon-only" onclick={() => (sheetVisible = !sheetVisible)}>
+        <Icon ios="f7:camera_fill" md="material:camera_alt" />
+      </a>
+    {/snippet}
+    {#snippet innerEnd()}
+      <a class="link icon-only" onclick={sendMessage}>
+        <Icon ios="f7:arrow_up_circle_fill" md="material:send" />
+      </a>
+    {/snippet}
     <MessagebarAttachments>
       {#each attachments as image, index (index)}
         <MessagebarAttachment

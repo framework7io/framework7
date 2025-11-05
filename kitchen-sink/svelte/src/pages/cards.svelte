@@ -135,25 +135,19 @@
     <CardContent padding={false}>
       <List mediaList>
         <ListItem title="Yellow Submarine" subtitle="Beatles">
-          <img
-            slot="media"
-            src="https://cdn.framework7.io/placeholder/fashion-88x88-4.jpg"
-            width="44"
-          />
+          {#snippet media()}
+            <img src="https://cdn.framework7.io/placeholder/fashion-88x88-4.jpg" width="44" />
+          {/snippet}
         </ListItem>
         <ListItem title="Don't Stop Me Now" subtitle="Queen">
-          <img
-            slot="media"
-            src="https://cdn.framework7.io/placeholder/fashion-88x88-5.jpg"
-            width="44"
-          />
+          {#snippet media()}
+            <img src="https://cdn.framework7.io/placeholder/fashion-88x88-5.jpg" width="44" />
+          {/snippet}
         </ListItem>
         <ListItem title="Billie Jean" subtitle="Michael Jackson">
-          <img
-            slot="media"
-            src="https://cdn.framework7.io/placeholder/fashion-88x88-6.jpg"
-            width="44"
-          />
+          {#snippet media()}
+            <img src="https://cdn.framework7.io/placeholder/fashion-88x88-6.jpg" width="44" />
+          {/snippet}
         </ListItem>
       </List>
     </CardContent>

@@ -8,7 +8,7 @@
     actionsAttrs,
   } from '../shared/mixins.js';
 
-  import { classNames, isStringProp, plainText } from '../shared/utils.js';
+  import { classNames, isStringProp } from '../shared/utils.js';
   import { app, f7ready } from '../shared/f7.js';
   import { useTooltip } from '../shared/use-tooltip.js';
   import { useSmartSelect } from '../shared/use-smart-select.js';
@@ -350,6 +350,7 @@
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 
+<!-- svelte-ignore a11y-missing-attribute -->
 {#if groupTitle}
   <li
     onclick={onClick}
@@ -420,7 +421,6 @@
                   {/if}
                   <div class="item-title-row">
                     <SnippetRender content={beforeTitle} />
-
                     {#if hasTitle}
                       <div class="item-title">
                         <SnippetRender content={title} />
@@ -430,10 +430,9 @@
                     {#if hasAfter}
                       <div class="item-after">
                         <SnippetRender content={afterStart} />
-
                         <SnippetRender content={after} />
                         {#if typeof badge !== 'undefined'}
-                          <Badge color={badgeColor}>{plainText(badge)}</Badge>
+                          <Badge color={badgeColor}><SnippetRender content={badge} /></Badge>
                         {/if}
 
                         <SnippetRender content={afterEnd} />
@@ -450,10 +449,9 @@
                       <SnippetRender content={text} />
                     </div>
                   {/if}
-
                   <SnippetRender content={inner} />
                   {#if !(swipeout || accordionItem)}
-                    <SnippetRender {content} />
+                    {@render children?.()}
                   {/if}
                   {#if hasFooter}
                     <div class="item-footer">
@@ -462,7 +460,6 @@
                   {/if}
                 {:else}
                   <SnippetRender content={beforeTitle} />
-
                   {#if hasTitle || hasHeader || hasFooter}
                     <div class="item-title">
                       {#if hasHeader}
@@ -484,7 +481,7 @@
                       <SnippetRender content={afterStart} />
                       <SnippetRender content={after} />
                       {#if typeof badge !== 'undefined'}
-                        <Badge color={badgeColor}>{plainText(badge)}</Badge>
+                        <Badge color={badgeColor}><SnippetRender content={badge} /></Badge>
                       {/if}
 
                       <SnippetRender content={afterEnd} />
@@ -492,12 +489,11 @@
                   {/if}
                   <SnippetRender content={inner} />
                   {#if !(swipeout || accordionItem)}
-                    <SnippetRender {content} />
+                    {@render children?.()}
                   {/if}
                 {/if}
                 <SnippetRender content={innerEnd} />
               </div>
-
               <SnippetRender {content} />
               <SnippetRender content={contentEnd} />
             </div>
@@ -542,7 +538,6 @@
                   {/if}
                   <div class="item-title-row">
                     <SnippetRender content={beforeTitle} />
-
                     {#if hasTitle}
                       <div class="item-title">
                         <SnippetRender content={title} />
@@ -554,7 +549,7 @@
                         <SnippetRender content={afterStart} />
                         <SnippetRender content={after} />
                         {#if typeof badge !== 'undefined'}
-                          <Badge color={badgeColor}>{plainText(badge)}</Badge>
+                          <Badge color={badgeColor}><SnippetRender content={badge} /></Badge>
                         {/if}
 
                         <SnippetRender content={afterEnd} />
@@ -571,10 +566,9 @@
                       <SnippetRender content={text} />
                     </div>
                   {/if}
-
                   <SnippetRender content={inner} />
                   {#if !(swipeout || accordionItem)}
-                    <SnippetRender {content} />
+                    {@render children?.()}
                   {/if}
                   {#if hasFooter}
                     <div class="item-footer">
@@ -583,7 +577,6 @@
                   {/if}
                 {:else}
                   <SnippetRender content={beforeTitle} />
-
                   {#if hasTitle || hasHeader || hasFooter}
                     <div class="item-title">
                       {#if hasHeader}
@@ -605,7 +598,7 @@
                       <SnippetRender content={afterStart} />
                       <SnippetRender content={after} />
                       {#if typeof badge !== 'undefined'}
-                        <Badge color={badgeColor}>{plainText(badge)}</Badge>
+                        <Badge color={badgeColor}><SnippetRender content={badge} /></Badge>
                       {/if}
 
                       <SnippetRender content={afterEnd} />
@@ -613,12 +606,11 @@
                   {/if}
                   <SnippetRender content={inner} />
                   {#if !(swipeout || accordionItem)}
-                    <SnippetRender {content} />
+                    {@render children?.()}
                   {/if}
                 {/if}
                 <SnippetRender content={innerEnd} />
               </div>
-
               <SnippetRender {content} />
               <SnippetRender content={contentEnd} />
             </label>
@@ -647,7 +639,6 @@
                   {/if}
                   <div class="item-title-row">
                     <SnippetRender content={beforeTitle} />
-
                     {#if hasTitle}
                       <div class="item-title">
                         <SnippetRender content={title} />
@@ -659,7 +650,7 @@
                         <SnippetRender content={afterStart} />
                         <SnippetRender content={after} />
                         {#if typeof badge !== 'undefined'}
-                          <Badge color={badgeColor}>{plainText(badge)}</Badge>
+                          <Badge color={badgeColor}><SnippetRender content={badge} /></Badge>
                         {/if}
 
                         <SnippetRender content={afterEnd} />
@@ -676,10 +667,9 @@
                       <SnippetRender content={text} />
                     </div>
                   {/if}
-
                   <SnippetRender content={inner} />
                   {#if !(swipeout || accordionItem)}
-                    <SnippetRender {content} />
+                    {@render children?.()}
                   {/if}
                   {#if hasFooter}
                     <div class="item-footer">
@@ -688,7 +678,6 @@
                   {/if}
                 {:else}
                   <SnippetRender content={beforeTitle} />
-
                   {#if hasTitle || hasHeader || hasFooter}
                     <div class="item-title">
                       {#if hasHeader}
@@ -710,21 +699,19 @@
                       <SnippetRender content={afterStart} />
                       <SnippetRender content={after} />
                       {#if typeof badge !== 'undefined'}
-                        <Badge color={badgeColor}>{plainText(badge)}</Badge>
+                        <Badge color={badgeColor}><SnippetRender content={badge} /></Badge>
                       {/if}
 
                       <SnippetRender content={afterEnd} />
                     </div>
                   {/if}
-
                   <SnippetRender content={inner} />
                   {#if !(swipeout || accordionItem)}
-                    <SnippetRender {content} />
+                    {@render children?.()}
                   {/if}
                 {/if}
                 <SnippetRender content={innerEnd} />
               </div>
-
               <SnippetRender {content} />
               <SnippetRender content={contentEnd} />
             </div>
@@ -765,7 +752,6 @@
               {/if}
               <div class="item-title-row">
                 <SnippetRender content={beforeTitle} />
-
                 {#if hasTitle}
                   <div class="item-title">
                     <SnippetRender content={title} />
@@ -777,7 +763,7 @@
                     <SnippetRender content={afterStart} />
                     <SnippetRender content={after} />
                     {#if typeof badge !== 'undefined'}
-                      <Badge color={badgeColor}>{plainText(badge)}</Badge>
+                      <Badge color={badgeColor}><SnippetRender content={badge} /></Badge>
                     {/if}
 
                     <SnippetRender content={afterEnd} />
@@ -794,10 +780,9 @@
                   <SnippetRender content={text} />
                 </div>
               {/if}
-
               <SnippetRender content={inner} />
               {#if !(swipeout || accordionItem)}
-                <SnippetRender {content} />
+                {@render children?.()}
               {/if}
               {#if hasFooter}
                 <div class="item-footer">
@@ -806,7 +791,6 @@
               {/if}
             {:else}
               <SnippetRender content={beforeTitle} />
-
               {#if hasTitle || hasHeader || hasFooter}
                 <div class="item-title">
                   {#if hasHeader}
@@ -828,21 +812,19 @@
                   <SnippetRender content={afterStart} />
                   <SnippetRender content={after} />
                   {#if typeof badge !== 'undefined'}
-                    <Badge color={badgeColor}>{plainText(badge)}</Badge>
+                    <Badge color={badgeColor}><SnippetRender content={badge} /></Badge>
                   {/if}
 
                   <SnippetRender content={afterEnd} />
                 </div>
               {/if}
-
               <SnippetRender content={inner} />
               {#if !(swipeout || accordionItem)}
-                <SnippetRender {content} />
+                {@render children?.()}
               {/if}
             {/if}
             <SnippetRender content={innerEnd} />
           </div>
-
           <SnippetRender {content} />
           <SnippetRender content={contentEnd} />
         </div>
@@ -887,7 +869,6 @@
               {/if}
               <div class="item-title-row">
                 <SnippetRender content={beforeTitle} />
-
                 {#if hasTitle}
                   <div class="item-title">
                     <SnippetRender content={title} />
@@ -899,7 +880,7 @@
                     <SnippetRender content={afterStart} />
                     <SnippetRender content={after} />
                     {#if typeof badge !== 'undefined'}
-                      <Badge color={badgeColor}>{plainText(badge)}</Badge>
+                      <Badge color={badgeColor}><SnippetRender content={badge} /></Badge>
                     {/if}
 
                     <SnippetRender content={afterEnd} />
@@ -916,10 +897,9 @@
                   <SnippetRender content={text} />
                 </div>
               {/if}
-
               <SnippetRender content={inner} />
               {#if !(swipeout || accordionItem)}
-                <SnippetRender {content} />
+                {@render children?.()}
               {/if}
               {#if hasFooter}
                 <div class="item-footer">
@@ -928,7 +908,6 @@
               {/if}
             {:else}
               <SnippetRender content={beforeTitle} />
-
               {#if hasTitle || hasHeader || hasFooter}
                 <div class="item-title">
                   {#if hasHeader}
@@ -950,21 +929,19 @@
                   <SnippetRender content={afterStart} />
                   <SnippetRender content={after} />
                   {#if typeof badge !== 'undefined'}
-                    <Badge color={badgeColor}>{plainText(badge)}</Badge>
+                    <Badge color={badgeColor}><SnippetRender content={badge} /></Badge>
                   {/if}
 
                   <SnippetRender content={afterEnd} />
                 </div>
               {/if}
-
               <SnippetRender content={inner} />
               {#if !(swipeout || accordionItem)}
-                <SnippetRender {content} />
+                {@render children?.()}
               {/if}
             {/if}
             <SnippetRender content={innerEnd} />
           </div>
-
           <SnippetRender {content} />
           <SnippetRender content={contentEnd} />
         </label>
@@ -993,7 +970,6 @@
               {/if}
               <div class="item-title-row">
                 <SnippetRender content={beforeTitle} />
-
                 {#if hasTitle}
                   <div class="item-title">
                     <SnippetRender content={title} />
@@ -1005,7 +981,7 @@
                     <SnippetRender content={afterStart} />
                     <SnippetRender content={after} />
                     {#if typeof badge !== 'undefined'}
-                      <Badge color={badgeColor}>{plainText(badge)}</Badge>
+                      <Badge color={badgeColor}><SnippetRender content={badge} /></Badge>
                     {/if}
 
                     <SnippetRender content={afterEnd} />
@@ -1022,10 +998,9 @@
                   <SnippetRender content={text} />
                 </div>
               {/if}
-
               <SnippetRender content={inner} />
               {#if !(swipeout || accordionItem)}
-                <SnippetRender {content} />
+                {@render children?.()}
               {/if}
               {#if hasFooter}
                 <div class="item-footer">
@@ -1034,7 +1009,6 @@
               {/if}
             {:else}
               <SnippetRender content={beforeTitle} />
-
               {#if hasTitle || hasHeader || hasFooter}
                 <div class="item-title">
                   {#if hasHeader}
@@ -1056,21 +1030,19 @@
                   <SnippetRender content={afterStart} />
                   <SnippetRender content={after} />
                   {#if typeof badge !== 'undefined'}
-                    <Badge color={badgeColor}>{plainText(badge)}</Badge>
+                    <Badge color={badgeColor}><SnippetRender content={badge} /></Badge>
                   {/if}
 
                   <SnippetRender content={afterEnd} />
                 </div>
               {/if}
-
               <SnippetRender content={inner} />
               {#if !(swipeout || accordionItem)}
-                <SnippetRender {content} />
+                {@render children?.()}
               {/if}
             {/if}
             <SnippetRender content={innerEnd} />
           </div>
-
           <SnippetRender {content} />
           <SnippetRender content={contentEnd} />
         </div>
@@ -1081,10 +1053,9 @@
       <div class="sortable-handler" />
     {/if}
     {#if swipeout || accordionItem}
-      <SnippetRender {content} />
+      {@render children?.()}
     {/if}
-    {@render children?.()}
     <SnippetRender content={root} />
-    <SnippetRender content={rootEnd} />
+    <SnippetRender content={rootStart} />
   </li>
 {/if}

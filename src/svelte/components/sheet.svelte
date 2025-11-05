@@ -40,6 +40,8 @@
   let isClosing = $state(false);
   let swipeStep = $state(false);
   let breakpoint = $state(false);
+  let isPushIn = $state(false);
+  let isPushClosing = $state(false);
 
   export function instance() {
     return f7Sheet;
@@ -61,6 +63,8 @@
         'sheet-modal-push': push,
         'modal-in-swipe-step': swipeStep,
         'modal-in-breakpoint': breakpoint,
+        'sheet-modal-push-in': !isClosing && push && isPushIn,
+        'sheet-modal-push-closing': isClosing && push && isPushClosing,
       },
 
       modalStateClasses({
@@ -148,6 +152,12 @@
         // eslint-disable-next-line
         _swipeStep(isSwipeStep) {
           swipeStep = isSwipeStep;
+        },
+        pushIn(s, v) {
+          isPushIn = v;
+        },
+        pushClosing(s, v) {
+          isPushClosing = v;
         },
       },
     };

@@ -49,7 +49,9 @@
 
 <Page>
   <Navbar large title="Color Themes" backLink>
-    <Link slot="right">Link</Link>
+    {#snippet right()}
+      <Link>Link</Link>
+    {/snippet}
   </Navbar>
   <Toolbar tabbar icons bottom>
     <Link

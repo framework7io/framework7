@@ -67,11 +67,12 @@
         targetEl: '.wheel-picker-target',
       }}
     >
+    {#snippet media()}
       <i
-        slot="media"
         style={`background-color: ${wheePickerValue.hex}`}
         class="icon demo-list-icon wheel-picker-target"
-      />
+      ></i>
+      {/snippet}
     </ListInput>
   </List>
 
@@ -90,11 +91,12 @@
         targetEl: '.spectrum-picker-target',
       }}
     >
+    {#snippet media()}
       <i
-        slot="media"
         style={`background-color: ${spectrumPickerValue.hex}`}
         class="icon demo-list-icon spectrum-picker-target"
-      />
+      ></i>
+      {/snippet}
     </ListInput>
   </List>
 
@@ -113,11 +115,12 @@
         targetEl: '.hs-spectrum-picker-target',
       }}
     >
+    {#snippet media()}
       <i
-        slot="media"
         style={`background-color: ${hsSpectrumPickerValue.hex}`}
         class="icon demo-list-icon hs-spectrum-picker-target"
-      />
+      ></i>
+      {/snippet}
     </ListInput>
   </List>
 
@@ -138,11 +141,12 @@
         targetEl: '.rgb-picker-target',
       }}
     >
+    {#snippet media()}
       <i
-        slot="media"
         style={`background-color: ${rgbPickerValue.hex}`}
         class="icon demo-list-icon rgb-picker-target"
-      />
+      ></i>
+      {/snippet}
     </ListInput>
   </List>
 
@@ -166,11 +170,12 @@
         },
       }}
     >
+    {#snippet media()}
       <i
-        slot="media"
         style={`background-color: ${rgbaPickerValue.rgba ? `rgba(${rgbaPickerValue.rgba.join(', ')})` : rgbaPickerValue.hex}`}
         class="icon demo-list-icon rgba-picker-target"
-      />
+      ></i>
+      {/snippet}
     </ListInput>
   </List>
 
@@ -194,11 +199,12 @@
         },
       }}
     >
+    {#snippet media()}
       <i
-        slot="media"
         style={`background-color: ${hsbPickerValue.hex}`}
         class="icon demo-list-icon hsb-picker-target"
-      />
+      ></i>
+      {/snippet}
     </ListInput>
   </List>
 
@@ -225,11 +231,12 @@
         },
       }}
     >
+    {#snippet media()}
       <i
-        slot="media"
         style={`background-color: ${rgbBarsPickerValue.hex}`}
         class="icon demo-list-icon rgb-bars-picker-target"
-      />
+      ></i>
+      {/snippet}
     </ListInput>
   </List>
 
@@ -255,11 +262,12 @@
         },
       }}
     >
+    {#snippet media()}
       <i
-        slot="media"
         style={`background-color: ${rgbSlidersColorsPickerValue.hex}`}
         class="icon demo-list-icon rgb-sliders-colors-picker-target"
-      />
+      ></i>
+      {/snippet}
     </ListInput>
   </List>
 
@@ -293,11 +301,12 @@
         },
       }}
     >
+    {#snippet media()}
       <i
-        slot="media"
         style={`background-color: ${palettePickerValue.hex}`}
         class="icon demo-list-icon palette-picker-target"
-      />
+      ></i>
+      {/snippet}
     </ListInput>
   </List>
 
@@ -339,11 +348,12 @@
         },
       }}
     >
-      <i
-        slot="media"
+    {#snippet media()}
+        <i
         style={`background-color: ${proPickerValue.rgba ? `rgba(${proPickerValue.rgba.join(', ')})` : proPickerValue.hex}`}
         class="icon demo-list-icon pro-picker-target"
-      />
+      ></i>
+      {/snippet}
     </ListInput>
   </List>
 

@@ -191,7 +191,9 @@
 
   <Popup class="demo-popup-swipe-handler" swipeToClose="to-bottom" swipeHandler=".swipe-handler">
     <Page>
-      <div slot="fixed" class="swipe-handler" />
+      {#snippet fixedContent()}
+        <div class="swipe-handler" />
+      {/snippet}
       <BlockTitle large>Hello!</BlockTitle>
       <Block strong inset>
         <p>

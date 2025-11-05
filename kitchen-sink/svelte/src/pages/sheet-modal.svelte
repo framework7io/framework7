@@ -269,9 +269,9 @@
     </div>
     <BlockTitle medium class="margin-top">Your order:</BlockTitle>
     <List>
-      <ListItem title="Item 1"><b slot="after">$200</b></ListItem>
-      <ListItem title="Item 2"><b slot="after">$180</b></ListItem>
-      <ListItem title="Delivery"><b slot="after">$120</b></ListItem>
+      <ListItem title="Item 1">{#snippet after()}<b>$200</b>{/snippet}</ListItem>
+      <ListItem title="Item 2">{#snippet after()}<b>$180</b>{/snippet}</ListItem>
+      <ListItem title="Delivery">{#snippet after()}<b>$120</b>{/snippet}</ListItem>
     </List>
   </Sheet>
 

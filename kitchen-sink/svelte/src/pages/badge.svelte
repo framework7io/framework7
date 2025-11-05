@@ -47,15 +47,25 @@
   </Toolbar>
 
   <List strongIos outlineIos dividersIos>
-    <ListItem title="Foo Bar" badge="0"><i slot="media" class="icon icon-f7" /></ListItem>
+    <ListItem title="Foo Bar" badge="0">
+      {#snippet media()}
+        <i class="icon icon-f7" />
+      {/snippet}
+    </ListItem>
     <ListItem title="Ivan Petrov" badge="CEO" badgeColor="blue">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}
+        <i class="icon icon-f7" />
+      {/snippet}
     </ListItem>
     <ListItem title="John Doe" badge="5" badgeColor="green">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}
+        <i class="icon icon-f7" />
+      {/snippet}
     </ListItem>
     <ListItem title="Jane Doe" badge="NEW" badgeColor="orange">
-      <i slot="media" class="icon icon-f7" />
+      {#snippet media()}
+        <i class="icon icon-f7" />
+      {/snippet}
     </ListItem>
   </List>
 </Page>

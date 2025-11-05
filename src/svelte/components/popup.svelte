@@ -28,6 +28,8 @@
 
   let isOpened = $state(opened);
   let isClosing = $state(false);
+  let isPushIn = $state(false);
+  let isPushClosing = $state(false);
 
   export function instance() {
     return f7Popup;
@@ -40,6 +42,8 @@
       {
         'popup-tablet-fullscreen': tabletFullscreen,
         'popup-push': push,
+        'popup-push-in': !isClosing && push && isPushIn,
+        'popup-push-closing': isClosing && push && isPushClosing,
       },
       modalStateClasses({ isOpened, isClosing }),
       colorClasses(restProps),
@@ -112,6 +116,12 @@
         opened: onOpened,
         close: onClose,
         closed: onClosed,
+        pushIn(p, v) {
+          isPushIn = v;
+        },
+        pushClosing(p, v) {
+          isPushClosing = v;
+        },
       },
     };
     if (typeof closeByBackdropClick !== 'undefined')

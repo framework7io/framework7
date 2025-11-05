@@ -677,6 +677,9 @@ class Sheet extends Modal {
         $el.addClass('sheet-modal-push');
         if (!useBreakpoints) {
           $el.addClass('sheet-modal-push-in');
+          sheet.emit('local::pushIn', sheet, true);
+        } else {
+          sheet.emit('local::pushIn', sheet, false);
         }
         if (!sheet.params.swipeToStep && !useBreakpoints) {
           sheet.$htmlEl[0].style.setProperty('--f7-sheet-push-scale', pushViewScale(pushOffset));
@@ -719,11 +722,16 @@ class Sheet extends Modal {
       if (sheet.push && pushOffset) {
         $el.removeClass('sheet-modal-push-in');
         $el.addClass('sheet-modal-push-closing');
+        sheet.emit('local::pushIn', sheet, false);
+        sheet.emit('local::pushClosing', sheet, true);
 
         if ($pushViewEl) {
           $pushViewEl.transform('');
           $pushViewEl.css('border-radius', '');
         }
+      } else {
+        sheet.emit('local::pushIn', sheet, false);
+        sheet.emit('local::pushClosing', sheet, false);
       }
     });
     sheet.on('closed', () => {

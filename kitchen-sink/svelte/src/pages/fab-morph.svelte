@@ -19,7 +19,7 @@
   <Fab position="center-bottom" morphTo=".demo-fab-fullscreen-sheet.fab-morph-target">
     <Icon ios="f7:plus" md="material:add" />
   </Fab>
-  <svelte:fragment slot="fixed">
+  {#snippet fixedContent()}
     <div class="list links-list demo-fab-sheet fab-morph-target">
       <ul>
         <li><a class="fab-close">Link 1</a></li>
@@ -39,7 +39,7 @@
         </ul>
       </div>
     </div>
-  </svelte:fragment>
+  {/snippet}
 
   <Block strong inset>
     <p>

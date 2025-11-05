@@ -8,59 +8,83 @@
   <BlockTitle>Full Layout / Stacked Labels</BlockTitle>
   <List strongIos dividersIos insetIos>
     <ListInput label="Name" type="text" placeholder="Your name" clearButton>
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
 
     <ListInput label="Password" type="password" placeholder="Your password" clearButton>
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
 
     <ListInput label="E-mail" type="email" placeholder="Your e-mail" clearButton>
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
 
     <ListInput label="URL" type="url" placeholder="URL" clearButton>
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
 
     <ListInput label="Phone" type="tel" placeholder="Your phone number" clearButton>
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
 
     <ListInput label="Gender" type="select" value="Male" placeholder="Please choose...">
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
       <option value="Male">Male</option>
       <option value="Female">Female</option>
     </ListInput>
 
     <ListInput label="Birthday" type="date" value="2014-04-30" placeholder="Please choose...">
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
 
     <ListInput label="Date time" type="datetime-local" placeholder="Please choose...">
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
 
     <ListInput label="Range" input={false}>
-      <i class="icon demo-list-icon" slot="media" />
-      <span slot="input">
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
+      {#snippet inputContent()}
         <Range value={50} min={0} max={100} step={1} />
-      </span>
+      {/snippet}
     </ListInput>
 
     <ListInput label="Textarea" type="textarea" placeholder="Bio">
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
 
     <ListInput label="Resizable" type="textarea" resizable placeholder="Bio">
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
   </List>
 
   <BlockTitle>Floating Labels</BlockTitle>
   <List strongIos dividersIos insetIos>
     <ListInput label="Name" floatingLabel type="text" placeholder="Your name" clearButton>
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
 
     <ListInput
@@ -70,30 +94,42 @@
       placeholder="Your password"
       clearButton
     >
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
 
     <ListInput label="E-mail" floatingLabel type="email" placeholder="Your e-mail" clearButton>
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
 
     <ListInput label="URL" floatingLabel type="url" placeholder="URL" clearButton>
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
 
     <ListInput label="Phone" floatingLabel type="tel" placeholder="Your phone number" clearButton>
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
 
     <ListInput label="Resizable" floatingLabel type="textarea" resizable placeholder="Bio">
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
   </List>
 
   <BlockTitle>Floating Labels + Outline Inputs</BlockTitle>
   <List strongIos dividersIos insetIos>
     <ListInput outline label="Name" floatingLabel type="text" placeholder="Your name" clearButton>
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
     <ListInput
       outline
@@ -103,7 +139,9 @@
       placeholder="Your password"
       clearButton
     >
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
     <ListInput
       outline
@@ -113,10 +151,14 @@
       placeholder="Your e-mail"
       clearButton
     >
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
     <ListInput outline label="URL" floatingLabel type="url" placeholder="URL" clearButton>
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
     <ListInput
       outline
@@ -126,7 +168,9 @@
       placeholder="Your phone number"
       clearButton
     >
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
     <ListInput
       outline
@@ -137,7 +181,9 @@
       placeholder="Bio"
       clearButton
     >
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
   </List>
 
@@ -152,7 +198,9 @@
       validate
       clearButton
     >
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
 
     <ListInput
@@ -164,8 +212,12 @@
       pattern="apple|banana"
       clearButton
     >
-      <i class="icon demo-list-icon" slot="media" />
-      <span slot="info">Pattern validation (<b>apple|banana</b>)</span>
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
+      {#snippet info()}
+        Pattern validation (<b>apple|banana</b>)
+      {/snippet}
     </ListInput>
 
     <ListInput
@@ -177,7 +229,9 @@
       validate
       clearButton
     >
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
 
     <ListInput
@@ -189,7 +243,9 @@
       validate
       clearButton
     >
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
 
     <ListInput
@@ -203,26 +259,36 @@
       pattern="[0-9]*"
       clearButton
     >
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
   </List>
 
   <BlockTitle>Icon + Input</BlockTitle>
   <List strongIos dividersIos insetIos>
     <ListInput type="text" placeholder="Your name" clearButton>
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
 
     <ListInput type="password" placeholder="Your password" clearButton>
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
 
     <ListInput type="email" placeholder="Your e-mail" clearButton>
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
 
     <ListInput type="url" placeholder="URL" clearButton>
-      <i class="icon demo-list-icon" slot="media" />
+      {#snippet media()}
+        <i class="icon demo-list-icon"></i>
+      {/snippet}
     </ListInput>
   </List>
 

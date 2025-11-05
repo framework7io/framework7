@@ -15,6 +15,7 @@
     dropdown = 'auto',
     wrap = true,
     input = true,
+    inputContent = undefined,
     type = 'text',
     name = undefined,
     value = undefined,
@@ -568,8 +569,8 @@
               />
             {/if}
           {/if}
-          {#if typeof input === 'function'}
-            {@render input?.()}
+          {#if typeof inputContent === 'function'}
+            {@render inputContent?.()}
           {/if}
 
           {#if hasErrorMessage && errorMessageForce}
@@ -785,10 +786,9 @@
             />
           {/if}
         {/if}
-        {#if typeof input === 'function'}
-          {@render input?.()}
+        {#if typeof inputContent === 'function'}
+          {@render inputContent?.()}
         {/if}
-        {@render input?.()}
         {#if hasErrorMessage && errorMessageForce}
           <div class="item-input-error-message">
             {#if typeof errorMessage === 'function'}

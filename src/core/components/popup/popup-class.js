@@ -338,6 +338,7 @@ class Popup extends Modal {
           popup.push &&
           (app.width < 630 || app.height < 630 || $el.hasClass('popup-tablet-fullscreen'));
       }
+
       if (isPush) {
         pushOffset = parseInt($el.css('--f7-popup-push-offset'), 10);
         if (Number.isNaN(pushOffset)) {
@@ -347,7 +348,10 @@ class Popup extends Modal {
         popup.$htmlEl[0].style.setProperty('--f7-popup-push-offset', `${pushOffset}px`);
         $el.addClass('popup-push');
         $el.addClass('popup-push-in');
+        popup.emit('local::pushIn', popup, true);
         popup.$htmlEl[0].style.setProperty('--f7-popup-push-scale', pushViewScale(pushOffset));
+      } else {
+        popup.emit('local::pushIn', popup, false);
       }
       app.on('resize', updatePushOffset);
     };
@@ -378,6 +382,11 @@ class Popup extends Modal {
       if (isPush && pushOffset && !hasPreviousPushPopup) {
         $el.removeClass('popup-push-in');
         $el.addClass('popup-push-closing');
+        popup.emit('local::pushIn', popup, false);
+        popup.emit('local::pushClosing', popup, true);
+      } else {
+        popup.emit('local::pushIn', popup, false);
+        popup.emit('local::pushClosing', popup, false);
       }
       app.off('resize', updatePushOffset);
     });

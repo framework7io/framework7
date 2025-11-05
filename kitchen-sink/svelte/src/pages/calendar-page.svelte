@@ -128,11 +128,17 @@
   <List id="calendar-events" noHairlines class="no-margin no-safe-area-left">
     {#each eventItems as item, index (index)}
       <ListItem title={item.title} after={item.time}>
-        <div class="event-color" style={`background-color: ${item.color}`} slot="root-start" />
+        {#snippet rootStart()}
+          <div class="event-color" style={`background-color: ${item.color}`} />
+        {/snippet}
       </ListItem>
     {/each}
     {#if eventItems.length === 0}
-      <ListItem><span class="text-color-gray" slot="title">No events for this day</span></ListItem>
+      <ListItem>
+        {#snippet title()}
+          <span class="text-color-gray">No events for this day</span>
+        {/snippet}
+      </ListItem>
     {/if}
   </List>
 </Page>

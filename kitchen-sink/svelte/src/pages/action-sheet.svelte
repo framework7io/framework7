@@ -131,59 +131,65 @@
   <Actions grid={true} bind:opened={actionGridOpened}>
     <ActionsGroup>
       <ActionsButton>
-        <img
-          slot="media"
-          src="https://cdn.framework7.io/placeholder/people-96x96-1.jpg"
-          width="48"
-          style="max-width: 100%; border-radius: 8px"
-        />
+        {#snippet media()}
+          <img
+            src="https://cdn.framework7.io/placeholder/people-96x96-1.jpg"
+            width="48"
+            style="max-width: 100%; border-radius: 8px"
+          />
+        {/snippet}
         <span>Button 1</span>
       </ActionsButton>
       <ActionsButton>
-        <img
-          slot="media"
-          src="https://cdn.framework7.io/placeholder/people-96x96-2.jpg"
-          width="48"
-          style="max-width: 100%; border-radius: 8px"
-        />
+        {#snippet media()}
+          <img
+            src="https://cdn.framework7.io/placeholder/people-96x96-2.jpg"
+            width="48"
+            style="max-width: 100%; border-radius: 8px"
+          />
+        {/snippet}
         <span>Button 2</span>
       </ActionsButton>
       <ActionsButton>
-        <img
-          slot="media"
-          src="https://cdn.framework7.io/placeholder/people-96x96-3.jpg"
-          width="48"
-          style="max-width: 100%; border-radius: 8px"
-        />
+        {#snippet media()}
+          <img
+            src="https://cdn.framework7.io/placeholder/people-96x96-3.jpg"
+            width="48"
+            style="max-width: 100%; border-radius: 8px"
+          />
+        {/snippet}
         <span>Button 3</span>
       </ActionsButton>
     </ActionsGroup>
     <ActionsGroup>
       <ActionsButton>
-        <img
-          slot="media"
-          src="https://cdn.framework7.io/placeholder/fashion-96x96-4.jpg"
-          width="48"
-          style="max-width: 100%; border-radius: 8px"
-        />
+        {#snippet media()}
+          <img
+            src="https://cdn.framework7.io/placeholder/fashion-96x96-4.jpg"
+            width="48"
+            style="max-width: 100%; border-radius: 8px"
+          />
+        {/snippet}
         <span>Button 4</span>
       </ActionsButton>
       <ActionsButton>
-        <img
-          slot="media"
-          src="https://cdn.framework7.io/placeholder/fashion-96x96-5.jpg"
-          width="48"
-          style="max-width: 100%; border-radius: 8px"
-        />
+        {#snippet media()}
+          <img
+            src="https://cdn.framework7.io/placeholder/fashion-96x96-5.jpg"
+            width="48"
+            style="max-width: 100%; border-radius: 8px"
+          />
+        {/snippet}
         <span>Button 5</span>
       </ActionsButton>
       <ActionsButton>
-        <img
-          slot="media"
-          src="https://cdn.framework7.io/placeholder/fashion-96x96-6.jpg"
-          width="48"
-          style="max-width: 100%; border-radius: 8px"
-        />
+        {#snippet media()}
+          <img
+            src="https://cdn.framework7.io/placeholder/fashion-96x96-6.jpg"
+            width="48"
+            style="max-width: 100%; border-radius: 8px"
+          />
+        {/snippet}
         <span>Button 6</span>
       </ActionsButton>
     </ActionsGroup>

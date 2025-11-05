@@ -42,9 +42,9 @@
     />
     <ListInput label="Date time" name="date" type="datetime-local" placeholder="Please choose..." />
     <ListInput label="Range" input={false}>
-      <span slot="input">
+      {#snippet inputContent()}
         <Range input={true} name="range" value={50} min={0} max={100} step={1} />
-      </span>
+      {/snippet}
     </ListInput>
 
     <ListInput label="About you" type="textarea" name="bio" resizable placeholder="Bio" />

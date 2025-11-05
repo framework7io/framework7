@@ -34,7 +34,7 @@
       `fab-${position}`,
       {
         'fab-morph': morphTo,
-        'fab-extended': text || typeof textEl !== 'undefined',
+        'fab-extended': text || textEl !== null,
       },
       colorClasses(restProps),
     ),
