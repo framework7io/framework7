@@ -98,15 +98,6 @@ async function release() {
   await exec.promise(`npm run build-vue:prod`);
   await exec.promise(`npm run build-svelte:prod`);
 
-  // update web types version
-  // eslint-disable-next-line
-  const webTypes = require('../packages/vue/framework7-vue-web-types.json');
-  webTypes.version = options.version;
-  fs.writeFileSync(
-    path.resolve(__dirname, '../packages/vue/framework7-vue-web-types.json'),
-    JSON.stringify(webTypes, null, 2),
-  );
-
   // NPM publish
   if (options.beta) {
     await exec.promise('cd ./packages/core && npm publish --tag beta');
