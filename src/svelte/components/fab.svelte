@@ -62,7 +62,10 @@
 <div class={classes} data-morph-to={morphTo} bind:this={el} data-f7-slot={f7Slot} {...restProps}>
   <a
     bind:this={linkEl}
-    onclick={restProps.onclick?.()}
+    onclick={(e) => {
+      restProps.onclick?.(e);
+      restProps.onclick?.(e);
+    }}
     {target}
     href={hrefComputed}
     use:useTooltip={{ tooltip, tooltipTrigger }}

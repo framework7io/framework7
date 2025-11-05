@@ -21,26 +21,32 @@
 
   function onBeforeOpen(accEl, prevent) {
     if (accEl !== el) return;
+    restProps.onaccordionbeforeopen?.(prevent);
     restProps.onAccordionBeforeOpen?.(prevent);
   }
   function onOpen(accEl) {
     if (accEl !== el) return;
+    restProps.onaccordionopen?.();
     restProps.onAccordionOpen?.();
   }
   function onOpened(accEl) {
     if (accEl !== el) return;
+    restProps.onaccordionopened?.();
     restProps.onAccordionOpened?.();
   }
   function onBeforeClose(accEl, prevent) {
     if (accEl !== el) return;
+    restProps.onaccordionbeforeclose?.(prevent);
     restProps.onAccordionBeforeClose?.(prevent);
   }
   function onClose(accEl) {
     if (accEl !== el) return;
+    restProps.onaccordionclose?.();
     restProps.onAccordionClose?.();
   }
   function onClosed(accEl) {
     if (accEl !== el) return;
+    restProps.onaccordionclosed?.();
     restProps.onAccordionClosed?.();
   }
 

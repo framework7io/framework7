@@ -31,6 +31,7 @@
   function onChange(event) {
     checked = event.target.checked;
     restProps.onchange?.(event);
+    restProps.onChange?.(event);
   }
 
   onMount(() => {

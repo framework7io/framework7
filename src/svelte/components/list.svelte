@@ -136,12 +136,12 @@
 
   function onSubmit(event) {
     restProps.onSubmit?.(event);
-    restProps.onSubmit?.(event);
+    restProps.onsubmit?.(event);
   }
   function onSortableEnable(sortableEl) {
     if (sortableEl !== el) return;
     restProps.onSortableEnable?.(sortableEl);
-    restProps.onSortableEnable?.(sortableEl);
+    restProps.onsortableenable?.(sortableEl);
   }
   function onSortableDisable(sortableEl) {
     if (sortableEl !== el) return;

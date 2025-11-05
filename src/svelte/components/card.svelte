@@ -82,23 +82,28 @@
 
   function onBeforeOpen(cardEl, prevent) {
     if (cardEl !== el) return;
+    restProps.oncardbeforeopen?.(el, prevent);
     restProps.onCardBeforeOpen?.(el, prevent);
   }
   function onOpen(cardEl) {
     if (cardEl !== el) return;
+    restProps.oncardopen?.(el);
     restProps.onCardOpen?.(el);
     expandableOpened = true;
   }
   function onOpened(cardEl, pageEl) {
     if (cardEl !== el) return;
+    restProps.oncardopened?.(el, pageEl);
     restProps.onCardOpened?.(el, pageEl);
   }
   function onClose(cardEl) {
     if (cardEl !== el) return;
+    restProps.oncardclose?.(el);
     restProps.onCardClose?.(el);
   }
   function onClosed(cardEl, pageEl) {
     if (cardEl !== el) return;
+    restProps.oncardclosed?.(el, pageEl);
     restProps.onCardClosed?.(el, pageEl);
     expandableOpened = false;
   }

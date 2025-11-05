@@ -494,7 +494,8 @@
                 {/if}
                 <SnippetRender content={innerEnd} />
               </div>
-              <SnippetRender {content} />
+              <!-- prettier-ignore -->
+              <SnippetRender content={content} />
               <SnippetRender content={contentEnd} />
             </div>
             <!-- Item content end -->

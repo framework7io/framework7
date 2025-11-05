@@ -8,27 +8,32 @@ const fs = require('./utils/fs-extra.js');
 const { COLOR_PROPS, ICON_PROPS, ROUTER_PROPS, ACTIONS_PROPS } = require('./ts-extend-props.js');
 
 const TEMPLATE = `
-import { SvelteComponent } from 'svelte';
+import { SvelteComponent, Snippet } from 'svelte';
 import { HTMLAttributes } from 'svelte/elements';
 {{IMPORTS}}
 
-interface {{componentName}}Props {
+interface Props {
   {{PROPS}}
 }
 
+interface {{componentName}}Props {}
+interface {{componentName}}Props extends Props {}
 {{EXTENDS}}
+interface {{componentName}}Events extends Record<'',{}>{}
+
+
 
 declare class {{componentName}} extends SvelteComponent<
-  {{componentName}}Props & Omit<HTMLAttributes<HTMLElementTagNameMap['div']>, keyof {{componentName}}Props>,
-  { {{EVENTS}} },
-  { {{SLOTS}} }
+  {{componentName}}Props,
+  {{componentName}}Events,
+  {  }
 > {}
 
 export { {{componentName}}Props };
 export default {{componentName}};
 `;
 
-function generateComponentProps(propsContent) {
+function generateComponentProps(propsContent, slots, events) {
   // eslint-disable-next-line
   const props = {};
   propsContent
@@ -42,7 +47,7 @@ function generateComponentProps(propsContent) {
     .map((line) => line.trim())
     .filter((line) => !!line)
     .forEach((line) => {
-      const propName = line.split(':')[0].replace('?', '');
+      const propName = line.split(':')[0].replace('?', '').trim();
       let propValue = line.split(':').slice(1).join(':');
       if (propValue.charAt(propValue.length - 1) === ';') {
         propValue = propValue.substr(0, propValue.length - 1);
@@ -52,6 +57,21 @@ function generateComponentProps(propsContent) {
 
   ['id', 'style', 'className', 'ref', 'slot', 'children'].forEach((key) => {
     delete props[key];
+  });
+  Object.keys(props).forEach((propName) => {
+    if (slots.includes(propName)) {
+      props[propName] = `${props[propName]} | Snippet`;
+    }
+  });
+  slots.forEach((slotName) => {
+    if (!Object.keys(props).includes(slotName)) {
+      props[slotName] = `Snippet`;
+    }
+  });
+  events.forEach((eventName) => {
+    if (!Object.keys(props).includes(eventName)) {
+      props[eventName] = `() => void`;
+    }
   });
   const content = Object.keys(props)
     .map((propName) => `${propName}?: ${props[propName]};`)
@@ -74,29 +94,28 @@ function generateComponentTypings(componentName, fileContent, reactFileContent) 
     propsExtends = reactFileContent.split('/* dts-extends')[1].split('*/')[0] || '';
   }
   const slots = [];
-  fileContent.replace(/<slot ([^>]*)\/>/g, (str, name) => {
-    if (!name.trim()) name = 'default';
-    name = name.match(/name="([a-z-]*)"/);
-    if (name) name = name[1];
-    else name = 'default';
+  fileContent.replace(/{@render ([a-zA-Z]*)/g, (str, name) => {
+    if (!name.trim()) name = 'children';
     if (!slots.includes(name)) slots.push(name);
   });
-  if (fileContent.includes('<slot') && !slots.includes('default')) slots.push('default');
-  const slotsContent = slots.map((slot) => ` '${slot}' : {};`).join(' ');
+  fileContent.replace(/<SnippetRender content={([a-zA-Z]*)/g, (str, name) => {
+    if (!name.trim()) name = 'children';
+    if (!slots.includes(name)) slots.push(name);
+  });
+  if (componentName === 'Navbar') {
+    slots.push(...['title', 'subtitle']);
+  }
 
   const events = [];
-  fileContent.replace(/emit\('([a-zA-Z]*)'/g, (str, name) => {
-    if (!events.includes(name)) events.push(name);
+  fileContent.replace(/restProps.on([a-zA-Z]*)/g, (str, name) => {
+    if (!events.includes(`on${name}`)) events.push(`on${name}`);
   });
-  const eventsContent = events.map((event) => `${event}: CustomEvent<void>;`).join(' ');
 
   // prettier-ignore
   return TEMPLATE
     .replace('{{IMPORTS}}', imports)
     .replace('{{EXTENDS}}', propsExtends ? ` interface ${componentName}Props extends ${propsExtends.trim()} {}` : '')
-    .replace('{{PROPS}}', generateComponentProps(props))
-    .replace('{{EVENTS}}', eventsContent)
-    .replace('{{SLOTS}}', slotsContent)
+    .replace('{{PROPS}}', generateComponentProps(props, slots, events))
     .replace(/{{componentName}}/g, componentName)
 }
 

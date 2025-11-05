@@ -168,19 +168,23 @@
   );
 
   function onTextareaResize(event) {
+    restProps.ontextarearesize?.(event);
     restProps.onTextareaResize?.(event);
   }
 
   function onInputNotEmpty(event) {
     restProps.onInputNotEmpty?.(event);
+    restProps.oninputnotempty?.(event);
   }
 
   function onInputEmpty(event) {
     restProps.onInputEmpty?.(event);
+    restProps.oninputempty?.(event);
   }
 
   function onInputClear(event) {
     restProps.onInputClear?.(event);
+    restProps.oninputclear?.(event);
   }
 
   function onInput(...args) {
@@ -217,6 +221,7 @@
     restProps.onchange?.(...args);
 
     if (type === 'texteditor') {
+      restProps.ontexteditorchange?.(args[1]);
       restProps.onTextEditorChange?.(args[1]);
       value = args[1];
     }
@@ -243,6 +248,7 @@
           on: {
             change(calendar, calendarValue) {
               restProps.onCalendarChange?.(calendarValue);
+              restProps.oncalendarchange?.(calendarValue);
               value = calendarValue;
             },
           },
@@ -256,7 +262,7 @@
           on: {
             change(colorPicker, colorPickerValue) {
               restProps.onColorPickerChange?.(colorPickerValue);
-              restProps.onColorpickerChange?.(colorPickerValue);
+              restProps.oncolorpickerchange?.(colorPickerValue);
               value = colorPickerValue;
             },
           },

@@ -48,19 +48,23 @@
   function onOpen(instance) {
     isOpened = true;
     isClosing = false;
+    restProps.onactionsopen?.(instance);
     restProps.onActionsOpen?.(instance);
     opened = true;
   }
   function onOpened(instance) {
+    restProps.onactionsopened?.(instance);
     restProps.onActionsOpened?.(instance);
   }
   function onClose(instance) {
     isOpened = false;
     isClosing = true;
+    restProps.onactionsclose?.(instance);
     restProps.onActionsClose?.(instance);
   }
   function onClosed(instance) {
     isClosing = false;
+    restProps.onactionsclosed?.(instance);
     restProps.onActionsClosed?.(instance);
     opened = false;
   }

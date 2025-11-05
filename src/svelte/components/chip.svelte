@@ -45,6 +45,7 @@
 
   function onDeleteClick(e) {
     restProps.onDelete?.(e);
+    restProps.ondelete?.(e);
   }
 </script>
 
