@@ -60,8 +60,8 @@
     "url": "https://www.patreon.com/framework7"
   },
   "browserslist": [
-    "IOS >= 15",
-    "Safari >= 15",
+    "IOS >= 18",
+    "Safari >= 18",
     "last 5 Chrome versions",
     "last 5 Firefox versions"
   ],
