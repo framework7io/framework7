@@ -1,60 +1,36 @@
 # WIP
 
-### Features
+### Core
 
-- ios highlights, remove obsolete support, single color photo browser ([8104887](https://github.com/framework7io/framework7/commit/810488756d81b1f93aec61d9c6dc510e4b9f33c1))
-- more demos ([6f7d2f6](https://github.com/framework7io/framework7/commit/6f7d2f6cff978f4a2e4527e3dcddc2b78b2f433f))
-- more demos ([f680822](https://github.com/framework7io/framework7/commit/f680822cdc22ba462c75a2380d8b9ab2a34b3ef0))
-- more svelte tweaks ([40ecfa0](https://github.com/framework7io/framework7/commit/40ecfa061efa5eac95c11a94b0d139964900786e))
-- more svelte v5 tweaks ([8cb0312](https://github.com/framework7io/framework7/commit/8cb03121363a8225da16c09d5c524df5f95bcb03))
-- Navbar - new iOS styles, remove dynamicNavbar functionality, empty back text everywhere by default ([b48c01c](https://github.com/framework7io/framework7/commit/b48c01c1afc83678968ef5541b4c9302c03e28f9))
-- navbar/searchbar tweaks ([9f08a8f](https://github.com/framework7io/framework7/commit/9f08a8f0c3a7edd3535146b5c7bacb8fa91b5df7))
-- new Actions style ([5fb87f1](https://github.com/framework7io/framework7/commit/5fb87f1c55b79fd8b8c224fa15c21c75d23e1a04))
-- new Input styles ([ee5b6e5](https://github.com/framework7io/framework7/commit/ee5b6e5d5c9e439438d14a458c8c5d7432743e3a))
-- new iOS Searchbar ([4314e01](https://github.com/framework7io/framework7/commit/4314e01fc414fd3fe0c3f2378016d3c74c0bb612))
-- new iOS Swipeout styles ([a2f0ce7](https://github.com/framework7io/framework7/commit/a2f0ce7e5c1601a9835a96ebff388d764d3110e0))
-- new iOS Tabbar ([3eba697](https://github.com/framework7io/framework7/commit/3eba69786e2b7882a510308b0aa366938c0ce72a))
-- new MD Color Schemes ([fe6351c](https://github.com/framework7io/framework7/commit/fe6351cb3fa486587d0d9b03e59c2772b11919b2))
-- new MD Progressbar ([8342947](https://github.com/framework7io/framework7/commit/83429476089d08dbd84bf78a2cf9319697a36888))
-- new MD Range ([2b14ae7](https://github.com/framework7io/framework7/commit/2b14ae7d67347cba5ad73b66773d097249d5a995))
-- new Messages + Messagebar styles ([4317002](https://github.com/framework7io/framework7/commit/4317002fa58fabe897a44abef7b2f748e119ca81))
-- new Notification styles ([d868565](https://github.com/framework7io/framework7/commit/d868565a1d75039cf6e835a7d89faf7de7a452b0))
-- new Popup styles ([fb65019](https://github.com/framework7io/framework7/commit/fb65019c5be799a22d047cbea91f6170f285d717))
-- new Sheet styles ([f9f90da](https://github.com/framework7io/framework7/commit/f9f90daa906023b5daf0a4153912b72e647d1698))
-- new Toast styles ([c5fd80e](https://github.com/framework7io/framework7/commit/c5fd80e6581f250537d800920b89a81b3695ac03))
-- new Toolbar styles, updated Picker, Calendar, Sheet, Popover ([8c37bcb](https://github.com/framework7io/framework7/commit/8c37bcb6126270546f629d2da7c998eaa53d1564))
-- **react:** update all demos ([917590d](https://github.com/framework7io/framework7/commit/917590d9450fbab45afffb327bdad2c0d1af62f5))
-- **react:** update to React 19 APIs ([7a553d4](https://github.com/framework7io/framework7/commit/7a553d4f951d4f444547ea167fa8985ace42499d))
-- remove default "Cancel" text in Autocomplete and Smart Select ([4632eea](https://github.com/framework7io/framework7/commit/4632eea3f951b8c7f564ba6b2ad155cdf6c54214))
-- remove vue web types ([5e5cf02](https://github.com/framework7io/framework7/commit/5e5cf02768c0f00c08f544409ffa3995203a179a))
-- rename glass vars ([076c5d2](https://github.com/framework7io/framework7/commit/076c5d2d00c5add7e913b8e135713ab5397071c7))
-- svelte v5 typings ([c71094d](https://github.com/framework7io/framework7/commit/c71094dee8360d7696b361e188ca7236b67831fd))
-- **svelte:** More components updated to v5 ([45def5f](https://github.com/framework7io/framework7/commit/45def5f6e3f61fe06662649c0ea1fd4314d020d5))
-- **svelte:** more v5 components ([80dd2e4](https://github.com/framework7io/framework7/commit/80dd2e4d5a1fb57cafc70eb5b76504a845b6fd0d))
-- **svelte:** updated Accordion components ([3ec936b](https://github.com/framework7io/framework7/commit/3ec936b7314a1afdbaeef8c494860e6454bfe9c8))
-- **svelte:** updated Badge components ([15a15a4](https://github.com/framework7io/framework7/commit/15a15a430524eb570a013c172083bdcbda688811))
-- **svelte:** updated Block components ([92fa5bb](https://github.com/framework7io/framework7/commit/92fa5bb54839405eeceff40d0ccebc2afea063cc))
-- **svelte:** updated Breadcrumbs components ([37202ea](https://github.com/framework7io/framework7/commit/37202eacd58b01e0705e77c80a79b2f57bd4564e))
-- **svelte:** updated Card components ([a2b12e4](https://github.com/framework7io/framework7/commit/a2b12e48a039bcdeb7f06dac1567e62777536bba))
-- **svelte:** updated Radio, Chip, Checkbox components ([7d1cac5](https://github.com/framework7io/framework7/commit/7d1cac58e03573e5b3a89611e8355d76dc319e63))
-- **timeline:** removed horizontal timeline ([8128e80](https://github.com/framework7io/framework7/commit/8128e800230fac2b172966fd51911bc3a218c527))
-- tweak iOS Color Picker styles ([552a7d4](https://github.com/framework7io/framework7/commit/552a7d48a317856dbf4160d7c5bf0d83f22aec6d))
-- tweak IOS popover ([7d6be3a](https://github.com/framework7io/framework7/commit/7d6be3a4c6fc6e6519f1cd8f83c6f1b626a57962))
-- tweak MD page transitions directions ([391e6e4](https://github.com/framework7io/framework7/commit/391e6e4d8dd44504fe6b29567a7af7a0984815b4))
-- tweak Login Screen styles ([c9dd9ee](https://github.com/framework7io/framework7/commit/c9dd9eef8df61755ab0ba6da4f558dd27c238152))
-- update Dialog style ([ede89ac](https://github.com/framework7io/framework7/commit/ede89ac9e41a09f6eae45183085bcdf9659e1984))
-- update FAB style ([2b2556c](https://github.com/framework7io/framework7/commit/2b2556c9ff126f5667e78cff56fc3ef95d80c37a))
-- update iOS block styles ([30b68d4](https://github.com/framework7io/framework7/commit/30b68d4a9fead8d05d152d6d72be4f061c34711e))
-- update iOS buttons styles ([3fa8c46](https://github.com/framework7io/framework7/commit/3fa8c46daa3b0e87b40934d0f5000d9b6dde7549))
-- update iOS cards styles ([d2df948](https://github.com/framework7io/framework7/commit/d2df948a7d6f89be113bd3ae0abd0afa50efc430))
-- update iOS list, menu list styles ([ff512b9](https://github.com/framework7io/framework7/commit/ff512b946770668af1953dbb36c76ff48fd2a20c))
-- update iOS range ([3824064](https://github.com/framework7io/framework7/commit/38240645480d8ae1299b901c79a46bad3a14864b))
-- update iOS range ([22d8c71](https://github.com/framework7io/framework7/commit/22d8c71e0bfe7e36d03246e58e8d9d861fce008b))
-- update iOS toggle ([ad6a046](https://github.com/framework7io/framework7/commit/ad6a0465d1b40ab02299a65828ae21bb5a5c67d5))
-- update Popover, remove "arrow" ([eff1c04](https://github.com/framework7io/framework7/commit/eff1c04a2199adf8dc0d3ef339a83d2c7124aba5))
-- update Progressbar iOS vars ([f569952](https://github.com/framework7io/framework7/commit/f569952a0e145ddc0d1674c5298252bd243b6479))
-- update Stepper iOS styles ([823ba72](https://github.com/framework7io/framework7/commit/823ba72e11ea8740a7f06eda0dff109944158d00))
-- **vue:** update all Vue demos ([8c5a73c](https://github.com/framework7io/framework7/commit/8c5a73cb22430b02cebdf1cc0a6a17ec1d06c656))
+- iOS theme:
+  - All new iOS 26 style across all components
+- Material theme:
+  - Colors schemes updated to latest Material You spec
+  - New Vibrant and Monochrome color schemes
+  - Updated look for Range slider
+  - Updated look for Progressbar
+- Components:
+  - Navbar
+    - Removed `dynamicNavbar` functionality
+    - Default back link text ("Back") is not empty in favor of using back icon only
+  - Photo Browser
+    - Removed both light/dark modes. Now it uses the same the light (or dark) mode as an app
+  - Autocomplete
+    - Removed default "Cancel" text (in favor of using just an icon)
+  - Smart Select
+    - Removed default "Cancel" text (in favor of using just an icon)
+  - Searchbar
+    - Removed default "Cancel" text (in favor of using just an icon)
+  - Timeline
+    - Removed "Horizontal Timeline" style
+
+### Svelte
+
+- Updated to latest Svelte v5 API
+
+### React
+
+- Updated to latest React 19 API
 
 <a href="https://www.patreon.com/framework7"><img src="https://framework7.io/i/support-badge.png" height="20"></a>
 
