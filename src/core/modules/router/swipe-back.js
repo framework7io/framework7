@@ -148,6 +148,7 @@ function SwipeBack(r) {
     // Transform pages
     let currentPageTranslate = touchesDiff * inverter;
     let previousPageTranslate = (touchesDiff / 5 - viewContainerWidth / 5) * inverter;
+
     if (!app.rtl) {
       currentPageTranslate = Math.min(currentPageTranslate, viewContainerWidth);
       previousPageTranslate = Math.min(previousPageTranslate, 0);
@@ -166,9 +167,7 @@ function SwipeBack(r) {
     $currentPageEl.transform(`translate3d(${currentPageTranslate}px,0,0)`);
     if (paramsSwipeBackAnimateShadow) $pageShadowEl[0].style.opacity = 1 - 1 * percentage;
 
-    if (app.theme === 'ios') {
-      $previousPageEl.transform(`translate3d(${previousPageTranslate}px,0,0)`);
-    }
+    $previousPageEl.transform(`translate3d(${previousPageTranslate}px,0,0)`);
     if (paramsSwipeBackAnimateOpacity) $pageOpacityEl[0].style.opacity = 1 - 1 * percentage;
   }
   function handleTouchEnd(e) {

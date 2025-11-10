@@ -74,7 +74,7 @@ export default {
       iosSwipeBackThreshold: 0,
       mdSwipeBack: false,
       mdSwipeBackAnimateShadow: true,
-      mdSwipeBackAnimateOpacity: false,
+      mdSwipeBackAnimateOpacity: true,
       mdSwipeBackActiveArea: 30,
       mdSwipeBackThreshold: 0,
       // Push State
