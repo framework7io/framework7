@@ -247,6 +247,8 @@ export namespace Router {
     /** Event will be fired when router.updateCurrentUrl method called */
     routeUrlUpdate(newRoute: Route, router: Router): void;
 
+    /** Event will be fired when the request starts. As an arguments receives navigating options object and request init object */
+    routerAjaxStart(options: RouteOptions, requestInit: RequestInit): void;
     /** Event will be fired when the request succeeds. As an arguments receives XHR object and navigating options object */
     routerAjaxSuccess(response: Response, options: RouteOptions): void;
     /** Event will be fired if the request fails. As an arguments receives XHR object and navigating options object */
