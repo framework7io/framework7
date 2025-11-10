@@ -890,7 +890,10 @@ class Router extends Framework7Class {
     const { browserHistory, browserHistoryOnLoad, browserHistorySeparator } = router.params;
     let { browserHistoryRoot } = router.params;
     if (
-      (window.cordova || (window.Capacitor && window.Capacitor.isNative)) &&
+      (window.cordova ||
+        (window.Capacitor &&
+          (window.Capacitor.isNative ||
+            (window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform())))) &&
       browserHistory &&
       !browserHistorySeparator &&
       !browserHistoryRoot &&

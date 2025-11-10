@@ -459,7 +459,9 @@ function initTouch() {
       (device.ios ||
         device.android ||
         device.cordova ||
-        (window.Capacitor && window.Capacitor.isNative))
+        (window.Capacitor &&
+          (window.Capacitor.isNative ||
+            (window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()))))
     ) {
       e.preventDefault();
     }

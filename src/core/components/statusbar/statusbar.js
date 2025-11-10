@@ -7,7 +7,7 @@ const isCapacitor = () => {
   const window = getWindow();
   return (
     window.Capacitor &&
-    window.Capacitor.isNative &&
+    (window.Capacitor.isNative || window.Capacitor.isNativePlatform) &&
     window.Capacitor.Plugins &&
     window.Capacitor.Plugins.StatusBar
   );
