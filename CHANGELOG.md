@@ -3,12 +3,13 @@
 ### Core
 
 - iOS theme:
-  - All new iOS 26 style across all components
+  - All new iOS 26 styles across all components
 - Material theme:
   - Colors schemes updated to latest Material You spec
   - New Vibrant and Monochrome color schemes
   - Updated look for Range slider
   - Updated look for Progressbar
+  - Reworked page transitions (effect and direction)
 - Components:
   - Navbar
     - Removed `dynamicNavbar` functionality
