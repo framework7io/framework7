@@ -539,9 +539,13 @@ class Router extends Framework7Class {
         }
       }
       router.xhrAbortController = new AbortController();
+      const options = {
+        method: 'GET',
+        signal: router.xhrAbortController.signal,
+      };
+      router.emit('routerAjaxStart', options);
       let fetchRes;
-      fetch(url, { signal: router.xhrAbortController.signal, method: 'GET' })
-        .then((res) => {
+      fetch(url, options).then(res => {
           fetchRes = res;
           return res.text();
         })
