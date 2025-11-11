@@ -227,6 +227,7 @@ export default {
     // Smart Select
     smartSelect: Boolean,
     smartSelectParams: Object,
+    smartSelection: [String, Number, Array, Date, Object],
 
     // Links Chevron (Arrow) Icon
     noChevron: Boolean,
@@ -271,6 +272,7 @@ export default {
     'accordion:opened',
     'change',
     'update:checked',
+    'update:smartSelection',
   ],
   setup(props, { slots, emit }) {
     const ListContext = inject('ListContext', {
@@ -362,15 +364,38 @@ export default {
       emit('change', event);
       emit('update:checked', event.target.checked);
     };
+    const onSmartSelectChange = (ss, value) => {
+      emit('update:smartSelection', value);
+    };
 
     useTooltip(elRef, props);
 
     useRouteProps(linkElRef, props);
 
+    let f7SmartSelect = null;
     useSmartSelect(
       props,
-      () => {},
+      (instance) => {
+        f7SmartSelect = instance;
+        if (f7SmartSelect) {
+          if (props.smartSelection !== undefined) {
+            f7SmartSelect.setValue(props.smartSelection);
+          }
+          // register for change event only after setting initial value
+          f7SmartSelect.$el.on('smartselect:change', onSmartSelectChange);
+        }
+      },
       () => elRef.value.querySelector('a.smart-select'),
+    );
+
+    watch(
+      () => props.smartSelection,
+      (newValue) => {
+        // eslint-disable-next-line eqeqeq
+        if (newValue === undefined || !f7SmartSelect || f7SmartSelect.getValue() == newValue)
+          return;
+        f7SmartSelect.setValue(newValue);
+      },
     );
 
     watch(
