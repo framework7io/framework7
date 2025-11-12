@@ -19,7 +19,7 @@
   export let backdropEl = undefined;
   export let closeByBackdropClick = undefined;
   export let closeOnEscape = undefined;
-  export let swipeToClose = false;
+  export let swipeToClose = undefined;
   export let swipeHandler = undefined;
   export let push = undefined;
   export let containerEl = undefined;
