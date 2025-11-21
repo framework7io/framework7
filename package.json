@@ -91,6 +91,7 @@
     "concurrently": "^7.1.0",
     "conventional-changelog-cli": "^3.0.0",
     "cross-env": "^10.1.0",
+    "cssnano": "^7.1.2",
     "eslint": "^8.47.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^9.0.0",

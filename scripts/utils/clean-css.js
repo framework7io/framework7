@@ -1,5 +1,6 @@
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-const CleanCSS = require('clean-css');
+/* eslint import/no-extraneous-dependencies: "off" */
+const postcss = require('postcss');
+const cssnano = require('cssnano');
 
 module.exports = (content, options = {}) => {
   // eslint-disable-next-line
@@ -14,8 +15,9 @@ module.exports = (content, options = {}) => {
     if (content instanceof Promise) {
       content
         .then((c) => {
-          const minified = new CleanCSS(options).minify(c);
-          resolve(minified.styles);
+          postcss([cssnano()])
+            .process(c, { from: undefined, to: undefined })
+            .then((result) => resolve(result.css));
         })
         .catch((err) => {
           reject(err);
@@ -23,7 +25,10 @@ module.exports = (content, options = {}) => {
         });
       return;
     }
-    const minified = new CleanCSS(options).minify(content);
-    resolve(minified.styles);
+    postcss([cssnano()])
+      .process(content, { from: undefined, to: undefined })
+      .then((res) => {
+        resolve(res.css);
+      });
   });
 };
