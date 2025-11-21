@@ -48,12 +48,16 @@
     }
     &::before {
       backdrop-filter: blur(2px);
-      mask-image: linear-gradient(to top, black 50%, transparent 100%);
+      mask-image: linear-gradient(
+        to top,
+        black calc(50% + var(--f7-safe-area-bottom, 0px)),
+        transparent 100%
+      );
     }
     &::after {
       background-image: linear-gradient(
         to top,
-        var(--f7-toolbar-bg-color, var(--f7-bars-bg-color)) 0%,
+        var(--f7-toolbar-bg-color, var(--f7-bars-bg-color)) var(--f7-safe-area-bottom, 0px),
         transparent 100%
       );
     }
@@ -70,12 +74,16 @@
     &.toolbar-top,
     &:not(.toolbar-bottom, .toolbar-top, .messagebar) {
       &::before {
-        mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+        mask-image: linear-gradient(
+          to bottom,
+          black calc(50% + var(--f7-safe-area-top, 0px)),
+          transparent 100%
+        );
       }
       &::after {
         background-image: linear-gradient(
           to bottom,
-          var(--f7-toolbar-bg-color, var(--f7-bars-bg-color)) 0%,
+          var(--f7-toolbar-bg-color, var(--f7-bars-bg-color)) var(--f7-safe-area-top, 0px),
           transparent 100%
         );
       }

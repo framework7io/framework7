@@ -61,7 +61,11 @@
       position: absolute;
       inset: 0;
       backdrop-filter: blur(2px);
-      mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+      mask-image: linear-gradient(
+        to bottom,
+        black calc(50% + var(--f7-safe-area-top, 0px)),
+        transparent 100%
+      );
     }
     &::after {
       content: '';
@@ -69,7 +73,7 @@
       inset: 0;
       background-image: linear-gradient(
         to bottom,
-        var(--f7-navbar-bg-color, var(--f7-bars-bg-color)) 0%,
+        var(--f7-navbar-bg-color, var(--f7-bars-bg-color)) var(--f7-safe-area-top, 0px),
         transparent 100%
       );
     }
