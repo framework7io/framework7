@@ -1,4 +1,6 @@
-# WIP
+# Change Log
+
+# [9.0.0](https://github.com/framework7io/framework7/compare/v8.3.4...v9.0.0) (2025-11-25)
 
 ### Core
 
@@ -32,10 +34,6 @@
 ### React
 
 - Updated to latest React 19 API
-
-<a href="https://www.patreon.com/framework7"><img src="https://framework7.io/i/support-badge.png" height="20"></a>
-
-# Change Log
 
 # [8.3.4](https://github.com/framework7io/framework7/compare/v8.3.3...v8.3.4) (2024-09-18)
 
