@@ -1,5 +1,11 @@
 # Change Log
 
+# [9.0.1](https://github.com/framework7io/framework7/compare/v9.0.0...v9.0.1) (2025-11-26)
+
+### Bug Fixes
+
+- **fab:** fix missing colors on FAB ([ff552c5](https://github.com/framework7io/framework7/commit/ff552c5629b9cb45b9315fdfe03a4a76039c89ad)), closes [#4343](https://github.com/framework7io/framework7/issues/4343)
+
 # [9.0.0](https://github.com/framework7io/framework7/compare/v8.3.4...v9.0.0) (2025-11-25)
 
 ### Core
