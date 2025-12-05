@@ -1,5 +1,11 @@
 # Change Log
 
+# [9.0.2](https://github.com/framework7io/framework7/compare/v9.0.1...v9.0.2) (2025-12-05)
+
+### Bug Fixes
+
+- **vue:** prevent open already opened modals with v-model ([1d4e29a](https://github.com/framework7io/framework7/commit/1d4e29a7dcbb132659edbf51fa85189d7bbf7217))
+
 # [9.0.1](https://github.com/framework7io/framework7/compare/v9.0.0...v9.0.1) (2025-11-26)
 
 ### Bug Fixes
