@@ -184,6 +184,9 @@ export default {
       () => props.opened,
       (value) => {
         if (!f7Sheet) return;
+        if (value === f7Sheet.opened) {
+          return;
+        }
         if (value) {
           f7Sheet.open();
         } else {

@@ -91,6 +91,9 @@ export default {
       () => props.opened,
       (value) => {
         if (!f7Actions) return;
+        if (value === f7Actions.opened) {
+          return;
+        }
         if (value) {
           f7Actions.open();
         } else {

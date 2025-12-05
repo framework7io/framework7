@@ -84,6 +84,9 @@ export default {
       () => props.opened,
       (value) => {
         if (!f7Popover.value) return;
+        if (value === f7Popover.value.opened) {
+          return;
+        }
         if (value) {
           f7Popover.value.open();
         } else {

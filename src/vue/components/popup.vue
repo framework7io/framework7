@@ -104,6 +104,10 @@ export default {
       () => props.opened,
       (value) => {
         if (!f7Popup.value) return;
+        if (value === f7Popup.value.opened) {
+          return;
+        }
+
         if (value) {
           f7Popup.value.open();
         } else {
