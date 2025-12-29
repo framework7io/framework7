@@ -45,6 +45,9 @@ const Toolbar = {
     let highlightTranslate;
 
     if ($tabbarEl.hasClass('tabbar-scrollable') && $activeLink && $activeLink[0]) {
+      if (activeLink[0].offsetWidth == 0) {
+        console.warn("ToolBar: ToolBar's scrollable indicator width is 0 because the first active tab width measured as 0.");
+      };
       highlightWidth = `${$activeLink[0].offsetWidth}px`;
       highlightTranslate = `${$activeLink[0].offsetLeft}px`;
     } else {

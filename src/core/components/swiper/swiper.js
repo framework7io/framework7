@@ -4,6 +4,7 @@ import Swiper from 'swiper/bundle';
 import { register } from 'swiper/element/bundle';
 import $ from '../../shared/dom7.js';
 import ConstructorMethods from '../../shared/constructor-methods.js';
+import { extend } from '../../shared/utils.js';
 
 register();
 
@@ -47,6 +48,9 @@ function initSwiper(swiperEl) {
       }
     });
   }
+
+  // skip if already initialized
+  if (params.initialSlide) return;
 
   if (typeof params.initialSlide === 'undefined' && typeof initialSlide !== 'undefined') {
     params.initialSlide = initialSlide;
@@ -113,11 +117,13 @@ export default {
   },
   create() {
     const app = this;
-    app.swiper = ConstructorMethods({
-      defaultSelector: '.swiper',
+    app.swiper = extend(ConstructorMethods({
+      defaultSelector: ".swiper",
       constructor: Swiper,
-      domProp: 'swiper',
-    });
+      domProp: "swiper"
+    }), {
+      init: initSwiper.bind(app)
+    })
   },
   on: {
     pageMounted(page) {
