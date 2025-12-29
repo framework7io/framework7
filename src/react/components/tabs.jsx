@@ -3,6 +3,7 @@ import { useIsomorphicLayoutEffect } from '../shared/use-isomorphic-layout-effec
 import { classNames, getExtraAttrs } from '../shared/utils.js';
 import { colorClasses } from '../shared/mixins.js';
 import { TabsSwipeableContext } from '../shared/tabs-swipeable-context.js';
+import { f7ready, f7 } from '../shared/f7.js';
 import { setRef } from '../shared/set-ref.js';
 /* dts-imports
 import { SwiperOptions } from 'swiper';
@@ -32,6 +33,11 @@ const Tabs = (props) => {
     if (!elRef.current) return;
     Object.assign(elRef.current, swiperParams);
     elRef.current.initialize();
+    f7ready(() => {
+      // It only initializes in pageInit callback
+      // We may need to manually call init() to update the instance
+      f7.swiper.init(elRef.current)
+    });
   }, []);
 
   const classes = classNames(className, colorClasses(props));
