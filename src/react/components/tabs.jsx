@@ -29,15 +29,17 @@ const Tabs = (props) => {
   const elRef = useRef(null);
 
   useIsomorphicLayoutEffect(() => {
+    if (swipeable) {
+      f7ready(() => {
+        // It only initializes in pageInit callback
+        // We may need to manually call init() to update the instance
+        f7.swiper.init(elRef.current)
+      });
+    }
     if (!swipeable || !swiperParams) return;
     if (!elRef.current) return;
     Object.assign(elRef.current, swiperParams);
     elRef.current.initialize();
-    f7ready(() => {
-      // It only initializes in pageInit callback
-      // We may need to manually call init() to update the instance
-      f7.swiper.init(elRef.current)
-    });
   }, []);
 
   const classes = classNames(className, colorClasses(props));

@@ -34,10 +34,6 @@ export default {
     const elRef = ref(null);
 
     onMounted(() => {
-      if (!props.swipeable || !props.swiperParams) return;
-      if (!elRef.value) return;
-      Object.assign(elRef.value, props.swiperParams);
-      elRef.value.initialize();
       if (props.swipeable) {
         f7ready(() => {
           // It only initializes in pageInit callback
@@ -45,6 +41,10 @@ export default {
           f7.swiper.init(elRef.value)
         });
       }
+      if (!props.swipeable || !props.swiperParams) return;
+      if (!elRef.value) return;
+      Object.assign(elRef.value, props.swiperParams);
+      elRef.value.initialize();
     });
 
     const classes = computed(() => classNames(colorClasses(props)));

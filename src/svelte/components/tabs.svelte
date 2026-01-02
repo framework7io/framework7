@@ -31,15 +31,17 @@
   }));
 
   onMount(() => {
-    if (swipeable && swiperParams && wrapEl) {
-      Object.assign(wrapEl, swiperParams);
-      wrapEl.initialize();
+    if (swipeable) {
       f7ready(() => {
         // It only initializes in pageInit callback
         // We may need to manually call init() to update the instance
         app.f7.swiper.init(wrapEl);
       });
     }
+    if (!swipeable || !swiperParams) return;
+    if (!wrapEl) return;
+    Object.assign(wrapEl, swiperParams);
+    wrapEl.initialize();
   });
 </script>
 
