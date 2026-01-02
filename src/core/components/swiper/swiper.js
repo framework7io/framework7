@@ -20,8 +20,9 @@ function initSwiper(swiperEl) {
   const app = this;
   const $swiperEl = $(swiperEl);
   if ($swiperEl.length === 0) return;
-  const isElement = $swiperEl[0].swiper && $swiperEl[0].swiper.isElement;
+  if (!$swiperEl[0].swiper) return;
   if ($swiperEl[0].swiper && !$swiperEl[0].swiper.isElement) return;
+  const isElement = $swiperEl[0].swiper && $swiperEl[0].swiper.isElement;
   let initialSlide;
   let params = {};
   let isTabs;
