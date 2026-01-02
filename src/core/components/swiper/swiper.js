@@ -4,6 +4,7 @@ import Swiper from 'swiper/bundle';
 import { register } from 'swiper/element/bundle';
 import $ from '../../shared/dom7.js';
 import ConstructorMethods from '../../shared/constructor-methods.js';
+import { extend } from '../../shared/utils.js';
 
 register();
 
@@ -19,8 +20,14 @@ function initSwiper(swiperEl) {
   const app = this;
   const $swiperEl = $(swiperEl);
   if ($swiperEl.length === 0) return;
-  const isElement = $swiperEl[0].swiper && $swiperEl[0].swiper.isElement;
+  if (!$swiperEl[0].swiper) return;
   if ($swiperEl[0].swiper && !$swiperEl[0].swiper.isElement) return;
+  
+  // skip if already initialized
+  if ($swiperEl[0]._f7SwiperInitialized) return;
+  $swiperEl[0]._f7SwiperInitialized = true;
+
+  const isElement = $swiperEl[0].swiper && $swiperEl[0].swiper.isElement;
   let initialSlide;
   let params = {};
   let isTabs;
@@ -113,11 +120,13 @@ export default {
   },
   create() {
     const app = this;
-    app.swiper = ConstructorMethods({
-      defaultSelector: '.swiper',
+    app.swiper = extend(ConstructorMethods({
+      defaultSelector: ".swiper",
       constructor: Swiper,
-      domProp: 'swiper',
-    });
+      domProp: "swiper"
+    }), {
+      init: initSwiper.bind(app)
+    })
   },
   on: {
     pageMounted(page) {
