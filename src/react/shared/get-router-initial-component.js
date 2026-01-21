@@ -7,7 +7,7 @@ export const getRouterInitialComponent = (router, initialComponent) => {
   let routeProps = {};
 
   if (initialRoute && initialRoute.route && initialRoute.route.options) {
-    routeProps = initialRoute.route.options.props;
+    routeProps = { ...initialRoute.route.options.props };
   }
 
   const isMasterRoute = (route) => {
@@ -34,6 +34,7 @@ export const getRouterInitialComponent = (router, initialComponent) => {
         ...initialRoute.params,
       },
     };
+    router.propsHistory.push(routeProps || {});
   }
   return {
     initialPage: initialComponentData,

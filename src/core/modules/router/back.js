@@ -259,6 +259,8 @@ function backward(router, el, backwardOptions) {
       router.history.unshift(router.url);
       router.propsHistory.unshift(options.props || {});
     }
+    // Verify if it's initialization and the page before initial page is not in cache prop
+    if (router.propsHistory.length === 1) router.propsHistory.unshift(options.props || {});
     router.history.pop();
     router.propsHistory.pop();
   }

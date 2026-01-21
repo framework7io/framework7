@@ -7,7 +7,7 @@ export const getRouterInitialComponent = (router, initialComponent) => {
   let routeProps = {};
 
   if (initialRoute && initialRoute.route && initialRoute.route.options) {
-    routeProps = initialRoute.route.options.props;
+    routeProps = { ...initialRoute.route.options.props };
   }
 
   const isMasterRoute = (route) => {
@@ -30,10 +30,11 @@ export const getRouterInitialComponent = (router, initialComponent) => {
       props: {
         f7route: initialRoute,
         f7router: router,
-        ...initialRoute.params,
         ...routeProps,
+        ...initialRoute.params,
       },
     };
+    router.propsHistory.push(routeProps || {});
   }
   return {
     initialPage: initialComponentData,
