@@ -913,9 +913,13 @@ class Router extends Framework7Class {
       );
       browserHistoryRoot = location.pathname.split('index.html')[0];
     } else if (browserHistory && !browserHistoryRoot) {
-      if (documentUrl.includes('index.html')) {
-        history.replaceState(history.state, document.title, location.pathname.replace(/\/index\.html/gi, '/') + location.search + location.hash);
-        documentUrl = documentUrl.replace(/\/index\.html/gi, '/');
+      if (documentUrl.startsWith('/index.html')) {
+        window.history.replaceState(
+          window.history.state,
+          document.title,
+          location.pathname.replace(/^\/index\.html/, '/') + location.search + location.hash
+        );
+        documentUrl = documentUrl.replace(/^\/index\.html/, '/');
       }
     }
     if (!browserHistory || !browserHistoryOnLoad) {
@@ -947,7 +951,11 @@ class Router extends Framework7Class {
       const initialRoute = router.findMatchingRoute(initialUrl);
       const anotherViewName = initialRoute.route.viewName;
       if (initialRoute && anotherViewName && app.view[anotherViewName] !== view) {
-        initialUrl = router.params.url || documentUrl.split(browserHistorySeparator)[0] || '/';
+        if (router.params.url) {
+          initialUrl = router.params.url;
+        } else {
+          console.error('Framework7: Initial page not found, using default URL (null). Please set the data-url attribute on your view element.', view);
+        }
       }
 
       if (router.history.indexOf(initialUrl) >= 0) {

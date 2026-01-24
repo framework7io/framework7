@@ -182,6 +182,8 @@ const View = (props) => {
               f7View.current.init(elRef.current);
               if (initialPage) {
                 initialPage.el = f7View.current.router.currentPageEl;
+                const routeId = pages?.[0]?.props?.routeId;
+                if (routeId) initialPage.el.routeId = routeId;
                 if (initialRoute && initialRoute.route && initialRoute.route.keepAlive) {
                   initialRoute.route.keepAliveData = { pageEl: initialPage.el };
                 }
@@ -192,6 +194,8 @@ const View = (props) => {
           f7View.current.init(elRef.current);
           if (initialPage) {
             initialPage.el = f7View.current.router.currentPageEl;
+            const routeId = pages?.[0]?.props?.routeId;
+            if (routeId) initialPage.el.routeId = routeId;
             if (initialRoute && initialRoute.route && initialRoute.route.keepAlive) {
               initialRoute.route.keepAliveData = { pageEl: initialPage.el };
             }
