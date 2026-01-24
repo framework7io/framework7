@@ -14,6 +14,20 @@ import $jsx from '../../shared/$jsx.js';
 
 class Framework7 extends Framework7Class {
   constructor(params = {}) {
+    const routes = params.routes;
+    if (routes) {
+      params.routes = routes.map(route => {
+        const newRoute = { ...route };
+        const options = newRoute.options ||= {};
+        const props = options.props ||= {};
+        Object.defineProperty(props, 'routeId', {
+          get: () => `${Date.now()}_${Math.random().toString(36).slice(2)}`,
+          enumerable: true,
+          configurable: true
+        });
+        return newRoute;
+      });
+    }
     super(params);
     // eslint-disable-next-line
     if (Framework7.instance && typeof window !== 'undefined') {

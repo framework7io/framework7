@@ -4,10 +4,13 @@ export const getRouterInitialComponent = (router, initialComponent) => {
   let initialComponentData;
   const { initialUrl } = router.getInitialUrl();
   const initialRoute = router.findMatchingRoute(initialUrl);
-  let routeProps = {};
-
-  if (initialRoute && initialRoute.route && initialRoute.route.options) {
-    routeProps = initialRoute.route.options.props;
+  let routeProps = routeProps = router.propsHistory[router.propsHistory.length - 1];
+  // Store route props first, if not present, fallback to route options
+  if (!routeProps) {
+    if (initialRoute && initialRoute.route && initialRoute.route.options) {
+      routeProps = { ...initialRoute.route.options.props };
+      router.propsHistory.push(routeProps);
+    }
   }
 
   const isMasterRoute = (route) => {
@@ -30,8 +33,8 @@ export const getRouterInitialComponent = (router, initialComponent) => {
       props: {
         f7route: initialRoute,
         f7router: router,
-        ...initialRoute.params,
         ...routeProps,
+        ...initialRoute.params,
       },
     };
   }

@@ -106,6 +106,7 @@ export default {
         if (options.componentOptions && options.componentOptions.root) {
           componentRoot = options.componentOptions.root;
         }
+        const routeId = componentProps.routeId;
         app.component
           .create(componentFunction, componentProps, {
             context: componentContext,
@@ -113,6 +114,7 @@ export default {
             root: componentRoot,
           })
           .then((createdComponent) => {
+            if (routeId) createdComponent.el.routeId = routeId;
             resolve(createdComponent.el);
           })
           .catch((err) => {
