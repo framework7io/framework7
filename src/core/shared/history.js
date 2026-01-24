@@ -40,6 +40,10 @@ const History = {
     if (!state) state = {};
 
     app.views.forEach((view) => {
+      const pageEl = view.el;
+      const pageElstyle = window.getComputedStyle(pageEl);
+      if (pageElstyle.display === 'none') return;
+
       const router = view.router;
       let viewState = state[view.id];
       if (!viewState && view.params.browserHistory) {
