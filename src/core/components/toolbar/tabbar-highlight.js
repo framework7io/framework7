@@ -100,6 +100,18 @@ export const initTabbarHighlight = (el) => {
       unsetHighlightOnTouch(data);
       stopAnimation(data);
     }
+    if (e.type === 'pointercancel') {
+      if (!data.touched) return;
+      data.touched = false;
+      data.moved = false;
+      data.setTransform = null;
+      stopAnimation(data);
+      if (highlightEl) {
+        highlightEl.classList.remove('tab-link-highlight-pressed');
+        highlightEl.style.transform = `translateX(${data.activeIndex * 100}%)`;
+        highlightEl.style.transitionTimingFunction = '';
+      }
+    }
   };
   el.addEventListener('touchstart', el.f7ToolbarOnPointer, { passive: false });
   el.addEventListener('pointerdown', el.f7ToolbarOnPointer, { passive: false });
