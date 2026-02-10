@@ -12,6 +12,7 @@
     type = undefined,
     name = undefined,
     value = undefined,
+    inputmode = undefined,
     placeholder = undefined,
     inputId = undefined,
     size = undefined,
@@ -382,6 +383,7 @@
         {placeholder}
         id={inputId}
         {size}
+        {inputmode}
         {accept}
         {autocomplete}
         {autocorrect}
@@ -451,6 +453,7 @@
         {placeholder}
         id={inputId}
         {size}
+        {inputmode}
         {accept}
         {autocomplete}
         {autocorrect}
@@ -561,6 +564,7 @@
     {placeholder}
     id={inputId}
     {size}
+    {inputmode}
     {accept}
     {autocomplete}
     {autocorrect}
@@ -642,6 +646,7 @@
     {placeholder}
     id={inputId}
     {size}
+    {inputmode}
     {accept}
     {autocomplete}
     {autocorrect}
