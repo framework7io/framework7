@@ -74,7 +74,7 @@ const buildTables = (sponsors) => {
                 : [
                     `    <td align="center" valign="middle">`,
                     `      <a href="${item.link}" target="_blank">`,
-                    `        <img src="https://framework7.io/i/sponsors/${item.image}" alt="${item.title}" width="160">`,
+                    `        <img src="${item.image.startsWith('http') ? item.image : `https://framework7.io/i/sponsors/${item.image}`}" alt="${item.title}" width="160">`,
                     `      </a>`,
                     `    </td>`,
                   ].join('\n'),
