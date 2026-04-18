@@ -208,10 +208,16 @@ class Router extends Framework7Class {
     return router.findElement('.page', router.tempDom);
   }
 
-  findElement(stringSelector, container) {
+  findElement(stringSelector, container, depth = 0) {
     const router = this;
     const view = router.view;
     const app = router.app;
+
+    const MAX_DEPTH = 10;
+    if (depth > MAX_DEPTH) {
+      console.error('Framework7: findElement recursion depth exceeded when searching for "' + stringSelector + '". Please check the container parameter:', container);
+      throw new Error('Framework7: findElement recursion depth exceeded when searching for "' + stringSelector + '"');
+    }
 
     // Modals Selector
     const modalsSelector =
@@ -236,7 +242,7 @@ class Router extends Framework7Class {
     }
     if (found.length === 1) return found;
 
-    found = router.findElement(selector, $container);
+    found = router.findElement(selector, $container, depth + 1);
     if (found && found.length === 1) return found;
     if (found && found.length > 1) return $(found[0]);
     return undefined;
@@ -730,12 +736,14 @@ class Router extends Framework7Class {
     if (callback === 'mounted') {
       attachEvents();
     }
+
+    const routeId = page.routeId || page.route.url;
     if (callback === 'init') {
       if (
         restoreScrollTopOnBack &&
         (from === 'previous' || !from) &&
         to === 'current' &&
-        router.scrollHistory[page.route.url] &&
+        router.scrollHistory[routeId] &&
         !$pageEl.hasClass('no-restore-scroll')
       ) {
         let $pageContent = $pageEl.find('.page-content');
@@ -748,7 +756,7 @@ class Router extends Framework7Class {
             );
           });
         }
-        $pageContent.scrollTop(router.scrollHistory[page.route.url]);
+        $pageContent.scrollTop(router.scrollHistory[routeId]);
       }
       attachEvents();
       if ($pageEl[0].f7PageInitialized) {
@@ -775,11 +783,11 @@ class Router extends Framework7Class {
           );
         });
       }
-      router.scrollHistory[page.route.url] = $pageContent.scrollTop();
+      router.scrollHistory[routeId] = $pageContent.scrollTop();
     }
     if (restoreScrollTopOnBack && callback === 'beforeOut' && from === 'current' && to === 'next') {
       // Delete scroll position
-      delete router.scrollHistory[page.route.url];
+      delete router.scrollHistory[routeId];
     }
 
     $pageEl.trigger(colonName, page);
@@ -904,6 +912,15 @@ class Router extends Framework7Class {
         'Framework7: wrong or not complete browserHistory configuration, trying to guess browserHistoryRoot',
       );
       browserHistoryRoot = location.pathname.split('index.html')[0];
+    } else if (browserHistory && !browserHistoryRoot) {
+      if (documentUrl.startsWith('/index.html')) {
+        window.history.replaceState(
+          window.history.state,
+          document.title,
+          location.pathname.replace(/^\/index\.html/, '/') + location.search + location.hash
+        );
+        documentUrl = documentUrl.replace(/^\/index\.html/, '/');
+      }
     }
     if (!browserHistory || !browserHistoryOnLoad) {
       if (!initialUrl) {
@@ -930,6 +947,17 @@ class Router extends Framework7Class {
         initialUrl = documentUrl;
       }
       router.restoreHistory();
+
+      const initialRoute = router.findMatchingRoute(initialUrl);
+      const anotherViewName = initialRoute.route.viewName;
+      if (initialRoute && anotherViewName && app.view[anotherViewName] !== view) {
+        if (router.params.url) {
+          initialUrl = router.params.url;
+        } else {
+          console.error('Framework7: Initial page not found, using default URL (null). Please set the data-url attribute on your view element.', view);
+        }
+      }
+
       if (router.history.indexOf(initialUrl) >= 0) {
         router.history = router.history.slice(0, router.history.indexOf(initialUrl) + 1);
       } else if (router.params.url === initialUrl) {
@@ -941,12 +969,21 @@ class Router extends Framework7Class {
       ) {
         initialUrl = router.history[router.history.length - 1];
       } else {
-        router.history = [documentUrl.split(browserHistorySeparator)[0] || '/', initialUrl];
+        router.history = [router.params.url || documentUrl.split(browserHistorySeparator)[0] || '/', initialUrl];
       }
       if (router.history.length > 1) {
         historyRestored = true;
       } else {
         router.history = [];
+      }
+
+      router.propsHistory = [];
+      for (let i = 0; i < router.history.length; i++) {
+        const navigateUrl = router.history[i];
+        const route = router.findMatchingRoute(navigateUrl);
+        const anotherViewName = route.route.viewName;
+        if (anotherViewName && router.view !== app.views[anotherViewName]) continue;
+        router.propsHistory.push({ ...(route?.route?.options?.props || {}) });
       }
       router.saveHistory();
     }
