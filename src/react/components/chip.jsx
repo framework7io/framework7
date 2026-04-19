@@ -45,6 +45,7 @@ const Chip = (props) => {
   };
 
   const onDeleteClick = (event) => {
+    event.stopPropagation();
     emit(props, 'delete', event);
   };
 
