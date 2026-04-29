@@ -128,8 +128,11 @@ function buildTypings(cb) {
     './',
   );
 
+  const cssContent = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.css.d.ts'));
+
   fs.writeFileSync(`${output}/framework7.d.ts`, mainTypings);
   fs.writeFileSync(`${output}/framework7-types.d.ts`, typesTypings);
+  fs.writeFileSync(`${output}/framework7.css.d.ts`, cssContent);
 
   cb();
 }
