@@ -1,5 +1,11 @@
 # Change Log
 
+# [9.0.4](https://github.com/framework7io/framework7/compare/v9.0.3...v9.0.4) (2026-04-29)
+
+### Features
+
+- **types:** types for css exports ([540f7eb](https://github.com/framework7io/framework7/commit/540f7eb928eaf8c2c2fc613fced59091d046e46c))
+
 # [9.0.3](https://github.com/framework7io/framework7/compare/v9.0.2...v9.0.3) (2026-02-13)
 
 ### Bug Fixes
