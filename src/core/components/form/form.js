@@ -68,6 +68,10 @@ const FormStorage = {
     const $formEl = $(formEl);
     const formId = $formEl.attr('id');
     if (!formId) return;
+    // Check using data attribute
+    if ($formEl[0]._f7FormStorageInitialized) {
+      return;
+    }
     const initialData = app.form.getFormData(formId);
     if (initialData) {
       app.form.fillFromData($formEl, initialData);
@@ -80,10 +84,12 @@ const FormStorage = {
       app.emit('formStoreData', $formEl[0], data);
     }
     $formEl.on('change submit', store);
+    $formEl[0]._f7FormStorageInitialized = true; // Set flag
   },
   destroy(formEl) {
     const $formEl = $(formEl);
     $formEl.off('change submit');
+    delete $formEl[0]._f7FormStorageInitialized; // Clear flag
   },
 };
 

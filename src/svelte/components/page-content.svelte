@@ -91,9 +91,15 @@
       app.f7.on('ptrPullEnd', onPtrPullEnd);
       app.f7.on('ptrRefresh', onPtrRefresh);
       app.f7.on('ptrDone', onPtrDone);
+      // PTR only initializes in pageInit callback.
+      // If page-content is added after page initialization, check if PTR exists.
+      // If not, create it manually.
+      app.f7.ptr.create(ptrEl);
     }
     if (infinite) {
       app.f7.on('infinite', onInfinite);
+      // Same logic applies to infinite scroll
+      app.f7.infiniteScroll.create(ptrEl);
     }
   }
   function destroyPageContent() {
