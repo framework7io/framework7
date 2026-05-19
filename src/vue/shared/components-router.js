@@ -54,6 +54,7 @@ export default {
       let resolved;
 
       const childrenBefore = getChildrenArray(el);
+      const routeId = pageData.props.routeId
       function onDidUpdate(componentRouterData) {
         if (componentRouterData !== viewRouter || resolved) return;
         const childrenAfter = getChildrenArray(el);
@@ -62,6 +63,7 @@ export default {
 
         const pageEl = el.children[el.children.length - 1];
         pageData.el = pageEl;
+        if (routeId) pageEl.routeId = routeId;
 
         resolve(pageEl);
         resolved = true;
