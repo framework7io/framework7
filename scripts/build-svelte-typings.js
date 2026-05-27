@@ -18,6 +18,7 @@ interface Props {
 
 interface {{componentName}}Props {}
 interface {{componentName}}Props extends Props {}
+{{HTML_ATTRS_EXTENDS}}
 {{EXTENDS}}
 interface {{componentName}}Events extends Record<'',{}>{}
 
@@ -111,9 +112,15 @@ function generateComponentTypings(componentName, fileContent, reactFileContent) 
     if (!events.includes(`on${name}`)) events.push(`on${name}`);
   });
 
+  // Components with no markup after </script> (e.g. PhotoBrowser — a pure JS API
+  // wrapper) don't render a DOM root, so HTML attributes don't apply to them.
+  const template = fileContent.split('</script>').slice(1).join('</script>').trim();
+  const hasDomRoot = template.length > 0;
+
   // prettier-ignore
   return TEMPLATE
     .replace('{{IMPORTS}}', imports)
+    .replace('{{HTML_ATTRS_EXTENDS}}', hasDomRoot ? `interface ${componentName}Props extends HTMLAttributes<HTMLElement> {}` : '')
     .replace('{{EXTENDS}}', propsExtends ? ` interface ${componentName}Props extends ${propsExtends.trim()} {}` : '')
     .replace('{{PROPS}}', generateComponentProps(props, slots, events))
     .replace(/{{componentName}}/g, componentName)
