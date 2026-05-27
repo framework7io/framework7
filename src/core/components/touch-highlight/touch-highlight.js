@@ -64,6 +64,7 @@ const initTouchHighlight = (app) => {
     const d = data;
     const el = e.target.closest(elements);
     if (!el) return;
+    if (el.closest('.tabbar-scrollable')) return;
     if (d.currentEl === el) return;
     d.currentEl = el;
 
