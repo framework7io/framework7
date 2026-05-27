@@ -1,4 +1,16 @@
+
+
+
 # Change Log
+
+# [9.0.5](https://github.com/framework7io/framework7/compare/v9.0.4...v9.0.5) (2026-05-27)
+
+
+### Bug Fixes
+
+* **svelte:** include HTML attributes in component prop types ([b10e1f0](https://github.com/framework7io/framework7/commit/b10e1f028c2341a44168309d55bdc51980162751)), closes [#4385](https://github.com/framework7io/framework7/issues/4385)
+* **toolbar:** allow native scroll on scrollable tabbar in iOS theme ([5c092a9](https://github.com/framework7io/framework7/commit/5c092a9bd2a2e8f9a3358f7123b338ea75791a98)), closes [#4391](https://github.com/framework7io/framework7/issues/4391)
+
 
 # [9.0.4](https://github.com/framework7io/framework7/compare/v9.0.3...v9.0.4) (2026-04-29)
 
