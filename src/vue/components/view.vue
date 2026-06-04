@@ -275,6 +275,8 @@ export default {
                 f7View.init(elRef.value);
                 if (initialPage) {
                   initialPage.el = f7View.router.currentPageEl;
+                  const routeId = pages?.value[0]?.props?.routeId;
+                  if (routeId) initialPage.el.routeId = routeId;
                   if (initialRoute && initialRoute.route && initialRoute.route.keepAlive) {
                     initialRoute.route.keepAliveData = { pageEl: initialPage.el };
                   }
@@ -285,6 +287,8 @@ export default {
             f7View.init(elRef.value);
             if (initialPage) {
               initialPage.el = f7View.router.currentPageEl;
+              const routeId = pages?.value[0]?.props?.routeId;
+              if (routeId) initialPage.el.routeId = routeId;
               if (initialRoute && initialRoute.route && initialRoute.route.keepAlive) {
                 initialRoute.route.keepAliveData = { pageEl: initialPage.el };
               }

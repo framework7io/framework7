@@ -22,7 +22,7 @@ export default {
     openIn(router, navigateUrl, options) {
       return routerOpenIn(router, navigateUrl, options);
     },
-    pageComponentLoader({ routerEl, component, options, resolve, reject, direction }) {
+    pageComponentLoader({ routerEl, component, options, resolve, reject }) {
       const router = this;
       const routerId = router.id;
       const el = routerEl;
@@ -54,25 +54,24 @@ export default {
       let resolved;
 
       const childrenBefore = getChildrenArray(el);
+      const routeId = pageData.props.routeId
       function onDidUpdate(componentRouterData) {
         if (componentRouterData !== viewRouter || resolved) return;
         const childrenAfter = getChildrenArray(el);
         if (hasSameChildren(childrenBefore, childrenAfter)) return;
         app.f7events.off('viewRouterDidUpdate', onDidUpdate);
 
-        const pageEl = el.children[direction === 'backward' ? 0 : el.children.length - 1];
+        const pageEl = el.children[el.children.length - 1];
         pageData.el = pageEl;
+        if (routeId) pageEl.routeId = routeId;
+
         resolve(pageEl);
-        viewRouter.setPages(viewRouter.pages);
         resolved = true;
       }
 
       app.f7events.on('viewRouterDidUpdate', onDidUpdate);
-      if (direction === 'backward') {
-        viewRouter.pages.unshift(pageData);
-      } else {
-        viewRouter.pages.push(pageData);
-      }
+
+      viewRouter.pages.push(pageData);
       viewRouter.setPages(viewRouter.pages);
     },
     removePage($pageEl) {
