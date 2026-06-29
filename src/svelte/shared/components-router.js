@@ -60,7 +60,10 @@ export default {
         if (hasSameChildren(childrenBefore, childrenAfter)) return;
         app.f7events.off('viewRouterDidUpdate', onDidUpdate);
 
-        const pageEl = el.children[direction === 'backward' ? 0 : el.children.length - 1];
+        const pageEl =
+          childrenAfter.find(
+            (child) => child.classList.contains('page') && !childrenBefore.includes(child),
+          ) || el.children[direction === 'backward' ? 0 : el.children.length - 1];
         pageData.el = pageEl;
         resolve(pageEl);
         viewRouter.setPages(viewRouter.pages);
