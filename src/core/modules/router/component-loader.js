@@ -14,9 +14,14 @@ export default {
           },
         },
       };
+      // Allow passing modal-specific params via a `<type>Options` object
+      // (e.g. sheetOptions, popupOptions, popoverOptions, panelOptions, loginScreenOptions)
+      const openInType = options.openIn.split(':')[0];
       const params = {
         ...options,
+        ...(options[`${openInType}Options`] || {}),
       };
+      delete params[`${openInType}Options`];
 
       const component = (props, ctx) => {
         const { $h, $onMounted, $el, $f7 } = ctx;
