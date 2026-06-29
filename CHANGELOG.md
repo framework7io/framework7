@@ -1,7 +1,14 @@
-
-
-
 # Change Log
+
+# [9.1.0](https://github.com/framework7io/framework7/compare/v9.0.5...v9.1.0) (2026-06-29)
+
+### Bug Fixes
+
+* **card:** add top safe area padding for opened expandable card ([f35ceec](https://github.com/framework7io/framework7/commit/f35ceec2351d1f85af75c37924855491e2ed861c)), closes [#4392](https://github.com/framework7io/framework7/issues/4392)
+* **react/vue/svelte:** resolve the actually-inserted page in pageComponentLoader ([c581498](https://github.com/framework7io/framework7/commit/c5814982d8278a753b3fb2d2d711f1655980390f)), closes [#4387](https://github.com/framework7io/framework7/issues/4387)
+* **router:** apply modal options for routable openIn ([2443e8f](https://github.com/framework7io/framework7/commit/2443e8f198b4f7e2443df81ae170caac10b008f1)), closes [#4383](https://github.com/framework7io/framework7/issues/4383)
+* **utils:** prevent prototype pollution in extend/merge deep merge ([b559fa8](https://github.com/framework7io/framework7/commit/b559fa88683f9771c37f920139c53e733be2c6f8)), closes [#4393](https://github.com/framework7io/framework7/issues/4393)
+
 
 # [9.0.5](https://github.com/framework7io/framework7/compare/v9.0.4...v9.0.5) (2026-05-27)
 
