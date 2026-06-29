@@ -211,6 +211,13 @@
       opacity: 0;
       pointer-events: none;
     }
+    // Keep header/content below the top safe area (e.g. notch) when opened fullscreen
+    .card-header {
+      padding-top: calc(var(--f7-card-header-padding-vertical) + var(--f7-safe-area-top));
+    }
+    .card-content > .card-content-padding:first-child {
+      padding-top: calc(var(--f7-card-content-padding-vertical) + var(--f7-safe-area-top));
+    }
   }
   &.card-opened {
     .card-content {
