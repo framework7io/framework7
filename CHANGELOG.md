@@ -1,5 +1,12 @@
 # Change Log
 
+# [9.1.1](https://github.com/framework7io/framework7/compare/v9.1.0...v0.0.0) (2026-07-07)
+
+### Bug Fixes
+
+* **calendar:** make disabled days visible in dark mode ([a746bd8](https://github.com/framework7io/framework7/commit/a746bd88995a25c1a39a47da4fc703759cc0cd54)), closes [#4397](https://github.com/framework7io/framework7/issues/4397)
+
+
 # [9.1.0](https://github.com/framework7io/framework7/compare/v9.0.5...v9.1.0) (2026-06-29)
 
 ### Bug Fixes
