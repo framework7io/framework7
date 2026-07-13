@@ -3,21 +3,6 @@ const path = require('path');
 const https = require('https');
 
 const getSponsors = () => {
-  let sponsorsLocal;
-  try {
-    const localPath = path.resolve(
-      __dirname,
-      '../../framework7-website/src/pug/sponsors/sponsors.json',
-    );
-    if (fs.existsSync(localPath)) {
-      // eslint-disable-next-line
-      sponsorsLocal = require(localPath);
-    }
-  } catch (err) {
-    // error
-  }
-  if (sponsorsLocal) return sponsorsLocal;
-
   return new Promise((resolve, reject) => {
     https
       .get('https://framework7.io/sponsors/sponsors.json', (resp) => {
@@ -146,7 +131,17 @@ const buildSponsors = async () => {
   const result = {};
 
   if (entries) {
-    entries.forEach((item) => {
+    const items = [...entries].filter((entry) => {
+      if (entry.ref && (entry.ref.includes('opencollective') || entry.ref.includes('patreon'))) {
+        const dt = new Date(entry.createdAt).getTime();
+        const targetDate = new Date(2026, 3, 1).getTime();
+        if (dt > targetDate) {
+          return false;
+        }
+      }
+      return true;
+    });
+    items.forEach((item) => {
       if (!result[item.plan]) result[item.plan] = [];
       result[item.plan].push(item);
     });
