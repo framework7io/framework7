@@ -55,6 +55,11 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
+      <a href="https://www.liceodiazce.it/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/migliori-casino-non-aams-bf72bff0.png" alt="migliori casino non aams" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://www.reddit.com/r/SmartBuying/comments/1tyj4cx/where_can_i_buy_linkedin_followers_likes_and/" target="_blank">
         <img src="https://framework7.io/i/sponsors/" alt="Buy LinkedIn Followers" width="160">
       </a>
@@ -74,13 +79,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/buy-instagram-followers-v4y.png" alt="buy instagram followers views4you" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://gilroydispatch.com/buy-instagram-followers/" target="_blank">
         <img src="https://framework7.io/i/sponsors/casino-online-sin-licencia-espana.webp" alt="buy instagram followers" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://casinos.pafes.cat/" target="_blank">
         <img src="https://framework7.io/i/sponsors/casino-online-sin-licencia-espana.webp" alt="casino online sin licencia España" width="160">
@@ -136,13 +141,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/casinos-fiables-fuera-de-espana.png" alt="casinos fiables fuera de España" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://viron-nettikasinot.net/" target="_blank">
         <img src="https://framework7.io/i/sponsors/viron-kasinot.png" alt="Viron Kasinot" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://pl.topkasynoonline.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/topkasynoonline-pl.png" alt="TopKasynoOnline PL" width="160">
@@ -198,13 +203,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/funded-account-pro.png" alt="Funded Account PRO" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://idealecasinos.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/idealecasinoscom.png" alt="iDealeCasinos" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://writehuman.ai/" target="_blank">
         <img src="https://framework7.io/i/sponsors/writehuman.png" alt="WriteHuman AI Humanizer" width="160">
@@ -260,13 +265,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/prestige_logo.webp" alt="Super Clone Watches: Best Website for 1:1 Replica Watches" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.socialfollowers.uk/buy-tiktok-followers/" target="_blank">
         <img src="https://framework7.io/i/sponsors/social-followers.png" alt="Buy Tiktok Followers" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://opencollective.com/bruce-dilger" target="_blank">
         <img src="https://framework7.io/i/sponsors/bruce-dilger.png" alt="Bruce Dilger" width="160">
@@ -322,13 +327,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/teravisiontech.webp" alt="Accelerating Your Software Products | Teravision Technologies" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://casinosinlicenciaespana.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/casinos-online-sin-licencia-2024.svg" alt="Casinos Online Sin Licencia 2024" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://jinanbo11.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/jinacoin.png" alt="JinaCoin | 仮想通貨/暗号資産ニュース・情報メディア" width="160">
@@ -384,13 +389,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/onlinecasinosspelen.png" alt="Onlinecasinosspelen.com site is dé nummer één gids, waardoor je gemakkelijk alle informatie van de top 10 online casino sites." width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://aviatorgame.net/" target="_blank">
         <img src="https://framework7.io/i/sponsors/aviator-game.png" alt="Aviator Game | Play Aviator Money Game by Spribe" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://pinupaviator.in/" target="_blank">
         <img src="https://framework7.io/i/sponsors/pin-up-aviator-india.png" alt="Pin Up Aviator Game Casino | Aviator Game in India" width="160">
@@ -446,13 +451,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/fortunegames.png" alt="Fortune Games® | Free Spins No Deposit Slot Games | Online Slots" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://casinoshunter.com/online-casinos/1-deposit/" target="_blank">
         <img src="https://framework7.io/i/sponsors/casinos-hunter.png" alt="Best 1$ deposit casino in Canada" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://veepn.com/vpn-apps/vpn-for-firefox/" target="_blank">
         <img src="https://framework7.io/i/sponsors/veepn-new.png" alt="VPN for Firefox to Make the Internet a Better Place" width="160">
@@ -498,7 +503,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/wappler.png" alt="Wappler - The Visual Web App Creator" width="160">
       </a>
     </td>
-    <td align="center" valign="middle"></td>
     <td align="center" valign="middle"></td>
     <td align="center" valign="middle"></td>
   </tr>
