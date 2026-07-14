@@ -104,9 +104,15 @@ const PageContent = (props) => {
         f7.on('ptrPullEnd', onPtrPullEnd);
         f7.on('ptrRefresh', onPtrRefresh);
         f7.on('ptrDone', onPtrDone);
+        // PTR only initializes in pageInit callback.
+        // If page-content is added after page initialization, check if PTR exists.
+        // If not, create it manually.
+        f7.ptr.create(elRef.current);
       }
       if (infinite) {
         f7.on('infinite', onInfinite);
+        // Same logic applies to infinite scroll
+        f7.infiniteScroll.create(elRef.current);
       }
     });
   };

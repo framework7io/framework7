@@ -5,10 +5,12 @@ import { getDevice } from '../../shared/get-device.js';
 
 class PullToRefresh extends Framework7Class {
   constructor(app, el) {
+    const $el = $(el);
+    if ($el[0].f7PullToRefresh) return $el[0].f7PullToRefresh;
+    
     super({}, [app]);
     const ptr = this;
     const device = getDevice();
-    const $el = $(el);
     const $preloaderEl = $el.find('.ptr-preloader');
 
     ptr.$el = $el;
@@ -27,7 +29,8 @@ class PullToRefresh extends Framework7Class {
     ptr.done = function done() {
       const $transitionTarget = isMaterial ? $preloaderEl : $el;
       const onTranstionEnd = (e) => {
-        if ($(e.target).closest($preloaderEl).length) return;
+        // Material Design platform currently does not support bottom preloader animation.
+        if (!isMaterial && $(e.target).closest($preloaderEl).length) return;
         $el.removeClass('ptr-transitioning ptr-pull-up ptr-pull-down ptr-closing');
         $el.trigger('ptr:done');
         ptr.emit('local::done ptrDone', $el[0]);
@@ -204,7 +207,7 @@ class PullToRefresh extends Framework7Class {
               ((!ptr.bottom && ptrScrollableEl.scrollTop > 0) ||
                 (ptr.bottom &&
                   ptrScrollableEl.scrollTop <
-                    ptrScrollableEl.scrollHeight - ptrScrollableEl.offsetHeight))
+                  ptrScrollableEl.scrollHeight - ptrScrollableEl.offsetHeight))
             ) {
               targetIsScrollable = true;
             }
@@ -453,7 +456,7 @@ class PullToRefresh extends Framework7Class {
               ((!ptr.bottom && ptrScrollableEl.scrollTop > 0) ||
                 (ptr.bottom &&
                   ptrScrollableEl.scrollTop <
-                    ptrScrollableEl.scrollHeight - ptrScrollableEl.offsetHeight))
+                  ptrScrollableEl.scrollHeight - ptrScrollableEl.offsetHeight))
             ) {
               targetIsScrollable = true;
             }
