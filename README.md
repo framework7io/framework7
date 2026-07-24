@@ -82,6 +82,11 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
   </tr>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://headshot.ltd" target="_blank">
+        <img src="https://cdn.sponsors.nolimits4web.com/JnLwciPllpHMcuYenhhG/mCthn2gwm65EEoMd9yZS/e3afa0f9c25ebc79.png" alt="headshot.ltd" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://www.fun88vnplay.com/" target="_blank">
         <img src="https://cdn.sponsors.nolimits4web.com/sm02J44cATxUuyBCMATS/QLWPUy4BnhSJzMwwU1Cd/aaf341e68d3ab882.svg" alt="fun88" width="160">
       </a>
@@ -94,11 +99,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
     <td align="center" valign="middle">
       <a href="https://www.jbo579.com/th/" target="_blank">
         <img src="https://cdn.sponsors.nolimits4web.com/sm02J44cATxUuyBCMATS/mvoaoFi3V83RO6BdgPp7/ff82cb5d7a05fad7.png" alt="jbo" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://tubidy.llc" target="_blank">
-        <img src="https://cdn.sponsors.nolimits4web.com/CVKHGlVBu5yomuKDioqV/8M7dLSwwSyfccoJvicYr/73050ba518725e72.png" alt="Tubidy" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -346,7 +346,7 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
     </td>
     <td align="center" valign="middle">
       <a href="https://jinanbo11.com/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/jinacoin.png" alt="JinaCoin | 仮想通貨/暗号資産ニュ���ス・情報メディア" width="160">
+        <img src="https://framework7.io/i/sponsors/jinacoin.png" alt="JinaCoin | 仮想通貨/暗号資産ニュース・情報メディア" width="160">
       </a>
     </td>
     <td align="center" valign="middle">

@@ -66,6 +66,11 @@
   </tr>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://headshot.ltd" target="_blank">
+        <img src="https://cdn.sponsors.nolimits4web.com/JnLwciPllpHMcuYenhhG/mCthn2gwm65EEoMd9yZS/e3afa0f9c25ebc79.png" alt="headshot.ltd" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://www.fun88vnplay.com/" target="_blank">
         <img src="https://cdn.sponsors.nolimits4web.com/sm02J44cATxUuyBCMATS/QLWPUy4BnhSJzMwwU1Cd/aaf341e68d3ab882.svg" alt="fun88" width="160">
       </a>
@@ -78,11 +83,6 @@
     <td align="center" valign="middle">
       <a href="https://www.jbo579.com/th/" target="_blank">
         <img src="https://cdn.sponsors.nolimits4web.com/sm02J44cATxUuyBCMATS/mvoaoFi3V83RO6BdgPp7/ff82cb5d7a05fad7.png" alt="jbo" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://tubidy.llc" target="_blank">
-        <img src="https://cdn.sponsors.nolimits4web.com/CVKHGlVBu5yomuKDioqV/8M7dLSwwSyfccoJvicYr/73050ba518725e72.png" alt="Tubidy" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -330,7 +330,7 @@
     </td>
     <td align="center" valign="middle">
       <a href="https://jinanbo11.com/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/jinacoin.png" alt="JinaCoin | 仮想通貨/暗号資産ニュ���ス・情報メディア" width="160">
+        <img src="https://framework7.io/i/sponsors/jinacoin.png" alt="JinaCoin | 仮想通貨/暗号資産ニュース・情報メディア" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -548,10 +548,10 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ### \$50+ Top Supporter
 
 <!-- TOP_SUPPORTER -->
+- [headshot.ltd](https://headshot.ltd)
 - [fun88](https://www.fun88vnplay.com/)
 - [fun88](https://www.fun88asiath.com/)
 - [jbo](https://www.jbo579.com/th/)
-- [Tubidy](https://tubidy.llc)
 - [AI Humanizer](https://cleverhumanizer.ai/)
 - [Superluxuryreps](https://superluxuryreps.com/)
 - [Minesweeper](https://minesweeper.now)
@@ -599,7 +599,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 - [IGComment](https://igcomment.com/)
 - [Accelerating Your Software Products | Teravision Technologies](https://www.teravisiontech.com/)
 - [Casinos Online Sin Licencia 2024](https://casinosinlicenciaespana.com/)
-- [JinaCoin | 仮想通貨/暗号資産ニュ���ス・情報メディア](https://jinanbo11.com/)
+- [JinaCoin | 仮想通貨/暗号資産ニュース・情報メディア](https://jinanbo11.com/)
 - [Buy Instagram Likes - Real Likes & Instant Delivery!](https://blastup.com/buy-instagram-likes)
 - [Best Bitcoin Casinos](https://www.doublethebitcoin.net/)
 - [Bet Consulting](https://opencollective.com/bet-consulting)
