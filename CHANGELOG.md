@@ -1,5 +1,14 @@
 # Change Log
 
+# [9.1.2](https://github.com/framework7io/framework7/compare/v9.1.1...v9.1.2) (2026-07-28)
+
+
+### Bug Fixes
+
+* **deps:** bump swiper and path-to-regexp past security advisories ([2018749](https://github.com/framework7io/framework7/commit/20187493c240497ff2d91151fb2e2b145ef8bbf6)), closes [#4398](https://github.com/framework7io/framework7/issues/4398)
+
+
+
 # [9.1.1](https://github.com/framework7io/framework7/compare/v9.1.0...v0.0.0) (2026-07-07)
 
 ### Bug Fixes
