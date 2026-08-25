@@ -265,7 +265,7 @@ const Messagebar = (props) => {
         </div>
         {((sendLink && sendLink.length > 0) ||
           slotsSendLink ||
-          (slotsInnerStart && slotsInnerEnd.length > 0)) && (
+          (slotsInnerEnd && slotsInnerEnd.length > 0)) && (
           <ToolbarPane>
             {((sendLink && sendLink.length > 0) || slotsSendLink) && (
               <Link onClick={onClick}>{slotsSendLink || sendLink}</Link>
