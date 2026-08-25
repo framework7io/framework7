@@ -1,5 +1,13 @@
 # Change Log
 
+# [9.1.3](https://github.com/framework7io/framework7/compare/v9.1.2...v9.1.3) (2026-08-25)
+
+### Bug Fixes
+
+* **react:** render messagebar inner-end slot pane based on its own content ([e0f6ca0](https://github.com/framework7io/framework7/commit/e0f6ca0e4764e811207244d0d1a284f4a0d00376)), closes [#4399](https://github.com/framework7io/framework7/issues/4399)
+* **RTL:** incorrect segmented button style in RTL layouts ([#4403](https://github.com/framework7io/framework7/issues/4403)) ([adb7257](https://github.com/framework7io/framework7/commit/adb72573b094a6b703b94f861c7e702537aa413f))
+* **RTL:** incorrect toggle button style in RTL layouts ([#4400](https://github.com/framework7io/framework7/issues/4400)) ([7601d4f](https://github.com/framework7io/framework7/commit/7601d4f772d94f50cbd1bce59cbb0500df535fa6))
+
 # [9.1.2](https://github.com/framework7io/framework7/compare/v9.1.1...v9.1.2) (2026-07-28)
 
 
