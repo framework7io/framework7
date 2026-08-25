@@ -45,7 +45,8 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     border-radius: calc(var(--f7-toggle-height) - 4px);
     transition-duration: 300ms;
-    transform: translateX(var(--f7-toggle-knob-tx)) scale(1);
+    .ltr({ transform: translateX(var(--f7-toggle-knob-tx)) scale(1); });
+    .rtl({ transform: translateX(calc(var(--f7-toggle-knob-tx) * -1)) scale(1); });
     position: relative;
     z-index: 1;
     transform-origin: center;
@@ -76,7 +77,8 @@
     }
     .toggle-icon {
       background: transparent;
-      transform: translateX(var(--f7-toggle-knob-tx)) scale(1.4);
+      .ltr({ transform: translateX(var(--f7-toggle-knob-tx)) scale(1.4); });
+      .rtl({ transform: translateX(calc(var(--f7-toggle-knob-tx) * -1)) scale(1.4); });
       &::before {
         opacity: 1;
       }
