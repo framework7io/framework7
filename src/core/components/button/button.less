@@ -279,17 +279,28 @@ button {
     background-color: var(--f7-segmented-strong-button-active-bg-color);
     border-radius: var(--f7-button-border-radius);
     box-shadow: var(--f7-segmented-strong-button-active-box-shadow);
-    left: var(--f7-segmented-strong-padding);
+    .ltr({ left: var(--f7-segmented-strong-padding); });
+    .rtl({ right: var(--f7-segmented-strong-padding); });
     top: var(--f7-segmented-strong-padding);
     height: calc(100% - var(--f7-segmented-strong-padding) * 2);
     width: var(--f7-segmented-highlight-width);
     z-index: 0;
-    transform: translateX(
-      calc(
-        var(--f7-segmented-highlight-active) * 100% + var(--f7-segmented-highlight-active) *
-          var(--f7-segmented-highlight-between)
-      )
-    );
+    .ltr({
+      transform: translateX(
+        calc(
+          var(--f7-segmented-highlight-active) * 100% + var(--f7-segmented-highlight-active) *
+            var(--f7-segmented-highlight-between)
+        )
+      );
+    });
+    .rtl({
+      transform: translateX(
+        calc(
+          var(--f7-segmented-highlight-active) * -100% - var(--f7-segmented-highlight-active) *
+            var(--f7-segmented-highlight-between)
+        )
+      );
+    });
     transition: 200ms;
   }
 }
