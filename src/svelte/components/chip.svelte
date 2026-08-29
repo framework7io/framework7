@@ -44,6 +44,7 @@
   const icon = $derived(useIcon(restProps));
 
   function onDeleteClick(e) {
+    e.stopPropagation();
     restProps.onDelete?.(e);
     restProps.ondelete?.(e);
   }
