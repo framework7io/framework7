@@ -71,11 +71,6 @@ export default {
     'ptr:refresh',
     'ptr:done',
     'infinite',
-    'ptrPullStart',
-    'ptrPullMove',
-    'ptrPullEnd',
-    'ptrRefresh',
-    'ptrDone',
     'tab:hide',
     'tab:show',
   ],
@@ -85,27 +80,22 @@ export default {
     const onPtrPullStart = (el) => {
       if (elRef.value !== el) return;
       emit('ptr:pullstart');
-      emit('ptrPullStart');
     };
     const onPtrPullMove = (el) => {
       if (elRef.value !== el) return;
       emit('ptr:pullmove');
-      emit('ptrPullMove');
     };
     const onPtrPullEnd = (el) => {
       if (elRef.value !== el) return;
       emit('ptr:pullend');
-      emit('ptrPullEnd');
     };
     const onPtrRefresh = (el, done) => {
       if (elRef.value !== el) return;
       emit('ptr:refresh', done);
-      emit('ptrRefresh', done);
     };
     const onPtrDone = (el) => {
       if (elRef.value !== el) return;
       emit('ptr:done');
-      emit('ptrDone');
     };
     const onInfinite = (el) => {
       if (elRef.value !== el) return;
@@ -122,9 +112,15 @@ export default {
           f7.on('ptrPullEnd', onPtrPullEnd);
           f7.on('ptrRefresh', onPtrRefresh);
           f7.on('ptrDone', onPtrDone);
+          // PTR only initializes in pageInit callback.
+          // If page-content is added after page initialization, check if PTR exists.
+          // If not, create it manually.
+          f7.ptr.create(elRef.value);
         }
         if (props.infinite) {
           f7.on('infinite', onInfinite);
+          // Same logic applies to infinite scroll
+          f7.infiniteScroll.create(elRef.value);
         }
       });
     });
