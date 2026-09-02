@@ -9,6 +9,16 @@
       </a>
     </td>
     <td align="center" valign="middle">
+      <a href="https://www.upmyviews.com/" target="_blank">
+        <img src="https://cdn.sponsors.nolimits4web.com/RnBdFz4Q7lja3OqxUbid/sfb9tOGU1OaH0R3G8dxE/5f8830fec9288e5a.png" alt="UpMyViews" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://kaufenfollower.com/" target="_blank">
+        <img src="https://cdn.sponsors.nolimits4web.com/iijrroHilrrFNuAjR8v9/QVAAiLYqjBZLslXoWRZC/068c2bab65653de3.png" alt="KaufenFollower" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://au.trustpilot.com/review/aussieonline.casino" target="_blank">
         <img src="https://cdn.sponsors.nolimits4web.com/2rTMYwPAgcrYBt3Cz1W6/zERPDgEN8nSLThdqEZMy/024a52d7da2e97f5.png" alt="Best online casino Australia" width="160">
       </a>
@@ -53,6 +63,8 @@
         <img src="https://framework7.io/i/sponsors/route4me.png" alt="Route4Me Route Planner" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.thoriumbuilder.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/thorium.png" alt="Thorium Builder - full visual Framework7 app builder" width="160">
@@ -63,11 +75,24 @@
         <img src="https://framework7.io/i/sponsors/tommy.png" alt="Tommy" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
+    <td align="center" valign="middle">
+      <a href="https://watchthis.dev" target="_blank">
+        <img src="https://cdn.sponsors.nolimits4web.com/AOtukRJjnjUWelCb4n3I/ZNfwbFNKe8mRp5MWhfjO/e4ed15d4343efb5b.png" alt="WatchThis — JavaScript SEO Checker" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://prime-digital.ca" target="_blank">
+        <img src="https://cdn.sponsors.nolimits4web.com/1E9ELxtpPRvHQHUMUXqW/344WbcksDQNHn5jJxozF/7b24bec557d3dd9a.png" alt="SEO Company Calgary" width="160">
+      </a>
+    </td>
     <td align="center" valign="middle">
       <a href="https://headshot.ltd" target="_blank">
         <img src="https://cdn.sponsors.nolimits4web.com/JnLwciPllpHMcuYenhhG/mCthn2gwm65EEoMd9yZS/e3afa0f9c25ebc79.png" alt="headshot.ltd" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://www.liceodiazce.it/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/migliori-casino-non-aams-bf72bff0.png" alt="migliori casino non aams" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -86,13 +111,60 @@
       </a>
     </td>
     <td align="center" valign="middle">
+      <a href="https://www.reddit.com/r/SmartBuying/comments/1tyj4cx/where_can_i_buy_linkedin_followers_likes_and/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/" alt="Buy LinkedIn Followers" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://www.jbo88b.com/vn/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/jbo-vietnam.png" alt="JBO" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://views4you.com/buy-instagram-followers/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/buy-instagram-followers-v4y.png" alt="buy instagram followers views4you" width="160">
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle">
       <a href="https://cleverhumanizer.ai/" target="_blank">
         <img src="https://cdn.sponsors.nolimits4web.com/ax13DbzrBlYi6KxgD4aA/LGwYIYyaNy9addegbe9Q/899ac7659d2581d9.png" alt="AI Humanizer" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://superluxuryreps.com/" target="_blank">
-        <img src="https://cdn.sponsors.nolimits4web.com/nnSLt8QcSRSkjS1LWWof/EdPDKFipuLJPgCI8ejNE/dc517d591588db7e.png" alt="Superluxuryreps" width="160">
+      <a href="https://gilroydispatch.com/buy-instagram-followers/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/casino-online-sin-licencia-espana.webp" alt="buy instagram followers" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://casinos.pafes.cat/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/casino-online-sin-licencia-espana.webp" alt="casino online sin licencia España" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://cluc.cat/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/casinos-sin-licencia-espana-de51904f.webp" alt="casinos sin licencia España" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://nomia.pt/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/casinos-online-portugal.png" alt="casinos online portugal" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://www.jazzonline.gr/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/to-kalytero-online-casino.png" alt="το καλυτερο online casino" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://apuesdeportivas.es/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/apuesdeportivas-es.png" alt="apuesdeportivas.es" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://www.maxamind.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/maxamind.png" alt="maxamind.com - the personal knowledge and productivity workbench" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -115,18 +187,18 @@
         <img src="https://cdn.sponsors.nolimits4web.com/JlGRn0kkP4bf4P4uSXa0/f7RtJ9aPnQzW1xKvE4cH/c87e4c5943987199.png" alt="Time Calculator" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle">
+      <a href="https://superclonewatches.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/" alt="super clone watches" width="160">
+      </a>
+    </td>
     <td align="center" valign="middle">
       <a href="https://time.now" target="_blank">
         <img src="https://cdn.sponsors.nolimits4web.com/JlGRn0kkP4bf4P4uSXa0/ymxqzGnDmxMONPAYfO0a/c87e4c5943987199.png" alt="Time Now" width="160">
       </a>
     </td>
-    <td align="center" valign="middle">
-      <a href="https://www.vanguardngr.com/casino/es/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/vanguardngr-spain.png" alt="VanguardNGR Spain" width="160">
-      </a>
-    </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.reddit.com/r/SocialBlueprint/comments/1s558re/whats_the_best_site_to_buy_instagram_shares_saves/" target="_blank">
         <img src="https://framework7.io/i/sponsors/" alt="Buy Instagram Shares Saves and Reposts" width="160">
@@ -163,18 +235,8 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://popmani.se/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/casinonutansvensklicensorg.png" alt="casino utan svensk licens" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
       <a href="https://casinobonusutaninsattning.net/10-euro-casino-utan-licens/" target="_blank">
         <img src="https://framework7.io/i/sponsors/utlandska-casino-10-euro.png" alt="utländska casino 10 euro" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://nya-casinon-utan-svensk-licens.se/casino-utan-svensk-licens-10-euro/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/casino-utan-svensk-licens-10-euro.png" alt="casino utan svensk licens 10 euro" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -225,11 +287,6 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://playfortuna.com/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/playfortunacom.png" alt="playfortuna.com" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
       <a href="https://finance.yahoo.com/news/best-website-super-clone-watches-073500706.html" target="_blank">
         <img src="https://framework7.io/i/sponsors/super-clone-prestige.png" alt="Yahoo Finance - Super Clone" width="160">
       </a>
@@ -245,13 +302,6 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://www.jeffbullas.com/thread/best-and-cheapest-sites-to-buy-tiktok-followers-and-likes/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/" alt="Buy TikTok Followers & Likes here" width="160">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" valign="middle">
       <a href="https://buytiktokfollowers.co/" target="_blank">
         <img src="https://framework7.io/i/sponsors/buy-tiktok-followers-co.png" alt="Buy TikTok Followers" width="160">
       </a>
@@ -261,6 +311,8 @@
         <img src="https://framework7.io/i/sponsors/prestige_logo.webp" alt="Super Clone Watches: Best Website for 1:1 Replica Watches" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.socialfollowers.uk/buy-tiktok-followers/" target="_blank">
         <img src="https://framework7.io/i/sponsors/social-followers.png" alt="Buy Tiktok Followers" width="160">
@@ -302,18 +354,6 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://zamsino.com/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/zamamamma.png" alt="Zamsino.com 🎖️ Global Online Gambling Guide" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://pomus.net/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/luotettavat-suomalaiset-nettikasinot.png" alt="Luotetut suomalaiset nettikasinot (2024) ▶️ 35+ Sivustoa!" width="160">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" valign="middle">
       <a href="https://igcomment.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/igcomment.png" alt="IGComment" width="160">
       </a>
@@ -333,6 +373,8 @@
         <img src="https://framework7.io/i/sponsors/jinacoin.png" alt="JinaCoin | 仮想通貨/暗号資産ニュース・情報メディア" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://blastup.com/buy-instagram-likes" target="_blank">
         <img src="https://framework7.io/i/sponsors/blastup_com.png" alt="Buy Instagram Likes - Real Likes & Instant Delivery!" width="160">
@@ -359,11 +401,6 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://888starz-polska.com/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/888starz.png" alt="888Starz Polska: Załóż Konto i Otrzymaj Bonus Powitalny do 1500 EUR!" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
       <a href="https://twicsy.com/buy-instagram-followers" target="_blank">
         <img src="https://framework7.io/i/sponsors/buy-instagram-followers-twicsy.png" alt="Buy Instagram Followers | Real, Instant Delivery & Only $2.97" width="160">
       </a>
@@ -373,8 +410,6 @@
         <img src="https://framework7.io/i/sponsors/nettikasinot-media.png" alt="Nettikasinot | Katso parhaat nettikasinot 2023 | Top 10 lista" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://nieuwe-casinos.net/" target="_blank">
         <img src="https://framework7.io/i/sponsors/nieuwecasinos.svg" alt="Beoordelen van nieuwe online casino's 2023" width="160">
@@ -400,6 +435,8 @@
         <img src="https://framework7.io/i/sponsors/lucky-jet-brazil.png" alt="Revisão do jogo Lucky Jet - Jogue por dinheiro real Jogos Lucky Jet" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://emporioae.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/crazy-time-italia.png" alt="Gioca Crazy Time Casinò per soldi veri - Crazy Time Casinò Italia" width="160">
@@ -435,8 +472,6 @@
         <img src="https://framework7.io/i/sponsors/play-casinos-canada.png" alt="Discover The Best Reputable Online Casinos in Canada" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://poprey.com/buy-instagram-views" target="_blank">
         <img src="https://framework7.io/i/sponsors/poprey-com.png" alt="Buy Instagram views" width="160">
@@ -462,6 +497,8 @@
         <img src="https://framework7.io/i/sponsors/casinoexpo.jpg" alt="CasinoExpo svenska nya casinon online" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://najlepsibukmacherzy.pl/ranking-legalnych-bukmacherow/" target="_blank">
         <img src="https://framework7.io/i/sponsors/netpositive.png" alt="Ranking Bukmacherów Legalnych 2020. Bukmacher nr 1 to..." width="160">
@@ -497,6 +534,11 @@
         <img src="https://framework7.io/i/sponsors/wappler.png" alt="Wappler - The Visual Web App Creator" width="160">
       </a>
     </td>
+    <td align="center" valign="middle"></td>
+    <td align="center" valign="middle"></td>
+    <td align="center" valign="middle"></td>
+    <td align="center" valign="middle"></td>
+    <td align="center" valign="middle"></td>
   </tr>
 </table>
 <!-- SPONSORS_TABLE_WRAP -->
@@ -528,6 +570,8 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ### \$100 Silver Sponsor
 
 <!-- SILVER_SPONSOR -->
+- [UpMyViews](https://www.upmyviews.com/)
+- [KaufenFollower](https://kaufenfollower.com/)
 - [Best online casino Australia](https://au.trustpilot.com/review/aussieonline.casino)
 - [Australian Online Pokies](https://au.trustpilot.com/review/bestaustraliaonlinepokies.com)
 - [CasinoGam - Casinos not on GamStop](https://casinogam.com/)
@@ -548,18 +592,30 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ### \$50+ Top Supporter
 
 <!-- TOP_SUPPORTER -->
+- [WatchThis — JavaScript SEO Checker](https://watchthis.dev)
+- [SEO Company Calgary](https://prime-digital.ca)
 - [headshot.ltd](https://headshot.ltd)
+- [migliori casino non aams](https://www.liceodiazce.it/)
 - [fun88](https://www.fun88vnplay.com/)
 - [fun88](https://www.fun88asiath.com/)
 - [jbo](https://www.jbo579.com/th/)
+- [Buy LinkedIn Followers](https://www.reddit.com/r/SmartBuying/comments/1tyj4cx/where_can_i_buy_linkedin_followers_likes_and/)
+- [JBO](https://www.jbo88b.com/vn/)
+- [buy instagram followers views4you](https://views4you.com/buy-instagram-followers/)
 - [AI Humanizer](https://cleverhumanizer.ai/)
-- [Superluxuryreps](https://superluxuryreps.com/)
+- [buy instagram followers](https://gilroydispatch.com/buy-instagram-followers/)
+- [casino online sin licencia España](https://casinos.pafes.cat/)
+- [casinos sin licencia España](https://cluc.cat/)
+- [casinos online portugal](https://nomia.pt/)
+- [το καλυτερο online casino](https://www.jazzonline.gr/)
+- [apuesdeportivas.es](https://apuesdeportivas.es/)
+- [maxamind.com - the personal knowledge and productivity workbench](https://www.maxamind.com/)
 - [Minesweeper](https://minesweeper.now)
 - [Transcribe Youtube Videos](https://transcript.you)
 - [Calculator](https://calculator.now)
 - [Time Calculator](https://time.now/time/calculator/)
+- [super clone watches](https://superclonewatches.com/)
 - [Time Now](https://time.now)
-- [VanguardNGR Spain](https://www.vanguardngr.com/casino/es/)
 - [Buy Instagram Shares Saves and Reposts](https://www.reddit.com/r/SocialBlueprint/comments/1s558re/whats_the_best_site_to_buy_instagram_shares_saves/)
 - [casinos fiables fuera de España](https://www.casino.escritoscientificos.es/)
 - [Viron Kasinot](https://viron-nettikasinot.net/)
@@ -567,9 +623,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 - [FBPostLikes](https://www.fbpostlikes.com/)
 - [Fun88 Vietnam](https://www.fun88vnu.com/vn/)
 - [Fun88 Thailand](https://www.fun88tha.com/th/)
-- [casino utan svensk licens](https://popmani.se/)
 - [utländska casino 10 euro](https://casinobonusutaninsattning.net/10-euro-casino-utan-licens/)
-- [casino utan svensk licens 10 euro](https://nya-casinon-utan-svensk-licens.se/casino-utan-svensk-licens-10-euro/)
 - [Fun88](https://global.fun88.com/)
 - [Fun88](https://global.fun88.com/)
 - [Private Instagram Viewer with no login required](https://scribehow.com/page/Instagram_Private_Account_Viewer_Method_2026_The_Safe_Way_to_See_Whats_Hidden__h8D5DquxRpyhsDSCv5mYdg)
@@ -579,11 +633,9 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 - [Best Online Casino](https://nl.trustpilot.com/review/scandicasinos.com)
 - [best replica watches](https://retail.economictimes.indiatimes.com/news/replica-watches-best-website-for-11-super-clone-watches-swiss-movement/114113699)
 - [καλύτερα online casino](https://www.kaliteraonlinecasino.eu.com/)
-- [playfortuna.com](https://playfortuna.com/)
 - [Yahoo Finance - Super Clone](https://finance.yahoo.com/news/best-website-super-clone-watches-073500706.html)
 - [Uudet Nettikasinot](https://fi.parhaatuudetkasinot.com/)
 - [humanize AI with UnAIMyText](https://unaimytext.com/)
-- [Buy TikTok Followers & Likes here](https://www.jeffbullas.com/thread/best-and-cheapest-sites-to-buy-tiktok-followers-and-likes/)
 - [Buy TikTok Followers](https://buytiktokfollowers.co/)
 - [Super Clone Watches: Best Website for 1:1 Replica Watches](https://prestigewatches.co/)
 - [Buy Tiktok Followers](https://www.socialfollowers.uk/buy-tiktok-followers/)
@@ -594,8 +646,6 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 - [CasinoAllianz](https://casinoallianz.com/)
 - [Buy Instagram Followers](https://www.socialwick.com/instagram/followers)
 - [Buy Youtube Subscribers](https://ssmarket.net/buy-youtube-subscribers)
-- [Zamsino.com 🎖️ Global Online Gambling Guide](https://zamsino.com/)
-- [Luotetut suomalaiset nettikasinot (2024) ▶️ 35+ Sivustoa!](https://pomus.net/)
 - [IGComment](https://igcomment.com/)
 - [Accelerating Your Software Products | Teravision Technologies](https://www.teravisiontech.com/)
 - [Casinos Online Sin Licencia 2024](https://casinosinlicenciaespana.com/)
@@ -605,7 +655,6 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 - [Bet Consulting](https://opencollective.com/bet-consulting)
 - [AirdropList(エアドロップリスト) | 仮想通貨のエアドロップ最新情報一覧](https://airdroplist.co/)
 - [UK Betting Sites Not on GamStop » Non GamStop Bookies 2023](https://casinogap.org/uk/betting-sites-not-on-gamstop/)
-- [888Starz Polska: Załóż Konto i Otrzymaj Bonus Powitalny do 1500 EUR!](https://888starz-polska.com/)
 - [Buy Instagram Followers | Real, Instant Delivery & Only $2.97](https://twicsy.com/buy-instagram-followers)
 - [Nettikasinot | Katso parhaat nettikasinot 2023 | Top 10 lista](https://www.nettikasinot.media/)
 - [Beoordelen van nieuwe online casino's 2023](https://nieuwe-casinos.net/)
