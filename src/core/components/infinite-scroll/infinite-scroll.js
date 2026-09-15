@@ -42,6 +42,8 @@ const InfiniteScroll = {
       app.infiniteScroll.handle(this, e);
     }
     $el.each((element) => {
+      // skip if already initialized
+      if (element.f7InfiniteScrollHandler) return;
       element.f7InfiniteScrollHandler = scrollHandler;
       element.addEventListener('scroll', element.f7InfiniteScrollHandler);
     });

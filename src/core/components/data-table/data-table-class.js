@@ -4,6 +4,11 @@ import Framework7Class from '../../shared/class.js';
 
 class DataTable extends Framework7Class {
   constructor(app, params = {}) {
+    // El
+    const $el = $(params.el);
+    // Because temporarily does not support virtual lists, so if the element does not exist, we can return directly.
+    if ($el[0].f7DataTable) return $el[0].f7DataTable;
+
     super(params, [app]);
 
     const table = this;
@@ -15,18 +20,10 @@ class DataTable extends Framework7Class {
 
     table.params = extend(defaults, params);
 
-    // El
-    const $el = $(table.params.el);
     if ($el.length === 0) return undefined;
 
     table.$el = $el;
     table.el = $el[0];
-
-    if (table.$el[0].f7DataTable) {
-      const instance = table.$el[0].f7DataTable;
-      table.destroy();
-      return instance;
-    }
 
     table.$el[0].f7DataTable = table;
 
