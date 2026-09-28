@@ -1,5 +1,5 @@
 <template>
-  <a ref="elRef" :class="classes" v-bind="attrs">
+  <a ref="elRef" :class="classes" v-bind="attrs" @click="onClick">
     <f7-use-icon v-if="icon" :icon="icon" />
     <span v-if="text" :class="isTabbarIcons ? 'tabbar-label' : ''">
       {{ text }}
@@ -37,6 +37,7 @@ export default {
     f7UseIcon,
   },
   props: {
+    disabled: Boolean,
     noLinkClass: Boolean,
     text: String,
     tabLink: [Boolean, String],
@@ -59,9 +60,19 @@ export default {
     ...actionsProps,
     ...routerProps,
   },
-  setup(props, { slots }) {
+  emits: ['click'],
+  setup(props, { slots, emit }) {
     const elRef = ref(null);
     let f7SmartSelect = null;
+
+    const onClick = (event) => {
+      if (props.disabled) {
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+      emit('click', event);
+    };
 
     useTooltip(elRef, props);
 
@@ -82,13 +93,15 @@ export default {
     const isTabbarIcons = computed(() => props.tabbarLabel || TabbarContext.value.tabbarHasIcons);
 
     const attrs = computed(() => {
-      const { href, tabLink, target } = props;
+      const { href, tabLink, target, disabled } = props;
       let hrefComputed = href;
       if (href === true) hrefComputed = '#';
       if (href === false) hrefComputed = undefined; // no href attribute
       return {
         href: hrefComputed,
         target,
+        'aria-disabled': disabled || undefined,
+        tabindex: disabled ? -1 : undefined,
         'data-tab': (isStringProp(tabLink) && tabLink) || undefined,
         ...routerAttrs(props),
         ...actionsAttrs(props),
@@ -96,7 +109,7 @@ export default {
     });
 
     const classes = computed(() => {
-      const { iconOnly, text, noLinkClass, tabLink, tabLinkActive, smartSelect } = props;
+      const { iconOnly, text, noLinkClass, tabLink, tabLinkActive, smartSelect, disabled } = props;
       let iconOnlyComputed;
       const hasChildren = slots && slots.default;
       if (iconOnly || (!text && !hasChildren)) {
@@ -106,6 +119,7 @@ export default {
       }
       return classNames(
         {
+          disabled,
           link: !(noLinkClass || isTabbarIcons.value),
           'icon-only': iconOnlyComputed,
           'tab-link': tabLink || tabLink === '',
@@ -122,6 +136,7 @@ export default {
 
     return {
       elRef,
+      onClick,
       icon,
       isTabbarIcons,
       attrs,

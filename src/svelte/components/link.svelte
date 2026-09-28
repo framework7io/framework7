@@ -18,6 +18,7 @@
 
   let {
     class: className,
+    disabled = false,
     noLinkClass = false,
     text = undefined,
     tabLink = undefined,
@@ -57,6 +58,8 @@
         target,
         'data-tab': (isStringProp(tabLink) && tabLink) || undefined,
         ...restProps,
+        'aria-disabled': disabled || restProps['aria-disabled'],
+        tabindex: disabled ? -1 : restProps.tabindex,
       },
       routerAttrs(restProps),
       actionsAttrs(restProps),
@@ -72,6 +75,7 @@
     classNames(
       className,
       {
+        disabled,
         link: !(noLinkClass || isTabbarIcons),
         'icon-only': iconOnlyComputed,
         'tab-link': tabLink || tabLink === '',
@@ -86,9 +90,14 @@
 
   const icon = $derived(useIcon(restProps));
 
-  function onClick() {
-    restProps.onClick?.();
-    restProps.onclick?.();
+  function onClick(e) {
+    if (disabled) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    restProps.onClick?.(e);
+    restProps.onclick?.(e);
   }
 
   useSmartSelect(
@@ -104,8 +113,8 @@
 <a
   bind:this={el}
   class={classes}
-  onclick={onClick}
   {...attrs}
+  onclick={onClick}
   use:useTooltip={{ tooltip, tooltipTrigger }}
   use:useRouteProps={routeProps}
 >

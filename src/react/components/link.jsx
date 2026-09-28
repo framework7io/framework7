@@ -24,6 +24,7 @@ import { SmartSelect } from 'framework7/types';
   id?: string | number;
   className?: string;
   style?: React.CSSProperties;
+  disabled? : boolean
   noLinkClass? : boolean
   text? : string
   tabLink? : boolean | string
@@ -54,6 +55,7 @@ const Link = (props) => {
     className,
     id,
     style,
+    disabled,
     children,
     noLinkClass,
     text,
@@ -80,6 +82,11 @@ const Link = (props) => {
   const elRef = useRef(null);
 
   const onClick = (e) => {
+    if (disabled) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
     emit(props, 'click', e);
   };
 
@@ -114,6 +121,7 @@ const Link = (props) => {
   const classes = classNames(
     className,
     {
+      disabled,
       link: !(noLinkClass || isTabbarIcons),
       'icon-only': iconOnlyComputed,
       'tab-link': tabLink || tabLink === '',
@@ -131,6 +139,8 @@ const Link = (props) => {
   const attrs = {
     href: hrefComputed,
     target,
+    'aria-disabled': disabled || undefined,
+    tabIndex: disabled ? -1 : undefined,
     'data-tab': (isStringProp(tabLink) && tabLink) || undefined,
     ...routerAttrs(props),
     ...actionsAttrs(props),
