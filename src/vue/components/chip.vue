@@ -43,6 +43,7 @@ export default {
     const elRef = ref(null);
 
     const onDeleteClick = (event) => {
+      event.stopPropagation();
       emit('delete', event);
     };
 
