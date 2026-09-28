@@ -131,6 +131,7 @@ const buildSponsors = async () => {
   const result = {};
 
   if (entries) {
+    // eslint-disable-next-line no-unused-vars
     const items = [...entries].filter((entry) => {
       // if (entry.ref && (entry.ref.includes('opencollective') || entry.ref.includes('patreon'))) {
       //   const dt = new Date(entry.createdAt).getTime();

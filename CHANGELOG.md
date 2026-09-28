@@ -1,5 +1,21 @@
 # Change Log
 
+# [9.2.0](https://github.com/framework7io/framework7/compare/v9.1.3...v9.2.0) (2026-09-28)
+
+
+### Bug Fixes
+
+* **input:** reset outlined input bottom margin in iOS theme ([1afcc00](https://github.com/framework7io/framework7/commit/1afcc00f649457e04ece879f004f68416a20306e)), closes [#4390](https://github.com/framework7io/framework7/issues/4390)
+* **login-screen:** match outlined label backgrounds to login screen ([c89cbf9](https://github.com/framework7io/framework7/commit/c89cbf96c0d4a97421a50b0b81d6c2b2ace92ca2)), closes [#4365](https://github.com/framework7io/framework7/issues/4365)
+* **sheet:** reserve toolbar space in default bottom sheets ([0556ecb](https://github.com/framework7io/framework7/commit/0556ecb1281b5518135042dd24d76d3daa1509a6)), closes [#4370](https://github.com/framework7io/framework7/issues/4370)
+
+
+### Features
+
+* **link:** support disabled links across component frameworks ([303f90d](https://github.com/framework7io/framework7/commit/303f90d6e89e32e1f54596999dd1f52146848d86)), closes [#4369](https://github.com/framework7io/framework7/issues/4369)
+
+
+
 # [9.1.3](https://github.com/framework7io/framework7/compare/v9.1.2...v9.1.3) (2026-08-25)
 
 ### Bug Fixes
