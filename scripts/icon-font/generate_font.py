@@ -95,7 +95,9 @@ f.fullname = font_name
 f.generate(fontfile + '.ttf')
 
 # Hint the TTF file
-subprocess.call('ttfautohint -s -f -n ' + fontfile + '.ttf ' + fontfile + '-hinted.ttf > /dev/null 2>&1 && mv ' + fontfile + '-hinted.ttf ' + fontfile + '.ttf', shell=True)
+subprocess.call(['ttfautohint', '-s', '-f', '-n', fontfile + '.ttf', fontfile + '-hinted.ttf'],
+                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+os.rename(fontfile + '-hinted.ttf', fontfile + '.ttf')
 
 # WOFF2 Font
-subprocess.call('woff2_compress ' + fontfile + '.ttf', shell=True)
+subprocess.call(['woff2_compress', fontfile + '.ttf'])
