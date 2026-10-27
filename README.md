@@ -75,15 +75,20 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://vladvsgolf.com/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/vladvsgolf.svg" alt="Vlad vs Golf" width="160">
+      <a href="https://viewsnapstories.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/viewsnapstories.png" alt="ViewSnapStories" width="160">
       </a>
     </td>
   </tr>
   <tr>
     <td align="center" valign="middle">
-      <a href="https://retail.economictimes.indiatimes.com/news/industry/super-clone-watches-explained-the-details-most-first-time-buyers-miss/132070524" target="_blank">
-        <img src="https://cdn.sponsors.nolimits4web.com/P1Tg6ajiQn8sjDgRkeff/Woi1uDn5rgXvUrj8mjRd/755350db23f5f2cb.webp" alt="super clone watches" width="160">
+      <a href="https://vladvsgolf.com/" target="_blank">
+        <img src="https://framework7.io/i/sponsors/vladvsgolf.svg" alt="Vlad vs Golf" width="160">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://www.globenewswire.com/news-release/2026/08/11/3343112/0/en/superluxuryreps-is-expands-super-clone-watches-collection-with-greater-focus-on-qc-and-precision.html" target="_blank">
+        <img src="https://cdn.sponsors.nolimits4web.com/P1Tg6ajiQn8sjDgRkeff/Woi1uDn5rgXvUrj8mjRd/e63dddbcdb0c3936.png" alt="super clone watches" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -107,18 +112,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://www.reddit.com/r/Streamers/comments/1vlh2pp/does_anyone_know_where_to_buy_kick_viewers_just/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/" alt="Buy Kick Viewers" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
       <a href="https://www.reddit.com/r/botting/comments/1vys53t/whats_the_best_kick_view_bot/" target="_blank">
         <img src="https://framework7.io/i/sponsors/" alt="Kick View Bot" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://prime-digital.ca" target="_blank">
-        <img src="https://cdn.sponsors.nolimits4web.com/1E9ELxtpPRvHQHUMUXqW/344WbcksDQNHn5jJxozF/7b24bec557d3dd9a.png" alt="SEO Company Calgary" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -141,13 +136,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://cdn.sponsors.nolimits4web.com/sm02J44cATxUuyBCMATS/QLWPUy4BnhSJzMwwU1Cd/aaf341e68d3ab882.svg" alt="fun88" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.jbo579.com/th/" target="_blank">
         <img src="https://cdn.sponsors.nolimits4web.com/sm02J44cATxUuyBCMATS/mvoaoFi3V83RO6BdgPp7/ff82cb5d7a05fad7.png" alt="jbo" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.jbo88b.com/vn/" target="_blank">
         <img src="https://framework7.io/i/sponsors/jbo-vietnam.png" alt="JBO" width="160">
@@ -203,13 +198,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://cdn.sponsors.nolimits4web.com/JlGRn0kkP4bf4P4uSXa0/f7RtJ9aPnQzW1xKvE4cH/73e48dc1f143adc1.png" alt="Calculator" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://time.now/time/calculator/" target="_blank">
         <img src="https://cdn.sponsors.nolimits4web.com/JlGRn0kkP4bf4P4uSXa0/f7RtJ9aPnQzW1xKvE4cH/c87e4c5943987199.png" alt="Time Calculator" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://superclonewatches.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/" alt="super clone watches" width="160">
@@ -265,13 +260,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/private-instagram-viewer-with-no-login-required.png" alt="Private Instagram Viewer with no login required" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://fundedaccountpro.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/funded-account-pro.png" alt="Funded Account PRO" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://idealecasinos.com/" target="_blank">
         <img src="https://framework7.io/i/sponsors/idealecasinoscom.png" alt="iDealeCasinos" width="160">
@@ -327,13 +322,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/social-followers.png" alt="Buy Tiktok Followers" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://opencollective.com/bruce-dilger" target="_blank">
         <img src="https://framework7.io/i/sponsors/bruce-dilger.png" alt="Bruce Dilger" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://writingmetier.com/ib-internal-assessment-writing-service/" target="_blank">
         <img src="https://framework7.io/i/sponsors/writing-metier.png" alt="IB IA Writing Service | Buy SL or HL Assessments" width="160">
@@ -389,13 +384,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/blastup_com.png" alt="Buy Instagram Likes - Real Likes & Instant Delivery!" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.doublethebitcoin.net/" target="_blank">
         <img src="https://framework7.io/i/sponsors/doublethebitcoin.png" alt="Best Bitcoin Casinos" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://opencollective.com/bet-consulting" target="_blank">
         <img src="https://framework7.io/i/sponsors/bet-consulting.png" alt="Bet Consulting" width="160">
@@ -409,11 +404,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
     <td align="center" valign="middle">
       <a href="https://casinogap.org/uk/betting-sites-not-on-gamstop/" target="_blank">
         <img src="https://framework7.io/i/sponsors/casinogaporg.png" alt="UK Betting Sites Not on GamStop » Non GamStop Bookies 2023" width="160">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://twicsy.com/buy-instagram-followers" target="_blank">
-        <img src="https://framework7.io/i/sponsors/buy-instagram-followers-twicsy.png" alt="Buy Instagram Followers | Real, Instant Delivery & Only $2.97" width="160">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -451,8 +441,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/crazy-time-italia.png" alt="Gioca Crazy Time Casinò per soldi veri - Crazy Time Casinò Italia" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://jetxgame.com/pt/" target="_blank">
         <img src="https://framework7.io/i/sponsors/jetxgame.png" alt="JetX Apostas | JetiX Aposta - Jogo do Foguete que Ganha Dinheiro" width="160">
@@ -463,6 +451,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/play-jetx.png" alt="jogo do aviãozinho" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.fast.bet/ca/" target="_blank">
         <img src="https://framework7.io/i/sponsors/fastbetca.png" alt="Fastest Payout Casinos in Canada [2022]" width="160">
@@ -509,13 +499,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://najlepsibukmacherzy.pl/ranking-legalnych-bukmacherow/" target="_blank">
-        <img src="https://framework7.io/i/sponsors/netpositive.png" alt="Ranking Bukmacherów Legalnych 2020. Bukmacher nr 1 to..." width="160">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" valign="middle">
       <a href="https://evolution-host.com" target="_blank">
         <img src="https://framework7.io/i/sponsors/evolution-host.png" alt="Evolution Host - A DDoS Protected VPS host that accepts Bitcoin" width="160">
       </a>
@@ -530,6 +513,8 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/cyberbrain.png" alt="CyberBrain IT Services" width="160">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://hicapps.cl" target="_blank">
         <img src="https://framework7.io/i/sponsors/hicapps.png" alt="HICAPPS - Health Informatics Custom APPs" width="160">
@@ -545,6 +530,9 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img src="https://framework7.io/i/sponsors/wappler.png" alt="Wappler - The Visual Web App Creator" width="160">
       </a>
     </td>
+    <td align="center" valign="middle"></td>
+    <td align="center" valign="middle"></td>
+    <td align="center" valign="middle"></td>
     <td align="center" valign="middle"></td>
     <td align="center" valign="middle"></td>
     <td align="center" valign="middle"></td>
