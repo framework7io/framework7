@@ -897,7 +897,7 @@ class Router extends Framework7Class {
       browserHistory &&
       !browserHistorySeparator &&
       !browserHistoryRoot &&
-      location.pathname.indexOf('index.html')
+      location.pathname.indexOf('index.html') >= 0
     ) {
       // eslint-disable-next-line
       console.warn(
