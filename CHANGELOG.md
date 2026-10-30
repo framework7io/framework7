@@ -1,5 +1,13 @@
 # Change Log
 
+# [9.3.0](https://github.com/framework7io/framework7/compare/v9.2.0...v9.3.0) (2026-10-30)
+
+### Bug Fixes
+
+* **component:** filter falsy children after flattening nested arrays in $h and $jsx ([0c418ea](https://github.com/framework7io/framework7/commit/0c418ea961a89511a0220fba523a8be63b09b8a5)), closes [#4407](https://github.com/framework7io/framework7/issues/4407)
+* **router:** only guess browserHistoryRoot when the path contains index.html ([#4405](https://github.com/framework7io/framework7/issues/4405)) ([21dda2b](https://github.com/framework7io/framework7/commit/21dda2b420179727b98804c8b2aadcc9a3e2f22e))
+
+
 # [9.2.0](https://github.com/framework7io/framework7/compare/v9.1.3...v9.2.0) (2026-09-28)
 
 
