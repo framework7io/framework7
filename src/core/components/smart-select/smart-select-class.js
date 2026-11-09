@@ -98,6 +98,11 @@ class SmartSelect extends Framework7Class {
     };
 
     function handleInputChange() {
+      if (ss.selectEl.matches(':disabled') || ss.$el.hasClass('disabled')) {
+        ss.close();
+        return;
+      }
+
       let optionEl;
       let text;
       const inputEl = this;
