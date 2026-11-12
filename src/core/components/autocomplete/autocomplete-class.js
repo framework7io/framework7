@@ -264,6 +264,7 @@ class Autocomplete extends Framework7Class {
       $newItem.addClass('autocomplete-dropdown-selected');
     }
     function onDropdownClick() {
+      if (ac.inputEl?.matches(':disabled')) return;
       const $clickedEl = $(this);
       let clickedItem;
       for (let i = 0; i < ac.items.length; i += 1) {
