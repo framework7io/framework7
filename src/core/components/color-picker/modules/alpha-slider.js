@@ -34,7 +34,7 @@ export default {
       on: {
         change(range, value) {
           const alpha = Math.floor(value * 100) / 100;
-          self.setValue({ alpha });
+          self.setValueFromUser({ alpha });
         },
       },
     });
@@ -46,7 +46,7 @@ export default {
         return;
       }
       value = Math.max(0, Math.min(1, value));
-      self.setValue({ alpha: value });
+      self.setValueFromUser({ alpha: value });
     }
 
     self.$el.on('change', '.color-picker-module-alpha-slider input', handleInputChange);

@@ -41,7 +41,7 @@ export default {
       on: {
         change(range, value) {
           const b = Math.floor(value * 1000) / 1000;
-          self.setValue({ hsb: [self.value.hsb[0], self.value.hsb[1], b] });
+          self.setValueFromUser({ hsb: [self.value.hsb[0], self.value.hsb[1], b] });
         },
       },
     });

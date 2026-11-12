@@ -33,7 +33,7 @@ export default {
   init(self) {
     function handlePaletteClick(e) {
       const hex = $(e.target).attr('data-palette-color');
-      self.setValue({
+      self.setValueFromUser({
         hex,
       });
     }
