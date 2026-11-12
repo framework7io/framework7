@@ -108,10 +108,12 @@ export default function pickerColumn(colEl, updateItems) {
   };
 
   function handleScroll() {
+    if (picker.inputEl?.matches(':disabled')) return;
     col.updateItems();
   }
 
   function handleClick() {
+    if (picker.inputEl?.matches(':disabled')) return;
     const value = $(this).attr('data-picker-value');
     col.setValue(value);
   }
