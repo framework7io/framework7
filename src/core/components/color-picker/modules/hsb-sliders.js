@@ -89,7 +89,7 @@ export default {
       limitKnobPosition: self.app.theme === 'ios',
       on: {
         change(range, value) {
-          self.setValue({ hue: value });
+          self.setValueFromUser({ hue: value });
         },
       },
     });
@@ -104,7 +104,7 @@ export default {
       on: {
         change(range, value) {
           const s = Math.floor(value * 1000) / 1000;
-          self.setValue({ hsb: [self.value.hsb[0], s, self.value.hsb[2]] });
+          self.setValueFromUser({ hsb: [self.value.hsb[0], s, self.value.hsb[2]] });
         },
       },
     });
@@ -119,7 +119,7 @@ export default {
       on: {
         change(range, value) {
           const b = Math.floor(value * 1000) / 1000;
-          self.setValue({ hsb: [self.value.hsb[0], self.value.hsb[1], b] });
+          self.setValueFromUser({ hsb: [self.value.hsb[0], self.value.hsb[1], b] });
         },
       },
     });
@@ -139,7 +139,7 @@ export default {
       }
 
       hsb[index] = value;
-      self.setValue({ hsb });
+      self.setValueFromUser({ hsb });
     }
 
     self.$el.on('change', '.color-picker-module-hsb-sliders input', handleInputChange);

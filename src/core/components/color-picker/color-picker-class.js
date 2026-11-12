@@ -237,6 +237,11 @@ class ColorPicker extends Framework7Class {
     ];
   }
 
+  setValueFromUser(value) {
+    if (this.inputEl?.matches(':disabled')) return;
+    this.setValue(value);
+  }
+
   setValue(value = {}, updateModules = true) {
     const self = this;
     if (typeof value === 'undefined') return;
