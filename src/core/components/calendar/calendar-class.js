@@ -257,7 +257,7 @@ class Calendar extends Framework7Class {
       }
 
       function handleDayClick(e) {
-        if (!allowItemClick) return;
+        if (!allowItemClick || calendar.inputEl?.matches(':disabled')) return;
         let $dayEl = $(e.target).parents('.calendar-day');
         if ($dayEl.length === 0 && $(e.target).hasClass('calendar-day')) {
           $dayEl = $(e.target);
