@@ -318,10 +318,27 @@ const Page = (props) => {
       ? hasNavbarLargeComputed || hasNavbarLarge.current
       : false;
 
+  // Router changes position/transition classes directly on the element (e.g. on swipe back
+  // release) without emitting page events. Keep the classes that are currently in DOM,
+  // otherwise a re-render during the transition removes them, "transitionend" never fires
+  // and router stays locked with allowPageChange = false.
+  const domRouterClasses = elRef.current
+    ? elRef.current.className
+        .split(' ')
+        .filter((c) =>
+          /^page-(current|next|previous|transitioning|transitioning-swipeback|swipeback-active)$/.test(
+            c,
+          ),
+        )
+    : [];
+  const routerClasses = domRouterClasses.some((c) => /^page-(current|next|previous)$/.test(c))
+    ? domRouterClasses.join(' ')
+    : routerPositionClass.current;
+
   const classes = classNames(
     className,
     'page',
-    routerPositionClass.current,
+    routerClasses,
     {
       tabs,
       'page-with-subnavbar': subnavbar || withSubnavbar || forceSubnavbar,
