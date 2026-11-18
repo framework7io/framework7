@@ -1,6 +1,7 @@
 <script>
-  import { onMount, setContext, tick } from 'svelte';
+  import { onMount, setContext } from 'svelte';
 
+  import { app, f7ready } from '../shared/f7.js';
   import { colorClasses } from '../shared/mixins.js';
   import { classNames } from '../shared/utils.js';
 
@@ -30,15 +31,17 @@
   }));
 
   onMount(() => {
-    if (swipeable && swiperParams && wrapEl) {
-      Object.assign(wrapEl, swiperParams);
-      wrapEl.initialize();
+    if (swipeable) {
+      f7ready(() => {
+        // It only initializes in pageInit callback
+        // We may need to manually call init() to update the instance
+        app.f7.swiper.init(wrapEl);
+      });
     }
-    tick().then(() => {
-      if (swipeable && wrapEl.swiper) {
-        wrapEl.swiper.update();
-      }
-    });
+    if (!swipeable || !swiperParams) return;
+    if (!wrapEl) return;
+    Object.assign(wrapEl, swiperParams);
+    wrapEl.initialize();
   });
 </script>
 
