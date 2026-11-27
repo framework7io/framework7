@@ -1,5 +1,19 @@
 # Change Log
 
+# [9.4.0](https://github.com/framework7io/framework7/compare/v9.3.0...v9.4.0) (2026-11-27)
+
+
+### Bug Fixes
+
+* **autocomplete:** ignore selections when input or opener is disabled ([cdb5b0a](https://github.com/framework7io/framework7/commit/cdb5b0adbc462b209daeda40706d04ec7d1a2db3)), closes [#4418](https://github.com/framework7io/framework7/issues/4418) [#4419](https://github.com/framework7io/framework7/issues/4419)
+* **calendar:** ignore day and time selection when input is disabled ([e7db21d](https://github.com/framework7io/framework7/commit/e7db21d808d19b4650894d218462d0b6973043a1)), closes [#4412](https://github.com/framework7io/framework7/issues/4412) [#4413](https://github.com/framework7io/framework7/issues/4413)
+* **color-picker:** ignore user edits when input or target is disabled ([f312c63](https://github.com/framework7io/framework7/commit/f312c63a1cc9bcfad5fd4ea8d4e3a4ee4f050210)), closes [#4415](https://github.com/framework7io/framework7/issues/4415) [#4417](https://github.com/framework7io/framework7/issues/4417)
+* **picker:** ignore column changes when input is disabled ([b241a6d](https://github.com/framework7io/framework7/commit/b241a6d41c68487f65ffedf5c89b2497aab6508f)), closes [#4414](https://github.com/framework7io/framework7/issues/4414) [#4416](https://github.com/framework7io/framework7/issues/4416)
+* **react, vue:** keep router classes on Page re-render during swipe back ([#4421](https://github.com/framework7io/framework7/issues/4421)) ([655f81d](https://github.com/framework7io/framework7/commit/655f81d243d00b2d71aaaabce39d6d94abf09c6d)), closes [#4420](https://github.com/framework7io/framework7/issues/4420)
+* **smart-select:** ignore selections and opening when disabled ([926eede](https://github.com/framework7io/framework7/commit/926eedee3a95b6a25b2879f7b3f3077ebd7911a8)), closes [#4409](https://github.com/framework7io/framework7/issues/4409) [#4410](https://github.com/framework7io/framework7/issues/4410)
+* **touch:** treat touchcancel/pointercancel as gesture end for components ([6b165cb](https://github.com/framework7io/framework7/commit/6b165cb3deeda4ce28ed6ea66a6fc4d789a6e739)), closes [#4408](https://github.com/framework7io/framework7/issues/4408)
+
+
 # [9.3.0](https://github.com/framework7io/framework7/compare/v9.2.0...v9.3.0) (2026-10-30)
 
 ### Bug Fixes
