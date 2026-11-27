@@ -1,5 +1,11 @@
 import $ from '../../shared/dom7.js';
 
+export function isPickerDisabled(picker) {
+  const { $inputEl } = picker;
+  if (!$inputEl || !$inputEl.length) return false;
+  return $inputEl[0].matches(':disabled') || $inputEl.closest('.disabled').length > 0;
+}
+
 export default function pickerColumn(colEl, updateItems) {
   const picker = this;
   // const app = picker.app;
@@ -108,10 +114,25 @@ export default function pickerColumn(colEl, updateItems) {
   };
 
   function handleScroll() {
+    if (isPickerDisabled(picker)) {
+      const scrollTop = col.$itemsEl[0].scrollTop;
+      if (Math.round(scrollTop / itemHeight) === col.activeIndex) return;
+      if (picker.inline) {
+        // keep column on the current value
+        col.$itemsEl[0].scrollTop = col.activeIndex * itemHeight;
+      } else {
+        picker.close();
+      }
+      return;
+    }
     col.updateItems();
   }
 
   function handleClick() {
+    if (isPickerDisabled(picker)) {
+      if (!picker.inline) picker.close();
+      return;
+    }
     const value = $(this).attr('data-picker-value');
     col.setValue(value);
   }
