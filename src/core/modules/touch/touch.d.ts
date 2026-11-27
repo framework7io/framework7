@@ -6,6 +6,7 @@ export namespace Touch {
       start: string;
       move: string;
       end: string;
+      cancel: string;
     };
   }
   interface AppParams {

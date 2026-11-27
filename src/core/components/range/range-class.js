@@ -333,7 +333,7 @@ class Range extends Framework7Class {
       range.setValue(newValue, true);
     }
     function handleTouchEnd(e) {
-      if (e.type === 'touchend') {
+      if (e.type === 'touchend' || e.type === 'touchcancel') {
         let touchEnded;
         for (let i = 0; i < e.changedTouches.length; i += 1) {
           if (e.changedTouches[i].identifier === targetTouchIdentifier) touchEnded = true;
