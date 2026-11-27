@@ -30,6 +30,14 @@ import moduleWheel from './modules/wheel.js';
 /** @jsx $jsx */
 import $jsx from '../../shared/$jsx.js';
 
+function isDisabled(self) {
+  const { $inputEl, $targetEl } = self;
+  return [$inputEl, $targetEl].some(
+    ($el) =>
+      $el && $el.length && ($el[0].matches(':disabled') || $el.closest('.disabled').length > 0),
+  );
+}
+
 class ColorPicker extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
@@ -235,6 +243,17 @@ class ColorPicker extends Framework7Class {
       Math.floor(arr[1] * 1000) / 1000,
       Math.floor(arr[2] * 1000) / 1000,
     ];
+  }
+
+  setValueFromUser(value) {
+    const self = this;
+    if (isDisabled(self)) {
+      // disabled while opened: keep the value and close (or re-sync inline modules)
+      if (self.inline) self.updateModules();
+      else self.close();
+      return;
+    }
+    self.setValue(value);
   }
 
   setValue(value = {}, updateModules = true) {
@@ -697,6 +716,7 @@ class ColorPicker extends Framework7Class {
     const self = this;
     const { app, opened, inline, $inputEl, $targetEl, params } = self;
     if (opened) return;
+    if (!inline && isDisabled(self)) return;
 
     if (inline) {
       self.$el = $(self.render());

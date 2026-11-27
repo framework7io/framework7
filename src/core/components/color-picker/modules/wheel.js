@@ -56,7 +56,7 @@ export default {
       let angleDeg = (angleRad * 180) / Math.PI + 90;
       if (angleDeg < 0) angleDeg += 360;
       angleDeg = 360 - angleDeg;
-      self.setValue({ hue: angleDeg });
+      self.setValueFromUser({ hue: angleDeg });
     }
     function setSBFromSpecterCoords(x, y) {
       let s = (x - specterRect.left) / specterRect.width;
@@ -64,7 +64,7 @@ export default {
       s = Math.max(0, Math.min(1, s));
       b = 1 - Math.max(0, Math.min(1, b));
 
-      self.setValue({ hsb: [self.value.hue, s, b] });
+      self.setValueFromUser({ hsb: [self.value.hue, s, b] });
     }
 
     function handleTouchStart(e) {

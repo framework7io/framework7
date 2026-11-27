@@ -34,7 +34,7 @@ export default {
       s = Math.max(0, Math.min(1, s));
       b = 1 - Math.max(0, Math.min(1, b));
 
-      self.setValue({ hsb: [self.value.hue, s, b] });
+      self.setValueFromUser({ hsb: [self.value.hue, s, b] });
     }
 
     function handleTouchStart(e) {

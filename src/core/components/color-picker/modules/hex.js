@@ -36,7 +36,7 @@ export default {
       if (current < min) {
         value = '000';
       }
-      self.setValue({ hex: value });
+      self.setValueFromUser({ hex: value });
     }
 
     self.$el.on('change', '.color-picker-module-hex input', handleInputChange);

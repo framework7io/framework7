@@ -16,7 +16,7 @@ export default {
     function handleInitialColorClick() {
       if (self.initialValue) {
         const { hex, alpha } = self.initialValue;
-        self.setValue({
+        self.setValueFromUser({
           hex,
           alpha,
         });
