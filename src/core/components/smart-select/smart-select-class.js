@@ -6,6 +6,12 @@ import removeDiacritics from '../searchbar/remove-diacritics.js';
 /** @jsx $jsx */
 import $jsx from '../../shared/$jsx.js';
 
+function isDisabled(ss) {
+  if (ss.selectEl && ss.selectEl.matches(':disabled')) return true;
+  if (ss.$el && ss.$el.closest('.disabled').length) return true;
+  return false;
+}
+
 class SmartSelect extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
@@ -98,9 +104,21 @@ class SmartSelect extends Framework7Class {
     };
 
     function handleInputChange() {
+      const inputEl = this;
+      if (isDisabled(ss)) {
+        // Smart select was disabled while opened: revert input state and close
+        if (inputEl.type === 'checkbox') {
+          inputEl.checked = !inputEl.checked;
+        } else {
+          ss.$containerEl.find(`input[type="radio"][name="${ss.inputName}"]`).each((radioEl) => {
+            radioEl.checked = radioEl.value === ss.selectEl.value;
+          });
+        }
+        ss.close();
+        return;
+      }
       let optionEl;
       let text;
-      const inputEl = this;
       const value = inputEl.value;
       let optionText = [];
       let displayAs;
@@ -948,7 +966,7 @@ class SmartSelect extends Framework7Class {
 
   open(type) {
     const ss = this;
-    if (ss.opened) return ss;
+    if (ss.opened || isDisabled(ss)) return ss;
     let prevented = false;
     function prevent() {
       prevented = true;
