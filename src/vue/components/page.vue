@@ -1,5 +1,5 @@
 <script>
-import { computed, ref, onMounted, onBeforeUnmount, h } from 'vue';
+import { ref, onMounted, onBeforeUnmount, h } from 'vue';
 import { classNames } from '../shared/utils.js';
 import { colorClasses, colorProps } from '../shared/mixins.js';
 import { f7ready, f7 } from '../shared/f7.js';
@@ -266,10 +266,10 @@ export default {
       f7.off('pageTabHide', onPageTabHide);
     });
 
-    const classes = computed(() =>
+    // Not a computed: router-related flags above are not reactive and must be read on every render
+    const getClasses = () =>
       classNames(
         'page',
-        routerPositionClass,
         {
           tabs: props.tabs,
           'page-with-subnavbar': props.subnavbar || props.withSubnavbar,
@@ -286,8 +286,7 @@ export default {
           'login-screen-page': props.loginScreen,
         },
         colorClasses(props),
-      ),
-    );
+      );
 
     const fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index panel'
       .split(' ')
@@ -328,7 +327,24 @@ export default {
         });
       }
 
-      let classesValue = classes.value;
+      // Router changes position/transition classes directly on the element (e.g. on swipe back
+      // release) without emitting page events. Keep the classes that are currently in DOM,
+      // otherwise a re-render during the transition removes them, "transitionend" never fires
+      // and router stays locked with allowPageChange = false.
+      const domRouterClasses = elRef.value
+        ? elRef.value.className
+            .split(' ')
+            .filter((c) =>
+              /^page-(current|next|next-on-right|previous|transitioning|transitioning-swipeback|swipeback-active)$/.test(
+                c,
+              ),
+            )
+        : [];
+      const routerClasses = domRouterClasses.some((c) => /^page-(current|next|previous)$/.test(c))
+        ? domRouterClasses.join(' ')
+        : routerPositionClass;
+
+      let classesValue = classNames(getClasses(), routerClasses);
 
       if (
         (hasSubnavbarComputed || hasSubnavbar) &&

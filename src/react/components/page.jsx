@@ -326,7 +326,7 @@ const Page = (props) => {
     ? elRef.current.className
         .split(' ')
         .filter((c) =>
-          /^page-(current|next|previous|transitioning|transitioning-swipeback|swipeback-active)$/.test(
+          /^page-(current|next|next-on-right|previous|transitioning|transitioning-swipeback|swipeback-active)$/.test(
             c,
           ),
         )
