@@ -13,6 +13,14 @@ import Framework7Class from '../../shared/class.js';
 /** @jsx $jsx */
 import $jsx from '../../shared/$jsx.js';
 
+function isDisabled(ac) {
+  const { $inputEl, $openerEl } = ac;
+  return [$inputEl, $openerEl].some(
+    ($el) =>
+      $el && $el.length && ($el[0].matches(':disabled') || $el.closest('.disabled').length > 0),
+  );
+}
+
 class Autocomplete extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
@@ -147,6 +155,24 @@ class Autocomplete extends Framework7Class {
     }
     function onPageInputChange() {
       const inputEl = this;
+      if (isDisabled(ac)) {
+        // Autocomplete was disabled while opened: revert input state and close
+        if (inputEl.type === 'checkbox') {
+          inputEl.checked = !inputEl.checked;
+        } else {
+          const current = ac.value && ac.value[0];
+          const currentValue =
+            current && typeof current === 'object' ? current[ac.params.valueProperty] : current;
+          $(inputEl)
+            .parents('ul')
+            .find(`input[name="${inputEl.name}"]`)
+            .each((el) => {
+              el.checked = `${el.value}` === `${currentValue}`;
+            });
+        }
+        ac.close();
+        return;
+      }
       const value = inputEl.value;
       const isValues = $(inputEl).parents('.autocomplete-values').length > 0;
       let item;
@@ -264,6 +290,10 @@ class Autocomplete extends Framework7Class {
       $newItem.addClass('autocomplete-dropdown-selected');
     }
     function onDropdownClick() {
+      if (isDisabled(ac)) {
+        ac.close();
+        return;
+      }
       const $clickedEl = $(this);
       let clickedItem;
       for (let i = 0; i < ac.items.length; i += 1) {
@@ -901,7 +931,7 @@ class Autocomplete extends Framework7Class {
 
   open() {
     const ac = this;
-    if (ac.opened) return ac;
+    if (ac.opened || isDisabled(ac)) return ac;
     const openIn = ac.params.openIn;
     ac[
       `open${openIn
